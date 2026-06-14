@@ -6,6 +6,8 @@
 
 **Probe code:** `scripts/q1_*.py` .. `scripts/q8_*.py`, shared helpers in `src/spike/entsoe_helpers.py`. Each script is independently runnable via `uv run scripts/qN_*.py` and writes evidence JSON to `data/spike/` (gitignored scratch -- this memo is the durable record).
 
+**Update (2026-06-14):** Q2's rerun snapshot/compare completed -- the R-2 verdict is in (VERIFIED, no overwrite detected). Q8 was re-probed from a second, independent sandbox instance -- still blocked on port 22, now with two data points.
+
 ---
 
 ## Q1 -- End-to-end access
@@ -28,9 +30,9 @@ No R-3 symptoms observed in this session (no timeouts, no HTTP error codes, no p
 
 ## Q2 -- R-2 vintage probe (load forecast A65/A01 + VRE forecast A69/A01)
 
-**Status: PENDING-with-rerun-path** (preliminary read below; harness committed at `scripts/q2_vintage_probe.py`)
+**Status: VERIFIED -- archive preserves as-published values; no overwrite detected**
 
-This is the block's most important question and the one genuinely open item. Three pieces of in-session evidence, then the rerun harness.
+This was the block's most important question. Three pieces of in-session evidence (below), then the rerun harness and its definitive result.
 
 **1. `revisionNumber`/`createdDateTime` are not usable as vintage signals.** `explore` pulled A65/A01 and A69/A01 for six delivery dates spanning 2019-01-15 -> 2026-06-13 (D+1). Result, identical at every date including 2019:
 
@@ -39,23 +41,37 @@ This is the block's most important question and the one genuinely open item. Thr
 | `revisionNumber` | `1` (1 TimeSeries) | `3` (3 TimeSeries: B16 Solar, B18 Wind Offshore, B19 Wind Onshore) |
 | `createdDateTime` | always == pull wall-clock time | always == pull wall-clock time |
 
-`createdDateTime` is the API's response-wrapper generation time (always "now"), not the data's original publication time. `revisionNumber` is constant across 7+ years -- a 2019-01-15 delivery shows the same `revisionNumber=3` for its VRE forecast as a delivery from yesterday. If the platform continuously overwrote archived VRE forecasts with later intraday resubmissions over the years, we would expect revision counts to grow with elapsed time; they don't. Reading: `revisionNumber=3` looks like a static attribute of the TSOs' A69 submission template (one document, three PSR-type TimeSeries), not a live "this has been revised N times since gate-close" counter. **Neither field can adjudicate R-2.**
+`createdDateTime` is the API's response-wrapper generation time (always "now"), not the data's original publication time. `revisionNumber` is constant across 7+ years -- a 2019-01-15 delivery shows the same `revisionNumber=3` for its VRE forecast as a delivery from yesterday. If the platform continuously overwrote archived VRE forecasts with later intraday resubmissions over the years, we would expect revision counts to grow with elapsed time; they don't. Reading: `revisionNumber=3` looks like a static attribute of the TSOs' A69 submission template (one document, three PSR-type TimeSeries), not a live "this has been revised N times since gate-close" counter. **Neither field can adjudicate R-2 on its own** -- but see the final verdict below, where a *constant* `revisionNumber` across captures becomes corroborating evidence rather than a dead end.
 
 **2. Direct evidence of publication-timing structure.** Pulled both forecasts for delivery date D+1 = 2026-06-13 at ~15:35 CEST on D-1 (2026-06-12):
 - A65/A01 load forecast: **available**, 96 rows (full day, PT15M) -- consistent with its ~10:00 CET D-1 regulatory deadline (Art. 6(2)(b)), already passed.
 - A69/A01 VRE forecast: **`NoMatchingDataError` (no data)** -- consistent with its 18:00 Brussels D-1 deadline (Art. 14(2)), not yet passed.
 
-This is a clean confirmation that the platform genuinely has *nothing* for D+1's VRE forecast before the deadline (not an early/placeholder value that later gets overwritten) -- the publication-timing asymmetry described in capstone S3 is real and observable.
+This is a clean confirmation that the platform genuinely has *nothing* for D+1's VRE forecast before the deadline (not an early/placeholder value that later gets overwritten) -- the publication-timing asymmetry described in capstone S3 is real and observable, and it is snapshot 1 in the final verdict below.
 
 **3. Repeat-pull stability.** Two back-to-back pulls of a settled delivery day's (2026-06-05, D-7) VRE forecast within this session returned `Series.equals() == True` -- the platform is not returning jittery/regenerated values on repeated queries of the same period.
 
-**Rerun harness (`scripts/q2_vintage_probe.py`):**
-- `snapshot --delivery-date 2026-06-13` already run **today** (pre-VRE-deadline): captured A65/A01 (96 rows, revision 1) to `data/spike/vintage/2026-06-13__20260612T133510Z.json`; A69/A01 recorded as `NO_DATA`.
-- Re-run `snapshot --delivery-date 2026-06-13` again **>=1 day from now** (after delivery has occurred and the VRE forecast has been published), then run `compare --delivery-date 2026-06-13`. `compare` diffs every quarter-hour value and the `revisionNumber` between snapshots and reports `n_differing_points`.
-- **If A69/A01 values for 2026-06-13 are unchanged** between the post-deadline snapshot and a snapshot taken days later (after the delivery day has fully elapsed) -> strong evidence the as-published vintage is preserved.
-- **If values differ** -> invoke the pre-authorized S5.2 fallback (document as "as-archived, best-available, same convention as the published EPF benchmark literature") in the M1 leakage audit.
+**Final verdict -- snapshot/compare rerun (`scripts/q2_vintage_probe.py`):**
 
-**Preliminary evidence-based read:** metadata (`revisionNumber`/`createdDateTime`) is a dead end -- don't spend M1 time on it. The publication-timing evidence (point 2) and repeat-pull stability (point 3) are mildly reassuring but do not resolve the core question (whether the *first* archived value for a delivery day already reflects post-gate intraday corrections). Only the value-level cross-day diff via the committed harness answers that. **Final verdict due before M1**, per the brief -- not a blocker for this spike.
+Three snapshots of delivery date 2026-06-13 were captured across the publication and delivery lifecycle:
+
+| # | Pulled at (UTC) | Context | load_fc (A65/A01) | vre_fc (A69/A01) |
+|---|---|---|---|---|
+| 1 | 2026-06-12 13:35:10 | D-1, pre-VRE-deadline | OK, 96 rows, rev=1 | `NO_DATA` |
+| 2 | 2026-06-12 16:24:38 | D-1, ~2.5h post-VRE-deadline | OK, 96 rows, rev=1 | OK, 96 rows, rev=3 |
+| 3 | 2026-06-14 12:03:47 | D+1, delivery day fully elapsed | OK, 96 rows, rev=1 | OK, 96 rows, rev=3 |
+
+`compare --delivery-date 2026-06-13` pairwise results (`data/spike/q2_compare_2026-06-13.json`):
+- **1 -> 2** (the publication-timing transition from point 2): `load_fc` rev 1->1, 96/96 common points, **0 differing**. `vre_fc` goes `NO_DATA` -> `OK` (a presence transition, not a value comparison).
+- **2 -> 3** (the overwrite test -- ~44h later, after 2026-06-13 has fully elapsed): `load_fc` rev 1->1, 96/96 common, **0 differing**. `vre_fc` rev 3->3, 96/96 common, **0 differing**.
+
+**Per-series verdict:**
+- **A65/A01 (load forecast): NOT overwritten.** Identical across all three captures, from D-1 pre-publication through D+1 post-delivery -- 0 value differences, `revisionNumber` constant at 1.
+- **A69/A01 (VRE forecast): NOT overwritten.** Snapshot 1 (`NO_DATA`) establishes only the publication-timing transition -- on its own it would prove presence, not overwrite-vs-not. But snapshot 2->3 *is* the direct overwrite test: the as-published values (captured ~2.5h after the 18:00 Brussels deadline) are bit-identical to the post-delivery archive (~44h later, after the delivery day fully elapsed) across all 96 quarter-hours, with `revisionNumber` constant at 3.
+
+**Conclusion:** for this sample delivery day, the ENTSO-E Transparency Platform archives the as-published D-1 forecast and does not silently revise it after the fact. The M1 ingest pipeline can pull archived history directly with no special "first-seen-value" capture step, and the pre-authorized **S5.2 fallback is not invoked** for this sample. This is single-delivery-day evidence (n=1); if M1's full-history pull ever surfaces a delivery date where a re-pull differs from an earlier archived value, treat that as a contradiction of this finding and fall back to S5.2 for that date.
+
+Snapshots: `data/spike/vintage/2026-06-13__20260612T133510Z.json`, `...20260612T162438Z.json`, `...20260614T120347Z.json`.
 
 ---
 
@@ -140,9 +156,11 @@ Checked the community-maintained OpenAPI spec for SMARD's `chart_data` API (`bun
 
 ## Q8 -- SFTP bulk path
 
-**Status: PENDING-with-rerun-path**
+**Status: PENDING-with-rerun-path (2/2 sandbox instances blocked)**
 
-`socket.create_connection(("sftp-transparency.entsoe.eu", 22), timeout=10)` -> `TimeoutError` from this sandbox. This is most likely the sandbox's outbound network policy blocking non-HTTP(S) ports (HTTPS to ENTSO-E/SMARD/PyPI all worked fine in this same session) rather than a statement about the SFTP service itself.
+`socket.create_connection(("sftp-transparency.entsoe.eu", 22), timeout=10)` -> `TimeoutError`, reproduced on **two independent sandbox sessions** (2026-06-12 and 2026-06-14), both with otherwise-working HTTPS (ENTSO-E/SMARD/PyPI all fine in both sessions). `nc` is not installed in either environment, so the literal `nc -zv` one-liner couldn't be run -- `socket.create_connection` is the equivalent TCP-connect check and gives the same `TimeoutError`.
+
+Two-for-two on port-22 timeouts across independently-provisioned sandboxes points to a **standing outbound-non-HTTP(S)-port policy on this class of cloud sandbox**, not a transient or session-specific issue -- but it still says nothing about reachability from Yarden's actual M3, which remains the only environment that can answer this.
 
 **Re-run on Yarden's M3:** `nc -zv sftp-transparency.entsoe.eu 22` (or `sftp <account>@sftp-transparency.entsoe.eu`). Even if reachable, SFTP credentials are separate from `ENTSOE_API_TOKEN` and not present in any environment used so far -- account provisioning (if needed) is a separate B-Manual step. **One-line assessment:** for the M1 bulk pull's actual size (~66k hourly rows + ~26k native quarter-hourly rows, single-digit-MB compressed per S3), the chunked API (12 yearly Q1-style pulls per series) is almost certainly simpler and fast enough -- SFTP is worth revisiting only if the API proves unreliable in practice at M1, not as a default.
 
@@ -154,9 +172,9 @@ Checked the community-maintained OpenAPI spec for SMARD's `chart_data` API (`bun
 
 **Remains open (by design -- this was a data-layer probe, not feature/pipeline code):** item 2 (the actual bulk pull, UTC/DST handling, Fold-5 date pinning), item 4's forecast-not-actual *code* guard, items 6-7 (regime flags, climatology -- M1 feature catalog), item 8 (CC BY attribution in a committed snapshot -- no snapshot exists yet), the DST and closed-left-rolling sub-clauses of item 9, and item 10 (leakage audit document).
 
-**Item 5 (R-2 vintage probe) is PENDING-with-rerun-path** -- executed with a preliminary read (Q2 above), harness committed, definitive verdict needs a >=1-day-separated re-run before M1.
+**Item 5 (R-2 vintage probe) is VERIFIED** -- the snapshot/compare rerun (Q2 above) found zero value differences and a constant `revisionNumber` for both A65/A01 and A69/A01 across pre-publication, post-publication, and post-delivery captures of delivery date 2026-06-13. The archive preserves as-published values; the S5.2 fallback is not invoked for this sample.
 
 **Findings that should shape the M1 plan:**
 1. **Resampling boundary artifact (Q4/Q6):** any pull whose `end` lands exactly on a quarter-hour produces a partial final hourly bin. The M1 chunked yearly pulls must handle chunk-boundary bins explicitly (drop-and-let-the-next-chunk-complete, or pad-and-trim) -- otherwise this silently corrupts one hour per chunk boundary (12 hours/year if chunked yearly).
 2. **PT15M is the native resolution for load/VRE feeds across the entire 2019-pull-date window** (Q3), not just post-2025-10-01 -- the hourly-aggregation step in the ingest pipeline applies uniformly from day one, simplifying the M1 ingest code (one aggregation path, not a date-conditional one for the feature feeds -- only A44 needs date-conditional handling).
-3. **`revisionNumber`/`createdDateTime` are dead ends for R-2** (Q2) -- don't budget M1 time on metadata-based vintage detection; the value-level snapshot/compare harness is the only path, and it's already running.
+3. **`revisionNumber`/`createdDateTime` alone are dead ends for R-2** (Q2), but the value-level snapshot/compare harness now gives a **definitive verdict: no overwrite detected** for the sampled delivery day -- M1 can pull archived history directly with no "first-seen-value" capture step.

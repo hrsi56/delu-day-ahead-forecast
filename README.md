@@ -1,7 +1,7 @@
 # DE-LU Day-Ahead Price Forecasting
 
 Probabilistic day-ahead electricity price forecasting for the German-Luxembourg
-(DE-LU) bidding zone. See `capstone_V6_0.md` for the full engineering plan.
+(DE-LU) bidding zone. See `capstone_V6_1.md` for the full engineering plan.
 
 Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de -- CC BY 4.0.
 
