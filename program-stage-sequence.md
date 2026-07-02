@@ -9,10 +9,10 @@ Legend: `L` = learning block (NotebookLM) · `M` / `CP` = capstone milestone / c
 | Stage | Description |
 |---|---|
 | **—** | **SETUP (complete)** |
-| M0 | ✓ DONE — Capstone plan ratified (v6.1) + data-layer de-risking spike run, adjudicated, merged to `main` (`docs/spike-feed-status.md`) |
+| M0 | Capstone plan ratified (v6.1) + data-layer de-risking spike run, adjudicated, merged to `main` (`docs/spike-feed-status.md`) |
 | **—** | **MONTH 0 — Linear Algebra Foundations (launched 2026-06-09; 5–6 weeks → ~mid-July)** |
-| L1 | ✓ DONE — Linear algebra 18.06 — Lectures 1–5 + Strang Ch. 1–2; Gaussian-elimination solver shipped |
-| L2 | ▶ ACTIVE — Linear algebra 18.06 — Lectures 6–10 + Ch. 3 [AUTH]: four fundamental subspaces; deliverable `four_subspaces(A)` |
+| L1 | Linear algebra 18.06 — Lectures 1–5 + Strang Ch. 1–2; Gaussian-elimination solver shipped |
+| L2 | Linear algebra 18.06 — Lectures 6–10 + Ch. 3 [AUTH]: four fundamental subspaces; deliverable `four_subspaces(A)` |
 | C2 | Track C one-off floor (authorized, pending): LinkedIn floor (headline, About, Featured) + README polish on solver + event-app repos (C-Claude → C-Manual) |
 | C8 | Research run: tiered DS target-company list — Beer-Sheva-local + ≤3-day-hybrid TLV/Herzliya (window: Months 0–1) |
 | L3 | Linear algebra 18.06 — Lectures 14–17 [AUTH]: orthogonality → projections → least squares → Gram–Schmidt; OLS normal-equation deliverable (Month-0 deliverable #1) |
