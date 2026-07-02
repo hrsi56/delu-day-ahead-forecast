@@ -1,6 +1,6 @@
 # Yarden's Triple-Track Progress Log
 
-*Living document. Regenerated in full at the end of every session under the orchestrator-role.md regeneration contract. Last updated: **2026-07-02 (program stage-sequence map delivered; no track-state change)**.*
+*Living document. Regenerated in full at the end of every session under the orchestrator-role.md regeneration contract. Last updated: **2026-07-02 (L2 closed; L3 issued)**.*
 
 ---
 
@@ -8,20 +8,21 @@
 
 ### Track A: Learning (Syllabus)
 - **Anchor: `syllabus_v3_0.md` v3.0.**
-- **Phase:** I (Mathematical Foundations). **Month:** 0 (launched 2026-06-09).
+- **Phase:** I (Mathematical Foundations). **Month:** 0. **Week:** 3–4 (launched 2026-06-09).
 - **L1 — DONE.** Strang L1–5 + Ch. 1–2; Gaussian-elimination solver shipped.
-- **L2 — ACTIVE (resumed 2026-06-14).** Strang L6–10 + Ch. 3, [AUTH], four fundamental subspaces; deliverable `four_subspaces(A)`. Runs on silence-means-success.
-- **L3 — NEXT after L2.** Orthogonality → projections → least squares → Gram–Schmidt (OCW L14–17; verify index at briefing per C5-min); OLS normal-equation deliverable. Then eigen L21–22 [AUTH]; determinants skim [REC]; SVD/PCA + condition number [REC] close Month 0.
-- **Pace note:** Month 0 is the binding constraint (5–6 weeks); conversion + spike consumed ~3 days of week 1.
-- **Next pending checkpoint:** Month-0 **mid-month gate** — the ~end-June window has now arrived (today: 2026-07-02). At the next work-session opening Yarden brings the one-line status: coding deliverable(s) runnable + NotebookLM consolidation verdict. **This is the next thing the orchestrator needs from Yarden.**
+- **L2 — DONE (2026-07-02, Yarden-reported).** Strang L6–10 + Ch. 3, [AUTH], four fundamental subspaces; `four_subspaces(A)` deliverable shipped.
+- **L3 — ACTIVE (issued 2026-07-02).** Orthogonality → projections → least squares → Gram–Schmidt (OCW L14–17; verify index at briefing per C5-min); OLS normal-equation deliverable. Runs on silence-means-success.
+- **Next after L3:** eigenvalues/eigenvectors L18–22 [AUTH]; determinants skim [REC]; SVD/PCA + condition number [REC] — this is the block that **closes Month 0** and fires the mid-month gate.
+- **Pace note:** Month 0 is the binding constraint (5–6 weeks); conversion + spike consumed ~3 days of week 1. L1 and L2 both closed clean. On-plan, though the mid-month gate estimate slides from end-June to ~mid-July.
+- **Next pending checkpoint:** Month-0 **mid-month gate**, ~mid-July — coding deliverable(s) runnable + NotebookLM consolidation verdict. **This is the next thing the orchestrator needs from Yarden.**
 
 ### Track B: Capstone Build
 - **Anchor: `capstone_V6_1.md` v6.1** (on `main`; swapped into PK + NotebookLM). **Milestone: M0** (plan approved; spike complete, adjudicated, and merged). **Data-layer de-risking arc CLOSED — no open capstone actions.**
 - **SPIKE — COMPLETE, ADJUDICATED, MERGED.** Branch `claude/modest-bardeen-96zee0` merged into `main` (2026-06-14). Memo `docs/spike-feed-status.md`. Final question status:
   - **Q1/Q3/Q4/Q5/Q6 — VERIFIED** (clean access; feature feeds PT15M across whole 2019+ archive, A44 date-conditional at 2025-10-01; boundary averaging exact to 1e-9; 2019 depth confirmed w/ ~25h A65/A01 head gap; ENTSO-E↔SMARD 96/96 within €0.01).
-  - **Q2 (R-2) — VERIFIED, NO OVERWRITE** (2026-06-14): 3-snapshot compare for delivery 2026-06-13 — A65/A01 rev 1→1 and A69/A01 rev 3→3, both 96/96 bit-identical. Archive preserves as-published values; §5.2 fallback not invoked. **CP-1 item 5 = VERIFIED.**
+  - **Q2 (R-2) — VERIFIED, NO OVERWRITE** (2026-06-14): 3-snapshot compare for delivery 2026-06-13 (pre-pub / post-pub / post-delivery) — A65/A01 rev 1→1 and A69/A01 rev 3→3, both 96/96 bit-identical. Archive preserves as-published values; §5.2 fallback not invoked. **CP-1 item 5 = VERIFIED.**
   - **Q7 (gas) — NOT MET, FINAL.** SMARD API = generation volume only, no THE price.
-  - **Q8 (SFTP) — CLOSED (2026-06-14).** Port 22 times out from all machines tested incl. Yarden's M3 → standing local network policy, not ENTSO-E. SFTP ruled out; **no project impact** — chunked API verified and sufficient for M1's bulk size; SMARD is the verified fallback-primary over HTTP.
+  - **Q8 (SFTP) — CLOSED (2026-06-14).** Port 22 times out from all three machines tested incl. Yarden's M3 → standing local network policy (non-HTTP egress filtering), not ENTSO-E. SFTP ruled out as a fallback route; **no project impact** — it was always the secondary path, the chunked API is verified and sufficient for M1's bulk size, and SMARD is the verified fallback-primary over HTTP.
 - **R-2 outcome → no spec change.** Verdict confirmed the favorable branch v6.1 already documents; interview honesty line strengthens to *"post-gate initial publication, archive verified stable ~44h later — bit-identical."* **No v6.2.**
 - **M1** lands in syllabus Month 2; CP-1 activates at M1; brief inherits the **v6.1 §12 binding list**. Spike pre-confirmed CP-1 item 1 (full), item 3 (sample-level), item 5 (VERIFIED); rest open by design.
 - **Pending clerical (B-Manual):** DagsHub account — Months 0–2 (precedes M2). HF account + Spaces — start of Month 5.
@@ -30,7 +31,7 @@
 ### Track C: Marketing — FROZEN (one-off floor authorized; consumes NO CV-iteration slot)
 - Phase-trigger fires continuous activation **after capstone M2** (projected mid-Month 3). Active applications no later than start of Month 5.
 - **Geography RATIFIED:** ≤3 office days/week TLV/Herzliya; Beer Sheva base.
-- **One-off C2 floor:** 1. LinkedIn floor (headline, About, Featured: World Psychiatry, solver, event app) — **PENDING**; recruiter-only open-to-work deferred to M2 trigger. 2. README polish on solver + event-app repos — **PENDING**. 3. Lab-Engineer framing fix — **CLOSED**; do NOT re-add "(transitional role)".
+- **One-off C2 floor (execute this month):** 1. LinkedIn floor (headline, About, Featured: World Psychiatry, solver, event app) — **PENDING**; recruiter-only open-to-work deferred to M2 trigger. 2. README polish on solver + event-app repos — **PENDING**. 3. Lab-Engineer framing fix — **CLOSED**; do NOT re-add "(transitional role)".
 - **C8-research (Month 0–1):** tiered Beer-Sheva-local + ≤3-day-hybrid DS target list. Not yet issued.
 - **C7 networking floor (from Month 1, ~1h/week):** former students, BGU alumni, one Tech7 / Gav-Yam Negev meetup per month.
 - **Positioning theme (held):** career-changer from clinical research to industry DS — quantitative forecasting + honest uncertainty communication; World Psychiatry lead-analyst credibility + shipping experience; capstone with regime-aware methodology, walk-forward + embargo, KFT/LAG leakage audit, CQR-calibrated intervals, regime-stratified errors, cloud-backed reproducibility, deployed marimo showcase. "Why the German market, in Israel" carries the transfer answer.
@@ -41,12 +42,11 @@
 
 ## Setup State (one-time actions)
 
-- **ACTION-REQUIRED (pending):** add **`program-stage-sequence.md`** (delivered 2026-07-02) to project knowledge. Stays pending until explicitly confirmed done.
 - **v6.1 swaps — DONE.** `capstone_V6_1.md` in project knowledge, NotebookLM, and repo `main` (all confirmed 2026-06-14).
 - **Repo rename — DONE.** `hrsi56/PJM` → `hrsi56/delu-day-ahead-forecast` (redirect live).
 - **Spike branch merge — DONE 2026-06-14** (`claude/modest-bardeen-96zee0` → `main`).
 - **SFTP local check — DONE 2026-06-14** (port 22 blocked; Q8 closed, no impact).
-- ENTSO-E token, repo, CLAUDE.md + capstone at root — DONE.
+- ENTSO-E token, repo, CLAUDE.md + capstone at root — DONE. *(Setup State is now empty of pending actions — section retained per skeleton; will carry the next one-time action when one arises.)*
 
 ---
 
@@ -54,7 +54,7 @@
 
 - **Target:** Industry Data Scientist role within ~6.5 months at NIS 35K. Capstone audience: DS hiring manager, not MLE.
 - **Geography:** ≤3 office days/week TLV/Herzliya (ratified 2026-06-10); Beer Sheva base.
-- **Anchor docs:** **`capstone_V6_1.md` v6.1** + **`syllabus_v3_0.md` v3.0**, `orchestrator-role.md` / `notebooklm-role.md` / `engineer-role.md` (refreshed 2026-06-11; engineer doc = repo `CLAUDE.md`). Decision records: `change-register-decisions.md`, `de-lu-conversion-memo`, `docs/spike-feed-status.md` (in-repo). Scheduling aid (non-anchor): `program-stage-sequence.md` — anchors win on any conflict; L4+ IDs provisional.
+- **Anchor docs:** **`capstone_V6_1.md` v6.1** + **`syllabus_v3_0.md` v3.0**, `orchestrator-role.md` / `notebooklm-role.md` / `engineer-role.md` (refreshed 2026-06-11; engineer doc = repo `CLAUDE.md`). Decision records: `change-register-decisions.md`, `de-lu-conversion-memo`, `docs/spike-feed-status.md` (in-repo).
 - **Repo:** `hrsi56/delu-day-ahead-forecast`.
 - **Depth labels:** [AUTH], [REC], [APPLIED-AUTH], [APPLIED-REC].
 - **Budget:** $0 expected run rate; $65/month policy ceiling. Deployment $0.
@@ -89,8 +89,8 @@
 
 ## Session Log (newest first)
 
-- **2026-07-02 — Program stage-sequence map delivered.** Full ordered stage table (`program-stage-sequence.md`) generated from syllabus v3.0 + capstone v6.1 + progress state, as a scheduling aid; L1–L3 IDs match this log, L4+ provisional. Added as a pending PK swap in Setup State. No track-state change; Month-0 mid-gate window noted as arrived.
-- **2026-06-14 — Data-layer arc closed; L2 resumed.** Q8 SFTP confirmed blocked from the M3 (port 22 timeout) → closed, no impact (API + SMARD cover ingestion). Spike branch merged to `main`. v6.1 confirmed swapped into PK + NotebookLM. R-2 verdict (no overwrite) stands; no v6.2. All capstone open actions cleared. L2 active.
+- **2026-07-02 — L2 closed (Yarden-reported); L3 issued.** Orthogonality/projections/least squares/Gram–Schmidt (OCW L14–17), OLS normal-equation deliverable. Not a checkpoint block. Track B/C untouched this session (no open capstone action; Track C frozen).
+- **2026-06-14 — Data-layer arc closed; L2 resumed.** Q8 SFTP confirmed blocked from the M3 (port 22 timeout) → closed, no impact (API + SMARD cover ingestion). Spike branch merged to `main`. v6.1 confirmed swapped into PK + NotebookLM. R-2 verdict (no overwrite) stands; no v6.2. All capstone open actions cleared.
 - **2026-06-14 — R-2 verdict closed.** Final snapshot/compare: no overwrite (A65/A01 rev 1→1, A69/A01 rev 3→3, both 96/96 identical). CP-1 item 5 VERIFIED.
 - **2026-06-12 (R-2 schedule) — Two engineer messages authored + timed** (post-pub baseline capture; verdict + housekeeping).
 - **2026-06-12 (adjudication) — Spike report received; v6.1 authored.** Gas reopen NOT MET; R-2 sharpened; PT15M-everywhere + chunk-boundary + metadata-dead-end folded into spec; entsoe-py pinned 0.8.0.
@@ -107,15 +107,14 @@
 
 ## Blockers / Open Questions
 
-- **None.** Data-layer de-risking complete; no capstone or setup action outstanding beyond the pending PK swap above. (Optional, non-blocking: the 10-min SMARD JS gas-page browser check for epistemic closure on §0.3 — boundary stands either way; `.zshrc` line 137 dangling-source warning, cosmetic, fix when it annoys.)
+- **None.** Data-layer de-risking complete; no capstone or setup action outstanding. (Optional, non-blocking: the 10-min SMARD JS gas-page browser check for epistemic closure on §0.3 — boundary stands either way; `.zshrc` line 137 dangling-source warning, cosmetic, fix when it annoys.)
 
 ---
 
 ## Notes for Future Sessions
 
-- **Next session opening:** the **Month-0 mid-month gate window has arrived** (~end June; today 2026-07-02) — Yarden opens the next work session with the one-line gate status: coding deliverable(s) runnable (OLS normal-equation + PCA/condition-number toy, as far as reached) + NotebookLM consolidation verdict. If L3 isn't done yet, the status says so and the gate slides with it.
-- **Month-0 close gate:** flag the month-closing L block (SVD/PCA + condition number) as a checkpoint block when issued.
-- **Stage map:** `program-stage-sequence.md` exists as the scheduling aid; anchors win on any conflict; L4+ IDs provisional until briefed.
+- **Next session opening:** no checkpoint pending until the Month-0 mid-month gate. L3 runs on silence-means-success. Nothing for Yarden to carry up.
+- **Month-0 mid-month gate (~mid-July):** the next thing the orchestrator needs — coding deliverable(s) runnable (OLS normal-equation + PCA/condition-number toy) + NotebookLM consolidation verdict. Flag the month-closing L block (eigen → determinants → SVD/PCA) as a checkpoint block when issued.
 - **R-2 is closed — verified stable.** M1 proceeds with the as-archived documentation as-is; honesty line now evidence-backed.
 - **M1 brief (syllabus Month 2):** inherits the **v6.1 §12 binding list** (feature aggregation + chunk-boundary integrity, A65/A01 ~25h head gap, R-2 as-archived documentation [verdict: stable], repo/branch-state verification). Plus the M1 cosmetic below.
 - **M1 cosmetic:** verify Dec-2024 / Jan-2025 Dunkelflaute peaks against pulled data; tighten the §2.2 narrative sentence.

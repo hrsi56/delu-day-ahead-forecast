@@ -13,8 +13,6 @@ Legend: `L` = learning block (NotebookLM) · `M` / `CP` = capstone milestone / c
 | **—** | **MONTH 0 — Linear Algebra Foundations (launched 2026-06-09; 5–6 weeks → ~mid-July)** |
 | L1 | Linear algebra 18.06 — Lectures 1–5 + Strang Ch. 1–2; Gaussian-elimination solver shipped |
 | L2 | Linear algebra 18.06 — Lectures 6–10 + Ch. 3 [AUTH]: four fundamental subspaces; deliverable `four_subspaces(A)` |
-| C2 | Track C one-off floor (authorized, pending): LinkedIn floor (headline, About, Featured) + README polish on solver + event-app repos (C-Claude → C-Manual) |
-| C8 | Research run: tiered DS target-company list — Beer-Sheva-local + ≤3-day-hybrid TLV/Herzliya (window: Months 0–1) |
 | L3 | Linear algebra 18.06 — Lectures 14–17 [AUTH]: orthogonality → projections → least squares → Gram–Schmidt; OLS normal-equation deliverable (Month-0 deliverable #1) |
 | G0-mid | **Month-0 mid-month gate** (~end June): coding deliverable(s) to date runnable + NotebookLM consolidation verdict — one-line status at next session opening |
 | L4 | Eigenvalues, eigenvectors, diagonalization — 18.06 L21–22 + Strang Ch. 5–6 [AUTH] (determinants L18–20 skim only [REC]) |
