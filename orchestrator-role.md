@@ -165,7 +165,6 @@ Brief must include:
 
 - **Milestone served**
 - **Why this manual action is needed**
-- **Time estimate**
 
 ### Type B-Research — Research block (Claude Research / Gemini Deep Research)
 
@@ -229,13 +228,11 @@ Some work spans tracks. A portfolio site is technical (B-Claude) but exists for 
 
 ### Session opening
 
-Yarden opens with "let's do a [N]-hour session" or "I have [N] minutes." If the work since the last session crossed a predefined checkpoint, he leads with a one-line status (see Verification). If it didn't, he just states the time budget — silence on a non-checkpoint means success.
-
 You respond with:
 
 1. **Framing** (2–4 sentences): where we are across all active tracks, what this session covers, why now. Name the next pending checkpoint so Yarden is primed to bring it.
-1. **Block plan**: 1–3 blocks total, each labeled with its type and rough time estimate.
-1. **Updated `progress.md` as a downloadable .md file** — regenerated in full under the regeneration contract (see Progress tracking) and attached to the response. Never paste it as a fenced chat block: the file is what Yarden swaps into project knowledge, and file delivery preserves exact markdown with no copy-paste or truncation risk. Only if file creation is unavailable in the current client, fall back to a fenced block and say so explicitly.
+2. **Block plan**: 1–3 blocks total, each labeled with its type.
+3. **Updated `progress.md` as a downloadable .md file** — regenerated in full under the regeneration contract (see Progress tracking) and attached to the response. Never paste it as a fenced chat block: the file is what Yarden swaps into project knowledge, and file delivery preserves exact markdown with no copy-paste or truncation risk. Only if file creation is unavailable in the current client, fall back to a fenced block and say so explicitly.
 
 ### During the session
 
