@@ -1,6 +1,6 @@
 # Yarden's Triple-Track Progress Log
 
-*Living document. Regenerated in full under the orchestrator-role.md regeneration contract. Last updated: **2026-07-06 (G0-mid CLOSED clean; L4 reissued with remediation emphasis, ACTIVE)**.*
+*Living document. Regenerated in full under the orchestrator-role.md regeneration contract. Last updated: **2026-07-12 (L4 DONE; L5 issued as checkpoint block — closes Month 0)**.*
 
 ---
 
@@ -8,15 +8,16 @@
 
 ### Track A: Learning (Syllabus)
 - **Anchor: `syllabus_v3_0.md` v3.0.**
-- **Phase:** I (Mathematical Foundations). **Month:** 0, week 4–5 (launched 2026-06-09).
+- **Phase:** I (Mathematical Foundations). **Month:** 0, week 5 (launched 2026-06-09).
 - **L1 — DONE.** Strang L1–5 + Ch. 1–2; Gaussian-elimination solver shipped.
 - **L2 — DONE (2026-07-02).** Four fundamental subspaces; `four_subspaces(A)` shipped.
 - **L3 — DONE (2026-07-05).** Orthogonality → projections → least squares → Gram–Schmidt; OLS normal-equation deliverable (Month-0 deliverable #1).
-- **G0-mid — CLOSED (2026-07-06).** All three artifacts re-ran clean. Verdict: normal-equations-from-projection-geometry, manual Gram–Schmidt, and the four-subspaces map solid at [AUTH]. **Flagged gap:** geometric intuition for AᵀA and the link from its eigenvalues to the condition number of the capstone feature catalog. Determinants/Jordan floor-demonstrated at [REC] during the gate block. **Remediation folded into L4 as a named first-class emphasis — no separate block.**
-- **L4 — ACTIVE (reissued 2026-07-06 with remediation emphasis).** Eigen/diagonalization [AUTH] (OCW L21–22 + Strang Ch. 6); AᵀA geometry as first-class objective; determinants skim compressed (floor already demonstrated). Deliverable: symmetric 3×3 diagonalization (hand + NumPy) + AᵀA ellipse/eigenvalue-ratio artifact with the AᵀA → SVD bridge paragraph.
-- **L5 — NEXT.** SVD/PCA + condition number [REC]; Month-0 deliverable #2 (PCA/condition-number toy on synthetic load/wind/solar/residual-load). **Flag L5 as a checkpoint block → G0 verdict closes Month 0.**
-- **Pace:** on-plan; Month-0 six-week envelope ends ~2026-07-21; L4 + L5 both land by then or flag the slip plainly.
-- **Next pending checkpoint:** **G0 (Month-0 close)** — one-line status (deliverables #1–#2 runnable + consolidation verdict) at the opening after L5 wraps.
+- **G0-mid — CLOSED (2026-07-06).** Artifacts clean; L1–L3 core solid at [AUTH]. Flagged gap (AᵀA geometry ↔ eigenvalues ↔ condition number) folded into L4 as remediation emphasis.
+- **L4 — DONE (2026-07-12, Yarden-reported).** Eigen/diagonalization [AUTH]; AᵀA remediation emphasis; deliverables per contract: symmetric 3×3 diagonalization (hand + NumPy) + AᵀA ellipse/eigenvalue-ratio artifact + AᵀA → SVD bridge paragraph.
+- **L5 — ACTIVE (issued 2026-07-12, CHECKPOINT BLOCK — closes Month 0).** SVD/PCA + condition number [REC] (LO3 ceiling holds — no Eckart–Young); Month-0 deliverable #2 (PCA + condition-number toy on synthetic load/wind/solar/residual-load with mechanical correlation) + written interview answer + **G0 consolidation verdict**, which must explicitly confirm the G0-mid flagged gap is closed.
+- **Pace:** on-plan; Month-0 six-week envelope ends ~2026-07-21; L5 is the last block and has ~9 days.
+- **Next pending checkpoint:** **G0 (Month-0 close)** — one-line status at next opening: deliverables #1–#2 runnable + consolidation verdict incl. gap-closure statement.
+- **After G0:** Month 1 opens (distributions → MLE → hypothesis testing (+C4-2 rider) → bootstrap → Bayes [REC] → pandas TS week → domain reading → change-point [APPLIED-AUTH]); C7 networking floor begins.
 
 ### Track B: Capstone Build
 - **Anchor: `capstone_V6_1.md` v6.1** (in PK + NotebookLM + repo `main`). **Milestone: M0 done**; data-layer de-risking arc CLOSED; no open capstone actions.
@@ -28,7 +29,8 @@
 - Phase-trigger fires after capstone M2 (projected mid-Month 3). Active applications no later than start of Month 5.
 - **Geography RATIFIED:** ≤3 office days/week TLV/Herzliya; Beer Sheva base.
 - **One-off C2 floor (authorized 2026-06-10) — still PENDING:** 1. LinkedIn floor (headline, About, Featured: World Psychiatry, solver, event app) — PENDING; recruiter-only open-to-work deferred to M2 trigger. 2. README polish on solver + event-app repos — PENDING. 3. Lab-Engineer framing fix — CLOSED; do NOT re-add "(transitional role)".
-- **C8-research (window Months 0–1, closing):** tiered Beer-Sheva-local + ≤3-day-hybrid DS target list. Not yet issued.
+- **C8-research (window Months 0–1):** tiered Beer-Sheva-local + ≤3-day-hybrid DS target list. Not yet issued.
+- **C2 + C8 scheduling — DEFAULT SET 2026-07-12 (awaiting veto):** deferred to the Month-0→1 seam, bundled as one short Track C session right after G0.
 - **C7 networking floor (from Month 1, ~1h/week):** former students, BGU alumni, one Tech7 / Gav-Yam Negev meetup per month.
 - **Positioning theme (held):** career-changer from clinical research to industry DS — quantitative forecasting + honest uncertainty communication; World Psychiatry lead-analyst credibility + shipping experience; capstone with regime-aware methodology, walk-forward + embargo, KFT/LAG leakage audit, CQR-calibrated intervals, regime-stratified errors, cloud-backed reproducibility, deployed marimo showcase. "Why the German market, in Israel" carries the transfer answer.
 - **Last published artifact:** None. **Pipeline:** empty. **Applications:** not started.
@@ -83,25 +85,26 @@
 
 ## Session Log (newest first)
 
-- **2026-07-06 — G0-mid CLOSED clean; L4 reissued (ACTIVE).** Verdict: artifacts re-ran clean; L1–L3 core solid at [AUTH]; flagged gap = AᵀA geometry ↔ eigenvalues ↔ condition-number intuition → folded into L4 as first-class remediation emphasis (no separate block); determinants/Jordan floor-demonstrated → L4 skim compressed. C2/C8 question (2026-07-05) still unanswered → moved to Open Questions.
-- **2026-07-05 — L3 closed (Yarden-reported); G0-mid checkpoint block + L4 issued.** Same day: stage-map audit vs. both anchors → **map v2 authored + swapped** (navigation column; +C2/C8/B-Man0 rows); orchestrator-role 2026-07-02 revision confirmed live. Tracks B/C untouched.
-- **2026-07-02 — L2 closed (Yarden-reported); L3 issued** (not a checkpoint block).
-- **2026-06-14 — Data-layer arc closed; L2 resumed.** Q8 SFTP blocked → closed, no impact. Spike branch merged to `main`. v6.1 swaps confirmed. R-2 verdict (no overwrite) stands; no v6.2.
+- **2026-07-12 — L4 closed (Yarden-reported); L5 issued as CHECKPOINT BLOCK (closes Month 0).** L5 = SVD/PCA + condition number [REC], Month-0 deliverable #2 + interview answer + G0 verdict (must confirm the AᵀA gap closed). Default set on the open C2/C8 question: defer to the Month-0→1 seam, bundled after G0 — awaiting veto. Tracks B/C otherwise untouched.
+- **2026-07-06 — G0-mid CLOSED clean; L4 reissued (ACTIVE).** Verdict: artifacts clean; L1–L3 solid at [AUTH]; flagged gap = AᵀA geometry ↔ eigenvalues ↔ condition-number → folded into L4 as remediation emphasis; determinants/Jordan floor-demonstrated.
+- **2026-07-05 — L3 closed; G0-mid checkpoint block + L4 issued.** Same day: stage-map audit → **map v2 authored + swapped** (nav column; +C2/C8/B-Man0); orchestrator-role 2026-07-02 revision confirmed live.
+- **2026-07-02 — L2 closed; L3 issued** (not a checkpoint block).
+- **2026-06-14 — Data-layer arc closed; L2 resumed.** Q8 SFTP blocked → closed, no impact. Spike merged to `main`. v6.1 swaps confirmed. R-2 verdict stands; no v6.2.
 - **2026-06-14 — R-2 verdict closed** (CP-1 item 5 VERIFIED). **2026-06-12 —** R-2 harness authored; spike adjudicated → v6.1; spike brief issued. **2026-06-11 —** conversion memo (PJM geo-blocked → DE-LU); `capstone_V6_0` + `syllabus_v3_0` authored; roles refreshed; audit passed. **2026-06-10 —** amendments; L1 done → L2; change-register adjudication. **2026-06-09 — program launch; L1 issued. 2026-05-31 — baseline.**
 
 ---
 
 ## Blockers / Open Questions
 
-- **C2 floor + C8 research (Track C, pending since 2026-06-10; Months 0–1 window closing):** issue as blocks or explicitly defer past Month 0? **Asked 2026-07-05 — unanswered; persists until Yarden answers.**
+- **C2 floor + C8 research:** default set 2026-07-12 — **defer to the Month-0→1 seam, bundle as one short Track C session right after G0.** Stands unless Yarden vetoes; closes on his confirmation or on execution at the seam.
 - Optional, non-blocking: 10-min SMARD JS gas-page browser check (pre-M1, epistemic closure on §0.3 — boundary stands either way); `.zshrc` line 137 dangling-source warning, cosmetic.
 
 ---
 
 ## Notes for Future Sessions
 
-- **L5 (closes Month 0):** flag as **checkpoint block** → G0 verdict. Deliverable #2 = PCA + condition-number toy on synthetic load/wind/solar/residual-load (rehearses the capstone §4 collinearity diagnostic). The G0 verdict should explicitly confirm the G0-mid flagged gap (AᵀA/eigenvalue/condition-number intuition) has closed after L4+L5.
-- **Pace watch:** Month-0 six-week envelope ends ~2026-07-21; L4 + L5 both land by then or flag the slip plainly.
+- **Next opening:** Yarden leads with the **G0 one-liner** (both Month-0 deliverables runnable + consolidation verdict incl. explicit AᵀA-gap-closure statement). Clean → Month 1 opens (L6 distributions) + the C2/C8 seam bundle per the standing default. A flagged gap → targeted remediation block first.
+- **Month-1 planning (at G0):** L6–L13 sequence per map; C7 networking floor starts; C4-2 rider attaches to the hypothesis-testing block; pandas TS week + domain reading run parallel; change-point block [APPLIED-AUTH] closes the month arc → G1.
 - **M1 brief (syllabus Month 2):** inherits the **v6.1 §12 binding list** + M1 cosmetic (verify Dec-2024 / Jan-2025 Dunkelflaute peaks against pulled data; tighten the §2.2 narrative sentence).
 - **SQL authoring block** [APPLIED-AUTH]: parallel filler Months 2–3, 20h cap; toy table `ts, price, load, wind, solar`; done when LAG/LEAD window queries write cold.
 - **CNN mini-project** [AUTH], B-Claude: Month 1→2 seam, 16h cap, CIFAR-10 default, ship-at-threshold. Not wired into the capstone.
