@@ -98,7 +98,7 @@
 ## Session Log (newest first)
 
 - **2026-07-12 (state-change regen, no position advance) — EXPANSION RATIFIED.** Four documents merged into law: `syllabus_v3_1.md`, `capstone_V6_2.md`, `Binary Classification Mini-Capstone.md` v1.0, `program-stage-sequence.md` v3; `orchestrator-role.md` rev 2026-07-12 (two-artifact Track B + companion stage-gate). Source chain: four-course gap analysis → spectral + algorithms specs → capstone v6.2 amendment sheet (applied) → syllabus v3.1 amendment sheet (applied). LO3 partially reopened (PCA→[APPLIED-AUTH]); LO2 reopened (CAUS). PCA-upgrade rider parked for Month 1 (L5 already issued under old ceiling). Track positions unchanged: L5 active, G0 next, Track B at M0. Sync actions logged in Setup State.
-- **2026-07-12 — L4 closed (Yarden-reported).
+- **2026-07-12 — L4 closed (Yarden-reported).**
 - **2026-07-06 — G0-mid CLOSED clean; L4 reissued (ACTIVE).** Verdict: artifacts clean; L1–L3 solid at [AUTH]; flagged gap = AᵀA geometry ↔ eigenvalues ↔ condition-number → folded into L4 as remediation emphasis; determinants/Jordan floor-demonstrated.
 - **2026-07-05 — L3 closed; G0-mid checkpoint block + L4 issued.** Same day: stage-map audit → map v2 authored + swapped; orchestrator-role 2026-07-02 revision confirmed live.
 - **2026-07-02 — L2 closed; L3 issued** (not a checkpoint block).
@@ -117,7 +117,7 @@
 
 ## Notes for Future Sessions
 
-- **Next opening:** Yarden leads with the **G0 one-liner** (both Month-0 deliverables runnable + consolidation verdict incl. explicit AᵀA-gap-closure statement). Clean → Month 1 opens (L6 distributions) + the C2/C8 seam bundle per the standing default. A flagged gap → targeted remediation block first. **Confirm the pending v6.2/v3.1/map/orchestrator swaps at this opening** and fold the **PCA-upgrade rider (~2–3h, [APPLIED-AUTH])** into Month 1 next to L-MTX.
+- **Next opening:** Issue **L5 block**. At this opening, also **confirm the pending v6.2/v3.1/map/orchestrator swaps**. Once L5 is completed, the following opening will require the **G0 one-liner** (both Month-0 deliverables runnable + consolidation verdict incl. explicit AᵀA-gap-closure statement) to close Month 0.
 - **Month-1 planning (at G0):** L6–L13 per map v3; **+ L-MTX [REC, ~4h]** (18.065 L5/L8/L9/L10); C7 networking floor starts; C4-2 rider attaches to hypothesis-testing; pandas TS week + domain reading parallel; change-point [APPLIED-AUTH] closes → G1.
 - **Seam (Month 1→2, ~2 wks):** **L-OPT [AUTH, ~10h]** (18.065 L21–23, L25; CS229 L2 [REC]) runs **before** the CNN; **DL+ riders (~5h)** NN/backprop [REC] (18.065 L26–27) + optional Fourier (L31–32) with the CNN.
 - **M1 brief (syllabus Month 2):** inherits the **v6.2 §12 binding list** (now incl. the **§4.2 spectral-EDA block** — module + 3 figures + README ¶ + R-5) + M1 cosmetic (verify Dec-2024 / Jan-2025 Dunkelflaute peaks; tighten §2.2 sentence). **SPEC** briefable inside M1 or as a follow-on B-Claude block, closing before CP-1.
