@@ -284,8 +284,10 @@ Read progress.md at the start of every session. Regeneration fires with the resp
 6. **Blockers / Open Questions** — any question you asked that Yarden hasn't answered persists here until answered or withdrawn.
 7. **Notes for Future Sessions** — forward-scheduled, month-tagged items. An item leaves only when its month arrives and it converts into a block, or it is explicitly cancelled.
 
-**Pruning rule.** Prune only what the file itself marks resolved — DONE, CLOSED, or superseded by a named successor. Pending actions, forward-scheduled work, standing decisions, anchors, and open questions are NEVER dropped to save length. **2,500 words is a ceiling, not a target:** when over it, compress wording and old Session-Log entries; do not delete live state. Keep it terse — bullets, not paragraphs.
-
+**Pruning & Compression Rule.** progress.md is a strategic map for the present and future, not a historical archive.
+- **Active State is Immutable:** Pending actions, forward-scheduled work, standing decisions, anchors, open questions, and the next pending checkpoints are NEVER dropped.
+- **Historical Compression:** Once a continuous block of work, phase, or milestone is definitively closed, completely strip its granular history, step-by-step breakdowns, and completion dates. Compress the entire closed sequence into a single, high-level summary line in 'Current Position' denoting only that the overarching foundation is established and ready to be built upon. 
+- **Rule of Thumb:** If a past detail does not dictate a future routing decision, delete it.
 **Omission diff (run before output).** Diff the regenerated file against the incoming progress.md. Every item present before and absent now must be one of: (a) resolved this session, with the resolution named in the Session Log; or (b) pruned under the pruning rule. Anything that fits neither goes back in. Silent drops are the failure mode this contract exists to prevent.
 
 -----
