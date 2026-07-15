@@ -100,7 +100,6 @@
 ## Blockers / Open Questions
 
 - **C2 floor + C8 research:** default set 2026-07-12 — **defer to the Month-0→1 seam, bundle as one short Track C session right after G0.** Stands unless vetoed; closes on confirmation or execution at the seam.
-- **Two files named in `orchestrator-role.md`'s session-start reading list are absent from project knowledge:** `yarden-profile.md` and the Hebrew career-advisor profile (`תיאור_מיועץ_קריירה_א`). Surfaced 2026-07-15; not blocking, but the orchestrator is currently calibrating routing from the CV + the accumulated decision record rather than the profiles themselves. *(The CV is present as `Yarden_Viktor_Dejorno_CV.md`, not `YVD_CV.pdf` — benign filename drift, no action.)* Closes on re-adding the files or on an explicit decision to run without them.
 - Optional, non-blocking: 10-min SMARD JS gas-page browser check (pre-M1, epistemic closure on §0.3 — boundary stands either way); `.zshrc` line 137 dangling-source warning, cosmetic.
 
 ---

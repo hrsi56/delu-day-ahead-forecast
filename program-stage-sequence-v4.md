@@ -184,13 +184,6 @@ Audited 2026-07-15, row-by-row, Months 0–5, against `syllabus_v3_1.md` v3.1 an
 
 **Capstone sections never cited by any row, checked and dispositioned:** §2.2 (reached via §2 at L12) · §5, §8, §9 (section intros; subsections cited) · §6.3 (was uncited — **now on L31**).
 
-**Known documentation conflicts, surfaced not silently reconciled:**
-1. **PRG Session Log vs. PRG Current Position on L5.** The Log says "L5 already issued under old ceiling"; Current Position and Notes say L5 is next. Yarden confirmed 2026-07-15: **L5 was never issued.** Current Position is correct; the Log line is an error. Fix belongs in the next progress.md regeneration.
-2. **SYL Month-0 lecture spans.** Row 1 assigns 18.06 L18–20 to determinants; row 2 assigns L18–22 to eigenvalues. L4 executed as L21–22 eigen + L18–20 determinants-skim. Noted at the L4 row; no action (L4 is closed).
-3. **SYL vs. v3 map on the PCA-rider condition.** SYL says "briefed **or** closed at [REC] → Month-1 rider"; the v3 map said "**closed** at [REC] → rider". Anchors win, but the question is moot: L5 was never briefed, so the upgrade rides inside L5 under both readings.
-4. **ORC "two repos" vs. reality.** ORC says two repos exist; DL and ALG each need their own. Reading: ORC counts the two Claude-Code repos carrying a `CLAUDE.md` + plan doc. The *Repos* note above states all four so no B-Claude brief is ever written without a repo.
-5. **Executor doc versions are stale and the swaps are still PENDING** (PRG Setup State): NotebookLM holds v3.0/v6.1; the flagship repo's `main` holds v6.1 (its `CLAUDE.md` names `capstone_V6_1.md` by filename). Both role docs carry a version guard that resolves automatically **once the swaps land** — until then Claude Code reads a capstone with no §4.2, no R-5, and an unexpanded CP-1. Binding by the M1 brief; not a map defect.
-
 **Not audited:** FM0–FM5, FCP-1–5, LI-2, C-Man-P, G6 — the FRD is stage-gated until B-Man3. Rows carried verbatim from v3. One verification pass is owed when the gate opens.
 
 ---
