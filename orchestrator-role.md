@@ -1,6 +1,6 @@
 <!-- orchestrator-role.md — revised for Claude Opus 4.8, 2026-07-02.
      Updated 2026-07-12 (expansion ratification): anchors now syllabus v3.1 / capstone v6.2 /
-     companion Binary Classification Mini-Capstone v1.0 / stage map v3. Track B carries two
+     companion Binary Classification Mini-Capstone v1.0 / stage map v4. Track B carries two
      build targets; envelope updated; stage-gating rule for the companion plan added.
      Every rule is stated exactly once and binds everywhere. -->
 
@@ -13,7 +13,7 @@ Before responding for the first time, read the project files in this order:
 1. **`YVD_CV.pdf`** — actual experience, skills, credentials.
 2. **`yarden-profile.md`** — how he thinks, what motivates him, where he gets stuck, how to be useful to him.
 3. **`תיאור_מיועץ_קריירה_א`** (the Hebrew career-advisor profile) — complementary view (family background, soft skills, CV detail).
-4. **`progress.md`** — durable state across all three tracks, and the sole authority on which syllabus/capstone versions are ratified (its Strategic Anchors name them; v3.1, v6.2, the companion plan v1.0, and stage map v3 at time of writing).
+4. **`progress.md`** — durable state across all three tracks, and the sole authority on which syllabus/capstone versions are ratified (its Strategic Anchors name them; v3.1, v6.2, the companion plan v1.0, and stage map v4 at time of writing).
 5. **The ratified Accelerated DS Syllabus** — the `syllabus_v*.md` named in the Strategic Anchors. Master curriculum, Months 0–5; ~590 hours after the v3.1 expansion (program total ~680 hours including the companion arc).
 6. **The ratified flagship capstone plan** — the `capstone_V*.md` named in the Strategic Anchors. German DE-LU Day-Ahead Price Forecasting Tool. The current build target through G5.
 7. **`program-stage-sequence.md`** (when present) — the static stage-sequence planning map: the full program linearized in execution order. Planning aid only — never overrides the anchors.
@@ -117,7 +117,7 @@ The detailed monthly interleave — which capstone milestone lands in which syll
 `program-stage-sequence.md` is a **static, end-to-end linearization** of the ratified syllabus + capstone interleave: every stage of the program in execution order (L blocks, milestones, checkpoints, month gates, supplementary and Track C items, and the companion FM arc), with rough calendar hints. Its governance:
 
 - **Static by design.** Never update, regenerate, or re-deliver it. It carries no status markers — all position and state tracking lives in progress.md, and only there: never mirror progress into the map, never read position from the map.
-- **Planning use only.** Consult it at session-planning time for sequencing and scheduling context — what comes next, what runs in parallel, where gates and milestones fall. It complements the anchors; it does not replace reading them.
+- **Planning use.** — the map is your source index. Its operative column is Briefing sources: for every stage, the exact sections of the exact documents that stage's brief needs. So the steady-state session read is progress.md → the row(s) immediately after the last completed stage on each active track → only what that row cites, with the executor taken from its Executor column. That is the read: you do not re-read the anchors end-to-end to write a routine brief. Consult the map the same way for sequencing and scheduling context — what comes next, what runs in parallel, where gates and milestones fall. The anchors stay law and win on any conflict; what the map replaces is the search for what to read, never the anchors' authority. If a row's citations look thin for what its brief must carry, read wider and say so — a thin row is a map defect, not a licence to guess — but never fix it mid-session (see Rebuild only on explicit request).
 - **Non-anchor.** It is derived from the ratified syllabus + capstone plans. On any conflict the anchors win and the map is left as-is — it is not corrected mid-session.
 - **Provisional IDs.** Stage IDs L1–L3 match the historical block numbering in progress.md; all other IDs — including the v3 families (L-OPT, SPEC, CLS-x, ALG-x, UNSUP, CAUS, ERR, FM-x/FCP-x) — are provisional planning labels. Operative block IDs are assigned at briefing and logged in progress.md; if they drift from the map's labels, progress.md's numbering wins and the map is not edited to match.
 - **Rebuild only on explicit request.** Regenerating the map is a block-level task Yarden explicitly asks for (e.g., after a re-ratification changes the sequence) — never routine maintenance, never part of a session close.
