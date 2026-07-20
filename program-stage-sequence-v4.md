@@ -37,7 +37,7 @@
 3. **ALG solutions** — public, pattern-organized, created at ALG-1. Yarden-solo, not a Claude Code repo.
 4. **Companion fraud** — created at FM0 (holds its own `CLAUDE.md` + the FRD). All FM rows.
 
-**Source notation:** `SYL` = `syllabus_v3_1.md` · `CAP` = `capstone_V6_2.md` · `FRD` = `Binary Classification Mini-Capstone.md` · `PRG` = `progress.md` · `ORC` = `orchestrator-role.md`. `SYL:M2 "spectral"` = that row of the Month-2 table; `FRD:§11 "M0"` = that milestone in the fraud plan. **Notation guard:** the fraud plan's internal milestones are named M0–M5; this map prefixes them FM/FCP to avoid collision with the flagship's M/CP.
+**Source notation:** `SYL` = `syllabus_v3_1.md` · `CAP` = `capstone_V6_2.md` · `AWS` = `aws-extension-spec_v1_1.md` · `FRD` = `Binary Classification Mini-Capstone.md` · `PRG` = `progress.md` · `ORC` = `orchestrator-role.md`. `SYL:M2 "spectral"` = that row of the Month-2 table; `FRD:§11 "M0"` = that milestone in the fraud plan. **Notation guard:** the fraud plan's internal milestones are named M0–M5; this map prefixes them FM/FCP to avoid collision with the flagship's M/CP.
 
 Legend: `L` = learning block · `M`/`CP` = flagship milestone/checkpoint · `FM`/`FCP` = fraud milestone/checkpoint · `G` = month/close gate · `B-Man` = manual action · `C*`/`CV`/`LI`/`APP`/`REV` = Track C · `DL`, `SQL`, `C4-x`, `ALG-x`, `CLS-x`, `UNSUP`, `CAUS`, `SPEC` = supplementary/extension blocks · `DEC` = pre-committed decision point · `TRIG` = state change. Depth labels per the syllabus. ⚠ = carried from v3, unverified against the stage-gated FRD.
 
@@ -127,13 +127,14 @@ Legend: `L` = learning block · `M`/`CP` = flagship milestone/checkpoint · `FM`
 | L30 | HF Spaces deployment mechanics [APPLIED-REC] | NotebookLM | SYL:M5 "Hugging Face Spaces" row · CAP:§9.2 |
 | M4 | **Capstone local showcase:** marimo end-to-end, champion registered `Production`, slider lookup + per-cell OOD flags (M4 spike validates), **incl. the §10 item-(3b) spectral section — labeled periodogram + one interpretation ¶, static, NO slider**. **Repo: flagship** | Claude Code | CAP:§12 "M4" (incl. the v6.2 scope line) + §9.2, §10 item 3b, §6.1 |
 | CP-4 | Capstone checkpoint 4: registry tag live, <10s local cold render, sliders from lookup, OOD flags validated | Orchestrator | CAP:§12 "CP-4" checklist |
-| M5 | **Capstone deploy:** container → HF Spaces (Docker SDK, DagsHub token as Secret), registry-first/bundle-fallback load, keep-alive cron (60-day auto-disable noted), CV + LinkedIn updated with URLs. **Repo: flagship** | Claude Code | CAP:§12 "M5" + §9.2, §9.3, §10 |
-| CP-5 | Capstone checkpoint 5: <30s cold start, registry-or-bundle load, stranger test passes **on the deployed URL**, limitations + reproducibility statements complete | Orchestrator | CAP:§12 "CP-5" checklist + §10.1 · **Contingency: CAP:§9.2 CPU Upgrade (~$22/mo) — cold-start failure only; PRG Standing Scope holds the baseline at free tier** |
-| L31 | Interview prep [AUTH]: the capstone script, incl. the three v6.2 spectral Q&As (seasonal features / folds-vs-regimes / where the DSP background helped) and the single-zonal-target answer | NotebookLM | SYL:M5 "Interview prep" row (incl. v3.1 additions) · CAP:§13 + **§6.3** (why one zonal target) + **§11 "R-1"** (the project's best interview narrative) |
+| M5 | **Capstone deploy:** container → HF Spaces (Docker SDK, DagsHub token as Secret), registry-first/bundle-fallback load; full §10 reading order exported to **GitHub Pages as the primary portfolio URL**; the Space is linked beneath it as the labeled interactive deep-dive, with the public MLflow UI alongside it. **No keep-alive of any kind.** CV / LinkedIn / README use the Pages URL as the canonical entry point. **Repo: flagship** | Claude Code | CAP:§12 "M5" + §9.2, §9.3, §10 |
+| CP-5 | Capstone checkpoint 5: static Pages report loads **< 3 s on a cold cache from an independent connection**, performs zero runtime calls, and is the primary portfolio URL; Space remains warm < 5 s / cold ≤ 30 s with registry-or-bundle load; stranger test starts at Pages and follows the labeled Space link; limitations + reproducibility statements complete; Monday snapshot + static re-export procedure exercised with both surfaces in sync | Orchestrator | CAP:§12 "CP-5" checklist + §10.1 |
+| L31 | Interview prep [AUTH]: the capstone script, incl. the three v6.2 spectral Q&As (seasonal features / folds-vs-regimes / where the DSP background helped), the **static-first-touch vs. live-demo rationale**, and the single-zonal-target answer | NotebookLM | SYL:M5 "Interview prep" row (incl. v3.1 additions) · CAP:§13 + **§6.3** (why one zonal target) + **§11 "R-1"** (the project's best interview narrative) |
 | C4-4b | Mock interviews #2–3 (~1h each) | Claude chat (or human peer) | SYL:Supp "C4-4" |
-| CV-3 | CV iteration #3: deployed showcase + Spaces URL — **final CV slot (3 of 3)** | Claude chat | SYL:M5 "Track C interleave" · PRG Track C |
+| CV-3 | CV iteration #3: deployed showcase with the **GitHub Pages URL as the primary portfolio link**; labeled Space deep-dive + public MLflow UI linked beneath it — **final CV slot (3 of 3)** | Claude chat | SYL:M5 "Track C interleave" · PRG Track C · CAP:§12 "M5" |
 | B-Man3 | *(clerical, any time in Month 5)* Kaggle account + API token (`kaggle.json`) + accept `ieee-fraud-detection` competition rules — unblocks FM0. **The companion stage-gate opens here** | Yarden | FRD:§2 (compliance pattern) + Exec Summary (download mechanics) |
-| G5 | **Month-5 gate / flagship envelope closes:** full artifact live, in-market with full-artifact applications continuing + **Month-5 consolidation verdict** + **CP-4 and CP-5 status carried up** | Orchestrator | ORC "Goal" · PRG · **CAP:§12 "CP-4" + "CP-5"** · **SYL:M5 interleave** |
+| DEC-AWS | **Pre-committed AWS-backbone decision at G5:** adjudicate parked decisions D1–D6 + D8 against the C8 target-list JD cloud-requirement ratio, live funnel/interview signal, and February capacity. A "yes" fires the documented amendment cascade and a stage-map rebuild; until then no AWS arc enters the ratified sequence | Orchestrator | CAP:§1 delta paragraph · AWS:§12 · C8 output · PRG Track C funnel/capacity state |
+| G5 | **Month-5 gate / flagship envelope closes:** full artifact live, in-market with full-artifact applications continuing + **Month-5 consolidation verdict** + **CP-4 and CP-5 status carried up + DEC-AWS adjudicated** | Orchestrator | ORC "Goal" · PRG · **CAP:§12 "CP-4" + "CP-5"** · **SYL:M5 interleave** · AWS:§12 |
 | **—** | **MONTHS 6–7 — FRAUD MINI-CAPSTONE ⚠ (companion Track B artifact, ~92h at 10–15h/wk; runs INSIDE the active application phase; hint ~mid-Jan → mid-Mar 2027). Rows below carried verbatim from v3 — unverified against the stage-gated FRD; verify in one pass at B-Man3** | | |
 | FM0 ⚠ | **Fraud repo + data + EDA** (~15h): repo scaffolded (src layout, ruff/pytest, its own `CLAUDE.md`), Kaggle download script + SHA-256 checksums (raw data .gitignored — never committed), memory-reduced load verified (<1 GB post-downcast), time-based train/val/calib/test splits frozen (0.60/0.15/0.10/0.15 by TransactionDT), leakage audit doc (UID aggregation, random-K-fold trap, target encoding, D-features). **Repo: companion (created here)** | Claude Code | FRD:§2 (data + compliance), §3 (splits), §10 (repo tree), §11 "M0" |
 | FCP-1 ⚠ | Fraud checkpoint 1: splits frozen + serialized; leakage audit in `docs/leakage.md`; checksums verified; exact file sizes confirmed from the Kaggle data page | Orchestrator | FRD:§11 "CP-1" checklist |
@@ -150,11 +151,11 @@ Legend: `L` = learning block · `M`/`CP` = flagship milestone/checkpoint · `FM`
 | C-Man-P ⚠ | Portfolio surfaces update (**no CV-iteration slot — the cap of 3 is already consumed**): fraud demo URL + repo pinned on GitHub/LinkedIn Featured; one line added to the existing CV file manually | Yarden | PRG Track C (CV cadence note) · FRD:§0 |
 | G6 ⚠ | **Fraud-capstone close gate / program fully closed:** FCP-1–5 all green, FM5 one-pager done, both artifacts live, application funnel running on the two-artifact portfolio | Orchestrator | FRD:§11 (all CP checklists) · ORC "Goal" |
 
-**Standing rhythm (not single rows):** C7 networking ~1h/week from Month 1; weekly Monday snapshot refresh of the deployed flagship demo during the application phase (CAP:§9.2); Track C application funnel continuous from the M2 phase-trigger onward — from Month 6 the funnel runs on both artifacts; the ALG re-solve queue is a weekly micro-rhythm inside Months 2–4 only (dies at G4).
+**Standing rhythm (not single rows):** C7 networking ~1h/week from Month 1; weekly Monday refresh of the deployed flagship during the application phase = **snapshot + static re-export + commit**, with the static Pages report and interactive Space kept in sync (CAP:§9.2); Track C application funnel continuous from the M2 phase-trigger onward — from Month 6 the funnel runs on both artifacts; the ALG re-solve queue is a weekly micro-rhythm inside Months 2–4 only (dies at G4).
 
 ---
 
-## Appendix — Load & calendar (v3, unchanged)
+## Appendix — Load & calendar (v3 baseline + v6.2 static-first-touch rider)
 
 Net new hours by month over the v2 baseline (~20–22h/wk budget unchanged):
 
@@ -166,11 +167,11 @@ Net new hours by month over the v2 baseline (~20–22h/wk budget unchanged):
 | Month 2 | +16h | SPEC (8) + ALG-1 (8) |
 | Month 3 | +28h | CLS-1 (net ≈ +1 over the absorbed C4-1), CLS-2 (8), ALG-2 (20) |
 | Month 4 | +36h | ALG-3 (20) + UNSUP (7) + CAUS (6) + ERR (3) |
-| Month 5 | ~0 | B-Man3 clerical only |
+| Month 5 | +3–5h | Static first-touch rider: full-report export, GitHub Pages publication, labeled deep-dive links, load/runtime-call gate, and one end-to-end Monday refresh rehearsal; B-Man3 remains clerical |
 | Months 6–7 | +92h | Fraud mini-capstone FM0–FM5 |
-| **Total** | **≈ +180h** | ~500h → ~680h |
+| **Total** | **≈ +183–185h** | ~500h → ~683–685h (rounded planning envelope remains ~680h) |
 
-Consequences, stated once: Months 2–4 each run ~5–5.5 weeks at the current weekly budget (or the budget rises to ~26–27h/wk to hold 4-week months); **G5 lands ~mid/late-January 2027**; G6 lands ~March 2027. **Fixed anchors that do NOT move:** APP begins at the start of program-Month 5 (in-market before the flagship envelope closes), and ALG closes at G4, before APP. The fraud capstone deliberately runs inside the application phase: its theory (CLS-1/2, UNSUP) is complete by end of Month 4, so take-homes arriving from Month 5 onward are covered before the second artifact itself ships.
+Consequences, stated once: Months 2–4 each run ~5–5.5 weeks at the current weekly budget (or the budget rises to ~26–27h/wk to hold 4-week months); the static-first-touch rider is absorbed inside M5's existing window, so **G5 still lands ~mid/late-January 2027**; G6 lands ~March 2027 unless DEC-AWS at G5 ratifies a different post-G5 sequence. **Fixed anchors that do NOT move:** APP begins at the start of program-Month 5 (in-market before the flagship envelope closes), and ALG closes at G4, before APP. The fraud capstone deliberately runs inside the application phase: its theory (CLS-1/2, UNSUP) is complete by end of Month 4, so take-homes arriving from Month 5 onward are covered before the second artifact itself ships.
 
 ---
 
