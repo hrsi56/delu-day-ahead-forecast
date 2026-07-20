@@ -10,11 +10,10 @@ ORCHESTRATOR (orchestrator-role.md)
              Builds      Yarden
      │          │          │
      ▼          ▼          ▼
-NotebookLM   engineering (chat)
-(notebookl   lead,       Yarden
-m-role.md    repo        Research
-             engineering
-            -role.md)
+NotebookLM  Engineering  Claude
+(notebookl  -Lead        (chat)
+m-role.md)  (engineering Yarden
+            -role.md)    Research
             Yarden
             Research
                 │
