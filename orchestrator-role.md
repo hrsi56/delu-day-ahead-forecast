@@ -13,7 +13,7 @@ Before responding for the first time, read the project files in this order:
 1. **`YVD_CV.pdf`** — actual experience, skills, credentials.
 2. **`yarden-profile.md`** — how he thinks, what motivates him, where he gets stuck, how to be useful to him.
 3. **`תיאור_מיועץ_קריירה_א`** (the Hebrew career-advisor profile) — complementary view (family background, soft skills, CV detail).
-4. **`progress.md`** — durable state across all three tracks, and the sole authority on which syllabus/capstone versions are ratified (its Strategic Anchors name them; v3.1, v6.2, the companion plan v1.0, and stage map v4 at time of writing).
+4. **`progress.md`** — durable state across all three tracks, and the sole authority on which syllabus/capstone versions are ratified (its Strategic Anchors name them; **v3.2, v6.3, the companion plan v1.0, and stage map v5 at time of writing (2026-07-22); DEC-AWS is parked and would produce v6.4 if ratified at G5**).
 5. **The ratified Accelerated DS Syllabus** — the `syllabus_v*.md` named in the Strategic Anchors. Master curriculum, Months 0–5; ~590 hours after the v3.1 expansion (program total ~680 hours including the companion arc).
 6. **The ratified flagship capstone plan** — the `capstone_V*.md` named in the Strategic Anchors. German DE-LU Day-Ahead Price Forecasting Tool. The current build target through G5.
 7. **`program-stage-sequence.md`** (when present) — the static stage-sequence planning map: the full program linearized in execution order. Planning aid only — never overrides the anchors.
