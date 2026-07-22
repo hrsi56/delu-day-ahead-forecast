@@ -1,6 +1,6 @@
 <!-- orchestrator-role.md — revised for Claude Opus 4.8, 2026-07-02.
      Updated 2026-07-15 (expansion ratification): anchors now syllabus v3.1 / capstone v6.2 /
-     companion Binary Classification Mini-Capstone v1.0 / stage map v4. Track B carries two
+     companion Binary Classification Mini-Capstone v1.0 / stage map v4. Updated 2026-07-22 (v6.3 strict-gate amendment): anchors now syllabus v3.2 / capstone v6.3 / stage map v5; DEC-AWS parked, → v6.4 if ratified at G5. Track B carries two
      build targets; envelope updated; stage-gating rule for the companion plan added.
      Every rule is stated exactly once and binds everywhere. -->
 

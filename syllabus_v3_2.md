@@ -91,7 +91,7 @@ Every sub-topic carries a depth label: **[AUTH]** (authoring — go deep), **[RE
 **Time:** ~4 weeks at 20–22 hrs/week.
 **Goal:** Walk-forward CV with embargo at full authoring depth, leakage taxonomy that Yarden can recite, gradient-boosting mechanics deep enough to defend LightGBM in an interview, and the "why not classical methods?" answer for ARIMA/SARIMA at the 30-second level.
 
-**Parallel block (non-capstone):** the **SQL raw-query authoring block** begins as light-week filler this month and continues into Month 3 — full detail in the *Supplementary Interview-Readiness Blocks* section. It feeds no capstone milestone; it gates the interview funnel and must be complete before active applications (start of Month 5). **Also this month (v3.1):** the **interview-algorithms block (ALG)** begins its light start — ~2h/week (~8h): Arrays & Hashing + Two Pointers, 6.006 L4 anchor, Python-idioms sub-block, solutions repo + progress log created. Full detail, cadence, downgrade rule, and the capstone-wins conflict rule in the *Supplementary Interview-Readiness Blocks* section.
+**Parallel block (SQL-A capstone-integrated; SQL-B interview-only):** the **SQL raw-query authoring block** begins as light-week filler this month and continues into Month 3 (full detail in *Supplementary Interview-Readiness Blocks*). **v3.2:** its **SQL-A** production subset is authored at M1 and integrated as the capstone's DuckDB mart (capstone §9.6 — a firewall exception, so it *does* feed a capstone milestone); **SQL-B** feeds no capstone milestone, gates the interview funnel, and must be complete before active submissions (SQL-B done at G3; start-of-Month-5 backstop). **Also this month (v3.1):** the **interview-algorithms block (ALG)** begins its light start — ~2h/week (~8h): Arrays & Hashing + Two Pointers, 6.006 L4 anchor, Python-idioms sub-block, solutions repo + progress log created. Full detail, cadence, downgrade rule, and the capstone-wins conflict rule in the *Supplementary Interview-Readiness Blocks* section.
 
 | Sub-topic | Depth | Resource | Capstone link |
 |---|---|---|---|
@@ -137,7 +137,7 @@ Every sub-topic carries a depth label: **[AUTH]** (authoring — go deep), **[RE
 - LightGBM quantile ensemble end-to-end with walk-forward CV (24h embargo, **v6.2 three-regime fold scheme: crisis-peak Fold 3 Jul–Sep 2022, negative-price-stress Fold 4 May–Jul 2025, Fold 5 ending at the pull date, fully post-15-min-transition**) and **MLflow logging to the DagsHub-hosted tracking URI**.
 - Isotonic post-processing wired in.
 - Diebold-Mariano test against the **similar-day naïve**, with statistical significance reported. (CP-2 carries the **pre-committed secondary gate** — Fold-5 p ∈ [0.05, 0.15] + pooled-across-folds DM significant → pass, both numbers reported; capstone §7.1.)
-- **Thin CI wired (v6.2):** GitHub Actions runs the capstone §9.4 invariant tests (now four, incl. the 15-min boundary test) on every push — no regression matrix.
+- **Thin CI wired (v6.2):** GitHub Actions runs the capstone §9.4 invariant tests (now five, incl. the 15-min boundary test and the champion/benchmark schema-separation test) on every push — no regression matrix.
 - CP-2 closes M2 (≥ 5 MLflow runs publicly visible on DagsHub UI; CI green on `main`).
 
 ---
@@ -145,7 +145,7 @@ Every sub-topic carries a depth label: **[AUTH]** (authoring — go deep), **[RE
 ## Month 4 — Calibration, Conformal, and Explainability — Capstone M3 Lands
 
 **Time:** ~4 weeks at 20–22 hrs/week.
-**Goal:** The diagnostic stack that distinguishes the artifact from a generic LightGBM tutorial. CQR conformal at full authoring depth (two papers, focused), SHAP at full authoring depth, permutation importance as a complement, reliability diagrams that visibly compare raw and conformal-adjusted intervals.
+**Goal:** The diagnostic stack that distinguishes the artifact from a generic LightGBM tutorial. CQR conformal at full authoring depth (two papers, focused), SHAP at full authoring depth, permutation importance as a complement, **three-stage reliability diagrams (raw / post-CQR / final post-isotonic; capstone §8.4) with the CP-3 ±5 pp gate on the FINAL output** and the post-CQR stage reported separately as the formal-guarantee carrier, and — new at v3.2 — the capstone's **§7.2 post-gate information benchmark** (strict vs. A69-augmented; the measured cost of strict-gate feasibility) that runs at capstone M3.
 
 **Parallel blocks (non-capstone, v2.3 C4):** **timed take-home rehearsal #2** (~4h box) and the **first mock interview** land this month — see *Supplementary Interview-Readiness Blocks*. **Also this month (v3.1):** the **ALG block peaks and closes** (~5h/week, ~20h: Trees + BFS/DFS on grids/graphs, intro 1-D DP, plus the ≥4 timed 25-min mock solves — nothing bleeds into Month 5); the **UNSUP block** (~7h: k-means [APPLIED-AUTH], EM/GMM [REC]) and the **CAUS block** (~6h, LO2 light reopen — causal-inference frame [REC] + A/B experiment-design deepening [APPLIED-AUTH]) run as parallel filler. Full detail in the Supplementary section.
 
@@ -186,8 +186,8 @@ Every sub-topic carries a depth label: **[AUTH]** (authoring — go deep), **[RE
 
 **Capstone interleave (this is when M4 and M5 land):**
 - HF account + initial Spaces setup (B-Manual block, scheduled at the start of Month 5).
-- **M4 lands first — local end-to-end.** Marimo showcase runs locally pulling the registered Production model from DagsHub MLflow and applying CQR thresholds on the snapshot data; `predict_next_day.py` smoke-test passes inside the container. CP-4 closes.
-- **M5 lands second — deployed.** Marimo showcase containerized via multi-stage Dockerfile and deployed to HF Spaces free tier; **no keep-alive cron (deleted at D7)**; the **static GitHub Pages export goes live as the primary portfolio URL**; CV and LinkedIn updated with the **Pages URL as primary**, the live Spaces URL and public MLflow URL linked beneath it. CP-5 closes.
+- **M4 lands first — local end-to-end.** Marimo showcase runs locally pulling the registered Production model from DagsHub MLflow and applying CQR thresholds on the snapshot data; `predict_next_day.py` smoke-test passes inside the container. **v3.2:** M4 also **generates the offline data/output-health report** (capstone §9.5, ≤~8h); the sliders are the champion's retained-feature controls. CP-4 closes.
+- **M5 lands second — deployed.** Marimo showcase containerized via multi-stage Dockerfile and deployed to HF Spaces free tier; **no keep-alive cron (deleted at D7)**; the **static GitHub Pages export goes live as the primary portfolio URL**; CV and LinkedIn updated with the **Pages URL as primary**, the live Spaces URL and public MLflow URL linked beneath it. **v3.2: CP-5 also verifies** the offline data/output-health report renders statically on the Pages page (< 3s cold-cache) and the §7.2 post-gate benchmark table is present. CP-5 closes.
 - **Stranger-test gate starts at the static GitHub Pages URL (< 3 s cold-cache), following the labeled link to the deployed Space for the interactive portion (D7 rider).** Reviewer recruitment is a Track C-Manual block scheduled earlier in Month 4 / early Month 5.
 
 **Track C interleave (begins this month):**
@@ -200,7 +200,7 @@ Every sub-topic carries a depth label: **[AUTH]** (authoring — go deep), **[RE
 
 ## Supplementary Interview-Readiness Blocks (v2.2 + v2.3 additions)
 
-These blocks sit outside the math arc and outside the capstone interleave. None feeds a capstone milestone; all close gaps that surface specifically in the DS interview funnel. They are placed to land before or alongside active applications (start of Month 5) and to double as concrete artifacts during the math-heavy stretch.
+These blocks sit outside the math arc. **v3.2 exception:** the SQL block's **SQL-A** production subset *does* enter the capstone (the DuckDB mart, capstone §9.6) — a deliberate firewall exception alongside spectral-EDA. Otherwise none feeds a capstone milestone; all close gaps that surface specifically in the DS interview funnel. They are placed to land before or alongside active applications (start of Month 5) and to double as concrete artifacts during the math-heavy stretch.
 
 ### SQL — Raw-Query Authoring Against a Real DB
 
@@ -324,7 +324,7 @@ Each omission below is a deliberate scope decision tied to `capstone_V6_3.md` v6
 
 **MLOps stack — partially in, partially out.** Under v6.3 the boundary is unchanged from v5.5 in structure (plus the v6.3 offline data/output-health report, capstone §9.5 — a batch report, not production monitoring):
 
-- *In scope at recognition / applied-recognition level:* **Docker multi-stage build patterns** (Month 5 [APPLIED-REC]), **DagsHub-hosted MLflow tracking + Model Registry** (Month 4 [REC]), **Hugging Face Spaces deployment mechanics** (Month 5 [APPLIED-REC]), and **the thin GitHub Actions CI** that runs the capstone's §9.4 invariant tests (now four, incl. the 15-min boundary test) on push — wiring at [APPLIED-REC]-level effort inside the M2 build, not a curriculum topic. Interview-quotable rationale: *"The capstone's MLOps surface is portfolio-grade — containerized marimo on Hugging Face Spaces, backed by a public DagsHub-hosted MLflow Model Registry, with invariant tests running on every push. This demonstrates fluency with the standard ML portfolio-hosting stack and gives hiring managers a publicly inspectable experiment history. It is not enterprise MLOps infrastructure."*
+- *In scope at recognition / applied-recognition level:* **Docker multi-stage build patterns** (Month 5 [APPLIED-REC]), **DagsHub-hosted MLflow tracking + Model Registry** (Month 4 [REC]), **Hugging Face Spaces deployment mechanics** (Month 5 [APPLIED-REC]), and **the thin GitHub Actions CI** that runs the capstone's §9.4 invariant tests (now five, incl. the 15-min boundary test and the champion/benchmark schema-separation test) on push — wiring at [APPLIED-REC]-level effort inside the M2 build, not a curriculum topic. Interview-quotable rationale: *"The capstone's MLOps surface is portfolio-grade — containerized marimo on Hugging Face Spaces, backed by a public DagsHub-hosted MLflow Model Registry, with invariant tests running on every push. This demonstrates fluency with the standard ML portfolio-hosting stack and gives hiring managers a publicly inspectable experiment history. It is not enterprise MLOps infrastructure."*
 - *Remains explicitly out of scope:* **DVC** (rejected; superseded by pinned deps + tagged commit + committed CC-BY snapshot), **Evidently AI** (no drift monitoring), **FastAPI** (no API layer — the marimo notebook IS the user-facing layer), **CI/CD regression matrices, scheduled retraining cron, automated rollback machinery, drift gates** (the thin invariant-test CI is not a regression matrix — capstone v6.3 §13 holds that line explicitly). Interview-quotable rationale: *"DVC, Evidently, FastAPI, CI/CD regression matrices, and drift monitoring are enterprise MLOps boilerplate. AI-generated code handles them correctly in any real role with a real codebase. Spending portfolio time on them would have demonstrated boilerplate over judgment. The investment instead went into calibration, diagnostics, and interactive uncertainty communication — the parts of a forecasting system that are hard to get right and that signal DS judgment."*
 
 **The full breadth of MIT 18.065 (matrix methods).** *"Selectively useful — SVD, PCA, condition number as a multicollinearity diagnostic. The Eckart-Young proof, low-rank approximation theorems, and special-matrix theory weren't needed for the capstone and didn't earn their place against the math-baseline timeline."* *(A proposal to upgrade Month-0 SVD/PCA to [AUTH] and restore Eckart–Young — LO3 — was reviewed and rejected: Month 0 is the binding constraint, the capstone's use of SVD/PCA is diagnostic and [REC] covers it. If the Month-0 consolidation verdict flags the SVD story as shaky, remediation fires through the existing checkpoint channel — not through a pre-emptive depth upgrade.)*
@@ -337,4 +337,4 @@ After capstone CP-5 closes and the Month-5 gate passes, a second, standalone Tra
 
 ---
 
-*End of Accelerated DS Syllabus — v3.1.*
+*End of Accelerated DS Syllabus — v3.2.*

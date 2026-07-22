@@ -54,7 +54,7 @@ S3  s3://delu-forecast-prod/                         │    order + architecture
         │                                            │            │ links to                      │
         ▼                                            │            ▼                               │
 SageMaker Pipeline  (manual weekly trigger)          │ 2. INTERACTIVE marimo Space (HF, v6.2 §9.2)│
-  validate → features → train → evaluate-gate        │    precomputed lookup, 3 sliders, OOD flags│
+  validate → features → train → evaluate-gate        │    precomputed lookup, retained sliders, OOD │
   → register → batch-forecast → drift-metrics        │    warm <5 s; cold ≤30 s, labeled          │
         │                │                           │ 3. DagsHub MLflow public UI (v6.2 §9.1)    │
         ▼                ▼                           │ 4. GitHub repo (incl. infra/)              │
@@ -147,11 +147,11 @@ Each component: purpose → concrete configuration → steady-state cost → the
 **CP-6 checklist (outcome-level):**
 - [ ] 1. IAM least-privilege roles committed (`infra/iam/`); no wildcard actions; no credentials anywhere in either repo's history.
 - [ ] 2. Training job reproduces the local champion — parity test green (pinball Δ < 0.1% rel., prediction max-abs-diff < 1e-6).
-- [ ] 3. `make cloud-refresh` executes the full DAG end-to-end: validate → features → train → evaluate-gate → register → batch-forecast → drift-metrics, one command, unattended.
+- [ ] 3. `make cloud-refresh` executes the full DAG end-to-end: validate → features → train → evaluate-gate → register → batch-forecast → drift-metrics, one command, unattended. **(Conditional under the §7 AWS-2 de-scope: if drift is deferred, the DAG ends at batch-forecast and `drift-metrics` moves to the post-CP-6 increment with item 7.)**
 - [ ] 4. Champion registered in **both** registries; SHA-256 identity asserted; SageMaker package approved via the manual-approval flow.
 - [ ] 5. Evaluate-gate demonstrated **both ways**: passes on the real snapshot; halts registration on a deliberately corrupted one.
 - [ ] 6. Serverless endpoint returns a correct, monotone 9-quantile forecast via `invoke_endpoint.py`; idle cost verified $0 on the bill.
-- [ ] 7. Drift job publishes all 8 metrics; both alarms tested by forced breach; email received.
+- [ ] 7. **(Conditional: if AWS-2 ships drift; under the §7 de-scope this item moves to the first post-CP-6 increment.)** Drift job publishes all 8 metrics; both alarms tested by forced breach; email received.
 - [ ] 8. Budgets $10/$50 live (test-fired); `project=delu` tag on every resource; `make aws-audit` returns **clean** at arc close.
 - [ ] 9. One full post-build calendar month's bill **≤ $5**, screenshot archived in `docs/aws-bills/`.
 - [ ] 10. Interview demo script: cold `make endpoint-up` → live scored request → `make endpoint-down` in **< 10 min**, teardown verified by the audit script.
@@ -202,7 +202,7 @@ Each component: purpose → concrete configuration → steady-state cost → the
 |---|---|
 | §1 constraints list (line-item bullets) | Add sixth bullet: the lean AWS backbone (two-plane invariant, scale-to-zero policy, ≤ $5/mo). Amend "Total hosting cost: $0" → "$0 showcase hosting + ≤ $5/month AWS backbone (measured target $1–3)". |
 | §1 audience sentence | "cloud-backed experiment tracking" gains "…and a lean AWS production backbone (SageMaker pipeline, registry, serverless serving, custom drift monitoring)". |
-| §9 (new **§9.5 — AWS Production Backbone**) | Insert §§2–4 + §6 of this spec essentially verbatim (architecture, components, refresh flow, cost model, guardrails). |
+| §9 (new **§9.7 — AWS Production Backbone**, following the existing **§9.5** offline health report and **§9.6** DuckDB mart — no collision) | Insert §§2–4 + §6 of this spec essentially verbatim (architecture, components, refresh flow, cost model, guardrails). |
 | §9.2 static-page + sleep paragraphs | **Landed at v6.2** (ping option deleted; static page = primary URL). v6.3 delta: extend the §9.2 static-page block with one provenance sentence — the lookup/snapshot/static HTML are now *produced by the cloud pipeline* and still committed by hand; the serving pattern is unchanged. |
 | §9.3 reproducibility | Add: the ECR image is built from the same `uv.lock`; the parity test extends reproducibility across environments; bill screenshots archived. |
 | §10 reading order | Insert item **(11b) "Production architecture"**: the diagram + three evidence figures + one paragraph — static, no slider (mirrors the §10 (3b) spectral pattern exactly). *(Item 12's canonical-entry-point line landed at v6.2.)* |
@@ -211,9 +211,9 @@ Each component: purpose → concrete configuration → steady-state cost → the
 | §12 milestones | Append **M6 (AWS-1/AWS-2) + CP-6** (§7 of this spec) after M5; amend the Post-CP-5 companion pointer's timing sentence to the D8 sequencing (pointer discipline itself unchanged). |
 | §13 boundary "No enterprise production pipeline or live trading layer" | **Rewritten** (the one substantive boundary change): *"**Lean cloud backbone, not enterprise MLOps.** The project ships a real train→register→deploy→monitor pipeline on SageMaker — serverless, gated, monitored, ≤ $5/month — because productionization is a capability worth proving. It still deliberately excludes scheduled retraining (the weekly trigger is human), live per-visitor inference, rollback machinery, multi-environment promotion, and IaC frameworks: the 20% of MLOps that demonstrates DS-owned production judgment, without the 80% that is platform boilerplate for a single-developer portfolio."* All neighboring §13 boundaries (no trading layer, no DVC, no live per-visitor pulls) **stand verbatim**. |
 | §13 (new boundary) | Add: **"No Terraform/CDK, no multi-env, no Kubernetes"** with the R-10 defense. |
-| **Unchanged invariants (asserted, not assumed)** | Marimo mandate + three-slider set + OOD flags; precomputed-lookup serving; HF Spaces free tier; DagsHub MLflow as the public registry; committed CC BY snapshot + attribution; no live API pulls in user sessions; single LightGBM + CQR + isotonic-last; walk-forward CV + embargo + pinned folds; DM gates; §9.4 invariant tests + thin CI; stranger-test gate; $65 ceiling; M3/16 GB; every §0 ratified decision. |
+| **Unchanged invariants (asserted, not assumed)** | Marimo mandate + **retained-feature controls (v6.3 — not a fixed trio, set at CP-4)** + OOD flags; precomputed-lookup serving; HF Spaces free tier; DagsHub MLflow as the public registry; committed CC BY snapshot + attribution; no live API pulls in user sessions; single LightGBM + CQR + isotonic-last; walk-forward CV + embargo + pinned folds; DM gates; §9.4 invariant tests + thin CI; stranger-test gate; $65 ceiling; M3/16 GB; every §0 ratified decision. |
 
-**Non-capstone cascade:** progress.md (anchors, Track B, Notes — regenerates on ratification), stage map v4 → v5 (owed on your explicit go), `orchestrator-role.md` envelope sentence (owner edit), CV slot usage per CP-6 item 13.
+**Non-capstone cascade:** progress.md (anchors, Track B, Notes — regenerates on ratification), stage map **v5 → v6** (owed on your explicit go), `orchestrator-role.md` envelope sentence (owner edit), CV slot usage per CP-6 item 13.
 
 ---
 

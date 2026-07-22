@@ -66,3 +66,14 @@ v6.3 is the current edition. The parked **DEC-AWS** (AWS production backbone, `a
 - **NotebookLM:** **syllabus v3.2 + capstone v6.3 only** — not the map, the AWS draft, or amendment-history files.
 
 Record each swap separately in progress.md; verify the final repo commit/tree.
+
+## Corrective addendum (2026-07-22, second commit — semantic-audit fixes)
+
+Owner semantic verification of the first commit surfaced fixes, applied docs-only in a second commit (no re-ratification of scope):
+
+- **CP-3 coverage gate (AMD-5/AMD-6):** the ±5 pp / ≥4-of-5-folds gate is on the **final post-isotonic output** (the shipped intervals); the **post-CQR / pre-isotonic** coverage is **reported separately** as the intermediate carrying the formal CQR guarantee. (First commit mis-placed the gate on the post-CQR stage.)
+- **§6.2 / §13 isotonic precision (AMD-5):** isotonic is inactive **only when all nine post-CQR endpoints are already non-decreasing** — a nonnegative `Q` makes that likely but does not guarantee it. Formal claim stays on the post-CQR stage; final is empirical.
+- **§4.1 proxy scope + naming (AMD-3):** the frozen experiment is **exactly the four 2×2 catalogs**; `forecast_uncertainty_proxy` is **future work (§13), not a fifth catalog**. Champion vs. benchmark names disambiguated: `gate_feasible_residual_load_proxy` / `gate_feasible_residual_load_deviation` (champion) vs. `residual_load_fc` / `residual_load_deviation_from_normal` (A69 benchmark). A **deterministic winner rule** added (lowest pooled pinball; ties → parsimony → raw-head calibration).
+- **Conditional "no proxy survives" wording:** §0 item 3, §3, §4, §5.2, §11 R-2, and the §13 answers now state the champion carries a proxy **only if the ablation retains it**, else ships strict-base.
+- **§9.5 bounding:** explicit rolling 28-day comparison window, as-of = last fully-populated snapshot hour, ≥90 % completeness rule (else "insufficient data"), training-decile PSI bins.
+- **§9.4 count:** five mandatory invariant tests (four originals + the champion/benchmark schema separation) — propagated to every operative "four tests" reference across the anchors.

@@ -43,7 +43,7 @@
 ## Setup State (one-time actions)
 
 - **`Binary Classification Mini-Capstone.md` v1.0 — PK confirmed present; do NOT load into NotebookLM, the repo, or any brief until FM0.** The one-time load action fires at FM0, not before. Gate re-affirmed 2026-07-15.
-- **SOURCE-SWAP — repo `main` (ACTION-REQUIRED, this session's commit):** `capstone_V6_3.md` (+ `capstone_V6_2-to-V6_3-amendments.md`), `engineering-role.md` (authority-rule fix), `README.md`, `docs/spike-feed-status.md` (appended v6.3 note) — committed to `main`. Confirm the tree is clean after commit.
+- **SOURCE-SWAP — repo `main` — DONE (committed).** The full v6.3 anchor set committed to `main` at **55963e3** (2026-07-22) + a corrective second commit (semantic-audit fixes). **Only the `origin` push and the PK / NotebookLM swaps remain pending** (push held per owner instruction). Worktree clean.
 - **SOURCE-SWAP — Project Knowledge (ACTION-REQUIRED):** swap in **capstone v6.3, syllabus v3.2, program-stage-sequence v5, this progress.md, the role docs, and the parked `aws-extension-spec_v1_1.md`** (rebased). Retire the v6.2/v3.1/v4 copies. Companion stays stage-gated (do NOT load).
 - **SOURCE-SWAP — NotebookLM (ACTION-REQUIRED):** swap in **`syllabus_v3_2.md` v3.2 and `capstone_V6_3.md` v6.3 ONLY**. Do **not** load the stage map, the AWS draft, or any amendment-history file. This closes the prior "NotebookLM copy is pre-rider" item (now a full v6.3 swap). Closes on Yarden's confirmation.
 
