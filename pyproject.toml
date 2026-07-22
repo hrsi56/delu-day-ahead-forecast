@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "DE-LU day-ahead electricity price forecasting capstone"
 requires-python = ">=3.11"
 dependencies = [
-    "entsoe-py>=0.7.5",
+    "entsoe-py==0.8.0",
     "pandas>=2.2",
     "requests>=2.31",
 ]

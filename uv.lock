@@ -133,7 +133,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "entsoe-py", specifier = ">=0.7.5" },
+    { name = "entsoe-py", specifier = "==0.8.0" },
     { name = "pandas", specifier = ">=2.2" },
     { name = "requests", specifier = ">=2.31" },
 ]

@@ -10,7 +10,7 @@ You sit one layer below a separate **orchestrator** — a different Claude that 
 
 ## How work arrives
 
-Yarden pastes a **brief** (written by the orchestrator) into a session here. A brief specifies: the milestone/checkpoint it serves, project-state context, the goal (what state should exist when the block ends), architectural constraints, and **outcome-level** acceptance criteria. It deliberately does **not** dictate implementation steps — those are yours. If a brief reads like it's prescribing implementation, treat that as context, not instruction, and make your own engineering call.
+Yarden pastes a **brief** (written by the orchestrator) into a session here. A brief specifies: the milestone/checkpoint it serves, project-state context, the goal (what state should exist when the block ends), architectural constraints, and the **task-specific subset of outcome-level criteria cited from the ratified plan/checkpoint**. The plan's checklist remains authoritative: the brief scopes and points to it; it does not create a divergent acceptance-criteria set. If a brief omits or contradicts an applicable plan criterion, flag the discrepancy and follow the ratified plan. The brief deliberately does **not** dictate implementation steps — those are yours. If it reads like it's prescribing implementation, treat that as context, not instruction, and make your own engineering call.
 
 ## How you work a brief
 
@@ -26,7 +26,7 @@ The capstone's CP-1…CP-5 checklists (in `capstone_V6_3.md`) are the project's 
 ## Hard constraints (non-negotiable)
 
 - **Budget.** $0 expected run rate; **$65/month policy ceiling** (target $5–25). No managed cloud databases, paid API services, or heavy cloud compute when a local or free-tier path exists.
-- **Hardware.** Local on Apple Silicon **M3, 16 GB unified memory, CPU only** under v6.2 (no GPU — no neural challenger in the capstone). Keep memory in mind on large pulls: the 2019→present ENTSO-E bulk pull chunks by **≤1-year requests** (API limit) and should stream to Parquet rather than accumulate in RAM.
+- **Hardware.** Local on Apple Silicon **M3, 16 GB unified memory, CPU only** under v6.3 (no GPU — no neural challenger in the capstone). Keep memory in mind on large pulls: the 2019→present ENTSO-E bulk pull chunks by **≤1-year requests** (API limit) and should stream to Parquet rather than accumulate in RAM.
 - **Data sources are ENTSO-E + SMARD per `capstone_V6_3.md` §0/§3 — never reintroduce PJM** (geo-blocked from this location, redistribution-restricted) **or any other geo-fragile or non-redistributable source.** If a feed misbehaves, the in-spec fallbacks are the SFTP bulk path and SMARD-as-primary — not a new vendor.
 - **No over-engineering.** Build exactly what the milestone needs. No premature abstractions, no scope the brief didn't ask for. The capstone's *"What this project is NOT"* section is a defended boundary — don't reopen it.
 - **Environment & reproducibility.** macOS, zsh, Homebrew at `/opt/homebrew`, home `/Users/djourno`. Pin dependencies (`uv` / `pyproject.toml`, including **`entsoe-py` pinned 0.8.0** — satisfies the ≥0.7.5 15-min-MTU-aware line), set seeds across NumPy / scikit-learn / LightGBM, keep the repo reproducible per `capstone_V6_3.md` §9.3 (pinned deps + tagged commit + committed Parquet snapshot **with the CC BY 4.0 attribution statement** — no DVC).
