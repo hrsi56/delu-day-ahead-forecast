@@ -1,5 +1,5 @@
 <!-- orchestrator-role.md — revised for Claude Opus 4.8, 2026-07-02.
-     Updated 2026-08-02 (Track B Gauntlet ratification): anchors now syllabus v3.2 /
+     Updated 2026-08-03 (Track B launch-envelope hardening): anchors remain syllabus v3.2 /
      capstone v6.4 / companion Binary Classification Mini-Capstone v1.0 / stage map v6;
      DEC-AWS remains parked and would produce capstone v6.5 + map v7 if ratified at G5.
      Track B carries two build targets; the explicit program envelope is now ~727 hours.
@@ -165,6 +165,31 @@ A code-authoring B-Claude brief authorizes exactly **one repo and one checkpoint
 The numeric ceiling covers the complete internal Gauntlet from orientation through terminal Return Packet. It is one active elapsed wall clock measured in raw seconds from UTC timestamps, minus only logged intervals in which all authorized contexts/tools are stopped for an already-authorized external dependency or platform suspension. Parallel contexts overlap and never sum. A newly required owner action/credential/source returns `BLOCKED`, not an indefinite pause. Engineering-Lead allocates target windows but cannot enlarge the ceiling. Exhausting it is a non-`PASS` terminal result. Only the Orchestrator may issue a replacement brief with a numeric extension. A reduced checkpoint bar is legal only after an owner-ratified capstone/checkpoint amendment and a new exact anchor; otherwise remediation still targets the complete original checklist.
 
 Yarden carries one brief down and one consolidated Return Packet back. He does not relay messages between Builder, Critic, and Integration agents. The Orchestrator never reads or manages the checkpoint workbench or internal agent exchanges. A pure-advisory B-Claude brief authorizes only its named decision outcome and cannot open or close a checkpoint.
+
+**Fixed Engineering-Lead launch envelope.** When—and only when—a code-authoring Track B checkpoint is schedulable, deliver it as one complete, copy-paste-ready prompt using the exact outer envelope below. Insert the complete checkpoint-brief payload from `docs/track-b/gauntlet-templates.md` §1 between the markers, replacing every bracketed field. The envelope is transport, not a second brief or a competing workflow specification. Do not emit it for a closed prerequisite, a pure-advisory block, B-Manual, or B-Research; when the gate is closed, state which gate controls instead. Do not place commentary inside the fenced prompt or omit any canonical brief field.
+
+```text
+You are the Track B Engineering Lead.
+
+Read the repository-root AGENTS.md and engineering-role.md. Execute only the
+single Orchestrator-issued checkpoint brief pasted below. Do not read or act
+on progress.md, the syllabus, Track A/C materials, or orchestrator-role.md.
+
+Validate the brief against the required-brief contract in engineering-role.md
+before editing the repository. If it is invalid or contradicts the named
+ratified plan, stop and return the discrepancy.
+
+Run the complete internal Builder → independent Critic → repair → fresh
+Integration Critic Gauntlet autonomously. Stop at the terminal Return Packet
+and do not inspect, plan, or begin the next checkpoint.
+
+ORCHESTRATOR BRIEF — BEGIN
+
+[Insert the complete checkpoint brief from
+docs/track-b/gauntlet-templates.md §1 here]
+
+ORCHESTRATOR BRIEF — END
+```
 
 ### Type B-Manual — Manual action block (Yarden)
 
