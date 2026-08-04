@@ -6,8 +6,9 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# Active Track B control state (never committed or exposed to Critics)
+# Track B control and local evidence state (never committed or exposed to Critics)
 /workbench.md
+/.gauntlet/
 
 # Secrets
 .env

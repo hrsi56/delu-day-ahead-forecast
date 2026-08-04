@@ -1,0 +1,1578 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pjm.local/schemas/cp2-blind-four-catalog.schema.json",
+  "title": "PJM CP-2 label-blind four-catalog protocol",
+  "description": "Closed machine contract for the committed identity inputs and the create-only anonymous metrics, freeze, reveal, and adjudication chain. scripts/gauntlet_protocol.py is the authoritative validator and additionally verifies canonical bytes, exact Decimal arithmetic, hashes, refs, ownership, chronology, and recomputation.",
+  "x-validator": "scripts/gauntlet_protocol.py@1.0",
+  "x-runtime-integer-policy": "Every JSON integer must decode as a non-Boolean Python int; integral-valued JSON numbers such as 0.0 are rejected by the authoritative validator even if a generic JSON Schema implementation treats them as mathematical integers.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/sourceManifest"
+    },
+    {
+      "$ref": "#/$defs/selectionDeclaration"
+    },
+    {
+      "$ref": "#/$defs/publicManifest"
+    },
+    {
+      "$ref": "#/$defs/commitment"
+    },
+    {
+      "$ref": "#/$defs/preparationReceipt"
+    },
+    {
+      "$ref": "#/$defs/metricsRecord"
+    },
+    {
+      "$ref": "#/$defs/freeze"
+    },
+    {
+      "$ref": "#/$defs/reveal"
+    },
+    {
+      "$ref": "#/$defs/adjudication"
+    },
+    {
+      "$ref": "#/$defs/preparationInvocation"
+    },
+    {
+      "$ref": "#/$defs/mappingPreimage"
+    },
+    {
+      "$ref": "#/$defs/custody"
+    },
+    {
+      "$ref": "#/$defs/attempt"
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "gitSHA": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "utcTimestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^(?:0|-?(?:[1-9][0-9]*|0\\.[0-9]*[1-9]|[1-9][0-9]*\\.[0-9]*[1-9]))$"
+    },
+    "absolutePath": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "repoPath": {
+      "type": "string",
+      "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!/)[A-Za-z0-9_. -]+(?:/[A-Za-z0-9_. -]+)*$"
+    },
+    "role": {
+      "enum": [
+        "strict_base",
+        "residual_arm",
+        "scarcity_arm",
+        "both_arms"
+      ]
+    },
+    "label": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit_sha",
+        "tree_sha"
+      ],
+      "properties": {
+        "commit_sha": {
+          "$ref": "#/$defs/gitSHA"
+        },
+        "tree_sha": {
+          "$ref": "#/$defs/gitSHA"
+        }
+      }
+    },
+    "hashBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/absolutePath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "repoBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_relative_path",
+        "sha256"
+      ],
+      "properties": {
+        "repo_relative_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "csvContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "header",
+        "folds",
+        "quantiles",
+        "canonical_sort"
+      ],
+      "properties": {
+        "header": {
+          "const": [
+            "fold_id",
+            "row_id",
+            "y",
+            "q025",
+            "q05",
+            "q10",
+            "q25",
+            "q50",
+            "q75",
+            "q90",
+            "q95",
+            "q975"
+          ]
+        },
+        "folds": {
+          "const": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "quantiles": {
+          "const": [
+            "q025",
+            "q05",
+            "q10",
+            "q25",
+            "q50",
+            "q75",
+            "q90",
+            "q95",
+            "q975"
+          ]
+        },
+        "canonical_sort": {
+          "const": [
+            "fold_id_numeric",
+            "row_id_utf8_bytes"
+          ]
+        }
+      }
+    },
+    "dataSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id",
+        "cutoff_utc",
+        "sha256"
+      ],
+      "properties": {
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cutoff_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "ruleBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "plan_filename",
+        "plan_sha256",
+        "bar_citation",
+        "bar_excerpt",
+        "canonicalization_version"
+      ],
+      "properties": {
+        "version": {
+          "const": "cp2-four-catalog-exact-v1"
+        },
+        "plan_filename": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "plan_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bar_citation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bar_excerpt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicalization_version": {
+          "const": "utf8-lf-decimal-interleaved-v1"
+        }
+      }
+    },
+    "blindComponentProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "piece",
+        "evidence_ref",
+        "verdict",
+        "integrity_manifest",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "piece": {
+          "$ref": "#/$defs/identifier"
+        },
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^refs/gauntlet-evidence/CP-2/[^/]+/[^/]+$"
+        },
+        "verdict": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "integrity_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "integrationIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "piece",
+        "evidence_ref",
+        "support_root",
+        "allocated_at_utc"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "piece": {
+          "$ref": "#/$defs/identifier"
+        },
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^refs/gauntlet-evidence/CP-2/[^/]+/[^/]+$"
+        },
+        "support_root": {
+          "$ref": "#/$defs/absolutePath"
+        },
+        "allocated_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "booleanDecimalCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lhs",
+        "rhs",
+        "pass"
+      ],
+      "properties": {
+        "lhs": {
+          "$ref": "#/$defs/decimal"
+        },
+        "rhs": {
+          "$ref": "#/$defs/decimal"
+        },
+        "pass": {
+          "type": "boolean"
+        }
+      }
+    },
+    "booleanIntegerCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lhs",
+        "rhs",
+        "pass"
+      ],
+      "properties": {
+        "lhs": {
+          "type": "integer"
+        },
+        "rhs": {
+          "type": "integer"
+        },
+        "pass": {
+          "type": "boolean"
+        }
+      }
+    },
+    "candidateDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "relative_loss",
+        "coverage",
+        "improving_folds",
+        "fold_pass",
+        "eligible"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "relative_loss": {
+          "$ref": "#/$defs/booleanDecimalCheck"
+        },
+        "coverage": {
+          "$ref": "#/$defs/booleanIntegerCheck"
+        },
+        "improving_folds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "fold_pass": {
+          "type": "boolean"
+        },
+        "eligible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "tieBreak": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature_survivors",
+        "calibration_survivors",
+        "preference_order"
+      ],
+      "properties": {
+        "feature_survivors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "calibration_survivors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "preference_order": {
+          "const": [
+            "residual_arm",
+            "scarcity_arm",
+            "both_arms"
+          ]
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_loss_zero",
+        "candidates",
+        "eligible_roles",
+        "minimum_eligible_loss",
+        "tie_set",
+        "tie_break",
+        "winner",
+        "decision_reason"
+      ],
+      "properties": {
+        "base_loss_zero": {
+          "type": "boolean"
+        },
+        "candidates": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/candidateDecision"
+          }
+        },
+        "eligible_roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "minimum_eligible_loss": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/decimal"
+            }
+          ]
+        },
+        "tie_set": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "tie_break": {
+          "$ref": "#/$defs/tieBreak"
+        },
+        "winner": {
+          "$ref": "#/$defs/role"
+        },
+        "decision_reason": {
+          "enum": [
+            "base_zero",
+            "no_eligible_arm",
+            "eligible_arm_tie_break"
+          ]
+        }
+      }
+    },
+    "foldMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fold_id",
+        "loss_sum",
+        "loss_denominator",
+        "row_count"
+      ],
+      "properties": {
+        "fold_id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "loss_sum": {
+          "$ref": "#/$defs/decimal"
+        },
+        "loss_denominator": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "metricCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "loss_sum",
+        "loss_denominator",
+        "coverage_hits",
+        "coverage_total",
+        "folds"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/label"
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "loss_sum": {
+          "$ref": "#/$defs/decimal"
+        },
+        "loss_denominator": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "coverage_hits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage_total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "folds": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/foldMetric"
+          }
+        }
+      }
+    },
+    "labelMetric": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metricCore"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "loss_sum",
+            "loss_denominator",
+            "coverage_hits",
+            "coverage_total",
+            "folds"
+          ],
+          "properties": {
+            "label": {
+              "$ref": "#/$defs/label"
+            },
+            "loss_sum": {
+              "$ref": "#/$defs/decimal"
+            },
+            "loss_denominator": {
+              "type": "integer"
+            },
+            "coverage_hits": {
+              "type": "integer"
+            },
+            "coverage_total": {
+              "type": "integer"
+            },
+            "folds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/foldMetric"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "roleMetric": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metricCore"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "loss_sum",
+            "loss_denominator",
+            "coverage_hits",
+            "coverage_total",
+            "folds"
+          ],
+          "properties": {
+            "role": {
+              "$ref": "#/$defs/role"
+            },
+            "loss_sum": {
+              "$ref": "#/$defs/decimal"
+            },
+            "loss_denominator": {
+              "type": "integer"
+            },
+            "coverage_hits": {
+              "type": "integer"
+            },
+            "coverage_total": {
+              "type": "integer"
+            },
+            "folds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/foldMetric"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sourceManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "catalogs",
+        "csv_contract",
+        "data_snapshot",
+        "rule",
+        "selection_declaration"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_source_manifest"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "catalogs": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "prediction_path",
+              "sha256",
+              "feature_count"
+            ],
+            "properties": {
+              "role": {
+                "$ref": "#/$defs/role"
+              },
+              "prediction_path": {
+                "$ref": "#/$defs/repoPath"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "feature_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2
+              }
+            }
+          }
+        },
+        "csv_contract": {
+          "$ref": "#/$defs/csvContract"
+        },
+        "data_snapshot": {
+          "$ref": "#/$defs/dataSnapshot"
+        },
+        "rule": {
+          "$ref": "#/$defs/ruleBinding"
+        },
+        "selection_declaration": {
+          "$ref": "#/$defs/repoBinding"
+        }
+      }
+    },
+    "selectionDeclaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "source_manifest_repo_relative_path",
+        "rule_version",
+        "selected_role",
+        "metrics_by_role",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_selection_declaration"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "source_manifest_repo_relative_path": {
+          "const": "artifacts/cp2/blind/source-manifest.json"
+        },
+        "rule_version": {
+          "const": "cp2-four-catalog-exact-v1"
+        },
+        "selected_role": {
+          "$ref": "#/$defs/role"
+        },
+        "metrics_by_role": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/roleMetric"
+          }
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "publicManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "blind_schema",
+        "protocol_tool",
+        "anonymous_csv",
+        "labels",
+        "folds",
+        "header",
+        "quantiles",
+        "canonical_sort",
+        "row_count_per_label",
+        "blindness_strength",
+        "prepared_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_public_manifest"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "blind_schema": {
+          "$ref": "#/$defs/repoBinding"
+        },
+        "protocol_tool": {
+          "$ref": "#/$defs/repoBinding"
+        },
+        "anonymous_csv": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "labels": {
+          "const": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "folds": {
+          "const": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "header": {
+          "const": [
+            "label",
+            "fold_id",
+            "row_id",
+            "y",
+            "q025",
+            "q05",
+            "q10",
+            "q25",
+            "q50",
+            "q75",
+            "q90",
+            "q95",
+            "q975"
+          ]
+        },
+        "quantiles": {
+          "const": [
+            "q025",
+            "q05",
+            "q10",
+            "q25",
+            "q50",
+            "q75",
+            "q90",
+            "q95",
+            "q975"
+          ]
+        },
+        "canonical_sort": {
+          "const": [
+            "fold_id_numeric",
+            "row_id_utf8_bytes",
+            "label_A_to_D"
+          ]
+        },
+        "row_count_per_label": {
+          "type": "integer",
+          "minimum": 5
+        },
+        "blindness_strength": {
+          "const": "COOPERATIVE_PROCEDURAL"
+        },
+        "prepared_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "commitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "domain",
+        "commitment_sha256",
+        "seed_bits",
+        "permutation_version",
+        "public_manifest",
+        "anonymous_csv",
+        "blind_schema",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_commitment"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "domain": {
+          "const": "PJM-CP2-BLIND-FOUR-CATALOG-COMMITMENT-v1"
+        },
+        "commitment_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "seed_bits": {
+          "const": 256
+        },
+        "permutation_version": {
+          "const": "sha256-fisher-yates-v1"
+        },
+        "public_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "anonymous_csv": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "blind_schema": {
+          "$ref": "#/$defs/repoBinding"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "preparationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "public_manifest",
+        "commitment",
+        "anonymous_csv",
+        "custody_record_sha256",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_preparation_receipt"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "public_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "commitment": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "anonymous_csv": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "custody_record_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "metricsRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "public_manifest",
+        "commitment",
+        "anonymous_csv",
+        "blind_schema",
+        "recompute_command",
+        "metrics",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_metrics"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "public_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "commitment": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "anonymous_csv": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "blind_schema": {
+          "$ref": "#/$defs/repoBinding"
+        },
+        "recompute_command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/labelMetric"
+          }
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "blind_component",
+        "integration",
+        "anonymous_csv",
+        "public_manifest",
+        "commitment",
+        "preparation_receipt",
+        "metrics",
+        "blind_schema",
+        "recompute_command",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_freeze"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "blind_component": {
+          "$ref": "#/$defs/blindComponentProvenance"
+        },
+        "integration": {
+          "$ref": "#/$defs/integrationIdentity"
+        },
+        "anonymous_csv": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "public_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "commitment": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "preparation_receipt": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "metrics": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "blind_schema": {
+          "$ref": "#/$defs/repoBinding"
+        },
+        "recompute_command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "reveal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "freeze",
+        "mapping",
+        "preparation_record",
+        "source_manifest",
+        "selection_declaration",
+        "sources",
+        "commitment",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_reveal"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "freeze": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "mapping": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "preparation_record": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "source_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "selection_declaration": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "$ref": "#/$defs/role"
+              },
+              "path": {
+                "$ref": "#/$defs/absolutePath"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "commitment": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "freeze",
+        "reveal",
+        "source_manifest",
+        "selection_declaration",
+        "metrics_by_role",
+        "decision",
+        "computed_winner",
+        "declared_winner",
+        "declaration_metrics_match",
+        "match",
+        "reason",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_adjudication"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "freeze": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "reveal": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "source_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "selection_declaration": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "metrics_by_role": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/roleMetric"
+          }
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        },
+        "computed_winner": {
+          "$ref": "#/$defs/role"
+        },
+        "declared_winner": {
+          "$ref": "#/$defs/role"
+        },
+        "declaration_metrics_match": {
+          "type": "boolean"
+        },
+        "match": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "preparationInvocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "argv",
+        "identity_inputs",
+        "runtime_tool_sha256",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_preparation_invocation"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "argv": {
+          "type": "array",
+          "minItems": 11,
+          "maxItems": 11,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "identity_inputs": {
+          "const": [
+            "artifacts/cp2/blind/source-manifest.json",
+            "artifacts/cp2/blind/selection-declaration.json"
+          ]
+        },
+        "runtime_tool_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "mappingPreimage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "seed_hex",
+        "permutation_version",
+        "mapping",
+        "source_manifest_sha256",
+        "selection_declaration_sha256",
+        "blind_schema_sha256",
+        "protocol_tool_sha256",
+        "preparation_invocation_sha256",
+        "public_manifest_sha256",
+        "anonymous_csv_sha256"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_mapping_preimage"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "seed_hex": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "permutation_version": {
+          "const": "sha256-fisher-yates-v1"
+        },
+        "mapping": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "role",
+              "feature_count",
+              "source_sha256"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/label"
+              },
+              "role": {
+                "$ref": "#/$defs/role"
+              },
+              "feature_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "source_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "source_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "selection_declaration_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "blind_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "protocol_tool_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preparation_invocation_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "public_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "anonymous_csv_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "custody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "candidate",
+        "component",
+        "mapping_preimage",
+        "preparation_invocation",
+        "source_manifest",
+        "selection_declaration",
+        "sources",
+        "public_manifest",
+        "commitment",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "cp2_blind_custody"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidate"
+        },
+        "component": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id",
+            "piece",
+            "evidence_ref",
+            "support_root"
+          ],
+          "properties": {
+            "run_id": {
+              "$ref": "#/$defs/identifier"
+            },
+            "piece": {
+              "$ref": "#/$defs/identifier"
+            },
+            "evidence_ref": {
+              "type": "string"
+            },
+            "support_root": {
+              "$ref": "#/$defs/absolutePath"
+            }
+          }
+        },
+        "mapping_preimage": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "preparation_invocation": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "source_manifest": {
+          "$ref": "#/$defs/custodyRepoCopy"
+        },
+        "selection_declaration": {
+          "$ref": "#/$defs/custodyRepoCopy"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "repo_relative_path",
+              "custody_path",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "$ref": "#/$defs/role"
+              },
+              "repo_relative_path": {
+                "$ref": "#/$defs/repoPath"
+              },
+              "custody_path": {
+                "$ref": "#/$defs/absolutePath"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "public_manifest": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "commitment": {
+          "$ref": "#/$defs/hashBinding"
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    },
+    "custodyRepoCopy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_relative_path",
+        "custody_path",
+        "sha256"
+      ],
+      "properties": {
+        "repo_relative_path": {
+          "$ref": "#/$defs/repoPath"
+        },
+        "custody_path": {
+          "$ref": "#/$defs/absolutePath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "checkpoint",
+        "blind_review_id",
+        "started_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "enum": [
+            "cp2_blind_recompute_attempt",
+            "cp2_blind_freeze_attempt",
+            "cp2_blind_reveal_attempt",
+            "cp2_blind_adjudicate_attempt"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "checkpoint": {
+          "const": "CP-2"
+        },
+        "blind_review_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      }
+    }
+  }
+}
