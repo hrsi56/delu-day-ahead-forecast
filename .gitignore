@@ -8,7 +8,6 @@ __pycache__/
 
 # Track B control and local evidence state (never committed or exposed to Critics)
 /workbench.md
-/.gauntlet/
 
 # Secrets
 .env
@@ -16,4 +15,6 @@ __pycache__/
 
 # Scratch data / probe evidence (not committed — see docs/spike-feed-status.md for summaries)
 data/
-Icon
+
+# macOS custom folder icon (filename ends with CR)
+Icon?

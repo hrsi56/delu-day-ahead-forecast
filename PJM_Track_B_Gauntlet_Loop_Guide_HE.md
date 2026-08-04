@@ -4,7 +4,22 @@
 תאריך: 4 באוגוסט 2026
 מקור השיטה: Matt Shumer, [How to Run a Gauntlet Loop](https://somethingbig.ai/gauntlet-loop)
 תחום המסמך: Track B בלבד — ה־Capstone ההנדסי של חיזוי מחירי Day-Ahead באזור DE-LU
-מצב חוזה: חבילת v6.4 / map v6 / חוזי התפקיד והתבניות כוללים את הקשחת provenance/Git ואת פרוטוקול CP-2 label-blind four-catalog מ־4 באוגוסט; operational validation ממתין לריצה מאושרת. M1 טרם התחיל ו־CP-1 עדיין ממתין לבריף מה־Orchestrator
+מצב חוזה: **מסמך מקור היסטורי — אינו החוזה הפעיל.**
+
+> **הודעת החלפה — 5 באוגוסט 2026.** המסמך הזה נשמר כתיעוד הקלט שהוביל להחלטות, ולא כחוזה עדכני.
+> החלקים שאומצו והם היום חלק מהתוכנית המאושררת: **AMD-1** (חלון audit קדימה ל־DM confirmatory),
+> **AMD-2** (ledger אמפירי של זמינות לפני ה־gate), **AMD-3** (experiment lineage במקום ספירת runs),
+> ההפרדה **Builder ≠ Critic** עם הקשר טרי ו־Integration Critic נפרד, פיצול **M0.5/CP-0 + B-Man-PIT**,
+> ותקרת active-elapsed לכל checkpoint.
+>
+> החלקים שנגנזו במפורש ב־5 באוגוסט 2026 (Option C): כל שכבת ה־protocol tooling —
+> `gauntlet_protocol.py`, שתי סכימות ה־JSON, שני קבצי הבדיקות, ה־snapshot helper ו־`cp2-blind-protocol.md`
+> (10,587 שורות). הן הוחלפו ב־**תבניות verdict ב־Markdown** וב־**בידוד באמצעות `git worktree` רגיל**.
+> בפרט: אין evidence root, אין integrity manifest, אין `refs/gauntlet-evidence/*`, ואין commitment /
+> custody / seed. עיוורון ב־CP-2 הוא **פרוצדורלי** בלבד (`COOPERATIVE_PROCEDURAL`).
+>
+> העוגן הפעיל הוא **`capstone_V6_5.md`**; החוזה התפעולי הוא **`engineering-role.md`**; התבניות הן
+> **`docs/track-b/gauntlet-templates.md`**. נימוקי ההחלטה מתועדים ב־`docs/track-b/rule-inventory.md`.
 
 ---
 

@@ -14,7 +14,7 @@ Full engineering plan: **`capstone_V6_5.md`**. Data: ENTSO-E Transparency Platfo
 
 M0 and the data-feed de-risking spike are complete. The v6.4 governance/statistical-audit amendment is ratified and version-controlled; its operational validation begins only when an authorized CP-1 run starts. **M1 has not started and CP-1 is pending.** Track B begins only from a one-repository/one-checkpoint Orchestrator brief and returns one consolidated evidence packet before any later checkpoint is authorized. The superseded full v6.3 plan remains available in Git history at `0b9c5cb:capstone_V6_3.md`.
 
-Execution contract: `engineering-role.md`. Canonical boundary templates: `docs/track-b/gauntlet-templates.md`. Critic snapshot helper: `scripts/gauntlet_critic_snapshot.sh`. These files do not themselves activate CP-1.
+Execution contract: `engineering-role.md`. Canonical boundary templates: `docs/track-b/gauntlet-templates.md`. Critic isolation is a plain `git worktree` at the candidate SHA; verdicts are markdown under `docs/track-b/evidence/<checkpoint>/`. These files do not themselves activate CP-1.
 
 ## Setup
 

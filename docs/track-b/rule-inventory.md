@@ -491,3 +491,72 @@ risk approaches zero. Otherwise it stands as accepted, disclosed, dormant surplu
 
 `69 passed, 18 subtests passed` — green before Stage 1, after Stage 1, and after the revert of the
 attempted crypto work. No test, schema, or documentation file was modified by Phase 2.
+
+---
+
+# OPTION C — machinery retired, governance kept — 2026-08-05
+
+Owner executive call, superseding the Phase 2 abort. The protocol tooling is deleted outright; the
+governance it was built to enforce is retained in full and now rests on markdown verdicts and plain
+`git worktree` isolation.
+
+**Rationale of record.** The sprint's value came from the **external review of the plan**
+(AMD-1/2/3) and from **Builder≠Critic separation**. The tooling assumed a threat model of agent
+*malice*; the real risk is agent *error*, and error is caught by a fresh Critic inspecting the real
+artifact — not by hash-chaining a verdict record. 10,587 lines of incidental protocol were not worth
+carrying through five checkpoints.
+
+## Deleted — 10,587 lines
+
+`scripts/gauntlet_protocol.py` 5,625 · `schemas/cp2-blind-four-catalog.schema.json` 1,578 ·
+`tests/test_gauntlet_protocol.py` 1,235 · `tests/test_cp2_blind_protocol.py` 1,074 ·
+`schemas/critic-verdict.schema.json` 626 · `scripts/gauntlet_critic_snapshot.sh` 276 ·
+`docs/track-b/cp2-blind-protocol.md` 173
+
+## Rule ledger — 138 → 105
+
+**33 rules retire** with the machinery. Every one was a property *of the tooling*, not of the
+review.
+
+| Domain | Retired | Why |
+|---|---|---|
+| **C** — Critic isolation | C5, C6, C7, C9, C11 | Tool-generated integrity manifest, pre-review manifest hash, `PYTHONPYCACHEPREFIX` routing, `verify` refusal conditions, manifest authorship ban. All existed to serve the manifest. |
+| **D** — Verdict record | D4, D5, D6 | Two-record separation, `scaffold-verdict`, `validate-verdict`/JSON schema. |
+| **G** — Evidence storage | G2, G3, G4, G5, G6, G9 | Init lock, run-root file set, support-root containment/hashing, lineage-manifest substitution, unhashed-prose rule, new-run-on-change. |
+| **H** — Candidate refs | H1–H6 (all) | The `refs/gauntlet-evidence/*` namespace. The checkpoint branch keeps candidate SHAs reachable. |
+| **M** — Evidence freezing | M1–M4 (all) | `freeze-evidence`. Verdicts are now committed directly, so nothing needs thawing. |
+| **O** — CP-2 protocol | O2, O3, O4, O5, O7, O8, O9, O11, O12 | Machine contract, commitment, custody modes, seed, identity scan, freeze/reveal command chain, copy-not-hard-link, `ENFORCED_READ_ISOLATION` eligibility, fail-closed restart machinery. |
+
+**8 rules are reduced, not retired:** C1 (brief contents, now checkable by hand), C8 (post-review
+`git status` instead of a manifest re-verify), C13, D1 (markdown fields), G1 (`docs/track-b/evidence/`),
+G7, G8, O1.
+
+**105 rules survive untouched** — every rule in domains **A** (authority), **B** (execution loop),
+**E** (staleness), **F** (mandatory surfaces and M1 oracles), **I** (ceiling), **J** (workbench),
+**K** (terminal conditions), **L** (Return Packet), **N** (receipt), **P** (constraints), plus the
+scientific CP-2 bar **O6** and **O10**.
+
+**Nothing in `capstone_V6_5.md`'s checklists changed.** No bar, checklist item, invariant, or
+acceptance criterion was weakened. The retired rules were process mechanics owned by
+`engineering-role.md` and the templates.
+
+## What replaces them
+
+| Was | Is |
+|---|---|
+| `init-evidence` + run/support roots + integrity manifest | `git worktree add --detach <path> <sha>` and `git status --porcelain` |
+| `create-ref` / `verify-ref` / `refs/gauntlet-evidence/*` | the candidate SHA cited in the verdict, reachable on `gauntlet/<checkpoint>` |
+| `scaffold-verdict` + `validate-verdict` + JSON schema | the markdown verdict template, `gauntlet-templates.md` §5 |
+| `freeze-evidence` | verdicts committed under `docs/track-b/evidence/<checkpoint>/` as they are written |
+| commitment / custody / reveal chain | the Lead withholds the mapping file and reveals after the Blind verdict; `COOPERATIVE_PROCEDURAL`, never claimed as enforced |
+
+## Verification
+
+Orphan sweep clean across every live document: `README.md`, `AGENTS.md`, `orchestrator-role.md`,
+`engineering-role.md`, `capstone_V6_5.md`, `gauntlet-templates.md`, `progress.md`. Historical
+session-log entries and the amendment sheets retain their references by design — they are the record
+of what was built and why it was removed.
+
+No test suite remains; `tests/` is empty until M1 creates the real invariant tests that
+`capstone_V6_5.md` §9.4 requires. That is the correct state: there is no longer any protocol to test,
+and the tests that existed tested only the protocol.

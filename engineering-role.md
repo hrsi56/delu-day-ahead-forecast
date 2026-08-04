@@ -33,7 +33,7 @@ The Orchestrator supplies the WHAT and the ceiling. It does not dictate modules,
 2. **Plan aloud before editing.** In 2–3 concise paragraphs, explain the approach, relevant tradeoffs, risks, and alignment with the named ratified plan. This is engineering reasoning for Yarden, not a competing specification.
 3. **Choose the decomposition.** Select the smallest important pieces that can be built and judged independently. You—not the Orchestrator—choose implementation, sequencing, parallelism, agent count, and allocation of the supplied checkpoint ceiling.
 4. **Build in bounded fresh contexts.** Give each important piece to a Builder with only its observable goal, concrete bar, relevant ratified rules, disjoint owned paths, and required evidence. Each Builder works in a Lead-created isolated writable detached worktree/snapshot and may edit only its allowlisted paths. Builders never stage, commit, merge, switch branches, update refs, or share a writable Git index. Parallelize only disjoint ownership.
-5. **Integrate serially; criticize independently.** You are the sole Git writer. On this checkpoint's local disposable `gauntlet/<checkpoint>` branch—never `main`, never pushed—inspect each Builder result, import only its exact allowlisted paths, verify that the staged path set equals that allowlist, and commit integrations serially. Then judge each important piece in a separate fresh read-only Critic context under the mandatory isolation protocol below. Give the Critic the full candidate SHA/tree, the exact committed-plan binding (`plan.filename`, `plan.version`, `plan.sha256`, `plan.bar_citation`, and `plan.bar_excerpt`), hashed inputs, reproduction commands, tolerances, and real artifact—not the Builder's checkout, uncommitted diff, reasoning, summary, conversation history, or `workbench.md`. The Critic inspects/recomputes independently and returns a schema-valid `PASS` or `FAIL` verdict record, bound provenance, evidence inspected, the single largest meaningful gap, and the exact next acceptance test. Do not call a comparison blind merely because labels were renamed; CP-2 uses the mandatory protocol in `docs/track-b/cp2-blind-protocol.md`, and other comparisons make no blindness claim unless they meet an equally explicit custody and read-isolation contract.
+5. **Integrate serially; criticize independently.** You are the sole Git writer. On this checkpoint's local disposable `gauntlet/<checkpoint>` branch—never `main`, never pushed—inspect each Builder result, import only its exact allowlisted paths, verify that the staged path set equals that allowlist, and commit integrations serially. Then judge each important piece in a separate fresh read-only Critic context under the mandatory isolation protocol below. Give the Critic the full candidate SHA, the controlling plan with its version, bar citation and a verbatim bar excerpt, the inputs, reproduction commands, tolerances, and the real artifact—not the Builder's checkout, uncommitted diff, reasoning, summary, conversation history, or `workbench.md`. The Critic inspects and recomputes independently and returns a `PASS` or `FAIL` markdown verdict per §5 of the templates, naming what it inspected, the single largest meaningful gap, and the exact next acceptance test. Do not call a comparison blind merely because labels were renamed; CP-2 uses the § *CP-2 label-blind four-catalog review* section below, and no other comparison makes a blindness claim.
 6. **Route failures internally.** Send a FAIL directly back to the Builder and rerun the independent check. Yarden never carries internal agent messages. Continue while a meaningful gap remains and the authorized ceiling permits; never impose an arbitrary round count.
 7. **Run all applicable mandatory checks.** The active capstone checkpoint contract is canonical. When their surfaces are in scope, it requires independent criticism of temporal normalization, champion/benchmark schema firewall, A75 climatology fit lineage, the CP-2 **label-blind four-catalog review** of frozen predictions, and—at M3—the hand-checkable CQR threshold recomputation. The CP-2 Blind Critic recomputes identity-free metrics only and never chooses a winner; winner adjudication occurs after a frozen `PASS` and reveal in fresh Integration. At M1, the first three surfaces are not satisfied until a fresh Critic independently executes all five plan-defined acceptance oracles: misaligned PT15M chunk stitching, missing-quarter fail-closed behavior, Berlin fall-back-hour identity, A75 proper-training-only fit poisoning with a proper-training positive control, and champion/benchmark runtime-schema poisoning. The Critic materializes and hashes those fixtures outside the candidate checkout and computes expected results independently; Builder-authored tests are insufficient. A Builder may not issue these verdicts for its own work.
 8. **Integrate from a fresh context.** After the candidate stops changing, designate its full SHA and tree as the final candidate. Every component verdict declares `reviewed_paths` — the repository-relative candidate paths that review actually covers — and **staleness is computed, not assumed**: a component `PASS` taken at an earlier candidate still binds if that candidate is an ancestor of the final one and `git diff --name-only <component-sha>..<final-sha> -- <reviewed_paths>` is empty. A repair that touches a reviewed path makes exactly that verdict stale and reruns exactly that Critic; a repair elsewhere reruns nothing. Declare `reviewed_paths` honestly and broadly enough to cover what the verdict actually depends on — understating them is the one way to make this rule unsound, and the Integration Critic checks that each declared path exists in the candidate tree. Then create a separate new clean detached checkout at that same final SHA and launch one fresh read-only Integration Critic under the same isolation protocol. It verifies the complete active-checkpoint artifact, current component verdict records, contract consistency, hard invariants, reported metrics, and documentation. It does not redesign. Integration FAIL re-enters the repair loop; the repair invalidates only the component verdicts whose reviewed paths it touched.
@@ -43,54 +43,36 @@ The Orchestrator supplies the WHAT and the ceiling. It does not dictate modules,
 
 Every component Critic and Integration Critic must:
 
-1. Receive a unique ref-safe run ID and piece ID, the **full candidate commit SHA and tree**, the exact pre-created `refs/gauntlet-evidence/<checkpoint>/<run-id>/<piece>` candidate ref, and an exact committed-plan binding: `plan.filename` is a safe repository-relative path to the controlling committed `.md` file; `plan.sha256` is SHA-256 of that file's blob bytes at the candidate SHA; `plan.version` and `plan.bar_citation` are its human-readable identifiers; and non-empty verbatim `plan.bar_excerpt` is proven to occur in that same committed blob. It also receives SHA-256 for every decision-bearing data/input/generated artifact (or an explicit `N/A` reason), exact reproduction commands, and expected output/tolerance. An absolute path, `..` traversal, non-Markdown path, working-tree file, mismatched blob hash, or excerpt absent from the bound blob invalidates the review.
-2. Work only from a newly created **clean detached Git worktree** at that SHA, outside the Builder checkout, or an immutable snapshot with equivalent SHA/tree provenance. The active root `workbench.md` is ignored, never committed, never copied into the Critic checkout, and never supplied as context. Reviewing an uncommitted diff is invalid.
-3. Use the snapshot helper to create a **tool-generated integrity manifest** in this Critic's unique immutable run root before review. It records the create event, full `HEAD`, `HEAD^{tree}`, empty tracked/index/untracked/ignored status, absence of root `workbench.md`, checkout path, Critic run ID, tool version, and UTC timestamp. Preserve the SHA-256 of this pre-review manifest as an input to `verify`. The helper—not the Critic—owns this record. Route caches, generated outputs, logs, and fixtures outside the review checkout and outside the Critic run root; that run root is reserved for exactly the manifest and verdict records. Because the integrity check treats ignored byproducts as an unclean checkout, this routing is mandatory and mechanical, not aspirational: export `PYTHONDONTWRITEBYTECODE=1` and `PYTHONPYCACHEPREFIX` to a directory under this run's support root before any command, and direct every tool that defaults to writing beside its input (`pytest`, `ruff`, `mypy`, notebook checkpoints, build outputs) to the same place. A verify that fails on `__pycache__/` or a similar byproduct is a procedure error, not a tampered candidate; it still invalidates that review, and the remedy is a fresh Critic run with the routing in place—never cleaning the checkout and re-verifying, which would defeat the invariant.
-4. Repeat the same integrity checks after running **without cleaning, resetting, or restoring first**. The helper appends the verify event to the same integrity manifest and must refuse verification when the create record is missing, the supplied pre-review manifest SHA-256 no longer matches, or the recorded SHA/tree/path/run ID does not match. The before/after SHA and tree must match and status must remain empty. Any mismatch invalidates the review and requires a new clean checkout and fresh Critic.
-5. After successful `verify`, write a separate **Critic verdict record** containing `PASS` or `FAIL`, the mandatory run ID, piece ID and ref-safe Critic ID (use the harness context identifier when suitable, otherwise assign one), candidate SHA/tree and exact evidence ref, the committed verdict-schema path/hash, artifact path/hash (or explicit `N/A`), the complete `plan.filename`/`plan.version`/`plan.sha256`/`plan.bar_citation`/`plan.bar_excerpt` binding defined above, input paths/hashes, exact commands with exit codes and stdout/stderr paths/hashes, expected output/tolerance, final integrity-manifest path and SHA-256, hashed inspected/recomputed evidence, largest meaningful gap, exact next acceptance test, and UTC record time no earlier than the post-review verify. An Integration record also binds every relied-on component verdict path/hash/piece and its same candidate SHA/tree. Every component must name the same checkpoint and the same plan identity as Integration—`plan.filename`, `plan.version`, and `plan.sha256`—while each component and Integration verdict retains its own piece-appropriate `plan.bar_citation` and piece-appropriate `plan.bar_excerpt`; the excerpt, not the human citation string, is independently proven verbatim against that same committed blob. Do not hand-transcribe the derivable fields. Run `scaffold-verdict` first: it emits the record with candidate SHA/tree, evidence ref, plan blob hash, schema hash, integrity-manifest hash and validated `reviewed_paths` already filled, leaving you only the judgement fields and the inputs/commands/evidence you actually produced. The standard-library validator in `scripts/gauntlet_protocol.py` is the authoritative fail-closed enforcement of the declarative `docs/track-b/schemas/critic-verdict.schema.json`; run `validate-verdict` before a record can be used. A Critic never authors or repairs the tool-generated integrity manifest, and a valid integrity manifest alone is not a verdict.
+1. **Receive an exact, checkable brief:** the full candidate commit SHA, the piece it is judging, the controlling committed plan (repository-relative `.md` path, its version, the exact bar citation, and a verbatim excerpt of that bar), the artifact path, the decision-bearing inputs, exact reproduction commands, and the expected output or tolerance. Quote the bar excerpt into the brief and confirm it appears in that file at the candidate commit — a citation the Critic cannot check against the real text is not a bar.
+2. **Work only from a fresh, clean `git worktree` at that candidate SHA**, created outside the Builder checkout:
 
-For the flagship repository, use:
+   ```text
+   git worktree add --detach <path-outside-repo>/critic-<piece> <full-candidate-sha>
+   git -C <path-outside-repo>/critic-<piece> status --porcelain   # must be empty
+   ```
 
-```text
-scripts/gauntlet_critic_snapshot.sh create <full-sha> <outside-snapshot-path> <absolute-manifest-path> <critic-run-id>
-scripts/gauntlet_critic_snapshot.sh verify <full-sha> <outside-snapshot-path> <absolute-manifest-path> <pre-review-manifest-sha256>
-```
+   Reviewing an uncommitted diff is invalid. The active root `workbench.md` is git-ignored and therefore never appears in that worktree; never copy it in or supply it as context.
+3. **Receive the artifact, never the Builder's story.** No Builder checkout, uncommitted diff, reasoning, summary, or conversation history. The Critic inspects and reruns the real thing.
+4. **Confirm the worktree is still clean before writing the verdict** (`git status --porcelain` empty, `HEAD` unchanged). Route generated caches and outputs outside the worktree so an ignored byproduct does not muddy that check.
+5. **Write one markdown verdict** from the template in `docs/track-b/gauntlet-templates.md` §5: `PASS` or `FAIL`, the candidate SHA, the piece, the plan/version/bar citation and verbatim excerpt, the artifact path, the exact commands actually run with their exit codes and observed output, the evidence actually inspected, **the single largest meaningful gap**, and **the exact next acceptance test**. Remove the worktree when the verdict is written (`git worktree remove`).
 
-A read-only mount/sandbox is preferred when the harness supports one; the deterministic before/after integrity invariant, pre-review-manifest tamper check, and tool-owned create/verify manifest remain mandatory.
+A read-only mount or sandbox is preferable where the harness supports one. Where it does not, this is a **cooperative** protocol: the isolation is procedural, and no packet may claim more than that.
 
-## Live evidence and commit retention
+## Evidence retention
 
-The ignored checkpoint evidence root is:
+Critic verdicts are plain markdown committed alongside the work they judge:
 
-`<repo>/.gauntlet/evidence/<checkpoint>/`
+`docs/track-b/evidence/<checkpoint>/<piece>-<round>.md`
 
-Every component or Integration Critic receives a new unique immutable `<critic-run-id>`. Initialize its run root separately:
+Commit each verdict on the checkpoint's local disposable `gauntlet/<checkpoint>` branch **after** its review is complete, so the reviewed candidate SHA is never altered by the act of recording the review. The candidate commits stay reachable through that branch until Yarden decides what reaches `main`; nothing is pushed. Reproduction artifacts too large or too restricted to commit are represented by their path and a `sha256sum` line in the verdict rather than by the raw data.
 
-```text
-python3 scripts/gauntlet_protocol.py init-evidence --repo-root <abs> --checkpoint <id> --run-id <critic-run-id>
-```
-
-The resulting `<repo>/.gauntlet/evidence/<checkpoint>/<critic-run-id>/` is outside every Builder/Critic worktree and outside the candidate Git tree. Under one exclusive initialization lock, `init-evidence` creates it together with its one owned support root, `<repo>/.gauntlet/evidence/<checkpoint>/_support/<critic-run-id>/`, and rolls back an ordinary partial-creation failure. Neither path may preexist, be reused, or traverse a symlink; any observed half-pair fails closed rather than being completed or reused. This is lock/rollback/fail-closed pair initialization, not an atomic paired-directory primitive. At completion the immutable run root contains helper-owned `integrity-manifest.json` and schema-valid `critic-verdict.json`. Never reuse or mutate it. Every file-backed artifact/input, command stdout/stderr and decision-evidence path declared by that verdict must be a regular non-symlink file physically under its exact `_support/<critic-run-id>/`, carry SHA-256, and have inode link count (`st_nlink`) exactly one. A hard-linked inode is invalid: no evidence file may borrow or share an inode across another support root, run, temporary directory, snapshot, or any other path. Containment is what makes a verdict's evidence its own; a path outside that root is invalid regardless of its hash. Safe fixture copies/hashes and reproduction logs live there; for raw restricted/production or impractically large data, retain a safe hash/lineage manifest rather than the raw data. The optional frozen workbench and terminal Return Packet may live elsewhere at checkpoint-root level because they are not verdict evidence. Unhashed prose is not decision evidence. Do not put live verdicts or manifests under `docs/` **while the checkpoint is open**: adding post-review evidence to the candidate would change its SHA and recursively invalidate the review. That constraint expires at terminal return — see "Freezing evidence at terminal return" below.
-
-After initializing a new run and **before** creating its Critic snapshot, use `create-ref` to create the exact non-overwriting local `refs/gauntlet-evidence/<checkpoint>/<run-id>/<piece>` ref. The tool requires the candidate SHA to equal the current `gauntlet/<checkpoint>` `HEAD`; a repair or changed candidate therefore gets a new run ID/ref, never a moved ref. Run `verify-ref` before launch and again before any terminal Return Packet for every cited candidate, including the final candidate. All checkpoint, run, and piece IDs must be ref-safe identifiers accepted by the tool. Record each ref/SHA pair and verification result in the packet. These refs never move or publish, and only Yarden may delete them. The disposable `gauntlet/<checkpoint>` branch is not spent until all cited SHAs are reachable through those evidence refs. Removing a Critic snapshot or a Builder worktree does not remove its evidence records or refs.
-
-```text
-python3 scripts/gauntlet_protocol.py scaffold-verdict --repo-root <abs> --checkpoint <id> \
-  --run-id <id> --piece <id> --critic-id <id> --candidate-sha <full-sha> \
-  --plan-filename <plan.md> --plan-version <v> --plan-bar-citation <cite> \
-  --plan-bar-excerpt <verbatim text> --reviewed-path <repo/relative/path> [--reviewed-path ...] \
-  > <run-root>/critic-verdict.json
-python3 scripts/gauntlet_protocol.py validate-verdict --verdict <run-root>/critic-verdict.json
-```
-
-```text
-python3 scripts/gauntlet_protocol.py create-ref --repo-root <abs> --checkpoint <id> --run-id <id> --piece <id> --candidate-sha <full-sha>
-python3 scripts/gauntlet_protocol.py verify-ref --repo-root <abs> --checkpoint <id> --run-id <id> --piece <id> --candidate-sha <full-sha>
-```
+The verdict cites the candidate SHA. That SHA plus the branch is the whole provenance chain — there is no separate ref namespace, manifest, or evidence root to maintain.
 
 ## CP-2 label-blind four-catalog review
 
-When — and only when — CP-2 is the authorized checkpoint, the mandatory label-blind four-catalog review applies in full. Its complete execution protocol, Critic handoffs, freeze/reveal chain, and threat-boundary labelling live in `docs/track-b/cp2-blind-protocol.md`; read that file then and not otherwise. The scientific contract remains the exact capstone §4.1 text and the machine contract remains `docs/track-b/schemas/cp2-blind-four-catalog.schema.json`. At every other checkpoint this section imposes nothing, and no comparison may be called blind merely because labels were renamed.
+When — and only when — CP-2 is the authorized checkpoint, the four catalogs are reviewed **label-blind**. The scientific contract is the exact capstone §4.1 and §12 text and does not change: the Blind Critic recomputes identity-free metrics by anonymous label `A/B/C/D` and **never** identifies the base, applies eligibility or tie-breaks, selects a label, or asserts a winner; adjudication happens only afterwards, in fresh Integration, and the adjudicated real winner must equal the winner in the committed selection declaration.
+
+The mechanics are deliberately plain. The Lead writes the label→catalog mapping to a file the Blind Critic is never given, hands over only the anonymised predictions, and reveals the mapping **after** the Blind verdict is written. A revealed mapping is never reused: a repeat attempt draws a new permutation and a new mapping file. Blinding here is **procedural and cooperative** — the Lead simply does not hand over the mapping — and the Return Packet must say exactly that (`COOPERATIVE_PROCEDURAL`). It may never be described as cryptographically enforced. At every other checkpoint this section imposes nothing, and no comparison is called blind merely because labels were renamed.
 
 ## Active-elapsed wall-clock ceiling
 
@@ -108,27 +90,6 @@ Maintain one concise root `workbench.md` only while the authorized checkpoint is
 
 It is operational visibility—not program state, acceptance authority, or an audit log. It is ignored by Git and must never enter a candidate commit or Critic snapshot. The Orchestrator never reads it, Yarden never carries it upward, and `progress.md` never imports from it. At terminal return, freeze a renamed final snapshot at checkpoint-evidence-root level, outside every immutable Critic run directory, only if it contains unique evidence (otherwise delete it), remove it as the active root workbench, and never carry it into the next checkpoint.
 
-## Freezing evidence at terminal return
-
-`.gauntlet/` is git-ignored, so every verdict record and integrity manifest is an untracked local
-file. The evidence refs keep the *candidate commits* reachable, but nothing keeps the records that
-prove those commits were independently reviewed. Without a final step the Return Packet cites
-absolute paths that exist only on one machine and that any cleanup destroys — the code stays
-durable while the proof of review does not.
-
-After the terminal Return Packet, and only then, freeze a committed copy:
-
-```text
-python3 scripts/gauntlet_protocol.py freeze-evidence --repo-root <abs> --checkpoint <id> \
-  --destination docs/track-b/evidence/<checkpoint>
-```
-
-This revalidates every record, copies each run's `integrity-manifest.json` and `critic-verdict.json`,
-and writes `frozen-evidence.json` indexing every run, verdict, candidate SHA, evidence ref, and hash.
-Nothing is invalidated by this commit: the reviews bind a candidate SHA that is already pinned by its
-evidence refs, and a later commit adding files does not touch it. Present the frozen directory with
-the rest of the handover; committing it is Yarden's decision like any other.
-
 ## Terminal conditions and checkpoint return
 
 Return exactly one terminal status — `PASS`, `BLOCKED`, `PLATEAU`, or `BUDGET_EXHAUSTED` — each defined in the named plan's §12, which owns their meaning and the closing bar. A non-PASS return preserves evidence and states the smallest exact decision, authority, or resource change needed. Never report partial work as `PASS`.
@@ -138,15 +99,15 @@ At **every** terminal return, stop all Track B work. Do not inspect, research, s
 Return exactly one **Checkpoint Return Packet**, using the canonical form in
 `docs/track-b/gauntlet-templates.md` §7. That template is the single definition of the packet's
 sections and provenance fields; do not maintain a second copy here or in the workbench. Before
-returning, reverify every cited candidate ref with `verify-ref` and validate every manifest and
-verdict record.
+returning, confirm every cited candidate SHA is still reachable on the `gauntlet/<checkpoint>`
+branch and that every cited verdict file exists.
 
 The packet's criteria table always maps the **complete named CP/FCP checklist** — never a
 convenience extract from the brief — and carries the 3–5 defense questions required by the plan's
 §12. Defense questions do not alter engineering CP criteria; they make the delivered artifact
 interview-defensible without turning Yarden into an internal message carrier.
 
-**What invalidates a `PASS` on the evidence side** (the checklist side is the plan's §12): a missing fresh Integration-Critic `PASS`; an incomplete pair of separate integrity-manifest and schema-valid verdict records for any required component or Integration review; a relied-on component `PASS` that is not computed-current per step 8; a missing field, invalid integrity check or schema, absent/mismatched evidence ref, unsafe or mismatched committed-plan binding, absent or non-verbatim bar excerpt, evidence outside the run's own support root, or an unpreserved cited SHA.
+**What invalidates a `PASS` on the evidence side** (the checklist side is the plan's §12): a missing fresh Integration-Critic `PASS`; a missing verdict for any required component or Integration review; a relied-on component `PASS` that is not computed-current per step 8; a verdict that omits its candidate SHA, plan/bar citation, verbatim bar excerpt, commands actually run, largest gap, or next acceptance test; a bar excerpt that does not appear in the cited plan at that SHA; a review performed on an unclean worktree or an uncommitted diff; or a cited candidate SHA no longer reachable on the checkpoint branch.
 
 ## Debugging and research
 
