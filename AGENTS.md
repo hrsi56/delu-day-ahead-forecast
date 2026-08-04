@@ -11,3 +11,13 @@ This repository is shared by program orchestration and Track B engineering, but 
 `progress.md` is controlled only by the Orchestrator. An active `workbench.md` is controlled only by the Engineering Lead, exists only inside one authorized checkpoint, and is never program state.
 
 `AGENTS.md` is the single canonical root-role router. `CLAUDE.md` must contain only a pointer to this file; do not duplicate policy there.
+
+## Git and publication authority
+
+All agent work is local. Publication and mainline history belong to Yarden alone, in every role and every session. No brief, checkpoint authorization, PASS verdict, or convenience argument grants either.
+
+- **Never publish.** No `git push` under any refspec or flag, no pushed tags, no remote branch creation or deletion, no PR, release, or issue, no `gh` command or other call that mutates `origin` or GitHub state. `origin` is a public portfolio repository linked from the CV and LinkedIn; treat every push as an irreversible public act that only its owner may take.
+- **Never commit to `main`.** `main` is written by Yarden, by hand, after his own review. Agents leave their work in the working tree and do not stage, commit, amend, rebase, reset, revert, cherry-pick, drop a stash, or check out over uncommitted work on that branch.
+- **Finish, then hand over.** An agent that reaches a point where a commit would normally follow does not stop mid-task to ask. It completes every task inside its authorization, brings the tree to one coherent reviewable state, and only then presents: `git status --porcelain=v1`, `git diff --stat`, the full diff, the list of files touched with a one-line reason each, and a proposed commit message. It then stops and waits. A commit that Yarden defers or refuses is never a reason to redo, revert, or abandon completed work.
+- **Sole commit exception — Track B candidates.** Inside one authorized checkpoint, the Engineering Lead and its Builders may commit **only** on a disposable branch named `gauntlet/<checkpoint>`, because the mandatory isolated Critic protocol in `engineering-role.md` is defined on a full candidate SHA and a clean detached worktree, and reviewing an uncommitted diff is invalid there. Those commits stay local, never touch `main`, and are never pushed. The Checkpoint Return Packet reports the final candidate SHA and its branch; whether that work reaches `main` is Yarden's decision alone.
+- **Destructive local operations are owner-only too.** History rewriting, `git clean`, hard resets, branch deletion outside a spent `gauntlet/*`, and worktree removal outside the Critic snapshot lifecycle require an explicit instruction naming the operation.

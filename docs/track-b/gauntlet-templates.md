@@ -121,7 +121,7 @@ Required tests/reproduction/evidence:
 Forbidden scope:
 Target wall-clock window within the checkpoint ceiling (Lead-set, non-authoritative):
 
-Implement only this bounded piece. Commit the candidate and return its full SHA, artifact hashes, exact reproduction commands, evidence, known gaps, and active-elapsed timing. Do not self-certify the checkpoint or ask a Critic to review an uncommitted diff.
+Implement only this bounded piece. Commit the candidate on this checkpoint's `gauntlet/<checkpoint>` branch — never on `main`, never pushed (`AGENTS.md`, Git and publication authority) — and return its full SHA, artifact hashes, exact reproduction commands, evidence, known gaps, and active-elapsed timing. Do not self-certify the checkpoint or ask a Critic to review an uncommitted diff.
 ```
 
 ## 4. Independent Critic assignment
