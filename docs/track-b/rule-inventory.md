@@ -352,3 +352,142 @@ in Phase 1.
 `capstone_V6_4-to-V6_5-amendments.md` · `capstone_V6_3-to-V6_4-amendments.md` · `progress.md` ·
 `docs/track-b/rule-inventory.md` (new). **No version bump** — relocation only; no bar, checklist
 item, invariant, or acceptance criterion changed.
+
+---
+
+# Phase 2 rule-delta — 2026-08-05 — **PREPARED, NOT EXECUTED**
+
+## Count correction
+
+**There are 6 Phase-2 candidates, not 9.** The Phase-1 verification block wrote "all nine"
+while listing six IDs. The marked candidates in the tables above are and always were:
+**G2, G4, O4, O5, O9, O12.**
+
+## Per-clause disposition
+
+Retirement operates on **clauses**, not whole rules. Only one rule retires outright.
+
+| Rule | Clause | Disposition | Reasoning |
+|---|---|---|---|
+| G2 | exclusive init lock + rollback | **RETAIN** | Concurrency guard for parallel Critic init, not an isolation claim. Nothing in the docs disclaims it. |
+| G2 | run/support root may not preexist or be reused | **RETAIN** | Load-bearing: stops stale evidence masquerading as a fresh run. |
+| G2 | may not traverse a symlink | **RETAIN — reclassified** | Originally marked a candidate. It is **containment**, not secrecy: a symlinked evidence root genuinely breaks "evidence is physically where it claims." Different threat class from the disclaimed one. |
+| G2 | observed half-pair fails closed | **RETAIN** | Prevents a real half-initialized state. |
+| G2 | "not an atomic paired-directory primitive" | **RETIRE** | Disclaimer prose about what the mechanism is not. Carries no obligation. |
+| G4 | evidence physically under its own owned support root | **RETAIN** | The load-bearing half of G4. |
+| G4 | evidence carries SHA-256 | **RETAIN** | — |
+| G4 | evidence is a regular non-symlink file | **RETAIN** | Containment, as G2 above. |
+| G4 | `st_nlink` exactly one / hard-linked inode invalid | **RETIRE** | **Blocks hard-linking while copying is explicitly permitted and produces an identical hash.** The permitted alternative achieves the identical outcome, so the check constrains nothing. O9 exists solely to mandate that alternative. |
+| O4 | 256-bit secret seed | **RETIRE** | Defends against enumerating 24 permutations against the commitment — while `capstone_V6_3-to-V6_4-amendments.md:155` concedes direct custody reading by a same-UID process is unprevented. Strong lock, conceded-open door. |
+| O4 | custody `0700` / files `0600` **as a validity gate** | **RETIRE** | Same concession, stated verbatim in the docs. Creation modes stay (free); *enforcement* on read goes. |
+| O4 | fresh unbiased permutation into a create-only custody dir | **RETAIN** | This is the actual blinding. |
+| O5 | cryptographic commitment binding preimage + seed | **RETIRE** | Its purpose is proving the mapping was fixed before recompute. Under `COOPERATIVE_PROCEDURAL` a create-only record with a timestamp carries the same weight as everything else in the chain. |
+| O5 | mapping fixed **before** metrics are computed | **RETAIN** | The chronology property is the real guarantee and survives without the crypto. |
+| O9 | copy rather than hard-link on reveal | **RETIRE (whole rule)** | Exists only to enforce the `st_nlink` rule it pairs with. Moot once G4's clause goes. |
+| O12 | new seed / custody directory per attempt | **RETIRE** | Tied to the retired crypto. |
+| O12 | a revealed mapping is never reused; restart draws a new permutation | **RETAIN** | Load-bearing: a reused mapping is knowable to the next Blind Critic. |
+
+**Net: 138 → 137 rules.** One rule retires outright (**O9**); five are reduced in scope
+(**G2, G4, O4, O5, O12**); **132 are untouched**.
+
+## The scoping finding — this changes Phase 2
+
+Measuring where the retired clauses actually live:
+
+| Target | Code location | General or CP-2? |
+|---|---|---|
+| `st_nlink` @ `gauntlet_protocol.py:411` | `_read_single_link_file` | **CP-2 only** — all 15 callers are `blind-*` / custody paths |
+| `st_nlink` @ `:3622` | custody snapshot | **CP-2 only** |
+| Mode enforcement — all 6 `_require_mode` sites | `:2156, :2526, :2534, :2767, :2796, :3616` | **CP-2 only** — every site is literally labelled `"CP-2 …"` |
+| Tool-binding runtime hash | `_cp2_require_runtime_tool_hash` | **CP-2 only** |
+| Seed / commitment / custody / preimage / receipt | ~1,108 lines (19% of the file) | **CP-2 only** |
+| `_reject_symlinked_evidence_ancestors` | 4–5 general sites | General — **but RETAINED** (reclassified above) |
+
+**Every clause approved for retirement lives inside the CP-2 blind protocol.** The general-purpose
+evidence machinery contains nothing that the documents disclaim. Phase 2 is therefore not "cut the
+filesystem hardening and, separately, the CP-2 chain" — the filesystem hardening *is* the CP-2
+chain's plumbing. Phase 2 is one thing: **the CP-2 blind-protocol simplification.**
+
+## Consequences
+
+1. **Size.** ~1,108 tool lines, the 1,074-line `test_cp2_blind_protocol.py`, and the 1,578-line
+   `cp2-blind-four-catalog.schema.json`. The plan estimated Phase 2 at **~2 h**. That estimate is
+   wrong by a wide margin — the same class of error as the ~4,000-word target.
+2. **Dormancy.** None of this code executes before **M2/CP-2**, projected syllabus Month 3. CP-0
+   and CP-1 never touch it.
+3. **Signal.** CP-0 is the first real run of the *evidence and verdict* machinery — the part
+   Phase 2 does **not** touch. Running CP-0 first costs nothing here and yields the measurements
+   Phase 3 needs.
+
+## Recommendation
+
+Reorder to **CP-0 → Phase 2 (CP-2 simplification) → Phase 3**, and re-estimate Phase 2 honestly
+before executing it. Nothing is lost: the retired clauses cannot fire before Month 3.
+
+---
+
+# Phase 2 execution record — 2026-08-05 — **STAGE 1 EXECUTED · REMAINDER ABORTED**
+
+Owner authorized the "Core" variant with the time constraint removed (Gauntlet reserve raised
+24 h → 48 h). Stage 1 executed and verified. The remaining crypto pass was then **deliberately
+abandoned on the merits**, not on cost.
+
+## Executed — Stage 1, suite green throughout
+
+`scripts/gauntlet_protocol.py` **5,649 → 5,626 lines**.
+
+| Removed | Result |
+|---|---|
+| `st_nlink` gate in `_read_single_link_file` | **zero occurrences remain repo-wide** |
+| `st_nlink` + `0o600` gates in `_cp2_custody_snapshot` | snapshot keeps its functional hash/size comparison |
+| `_require_mode` — the function and **all six call sites** | zero occurrences remain |
+
+`0o600`/`0o700` **creation** modes are retained by design: creating files private is free and is not
+a validity gate. The custody snapshot's before/after comparison is retained because it proves the
+*reveal step did not mutate custody* — a correctness property of our own code, not an adversarial
+control.
+
+## Aborted — the commitment / preimage / receipt / seed layer
+
+Attempted and reverted: `cp2_permutation` → `SystemRandom().shuffle()` broke two callers, and the
+fix cascades irreducibly into `prepare`, five validators, and the freeze/reveal chain. That work is
+atomic; a half-applied record-shape change is a worse state than either endpoint.
+
+**Why it was abandoned rather than rescheduled:**
+
+1. **The remaining layer is already honestly labelled.** The §12 / `cp2-blind-protocol.md` threat
+   boundary *mandates* the `COOPERATIVE_PROCEDURAL` label absent a real read sandbox, and states
+   verbatim that the disclosure "does not turn hashes into proof of blindness." The system does not
+   overstate itself. This defuses the correctness-and-honesty argument that justified the cut — an
+   argument that **does** hold for what Stage 1 removed (silent gates, no disclosure, blocking
+   nothing since copying is permitted and yields an identical hash).
+2. **What is left is a size argument, and size does not apply here.** `gauntlet_protocol.py` is
+   **executed, never loaded into agent context** — Phase 1 already removed the prose that was
+   actually costing us. Line count in a dormant module has no effect on the Gauntlet loop.
+3. **Risk asymmetry.** The blind protocol is the machinery that makes the CP-2 four-catalog
+   selection honest — the scientific centerpiece of the strict-gate design. A refactor bug
+   introduced now would not surface until **M2/CP-2 in Month 3**, with no intervening run to catch
+   it, at the exact moment the protocol is needed. Against ~600 lines in code that is green and
+   tested, that is a bad trade.
+
+## Rule-ledger effect
+
+**No rule fully retires. The count stays 138.**
+
+| Rule | Effect |
+|---|---|
+| **G4** | `st_nlink` / hard-linked-inode clause **retired**. Containment, non-symlink, and SHA-256 clauses retained. |
+| **O4** | Custody `0700`/`0600` **enforcement** clause retired. Fresh permutation, create-only custody, and creation modes retained. |
+| **O9** | **VESTIGIAL.** Reveal still copies rather than hard-links, but the `st_nlink` rule it enforced against is gone. Harmless and correct behaviour; it is no longer load-bearing and must not be cited as a control. |
+| G2, O5, O12 | **Untouched.** Lock, no-reuse, fail-closed, commitment chronology, and never-reuse-a-revealed-mapping all stand as written. |
+
+## Re-entry trigger
+
+Do **not** schedule the crypto simplification as standalone work. If CP-2 code must be modified
+before Month 3 for any other reason, do it then — the blast radius is already open and the marginal
+risk approaches zero. Otherwise it stands as accepted, disclosed, dormant surplus.
+
+## Suite
+
+`69 passed, 18 subtests passed` — green before Stage 1, after Stage 1, and after the revert of the
+attempted crypto work. No test, schema, or documentation file was modified by Phase 2.

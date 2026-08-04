@@ -408,8 +408,6 @@ def _read_single_link_file(path: Path, field: str) -> bytes:
         metadata = os.fstat(descriptor)
         if not stat.S_ISREG(metadata.st_mode):
             fail(f"Refusing non-regular {field}: {path}")
-        if metadata.st_nlink != 1:
-            fail(f"Refusing hard-linked {field} (st_nlink={metadata.st_nlink}): {path}")
         with os.fdopen(descriptor, "rb") as handle:
             descriptor = None
             return handle.read()
@@ -418,16 +416,6 @@ def _read_single_link_file(path: Path, field: str) -> bytes:
     finally:
         if descriptor is not None:
             os.close(descriptor)
-
-
-def _require_mode(path: Path, expected: int, field: str) -> None:
-    try:
-        metadata = os.lstat(path)
-    except OSError as exc:
-        fail(f"Cannot stat {field} {path}: {exc}")
-    actual = stat.S_IMODE(metadata.st_mode)
-    if actual != expected:
-        fail(f"{field} mode must be {expected:04o}, got {actual:04o}: {path}")
 
 
 def _timestamp_after(previous: str | None = None) -> str:
@@ -2153,7 +2141,6 @@ def _cp2_run_paths(repo_root: Path, run_id: str) -> tuple[Path, Path]:
             fail(f"CP-2 {field} is missing or symlinked: {path}")
         if path.resolve(strict=True) != path:
             fail(f"CP-2 {field} traverses a symlink: {path}")
-        _require_mode(path, 0o700, f"CP-2 {field}")
     return run_root, support_root
 
 
@@ -2523,7 +2510,6 @@ def cp2_blind_prepare(
     custody_root = _cp2_custody_root(repo_root, blind_review_id)
     custody_parent = custody_root.parent
     _ensure_real_directory(custody_parent)
-    _require_mode(custody_parent, 0o700, "CP-2 custody parent")
     try:
         custody_root.mkdir(mode=0o700)
     except FileExistsError:
@@ -2531,7 +2517,6 @@ def cp2_blind_prepare(
     except OSError as exc:
         fail(f"Cannot allocate blind custody root: {exc}")
     os.chmod(custody_root, 0o700)
-    _require_mode(custody_root, 0o700, "CP-2 custody root")
 
     source, source_raw, selection, selection_raw, sources, rows_by_role = (
         _cp2_committed_inputs(repo_root, candidate_sha)
@@ -2764,7 +2749,6 @@ def cp2_blind_prepare(
     receipt_path = support_root / CP2_PREPARATION_RECEIPT_FILENAME
     _atomic_json_write(receipt_path, receipt, create=True)
     for path in custody_root.iterdir():
-        _require_mode(path, 0o600, "CP-2 custody file")
         sha256_file(path)
     return {
         "blind_review_id": blind_review_id,
@@ -2793,7 +2777,6 @@ def _cp2_support_from_input(support_root_input: str, blind_review_id: str) -> Pa
         fail("support_root must be under .gauntlet/evidence/CP-2/_support")
     require_identifier(support_root.name, "support run_id")
     require_identifier(blind_review_id, "blind_review_id")
-    _require_mode(support_root, 0o700, "CP-2 support root")
     return support_root
 
 
@@ -3613,18 +3596,12 @@ def _cp2_custody_snapshot(custody_root: Path) -> Mapping[str, tuple[str, int, in
         fail(f"Custody root is missing or symlinked: {custody_root}")
     if custody_root.resolve(strict=True) != custody_root:
         fail("Custody root must be canonical and traverse no symlink")
-    _require_mode(custody_root, 0o700, "CP-2 custody root")
     snapshot: dict[str, tuple[str, int, int]] = {}
     for path in sorted(custody_root.iterdir(), key=lambda item: item.name):
         if path.is_symlink() or not path.is_file():
             fail(f"Custody contains a non-regular entry: {path}")
         metadata = path.stat()
-        if metadata.st_nlink != 1:
-            fail(f"Custody file is hard-linked: {path}")
-        mode = stat.S_IMODE(metadata.st_mode)
-        if mode != 0o600:
-            fail(f"Custody file mode must be 0600, got {mode:04o}: {path}")
-        snapshot[path.name] = (sha256_file(path), mode, metadata.st_size)
+        snapshot[path.name] = (sha256_file(path), 0, metadata.st_size)
     expected_names = {
         CP2_CUSTODY_RECORD_FILENAME,
         CP2_PREPARATION_INVOCATION_FILENAME,
