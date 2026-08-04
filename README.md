@@ -8,7 +8,7 @@
 - **Honest limitations** — regime-shift exchangeability, the measured cost of strict-gate feasibility, the live negative-price floor, model staleness.
 - **Demo & reproduction** — the **primary link is the static GitHub Pages report** (CDN-served, no container, no cold start); the interactive marimo Space is one labeled click deeper; `make train` after checking out the tagged commit reproduces the champion from the committed snapshot. *(Live from M5.)*
 
-Full engineering plan: **`capstone_V6_4.md`**. Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.
+Full engineering plan: **`capstone_V6_5.md`**. Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.
 
 ## Current status
 

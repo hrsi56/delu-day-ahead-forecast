@@ -40,8 +40,8 @@ The complete named CP/FCP checklist remains controlling even if either extract a
 - M3 / 16 GB / CPU-only, unless the named plan says otherwise
 
 ## CP-2 mandatory label-blind four-catalog outcome (include only for CP-2)
-- Exact metric/eligibility/tie-break authority: [`capstone_V6_4.md` §4.1 exact citation + excerpt]
-- Protocol authority: [`capstone_V6_4.md` §12 CP-2 mandatory protocol exact citation + excerpt]
+- Exact metric/eligibility/tie-break authority: [`capstone_V6_5.md` §4.1 exact citation + excerpt]
+- Protocol authority: [`capstone_V6_5.md` §12 CP-2 mandatory protocol exact citation + excerpt]
 - Final candidate must commit blob-hash-bound `artifacts/cp2/blind/source-manifest.json` and `artifacts/cp2/blind/selection-declaration.json`.
 - A fresh Blind Critic must recompute and freeze identity-free `A/B/C/D` metrics without choosing a winner; no mapping reveal is allowed before its schema-valid `PASS` is frozen.
 - Fresh Integration must reveal, apply §4.1 identities/eligibility/tie-breaks, validate the chain, and match the committed winner.
@@ -147,7 +147,7 @@ python3 scripts/gauntlet_protocol.py create-ref --repo-root <abs> --checkpoint <
 python3 scripts/gauntlet_protocol.py verify-ref --repo-root <abs> --checkpoint <id> --run-id <critic-run-id> --piece <piece> --candidate-sha <full-current-head-sha>
 ```
 
-Under one exclusive initialization lock, `init-evidence` creates both `.gauntlet/evidence/<checkpoint>/<critic-run-id>/` and `.gauntlet/evidence/<checkpoint>/_support/<critic-run-id>/` and rolls back an ordinary partial-creation failure. Neither may preexist, be reused, or traverse symlinks; an observed half-pair fails closed rather than being completed or reused. This is lock/rollback/fail-closed pair initialization, not an atomic paired-directory primitive. The run directory eventually contains exactly `integrity-manifest.json` and `critic-verdict.json`. Every file-backed artifact/input, command stdout/stderr and decision-evidence path declared by this verdict must be a regular non-symlink file physically under its exact owned support root, with SHA-256 and inode link count (`st_nlink`) exactly one. A hard-linked inode is invalid: it may not be borrowed or shared across another support root, run, temporary directory, snapshot, or any other path. Use safe hash/lineage manifests instead of raw restricted or impractically large data. Prose-only observations are not evidence. A changed candidate requires a new run ID/piece/ref/support root.
+Under one exclusive initialization lock, `init-evidence` creates both `.gauntlet/evidence/<checkpoint>/<critic-run-id>/` and `.gauntlet/evidence/<checkpoint>/_support/<critic-run-id>/` and rolls back an ordinary partial-creation failure. Neither may preexist, be reused, or traverse symlinks; an observed half-pair fails closed rather than being completed or reused. This is lock/rollback/fail-closed pair initialization, not an atomic paired-directory primitive. The run directory contains `integrity-manifest.json` and `critic-verdict.json`. Every file-backed artifact/input, command stdout/stderr and decision-evidence path declared by this verdict must be a regular non-symlink file physically under its exact owned support root, with SHA-256. Use safe hash/lineage manifests instead of raw restricted or impractically large data. Prose-only observations are not evidence. A changed candidate requires a new run ID/piece/ref/support root.
 
 ## 3. Builder assignment
 
@@ -169,7 +169,7 @@ Implement only this bounded piece and edit only the allowlisted paths. Do not st
 
 ## 4. Independent Critic assignment
 
-Use a fresh read-only context and the mandatory isolated protocol in `engineering-role.md`. The Lead first initializes the run plus its uniquely owned `_support/<run-id>/` root and creates/verifies its non-moving candidate evidence ref at the exact current checkpoint `HEAD`. Then create a clean detached checkout at that full candidate SHA outside every Builder tree. `workbench.md`, Builder history, summaries, and uncommitted files must be absent. The unique Critic run root is outside the checkout and reserved for exactly the tool-generated integrity manifest and separate verdict record; every declared file-backed artifact/input/cache/output/fixture/log/evidence path belongs under the exact owned support root, carries SHA-256, and has `st_nlink == 1` so no inode is shared through a hard link.
+Use a fresh read-only context and the mandatory isolated protocol in `engineering-role.md`. The Lead first initializes the run plus its uniquely owned `_support/<run-id>/` root and creates/verifies its non-moving candidate evidence ref at the exact current checkpoint `HEAD`. Then create a clean detached checkout at that full candidate SHA outside every Builder tree. `workbench.md`, Builder history, summaries, and uncommitted files must be absent. The unique Critic run root is outside the checkout and holds the tool-generated integrity manifest and the separate verdict record; every declared file-backed artifact/input/cache/output/fixture/log/evidence path belongs under the exact owned support root and carries SHA-256.
 
 ```text
 scripts/gauntlet_critic_snapshot.sh create <full-sha> <outside-snapshot-path> <absolute-manifest-path> <critic-run-id>
@@ -194,6 +194,10 @@ Observable goal:
 Decision-bearing input/data SHA-256 (or explicit N/A):
 Exact reproduction commands:
 Expected output/tolerance:
+Mandatory cache routing (export before any command; ignored byproducts inside the checkout invalidate the review):
+- `PYTHONDONTWRITEBYTECODE=1`
+- `PYTHONPYCACHEPREFIX=<support-root>/pycache`
+- every other tool that writes beside its input directed under the support root
 Command stdout/stderr destinations (absolute, outside run root):
 Unique immutable Critic run ID: [mandatory ref-safe ID; never reused]
 Critic ID: [ref-safe harness context ID when suitable; otherwise assigned]
@@ -228,139 +232,11 @@ Inspect and rerun independently. Return:
 Do not edit the checkout or inspect any Builder workspace. Do not author or repair the helper-owned integrity manifest. Repeat every integrity check after review without cleaning/resetting first. `verify` must refuse a missing/mismatched create record or pre-review manifest hash. Write the verdict only after successful verify; its UTC record time cannot precede verify. Any changed SHA/tree/ref, nonempty status, workbench presence, invalid schema, unsafe/mismatched plan path or blob hash, `bar_excerpt` absent from the bound blob, unhashed or hard-linked support evidence, or missing provenance field invalidates the verdict. Do not redesign the project and do not accept claims that are not reproducible from the artifact.
 ```
 
-Do not describe a comparison as blind merely because labels were renamed. CP-2 must use the mandatory label-blind four-catalog protocol below. On any `FAIL`, Engineering-Lead routes the evidence directly back to a Builder and later launches a fresh critic; Yarden does not relay messages.
+Do not describe a comparison as blind merely because labels were renamed. CP-2 must use the mandatory label-blind four-catalog protocol in `docs/track-b/cp2-blind-protocol.md`. On any `FAIL`, Engineering-Lead routes the evidence directly back to a Builder and later launches a fresh critic; Yarden does not relay messages.
 
-### 4.1 CP-2 label-blind four-catalog component Critic
+### 4.1 CP-2 label-blind four-catalog review
 
-Before this handoff, the final candidate already commits `artifacts/cp2/blind/source-manifest.json` and `artifacts/cp2/blind/selection-declaration.json`. The Lead initializes only the Blind component run/ref/support and private custody; Integration is not allocated unless this component returns schema-valid `PASS`. The tool-generated identity-bearing `preparation-invocation.json` and every identity-bearing source file stay in create-only custody; any harness log remains Lead-private and outside the Blind allowlist. None enters this support root or prompt. The hidden commitment binds the exact preparation-invocation hash, and the later safe public receipt binds the exact private custody-record hash without exposing its contents. The canonical preparation invocation is:
-
-```text
-python3 scripts/gauntlet_protocol.py blind-prepare --repo-root <ABS_REPO> --candidate-sha <FULL_SHA> --blind-review-id <ID> --component-run-id <RUN>
-```
-
-```markdown
-# CP-2 Blind Metric Critic — anonymous A/B/C/D
-
-Authorized checkpoint: CP-2
-Blind review ID:
-Blind component piece/run ID:
-Pre-created candidate evidence ref:
-Full final candidate commit SHA/tree:
-Blind component run root:
-Blind component owned support root:
-Tool integrity manifest path and pre-review hash:
-Critic verdict path:
-General verdict schema path/blob SHA-256:
-CP-2 blind schema path/blob SHA-256: [docs/track-b/schemas/cp2-blind-four-catalog.schema.json]
-Canonical tool path/blob SHA-256: [scripts/gauntlet_protocol.py]
-`plan.filename` / `plan.version` / `plan.sha256`:
-Piece-specific `plan.bar_citation` / verbatim `plan.bar_excerpt`:
-Anonymous interleaved CSV path/SHA-256: [<ABS_BLIND_SUPPORT>/blind-public-input.csv]
-Identity-free public manifest path/SHA-256: [<ABS_BLIND_SUPPORT>/blind-public-manifest.json]
-Mapping commitment path/SHA-256: [<ABS_BLIND_SUPPORT>/blind-commitment.json]
-Safe identity-free preparation receipt path/SHA-256: [<ABS_BLIND_SUPPORT>/blind-preparation-receipt.json]
-Read-isolation class: ENFORCED_READ_ISOLATION | COOPERATIVE_PROCEDURAL
-Enforced allowlist/deny mechanism or candid limitation:
-
-Allowed inputs are only `blind-public-input.csv`/public manifest/commitment/safe
-receipt, the exact §4.1 metric text, the two schemas, and allowlisted recomputation
-code. Do not read custody, identity-bearing source manifest/files, committed
-selection declaration, reveal artifacts, the preparation-invocation record or
-any harness log, Builder
-material, or any Git/object-store route to those identities. A detached checkout
-with unrestricted reads does not support an enforced-blindness claim.
-
-Run the following command independently:
-
-`python3 scripts/gauntlet_protocol.py blind-recompute --support-root <ABS_BLIND_SUPPORT> --blind-review-id <ID>`
-
-Validate the exact public header
-`label,fold_id,row_id,y,q025,q05,q10,q25,q50,q75,q90,q95,q975`, canonical
-UTF-8/LF rows in sort `(fold_id numeric, row_id UTF-8 byte order, label A→D)`,
-opaque `row_id` values matching `^r[0-9]{6,}$`, matched rows/folds, all nine raw
-quantiles, finite base-10 Decimal inputs and deterministic output. A `row_id`
-contains no timestamp or catalog identity; do not receive or consult any timestamp/
-identity lookup, which remains outside the Blind context.
-Compute observation-weighted pooled/fold pinball and inclusive submitted
-q10≤y≤q90 coverage exactly. Raw crossing is allowed: do not repair, reject,
-isotonize or calibrate it at M2.
-
-Return PASS only for complete, schema-valid identity-free arithmetic. Write
-metrics by A/B/C/D in `blind-metrics.json` and bind them in the verdict's `blind_review`. Never infer
-which label is base, apply eligibility or tie-breaks, select a label, or state a
-winner. Complete snapshot verify and general verdict validation, then stop.
-Do not reveal or request the mapping.
-
-Before accepting the verdict, run the authoritative validator so that every
-support filename and raw byte stream—including invalid UTF-8—and every string
-anywhere in the verdict is rejected if it contains a semantic catalog identity
-or forbidden identity-input path.
-```
-
-The `blind_review` object must bind `blind_review_id`, `public_manifest {path, sha256}`, `commitment {path, sha256}`, `preparation_receipt {path, sha256}`, `metrics {path, sha256}`, `protocol_schema {repo_relative_path, sha256}`, `recompute_command`, and the exact constant `identity_decision: NOT_PERFORMED`. Exactly one relied-on component verdict may carry it. A paired custody+receipt rewrite after review must therefore make that verdict stale.
-
-Blind component support contains only `blind-public-input.csv`, `blind-public-manifest.json`, `blind-commitment.json`, `blind-preparation-receipt.json`, `blind-metrics.json`, and its safe recomputation command/evidence files. Its run root remains exactly the two canonical records. `0700/0600` custody is outside the Critic read context and is not evidence of adversarial secrecy from another same-UID process.
-
-## 5. CP-2 freeze and reveal handoffs
-
-### 5.1 Freeze handoff — Lead/tool only
-
-```markdown
-# CP-2 Freeze Authorization
-
-Blind review ID:
-Exact final candidate SHA/tree:
-Schema-valid Blind PASS verdict path/SHA-256:
-Blind integrity manifest path/SHA-256:
-Blind run/piece/ref:
-`blind-public-input.csv` / public manifest / commitment / metrics paths and hashes:
-
-Supply fresh Integration run and piece IDs but do not initialize either identity.
-`blind-freeze` is the sole allocator: it verifies the Blind verdict/ref first,
-rejects every pre-existing run/support/ref, and only if the verdict is schema-valid
-PASS initializes the fresh Integration run/support and creates its ref at the same
-final SHA/tree. It then writes the create-only freeze plus the five
-Integration-owned single-link copies `frozen-blind-public-input.csv`,
-`frozen-blind-public-manifest.json`, `frozen-blind-commitment.json`,
-`frozen-blind-preparation-receipt.json`, and `frozen-blind-metrics.json` into that
-Integration support root. Its `blind_component` object must exactly reproduce the
-revalidated verdict's run, piece, ref, verdict path/hash, integrity-manifest
-path/hash and record time; another hash-valid file is not a substitute. Bind all
-listed hashes and UTC chronology. On FAIL, mismatch,
-preexisting output or tamper, do not reveal; preserve every allocated or partial
-attempt and restart with wholly new IDs and custody.
-
-Canonical invocation:
-`python3 scripts/gauntlet_protocol.py blind-freeze --repo-root <ABS_REPO> --blind-review-id <ID> --component-verdict <ABS_CRITIC_VERDICT> --integration-run-id <RUN> --integration-piece <PIECE>`
-```
-
-### 5.2 Reveal handoff — Lead/tool only
-
-```markdown
-# CP-2 Reveal Authorization
-
-Blind review ID:
-Integration run/piece/ref/support:
-Freeze path/SHA-256/time:
-Private custody-record path/SHA-256, receipt-bound SHA-256, and directory/file modes:
-
-Run `blind-reveal` only after revalidating the frozen PASS and unchanged hashes.
-Read but never mutate custody. Verify invocation→public manifest→commitment→custody→receipt
-chronology, the 256-bit-seeded commitment, and that the frozen receipt's
-`custody_record_sha256` matches the exact private custody record. Compare every
-custody source role/repository path/hash with both the committed source manifest
-and the hidden mapping preimage. Copy—never
-hard-link—the mapping, all four identity-bearing canonical source prediction
-CSVs, source manifest, committed selection declaration, and safe post-reveal
-preparation record into Integration's owned support root. Create the reveal once;
-record every path/hash/time. Never write reveal material to Blind support or
-return it to the Blind Critic. Stop before adjudication.
-
-Canonical invocation:
-`python3 scripts/gauntlet_protocol.py blind-reveal --repo-root <ABS_REPO> --blind-review-id <ID> --integration-run-id <RUN>`
-```
-
-Every public/custody/metrics/freeze/reveal/adjudication record is create-only. A changed candidate/source/rule/selection, Blind `FAIL`, premature exposure, tamper, reuse or later winner mismatch preserves the old attempt but forces a new blind ID, Blind and Integration runs/refs, 256-bit seed/permutation/custody and complete chain. Never reuse a revealed mapping.
+Applicable only when CP-2 is the authorized checkpoint. The Blind component Critic assignment and the freeze/reveal handoffs are in `docs/track-b/cp2-blind-protocol.md` §2–§3.
 
 ## 6. Fresh Integration Critic
 
@@ -454,6 +330,7 @@ Status: PASS | BLOCKED | PLATEAU | BUDGET_EXHAUSTED
 Target repository:
 Ratified plan anchor:
 Checkpoint evidence root:
+Frozen evidence root (committed copy):
 Exact final candidate commit/tree/branch:
 Working-tree state:
 Data snapshot/cutoff/hash:

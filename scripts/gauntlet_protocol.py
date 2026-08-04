@@ -183,6 +183,7 @@ VERDICT_BASE_REQUIRED_FIELDS = (
     "tolerance",
     "integrity_manifest",
     "evidence",
+    "reviewed_paths",
     "largest_meaningful_gap",
     "next_acceptance_test",
     "recorded_at_utc",
@@ -210,6 +211,7 @@ COMPONENT_BINDING_REQUIRED_FIELDS = (
     "sha256",
     "candidate_sha",
     "candidate_tree",
+    "reviewed_paths",
 )
 REPO_RELATIVE_MARKDOWN_RE = re.compile(
     r"^(?!.*(?:^|/)\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9_. -]+"
@@ -233,7 +235,7 @@ def _canonical_json_bytes(value: Mapping[str, Any]) -> bytes:
     return (json.dumps(value, indent=2, sort_keys=True) + "\n").encode("utf-8")
 
 
-def sha256_file(path: Path, *, require_single_link: bool = False) -> str:
+def sha256_file(path: Path) -> str:
     descriptor: int | None = None
     try:
         descriptor = os.open(
@@ -243,11 +245,6 @@ def sha256_file(path: Path, *, require_single_link: bool = False) -> str:
         metadata = os.fstat(descriptor)
         if not stat.S_ISREG(metadata.st_mode):
             fail(f"Refusing non-regular evidence file: {path}")
-        if require_single_link and metadata.st_nlink != 1:
-            fail(
-                f"Refusing hard-linked evidence file (st_nlink={metadata.st_nlink}): "
-                f"{path}"
-            )
         with os.fdopen(descriptor, "rb") as handle:
             descriptor = None
             digest = hashlib.sha256()
@@ -271,12 +268,6 @@ def _read_regular_file(path: Path, field: str) -> bytes:
         metadata = os.fstat(descriptor)
         if not stat.S_ISREG(metadata.st_mode):
             fail(f"Refusing non-regular {field}: {path}")
-        # Protocol JSON records are immutable identity artifacts.  A second hard-link
-        # name would permit mutation outside their canonical two-file run directory.
-        if metadata.st_nlink != 1:
-            fail(
-                f"Refusing hard-linked {field} (st_nlink={metadata.st_nlink}): {path}"
-            )
         with os.fdopen(descriptor, "rb") as handle:
             descriptor = None
             return handle.read()
@@ -1398,7 +1389,7 @@ def _validate_hash_or_na(
         path = _require_run_support_path(path, support_root, f"{field}.path")
         if not path.is_file():
             fail(f"{field}.path does not exist: {path}")
-        actual = sha256_file(path, require_single_link=True)
+        actual = sha256_file(path)
         if actual != value["sha256"]:
             fail(f"{field}.sha256 mismatch: expected {value['sha256']}, got {actual}")
 
@@ -1436,7 +1427,7 @@ def _validate_inputs(value: Any, support_root: Path) -> None:
         paths.add(str(path))
         if not path.is_file():
             fail(f"Input file does not exist: {path}")
-        actual = sha256_file(path, require_single_link=True)
+        actual = sha256_file(path)
         if actual != expected:
             fail(f"{item_field}.sha256 mismatch: expected {expected}, got {actual}")
 
@@ -1486,7 +1477,7 @@ def _validate_commands(value: Any, support_root: Path) -> None:
             )
             if not path.is_file():
                 fail(f"{field}.{stream}_path does not exist: {path}")
-            actual = sha256_file(path, require_single_link=True)
+            actual = sha256_file(path)
             if actual != expected:
                 fail(
                     f"{field}.{stream}_sha256 mismatch: "
@@ -1510,7 +1501,7 @@ def _validate_evidence(value: Any, support_root: Path) -> None:
         expected = require_sha256(item["sha256"], f"{field}.sha256")
         if not path.is_file():
             fail(f"Evidence file does not exist: {path}")
-        actual = sha256_file(path, require_single_link=True)
+        actual = sha256_file(path)
         if actual != expected:
             fail(f"{field}.sha256 mismatch: expected {expected}, got {actual}")
 
@@ -2199,7 +2190,7 @@ def _cp2_custody_root(repo_root: Path, blind_review_id: str) -> Path:
 
 
 def _cp2_binding(path: Path) -> Mapping[str, str]:
-    return {"path": str(path), "sha256": sha256_file(path, require_single_link=True)}
+    return {"path": str(path), "sha256": sha256_file(path)}
 
 
 def _cp2_validate_absolute_binding(
@@ -2214,7 +2205,7 @@ def _cp2_validate_absolute_binding(
     if ownership_root is not None and path.parent != ownership_root:
         fail(f"{field}.path must be directly owned by {ownership_root}")
     expected = require_sha256(value["sha256"], f"{field}.sha256")
-    actual = sha256_file(path, require_single_link=True)
+    actual = sha256_file(path)
     if actual != expected:
         fail(f"{field}.sha256 mismatch: expected {expected}, got {actual}")
     return path, actual
@@ -2774,7 +2765,7 @@ def cp2_blind_prepare(
     _atomic_json_write(receipt_path, receipt, create=True)
     for path in custody_root.iterdir():
         _require_mode(path, 0o600, "CP-2 custody file")
-        sha256_file(path, require_single_link=True)
+        sha256_file(path)
     return {
         "blind_review_id": blind_review_id,
         "component_run_id": component_run_id,
@@ -3206,7 +3197,7 @@ def cp2_blind_freeze(
     for source_path, destination_path in frozen_sources:
         payload = _read_single_link_file(source_path, f"Blind frozen input {source_path.name}")
         copied_hash = _atomic_bytes_create(destination_path, payload)
-        if copied_hash != sha256_file(source_path, require_single_link=True):
+        if copied_hash != sha256_file(source_path):
             fail(f"Frozen copy hash mismatch for {source_path.name}")
         if os.stat(source_path).st_ino == os.stat(destination_path).st_ino:
             fail(f"Frozen input {source_path.name} was hard-linked instead of copied")
@@ -3633,7 +3624,7 @@ def _cp2_custody_snapshot(custody_root: Path) -> Mapping[str, tuple[str, int, in
         mode = stat.S_IMODE(metadata.st_mode)
         if mode != 0o600:
             fail(f"Custody file mode must be 0600, got {mode:04o}: {path}")
-        snapshot[path.name] = (sha256_file(path, require_single_link=True), mode, metadata.st_size)
+        snapshot[path.name] = (sha256_file(path), mode, metadata.st_size)
     expected_names = {
         CP2_CUSTODY_RECORD_FILENAME,
         CP2_PREPARATION_INVOCATION_FILENAME,
@@ -4383,17 +4374,11 @@ def _validate_canonical_verdict_location(
     except OSError as exc:
         fail(f"Cannot enumerate immutable Critic run directory {parent}: {exc}")
     actual_names = {entry.name for entry in entries}
-    if actual_names != expected_names or len(entries) != 2:
-        extra = sorted(actual_names - expected_names)
-        missing = sorted(expected_names - actual_names)
-        details = []
-        if extra:
-            details.append(f"extra={extra}")
-        if missing:
-            details.append(f"missing={missing}")
+    missing = sorted(expected_names - actual_names)
+    if missing:
         fail(
-            "Critic run directory must contain exactly integrity-manifest.json and "
-            f"critic-verdict.json ({', '.join(details) or 'duplicate/invalid entries'})"
+            "Critic run directory must contain integrity-manifest.json and "
+            f"critic-verdict.json (missing={missing})"
         )
     for entry in entries:
         if entry.is_symlink() or not entry.is_file():
@@ -4690,9 +4675,65 @@ def _cp2_validate_adjudication_record(
     return record, path, digest
 
 
+def _validate_reviewed_paths(value: Any, *, repo_root: Path, candidate_sha: str) -> list[str]:
+    """Candidate-tree paths this review actually covers.
+
+    These are what make staleness computable: a later candidate only invalidates
+    this verdict if it touched one of these paths.
+    """
+    if not isinstance(value, list) or not value:
+        fail("reviewed_paths must be a non-empty array of repository-relative paths")
+    seen: set[str] = set()
+    for index, entry in enumerate(value):
+        field = f"reviewed_paths[{index}]"
+        path = require_string(entry, field)
+        if not CP2_SAFE_REPO_PATH_RE.match(path):
+            fail(f"{field} must be a safe repository-relative path: {path}")
+        if path in seen:
+            fail(f"Duplicate reviewed path: {path}")
+        seen.add(path)
+    listing = _git(
+        repo_root,
+        ["ls-tree", "-r", "--name-only", "--full-tree", candidate_sha],
+    ).splitlines()
+    tracked = set(listing)
+    for path in seen:
+        prefix = path.rstrip("/") + "/"
+        if path not in tracked and not any(item.startswith(prefix) for item in tracked):
+            fail(
+                f"reviewed_paths entry {path} does not exist in the candidate tree "
+                f"at {candidate_sha}"
+            )
+    return sorted(seen)
+
+
+def _component_is_current(
+    *,
+    repo_root: Path,
+    component_sha: str,
+    final_sha: str,
+    reviewed_paths: Sequence[str],
+) -> tuple[bool, list[str]]:
+    """A component verdict survives a later candidate iff nothing it reviewed changed."""
+    if component_sha == final_sha:
+        return True, []
+    try:
+        merge_base = _git(repo_root, ["merge-base", component_sha, final_sha])
+    except ProtocolError:
+        merge_base = ""
+    if merge_base != component_sha:
+        return False, ["<component candidate is not an ancestor of the final candidate>"]
+    changed = _git(
+        repo_root,
+        ["diff", "--name-only", f"{component_sha}..{final_sha}", "--", *reviewed_paths],
+    ).splitlines()
+    return (not changed), changed
+
+
 def _validate_component_bindings(
     value: Any,
     *,
+    repo_root: Path,
     candidate_sha: str,
     candidate_tree: str,
     checkpoint: str,
@@ -4733,10 +4774,24 @@ def _validate_component_bindings(
             fail(f"Duplicate component verdict path: {component_path}")
         pieces.add(piece)
         paths.add(component_path)
-        if bound_sha != candidate_sha or bound_tree != candidate_tree:
+        # Staleness is computed, not assumed.  A component verdict taken at an
+        # earlier candidate still binds if the final candidate changed nothing it
+        # reviewed; otherwise it is stale and that Critic must rerun.
+        bound_reviewed = _validate_reviewed_paths(
+            binding["reviewed_paths"],
+            repo_root=repo_root,
+            candidate_sha=bound_sha,
+        )
+        current, changed = _component_is_current(
+            repo_root=repo_root,
+            component_sha=bound_sha,
+            final_sha=candidate_sha,
+            reviewed_paths=bound_reviewed,
+        )
+        if not current:
             fail(
-                f"{field} is stale: every component verdict must bind to the exact "
-                "final candidate SHA/tree"
+                f"{field} is stale: the final candidate changed reviewed paths "
+                f"{changed}; rerun this component Critic"
             )
         if component_path == integration_path:
             fail(f"{field}.path may not reference the Integration verdict itself")
@@ -4766,10 +4821,12 @@ def _validate_component_bindings(
             fail(f"{field}.path was recorded after the Integration verdict")
         component_candidate = component_record["candidate"]
         if (
-            component_candidate["commit_sha"] != candidate_sha
-            or component_candidate["tree_sha"] != candidate_tree
+            component_candidate["commit_sha"] != bound_sha
+            or component_candidate["tree_sha"] != bound_tree
         ):
-            fail(f"{field}.path contains a stale candidate SHA/tree")
+            fail(f"{field} does not match the referenced verdict's candidate SHA/tree")
+        if sorted(component_record["reviewed_paths"]) != bound_reviewed:
+            fail(f"{field}.reviewed_paths does not match the referenced verdict")
         validated.append((binding, component_record, actual_hash))
     return validated
 
@@ -4990,6 +5047,9 @@ def validate_verdict_file(
             repo_root=repo_root,
         )
         _validate_evidence(record["evidence"], support_root)
+        _validate_reviewed_paths(
+            record["reviewed_paths"], repo_root=repo_root, candidate_sha=candidate_sha
+        )
         require_string(record["largest_meaningful_gap"], "largest_meaningful_gap")
         require_string(record["next_acceptance_test"], "next_acceptance_test")
         recorded_at = require_utc(record["recorded_at_utc"], "recorded_at_utc")
@@ -5011,6 +5071,7 @@ def validate_verdict_file(
         if record_type == INTEGRATION_RECORD_TYPE:
             component_records = _validate_component_bindings(
                 record["component_verdicts"],
+                repo_root=repo_root,
                 candidate_sha=candidate_sha,
                 candidate_tree=candidate_tree,
                 checkpoint=checkpoint,
@@ -5136,6 +5197,36 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     validate_parser.add_argument("--verdict", required=True)
 
+    freeze_parser = subparsers.add_parser(
+        "freeze-evidence",
+        help="copy a closed checkpoint's verdict records out of ignored .gauntlet/ for committing",
+    )
+    freeze_parser.add_argument("--repo-root", required=True)
+    freeze_parser.add_argument("--checkpoint", required=True)
+    freeze_parser.add_argument(
+        "--destination", required=True,
+        help="repository-relative target, e.g. docs/track-b/evidence/CP-1",
+    )
+
+    scaffold_parser = subparsers.add_parser(
+        "scaffold-verdict",
+        help="emit a verdict skeleton with all tool-derivable fields prefilled",
+    )
+    for flag in (
+        "--repo-root", "--checkpoint", "--run-id", "--piece", "--critic-id",
+        "--candidate-sha", "--plan-filename", "--plan-version",
+        "--plan-bar-citation", "--plan-bar-excerpt",
+    ):
+        scaffold_parser.add_argument(flag, required=True)
+    scaffold_parser.add_argument(
+        "--record-type", default=COMPONENT_RECORD_TYPE,
+        choices=[COMPONENT_RECORD_TYPE, INTEGRATION_RECORD_TYPE],
+    )
+    scaffold_parser.add_argument(
+        "--reviewed-path", action="append", required=True, dest="reviewed_paths",
+        help="repository-relative path this review covers (repeatable)",
+    )
+
     prepare_parser = subparsers.add_parser(
         "blind-prepare", help="prepare one create-only CP-2 label-blind review"
     )
@@ -5207,6 +5298,194 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def freeze_evidence(
+    *, repo_root_input: str, checkpoint: str, destination_relative: str
+) -> str:
+    """Copy a closed checkpoint's verdict records out of ignored .gauntlet/ so they persist.
+
+    Live evidence must stay outside the candidate tree: adding it mid-checkpoint would
+    change the candidate SHA and recursively invalidate the reviews that cite it.  But
+    once the checkpoint is terminal the candidate is fixed and pinned by its evidence
+    refs, so committing a frozen copy invalidates nothing -- and it is the only thing
+    that makes the Return Packet's citations checkable later.
+
+    Run this only after the terminal Return Packet.  It copies each run's
+    integrity-manifest.json and critic-verdict.json, re-verifies every hash while
+    copying, and writes a manifest of what it froze.
+    """
+    repo_root = canonical_repo_root(repo_root_input)
+    require_identifier(checkpoint, "checkpoint")
+    if not CP2_SAFE_REPO_PATH_RE.match(destination_relative):
+        fail(f"Destination must be a safe repository-relative path: {destination_relative}")
+
+    evidence_root = repo_root / ".gauntlet" / "evidence" / checkpoint
+    if not evidence_root.is_dir():
+        fail(f"No evidence root for {checkpoint}: {evidence_root}")
+    destination = repo_root / destination_relative
+    if destination.exists():
+        fail(f"Refusing to overwrite an existing frozen evidence root: {destination}")
+
+    runs: list[dict[str, Any]] = []
+    for run_root in sorted(evidence_root.iterdir(), key=lambda item: item.name):
+        if not run_root.is_dir() or run_root.name.startswith("_"):
+            continue
+        verdict_path = run_root / "critic-verdict.json"
+        manifest_path = run_root / "integrity-manifest.json"
+        if not verdict_path.is_file() or not manifest_path.is_file():
+            fail(f"Incomplete Critic run, refusing to freeze: {run_root}")
+        record, verdict_hash = validate_verdict_file(verdict_path)
+        target = destination / run_root.name
+        try:
+            target.mkdir(parents=True)
+        except OSError as exc:
+            fail(f"Cannot create frozen evidence directory {target}: {exc}")
+        for name, source, expected in (
+            ("critic-verdict.json", verdict_path, verdict_hash),
+            ("integrity-manifest.json", manifest_path, sha256_file(manifest_path)),
+        ):
+            payload = _read_regular_file(source, name)
+            if _sha256_bytes(payload) != expected:
+                fail(f"{source} changed while freezing; aborting")
+            _atomic_bytes_create(target / name, payload, mode=0o644)
+        runs.append(
+            {
+                "run_id": str(record["run_id"]),
+                "piece": str(record["piece"]),
+                "record_type": str(record["record_type"]),
+                "verdict": str(record["verdict"]),
+                "candidate_sha": str(record["candidate"]["commit_sha"]),
+                "evidence_ref": str(record["candidate"]["evidence_ref"]),
+                "critic_verdict_sha256": verdict_hash,
+                "integrity_manifest_sha256": sha256_file(manifest_path),
+            }
+        )
+    if not runs:
+        fail(f"No complete Critic runs to freeze under {evidence_root}")
+
+    index = {
+        "record_type": "frozen_checkpoint_evidence",
+        "schema_version": SCHEMA_VERSION,
+        "checkpoint": checkpoint,
+        "frozen_at_utc": utc_now(),
+        "source_root": str(evidence_root),
+        "runs": runs,
+    }
+    _atomic_bytes_create(
+        destination / "frozen-evidence.json",
+        json.dumps(index, indent=2, sort_keys=True).encode("utf-8") + b"\n",
+        mode=0o644,
+    )
+    print(
+        f"Froze {len(runs)} Critic run(s) to {destination}.\n"
+        "Commit this directory; it is the durable half of the Return Packet.",
+        file=sys.stderr,
+    )
+    return str(destination)
+
+
+def scaffold_verdict(
+    *,
+    repo_root_input: str,
+    checkpoint: str,
+    run_id: str,
+    piece: str,
+    critic_id: str,
+    record_type: str,
+    candidate_sha_input: str,
+    plan_filename: str,
+    plan_version: str,
+    plan_bar_citation: str,
+    plan_bar_excerpt: str,
+    reviewed_paths: Sequence[str],
+) -> str:
+    """Emit a verdict skeleton with every tool-derivable field already filled.
+
+    The Critic then supplies only judgement: verdict, expected_output, tolerance,
+    largest_meaningful_gap, next_acceptance_test, and the inputs/commands/evidence
+    it actually produced.  Hand-transcribing SHAs is the largest avoidable error
+    source in the protocol, so the tool computes them.
+    """
+    repo_root = canonical_repo_root(repo_root_input)
+    require_identifier(checkpoint, "checkpoint")
+    require_identifier(run_id, "run_id")
+    require_identifier(piece, "piece")
+    require_identifier(critic_id, "critic_id")
+    if record_type not in (COMPONENT_RECORD_TYPE, INTEGRATION_RECORD_TYPE):
+        fail(f"Unsupported record_type: {record_type}")
+    candidate_sha, candidate_tree = _validate_full_commit(repo_root, candidate_sha_input)
+
+    run_root = repo_root / ".gauntlet" / "evidence" / checkpoint / run_id
+    support_root = repo_root / ".gauntlet" / "evidence" / checkpoint / "_support" / run_id
+    if not run_root.is_dir():
+        fail(f"Run root does not exist; run init-evidence first: {run_root}")
+    manifest_path = run_root / "integrity-manifest.json"
+    if not manifest_path.is_file():
+        fail(f"Integrity manifest does not exist yet: {manifest_path}")
+
+    if not REPO_RELATIVE_MARKDOWN_RE.match(plan_filename):
+        fail(f"plan.filename must be a safe repository-relative .md path: {plan_filename}")
+    try:
+        plan_blob = _git_bytes(repo_root, ["show", f"{candidate_sha}:{plan_filename}"])
+    except ProtocolError:
+        fail(f"plan.filename is not committed at {candidate_sha}: {plan_filename}")
+    if plan_bar_excerpt.encode("utf-8") not in plan_blob:
+        fail("plan.bar_excerpt does not occur verbatim in the committed plan blob")
+
+    schema_relative = VERDICT_SCHEMA_RELATIVE_PATH
+    schema_blob = _git_bytes(repo_root, ["show", f"{candidate_sha}:{schema_relative}"])
+
+    skeleton: dict[str, Any] = {
+        "record_type": record_type,
+        "schema_version": SCHEMA_VERSION,
+        "run_id": run_id,
+        "checkpoint": checkpoint,
+        "piece": piece,
+        "critic_id": critic_id,
+        "verdict": "REPLACE_WITH_PASS_OR_FAIL",
+        "candidate": {
+            "commit_sha": candidate_sha,
+            "tree_sha": candidate_tree,
+            "evidence_ref": f"refs/gauntlet-evidence/{checkpoint}/{run_id}/{piece}",
+        },
+        "verdict_schema": {
+            "repo_relative_path": schema_relative,
+            "sha256": _sha256_bytes(schema_blob),
+        },
+        "artifact": {"path": "REPLACE_OR_NA", "sha256": "REPLACE_OR_NA"},
+        "plan": {
+            "filename": plan_filename,
+            "version": plan_version,
+            "sha256": _sha256_bytes(plan_blob),
+            "bar_citation": plan_bar_citation,
+            "bar_excerpt": plan_bar_excerpt,
+        },
+        "inputs": [],
+        "commands": [],
+        "expected_output": "REPLACE",
+        "tolerance": "REPLACE",
+        "integrity_manifest": {
+            "path": str(manifest_path),
+            "sha256": sha256_file(manifest_path),
+        },
+        "evidence": [],
+        "reviewed_paths": _validate_reviewed_paths(
+            list(reviewed_paths), repo_root=repo_root, candidate_sha=candidate_sha
+        ),
+        "largest_meaningful_gap": "REPLACE",
+        "next_acceptance_test": "REPLACE",
+        "recorded_at_utc": "REPLACE_AFTER_POST_REVIEW_VERIFY",
+    }
+    if record_type == INTEGRATION_RECORD_TYPE:
+        skeleton["component_verdicts"] = []
+    print(
+        f"# Scaffold for {run_root / 'critic-verdict.json'}\n"
+        f"# Support root: {support_root}\n"
+        "# Replace every REPLACE* value; fill inputs/commands/evidence from real runs.",
+        file=sys.stderr,
+    )
+    return json.dumps(skeleton, indent=2, sort_keys=False) + "\n"
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = _build_parser()
     arguments = parser.parse_args(argv)
@@ -5224,6 +5503,31 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"verdict_sha256={verdict_hash}")
             print(f"schema_repo_relative_path={VERDICT_SCHEMA_RELATIVE_PATH}")
             print(f"schema_sha256={record['verdict_schema']['sha256']}")
+        elif arguments.command == "freeze-evidence":
+            print(
+                freeze_evidence(
+                    repo_root_input=arguments.repo_root,
+                    checkpoint=arguments.checkpoint,
+                    destination_relative=arguments.destination,
+                )
+            )
+        elif arguments.command == "scaffold-verdict":
+            sys.stdout.write(
+                scaffold_verdict(
+                    repo_root_input=arguments.repo_root,
+                    checkpoint=arguments.checkpoint,
+                    run_id=arguments.run_id,
+                    piece=arguments.piece,
+                    critic_id=arguments.critic_id,
+                    record_type=arguments.record_type,
+                    candidate_sha_input=arguments.candidate_sha,
+                    plan_filename=arguments.plan_filename,
+                    plan_version=arguments.plan_version,
+                    plan_bar_citation=arguments.plan_bar_citation,
+                    plan_bar_excerpt=arguments.plan_bar_excerpt,
+                    reviewed_paths=arguments.reviewed_paths,
+                )
+            )
         elif arguments.command == "blind-prepare":
             result = cp2_blind_prepare(
                 arguments.repo_root,

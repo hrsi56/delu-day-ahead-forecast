@@ -27,7 +27,8 @@
     "evidence",
     "largest_meaningful_gap",
     "next_acceptance_test",
-    "recorded_at_utc"
+    "recorded_at_utc",
+    "reviewed_paths"
   ],
   "properties": {
     "record_type": {
@@ -284,7 +285,8 @@
           "path",
           "sha256",
           "candidate_sha",
-          "candidate_tree"
+          "candidate_tree",
+          "reviewed_paths"
         ],
         "properties": {
           "piece": {
@@ -301,6 +303,16 @@
           },
           "candidate_tree": {
             "$ref": "#/$defs/gitSHA"
+          },
+          "reviewed_paths": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "description": "Repository-relative paths in the candidate tree that this review actually covers. Staleness is computed from these: a later candidate invalidates this verdict only if it changed one of them.",
+            "items": {
+              "type": "string",
+              "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!/)[A-Za-z0-9_. -]+(?:/[A-Za-z0-9_. -]+)*$"
+            }
           }
         }
       }
@@ -406,6 +418,16 @@
             }
           }
         }
+      }
+    },
+    "reviewed_paths": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Repository-relative paths in the candidate tree that this review actually covers. Staleness is computed from these: a later candidate invalidates this verdict only if it changed one of them.",
+      "items": {
+        "type": "string",
+        "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!/)[A-Za-z0-9_. -]+(?:/[A-Za-z0-9_. -]+)*$"
       }
     }
   },

@@ -1,8 +1,8 @@
 # AWS Extension Spec v1.1 — Cloud Production Backbone for the Flagship DE-LU Capstone
 
-**Status: DRAFT v1.1 (semantically rebased 2026-08-02) — PARKED as DEC-AWS, adjudicated only at G5.** If ratified, it amends `capstone_V6_4.md` to v6.5 and rebuilds map v6 to v7. Ratification package remains D1–D6 + D8; D7 is already part of the flagship. The AWS arc remains an estimated 50–70 hours, uses the existing manual health-report logic, and must re-verify prices and service availability at arc start.
+**Status: DRAFT v1.1 (semantically rebased 2026-08-02) — PARKED as DEC-AWS, adjudicated only at G5.** If ratified, it amends `capstone_V6_5.md` to v6.5 and rebuilds map v6 to v7. Ratification package remains D1–D6 + D8; D7 is already part of the flagship. The AWS arc remains an estimated 50–70 hours, uses the existing manual health-report logic, and must re-verify prices and service availability at arc start.
 
-**Semantic rebase (2026-08-02, controlling for DEC-AWS; proposal remains PARKED).** Capstone v6.4 and stage map v6 are now the operative baseline; ratification would produce capstone v6.5 and map v7. The v6.4 Gauntlet/statistical-audit contract carries forward unchanged into M6: one authorized checkpoint, one numeric active-elapsed wall-clock ceiling, clean-detached independent criticism with bound provenance/tree-integrity evidence, a separate fresh Integration review, one Return Packet, and a stop before the companion arc. Parallel contexts overlap on the single clock and never sum. Current program envelope is ~727 h; this proposal would make it ~777–797 h. Derived hints shift approximately one week: G5 ~early/mid-February 2027, CP-6 ~late-March/mid-April, companion G6 ~early/mid-June. Any legacy inline `v6.3` label below describes the origin of an unchanged rule; operative execution reads the corresponding section in v6.4.
+**Semantic rebase (2026-08-02, controlling for DEC-AWS; proposal remains PARKED).** Capstone v6.5 and stage map v7 are now the operative baseline (rebased again 2026-08-04); ratification would produce capstone v6.5 and map v7. The v6.4 Gauntlet/statistical-audit contract carries forward unchanged into M6: one authorized checkpoint, one numeric active-elapsed wall-clock ceiling, clean-detached independent criticism with bound provenance/tree-integrity evidence, a separate fresh Integration review, one Return Packet, and a stop before the companion arc. Parallel contexts overlap on the single clock and never sum. Current program envelope is ~727 h; this proposal would make it ~779–799 h. Derived hints shift approximately one week: G5 ~early/mid-February 2027, CP-6 ~late-March/mid-April, companion G6 ~early/mid-June. Any legacy inline `v6.3` label below describes the origin of an unchanged rule; operative execution reads the corresponding section in v6.4.
 
 ---
 
@@ -15,7 +15,7 @@
 - **D5 — Monitoring is custom-built, operationalized (not net-new), and manually triggered.** v6.4 already ships an **offline batch data/output-health report** (capstone §9.5); the AWS arc operationalizes that same feature-aware, calendar-matched PSI and completeness logic inside the manually-triggered `cloud-refresh` pipeline—not a schedule—while preserving the v6.4 audit/lineage contract. Not SageMaker Model Monitor, which closed to new customers on 2026-07-30.
 - **D6 — Region.** `eu-central-1` (Frankfurt) — narrative coherence with the DE-LU market ("the model runs where the market clears"). ~5–15% price premium over us-east-1; immaterial at this scale (worst case ≈ +$0.40/month). Fallback us-east-1 permitted if arc-start price re-verification surfaces a surprise; either region passes every gate in this spec.
 - **D7 — EXTRACTED & RATIFIED SEPARATELY (2026-07-20; not on this ballot).** The static first-touch page is ratified capstone scope: **capstone v6.2, M5 rider** (Pages primary URL, full §10 reading order static, no keep-alive of any kind, < 3 s CP-5 gate). This spec **assumes it as existing infrastructure**: on ratification, the arc's only D7-adjacent work is adding the **architecture section + evidence figures to the already-live static page** (AWS-2), and the two-plane invariant (D2) inherits Plane A's ratified static leg.
-- **D8 — Sequencing.** M6 runs in **program Month 6 (≈ Feb–Apr 2027)**, immediately after G5. The companion arc shifts to **Months 7–8 (≈ Apr–Jun 2027)**; **G6 moves to ~early/mid-June 2027**. Program hours: ~727 → **~777–797** (+50–70 h). Full cascade in §8.
+- **D8 — Sequencing.** M6 runs in **program Month 6 (≈ Feb–Apr 2027)**, immediately after G5. The companion arc shifts to **Months 7–8 (≈ Apr–Jun 2027)**; **G6 moves to ~early/mid-June 2027**. Program hours: ~727 → **~779–799** (+50–70 h). Full cascade in §8.
 
 ---
 
@@ -166,10 +166,10 @@ Each component: purpose → concrete configuration → steady-state cost → the
 
 ## 8. Sequencing, envelope impact, and the ratification cascade
 
-**Recommended (D8):** G5 closes ~early/mid-February 2027 exactly as currently ratified; the AWS arc does not touch the pre-G5 critical path. **Month 6 (≈ Feb–Apr):** M6 at ~10 h/week alongside active applications → **CP-6 closes ~late-March/mid-April** under §7's 6–8-week estimate. **Months 7–8 (≈ Apr–Jun):** companion FM0–FM5 remains unchanged in content; **G6 → ~early/mid-June 2027.** B-Man3 shifts to the Month-6→7 seam; B-Man-AWS lands at AWS-1 day 1. Program envelope ~727 h → **~777–797 h**.
+**Recommended (D8):** G5 closes ~early/mid-February 2027 exactly as currently ratified; the AWS arc does not touch the pre-G5 critical path. **Month 6 (≈ Feb–Apr):** M6 at ~10 h/week alongside active applications → **CP-6 closes ~late-March/mid-April** under §7's 6–8-week estimate. **Months 7–8 (≈ Apr–Jun):** companion FM0–FM5 remains unchanged in content; **G6 → ~early/mid-June 2027.** B-Man3 shifts to the Month-6→7 seam; B-Man-AWS lands at AWS-1 day 1. Program envelope ~727 h → **~779–799 h**.
 **Why AWS before the companion:** it reuses red-hot flagship context (same model, same container discipline, same data); it injects what this spec claims is the strongest CV delta ("productionized on AWS, < $5/month") into the funnel at its earliest live month — **the claim DEC-AWS exists to test**, adjudicated at G5 against the C8 target-list JD cloud-requirement ratio and live funnel/interview signal; and the companion — whose market story is classification breadth, not infrastructure — loses nothing by shipping eight weeks later, inside an already-active funnel.
 **Alternative considered and rejected:** running M6 and the companion in parallel across Months 6–7 (≈ 25–30 h/wk on top of interviews) — rejected as an overload risk exactly when interview performance matters most. It remains available as an owner override if the funnel is quiet in February.
-**Ratification cascade (fires only on "yes"):** (1) capstone v6.4 → v6.5 per §11; (2) progress.md anchors/envelope/Track B/Notes; (3) **stage map v6 → v7 rebuild**—ratifying D8 is the explicit authorization; FM rows shift one month and M6/CP-6/B-Man-AWS rows are added; (4) the companion document remains unchanged; (5) the Orchestrator envelope is updated.
+**Ratification cascade (fires only on "yes"):** (1) capstone bump per §11 — target the then-current plan version (v6.5 was taken by the 2026-08-04 capture-schedule amendment, so this cascade now produces **v6.6**); (2) progress.md anchors/envelope/Track B/Notes; (3) **stage map v7 → v8 rebuild**—ratifying D8 is the explicit authorization; FM rows shift one month and M6/CP-6/B-Man-AWS rows are added; (4) the companion document remains unchanged; (5) the Orchestrator envelope is updated.
 
 ---
 
@@ -198,7 +198,9 @@ Each component: purpose → concrete configuration → steady-state cost → the
 
 ---
 
-## 11. Exact amendment map — capstone v6.4 → v6.5
+## 11. Exact amendment map — capstone bump (baseline v6.5 → v6.6)
+
+*Numbering note (2026-08-04): this spec was written against a v6.4 baseline. The capture-schedule amendment took v6.5, so ratifying DEC-AWS now produces v6.6. The content of the map below is unaffected.*
 
 | v6.5 location | Amendment |
 |---|---|
@@ -221,7 +223,7 @@ Each component: purpose → concrete configuration → steady-state cost → the
 
 ## 12. Ratification checklist (what "yes" means)
 
-Reply approving **D1–D6 + D8** (or vetoing specific items) ratifies this spec as the **v6.5 amendment**. D7 is already ratified and live in capstone v6.4; it is not on this ballot. Partial ratification remains legitimate. DEC-AWS remains scheduled at G5 on the recorded evidence. On ratification, the §8 cascade fires and the **map v6 → v7 rebuild** needs no second go/no-go. Until then this file is a flagged, unratified draft under version precedence.
+Reply approving **D1–D6 + D8** (or vetoing specific items) ratifies this spec as the **v6.6 amendment**. D7 is already ratified and live in capstone v6.4; it is not on this ballot. Partial ratification remains legitimate. DEC-AWS remains scheduled at G5 on the recorded evidence. On ratification, the §8 cascade fires and the **map v6 → v7 rebuild** needs no second go/no-go. Until then this file is a flagged, unratified draft under version precedence.
 
 ## Caveats
 

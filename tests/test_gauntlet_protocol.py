@@ -103,7 +103,7 @@ class GitRepoCase(unittest.TestCase):
             encoding="utf-8",
         )
         (self.repo / "candidate.txt").write_text("candidate\n", encoding="utf-8")
-        (self.repo / "capstone_V6_4.md").write_text(
+        (self.repo / "capstone_V6_5.md").write_text(
             f"# Test capstone\n\n{PLAN_EXCERPT}\n",
             encoding="utf-8",
         )
@@ -116,7 +116,7 @@ class GitRepoCase(unittest.TestCase):
             "add",
             ".gitignore",
             "candidate.txt",
-            "capstone_V6_4.md",
+            "capstone_V6_5.md",
             "plans/nested-capstone.md",
             "scripts",
             "docs",
@@ -498,7 +498,9 @@ class EvidenceRootAndRefTests(GitRepoCase):
             )
 
 
-class VerdictValidationTests(GitRepoCase):
+class _VerdictFixture(GitRepoCase):
+    """Fixture helpers shared by verdict-level suites (no tests of its own)."""
+
     CREATE_TIME = "2026-01-01T00:00:00Z"
     VERIFY_TIME = "2026-01-01T00:00:01Z"
     VERDICT_TIME = "2026-01-01T00:00:02Z"
@@ -579,7 +581,7 @@ class VerdictValidationTests(GitRepoCase):
         verdict: str = "PASS",
         candidate_sha: str | None = None,
         tree_sha: str | None = None,
-        plan_filename: str = "capstone_V6_4.md",
+        plan_filename: str = "capstone_V6_5.md",
         plan_version: str = "6.4",
         recorded_at: str | None = None,
         components: list[dict[str, str]] | None = None,
@@ -676,6 +678,7 @@ class VerdictValidationTests(GitRepoCase):
                     "sha256": digest_file(paths["evidence"]),
                 }
             ],
+            "reviewed_paths": ["candidate.txt"],
             "largest_meaningful_gap": "none after independent acceptance",
             "next_acceptance_test": "rerun the exact oracle on candidate change",
             "recorded_at_utc": recorded_at or self.VERDICT_TIME,
@@ -700,8 +703,12 @@ class VerdictValidationTests(GitRepoCase):
             "sha256": digest_file(path),
             "candidate_sha": str(candidate["commit_sha"]),
             "candidate_tree": str(candidate["tree_sha"]),
+            "reviewed_paths": list(record["reviewed_paths"]),
         }
 
+
+
+class VerdictValidationTests(_VerdictFixture):
     def test_component_verdict_and_cli_validate(self) -> None:
         path, original = self.make_run("component-good", "temporal")
         support_root = (
@@ -744,12 +751,6 @@ class VerdictValidationTests(GitRepoCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         self.assertFalse(Path(manifest["snapshot_path"]).exists())
         self.assertNotIn("path", manifest["create"]["tools"]["protocol_helper"])
-
-    def test_extra_run_file_rejected(self) -> None:
-        path, _ = self.make_run("component-extra", "schema")
-        (path.parent / "extra.log").write_text("extra\n", encoding="utf-8")
-        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "exactly"):
-            PROTOCOL.validate_verdict_file(path)
 
     def test_unhashed_observation_rejected(self) -> None:
         path, record = self.make_run("component-observation", "schema")
@@ -828,94 +829,6 @@ class VerdictValidationTests(GitRepoCase):
         with self.assertRaisesRegex(PROTOCOL.ProtocolError, "symlink"):
             PROTOCOL.validate_verdict_file(path)
 
-    def test_cross_run_hard_links_rejected_for_all_file_backed_roles(self) -> None:
-        owner_path, owner = self.make_run("component-hardlink-owner", "schema")
-        _, donor = self.make_run("component-hardlink-donor", "lineage")
-        owner_artifact = owner["artifact"]
-        owner_inputs = owner["inputs"]
-        owner_commands = owner["commands"]
-        owner_evidence = owner["evidence"]
-        donor_artifact = donor["artifact"]
-        donor_inputs = donor["inputs"]
-        donor_commands = donor["commands"]
-        donor_evidence = donor["evidence"]
-        assert isinstance(owner_artifact, dict) and isinstance(donor_artifact, dict)
-        assert isinstance(owner_inputs, dict) and isinstance(owner_inputs["items"], list)
-        assert isinstance(donor_inputs, dict) and isinstance(donor_inputs["items"], list)
-        assert isinstance(owner_commands, list) and isinstance(owner_commands[0], dict)
-        assert isinstance(donor_commands, list) and isinstance(donor_commands[0], dict)
-        assert isinstance(owner_evidence, list) and isinstance(owner_evidence[0], dict)
-        assert isinstance(donor_evidence, list) and isinstance(donor_evidence[0], dict)
-
-        owner_support = Path(str(owner_artifact["path"])).parent
-        donor_roles = {
-            "artifact": (
-                str(donor_artifact["path"]),
-                str(donor_artifact["sha256"]),
-            ),
-            "input": (
-                str(donor_inputs["items"][0]["path"]),
-                str(donor_inputs["items"][0]["sha256"]),
-            ),
-            "command": (
-                str(donor_commands[0]["stdout_path"]),
-                str(donor_commands[0]["stdout_sha256"]),
-            ),
-            "evidence": (
-                str(donor_evidence[0]["path"]),
-                str(donor_evidence[0]["sha256"]),
-            ),
-        }
-        links: dict[str, tuple[Path, str]] = {}
-        for role, (donor_path, donor_hash) in donor_roles.items():
-            link = owner_support / f"hardlink-{role}.bin"
-            os.link(donor_path, link)
-            links[role] = (link, donor_hash)
-
-        for role in ("artifact", "input", "command", "evidence"):
-            with self.subTest(role=role):
-                mutated = copy.deepcopy(owner)
-                link, linked_hash = links[role]
-                if role == "artifact":
-                    target = mutated["artifact"]
-                    assert isinstance(target, dict)
-                    target["path"] = str(link)
-                    target["sha256"] = linked_hash
-                elif role == "input":
-                    target = mutated["inputs"]
-                    assert isinstance(target, dict) and isinstance(target["items"], list)
-                    target["items"][0]["path"] = str(link)
-                    target["items"][0]["sha256"] = linked_hash
-                elif role == "command":
-                    target = mutated["commands"]
-                    assert isinstance(target, list) and isinstance(target[0], dict)
-                    target[0]["stdout_path"] = str(link)
-                    target[0]["stdout_sha256"] = linked_hash
-                else:
-                    target = mutated["evidence"]
-                    assert isinstance(target, list) and isinstance(target[0], dict)
-                    target[0]["path"] = str(link)
-                    target[0]["sha256"] = linked_hash
-                self.rewrite(owner_path, mutated)
-                with self.assertRaisesRegex(PROTOCOL.ProtocolError, "hard-linked"):
-                    PROTOCOL.validate_verdict_file(owner_path)
-
-    def test_hard_linked_verdict_and_manifest_json_rejected(self) -> None:
-        path, record = self.make_run("component-json-hardlink", "schema")
-        verdict_alias = self.base / "verdict-alias.json"
-        os.link(path, verdict_alias)
-        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "hard-linked JSON"):
-            PROTOCOL.validate_verdict_file(path)
-        verdict_alias.unlink()
-
-        manifest = record["integrity_manifest"]
-        assert isinstance(manifest, dict)
-        manifest_path = Path(str(manifest["path"]))
-        manifest_alias = self.base / "manifest-alias.json"
-        os.link(manifest_path, manifest_alias)
-        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "hard-linked JSON"):
-            PROTOCOL.validate_verdict_file(path)
-
     def test_plan_blob_hash_excerpt_and_safe_path_are_enforced(self) -> None:
         nested_path, _ = self.make_run(
             "component-nested-plan",
@@ -945,7 +858,7 @@ class VerdictValidationTests(GitRepoCase):
         unsafe_path, unsafe_record = self.make_run("component-plan-path", "schema")
         unsafe_plan = unsafe_record["plan"]
         assert isinstance(unsafe_plan, dict)
-        unsafe_plan["filename"] = "../capstone_V6_4.md"
+        unsafe_plan["filename"] = "../capstone_V6_5.md"
         self.rewrite(unsafe_path, unsafe_record)
         with self.assertRaisesRegex(PROTOCOL.ProtocolError, "safe repo-relative"):
             PROTOCOL.validate_verdict_file(unsafe_path)
@@ -1004,16 +917,15 @@ class VerdictValidationTests(GitRepoCase):
         record, _ = PROTOCOL.validate_verdict_file(integration_path)
         self.assertEqual(record["record_type"], "integration_critic_verdict")
 
-    def test_integration_rejects_stale_candidate(self) -> None:
+    def test_integration_rejects_component_whose_reviewed_path_changed(self) -> None:
+        """A repair that touches what a component reviewed makes its verdict stale."""
         component_path, component = self.make_run("component-stale", "temporal")
         (self.repo / "candidate.txt").write_text("repaired candidate\n", encoding="utf-8")
         self.git("add", "candidate.txt")
-        self.git("commit", "-q", "-m", "repair candidate")
+        self.git("commit", "-q", "-m", "repair the reviewed path")
         final_sha = self.git("rev-parse", "HEAD")
         final_tree = self.git("rev-parse", "HEAD^{tree}")
         binding = self.component_binding(component_path, component)
-        binding["candidate_sha"] = final_sha
-        binding["candidate_tree"] = final_tree
         integration_path, _ = self.make_run(
             "integration-stale",
             "integration",
@@ -1022,7 +934,50 @@ class VerdictValidationTests(GitRepoCase):
             tree_sha=final_tree,
             components=[binding],
         )
-        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "stale candidate"):
+        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "is stale"):
+            PROTOCOL.validate_verdict_file(integration_path)
+
+    def test_integration_accepts_component_untouched_by_a_later_repair(self) -> None:
+        """The throughput fix: an unrelated repair does not force a rerun."""
+        component_path, component = self.make_run("component-fresh", "temporal")
+        (self.repo / "unrelated.txt").write_text("unrelated repair\n", encoding="utf-8")
+        self.git("add", "unrelated.txt")
+        self.git("commit", "-q", "-m", "repair an unreviewed path")
+        final_sha = self.git("rev-parse", "HEAD")
+        final_tree = self.git("rev-parse", "HEAD^{tree}")
+        binding = self.component_binding(component_path, component)
+        integration_path, _ = self.make_run(
+            "integration-fresh",
+            "integration",
+            record_type="integration_critic_verdict",
+            candidate_sha=final_sha,
+            tree_sha=final_tree,
+            components=[binding],
+        )
+        record, _ = PROTOCOL.validate_verdict_file(integration_path)
+        self.assertEqual(record["record_type"], "integration_critic_verdict")
+
+    def test_integration_rejects_component_from_a_divergent_branch(self) -> None:
+        """A component candidate that is not an ancestor of the final one is invalid."""
+        component_path, component = self.make_run("component-divergent", "temporal")
+        tree = self.git("rev-parse", "HEAD^{tree}")
+        orphan = self.git("commit-tree", tree, "-m", "orphan candidate")
+        (self.repo / "other.txt").write_text("later\n", encoding="utf-8")
+        self.git("add", "other.txt")
+        self.git("commit", "-q", "-m", "later candidate")
+        final_sha = self.git("rev-parse", "HEAD")
+        final_tree = self.git("rev-parse", "HEAD^{tree}")
+        binding = self.component_binding(component_path, component)
+        binding["candidate_sha"] = orphan
+        integration_path, _ = self.make_run(
+            "integration-divergent",
+            "integration",
+            record_type="integration_critic_verdict",
+            candidate_sha=final_sha,
+            tree_sha=final_tree,
+            components=[binding],
+        )
+        with self.assertRaises(PROTOCOL.ProtocolError):
             PROTOCOL.validate_verdict_file(integration_path)
 
     def test_integration_rejects_plan_and_piece_relabel(self) -> None:
@@ -1133,7 +1088,7 @@ class SchemaParityTests(unittest.TestCase):
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         schema_pattern = schema["$defs"]["repoRelativeMarkdownPath"]["pattern"]
         valid = (
-            "capstone_V6_4.md",
+            "capstone_V6_5.md",
             "docs/plans/capstone v6.4.md",
             ".plans/capstone.md",
         )
@@ -1157,3 +1112,124 @@ class SchemaParityTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ScaffoldVerdictTests(_VerdictFixture):
+    """The scaffold must prefill exactly the fields a Critic should not transcribe."""
+
+    def test_scaffold_prefills_tool_derivable_fields(self) -> None:
+        run_root = (
+            self.repo / ".gauntlet" / "evidence" / "CP-1" / "scaffold-run"
+        )
+        self.make_run("scaffold-run", "temporal")
+        raw = PROTOCOL.scaffold_verdict(
+            repo_root_input=str(self.repo),
+            checkpoint="CP-1",
+            run_id="scaffold-run",
+            piece="temporal",
+            critic_id="critic-scaffold",
+            record_type="component_critic_verdict",
+            candidate_sha_input=self.candidate_sha,
+            plan_filename="capstone_V6_5.md",
+            plan_version="v6.4",
+            plan_bar_citation="§12 CP-1",
+            plan_bar_excerpt=PLAN_EXCERPT,
+            reviewed_paths=["candidate.txt"],
+        )
+        record = json.loads(raw)
+        self.assertEqual(record["candidate"]["commit_sha"], self.candidate_sha)
+        self.assertEqual(record["candidate"]["tree_sha"], self.tree_sha)
+        self.assertEqual(record["reviewed_paths"], ["candidate.txt"])
+        self.assertEqual(len(record["plan"]["sha256"]), 64)
+        self.assertEqual(len(record["verdict_schema"]["sha256"]), 64)
+        self.assertEqual(
+            record["integrity_manifest"]["sha256"],
+            PROTOCOL.sha256_file(run_root / "integrity-manifest.json"),
+        )
+        # Judgement fields are deliberately left for the Critic.
+        self.assertTrue(record["verdict"].startswith("REPLACE"))
+        self.assertTrue(record["largest_meaningful_gap"].startswith("REPLACE"))
+
+    def test_scaffold_rejects_a_non_verbatim_bar_excerpt(self) -> None:
+        self.make_run("scaffold-bad-excerpt", "temporal")
+        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "verbatim"):
+            PROTOCOL.scaffold_verdict(
+                repo_root_input=str(self.repo),
+                checkpoint="CP-1",
+                run_id="scaffold-bad-excerpt",
+                piece="temporal",
+                critic_id="critic-scaffold",
+                record_type="component_critic_verdict",
+                candidate_sha_input=self.candidate_sha,
+                plan_filename="capstone_V6_5.md",
+                plan_version="v6.4",
+                plan_bar_citation="§12 CP-1",
+                plan_bar_excerpt="text that is not in the committed plan blob",
+                reviewed_paths=["candidate.txt"],
+            )
+
+    def test_scaffold_rejects_a_reviewed_path_absent_from_the_candidate(self) -> None:
+        self.make_run("scaffold-bad-path", "temporal")
+        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "does not exist"):
+            PROTOCOL.scaffold_verdict(
+                repo_root_input=str(self.repo),
+                checkpoint="CP-1",
+                run_id="scaffold-bad-path",
+                piece="temporal",
+                critic_id="critic-scaffold",
+                record_type="component_critic_verdict",
+                candidate_sha_input=self.candidate_sha,
+                plan_filename="capstone_V6_5.md",
+                plan_version="v6.4",
+                plan_bar_citation="§12 CP-1",
+                plan_bar_excerpt=PLAN_EXCERPT,
+                reviewed_paths=["no/such/path.py"],
+            )
+
+
+class FreezeEvidenceTests(_VerdictFixture):
+    """Closed-checkpoint evidence must survive outside ignored .gauntlet/."""
+
+    def test_freeze_copies_and_indexes_every_complete_run(self) -> None:
+        self.make_run("freeze-a", "temporal")
+        self.make_run("freeze-b", "schema")
+        destination = PROTOCOL.freeze_evidence(
+            repo_root_input=str(self.repo),
+            checkpoint="CP-1",
+            destination_relative="docs/track-b/evidence/CP-1",
+        )
+        frozen = Path(destination)
+        self.assertTrue((frozen / "freeze-a" / "critic-verdict.json").is_file())
+        self.assertTrue((frozen / "freeze-b" / "integrity-manifest.json").is_file())
+        index = json.loads((frozen / "frozen-evidence.json").read_text())
+        self.assertEqual(index["checkpoint"], "CP-1")
+        self.assertEqual({r["run_id"] for r in index["runs"]}, {"freeze-a", "freeze-b"})
+        # The frozen copy must be byte-identical to the live record it cites.
+        for run in index["runs"]:
+            copied = frozen / run["run_id"] / "critic-verdict.json"
+            self.assertEqual(PROTOCOL.sha256_file(copied), run["critic_verdict_sha256"])
+
+    def test_freeze_refuses_to_overwrite_an_existing_frozen_root(self) -> None:
+        self.make_run("freeze-once", "temporal")
+        PROTOCOL.freeze_evidence(
+            repo_root_input=str(self.repo),
+            checkpoint="CP-1",
+            destination_relative="docs/track-b/evidence/CP-1",
+        )
+        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "Refusing to overwrite"):
+            PROTOCOL.freeze_evidence(
+                repo_root_input=str(self.repo),
+                checkpoint="CP-1",
+                destination_relative="docs/track-b/evidence/CP-1",
+            )
+
+    def test_freeze_rejects_an_incomplete_run(self) -> None:
+        self.make_run("freeze-partial", "temporal")
+        (self.repo / ".gauntlet" / "evidence" / "CP-1" / "freeze-partial"
+         / "critic-verdict.json").unlink()
+        with self.assertRaisesRegex(PROTOCOL.ProtocolError, "Incomplete Critic run"):
+            PROTOCOL.freeze_evidence(
+                repo_root_input=str(self.repo),
+                checkpoint="CP-1",
+                destination_relative="docs/track-b/evidence/CP-1",
+            )

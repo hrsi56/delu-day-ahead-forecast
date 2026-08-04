@@ -130,12 +130,38 @@ check_snapshot() {
     exit 1
   }
 
-  git -C "$resolved_snapshot" diff --quiet --exit-code
-  git -C "$resolved_snapshot" diff --cached --quiet --exit-code
+  git -C "$resolved_snapshot" diff --quiet --exit-code || {
+    echo "Tracked files in the Critic snapshot were modified — candidate integrity is broken:" >&2
+    git -C "$resolved_snapshot" diff --name-status >&2
+    exit 1
+  }
+  git -C "$resolved_snapshot" diff --cached --quiet --exit-code || {
+    echo "The Critic snapshot index is not empty — candidate integrity is broken:" >&2
+    git -C "$resolved_snapshot" diff --cached --name-status >&2
+    exit 1
+  }
   snapshot_status=$(git -C "$resolved_snapshot" status --porcelain=v1 --untracked-files=all --ignored=matching)
   [[ -z "$snapshot_status" ]] || {
     echo "Critic snapshot is not clean:" >&2
     echo "$snapshot_status" >&2
+    if printf '%s\n' "$snapshot_status" |
+      grep -qE '(^|[/[:space:]"])(__pycache__|\.pytest_cache|\.ruff_cache|\.mypy_cache|\.ipynb_checkpoints)(/|$)|\.pyc"?$'; then
+      cat >&2 <<'DIAGNOSTIC'
+
+Cause: interpreter or tool byproducts were written inside the review checkout.
+This is a procedure error, not a tampered candidate — but the review is still
+invalid and the integrity invariant must not be repaired by cleaning first.
+
+Do NOT simply recreate an identical checkout: it will fail the same way.
+Relaunch a fresh Critic and run every command with cache routing outside the
+checkout, e.g.:
+
+  export PYTHONDONTWRITEBYTECODE=1
+  export PYTHONPYCACHEPREFIX="$CRITIC_SUPPORT_ROOT/pycache"
+
+See engineering-role.md, "Mandatory isolated Critic protocol", step 3.
+DIAGNOSTIC
+    fi
     exit 1
   }
 
@@ -200,6 +226,13 @@ case "$mode" in
     printf 'critic_run_id=%s\n' "$mode_input"
     printf 'integrity_manifest_path=%s\n' "$manifest_path"
     printf 'pre_review_manifest_sha256=%s\n' "$pre_review_manifest_sha256"
+    printf 'required_critic_env=PYTHONDONTWRITEBYTECODE=1\n'
+    cat >&2 <<'REMINDER'
+Run every review command with caches routed outside this checkout, or the
+post-review verify will fail on ignored byproducts and invalidate the review:
+  export PYTHONDONTWRITEBYTECODE=1
+  export PYTHONPYCACHEPREFIX="$CRITIC_SUPPORT_ROOT/pycache"
+REMINDER
     ;;
   verify)
     [[ "$mode_input" =~ ^[0-9a-f]{64}$ ]] || {

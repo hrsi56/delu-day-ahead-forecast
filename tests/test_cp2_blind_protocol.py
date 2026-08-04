@@ -63,7 +63,7 @@ class CP2RepoCase(unittest.TestCase):
         shutil.copyfile(VERDICT_SCHEMA_PATH, schema_root / VERDICT_SCHEMA_PATH.name)
         shutil.copyfile(BLIND_SCHEMA_PATH, schema_root / BLIND_SCHEMA_PATH.name)
         (self.repo / ".gitignore").write_text("/.gauntlet/\n", encoding="utf-8")
-        self.plan_path = self.repo / "capstone_V6_4.md"
+        self.plan_path = self.repo / "capstone_V6_5.md"
         self.plan_path.write_text(f"# Test plan\n\n{PLAN_EXCERPT}\n", encoding="utf-8")
 
     def tearDown(self) -> None:
@@ -169,7 +169,7 @@ class CP2RepoCase(unittest.TestCase):
             },
             "rule": {
                 "version": PROTOCOL.CP2_RULE_VERSION,
-                "plan_filename": "capstone_V6_4.md",
+                "plan_filename": "capstone_V6_5.md",
                 "plan_sha256": digest(plan_raw),
                 "bar_citation": "§4.1 exact rule",
                 "bar_excerpt": PLAN_EXCERPT,

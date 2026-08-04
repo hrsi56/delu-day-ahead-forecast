@@ -41,7 +41,7 @@ Orchestrator מחליט מה קורה עכשיו בין A/B/C
 
 היישום שאושר ונכתב ב־2 באוגוסט 2026:
 
-1. `capstone_V6_4.md` כולל forward audit window, תיקון ניסוח ה־KFT, experiment lineage ו־CQR rank fixture.
+1. `capstone_V6_5.md` כולל forward audit window, תיקון ניסוח ה־KFT, experiment lineage ו־CQR rank fixture.
 2. `engineering-role.md` כולל חוזה Gauntlet אוטונומי בתוך checkpoint מאושר; `orchestrator-role.md` כולל את חוזה הצד השני.
 3. לאפשר ל־Lead לבחור את הפירוק בזמן אמת; לא לקבע מראש 26 לולאות או שישה workstreams מחייבים. ה־Lead הוא Git writer יחיד; Builders מקבילים מבודדים ואינם מבצעים פעולת Git כותבת.
 4. לקבוע **חמישה** component-level critic surfaces חובה כאשר הם רלוונטיים, ולבצע fresh Integration Critic בכל checkpoint.
@@ -59,7 +59,7 @@ Orchestrator מחליט מה קורה עכשיו בין A/B/C
 
 נבדקו חומרי Track B והחלקים הרלוונטיים לניהולו:
 
-- `capstone_V6_4.md` וה־amendment מ־v6.3;
+- `capstone_V6_5.md` וה־amendment מ־v6.3;
 - `engineering-role.md`;
 - `README.md`;
 - `docs/spike-feed-status.md`;
@@ -269,7 +269,7 @@ v6.4 נושא קדימה את החלטת v6.3: הוא אוסר delivery-day A69 
 
 הוא אינו צריך לכתוב ל־Engineering Lead את פירוק ה־modules, סדר הקבצים או מספר הסוכנים.
 
-`capstone_V6_4.md` מכיל החלטות מתודולוגיות ratified ולכן הן constraints אמיתיים, לא micromanagement. Templates עתידיים אינם מקודדים version: כל brief מעתיק את ה־anchor המדויק מ־`progress.md`. בתוך הגבולות האלה ה־Lead בוחר את הדרך.
+`capstone_V6_5.md` מכיל החלטות מתודולוגיות ratified ולכן הן constraints אמיתיים, לא micromanagement. Templates עתידיים אינם מקודדים version: כל brief מעתיק את ה־anchor המדויק מ־`progress.md`. בתוך הגבולות האלה ה־Lead בוחר את הדרך.
 
 ### 6.3 להשתמש ברף קונקרטי
 
@@ -1090,7 +1090,7 @@ Track B has stopped. No later-checkpoint work has begun.
 
 בעל הפרויקט אישר לבצע את חבילת התיעוד במלואה, ולכן אין עוד “אישור עתידי” ל־AMD-1/2/3:
 
-- `capstone_V6_4.md` ו־`capstone_V6_3-to-V6_4-amendments.md` נכתבו;
+- `capstone_V6_5.md` ו־`capstone_V6_3-to-V6_4-amendments.md` נכתבו;
 - `engineering-role.md` ו־`orchestrator-role.md` עודכנו משני צדי הגבול;
 - map v6, `progress.md`, הסילבוס, README, NotebookLM pointer, spike note ו־AWS future cascade יושרו;
 - `AGENTS.md`/`CLAUDE.md` תוקנו ו־`docs/track-b/gauntlet-templates.md` נוצר;

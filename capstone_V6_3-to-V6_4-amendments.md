@@ -1,6 +1,6 @@
 # Capstone v6.3 → v6.4 Amendments — Gauntlet Execution Contract and Statistical-Audit Corrections
 
-*Authored and owner-ratified 2026-08-02. The changes are already applied in `capstone_V6_4.md`. This sheet is the durable change record; it does not authorize M1 execution by itself. M0 remains closed, M1 has not started, and CP-1 remains the next Track B checkpoint.*
+*Authored and owner-ratified 2026-08-02. The changes are already applied in `capstone_V6_5.md`. This sheet is the durable change record; it does not authorize M1 execution by itself. M0 remains closed, M1 has not started, and CP-1 remains the next Track B checkpoint.*
 
 ## Scope and invariants preserved
 
@@ -191,7 +191,7 @@ At issue time the Orchestrator adds the relevant reserve to the milestone's exis
 
 ## Version and distribution consequence
 
-- Current flagship anchor: `capstone_V6_4.md` v6.4.
+- Current flagship anchor: `capstone_V6_5.md` v6.4.
 - Current stage map: v6.
 - The parked DEC-AWS proposal is rebased to **v6.4 → v6.5** and, if ratified, rebuilds map **v6 → v7**.
 - `engineering-role.md`, `orchestrator-role.md`, `AGENTS.md`, `CLAUDE.md`, `program-stage-sequence.md`, `progress.md`, `README.md`, and the canonical Hebrew guide are updated in the same authoring pass.
