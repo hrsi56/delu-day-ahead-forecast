@@ -198,3 +198,22 @@ At issue time the Orchestrator adds the relevant reserve to the milestone's exis
 - Operational templates never hardcode a future version; each brief supplies the exact ratified anchor.
 
 *End of v6.3 → v6.4 amendment record.*
+
+---
+
+## Dated corrective addendum (2026-08-04) — historical record preserved
+
+The v6.4 rule recorded above — *"Any candidate change invalidates all earlier component `PASS`
+verdicts, so all required component Critics rerun; selective reuse by reviewed path is
+forbidden"* — is an accurate record of what v6.4 ratified on 2026-08-02 and is left unedited.
+
+It was **superseded on 2026-08-04** by computed staleness from declared `reviewed_paths`. The
+normative replacement, its three necessary-and-sufficient conditions, and its soundness condition
+are stated in `capstone_V6_4-to-V6_5-amendments.md` § *Corrective addendum — verdict-staleness
+propagation*, and are operative in `capstone_V6_5.md` §12, `engineering-role.md`,
+`docs/track-b/gauntlet-templates.md`, `docs/track-b/schemas/critic-verdict.schema.json`, and
+`scripts/gauntlet_protocol.py`. Read the v6.4 rule above as history, not as controlling.
+
+The `st_nlink` / hard-linked-inode requirement recorded in this sheet is **unchanged and still
+enforced**; see the same file's `st_nlink` addendum for what was actually withdrawn (the same-UID
+non-observation claim, not the mechanism).

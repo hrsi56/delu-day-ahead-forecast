@@ -40,13 +40,10 @@ The complete named CP/FCP checklist remains controlling even if either extract a
 - M3 / 16 GB / CPU-only, unless the named plan says otherwise
 
 ## CP-2 mandatory label-blind four-catalog outcome (include only for CP-2)
-- Exact metric/eligibility/tie-break authority: [`capstone_V6_5.md` §4.1 exact citation + excerpt]
-- Protocol authority: [`capstone_V6_5.md` §12 CP-2 mandatory protocol exact citation + excerpt]
-- Final candidate must commit blob-hash-bound `artifacts/cp2/blind/source-manifest.json` and `artifacts/cp2/blind/selection-declaration.json`.
-- A fresh Blind Critic must recompute and freeze identity-free `A/B/C/D` metrics without choosing a winner; no mapping reveal is allowed before its schema-valid `PASS` is frozen.
-- Fresh Integration must reveal, apply §4.1 identities/eligibility/tie-breaks, validate the chain, and match the committed winner.
+- Scientific bar (Blind Critic never adjudicates; fresh Integration must match the committed winner): [`capstone_V6_5.md` §12 CP-2 exact citation + excerpt]
+- Metric/eligibility/tie-break authority: [`capstone_V6_5.md` §4.1 exact citation + excerpt]
+- Execution protocol authority: `docs/track-b/cp2-blind-protocol.md` — read only at CP-2.
 - Machine contract/commands: `docs/track-b/schemas/cp2-blind-four-catalog.schema.json`; `blind-prepare`, `blind-recompute`, `blind-freeze`, `blind-reveal`, `blind-adjudicate` in `scripts/gauntlet_protocol.py`.
-- Threat-boundary disclosure required: `ENFORCED_READ_ISOLATION` only with a real deny/read allowlist; otherwise `COOPERATIVE_PROCEDURAL`.
 
 ## Owner-only actions already authorized
 - none / [credential, signup, browser-bound action, payment, publication]
@@ -55,9 +52,7 @@ The complete named CP/FCP checklist remains controlling even if either extract a
 Run the bounded Gauntlet autonomously under `engineering-role.md`. Return exactly one consolidated Return Packet with PASS, BLOCKED, PLATEAU, or BUDGET_EXHAUSTED. Stop all Track B work before any later checkpoint. Do not plan or begin it.
 ```
 
-Measure one active elapsed wall clock in UTC. Record raw seconds from `started_at_utc` to terminal return minus only logged, eligible all-context pauses. Parallel contexts overlap and never sum. New owner/credential/authority requirements return `BLOCKED`; they are not open-ended pauses.
-
-Invalid briefs are returned before work begins if they omit the exact anchor or full-checklist citation, authorize more than one repo/checkpoint, or lack a numeric active-elapsed wall-clock ceiling. A brief cannot reduce the checkpoint bar: that requires an owner-ratified capstone/checkpoint amendment, a new exact anchor, and then a replacement brief.
+Clock accounting is defined in `engineering-role.md` § *Active-elapsed wall-clock ceiling*; brief-validity and required fields in § *Required brief fields*; the bar a brief may not reduce is the named plan's §12. This form does not restate them.
 
 ## 2. Active `workbench.md`
 
@@ -135,9 +130,7 @@ Latest invalidation/reset reason:
 - none / exact owner or authority request
 ```
 
-The workbench is temporary engineering state, ignored by Git, and never included in a candidate commit or Critic checkout/context. The Orchestrator never reads it and `progress.md` never imports it. At terminal return, archive a renamed final snapshot at checkpoint-evidence-root level, outside every immutable Critic run directory, only if it contains unique evidence; otherwise delete it. Never carry an active root workbench into the next checkpoint.
-
-At M1, the oracle table is mandatory rather than illustrative. A fresh Critic—not the Builder—materializes and hashes every fixture outside the candidate checkout, computes the expected outcome independently, and records exact commands and results. Repository property tests do not substitute for these five verdicts.
+Workbench lifecycle is `engineering-role.md` § *`workbench.md` lifecycle*. The M1 oracle table is mandatory, not illustrative — the bar and the independent-fixture requirement are the plan's §12.
 
 For every component or Integration Critic, choose new ref-safe `<critic-run-id>` and `<piece>` values, initialize its run root, and create/verify its candidate ref at the exact current checkpoint `HEAD` **before** launching the review:
 
@@ -147,7 +140,7 @@ python3 scripts/gauntlet_protocol.py create-ref --repo-root <abs> --checkpoint <
 python3 scripts/gauntlet_protocol.py verify-ref --repo-root <abs> --checkpoint <id> --run-id <critic-run-id> --piece <piece> --candidate-sha <full-current-head-sha>
 ```
 
-Under one exclusive initialization lock, `init-evidence` creates both `.gauntlet/evidence/<checkpoint>/<critic-run-id>/` and `.gauntlet/evidence/<checkpoint>/_support/<critic-run-id>/` and rolls back an ordinary partial-creation failure. Neither may preexist, be reused, or traverse symlinks; an observed half-pair fails closed rather than being completed or reused. This is lock/rollback/fail-closed pair initialization, not an atomic paired-directory primitive. The run directory contains `integrity-manifest.json` and `critic-verdict.json`. Every file-backed artifact/input, command stdout/stderr and decision-evidence path declared by this verdict must be a regular non-symlink file physically under its exact owned support root, with SHA-256. Use safe hash/lineage manifests instead of raw restricted or impractically large data. Prose-only observations are not evidence. A changed candidate requires a new run ID/piece/ref/support root.
+Evidence-root creation, containment, hashing, and reuse rules are `engineering-role.md` § *Live evidence and commit retention*.
 
 ## 3. Builder assignment
 
@@ -169,7 +162,7 @@ Implement only this bounded piece and edit only the allowlisted paths. Do not st
 
 ## 4. Independent Critic assignment
 
-Use a fresh read-only context and the mandatory isolated protocol in `engineering-role.md`. The Lead first initializes the run plus its uniquely owned `_support/<run-id>/` root and creates/verifies its non-moving candidate evidence ref at the exact current checkpoint `HEAD`. Then create a clean detached checkout at that full candidate SHA outside every Builder tree. `workbench.md`, Builder history, summaries, and uncommitted files must be absent. The unique Critic run root is outside the checkout and holds the tool-generated integrity manifest and the separate verdict record; every declared file-backed artifact/input/cache/output/fixture/log/evidence path belongs under the exact owned support root and carries SHA-256.
+Use a fresh read-only context under `engineering-role.md` § *Mandatory isolated Critic protocol*, which defines the run/ref/support initialization order, the clean detached checkout, and what the Critic must never receive.
 
 ```text
 scripts/gauntlet_critic_snapshot.sh create <full-sha> <outside-snapshot-path> <absolute-manifest-path> <critic-run-id>
@@ -229,10 +222,10 @@ Inspect and rerun independently. Return:
 - The exact next acceptance test
 - Any scope or methodology conflict
 
-Do not edit the checkout or inspect any Builder workspace. Do not author or repair the helper-owned integrity manifest. Repeat every integrity check after review without cleaning/resetting first. `verify` must refuse a missing/mismatched create record or pre-review manifest hash. Write the verdict only after successful verify; its UTC record time cannot precede verify. Any changed SHA/tree/ref, nonempty status, workbench presence, invalid schema, unsafe/mismatched plan path or blob hash, `bar_excerpt` absent from the bound blob, unhashed or hard-linked support evidence, or missing provenance field invalidates the verdict. Do not redesign the project and do not accept claims that are not reproducible from the artifact.
+Read-only conduct, the post-review re-verify, and the full invalidation list are `engineering-role.md` § *Mandatory isolated Critic protocol* steps 2–5. Do not redesign the project and do not accept claims that are not reproducible from the artifact.
 ```
 
-Do not describe a comparison as blind merely because labels were renamed. CP-2 must use the mandatory label-blind four-catalog protocol in `docs/track-b/cp2-blind-protocol.md`. On any `FAIL`, Engineering-Lead routes the evidence directly back to a Builder and later launches a fresh critic; Yarden does not relay messages.
+On any `FAIL`, the Engineering Lead routes the evidence directly back to a Builder and later launches a fresh Critic; Yarden does not relay messages.
 
 ### 4.1 CP-2 label-blind four-catalog review
 
@@ -281,39 +274,18 @@ Adjudication/chain-validation destination:
 From this fresh read-only context, verify:
 1. every item in the complete named CP/FCP checklist against direct evidence;
 2. all current independent verdicts and mandatory surfaces;
-3. every component `PASS` used for terminal `PASS` binds its declared piece, pre-created evidence ref, the exact final candidate SHA/tree, the same checkpoint and plan identity (`plan.filename`, `plan.version`, and `plan.sha256`) as Integration, the committed schema, and current input hashes; each component and Integration verdict retains its own piece-appropriate `plan.bar_citation` and `plan.bar_excerpt`, and each excerpt is independently proven verbatim in that same committed blob; any candidate change invalidates all earlier component `PASS` verdicts, so rerun all required component Critics with new run IDs/refs rather than selectively reusing by path;
+3. every component `PASS` used for terminal `PASS` binds its declared piece, pre-created evidence ref, its own bound candidate SHA/tree, the same checkpoint and plan identity (`plan.filename`, `plan.version`, and `plan.sha256`) as Integration, the committed schema, and current input hashes; each component and Integration verdict retains its own piece-appropriate `plan.bar_citation` and `plan.bar_excerpt`, and each excerpt is independently proven verbatim in that same committed blob; staleness is computed, not assumed — a component `PASS` still binds **if and only if** its candidate is an ancestor of the final candidate and `git diff --name-only <component-sha>..<final-sha> -- <reviewed_paths>` is empty, and each stale verdict, and only a stale verdict, reruns with a new run ID/ref;
 4. cross-component contracts and hard invariants;
 5. metrics recomputed from frozen predictions where applicable;
 6. clean-environment reproducibility and documentation consistency;
 7. absence of unauthorized later-checkpoint work.
 
-For CP-2 also run
-`python3 scripts/gauntlet_protocol.py blind-adjudicate --integration-support-root <ABS_INTEGRATION_SUPPORT> --blind-review-id <ID>`
-only against Integration-owned copies and
-the frozen anonymous metrics—never custody. Verify the commitment's 256-bit-secret
-preimage, the frozen receipt-to-custody-record hash binding, exact custody-source
-path/hash equality with the committed manifest/preimage, create-only chronology,
-exact Blind verdict/integrity provenance, Blind PASS freeze strictly before reveal,
-candidate/source/rule/selection hashes, and that no old ID/map/record was reused.
-Apply the exact §4.1 identities `strict_base | residual_arm | scarcity_arm |
-both_arms`, observation-weighted nine-quantile Decimal metrics, inclusive raw
-q10≤y≤q90 coverage, exact eligibility boundaries and deterministic tie-break.
-Raw crossing remains unmodified. Verify that the adjudicated real winner equals
-the committed selection declaration. Bind the resulting adjudication record in
-the Integration verdict's `blind_adjudication`. A mismatch is FAIL; after any
-needed candidate repair, the entire Blind/freeze/reveal/Integration chain uses
-new IDs, refs, seed/permutation and custody even if candidate bytes are unchanged.
-
-Also verify that every revealed identity-bearing source CSV has exact header
-`fold_id,row_id,y,q025,q05,q10,q25,q50,q75,q90,q95,q975`, canonical sort
-`(fold_id numeric, row_id UTF-8 byte order)`, and the same opaque
-`^r[0-9]{6,}$` row universe as the anonymous input. Timestamp/identity lookup
-evidence is post-reveal Integration material and never Blind input.
-
-Repeat the full integrity check after review without cleanup. Return PASS or FAIL in a separate schema-valid Integration verdict record with the same mandatory SHA/tree/bar/input/command/integrity provenance, evidence inspected, the single largest gap, and the exact next acceptance test. Do not redesign.
-```
-
-For CP-2, `blind_adjudication` must bind `blind_review_id`, `freeze {path, sha256}`, `reveal {path, sha256}`, `adjudication {path, sha256}`, `selected_role`, and `selection_declaration {repo_relative_path, sha256}`. Terminal `PASS` requires the adjudication record's `match` to be `true`.
+For CP-2, run `blind-adjudicate` and validate the full chain exactly as specified in
+`docs/track-b/cp2-blind-protocol.md` §4–§5 (Integration-owned copies only, never custody). The
+scientific bar it must satisfy — the Blind Critic never adjudicates, and the adjudicated real winner
+must equal the committed selection declaration — is `capstone_V6_5.md` §12. `blind_adjudication`
+binds `blind_review_id`, `freeze`, `reveal`, `adjudication`, `selected_role`, and
+`selection_declaration`; terminal `PASS` requires its `match` to be `true`.
 
 ## 7. Consolidated Return Packet
 
@@ -369,7 +341,7 @@ Blind Critic did not choose or assert any winner: PASS | FAIL
 |---|---|---|
 
 ## Independent criticism
-| Piece/surface | Critic/run ID | Candidate SHA/tree (must equal final for relied-on PASS) | Artifact/input hashes | Plan filename/blob hash/version/citation + verbatim excerpt | Exact commands/tolerances | Integrity manifest path/hash | Schema-valid verdict path/hash/result | Largest gap and disposition |
+| Piece/surface | Critic/run ID | Own bound candidate SHA/tree + computed-current vs final (ancestor + no reviewed_paths changed) | Artifact/input hashes | Plan filename/blob hash/version/citation + verbatim excerpt | Exact commands/tolerances | Integrity manifest path/hash | Schema-valid verdict path/hash/result | Largest gap and disposition |
 |---|---|---|---|---|---|---|---|---|
 
 ## Engineering decisions
@@ -393,9 +365,28 @@ Track B has stopped. No later-checkpoint work has begun.
 
 ## 8. Orchestrator receipt and gate
 
-The Orchestrator checks that the packet names the authorized repo/checkpoint/anchor, maps **every item in the full named CP/FCP checklist** to direct evidence, includes all applicable independent surfaces and M1 oracles, and does not hide an open item behind `PASS`. Every required component, oracle, and Integration review must have a unique immutable Critic run root containing exactly its separate tool-generated integrity manifest and schema-valid Critic verdict record plus its uniquely owned `_support/<run-id>/` root, with their paths/hashes, piece ID, pre-created candidate ref, committed schema hash, full candidate SHA/tree and artifact/input hashes, exact commands/tolerances, exit codes, stdout/stderr hashes, and hashed evidence. Each verdict must bind the controlling committed plan through safe repository-relative `.md` `plan.filename`, exact committed-blob `plan.sha256`, human `plan.version` and `plan.bar_citation`, and a verbatim `plan.bar_excerpt` that occurs in that same blob. Every file-backed verdict path must be physically inside that exact support root, have SHA-256, and have inode link count exactly one; a hard-linked or borrowed inode is invalid. For terminal `PASS`, every relied-on component `PASS` must bind the exact final candidate SHA/tree and checkpoint and share Integration's plan identity (`plan.filename`, `plan.version`, and `plan.sha256`). Its `plan.bar_citation` and `plan.bar_excerpt` remain piece-specific; the excerpt, not the human citation string, is independently proven verbatim in that same blob, and the pair need not equal Integration's checkpoint-wide citation/excerpt. Any candidate change invalidates all earlier component `PASS` verdicts and requires all required component Critics to rerun with new run IDs/refs. The packet must also enumerate and reverify every non-moving local `refs/gauntlet-evidence/...` ref. A missing field/ref, reused/mutable run/support root, invalid schema, unsafe/mismatched plan identity, piece-inappropriate citation, non-verbatim excerpt, cross-run/external/unhashed/hard-linked evidence, dirty checkout, changed SHA/tree, or review of uncommitted work invalidates that verdict and therefore invalidates `PASS`. A supported `PASS` requires a current fresh Integration-Critic `PASS`. For a non-`PASS` return, `NOT_RUN` is acceptable only with the exact terminal reason—`BLOCKED`, `PLATEAU`, or `BUDGET_EXHAUSTED`—that prevented integration; it never implies a pass.
+The Orchestrator's receipt is a **gate on the packet, not a re-derivation of hashes**. Confirm that
+the packet:
 
-For CP-2, also reject `PASS` unless the dedicated table proves one terminal **label-blind four-catalog review** chain: final committed `artifacts/cp2/blind/source-manifest.json` and `artifacts/cp2/blind/selection-declaration.json`; anonymous `blind-public-input.csv`/`blind-public-manifest.json`/`blind-commitment.json` plus a safe receipt binding the exact private custody-record hash; Blind identity-free `blind-metrics.json` and schema-valid component `PASS` with `identity_decision: NOT_PERFORMED` and no winner assertion; fresh Integration allocation only after that PASS; `blind-freeze.json` whose component provenance exactly reproduces that validated verdict/integrity pair, plus its five Integration-owned frozen copies before `blind-reveal.json`; copied (never hard-linked) revealed mapping, all four real source CSVs, source manifest and selection declaration inside Integration's support root; `blind-adjudication.json` chain validation and winner equality; and fresh Integration `PASS` with `blind_adjudication`. All artifacts are create-only, all attempts and resets are preserved, invocation→manifest→commitment→custody→receipt and PASS→allocation→freeze→reveal chronology/hashes match, and no revealed mapping is reused. `ENFORCED_READ_ISOLATION` requires an actual read sandbox/allowlist excluding custody, identities, selection, reveal/preparation material or harness logs and Git/object-store bypass; otherwise the only honest label is `COOPERATIVE_PROCEDURAL`. Modes and hashes do not prove non-observation by another same-UID process.
+1. names the authorized repository, the single checkpoint, and the exact ratified plan anchor;
+2. maps **every item in the full named CP/FCP checklist** — not a convenience extract — to direct
+   evidence, and hides no open item behind `PASS`;
+3. includes every applicable mandatory independent surface and, at M1, all five acceptance oracles;
+4. inventories, for every required component/oracle/Integration review, a unique immutable run root
+   with its separate integrity manifest and schema-valid verdict record, its owned support root, its
+   pre-created ref/SHA pair, and their hashes;
+5. reports a successful `validate-verdict` for every verdict record and `verify-ref` for every cited
+   ref — the Orchestrator checks the **reported exit codes**, and does not recompute hashes itself;
+6. shows a current fresh Integration-Critic `PASS` for any supported `PASS`, and uses `NOT_RUN` only
+   in a non-`PASS` return that names the exact terminal reason.
+
+What invalidates an individual verdict is `engineering-role.md`; what the closing bar is, and what
+each terminal status means, is the named plan's §12. The receipt re-litigates neither.
+
+For CP-2, additionally require the §7 chain table to be complete and its blindness-strength label
+honest. The chain's own validity conditions are `docs/track-b/cp2-blind-protocol.md`; the scientific
+bar — Blind Critic never adjudicates, adjudicated winner equals the committed selection declaration —
+is `capstone_V6_5.md` §12.
 
 - Supported `PASS`: close only that checkpoint in `progress.md`, summarize its evidence, then ask Yarden explicitly whether to authorize the next stage.
 - `BLOCKED`: request only the exact owner action, authority, or plan/reality resolution named by the packet.

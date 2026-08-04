@@ -37,7 +37,7 @@ The Orchestrator supplies the WHAT and the ceiling. It does not dictate modules,
 6. **Route failures internally.** Send a FAIL directly back to the Builder and rerun the independent check. Yarden never carries internal agent messages. Continue while a meaningful gap remains and the authorized ceiling permits; never impose an arbitrary round count.
 7. **Run all applicable mandatory checks.** The active capstone checkpoint contract is canonical. When their surfaces are in scope, it requires independent criticism of temporal normalization, champion/benchmark schema firewall, A75 climatology fit lineage, the CP-2 **label-blind four-catalog review** of frozen predictions, and—at M3—the hand-checkable CQR threshold recomputation. The CP-2 Blind Critic recomputes identity-free metrics only and never chooses a winner; winner adjudication occurs after a frozen `PASS` and reveal in fresh Integration. At M1, the first three surfaces are not satisfied until a fresh Critic independently executes all five plan-defined acceptance oracles: misaligned PT15M chunk stitching, missing-quarter fail-closed behavior, Berlin fall-back-hour identity, A75 proper-training-only fit poisoning with a proper-training positive control, and champion/benchmark runtime-schema poisoning. The Critic materializes and hashes those fixtures outside the candidate checkout and computes expected results independently; Builder-authored tests are insufficient. A Builder may not issue these verdicts for its own work.
 8. **Integrate from a fresh context.** After the candidate stops changing, designate its full SHA and tree as the final candidate. Every component verdict declares `reviewed_paths` — the repository-relative candidate paths that review actually covers — and **staleness is computed, not assumed**: a component `PASS` taken at an earlier candidate still binds if that candidate is an ancestor of the final one and `git diff --name-only <component-sha>..<final-sha> -- <reviewed_paths>` is empty. A repair that touches a reviewed path makes exactly that verdict stale and reruns exactly that Critic; a repair elsewhere reruns nothing. Declare `reviewed_paths` honestly and broadly enough to cover what the verdict actually depends on — understating them is the one way to make this rule unsound, and the Integration Critic checks that each declared path exists in the candidate tree. Then create a separate new clean detached checkout at that same final SHA and launch one fresh read-only Integration Critic under the same isolation protocol. It verifies the complete active-checkpoint artifact, current component verdict records, contract consistency, hard invariants, reported metrics, and documentation. It does not redesign. Integration FAIL re-enters the repair loop; the repair invalidates only the component verdicts whose reviewed paths it touched.
-9. **Close only on preserved evidence.** `PASS` requires every item in the complete named CP/FCP checklist, every applicable mandatory independent check, and a current Integration-Critic PASS, all bound to the exact final candidate SHA/tree. Each Critic's candidate ref is created before its review and is immutable; before any terminal return, verify every cited ref and validate every manifest/verdict record. A brief extract cannot narrow the bar. The Lead or Builder cannot self-certify closure.
+9. **Close only on preserved evidence.** `PASS` requires every item in the complete named CP/FCP checklist, every applicable mandatory independent check, and a current Integration-Critic `PASS`. The Integration verdict binds the exact final candidate SHA/tree; each relied-on component `PASS` binds **its own** candidate SHA/tree and must be computed-current against the final candidate per step 8 — it need not equal it. Each Critic's candidate ref is created before its review and is immutable; before any terminal return, verify every cited ref and validate every manifest/verdict record. A brief extract cannot narrow the bar. The Lead or Builder cannot self-certify closure.
 
 ## Mandatory isolated Critic protocol
 
@@ -70,7 +70,7 @@ Every component or Integration Critic receives a new unique immutable `<critic-r
 python3 scripts/gauntlet_protocol.py init-evidence --repo-root <abs> --checkpoint <id> --run-id <critic-run-id>
 ```
 
-The resulting `<repo>/.gauntlet/evidence/<checkpoint>/<critic-run-id>/` is outside every Builder/Critic worktree and outside the candidate Git tree. Under one exclusive initialization lock, `init-evidence` creates it together with its one owned support root, `<repo>/.gauntlet/evidence/<checkpoint>/_support/<critic-run-id>/`, and rolls back an ordinary partial-creation failure. Neither path may preexist, be reused, or traverse a symlink; any observed half-pair fails closed rather than being completed or reused. This is lock/rollback/fail-closed pair initialization, not an atomic paired-directory primitive. At completion the immutable run root contains helper-owned `integrity-manifest.json` and schema-valid `critic-verdict.json`. Never reuse or mutate it. Every file-backed artifact/input, command stdout/stderr and decision-evidence path declared by that verdict must be a regular non-symlink file physically under its exact `_support/<critic-run-id>/` and carry SHA-256. Containment is what makes a verdict's evidence its own; a path outside that root is invalid regardless of its hash. Safe fixture copies/hashes and reproduction logs live there; for raw restricted/production or impractically large data, retain a safe hash/lineage manifest rather than the raw data. The optional frozen workbench and terminal Return Packet may live elsewhere at checkpoint-root level because they are not verdict evidence. Unhashed prose is not decision evidence. Do not put live verdicts or manifests under `docs/` **while the checkpoint is open**: adding post-review evidence to the candidate would change its SHA and recursively invalidate the review. That constraint expires at terminal return — see "Freezing evidence at terminal return" below.
+The resulting `<repo>/.gauntlet/evidence/<checkpoint>/<critic-run-id>/` is outside every Builder/Critic worktree and outside the candidate Git tree. Under one exclusive initialization lock, `init-evidence` creates it together with its one owned support root, `<repo>/.gauntlet/evidence/<checkpoint>/_support/<critic-run-id>/`, and rolls back an ordinary partial-creation failure. Neither path may preexist, be reused, or traverse a symlink; any observed half-pair fails closed rather than being completed or reused. This is lock/rollback/fail-closed pair initialization, not an atomic paired-directory primitive. At completion the immutable run root contains helper-owned `integrity-manifest.json` and schema-valid `critic-verdict.json`. Never reuse or mutate it. Every file-backed artifact/input, command stdout/stderr and decision-evidence path declared by that verdict must be a regular non-symlink file physically under its exact `_support/<critic-run-id>/`, carry SHA-256, and have inode link count (`st_nlink`) exactly one. A hard-linked inode is invalid: no evidence file may borrow or share an inode across another support root, run, temporary directory, snapshot, or any other path. Containment is what makes a verdict's evidence its own; a path outside that root is invalid regardless of its hash. Safe fixture copies/hashes and reproduction logs live there; for raw restricted/production or impractically large data, retain a safe hash/lineage manifest rather than the raw data. The optional frozen workbench and terminal Return Packet may live elsewhere at checkpoint-root level because they are not verdict evidence. Unhashed prose is not decision evidence. Do not put live verdicts or manifests under `docs/` **while the checkpoint is open**: adding post-review evidence to the candidate would change its SHA and recursively invalidate the review. That constraint expires at terminal return — see "Freezing evidence at terminal return" below.
 
 After initializing a new run and **before** creating its Critic snapshot, use `create-ref` to create the exact non-overwriting local `refs/gauntlet-evidence/<checkpoint>/<run-id>/<piece>` ref. The tool requires the candidate SHA to equal the current `gauntlet/<checkpoint>` `HEAD`; a repair or changed candidate therefore gets a new run ID/ref, never a moved ref. Run `verify-ref` before launch and again before any terminal Return Packet for every cited candidate, including the final candidate. All checkpoint, run, and piece IDs must be ref-safe identifiers accepted by the tool. Record each ref/SHA pair and verification result in the packet. These refs never move or publish, and only Yarden may delete them. The disposable `gauntlet/<checkpoint>` branch is not spent until all cited SHAs are reachable through those evidence refs. Removing a Critic snapshot or a Builder worktree does not remove its evidence records or refs.
 
@@ -100,18 +100,11 @@ The numeric ceiling in the brief covers the whole checkpoint run from orientatio
 
 Record `started_at_utc`, every `paused_at_utc`/`resumed_at_utc` pair with reason and evidence, `terminal_at_utc`, and the raw consumed seconds in the workbench and Return Packet. Preserve raw seconds for enforcement and display decimal hours only as a convenience. A pause is eligible only while **all** authorized Lead/Builder/Critic/Integration/test/tool activity is stopped for an already-authorized external dependency or a platform suspension. A newly required owner action, credential, source, or authority returns terminal `BLOCKED`; it is not an indefinite excluded pause. Parallel contexts overlap on this single clock and never sum.
 
-Approaching the raw-seconds ceiling is a prioritization signal, never permission to cut or weaken a ratified criterion. Reaching it before PASS produces `BUDGET_EXHAUSTED`. Only the Orchestrator may issue a replacement brief with a changed numeric ceiling. Yarden may authorize additional program time **to the Orchestrator**, but you may not accept a direct extension or resume until the replacement Orchestrator brief arrives. A reduced bar is valid only after an owner-ratified capstone/checkpoint amendment and a new exact plan anchor.
+You allocate internal target windows across pieces and agents as you see fit, but you **cannot enlarge the ceiling** itself. Approaching the raw-seconds ceiling is a prioritization signal, never permission to cut or weaken a ratified criterion. Reaching it before PASS produces `BUDGET_EXHAUSTED`. Only the Orchestrator may issue a replacement brief with a changed numeric ceiling. Yarden may authorize additional program time **to the Orchestrator**, but you may not accept a direct extension or resume until the replacement Orchestrator brief arrives. A reduced bar is valid only after an owner-ratified capstone/checkpoint amendment and a new exact plan anchor.
 
 ## `workbench.md` lifecycle
 
-Maintain one concise root `workbench.md` only while the authorized checkpoint is active. It may show:
-
-- authorized goal/bar and exact plan anchor;
-- supplied active-elapsed ceiling, UTC start/last-update timestamps, eligible-pause ledger, and raw consumed seconds;
-- Lead-chosen pieces and artifact paths;
-- current test/metric/screenshot evidence;
-- latest independent verdict and largest open gap;
-- exact terminal blocker, if any.
+Maintain one concise root `workbench.md` only while the authorized checkpoint is active, using the form in `docs/track-b/gauntlet-templates.md` §2 — that template is the single definition of what it may show.
 
 It is operational visibility—not program state, acceptance authority, or an audit log. It is ignored by Git and must never enter a candidate commit or Critic snapshot. The Orchestrator never reads it, Yarden never carries it upward, and `progress.md` never imports from it. At terminal return, freeze a renamed final snapshot at checkpoint-evidence-root level, outside every immutable Critic run directory, only if it contains unique evidence (otherwise delete it), remove it as the active root workbench, and never carry it into the next checkpoint.
 
@@ -138,89 +131,22 @@ the rest of the handover; committing it is Yarden's decision like any other.
 
 ## Terminal conditions and checkpoint return
 
-Return exactly one terminal status:
-
-- **PASS** — the complete bar and Integration Critic pass;
-- **BLOCKED** — an owner credential/action, new authority, ratified-methodology change, destructive/public action, missing/contradictory/untestable acceptance bar, or plan/reality resolution is required;
-- **PLATEAU** — the next improvement is not worth its cost, or two material repair attempts produced no meaningful improvement;
-- **BUDGET_EXHAUSTED** — the supplied active-elapsed raw-seconds ceiling is reached before PASS.
-
-A non-PASS return preserves evidence and states the smallest exact decision, authority, or resource change needed. Never report partial work as PASS.
+Return exactly one terminal status — `PASS`, `BLOCKED`, `PLATEAU`, or `BUDGET_EXHAUSTED` — each defined in the named plan's §12, which owns their meaning and the closing bar. A non-PASS return preserves evidence and states the smallest exact decision, authority, or resource change needed. Never report partial work as `PASS`.
 
 At **every** terminal return, stop all Track B work. Do not inspect, research, scaffold, branch for, or plan the next milestone/checkpoint.
 
-Return this packet:
+Return exactly one **Checkpoint Return Packet**, using the canonical form in
+`docs/track-b/gauntlet-templates.md` §7. That template is the single definition of the packet's
+sections and provenance fields; do not maintain a second copy here or in the workbench. Before
+returning, reverify every cited candidate ref with `verify-ref` and validate every manifest and
+verdict record.
 
-```markdown
-# Track B Checkpoint Return — [M#/CP-#]
+The packet's criteria table always maps the **complete named CP/FCP checklist** — never a
+convenience extract from the brief — and carries the 3–5 defense questions required by the plan's
+§12. Defense questions do not alter engineering CP criteria; they make the delivered artifact
+interview-defensible without turning Yarden into an internal message carrier.
 
-Status: PASS | BLOCKED | PLATEAU | BUDGET_EXHAUSTED
-Target repository:
-Ratified plan anchor:
-Checkpoint evidence root:
-Frozen evidence root (committed copy):
-Exact final candidate commit/tree/branch:
-Working-tree state:
-Data snapshot/cutoff/hash:
-Checkpoint active-elapsed ceiling:
-started_at_utc / terminal_at_utc:
-Eligible pause ledger (UTC, reason, evidence):
-Consumed active elapsed: [raw seconds and decimal hours]
-Integration verdict and evidence: PASS | FAIL | NOT_RUN — [evidence or exact reason]
-Integration integrity manifest (tool-generated path/SHA-256):
-Integration Critic verdict record (schema-valid path/SHA-256):
-
-## Critic run inventory
-| Unique immutable run ID / piece | Component/Integration | Pre-created candidate ref/SHA | Run root | Integrity manifest path/hash | Committed schema hash | Schema-valid verdict path/hash/result |
-|---|---|---|---|---|---|---|
-
-## CP-2 label-blind four-catalog chain (mandatory when CP-2)
-Blindness strength: ENFORCED_READ_ISOLATION | COOPERATIVE_PROCEDURAL
-Read-isolation mechanism / candid limitation:
-Committed identity-bearing source manifest path/blob SHA-256: `artifacts/cp2/blind/source-manifest.json` / ...
-Committed selection declaration path/blob SHA-256/declared winner: `artifacts/cp2/blind/selection-declaration.json` / ...
-Blind schema path/blob SHA-256 and canonical tool blob SHA-256:
-
-| Attempt / blind-review ID | Final SHA/tree | Blind run/piece/ref/support | Integration run/piece/ref/support | Custody-record path/SHA-256 + receipt-bound SHA/modes | `blind-public-input.csv` / manifest / commitment / receipt hashes | Metrics path/hash | Freeze path/hash/time | Reveal + safe-copy paths/hashes/time | Adjudication path/hash/winner | Result/reset reason |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-
-## Preserved candidate refs
-| Evidence ref | Exact commit SHA | Purpose | Verified reachable? |
-|---|---|---|---|
-
-## Complete named CP/FCP checklist
-| Criterion citation | PASS/OPEN | Direct evidence/reproduction |
-|---|---|---|
-
-## Independent criticism
-| Piece/surface | Critic/run ID | Candidate SHA/tree (must equal final for relied-on PASS) | Artifact/input hashes | Committed plan path/blob hash/version/citation + verbatim excerpt | Exact commands/tolerances | Integrity manifest path/hash | Schema-valid verdict path/hash/result | Largest gap and disposition |
-|---|---|---|---|---|---|---|---|---|
-
-## Engineering decisions
-- decision and rationale
-- rejected alternatives and why
-- largest failure uncovered by the Gauntlet and how it was repaired
-
-## Reproduction
-- exact commands
-- artifacts
-- metrics/screenshots where applicable
-
-## Open risks or exact owner action
-- none / exact request
-
-## Defense questions
-1. ...
-2. ...
-3. ...
-[3–5 questions grounded in the actual architecture, tradeoffs, and evidence]
-
-Track B has stopped. No later-checkpoint work has begun.
-```
-
-Defense questions do not alter engineering CP criteria. They make the delivered artifact interview-defensible without turning Yarden into an internal message carrier.
-
-`PASS` requires a fresh Integration-Critic `PASS`, complete separate integrity-manifest and schema-valid verdict records for every required component and Integration review, and a computed-current binding for every relied-on component `PASS`: its candidate is an ancestor of the final candidate and none of its `reviewed_paths` changed between them. A component whose reviewed paths moved is stale and that Critic reruns. A missing field, invalid integrity check/schema, absent/mismatched evidence ref, unsafe or mismatched committed-plan binding, absent/non-verbatim bar excerpt, evidence outside the run's own support root, or unpreserved cited SHA invalidates `PASS`. A non-`PASS` terminal return may use `NOT_RUN` only when the packet states the exact terminal reason—`BLOCKED`, `PLATEAU`, or `BUDGET_EXHAUSTED`—that prevented integration; it never implies that integration passed. The criteria table always maps the complete named CP/FCP checklist, not merely a convenience extract from the brief.
+**What invalidates a `PASS` on the evidence side** (the checklist side is the plan's §12): a missing fresh Integration-Critic `PASS`; an incomplete pair of separate integrity-manifest and schema-valid verdict records for any required component or Integration review; a relied-on component `PASS` that is not computed-current per step 8; a missing field, invalid integrity check or schema, absent/mismatched evidence ref, unsafe or mismatched committed-plan binding, absent or non-verbatim bar excerpt, evidence outside the run's own support root, or an unpreserved cited SHA.
 
 ## Debugging and research
 
