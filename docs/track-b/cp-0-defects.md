@@ -6,9 +6,17 @@ CP-0's `PASS` and its receipt gate. Append findings as they surface. **Do not cl
 defect is adjudicated, the ratified remedies are authored into their owning documents, and the
 `progress.md` Blockers entry gating CP-1 is discharged.
 
-**CP-0 is closed `PASS` and deliberately unlanded.** `gauntlet/cp-0` stays local at `8f371e5`;
-`main` stays at `d7bdd5f`. Owner decision of record, 2026-08-05: nothing merges to `main` and CP-1 is
-not briefed until the contract itself is fixed.
+**CP-0 attempt 1 is closed `PASS`, never landed, and now archived.** Owner decision of record,
+2026-08-05: nothing from it merges to `main`, and CP-1 is not briefed until the contract itself is
+fixed. Its branch `gauntlet/cp-0` was retired on 2026-08-05 under the tag-before-delete rule; **every
+SHA this document cites is preserved at the annotated ref `archive/cp-0-attempt-1` (= `8f371e5`)**
+and is reachable from it. Attempt 1 is superseded by a clean-room re-run, not merged
+(`docs/track-b/gauntlet-amendment-plan.md`, DEC-3).
+
+> **Reading SHAs in this document.** Every `gauntlet/cp-0` reference below is historical — it records
+> what was true during attempt 1. To inspect any cited SHA today, use the archive tag:
+> `git show archive/cp-0-attempt-1`, `git log --oneline main..archive/cp-0-attempt-1`,
+> `git show <sha>`.
 
 **Purpose.** `progress.md:27` designates CP-0 as the operational validation of
 `engineering-role.md`, and the Notes for Future Sessions direct that its Return Packet be read for
@@ -550,7 +558,8 @@ the amendment must not weaken them:
 
 Checked against the repository, not against the packet's claims: `main` clean at `d7bdd5f`;
 `gauntlet/cp-0` linear at `d7bdd5f → 7526310 → 63ebfab → 8f371e5`; both cited SHAs reachable on that
-branch; `7526310` an ancestor of `8f371e5`; both verdict files present in the candidate tree; the
+branch at the time of the gate, and reachable today from `archive/cp-0-attempt-1`, which succeeded
+it; `7526310` an ancestor of `8f371e5`; both verdict files present in the candidate tree; the
 candidate diff confined to `pyproject.toml`, `scripts/pit_capture.py`, `src/pit_capture/**`,
 `tests/**`, and `docs/track-b/evidence/cp-0/**` with no later-checkpoint scope; all seven checklist
 items mapped to reproducible evidence with no open item hidden behind `PASS`.
@@ -756,10 +765,14 @@ outside agent authority by construction, so it needs no agent-side check.
 - The orphaned worktree at `.../23cc0d4e-.../scratchpad/gauntlet/builder-instrument` awaits owner
   removal. The Lead correctly declined to remove a worktree it did not create. Under AMD-G3 this
   would have appeared in a Landing Report rather than surfacing through an unrequired topology sweep.
-- **CP-0's landing decision itself.** `gauntlet/cp-0` @ `8f371e5` is reviewed, closed, and held. It
-  lands — if it lands — under AMD-G3's squash procedure once that is ratified, or by whatever
-  procedure supersedes it. It is a live example of the gap D-CP0-12 names: a `PASS` artifact with no
-  contractual route to `main`.
-- **Whether the amendment should be one capstone v6.6 or two releases.** AMD-G2 is independent and
+- ~~**CP-0's landing decision itself.**~~ **RESOLVED 2026-08-05 — DISCARD.** Attempt 1 was reviewed,
+  closed, and never landed. It was archived at `archive/cp-0-attempt-1` and its branch retired, per
+  DEC-3: attempt 1 was built under the defective contract, so it is superseded by a clean-room re-run
+  rather than merged. It remains the worked example of the gap D-CP0-12 names — a `PASS` artifact
+  that sat with no contractual route to `main` — and the first application of AMD-G13's
+  tag-before-delete rule, performed manually before that rule existed.
+- ~~**Whether the amendment should be one capstone v6.6 or two releases.**~~ **RESOLVED 2026-08-05 —
+  DEC-2: one bundled v6.6 package**, ratified in full before the re-run. The original reasoning is
+  kept below for the record. AMD-G2 is independent and
   could ship immediately; AMD-G1 and AMD-G3 are coupled through the two-SHA vocabulary. Shipping G2
   alone would unblock honest packets sooner at the cost of a second ratification cycle. Owner call.

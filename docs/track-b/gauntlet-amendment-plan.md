@@ -104,6 +104,25 @@ needs the two-SHA vocabulary. G13 immediately after G3 because it completes the 
 > repointed to the tag in the same operation. A tag that preserves the SHA while the prose still
 > points at a deleted branch satisfies the letter of this rule and fails its purpose.
 
+### Who executes what — owner instruction, 2026-08-05
+
+> "One of the CP-0 insights is that I don't want to deal with unnecessary branch management."
+
+Ref hygiene is tedium, not judgement, and delegating it costs nothing that matters. The protection
+that matters is **what enters `main`**, and that is untouched.
+
+| Operation | Executor | Why |
+|---|---|---|
+| INSPECT — topology, diffs, reconciliation | **Agent** | Read-only |
+| DISPOSE · **LAND** — the squash and the commit on `main` | **Owner, by hand** | Unchanged. `git merge --squash` stages without committing precisely so the owner authors what lands |
+| DISPOSE · **DISCARD** — tag the attempt | **Agent** | Creates a ref, destroys nothing |
+| REPOINT — update documents citing the retired branch | **Agent** | Mechanical, and the agent is what breaks it if skipped |
+| RECLAIM — delete the branch, remove worktrees, prune | **Agent** | Tedium. Permitted **only** after the disposition is recorded and the tag verified to resolve |
+
+**The one guard that survives delegation:** an agent may never delete a ref whose SHAs are not
+already reachable from a verified tag, and may never delete a branch the owner has not dispositioned
+as LAND or DISCARD. Deletion is permitted; deciding what the work was worth is not.
+
 ### Orchestrator runbook — the automatic part
 
 Added verbatim to `orchestrator-role.md` so reclamation is a step the Orchestrator performs at every
