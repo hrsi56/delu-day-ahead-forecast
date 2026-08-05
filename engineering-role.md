@@ -27,6 +27,7 @@ An executable checkpoint brief names exactly:
 - relevant ratified constraints;
 - **numeric total checkpoint active-elapsed wall-clock ceiling**, covering orientation through terminal return;
 - owner-only actions already authorized;
+- **executor preconditions** — the minimum executor tier and reasoning effort, and the requirement that this be a new session;
 - stop-and-return contract.
 
 The Orchestrator supplies the WHAT and the ceiling. It does not dictate modules, file layout, decomposition, agent count, internal workstream budgets, implementation steps, or a fixed number of review rounds.
@@ -103,13 +104,13 @@ You allocate internal target windows across pieces and agents as you see fit, bu
 
 Maintain one concise root `workbench.md` only while the authorized checkpoint is active, using the form in `docs/track-b/gauntlet-templates.md` §2 — that template is the single definition of what it may show.
 
-It is operational visibility—not program state, acceptance authority, or an audit log. It is ignored by Git and must never enter a candidate commit or Critic snapshot. The Orchestrator never reads it, Yarden never carries it upward, and `progress.md` never imports from it. At terminal return, freeze a renamed final snapshot at checkpoint-evidence-root level, outside every immutable Critic run directory, only if it contains unique evidence (otherwise delete it), remove it as the active root workbench, and never carry it into the next checkpoint.
+It is operational visibility—not program state, acceptance authority, or an audit log. It is ignored by Git and must never enter a candidate commit or Critic snapshot. The Orchestrator never reads it, Yarden never carries it upward, and `progress.md` never imports from it. At terminal return, freeze a renamed final snapshot outside the repository only if it contains unique evidence (otherwise delete it), remove it as the active root workbench, and never carry it into the next checkpoint.
 
 ## Terminal conditions and checkpoint return
 
 Return exactly one terminal status — `PASS`, `BLOCKED`, `PLATEAU`, `BUDGET_EXHAUSTED`, or `BRIEF_INVALID` — each defined in the named plan's §12, which owns their meaning and the closing bar. A non-PASS return preserves evidence and states the smallest exact decision, authority, or resource change needed. Never report partial work as `PASS`.
 
-`BRIEF_INVALID` is a **pre-work** status and is the only one that returns no Return Packet: the authorization was malformed, so no work started, no clock was consumed, and no repository file was edited. Return it on the minimal form in `docs/track-b/gauntlet-templates.md` §10, naming every missing or contradictory required field, whatever repository state you did verify, and the two validation timestamps. It is distinct from `BLOCKED`, which means work started and hit an owner-only dependency.
+`BRIEF_INVALID` alone returns no Return Packet — use the minimal form in `docs/track-b/gauntlet-templates.md` §10, naming every missing or contradictory required field, whatever repository state you did verify, and the two validation timestamps. Its meaning and its distinction from `BLOCKED` are the plan's §12.
 
 At **every** terminal return, stop all Track B work. Do not inspect, research, scaffold, branch for, or plan the next milestone/checkpoint.
 
@@ -128,7 +129,7 @@ interview-defensible without turning Yarden into an internal message carrier.
 
 ## Terminal handover
 
-At terminal return, enumerate what the checkpoint leaves behind so the owner can act on it without reconstructing it. The Return Packet's Landing Report carries: the checkpoint branch and both terminal SHAs; the diff and commit list against `main`; every worktree registered against the repository, marked created-by-this-checkpoint (removed) or pre-existing (left in place, with its path and clean/dirty state); every other `gauntlet/*` branch present; and a proposed disposition with a proposed commit message for the owner to use, edit, or discard.
+At terminal return, enumerate what the checkpoint leaves behind so the owner can act on it without reconstructing it. Fill the **Landing Report** in `docs/track-b/gauntlet-templates.md` §7, which is the single definition of its fields.
 
 Removing a worktree this checkpoint did not create remains owner-only. **Never merge, squash, rebase, fast-forward, or cherry-pick anything into `main`, and never propose doing so as an action you will take** — the disposition is the owner's, and the commit that lands is authored by hand. See `AGENTS.md` § *Branch and ref lifecycle*.
 

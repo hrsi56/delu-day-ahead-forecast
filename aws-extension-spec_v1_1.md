@@ -1,11 +1,5 @@
 # AWS Extension Spec v1.1 — Cloud Production Backbone for the Flagship DE-LU Capstone
 
-**Status: DRAFT v1.1 (semantically rebased 2026-08-02) — PARKED as DEC-AWS, adjudicated only at G5.** If ratified, it amends `capstone_V6_5.md` to v6.5 and rebuilds map v6 to v7. Ratification package remains D1–D6 + D8; D7 is already part of the flagship. The AWS arc remains an estimated 50–70 hours, uses the existing manual health-report logic, and must re-verify prices and service availability at arc start.
-
-**Semantic rebase (2026-08-02, controlling for DEC-AWS; proposal remains PARKED).** Capstone v6.5 and stage map v7 are now the operative baseline (rebased again 2026-08-04); ratification would produce capstone v6.5 and map v7. The v6.4 Gauntlet/statistical-audit contract carries forward unchanged into M6: one authorized checkpoint, one numeric active-elapsed wall-clock ceiling, clean-detached independent criticism with bound provenance/tree-integrity evidence, a separate fresh Integration review, one Return Packet, and a stop before the companion arc. Parallel contexts overlap on the single clock and never sum. Current program envelope is ~727 h; this proposal would make it ~779–799 h. Derived hints shift approximately one week: G5 ~early/mid-February 2027, CP-6 ~late-March/mid-April, companion G6 ~early/mid-June. Any legacy inline `v6.3` label below describes the origin of an unchanged rule; operative execution reads the corresponding section in v6.4.
-
----
-
 ## 0. What this spec ratifies (eight decisions)
 
 - **D1 — Scope & placement.** A lean AWS production backbone (train → register → deploy → monitor on SageMaker) is added to the **flagship**, as a new post-G5 milestone **M6 (two phases, AWS-1 / AWS-2)** with checkpoint **CP-6**. The companion mini-capstone is untouched in content and stays stage-gated.

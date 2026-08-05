@@ -237,9 +237,9 @@ Worktree clean before and after review: yes/no
 `BLOCKED` means the check could not be performed (missing token, unavailable API). It is never a
 substitute for `FAIL`.
 
-**`Reviewed paths` is the soundness condition of computed staleness.** Declare them honestly and
-broadly enough to cover what the verdict actually depends on; understating them is the one way to
-make verdict reuse unsound. Integration checks that each declared path exists in the candidate tree.
+**`Reviewed paths` is the operand of computed staleness** — the rule and its soundness condition are
+`engineering-role.md` step 8. Fill the field honestly and broadly; a Critic that under-declares here
+is the one way to make verdict reuse unsound.
 
 **Line numbers are not part of the citation.** Only the verbatim bar excerpt and its presence in the
 cited plan at the candidate SHA are load-bearing. A line range may be added as a courtesy and is
@@ -302,7 +302,7 @@ Consumed active elapsed: [raw seconds / decimal hours]
 Integration verdict: PASS | FAIL | NOT_RUN — [verdict file or exact reason]
 
 ## Brief fields as issued
-Reproduce the ten required fields verbatim from the brief, so the Orchestrator can validate the
+Reproduce every required field verbatim from the brief, so the Orchestrator can validate the
 authorization it wrote against the plan it holds.
 | Required field | As issued in the brief |
 |---|---|
@@ -395,7 +395,7 @@ A gate on the packet, not a re-derivation. Confirm that it:
    the packet's word for it;
 7. carries a **provenance block**. A packet without one is returned unread — an absent block is not
    an assertion that no late read occurred;
-8. reproduces the **ten required brief fields**, and they match the brief you issued and the plan you
+8. reproduces the **complete set of required brief fields**, and they match the brief you issued and the plan you
    hold;
 9. declares **every Builder worktree's seed**, and **each of the five mandatory surfaces** as in or
    out of scope with a reason;
@@ -437,7 +437,7 @@ git diff --name-only <final_candidate_sha>..<evidence_tip_sha>   # evidence path
 
 **Step 2 — DISPOSE (exactly one).**
 
-*LAND — owner, by hand. Never delegated, never agent-executed.*
+*LAND — owner, by hand. Never delegated, never agent-executed (`AGENTS.md` owns this rule).*
 
 ```text
 git checkout main && git merge --squash gauntlet/<cp>
@@ -469,16 +469,16 @@ git worktree prune
 git branch -vv                       # MUST show main only
 ```
 
-**Guards.** Never delete a ref whose SHAs are not already reachable from a verified tag. Never delete
-a branch the owner has not dispositioned. Deletion is delegable; deciding what the work was worth is
-not.
+**Guards.** The two conditions on agent-executed deletion, the LAND/DISCARD dispositions, and the
+tag-before-delete and citation-follows-ref rules are owned by `AGENTS.md` § *Branch and ref
+lifecycle*. This section is the procedure; that section is the authority.
 
 ---
 
 ## 10. `BRIEF_INVALID` return
 
-A **pre-work** return: the authorization was malformed, so no work started, no clock was consumed,
-and no repository file was edited. It is the only terminal status that returns no Return Packet.
+The form for the terminal status defined in the plan's §12. It is the only status that returns no
+Return Packet.
 
 ```markdown
 # Brief Invalid — [checkpoint id as named, or "unnamed"]

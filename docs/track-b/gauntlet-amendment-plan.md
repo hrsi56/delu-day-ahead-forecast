@@ -59,7 +59,7 @@ architecture rests on. The contract has no position on either.
 | **G3** | D-CP0-12 | `AGENTS.md` · TMPL §7 · new TMPL §9 | Landing Report, gate inspection, owner-only squash merge |
 | **G4** | D-CP0-1 (part), D-CP0-5 (floor) | `orchestrator-role.md` launch envelope | Named minimum executor tier and reasoning effort; session-freshness declaration |
 | **G5** | D-CP0-2, D-CP0-3 | §12 status vocabulary · `engineering-role.md` ceiling § · new TMPL §10 | `BRIEF_INVALID` as a fifth pre-work status with its own minimal form; brief validation precedes the clock and consumes no ceiling |
-| **G6** | D-CP0-4 | TMPL §7/§8 | Packet reproduces the ten required brief fields verbatim; gate validates them against the plan it holds |
+| **G6** | D-CP0-4 | TMPL §7/§8 | Packet reproduces every required brief field verbatim; gate validates them against the plan it holds |
 | **G7** | D-CP0-5 (abandonment) | `orchestrator-role.md` · §12 | `started_at_utc` + verified state as first observable output; owner-side abandonment convention, distinct from `BUDGET_EXHAUSTED` |
 | **G8** | D-CP0-7 | `engineering-role.md` step 4 · TMPL §7/§8 | Each Builder worktree's seed declared; seeding permitted but forces whole-artifact review |
 | **G9** | D-CP0-9 | `engineering-role.md:56` | Demote cache routing to a recommendation; `git status --porcelain` stays the only cleanliness test |
@@ -257,7 +257,7 @@ Every amendment gets an observable test in the re-run. **An amendment with no te
 | G3 | Packet has a Landing Report; gate's inspection reconciles against the live repo | Any discrepancy between report and repository |
 | G4 | Envelope names the executor floor; Lead affirms session freshness | Either absent |
 | G5 | 4.1 returns `BRIEF_INVALID` in the new form, zero clock, no edit | Any other status, any clock consumed, or any edit |
-| G6 | Packet reproduces the ten brief fields; gate validates them against the plan | A field is missing or does not match |
+| G6 | Packet reproduces every required brief field; gate validates them against the plan | A field is missing or does not match |
 | G7 | `started_at_utc` + verified state emitted as first observable output | Not observable before the first Builder dispatch |
 | G8 | Packet declares each Builder worktree's seed | Any seed undeclared |
 | G9 | Text check only — routing is a recommendation, `--porcelain` is the test | Contradiction survives |

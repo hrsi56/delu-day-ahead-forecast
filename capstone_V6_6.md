@@ -1,4 +1,4 @@
-# Engineering Plan — German DE-LU Day-Ahead Price Forecasting Tool, v6.4 — Lean DS Capstone with Cloud-Backed Showcase
+# Engineering Plan — German DE-LU Day-Ahead Price Forecasting Tool, v6.6 — Lean DS Capstone with Cloud-Backed Showcase
 
 ## 0. Ratified decisions (five; final)
 
@@ -400,7 +400,7 @@ Passes when one technical and one non-technical reviewer can each articulate the
 
 ### Checkpoint execution contract — bounded Gauntlet (v6.4)
 
-**Process authority — stated once, elsewhere.** How a checkpoint *executes* — decomposition, Builder/Critic isolation, verdict records, staleness, evidence storage, candidate refs, clock accounting, `workbench.md`, and the Return Packet form — is defined once in the repo-root `engineering-role.md` and is deliberately **not** restated here. This section states only what must be **true** for a checkpoint to close. Where the two touch, `engineering-role.md` owns the mechanism and this section owns the bar; on any conflict about a bar, this document wins.
+**Process authority — stated once, elsewhere.** How a checkpoint *executes* — decomposition, Builder/Critic isolation, verdict records, staleness, evidence storage, clock accounting, `workbench.md`, and the Return Packet form — is defined once in the repo-root `engineering-role.md` and is deliberately **not** restated here. This section states only what must be **true** for a checkpoint to close. Where the two touch, `engineering-role.md` owns the mechanism and this section owns the bar; on any conflict about a bar, this document wins.
 
 **Authority split.** The Orchestrator alone decides **when** Track B runs, which single checkpoint is authorized, and the numeric active-elapsed wall-clock ceiling. The Engineering Lead decides **how**. Yarden carries one brief into Track B and one terminal packet back; he never routes Builder/Critic messages. A brief cannot reduce a checkpoint bar: that requires an owner-ratified capstone/checkpoint amendment, a new exact plan anchor, and then a replacement brief.
 
@@ -446,7 +446,7 @@ are scientific rather than procedural and therefore bind here:
 **Gauntlet planning reserve (net addition, already reflected in the program envelope):** CP-0 2 h; CP-1 6 h; CP-2 5 h; CP-3 5 h; CP-4 3 h; CP-5 3 h — **24 h total** (22 h at v6.4 across CP-1–CP-5, plus the 2 h CP-0 reserve added at v6.5), matching `progress.md`. These are planning-load estimates, not additive agent-hours or Lead-granted budgets. At issue time the Orchestrator combines the relevant reserve with the milestone's existing allocation and writes the resulting active-elapsed wall-clock ceiling into the brief. Only the Orchestrator may issue a replacement brief that extends it; the owner may authorize added program time to the Orchestrator, not directly to the Lead.
 
 ### M0 — Plan approved
-This document (v6.5; v6.0 ratified 2026-06-11, spike-adjudicated 2026-06-12; v6.2 amendments merged 2026-07-12 — spectral extension + companion pointer, additive; the D7 static-page rider absorbed 2026-07-20; the **v6.3 strict-gate methodology amendment ratified 2026-07-22**; the **v6.4 Gauntlet/statistical-audit amendment ratified and authored 2026-08-02**; the **v6.5 capture-schedule feasibility amendment ratified 2026-08-04**).
+This document (v6.6; v6.0 ratified 2026-06-11, spike-adjudicated 2026-06-12; v6.2 amendments merged 2026-07-12 — spectral extension + companion pointer, additive; the D7 static-page rider absorbed 2026-07-20; the **v6.3 strict-gate methodology amendment ratified 2026-07-22**; the **v6.4 Gauntlet/statistical-audit amendment ratified and authored 2026-08-02**; the **v6.5 capture-schedule feasibility amendment ratified 2026-08-04**).
 
 ### M0.5 — Point-in-time capture instrument
 
@@ -601,4 +601,4 @@ Each omission is a deliberate scope decision, defended and interview-quotable. T
 
 ---
 
-*End of Engineering Plan — German DE-LU Day-Ahead Price Forecasting Tool, v6.4 — Lean DS Capstone with Cloud-Backed Showcase.*
+*End of Engineering Plan — German DE-LU Day-Ahead Price Forecasting Tool, v6.6 — Lean DS Capstone with Cloud-Backed Showcase.*

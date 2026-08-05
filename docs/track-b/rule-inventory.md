@@ -639,7 +639,7 @@ retired IDs.
 | Q17 | Close a checkpoint only from its consolidated packet, mapping every item in the full checklist to inspectable evidence | ORCH *Verification* · co-owned with N1/L5 | ORCH |
 | Q18 | At CP-1 the packet must carry independent verdicts for all five M1 acceptance oracles; Builder tests do not substitute | ORCH *Verification* · co-owned with F2/F3 | ORCH |
 | Q19 | The Orchestrator does not audit evidence files and has no shell; record-level rules are enforced by the Lead and evidenced in committed verdicts. The gate is the packet and the verdict files it names, never the internal workbench | ORCH *Verification* | ORCH |
-| Q20 | CP-2 receipt gate: the packet must be labelled `COOPERATIVE_PROCEDURAL`; reject any packet claiming cryptographic enforcement | ORCH *Verification* · co-owned with O11 | ORCH |
+| Q20 | CP-2 receipt gate: the packet must be labelled `COOPERATIVE_PROCEDURAL`; reject any packet claiming cryptographic enforcement | ORCH *Verification* · co-owned with the CP-2 honesty label, now in ROLE (O11 retired by Option C) | ORCH |
 | Q21 | `progress.md` is read at session start and regenerated **in full** when durable state changes; never paraphrased from memory | ORCH *Regeneration contract* | ORCH |
 | Q22 | Run the omission diff before output; every item present before and absent now is resolved-and-logged or pruned-under-the-rule. Silent drops are the failure mode the contract exists to prevent | ORCH *Regeneration contract* | ORCH |
 | Q23 | The regeneration contract applies to `progress.md` and nothing else | ORCH *Regeneration contract* | ORCH |
@@ -669,7 +669,7 @@ No rule is retired by this amendment.
 | K1 | G5 | Status vocabulary becomes five: `PASS` · `BLOCKED` · `PLATEAU` · `BUDGET_EXHAUSTED` · `BRIEF_INVALID` |
 | K2 | G1 | `PASS` binds `final_candidate_sha`; the evidence tip is not the bound SHA |
 | L1 | G1,G2,G3,G8,G10 | Header carries two SHAs; adds the provenance block, Landing Report, Builder seeds, and topology |
-| L5 | G6 | Adds the reproduced ten brief fields alongside the checklist table |
+| L5 | G6 | Adds the reproduced required brief fields alongside the checklist table |
 | L6 | G12 | Independent-criticism table carries the surface scope declaration |
 | N1 | G1,G2,G6,G12 | Gate gains: the verdict-only delta check, the provenance block, brief-field validation, surface scope |
 | N7 | G14 | Restate — cites `validate-verdict`/`verify-ref` exit codes that no longer exist (D-CP0-15) |
@@ -698,7 +698,7 @@ territory vacated by retired H and M.
 | K12 | A run that exceeds its ceiling in real elapsed time with no packet is **abandoned**, not `BUDGET_EXHAUSTED` — the latter asserts the ceiling was consumed by work, which an abandoned run cannot evidence | G7 | **CAP** + ORCH |
 | L12 | The packet carries a provenance block: decision-phase reads, declared late reads, and the `ASSERTED_ROLE_BOUNDARY` label | G2 | TMPL |
 | L13 | The packet carries a Landing Report: both terminal SHAs, the diff against `main`, branch commits, worktrees created and not created, other `gauntlet/*` branches, proposed disposition and commit message | G3 | TMPL |
-| L14 | The packet reproduces the ten required brief fields verbatim | G6 | TMPL |
+| L14 | The packet reproduces every required brief field verbatim | G6 | TMPL |
 | L15 | The packet declares each Builder worktree's seed — brief-authored, or copied from a named path at a named state | G8 | TMPL |
 | L16 | The packet records repository topology at `started_at_utc` and at terminal return, and reports any change | G10 | TMPL |
 | N8 | The gate runs the verdict-only delta check itself rather than accepting the packet's claim | G1 | TMPL |
