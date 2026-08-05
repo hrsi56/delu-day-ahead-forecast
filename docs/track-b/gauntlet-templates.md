@@ -264,9 +264,9 @@ Data snapshot / cutoff:
 
 From this fresh context, verify:
 1. every item in the complete named CP/FCP checklist against direct evidence;
-2. every required component verdict exists, is PASS, and is computed-current — its candidate is an
-   ancestor of the final candidate and `git diff --name-only <component-sha>..<final-sha> --
-   <reviewed paths>` is empty;
+2. every required component verdict exists, is PASS, and is computed-current per the staleness rule
+   in `engineering-role.md` step 8 — run `git diff --name-only <component-sha>..<final_candidate_sha>
+   -- <that verdict's declared reviewed paths>`;
 3. cross-component contracts and hard invariants;
 4. metrics recomputed from frozen predictions where applicable;
 5. clean-environment reproducibility and documentation consistency;

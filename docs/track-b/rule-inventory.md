@@ -650,7 +650,7 @@ No rule is retired by this amendment.
 
 | Rule | AMD | Change |
 |---|---|---|
-| A5 | G6 | Referenced, not changed — the packet must now reproduce these ten fields verbatim |
+| A5 | G6 | Referenced, not changed — the packet must now reproduce every required field verbatim |
 | A6 | G5 | Invalid brief returns the named terminal status `BRIEF_INVALID` instead of an unnamed "discrepancy" |
 | A9 | G2 | Prohibition scoped to **influence**; a declared post-Integration read solely to author the packet is permitted |
 | B1 | G10 | State verification extends to repository topology, recorded at start and at terminal return |
