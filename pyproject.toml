@@ -19,4 +19,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/spike"]
+packages = ["src/spike", "src/pit_capture"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
