@@ -1,8 +1,14 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN.** Opened 2026-08-05, before CP-0 produced a candidate. Append findings as they
-surface; do not close until CP-0 returns a terminal packet and the amendment in
-`progress.md`'s Blockers section is ratified.
+**Status: OPEN — 12 defects; amendment drafts prepared for the three blocking items, none ratified.**
+Opened 2026-08-05 before CP-0 produced a candidate; extended the same day with the findings from
+CP-0's `PASS` and its receipt gate. Append findings as they surface. **Do not close** until every
+defect is adjudicated, the ratified remedies are authored into their owning documents, and the
+`progress.md` Blockers entry gating CP-1 is discharged.
+
+**CP-0 is closed `PASS` and deliberately unlanded.** `gauntlet/cp-0` stays local at `8f371e5`;
+`main` stays at `d7bdd5f`. Owner decision of record, 2026-08-05: nothing merges to `main` and CP-1 is
+not briefed until the contract itself is fixed.
 
 **Purpose.** `progress.md:27` designates CP-0 as the operational validation of
 `engineering-role.md`, and the Notes for Future Sessions direct that its Return Packet be read for
@@ -29,9 +35,31 @@ existing ID; a superseded defect is marked superseded and kept.
 | 2026-08-05 | Executor stall on a low-reasoning-effort run, before any candidate existed | D-CP0-5 |
 | 2026-08-05 | CP-0 Return Packet (`PASS`, final candidate `8f371e5` on `gauntlet/cp-0`) and Orchestrator receipt-gate verification of it | D-CP0-6 … D-CP0-11 |
 
-All five were found **before a single line of CP-0 product code was written.** That is itself the
-first result: the contract's own front gate produced findings on its first real contact with an
-execution attempt.
+D-CP0-1 … D-CP0-5 were found **before a single line of CP-0 product code was written** — the
+contract's own front gate producing findings on its first real contact with an execution attempt.
+D-CP0-6 … D-CP0-12 came from a checkpoint that **passed cleanly**, which is the more useful result:
+the loop worked and the contract around it did not quite.
+
+## Defect index
+
+| ID | One line | Owner document | Severity |
+|---|---|---|---|
+| D-CP0-1 | Role is asserted, never verified | `AGENTS.md`, launch envelope | Standing |
+| D-CP0-2 | No terminal status for an invalid brief | `capstone_V6_5.md` §12, templates | High |
+| D-CP0-3 | No defined clock start on a rejected brief | `engineering-role.md` ceiling § | Medium |
+| D-CP0-4 | Brief validity judged by its beneficiary | templates §8, `engineering-role.md` | High |
+| D-CP0-5 | No execution-capability floor; a stall returns no status | `orchestrator-role.md`, §12 | High |
+| **D-CP0-6** | **Integration cannot review the commit recording its own verdict** | **§12 item 7, `engineering-role.md` 8–9** | **Blocking — structurally unsatisfiable** |
+| D-CP0-7 | Candidate provenance unspecified; disclosure voluntary | `engineering-role.md` step 4, templates | Medium |
+| **D-CP0-8** | **Honest disclosure required violating the role boundary** | **`engineering-role.md:9`** | **High — inverts the incentive** |
+| D-CP0-9 | Cache-routing rule unenforceable by its own test | `engineering-role.md:56` | Low |
+| D-CP0-10 | Concurrent sessions on one repository are unmodelled | `AGENTS.md`, `engineering-role.md` step 1 | Medium |
+| D-CP0-11 | Volunteered line citations create false discrepancy signals | templates §5 | Low |
+| **D-CP0-12** | **No defined landing path from candidate branch to `main`** | **`AGENTS.md`, templates §8** | **High — blocks acceptance** |
+
+Concrete amendment drafts for the three blocking/high-inversion items — **D-CP0-6**, **D-CP0-8**, and
+**D-CP0-12** — are in *Proposed amendments* below. The remainder carry candidate remedies with a
+recommendation in their own entries and are drafted after those three are ratified.
 
 ---
 
@@ -442,6 +470,55 @@ process failures and are not — which is a slow way to erode trust in the verdi
 
 ---
 
+## D-CP0-12 — No defined landing path from the candidate branch to `main`
+
+**Statement.** The contract describes in detail how a checkpoint is built, reviewed, and closed in
+*program state* — and says **nothing about how the reviewed code reaches `main`**. The Return Packet
+ends with "Track B has stopped." `AGENTS.md` states that `main` is written by Yarden by hand after
+his own review. Between those two sentences there is no defined operation, no inspection procedure,
+and no artifact telling the owner what he is being asked to accept.
+
+**Evidence.** CP-0 returned `PASS` on 2026-08-05 with its artifact on the local disposable branch
+`gauntlet/cp-0`. The checkpoint is closed in `progress.md`. The code is on a branch explicitly
+described as disposable, `main` is untouched at `d7bdd5f`, and the contract provides no next step.
+The packet did not enumerate what the run left behind; the orphaned worktree at
+`.../23cc0d4e-.../scratchpad/gauntlet/builder-instrument` surfaced only because the Integration
+Critic ran an unrequired topology sweep (see D-CP0-10).
+
+**Impact.** Three distinct gaps, all owner-facing:
+
+1. **No inspection surface.** The Orchestrator gates a *packet*. It has no defined way to see the
+   branches, worktrees, and SHAs the Engineering Lead actually created, or how the candidate differs
+   from `main`. It is asked to close a checkpoint without a view of the tree that checkpoint
+   produced.
+2. **No acceptance operation.** "Written by hand after his own review" is a policy, not a procedure.
+   Without a named operation the owner either invents one per checkpoint or defers indefinitely —
+   and deferral is what actually happened: CP-0 is closed and unlanded.
+3. **No cleanup obligation.** The Lead may only remove worktrees it created this checkpoint, which is
+   correct, but nobody is charged with *enumerating* what exists at terminal return so the owner can
+   act on the rest.
+
+**This is also the clean resolution of D-CP0-6.** A squash merge collapses the candidate commit, the
+component verdict commit, and the evidence-tip commit into **one owner-authored commit on `main`**
+whose tree is the reviewed tree plus its verdicts. The circularity is a property of the *candidate
+branch's* commit ordering; it does not propagate to `main`, because `main` never replays that
+ordering. Landing by squash is therefore not merely convenient — it is the step at which the
+D-CP0-6 anomaly is discharged rather than inherited.
+
+**The required capability, precisely.** The Orchestrator must be able to (a) inspect the trees and
+branches the Engineering Lead opened, (b) decide on a **local squash merge**, and (c) execute it
+**without producing an automatic commit** — leaving the result staged in the working tree for the
+owner to inspect and commit by hand. `git merge --squash` has exactly these semantics: it applies the
+merged tree to the index and working tree and deliberately stops short of creating a commit. It is
+the operation `AGENTS.md`'s hand-written-`main` rule has always implied without ever naming.
+
+**Ownership.** `AGENTS.md` (git and publication authority); `gauntlet-templates.md` §7 (packet) and
+§8 (receipt gate); a new §9 landing form.
+
+**Candidate remedies.** Drafted as **AMD-G3** below.
+
+---
+
 ## What the run confirmed — recorded so the amendment does not overcorrect
 
 Not every finding is a defect. Six properties were operationally validated for the first time, and
@@ -482,6 +559,190 @@ items mapped to reproducible evidence with no open item hidden behind `PASS`.
 reviewed SHA and the branch tip is provably a single evidence file — but that is a property of this
 run, not a guarantee of the contract, which is the defect.
 
+---
+
+# Proposed amendments — DRAFT, NOT RATIFIED
+
+Concrete replacement text for the three items that block CP-1: **D-CP0-6** (structurally
+unsatisfiable), **D-CP0-8** (inverts the honesty incentive and contradicts D-CP0-1's own remedy), and
+**D-CP0-12** (no acceptance path). Each states its owner document, the change, and how it is checked.
+
+**These are drafts for owner adjudication.** Nothing here is in force. Most touch
+`capstone_V6_5.md` §12, so ratification produces **capstone v6.6 with a new exact anchor**, and no
+brief may cite it until that anchor exists. No draft below weakens a bar, checklist item, invariant,
+or acceptance criterion; AMD-G1 and AMD-G3 make an existing requirement satisfiable, and AMD-G2
+narrows a prohibition that currently forbids honest reporting.
+
+## AMD-G1 — Separate the final candidate from the evidence tip *(closes D-CP0-6)*
+
+**Problem restated.** Item 7 binds Integration `PASS` to "the exact final candidate SHA/tree" while
+evidence retention requires each verdict to be committed after its review. The Integration verdict
+has nothing above it, so committing it always produces a tip no Integration Critic reviewed. No
+ordering satisfies both.
+
+**Resolution.** Name the two SHAs, bind the bar to the reviewed one, and constrain the delta.
+
+**(a) `engineering-role.md`, step 8 — add after the existing final-candidate designation:**
+
+> The checkpoint has **two** terminal SHAs and they are never the same commit.
+> **`final_candidate_sha`** is the SHA the fresh Integration Critic reviewed: the candidate after it
+> stopped changing, carrying every component verdict. It is what every bar binds to.
+> **`evidence_tip_sha`** is the branch tip after the Integration verdict itself is committed.
+> The delta between them is **verdict-only**: `git diff --name-only <final_candidate_sha>..<evidence_tip_sha>`
+> must return nothing outside `docs/track-b/evidence/<checkpoint>/`. A tip that touches any other path
+> invalidates the terminal `PASS` and requires a new final candidate and a new Integration review.
+
+**(b) `capstone_V6_5.md` §12 — replace the last CP-N checklist item wherever it appears:**
+
+> - [ ] Fresh Integration-Critic `PASS` at the exact **`final_candidate_sha`**/tree, with the
+>   evidence tip above it containing verdict files only.
+
+**(c) `gauntlet-templates.md` §7 — replace the single "Final candidate commit / branch" field:**
+
+```markdown
+Final candidate SHA (Integration-reviewed; every bar binds here):
+Evidence tip SHA (branch tip after the Integration verdict was committed):
+Verdict-only delta confirmed: `git diff --name-only <final>..<tip>` → [paths, all under docs/track-b/evidence/<checkpoint>/]
+```
+
+**(d) `gauntlet-templates.md` §8 — add to the receipt gate:**
+
+> 7. carries both terminal SHAs, and the diff between them contains only paths under
+>    `docs/track-b/evidence/<checkpoint>/`. Run it; do not take the packet's word.
+
+**Check.** One command the Orchestrator runs at the gate. **Retrofit:** CP-0 satisfies this as
+drafted — `final_candidate_sha = 63ebfab`, `evidence_tip_sha = 8f371e5`, delta is
+`docs/track-b/evidence/cp-0/integration-round1.md` alone. The amendment records what CP-0 achieved by
+accident as a property the contract now requires.
+
+## AMD-G2 — Scope the role boundary to the decision-bearing phase *(closes D-CP0-8)*
+
+**Problem restated.** `engineering-role.md:9` forbids reading program state "during Track B
+execution." The Return Packet is written during execution. A Lead needing to describe something
+accurately must read program state and thereby breach the rule, so the compliant move is silence —
+the opposite of what the architecture wants, and it makes D-CP0-1's proposed remedy unwritable.
+
+**Resolution.** Forbid the *influence*, not the *reading*, and make the declaration the control.
+
+**(a) `engineering-role.md:9` — replace the prohibition sentence:**
+
+> During Track B execution, no read of `orchestrator-role.md`, `progress.md`, the syllabus, or Track
+> A/C material may inform any engineering decision: decomposition, a Builder or Critic brief, a
+> verdict, a repair, or the terminal status. Before the final Integration verdict exists, do not read
+> them at all. **After** that verdict is written and no engineering decision remains, a read
+> performed **solely to author the Return Packet accurately** is permitted, and must be declared in
+> the packet's provenance block with its scope and timing. Silence about such a read is a defect in
+> the packet, not compliance.
+
+**(b) `gauntlet-templates.md` §7 — add a mandatory block:**
+
+```markdown
+## Provenance and read scope
+Documents read during the decision-bearing phase: [exhaustive list]
+Reads performed after the final Integration verdict, solely to author this packet:
+  [document] — [UTC time] — [why it was necessary] — [what it did NOT influence]
+Role-boundary guarantee: ASSERTED_ROLE_BOUNDARY — this is the Lead's own declaration.
+  The harness does not enforce read isolation and this packet does not claim it does.
+```
+
+**(c) `gauntlet-templates.md` §8 — add to the receipt gate:** a packet with no provenance block is
+returned unread. An absent block is not an assertion that no late read occurred.
+
+**Note.** `ASSERTED_ROLE_BOUNDARY` is the same honesty pattern as `COOPERATIVE_PROCEDURAL`: name the
+guarantee at its real strength rather than implying enforcement the harness does not provide. This
+amendment also unblocks D-CP0-1's remedy, which cannot be adopted before it.
+
+## AMD-G3 — Terminal handover and the owner squash merge *(closes D-CP0-12)*
+
+**Problem restated.** The contract has no operation between "Track B has stopped" and "`main` is
+written by Yarden by hand." The Orchestrator cannot see what the Lead built, and the owner has no
+named acceptance step. CP-0 is closed and unlanded as a direct result.
+
+**Resolution.** A Landing Report in the packet, an inspection procedure at the gate, and one named
+owner operation that stages without committing.
+
+**(a) `engineering-role.md` — new section, *Terminal handover*:**
+
+> At terminal return, enumerate what the checkpoint leaves behind so the owner can act on it without
+> reconstructing it. Report the checkpoint branch and both terminal SHAs; every worktree registered
+> against the repository, marked as created-by-this-checkpoint (removed) or pre-existing (left, with
+> its path and state); every `gauntlet/*` branch; and the exact diffstat of the candidate against
+> `main`. Removing a worktree this checkpoint did not create remains owner-only. Never merge, squash,
+> rebase, or fast-forward anything into `main`, and never propose doing so as an action you will take.
+
+**(b) `gauntlet-templates.md` §7 — new section in the packet:**
+
+```markdown
+## Landing report
+Checkpoint branch: gauntlet/<checkpoint>
+final_candidate_sha / evidence_tip_sha:
+Diff against main:  `git diff --stat main...<evidence_tip_sha>`  → [summary]
+Commits on the branch: `git log --oneline main..<evidence_tip_sha>` → [list]
+Worktrees created by this checkpoint: [paths] — all removed / [exceptions with reason]
+Worktrees NOT created by this checkpoint: [paths, SHA, clean/dirty] — left untouched, owner-only
+Other gauntlet/* branches present: [list, or none]
+Proposed landing: squash `gauntlet/<checkpoint>` into main as ONE owner-authored commit.
+Proposed commit message: [subject + body, for the owner to use, edit, or discard]
+```
+
+**(c) `gauntlet-templates.md` — new §9, *Landing inspection and owner squash merge*:**
+
+> **Inspection — the Orchestrator, read-only.** The receipt gate closes a checkpoint in program
+> state; landing is a separate decision and needs its own look at the tree:
+>
+> ```text
+> git worktree list
+> git branch -vv --list 'gauntlet/*'
+> git log --oneline --graph main..<evidence_tip_sha>
+> git diff --stat main...<evidence_tip_sha>
+> git diff --name-only <final_candidate_sha>..<evidence_tip_sha>   # AMD-G1: evidence paths only
+> ```
+>
+> Reconcile this against the Landing Report. A discrepancy between what the packet claims the
+> checkpoint left behind and what the repository actually holds is a receipt-gate failure, not a
+> footnote.
+>
+> **The owner operation.** Landing is a squash merge run locally by Yarden, and by no agent:
+>
+> ```text
+> git checkout main
+> git merge --squash gauntlet/<checkpoint>
+> git status            # review the staged tree — nothing has been committed
+> git diff --cached     # this is exactly what would enter main
+> git commit            # authored by hand, after his own review
+> ```
+>
+> `git merge --squash` applies the merged tree to the index and working tree and **deliberately does
+> not create a commit**. That is the point: it produces a reviewable staged state and stops, so the
+> commit that lands on `main` is written by the owner rather than generated by the merge. It also
+> collapses the candidate, the component verdicts, and the evidence tip into **one** commit, which
+> discharges the D-CP0-6 ordering anomaly instead of replaying it onto `main`.
+>
+> Nothing here authorizes an agent to run any of it. A `PASS` packet is evidence for the decision; it
+> is not the decision, and a checkpoint may stay closed-and-unlanded indefinitely.
+
+**(d) `AGENTS.md` — add under *Git and publication authority*:**
+
+> **Landing is owner-only and squash-only.** A reviewed checkpoint reaches `main` as one
+> owner-authored commit produced by a local `git merge --squash` that Yarden runs and commits by
+> hand. Agents never merge, squash, rebase, fast-forward, or cherry-pick into `main`, and never
+> offer to. An agent may prepare the Landing Report and a proposed commit message; it may not
+> execute the landing.
+
+**Check.** The gate reconciles the Landing Report against the live repository. The landing itself is
+outside agent authority by construction, so it needs no agent-side check.
+
+## Sequencing
+
+1. **AMD-G2 first.** It is the cheapest, and D-CP0-1's remedy cannot be adopted before it — the
+   current text makes the required declaration impossible to write honestly.
+2. **AMD-G1 next.** It is the only structurally unsatisfiable defect, and it must be settled before
+   CP-1 produces a candidate under the old wording.
+3. **AMD-G3 last of the three**, because its landing rule depends on AMD-G1's two-SHA vocabulary.
+4. Then D-CP0-2 through D-CP0-5, D-CP0-7, and D-CP0-9 through D-CP0-11, which are underspecified
+   rather than contradictory and can be drafted together once the shape above is settled.
+5. Ratify as **capstone v6.6 + a new exact anchor**, then close this ledger, then brief CP-1.
+
 ## Still open
 
 - Whether the packet's 3–5 defense questions are answerable by the owner — untested until Yarden
@@ -493,4 +754,12 @@ run, not a guarantee of the contract, which is the defect.
   but never labelled as a mandatory surface. **Adjudicate this before CP-1, where all three of
   surfaces 1–3 are unambiguously in scope.**
 - The orphaned worktree at `.../23cc0d4e-.../scratchpad/gauntlet/builder-instrument` awaits owner
-  removal. The Lead correctly declined to remove a worktree it did not create.
+  removal. The Lead correctly declined to remove a worktree it did not create. Under AMD-G3 this
+  would have appeared in a Landing Report rather than surfacing through an unrequired topology sweep.
+- **CP-0's landing decision itself.** `gauntlet/cp-0` @ `8f371e5` is reviewed, closed, and held. It
+  lands — if it lands — under AMD-G3's squash procedure once that is ratified, or by whatever
+  procedure supersedes it. It is a live example of the gap D-CP0-12 names: a `PASS` artifact with no
+  contractual route to `main`.
+- **Whether the amendment should be one capstone v6.6 or two releases.** AMD-G2 is independent and
+  could ship immediately; AMD-G1 and AMD-G3 are coupled through the two-SHA vocabulary. Shipping G2
+  alone would unblock honest packets sooner at the cost of a second ratification cycle. Owner call.
