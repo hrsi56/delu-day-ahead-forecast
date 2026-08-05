@@ -560,3 +560,206 @@ of what was built and why it was removed.
 No test suite remains; `tests/` is empty until M1 creates the real invariant tests that
 `capstone_V6_5.md` §9.4 requires. That is the correct state: there is no longer any protocol to test,
 and the tests that existed tested only the protocol.
+
+---
+
+# v6.6 amendment inventory — BEFORE — 2026-08-05
+
+**Purpose.** Enumerate every normative rule the v6.6 Gauntlet amendment (AMD-G1 … G14) will touch,
+**before** any of it is authored, so the post-amendment state can be *proved* complete rather than
+asserted complete. Phase 2.1 of `docs/track-b/gauntlet-amendment-plan.md`. This is a working
+artifact, never agent context.
+
+**Why it runs first.** The method has now caught a live rule loss twice — `G4` and `I9` in Phase 1 —
+that targeted greps missed. This amendment touches **five** documents instead of four, and three of
+its remedies land in a document that has never been enumerated at all. Authoring first would repeat
+the exact failure the method exists to prevent.
+
+**Sources inventoried (complete read):** `capstone_V6_5.md` §12 · `engineering-role.md` ·
+`docs/track-b/gauntlet-templates.md` · `AGENTS.md` · **`orchestrator-role.md` (first time — see
+D-CP0-14)**.
+
+## Two findings from the enumeration itself
+
+These are not amendment decisions. They are defects in the ledger, found while preparing to use it,
+and both are filed in `cp-0-defects.md`.
+
+**D-CP0-14 — `orchestrator-role.md` was never inventoried.** Phase 1's sources were the capstone,
+the role doc, the templates, and the CP-2 protocol file. The Orchestrator side of the contract has
+never been enumerated, single-owned, or checked against loss — and AMD-G4, G7, and G13 all land
+there. **Remedied below as domain Q**, enumerated here for the first time.
+
+**D-CP0-15 — the domain tables above are one amendment out of date.** Option C retired 33 rules and
+reduced 8 more, and recorded that as an appended delta. The tables were never restated, so they still
+describe machinery that no longer exists: `E6` cites the "two-record contract", `C1` a "pre-created
+evidence ref", `G1` the `.gauntlet/` root, `N7` the deleted `validate-verdict`/`verify-ref` exit
+codes. Inversely, `engineering-role.md:56`'s cache-routing sentence is **in force but unledgered** —
+a surviving remnant of retired `C7`, and the reason D-CP0-9 stayed invisible.
+
+**Consequence for this pass:** every rule statement used below is re-derived from the **current**
+document text, not carried forward from the tables above. AMD-G14 extends to restating the 8 reduced
+rules in place and striking the 33 retired ones where they sit.
+
+## Baseline
+
+| | Count |
+|---|---:|
+| Phase 1 enumeration | 138 |
+| Retired by Option C | −33 |
+| **Live executor-side rules (domains A–P)** | **105** |
+| Domain Q — `orchestrator-role.md`, newly enumerated | +23 |
+| **Enumerated baseline entering the amendment** | **128** |
+
+Live domain arithmetic: A 10 · B 10 · C 8 · D 4 · E 8 · F 6 · G 3 · H 0 · I 10 · J 6 · K 10 ·
+L 11 · M 0 · N 7 · O 3 · P 9 = **105**. Domains H and M are empty — their entire subject matter
+(the evidence-ref namespace, evidence freezing) went with the machinery. **AMD-G13 re-enters that
+territory with different mechanics**, which is why it needs its own enumeration rather than reviving
+retired IDs.
+
+## Domain Q — Orchestrator-side rules (23) — *first enumeration, D-CP0-14*
+
+| ID | Rule | Currently in | → |
+|---|---|---|---|
+| Q1 | The Orchestrator holds strategic context no executor has; an executor missing context it needs is a routing failure, not an executor failure | ORCH *hierarchy* | ORCH |
+| Q2 | Subagents are never briefed by the Orchestrator; referenced only at outcome level | ORCH *hierarchy* | ORCH |
+| Q3 | Delegate to a specific executor with a specific brief, never to "the team" | ORCH *hierarchy* | ORCH |
+| Q4 | Briefs inherit executor role-doc workflow defaults instead of duplicating them | ORCH *role docs* | ORCH |
+| Q5 | The B-Claude brief names exactly one repo, one checkpoint, one ratified anchor, one numeric ceiling; cites the complete checklist; may carry a task-specific extract without narrowing it; never dictates implementation or decomposition | ORCH *role docs*, *Type B-Claude* · co-owned with A5 | ORCH + CAP |
+| Q6 | A Return Packet is evidence for the gate decision, never authorization to begin the next checkpoint | ORCH *role docs* · co-owned with N6 | ORCH |
+| Q7 | The Orchestrator decides what runs, when, in which repo, against which single checkpoint, under which constraints and ceiling; the Lead owns how | ORCH *Track B* · co-owned with A1/A2 | ORCH |
+| Q8 | The Orchestrator does not rewrite ratified criteria, inspect the internal workbench, or mediate between subagents | ORCH *Track B* · co-owned with J4 | ORCH |
+| Q9 | "Execute the capstone" resolves to one valid brief for the next schedulable checkpoint; never blanket authorization; if Track B is not schedulable, name the controlling gate | ORCH *Track B* · co-owned with A10 | ORCH |
+| Q10 | The fixed launch envelope is delivered as one copy-paste-ready prompt with the canonical brief between markers; it is transport, not a second brief; no commentary inside the fence, no canonical field omitted | ORCH *Type B-Claude* | ORCH |
+| Q11 | Do not emit the envelope for a closed prerequisite, an advisory block, B-Manual, or B-Research; state which gate controls instead | ORCH *Type B-Claude* | ORCH |
+| Q12 | Clock accounting as stated to the Orchestrator: one active elapsed wall clock, parallel contexts overlap and never sum, ceiling exhaustion is a non-`PASS` terminal, only the Orchestrator extends it | ORCH *Type B-Claude* · co-owned with I1–I8 | ORCH |
+| Q13 | Execution defaults inherited from `engineering-role.md` (sole Git writer, isolated Builder worktrees, committed verdicts) are not brief content and not Orchestrator-managed state | ORCH *Type B-Claude* | ORCH |
+| Q14 | One checkpoint block may contain many internal turns but remains one Orchestrator block; the owner returns only when the terminal packet exists | ORCH *Session lifecycle* | ORCH |
+| Q15 | Silence never closes a Track B CP/FCP; only the consolidated Return Packet can support closure | ORCH *Session lifecycle*, *Verification* | ORCH |
+| Q16 | Assume perfect execution of prior blocks unless stated otherwise or a Track A checkpoint was crossed; this carry-forward never applies to Track B closure | ORCH *Closing* | ORCH |
+| Q17 | Close a checkpoint only from its consolidated packet, mapping every item in the full checklist to inspectable evidence | ORCH *Verification* · co-owned with N1/L5 | ORCH |
+| Q18 | At CP-1 the packet must carry independent verdicts for all five M1 acceptance oracles; Builder tests do not substitute | ORCH *Verification* · co-owned with F2/F3 | ORCH |
+| Q19 | The Orchestrator does not audit evidence files and has no shell; record-level rules are enforced by the Lead and evidenced in committed verdicts. The gate is the packet and the verdict files it names, never the internal workbench | ORCH *Verification* | ORCH |
+| Q20 | CP-2 receipt gate: the packet must be labelled `COOPERATIVE_PROCEDURAL`; reject any packet claiming cryptographic enforcement | ORCH *Verification* · co-owned with O11 | ORCH |
+| Q21 | `progress.md` is read at session start and regenerated **in full** when durable state changes; never paraphrased from memory | ORCH *Regeneration contract* | ORCH |
+| Q22 | Run the omission diff before output; every item present before and absent now is resolved-and-logged or pruned-under-the-rule. Silent drops are the failure mode the contract exists to prevent | ORCH *Regeneration contract* | ORCH |
+| Q23 | The regeneration contract applies to `progress.md` and nothing else | ORCH *Regeneration contract* | ORCH |
+
+## Rules the amendment amends (26)
+
+No rule is retired by this amendment.
+
+| Rule | AMD | Change |
+|---|---|---|
+| A5 | G6 | Referenced, not changed — the packet must now reproduce these ten fields verbatim |
+| A6 | G5 | Invalid brief returns the named terminal status `BRIEF_INVALID` instead of an unnamed "discrepancy" |
+| A9 | G2 | Prohibition scoped to **influence**; a declared post-Integration read solely to author the packet is permitted |
+| B1 | G10 | State verification extends to repository topology, recorded at start and at terminal return |
+| B4 | G8 | The Builder worktree's seed is declared; seeding from prior work is permitted and forces whole-artifact review |
+| C1 | G14 | Restate from current text — the "pre-created evidence ref" clause is retired machinery (D-CP0-15) |
+| C8 | G14 | Restate — post-review check is `git status --porcelain`, not a manifest re-verify |
+| D1 | G11 | Line citations optional and explicitly non-binding; only the verbatim excerpt is load-bearing |
+| E2 | G1 | "final candidate" → `final_candidate_sha`; semantics unchanged |
+| E5 | G1 | Same terminology change; the earlier-SHA binding is preserved exactly |
+| E6 | G1 | Integration runs at `final_candidate_sha`; strike the retired "two-record contract" clause |
+| F1 | G12 | The packet declares in-scope/out-of-scope **with a reason** for each of the five surfaces |
+| G1 | G14 | Restate — evidence lives at `docs/track-b/evidence/<checkpoint>/`, not `.gauntlet/` |
+| — | G9 | `engineering-role.md:56` cache routing: **demote to recommendation** and re-ledger, or drop. Currently in force and unledgered |
+| I1 | G5 | Brief validation precedes the clock and consumes no ceiling |
+| I2 | G5 | The clock starts at the first repository-state verification performed under a **valid** brief |
+| K1 | G5 | Status vocabulary becomes five: `PASS` · `BLOCKED` · `PLATEAU` · `BUDGET_EXHAUSTED` · `BRIEF_INVALID` |
+| K2 | G1 | `PASS` binds `final_candidate_sha`; the evidence tip is not the bound SHA |
+| L1 | G1,G2,G3,G8,G10 | Header carries two SHAs; adds the provenance block, Landing Report, Builder seeds, and topology |
+| L5 | G6 | Adds the reproduced ten brief fields alongside the checklist table |
+| L6 | G12 | Independent-criticism table carries the surface scope declaration |
+| N1 | G1,G2,G6,G12 | Gate gains: the verdict-only delta check, the provenance block, brief-field validation, surface scope |
+| N7 | G14 | Restate — cites `validate-verdict`/`verify-ref` exit codes that no longer exist (D-CP0-15) |
+| Q5 · Q10 | G4 | Envelope names a minimum executor tier and reasoning effort, and requires a session-freshness declaration |
+| Q15 | G7 | Silence still never closes — and gains the abandonment convention it currently lacks |
+| Q19 | G3,G13 | The gate gains the landing inspection and the reclamation step |
+
+## Rules the amendment adds (25)
+
+New IDs continue each domain; **R** is a new domain for landing and reclamation, replacing the
+territory vacated by retired H and M.
+
+| ID | Rule | AMD | Owner |
+|---|---|---|---|
+| A11 | An invalid brief is returned as `BRIEF_INVALID` before any repository edit, naming every missing or contradictory required field | G5 | ROLE |
+| B11 | The Lead emits `started_at_utc` and its verified repository state as its **first observable output**, before any Builder is dispatched | G7 | ROLE |
+| B12 | A Builder worktree seeded from pre-existing work is reviewed as a whole artifact, never as a diff | G8 | ROLE |
+| C14 | The Lead declares, in the packet, the exhaustive set of documents read during the decision-bearing phase | G2 | ROLE |
+| C15 | Any read performed after the final Integration verdict, solely to author the packet, is declared with its timing and what it did not influence | G2 | ROLE |
+| C16 | The role-boundary guarantee is labelled `ASSERTED_ROLE_BOUNDARY`; no packet may imply harness-enforced read isolation | G2 | ROLE |
+| E9 | `final_candidate_sha` is the SHA the Integration Critic reviewed; every bar binds to it | G1 | ROLE |
+| E10 | `evidence_tip_sha` is the branch tip after the Integration verdict is committed | G1 | ROLE |
+| E11 | The delta between them is verdict-only: `git diff --name-only <final>..<tip>` returns nothing outside `docs/track-b/evidence/<checkpoint>/`. A tip touching any other path invalidates the terminal `PASS` | G1 | ROLE + CAP |
+| I11 | Brief validation is outside the ceiling; a `BRIEF_INVALID` return records `validation_started_at_utc` and `returned_at_utc`, explicitly excluded from consumed seconds | G5 | ROLE |
+| K11 | `BRIEF_INVALID` — the authorization was malformed; no work started, no clock consumed, no repository edit made. Distinct from `BLOCKED`, which means work started and hit an owner-only dependency | G5 | **CAP** |
+| K12 | A run that exceeds its ceiling in real elapsed time with no packet is **abandoned**, not `BUDGET_EXHAUSTED` — the latter asserts the ceiling was consumed by work, which an abandoned run cannot evidence | G7 | **CAP** + ORCH |
+| L12 | The packet carries a provenance block: decision-phase reads, declared late reads, and the `ASSERTED_ROLE_BOUNDARY` label | G2 | TMPL |
+| L13 | The packet carries a Landing Report: both terminal SHAs, the diff against `main`, branch commits, worktrees created and not created, other `gauntlet/*` branches, proposed disposition and commit message | G3 | TMPL |
+| L14 | The packet reproduces the ten required brief fields verbatim | G6 | TMPL |
+| L15 | The packet declares each Builder worktree's seed — brief-authored, or copied from a named path at a named state | G8 | TMPL |
+| L16 | The packet records repository topology at `started_at_utc` and at terminal return, and reports any change | G10 | TMPL |
+| N8 | The gate runs the verdict-only delta check itself rather than accepting the packet's claim | G1 | TMPL |
+| N9 | A packet with no provenance block is returned unread; an absent block is not an assertion that no late read occurred | G2 | TMPL |
+| N10 | The gate reconciles the Landing Report against the live repository; a discrepancy is a gate failure, not a footnote | G3 | TMPL |
+| R1 | **One-branch invariant:** at rest the repository has exactly `main`; while a checkpoint is open, exactly one `gauntlet/<checkpoint>`. Never a third | G13 | **AGENTS** |
+| R2 | Every closed checkpoint receives exactly one disposition — **LAND** (owner squash, commit by hand, `tag land/<cp>`) or **DISCARD** (`tag archive/<cp>-attempt-<k>`) — and both end in branch deletion | G13 | AGENTS + ORCH |
+| R3 | **Tag before delete, always.** A branch may never be deleted while any live document cites a SHA reachable only from it | G13 | **AGENTS** |
+| R4 | **The citation follows the ref.** Retiring a branch repoints, in the same operation, every live document that named it | G13 | AGENTS + ORCH |
+| R5 | Execution split: INSPECT, DISCARD, REPOINT and RECLAIM are agent-executed; **LAND is owner-authored by hand**. An agent may never delete a ref whose SHAs are not already reachable from a verified tag, nor a branch the owner has not dispositioned | G13 | **AGENTS** |
+
+## Post-amendment ownership
+
+**Correction, recorded rather than quietly fixed.** The first draft of this table read CAP 31 ·
+ROLE 98 · TMPL 26 · AGENTS 5 · ORCH 23 · PROG 1 and summed to **184**, against a stated total of 153.
+The per-domain counts and the 128 + 25 arithmetic were right throughout; the ownership row values were
+carried over from the pre-Option-C split without subtracting the 33 retired rules. This is the same
+class of error the Phase 1 inventory made (148 written, 138 actual) and is logged for the same reason:
+the instrument that proves nothing was lost has to be auditable itself.
+
+Derivation of the baseline split. Phase 1 assigned CAP 27 · ROLE 85 · TMPL 16 · CP2 10 = 138. Of the
+33 rules Option C retired, **24 were ROLE-owned** (C5–C11 group 5, D4–D6 3, G2–G9 group 6, H1–H6 6,
+M1–M4 4) and **9 were CP2-owned** (O2–O12 group). No CAP-owned or TMPL-owned rule was retired. The
+one surviving CP2 rule, `O1`, moved to ROLE when `cp2-blind-protocol.md` was deleted. So
+ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q **23** → **128**.
+
+| Owner | Baseline | New | Post-amendment | Note |
+|---|---:|---:|---:|---|
+| **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
+| **ROLE** `engineering-role.md` | 62 | +9 | **71** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
+| **TMPL** `gauntlet-templates.md` | 16 | +8 | **24** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
+| **AGENTS** `AGENTS.md` | 0 | +5 | **5** | New owner — R1–R5, the ref lifecycle |
+| **ORCH** `orchestrator-role.md` | 23 | 0 | **23** | Newly enumerated (Q1–Q23); amended by G4, G7, G13 but gains no new ID |
+| **Total** | **128** | **+25** | **153** | **0 retired** |
+
+`I10` remains co-owned with `progress.md` as a cross-reference, counted once under CAP. Nine
+co-ownerships persist from Phase 1 and are stated once in each place with an explicit cross-reference,
+never restated in full.
+
+## Rules that must not change — the overcorrection guard
+
+The CP-0 run validated these operationally. Phase 2.3's review checks each is present and unweakened:
+
+**B8** Builder never grades its own work · **B7** sole Git writer · **B5** Builders never touch Git ·
+**C3** fresh clean detached worktree at the candidate SHA · **C4** Critic never receives the
+Builder's story · **E1–E4** computed staleness (E2/E5/E6 take terminology only, never semantics) ·
+**F1–F6** mandatory surfaces and the Critic-materializes-fixtures rule · **B1** verify real state
+(extended by G10, never relaxed) · **K9** hard stop at every terminal return · **I6** parallel
+contexts never sum.
+
+## Verification protocol for Phase 2.3
+
+1. Author G1 … G14.
+2. For each of the **153** IDs, confirm presence in its assigned owner by normalized-whitespace
+   substring match — the method that caught `G4` and `I9`.
+3. Confirm no rule appears normatively outside its assigned owner (cross-references excepted).
+4. Confirm every rule in the overcorrection guard is present and unweakened.
+5. Confirm the 8 Option-C-reduced rules and the 33 retired ones are restated or struck in place
+   (D-CP0-15), and that `engineering-role.md:56` is either re-ledgered or dropped (D-CP0-9).
+6. Record the result here as a dated verification block, including any rule the pass had to restore.
+
+**Judged by a fresh context that did not author the amendment.** Builder ≠ Critic applies to the
+contract itself; the alternative is the authors certifying their own work, which the contract forbids
+everywhere else.

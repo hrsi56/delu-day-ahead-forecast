@@ -42,6 +42,8 @@ existing ID; a superseded defect is marked superseded and kept.
 | 2026-08-05 | Brief-validation failure on the first CP-0 handoff attempt — the brief was returned invalid before any repository edit | D-CP0-1 … D-CP0-4 |
 | 2026-08-05 | Executor stall on a low-reasoning-effort run, before any candidate existed | D-CP0-5 |
 | 2026-08-05 | CP-0 Return Packet (`PASS`, final candidate `8f371e5` on `gauntlet/cp-0`) and Orchestrator receipt-gate verification of it | D-CP0-6 … D-CP0-11 |
+| 2026-08-05 | Owner's standing requirement that no unnecessary branch ever stay open, and the ref cleanup that followed CP-0 | D-CP0-13 |
+| 2026-08-05 | The v6.6 amendment rule inventory (`rule-inventory.md`, Phase 2.1) | D-CP0-14, D-CP0-15 |
 
 D-CP0-1 … D-CP0-5 were found **before a single line of CP-0 product code was written** — the
 contract's own front gate producing findings on its first real contact with an execution attempt.
@@ -64,6 +66,9 @@ the loop worked and the contract around it did not quite.
 | D-CP0-10 | Concurrent sessions on one repository are unmodelled | `AGENTS.md`, `engineering-role.md` step 1 | Medium |
 | D-CP0-11 | Volunteered line citations create false discrepancy signals | templates §5 | Low |
 | **D-CP0-12** | **No defined landing path from candidate branch to `main`** | **`AGENTS.md`, templates §8** | **High — blocks acceptance** |
+| **D-CP0-13** | **No branch or ref reclamation rule** | **`AGENTS.md`, `orchestrator-role.md`, templates §9** | **High — blocks acceptance** |
+| D-CP0-14 | `orchestrator-role.md` was never rule-inventoried | `rule-inventory.md`, `orchestrator-role.md` | Medium |
+| D-CP0-15 | The rule ledger's own statements went stale after Option C | `rule-inventory.md` | Medium |
 
 Concrete amendment drafts for the three blocking/high-inversion items — **D-CP0-6**, **D-CP0-8**, and
 **D-CP0-12** — are in *Proposed amendments* below. The remainder carry candidate remedies with a
@@ -524,6 +529,91 @@ the operation `AGENTS.md`'s hand-written-`main` rule has always implied without 
 §8 (receipt gate); a new §9 landing form.
 
 **Candidate remedies.** Drafted as **AMD-G3** below.
+
+---
+
+## D-CP0-13 — No branch or ref reclamation rule
+
+**Statement.** Nothing in the contract says what happens to `gauntlet/<checkpoint>`, or to any
+worktree, after a checkpoint closes. Refs accumulate silently across sessions, and there is no rule
+preventing the deletion of a branch that live documents still depend on.
+
+**Evidence.** The 2026-08-05 cleanup found **six worktrees and eight local branches** against one
+repository, including an orphan from a third session, none of which any rule required anyone to
+reclaim. Simultaneously, this document cited `7526310`, `63ebfab`, and `8f371e5` — all reachable
+**only** from `gauntlet/cp-0`. Deleting that branch as "cleanup" would have left the ledger citing
+SHAs that garbage collection is free to destroy.
+
+**Impact.** Two failure modes pulling in opposite directions: refs accumulate until nobody knows
+which are live, and the obvious remedy — delete them — silently breaks the evidence chain the whole
+architecture rests on. The contract has no position on either.
+
+There is a third, subtler face. Preserving the SHA is not the same as preserving the citation: a tag
+that keeps `8f371e5` reachable while the prose still says "reachable on that branch" satisfies the
+mechanism and defeats its purpose. Ref hygiene and document hygiene are one operation, and nothing
+said so.
+
+**Ownership.** `AGENTS.md`, `orchestrator-role.md`, `gauntlet-templates.md` §9.
+
+**Remedy.** AMD-G13 — the one-branch invariant, LAND/DISCARD dispositions, tag-before-delete, and
+the citation-follows-ref rule, with an execution split that delegates reclamation to agents and keeps
+authorship of `main` with the owner. Full draft in `docs/track-b/gauntlet-amendment-plan.md`.
+
+**Status.** The procedure was executed manually on 2026-08-05, before the rule existed:
+`archive/cp-0-attempt-1` tagged and verified, seven citations in this document repointed, then
+`gauntlet/cp-0` and the last article branch deleted. AMD-G13 codifies what was done so it stops
+depending on anyone remembering it.
+
+---
+
+## D-CP0-14 — `orchestrator-role.md` was never rule-inventoried
+
+**Statement.** The Phase 1 rule inventory enumerated four documents — `capstone_V6_5.md` §12,
+`engineering-role.md`, `gauntlet-templates.md`, and the then-separate CP-2 protocol file. It did not
+enumerate `orchestrator-role.md`. **The entire Orchestrator side of the contract has never been
+enumerated, single-owned, or verified against loss.**
+
+**Evidence.** `rule-inventory.md` header, *Sources inventoried (complete read)*. Domain N covers the
+receipt gate, but it lives in the templates; the launch envelope, the B-Claude block contract, the
+checkpoint-verification rules, and the progress-regeneration contract are all in
+`orchestrator-role.md` and appear in no domain.
+
+**Impact.** Half the contract has no drift protection. The Phase 1 method exists because duplicated
+prose diverges — that is how D-1 survived two sessions — and it has only ever been applied to the
+executor side. Three of this amendment's own remedies (AMD-G4, G7, G13) land in `orchestrator-role.md`
+and would be authored into an unenumerated document, which is precisely the condition the method
+was built to prevent.
+
+**Ownership.** `rule-inventory.md`.
+
+**Remedy.** Enumerate `orchestrator-role.md`'s Track-B-facing rules as a new **domain Q** in the
+Phase 2.1 inventory, before authoring. Done — see `rule-inventory.md` § *v6.6 amendment inventory*.
+
+---
+
+## D-CP0-15 — The rule ledger's own statements went stale after Option C
+
+**Statement.** Option C retired 33 rules and reduced 8 more, and recorded that as a delta section
+appended to `rule-inventory.md`. The per-domain tables above it were never rewritten. **The ledger's
+rule statements therefore still describe machinery that no longer exists**, and a reader who consults
+a domain table gets the pre-Option-C text with no marking.
+
+**Evidence.** `E6` still reads "same two-record contract"; `C1` still requires a "pre-created
+evidence ref"; `G1` still names `.gauntlet/evidence/`; `D1`'s fields are the retired JSON schema's.
+All four describe retired mechanics. Separately, `engineering-role.md:56`'s cache-routing sentence
+survives in the live document as a remnant of retired `C7` — **a rule in force that the ledger says
+does not exist**, which is how D-CP0-9 stayed invisible.
+
+**Impact.** The inventory is the instrument the project uses to prove nothing was lost. An instrument
+whose readings are one amendment out of date will certify a state that is not the state. This is the
+same class as D-1 — a rule surviving where the record says it does not — inverted.
+
+**Ownership.** `rule-inventory.md`.
+
+**Remedy.** AMD-G14 extends to a restatement pass: every surviving rule whose mechanics Option C
+changed is restated from the current document text, and every retired rule is struck through in place
+rather than only listed in a delta section. The 8 reduced rules (`C1`, `C8`, `C13`, `D1`, `G1`, `G7`,
+`G8`, `O1`) are the minimum set; `engineering-role.md:56` is re-ledgered or dropped by AMD-G9.
 
 ---
 
