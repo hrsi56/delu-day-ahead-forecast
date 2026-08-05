@@ -608,7 +608,8 @@ rules in place and striking the 33 retired ones where they sit.
 | Retired by Option C | −33 |
 | **Live executor-side rules (domains A–P)** | **105** |
 | Domain Q — `orchestrator-role.md`, newly enumerated | +23 |
-| **Enumerated baseline entering the amendment** | **128** |
+| Domain S — `AGENTS.md`, newly enumerated (D-CP0-17) | +13 |
+| **Enumerated baseline entering the amendment** | **141** |
 
 Live domain arithmetic: A 10 · B 10 · C 8 · D 4 · E 8 · F 6 · G 3 · H 0 · I 10 · J 6 · K 10 ·
 L 11 · M 0 · N 7 · O 3 · P 9 = **105**. Domains H and M are empty — their entire subject matter
@@ -643,6 +644,34 @@ retired IDs.
 | Q21 | `progress.md` is read at session start and regenerated **in full** when durable state changes; never paraphrased from memory | ORCH *Regeneration contract* | ORCH |
 | Q22 | Run the omission diff before output; every item present before and absent now is resolved-and-logged or pruned-under-the-rule. Silent drops are the failure mode the contract exists to prevent | ORCH *Regeneration contract* | ORCH |
 | Q23 | The regeneration contract applies to `progress.md` and nothing else | ORCH *Regeneration contract* | ORCH |
+
+## Domain S — `AGENTS.md` pre-existing rules (13) — *first enumeration, D-CP0-17*
+
+The Phase 2.1 pass assigned `AGENTS.md` a baseline of **0** and made it the owner of R1–R5. That was
+wrong: it already carried thirteen normative rules that appear in no domain. Same class as D-CP0-14,
+one document to the left — and worse, because the amendment made this document an owner while
+leaving most of what it owns unledgered.
+
+| ID | Rule | → |
+|---|---|---|
+| S1 | An ORCHESTRATOR session reads `orchestrator-role.md` and its anchors and does not act as Engineering Lead | AGENTS |
+| S2 | A BOUNDED SUBAGENT follows only its bounded task, named plan sections, constraints, owned paths and artifact paths; it assumes no Lead or Orchestrator authority, never updates `progress.md`, never opens or closes a checkpoint, and never inspects later work | AGENTS |
+| S3 | A ROLE-MAINTENANCE task explicitly authorized to compare or edit the contracts may read both role documents and the router | AGENTS |
+| S4 | An AMBIGUOUS role permits read-only inspection only; ask for the missing role or brief before changing project files. "Execute the capstone" authorizes nothing | AGENTS |
+| S5 | `progress.md` is controlled only by the Orchestrator; an active `workbench.md` only by the Lead, exists only inside one authorized checkpoint, and is never program state | AGENTS · co-owned J1/J3 |
+| S6 | `AGENTS.md` is the single canonical root-role router; `CLAUDE.md` contains only a pointer and never duplicated policy | AGENTS |
+| S7 | **Never publish.** No push under any refspec or flag, no pushed tags, no remote branch creation or deletion, no PR, release or issue, no `gh` call or other mutation of `origin` or GitHub state | AGENTS |
+| S8 | **Never commit to `main`.** `main` is written by Yarden by hand after his own review; agents do not stage, commit, amend, rebase, reset, revert, cherry-pick, drop a stash, or check out over uncommitted work on it | AGENTS |
+| S9 | **Finish, then hand over.** Complete every task inside the authorization, bring the tree to one coherent reviewable state, then present status, diffstat, full diff, files touched with reasons, and a proposed commit message — then stop. A deferred or refused commit is never a reason to redo or abandon completed work | AGENTS |
+| S10 | Sole commit exception: inside one authorized checkpoint the Lead may commit candidate work on the local disposable `gauntlet/<checkpoint>` branch. Candidate commits stay local, never touch `main`, are never pushed; whether any reaches `main` is Yarden's decision alone | AGENTS · grants the exception; mechanics are ROLE B5/B7 |
+| S11 | Critic verdicts are committed under `docs/track-b/evidence/<checkpoint>/` on that branch, and every cited SHA stays reachable — on the branch while it exists, on the disposition tag afterwards | AGENTS · co-owned G1 |
+| S12 | Bounded worktree lifecycle: the Lead creates and removes only the worktrees it created for the active checkpoint; removing any other is owner-only except under reclamation | AGENTS |
+| S13 | Destructive local operations are owner-only: history rewriting, `git clean`, hard resets, worktree removal outside the lifecycle, and deletion of any branch or ref other than a dispositioned `gauntlet/*` reclaimed under the lifecycle rule | AGENTS |
+
+The read-boundary sentence at `AGENTS.md:6` is **not** a fourteenth rule: it is A9 restated in the
+router the Lead reads first, closing with an explicit pointer to its ROLE owner. That restatement is
+deliberate and load-bearing — the router is read before `engineering-role.md`, so a bare
+cross-reference there would leave the boundary unstated at the moment it first applies.
 
 ## Rules the amendment amends (26)
 
@@ -713,7 +742,8 @@ territory vacated by retired H and M.
 ## Post-amendment ownership
 
 **Correction, recorded rather than quietly fixed.** The first draft of this table read CAP 31 ·
-ROLE 98 · TMPL 26 · AGENTS 5 · ORCH 23 · PROG 1 and summed to **184**, against a stated total of 153.
+ROLE 98 · TMPL 26 · AGENTS 5 · ORCH 23 · PROG 1 and summed to **184**, against the then-stated total
+of 153 (now 166, after D-CP0-17 added domain S).
 The per-domain counts and the 128 + 25 arithmetic were right throughout; the ownership row values were
 carried over from the pre-Option-C split without subtracting the 33 retired rules. This is the same
 class of error the Phase 1 inventory made (148 written, 138 actual) and is logged for the same reason:
@@ -730,9 +760,9 @@ ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q 
 | **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
 | **ROLE** `engineering-role.md` | 62 | +9 | **71** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
 | **TMPL** `gauntlet-templates.md` | 16 | +8 | **24** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
-| **AGENTS** `AGENTS.md` | 0 | +5 | **5** | New owner — R1–R5, the ref lifecycle |
+| **AGENTS** `AGENTS.md` | 13 | +5 | **18** | Domain S newly enumerated (D-CP0-17), plus R1–R5, the ref lifecycle |
 | **ORCH** `orchestrator-role.md` | 23 | 0 | **23** | Newly enumerated (Q1–Q23); amended by G4, G7, G13 but gains no new ID |
-| **Total** | **128** | **+25** | **153** | **0 retired** |
+| **Total** | **141** | **+25** | **166** | **0 retired** |
 
 `I10` remains co-owned with `progress.md` as a cross-reference, counted once under CAP. Nine
 co-ownerships persist from Phase 1 and are stated once in each place with an explicit cross-reference,
@@ -752,7 +782,7 @@ contexts never sum.
 ## Verification protocol for Phase 2.3
 
 1. Author G1 … G14.
-2. For each of the **153** IDs, confirm presence in its assigned owner by normalized-whitespace
+2. For each of the **166** IDs, confirm presence in its assigned owner by normalized-whitespace
    substring match — the method that caught `G4` and `I9`.
 3. Confirm no rule appears normatively outside its assigned owner (cross-references excepted).
 4. Confirm every rule in the overcorrection guard is present and unweakened.

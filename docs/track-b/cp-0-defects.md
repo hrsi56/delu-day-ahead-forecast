@@ -70,6 +70,7 @@ the loop worked and the contract around it did not quite.
 | D-CP0-14 | `orchestrator-role.md` was never rule-inventoried | `rule-inventory.md`, `orchestrator-role.md` | Medium |
 | D-CP0-15 | The rule ledger's own statements went stale after Option C | `rule-inventory.md` | Medium |
 | **D-CP0-16** | **The verdict form omits `reviewed_paths`, which computed staleness depends on** | **templates §5** | **High — the staleness rule's input was never collected** |
+| D-CP0-17 | `AGENTS.md` was never rule-inventoried either | `rule-inventory.md`, `AGENTS.md` | Medium |
 
 Concrete amendment drafts for the three blocking/high-inversion items — **D-CP0-6**, **D-CP0-8**, and
 **D-CP0-12** — are in *Proposed amendments* below. The remainder carry candidate remedies with a
@@ -649,6 +650,36 @@ having *worked*.
 **Remedy.** AMD-G11 extends to adding `Reviewed paths:` to the §5 header and to the packet's verdict
 table, with the soundness condition stated on the form itself where the Critic will read it.
 Authored 2026-08-05.
+
+---
+
+## D-CP0-17 — `AGENTS.md` was never rule-inventoried either
+
+**Statement.** Phase 2.1 closed D-CP0-14 by enumerating `orchestrator-role.md` as domain Q, and in
+the same pass made `AGENTS.md` the owner of five new rules (R1–R5) while recording its baseline as
+**0**. That baseline was false. `AGENTS.md` already carried thirteen normative rules — the role
+router, the publication prohibition, never-commit-to-`main`, finish-then-hand-over, the commit
+exception, evidence retention, the worktree lifecycle, and the destructive-operations rule — none of
+which appeared in any domain.
+
+**Evidence.** Found by the third independent review of the v6.6 amendment. `rule-inventory.md` listed
+`AGENTS.md` as a complete-read source and assigned it a baseline of 0 in the same table.
+
+**Impact.** The instrument that certifies nothing was lost did not cover a document the amendment had
+just promoted to owner. Worse than D-CP0-14 in one respect: there, an unenumerated document was left
+alone; here, an unenumerated document was actively edited — the destructive-operations rule lost its
+branch-deletion clause in the first authoring pass and was restored only because a reviewer noticed,
+not because the ledger flagged a missing ID.
+
+It is the same defect class as D-CP0-14 and D-CP0-15, and the third instance in three passes. The
+pattern is now clear enough to state as a rule rather than rediscover: **a document that any contract
+rule points at must be enumerated before it can be amended.**
+
+**Ownership.** `rule-inventory.md`, `AGENTS.md`.
+
+**Remedy.** Domain S, thirteen rules, enumerated in `rule-inventory.md` § *v6.6 amendment inventory*.
+Baseline 128 → 141; post-amendment 153 → **166**; `AGENTS.md` ownership 5 → **18**. AMD-G14's
+verification protocol now runs over 166 IDs.
 
 ---
 

@@ -118,7 +118,7 @@ Consumed active elapsed: [raw seconds / decimal hours]
 | M1-O5 — champion/benchmark schema poison | | champion passes; A69/actual injection fails closed | |
 
 ## Integration
-- final candidate SHA:
+- final_candidate_sha / evidence_tip_sha:
 - reproduction commands:
 - Integration verdict file:
 
@@ -421,8 +421,9 @@ No terminal status automatically opens the next checkpoint.
 ## 9. Landing inspection, disposition, and reclamation
 
 Closing a checkpoint in program state and landing its code are **two decisions**. §8 gates the
-packet; this section disposes of the tree. A checkpoint is not closed until `git branch -vv` shows
-`main` alone.
+packet; this section is the procedure for disposing of the tree. The invariant, the dispositions, the
+tag-before-delete and citation-follows-ref rules, the agent/owner split and the closure condition are
+all owned by `AGENTS.md` § *Branch and ref lifecycle*.
 
 **Step 1 — INSPECT (agent, read-only).** Reconcile against the packet's Landing Report:
 
@@ -446,9 +447,7 @@ git commit                           # authored by hand, after the owner's own r
 git tag land/<cp> <evidence_tip_sha>
 ```
 
-`git merge --squash` stages the merged tree and deliberately stops short of a commit. That is the
-point: the commit reaching `main` is authored, not generated. It also collapses candidate, component
-verdicts and evidence tip into one commit, so the two-terminal-SHA ordering never propagates.
+The `--squash` semantics and why landing is squash-only are `AGENTS.md` § *Branch and ref lifecycle*.
 
 *DISCARD — agent-executed.*
 
@@ -457,8 +456,7 @@ git tag archive/<cp>-attempt-<k> <evidence_tip_sha>
 ```
 
 **Step 3 — REPOINT (agent).** Update every live document that cites the branch about to be deleted,
-in the same operation. A tag that preserves the SHA while the prose still points at a deleted branch
-satisfies the letter of the rule and fails its purpose.
+in the same operation, per the citation-follows-ref rule in `AGENTS.md`.
 
 **Step 4 — RECLAIM (agent).** Only after the disposition is recorded and the tag verified to resolve:
 
