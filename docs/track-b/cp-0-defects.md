@@ -27,6 +27,7 @@ existing ID; a superseded defect is marked superseded and kept.
 |---|---|---|
 | 2026-08-05 | Brief-validation failure on the first CP-0 handoff attempt — the brief was returned invalid before any repository edit | D-CP0-1 … D-CP0-4 |
 | 2026-08-05 | Executor stall on a low-reasoning-effort run, before any candidate existed | D-CP0-5 |
+| 2026-08-05 | CP-0 Return Packet (`PASS`, final candidate `8f371e5` on `gauntlet/cp-0`) and Orchestrator receipt-gate verification of it | D-CP0-6 … D-CP0-11 |
 
 All five were found **before a single line of CP-0 product code was written.** That is itself the
 first result: the contract's own front gate produced findings on its first real contact with an
@@ -227,14 +228,269 @@ property, and it is only visible from outside the session that violates it.
 
 ---
 
-## Open — awaiting CP-0's Return Packet
+---
 
-Sonnet's Lead session was issued a completed CP-0 brief on 2026-08-05 and is running. Append here:
+# Findings from the CP-0 run — 2026-08-05
 
-- defects surfaced during Builder → Critic → repair cycles;
-- defects in the verdict form (`gauntlet-templates.md` §5) once one is actually written;
-- whether the computed-staleness rule (`engineering-role.md:39`) is usable by hand at CP-0's scale,
-  or whether it only pays off at CP-1's;
-- whether `git worktree --detach` isolation held in practice, and what it cost in wall-clock;
-- whether the 2 h reserve bore any relation to the real ceiling consumed;
-- whether the Return Packet's defense questions were answerable by the owner.
+CP-0 returned **`PASS`**, final candidate `8f371e5` on `gauntlet/cp-0`, 2727 s of a 7200 s ceiling.
+The receipt gate accepted it; the verification behind that acceptance is recorded at the end of this
+section. Six further defects follow. **None of them invalidates the CP-0 `PASS`**, and none touches a
+capstone bar.
+
+## D-CP0-6 — Integration cannot review the commit that records its own verdict
+
+**Statement.** Two rules that are individually correct cannot both be satisfied. CP-0 item 7 requires
+a "fresh Integration-Critic `PASS` **at the exact final candidate SHA/tree**." `engineering-role.md`
+§ *Evidence retention* requires each verdict to be committed **after** its review completes, "so the
+reviewed candidate SHA is never altered by the act of recording the review." For the Integration
+verdict — the last one, with nothing above it — recording it necessarily creates a commit that no
+Integration Critic has reviewed. **There is no ordering that satisfies both.**
+
+**Evidence.** Verified directly, not taken from the packet:
+
+```text
+git show 8f371e5:docs/track-b/evidence/cp-0/integration-round1.md | grep "Candidate SHA"
+  → Candidate SHA: 63ebfaba701fbe54e5533170ac89c08204184446
+git diff --stat 63ebfab..8f371e5
+  → docs/track-b/evidence/cp-0/integration-round1.md | 73 ++++++ (1 file changed)
+```
+
+The Return Packet declares `8f371e5` the final candidate. The Integration Critic reviewed `63ebfab`.
+So either the packet's final-candidate field is wrong, or item 7 is unsatisfied — and no third
+option exists. This is structural, not an execution error: it recurs identically at every checkpoint.
+
+**Impact.** The branch tip is always outside the reviewed set. Today that is harmless because the
+delta is provably one file under `docs/track-b/evidence/` — but *nothing in the contract says it has
+to be*. The same sequence would accept a tip commit that also touched source, and no verdict would
+cover it. The rule that closes the loop is missing, not merely unstated.
+
+**Ownership.** `capstone_V6_5.md` §12 (item 7 wording) and `engineering-role.md` §§ *Gauntlet
+execution* step 8 / *Evidence retention*.
+
+**Candidate remedies.**
+1. **Define the final candidate as the SHA the Integration Critic reviewed**, and require the branch
+   tip above it to be verdict-only — enforced by a stated check the Orchestrator can run:
+   `git diff --name-only <final-sha>..<tip>` must contain nothing outside
+   `docs/track-b/evidence/<checkpoint>/`. Rewrite item 7 to bind that SHA, and have the Return Packet
+   carry both `final_candidate_sha` and `evidence_tip_sha` as distinct fields.
+2. Commit the Integration verdict to a separate evidence branch, leaving the candidate tip exactly at
+   the reviewed SHA. Cleaner conceptually, but it splits provenance across two refs and forfeits "the
+   candidate SHA plus the branch is the whole provenance chain."
+
+**Recommendation:** 1. It is two fields, one check, and it makes explicit the property the current
+run happens to satisfy by luck.
+
+---
+
+## D-CP0-7 — Candidate provenance is unspecified, and disclosure is voluntary
+
+**Statement.** `engineering-role.md` step 4 assumes a Builder authors its piece from the brief.
+Nothing states where a Builder's starting tree may come from, whether pre-existing unreviewed work
+may seed it, or that its origin must be disclosed.
+
+**Evidence.** The Lead found a substantial uncommitted draft of exactly this instrument — 38 passing
+tests — in a *different, earlier session's* scratch worktree under `/private/tmp`, and seeded a fresh
+Lead-created Builder worktree from it rather than rebuilding. That worktree is still registered:
+`.../23cc0d4e-.../scratchpad/gauntlet/builder-instrument`, detached at `d7bdd5f`, uncommitted.
+
+**Impact.** The engineering call was sound, and the artifact then passed genuinely independent review
+— which is precisely the design's claim: provenance should not matter if the artifact is judged
+independently against the bar. Two things qualify that.
+
+First, **the bar is a checklist, not a completeness statement.** A Critic confirms seven properties
+hold. It does not confirm that nothing else is present. Independent review of an artifact of unknown
+origin is weaker than independent review of an artifact built to the brief, and the contract does not
+distinguish them.
+
+Second, and worse: **only the Lead's own candour surfaced this.** No rule required the disclosure,
+nothing would have detected its absence, and the receipt gate does not ask. A packet that omitted the
+paragraph would have passed identically.
+
+**Ownership.** `engineering-role.md` step 4; `gauntlet-templates.md` §7 (packet) and §8 (receipt).
+
+**Candidate remedies.**
+1. Require the Return Packet to state each Builder worktree's seed — brief-authored, or copied from a
+   named path at a named SHA/state — as a mandatory field, and add it to the §8 receipt gate.
+2. State explicitly that seeding from prior unreviewed work is **permitted**, since forbidding it
+   would waste sound work, but that a seeded piece requires the Critic to review the whole artifact
+   rather than a diff. (That is what happened here; it should not depend on the Lead choosing it.)
+
+**Recommendation:** both. 1 makes it visible, 2 makes the review strength explicit.
+
+---
+
+## D-CP0-8 — Honest disclosure required violating the role boundary
+
+**Statement.** `engineering-role.md:9` forbids the Lead from reading `progress.md` or
+`orchestrator-role.md` "during Track B execution." The Return Packet is written during execution —
+terminal return is its end, not a phase after it. A Lead that discovers something needing honest
+disclosure in the packet must read program state to describe it accurately, and thereby breaches the
+rule. **The contract makes candour a violation.**
+
+**Evidence.** The Lead read only the brief, `AGENTS.md`, `engineering-role.md`, `capstone_V6_5.md`
+§§3/4.0/12, and the templates for the entire Builder → Critic → Integration sequence — then, after
+the candidate was built, committed, and twice independently `PASS`'d, read a `progress.md` diff and
+this ledger in order to write its addendum truthfully. It disclosed the read, its timing, and its
+scope unprompted.
+
+**Impact.** Conduct that the architecture should reward is technically non-compliant. Worse for the
+health of the contract: the *safe* move under the current text is to disclose nothing, since silence
+is compliant and disclosure is not. That is exactly backwards, and it directly undercuts the remedy
+proposed for **D-CP0-1**, which asks the Lead to affirm its read-scope in the packet — an affirmation
+the current rule would make it unable to write honestly.
+
+**Ownership.** `engineering-role.md:9`.
+
+**Candidate remedies.**
+1. Scope the prohibition to the decision-bearing phase: no program-state read may inform
+   decomposition, a Builder brief, a Critic brief, a verdict, or a repair. Reads performed **after
+   the final Integration verdict, solely to author the packet**, are permitted and must be declared
+   with their timing.
+2. Require the packet's provenance block to state read-scope and the timing of any late read, making
+   the declaration the control rather than the silence.
+
+**Recommendation:** both, as one edit. This is the cheapest high-value fix in the ledger.
+
+---
+
+## D-CP0-9 — The cache-routing rule is unenforceable by its own cleanliness test
+
+**Statement.** `engineering-role.md:56` requires generated caches and outputs to be routed outside
+the Critic worktree "so an ignored byproduct does not muddy that check." The check itself is
+`git status --porcelain` returning empty — which **cannot observe a gitignored byproduct**. A Critic
+that ignores the routing rule passes the test that the rule exists to protect.
+
+**Evidence.** The component Critic ran `uv run` inside its worktree, creating `.venv/` and
+`src/pit_capture/__pycache__/`. Both are gitignored, `git status --porcelain` printed nothing, and
+the cleanliness determination passed. The Critic disclosed this in its verdict.
+
+**Impact.** Low severity, real defect. The rule is advisory in practice while written as mandatory,
+and the gap is invisible to every party downstream. Note the honest disclosure here came, again, from
+the reviewer volunteering it.
+
+**Ownership.** `engineering-role.md:56`; `gauntlet-templates.md` §4.
+
+**Candidate remedies.**
+1. Make the check `git status --porcelain --untracked-files=all --ignored=matching` and state the
+   expected non-empty exceptions, so routing violations are visible.
+2. Or drop the routing rule to a recommendation and rely on `--porcelain` alone, accepting that
+   ignored byproducts are harmless. Cheaper and arguably correct — but then say so, rather than
+   stating a mandatory rule nothing checks.
+
+**Recommendation:** 2, unless a case is found where an ignored byproduct actually changes a verdict.
+An unenforced mandatory rule is worse than an honest recommendation.
+
+---
+
+## D-CP0-10 — Concurrent sessions on one repository are unmodelled
+
+**Statement.** The contract makes the Lead the sole Git writer *within* a checkpoint but says nothing
+about other sessions operating on the same repository at the same time, on sibling branches or in
+other worktrees.
+
+**Evidence.** During CP-0, this Orchestrator-side session committed `b8b70e6` to
+`claude/gauntlet-loop-article-19d7ae` roughly one minute after the candidate's instrument commit.
+Six worktrees were registered against the repository concurrently, including an orphan from a third
+session. The Integration Critic discovered the sibling branch through a git-topology sweep and
+reconciled it correctly — but **no rule required that sweep**, and nothing would have flagged a
+sibling commit that did touch the reviewed paths.
+
+**Impact.** Benign here, and partly by deliberate care: the sibling commit avoided `main` precisely
+so the Lead's expected-state verification would hold. That care was ad hoc. A concurrent session
+editing `progress.md` or a reviewed path mid-checkpoint would corrupt state verification or verdict
+staleness with no defined detection.
+
+**Ownership.** `AGENTS.md` (the router) and `engineering-role.md` step 1.
+
+**Candidate remedies.**
+1. Require the Lead to record the repository's worktree and branch topology at `started_at_utc` and
+   again at terminal return, and to report any change — making the Integration Critic's ad-hoc sweep
+   a stated obligation.
+2. State in `AGENTS.md` that while a checkpoint is open, no other session may write to the target
+   repository's `main` or to any path inside the checkpoint's owned set.
+
+**Recommendation:** both. 2 is the rule; 1 is the detection.
+
+---
+
+## D-CP0-11 — Volunteered line citations create false discrepancy signals
+
+**Statement.** The contract requires a **verbatim excerpt** verified present in the cited plan at the
+candidate SHA. It says nothing about line numbers. Both critics volunteered line ranges anyway, and
+one was wrong.
+
+**Evidence.** `**CP-0**` sits at line 459 of `capstone_V6_5.md` (verified independently). The
+component verdict cited "lines 456-461"; the correct range for its five-item excerpt is 459-464. The
+Integration Critic caught the discrepancy and correctly classified it as cosmetic — the quoted text
+was verbatim-correct throughout. It was the only defect either critic found in the other's work.
+
+**Impact.** The contract's actual mechanism worked perfectly: verbatim text matched at the candidate
+SHA, twice. The single "defect" surfaced in review was in decoration the contract never asked for and
+does not check. Left unaddressed, unspecified metadata will keep generating findings that look like
+process failures and are not — which is a slow way to erode trust in the verdicts that matter.
+
+**Ownership.** `gauntlet-templates.md` §5.
+
+**Candidate remedies.**
+1. State that a line citation is optional and non-binding, and that only the verbatim excerpt and its
+   presence at the candidate SHA are load-bearing. One sentence in the form.
+2. Or require line ranges and make them a checked field. More precise, more brittle — line numbers
+   move with every plan edit while the text does not, which is exactly why the excerpt mechanism was
+   chosen over a citation in the first place.
+
+**Recommendation:** 1.
+
+---
+
+## What the run confirmed — recorded so the amendment does not overcorrect
+
+Not every finding is a defect. Six properties were operationally validated for the first time, and
+the amendment must not weaken them:
+
+- **Independent review found real bugs.** The Builder's own critical read against the bar fixed three
+  crash-without-ledger-entry paths — an escaping `ValueError` on malformed timestamps, an uncaught
+  `LookupError` on a bogus response charset, an uncaught `OSError` on raw-artifact write failure.
+  Each is exactly the failure class CP-0 item 2 exists to prevent, and each was found by requiring a
+  line-by-line read against the bar rather than "make the tests pass."
+- **Builder≠Critic was not theatre.** The component Critic hand-authored its fixtures outside the
+  candidate checkout, computed every expectation before running anything, and never opened `tests/`.
+  The Integration Critic then re-derived the Berlin DST facts a third time from bare `zoneinfo`
+  without importing the candidate's own time module. Three passes, no shared evidence, converging.
+- **Computed staleness worked on its first real use.** `git diff --name-only 7526310..63ebfab` over
+  the reviewed paths was empty, so the component `PASS` carried to the final candidate without a
+  rerun. Verified independently at the gate: `7526310` is an ancestor of `8f371e5`.
+- **Worktree isolation held.** Detached HEAD confirmed by `git symbolic-ref -q HEAD` exiting 1; SHA
+  and clean status matched before and after each review; `main` never moved from `d7bdd5f`.
+- **The expected-state mismatch rule fired correctly.** A pre-existing `gauntlet/cp-0` branch (no
+  commits ahead) contradicted the brief; the Lead reported it before relying on the brief, per B1.
+- **The ceiling was generous, and now has a measurement.** 2727 s consumed against 7200 s — 38%.
+  The 2 h reserve was ≈2.6× the actual for a one-piece checkpoint with two reviews. CP-1's 6 h
+  reserve should be re-derived from this rather than from the original estimate, in **both**
+  directions: CP-1 carries 16 checklist items and three mandatory surfaces, so it is not a linear
+  scale-up of one piece.
+
+## Receipt-gate verification behind the accepted `PASS`
+
+Checked against the repository, not against the packet's claims: `main` clean at `d7bdd5f`;
+`gauntlet/cp-0` linear at `d7bdd5f → 7526310 → 63ebfab → 8f371e5`; both cited SHAs reachable on that
+branch; `7526310` an ancestor of `8f371e5`; both verdict files present in the candidate tree; the
+candidate diff confined to `pyproject.toml`, `scripts/pit_capture.py`, `src/pit_capture/**`,
+`tests/**`, and `docs/track-b/evidence/cp-0/**` with no later-checkpoint scope; all seven checklist
+items mapped to reproducible evidence with no open item hidden behind `PASS`.
+
+**The `PASS` stands.** D-CP0-6's circularity does not undermine it here because the delta between the
+reviewed SHA and the branch tip is provably a single evidence file — but that is a property of this
+run, not a guarantee of the contract, which is the defect.
+
+## Still open
+
+- Whether the packet's 3–5 defense questions are answerable by the owner — untested until Yarden
+  reads them.
+- Whether the five mandatory critic surfaces were correctly judged out of scope at CP-0. The packet
+  never declares an in-scope/out-of-scope determination for them, and §8 receipt item 3 asks the
+  Orchestrator to confirm their presence with nothing to check against. Item 4's Berlin DST work is
+  arguably surface 1 (temporal normalization) in scope; it was covered substantively by both critics
+  but never labelled as a mandatory surface. **Adjudicate this before CP-1, where all three of
+  surfaces 1–3 are unambiguously in scope.**
+- The orphaned worktree at `.../23cc0d4e-.../scratchpad/gauntlet/builder-instrument` awaits owner
+  removal. The Lead correctly declined to remove a worktree it did not create.
