@@ -673,7 +673,7 @@ router the Lead reads first, closing with an explicit pointer to its ROLE owner.
 deliberate and load-bearing — the router is read before `engineering-role.md`, so a bare
 cross-reference there would leave the boundary unstated at the moment it first applies.
 
-## Rules the amendment amends (26)
+## Rules the amendment amends (27)
 
 No rule is retired by this amendment.
 
@@ -684,6 +684,7 @@ No rule is retired by this amendment.
 | A9 | G2 | Prohibition scoped to **influence**; a declared post-Integration read solely to author the packet is permitted |
 | B1 | G10 | State verification extends to repository topology, recorded at start and at terminal return |
 | B4 | G8 | The Builder worktree's seed is declared; seeding from prior work is permitted and forces whole-artifact review |
+| B5 | G13 | Adds "manage worktrees" to the Builder prohibition. The clause was in force in `AGENTS.md` and the Builder form but absent from its ROLE owner — the same near-drop shape as `G4`/`I9` |
 | C1 | G14 | Restate from current text — the "pre-created evidence ref" clause is retired machinery (D-CP0-15) |
 | C8 | G14 | Restate — post-review check is `git status --porcelain`, not a manifest re-verify |
 | D1 | G11 | Line citations optional and explicitly non-binding; only the verbatim excerpt is load-bearing |
@@ -692,7 +693,7 @@ No rule is retired by this amendment.
 | E6 | G1 | Integration runs at `final_candidate_sha`; strike the retired "two-record contract" clause |
 | F1 | G12 | The packet declares in-scope/out-of-scope **with a reason** for each of the five surfaces |
 | G1 | G14 | Restate — evidence lives at `docs/track-b/evidence/<checkpoint>/`, not `.gauntlet/` |
-| — | G9 | `engineering-role.md:56` cache routing: **demote to recommendation** and re-ledger, or drop. Currently in force and unledgered |
+| — | G9 | `engineering-role.md` cache routing: **demoted to a non-normative recommendation**. Disposition taken — a recommendation carries no rule ID, so D-CP0-9 closes on the demotion rather than on a re-ledger |
 | I1 | G5 | Brief validation precedes the clock and consumes no ceiling |
 | I2 | G5 | The clock starts at the first repository-state verification performed under a **valid** brief |
 | K1 | G5 | Status vocabulary becomes five: `PASS` · `BLOCKED` · `PLATEAU` · `BUDGET_EXHAUSTED` · `BRIEF_INVALID` |
@@ -706,7 +707,7 @@ No rule is retired by this amendment.
 | Q15 | G7 | Silence still never closes — and gains the abandonment convention it currently lacks |
 | Q19 | G3,G13 | The gate gains the landing inspection and the reclamation step |
 
-## Rules the amendment adds (25)
+## Rules the amendment adds (26)
 
 New IDs continue each domain; **R** is a new domain for landing and reclamation, replacing the
 territory vacated by retired H and M.
@@ -738,6 +739,7 @@ territory vacated by retired H and M.
 | R3 | **Tag before delete, always.** A branch may never be deleted while any live document cites a SHA reachable only from it | G13 | **AGENTS** |
 | R4 | **The citation follows the ref.** Retiring a branch repoints, in the same operation, every live document that named it | G13 | AGENTS + ORCH |
 | R5 | Execution split: INSPECT, DISCARD, REPOINT and RECLAIM are agent-executed; **LAND is owner-authored by hand**. An agent may never delete a ref whose SHAs are not already reachable from a verified tag, nor a branch the owner has not dispositioned | G13 | **AGENTS** |
+| R6 | **Reclamation closes the checkpoint:** it is not closed until `git branch -vv` shows `main` alone | G13 | **AGENTS** |
 
 ## Post-amendment ownership
 
@@ -760,9 +762,9 @@ ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q 
 | **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
 | **ROLE** `engineering-role.md` | 62 | +9 | **71** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
 | **TMPL** `gauntlet-templates.md` | 16 | +8 | **24** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
-| **AGENTS** `AGENTS.md` | 13 | +5 | **18** | Domain S newly enumerated (D-CP0-17), plus R1–R5, the ref lifecycle |
+| **AGENTS** `AGENTS.md` | 13 | +6 | **19** | Domain S newly enumerated (D-CP0-17), plus R1–R6, the ref lifecycle |
 | **ORCH** `orchestrator-role.md` | 23 | 0 | **23** | Newly enumerated (Q1–Q23); amended by G4, G7, G13 but gains no new ID |
-| **Total** | **141** | **+25** | **166** | **0 retired** |
+| **Total** | **141** | **+26** | **167** | **0 retired** |
 
 `I10` remains co-owned with `progress.md` as a cross-reference, counted once under CAP. Nine
 co-ownerships persist from Phase 1 and are stated once in each place with an explicit cross-reference,
@@ -782,7 +784,7 @@ contexts never sum.
 ## Verification protocol for Phase 2.3
 
 1. Author G1 … G14.
-2. For each of the **166** IDs, confirm presence in its assigned owner by normalized-whitespace
+2. For each of the **167** IDs, confirm presence in its assigned owner by normalized-whitespace
    substring match — the method that caught `G4` and `I9`.
 3. Confirm no rule appears normatively outside its assigned owner (cross-references excepted).
 4. Confirm every rule in the overcorrection guard is present and unweakened.
