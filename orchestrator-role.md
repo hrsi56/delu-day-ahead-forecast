@@ -168,12 +168,25 @@ The inherited engineering contract makes the Engineering Lead the sole Git write
 
 **Fixed Engineering-Lead launch envelope.** When—and only when—a code-authoring Track B checkpoint is schedulable, deliver it as one complete, copy-paste-ready prompt using the exact outer envelope below. Insert the complete checkpoint-brief payload from `docs/track-b/gauntlet-templates.md` §1 between the markers, replacing every bracketed field. The envelope is transport, not a second brief or a competing workflow specification. Do not emit it for a closed prerequisite, a pure-advisory block, B-Manual, or B-Research; when the gate is closed, state which gate controls instead. Do not place commentary inside the fenced prompt or omit any canonical brief field.
 
+**Executor floor.** The envelope names a minimum executor tier and reasoning effort as a stated
+precondition, the same way budget and hardware are stated constraints. The contract assumes an
+executor able to hold ~8,500 words of contract and plan while managing worktrees and routing
+Builders and Critics; below that threshold a run does not fail cleanly, it **stalls**, and a stalled
+run returns no status at all. Set the floor deliberately for the checkpoint's size and record it.
+
 ```text
 You are the Track B Engineering Lead.
 
+Minimum executor tier / reasoning effort for this checkpoint: [tier] / [effort].
+This must be a NEW session that has not previously read orchestrator-role.md,
+progress.md, the syllabus, or Track A/C material. Affirm your read scope in
+the Return Packet's provenance block.
+
 Read the repository-root AGENTS.md and engineering-role.md. Execute only the
-single Orchestrator-issued checkpoint brief pasted below. Do not read or act
-on progress.md, the syllabus, Track A/C materials, or orchestrator-role.md.
+single Orchestrator-issued checkpoint brief pasted below. No read of
+progress.md, the syllabus, Track A/C materials, or orchestrator-role.md may
+inform any engineering decision; before the final Integration verdict exists,
+do not read them at all.
 
 Validate the brief against the required-brief contract in engineering-role.md
 before editing the repository. If it is invalid or contradicts the named
@@ -279,6 +292,24 @@ The session contract runs on trust, and that default stays. But pure silence is 
 **Track B checkpoints (capstone).** CP-1 through CP-5 in the flagship plan and FCP-1 through FCP-5 in the companion plan; the gate is the complete ratified checklist for the named checkpoint. Close a checkpoint only from its consolidated Return Packet, which must map **every item in that full checklist** to inspectable evidence. At CP-1 it must also contain independent verdicts for all five M1 acceptance oracles: misaligned PT15M chunk stitching, missing-quarter fail-closed behavior, Berlin fall-back-hour identity, A75 proper-training-only fit poisoning with a proper-training positive control, and champion/benchmark runtime-schema poisoning. Builder tests do not substitute for those verdicts.
 
 You do not audit evidence files yourself, and you have no shell: the record-level rules — the candidate SHA a verdict cites, computed verdict staleness over each review's reviewed paths, the plan/version/bar citation with a verbatim excerpt that must appear in that file at that SHA, and the commands actually run with their exit codes — are enforced by the Engineering Lead and evidenced in the committed markdown verdicts under `docs/track-b/evidence/<checkpoint>/`. Your gate is the packet: every checklist item mapped to a named verdict file, every applicable mandatory surface present, no open item hidden behind `PASS`, and a fresh Integration-Critic `PASS` for any supported `PASS`. Inspect the packet and the verdict files it names, not the internal workbench.
+
+**Abandonment — the case where nothing comes back.** Every terminal status describes a run that
+*finished*. Silence is not among them, and silence-means-success does not apply to Track B. If a run
+materially exceeds its ceiling in real elapsed time and produces no packet — a stalled or dead
+executor — declare it **abandoned**. It is never recorded as `BUDGET_EXHAUSTED`: that status asserts
+the ceiling was consumed by work, which an abandoned run cannot evidence. Record the attempt in
+`progress.md` so a reissued brief is visibly a second attempt, reclaim any refs and worktrees it
+left behind per §9 of the templates, and consider raising the executor floor before reissuing. A
+run that emitted `started_at_utc` and its verified state leaves at least the evidence that it began;
+one that did not is the stronger signal that the floor was set too low.
+
+**Landing and reclamation.** Closing a checkpoint in `progress.md` and landing its code are two
+decisions. Gate the packet per the templates §8, then run §9: inspect the topology read-only and
+reconcile it against the packet's Landing Report, take exactly one disposition — **LAND** (yours, by
+hand, `git merge --squash` then `git commit`) or **DISCARD** (tag the attempt) — repoint every live
+document citing the retired branch, then reclaim. **A checkpoint is not closed until `git branch -vv`
+shows `main` alone.** You may direct an agent to inspect, tag, repoint and reclaim; you may never
+delegate the landing commit. `AGENTS.md` § *Branch and ref lifecycle* is the authority.
 
 **CP-2 additional receipt gate.** When the closing checkpoint is CP-2, the mandatory label-blind four-catalog chain also applies; its receipt gate is in `docs/track-b/gauntlet-templates.md` §7–§8. Blinding is procedural, so the packet must be labelled `COOPERATIVE_PROCEDURAL`; reject any packet claiming cryptographic enforcement.
 

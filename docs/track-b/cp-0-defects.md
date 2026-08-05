@@ -69,6 +69,7 @@ the loop worked and the contract around it did not quite.
 | **D-CP0-13** | **No branch or ref reclamation rule** | **`AGENTS.md`, `orchestrator-role.md`, templates §9** | **High — blocks acceptance** |
 | D-CP0-14 | `orchestrator-role.md` was never rule-inventoried | `rule-inventory.md`, `orchestrator-role.md` | Medium |
 | D-CP0-15 | The rule ledger's own statements went stale after Option C | `rule-inventory.md` | Medium |
+| **D-CP0-16** | **The verdict form omits `reviewed_paths`, which computed staleness depends on** | **templates §5** | **High — the staleness rule's input was never collected** |
 
 Concrete amendment drafts for the three blocking/high-inversion items — **D-CP0-6**, **D-CP0-8**, and
 **D-CP0-12** — are in *Proposed amendments* below. The remainder carry candidate remedies with a
@@ -614,6 +615,40 @@ same class as D-1 — a rule surviving where the record says it does not — inv
 changed is restated from the current document text, and every retired rule is struck through in place
 rather than only listed in a delta section. The 8 reduced rules (`C1`, `C8`, `C13`, `D1`, `G1`, `G7`,
 `G8`, `O1`) are the minimum set; `engineering-role.md:56` is re-ledgered or dropped by AMD-G9.
+
+---
+
+## D-CP0-16 — The verdict form omits `reviewed_paths`, the input computed staleness runs on
+
+**Statement.** `E1` requires every component verdict to declare a non-empty `reviewed_paths` set, and
+`E2`–`E4` — the entire computed-staleness rule — take that set as their input. **The verdict form in
+`gauntlet-templates.md` §5 has no such field.** The rule the project considers its most important
+efficiency mechanism was never given a place to record its own operand.
+
+**Evidence.** Found while authoring AMD-G11 in Phase 2.2. The §5 form's header ran
+`Status · Checkpoint · Candidate SHA · Controlling plan · Bar excerpt · Artifact · Worktree clean`
+— no reviewed paths. Both CP-0 verdicts complied with the form and therefore declared none. The Lead
+improvised: the component verdict's `Artifact:` line (`scripts/pit_capture.py, src/pit_capture/**`)
+was treated as the reviewed set, and the Integration Critic computed
+`git diff --name-only 7526310..63ebfab -- scripts/pit_capture.py src/pit_capture tests pyproject.toml`
+against paths that were never formally declared anywhere.
+
+**Impact.** CP-0's staleness computation was sound because one competent Lead chose a sensible set
+and one competent Critic chose a compatible one — not because the contract collected it. The rule's
+stated soundness condition is *"declare `reviewed_paths` honestly and broadly"*, and a field that
+does not exist cannot be declared honestly, broadly, or at all. At CP-1's sixteen checklist items and
+three mandatory surfaces, two agents silently choosing different implicit sets is a live path to a
+`PASS` resting on a verdict that a repair had already invalidated.
+
+This is the same class as D-CP0-15 and D-1: a rule in force with no corresponding mechanism. It is
+the sharpest instance, because the missing mechanism belongs to the rule the CP-0 run singled out as
+having *worked*.
+
+**Ownership.** `gauntlet-templates.md` §5.
+
+**Remedy.** AMD-G11 extends to adding `Reviewed paths:` to the §5 header and to the packet's verdict
+table, with the soundness condition stated on the form itself where the Critic will read it.
+Authored 2026-08-05.
 
 ---
 

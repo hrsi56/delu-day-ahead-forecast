@@ -408,12 +408,17 @@ Passes when one technical and one non-technical reviewer can each articulate the
 
 **The five mandatory component-level critic surfaces**, when their subject matter is in scope: **(1) temporal normalization; (2) champion/benchmark schema firewall; (3) A75 climatology fit lineage; (4) the CP-2 label-blind four-catalog metric-only recomputation (procedural blinding — `engineering-role.md`); (5) M3 CQR threshold recomputation on the §6.2 hand-checkable fixture and persisted calibration predictions.** At M1, surfaces 1–3 are not satisfied until a fresh Critic independently executes all five §9.4 acceptance oracles; that Critic — never the Builder — materializes and hashes every fixture outside the candidate checkout and computes the expected result independently, and repository property tests do not substitute for those verdicts. A Builder may not issue these verdicts for its own work. The Lead may add a further Critic only where the risk justifies its cost inside the supplied ceiling. No comparison is described as **blind** merely because labels were renamed.
 
-**Terminal statuses.** A checkpoint returns exactly one of `PASS`, `BLOCKED`, `PLATEAU`, `BUDGET_EXHAUSTED`.
+**Scope is declared, never inferred.** The Return Packet states, for **each** of the five surfaces, whether it was in scope at this checkpoint and **why** — naming the verdict file if in scope, and the reason it does not apply if not. "In scope when their subject matter is in scope" is a judgement someone must make and record; a packet silent on a surface gives the receipt gate nothing to check, and an unstated judgement is indistinguishable from an unmade one.
 
-- **`PASS`** requires every item in the complete named CP/FCP checklist, every applicable mandatory independent check, complete valid Critic records for every required review, a current fresh Integration-Critic `PASS`, and a computed-current binding for every relied-on component `PASS` (mechanism: `engineering-role.md`).
+**Terminal statuses.** A checkpoint returns exactly one of `PASS`, `BLOCKED`, `PLATEAU`, `BUDGET_EXHAUSTED`, `BRIEF_INVALID`.
+
+- **`PASS`** requires every item in the complete named CP/FCP checklist, every applicable mandatory independent check, complete valid Critic records for every required review, a current fresh Integration-Critic `PASS` bound to `final_candidate_sha`, a **verdict-only delta** between `final_candidate_sha` and `evidence_tip_sha`, and a computed-current binding for every relied-on component `PASS` (mechanism: `engineering-role.md`).
 - **`BLOCKED`** — an owner credential or action, new authority, ratified-methodology change, destructive or public action, a missing/contradictory/untestable acceptance bar, or a plan/reality resolution is required.
 - **`PLATEAU`** — the next improvement is not worth its cost, or two material repair attempts produced no meaningful improvement.
 - **`BUDGET_EXHAUSTED`** — the supplied active-elapsed raw-seconds ceiling is reached before `PASS`. Approaching the ceiling is a prioritization signal, **never** permission to cut or weaken a ratified criterion.
+- **`BRIEF_INVALID`** — a **pre-work** status: the authorization was malformed, so no work started, no clock was consumed, and no repository file was edited. It names every missing or contradictory required field. It is the only status that returns no Return Packet, using instead the minimal form in `docs/track-b/gauntlet-templates.md` §10. Distinct from `BLOCKED`, which means work started and hit an owner-only dependency.
+
+**Abandonment is not a status the Lead can return.** A run that exceeds its ceiling in real elapsed time and produces no packet at all — a stalled or dead executor — is **abandoned**, declared owner-side per `orchestrator-role.md`. It is never recorded as `BUDGET_EXHAUSTED`: that status asserts the ceiling was consumed by work, which an abandoned run cannot evidence. Every status above describes a run that finished; silence is not among them.
 
 None of these weakens the bar or advances the checkpoint, and **no terminal status automatically opens the next one**. A non-`PASS` packet may mark Integration `NOT_RUN` only with the exact terminal reason that prevented it; it never implies a pass. At every terminal status Track B stops completely and does not inspect, research, plan, scaffold, or begin the next checkpoint.
 
@@ -463,7 +468,7 @@ is complete under §4.0 DST rules, and an explicit `qualifying` / `not_qualifyin
 - [ ] Berlin DST is handled per §4.0: a capture in either 02:00 offset on a fall-back day resolves to a distinct UTC instant, and D+1 completeness is judged on the correct 23/24/25-hour day length.
 - [ ] Raw captures and ledger entries are hash-bound and immutable once written; a rerun cannot silently replace a prior attempt.
 - [ ] **Independent Critic PASS (mandatory):** a fresh Critic materializes its own fixtures outside the candidate checkout — including a truncated response, a rate-limit response, and a Berlin fall-back day — computes expected outcomes independently, and confirms each. Builder-authored tests are insufficient.
-- [ ] Fresh Integration-Critic `PASS` at the exact final candidate SHA/tree.
+- [ ] Fresh Integration-Critic `PASS` at the exact `final_candidate_sha`/tree, with the evidence tip above it containing verdict files only (`git diff --name-only <final_candidate_sha>..<evidence_tip_sha>` returns nothing outside `docs/track-b/evidence/<checkpoint>/`).
 
 **B-Man-PIT (owner-run, between CP-0 and CP-1).** With the reviewed instrument in hand, Yarden runs it
 on at least three non-consecutive delivery days at approximately 10:30 and 11:45 Europe/Berlin on D-1,
