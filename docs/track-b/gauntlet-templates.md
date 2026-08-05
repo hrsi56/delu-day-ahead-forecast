@@ -49,8 +49,8 @@ extract may not weaken, strengthen, or replace it.
 
 ## CP-2 label-blind four-catalog outcome (include only for CP-2)
 - Scientific bar — Blind Critic never adjudicates; fresh Integration must match the committed
-  selection declaration: [`capstone_V6_5.md` §12 CP-2 citation + verbatim excerpt]
-- Metric / eligibility / tie-break authority: [`capstone_V6_5.md` §4.1 citation + verbatim excerpt]
+  selection declaration: [`capstone_V6_6.md` §12 CP-2 citation + verbatim excerpt]
+- Metric / eligibility / tie-break authority: [`capstone_V6_6.md` §4.1 citation + verbatim excerpt]
 - Blinding is procedural: the Lead withholds the mapping and reveals only after the Blind verdict
   is written. The packet must label it `COOPERATIVE_PROCEDURAL`.
 

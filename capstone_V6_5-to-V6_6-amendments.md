@@ -1,0 +1,100 @@
+# capstone v6.5 → v6.6 — amendment sheet
+
+**Ratified 2026-08-05.** Owner-approved. **Execution-contract only.**
+
+**Nothing scientific moved.** No bar, checklist item, invariant, acceptance criterion, feed
+identifier, fold scheme, metric definition, coverage requirement, or scope boundary changed. §§1–11
+and §13 are byte-identical to v6.5. Every edit is in §12 or in the four contract documents §12 points
+at. A reader who cares only about the forecasting method can stop here.
+
+**Why a version bump at all.** Three of the changes alter what `PASS` *means* — the SHA a bar binds
+to, the statuses a checkpoint may return, and the conditions that invalidate a `PASS`. Under the
+version-precedence rule those are anchor-class and cannot ship as a corrective pass, so v6.6 exists
+and no brief may cite it until `progress.md` names it.
+
+**Numbering.** DEC-1 requisitioned v6.6 for this package. DEC-AWS, parked until G5, cascades to
+**capstone v6.7 + map v9**; map v8 is deliberately left unused so plan and map numbering stay
+aligned. No map rebuild — nothing here changes the stage sequence.
+
+## Provenance
+
+Every amendment closes a defect in `docs/track-b/cp-0-defects.md`, opened when the first CP-0 handoff
+was refused at the front gate and extended by CP-0's `PASS`, its receipt gate, and the Phase 2.1 rule
+inventory. Sixteen defects; the amendment closes all of them. The full plan is
+`docs/track-b/gauntlet-amendment-plan.md`; the rule accounting is `docs/track-b/rule-inventory.md`
+§ *v6.6 amendment inventory*.
+
+## §12 changes
+
+| Change | Was | Is |
+|---|---|---|
+| Terminal statuses | Four: `PASS` · `BLOCKED` · `PLATEAU` · `BUDGET_EXHAUSTED` | Five, adding **`BRIEF_INVALID`** — a pre-work status: the authorization was malformed, so no work started, no clock consumed, no file edited. The only status returning no Return Packet |
+| Abandonment | Undefined. A stalled executor returned nothing and had no vocabulary | Named explicitly as **owner-side and not a Lead status**, and explicitly **not** `BUDGET_EXHAUSTED` — that status asserts the ceiling was consumed by work, which an abandoned run cannot evidence |
+| `PASS` definition | Integration `PASS` + computed-current component bindings | Adds: Integration bound to **`final_candidate_sha`**, and a **verdict-only delta** between it and `evidence_tip_sha` |
+| Checklist item 7 (every CP) | "Fresh Integration-Critic `PASS` at the exact final candidate SHA/tree" | Binds `final_candidate_sha`, with the evidence tip above it carrying verdict files only |
+| Mandatory surfaces | "when their subject matter is in scope" | Scope is **declared, never inferred**: the packet states each of the five as in or out of scope **with a reason**. An unstated judgement is indistinguishable from an unmade one |
+
+## The circularity, and why it needed naming
+
+v6.5 required Integration `PASS` "at the exact final candidate SHA/tree" while
+`engineering-role.md` required every verdict to be committed *after* its review. For the Integration
+verdict — the last one, with nothing above it — recording it always creates a commit no Integration
+Critic reviewed. **No ordering satisfied both.** CP-0 satisfied item 7 only because the delta happened
+to be a single evidence file, which nothing required.
+
+v6.6 names two SHAs instead: `final_candidate_sha` is what the Integration Critic reviewed and what
+every bar binds to; `evidence_tip_sha` is the branch tip afterwards; the delta between them must
+contain nothing outside `docs/track-b/evidence/<checkpoint>/`, and the Orchestrator runs that command
+itself rather than accepting the claim. **CP-0 attempt 1 satisfies the new wording retroactively** —
+what it achieved by accident is now a required property.
+
+## Contract-document changes (§12 points at these; it does not restate them)
+
+**`engineering-role.md`** — role boundary scoped to *influence* rather than *reading*, with a declared
+post-Integration read permitted solely to author the packet and a mandatory provenance block labelled
+`ASSERTED_ROLE_BOUNDARY`; `BRIEF_INVALID` replaces the unnamed "return the discrepancy"; brief
+validation precedes the clock and consumes no ceiling; `started_at_utc` plus verified state as the
+first observable output; Builder worktree seeds declared and seeded pieces reviewed whole; cache
+routing demoted to a recommendation; topology recorded at start and terminal return; a terminal
+handover section.
+
+**`AGENTS.md`** — new § *Branch and ref lifecycle*: the one-branch invariant, LAND/DISCARD
+dispositions, **tag before delete**, **the citation follows the ref**, and an execution split in which
+agents inspect, tag, repoint and reclaim while **the landing commit stays owner-authored**.
+
+**`docs/track-b/gauntlet-templates.md`** — §1 gains executor-floor and session-freshness
+preconditions; §5 gains **`Reviewed paths`** and marks line citations non-binding; §7 gains both
+SHAs, the brief-field reproduction, the provenance block, Builder seeds, topology, surface scope and
+the Landing Report; §8 gains five gate items the Orchestrator runs itself; **new §9** landing,
+disposition and reclamation; **new §10** the `BRIEF_INVALID` form.
+
+**`orchestrator-role.md`** — the launch envelope names a minimum executor tier and reasoning effort
+and requires a session-freshness affirmation; the abandonment convention; landing and reclamation as
+a gate step, closing on `git branch -vv` showing `main` alone.
+
+## The one that was hiding in plain sight
+
+**D-CP0-16.** `E1` required every verdict to declare `reviewed_paths`, and `E2`–`E4` — all of
+computed staleness — take that set as input. **The §5 verdict form had no such field.** Both CP-0
+verdicts complied with the form and declared none; the Lead used the `Artifact:` line as an implicit
+set and the Integration Critic computed the diff against paths never formally declared anywhere.
+
+CP-0's staleness computation was sound because two competent agents independently chose compatible
+implicit sets — not because the contract collected them. The rule's stated soundness condition is
+"declare `reviewed_paths` honestly and broadly", and a field that does not exist cannot be declared
+at all. v6.6 adds it to the form and to the packet's verdict table, with the soundness condition
+printed where the Critic will read it.
+
+## Rule accounting
+
+128 enumerated baseline (105 live executor-side after Option C, plus 23 Orchestrator-side rules
+enumerated for the first time as domain Q) → **153**, with **26 amended, 25 added, 0 retired**. New
+domain **R** (5 rules, `AGENTS.md`) carries the ref lifecycle, taking over territory retired domains
+H and M vacated.
+
+## Not yet proven
+
+The amendment is authored, not validated. It is accepted only when the clean-room CP-0 re-run
+exercises each amendment against its acceptance test in
+`docs/track-b/gauntlet-amendment-plan.md` Phase 5 — including a deliberately deficient brief as a
+negative control for `BRIEF_INVALID`. `docs/track-b/cp-0-defects.md` stays **OPEN** until then.
