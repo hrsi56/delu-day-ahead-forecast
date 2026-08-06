@@ -3,9 +3,21 @@
 **Ratified 2026-08-05.** Owner-approved. **Execution-contract only.**
 
 **Nothing scientific moved.** No bar, checklist item, invariant, acceptance criterion, feed
-identifier, fold scheme, metric definition, coverage requirement, or scope boundary changed. §§1–11
-and §13 are byte-identical to v6.5. Every edit is in §12 or in the four contract documents §12 points
-at. A reader who cares only about the forecasting method can stop here.
+identifier, fold scheme, metric definition, coverage requirement, or scope boundary changed. **§§2–3,
+§§5–11 and §13 are byte-identical to v6.5.**
+
+Two sections outside §12 did change, and a reader must not be told otherwise. **§1** carries the
+version-delta block. **§4.1's canonicalization pointer was corrected**: it cited three `blind-*`
+commands retired with the protocol tooling, and templates §4–§6 for a "schema and canonicalization
+contract" those sections do not contain. The paragraph now states that it is itself the contract,
+applied by hand. **A CP-2 Lead must re-read §4.1** — templates §1 routes them there for the metric,
+eligibility and tie-break authority.
+
+That correction is also the cautionary tale of this amendment: the defect survived four independent
+review rounds because every one of them was told §§1–11 were unchanged. A scope claim is an
+instruction not to look.
+
+Every other edit is in §12 or in the four contract documents §12 points at.
 
 **Why a version bump at all.** Three of the changes alter what `PASS` *means* — the SHA a bar binds
 to, the statuses a checkpoint may return, and the conditions that invalidate a `PASS`. Under the

@@ -1,6 +1,8 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 12 defects; amendment drafts prepared for the three blocking items, none ratified.**
+**Status: OPEN — 17 defects. The v6.6 amendment closing them is RATIFIED (2026-08-05) but NOT YET
+VALIDATED**; validation is the clean-room CP-0 re-run, `docs/track-b/gauntlet-amendment-plan.md`
+Phases 4–6.
 Opened 2026-08-05 before CP-0 produced a candidate; extended the same day with the findings from
 CP-0's `PASS` and its receipt gate. Append findings as they surface. **Do not close** until every
 defect is adjudicated, the ratified remedies are authored into their owning documents, and the
@@ -41,7 +43,7 @@ existing ID; a superseded defect is marked superseded and kept.
 |---|---|---|
 | 2026-08-05 | Brief-validation failure on the first CP-0 handoff attempt — the brief was returned invalid before any repository edit | D-CP0-1 … D-CP0-4 |
 | 2026-08-05 | Executor stall on a low-reasoning-effort run, before any candidate existed | D-CP0-5 |
-| 2026-08-05 | CP-0 Return Packet (`PASS`, final candidate `8f371e5` on `gauntlet/cp-0`) and Orchestrator receipt-gate verification of it | D-CP0-6 … D-CP0-11 |
+| 2026-08-05 | CP-0 Return Packet (`PASS`; `final_candidate_sha` `63ebfab`, `evidence_tip_sha` `8f371e5`, on `gauntlet/cp-0`) and Orchestrator receipt-gate verification of it | D-CP0-6 … D-CP0-11 |
 | 2026-08-05 | Owner's standing requirement that no unnecessary branch ever stay open, and the ref cleanup that followed CP-0 | D-CP0-13 |
 | 2026-08-05 | The v6.6 amendment rule inventory (`rule-inventory.md`, Phase 2.1) | D-CP0-14, D-CP0-15 |
 
@@ -275,7 +277,7 @@ property, and it is only visible from outside the session that violates it.
 
 # Findings from the CP-0 run — 2026-08-05
 
-CP-0 returned **`PASS`**, final candidate `8f371e5` on `gauntlet/cp-0`, 2727 s of a 7200 s ceiling.
+CP-0 returned **`PASS`** on `gauntlet/cp-0`, 2727 s of a 7200 s ceiling. Under v6.6 its `final_candidate_sha` is **`63ebfab`** — the SHA the Integration Critic reviewed — and its `evidence_tip_sha` is **`8f371e5`**.
 The receipt gate accepted it; the verification behind that acceptance is recorded at the end of this
 section. Six further defects follow. **None of them invalidates the CP-0 `PASS`**, and none touches a
 capstone bar.
