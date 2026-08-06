@@ -2,9 +2,15 @@
 
 **Ratified 2026-08-05.** Owner-approved. **Execution-contract only.**
 
-**Nothing scientific moved.** No bar, checklist item, invariant, acceptance criterion, feed
-identifier, fold scheme, metric definition, coverage requirement, or scope boundary changed. **§§2–3,
-§§5–11 and §13 are byte-identical to v6.5.**
+**Nothing scientific moved.** No bar, invariant, acceptance criterion, feed identifier, fold scheme,
+metric definition, coverage requirement, or scope boundary changed. **§§2–3, §§5–11 and §13 are
+byte-identical to v6.5.**
+
+**One checklist change, and it adds rather than relaxes.** CP-1 through CP-5 each gain an explicit
+Integration-verdict line. It creates no new obligation — §12's `PASS` definition already required a
+fresh Integration `PASS` at every checkpoint — but the requirement previously appeared in a
+checklist only at CP-0, so five checklists could be read end to end without it in view. Nothing was
+removed from any checklist, and no threshold moved.
 
 Two sections outside §12 did change, and a reader must not be told otherwise. **§1** carries the
 version-delta block. **§4.1's canonicalization pointer was corrected**: it cited three `blind-*`
@@ -32,7 +38,7 @@ aligned. No map rebuild — nothing here changes the stage sequence.
 
 Every amendment closes a defect in `docs/track-b/cp-0-defects.md`, opened when the first CP-0 handoff
 was refused at the front gate and extended by CP-0's `PASS`, its receipt gate, and the Phase 2.1 rule
-inventory. Sixteen defects; the amendment closes all of them. The full plan is
+inventory. Seventeen defects. The amendment closes all of them, including D-CP0-10 in full — its concurrent-session half was specified in the plan, omitted from the first authoring pass, and authored as `R7` after the fifth review. The full plan is
 `docs/track-b/gauntlet-amendment-plan.md`; the rule accounting is `docs/track-b/rule-inventory.md`
 § *v6.6 amendment inventory*.
 
@@ -43,7 +49,7 @@ inventory. Sixteen defects; the amendment closes all of them. The full plan is
 | Terminal statuses | Four: `PASS` · `BLOCKED` · `PLATEAU` · `BUDGET_EXHAUSTED` | Five, adding **`BRIEF_INVALID`** — a pre-work status: the authorization was malformed, so no work started, no clock consumed, no file edited. The only status returning no Return Packet |
 | Abandonment | Undefined. A stalled executor returned nothing and had no vocabulary | Named explicitly as **owner-side and not a Lead status**, and explicitly **not** `BUDGET_EXHAUSTED` — that status asserts the ceiling was consumed by work, which an abandoned run cannot evidence |
 | `PASS` definition | Integration `PASS` + computed-current component bindings | Adds: Integration bound to **`final_candidate_sha`**, and a **verdict-only delta** between it and `evidence_tip_sha` |
-| Checklist item 7 (every CP) | "Fresh Integration-Critic `PASS` at the exact final candidate SHA/tree" | Binds `final_candidate_sha`, with the evidence tip above it carrying verdict files only |
+| Checklist item 7 — CP-0 originally, now **every CP** | Present only at CP-0; CP-1–CP-5 relied on the §12 `PASS` definition alone | Binds `final_candidate_sha`, evidence tip verdict-only, and now stated explicitly in all six checklists so none is closable without it in view. No bar weakened — it restates an existing §12 requirement |
 | Mandatory surfaces | "when their subject matter is in scope" | Scope is **declared, never inferred**: the packet states each of the five as in or out of scope **with a reason**. An unstated judgement is indistinguishable from an unmade one |
 
 ## The circularity, and why it needed naming
@@ -72,7 +78,7 @@ handover section.
 
 **`AGENTS.md`** — new § *Branch and ref lifecycle*: the one-branch invariant, LAND/DISCARD
 dispositions, **tag before delete**, **the citation follows the ref**, and an execution split in which
-agents inspect, tag, repoint and reclaim while **the landing commit stays owner-authored**.
+agents inspect, tag, repoint and reclaim while **the landing commit stays owner-authored**; plus the **one-writer rule** (`R7`) closing D-CP0-10's concurrent-session half.
 
 **`docs/track-b/gauntlet-templates.md`** — §1 gains executor-floor and session-freshness
 preconditions; §5 gains **`Reviewed paths`** and marks line citations non-binding; §7 gains both
@@ -99,10 +105,18 @@ printed where the Critic will read it.
 
 ## Rule accounting
 
-128 enumerated baseline (105 live executor-side after Option C, plus 23 Orchestrator-side rules
-enumerated for the first time as domain Q) → **153**, with **26 amended, 25 added, 0 retired**. New
-domain **R** (5 rules, `AGENTS.md`) carries the ref lifecycle, taking over territory retired domains
-H and M vacated.
+**141 enumerated baseline → 168**, with **27 amended, 27 added, 0 retired**.
+
+The baseline is 105 live executor-side rules after Option C, plus two domains enumerated for the
+first time during this amendment: **Q** (23, `orchestrator-role.md` — D-CP0-14) and **S** (13,
+`AGENTS.md` — D-CP0-17). Both had been amended for months without ever being inventoried; the second
+was discovered only because this amendment made `AGENTS.md` an owner and recorded its baseline as
+zero. New domain **R** (7 rules, `AGENTS.md`) carries the ref lifecycle and the one-writer rule,
+taking over territory retired domains H and M vacated.
+
+The Phase 1 domain tables in `rule-inventory.md` are now marked in place: 33 rules struck as
+`RETIRED — Option C`, 8 restated with their current wording. That closes D-CP0-15, which had left
+the ledger describing machinery deleted months earlier.
 
 ## Not yet proven
 

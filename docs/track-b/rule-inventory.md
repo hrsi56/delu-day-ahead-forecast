@@ -30,6 +30,13 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 ---
 
+> **Post-Option-C status, applied in place 2026-08-05 (closes D-CP0-15).** The tables below were
+> written for the Phase 1 prune, before Option C retired the protocol machinery. They are now marked
+> rather than left to mislead: **33 rules struck through and labelled `RETIRED — Option C`**, and the
+> **8 reduced rules restated with their current wording**. A struck row records what the rule was; it
+> binds nothing. Everything unmarked survives as written. Live count: **105** in domains A–P, plus
+> domain Q (23) and domain S (13).
+
 ## A — Authority and brief validity (10)
 
 | ID | Rule | Currently in | → |
@@ -64,30 +71,30 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| C1 | Critic receives unique ref-safe run ID + piece ID, full candidate SHA/tree, pre-created evidence ref, exact committed-plan binding, input hashes (or explicit N/A), reproduction commands, expected output/tolerance | CAP L405 · ROLE 46 · TMPL 182–209 | ROLE |
+| C1 | **REDUCED — Option C.** Current wording: Brief is checkable by hand: full candidate SHA, the piece, plan file/version/bar citation with a verbatim excerpt, artifact path, decision-bearing inputs, reproduction commands, expected output or tolerance. No run IDs, no pre-created refs. | — |  |
 | C2 | `plan.filename` safe repo-relative `.md`; `plan.sha256` = blob bytes at candidate SHA; `plan.bar_excerpt` non-empty and verbatim in that blob. Absolute path, `..`, non-Markdown, working-tree file, mismatched hash, or absent excerpt invalidates | CAP L405, L407 · ROLE 46 · TMPL 188–192, 222 | ROLE |
 | C3 | Critic works only from a newly created clean detached worktree at that SHA outside the Builder checkout (or immutable snapshot with equivalent provenance); reviewing an uncommitted diff is invalid | CAP L405 · ROLE 47 · TMPL 172 | ROLE |
 | C4 | Critic never receives the Builder checkout, uncommitted diff, reasoning, summary, history, or `workbench.md` | CAP L405, L409 · ROLE 36, 47 · TMPL 172 | ROLE |
-| C5 | Tool-generated integrity manifest created in the run root **before** review, recording create event, `HEAD`, `HEAD^{tree}`, empty status, absence of root `workbench.md`, checkout path, run ID, tool version, UTC. Helper owns it | CAP L405 · ROLE 48 · TMPL 206, 218 | ROLE |
-| C6 | Preserve the pre-review manifest SHA-256 as an input to `verify` | ROLE 48–49 · TMPL 218, 224 | ROLE |
-| C7 | Mandatory cache routing before any command (`PYTHONDONTWRITEBYTECODE`, `PYTHONPYCACHEPREFIX`, every tool writing beside its input). A verify failing on an ignored byproduct is a procedure error that still invalidates; remedy is a fresh run, never cleaning | ROLE 48 · TMPL 197–200 | ROLE |
-| C8 | Repeat integrity checks after running **without** cleaning/resetting/restoring; before/after SHA and tree must match and status stay empty | ROLE 49 · TMPL 232 | ROLE |
-| C9 | `verify` refuses on missing create record, mismatched pre-review manifest SHA, or mismatched recorded SHA/tree/path/run ID | ROLE 49 · TMPL 232 | ROLE |
+| ~~C5~~ | **RETIRED — Option C, 2026-08-05.** Was: Tool-generated integrity manifest created in the run root **before** review, recording create event, `HEAD`, `HEAD^{tree}`, empty status, absence of root `workbench.md`, checkout path, run ID, tool version, UTC. Helper owns it | CAP L405 · ROLE 48 · TMPL 206, 218 | — | — |
+| ~~C6~~ | **RETIRED — Option C, 2026-08-05.** Was: Preserve the pre-review manifest SHA-256 as an input to `verify` | ROLE 48–49 · TMPL 218, 224 | — | — |
+| ~~C7~~ | **RETIRED — Option C, 2026-08-05.** Was: Mandatory cache routing before any command (`PYTHONDONTWRITEBYTECODE`, `PYTHONPYCACHEPREFIX`, every tool writing beside its input). A verify failing on an ignored byproduct is a procedure error that still invalidates; remedy is a fresh run, never cleaning | ROLE 48 · TMPL 197–200 | — | — |
+| C8 | **REDUCED — Option C.** Current wording: Confirm the worktree is still clean before writing the verdict — `git status --porcelain` empty, `HEAD` unchanged. That command is the whole test. | — |  |
+| ~~C9~~ | **RETIRED — Option C, 2026-08-05.** Was: `verify` refuses on missing create record, mismatched pre-review manifest SHA, or mismatched recorded SHA/tree/path/run ID | ROLE 49 · TMPL 232 | — | — |
 | C10 | Any mismatch invalidates the review and requires a new clean checkout and fresh Critic | CAP L405 · ROLE 49 | ROLE |
-| C11 | Critic never authors or repairs the integrity manifest; a valid manifest alone is not a verdict | ROLE 50 · TMPL 232 | ROLE |
+| ~~C11~~ | **RETIRED — Option C, 2026-08-05.** Was: Critic never authors or repairs the integrity manifest; a valid manifest alone is not a verdict | ROLE 50 · TMPL 232 | — | — |
 | C12 | Critic is read-only: no editing the checkout, no inspecting Builder workspaces, no redesign | ROLE 39 · TMPL 232 | ROLE |
-| C13 | Verdict written only after successful `verify`; its UTC record time cannot precede verify | ROLE 50 · TMPL 232 | ROLE |
+| C13 | **REDUCED — Option C.** Current wording: The verdict is written only after that post-review cleanliness check. | — |  |
 
 ## D — Verdict record (7)
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| D1 | Verdict contains PASS/FAIL, run/piece/Critic IDs, candidate SHA/tree, evidence ref, schema path+hash, artifact path/hash or N/A, complete plan binding, input paths/hashes, exact commands with exit codes and stdout/stderr paths/hashes, expected output/tolerance, final manifest path/SHA, hashed evidence, largest gap, next acceptance test, UTC time | CAP L405 · ROLE 50 · TMPL 220–230 | ROLE |
+| D1 | **REDUCED — Option C.** Current wording: Verdict is markdown per templates §5: status, candidate SHA, `reviewed_paths`, plan/version/bar citation with verbatim excerpt, artifact, commands actually run with exit codes, largest gap, next acceptance test. | — |  |
 | D2 | Integration record also binds every relied-on component verdict path/hash/piece and its candidate SHA/tree | CAP L407 · ROLE 50 | ROLE |
 | D3 | Every component names the same checkpoint and plan identity as Integration; each keeps a piece-appropriate citation and excerpt; the excerpt (not the citation) is proven verbatim; pairs need not be identical | CAP L407 · ROLE 50 · TMPL 284, 396 | ROLE |
-| D4 | Two distinct records per review — helper-owned integrity manifest and separate schema-valid verdict. Neither substitutes for the other | CAP L405, L409 · ROLE 50, 73 | ROLE |
-| D5 | Do not hand-transcribe derivable fields; run `scaffold-verdict` first | ROLE 50 | ROLE |
-| D6 | `validate-verdict` must pass before a record is used; `gauntlet_protocol.py` is the authoritative fail-closed enforcement of the declarative schema | ROLE 50 · TMPL 225 | ROLE |
+| ~~D4~~ | **RETIRED — Option C, 2026-08-05.** Was: Two distinct records per review — helper-owned integrity manifest and separate schema-valid verdict. Neither substitutes for the other | CAP L405, L409 · ROLE 50, 73 | — | — |
+| ~~D5~~ | **RETIRED — Option C, 2026-08-05.** Was: Do not hand-transcribe derivable fields; run `scaffold-verdict` first | ROLE 50 | — | — |
+| ~~D6~~ | **RETIRED — Option C, 2026-08-05.** Was: `validate-verdict` must pass before a record is used; `gauntlet_protocol.py` is the authoritative fail-closed enforcement of the declarative schema | ROLE 50 · TMPL 225 | — | — |
 | D7 | Verdict returns the single largest meaningful gap and the exact next acceptance test | CAP L405, L407 · ROLE 36 · TMPL 228–229 | **CAP** (bar) + ROLE |
 
 ## E — Staleness and integration (8) — *repaired 2026-08-04; see D-1*
@@ -118,26 +125,26 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| G1 | Live evidence root is ignored `<repo>/.gauntlet/evidence/<checkpoint>/`, outside every Builder/Critic worktree and outside the candidate Git tree | CAP L409 · ROLE 63–73 · TMPL 150 | ROLE |
-| G2 | `init-evidence` under one exclusive lock creates the run root and `_support/<run-id>/` pair, rolling back an ordinary partial failure; neither may preexist, be reused, or traverse a symlink; a half-pair fails closed. Not an atomic paired-directory primitive | CAP L409 · ROLE 73 · TMPL 150 | ROLE · **P2 candidate** |
-| G3 | The run root contains exactly `integrity-manifest.json` and `critic-verdict.json`; never reused or mutated | CAP L409 · ROLE 73 · TMPL 150 | ROLE |
-| G4 | Every file-backed artifact/input/stdout/stderr/decision-evidence path is a regular non-symlink file physically under its owned support root, SHA-256-bound, `st_nlink` exactly 1; a path outside that root is invalid regardless of hash | CAP L409 · ROLE 73 · TMPL 150, 227 | ROLE · **P2 candidate** (`st_nlink`, symlink) |
-| G5 | Safe hash/lineage manifests substitute for raw restricted or impractically large data | CAP L409 · ROLE 73 · TMPL 150 | ROLE |
-| G6 | Unhashed prose or observations are not decision evidence | CAP L409 · ROLE 73 · TMPL 150 | ROLE |
-| G7 | The frozen workbench and Return Packet may live at checkpoint-root level; they are not verdict evidence | CAP L409 · ROLE 73 | ROLE |
-| G8 | Live verdicts/manifests never under `docs/` while the checkpoint is open (would change the candidate SHA and recursively invalidate); the constraint expires at terminal return | CAP L409 · ROLE 73 | ROLE |
-| G9 | A changed candidate requires a new run ID, piece, ref, and support root | ROLE 75 · TMPL 150 | ROLE |
+| G1 | **REDUCED — Option C.** Current wording: Verdicts are committed markdown under `docs/track-b/evidence/<checkpoint>/` on the checkpoint branch, written after each review completes. | — |  |
+| ~~G2~~ | **RETIRED — Option C, 2026-08-05.** Was: `init-evidence` under one exclusive lock creates the run root and `_support/<run-id>/` pair, rolling back an ordinary partial failure; neither may preexist, be reused, or traverse a symlink; a half-pair fails closed. Not an atomic paired-directory primitive | CAP L409 · ROLE 73 · TMPL 150 | — | — |
+| ~~G3~~ | **RETIRED — Option C, 2026-08-05.** Was: The run root contains exactly `integrity-manifest.json` and `critic-verdict.json`; never reused or mutated | CAP L409 · ROLE 73 · TMPL 150 | — | — |
+| ~~G4~~ | **RETIRED — Option C, 2026-08-05.** Was: Every file-backed artifact/input/stdout/stderr/decision-evidence path is a regular non-symlink file physically under its owned support root, SHA-256-bound, `st_nlink` exactly 1; a path outside that root is invalid regardless of hash | CAP L409 · ROLE 73 · TMPL 150, 227 | — | — |
+| ~~G5~~ | **RETIRED — Option C, 2026-08-05.** Was: Safe hash/lineage manifests substitute for raw restricted or impractically large data | CAP L409 · ROLE 73 · TMPL 150 | — | — |
+| ~~G6~~ | **RETIRED — Option C, 2026-08-05.** Was: Unhashed prose or observations are not decision evidence | CAP L409 · ROLE 73 · TMPL 150 | — | — |
+| G7 | **REDUCED — Option C.** Current wording: A frozen workbench snapshot lives outside the repository and is not verdict evidence. | — |  |
+| G8 | **REDUCED — Option C.** Current wording: Verdicts enter `docs/` only after their review is complete, so recording a review never alters the SHA it judged. | — |  |
+| ~~G9~~ | **RETIRED — Option C, 2026-08-05.** Was: A changed candidate requires a new run ID, piece, ref, and support root | ROLE 75 · TMPL 150 | — | — |
 
 ## H — Candidate refs (6)
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| H1 | `create-ref` makes the exact non-overwriting local `refs/gauntlet-evidence/<checkpoint>/<run-id>/<piece>` at candidate `HEAD`, before the Critic snapshot; the tool requires candidate SHA to equal current `gauntlet/<checkpoint>` `HEAD` | CAP L405, L409 · ROLE 75 · TMPL 142–147 | ROLE |
-| H2 | `verify-ref` before launch and again before any terminal Return Packet, for every cited candidate including the final | ROLE 75 · TMPL 320–324 | ROLE |
-| H3 | Refs never move or publish; only Yarden may delete them | CAP L409 · ROLE 75 | ROLE |
-| H4 | The disposable `gauntlet/<checkpoint>` branch is not spent until all cited SHAs are reachable through evidence refs | CAP L409 · ROLE 75 | ROLE |
-| H5 | Removing a Critic snapshot or Builder worktree does not remove its evidence records or refs | ROLE 75 | ROLE |
-| H6 | All checkpoint, run, and piece IDs must be ref-safe identifiers accepted by the tool | ROLE 75 | ROLE |
+| ~~H1~~ | **RETIRED — Option C, 2026-08-05.** Was: `create-ref` makes the exact non-overwriting local `refs/gauntlet-evidence/<checkpoint>/<run-id>/<piece>` at candidate `HEAD`, before the Critic snapshot; the tool requires candidate SHA to equal current `gauntlet/<checkpoint>` `HEAD` | CAP L405, L409 · ROLE 75 · TMPL 142–147 | — | — |
+| ~~H2~~ | **RETIRED — Option C, 2026-08-05.** Was: `verify-ref` before launch and again before any terminal Return Packet, for every cited candidate including the final | ROLE 75 · TMPL 320–324 | — | — |
+| ~~H3~~ | **RETIRED — Option C, 2026-08-05.** Was: Refs never move or publish; only Yarden may delete them | CAP L409 · ROLE 75 | — | — |
+| ~~H4~~ | **RETIRED — Option C, 2026-08-05.** Was: The disposable `gauntlet/<checkpoint>` branch is not spent until all cited SHAs are reachable through evidence refs | CAP L409 · ROLE 75 | — | — |
+| ~~H5~~ | **RETIRED — Option C, 2026-08-05.** Was: Removing a Critic snapshot or Builder worktree does not remove its evidence records or refs | ROLE 75 | — | — |
+| ~~H6~~ | **RETIRED — Option C, 2026-08-05.** Was: All checkpoint, run, and piece IDs must be ref-safe identifiers accepted by the tool | ROLE 75 | — | — |
 
 ## I — Ceiling and clock (10)
 
@@ -200,10 +207,10 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| M1 | `.gauntlet/` is git-ignored, so records are untracked; refs keep candidate commits reachable but nothing keeps the proof of review | ROLE 120–124 | ROLE |
-| M2 | After the terminal Return Packet, and only then, run `freeze-evidence` to `docs/track-b/evidence/<checkpoint>` | ROLE 126–131 | ROLE |
-| M3 | `freeze-evidence` revalidates every record, copies each run's manifest and verdict, and writes `frozen-evidence.json` indexing run, verdict, candidate SHA, ref, and hash | ROLE 133–135 | ROLE |
-| M4 | Freezing invalidates nothing; committing it is Yarden's decision | ROLE 135–137 | ROLE |
+| ~~M1~~ | **RETIRED — Option C, 2026-08-05.** Was: `.gauntlet/` is git-ignored, so records are untracked; refs keep candidate commits reachable but nothing keeps the proof of review | ROLE 120–124 | — | — |
+| ~~M2~~ | **RETIRED — Option C, 2026-08-05.** Was: After the terminal Return Packet, and only then, run `freeze-evidence` to `docs/track-b/evidence/<checkpoint>` | ROLE 126–131 | — | — |
+| ~~M3~~ | **RETIRED — Option C, 2026-08-05.** Was: `freeze-evidence` revalidates every record, copies each run's manifest and verdict, and writes `frozen-evidence.json` indexing run, verdict, candidate SHA, ref, and hash | ROLE 133–135 | — | — |
+| ~~M4~~ | **RETIRED — Option C, 2026-08-05.** Was: Freezing invalidates nothing; committing it is Yarden's decision | ROLE 135–137 | — | — |
 
 ## N — Orchestrator receipt (7)
 
@@ -221,18 +228,18 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| O1 | Applies only when CP-2 is the authorized checkpoint; imposes nothing elsewhere | CAP L411 · ROLE 93 · TMPL 237–239 | CP2 |
-| O2 | Machine contract is `cp2-blind-four-catalog.schema.json`; canonical transitions are `blind-prepare/recompute/freeze/reveal/adjudicate` | CAP L413 · TMPL 48 | CP2 |
-| O3 | Final candidate must already commit `source-manifest.json` and `selection-declaration.json`; never supplied to the Blind Critic | CAP L413 · TMPL 45 | CP2 |
-| O4 | `blind-prepare` draws a 256-bit secret seed/nonce and fresh unbiased permutation to `A/B/C/D`; custody dir `0700`/files `0600`, create-only | CAP L415 | CP2 · **P2 candidate** |
-| O5 | Commitment binds mapping preimage, seed/nonce, candidate SHA/tree, source-manifest hash, frozen source hashes, invocation hash, rule identity | CAP L415 | CP2 · **P2 candidate** |
+| O1 | **REDUCED — Option C.** Current wording: The CP-2 label-blind section applies only when CP-2 is the authorized checkpoint and imposes nothing elsewhere. | — |  |
+| ~~O2~~ | **RETIRED — Option C, 2026-08-05.** Was: Machine contract is `cp2-blind-four-catalog.schema.json`; canonical transitions are `blind-prepare/recompute/freeze/reveal/adjudicate` | CAP L413 · TMPL 48 | — | — |
+| ~~O3~~ | **RETIRED — Option C, 2026-08-05.** Was: Final candidate must already commit `source-manifest.json` and `selection-declaration.json`; never supplied to the Blind Critic | CAP L413 · TMPL 45 | — | — |
+| ~~O4~~ | **RETIRED — Option C, 2026-08-05.** Was: `blind-prepare` draws a 256-bit secret seed/nonce and fresh unbiased permutation to `A/B/C/D`; custody dir `0700`/files `0600`, create-only | CAP L415 | — | — |
+| ~~O5~~ | **RETIRED — Option C, 2026-08-05.** Was: Commitment binds mapping preimage, seed/nonce, candidate SHA/tree, source-manifest hash, frozen source hashes, invocation hash, rule identity | CAP L415 | — | — |
 | O6 | Blind Critic recomputes identity-free metrics only; never identifies the base, applies eligibility/tie-breaks, selects a label, or asserts a winner | CAP L416 · TMPL 46, 361 | **CAP** (scientific) + CP2 |
-| O7 | Identity scan of every support filename, raw byte stream, and verdict string before the verdict is accepted | CAP L416 | CP2 |
-| O8 | `blind-freeze` runs only after a schema-valid Blind `PASS`; it is the sole allocator of the Integration run/ref/support identity | CAP L417 | CP2 |
-| O9 | `blind-reveal` refuses without a valid freeze or on any changed frozen byte; copies (never hard-links) into the Integration support root | CAP L418 | CP2 · **P2 candidate** |
+| ~~O7~~ | **RETIRED — Option C, 2026-08-05.** Was: Identity scan of every support filename, raw byte stream, and verdict string before the verdict is accepted | CAP L416 | — | — |
+| ~~O8~~ | **RETIRED — Option C, 2026-08-05.** Was: `blind-freeze` runs only after a schema-valid Blind `PASS`; it is the sole allocator of the Integration run/ref/support identity | CAP L417 | — | — |
+| ~~O9~~ | **RETIRED — Option C, 2026-08-05.** Was: `blind-reveal` refuses without a valid freeze or on any changed frozen byte; copies (never hard-links) into the Integration support root | CAP L418 | — | — |
 | O10 | Adjudication only in fresh Integration, against Integration-owned copies, never custody; the real winner must equal the committed selection declaration | CAP L419 · TMPL 47, 290–316 | **CAP** (scientific) + CP2 |
-| O11 | Threat boundary: modes/prompts/hashes are custody and chronology evidence, **not** adversarial secrecy from a same-UID process. `ENFORCED_READ_ISOLATION` only with a real read allowlist/sandbox; otherwise `COOPERATIVE_PROCEDURAL` | CAP L421 · TMPL 49, 398 | CP2 |
-| O12 | Fail-closed restart: any candidate/source/rule/selection change, Blind `FAIL`, premature exposure, tamper, reuse, or winner mismatch invalidates the whole attempt; new IDs, seed, permutation, custody. A revealed mapping is never reused | CAP L423 · TMPL 398 | CP2 · **P2 candidate** |
+| ~~O11~~ | **RETIRED — Option C, 2026-08-05.** Was: Threat boundary: modes/prompts/hashes are custody and chronology evidence, **not** adversarial secrecy from a same-UID process. `ENFORCED_READ_ISOLATION` only with a real read allowlist/sandbox; otherwise `COOPERATIVE_PROCEDURAL` | CAP L421 · TMPL 49, 398 | — | — |
+| ~~O12~~ | **RETIRED — Option C, 2026-08-05.** Was: Fail-closed restart: any candidate/source/rule/selection change, Blind `FAIL`, premature exposure, tamper, reuse, or winner mismatch invalidates the whole attempt; new IDs, seed, permutation, custody. A revealed mapping is never reused | CAP L423 · TMPL 398 | — | — |
 
 ## P — Debugging, research, constraints, communication (9)
 
@@ -707,7 +714,7 @@ No rule is retired by this amendment.
 | Q15 | G7 | Silence still never closes — and gains the abandonment convention it currently lacks |
 | Q19 | G3,G13 | The gate gains the landing inspection and the reclamation step |
 
-## Rules the amendment adds (26)
+## Rules the amendment adds (27)
 
 New IDs continue each domain; **R** is a new domain for landing and reclamation, replacing the
 territory vacated by retired H and M.
@@ -740,12 +747,13 @@ territory vacated by retired H and M.
 | R4 | **The citation follows the ref.** Retiring a branch repoints, in the same operation, every live document that named it | G13 | AGENTS + ORCH |
 | R5 | Execution split: INSPECT, DISCARD, REPOINT and RECLAIM are agent-executed; **LAND is owner-authored by hand**. An agent may never delete a ref whose SHAs are not already reachable from a verified tag, nor a branch the owner has not dispositioned | G13 | **AGENTS** |
 | R6 | **Reclamation closes the checkpoint:** it is not closed until `git branch -vv` shows `main` alone | G13 | **AGENTS** |
+| R7 | **One writer per repository while a checkpoint is open:** no session other than that checkpoint's Lead writes to the target repository — not `main`, not any owned path, not `progress.md`. Concurrent sessions may read and may work on an unrelated branch. Topology recorded at start and terminal return makes an unauthorized write detectable; a change the Lead did not make is reported, not reconciled | G10 | **AGENTS** |
 
 ## Post-amendment ownership
 
 **Correction, recorded rather than quietly fixed.** The first draft of this table read CAP 31 ·
 ROLE 98 · TMPL 26 · AGENTS 5 · ORCH 23 · PROG 1 and summed to **184**, against the then-stated total
-of 153 (now 166, after D-CP0-17 added domain S).
+of 153 (now 168, after D-CP0-17 added domain S and G10 minted R7).
 The per-domain counts and the 128 + 25 arithmetic were right throughout; the ownership row values were
 carried over from the pre-Option-C split without subtracting the 33 retired rules. This is the same
 class of error the Phase 1 inventory made (148 written, 138 actual) and is logged for the same reason:
@@ -762,9 +770,9 @@ ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q 
 | **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
 | **ROLE** `engineering-role.md` | 62 | +9 | **71** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
 | **TMPL** `gauntlet-templates.md` | 16 | +8 | **24** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
-| **AGENTS** `AGENTS.md` | 13 | +6 | **19** | Domain S newly enumerated (D-CP0-17), plus R1–R6, the ref lifecycle |
+| **AGENTS** `AGENTS.md` | 13 | +7 | **20** | Domain S newly enumerated (D-CP0-17), plus R1–R7 — the ref lifecycle and the one-writer rule |
 | **ORCH** `orchestrator-role.md` | 23 | 0 | **23** | Newly enumerated (Q1–Q23); amended by G4, G7, G13 but gains no new ID |
-| **Total** | **141** | **+26** | **167** | **0 retired** |
+| **Total** | **141** | **+27** | **168** | **0 retired** |
 
 `I10` remains co-owned with `progress.md` as a cross-reference, counted once under CAP. Nine
 co-ownerships persist from Phase 1 and are stated once in each place with an explicit cross-reference,
@@ -784,7 +792,7 @@ contexts never sum.
 ## Verification protocol for Phase 2.3
 
 1. Author G1 … G14.
-2. For each of the **167** IDs, confirm presence in its assigned owner by normalized-whitespace
+2. For each of the **168** IDs, confirm presence in its assigned owner by normalized-whitespace
    substring match — the method that caught `G4` and `I9`.
 3. Confirm no rule appears normatively outside its assigned owner (cross-references excepted).
 4. Confirm every rule in the overcorrection guard is present and unweakened.
@@ -795,3 +803,63 @@ contexts never sum.
 **Judged by a fresh context that did not author the amendment.** Builder ≠ Critic applies to the
 contract itself; the alternative is the authors certifying their own work, which the contract forbids
 everywhere else.
+
+---
+
+# Phase 2.3 verification — 2026-08-05 — **FIVE ROUNDS, FAIL → repaired; final round pending**
+
+Protocol step 6. Recorded late: rounds 1–4 ran without this block existing, which is itself a finding
+— the protocol required a dated record and none was written until the fifth round demanded it.
+
+## Method
+
+Each round was judged by a **fresh context that did not author the amendment**, given the artifacts
+and the inventory, and explicitly denied the author's reasoning and commit messages. Builder ≠ Critic
+applied to the contract itself.
+
+## Rounds
+
+| # | Scope given | Verdict | Findings | Guard |
+|---|---|---|---|---|
+| 1 | capstone §12 + four contract docs | FAIL | 9 — one amended row undelivered, 4 ownership, 6 consistency | clean |
+| 2 | same | FAIL | 6 — `AGENTS.md` still carried the pre-amendment read boundary | clean |
+| 3 | same | FAIL | 7 — D-CP0-17 (`AGENTS.md` unledgered), ownership leaks, map cascade | clean |
+| 4 | same | FAIL | 6 — §4.1 retired-machinery citation, cascade error introduced by a prior repair | clean |
+| 5 | **none — unscoped, owner-directed** | FAIL | ~30 across 8 documents | clean |
+
+**The guard held in all five rounds.** `B8`, `B7`, `B5`, `C3`, `C4`, `E1`–`E4`, `F1`–`F6`, `B1`,
+`K9`, `I6` were verified present and unweakened every time; `B5` and `E1` were strengthened.
+
+## What the rounds cost and what they bought
+
+Rounds 1–4 were **scoped by the author** — "capstone §12 only", "the five documents". Round 4 found
+that scoping had let a real defect survive all four: `capstone_V6_6.md` §4.1 pointed a CP-2 executor
+at three commands deleted by Option C and at template sections that hold no such contract. It
+survived because the amendment declared §§1–11 unchanged, and every reviewer believed it.
+
+Round 5 was run with **zero scope restrictions** on owner instruction, and found roughly as much as
+the four scoped rounds combined — including two items that would have fired on the next execution
+session: a three-way contradiction over which brief was due next, and a DEC-AWS renumbering that
+`progress.md` asserted was applied and was not.
+
+**Recorded as a standing lesson: a scope claim is an instruction not to look.** Any future review of
+this contract is unscoped by default, and any document asserting that a section is unchanged is
+treated as an unverified claim until diffed.
+
+## Rules restored or minted by the repair rounds
+
+| Rule | Round | Why |
+|---|---|---|
+| `B5` | 3 | "Builders may not manage worktrees" was in force in `AGENTS.md` and the Builder form but absent from its ROLE owner — the `G4`/`I9` near-drop shape |
+| `S13` | 3 | The destructive-operations rule lost its branch-deletion clause in the first authoring pass; a reviewer caught it, the ledger did not |
+| Domain S (13) | 3 | `AGENTS.md` was made an owner with a recorded baseline of 0 |
+| `R6` | 4 | The checkpoint-closure condition was in force with no ID |
+| `R7` | 5 | `G10`'s concurrent-session rule was specified in the plan and never authored |
+
+## Open at the time of writing
+
+- **Pass (c) not yet run:** count and version rot across `syllabus_v3_2.md`, `README.md`,
+  `program-stage-sequence.md`, `progress.md` and this file — stale defect counts, `v6.4` labels, a
+  22 h reserve, ≈727 h envelopes, and 32 citations to the nonexistent `capstone_V6_5.md`.
+- **A sixth unscoped round is required** after pass (c) and must return a clean `PASS` before Phase 4
+  opens.

@@ -1,5 +1,7 @@
 # AWS Extension Spec v1.1 — Cloud Production Backbone for the Flagship DE-LU Capstone
 
+**Status: PARKED (DEC-AWS)** — unratified draft, adjudicated only at G5. Ratification produces capstone v6.7 + map v9. Nothing here is in force.
+
 ## 0. What this spec ratifies (eight decisions)
 
 - **D1 — Scope & placement.** A lean AWS production backbone (train → register → deploy → monitor on SageMaker) is added to the **flagship**, as a new post-G5 milestone **M6 (two phases, AWS-1 / AWS-2)** with checkpoint **CP-6**. The companion mini-capstone is untouched in content and stays stage-gated.
