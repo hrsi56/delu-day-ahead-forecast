@@ -46,10 +46,12 @@ existing ID; a superseded defect is marked superseded and kept.
 | 2026-08-05 | CP-0 Return Packet (`PASS`; `final_candidate_sha` `63ebfab`, `evidence_tip_sha` `8f371e5`, on `gauntlet/cp-0`) and Orchestrator receipt-gate verification of it | D-CP0-6 … D-CP0-11 |
 | 2026-08-05 | Owner's standing requirement that no unnecessary branch ever stay open, and the ref cleanup that followed CP-0 | D-CP0-13 |
 | 2026-08-05 | The v6.6 amendment rule inventory (`rule-inventory.md`, Phase 2.1) | D-CP0-14, D-CP0-15 |
+| 2026-08-05 | Authoring AMD-G11 in Phase 2.2 | D-CP0-16 |
+| 2026-08-05 | The third independent review of the v6.6 amendment (Phase 2.3) | D-CP0-17 |
 
 D-CP0-1 … D-CP0-5 were found **before a single line of CP-0 product code was written** — the
 contract's own front gate producing findings on its first real contact with an execution attempt.
-D-CP0-6 … D-CP0-12 came from a checkpoint that **passed cleanly**, which is the more useful result:
+D-CP0-6 … D-CP0-17 came from a checkpoint that **passed cleanly**, from authoring the amendment, and from five independent reviews of it, which is the more useful result:
 the loop worked and the contract around it did not quite.
 
 ## Defect index
@@ -57,7 +59,7 @@ the loop worked and the contract around it did not quite.
 | ID | One line | Owner document | Severity |
 |---|---|---|---|
 | D-CP0-1 | Role is asserted, never verified | `AGENTS.md`, launch envelope | Standing |
-| D-CP0-2 | No terminal status for an invalid brief | `capstone_V6_5.md` §12, templates | High |
+| D-CP0-2 | No terminal status for an invalid brief | `capstone_V6_6.md` §12, templates | High |
 | D-CP0-3 | No defined clock start on a rejected brief | `engineering-role.md` ceiling § | Medium |
 | D-CP0-4 | Brief validity judged by its beneficiary | templates §8, `engineering-role.md` | High |
 | D-CP0-5 | No execution-capability floor; a stall returns no status | `orchestrator-role.md`, §12 | High |
@@ -74,9 +76,10 @@ the loop worked and the contract around it did not quite.
 | **D-CP0-16** | **The verdict form omits `reviewed_paths`, which computed staleness depends on** | **templates §5** | **High — the staleness rule's input was never collected** |
 | D-CP0-17 | `AGENTS.md` was never rule-inventoried either | `rule-inventory.md`, `AGENTS.md` | Medium |
 
-Concrete amendment drafts for the three blocking/high-inversion items — **D-CP0-6**, **D-CP0-8**, and
-**D-CP0-12** — are in *Proposed amendments* below. The remainder carry candidate remedies with a
-recommendation in their own entries and are drafted after those three are ratified.
+All seventeen are remedied by the **v6.6 amendment (AMD-G1 … G14)**, ratified 2026-08-05 and recorded in
+`capstone_V6_5-to-V6_6-amendments.md`. The drafts for the three blocking items are kept below as the
+record of how they were reasoned through. **Ratified is not validated:** this ledger stays OPEN until
+the clean-room CP-0 re-run exercises each amendment against its Phase 5 acceptance test.
 
 ---
 
@@ -88,7 +91,7 @@ execution. Nothing detects or prevents a session that has *already* read them fr
 itself the Lead. The role boundary is a declaration, not a verified property.
 
 **Evidence.** On 2026-08-05 a session that had read `orchestrator-role.md`, `progress.md`,
-`docs/track-b/rule-inventory.md`, the Hebrew guide, and `capstone_V6_5.md` §11–§12 in full — for
+`docs/track-b/rule-inventory.md`, the Hebrew guide, and `capstone_V6_6.md` §11–§12 in full — for
 unrelated article work — was handed a CP-0 execution instruction. It could have proceeded. The only
 thing that stopped it was the session choosing to disclose its own contamination.
 
@@ -117,7 +120,7 @@ that actually failed here.
 
 ## D-CP0-2 — The terminal-status taxonomy has no slot for an invalid brief
 
-**Statement.** `capstone_V6_5.md` §12 defines exactly four terminal statuses: `PASS`, `BLOCKED`,
+**Statement.** `capstone_V6_6.md` §12 defines exactly four terminal statuses: `PASS`, `BLOCKED`,
 `PLATEAU`, `BUDGET_EXHAUSTED`. `engineering-role.md:7` separately requires the Lead to "stop and
 return the discrepancy" when a brief is invalid. That return is a **fifth terminal outcome with no
 name, no form, and no place in the Return Packet**, whose template requires one of the four
@@ -134,7 +137,7 @@ no defined shape in any contract document. It was authored ad hoc.
 - Because it is unnamed, there is no rule about what happens next: whether the reissued brief is a
   new checkpoint attempt, whether the refusal is evidence, whether it is reportable at all.
 
-**Ownership.** `capstone_V6_5.md` §12 owns the status vocabulary (the bar); `engineering-role.md`
+**Ownership.** `capstone_V6_6.md` §12 owns the status vocabulary (the bar); `engineering-role.md`
 owns the mechanism; `gauntlet-templates.md` owns the form.
 
 **Candidate remedies.**
@@ -242,7 +245,7 @@ nothing about the *reasoning* capacity needed to act on those words, which is wh
 here. Smaller context did not make the contract executable by a weaker executor.
 
 **Ownership.** `orchestrator-role.md` (the launch envelope and the checkpoint-waiting convention);
-`capstone_V6_5.md` §12 (the status vocabulary).
+`capstone_V6_6.md` §12 (the status vocabulary).
 
 **Candidate remedies.**
 1. **Name a minimum executor tier and reasoning effort in the launch envelope**, as a stated
@@ -309,7 +312,7 @@ delta is provably one file under `docs/track-b/evidence/` — but *nothing in th
 to be*. The same sequence would accept a tip commit that also touched source, and no verdict would
 cover it. The rule that closes the loop is missing, not merely unstated.
 
-**Ownership.** `capstone_V6_5.md` §12 (item 7 wording) and `engineering-role.md` §§ *Gauntlet
+**Ownership.** `capstone_V6_6.md` §12 (item 7 wording) and `engineering-role.md` §§ *Gauntlet
 execution* step 8 / *Evidence retention*.
 
 **Candidate remedies.**
@@ -372,7 +375,7 @@ terminal return is its end, not a phase after it. A Lead that discovers somethin
 disclosure in the packet must read program state to describe it accurately, and thereby breaches the
 rule. **The contract makes candour a violation.**
 
-**Evidence.** The Lead read only the brief, `AGENTS.md`, `engineering-role.md`, `capstone_V6_5.md`
+**Evidence.** The Lead read only the brief, `AGENTS.md`, `engineering-role.md`, `capstone_V6_6.md`
 §§3/4.0/12, and the templates for the entire Builder → Critic → Integration sequence — then, after
 the candidate was built, committed, and twice independently `PASS`'d, read a `progress.md` diff and
 this ledger in order to write its addendum truthfully. It disclosed the read, its timing, and its
@@ -464,7 +467,7 @@ staleness with no defined detection.
 candidate SHA. It says nothing about line numbers. Both critics volunteered line ranges anyway, and
 one was wrong.
 
-**Evidence.** `**CP-0**` sits at line 459 of `capstone_V6_5.md` (verified independently). The
+**Evidence.** `**CP-0**` sits at line 459 of `capstone_V6_6.md` (verified independently). The
 component verdict cited "lines 456-461"; the correct range for its five-item excerpt is 459-464. The
 Integration Critic caught the discrepancy and correctly classified it as cosmetic — the quoted text
 was verbatim-correct throughout. It was the only defect either critic found in the other's work.
@@ -572,7 +575,7 @@ depending on anyone remembering it.
 
 ## D-CP0-14 — `orchestrator-role.md` was never rule-inventoried
 
-**Statement.** The Phase 1 rule inventory enumerated four documents — `capstone_V6_5.md` §12,
+**Statement.** The Phase 1 rule inventory enumerated four documents — `capstone_V6_6.md` §12,
 `engineering-role.md`, `gauntlet-templates.md`, and the then-separate CP-2 protocol file. It did not
 enumerate `orchestrator-role.md`. **The entire Orchestrator side of the contract has never been
 enumerated, single-owned, or verified against loss.**
@@ -680,8 +683,8 @@ rule points at must be enumerated before it can be amended.**
 **Ownership.** `rule-inventory.md`, `AGENTS.md`.
 
 **Remedy.** Domain S, thirteen rules, enumerated in `rule-inventory.md` § *v6.6 amendment inventory*.
-Baseline 128 → 141; post-amendment 153 → **166**; `AGENTS.md` ownership 5 → **18**. AMD-G14's
-verification protocol now runs over 166 IDs.
+Baseline 128 → 141; post-amendment 153 → **168** (R7 added later by G10); `AGENTS.md` ownership
+5 → **20**. AMD-G14's verification protocol now runs over 168 IDs.
 
 ---
 
@@ -735,7 +738,7 @@ unsatisfiable), **D-CP0-8** (inverts the honesty incentive and contradicts D-CP0
 **D-CP0-12** (no acceptance path). Each states its owner document, the change, and how it is checked.
 
 **These are drafts for owner adjudication.** Nothing here is in force. Most touch
-`capstone_V6_5.md` §12, so ratification produces **capstone v6.6 with a new exact anchor**, and no
+`capstone_V6_6.md` §12, so ratification produces **capstone v6.6 with a new exact anchor**, and no
 brief may cite it until that anchor exists. No draft below weakens a bar, checklist item, invariant,
 or acceptance criterion; AMD-G1 and AMD-G3 make an existing requirement satisfiable, and AMD-G2
 narrows a prohibition that currently forbids honest reporting.
@@ -759,7 +762,7 @@ ordering satisfies both.
 > must return nothing outside `docs/track-b/evidence/<checkpoint>/`. A tip that touches any other path
 > invalidates the terminal `PASS` and requires a new final candidate and a new Integration review.
 
-**(b) `capstone_V6_5.md` §12 — replace the last CP-N checklist item wherever it appears:**
+**(b) `capstone_V6_6.md` §12 — replace the last CP-N checklist item wherever it appears:**
 
 > - [ ] Fresh Integration-Critic `PASS` at the exact **`final_candidate_sha`**/tree, with the
 >   evidence tip above it containing verdict files only.

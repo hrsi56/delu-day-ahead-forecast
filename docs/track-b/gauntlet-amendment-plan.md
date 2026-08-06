@@ -1,6 +1,6 @@
 # Gauntlet contract amendment + CP-0 re-run — execution plan
 
-**Status: RATIFIED 2026-08-05 — awaiting owner commit, then Phase 1.** All three gates decided
+**Status: IN EXECUTION.** Phases 0–3 complete; Phase 2.3 ran five independent review rounds (see `rule-inventory.md` § *Phase 2.3 verification*). Phase 4 — the clean-room CP-0 re-run — is next, gated on a clean unscoped review. All three gates decided
 below. Charged to the Gauntlet reserve (≈44 h remain). No phase executes ahead of its order.
 
 **Goal.** Close every defect in `docs/track-b/cp-0-defects.md`, then re-run CP-0 clean-room under the
@@ -27,7 +27,7 @@ depending on anyone remembering it.
 
 ## What is being fixed
 
-Thirteen defects. Twelve are in the ledger; **D-CP0-13 is new and is appended in Phase 2.0**, because
+Seventeen defects. Twelve were in the ledger when this plan was written; D-CP0-13 was appended in Phase 2.0, D-CP0-14 and D-CP0-15 by the Phase 2.1 inventory, D-CP0-16 while authoring, and D-CP0-17 by the third review. D-CP0-13 is here because
 it comes from the owner's standing requirement rather than from the CP-0 run.
 
 ### D-CP0-13 — No branch or ref reclamation rule *(to be appended to the ledger)*
@@ -210,13 +210,13 @@ written.
 **2.0** Append **D-CP0-13** to the ledger with its provenance row and index entry.
 
 **2.1 Rule inventory, before.** Re-run the method that caught two near-drops during the prune:
-enumerate every normative rule touched by G1–G13 across `capstone_V6_5.md` §12,
+enumerate every normative rule touched by G1–G13 across `capstone_V6_6.md` §12,
 `engineering-role.md`, `gauntlet-templates.md`, `AGENTS.md`, and `orchestrator-role.md`, with its
 current location and its post-amendment owner. **This is not optional** — the amendment touches five
 documents and the project has already proved twice that targeted greps lose rules.
 
 **2.2 Author G1 … G13** in the order above, one owner per rule, cross-references never restatements.
-`capstone_V6_5.md` → `capstone_V6_6.md`; every reference repointed; an amendment sheet
+`capstone_V6_6.md` → `capstone_V6_6.md`; every reference repointed; an amendment sheet
 `capstone_V6_5-to-V6_6-amendments.md` in the existing style.
 
 **2.3 Independent review before ratification.** The amendment is judged by a fresh context that did

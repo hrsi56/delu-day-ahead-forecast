@@ -5,10 +5,10 @@ post-prune state can be proved complete rather than asserted complete. This is a
 for the prune, **not** agent context — it is never loaded into a Builder or Critic.
 
 **Sources inventoried (complete read):**
-`capstone_V6_5.md` §12 (L393–L425) · `engineering-role.md` (241 lines) ·
+`capstone_V6_6.md` §12 (L393–L425) · `engineering-role.md` (241 lines) ·
 `docs/track-b/gauntlet-templates.md` (405 lines) · `docs/track-b/cp2-blind-protocol.md` (173 lines)
 
-**Post-prune ownership:** `CAP` = `capstone_V6_5.md` §12 (the bar) · `ROLE` = `engineering-role.md`
+**Post-prune ownership:** `CAP` = `capstone_V6_6.md` §12 (the bar) · `ROLE` = `engineering-role.md`
 (the process) · `TMPL` = `gauntlet-templates.md` (forms only) · `CP2` = `cp2-blind-protocol.md`
 (CP-2 only) · `PROG` = `progress.md` (program state).
 
@@ -261,7 +261,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | Owner | Rules | Note |
 |---|---|---|
-| **CAP** `capstone_V6_5.md` §12 | 26 (A7, A8, B8, D7, F1–F6, I7, I8, I10, K1–K10, L5, L10, N6, O6, O10) | The bar only |
+| **CAP** `capstone_V6_6.md` §12 | 26 (A7, A8, B8, D7, F1–F6, I7, I8, I10, K1–K10, L5, L10, N6, O6, O10) | The bar only |
 | **ROLE** `engineering-role.md` | 91 | The process; sole owner of execution mechanics |
 | **TMPL** `gauntlet-templates.md` | 19 | Forms + Orchestrator receipt; no normative prose it does not own |
 | **CP2** `cp2-blind-protocol.md` | 12 | Loaded only at CP-2 |
@@ -302,13 +302,13 @@ match. Two flags were raised on the first pass:
 | **G4** absent from ROLE | **REAL — a genuine near-drop** | fixed |
 | **I9** absent from ROLE | **REAL — partial coverage only** | fixed |
 
-**G4** (`st_nlink` / hard-linked-inode invalidity) was stated in `capstone_V6_5.md` §12 L409 and in
+**G4** (`st_nlink` / hard-linked-inode invalidity) was stated in `capstone_V6_6.md` §12 L409 and in
 the templates, but never in `engineering-role.md` — its assigned owner. Deleting the capstone
 paragraph would have left the rule stated only in a form document. Restored to
 `engineering-role.md` § *Live evidence and commit retention*.
 
 **I9** (the Lead allocates internal target windows but cannot enlarge the ceiling) was in
-`capstone_V6_5.md` L399, which the prune compressed. ROLE covered both halves only implicitly
+`capstone_V6_6.md` L399, which the prune compressed. ROLE covered both halves only implicitly
 across three separate sentences. Now stated explicitly in § *Active-elapsed wall-clock ceiling*.
 
 This is the second time the inventory method caught a live rule loss that a targeted grep did not.
@@ -318,14 +318,14 @@ This is the second time the inventory method caught a live rule loss that a targ
 | Defect | Status | Evidence |
 |---|---|---|
 | **D-1** — rerun-all surviving at `engineering-role.md:40`, `:196`, `gauntlet-templates.md:372` | **CLOSED** | Zero matches repo-wide for `must equal final` / `bound to the exact final candidate` / `invalidates all earlier` / `no selective reuse` |
-| **D-2** — reserve table omitted CP-0 (22 h vs 24 h) | **CLOSED** | `capstone_V6_5.md` now reads `CP-0 2 h; … — 24 h total`, matching `progress.md:36` |
+| **D-2** — reserve table omitted CP-0 (22 h vs 24 h) | **CLOSED** | `capstone_V6_6.md` now reads `CP-0 2 h; … — 24 h total`, matching `progress.md:36` |
 | **D-3** — brief template cited §12 as CP-2 protocol authority | **CLOSED** | Repointed to `docs/track-b/cp2-blind-protocol.md`; zero stale §12-protocol citations |
 
 ## Measured reduction
 
 | Surface | Before | After | Δ |
 |---|---:|---:|---:|
-| `capstone_V6_5.md` §12 execution contract | 2,101 | **901** | −57% |
+| `capstone_V6_6.md` §12 execution contract | 2,101 | **901** | −57% |
 | `docs/track-b/gauntlet-templates.md` | 3,683 | **2,762** | −25% |
 | `engineering-role.md` | 3,836 | **3,512** | −8% |
 | `AGENTS.md` | 777 | 777 | — |
@@ -355,7 +355,7 @@ in Phase 1.
 
 ## Files changed
 
-`capstone_V6_5.md` · `engineering-role.md` · `docs/track-b/gauntlet-templates.md` ·
+`capstone_V6_6.md` · `engineering-role.md` · `docs/track-b/gauntlet-templates.md` ·
 `capstone_V6_4-to-V6_5-amendments.md` · `capstone_V6_3-to-V6_4-amendments.md` · `progress.md` ·
 `docs/track-b/rule-inventory.md` (new). **No version bump** — relocation only; no bar, checklist
 item, invariant, or acceptance criterion changed.
@@ -543,7 +543,7 @@ G7, G8, O1.
 **K** (terminal conditions), **L** (Return Packet), **N** (receipt), **P** (constraints), plus the
 scientific CP-2 bar **O6** and **O10**.
 
-**Nothing in `capstone_V6_5.md`'s checklists changed.** No bar, checklist item, invariant, or
+**Nothing in `capstone_V6_6.md`'s checklists changed.** No bar, checklist item, invariant, or
 acceptance criterion was weakened. The retired rules were process mechanics owned by
 `engineering-role.md` and the templates.
 
@@ -560,12 +560,12 @@ acceptance criterion was weakened. The retired rules were process mechanics owne
 ## Verification
 
 Orphan sweep clean across every live document: `README.md`, `AGENTS.md`, `orchestrator-role.md`,
-`engineering-role.md`, `capstone_V6_5.md`, `gauntlet-templates.md`, `progress.md`. Historical
+`engineering-role.md`, `capstone_V6_6.md`, `gauntlet-templates.md`, `progress.md`. Historical
 session-log entries and the amendment sheets retain their references by design — they are the record
 of what was built and why it was removed.
 
 No test suite remains; `tests/` is empty until M1 creates the real invariant tests that
-`capstone_V6_5.md` §9.4 requires. That is the correct state: there is no longer any protocol to test,
+`capstone_V6_6.md` §9.4 requires. That is the correct state: there is no longer any protocol to test,
 and the tests that existed tested only the protocol.
 
 ---
@@ -582,7 +582,7 @@ that targeted greps missed. This amendment touches **five** documents instead of
 its remedies land in a document that has never been enumerated at all. Authoring first would repeat
 the exact failure the method exists to prevent.
 
-**Sources inventoried (complete read):** `capstone_V6_5.md` §12 · `engineering-role.md` ·
+**Sources inventoried (complete read):** `capstone_V6_6.md` §12 · `engineering-role.md` ·
 `docs/track-b/gauntlet-templates.md` · `AGENTS.md` · **`orchestrator-role.md` (first time — see
 D-CP0-14)**.
 
@@ -858,8 +858,9 @@ treated as an unverified claim until diffed.
 
 ## Open at the time of writing
 
-- **Pass (c) not yet run:** count and version rot across `syllabus_v3_2.md`, `README.md`,
-  `program-stage-sequence.md`, `progress.md` and this file — stale defect counts, `v6.4` labels, a
-  22 h reserve, ≈727 h envelopes, and 32 citations to the nonexistent `capstone_V6_5.md`.
+- **Pass (c) complete (2026-08-05):** the count and version sweep repointed 28 dead
+  `capstone_V6_5.md` citations, corrected the syllabus's 22 h reserve and ≈727 h envelope, rewrote
+  README's status paragraph (it omitted M0.5/CP-0 entirely), and reconciled defect counts to 17
+  across every live document.
 - **A sixth unscoped round is required** after pass (c) and must return a clean `PASS` before Phase 4
   opens.

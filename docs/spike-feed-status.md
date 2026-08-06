@@ -187,4 +187,4 @@ The strict-gate methodology amendment (`capstone_V6_3.md`) reinterprets this pro
 
 ## v6.4 evidence note (appended 2026-08-02 — all measurements above unchanged)
 
-`capstone_V6_5.md` carries the strict-gate interpretation forward and corrects one evidentiary overstatement: observing A65/A01 at 15:35 CEST corroborates availability after the gate, but does not empirically prove availability before 12:00. Its regulatory deadline remains authoritative; M1 now adds a hashed point-in-time capture ledger on at least three nonconsecutive delivery days at 10:30 and 11:45 Europe/Berlin. The spike remains M0 evidence and is not retroactively relabeled as that M1 proof.
+`capstone_V6_6.md` carries the strict-gate interpretation forward and corrects one evidentiary overstatement: observing A65/A01 at 15:35 CEST corroborates availability after the gate, but does not empirically prove availability before 12:00. Its regulatory deadline remains authoritative; M1 now adds a hashed point-in-time capture ledger on at least three nonconsecutive delivery days at 10:30 and 11:45 Europe/Berlin. The spike remains M0 evidence and is not retroactively relabeled as that M1 proof.
