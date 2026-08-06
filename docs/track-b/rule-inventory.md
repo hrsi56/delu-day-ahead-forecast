@@ -32,8 +32,9 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 > **Post-Option-C status, applied in place 2026-08-05 (closes D-CP0-15).** The tables below were
 > written for the Phase 1 prune, before Option C retired the protocol machinery. They are now marked
-> rather than left to mislead: **32 rules struck through and labelled `RETIRED — Option C`**, and the
-> **9 reduced rules restated with their current wording** (G5 was struck in error and re-ledgered). A struck row records what the rule was; it
+> rather than left to mislead: **33 rules struck through and labelled `RETIRED — Option C`** (the 32 Option-C retirements minus
+> `G5`, which was struck in error and re-ledgered, plus `L4`, struck 2026-08-05), and the
+> **12 reduced rules restated with their current wording**. A struck row records what the rule was; it
 > binds nothing. Everything unmarked survives as written. Live count: **105** in domains A–P, plus
 > domain Q (23) and domain S (13).
 
@@ -72,7 +73,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | ID | Rule | Currently in | → |
 |---|---|---|---|
 | C1 | **REDUCED — Option C.** Current wording: Brief is checkable by hand: full candidate SHA, the piece, plan file/version/bar citation with a verbatim excerpt, artifact path, decision-bearing inputs, reproduction commands, expected output or tolerance. No run IDs, no pre-created refs. | — |  |
-| C2 | `plan.filename` safe repo-relative `.md`; `plan.sha256` = blob bytes at candidate SHA; `plan.bar_excerpt` non-empty and verbatim in that blob. Absolute path, `..`, non-Markdown, working-tree file, mismatched hash, or absent excerpt invalidates | CAP L405, L407 · ROLE 46 · TMPL 188–192, 222 | ROLE |
+| C2 | **REDUCED — Option C.** Current wording: The Critic brief carries the controlling plan file, its version, the bar citation and a **verbatim excerpt**, and the Critic confirms that excerpt appears in that file at the candidate SHA. A citation the Critic cannot check against the real text is not a bar. The `plan.sha256` / path-safety / hash-mismatch machinery went with the JSON record. | — |
 | C3 | Critic works only from a newly created clean detached worktree at that SHA outside the Builder checkout (or immutable snapshot with equivalent provenance); reviewing an uncommitted diff is invalid | CAP L405 · ROLE 47 · TMPL 172 | ROLE |
 | C4 | Critic never receives the Builder checkout, uncommitted diff, reasoning, summary, history, or `workbench.md` | CAP L405, L409 · ROLE 36, 47 · TMPL 172 | ROLE |
 | ~~C5~~ | **RETIRED — Option C, 2026-08-05.** Was: Tool-generated integrity manifest created in the run root **before** review, recording create event, `HEAD`, `HEAD^{tree}`, empty status, absence of root `workbench.md`, checkout path, run ID, tool version, UTC. Helper owns it | CAP L405 · ROLE 48 · TMPL 206, 218 | — | — |
@@ -90,8 +91,8 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | ID | Rule | Currently in | → |
 |---|---|---|---|
 | D1 | **REDUCED — Option C.** Current wording: Verdict is markdown per templates §5: status, candidate SHA, `reviewed_paths`, plan/version/bar citation with verbatim excerpt, artifact, commands actually run with exit codes, largest gap, next acceptance test. | — |  |
-| D2 | Integration record also binds every relied-on component verdict path/hash/piece and its candidate SHA/tree | CAP L407 · ROLE 50 | ROLE |
-| D3 | Every component names the same checkpoint and plan identity as Integration; each keeps a piece-appropriate citation and excerpt; the excerpt (not the citation) is proven verbatim; pairs need not be identical | CAP L407 · ROLE 50 · TMPL 284, 396 | ROLE |
+| D2 | **REDUCED — Option C.** Current wording: Integration verifies that every relied-on component verdict exists, is `PASS`, and is computed-current per the staleness rule, and that each declared reviewed path exists in the candidate tree. | — |
+| D3 | **REDUCED — Option C.** Current wording: Every verdict names its checkpoint, its piece, the candidate SHA, and the controlling plan identity with a piece-appropriate bar citation and verbatim excerpt. | — |
 | ~~D4~~ | **RETIRED — Option C, 2026-08-05.** Was: Two distinct records per review — helper-owned integrity manifest and separate schema-valid verdict. Neither substitutes for the other | CAP L405, L409 · ROLE 50, 73 | — | — |
 | ~~D5~~ | **RETIRED — Option C, 2026-08-05.** Was: Do not hand-transcribe derivable fields; run `scaffold-verdict` first | ROLE 50 | — | — |
 | ~~D6~~ | **RETIRED — Option C, 2026-08-05.** Was: `validate-verdict` must pass before a record is used; `gauntlet_protocol.py` is the authoritative fail-closed enforcement of the declarative schema | ROLE 50 · TMPL 225 | — | — |
@@ -224,7 +225,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | N6 | No terminal status automatically opens the next checkpoint | TMPL 405 | **CAP** |
 | N7 | **AMENDED v6.6 (G14).** The Orchestrator runs the checks it can run itself — the verdict-only delta between the two terminal SHAs, brief-field validation, the Landing Report reconciliation. No tool exit codes exist to report | TMPL |
 
-## O — CP-2 label-blind protocol (12) — **entire domain → CP2, loaded only at CP-2**
+## O — CP-2 label-blind protocol (12) — **CP2 file deleted by Option C; O1 → ROLE, O6/O10 → CAP, nine retired**
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
@@ -264,7 +265,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | **CAP** `capstone_V6_6.md` §12 | 26 (A7, A8, B8, D7, F1–F6, I7, I8, I10, K1–K10, L5, L10, N6, O6, O10) | The bar only |
 | **ROLE** `engineering-role.md` | 91 | The process; sole owner of execution mechanics |
 | **TMPL** `gauntlet-templates.md` | 19 | Forms + Orchestrator receipt; no normative prose it does not own |
-| **CP2** `cp2-blind-protocol.md` | 12 | Loaded only at CP-2 |
+| ~~**CP2**~~ `cp2-blind-protocol.md` | ~~12~~ | **Document deleted by Option C.** O1, O6 and O10 survive and are re-homed to ROLE/CAP; the other nine retired |
 | **PROG** `progress.md` | 1 (I10 shared) | Program state |
 | **Total** | **148** | **No rule dropped** |
 
@@ -612,11 +613,11 @@ rules in place and striking the 33 retired ones where they sit.
 | | Count |
 |---|---:|
 | Phase 1 enumeration | 138 |
-| Retired by Option C | −32 (G5 re-ledgered 2026-08-05: it survives in reduced form) |
-| **Live executor-side rules (domains A–P)** | **106** |
+| Retired by Option C, plus `L4` struck 2026-08-05 | −33 (`G5` was re-ledgered — it survives in reduced form — and `L4` was struck: its `refs/gauntlet-evidence/*` table went with domain H) |
+| **Live executor-side rules (domains A–P)** | **105** |
 | Domain Q — `orchestrator-role.md`, newly enumerated | +23 |
 | Domain S — `AGENTS.md`, newly enumerated (D-CP0-17) | +13 |
-| **Enumerated baseline entering the amendment** | **142** |
+| **Enumerated baseline entering the amendment** | **141** |
 
 Live domain arithmetic: A 10 · B 10 · C 8 · D 4 · E 8 · F 6 · G 4 · H 0 · I 10 · J 6 · K 10 ·
 L 11 · M 0 · N 7 · O 3 · P 9 = **105**. Domains H and M are empty — their entire subject matter
@@ -769,10 +770,10 @@ ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q 
 |---|---:|---:|---:|---|
 | **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
 | **ROLE** `engineering-role.md` | 63 | +9 | **72** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
-| **TMPL** `gauntlet-templates.md` | 16 | +8 | **24** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
+| **TMPL** `gauntlet-templates.md` | 15 | +8 | **23** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
 | **AGENTS** `AGENTS.md` | 13 | +7 | **20** | Domain S newly enumerated (D-CP0-17), plus R1–R7 — the ref lifecycle and the one-writer rule |
 | **ORCH** `orchestrator-role.md` | 23 | 0 | **23** | Newly enumerated (Q1–Q23); amended by G4, G7, G13 but gains no new ID |
-| **Total** | **142** | **+27** | **169** | **0 retired** |
+| **Total** | **141** | **+27** | **168** | **0 retired** |
 
 `I10` remains co-owned with `progress.md` as a cross-reference, counted once under CAP. Nine
 co-ownerships persist from Phase 1 and are stated once in each place with an explicit cross-reference,
@@ -792,7 +793,7 @@ contexts never sum.
 ## Verification protocol for Phase 2.3
 
 1. Author G1 … G14.
-2. For each of the **169** IDs, confirm presence in its assigned owner by normalized-whitespace
+2. For each of the **168** IDs, confirm presence in its assigned owner by normalized-whitespace
    substring match — the method that caught `G4` and `I9`.
 3. Confirm no rule appears normatively outside its assigned owner (cross-references excepted).
 4. Confirm every rule in the overcorrection guard is present and unweakened.
@@ -806,7 +807,7 @@ everywhere else.
 
 ---
 
-# Phase 2.3 verification — 2026-08-05 — **FIVE ROUNDS, FAIL → repaired; final round pending**
+# Phase 2.3 verification — 2026-08-05 — **SEVEN ROUNDS; CLOSED BY OWNER DECISION**
 
 Protocol step 6. Recorded late: rounds 1–4 ran without this block existing, which is itself a finding
 — the protocol required a dated record and none was written until the fifth round demanded it.
@@ -862,5 +863,8 @@ treated as an unverified claim until diffed.
   `capstone_V6_5.md` citations, corrected the syllabus's 22 h reserve and ≈727 h envelope, rewrote
   README's status paragraph (it omitted M0.5/CP-0 entirely), and reconciled defect counts to 17
   across every live document.
-- **A sixth unscoped round is required** after pass (c) and must return a clean `PASS` before Phase 4
-  opens.
+- **Rounds 6 and 7 ran unscoped and both returned `FAIL`**, each with a smaller and more mechanical
+  finding set than the last; the guard held clean in all seven. **Round 8 was skipped by owner
+  decision on 2026-08-05** — the architecture was judged settled, the remaining findings identified
+  and repaired, and further text review judged lower-value than the CP-0 re-run itself, which tests
+  behaviour rather than prose. Phase 4 opens on that decision, not on a clean text `PASS`.

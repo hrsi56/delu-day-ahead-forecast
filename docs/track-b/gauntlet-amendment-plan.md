@@ -5,8 +5,8 @@ below. Charged to the Gauntlet reserve (≈44 h remain). No phase executes ahead
 
 **Goal.** Close every defect in `docs/track-b/cp-0-defects.md`, then re-run CP-0 clean-room under the
 amended contract and use that run as the acceptance test for the amendment itself. End state: `main`
-carries the amended contract and one landed CP-0, the ledger is closed, and **the repository holds
-exactly one local branch.**
+carries the amended contract and one landed CP-0, the ledger is closed, and **every branch in the
+repository is either declared by an active return or escalated to the owner.**
 
 ---
 
@@ -63,10 +63,10 @@ architecture rests on. The contract has no position on either.
 | **G7** | D-CP0-5 (abandonment) | `orchestrator-role.md` · §12 | `started_at_utc` + verified state as first observable output; owner-side abandonment convention, distinct from `BUDGET_EXHAUSTED` |
 | **G8** | D-CP0-7 | `engineering-role.md` step 4 · TMPL §7/§8 | Each Builder worktree's seed declared; seeding permitted but forces whole-artifact review |
 | **G9** | D-CP0-9 | `engineering-role.md:56` | Demote cache routing to a recommendation; `git status --porcelain` stays the only cleanliness test |
-| **G10** | D-CP0-10 | `AGENTS.md` · `engineering-role.md` step 1 · TMPL §7 | Topology recorded at start and terminal return; no other session writes to `main` or owned paths while a checkpoint is open |
+| **G10** | D-CP0-10 | `AGENTS.md` · `engineering-role.md` step 1 · TMPL §7 | Topology recorded at start and terminal return; unaccounted branches escalate to the owner; concurrent writes are handled by the staleness rule, not by prohibition |
 | **G11** | D-CP0-11 | TMPL §5 | Line citations optional and explicitly non-binding; only the verbatim excerpt is load-bearing |
 | **G12** | mandatory-surface scope | §12 · TMPL §7/§8 | Packet declares in-scope/out-of-scope **with a reason** for each of the five surfaces, so gate item 3 has something to check |
-| **G13** | **D-CP0-13** | `AGENTS.md` · `orchestrator-role.md` · TMPL §9 | Branch and ref lifecycle; tag-before-delete; the one-branch invariant |
+| **G13** | **D-CP0-13** | `AGENTS.md` · `orchestrator-role.md` · TMPL §9 | Branch and ref lifecycle; tag-before-delete; the branch-accountability rule |
 | **G14** | method | `rule-inventory.md` | Re-run the project's own rule-inventory method across the amendment |
 
 **Authoring order: G2 → G1 → G3 → G13 → G5 → G4/G7 → G6/G8/G12 → G9/G10/G11 → G14.**
@@ -77,11 +77,13 @@ needs the two-SHA vocabulary. G13 immediately after G3 because it completes the 
 
 ## AMD-G13 in full — branch and ref lifecycle
 
-### The invariant
+### The rule
 
-> **At rest the repository has exactly one local branch: `main`.** While a checkpoint is open it has
-> exactly one more: `gauntlet/<checkpoint>`. There is never a third. A branch that is neither `main`
-> nor the single open checkpoint branch is a defect to be reclaimed, not a state to be tolerated.
+> **Parallel work is expected; branches are accounted for, not forbidden.** Any agent that opens a
+> branch declares it in its terminal return — name, purpose, state, proposed disposition. A branch no
+> active return accounts for is **escalated to the owner** with findings and a recommendation
+> (merge / delete / leave open); it is never auto-deleted and never blocks a checkpoint. Concurrent
+> writes are handled by the staleness rule, not by prohibition.
 
 ### Disposition at checkpoint close — exactly one, and both end in deletion
 
@@ -96,7 +98,7 @@ needs the two-SHA vocabulary. G13 immediately after G3 because it completes the 
 ### The hard rule
 
 > **Tag before delete, always.** A branch may never be deleted while any live document cites a SHA
-> reachable only from it. Tags are not branches: they satisfy the one-branch invariant while keeping
+> reachable only from it. Tags are not branches: they satisfy the branch-accountability rule while keeping
 > every cited SHA reachable and safe from garbage collection. A cleanup that breaks a citation in
 > `cp-0-defects.md`, a verdict, or a Return Packet is not cleanup — it is evidence destruction.
 >
@@ -152,11 +154,11 @@ git tag archive/<cp>-attempt-<k> <evidence_tip_sha>
 git branch -D gauntlet/<cp>
 git worktree remove <each path in the Landing Report>
 git worktree prune
-git branch -vv                           # MUST show main only
+git branch -vv                           # gauntlet/<cp> gone; others declared or escalated
 ```
 
-**Step 4's final line is the gate.** A checkpoint is not closed until `git branch -vv` shows `main`
-alone. `AGENTS.md` gains the matching prohibition: agents never merge, squash, rebase, fast-forward,
+**Step 4's final line is the gate.** A checkpoint is closed when its own `gauntlet/<checkpoint>`
+branch is dispositioned and reclaimed. `AGENTS.md` gains the matching prohibition: agents never merge, squash, rebase, fast-forward,
 or cherry-pick into `main`, never delete a branch the owner has not dispositioned, and never offer to.
 
 ---
@@ -199,10 +201,10 @@ identical to `main` and its worktree is no longer needed:
 git worktree remove /Users/djourno/Downloads/PJM/.claude/worktrees/gauntlet-loop-article-19d7ae
 git branch -d claude/gauntlet-loop-article-19d7ae
 git worktree prune
-git branch -vv                           # MUST show main only
+git branch -vv                           # gauntlet/<cp> gone; others declared or escalated
 ```
 
-Phase 1 ends with the one-branch invariant already true, before the amendment that requires it is
+Phase 1 ends with the branch-accountability rule already true, before the amendment that requires it is
 written.
 
 ### Phase 2 — Author the amendment *(~6 h)*
@@ -264,7 +266,7 @@ Every amendment gets an observable test in the re-run. **An amendment with no te
 | G10 | Packet records topology at start and terminal return | Either missing, or a change goes unreported |
 | G11 | Verdicts omit line citations or mark them non-binding | A line citation is presented as binding |
 | G12 | Packet declares in/out of scope **with a reason** for all five surfaces | Any surface undeclared |
-| G13 | After Phase 6, `git branch -vv` shows `main` only; `archive/cp-0-attempt-1` and `land/cp-0` both resolve; no live document cites a deleted branch | Any extra branch, any unreachable cited SHA, or any stale branch citation in prose |
+| G13 | After Phase 6, `gauntlet/cp-0` is gone and its disposition tag resolves; **every branch still standing is either declared in the Return Packet or escalated to the owner with findings**; no live document cites a deleted branch | The checkpoint branch survives undispositioned, a cited SHA is unreachable, an undeclared branch is neither declared nor escalated, or a stale branch citation survives in prose |
 
 **5.4 Replication check *(analysis, not a gate)*.** Diff the attempt-2 instrument against
 `archive/cp-0-attempt-1`. Two independent clean-room implementations of the same 7-item bar are a
@@ -279,7 +281,7 @@ nothing.
 2. **LAND** per AMD-G13: `git merge --squash gauntlet/cp-0` → review staged tree → commit by hand →
    `git tag land/cp-0 <evidence_tip_sha>`.
 3. **REPOINT then RECLAIM**: update any document citing `gauntlet/cp-0`, delete the branch, remove
-   every worktree in the Landing Report, prune, confirm `git branch -vv` shows `main` alone.
+   every worktree in the Landing Report, prune, confirm `gauntlet/cp-0` is gone and any remaining branch is declared or escalated.
 4. Close the ledger — status `CLOSED`, each defect marked `REMEDIED AND ACCEPTED` with its Phase 5
    evidence. Anything that failed acceptance stays open and blocks CP-1.
 5. Discharge the `progress.md` blocker; next pending checkpoint becomes CP-1 behind B-Man-PIT only.

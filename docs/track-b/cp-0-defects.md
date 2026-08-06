@@ -1,8 +1,10 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 17 defects. The v6.6 amendment closing them is RATIFIED (2026-08-05) but NOT YET
-VALIDATED**; validation is the clean-room CP-0 re-run, `docs/track-b/gauntlet-amendment-plan.md`
-Phases 4–6.
+**Status: OPEN — 17 defects, all REMEDIED BY the v6.6 amendment, none yet ACCEPTED.** Every entry
+below carries the AMD that closes it. The amendment was ratified 2026-08-05 and hardened across seven
+independent review rounds, but **an amendment authored is not an amendment proven**: acceptance is the
+clean-room CP-0 re-run exercising each remedy against its Phase-5 test in
+`docs/track-b/gauntlet-amendment-plan.md`. **This ledger does not close until that run passes.**
 Opened 2026-08-05 before CP-0 produced a candidate; extended the same day with the findings from
 CP-0's `PASS` and its receipt gate. Append findings as they surface. **Do not close** until every
 defect is adjudicated, the ratified remedies are authored into their owning documents, and the
@@ -85,6 +87,8 @@ the clean-room CP-0 re-run exercises each amendment against its Phase 5 acceptan
 
 ## D-CP0-1 — Role is asserted, never verified
 
+**Status: REMEDIED BY AMD-G2 + G4 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** `AGENTS.md` routes every session to a role and forbids an Engineering-Lead session
 from reading `orchestrator-role.md`, `progress.md`, the syllabus, or Track A/C material during
 execution. Nothing detects or prevents a session that has *already* read them from then declaring
@@ -120,6 +124,8 @@ that actually failed here.
 
 ## D-CP0-2 — The terminal-status taxonomy has no slot for an invalid brief
 
+**Status: REMEDIED BY AMD-G5 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** `capstone_V6_6.md` §12 defines exactly four terminal statuses: `PASS`, `BLOCKED`,
 `PLATEAU`, `BUDGET_EXHAUSTED`. `engineering-role.md:7` separately requires the Lead to "stop and
 return the discrepancy" when a brief is invalid. That return is a **fifth terminal outcome with no
@@ -153,6 +159,8 @@ owns the mechanism; `gauntlet-templates.md` owns the form.
 ---
 
 ## D-CP0-3 — The clock has no defined start on a rejected brief
+
+**Status: REMEDIED BY AMD-G5 — pending acceptance in the CP-0 re-run.**
 
 **Statement.** The ceiling "covers the whole checkpoint run from orientation through the terminal
 Return Packet" (`engineering-role.md` § *Active-elapsed wall-clock ceiling*), and orientation
@@ -188,6 +196,8 @@ otherwise discard.
 
 ## D-CP0-4 — The only validity gate is judged by the party that benefits from passing it
 
+**Status: REMEDIED BY AMD-G6 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** The Lead validates its own brief, and nothing independently confirms that validation
 happened or was correct. This is structurally the same defect the architecture closes at the piece
 level — a Builder may not grade its own work — displaced one level upward, where it is not closed:
@@ -221,6 +231,8 @@ because the Orchestrator is the party that wrote the brief and can see immediate
 ---
 
 ## D-CP0-5 — No stated execution-capability floor, and a stalled executor returns no status
+
+**Status: REMEDIED BY AMD-G4 + G7 — pending acceptance in the CP-0 re-run.**
 
 **Statement.** The contract names no minimum executor capability, while assuming one: an agent able
 to hold roughly 8,500 words of contract and plan while creating worktrees, routing Builders and
@@ -287,6 +299,8 @@ capstone bar.
 
 ## D-CP0-6 — Integration cannot review the commit that records its own verdict
 
+**Status: REMEDIED BY AMD-G1 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** Two rules that are individually correct cannot both be satisfied. CP-0 item 7 requires
 a "fresh Integration-Critic `PASS` **at the exact final candidate SHA/tree**." `engineering-role.md`
 § *Evidence retention* requires each verdict to be committed **after** its review completes, "so the
@@ -332,6 +346,8 @@ run happens to satisfy by luck.
 
 ## D-CP0-7 — Candidate provenance is unspecified, and disclosure is voluntary
 
+**Status: REMEDIED BY AMD-G8 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** `engineering-role.md` step 4 assumes a Builder authors its piece from the brief.
 Nothing states where a Builder's starting tree may come from, whether pre-existing unreviewed work
 may seed it, or that its origin must be disclosed.
@@ -369,6 +385,8 @@ paragraph would have passed identically.
 
 ## D-CP0-8 — Honest disclosure required violating the role boundary
 
+**Status: REMEDIED BY AMD-G2 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** `engineering-role.md:9` forbids the Lead from reading `progress.md` or
 `orchestrator-role.md` "during Track B execution." The Return Packet is written during execution —
 terminal return is its end, not a phase after it. A Lead that discovers something needing honest
@@ -403,6 +421,8 @@ the current rule would make it unable to write honestly.
 
 ## D-CP0-9 — The cache-routing rule is unenforceable by its own cleanliness test
 
+**Status: REMEDIED BY AMD-G9 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** `engineering-role.md:56` requires generated caches and outputs to be routed outside
 the Critic worktree "so an ignored byproduct does not muddy that check." The check itself is
 `git status --porcelain` returning empty — which **cannot observe a gitignored byproduct**. A Critic
@@ -431,6 +451,8 @@ An unenforced mandatory rule is worse than an honest recommendation.
 ---
 
 ## D-CP0-10 — Concurrent sessions on one repository are unmodelled
+
+**Status: REMEDIED BY AMD-G10 — pending acceptance in the CP-0 re-run.**
 
 **Statement.** The contract makes the Lead the sole Git writer *within* a checkpoint but says nothing
 about other sessions operating on the same repository at the same time, on sibling branches or in
@@ -463,6 +485,8 @@ staleness with no defined detection.
 
 ## D-CP0-11 — Volunteered line citations create false discrepancy signals
 
+**Status: REMEDIED BY AMD-G11 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** The contract requires a **verbatim excerpt** verified present in the cited plan at the
 candidate SHA. It says nothing about line numbers. Both critics volunteered line ranges anyway, and
 one was wrong.
@@ -491,6 +515,8 @@ process failures and are not — which is a slow way to erode trust in the verdi
 ---
 
 ## D-CP0-12 — No defined landing path from the candidate branch to `main`
+
+**Status: REMEDIED BY AMD-G3 — pending acceptance in the CP-0 re-run.**
 
 **Statement.** The contract describes in detail how a checkpoint is built, reviewed, and closed in
 *program state* — and says **nothing about how the reviewed code reaches `main`**. The Return Packet
@@ -541,6 +567,8 @@ the operation `AGENTS.md`'s hand-written-`main` rule has always implied without 
 
 ## D-CP0-13 — No branch or ref reclamation rule
 
+**Status: REMEDIED BY AMD-G13 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** Nothing in the contract says what happens to `gauntlet/<checkpoint>`, or to any
 worktree, after a checkpoint closes. Refs accumulate silently across sessions, and there is no rule
 preventing the deletion of a branch that live documents still depend on.
@@ -562,9 +590,11 @@ said so.
 
 **Ownership.** `AGENTS.md`, `orchestrator-role.md`, `gauntlet-templates.md` §9.
 
-**Remedy.** AMD-G13 — the one-branch invariant, LAND/DISCARD dispositions, tag-before-delete, and
-the citation-follows-ref rule, with an execution split that delegates reclamation to agents and keeps
-authorship of `main` with the owner. Full draft in `docs/track-b/gauntlet-amendment-plan.md`.
+**Remedy.** AMD-G13 — branch accountability (every branch an agent opens is declared in its terminal
+return) with owner escalation for anything unaccounted, LAND/DISCARD dispositions, tag-before-delete,
+and the citation-follows-ref rule, with an execution split that delegates reclamation to agents and
+keeps authorship of `main` with the owner. The single-branch invariant first drafted here was retired
+on 2026-08-05: it optimised a multi-agent repository for one agent at a time. Full draft in `docs/track-b/gauntlet-amendment-plan.md`.
 
 **Status.** The procedure was executed manually on 2026-08-05, before the rule existed:
 `archive/cp-0-attempt-1` tagged and verified, seven citations in this document repointed, then
@@ -574,6 +604,8 @@ depending on anyone remembering it.
 ---
 
 ## D-CP0-14 — `orchestrator-role.md` was never rule-inventoried
+
+**Status: REMEDIED BY AMD-G14 (domain Q) — pending acceptance in the CP-0 re-run.**
 
 **Statement.** The Phase 1 rule inventory enumerated four documents — `capstone_V6_6.md` §12,
 `engineering-role.md`, `gauntlet-templates.md`, and the then-separate CP-2 protocol file. It did not
@@ -600,6 +632,8 @@ Phase 2.1 inventory, before authoring. Done — see `rule-inventory.md` § *v6.6
 
 ## D-CP0-15 — The rule ledger's own statements went stale after Option C
 
+**Status: REMEDIED BY AMD-G14 — pending acceptance in the CP-0 re-run.**
+
 **Statement.** Option C retired 33 rules and reduced 8 more, and recorded that as a delta section
 appended to `rule-inventory.md`. The per-domain tables above it were never rewritten. **The ledger's
 rule statements therefore still describe machinery that no longer exists**, and a reader who consults
@@ -625,6 +659,8 @@ rather than only listed in a delta section. The 8 reduced rules (`C1`, `C8`, `C1
 ---
 
 ## D-CP0-16 — The verdict form omits `reviewed_paths`, the input computed staleness runs on
+
+**Status: REMEDIED BY AMD-G11 — pending acceptance in the CP-0 re-run.**
 
 **Statement.** `E1` requires every component verdict to declare a non-empty `reviewed_paths` set, and
 `E2`–`E4` — the entire computed-staleness rule — take that set as their input. **The verdict form in
@@ -659,6 +695,8 @@ Authored 2026-08-05.
 ---
 
 ## D-CP0-17 — `AGENTS.md` was never rule-inventoried either
+
+**Status: REMEDIED BY AMD-G14 (domain S) — pending acceptance in the CP-0 re-run.**
 
 **Statement.** Phase 2.1 closed D-CP0-14 by enumerating `orchestrator-role.md` as domain Q, and in
 the same pass made `AGENTS.md` the owner of five new rules (R1–R5) while recording its baseline as

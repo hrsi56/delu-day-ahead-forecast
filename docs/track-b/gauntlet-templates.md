@@ -466,7 +466,10 @@ in the same operation, per the citation-follows-ref rule in `AGENTS.md`.
 git branch -D gauntlet/<cp>
 git worktree remove <each path in the Landing Report>
 git worktree prune
-git branch -vv                       # MUST show main only
+git branch -vv                       # gauntlet/<cp> must be gone. Any other branch left standing
+                                     # is EITHER declared by an active return (fine) OR escalated
+                                     # to the owner with findings — never auto-deleted, and never
+                                     # a reason to hold the checkpoint open.
 ```
 
 **Guards.** The two conditions on agent-executed deletion, the LAND/DISCARD dispositions, and the

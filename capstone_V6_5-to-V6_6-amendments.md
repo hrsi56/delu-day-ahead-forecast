@@ -76,9 +76,10 @@ first observable output; Builder worktree seeds declared and seeded pieces revie
 routing demoted to a recommendation; topology recorded at start and terminal return; a terminal
 handover section.
 
-**`AGENTS.md`** — new § *Branch and ref lifecycle*: the one-branch invariant, LAND/DISCARD
-dispositions, **tag before delete**, **the citation follows the ref**, and an execution split in which
-agents inspect, tag, repoint and reclaim while **the landing commit stays owner-authored**; plus the **one-writer rule** (`R7`) closing D-CP0-10's concurrent-session half.
+**`AGENTS.md`** — new § *Branch and ref lifecycle*: **branch accountability** — every branch an agent opens is declared
+in its terminal return, and anything unaccounted is **escalated to the owner**, never auto-deleted and
+never a block on a checkpoint — LAND/DISCARD dispositions, **tag before delete**, **the citation follows the ref**, and an execution split in which
+agents inspect, tag, repoint and reclaim while **the landing commit stays owner-authored**; plus `R7`, which closes D-CP0-10's concurrent-session half by escalation rather than prohibition: concurrent writes are caught by the staleness rule, and the topology record makes them visible and attributable.
 
 **`docs/track-b/gauntlet-templates.md`** — §1 gains executor-floor and session-freshness
 preconditions; §5 gains **`Reviewed paths`** and marks line citations non-binding; §7 gains both
@@ -88,7 +89,7 @@ disposition and reclamation; **new §10** the `BRIEF_INVALID` form.
 
 **`orchestrator-role.md`** — the launch envelope names a minimum executor tier and reasoning effort
 and requires a session-freshness affirmation; the abandonment convention; landing and reclamation as
-a gate step, closing on `git branch -vv` showing `main` alone.
+a gate step, closing when the checkpoint's own branch is dispositioned and reclaimed.
 
 ## The one that was hiding in plain sight
 
@@ -114,7 +115,7 @@ was discovered only because this amendment made `AGENTS.md` an owner and recorde
 zero. New domain **R** (7 rules, `AGENTS.md`) carries the ref lifecycle and the one-writer rule,
 taking over territory retired domains H and M vacated.
 
-The Phase 1 domain tables in `rule-inventory.md` are now marked in place: 33 rules struck as
+The Phase 1 domain tables in `rule-inventory.md` are now marked in place: 32 rules struck as
 `RETIRED — Option C`, 8 restated with their current wording. That closes D-CP0-15, which had left
 the ledger describing machinery deleted months earlier.
 
