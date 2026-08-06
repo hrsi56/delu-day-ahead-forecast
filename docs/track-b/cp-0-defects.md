@@ -642,7 +642,7 @@ against paths that were never formally declared anywhere.
 **Impact.** CP-0's staleness computation was sound because one competent Lead chose a sensible set
 and one competent Critic chose a compatible one — not because the contract collected it. The rule's
 stated soundness condition is *"declare `reviewed_paths` honestly and broadly"*, and a field that
-does not exist cannot be declared honestly, broadly, or at all. At CP-1's sixteen checklist items and
+does not exist cannot be declared honestly, broadly, or at all. At CP-1's seventeen checklist items and
 three mandatory surfaces, two agents silently choosing different implicit sets is a live path to a
 `PASS` resting on a verdict that a repair had already invalidated.
 
@@ -712,7 +712,7 @@ the amendment must not weaken them:
 - **The ceiling was generous, and now has a measurement.** 2727 s consumed against 7200 s — 38%.
   The 2 h reserve was ≈2.6× the actual for a one-piece checkpoint with two reviews. CP-1's 6 h
   reserve should be re-derived from this rather than from the original estimate, in **both**
-  directions: CP-1 carries 16 checklist items and three mandatory surfaces, so it is not a linear
+  directions: CP-1 carries 17 checklist items and three mandatory surfaces, so it is not a linear
   scale-up of one piece.
 
 ## Receipt-gate verification behind the accepted `PASS`

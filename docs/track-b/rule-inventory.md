@@ -32,8 +32,8 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 > **Post-Option-C status, applied in place 2026-08-05 (closes D-CP0-15).** The tables below were
 > written for the Phase 1 prune, before Option C retired the protocol machinery. They are now marked
-> rather than left to mislead: **33 rules struck through and labelled `RETIRED — Option C`**, and the
-> **8 reduced rules restated with their current wording**. A struck row records what the rule was; it
+> rather than left to mislead: **32 rules struck through and labelled `RETIRED — Option C`**, and the
+> **9 reduced rules restated with their current wording** (G5 was struck in error and re-ledgered). A struck row records what the rule was; it
 > binds nothing. Everything unmarked survives as written. Live count: **105** in domains A–P, plus
 > domain Q (23) and domain S (13).
 
@@ -45,22 +45,22 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | A2 | Lead decides how: implementation, decomposition, parallelism, agent count, internal windows | CAP L403, L405 · ROLE 28, 34 | ROLE |
 | A3 | Yarden carries one brief in and one packet back; never routes Builder/Critic messages | CAP L403 · ROLE 37 · TMPL 235 | ROLE |
 | A4 | Engineering source of truth is the exact ratified plan named in the active brief; never the highest-numbered file on disk | ROLE 7 · TMPL 3 | ROLE |
-| A5 | Brief must name: repo · one checkpoint · exact anchor · expected state · observable goal · complete CP/FCP checklist citation · supporting extract · constraints · numeric ceiling · owner-only actions · stop-and-return | CAP L399 · ROLE 15–26 · TMPL 8–56 | ROLE (rule) + TMPL (form) |
-| A6 | Missing anchor, full-checklist citation, or numeric ceiling, or >1 repo/checkpoint ⇒ invalid brief, returned before work | CAP L399 · ROLE 7 · TMPL 60 | ROLE |
+| A5 | **AMENDED v6.6** — see *Rules the amendment amends*. Brief must name: repo · one checkpoint · exact anchor · expected state · observable goal · complete CP/FCP checklist citation · supporting extract · constraints · numeric ceiling · owner-only actions · stop-and-return | CAP L399 · ROLE 15–26 · TMPL 8–56 | ROLE (rule) + TMPL (form) |
+| A6 | **AMENDED v6.6** — see *Rules the amendment amends*. Missing anchor, full-checklist citation, or numeric ceiling, or >1 repo/checkpoint ⇒ invalid brief, returned before work | CAP L399 · ROLE 7 · TMPL 60 | ROLE |
 | A7 | A supporting extract cannot narrow, weaken, strengthen, or replace the complete checklist | CAP L395 · ROLE 7, 40 · TMPL 35 | CAP |
 | A8 | A brief cannot reduce the bar; that needs owner-ratified amendment + new anchor + replacement brief | ROLE 103 · TMPL 60, 403 | CAP |
-| A9 | Co-located orchestration docs are not engineering context; don't read `orchestrator-role.md`, `progress.md`, syllabus, or Track A/C during execution | ROLE 9 | ROLE |
+| A9 | **AMENDED v6.6 (G2).** The boundary is on *influence*, not reading: no read of `orchestrator-role.md`, `progress.md`, the syllabus or Track A/C may inform an engineering decision; before the final Integration verdict, no read at all; after it, a read solely to author the packet is permitted and must be declared | ROLE |
 | A10 | A standalone advisory brief cannot open or close a checkpoint; "execute the capstone" without a brief authorizes nothing | ROLE 11 | ROLE |
 
 ## B — Execution loop (10)
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| B1 | Verify real repo state; never trust the expected-state paragraph; report material mismatch | ROLE 32 · TMPL 22 | ROLE |
+| B1 | **AMENDED v6.6** — see *Rules the amendment amends*. Verify real repo state; never trust the expected-state paragraph; report material mismatch | ROLE 32 · TMPL 22 | ROLE |
 | B2 | Plan aloud before editing, 2–3 paragraphs — engineering reasoning for Yarden, not a competing spec | ROLE 33 | ROLE |
 | B3 | Choose the smallest important pieces that can be built and judged independently | ROLE 34 | ROLE |
-| B4 | Builder receives observable goal, concrete bar, relevant ratified rules, disjoint owned paths, required evidence; works in a Lead-created isolated writable detached worktree; edits only allowlisted paths | CAP L405 · ROLE 35 · TMPL 155–167 | ROLE |
-| B5 | Builders never stage, commit, merge, switch branches, update refs, or share a writable Git index | CAP L405 · ROLE 35 · TMPL 167 | ROLE |
+| B4 | **AMENDED v6.6** — see *Rules the amendment amends*. Builder receives observable goal, concrete bar, relevant ratified rules, disjoint owned paths, required evidence; works in a Lead-created isolated writable detached worktree; edits only allowlisted paths | CAP L405 · ROLE 35 · TMPL 155–167 | ROLE |
+| B5 | **AMENDED v6.6 (G13).** Builders never stage, commit, merge, switch branches, update refs, **manage worktrees**, or share a writable Git index | ROLE |
 | B6 | Parallelize only disjoint ownership | CAP L405 · ROLE 35 | ROLE |
 | B7 | Lead is sole Git writer: imports exact allowlisted paths, verifies staged set equals allowlist, commits serially on local disposable `gauntlet/<checkpoint>` — never `main`, never pushed | CAP L405 · ROLE 36 · TMPL 167 | ROLE |
 | B8 | Builder never grades its own work, self-certifies, or closes a CP item | CAP L405 · ROLE 40 · TMPL 167 | **CAP** (bar) + ROLE |
@@ -102,11 +102,11 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | ID | Rule | Currently in | → |
 |---|---|---|---|
 | E1 | Every component verdict declares a non-empty `reviewed_paths` set of safe repo-relative paths existing in the candidate tree at its bound SHA | CAP L407 · ROLE 39 · TMPL 284 | ROLE |
-| E2 | Component `PASS` binds **iff** (a) its candidate is an ancestor of the final candidate, (b) the diff restricted to `reviewed_paths` is empty, (c) the declared set matches the referenced record | CAP L407 · ROLE 39, 223 · TMPL 284, 396 | ROLE |
+| E2 | **AMENDED v6.6** — see *Rules the amendment amends*. Component `PASS` binds **iff** (a) its candidate is an ancestor of the final candidate, (b) the diff restricted to `reviewed_paths` is empty, (c) the declared set matches the referenced record | CAP L407 · ROLE 39, 223 · TMPL 284, 396 | ROLE |
 | E3 | A stale verdict, and only a stale verdict, reruns with a new run ID/ref; a repair touching no reviewed path reruns nothing | CAP L407 · ROLE 39 · TMPL 284, 396 | ROLE |
 | E4 | `reviewed_paths` declared honestly and broadly; understating them is the sole unsoundness. Integration verifies each declared path exists in the candidate tree | CAP L407 · ROLE 39 | ROLE |
-| E5 | A current component `PASS` binds its **own earlier** SHA/tree; only the Integration Critic runs at the final SHA/tree | CAP L407 · TMPL 396 — **contradicted at ROLE 40, ROLE 196, TMPL 372 (D-1)** | ROLE |
-| E6 | One fresh read-only Integration Critic at the final SHA/tree, separate new clean detached checkout, same two-record contract | CAP L407 · ROLE 39 · TMPL 241–262 | ROLE |
+| E5 | **AMENDED v6.6 (G1).** A current component `PASS` binds its **own earlier** SHA/tree; only the Integration Critic runs at `final_candidate_sha` | ROLE |
+| E6 | **AMENDED v6.6 (G1).** One fresh read-only Integration Critic at `final_candidate_sha`, separate new clean detached checkout. The two-record contract is retired | ROLE |
 | E7 | Integration verifies the complete checkpoint artifact, current component verdicts, contract consistency, hard invariants, reported metrics, documentation; does not redesign | CAP L407 · ROLE 39 · TMPL 281–288, 313 | ROLE |
 | E8 | Integration FAIL re-enters the repair loop; the repair invalidates only verdicts whose reviewed paths it touched | CAP L407 · ROLE 39 | ROLE |
 
@@ -114,7 +114,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| F1 | Five mandatory component critic surfaces when in scope: temporal normalization · champion/benchmark schema firewall · A75 climatology fit lineage · CP-2 label-blind four-catalog metric-only recomputation · M3 CQR threshold recomputation on the §6.2 hand-checkable fixture and persisted calibration predictions | CAP L405 · ROLE 38 · TMPL 89–96 | **CAP** |
+| F1 | **AMENDED v6.6** — see *Rules the amendment amends*. Five mandatory component critic surfaces when in scope: temporal normalization · champion/benchmark schema firewall · A75 climatology fit lineage · CP-2 label-blind four-catalog metric-only recomputation · M3 CQR threshold recomputation on the §6.2 hand-checkable fixture and persisted calibration predictions | CAP L405 · ROLE 38 · TMPL 89–96 | **CAP** |
 | F2 | At M1, surfaces 1–3 are unsatisfied until a fresh Critic independently executes all five §9.4 acceptance oracles (M1-O1…O5) | CAP L405 · ROLE 38 · TMPL 98–105, 140 | **CAP** |
 | F3 | The Critic — not the Builder — materializes and hashes oracle fixtures outside the candidate checkout and computes expected results independently; repository property tests do not substitute | ROLE 38 · TMPL 140 | **CAP** |
 | F4 | A Builder may not issue these verdicts for its own work | ROLE 38 | **CAP** |
@@ -129,7 +129,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 | ~~G2~~ | **RETIRED — Option C, 2026-08-05.** Was: `init-evidence` under one exclusive lock creates the run root and `_support/<run-id>/` pair, rolling back an ordinary partial failure; neither may preexist, be reused, or traverse a symlink; a half-pair fails closed. Not an atomic paired-directory primitive | CAP L409 · ROLE 73 · TMPL 150 | — | — |
 | ~~G3~~ | **RETIRED — Option C, 2026-08-05.** Was: The run root contains exactly `integrity-manifest.json` and `critic-verdict.json`; never reused or mutated | CAP L409 · ROLE 73 · TMPL 150 | — | — |
 | ~~G4~~ | **RETIRED — Option C, 2026-08-05.** Was: Every file-backed artifact/input/stdout/stderr/decision-evidence path is a regular non-symlink file physically under its owned support root, SHA-256-bound, `st_nlink` exactly 1; a path outside that root is invalid regardless of hash | CAP L409 · ROLE 73 · TMPL 150, 227 | — | — |
-| ~~G5~~ | **RETIRED — Option C, 2026-08-05.** Was: Safe hash/lineage manifests substitute for raw restricted or impractically large data | CAP L409 · ROLE 73 · TMPL 150 | — | — |
+| G5 | **REDUCED — Option C.** Current wording: reproduction artifacts too large or too restricted to commit are represented by their path and a `sha256sum` line in the verdict rather than by the raw data (`engineering-role.md` § *Evidence retention*). Re-ledgered 2026-08-05 — it had been struck while still in force | — | ROLE |
 | ~~G6~~ | **RETIRED — Option C, 2026-08-05.** Was: Unhashed prose or observations are not decision evidence | CAP L409 · ROLE 73 · TMPL 150 | — | — |
 | G7 | **REDUCED — Option C.** Current wording: A frozen workbench snapshot lives outside the repository and is not verdict evidence. | — |  |
 | G8 | **REDUCED — Option C.** Current wording: Verdicts enter `docs/` only after their review is complete, so recording a review never alters the SHA it judged. | — |  |
@@ -150,8 +150,8 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| I1 | The ceiling covers orientation through terminal packet, measured as one active elapsed wall clock, not additive agent effort | CAP L399, L403 · ROLE 97 · TMPL 58 | ROLE |
-| I2 | `consumed = terminal_at_utc − started_at_utc − Σ eligible_pause_seconds` | ROLE 99 | ROLE |
+| I1 | **AMENDED v6.6** — see *Rules the amendment amends*. The ceiling covers orientation through terminal packet, measured as one active elapsed wall clock, not additive agent effort | CAP L399, L403 · ROLE 97 · TMPL 58 | ROLE |
+| I2 | **AMENDED v6.6** — see *Rules the amendment amends*. `consumed = terminal_at_utc − started_at_utc − Σ eligible_pause_seconds` | ROLE 99 | ROLE |
 | I3 | Record start, each paused/resumed pair with reason and evidence, terminal, and raw seconds in both workbench and packet; raw seconds enforce, decimal hours display only | CAP L409 · ROLE 101 · TMPL 76–80, 339–340 | ROLE |
 | I4 | A pause is eligible only while **all** authorized Lead/Builder/Critic/Integration/test/tool activity is stopped, for an already-authorized external dependency or platform suspension | ROLE 101 · TMPL 58 | ROLE |
 | I5 | A newly required owner action, credential, source, or authority returns terminal `BLOCKED` — not an indefinite pause | ROLE 101 · TMPL 58 | ROLE |
@@ -176,8 +176,8 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| K1 | Exactly one terminal status: `PASS` \| `BLOCKED` \| `PLATEAU` \| `BUDGET_EXHAUSTED` | CAP L407 · ROLE 141–146 · TMPL 55, 329 | **CAP** |
-| K2 | `PASS` requires every checklist item + every applicable mandatory independent check + complete valid records for every required review + current fresh Integration `PASS` + computed-current binding for every relied-on component `PASS` | CAP L407 · ROLE 40, 223 · TMPL 396 | **CAP** |
+| K1 | **AMENDED v6.6 (G5).** Exactly one terminal status: `PASS` · `BLOCKED` · `PLATEAU` · `BUDGET_EXHAUSTED` · `BRIEF_INVALID` | **CAP** |
+| K2 | **AMENDED v6.6** — see *Rules the amendment amends*. `PASS` requires every checklist item + every applicable mandatory independent check + complete valid records for every required review + current fresh Integration `PASS` + computed-current binding for every relied-on component `PASS` | CAP L407 · ROLE 40, 223 · TMPL 396 | **CAP** |
 | K3 | `BLOCKED` = owner credential/action, new authority, ratified-methodology change, destructive/public action, missing or untestable acceptance bar, or plan/reality resolution required | ROLE 144 · TMPL 401 | **CAP** |
 | K4 | `PLATEAU` = the next improvement is not worth its cost, or two material repair attempts produced no meaningful improvement | CAP L407 · ROLE 145 · TMPL 402 | **CAP** |
 | K5 | `BUDGET_EXHAUSTED` = the raw-seconds ceiling is reached before `PASS` | CAP L407 · ROLE 146 | **CAP** |
@@ -191,12 +191,12 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| L1 | Sole upward artifact; header carries status, repo, anchor, evidence roots, frozen root, final candidate commit/tree/branch, working-tree state, data snapshot/cutoff/hash, ceiling, start/terminal UTC, pause ledger, consumed raw seconds, Integration verdict + manifest/verdict paths and hashes | CAP L409 · ROLE 155–171 · TMPL 327–343 | TMPL |
+| L1 | **AMENDED v6.6** — see *Rules the amendment amends*. Sole upward artifact; header carries status, repo, anchor, evidence roots, frozen root, final candidate commit/tree/branch, working-tree state, data snapshot/cutoff/hash, ceiling, start/terminal UTC, pause ledger, consumed raw seconds, Integration verdict + manifest/verdict paths and hashes | CAP L409 · ROLE 155–171 · TMPL 327–343 | TMPL |
 | L2 | Critic run inventory table | ROLE 173–175 · TMPL 345–347 | TMPL |
-| L3 | CP-2 chain table (CP-2 only) | ROLE 177–185 · TMPL 349–361 | CP2 |
-| L4 | Preserved candidate refs table with verified-reachable column | ROLE 187–189 · TMPL 363–365 | TMPL |
-| L5 | Complete named CP/FCP checklist table mapping **every** item to PASS/OPEN + direct evidence — always the complete checklist, never a convenience extract | CAP L409 · ROLE 191–193, 223 · TMPL 367–369, 396 | **CAP** (rule) + TMPL (form) |
-| L6 | Independent criticism table | ROLE 195–197 · TMPL 371–373 | TMPL |
+| L3 | CP-2 chain table (CP-2 only) | ROLE 177–185 · TMPL 349–361 | ROLE § *CP-2 label-blind* + TMPL §7 |
+| ~~L4~~ | **RETIRED — Option C, 2026-08-05.** Was: preserved candidate refs table with verified-reachable column. The `refs/gauntlet-evidence/*` namespace it indexed went with domain H; the surviving obligation (confirm every cited SHA is reachable before terminal return) lives in `engineering-role.md` step 9 | — | — |
+| L5 | **AMENDED v6.6** — see *Rules the amendment amends*. Complete named CP/FCP checklist table mapping **every** item to PASS/OPEN + direct evidence — always the complete checklist, never a convenience extract | CAP L409 · ROLE 191–193, 223 · TMPL 367–369, 396 | **CAP** (rule) + TMPL (form) |
+| L6 | **AMENDED v6.6** — see *Rules the amendment amends*. Independent criticism table | ROLE 195–197 · TMPL 371–373 | TMPL |
 | L7 | Engineering decisions: decision + rationale, rejected alternatives, largest failure uncovered and how repaired | CAP L409 · ROLE 199–202 · TMPL 375–378 | TMPL |
 | L8 | Reproduction: exact commands, artifacts, metrics/screenshots | ROLE 204–207 · TMPL 380–383 | TMPL |
 | L9 | Open risks or exact owner action | ROLE 209–210 · TMPL 385–386 | TMPL |
@@ -216,28 +216,28 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| N1 | Orchestrator checks the packet names the authorized repo/checkpoint/anchor, maps every checklist item to direct evidence, includes all applicable surfaces and M1 oracles, and hides no open item behind `PASS` | TMPL 396 | TMPL |
+| N1 | **AMENDED v6.6** — see *Rules the amendment amends*. Orchestrator checks the packet names the authorized repo/checkpoint/anchor, maps every checklist item to direct evidence, includes all applicable surfaces and M1 oracles, and hides no open item behind `PASS` | TMPL 396 | TMPL |
 | N2 | Supported `PASS` → close only that checkpoint in `progress.md`, summarize evidence, then ask Yarden explicitly whether to authorize the next stage | TMPL 400 | TMPL |
 | N3 | `BLOCKED` → request only the exact owner action, authority, or resolution named by the packet | TMPL 401 | TMPL |
 | N4 | `PLATEAU` → decide whether the remaining improvement warrants a new bounded brief; never relabel it `PASS` | TMPL 402 | TMPL |
 | N5 | `BUDGET_EXHAUSTED` → decide whether to issue a replacement brief with a numeric extension; a reduced bar first requires an owner-ratified amendment and new anchor | TMPL 403 | TMPL |
 | N6 | No terminal status automatically opens the next checkpoint | TMPL 405 | **CAP** |
-| N7 | The Orchestrator verifies by reported `validate-verdict` / `verify-ref` exit codes, not by re-deriving hashes | TMPL 396 (implicit) | TMPL |
+| N7 | **AMENDED v6.6 (G14).** The Orchestrator runs the checks it can run itself — the verdict-only delta between the two terminal SHAs, brief-field validation, the Landing Report reconciliation. No tool exit codes exist to report | TMPL |
 
 ## O — CP-2 label-blind protocol (12) — **entire domain → CP2, loaded only at CP-2**
 
 | ID | Rule | Currently in | → |
 |---|---|---|---|
-| O1 | **REDUCED — Option C.** Current wording: The CP-2 label-blind section applies only when CP-2 is the authorized checkpoint and imposes nothing elsewhere. | — |  |
+| O1 | **REDUCED — Option C.** Current wording: The CP-2 label-blind section applies only when CP-2 is the authorized checkpoint and imposes nothing elsewhere. | ROLE |  |
 | ~~O2~~ | **RETIRED — Option C, 2026-08-05.** Was: Machine contract is `cp2-blind-four-catalog.schema.json`; canonical transitions are `blind-prepare/recompute/freeze/reveal/adjudicate` | CAP L413 · TMPL 48 | — | — |
 | ~~O3~~ | **RETIRED — Option C, 2026-08-05.** Was: Final candidate must already commit `source-manifest.json` and `selection-declaration.json`; never supplied to the Blind Critic | CAP L413 · TMPL 45 | — | — |
 | ~~O4~~ | **RETIRED — Option C, 2026-08-05.** Was: `blind-prepare` draws a 256-bit secret seed/nonce and fresh unbiased permutation to `A/B/C/D`; custody dir `0700`/files `0600`, create-only | CAP L415 | — | — |
 | ~~O5~~ | **RETIRED — Option C, 2026-08-05.** Was: Commitment binds mapping preimage, seed/nonce, candidate SHA/tree, source-manifest hash, frozen source hashes, invocation hash, rule identity | CAP L415 | — | — |
-| O6 | Blind Critic recomputes identity-free metrics only; never identifies the base, applies eligibility/tie-breaks, selects a label, or asserts a winner | CAP L416 · TMPL 46, 361 | **CAP** (scientific) + CP2 |
+| O6 | Blind Critic recomputes identity-free metrics only; never identifies the base, applies eligibility/tie-breaks, selects a label, or asserts a winner | CAP L416 · TMPL 46, 361 | **CAP** (scientific) + ROLE |
 | ~~O7~~ | **RETIRED — Option C, 2026-08-05.** Was: Identity scan of every support filename, raw byte stream, and verdict string before the verdict is accepted | CAP L416 | — | — |
 | ~~O8~~ | **RETIRED — Option C, 2026-08-05.** Was: `blind-freeze` runs only after a schema-valid Blind `PASS`; it is the sole allocator of the Integration run/ref/support identity | CAP L417 | — | — |
 | ~~O9~~ | **RETIRED — Option C, 2026-08-05.** Was: `blind-reveal` refuses without a valid freeze or on any changed frozen byte; copies (never hard-links) into the Integration support root | CAP L418 | — | — |
-| O10 | Adjudication only in fresh Integration, against Integration-owned copies, never custody; the real winner must equal the committed selection declaration | CAP L419 · TMPL 47, 290–316 | **CAP** (scientific) + CP2 |
+| O10 | Adjudication only in fresh Integration, against Integration-owned copies, never custody; the real winner must equal the committed selection declaration | CAP L419 · TMPL 47, 290–316 | **CAP** (scientific) + ROLE |
 | ~~O11~~ | **RETIRED — Option C, 2026-08-05.** Was: Threat boundary: modes/prompts/hashes are custody and chronology evidence, **not** adversarial secrecy from a same-UID process. `ENFORCED_READ_ISOLATION` only with a real read allowlist/sandbox; otherwise `COOPERATIVE_PROCEDURAL` | CAP L421 · TMPL 49, 398 | — | — |
 | ~~O12~~ | **RETIRED — Option C, 2026-08-05.** Was: Fail-closed restart: any candidate/source/rule/selection change, Blind `FAIL`, premature exposure, tamper, reuse, or winner mismatch invalidates the whole attempt; new IDs, seed, permutation, custody. A revealed mapping is never reused | CAP L423 · TMPL 398 | — | — |
 
@@ -334,7 +334,7 @@ This is the second time the inventory method caught a live rule loss that a targ
 
 **The ~4,000-word target was not met, and was not reachable.** It was estimated before the
 enumeration existed. With 138 rules preserved and 85 of them legitimately owned by
-`engineering-role.md`, ~8,500 words is the floor for a relocation-only pass. The deeper cut is
+`engineering-role.md`, ~9,400 words is the floor for a relocation-only pass. The deeper cut is
 Phase 2, which *removes* rules (the nine Phase-2 candidates) rather than relocating them.
 
 What the pass did buy beyond word count: single ownership per rule, which closes the drift class
@@ -612,13 +612,13 @@ rules in place and striking the 33 retired ones where they sit.
 | | Count |
 |---|---:|
 | Phase 1 enumeration | 138 |
-| Retired by Option C | −33 |
-| **Live executor-side rules (domains A–P)** | **105** |
+| Retired by Option C | −32 (G5 re-ledgered 2026-08-05: it survives in reduced form) |
+| **Live executor-side rules (domains A–P)** | **106** |
 | Domain Q — `orchestrator-role.md`, newly enumerated | +23 |
 | Domain S — `AGENTS.md`, newly enumerated (D-CP0-17) | +13 |
-| **Enumerated baseline entering the amendment** | **141** |
+| **Enumerated baseline entering the amendment** | **142** |
 
-Live domain arithmetic: A 10 · B 10 · C 8 · D 4 · E 8 · F 6 · G 3 · H 0 · I 10 · J 6 · K 10 ·
+Live domain arithmetic: A 10 · B 10 · C 8 · D 4 · E 8 · F 6 · G 4 · H 0 · I 10 · J 6 · K 10 ·
 L 11 · M 0 · N 7 · O 3 · P 9 = **105**. Domains H and M are empty — their entire subject matter
 (the evidence-ref namespace, evidence freezing) went with the machinery. **AMD-G13 re-enters that
 territory with different mechanics**, which is why it needs its own enumeration rather than reviving
@@ -741,13 +741,13 @@ territory vacated by retired H and M.
 | N8 | The gate runs the verdict-only delta check itself rather than accepting the packet's claim | G1 | TMPL |
 | N9 | A packet with no provenance block is returned unread; an absent block is not an assertion that no late read occurred | G2 | TMPL |
 | N10 | The gate reconciles the Landing Report against the live repository; a discrepancy is a gate failure, not a footnote | G3 | TMPL |
-| R1 | **One-branch invariant:** at rest the repository has exactly `main`; while a checkpoint is open, exactly one `gauntlet/<checkpoint>`. Never a third | G13 | **AGENTS** |
+| R1 | **Branch accountability:** any agent creating a branch declares it in its terminal return — exact name, purpose, state at return (tip SHA, ahead/behind `main`, clean/dirty) and a proposed disposition. Creating a branch is permitted; creating one silently is a defect in the return. Applies equally to worktrees and tags | G13 | **AGENTS** |
 | R2 | Every closed checkpoint receives exactly one disposition — **LAND** (owner squash, commit by hand, `tag land/<cp>`) or **DISCARD** (`tag archive/<cp>-attempt-<k>`) — and both end in branch deletion | G13 | AGENTS + ORCH |
 | R3 | **Tag before delete, always.** A branch may never be deleted while any live document cites a SHA reachable only from it | G13 | **AGENTS** |
 | R4 | **The citation follows the ref.** Retiring a branch repoints, in the same operation, every live document that named it | G13 | AGENTS + ORCH |
 | R5 | Execution split: INSPECT, DISCARD, REPOINT and RECLAIM are agent-executed; **LAND is owner-authored by hand**. An agent may never delete a ref whose SHAs are not already reachable from a verified tag, nor a branch the owner has not dispositioned | G13 | **AGENTS** |
-| R6 | **Reclamation closes the checkpoint:** it is not closed until `git branch -vv` shows `main` alone | G13 | **AGENTS** |
-| R7 | **One writer per repository while a checkpoint is open:** no session other than that checkpoint's Lead writes to the target repository — not `main`, not any owned path, not `progress.md`. Concurrent sessions may read and may work on an unrelated branch. Topology recorded at start and terminal return makes an unauthorized write detectable; a change the Lead did not make is reported, not reconciled | G10 | **AGENTS** |
+| R6 | **Reclamation closes the checkpoint — its own branch, not the repository:** closed when `gauntlet/<checkpoint>` is dispositioned, tagged, repointed and deleted and the worktrees that checkpoint created are removed. Other branches never block closure | G13 | **AGENTS** |
+| R7 | **Human-in-the-loop escalation for unaccounted branches:** an unknown or orphan branch is never auto-deleted and never blocks execution. The Orchestrator inspects it (tip, age, ahead/behind, diff vs `main`, attached worktree, whether any live document cites a SHA reachable only from it) and presents the findings to the owner with a recommendation, asking for merge / delete / leave-open. Concurrent writes are handled by the staleness rule, not by prohibition; the Lead's topology record makes them visible and attributable | G10 | **AGENTS** |
 
 ## Post-amendment ownership
 
@@ -768,11 +768,11 @@ ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q 
 | Owner | Baseline | New | Post-amendment | Note |
 |---|---:|---:|---:|---|
 | **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
-| **ROLE** `engineering-role.md` | 62 | +9 | **71** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
+| **ROLE** `engineering-role.md` | 63 | +9 | **72** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
 | **TMPL** `gauntlet-templates.md` | 16 | +8 | **24** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
 | **AGENTS** `AGENTS.md` | 13 | +7 | **20** | Domain S newly enumerated (D-CP0-17), plus R1–R7 — the ref lifecycle and the one-writer rule |
 | **ORCH** `orchestrator-role.md` | 23 | 0 | **23** | Newly enumerated (Q1–Q23); amended by G4, G7, G13 but gains no new ID |
-| **Total** | **141** | **+27** | **168** | **0 retired** |
+| **Total** | **142** | **+27** | **169** | **0 retired** |
 
 `I10` remains co-owned with `progress.md` as a cross-reference, counted once under CAP. Nine
 co-ownerships persist from Phase 1 and are stated once in each place with an explicit cross-reference,
@@ -792,7 +792,7 @@ contexts never sum.
 ## Verification protocol for Phase 2.3
 
 1. Author G1 … G14.
-2. For each of the **168** IDs, confirm presence in its assigned owner by normalized-whitespace
+2. For each of the **169** IDs, confirm presence in its assigned owner by normalized-whitespace
    substring match — the method that caught `G4` and `I9`.
 3. Confirm no rule appears normatively outside its assigned owner (cross-references excepted).
 4. Confirm every rule in the overcorrection guard is present and unweakened.

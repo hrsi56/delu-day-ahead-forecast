@@ -170,7 +170,7 @@ The inherited engineering contract makes the Engineering Lead the sole Git write
 
 **Executor floor.** The envelope names a minimum executor tier and reasoning effort as a stated
 precondition, the same way budget and hardware are stated constraints. The contract assumes an
-executor able to hold ~8,500 words of contract and plan while managing worktrees and routing
+executor able to hold ~9,400 words of contract and plan while managing worktrees and routing
 Builders and Critics; below that threshold a run does not fail cleanly, it **stalls**, and a stalled
 run returns no status at all. Set the floor deliberately for the checkpoint's size and record it.
 
@@ -308,8 +308,7 @@ one that did not is the stronger signal that the floor was set too low.
 decisions. Gate the packet per the templates §8, then run §9: inspect the topology read-only and
 reconcile it against the packet's Landing Report, take exactly one disposition — **LAND** (yours, by
 hand, `git merge --squash` then `git commit`) or **DISCARD** (tag the attempt) — repoint every live
-document citing the retired branch, then reclaim. **A checkpoint is not closed until `git branch -vv`
-shows `main` alone.** You may direct an agent to inspect, tag, repoint and reclaim; you may never
+document citing the retired branch, then reclaim. **A checkpoint is closed when its own `gauntlet/<checkpoint>` branch is dispositioned and reclaimed.** You may direct an agent to inspect, tag, repoint and reclaim; you may never
 delegate the landing commit. `AGENTS.md` § *Branch and ref lifecycle* is the authority.
 
 **CP-2 additional receipt gate.** When the closing checkpoint is CP-2, the mandatory label-blind four-catalog chain also applies; its receipt gate is in `docs/track-b/gauntlet-templates.md` §7–§8. Blinding is procedural, so the packet must be labelled `COOPERATIVE_PROCEDURAL`; reject any packet claiming cryptographic enforcement.

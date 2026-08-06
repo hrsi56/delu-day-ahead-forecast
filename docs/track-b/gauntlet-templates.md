@@ -363,7 +363,8 @@ Diff against main: `git diff --stat main...<evidence_tip_sha>` → [summary]
 Commits on the branch: `git log --oneline main..<evidence_tip_sha>` → [list]
 Worktrees created by this checkpoint: [paths] — all removed / [exceptions with reason]
 Worktrees NOT created by this checkpoint: [paths, SHA, clean/dirty] — left untouched
-Other gauntlet/* branches present: [list, or none]
+Branches this checkpoint opened: [name — purpose — tip SHA — ahead/behind main — clean/dirty — proposed disposition]
+Other branches present that this checkpoint did not open: [list, or none] — for Orchestrator escalation, not agent reclamation
 Proposed disposition: LAND | DISCARD — [one-line rationale]
 Proposed commit message: [subject + body, for the owner to use, edit, or discard]
 
@@ -421,9 +422,10 @@ No terminal status automatically opens the next checkpoint.
 ## 9. Landing inspection, disposition, and reclamation
 
 Closing a checkpoint in program state and landing its code are **two decisions**. §8 gates the
-packet; this section is the procedure for disposing of the tree. The invariant, the dispositions, the
-tag-before-delete and citation-follows-ref rules, the agent/owner split and the closure condition are
-all owned by `AGENTS.md` § *Branch and ref lifecycle*.
+packet; this section is the procedure for disposing of the tree. Branch accountability, the
+dispositions, tag-before-delete, citation-follows-ref, the agent/owner split, escalation of
+unaccounted branches and the closure condition are all owned by `AGENTS.md` § *Branch and ref
+lifecycle*.
 
 **Step 1 — INSPECT (agent, read-only).** Reconcile against the packet's Landing Report:
 
