@@ -50,6 +50,7 @@ existing ID; a superseded defect is marked superseded and kept.
 | 2026-08-05 | The v6.6 amendment rule inventory (`rule-inventory.md`, Phase 2.1) | D-CP0-14, D-CP0-15 |
 | 2026-08-05 | Authoring AMD-G11 in Phase 2.2 | D-CP0-16 |
 | 2026-08-05 | The third independent review of the v6.6 amendment (Phase 2.3) | D-CP0-17 |
+| 2026-08-06 | The CP-0 clean-room re-run — self-reported by the Engineering Lead against its own run, and confirmed by the Phase-5 acceptance matrix | D-CP0-18 |
 
 D-CP0-1 … D-CP0-5 were found **before a single line of CP-0 product code was written** — the
 contract's own front gate producing findings on its first real contact with an execution attempt.
@@ -77,6 +78,7 @@ the loop worked and the contract around it did not quite.
 | D-CP0-15 | The rule ledger's own statements went stale after Option C | `rule-inventory.md` | Medium |
 | **D-CP0-16** | **The verdict form omits `reviewed_paths`, which computed staleness depends on** | **templates §5** | **High — the staleness rule's input was never collected** |
 | D-CP0-17 | `AGENTS.md` was never rule-inventoried either | `rule-inventory.md`, `AGENTS.md` | Medium |
+| **D-CP0-18** | **`started_at_utc` is required but the executor has no clock unless told to call one** | **`engineering-role.md` step 1** | **High — failed its own acceptance test** |
 
 All seventeen are remedied by the **v6.6 amendment (AMD-G1 … G14)**, ratified 2026-08-05 and recorded in
 `capstone_V6_5-to-V6_6-amendments.md`. The drafts for the three blocking items are kept below as the
@@ -723,6 +725,46 @@ rule points at must be enumerated before it can be amended.**
 **Remedy.** Domain S, thirteen rules, enumerated in `rule-inventory.md` § *v6.6 amendment inventory*.
 Baseline 128 → 141; post-amendment 153 → **168** (R7 added later by G10); `AGENTS.md` ownership
 5 → **20**. AMD-G14's verification protocol now runs over 168 IDs.
+
+---
+
+## D-CP0-18 — `started_at_utc` is required but unobtainable without an instruction to fetch it
+
+**Status: OPEN — the only amendment that FAILED its Phase-5 acceptance test.**
+
+**Statement.** AMD-G7 requires the Lead to emit `started_at_utc` together with its verified
+repository state as the **first observable output**. `engineering-role.md` step 1 says *what* must be
+emitted and never says *how* the value is obtained. A language model has no clock: unless the
+contract tells it to call one, it cannot produce a wall-clock timestamp, and it will discover this
+only after the moment it was supposed to record has passed.
+
+**Evidence.** The CP-0 clean-room re-run (2026-08-06) self-reported the failure in its Return Packet:
+the Lead emitted verified repository state early, as required, but captured no timestamp there. The
+earliest real timestamp it held — `12:51:49Z` — came several tool calls later, during unrelated
+library research. Its own words: *"The true start was somewhat earlier; I have no exact value for
+it."* Consumed elapsed was therefore reported as a conservative ≈4187 s against a 7200 s ceiling.
+
+**Impact.** Bounded here — even the conservative window sat well under the ceiling, so no terminal
+determination changed. It is not bounded in general. `consumed = terminal − start − pauses` is the
+enforcement mechanism for `BUDGET_EXHAUSTED`, and a start time reconstructed after the fact is not
+evidence. At CP-1's larger allocation, a Lead that under-reports its start by twenty minutes reports
+a consumption figure nobody can check, and the ceiling stops being a control.
+
+The deeper defect is the shape, not the size: **G7 specified an obligation without specifying the
+mechanism that makes it satisfiable.** That is the same class as D-CP0-16, where the staleness rule
+required an input the form never collected — a rule in force with no way to comply.
+
+**Ownership.** `engineering-role.md` step 1.
+
+**Remedy (proposed, not ratified).** State the mechanism in the rule: *"Obtain `started_at_utc` by
+calling `date -u +%Y-%m-%dT%H:%M:%SZ` in the same tool batch as the first `git worktree list` /
+`git branch -vv` topology check, and emit both together."* One clause, and it makes the obligation
+executable rather than aspirational. Re-tested at the next checkpoint.
+
+**Credit where it is due.** This defect exists in the record because the executor audited its own
+compliance and reported a failure nobody would have detected from the artifacts. That is the
+behaviour the provenance block and the honest-negative-result culture were built to produce, and it
+is the strongest single piece of evidence that the amendment's disclosure machinery works.
 
 ---
 
