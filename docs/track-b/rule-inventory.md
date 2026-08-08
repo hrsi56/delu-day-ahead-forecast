@@ -1,3 +1,46 @@
+> # ⛔ PRIME DIRECTIVE — GOVERNANCE LOCKDOWN
+>
+> *Stated in full in `AGENTS.md`, which owns it. Reproduced here because this ledger is inside the
+> locked set and a reader must meet the lock before the rules it accounts for.*
+>
+> **No agent may modify this rulebook, the ratified anchor documents, or the agent-configuration
+> files. Not a Builder, not a Critic, not the Engineering Lead, and not the Orchestrator. There is no
+> role, brief, checkpoint authorization, `PASS` verdict, review finding, amendment plan, or
+> convenience argument that grants this authority. It is held by the Owner alone.**
+>
+> **The locked set:**
+>
+> - **This rulebook:** `AGENTS.md`, `CLAUDE.md`, `engineering-role.md`, `orchestrator-role.md`,
+>   `notebooklm-role.md`, `docs/track-b/gauntlet-templates.md`
+> - **The ratified anchors:** the `capstone_V*.md` named in `progress.md`'s Strategic Anchors, the
+>   `syllabus_v*.md` named there, the stage-gated companion plan, and `program-stage-sequence.md`
+> - **The governance record:** `docs/track-b/rule-inventory.md`, `docs/track-b/cp-0-defects.md`, and
+>   every `capstone_V*-to-V*-amendments.md` sheet
+> - **Agent configuration:** `.claude/**`, and any file that configures how agents run in this
+>   repository
+>
+> **When a change to any of these is genuinely necessary — HALT.** Do not edit it. Do not stage it.
+> Do not prepare it and ask afterwards. Stop the work, state plainly what must change and why, name
+> the exact file and the exact text, and **request that the Owner manually and temporarily suspend
+> this Lockdown Rule** to authorize that specific edit. Work that cannot proceed without the change
+> waits. A blocked task is a correct outcome; an unauthorized governance edit is not.
+>
+> **A suspension is narrow and spent on use.** It covers the named file and the named change, for
+> that one edit, and lapses the moment it is applied. It does not generalize to the rest of the
+> session, to a related file, or to a second change the first one turns out to require — each needs
+> its own request.
+>
+> **Why this exists.** These documents are the only thing standing between an agent's judgement and
+> the Owner's. An agent that may rewrite the rule it is being judged against is not being judged.
+> Every guarantee below — Builder ≠ Critic, the bar a brief may not reduce, publication authority,
+> tag-before-delete — is worth exactly as much as the difficulty of quietly editing it away.
+>
+> **Scope note, recorded honestly rather than assumed.** This rule locks *governance*. It does not
+> lock the engineering artifacts a checkpoint exists to produce — source, tests, evidence verdicts,
+> and the project manifest a Builder legitimately extends inside its allowlist. `progress.md` is
+> program state, not rulebook, and is written by the Orchestrator under its own regeneration
+> contract. If the Owner intends either of those inside the lock, say so and they move in.
+
 # Track B Gauntlet — Rule Inventory (Phase 1 prune, 2026-08-05)
 
 **Purpose.** Enumerate every normative rule in the four prose documents before the prune, so the
