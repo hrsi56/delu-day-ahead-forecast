@@ -1,6 +1,6 @@
 # Gauntlet contract amendment + CP-0 re-run — execution plan
 
-**Status: IN EXECUTION.** Phases 0–3 complete; Phase 2.3 ran five independent review rounds (see `rule-inventory.md` § *Phase 2.3 verification*). Phase 4 — the clean-room CP-0 re-run — is next, gated on a clean unscoped review. All three gates decided
+**Status: PHASES 0–6 EXECUTED, 2026-08-06.** Phase 2.3 ran seven independent review rounds; round 8 was skipped by owner decision. Phase 4's clean-room CP-0 re-run returned `PASS` and landed on `main` as `a911191`. Phase 5's acceptance matrix is recorded at the end of this file: **11 of 13 amendments accepted, AMD-G7 failed, AMD-G5 never exercised.** Phase 6 reclaimed the branch under the two-tag rule D-CP0-19 produced. **The defects ledger stays OPEN.** All three gates decided
 below. Charged to the Gauntlet reserve (≈44 h remain). No phase executes ahead of its order.
 
 **Goal.** Close every defect in `docs/track-b/cp-0-defects.md`, then re-run CP-0 clean-room under the
@@ -91,7 +91,7 @@ needs the two-SHA vocabulary. G13 immediately after G3 because it completes the 
 |---|---|---|
 | When | The owner accepts the artifact | The attempt is superseded, abandoned, or refused |
 | Step 1 | `git merge --squash gauntlet/<cp>` → review staged tree → `git commit` **by hand** | — |
-| Step 2 | `git tag land/<cp> <evidence_tip_sha>` | `git tag archive/<cp>-attempt-<k> <evidence_tip_sha>` |
+| Step 2 | **Two tags:** `git tag land/<cp> <squash commit on main>` (where it landed) **and** `git tag evidence/<cp> <evidence_tip_sha>` (the reviewed chain — the one tag-before-delete requires, since a squash commit holds the content but not the candidate SHAs) | `git tag archive/<cp>-attempt-<k> <evidence_tip_sha>` |
 | Step 3 | `git branch -D gauntlet/<cp>` | `git branch -D gauntlet/<cp>` |
 | Result | One owner-authored commit on `main`; branch gone; every cited SHA still reachable via tag | Nothing on `main`; branch gone; every cited SHA still reachable via tag |
 
@@ -319,3 +319,54 @@ Phase 6.5 should close the open question in `progress.md` Blockers.
 - **Phase 2 is authoring, not a checkpoint.** It consumes reserve but has no Gauntlet ceiling and no
   terminal status. If that turns out to matter, it is itself a finding — the contract governs
   checkpoints and says nothing about governance work.
+
+---
+
+# Phase 5 — acceptance result — 2026-08-06
+
+The clean-room CP-0 re-run returned **`PASS`** on all seven checklist items; the Orchestrator receipt
+gate verified it against the repository rather than the packet's claims, and all ten §8 items passed.
+The matrix below judges **the amendment**, not the checkpoint.
+
+| AMD | Acceptance test | Result |
+|---|---|---|
+| G1 | Two SHAs carried; gate ran the delta itself | **ACCEPTED** — `12abbbd`/`31022b5`; delta = `integration.md` alone |
+| G2 | Provenance block, `ASSERTED_ROLE_BOUNDARY`, late reads declared | **ACCEPTED** — and it went further: the Lead disclosed a subagent's read of `cp-0-defects.md` that nothing would have detected |
+| G3 | Landing Report present and reconciling against the live repo | **ACCEPTED** — reconciled exactly, including the worktree it deliberately left open |
+| G4 | Envelope named the executor floor; session freshness affirmed | **ACCEPTED** |
+| **G5** | Deficient brief returns `BRIEF_INVALID`, zero clock, no edit | **NOT EXERCISED** — negative control skipped by owner decision |
+| G6 | Packet reproduces every required brief field | **ACCEPTED** — all eleven, including executor preconditions |
+| **G7** | `started_at_utc` emitted as the first observable output | **FAILED** — see D-CP0-18, self-reported |
+| G8 | Every Builder worktree seed declared | **ACCEPTED** — declared brief-authored, empty, detached at the candidate |
+| G9 | Cache routing is a recommendation; `--porcelain` is the test | **ACCEPTED** — no false invalidation |
+| G10 | Topology at start and terminal return; changes reported | **ACCEPTED** — and it caught a real mismatch the brief had not anticipated |
+| G11 | `reviewed_paths` present; line citations non-binding | **ACCEPTED** — `src/pit_capture/`, `tests/pit_capture/`; staleness computed from them |
+| G12 | Five surfaces declared in or out of scope with a reason | **ACCEPTED** — one in, four out, each reasoned |
+| G13 | Branches declared or escalated; disposition proposed | **ACCEPTED** — the harness branch was escalated, not blocked on; see D-CP0-19 for the tag gap the landing then exposed |
+
+**11 accepted · 1 failed · 1 not exercised.**
+
+## What the run proved that a text review could not
+
+- **The escalation rule worked on its first contact with reality.** The brief's expected state assumed
+  one worktree; the repository had two, because the harness had scaffolded its own. Under the retired
+  single-branch invariant that was a fault state. Under R1/R7 the Lead declared it, did not touch it,
+  did not block, and handed it up. The redesign was ratified one day earlier and was immediately
+  correct.
+- **`BLOCKED` mattered, and honesty about it mattered more.** ENTSO-E was in genuine scheduled
+  maintenance for the entire build — confirmed independently three times. The run recorded the outage,
+  skipped the affected tests with a documented reason, and substituted a schema-faithful synthetic
+  positive control validated against the real parser, rather than fabricating a live capture.
+- **The self-report is the strongest evidence in the packet.** G7's failure was invisible in the
+  artifacts. It exists in the record because the executor audited its own compliance and reported a
+  gap nobody would have found. That is what the provenance block was built to produce.
+- **A `PASS` with no repair round is a real outcome.** Round 1 passed component and Integration review
+  on the first attempt, and the packet said so plainly instead of manufacturing a repair narrative.
+
+## Still open
+
+- **D-CP0-18** — G7's remedy is drafted, not authored or re-tested.
+- **D-CP0-19** — R2's two-tag fix is authored, not re-tested.
+- **AMD-G5 has still never executed.** `BRIEF_INVALID`, its clock-exclusion rule and the §10 form ship
+  into CP-1 untested. A deliberate two-minute test before CP-1's larger ceiling depends on them is the
+  cheapest remaining risk reduction available.

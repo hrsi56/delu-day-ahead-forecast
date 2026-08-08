@@ -1,14 +1,24 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 17 defects, all REMEDIED BY the v6.6 amendment, none yet ACCEPTED.** Every entry
-below carries the AMD that closes it. The amendment was ratified 2026-08-05 and hardened across seven
-independent review rounds, but **an amendment authored is not an amendment proven**: acceptance is the
-clean-room CP-0 re-run exercising each remedy against its Phase-5 test in
-`docs/track-b/gauntlet-amendment-plan.md`. **This ledger does not close until that run passes.**
-Opened 2026-08-05 before CP-0 produced a candidate; extended the same day with the findings from
-CP-0's `PASS` and its receipt gate. Append findings as they surface. **Do not close** until every
-defect is adjudicated, the ratified remedies are authored into their owning documents, and the
-`progress.md` Blockers entry gating CP-1 is discharged.
+**Status: OPEN — 19 defects. 17 ACCEPTED · 1 FAILED its acceptance test · 1 REMEDIED but not re-tested
+· 1 amendment NEVER EXERCISED.**
+
+The v6.6 amendment was ratified 2026-08-05, hardened across seven independent review rounds, and put
+to its acceptance test on 2026-08-06 by the clean-room CP-0 re-run. **That run returned `PASS` on all
+seven CP-0 checklist items**, the receipt gate verified it against the repository rather than the
+packet's claims, and the candidate landed on `main` as `a911191`. The Phase-5 matrix in
+`docs/track-b/gauntlet-amendment-plan.md` then judged the amendment itself: **11 of 13 accepted on
+observed behaviour.**
+
+- **D-CP0-1 … D-CP0-17 — ACCEPTED.** Each was remedied and its remedy exercised by the run.
+- **D-CP0-18 — OPEN.** AMD-G7 failed its acceptance test, self-reported by the executor.
+- **D-CP0-19 — REMEDIED 2026-08-06, not re-tested.** Found by the reclamation guard at landing.
+- **AMD-G5 — NEVER EXERCISED.** The `BRIEF_INVALID` negative control was skipped by owner decision,
+  so the fifth terminal status, its clock-exclusion rule and the §10 form have still never run.
+
+**This ledger stays OPEN.** It closes when D-CP0-18's remedy is authored and re-tested, D-CP0-19's is
+re-tested, and G5 has been exercised once. **An amendment authored is not an amendment proven** — and
+two of these were found only because the contract was executed rather than read.
 
 **CP-0 attempt 1 is closed `PASS`, never landed, and now archived.** Owner decision of record,
 2026-08-05: nothing from it merges to `main`, and CP-1 is not briefed until the contract itself is
@@ -51,11 +61,14 @@ existing ID; a superseded defect is marked superseded and kept.
 | 2026-08-05 | Authoring AMD-G11 in Phase 2.2 | D-CP0-16 |
 | 2026-08-05 | The third independent review of the v6.6 amendment (Phase 2.3) | D-CP0-17 |
 | 2026-08-06 | The CP-0 clean-room re-run — self-reported by the Engineering Lead against its own run, and confirmed by the Phase-5 acceptance matrix | D-CP0-18 |
+| 2026-08-06 | Executing the `LAND` disposition and reclamation for CP-0 | D-CP0-19 |
 
 D-CP0-1 … D-CP0-5 were found **before a single line of CP-0 product code was written** — the
 contract's own front gate producing findings on its first real contact with an execution attempt.
-D-CP0-6 … D-CP0-17 came from a checkpoint that **passed cleanly**, from authoring the amendment, and from five independent reviews of it, which is the more useful result:
-the loop worked and the contract around it did not quite.
+D-CP0-6 … D-CP0-19 came from checkpoints that **passed cleanly**, from authoring the amendment, from
+seven independent reviews of it, and from executing the landing — which is the more useful result:
+the loop worked and the contract around it did not quite. Two defects surfaced only under execution,
+after seven text reviews had found nothing further.
 
 ## Defect index
 
@@ -79,11 +92,12 @@ the loop worked and the contract around it did not quite.
 | **D-CP0-16** | **The verdict form omits `reviewed_paths`, which computed staleness depends on** | **templates §5** | **High — the staleness rule's input was never collected** |
 | D-CP0-17 | `AGENTS.md` was never rule-inventoried either | `rule-inventory.md`, `AGENTS.md` | Medium |
 | **D-CP0-18** | **`started_at_utc` is required but the executor has no clock unless told to call one** | **`engineering-role.md` step 1** | **High — failed its own acceptance test** |
+| **D-CP0-19** | **`LAND` tags the landing point or the reviewed chain, and the contract named only one** | **`AGENTS.md` R2** | **High — caught at the reclamation guard** |
 
-All seventeen are remedied by the **v6.6 amendment (AMD-G1 … G14)**, ratified 2026-08-05 and recorded in
-`capstone_V6_5-to-V6_6-amendments.md`. The drafts for the three blocking items are kept below as the
-record of how they were reasoned through. **Ratified is not validated:** this ledger stays OPEN until
-the clean-room CP-0 re-run exercises each amendment against its Phase 5 acceptance test.
+D-CP0-1 … D-CP0-17 are remedied by the **v6.6 amendment (AMD-G1 … G14)**, ratified 2026-08-05 and
+recorded in `capstone_V6_5-to-V6_6-amendments.md`, **and accepted 2026-08-06** by the clean-room CP-0
+re-run. D-CP0-18 and D-CP0-19 came out of that run and its landing. The drafts for the three original
+blocking items are kept below as the record of how they were reasoned through.
 
 ---
 
@@ -765,6 +779,38 @@ executable rather than aspirational. Re-tested at the next checkpoint.
 compliance and reported a failure nobody would have detected from the artifacts. That is the
 behaviour the provenance block and the honest-negative-result culture were built to produce, and it
 is the strongest single piece of evidence that the amendment's disclosure machinery works.
+
+---
+
+## D-CP0-19 — `LAND` has two things worth tagging and the contract named one
+
+**Status: REMEDIED 2026-08-06 — `AGENTS.md` R2 now requires both tags. Not yet re-tested.**
+
+**Statement.** AMD-G13's `LAND` disposition said: squash, commit by hand, then
+`git tag land/<cp> <evidence_tip_sha>`. Two different commits deserve a marker at a landing, and the
+rule named only one — under a name whose plain meaning points at the other. `land/cp-0` reads as
+*where the work landed*, which is the squash commit on `main`; the rule intended *the reviewed chain
+that justified it*, which is `evidence_tip_sha` on the checkpoint branch. A squash commit contains
+the landed **content** and none of the candidate **SHAs**.
+
+**Evidence.** At CP-0's landing on 2026-08-06 the owner tagged `land/cp-0` at the squash commit
+`a911191` — the natural reading. The reclamation guard then refused to delete `gauntlet/cp-0`:
+`1a1defc`, `12abbbd` and `31022b5` were reachable from the branch and from nothing else. Deleting it
+would have left every citation in both verdict files, the Return Packet and this ledger pointing at
+unreachable objects.
+
+**Impact.** Bounded only because the guard held. This is the first live case where **tag-before-delete
+did the exact job it was written for**, and it fired against a tag that had been created in good faith
+under the rule's own wording. An ambiguous instruction and a correct guard produced the right outcome;
+the ambiguity alone would have produced evidence destruction.
+
+**Ownership.** `AGENTS.md` § *Branch and ref lifecycle*, R2.
+
+**Remedy (authored 2026-08-06).** `LAND` now produces **two** tags: `land/<cp>` at the squash commit
+on `main`, recording where the work landed, and `evidence/<cp>` at `evidence_tip_sha`, preserving the
+reviewed chain — **the second is the one tag-before-delete requires.** Applied to CP-0 in the same
+operation: `evidence/cp-0` was created at `31022b5` and all three candidate SHAs re-verified reachable
+before `gauntlet/cp-0` was deleted.
 
 ---
 
