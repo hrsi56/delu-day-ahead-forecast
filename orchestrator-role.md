@@ -292,7 +292,23 @@ The session contract runs on trust, and that default stays. But pure silence is 
 
 **Track B checkpoints (capstone).** CP-1 through CP-5 in the flagship plan and FCP-1 through FCP-5 in the companion plan; the gate is the complete ratified checklist for the named checkpoint. Close a checkpoint only from its consolidated Return Packet, which must map **every item in that full checklist** to inspectable evidence. At CP-1 it must also contain independent verdicts for all five M1 acceptance oracles: misaligned PT15M chunk stitching, missing-quarter fail-closed behavior, Berlin fall-back-hour identity, A75 proper-training-only fit poisoning with a proper-training positive control, and champion/benchmark runtime-schema poisoning. Builder tests do not substitute for those verdicts.
 
-You do not audit evidence files yourself, and you have no shell: the record-level rules — the candidate SHA a verdict cites, computed verdict staleness over each review's reviewed paths, the plan/version/bar citation with a verbatim excerpt that must appear in that file at that SHA, and the commands actually run with their exit codes — are enforced by the Engineering Lead and evidenced in the committed markdown verdicts under `docs/track-b/evidence/<checkpoint>/`. Your gate is the packet: every checklist item mapped to a named verdict file, every applicable mandatory surface present, no open item hidden behind `PASS`, and a fresh Integration-Critic `PASS` for any supported `PASS`. Inspect the packet and the verdict files it names, not the internal workbench.
+**You do not audit the engineering, and you do not re-derive it.** The record-level rules — the candidate SHA a verdict cites, computed staleness over each review's reviewed paths, the plan/version/bar citation with a verbatim excerpt present at that SHA, the commands actually run and their exit codes — are enforced by the Engineering Lead and evidenced in the committed verdicts under `docs/track-b/evidence/<checkpoint>/`. Your gate is the packet and the verdict files it names — every checklist item mapped to a named verdict file, every applicable mandatory surface present, no open item hidden behind `PASS`, a fresh Integration-Critic `PASS` for any supported `PASS` — never the internal workbench, and never a second opinion on whether the code is right. That was already judged, by parties with better information and no stake in the answer.
+
+**You do run the checks that verify the packet against the repository**, because a claim you accept on the packet's word is not evidence. Those checks are read-only, enumerated, and closed:
+
+```text
+git log --oneline main..<evidence_tip_sha>                        # the commits claimed
+git diff --stat main...<evidence_tip_sha>                         # the scope claimed
+git diff --name-only <final_candidate_sha>..<evidence_tip_sha>    # verdict-only delta
+git merge-base --is-ancestor <component-sha> <final_candidate_sha>
+git diff --name-only <component-sha>..<final_candidate_sha> -- <that verdict's reviewed paths>
+git worktree list · git branch -vv · git tag --list               # reconcile the Landing Report
+git cat-file -e <every cited SHA>                                 # reachability before reclamation
+```
+
+**That list is exhaustive.** Anything beyond it — reading source, running tests, re-deriving a metric, inspecting a Builder workspace — is re-doing the engineering and is forbidden.
+
+If your context has no shell, the obligation does not lapse: direct a read-only agent to run exactly those commands and report the raw output, or ask the owner to run them. **The check is mandatory in every environment; only who types it varies.**
 
 **Abandonment — the case where nothing comes back.** Every terminal status describes a run that
 *finished*. Silence is not among them, and silence-means-success does not apply to Track B. If a run
