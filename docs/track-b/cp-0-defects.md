@@ -1,6 +1,6 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 19 defects. 17 ACCEPTED · 1 FAILED its acceptance test · 1 REMEDIED but not re-tested
+**Status: OPEN — 20 defects. 17 ACCEPTED · 1 FAILED its acceptance test · 2 REMEDIED but not re-tested
 · 1 amendment NEVER EXERCISED.**
 
 The v6.6 amendment was ratified 2026-08-05, hardened across seven independent review rounds, and put
@@ -13,6 +13,8 @@ observed behaviour.**
 - **D-CP0-1 … D-CP0-17 — ACCEPTED.** Each was remedied and its remedy exercised by the run.
 - **D-CP0-18 — OPEN.** AMD-G7 failed its acceptance test, self-reported by the executor.
 - **D-CP0-19 — REMEDIED 2026-08-06, not re-tested.** Found by the reclamation guard at landing.
+- **D-CP0-20 — REMEDIED 2026-08-10, not re-tested.** Found by an agent reading the corpus to document
+  it. Fixed under **the first authorized suspension of the Governance Lockdown**.
 - **AMD-G5 — NEVER EXERCISED.** The `BRIEF_INVALID` negative control was skipped by owner decision,
   so the fifth terminal status, its clock-exclusion rule and the §10 form have still never run.
 
@@ -62,6 +64,7 @@ existing ID; a superseded defect is marked superseded and kept.
 | 2026-08-05 | The third independent review of the v6.6 amendment (Phase 2.3) | D-CP0-17 |
 | 2026-08-06 | The CP-0 clean-room re-run — self-reported by the Engineering Lead against its own run, and confirmed by the Phase-5 acceptance matrix | D-CP0-18 |
 | 2026-08-06 | Executing the `LAND` disposition and reclamation for CP-0 | D-CP0-19 |
+| 2026-08-10 | An independent agent reading the corpus to write the public method article | D-CP0-20 |
 
 D-CP0-1 … D-CP0-5 were found **before a single line of CP-0 product code was written** — the
 contract's own front gate producing findings on its first real contact with an execution attempt.
@@ -93,6 +96,7 @@ after seven text reviews had found nothing further.
 | D-CP0-17 | `AGENTS.md` was never rule-inventoried either | `rule-inventory.md`, `AGENTS.md` | Medium |
 | **D-CP0-18** | **`started_at_utc` is required but the executor has no clock unless told to call one** | **`engineering-role.md` step 1** | **High — failed its own acceptance test** |
 | **D-CP0-19** | **`LAND` tags the landing point or the reviewed chain, and the contract named only one** | **`AGENTS.md` R2** | **High — caught at the reclamation guard** |
+| **D-CP0-20** | **The Orchestrator's limit was written as a capability ("no shell"), not a scope** | **`orchestrator-role.md`** | **Medium — REMEDIED 2026-08-10** |
 
 D-CP0-1 … D-CP0-17 are remedied by the **v6.6 amendment (AMD-G1 … G14)**, ratified 2026-08-05 and
 recorded in `capstone_V6_5-to-V6_6-amendments.md`, **and accepted 2026-08-06** by the clean-room CP-0
@@ -811,6 +815,58 @@ on `main`, recording where the work landed, and `evidence/<cp>` at `evidence_tip
 reviewed chain — **the second is the one tag-before-delete requires.** Applied to CP-0 in the same
 operation: `evidence/cp-0` was created at `31022b5` and all three candidate SHAs re-verified reachable
 before `gauntlet/cp-0` was deleted.
+
+---
+
+## D-CP0-20 — the Orchestrator's limit was written as a capability, not a scope
+
+**Status: REMEDIED 2026-08-10 under the first authorized Governance Lockdown suspension. Not re-tested.**
+
+**Statement.** `orchestrator-role.md` read: *"You do not audit evidence files yourself, **and you have
+no shell**."* Those are two different claims welded into one sentence. The first is a load-bearing
+authority rule — the Orchestrator must not re-derive the engineering, because if it does it becomes a
+second Engineering Lead with worse information and the authority split collapses. The second was an
+**environment assumption**, true when the Orchestrator was a chat session and false the moment the
+role ran anywhere with a terminal. The justification had quietly become the rule.
+
+**Evidence.** Found on 2026-08-10 by an independent agent reading the corpus in order to write the
+public method article — not by any review round, and not by a checkpoint run. It observed that the
+v6.6 receipt gate now requires two checks the Orchestrator must perform itself (*"run
+`git diff --name-only <final>..<tip>` yourself and confirm it… Do not take the packet's word for it"*
+and *"Run the §9 inspection"*) while the role document still denied it a shell. Both statements were
+live and they contradicted each other. Separately, every gate command at CP-0 was in fact run from an
+Orchestrator context that had a shell — so the claim was already false in practice.
+
+**Impact.** "No shell" was a **weak fence**: it constrained the Orchestrator by accident of
+environment rather than by rule, and therefore stopped constraining anything the moment the role was
+instantiated somewhere with a terminal. Meanwhile the contradiction left two live documents
+disagreeing about what the gate actually is, which is the condition `orchestrator-role.md`'s own
+version-precedence rule says must be surfaced and never silently reconciled.
+
+**Ownership.** `orchestrator-role.md` § *Verification and checkpoints*.
+
+**Remedy (applied 2026-08-10).** State the limit as a limit on **scope**, not on capability. The
+Orchestrator does not audit or re-derive the engineering — that was already judged by parties with
+better information and no stake. It **does** run the checks that verify the packet against the
+repository, because a claim accepted on the packet's word is not evidence; those checks are read-only
+and **enumerated exhaustively** (seven commands), and anything beyond that list — reading source,
+running tests, re-deriving a metric, inspecting a Builder workspace — is re-doing the engineering and
+is forbidden. If a context has no shell the obligation does not lapse: it delegates to a read-only
+agent or to the owner. **The check is mandatory in every environment; only who types it varies.**
+
+An enumerated command list is a real fence. It survives the role moving to a context that can run
+anything, which "no shell" did not.
+
+**The pattern, third instance.** `D-CP0-16`: verdicts had to declare `reviewed_paths` and the form had
+no field. `D-CP0-18`: the Lead had to emit a start time and had no way to obtain a clock. Here: an
+authority limit expressed as a capability rather than a scope. Each time the rule was right and the
+thing that made it *executable* was absent or wrong — and all three survived document review.
+
+**How it was fixed matters as much as the fix.** No agent repaired this. The finding was raised, the
+exact clause and its replacement were put to the owner, and the owner named the file, quoted the text,
+and lifted the Lockdown for that one edit — recorded in commit `aee7f3a` as the first authorized
+suspension. The ledger entry you are reading required a second, separate authorization, because a
+suspension covers one file and one change and is spent on use.
 
 ---
 
