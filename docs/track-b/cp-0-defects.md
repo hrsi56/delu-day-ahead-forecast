@@ -864,7 +864,7 @@ thing that made it *executable* was absent or wrong — and all three survived d
 
 **How it was fixed matters as much as the fix.** No agent repaired this. The finding was raised, the
 exact clause and its replacement were put to the owner, and the owner named the file, quoted the text,
-and lifted the Lockdown for that one edit — recorded in commit `aee7f3a` as the first authorized
+and lifted the Lockdown for that one edit — recorded in commit `3670949` as the first authorized
 suspension. The ledger entry you are reading required a second, separate authorization, because a
 suspension covers one file and one change and is spent on use.
 
