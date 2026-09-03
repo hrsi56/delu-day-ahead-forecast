@@ -1,7 +1,7 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 20 defects. 17 ACCEPTED · 3 REMEDIED but not re-tested · 1 amendment NEVER
-EXERCISED.**
+**Status: OPEN — 20 defects. 17 ACCEPTED · 3 REMEDIED but not re-tested · 1 amendment WAIVED BY
+OWNER.**
 
 The v6.6 amendment was ratified 2026-08-05, hardened across seven independent review rounds, and put
 to its acceptance test on 2026-08-06 by the clean-room CP-0 re-run. **That run returned `PASS` on all
@@ -16,11 +16,20 @@ observed behaviour.**
 - **D-CP0-19 — REMEDIED 2026-08-06, not re-tested.** Found by the reclamation guard at landing.
 - **D-CP0-20 — REMEDIED 2026-08-10, not re-tested.** Found by an agent reading the corpus to document
   it. Fixed under **the first authorized suspension of the Governance Lockdown**.
-- **AMD-G5 — NEVER EXERCISED.** The `BRIEF_INVALID` negative control was skipped by owner decision,
-  so the fifth terminal status, its clock-exclusion rule and the §10 form have still never run.
+- **AMD-G5 — WAIVED BY OWNER, 2026-09-04.** The `BRIEF_INVALID` negative control was skipped at the
+  CP-0 re-run and, after being re-proposed twice, was **declined as an informed owner decision** — a
+  deliberate risk acceptance, not an oversight, and **not an open item**. **What is waived is the
+  test, not the mechanism:** `BRIEF_INVALID`, its clock-exclusion rule and the §10 form remain fully
+  in force under the ratified contract, and an Engineering Lead meeting a malformed brief must still
+  return on that form. They simply ship unexercised. The compensating control is the Orchestrator's
+  mandatory pre-dispatch brief validation (`orchestrator-role.md`), which was always the primary
+  gate; the waiver removes the backup test, not the primary control. **Do not re-raise this as a
+  pending test, a ledger condition, or a risk-reduction suggestion.**
 
-**This ledger stays OPEN.** It closes when D-CP0-18's and D-CP0-19's remedies are re-tested, and
-AMD-G5 has been exercised once. **An amendment authored is not an amendment proven** — and
+**This ledger stays OPEN.** It closes when D-CP0-18's and D-CP0-19's remedies are re-tested. The
+AMD-G5 clause was struck from this condition on 2026-09-04 under an owner-authorized, task-scoped
+suspension of the Governance Lockdown, because the owner waived that test; every other closure
+condition is unchanged and no bar moved. **An amendment authored is not an amendment proven** — and
 two of these were found only because the contract was executed rather than read.
 
 **CP-0 attempt 1 is closed `PASS`, never landed, and now archived.** Owner decision of record,
@@ -145,7 +154,8 @@ that actually failed here.
 
 ## D-CP0-2 — The terminal-status taxonomy has no slot for an invalid brief
 
-**Status: REMEDIED BY AMD-G5 — pending acceptance in the CP-0 re-run.**
+**Status: REMEDIED BY AMD-G5 — remedy stands; its acceptance test is WAIVED BY OWNER, 2026-09-04
+and will not run.**
 
 **Statement.** `capstone_V6_6.md` §12 defines exactly four terminal statuses: `PASS`, `BLOCKED`,
 `PLATEAU`, `BUDGET_EXHAUSTED`. `engineering-role.md:7` separately requires the Lead to "stop and
@@ -181,7 +191,8 @@ owns the mechanism; `gauntlet-templates.md` owns the form.
 
 ## D-CP0-3 — The clock has no defined start on a rejected brief
 
-**Status: REMEDIED BY AMD-G5 — pending acceptance in the CP-0 re-run.**
+**Status: REMEDIED BY AMD-G5 — remedy stands; its acceptance test is WAIVED BY OWNER, 2026-09-04
+and will not run.**
 
 **Statement.** The ceiling "covers the whole checkpoint run from orientation through the terminal
 Return Packet" (`engineering-role.md` § *Active-elapsed wall-clock ceiling*), and orientation

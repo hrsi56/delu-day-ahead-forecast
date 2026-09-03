@@ -1,6 +1,6 @@
 # Gauntlet contract amendment + CP-0 re-run — execution plan
 
-**Status: PHASES 0–6 EXECUTED, 2026-08-06.** Phase 2.3 ran seven independent review rounds; round 8 was skipped by owner decision. Phase 4's clean-room CP-0 re-run returned `PASS` and landed on `main` as `a911191`. Phase 5's acceptance matrix is recorded at the end of this file: **11 of 13 amendments accepted, AMD-G7 failed, AMD-G5 never exercised.** Phase 6 reclaimed the branch under the two-tag rule D-CP0-19 produced. **The defects ledger stays OPEN.** All three gates decided
+**Status: PHASES 0–6 EXECUTED, 2026-08-06.** Phase 2.3 ran seven independent review rounds; round 8 was skipped by owner decision. Phase 4's clean-room CP-0 re-run returned `PASS` and landed on `main` as `a911191`. Phase 5's acceptance matrix is recorded at the end of this file: **11 of 13 amendments accepted, AMD-G7 failed, AMD-G5 never exercised** — and AMD-G5's negative control was subsequently **WAIVED BY THE OWNER on 2026-09-04**, so it is closed rather than pending. Phase 6 reclaimed the branch under the two-tag rule D-CP0-19 produced. **The defects ledger stays OPEN.** All three gates decided
 below. Charged to the Gauntlet reserve (≈44 h remain). No phase executes ahead of its order.
 
 **Goal.** Close every defect in `docs/track-b/cp-0-defects.md`, then re-run CP-0 clean-room under the
@@ -241,6 +241,9 @@ Expected: a `BRIEF_INVALID` return in AMD-G5's new form, naming the missing fiel
 consumed and no repository edit**. This is a positive control for the front gate, in the same spirit
 as CP-0's own item-2 control. If it returns anything else, G5 has failed and Phase 4 stops.
 
+**Not executed.** Skipped by owner decision at the re-run, and the control itself was **waived by the
+owner on 2026-09-04**. This step is historical: it will not run.
+
 **4.2 Issue the valid brief** — fresh session, launch envelope carrying AMD-G4's executor floor and
 session-freshness declaration, anchored at `capstone_V6_6.md`, same 7-item CP-0 checklist, same 2 h
 ceiling.
@@ -334,7 +337,7 @@ The matrix below judges **the amendment**, not the checkpoint.
 | G2 | Provenance block, `ASSERTED_ROLE_BOUNDARY`, late reads declared | **ACCEPTED** — and it went further: the Lead disclosed a subagent's read of `cp-0-defects.md` that nothing would have detected |
 | G3 | Landing Report present and reconciling against the live repo | **ACCEPTED** — reconciled exactly, including the worktree it deliberately left open |
 | G4 | Envelope named the executor floor; session freshness affirmed | **ACCEPTED** |
-| **G5** | Deficient brief returns `BRIEF_INVALID`, zero clock, no edit | **NOT EXERCISED** — negative control skipped by owner decision |
+| **G5** | Deficient brief returns `BRIEF_INVALID`, zero clock, no edit | **NOT EXERCISED** — negative control skipped by owner decision; **WAIVED BY OWNER 2026-09-04**, closed rather than pending |
 | G6 | Packet reproduces every required brief field | **ACCEPTED** — all eleven, including executor preconditions |
 | **G7** | `started_at_utc` emitted as the first observable output | **FAILED** — see D-CP0-18, self-reported |
 | G8 | Every Builder worktree seed declared | **ACCEPTED** — declared brief-authored, empty, detached at the candidate |
@@ -367,6 +370,11 @@ The matrix below judges **the amendment**, not the checkpoint.
 
 - **D-CP0-18** — G7's remedy is drafted, not authored or re-tested.
 - **D-CP0-19** — R2's two-tag fix is authored, not re-tested.
-- **AMD-G5 has still never executed.** `BRIEF_INVALID`, its clock-exclusion rule and the §10 form ship
-  into CP-1 untested. A deliberate two-minute test before CP-1's larger ceiling depends on them is the
-  cheapest remaining risk reduction available.
+
+## Closed by owner decision — not open
+
+- **AMD-G5 — WAIVED BY OWNER, 2026-09-04.** The negative control never executed and never will. The
+  owner declined it knowingly after it was proposed twice; it is a deliberate risk acceptance, not an
+  oversight. `BRIEF_INVALID`, its clock-exclusion rule and the §10 form ship into CP-1 unexercised,
+  with the Orchestrator's mandatory pre-dispatch brief validation as the compensating control. **Do
+  not re-raise this as a pending test or as a risk-reduction suggestion.**

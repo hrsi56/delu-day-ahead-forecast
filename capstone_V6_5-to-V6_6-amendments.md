@@ -125,3 +125,13 @@ The amendment is authored, not validated. It is accepted only when the clean-roo
 exercises each amendment against its acceptance test in
 `docs/track-b/gauntlet-amendment-plan.md` Phase 5 — including a deliberately deficient brief as a
 negative control for `BRIEF_INVALID`. `docs/track-b/cp-0-defects.md` stays **OPEN** until then.
+
+**Superseding note, 2026-09-04 — owner-authorized, task-scoped suspension of the Governance
+Lockdown. The paragraph above is retained unedited as the record of what was required at
+ratification; this note states what is true now.** The clean-room re-run executed on 2026-08-06 and
+the Phase-5 matrix returned **11 of 13**: `AMD-G7` failed and **`AMD-G5`'s negative control was
+never exercised**. On 2026-09-04 the owner **knowingly waived the AMD-G5 negative control**. It is a
+closed decision, not a pending test, and it is **not** a condition on the defects ledger or on CP-1.
+`BRIEF_INVALID` itself — the fifth terminal status, its clock-exclusion rule and the §10 form —
+remains fully in force and unamended; only its deliberate negative-control exercise is waived. The
+ledger stays OPEN on its remaining conditions alone: D-CP0-18 and D-CP0-19 re-tested.
