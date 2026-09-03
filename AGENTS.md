@@ -22,10 +22,12 @@
 > this Lockdown Rule** to authorize that specific edit. Work that cannot proceed without the change
 > waits. A blocked task is a correct outcome; an unauthorized governance edit is not.
 >
-> **A suspension is narrow and spent on use.** It covers the named file and the named change, for
-> that one edit, and lapses the moment it is applied. It does not generalize to the rest of the
-> session, to a related file, or to a second change the first one turns out to require — each needs
-> its own request.
+> **A suspension is task-scoped and spent at terminal return.** It covers the files and objective
+> expressly named by the Owner, including directly necessary consistency edits discovered during
+> execution, and remains active until the task reaches one coherent, verified terminal return. It
+> does not authorize unrelated files, scope expansion, publication, destructive history operations,
+> or a second task. Do not request separate authorization per sentence, command, or consistency edit
+> within that scope.
 >
 > **Why this exists.** These documents are the only thing standing between an agent's judgement and
 > the Owner's. An agent that may rewrite the rule it is being judged against is not being judged.
@@ -37,6 +39,19 @@
 > and the project manifest a Builder legitimately extends inside its allowlist. `progress.md` is
 > program state, not rulebook, and is written by the Orchestrator under its own regeneration
 > contract. If the Owner intends either of those inside the lock, say so and they move in.
+>
+> **Default task authority.** Within an agent's assigned role, an imperative Owner request to
+> execute, fix, update, or continue authorizes all non-destructive, repository-local actions
+> reasonably necessary to complete that task. This includes inspection, file edits, tests,
+> validation, and directly necessary consistency updates. Do not request approval per command or
+> per file. Escalation remains mandatory for publication, secrets, external cost, destructive or
+> irreversible operations, and material scope decisions not determined by the request.
+>
+> **Operational-record exception.** The Orchestrator may update `progress.md` and the status,
+> timestamps, evidence references, and disposition fields in `docs/track-b/cp-0-defects.md` when
+> directly recording an already authorized and evidenced action. These updates are operational
+> bookkeeping and require no Lockdown suspension. This exception does not authorize changing defect
+> definitions, acceptance criteria, historical evidence, ratified anchors, or governance policy.
 
 # Project role router
 
