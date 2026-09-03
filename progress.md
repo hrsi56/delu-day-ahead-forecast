@@ -6,7 +6,7 @@
 
 ## Current Position
 
-### Track A — Learning
+### Track A — Learning.
 
 - **Anchor:** `syllabus_v3_2.md` v3.2, semantically rebased 2026-08-02 to the flagship plan. No learning topic, depth, deliverable, or Track A checkpoint has been changed by any Track B amendment.
 - **Phase:** I, Mathematical Foundations. **Month:** 0, week 6 (launched 2026-06-09). No later completion evidence has been supplied; do not infer it from elapsed calendar time.
