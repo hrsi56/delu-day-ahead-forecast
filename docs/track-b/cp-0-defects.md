@@ -1,7 +1,7 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 20 defects. 17 ACCEPTED · 1 FAILED its acceptance test · 2 REMEDIED but not re-tested
-· 1 amendment NEVER EXERCISED.**
+**Status: OPEN — 20 defects. 17 ACCEPTED · 3 REMEDIED but not re-tested · 1 amendment NEVER
+EXERCISED.**
 
 The v6.6 amendment was ratified 2026-08-05, hardened across seven independent review rounds, and put
 to its acceptance test on 2026-08-06 by the clean-room CP-0 re-run. **That run returned `PASS` on all
@@ -11,15 +11,16 @@ packet's claims, and the candidate landed on `main` as `a911191`. The Phase-5 ma
 observed behaviour.**
 
 - **D-CP0-1 … D-CP0-17 — ACCEPTED.** Each was remedied and its remedy exercised by the run.
-- **D-CP0-18 — OPEN.** AMD-G7 failed its acceptance test, self-reported by the executor.
+- **D-CP0-18 — REMEDIED 2026-09-03, not re-tested.** AMD-G7 failed its acceptance test,
+  self-reported by the executor; the owner-authorized remedy is recorded at `6ea6a20`.
 - **D-CP0-19 — REMEDIED 2026-08-06, not re-tested.** Found by the reclamation guard at landing.
 - **D-CP0-20 — REMEDIED 2026-08-10, not re-tested.** Found by an agent reading the corpus to document
   it. Fixed under **the first authorized suspension of the Governance Lockdown**.
 - **AMD-G5 — NEVER EXERCISED.** The `BRIEF_INVALID` negative control was skipped by owner decision,
   so the fifth terminal status, its clock-exclusion rule and the §10 form have still never run.
 
-**This ledger stays OPEN.** It closes when D-CP0-18's remedy is authored and re-tested, D-CP0-19's is
-re-tested, and G5 has been exercised once. **An amendment authored is not an amendment proven** — and
+**This ledger stays OPEN.** It closes when D-CP0-18's and D-CP0-19's remedies are re-tested, and
+AMD-G5 has been exercised once. **An amendment authored is not an amendment proven** — and
 two of these were found only because the contract was executed rather than read.
 
 **CP-0 attempt 1 is closed `PASS`, never landed, and now archived.** Owner decision of record,
@@ -748,7 +749,7 @@ Baseline 128 → 141; post-amendment 153 → **168** (R7 added later by G10); `A
 
 ## D-CP0-18 — `started_at_utc` is required but unobtainable without an instruction to fetch it
 
-**Status: OPEN — the only amendment that FAILED its Phase-5 acceptance test.**
+**Status: REMEDIED 2026-09-03 under owner authorization; not re-tested.**
 
 **Statement.** AMD-G7 requires the Lead to emit `started_at_utc` together with its verified
 repository state as the **first observable output**. `engineering-role.md` step 1 says *what* must be
@@ -774,10 +775,11 @@ required an input the form never collected — a rule in force with no way to co
 
 **Ownership.** `engineering-role.md` step 1.
 
-**Remedy (proposed, not ratified).** State the mechanism in the rule: *"Obtain `started_at_utc` by
-calling `date -u +%Y-%m-%dT%H:%M:%SZ` in the same tool batch as the first `git worktree list` /
-`git branch -vv` topology check, and emit both together."* One clause, and it makes the obligation
-executable rather than aspirational. Re-tested at the next checkpoint.
+**Remedy (authored 2026-09-03; `6ea6a20`).** `engineering-role.md` step 1 now states the mechanism:
+*"Obtain `started_at_utc` by calling `date -u +%Y-%m-%dT%H:%M:%SZ` in the same tool batch as the
+first `git worktree list` / `git branch -vv` topology check, and emit both together."* One clause,
+and it makes the obligation executable rather than aspirational. It remains unproven until the next
+checkpoint re-tests it.
 
 **Credit where it is due.** This defect exists in the record because the executor audited its own
 compliance and reported a failure nobody would have detected from the artifacts. That is the
