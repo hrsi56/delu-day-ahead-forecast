@@ -7,8 +7,13 @@
 # capstone_V6_6.md §9.2 forbids standing scheduled jobs ("no keep-alive of any kind,
 # on any platform"); a capture cron left running afterwards contradicts that posture.
 #
-# It never writes to the repository. Each run uploads its ledger row + raw payload as
-# an artifact; the owner assembles and commits the ledger by hand.
+# It never writes to the repository. The ledger is an append-only HASH-CHAINED JSONL
+# (src/pit_capture/ledger.py): every entry's prev_entry_hash must equal the hash of the
+# preceding line, and append_entry re-verifies the whole chain before appending. Runners
+# are ephemeral, so each run RESTORES the previous run's ledger before capturing and
+# uploads the full cumulative ledger again. Hand-concatenating per-run rows would produce
+# N disjoint chains that fail verification -- which is precisely what CP-1 checks.
+# The final artifact is therefore self-contained: download the newest one and commit it.
 
 name: pit-capture
 
@@ -34,6 +39,7 @@ concurrency:
 
 permissions:
   contents: read
+  actions: read   # to restore the previous run's ledger artifact
 
 jobs:
   capture:
@@ -96,6 +102,26 @@ jobs:
         with:
           enable-cache: true
 
+      - name: Restore the previous ledger so the hash chain continues
+        if: steps.guard.outputs.proceed == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREFIX: ${{ steps.guard.outputs.force == 'yes' && 'pit-TEST-' || 'pit-capture-' }}
+        run: |
+          set -euo pipefail
+          mkdir -p data/pit_capture
+          PREV=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=100" \
+            --jq "[.artifacts[] | select(.expired==false) | select(.name|startswith(\"$PREFIX\"))]
+                  | sort_by(.created_at) | last | \"\\(.workflow_run.id) \\(.name)\"" || true)
+          if [ -z "${PREV:-}" ] || [ "$PREV" = "null null" ]; then
+            echo "No prior '$PREFIX' artifact — starting a fresh chain at entry_seq 0."
+          else
+            RID="${PREV%% *}"; ANAME="${PREV#* }"
+            echo "Restoring ledger from run $RID artifact '$ANAME'"
+            gh run download "$RID" -n "$ANAME" -D data/pit_capture
+            echo "Restored $(wc -l < data/pit_capture/ledger.jsonl) prior entr(y/ies)."
+          fi
+
       - name: Capture
         if: steps.guard.outputs.proceed == 'yes'
         env:
@@ -105,15 +131,18 @@ jobs:
           PULLED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           echo "pulled_at_utc=$PULLED_AT"
           uv run python -m pit_capture.cli --pulled-at-utc "$PULLED_AT" | tee capture_result.txt
+          TOTAL=$(wc -l < data/pit_capture/ledger.jsonl)
+          QUAL=$(grep -c '"qualifying": true' data/pit_capture/ledger.jsonl || true)
           {
             echo ""
             echo "### capture"
             echo ""
             echo "- \`pulled_at_utc\` = \`$PULLED_AT\`"
             echo "- result: \`$(cat capture_result.txt)\`"
+            echo "- ledger now holds **$TOTAL** entries, **$QUAL** qualifying"
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Upload ledger row + raw payload
+      - name: Upload the full cumulative ledger + raw payloads
         if: steps.guard.outputs.proceed == 'yes'
         uses: actions/upload-artifact@v4
         with:
