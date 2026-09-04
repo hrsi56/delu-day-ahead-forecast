@@ -1,0 +1,124 @@
+# B-Man-PIT — point-in-time capture of ENTSO-E A65/A01 (DE-LU day-ahead load forecast).
+#
+# Purpose: produce the pre-gate capture ledger required by capstone_V6_6.md §3 and
+# verified at CP-1. This is a FINITE, self-terminating evidence job, not a service.
+#
+# DELETE THIS WORKFLOW once the ledger reports three qualifying delivery days.
+# capstone_V6_6.md §9.2 forbids standing scheduled jobs ("no keep-alive of any kind,
+# on any platform"); a capture cron left running afterwards contradicts that posture.
+#
+# It never writes to the repository. Each run uploads its ledger row + raw payload as
+# an artifact; the owner assembles and commits the ledger by hand.
+
+name: pit-capture
+
+on:
+  schedule:
+    # Cron is UTC and has no DST. Two crons per Berlin offset; the guard below runs
+    # only the pair that matches the offset actually in effect, so exactly two
+    # captures happen per day in either regime. Days: Sun/Tue/Thu -> delivery days
+    # Mon/Wed/Fri (three non-consecutive delivery days inside one week).
+    - cron: '30 8 * * 0,2,4'    # CEST (+02:00) -> 10:30 Europe/Berlin
+    - cron: '45 9 * * 0,2,4'    # CEST (+02:00) -> 11:45 Europe/Berlin
+    - cron: '30 9 * * 0,2,4'    # CET  (+01:00) -> 10:30 Europe/Berlin
+    - cron: '45 10 * * 0,2,4'   # CET  (+01:00) -> 11:45 Europe/Berlin
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Bypass the window guard (TEST ONLY — records a non-qualifying row)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: pit-capture-${{ github.run_id }}
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Guard — is this the right cron for the offset actually in effect?
+        id: guard
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import os
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+
+          CEST = {'30 8 * * 0,2,4', '45 9 * * 0,2,4'}    # valid at +02:00
+          CET  = {'30 9 * * 0,2,4', '45 10 * * 0,2,4'}   # valid at +01:00
+
+          sched = (os.environ.get("SCHEDULE") or "").strip()
+          force = (os.environ.get("FORCE") or "").lower() == "true"
+          now = datetime.now(timezone.utc).astimezone(ZoneInfo("Europe/Berlin"))
+          offset_h = now.utcoffset().total_seconds() / 3600
+          mins = now.hour * 60 + now.minute
+
+          if force:
+              ok, why = True, "FORCED manual test run — guard bypassed"
+          elif not sched:
+              ok, why = False, "manual run without force; nothing to do"
+          elif mins >= 11 * 60 + 58:
+              ok, why = False, f"too late ({now:%H:%M} Berlin) — the 12:00 gate is imminent"
+          elif sched in CEST and offset_h == 2:
+              ok, why = True, f"CEST cron {sched!r} at offset +02:00"
+          elif sched in CET and offset_h == 1:
+              ok, why = True, f"CET cron {sched!r} at offset +01:00"
+          else:
+              ok, why = False, f"cron {sched!r} is not the pair for offset +0{int(offset_h)}:00"
+
+          print(f"proceed={'yes' if ok else 'no'}")
+          print(f"force={'yes' if force else 'no'}")
+          print(f"berlin={now.isoformat()}")
+          print(f"why={why}")
+          PY
+
+      - name: Report guard decision
+        run: |
+          {
+            echo "### pit-capture guard"
+            echo ""
+            echo "- Berlin now: \`${{ steps.guard.outputs.berlin }}\`"
+            echo "- Triggering cron: \`${{ github.event.schedule }}\`"
+            echo "- Decision: **${{ steps.guard.outputs.proceed }}** — ${{ steps.guard.outputs.why }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: astral-sh/setup-uv@v6
+        if: steps.guard.outputs.proceed == 'yes'
+        with:
+          enable-cache: true
+
+      - name: Capture
+        if: steps.guard.outputs.proceed == 'yes'
+        env:
+          ENTSOE_API_TOKEN: ${{ secrets.ENTSOE_API_TOKEN }}
+        run: |
+          uv sync --frozen
+          PULLED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "pulled_at_utc=$PULLED_AT"
+          uv run python -m pit_capture.cli --pulled-at-utc "$PULLED_AT" | tee capture_result.txt
+          {
+            echo ""
+            echo "### capture"
+            echo ""
+            echo "- \`pulled_at_utc\` = \`$PULLED_AT\`"
+            echo "- result: \`$(cat capture_result.txt)\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload ledger row + raw payload
+        if: steps.guard.outputs.proceed == 'yes'
+        uses: actions/upload-artifact@v4
+        with:
+          # A forced test run is named so it can never be mistaken for capture evidence.
+          name: ${{ steps.guard.outputs.force == 'yes' && 'pit-TEST' || 'pit-capture' }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data/pit_capture/
+          if-no-files-found: error
+          retention-days: 90
