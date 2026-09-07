@@ -7,10 +7,17 @@
 מצב חוזה: **מסמך מקור היסטורי — אינו החוזה הפעיל.**
 
 > **הודעת החלפה — 5 באוגוסט 2026.** המסמך הזה נשמר כתיעוד הקלט שהוביל להחלטות, ולא כחוזה עדכני.
-> החלקים שאומצו והם היום חלק מהתוכנית המאושררת: **AMD-1** (חלון audit קדימה ל־DM confirmatory),
-> **AMD-2** (ledger אמפירי של זמינות לפני ה־gate), **AMD-3** (experiment lineage במקום ספירת runs),
-> ההפרדה **Builder ≠ Critic** עם הקשר טרי ו־Integration Critic נפרד, פיצול **M0.5/CP-0 + B-Man-PIT**,
-> ותקרת active-elapsed לכל checkpoint.
+> החלקים שאומצו **באוגוסט 2026 והיו אז** חלק מהתוכנית המאושררת: **AMD-1** (חלון audit קדימה
+> ל־DM confirmatory), **AMD-2** (ledger אמפירי של זמינות לפני ה־gate), **AMD-3** (experiment
+> lineage במקום ספירת runs), ההפרדה **Builder ≠ Critic** עם הקשר טרי ו־Integration Critic נפרד,
+> פיצול **M0.5/CP-0 + B-Man-PIT**, ותקרת active-elapsed לכל checkpoint.
+>
+> **עדכון 7 בספטמבר 2026 — capstone v6.7 גובר על הרשימה הזאת.** ארבעה מהמנגנונים שלמעלה
+> **בוטלו**: ה־forward audit (הוחלף ב־holdout קפוא של 90 יום בתוך הסנאפשוט הקיים), ה־ledger
+> של זמינות לפני ה־gate (הזמינות היא כעת הנחה מוצהרת לפי תקנה 543/2013 סעיף 6(2)(ב)), פיצול
+> M0.5/CP-0 + B-Man-PIT (הדרישה שהוא שירת בוטלה), ותקרת ה־active-elapsed (הוחלפה ב־timebox
+> משוער בשעות). ה־experiment lineage צומצם לרשומות של ריצות נושאות־החלטה בלבד. **מה ששרד
+> ללא שינוי: Builder ≠ Critic ו־Integration Critic טרי בצ'קאאוט נקי ומנותק.**
 >
 > החלקים שנגנזו במפורש ב־5 באוגוסט 2026 (Option C): כל שכבת ה־protocol tooling —
 > `gauntlet_protocol.py`, שתי סכימות ה־JSON, שני קבצי הבדיקות, ה־snapshot helper ו־`cp2-blind-protocol.md`
@@ -18,8 +25,9 @@
 > בפרט: אין evidence root, אין integrity manifest, אין `refs/gauntlet-evidence/*`, ואין commitment /
 > custody / seed. עיוורון ב־CP-2 הוא **פרוצדורלי** בלבד (`COOPERATIVE_PROCEDURAL`).
 >
-> העוגן הפעיל הוא **`capstone_V6_5.md`**; החוזה התפעולי הוא **`engineering-role.md`**; התבניות הן
-> **`docs/track-b/gauntlet-templates.md`**. נימוקי ההחלטה מתועדים ב־`docs/track-b/rule-inventory.md`.
+> העוגן הפעיל הוא **`capstone_V6_7.md`** (עודכן 7 בספטמבר 2026; בעת כתיבת המסמך היה
+> `capstone_V6_5.md`); החוזה התפעולי הוא **`engineering-role.md`**; התבניות הן
+> **`docs/track-b/gauntlet-templates.md`** — ארבעה טפסים מאז v6.7, לא עשרה. נימוקי ההחלטה מתועדים ב־`docs/track-b/rule-inventory.md`.
 
 ---
 

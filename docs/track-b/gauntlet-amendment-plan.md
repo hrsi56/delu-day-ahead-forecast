@@ -1,5 +1,14 @@
 # Gauntlet contract amendment + CP-0 re-run — execution plan
 
+> **HISTORICAL (2026-09-07).** This plan authored and executed the **v6.6 ten-form Gauntlet
+> contract**, which capstone **v6.7 retired**: component Critics, per-surface verdicts, the
+> mandatory `workbench.md`, the five-surface scope declaration, the raw-second active-elapsed
+> ceiling, and the `BRIEF_INVALID` / `PLATEAU` / `BUDGET_EXHAUSTED` statuses are all gone. What
+> survives from it is Builder ≠ Critic, the fresh Integration Critic in a clean detached checkout,
+> the two terminal SHAs with a verdict-only delta, and the evidence-retention and tag-before-delete
+> rules. Read this as the record of how those were arrived at — **not as a live contract.** The
+> current forms are `docs/track-b/gauntlet-templates.md` (four forms) and `engineering-role.md`.
+
 **Status: PHASES 0–6 EXECUTED, 2026-08-06.** Phase 2.3 ran seven independent review rounds; round 8 was skipped by owner decision. Phase 4's clean-room CP-0 re-run returned `PASS` and landed on `main` as `a911191`. Phase 5's acceptance matrix is recorded at the end of this file: **11 of 13 amendments accepted, AMD-G7 failed, AMD-G5 never exercised** — and AMD-G5's negative control was subsequently **WAIVED BY THE OWNER on 2026-09-04**, so it is closed rather than pending. Phase 6 reclaimed the branch under the two-tag rule D-CP0-19 produced. **The defects ledger stays OPEN.** All three gates decided
 below. Charged to the Gauntlet reserve (≈44 h remain). No phase executes ahead of its order.
 
@@ -218,7 +227,7 @@ current location and its post-amendment owner. **This is not optional** — the 
 documents and the project has already proved twice that targeted greps lose rules.
 
 **2.2 Author G1 … G13** in the order above, one owner per rule, cross-references never restatements.
-`capstone_V6_6.md` → `capstone_V6_6.md`; every reference repointed; an amendment sheet
+`capstone_V6_5.md` → `capstone_V6_6.md`; every reference repointed; an amendment sheet
 `capstone_V6_5-to-V6_6-amendments.md` in the existing style.
 
 **2.3 Independent review before ratification.** The amendment is judged by a fresh context that did
