@@ -1,6 +1,19 @@
 # AWS Extension Spec v1.1 — Cloud Production Backbone for the Flagship DE-LU Capstone
 
-**Status: PARKED (DEC-AWS)** — unratified draft, adjudicated only at G5. Ratification produces capstone v6.7 + map v9. Nothing here is in force.
+> # ⛔ STATUS: STALE / NOT SCHEDULED (2026-09-07)
+>
+> **This proposal is not parked awaiting a ballot. It is stale, and its premises are gone.**
+> Capstone v6.7 retired the automatic DEC-AWS ballot along with the G5 gate that would have held it,
+> and removed the things this backbone was designed to operationalize: the **weekly refresh**
+> (the release is frozen), the **offline data/output-health report** (deleted), the **precomputed
+> lookup grid with per-cell OOD flags** (deleted), the **outcome gates** (results are reported, not
+> gated), the **five-checkpoint arc** it sequenced against, and the **Month-6 calendar** it assumed.
+>
+> **Do not line-edit this document into apparent currency.** If cloud work is ever wanted, it needs a
+> **new explicit owner instruction after CP-3** and a **new proposal written against the artifact
+> that actually shipped** — which is a frozen, bundled, three-checkpoint release, not the
+> continuously-refreshed service this spec extends. The engineering content below may still be worth
+> reading as prior art. None of it is in force.
 
 ## 0. What this spec ratifies (eight decisions)
 

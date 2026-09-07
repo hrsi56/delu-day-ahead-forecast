@@ -1,508 +1,239 @@
-# Track B Gauntlet — Canonical Templates
+# Track B — Canonical Templates (v6.7)
 
-Boundary-contract forms, not a second capstone plan. The ratified plan named in `progress.md` is
-normative; `engineering-role.md` owns the execution process. Replace every bracketed field; never
-infer an anchor from the highest version on disk.
+Boundary-contract forms, not a second capstone plan. The ratified plan named in `progress.md` is normative; `engineering-role.md` owns the execution process; `AGENTS.md` owns branch, tag and publication authority. Replace every bracketed field; never infer an anchor from the highest version on disk.
 
-Isolation is a plain `git worktree` at the candidate SHA. Verdicts are markdown files committed
-under `docs/track-b/evidence/<checkpoint>/`. There is no protocol tool, schema, or evidence-ref
-namespace.
+Isolation is a plain `git worktree` at the candidate SHA. The verdict is a markdown file committed under `docs/track-b/evidence/<checkpoint>/`. There is no protocol tool, schema, or evidence-ref namespace.
+
+**Section-number compatibility (read this before following a citation).** `AGENTS.md`, `orchestrator-role.md`, `engineering-role.md`, `program-stage-sequence.md` and `capstone_V6_7.md` were repointed to the new numbering on 2026-09-07. **Historical documents were not** — the amendment sheets, `cp-0-defects.md`, `docs/track-b/rule-inventory.md` and the Hebrew Gauntlet guide still cite this file's old ten-form numbering, correctly, as the numbering that was current when they were written. **All ten old sections** resolve as follows:
+
+| Cited as | Now |
+|---|---|
+| `gauntlet-templates.md` §1 — Orchestrator checkpoint brief | **§1** (same role; the CP-2 blind block, executor preconditions and raw-second ceiling are gone) |
+| `gauntlet-templates.md` §2 — active `workbench.md` | **retired**; the Lead keeps whatever working notes it likes and none are program state |
+| `gauntlet-templates.md` §3 — Builder assignment | **retired**; delegation is an unmandated engineering choice (`engineering-role.md` § *Checkpoint execution* step 3) |
+| `gauntlet-templates.md` §4 — independent (component) Critic assignment | **retired**; one fresh Integration Critic per checkpoint, assigned from **§2** |
+| `gauntlet-templates.md` §5 — Critic verdict | **§2**, *Integration Critic assignment and verdict* |
+| `gauntlet-templates.md` §6 — fresh Integration Critic | **§2**, *Integration Critic assignment and verdict* |
+| `gauntlet-templates.md` §7 — Consolidated Return Packet | **§3**, *Checkpoint return* — the whole form, including its *Landing report* block |
+| `gauntlet-templates.md` §8 — Orchestrator receipt and gate | **§4**, *Orchestrator receipt and disposition* |
+| `gauntlet-templates.md` §9 — inspection, disposition, reclamation | **§4**, *Orchestrator receipt and disposition* |
+| `gauntlet-templates.md` §10 — `BRIEF_INVALID` return | **retired**; a malformed brief is corrected in conversation |
+
+**v6.7 reduced this file from ten forms to four.** Retired: the active `workbench.md` form, the Builder assignment form, the component-Critic assignment form, the separate component-verdict form, the mandatory-surface scope table, the Builder-seed and start/end topology tables, the provenance/read-scope block, and the `BRIEF_INVALID` return. A malformed brief is now corrected in conversation before repository work begins.
 
 ---
 
 ## 1. Orchestrator checkpoint brief
 
-```markdown
-# Track B Checkpoint Brief — [M#/CP-# or FM#/FCP-#]
+```text
+# Track B Checkpoint Brief — [M#/CP-#]
 
-Target repository: [absolute path or unambiguous repo name]
-Authorized checkpoint: [exactly one checkpoint]
-Ratified plan anchor: [exact filename and version from progress.md]
-Complete checkpoint checklist: [exact citation to the full named CP/FCP checklist]
-Supporting sections: [exact citations needed for this checkpoint]
-Total checkpoint active-elapsed ceiling: [numeric hours, orientation through terminal return]
+## Target
+- Repository: [name and local path]
+- Authorized checkpoint: [exactly one]
+- Ratified plan anchor: [exact filename and version]
 
 ## Orchestrator-reported expected state
-- branch / commit / working-tree expectation
-- completed predecessor and artifacts expected to exist
-- data snapshot/cutoff expected
-
-Engineering-Lead must verify this against the repository before relying on it. A material
-mismatch is returned, not silently reconciled.
+- Branch / commit: [...]
+- Working tree: [...]
+- What already exists: [...]
+- Verify this yourself before relying on it, and report any material mismatch.
 
 ## Observable outcome
-[The state that must exist when this checkpoint closes.]
+[What must be demonstrably true when this checkpoint closes.]
 
 ## Complete authoritative checkpoint bar
-- [every item in the named CP/FCP checklist, with citation]
+[Citation to the complete named checklist in the plan's §12 — every item, not an extract.]
 
 ## Task-specific supporting extract
-- [supporting-plan citation]: [faithful outcome-level statement]
-
-The complete named CP/FCP checklist remains controlling even if an extract omits an item. An
-extract may not weaken, strengthen, or replace it.
+[Optional. A convenience quote. It cannot narrow, weaken or replace the complete checklist above.]
 
 ## Applicable constraints
-- [ratified architecture/data/method constraints]
-- $0 expected run rate; $65/month policy ceiling
-- M3 / 16 GB / CPU-only, unless the named plan says otherwise
+[Budget, hardware, data sources, scope boundaries, reproducibility — from the named plan.]
 
-## CP-2 label-blind four-catalog outcome (include only for CP-2)
-- Scientific bar — Blind Critic never adjudicates; fresh Integration must match the committed
-  selection declaration: [`capstone_V6_6.md` §12 CP-2 citation + verbatim excerpt]
-- Metric / eligibility / tie-break authority: [`capstone_V6_6.md` §4.1 citation + verbatim excerpt]
-- Blinding is procedural: the Lead withholds the mapping and reveals only after the Blind verdict
-  is written. The packet must label it `COOPERATIVE_PROCEDURAL`.
+## Timebox
+[One approximate figure in hours, covering orientation through terminal return. Report elapsed
+hours to the nearest half hour. Crossing it is a scope check, not an automatic stop.]
 
 ## Owner-only actions already authorized
-- none / [credential, signup, browser-bound action, payment, publication]
-
-## Executor preconditions
-- Minimum executor tier and reasoning effort: [named tier · named effort]
-- This must be a **new session** that has not read `orchestrator-role.md`, `progress.md`, the
-  syllabus, or Track A/C material. Affirm this in the packet's provenance block.
+[Credentials supplied, destructive operations pre-approved, or "none".]
 
 ## Stop and return
-Emit `started_at_utc` and your verified repository state as your first observable output. Then run
-the bounded Gauntlet autonomously under `engineering-role.md`. Return exactly one Return Packet
-with PASS, BLOCKED, PLATEAU, or BUDGET_EXHAUSTED — or, if this brief is invalid, return
-BRIEF_INVALID on the §10 form before editing anything. Stop all Track B work before any later
-checkpoint. Do not plan or begin it.
-```
-
-Clock accounting is `engineering-role.md` § *Active-elapsed wall-clock ceiling*; brief validity and
-required fields are § *Required brief fields*; the bar a brief may not reduce is the plan's §12.
-
----
-
-## 2. Active `workbench.md`
-
-Create only after a valid brief arrives. Git-ignored; never committed, never carried upward.
-
-```markdown
-# Active Track B Workbench — [checkpoint]
-
-Plan anchor:
-Candidate branch / full commit SHA:
-Checkpoint active-elapsed ceiling:
-started_at_utc / last_updated_at_utc:
-Consumed active elapsed: [raw seconds / decimal hours]
-
-## Eligible pause ledger
-| paused_at_utc | resumed_at_utc | seconds | reason/evidence | all contexts stopped? |
-|---|---|---:|---|---|
-
-## Authorized goal and bar
-- criterion → evidence required
-
-## Lead-chosen pieces
-| Piece | Owned paths | Builder worktree | Integration SHA | Critic verdict | Largest open gap |
-|---|---|---|---|---|---|
-
-## Mandatory independent surfaces in scope
-| Surface | Applicable? | Verdict file |
-|---|---|---|
-| Temporal normalization | | |
-| Champion/benchmark schema firewall | | |
-| A75 climatology fit lineage | | |
-| CP-2 label-blind four-catalog metric recomputation | | |
-| M3 hand-checkable CQR threshold recomputation | | |
-
-## Mandatory M1 acceptance-oracle pack (when CP-1 is active)
-| Oracle | Independent fixture | Independent expected result | Critic commands / verdict |
-|---|---|---|---|
-| M1-O1 — misaligned PT15M chunk stitch | | exactly one four-quarter mean; no three-quarter mean | |
-| M1-O2 — missing quarter | | no hourly value; explicit incomplete/recovery | |
-| M1-O3 — Berlin fall-back hour | | both 02:00 offsets distinct in UTC; 25 rows; true duplicate rejected | |
-| M1-O4 — A75 fit-lineage poison | | calibration/eval poison inert; proper-training poison changes fit | |
-| M1-O5 — champion/benchmark schema poison | | champion passes; A69/actual injection fails closed | |
-
-## Integration
-- final_candidate_sha / evidence_tip_sha:
-- reproduction commands:
-- Integration verdict file:
-
-## Exact blocker, if terminal
-- none / exact owner or authority request
-```
-
-The M1 oracle table is mandatory, not illustrative — the bar and the independent-fixture
-requirement are the plan's §12.
-
----
-
-## 3. Builder assignment
-
-```markdown
-# Builder assignment — [piece]
-
-Authorized checkpoint:
-Your worktree (Lead-created, writable):
-Owned paths (exact allowlist):
-Observable goal:
-Concrete acceptance bar:
-Relevant ratified rules/citations:
-Required tests/reproduction/evidence:
-Forbidden scope:
-Target window within the checkpoint ceiling (Lead-set, non-authoritative):
-
-Implement only this piece and edit only the allowlisted paths. Do not stage, commit, merge,
-switch branches, update refs, or manage worktrees. Return the changed-path list, exact
-reproduction commands, evidence, and known gaps to the Engineering Lead. The Lead alone imports
-those paths and commits serially on `gauntlet/<checkpoint>`. Do not grade your own work, write a
-verdict, or mark any CP item complete.
+Return exactly one of PASS / BLOCKED / INCOMPLETE using §3. Do not begin, scaffold, or plan the
+next checkpoint. Do not commit to main, publish, or push.
 ```
 
 ---
 
-## 4. Independent Critic assignment
+## 2. Integration Critic assignment and verdict
 
-The Lead first commits the candidate, then creates a clean detached worktree at that SHA:
+**Assignment** — the Lead gives the Critic exactly this and nothing else. No Builder checkout, no uncommitted diff, no reasoning, no summary, no conversation history.
 
 ```text
-git worktree add --detach ../critic-<piece> <full-candidate-sha>
-git -C ../critic-<piece> status --porcelain     # must be empty
-```
+# Integration Critic — [checkpoint]
 
-```markdown
-# Independent Critic — [piece or mandatory surface]
+## Candidate
+- Full SHA: [40 hex]
+- Clean detached worktree: git worktree add --detach <path-outside-repo>/critic-[cp] <sha>
+- Confirm `git status --porcelain` is empty before and after your review.
 
-Authorized checkpoint:
-Piece:
-Full candidate commit SHA:
-Your worktree (clean, detached, read-only to you):
-Artifact path:
-Controlling plan: [repo-relative .md] · version [v] · bar citation [§x.y]
-Verbatim bar excerpt:
-> [exact text from that file at this SHA]
-Decision-bearing inputs:
-Exact reproduction commands:
-Expected output / tolerance:
+## Controlling plan
+- File: [repository-relative .md path]   Version: [...]
+- Bar citation: [section]
+- Verbatim bar excerpt:
+  > [paste the exact text; confirm it appears in that file at this SHA]
 
-Inspect and rerun the real artifact. You do not receive the Builder's checkout, diff, reasoning,
-summary, or history, and you may not edit anything or inspect a Builder workspace. Confirm the
-bar excerpt above appears verbatim in the cited plan at this SHA. Before writing your verdict,
-confirm the worktree is still clean and HEAD unchanged.
-
-Return the verdict in §5. Do not redesign the project, and do not accept a claim you cannot
-reproduce from the artifact.
-```
-
-On any `FAIL` the Lead routes the gap directly back to a Builder and later launches a fresh
-Critic; Yarden never relays messages. No comparison is called blind merely because labels were
-renamed.
-
----
-
-## 5. Critic verdict
-
-One markdown file, committed at `docs/track-b/evidence/<checkpoint>/<piece>-<round>.md`.
-
-```markdown
-# Verdict — [piece] — round [n]
-
-Status: PASS | FAIL | BLOCKED
-Checkpoint: [M#/CP-#]
-Candidate SHA: [full sha]
-Reviewed paths: [repo-relative paths this review actually covers — the staleness rule binds here]
-Controlling plan: [file] · [version] · [bar citation]
-Bar excerpt (verbatim, verified present at this SHA):
-> [exact text]
-Artifact: [path]
-Worktree clean before and after review: yes/no
-
-## What I inspected
-- exact files, data, and pages
-
-## Commands actually run
-```text
-[command]   → exit [n]
-[observed output or sha256sum of the output file]
-```
-
-## Bar comparison
-| Criterion | Evidence | Result |
-|---|---|---|
-
-## Largest remaining gap
-[one, high-impact — omit only on PASS]
-
-## Exact next acceptance test
-[the observable condition that would close it]
-
-## Non-blocking observations
-- [optional]
-```
-
-`BLOCKED` means the check could not be performed (missing token, unavailable API). It is never a
-substitute for `FAIL`.
-
-**`Reviewed paths` is the operand of computed staleness** — the rule and its soundness condition are
-`engineering-role.md` step 8. Fill the field honestly and broadly; a Critic that under-declares here
-is the one way to make verdict reuse unsound.
-
-**Line numbers are not part of the citation.** Only the verbatim bar excerpt and its presence in the
-cited plan at the candidate SHA are load-bearing. A line range may be added as a courtesy and is
-explicitly **non-binding** — line numbers move whenever the plan is edited while the quoted text does
-not, which is precisely why the excerpt mechanism exists. A mismatched line range is never a defect
-in the verdict.
-
----
-
-## 6. Fresh Integration Critic
-
-New clean worktree at the **final** candidate SHA, same contract as §4.
-
-```markdown
-# Fresh Integration Critic — [checkpoint]
-
-Final candidate SHA / your worktree:
-Controlling plan · version · complete checkpoint bar citation + verbatim excerpt:
-Component verdict files relied on:
-Clean reproduction commands / expected outputs:
-Data snapshot / cutoff:
-
-From this fresh context, verify:
-1. every item in the complete named CP/FCP checklist against direct evidence;
-2. every required component verdict exists, is PASS, and is computed-current per the staleness rule
-   in `engineering-role.md` step 8 — run `git diff --name-only <component-sha>..<final_candidate_sha>
-   -- <that verdict's declared reviewed paths>`;
-3. cross-component contracts and hard invariants;
-4. metrics recomputed from frozen predictions where applicable;
-5. clean-environment reproducibility and documentation consistency;
-6. absence of unauthorized later-checkpoint work.
-
-For CP-2, additionally apply the §4.1 identities, eligibility comparisons and deterministic
-tie-breaks after reveal, and confirm the adjudicated real winner equals the committed selection
-declaration. A mismatch is FAIL.
-
-Return a §5 verdict. Do not redesign.
-```
-
----
-
-## 7. Consolidated Return Packet
-
-```markdown
-# Track B Checkpoint Return — [M#/CP-#]
-
-Status: PASS | BLOCKED | PLATEAU | BUDGET_EXHAUSTED
-Target repository / ratified plan anchor:
-Checkpoint branch: gauntlet/<checkpoint>
-final_candidate_sha (Integration-reviewed; every bar binds here):
-evidence_tip_sha (branch tip after the Integration verdict was committed):
-Verdict-only delta: `git diff --name-only <final_candidate_sha>..<evidence_tip_sha>`
-  → [paths, all of which must be under docs/track-b/evidence/<checkpoint>/]
-Working-tree state:
-Data snapshot / cutoff / hash:
-Checkpoint active-elapsed ceiling:
-started_at_utc / terminal_at_utc:
-Eligible pause ledger (UTC, reason, all contexts stopped):
-Consumed active elapsed: [raw seconds / decimal hours]
-Integration verdict: PASS | FAIL | NOT_RUN — [verdict file or exact reason]
-
-## Brief fields as issued
-Reproduce every required field verbatim from the brief, so the Orchestrator can validate the
-authorization it wrote against the plan it holds.
-| Required field | As issued in the brief |
-|---|---|
-
-## Provenance and read scope
-Documents read during the decision-bearing phase: [exhaustive]
-Reads after the final Integration verdict, solely to author this packet:
-  [document] — [UTC] — [why necessary] — [what it did NOT influence]
-Role-boundary guarantee: ASSERTED_ROLE_BOUNDARY — the Lead's own declaration. The harness does
-  not enforce read isolation and this packet does not claim it does.
-
-## Builder worktree seeds
-| Piece | Worktree | Seed — brief-authored, or copied from [path] at [state] |
-|---|---|---|
-
-## Repository topology
-| | At started_at_utc | At terminal return |
-|---|---|---|
-| Worktrees | | |
-| Branches | | |
-Changes during the run: [none / exact]
-
-## Verdicts
-| Piece / surface | Candidate SHA | Reviewed paths | Verdict file | Result | Largest gap and disposition |
-|---|---|---|---|---|---|
-
-## Mandatory surface scope
-| Surface | In scope? | Why | Verdict file |
-|---|---|---|---|
-| Temporal normalization | | | |
-| Champion/benchmark schema firewall | | | |
-| A75 climatology fit lineage | | | |
-| CP-2 label-blind four-catalog recomputation | | | |
-| M3 CQR threshold recomputation | | | |
-
-## CP-2 label-blind chain (only for CP-2)
-Blindness: COOPERATIVE_PROCEDURAL — the Lead withheld the mapping; not cryptographically enforced.
-| Attempt | Mapping file (withheld until) | Blind verdict | Reveal time | Adjudicated winner | Matches committed declaration? |
-|---|---|---|---|---|---|
-
-## Complete named CP/FCP checklist
-| Criterion citation | PASS/OPEN | Direct evidence / reproduction |
-|---|---|---|
-
-## Engineering decisions
-- decision and rationale
-- rejected alternatives and why
-- largest failure the Gauntlet uncovered, and how it was repaired
+## What to verify
+The complete named checklist, item by item: contract consistency, hard invariants, reported
+metrics, reproduction, documentation. Recompute independently. Do not redesign.
 
 ## Reproduction
-- exact commands · artifacts · metrics/screenshots
-
-## Open risks or exact owner action
-- none / exact request
-
-## Landing report
-Diff against main: `git diff --stat main...<evidence_tip_sha>` → [summary]
-Commits on the branch: `git log --oneline main..<evidence_tip_sha>` → [list]
-Worktrees created by this checkpoint: [paths] — all removed / [exceptions with reason]
-Worktrees NOT created by this checkpoint: [paths, SHA, clean/dirty] — left untouched
-Branches this checkpoint opened: [name — purpose — tip SHA — ahead/behind main — clean/dirty — proposed disposition]
-Other branches present that this checkpoint did not open: [list, or none] — for Orchestrator escalation, not agent reclamation
-Proposed disposition: LAND | DISCARD — [one-line rationale]
-Proposed commit message: [subject + body, for the owner to use, edit, or discard]
-
-## Defense questions
-1. [3–5, grounded in actual architecture, tradeoffs, and evidence]
-
-Track B has stopped. No later-checkpoint work has begun.
+- Commands: [exact]
+- Expected output or tolerance: [...]
 ```
 
-The Landing Report is a report, never an action. The disposition is the owner's and the commit that
-reaches `main` is authored by hand — see `AGENTS.md` § *Branch and ref lifecycle* and §9 below.
+**Verdict** — one markdown file, committed to `docs/track-b/evidence/<checkpoint>/integration.md` *after* the review is complete.
+
+```text
+# Verdict — [checkpoint] — Integration — [PASS | FAIL | BLOCKED]
+
+- Candidate SHA: [40 hex]
+- Plan / version / bar: [file, version, section]
+- Verbatim bar excerpt: > [...]
+  (The excerpt is the citation. Any line number is a courtesy and is non-binding.)
+- Worktree clean before and after: [yes]
+
+## Commands actually run
+[Each command, its exit code, and the observed output. Not a description of what you would run.]
+
+## Evidence actually inspected
+[Files, artifacts, figures, metrics — what you opened, not what exists.]
+
+## Checklist verdict
+| # | Checklist item | Verdict | Evidence |
+|---|---|---|---|
+[Every item in the complete named checklist. No item may be omitted or merged.]
+
+## On FAIL only
+- Single largest meaningful gap: [one or two sentences]
+- Exact next acceptance test: [what would have to pass]
+```
+
+`BLOCKED` means the check could not be performed at all (missing credential, unavailable source). It is never a substitute for `FAIL`, and a required review left `BLOCKED` cannot support a terminal `PASS`.
 
 ---
 
-## 8. Orchestrator receipt and gate
+## 3. Checkpoint return
 
-A gate on the packet, not a re-derivation. Confirm that it:
+```text
+# Track B Checkpoint Return — [M#/CP-#]
 
-1. names the authorized repository, the single checkpoint, and the exact ratified plan anchor;
-2. maps **every item** in the full named CP/FCP checklist — not a convenience extract — to direct
-   evidence, and hides no open item behind `PASS`;
-3. includes every applicable mandatory independent surface and, at M1, all five acceptance oracles;
-4. cites, for every required review, a committed verdict file naming its candidate SHA, its bar
-   citation and verbatim excerpt, and the commands actually run;
-5. shows a current fresh Integration-Critic `PASS` for any supported `PASS`, and uses `NOT_RUN`
-   only in a non-`PASS` return that names the exact terminal reason;
-6. carries **both** terminal SHAs — run `git diff --name-only <final_candidate_sha>..<evidence_tip_sha>`
-   yourself and confirm it returns nothing outside `docs/track-b/evidence/<checkpoint>/`. Do not take
-   the packet's word for it;
-7. carries a **provenance block**. A packet without one is returned unread — an absent block is not
-   an assertion that no late read occurred;
-8. reproduces the **complete set of required brief fields**, and they match the brief you issued and the plan you
-   hold;
-9. declares **every Builder worktree's seed**, and **each of the five mandatory surfaces** as in or
-   out of scope with a reason;
-10. carries a **Landing Report** that reconciles against the live repository. Run the §9 inspection.
-    A discrepancy between what the packet says the checkpoint left behind and what the repository
-    actually holds is a gate failure, not a footnote.
+## Status
+[PASS | BLOCKED | INCOMPLETE]  — one only.
 
-What invalidates an individual verdict is `engineering-role.md`; the closing bar and the meaning of
-each terminal status are the plan's §12. The receipt re-litigates neither.
+## Identity
+- Repository / checkpoint / ratified anchor and version: [...]
+- final_candidate_sha: [40 hex]   (every bar binds here)
+- evidence_tip_sha:    [40 hex]
+- git diff --name-only <final_candidate_sha>..<evidence_tip_sha>:
+  [paste output — must be empty outside docs/track-b/evidence/<checkpoint>/]
 
-- **Supported `PASS`:** close only that checkpoint in `progress.md`, summarize its evidence, then
-  ask Yarden explicitly whether to authorize the next stage.
-- **`BLOCKED`:** request only the exact owner action, authority, or resolution named.
-- **`PLATEAU`:** decide whether the remaining improvement warrants a new bounded brief; never
-  relabel it `PASS`.
-- **`BUDGET_EXHAUSTED`:** decide whether to issue a replacement brief with a numeric extension. A
-  reduced bar first requires an owner-ratified amendment and a new exact anchor.
+## Repository state
+- Branch: gauntlet/[cp]   Working tree: [clean | listed exceptions]
+- Branches, worktrees or tags this checkpoint created: [each one named, with purpose and state,
+  or "none". An undeclared branch is a defect in this return.]
+- main untouched, nothing staged on main, nothing pushed: [confirm]
 
-No terminal status automatically opens the next checkpoint.
+## Complete checklist with direct evidence
+| # | Checklist item | Status | Direct evidence (path, command, or metric) |
+|---|---|---|---|
+[The complete named checklist from the plan's §12 — never the brief's extract.]
+
+## Integration verdict
+- Path: docs/track-b/evidence/[cp]/integration.md   Result: [PASS]
+- Candidate SHA it binds: [40 hex]
+
+## Reproduction
+[Commands a reader can run, and the results observed when they were run.]
+
+## Files changed
+[git diff --stat, plus one line of rationale per file.]
+
+## Elapsed
+[Approximate hours to the nearest half hour, against the brief's timebox.]
+
+## Open risk or exact owner action
+[The smallest exact decision, authority, credential or resource needed — or "none".]
+
+## Landing report
+- Proposed disposition: [LAND | DISCARD] with one line of reasoning
+- Evidence tip to preserve: [40 hex]
+- Live documents citing this branch (to repoint on reclamation): [list, or "none"]
+- Proposed commit message: [one message, for the owner to use or discard]
+
+## Post-return reads
+[If you read progress.md or orchestrator material after the Integration verdict solely to author
+this return accurately, say so in one line. Otherwise "none".]
+```
 
 ---
 
-## 9. Landing inspection, disposition, and reclamation
+## 4. Orchestrator receipt and disposition
 
-Closing a checkpoint in program state and landing its code are **two decisions**. §8 gates the
-packet; this section is the procedure for disposing of the tree. Branch accountability, the
-dispositions, tag-before-delete, citation-follows-ref, the agent/owner split, escalation of
-unaccounted branches and the closure condition are all owned by `AGENTS.md` § *Branch and ref
-lifecycle*.
+**Receipt — the Orchestrator verifies rather than accepts.** Run, do not read about:
 
-**Step 1 — INSPECT (agent, read-only).** Reconcile against the packet's Landing Report:
+```text
+git -C <repo> log --oneline -3 <evidence_tip_sha>
+git -C <repo> diff --name-only <final_candidate_sha>..<evidence_tip_sha>
+git -C <repo> status --porcelain=v1
+git -C <repo> branch -vv
+test -f docs/track-b/evidence/<cp>/integration.md && head -5 docs/track-b/evidence/<cp>/integration.md
+```
+
+Confirm: status is one of the three; the verdict file exists and reads `PASS` at `final_candidate_sha`; the two-SHA delta touches evidence paths only; every checklist item carries direct evidence; `main` is untouched and nothing was pushed. **Do not re-derive every record-level claim the return already evidences** — verify the SHAs, the verdict, the delta and the checklist coverage, and take the rest as reported.
+
+**Disposition — the procedure is `AGENTS.md` § *Branch and ref lifecycle*; this is the command form.**
+
+*Step 1 — INSPECT (agent, read-only).*
 
 ```text
 git worktree list
 git branch -vv
-git tag --list 'land/*' 'archive/*'
+git tag --list 'land/*' 'evidence/*' 'archive/*'
 git log --oneline --graph main..<evidence_tip_sha>
 git diff --stat main...<evidence_tip_sha>
 git diff --name-only <final_candidate_sha>..<evidence_tip_sha>   # evidence paths only
 ```
 
-**Step 2 — DISPOSE (exactly one).**
+*Step 2 — DISPOSE (exactly one).*
 
-*LAND — owner, by hand. Never delegated, never agent-executed (`AGENTS.md` owns this rule).*
+**LAND — owner, by hand. Never delegated, never agent-executed.**
 
 ```text
 git checkout main && git merge --squash gauntlet/<cp>
 git status && git diff --cached      # review the staged tree; nothing is committed yet
 git commit                           # authored by hand, after the owner's own review
-git tag land/<cp> <evidence_tip_sha>
+git tag land/<cp> <the squash commit on main>
+git tag evidence/<cp> <evidence_tip_sha>
 ```
 
-The `--squash` semantics and why landing is squash-only are `AGENTS.md` § *Branch and ref lifecycle*.
+**Both tags, always.** `land/<cp>` records where the work landed; `evidence/<cp>` preserves the reviewed candidate chain. A squash commit does not contain the candidate SHAs the verdict cites, so tagging only the landing point leaves that chain reachable from nothing once the branch is reclaimed. This is the rule `AGENTS.md` states and the defect `D-CP0-19` was filed for; **v6.7 corrected this block, which had named only one tag.**
 
-*DISCARD — agent-executed.*
+**DISCARD — agent-executed.**
 
 ```text
 git tag archive/<cp>-attempt-<k> <evidence_tip_sha>
 ```
 
-**Step 3 — REPOINT (agent).** Update every live document that cites the branch about to be deleted,
-in the same operation, per the citation-follows-ref rule in `AGENTS.md`.
+*Step 3 — REPOINT (agent).* Update every live document that cites the branch about to be deleted, in the same operation. The citation follows the ref.
 
-**Step 4 — RECLAIM (agent).** Only after the disposition is recorded and the tag verified to resolve:
+*Step 4 — RECLAIM (agent).* Only after the disposition is recorded and the tag verified to resolve:
 
 ```text
+git tag --list 'evidence/<cp>' 'archive/<cp>-*'    # must resolve before deleting anything
 git branch -D gauntlet/<cp>
-git worktree remove <each path in the Landing Report>
+git worktree remove <each worktree this checkpoint created>
 git worktree prune
-git branch -vv                       # gauntlet/<cp> must be gone. Any other branch left standing
-                                     # is EITHER declared by an active return (fine) OR escalated
-                                     # to the owner with findings — never auto-deleted, and never
-                                     # a reason to hold the checkpoint open.
 ```
 
-**Guards.** The two conditions on agent-executed deletion, the LAND/DISCARD dispositions, and the
-tag-before-delete and citation-follows-ref rules are owned by `AGENTS.md` § *Branch and ref
-lifecycle*. This section is the procedure; that section is the authority.
-
----
-
-## 10. `BRIEF_INVALID` return
-
-The form for the terminal status defined in the plan's §12. It is the only status that returns no
-Return Packet.
-
-```markdown
-# Brief Invalid — [checkpoint id as named, or "unnamed"]
-
-Status: BRIEF_INVALID
-Target repository as named:
-validation_started_at_utc / returned_at_utc:
-Clock consumed: none — brief validation precedes the ceiling
-Repository edits made: none
-
-## Missing or contradictory required fields
-| Required field | State in the brief |
-|---|---|
-
-## Repository state verified before returning
-- [whatever was checked, or "none — the brief was invalid on its face"]
-
-## What would make this brief executable
-- [the exact fields to supply; nothing else]
-```
-
-The Orchestrator's disposition is to reissue a complete brief. `BRIEF_INVALID` records that an
-attempt was made and correctly refused — it does not open, close, or advance a checkpoint, and it
-consumes no reserve.
+An agent may never delete a ref whose SHAs are not already reachable from a verified tag, and never a branch the owner has not dispositioned. Unknown branches are escalated to the owner with findings and a recommendation — never auto-deleted, and never grounds for refusing to run a checkpoint.

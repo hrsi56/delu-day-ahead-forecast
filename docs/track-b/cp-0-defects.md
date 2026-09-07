@@ -1,7 +1,7 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 20 defects. 17 ACCEPTED · 3 REMEDIED but not re-tested · 1 amendment WAIVED BY
-OWNER.**
+**Status: OPEN — 20 defects. 17 ACCEPTED · 1 MOOT · 2 REMEDIED but not re-tested · 1 amendment
+WAIVED BY OWNER.**
 
 The v6.6 amendment was ratified 2026-08-05, hardened across seven independent review rounds, and put
 to its acceptance test on 2026-08-06 by the clean-room CP-0 re-run. **That run returned `PASS` on all
@@ -11,31 +11,48 @@ packet's claims, and the candidate landed on `main` as `a911191`. The Phase-5 ma
 observed behaviour.**
 
 - **D-CP0-1 … D-CP0-17 — ACCEPTED.** Each was remedied and its remedy exercised by the run.
-- **D-CP0-18 — REMEDIED 2026-09-03, not re-tested.** AMD-G7 failed its acceptance test,
-  self-reported by the executor; the owner-authorized remedy is recorded at `6ea6a20`.
+- **D-CP0-18 — MOOT 2026-09-07 — underlying requirement retired by v6.7.** Remedied 2026-09-03 and
+  never re-tested; the remedy lived in `engineering-role.md` step 1, and v6.7 deletes the
+  `started_at_utc` requirement entirely, so there is nothing left to re-test. AMD-G7 failed its
+  acceptance test, self-reported by the executor; the owner-authorized remedy is recorded at
+  `6ea6a20`. The defect definition and its historical evidence are unchanged.
 - **D-CP0-19 — REMEDIED 2026-08-06, not re-tested.** Found by the reclamation guard at landing.
 - **D-CP0-20 — REMEDIED 2026-08-10, not re-tested.** Found by an agent reading the corpus to document
   it. Fixed under **the first authorized suspension of the Governance Lockdown**.
 - **AMD-G5 — WAIVED BY OWNER, 2026-09-04.** The `BRIEF_INVALID` negative control was skipped at the
   CP-0 re-run and, after being re-proposed twice, was **declined as an informed owner decision** — a
   deliberate risk acceptance, not an oversight, and **not an open item**. **What is waived is the
-  test, not the mechanism:** `BRIEF_INVALID`, its clock-exclusion rule and the §10 form remain fully
-  in force under the ratified contract, and an Engineering Lead meeting a malformed brief must still
-  return on that form. They simply ship unexercised. The compensating control is the Orchestrator's
-  mandatory pre-dispatch brief validation (`orchestrator-role.md`), which was always the primary
-  gate; the waiver removes the backup test, not the primary control. **Do not re-raise this as a
-  pending test, a ledger condition, or a risk-reduction suggestion.**
+  test, not the mechanism:** `BRIEF_INVALID`, its clock-exclusion rule and the §10 form remained
+  fully in force under the v6.6 contract current when this was written, and an Engineering Lead
+  meeting a malformed brief still had to return on that form. They shipped unexercised. The
+  compensating control is the Orchestrator's mandatory pre-dispatch brief validation
+  (`orchestrator-role.md`), which was always the primary gate; the waiver removes the backup test,
+  not the primary control. **Do not re-raise this as a pending test, a ledger condition, or a
+  risk-reduction suggestion.** **Superseded 2026-09-07:** capstone v6.7 retired all three —
+  `BRIEF_INVALID` (`K11`), its clock-exclusion rule (`I11`) and templates §10 — so a malformed
+  brief is now corrected in conversation before repository work, with no terminal status, timestamp
+  or special form. The waiver is moot as well as closed: the mechanism it spared no longer exists,
+  and the pre-dispatch validation that was its compensating control still stands.
 
-**This ledger stays OPEN.** It closes when D-CP0-18's and D-CP0-19's remedies are re-tested. The
-AMD-G5 clause was struck from this condition on 2026-09-04 under an owner-authorized, task-scoped
-suspension of the Governance Lockdown, because the owner waived that test; every other closure
-condition is unchanged and no bar moved. **An amendment authored is not an amendment proven** — and
-two of these were found only because the contract was executed rather than read.
+**This ledger stays OPEN.** It closes when **D-CP0-19's and D-CP0-20's** remedies are re-tested. The
+D-CP0-18 clause was struck from this condition on 2026-09-07 under an owner-authorized, task-scoped
+suspension of the Governance Lockdown, because capstone v6.7 retired the requirement that defect
+remediated; the AMD-G5 clause was struck from it on 2026-09-04 under the same kind of suspension,
+because the owner waived that test. **D-CP0-20 was added on 2026-09-07**, under the post-ratification
+repair authorization, to close a contradiction an independent read-only audit found live in this
+header: the ledger reported D-CP0-20 as *remedied but not re-tested* while permitting closure without
+it. Its remedy was authored 2026-08-10 — four days **after** the 2026-08-06 clean-room CP-0 re-run,
+the only acceptance test this contract has ever run — so no exercise of it exists and no other test
+proved it. The omission was clerical rather than a judgement: this sentence was written at `383a121`,
+before the defect existed. No defect definition, acceptance criterion, or item of historical evidence
+moved; the condition now names every defect this ledger itself reports as un-re-tested. **An
+amendment authored is not an amendment proven** — and two of these were found only because the
+contract was executed rather than read.
 
 **CP-0 attempt 1 is closed `PASS`, never landed, and now archived.** Owner decision of record,
 2026-08-05: nothing from it merges to `main`, and CP-1 is not briefed until the contract itself is
 fixed. Its branch `gauntlet/cp-0` was retired on 2026-08-05 under the tag-before-delete rule; **every
-SHA this document cites is preserved at the annotated ref `archive/cp-0-attempt-1` (= `8f371e5`)**
+SHA this document cites is preserved at the lightweight tag `archive/cp-0-attempt-1` (= `8f371e5`)**
 and is reachable from it. Attempt 1 is superseded by a clean-room re-run, not merged
 (`docs/track-b/gauntlet-amendment-plan.md`, DEC-3).
 

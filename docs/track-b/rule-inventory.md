@@ -1,7 +1,8 @@
 > # ⛔ PRIME DIRECTIVE — GOVERNANCE LOCKDOWN
 >
-> *Stated in full in `AGENTS.md`, which owns it. Reproduced here because this ledger is inside the
-> locked set and a reader must meet the lock before the rules it accounts for.*
+> *`AGENTS.md` is the sole canonical text and wins on any conflict. The controlling core is reproduced
+> here because this ledger is inside the locked set and a reader must meet the lock before the rules
+> it accounts for; do not treat this copy as an independently amendable policy source.*
 >
 > **No agent may modify this rulebook, the ratified anchor documents, or the agent-configuration
 > files. Not a Builder, not a Critic, not the Engineering Lead, and not the Orchestrator. There is no
@@ -25,10 +26,12 @@
 > this Lockdown Rule** to authorize that specific edit. Work that cannot proceed without the change
 > waits. A blocked task is a correct outcome; an unauthorized governance edit is not.
 >
-> **A suspension is narrow and spent on use.** It covers the named file and the named change, for
-> that one edit, and lapses the moment it is applied. It does not generalize to the rest of the
-> session, to a related file, or to a second change the first one turns out to require — each needs
-> its own request.
+> **A suspension is task-scoped and spent at terminal return.** It covers the files and objective
+> expressly named by the Owner, including directly necessary consistency edits discovered during
+> execution, and remains active until the task reaches one coherent, verified terminal return. It
+> does not authorize unrelated files, scope expansion, publication, destructive history operations,
+> or a second task. Do not request separate authorization per sentence, command, or consistency edit
+> within that scope.
 >
 > **Why this exists.** These documents are the only thing standing between an agent's judgement and
 > the Owner's. An agent that may rewrite the rule it is being judged against is not being judged.
@@ -41,6 +44,71 @@
 > program state, not rulebook, and is written by the Orchestrator under its own regeneration
 > contract. If the Owner intends either of those inside the lock, say so and they move in.
 
+# Rule inventory — current state at capstone v6.7 (2026-09-07)
+
+**This section is the live inventory. The ledger below the explicit “Everything below this line is the historical v6.6 ledger” boundary is historical.** Its prose, counts, findings, line references and reasoning are preserved exactly as written; its former anchor filename was repointed to `capstone_V6_7.md` on 2026-09-07 under `AGENTS.md` § *the citation follows the ref*. Read every such historical citation as naming **the v6.6 text** of that file. The live header and the reproduced Lockdown excerpt may be corrected when the current contract changes; they are not part of the frozen v6.6 ledger.
+
+The v6.7 scope and governance reduction retired a large part of the execution contract. The tables further down still describe the v6.6 state and **must not be read as current**; they remain because the reasoning that produced each rule is worth keeping, and because a ledger that erases what it retired cannot be audited.
+
+## Arithmetic — recorded, not guessed
+
+| | Count |
+|---|---:|
+| Live rules at v6.6 (the baseline this ledger last verified) | **168** |
+| Retired by v6.7 (enumerated below, by ID) | **−54** |
+| Minted by v6.7 (enumerated below) | **+13** |
+| **Live at v6.7** | **127** |
+
+**Confidence, stated honestly.** The retirement list is authoritative — each ID is retired because the text that carried it was deleted in this amendment, and the deletions are in the diff. The addition list is likewise explicit. What has **not** been done is the full mechanical presence-check of all 127 surviving IDs against the newly authored documents, in the manner of this file's own *Verification protocol* section. That pass is worth running once, and is the natural first governance task after CP-1 lands. **Until it runs, 127 is a derived figure with a stated derivation — not a verified census.** Do not quote it as verified, and do not re-quote **168**: that number is now historical.
+
+## Retired by v6.7 (54)
+
+| Domain | Retired IDs | Why |
+|---|---|---|
+| **B** — execution loop | `B3`, `B4`, `B11`, `B12` | Decomposition and Builder worktrees are no longer mandatory; `started_at_utc` as first output and the seed declaration go with the clock and the seed table |
+| **C** — critic isolation | `C14`, `C16` | The exhaustive read-scope enumeration and the `ASSERTED_ROLE_BOUNDARY` label; a one-line honest statement replaces both |
+| **D** — verdict record | `D2` | Integration verifying component verdicts — there are no component verdicts |
+| **E** — staleness | `E1`, `E2`, `E3`, `E4`, `E5` | `reviewed_paths` staleness arithmetic has nothing to compute once no earlier component verdict can be reused. `E6`, `E9`–`E11` survive |
+| **F** — mandatory surfaces | `F1`, `F2`, `F3`, `F5`, `F6` | The five-surface declaration and the independent oracle materialization/hashing ceremony. The oracles themselves survive as ordinary committed tests in the plan's §9.4. `F4` survives |
+| **G** — evidence storage | `G7` | The frozen workbench snapshot |
+| **I** — ceiling and clock | `I1`, `I2`, `I3`, `I4`, `I6`, `I7`, `I8`, `I9`, `I10`, `I11` | The entire raw-second ledger, the eligible-pause definition, and the 24 h reserve. `I5` survives — a newly required owner action returns `BLOCKED`, not a pause |
+| **J** — `workbench.md` | `J1`–`J6` | The mandatory workbench and its lifecycle |
+| **K** — terminal conditions | `K4`, `K5`, `K8`, `K11` | `PLATEAU`, `BUDGET_EXHAUSTED`, Integration `NOT_RUN`, `BRIEF_INVALID` |
+| **L** — return packet | `L2`, `L3`, `L6`, `L10`, `L12`, `L14`, `L15`, `L16` | The Critic run inventory, the CP-2 chain table, the independent-criticism table, the mandatory defense questions, the provenance block, verbatim reproduction of every brief field, the seed declaration, and the topology tables |
+| **N** — orchestrator receipt | `N4`, `N5` | The `PLATEAU` and `BUDGET_EXHAUSTED` receipt paths |
+| **O** — CP-2 label-blind | `O1`, `O6`, `O10` | The four-catalog selection this protocol policed no longer exists |
+| **Q** — orchestrator | `Q12`, `Q18`, `Q20` | Clock accounting as stated upward; the five oracles as separate CP-1 verdicts; the `COOPERATIVE_PROCEDURAL` receipt gate |
+
+**Domains untouched:** `A` (all 10 survive, several amended), `M` (evidence freezing), `P` (constraints and communication), `S` (the `AGENTS.md` domain — outside the suspension and unchanged).
+
+## Minted by v6.7 (13)
+
+| ID | Rule | Owner |
+|---|---|---|
+| `T1` | The brief states one approximate hour timebox; the Lead reports elapsed hours to the nearest half hour from ordinary wall clock | ROLE |
+| `T2` | Crossing the timebox is one scope check, not an automatic stop: finish a short direct path, or return `INCOMPLETE`. Never permission to weaken a bar | ROLE |
+| `T3` | Empirical results are reported, never gated. Zero quantile crossing after CQR-then-isotonic is the one retained hard gate, because it is a correctness property | CAP |
+| `T4` | An unfavorable honest result constrains the public claim and never blocks completion; tuning until it passes is the scientific defect | CAP |
+| `T5` | Whether the Lead delegates at all is its own engineering choice and needs no authorization | ROLE |
+| `T6` | The Lead may run additional internal reviews at its discretion; one terminal review of a large surface is a shallower review | ROLE |
+| `T7` | A malformed or contradictory brief is corrected in conversation before repository work — no terminal status, no timestamps, no special form | ROLE |
+| `T8` | The largest gap and the exact next acceptance test are required on `FAIL` verdicts only | ROLE |
+| `T9` | The artifact evaluated on the holdout is the artifact that ships; no retrain follows the holdout being opened | CAP |
+| `T10` | Four cutoffs — snapshot, raw-model fit, final calibration, holdout — are published separately on every surface and in the MLflow tags | CAP |
+| `T11` | The holdout DM result is labelled *pre-specified one-shot, confirmatory-style, not power-qualified*, and supports no superiority claim it does not earn | CAP |
+| `T12` | A one-day embargo separates every fitted set from the set that measures it — the two tail boundaries and each fold's calibration slice alike | CAP |
+| `T13` | Both disclosed assumptions — A65 pre-gate availability and A75 revision — appear wherever the leakage audit is claimed, always as assumptions | CAP |
+
+## Amended rather than retired
+
+`A1`, `A2`, `A5`, `A6`, `A9` (brief fields, timebox, the one-line late-read statement) · `B1`, `B10` · `C15` · `D1`, `D7` · `E7`, `E8` · `K1`, `K2`, `K12` · `L1`, `L5` · `N1`, `N7` · `Q5`, `Q13`, `Q16`. Their substance survives; their wording moved with the contract.
+
+---
+
+*Everything below this line is the historical v6.6 ledger. Its prose, counts, findings and line references are preserved as written; only the former anchor filename was repointed to `capstone_V6_7.md` on 2026-09-07. Its counts, its "currently in" line references and its domain totals describe the contract as it stood on 2026-08-05 and are **not** current. Two consequences are worth naming so no one reads them as claims about v6.7: "Nothing in `capstone_V6_7.md`'s checklists changed" was true of the v6.6 execution-contract amendment and is **false of v6.7**, which cut the checklists from 56 items to 26; and the `CP-0 2 h … 24 h total` reserve it records was **retired** by v6.7 (rule `I10`). The `L393–L425`, `L399` and `L409` line references likewise address the v6.6 file, not this one.*
+
+---
+
 # Track B Gauntlet — Rule Inventory (Phase 1 prune, 2026-08-05)
 
 **Purpose.** Enumerate every normative rule in the four prose documents before the prune, so the
@@ -48,10 +116,10 @@ post-prune state can be proved complete rather than asserted complete. This is a
 for the prune, **not** agent context — it is never loaded into a Builder or Critic.
 
 **Sources inventoried (complete read):**
-`capstone_V6_6.md` §12 (L393–L425) · `engineering-role.md` (241 lines) ·
+`capstone_V6_7.md` §12 (L393–L425) · `engineering-role.md` (241 lines) ·
 `docs/track-b/gauntlet-templates.md` (405 lines) · `docs/track-b/cp2-blind-protocol.md` (173 lines)
 
-**Post-prune ownership:** `CAP` = `capstone_V6_6.md` §12 (the bar) · `ROLE` = `engineering-role.md`
+**Post-prune ownership:** `CAP` = `capstone_V6_7.md` §12 (the bar) · `ROLE` = `engineering-role.md`
 (the process) · `TMPL` = `gauntlet-templates.md` (forms only) · `CP2` = `cp2-blind-protocol.md`
 (CP-2 only) · `PROG` = `progress.md` (program state).
 
@@ -305,7 +373,7 @@ D-1 is the same class as the defect we repaired yesterday, and it is why the inv
 
 | Owner | Rules | Note |
 |---|---|---|
-| **CAP** `capstone_V6_6.md` §12 | 26 (A7, A8, B8, D7, F1–F6, I7, I8, I10, K1–K10, L5, L10, N6, O6, O10) | The bar only |
+| **CAP** `capstone_V6_7.md` §12 | 26 (A7, A8, B8, D7, F1–F6, I7, I8, I10, K1–K10, L5, L10, N6, O6, O10) | The bar only |
 | **ROLE** `engineering-role.md` | 91 | The process; sole owner of execution mechanics |
 | **TMPL** `gauntlet-templates.md` | 19 | Forms + Orchestrator receipt; no normative prose it does not own |
 | ~~**CP2**~~ `cp2-blind-protocol.md` | ~~12~~ | **Document deleted by Option C.** O1, O6 and O10 survive and are re-homed to ROLE/CAP; the other nine retired |
@@ -346,13 +414,13 @@ match. Two flags were raised on the first pass:
 | **G4** absent from ROLE | **REAL — a genuine near-drop** | fixed |
 | **I9** absent from ROLE | **REAL — partial coverage only** | fixed |
 
-**G4** (`st_nlink` / hard-linked-inode invalidity) was stated in `capstone_V6_6.md` §12 L409 and in
+**G4** (`st_nlink` / hard-linked-inode invalidity) was stated in `capstone_V6_7.md` §12 L409 and in
 the templates, but never in `engineering-role.md` — its assigned owner. Deleting the capstone
 paragraph would have left the rule stated only in a form document. Restored to
 `engineering-role.md` § *Live evidence and commit retention*.
 
 **I9** (the Lead allocates internal target windows but cannot enlarge the ceiling) was in
-`capstone_V6_6.md` L399, which the prune compressed. ROLE covered both halves only implicitly
+`capstone_V6_7.md` L399, which the prune compressed. ROLE covered both halves only implicitly
 across three separate sentences. Now stated explicitly in § *Active-elapsed wall-clock ceiling*.
 
 This is the second time the inventory method caught a live rule loss that a targeted grep did not.
@@ -362,14 +430,14 @@ This is the second time the inventory method caught a live rule loss that a targ
 | Defect | Status | Evidence |
 |---|---|---|
 | **D-1** — rerun-all surviving at `engineering-role.md:40`, `:196`, `gauntlet-templates.md:372` | **CLOSED** | Zero matches repo-wide for `must equal final` / `bound to the exact final candidate` / `invalidates all earlier` / `no selective reuse` |
-| **D-2** — reserve table omitted CP-0 (22 h vs 24 h) | **CLOSED** | `capstone_V6_6.md` now reads `CP-0 2 h; … — 24 h total`, matching `progress.md:36` |
+| **D-2** — reserve table omitted CP-0 (22 h vs 24 h) | **CLOSED** | `capstone_V6_7.md` now reads `CP-0 2 h; … — 24 h total`, matching `progress.md:36` |
 | **D-3** — brief template cited §12 as CP-2 protocol authority | **CLOSED** | Repointed to `docs/track-b/cp2-blind-protocol.md`; zero stale §12-protocol citations |
 
 ## Measured reduction
 
 | Surface | Before | After | Δ |
 |---|---:|---:|---:|
-| `capstone_V6_6.md` §12 execution contract | 2,101 | **901** | −57% |
+| `capstone_V6_7.md` §12 execution contract | 2,101 | **901** | −57% |
 | `docs/track-b/gauntlet-templates.md` | 3,683 | **2,762** | −25% |
 | `engineering-role.md` | 3,836 | **3,512** | −8% |
 | `AGENTS.md` | 777 | 777 | — |
@@ -399,7 +467,7 @@ in Phase 1.
 
 ## Files changed
 
-`capstone_V6_6.md` · `engineering-role.md` · `docs/track-b/gauntlet-templates.md` ·
+`capstone_V6_7.md` · `engineering-role.md` · `docs/track-b/gauntlet-templates.md` ·
 `capstone_V6_4-to-V6_5-amendments.md` · `capstone_V6_3-to-V6_4-amendments.md` · `progress.md` ·
 `docs/track-b/rule-inventory.md` (new). **No version bump** — relocation only; no bar, checklist
 item, invariant, or acceptance criterion changed.
@@ -587,7 +655,7 @@ G7, G8, O1.
 **K** (terminal conditions), **L** (Return Packet), **N** (receipt), **P** (constraints), plus the
 scientific CP-2 bar **O6** and **O10**.
 
-**Nothing in `capstone_V6_6.md`'s checklists changed.** No bar, checklist item, invariant, or
+**Nothing in `capstone_V6_7.md`'s checklists changed.** No bar, checklist item, invariant, or
 acceptance criterion was weakened. The retired rules were process mechanics owned by
 `engineering-role.md` and the templates.
 
@@ -604,12 +672,12 @@ acceptance criterion was weakened. The retired rules were process mechanics owne
 ## Verification
 
 Orphan sweep clean across every live document: `README.md`, `AGENTS.md`, `orchestrator-role.md`,
-`engineering-role.md`, `capstone_V6_6.md`, `gauntlet-templates.md`, `progress.md`. Historical
+`engineering-role.md`, `capstone_V6_7.md`, `gauntlet-templates.md`, `progress.md`. Historical
 session-log entries and the amendment sheets retain their references by design — they are the record
 of what was built and why it was removed.
 
 No test suite remains; `tests/` is empty until M1 creates the real invariant tests that
-`capstone_V6_6.md` §9.4 requires. That is the correct state: there is no longer any protocol to test,
+`capstone_V6_7.md` §9.4 requires. That is the correct state: there is no longer any protocol to test,
 and the tests that existed tested only the protocol.
 
 ---
@@ -626,7 +694,7 @@ that targeted greps missed. This amendment touches **five** documents instead of
 its remedies land in a document that has never been enumerated at all. Authoring first would repeat
 the exact failure the method exists to prevent.
 
-**Sources inventoried (complete read):** `capstone_V6_6.md` §12 · `engineering-role.md` ·
+**Sources inventoried (complete read):** `capstone_V6_7.md` §12 · `engineering-role.md` ·
 `docs/track-b/gauntlet-templates.md` · `AGENTS.md` · **`orchestrator-role.md` (first time — see
 D-CP0-14)**.
 
@@ -811,7 +879,7 @@ ROLE 85 − 24 + 1 = **62**, CAP **27**, TMPL **16** → **105**, plus domain Q 
 
 | Owner | Baseline | New | Post-amendment | Note |
 |---|---:|---:|---:|---|
-| **CAP** `capstone_V6_6.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
+| **CAP** `capstone_V6_7.md` §12 | 27 | +3 | **30** | The bar — gains E11, K11, K12 |
 | **ROLE** `engineering-role.md` | 63 | +9 | **72** | The process — gains A11, B11, B12, C14–C16, E9, E10, I11 |
 | **TMPL** `gauntlet-templates.md` | 15 | +8 | **23** | Forms + receipt gate — gains L12–L16, N8–N10, plus §9 landing and §10 `BRIEF_INVALID` |
 | **AGENTS** `AGENTS.md` | 13 | +7 | **20** | Domain S newly enumerated (D-CP0-17), plus R1–R7 — the ref lifecycle and the one-writer rule |
@@ -877,7 +945,7 @@ applied to the contract itself.
 ## What the rounds cost and what they bought
 
 Rounds 1–4 were **scoped by the author** — "capstone §12 only", "the five documents". Round 4 found
-that scoping had let a real defect survive all four: `capstone_V6_6.md` §4.1 pointed a CP-2 executor
+that scoping had let a real defect survive all four: `capstone_V6_7.md` §4.1 pointed a CP-2 executor
 at three commands deleted by Option C and at template sections that hold no such contract. It
 survived because the amendment declared §§1–11 unchanged, and every reviewer believed it.
 
