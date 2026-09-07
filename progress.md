@@ -40,9 +40,16 @@
 - **Authoritative document:** `capstone_V6_7.md` **v6.7**. **This file decides what is law.**
 - **Optional reference:** `syllabus_v3_2.md` v3.2 — demoted 2026-09-06, banner-marked at v6.7, not an anchor, not retired.
 - **Planning aid:** `program-stage-sequence.md` **v8**, static/non-anchor — capstone-first, with an optional learning sidecar.
+- **Authoritative document:** `capstone_V6_7.md` **v6.7**. **This file decides what is law.**
+- **Optional reference:** `syllabus_v3_2.md` v3.2 — demoted 2026-09-06, banner-marked at v6.7, not an anchor, not retired.
+- **Planning aid:** `program-stage-sequence.md` **v8**, static/non-anchor — capstone-first, with an optional learning sidecar.
 - **Optional future projects, neither scheduled:** the companion `Binary Classification Mini-Capstone.md` and `aws-extension-spec_v1_1.md` (marked **STALE / NOT SCHEDULED**). Each needs a new explicit owner instruction after CP-3.
 - **Governance record:** `docs/track-b/rule-inventory.md` and `docs/track-b/cp-0-defects.md`. Both locked. Amendment sheets: `capstone_V6_1-to-V6_2` … `V6_5-to-V6_6` at root, and `docs/track-b/capstone_V6_6-to-V6_7-amendments.md`.
 - **Repos:** flagship `hrsi56/delu-day-ahead-forecast` (local `/Users/djourno/Downloads/PJM`); public method repo `hrsi56/Zero-Trust-Hierarchy`.
+- **Authoritative document:** `capstone_V6_7.md` **v6.7**. **This file decides what is law.**
+- **Optional reference:** `syllabus_v3_2.md` v3.2 — demoted 2026-09-06, banner-marked at v6.7, not an anchor, not retired.
+- **Planning aid:** `program-stage-sequence.md` **v8**, static/non-anchor — capstone-first, with an optional learning sidecar.
+>>>>>>> claude/v6-7-verify-working-tree-f8ab80
 - **Budget/hardware:** $0 expected run rate, $65/month ceiling; M3, 16 GB, CPU-only.
 - **Language:** replies and briefs in English; Hebrew input fine.
 
@@ -107,10 +114,17 @@
 - **The next Track B action is exactly one M1/CP-1 brief** from `docs/track-b/gauntlet-templates.md` §1, after the token is in place. Ten checklist items, one fresh Integration Critic, one approximate hour timebox.
 - **Pre-dispatch brief validation is the operative front gate.** `BRIEF_INVALID` no longer exists; a malformed brief is corrected in conversation before repository work begins.
 - **Do not re-raise:** AMD-G5, the publication-metadata substitution, the point-in-time capture ledger, the four-catalog selection system, or the forward confirmatory audit. All are closed owner decisions with their reasoning recorded.
+- **The next Track B action is exactly one M1/CP-1 brief** from `docs/track-b/gauntlet-templates.md` §1, after the token is in place. Ten checklist items, one fresh Integration Critic, one approximate hour timebox.
+- **Pre-dispatch brief validation is the operative front gate.** `BRIEF_INVALID` no longer exists; a malformed brief is corrected in conversation before repository work begins.
+- **Do not re-raise:** AMD-G5, the publication-metadata substitution, the point-in-time capture ledger, the four-catalog selection system, or the forward confirmatory audit. All are closed owner decisions with their reasoning recorded.
 - **Both disclosed assumptions must appear wherever the leakage audit is claimed** — A65 pre-gate availability and A75 revision — in §5.2, the README limitations, and the static page. An assumption stated plainly is defensible; an assumption presented as a measurement is not.
 - **The holdout is opened once.** Its DM result is labelled *confirmatory-style, not power-qualified*. There is no re-tuning and no second run after it is read, and the model that ships is the model that was evaluated.
 - At each Track B `PASS`: close only that checkpoint, run the §4 landing inspection, take one disposition, take **both** tags, regenerate this file, and ask "Authorize the next stage?"
 - After CP-3, ask whether the companion or any cloud work is worth opening. Neither starts on its own.
+- **The holdout is opened once.** Its DM result is labelled *confirmatory-style, not power-qualified*. There is no re-tuning and no second run after it is read, and the model that ships is the model that was evaluated.
+- At each Track B `PASS`: close only that checkpoint, run the §4 landing inspection, take one disposition, take **both** tags, regenerate this file, and ask "Authorize the next stage?"
+- After CP-3, ask whether the companion or any cloud work is worth opening. Neither starts on its own.
+>>>>>>> claude/v6-7-verify-working-tree-f8ab80
 
 ---
 

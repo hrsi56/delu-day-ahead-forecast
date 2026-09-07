@@ -5,6 +5,7 @@
 **Governance (unchanged in kind).** Static by design — no status markers; all position and state live in `progress.md` and only there. Non-anchor — derived from the ratified capstone plan, which wins on any conflict. Planning aid, never authority. Rebuild only on explicit owner request.
 
 **How to use it.** Read `progress.md` → find the row after the last completed stage → read **only** the sources that row's *Briefing sources* column names. That is the read; you do not re-read the anchor end-to-end to write a routine brief.
+>>>>>>> claude/v6-7-verify-working-tree-f8ab80
 
 ---
 
