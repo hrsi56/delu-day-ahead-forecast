@@ -3,9 +3,6 @@
 > # ⛔ STATUS: STALE / NOT SCHEDULED (2026-09-07)
 >
 > **This proposal is not parked awaiting a ballot. It is stale, and its premises are gone.**
-> # ⛔ STATUS: STALE / NOT SCHEDULED (2026-09-07)
->
-> **This proposal is not parked awaiting a ballot. It is stale, and its premises are gone.**
 > Capstone v6.7 retired the automatic DEC-AWS ballot along with the G5 gate that would have held it,
 > and removed the things this backbone was designed to operationalize: the **weekly refresh**
 > (the release is frozen), the **offline data/output-health report** (deleted), the **precomputed
@@ -17,7 +14,6 @@
 > that actually shipped** — which is a frozen, bundled, three-checkpoint release, not the
 > continuously-refreshed service this spec extends. The engineering content below may still be worth
 > reading as prior art. None of it is in force.
->>>>>>> claude/v6-7-verify-working-tree-f8ab80
 
 ## 0. What this spec ratifies (eight decisions)
 
