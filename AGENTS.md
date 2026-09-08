@@ -67,6 +67,20 @@ This repository is shared by program orchestration and Track B engineering, but 
 
 `AGENTS.md` is the single canonical root-role router. `CLAUDE.md` must contain only a pointer to this file; do not duplicate policy there.
 
+## Interview-answer capture
+
+**The project is judged in a room, not only in a repository.** Reasoning that stays in a transcript cannot be defended later. When a session produces an explanation worth giving a hiring manager, it is written down at the time, not reconstructed the week before an interview.
+
+**Triggers — any one.** An agent hits real uncertainty and resolves it; a decision is taken whose reasoning is not self-evident from the artifact; an approach is chosen where a reasonable alternative existed; a failure is traced to a cause; an entry lands in `progress.md` that a stranger would find interesting; or Yarden asks for an explanation of any of these.
+
+**Who files — the Orchestrator, and only the Orchestrator.** An Engineering Lead or bounded subagent that meets a trigger **names it in one line in its terminal return** and files nothing itself. The Track B isolation boundary is not opened for this, and no checkpoint is ever paused to write an entry.
+
+**How.** `python3 scripts/qa_append.py -q "<question>" -a "<paragraph>" [-a ...]` appends to `שאלות תשובות.docx`. It numbers the entry, carries the document's RTL markup, and accepts `**bold**` inline. Never hand-edit the `.docx`.
+
+**Format.** The question as a hiring manager would ask it. The answer in Yarden's voice — Hebrew, first person plural, no hedging — stating what was actually done, including when the answer is "we hit a wall and took the other road." A trigger that yields no answer worth defending is not filed.
+
+**Presentation is Yarden's.** Agents write content. No rendering, no visual verification, no layout review.
+
 ## Git and publication authority
 
 All agent work is local. Publication and mainline history belong to Yarden alone, in every role and every session. No brief, checkpoint authorization, PASS verdict, or convenience argument grants either.
