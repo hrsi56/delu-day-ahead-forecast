@@ -77,6 +77,13 @@ def main() -> None:
     latest_allowed = delivery_by_timestamp.loc[proxy.index[valid_proxy]].map(lambda value: value - timedelta(days=2))
     assert (proxy.loc[valid_proxy, "window_end_delivery_date"].to_numpy() <= latest_allowed.to_numpy()).all()
 
+    report_dir = ROOT / "reports"
+    for figure in ("fig_welch_periodogram.png", "fig_per_regime_periodogram.png", "fig_acf_24_168.png"):
+        assert (report_dir / figure).stat().st_size > 10_000
+    peak_bins = pd.read_csv(report_dir / "spectral_peak_bins.csv")
+    assert {24, 168, 12} == set(peak_bins["period_hours"])
+    assert (peak_bins["bin_error"] <= peak_bins["fft_bin_width"]).all()
+
     result = {
         "snapshot_sha256": digest,
         "rows": len(frame),

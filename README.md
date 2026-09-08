@@ -31,6 +31,19 @@ partitions were pinned in [`data/partitions.json`](data/partitions.json) before
 spectral EDA. The complete KFT/LAG classification and the A65/A75 assumptions
 are in [`docs/data-leakage-audit.md`](docs/data-leakage-audit.md).
 
+### Why these seasonal features? (spectral view)
+
+The [Welch periodogram](reports/fig_welch_periodogram.png) confirms pronounced
+price energy at the 24-hour and 168-hour cycles, with the 12-hour harmonic,
+which justifies the catalog's hour-of-day and day-of-week structure. The
+[per-regime spectrum](reports/fig_per_regime_periodogram.png) shows an elevated
+broadband floor and altered seasonal amplitude during the crisis, supporting
+regime-stratified evaluation rather than one recent-tail summary. The
+[ACF cross-check](reports/fig_acf_24_168.png) independently shows strong daily
+and weekly recurrence in the time domain. These are price diagnostics: they do
+not validate or justify retaining `residual_load_proxy`, which the frozen CP-2
+two-arm comparison alone decides.
+
 ## Setup
 
 ```
