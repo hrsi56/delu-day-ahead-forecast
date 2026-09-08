@@ -64,6 +64,22 @@ def main() -> None:
     assert partition_file == expected_partitions
     assert date.fromisoformat(partition_file["tail_partitions"]["fold_5"]["start"]) >= date(2025, 10, 1)
 
+    sample_path = ROOT / "data" / "reconciliation_sample.json"
+    reconciliation = json.loads((ROOT / "data" / "reconciliation_summary.json").read_text(encoding="utf-8"))
+    assert reconciliation["sample_spec_sha256"] == hashlib.sha256(sample_path.read_bytes()).hexdigest()
+    assert reconciliation["result"] == manifest["reconciliation"]["status"] == "pass"
+    assert reconciliation["fraction_within_tolerance"] >= 0.999
+    comparison = pd.read_csv(ROOT / "data" / "reconciliation.csv")
+    assert len(comparison) == reconciliation["overlapping_hours"] == 120
+    assert comparison["abs_diff_eur_mwh"].le(reconciliation["tolerance_eur_mwh"] + 1e-12).all()
+    assert {
+        "pre_crisis",
+        "crisis_peak",
+        "post_crisis",
+        "pt60m_boundary_side",
+        "pt15m_boundary_side",
+    } == set(comparison["stratum"])
+
     base = build_feature_catalog(frame, "base")
     augmented = build_feature_catalog(frame, "base_plus_residual_load_proxy")
     assert tuple(base.columns) == BASE_FEATURES

@@ -64,8 +64,13 @@
   "mapping_authority": "https://www.smard.de/app/chart_configuration/market_data_configuration.json",
   "pulled_at_utc": "2026-09-08T13:34:33+00:00",
   "reconciliation": {
-    "reason": "ENTSO-E External API unavailable; a fixed stratified cross-source comparison cannot be evidenced from one source.",
-    "status": "open"
+    "comparison": "data/reconciliation.csv",
+    "fraction_within_tolerance": 1.0,
+    "max_abs_diff_eur_mwh": 0.0,
+    "overlapping_hours": 120,
+    "sample_spec": "data/reconciliation_sample.json",
+    "status": "pass",
+    "summary": "data/reconciliation_summary.json"
   },
   "requested_start_delivery_date": "2019-01-01",
   "route_reason": "ENTSO-E External API unavailable during the 2026-09-08 pull; capstone v6.7 section 3 authorizes SMARD fallback-primary.",

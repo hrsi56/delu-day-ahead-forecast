@@ -20,9 +20,10 @@ The frozen snapshot contains 67,343 continuous hourly price rows from delivery
 fallback-primary route while the ENTSO-E External API was unavailable. The
 mapping, cutoff, missing-source accounting, CC BY 4.0 attribution, and immutable
 SHA-256 are recorded in [`data/README.md`](data/README.md) and
-[`data/source_manifest.json`](data/source_manifest.json). The independent
-ENTSO-E↔SMARD reconciliation remains open; no same-source proxy comparison is
-presented as that evidence.
+[`data/source_manifest.json`](data/source_manifest.json). When the ENTSO-E API
+returned later in the checkpoint, the independently pre-pinned five-day sample
+reconciled 120/120 hourly prices within €0.01/MWh (maximum difference €0.00),
+including both sides of the 2025-10-01 transition.
 
 The Python layer in `src/delu_forecast/` implements exactly two frozen model
 catalogs: `base`, and `base_plus_residual_load_proxy`, whose only added model

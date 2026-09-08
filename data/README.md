@@ -39,9 +39,11 @@ including all missing counts and first/last valid timestamps, are in
   downstream catalogs use explicit completeness filtering on matched rows.
 - A44 is continuous for all 67,343 hourly rows and has zero nulls. All 8,184
   price hours on or after 2025-10-01 are means of exactly four source quarters.
-- The ENTSO-E↔SMARD fixed stratified reconciliation is open because the ENTSO-E
-  API was unavailable. A second SMARD-derived series is not an independent
-  source and is not used as a substitute.
+- The ENTSO-E API returned after the SMARD bulk pull. The sample in
+  `reconciliation_sample.json` was committed before querying it; all 120 hours
+  across pre-crisis, crisis, post-crisis, and both MTU-boundary sides agreed
+  within €0.01/MWh (maximum absolute difference €0.00). The complete comparison
+  and summary are committed beside the snapshot.
 
 ## Reproduction and audit
 
