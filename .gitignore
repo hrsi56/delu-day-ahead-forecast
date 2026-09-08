@@ -21,6 +21,9 @@ data/*
 !data/snapshot.sha256
 !data/source_manifest.json
 !data/partitions.json
+!data/reconciliation_sample.json
+!data/reconciliation.csv
+!data/reconciliation_summary.json
 data/raw/
 
 # macOS custom folder icon (filename ends with CR)
