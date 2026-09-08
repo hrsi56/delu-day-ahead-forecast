@@ -13,10 +13,36 @@
 
 Full engineering plan: **`capstone_V6_7.md`** (v6.7). Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.
 
+## CP-1 data and fixed features
+
+The frozen snapshot contains 67,343 continuous hourly price rows from delivery
+2019-01-01 through 2026-09-06. It was pulled from SMARD as the plan-authorized
+fallback-primary route while the ENTSO-E External API was unavailable. The
+mapping, cutoff, missing-source accounting, CC BY 4.0 attribution, and immutable
+SHA-256 are recorded in [`data/README.md`](data/README.md) and
+[`data/source_manifest.json`](data/source_manifest.json). The independent
+ENTSO-E↔SMARD reconciliation remains open; no same-source proxy comparison is
+presented as that evidence.
+
+The Python layer in `src/delu_forecast/` implements exactly two frozen model
+catalogs: `base`, and `base_plus_residual_load_proxy`, whose only added model
+feature is the 42-complete-delivery-day, D-2-bounded proxy. The five tail
+partitions were pinned in [`data/partitions.json`](data/partitions.json) before
+spectral EDA. The complete KFT/LAG classification and the A65/A75 assumptions
+are in [`docs/data-leakage-audit.md`](docs/data-leakage-audit.md).
+
 ## Setup
 
 ```
 uv sync
+```
+
+Verify the committed CP-1 artifact:
+
+```bash
+make test
+make audit
+make sql
 ```
 
 Requires `ENTSOE_API_TOKEN` in the environment (never commit it -- see `.gitignore`).

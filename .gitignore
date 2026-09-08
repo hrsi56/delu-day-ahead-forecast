@@ -13,8 +13,15 @@ __pycache__/
 .env
 *.env
 
-# Scratch data / probe evidence (not committed — see docs/spike-feed-status.md for summaries)
-data/
+# Scratch data / probe evidence. CP-1's frozen snapshot and manifests are
+# explicitly committed; transient downloads remain ignored.
+data/*
+!data/README.md
+!data/snapshot.parquet
+!data/snapshot.sha256
+!data/source_manifest.json
+!data/partitions.json
+data/raw/
 
 # macOS custom folder icon (filename ends with CR)
 Icon?

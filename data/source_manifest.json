@@ -1,0 +1,186 @@
+{
+  "a65_head_gap_observed_hours": 0,
+  "attribution": "Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de \u2014 CC BY 4.0.",
+  "coverage": {
+    "load_forecast_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67149,
+      "null_rows": 194,
+      "rows": 67343
+    },
+    "price_eur_mwh": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67343,
+      "null_rows": 0,
+      "rows": 67343
+    },
+    "solar_actual_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67342,
+      "null_rows": 1,
+      "rows": 67343
+    },
+    "solar_forecast_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67340,
+      "null_rows": 3,
+      "rows": 67343
+    },
+    "wind_offshore_actual_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67343,
+      "null_rows": 0,
+      "rows": 67343
+    },
+    "wind_offshore_forecast_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67343,
+      "null_rows": 0,
+      "rows": 67343
+    },
+    "wind_onshore_actual_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67342,
+      "null_rows": 1,
+      "rows": 67343
+    },
+    "wind_onshore_forecast_mw": {
+      "first_valid_utc": "2018-12-31T23:00:00+00:00",
+      "last_valid_utc": "2026-09-06T21:00:00+00:00",
+      "non_null_rows": 67340,
+      "null_rows": 3,
+      "rows": 67343
+    }
+  },
+  "ingestion_route": "SMARD fallback-primary",
+  "license": "CC BY 4.0",
+  "mapping_authority": "https://www.smard.de/app/chart_configuration/market_data_configuration.json",
+  "pulled_at_utc": "2026-09-08T13:34:33+00:00",
+  "reconciliation": {
+    "reason": "ENTSO-E External API unavailable; a fixed stratified cross-source comparison cannot be evidenced from one source.",
+    "status": "open"
+  },
+  "requested_start_delivery_date": "2019-01-01",
+  "route_reason": "ENTSO-E External API unavailable during the 2026-09-08 pull; capstone v6.7 section 3 authorizes SMARD fallback-primary.",
+  "schema_version": 1,
+  "series_mapping": [
+    {
+      "aggregation": "mean",
+      "column": "price_eur_mwh",
+      "filter_id": 4169,
+      "output_unit": "EUR/MWh",
+      "plan_series": "A44",
+      "role": "target",
+      "smard_label": "Day-ahead price"
+    },
+    {
+      "aggregation": "sum",
+      "column": "load_forecast_mw",
+      "filter_id": 411,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A65/A01",
+      "role": "kft_assumption",
+      "smard_label": "Forecast consumption: total grid load"
+    },
+    {
+      "aggregation": "sum",
+      "column": "wind_onshore_forecast_mw",
+      "filter_id": 123,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A69",
+      "role": "benchmark_only",
+      "smard_label": "Forecast wind onshore"
+    },
+    {
+      "aggregation": "sum",
+      "column": "solar_forecast_mw",
+      "filter_id": 125,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A69",
+      "role": "benchmark_only",
+      "smard_label": "Forecast solar"
+    },
+    {
+      "aggregation": "sum",
+      "column": "wind_offshore_forecast_mw",
+      "filter_id": 3791,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A69",
+      "role": "benchmark_only",
+      "smard_label": "Forecast wind offshore"
+    },
+    {
+      "aggregation": "sum",
+      "column": "wind_onshore_actual_mw",
+      "filter_id": 4067,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A75",
+      "role": "lag_input",
+      "smard_label": "Actual wind onshore"
+    },
+    {
+      "aggregation": "sum",
+      "column": "solar_actual_mw",
+      "filter_id": 4068,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A75",
+      "role": "lag_input",
+      "smard_label": "Actual solar"
+    },
+    {
+      "aggregation": "sum",
+      "column": "wind_offshore_actual_mw",
+      "filter_id": 1225,
+      "output_unit": "MW-hour-average",
+      "plan_series": "A75",
+      "role": "lag_input",
+      "smard_label": "Actual wind offshore"
+    }
+  ],
+  "snapshot_cutoff_delivery_date": "2026-09-06",
+  "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+  "source_bin_integrity": {
+    "load_forecast_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67149,
+      "hours_with_zero_non_null_quarters": 194,
+      "partial_hours_fail_closed_to_null": 0
+    },
+    "solar_actual_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67342,
+      "hours_with_zero_non_null_quarters": 0,
+      "partial_hours_fail_closed_to_null": 1
+    },
+    "solar_forecast_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67340,
+      "hours_with_zero_non_null_quarters": 3,
+      "partial_hours_fail_closed_to_null": 0
+    },
+    "wind_offshore_actual_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67343,
+      "hours_with_zero_non_null_quarters": 0,
+      "partial_hours_fail_closed_to_null": 0
+    },
+    "wind_offshore_forecast_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67343,
+      "hours_with_zero_non_null_quarters": 0,
+      "partial_hours_fail_closed_to_null": 0
+    },
+    "wind_onshore_actual_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67342,
+      "hours_with_zero_non_null_quarters": 0,
+      "partial_hours_fail_closed_to_null": 1
+    },
+    "wind_onshore_forecast_mw_source_quarter_count": {
+      "hours_with_four_non_null_quarters": 67340,
+      "hours_with_zero_non_null_quarters": 3,
+      "partial_hours_fail_closed_to_null": 0
+    }
+  }
+}

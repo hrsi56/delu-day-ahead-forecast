@@ -1,0 +1,15 @@
+name: invariant-tests
+
+on:
+  push:
+
+jobs:
+  properties:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked --dev
+      - run: uv run pytest -q
