@@ -27,6 +27,20 @@ def test_residual_proxy_is_42_complete_days_d2_bounded_and_dst_safe() -> None:
     assert hour_zero["vre_norm"] == expected
     assert hour_zero["window_end_delivery_date"] == target - timedelta(days=2)
 
+    target_rows = details.index[local.date == target]
+    changed = snapshot.copy()
+    changed.loc[changed["delivery_date"] > target - timedelta(days=2), "vre_actual_mw"] = -999_999.0
+    pd.testing.assert_frame_equal(details.loc[target_rows], residual_proxy_details(changed).loc[target_rows])
+    outside = snapshot.copy()
+    outside.loc[outside["delivery_date"] < target - timedelta(days=43), "vre_actual_mw"] = -999_999.0
+    pd.testing.assert_frame_equal(details.loc[target_rows], residual_proxy_details(outside).loc[target_rows])
+    inside = snapshot.copy()
+    inside.loc[inside["delivery_date"].eq(target - timedelta(days=2)), "vre_actual_mw"] += 42
+    np.testing.assert_allclose(
+        residual_proxy_details(inside).loc[target_rows, "vre_norm"] - details.loc[target_rows, "vre_norm"],
+        42 / details.loc[target_rows, "window_observation_count"],
+    )
+
     spring_target = details.loc[local.date == date(2024, 3, 31)]
     assert 2 not in spring_target.index.tz_convert("Europe/Berlin").hour
     fall_target = details.loc[(local.date == date(2024, 10, 27)) & (local.hour == 2)]

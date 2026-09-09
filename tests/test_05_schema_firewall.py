@@ -3,6 +3,7 @@ import pytest
 from delu_forecast.features import AUGMENTED_FEATURES, BASE_FEATURES
 from delu_forecast.schema import (
     BENCHMARK_ADDITIONS,
+    SAME_DAY_ACTUAL_COLUMNS,
     validate_benchmark_runtime_schema,
     validate_champion_runtime_schema,
     validate_historical_actual_input,
@@ -12,6 +13,11 @@ from delu_forecast.schema import (
 def test_champion_benchmark_runtime_schema_firewall() -> None:
     validate_champion_runtime_schema(BASE_FEATURES, "base")
     validate_champion_runtime_schema(AUGMENTED_FEATURES, "base_plus_residual_load_proxy")
+    for catalog, columns in (("base", BASE_FEATURES), ("base_plus_residual_load_proxy", AUGMENTED_FEATURES)):
+        for forbidden in (*BENCHMARK_ADDITIONS, *SAME_DAY_ACTUAL_COLUMNS):
+            with pytest.raises(ValueError, match="forbidden"):
+                validate_champion_runtime_schema(columns + (forbidden,), catalog)
+        validate_benchmark_runtime_schema(columns + BENCHMARK_ADDITIONS, catalog)
     with pytest.raises(ValueError, match="forbidden"):
         validate_champion_runtime_schema(BASE_FEATURES + ("wind_onshore_forecast_mw",), "base")
     with pytest.raises(ValueError, match="forbidden"):

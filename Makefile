@@ -5,6 +5,7 @@ test:
 
 audit:
 	uv run python scripts/audit_snapshot.py
+	uv run python scripts/audit_delivery_day_features.py
 
 spectral:
 	uv run python scripts/generate_spectral_artifacts.py

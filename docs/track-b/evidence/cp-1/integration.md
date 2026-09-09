@@ -1,3 +1,8 @@
+> **SUPERSEDED — attempt 1 historical verdict.** Landing was refused after an
+> independent pre-landing audit identified the ratified v6.7 availability defect.
+> This verdict remains intact below and does not certify v6.8. The new review is
+> recorded separately in `integration-v68.md` against its own candidate SHA.
+
 # Verdict — M1/CP-1 — Integration — PASS
 
 - Candidate SHA: `368822de297e71f24fd08569815cae0289e65b96`

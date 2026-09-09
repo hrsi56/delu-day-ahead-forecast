@@ -5,19 +5,50 @@ features are either known at that gate (KFT) or lagged observations (LAG). The
 model feature matrix is enforced by `src/delu_forecast/schema.py`; delivery-day
 A69, every A69 derivative, and same-day actual values are rejected.
 
-| Champion feature group | Class | Why it is available |
+For every row of D, every price-derived input must have a delivery date earlier
+than D (§5.2, capstone_V6_8.md). A row-wise t−1 edge does not establish gate
+availability for a whole-day curve and is retired. Calendar fields are derived
+from UTC timestamps converted to Europe/Berlin, not from the number of observed
+rows, so missing data cannot masquerade as a DST transition.
+
+| Champion feature | Class | Latest consumed delivery date / justification |
 |---|---|---|
-| Local hour, day of week, month, German federal holiday, day-after-holiday, bridge day, day type, DST-transition day, summer/winter flags | KFT | Deterministic calendar values known before the gate |
-| `crisis_period`, `post_crisis` | KFT | Static date indicators; no outcome information is used |
-| A65/A01 `load_forecast_mw` and delivery-day mean | KFT by explicit assumption | Regulation 543/2013 Art. 6(1)(b)/(2)(b) requires publication before the gate, but this snapshot does not empirically prove which archived vintage was present at 12:00 |
-| `price_lag_24h`, `price_lag_48h`, `price_lag_168h` | LAG | Already-cleared prices addressed by fixed UTC offsets |
-| 7/30-day price means/stds, 168h price quantiles, 7-day negative-hour count | LAG | Every rolling input is shifted first; its right edge is strictly t-1 (closed-left) |
-| `residual_load_proxy` in the sole augmented candidate | LAG + KFT | Delivery-day A65 minus `vre_norm`; the latter uses only A75 actuals from 42 complete delivery days ending at the close of D-2 |
+| `local_hour`, `day_of_week`, `month`, `is_federal_holiday`, `is_day_after_holiday`, `is_bridge_day`, `day_type`, `dst_transition_day`, `summer_peak`, `winter_peak` | KFT | Deterministic calendar values; no price consumed |
+| `crisis_period`, `post_crisis` | KFT | Static date indicators; no price consumed |
+| `load_forecast_mw` | KFT by explicit assumption | A65/A01 for D; regulatory pre-gate deadline and archive-vintage assumption below |
+| `load_forecast_day_mean_mw` | KFT by explicit assumption | A65/A01 for D; requires every expected UTC hour of the Berlin delivery day, 23/24/25, and propagates any null |
+| `price_lag_24h` | LAG | D−1, same Berlin clock hour; unavailable or ambiguous source is null |
+| `price_lag_48h` | LAG | D−2, same Berlin clock hour; unavailable or ambiguous source is null |
+| `price_lag_168h` | LAG | D−7, same Berlin clock hour; unavailable or ambiguous source is null |
+| `price_roll_mean_168h` | LAG | D−1; mean of the final 168 canonical hourly prices ending at the close of D−1 |
+| `price_roll_std_168h` | LAG | D−1; sample standard deviation (ddof=1) on that same 168-hour window |
+| `price_roll_mean_720h` | LAG | D−1; mean of the final 720 canonical hourly prices ending at the close of D−1 |
+| `price_roll_std_720h` | LAG | D−1; sample standard deviation (ddof=1) on that same 720-hour window |
+| `price_roll_q05_168h` | LAG | D−1; linearly interpolated 0.05 quantile on the same 168-hour window |
+| `price_roll_q50_168h` | LAG | D−1; linearly interpolated 0.50 quantile on the same 168-hour window |
+| `price_roll_q95_168h` | LAG | D−1; linearly interpolated 0.95 quantile on the same 168-hour window |
+| `negative_price_count_168h` | LAG | D−1; count of prices strictly below zero on the same 168-hour window |
+| `residual_load_proxy` (sole augmented addition) | LAG + KFT | No price consumed: A65 for D minus the A75 `vre_norm` over 42 complete delivery days D−43 through D−2 |
+
+Every rolling statistic is computed once per D and broadcast unchanged to all
+its rows. Missing history yields null, including at the snapshot head; neither
+the observation count nor the D−1 boundary is relaxed. On a fall-back target
+both repeated hours match the same unambiguous earlier source hour; if the
+**source** hour is ambiguous, it remains null even if just one of the repeated
+source rows is present. No adjacent-row fallback exists.
+
+The DuckDB supplementary artifact joins D to D−1/D−2/D−7 on local hour using
+an expected calendar grid to count source ambiguity. Its rolling query joins
+each local-midnight D boundary to the preceding 168/720 UTC hours, enforces full
+counts, and emits one result per delivery date. The offline acceptance audit
+compares both Python and SQL to independently selected raw-price windows.
 
 ## Two disclosed assumptions
 
 1. **A65 pre-gate assumption.** The regulatory deadline is the basis for KFT.
-   The archive can contain a later revision, so the data pulled after delivery
+   Both the pre-gate existence of the vector and its equality to the archived
+   vector are assumptions. The regulation also requires updates on significant
+   changes, so the archive can contain a later revision. The data pulled after delivery
    are not presented as empirical proof of the exact 12:00 vector.
 2. **A75 revision caveat.** The D-2 window uses the archive's current actual-
    generation values. A75 can be revised later, so those values may differ from

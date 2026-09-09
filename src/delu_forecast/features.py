@@ -51,12 +51,50 @@ def _utc_index(frame: pd.DataFrame) -> pd.DataFrame:
     result.index = result.index.tz_convert("UTC")
     if result.index.has_duplicates or not result.index.is_monotonic_increasing:
         raise ValueError("timestamps must be unique and increasing")
+    if not result.index.equals(result.index.floor("h")):
+        raise ValueError("timestamps must identify canonical UTC hours")
     return result
 
 
-def _time_lag(series: pd.Series, hours: int) -> pd.Series:
-    source_index = series.index - pd.Timedelta(hours=hours)
+def _calendar_day_lag(series: pd.Series, days: int) -> pd.Series:
+    """Match D-days/local hour; even a partially observed ambiguous hour is null."""
+    source_local = series.index.tz_convert(BERLIN).tz_localize(None) - pd.Timedelta(days=days)
+    source_index = source_local.tz_localize(BERLIN, ambiguous="NaT", nonexistent="NaT").tz_convert("UTC")
     return pd.Series(series.reindex(source_index).to_numpy(), index=series.index)
+
+
+def _delivery_day_hours(delivery_day: date) -> pd.DatetimeIndex:
+    return pd.date_range(
+        pd.Timestamp(delivery_day, tz=BERLIN).tz_convert("UTC"),
+        pd.Timestamp(delivery_day + timedelta(days=1), tz=BERLIN).tz_convert("UTC"),
+        freq="h", inclusive="left",
+    )
+
+
+def _daily_price_statistics(price: pd.Series, delivery_dates: pd.Index) -> pd.DataFrame:
+    """Compute exactly 168/720 canonical observations ending at D-1, once per D.
+
+    Reindex the expected hours, so a missing observation cannot silently extend
+    the window into older history. NumPy aggregates propagate any missing value.
+    """
+    rows = []
+    for delivery_day in delivery_dates:
+        boundary = pd.Timestamp(delivery_day, tz=BERLIN).tz_convert("UTC")
+        hours = pd.date_range(end=boundary - pd.Timedelta(hours=1), periods=720, freq="h")
+        long = price.reindex(hours).to_numpy(dtype=float)
+        short = long[-168:]
+        quantiles = np.quantile(short, [0.05, 0.50, 0.95])
+        rows.append({
+            "price_roll_mean_168h": np.mean(short),
+            "price_roll_std_168h": np.std(short, ddof=1),
+            "price_roll_mean_720h": np.mean(long),
+            "price_roll_std_720h": np.std(long, ddof=1),
+            "price_roll_q05_168h": quantiles[0],
+            "price_roll_q50_168h": quantiles[1],
+            "price_roll_q95_168h": quantiles[2],
+            "negative_price_count_168h": float(np.sum(short < 0)) if not np.isnan(short).any() else np.nan,
+        })
+    return pd.DataFrame(rows, index=delivery_dates)
 
 
 def build_base_features(snapshot: pd.DataFrame) -> pd.DataFrame:
@@ -91,25 +129,24 @@ def build_base_features(snapshot: pd.DataFrame) -> pd.DataFrame:
         [2, 1],
         default=0,
     ).astype("int8")
-    day_counts = pd.Series(1, index=frame.index).groupby(delivery_dates).transform("sum")
-    result["dst_transition_day"] = day_counts.ne(24).astype("int8")
+    unique_dates = delivery_dates.unique()
+    expected_hours = {value: _delivery_day_hours(value) for value in unique_dates}
+    result["dst_transition_day"] = np.array([len(expected_hours[value]) != 24 for value in delivery_dates], dtype="int8")
     result["summer_peak"] = result["month"].isin((6, 7, 8)).astype("int8")
     result["winter_peak"] = result["month"].isin((12, 1, 2)).astype("int8")
     result["load_forecast_mw"] = frame["load_forecast_mw"]
-    result["load_forecast_day_mean_mw"] = frame["load_forecast_mw"].groupby(delivery_dates).transform("mean")
+    # Missing rows and present-but-null values both invalidate the entire day.
+    daily_load = {
+        value: frame["load_forecast_mw"].reindex(hours).mean(skipna=False)
+        for value, hours in expected_hours.items()
+    }
+    result["load_forecast_day_mean_mw"] = delivery_dates.map(daily_load).to_numpy()
 
     price = frame["price_eur_mwh"]
     for hours in (24, 48, 168):
-        result[f"price_lag_{hours}h"] = _time_lag(price, hours)
-    closed_left = price.shift(1)
-    result["price_roll_mean_168h"] = closed_left.rolling(168, min_periods=168).mean()
-    result["price_roll_std_168h"] = closed_left.rolling(168, min_periods=168).std()
-    result["price_roll_mean_720h"] = closed_left.rolling(720, min_periods=720).mean()
-    result["price_roll_std_720h"] = closed_left.rolling(720, min_periods=720).std()
-    result["price_roll_q05_168h"] = closed_left.rolling(168, min_periods=168).quantile(0.05)
-    result["price_roll_q50_168h"] = closed_left.rolling(168, min_periods=168).quantile(0.50)
-    result["price_roll_q95_168h"] = closed_left.rolling(168, min_periods=168).quantile(0.95)
-    result["negative_price_count_168h"] = price.lt(0).shift(1).rolling(168, min_periods=168).sum()
+        result[f"price_lag_{hours}h"] = _calendar_day_lag(price, hours // 24)
+    daily_price = _daily_price_statistics(price, unique_dates)
+    result[daily_price.columns] = daily_price.reindex(delivery_dates).to_numpy()
 
     result["crisis_period"] = np.fromiter(
         (date(2021, 9, 1) <= value <= date(2022, 12, 31) for value in delivery_dates), dtype="int8"

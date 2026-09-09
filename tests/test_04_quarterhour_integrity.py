@@ -50,3 +50,30 @@ def test_price_transition_is_continuous_and_four_quarters_are_averaged() -> None
     result = assemble_price_series(pre, post)
     assert result.index.equals(pd.date_range("2025-09-30T20:00:00Z", periods=4, freq="h", tz="UTC"))
     assert result.tolist() == [50.0, 60.0, 70.0, 35.0]
+
+
+@pytest.mark.parametrize('day,quarters', [('2025-10-26', 100), ('2026-03-29', 92), ('2025-10-01', 96)])
+def test_entsoe_inclusive_endpoint_is_normalized_to_half_open_berlin_day(day: str, quarters: int) -> None:
+    # Exercise the actual reconciliation normalizer, without a network request.
+    from importlib.util import module_from_spec, spec_from_file_location
+    from pathlib import Path
+    from datetime import timedelta
+    spec = spec_from_file_location('reconcile', Path(__file__).resolve().parents[1] / 'scripts/reconcile_entsoe_smard.py')
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    start = pd.Timestamp(day, tz='Europe/Berlin')
+    end = pd.Timestamp(start.date() + timedelta(days=1), tz='Europe/Berlin')
+    index = pd.date_range(start, end, freq='15min')
+    assert len(index) == quarters + 1  # The pinned client's inclusive endpoint.
+    raw = pd.Series(range(len(index)), index=index, dtype=float)
+    hourly = module._hourly_entsoe_price(raw, start.date())
+    assert len(hourly) == quarters // 4
+    assert hourly.notna().all()
+    assert hourly.index.equals(pd.date_range(start.tz_convert('UTC'), end.tz_convert('UTC'), freq='h', inclusive='left'))
+    assert hourly.tolist() == [sum(range(offset, offset + 4)) / 4 for offset in range(0, quarters, 4)]
+    milliseconds = raw.copy()
+    milliseconds.index = milliseconds.index.as_unit("ms")
+    assert module._hourly_entsoe_price(milliseconds, start.date()).tolist() == hourly.tolist()
+    # A single surviving quarter must not be mistaken for a PT60M product.
+    with pytest.raises(ValueError, match='incomplete'):
+        module._hourly_entsoe_price(raw.drop(index=raw.index[1:4]), start.date())

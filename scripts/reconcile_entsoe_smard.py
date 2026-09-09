@@ -13,7 +13,7 @@ from pathlib import Path
 import pandas as pd
 from entsoe import EntsoePandasClient
 
-from delu_forecast.ingest import BERLIN
+from delu_forecast.ingest import BERLIN, TRANSITION_LOCAL_DATE
 
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLE_PATH = ROOT / "data" / "reconciliation_sample.json"
@@ -27,10 +27,14 @@ def _hourly_entsoe_price(raw: pd.Series, delivery_day: date) -> pd.Series:
     day = raw.loc[(raw.index >= start_local) & (raw.index < end_local)].tz_convert("UTC")
     if day.isna().any() or day.empty:
         raise ValueError("ENTSO-E day is empty or contains nulls")
+    interval = "15min" if delivery_day >= TRANSITION_LOCAL_DATE else "h"
+    expected_index = pd.date_range(start_local.tz_convert("UTC"), end_local.tz_convert("UTC"), freq=interval, inclusive="left")
+    if not day.index.as_unit("ns").equals(expected_index.as_unit("ns")):
+        raise ValueError("ENTSO-E delivery day has an incomplete, duplicate or misaligned source grid")
     frame = day.rename("value").to_frame()
     frame["hour_utc"] = frame.index.floor("h")
     sizes = frame.groupby("hour_utc")["value"].size()
-    invalid = ~sizes.isin((1, 4))
+    invalid = sizes.ne(4 if interval == "15min" else 1)
     if invalid.any():
         raise ValueError("ENTSO-E returned an incomplete hourly/quarter-hour bin")
     hourly = frame.groupby("hour_utc")["value"].mean()
