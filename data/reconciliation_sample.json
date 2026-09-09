@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "frozen_before_query": true,
+  "tolerance_eur_mwh": 0.01,
+  "required_fraction_within_tolerance": 0.999,
+  "delivery_days": [
+    {
+      "delivery_date": "2020-08-15",
+      "stratum": "pre_crisis"
+    },
+    {
+      "delivery_date": "2022-08-15",
+      "stratum": "crisis_peak"
+    },
+    {
+      "delivery_date": "2024-06-15",
+      "stratum": "post_crisis"
+    },
+    {
+      "delivery_date": "2025-09-30",
+      "stratum": "pt60m_boundary_side"
+    },
+    {
+      "delivery_date": "2025-10-01",
+      "stratum": "pt15m_boundary_side"
+    }
+  ]
+}
