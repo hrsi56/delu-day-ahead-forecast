@@ -7,6 +7,7 @@ single `mlflow.pyfunc.PythonModel` with one `predict`.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from datetime import date, timedelta
@@ -174,8 +175,31 @@ class ChampionModel(mlflow.pyfunc.PythonModel):
         return pd.DataFrame(stages["final"], columns=list(QUANTILE_LABELS), index=index)
 
     # -- provenance -------------------------------------------------------
+    def fingerprint(self) -> str:
+        """A stable identity for the frozen model: the thing CP-3 must still match.
+
+        `python_model.pkl` is NOT byte-stable -- MLflow stamps a fresh `model_uuid`
+        and `utc_time_created` into `MLmodel`, and cloudpickle does not reproduce
+        identical bytes across processes -- so hashing the artifact directory would
+        report a change on every save while the model was unchanged. This hashes
+        what the model *is*: the catalog, the nine boosters own serializations,
+        and the four CQR thresholds.
+        """
+        digest = hashlib.sha256()
+        digest.update(self.catalog.encode())
+        digest.update(",".join(catalog_columns(self.catalog)).encode())
+        digest.update(",".join(str(value) for value in QUANTILES).encode())
+        payload = thresholds_to_json(self.thresholds)
+        for key in sorted(payload):
+            digest.update(f"{key}:{payload[key]!r}".encode())
+        for label in QUANTILE_LABELS:
+            digest.update(label.encode())
+            digest.update(self.heads[label].booster_.model_to_string().encode())
+        return digest.hexdigest()
+
     def describe(self) -> dict[str, Any]:
         return {
+            "artifact_fingerprint_sha256": self.fingerprint(),
             "catalog": self.catalog,
             "feature_list": list(catalog_columns(self.catalog)),
             "quantiles": list(QUANTILES),

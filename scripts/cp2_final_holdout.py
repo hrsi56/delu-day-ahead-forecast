@@ -91,6 +91,7 @@ def sequential_equivalence(champion: ChampionModel, snapshot: pd.DataFrame, days
 def main() -> None:
     started = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
+    tree_dirty_at_start = working_tree_dirty()
     inputs = load_inputs()
     enabled = configure_tracking()
     spec = inputs.spec
@@ -195,7 +196,9 @@ def main() -> None:
         "evaluation_decision_taken_once": True,
         "retrain_after_holdout": False,
         "retune_after_holdout": False,
-        "working_tree_dirty_at_run": working_tree_dirty(),
+        "source_tree_dirty_when_run_started": tree_dirty_at_start,
+        "artifact_fingerprint_sha256": champion.fingerprint(),
+        "artifact_bytes_are_not_stable": "MLflow stamps a fresh model_uuid and creation time into MLmodel and cloudpickle is not byte-reproducible, so models/champion changes on every save while the model does not. artifact_fingerprint_sha256 -- catalog, feature list, quantiles, the four thresholds and the nine boosters' own serializations -- is the identity to check.",
         "selected_catalog": selected,
         "n_holdout_rows": int(holdout_rows.sum()),
         "n_holdout_days": len(holdout_days),
@@ -220,7 +223,8 @@ def main() -> None:
     if previous is not None:
         drift = {
             key: (previous.get(key), report[key])
-            for key in ("champion_mae", "champion_mean_pinball", "similar_day_naive_mae", "final_cqr_thresholds")
+            for key in ("champion_mae", "champion_mean_pinball", "similar_day_naive_mae",
+                        "final_cqr_thresholds", "artifact_fingerprint_sha256")
             if previous.get(key) != report[key]
         }
         report["reproduces_previous_run_exactly"] = not drift
@@ -247,6 +251,7 @@ def main() -> None:
                 "cqr_thresholds": json.dumps(thresholds_to_json(thresholds)),
                 "dm_label": DM_LABEL,
                 "artifact": "mlflow.pyfunc; nine heads + catalog pipeline + CQR + isotonic",
+                "artifact_fingerprint_sha256": champion.fingerprint(),
             }),
             metrics={
                 "holdout_mae": champion_mae,

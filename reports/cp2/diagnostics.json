@@ -1,0 +1,189 @@
+{
+  "coverage_levels": [
+    "50",
+    "80",
+    "95"
+  ],
+  "dunkelflaute_definition": "delivery day whose mean A69 VRE forecast is below 20% of its mean A65 load forecast; a post-hoc evaluation stratum only, never a champion feature",
+  "frozen_champion_shap_top10_in_sample": [
+    {
+      "feature": "price_lag_24h",
+      "mean_abs_shap": 14.638026612371469,
+      "rank": 1
+    },
+    {
+      "feature": "price_lag_168h",
+      "mean_abs_shap": 5.657623951395043,
+      "rank": 2
+    },
+    {
+      "feature": "price_roll_q50_168h",
+      "mean_abs_shap": 4.448508921689905,
+      "rank": 3
+    },
+    {
+      "feature": "price_lag_48h",
+      "mean_abs_shap": 4.439940498351033,
+      "rank": 4
+    },
+    {
+      "feature": "day_of_week",
+      "mean_abs_shap": 4.396023958232133,
+      "rank": 5
+    },
+    {
+      "feature": "price_roll_q95_168h",
+      "mean_abs_shap": 4.386255175377148,
+      "rank": 6
+    },
+    {
+      "feature": "load_forecast_mw",
+      "mean_abs_shap": 3.418967676456138,
+      "rank": 7
+    },
+    {
+      "feature": "local_hour",
+      "mean_abs_shap": 3.395383482828897,
+      "rank": 8
+    },
+    {
+      "feature": "price_roll_mean_720h",
+      "mean_abs_shap": 3.281260605520439,
+      "rank": 9
+    },
+    {
+      "feature": "day_type",
+      "mean_abs_shap": 2.982999170265987,
+      "rank": 10
+    }
+  ],
+  "n_dunkelflaute_days_in_snapshot": 328,
+  "permutation_top10": [
+    {
+      "feature": "price_lag_24h",
+      "importance_mean_mae_increase": 8.260802538981292,
+      "importance_std": 0.30247307929369166,
+      "rank": 1
+    },
+    {
+      "feature": "price_lag_48h",
+      "importance_mean_mae_increase": 1.802510035141463,
+      "importance_std": 0.14628203865002448,
+      "rank": 2
+    },
+    {
+      "feature": "day_of_week",
+      "importance_mean_mae_increase": 1.443593197772815,
+      "importance_std": 0.15776352757618647,
+      "rank": 3
+    },
+    {
+      "feature": "local_hour",
+      "importance_mean_mae_increase": 1.1285028713503344,
+      "importance_std": 0.09176676071425387,
+      "rank": 4
+    },
+    {
+      "feature": "price_lag_168h",
+      "importance_mean_mae_increase": 1.0966840658952974,
+      "importance_std": 0.08430715494917224,
+      "rank": 5
+    },
+    {
+      "feature": "load_forecast_day_mean_mw",
+      "importance_mean_mae_increase": 0.4105148675733332,
+      "importance_std": 0.07627746551533812,
+      "rank": 6
+    },
+    {
+      "feature": "load_forecast_mw",
+      "importance_mean_mae_increase": 0.3855651672396828,
+      "importance_std": 0.07415806585874446,
+      "rank": 7
+    },
+    {
+      "feature": "day_type",
+      "importance_mean_mae_increase": 0.33649415897484614,
+      "importance_std": 0.06551227273566475,
+      "rank": 8
+    },
+    {
+      "feature": "price_roll_std_720h",
+      "importance_mean_mae_increase": 0.1886270625418504,
+      "importance_std": 0.04192072992783573,
+      "rank": 9
+    },
+    {
+      "feature": "price_roll_q50_168h",
+      "importance_mean_mae_increase": 0.15114704944396032,
+      "importance_std": 0.05026603320434395,
+      "rank": 10
+    }
+  ],
+  "quantiles": [
+    0.025,
+    0.05,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    0.95,
+    0.975
+  ],
+  "scoping": "SHAP on the p50 head explains central tendency, not interval width. Interval width is driven by the inter-quantile spread and the CQR shift Q. SHAP explains the selected champion; it is not the incremental-value test -- that is the \u00a74.1 two-arm comparison, which selected `base`.",
+  "shap_surface": "p50 head of the champion catalog's fold-5 model, scored on fold 5's eval block (2026-01-08..2026-04-07) -- out of sample for that model",
+  "shap_top10": [
+    {
+      "feature": "price_lag_24h",
+      "mean_abs_shap": 15.401310383360386,
+      "rank": 1
+    },
+    {
+      "feature": "price_lag_168h",
+      "mean_abs_shap": 5.412601170582895,
+      "rank": 2
+    },
+    {
+      "feature": "price_roll_q50_168h",
+      "mean_abs_shap": 5.1258021429891265,
+      "rank": 3
+    },
+    {
+      "feature": "day_of_week",
+      "mean_abs_shap": 4.510413707759048,
+      "rank": 4
+    },
+    {
+      "feature": "price_lag_48h",
+      "mean_abs_shap": 4.206478858888543,
+      "rank": 5
+    },
+    {
+      "feature": "load_forecast_mw",
+      "mean_abs_shap": 3.2302870958504752,
+      "rank": 6
+    },
+    {
+      "feature": "day_type",
+      "mean_abs_shap": 3.1644473239108297,
+      "rank": 7
+    },
+    {
+      "feature": "local_hour",
+      "mean_abs_shap": 3.064186071616306,
+      "rank": 8
+    },
+    {
+      "feature": "price_roll_mean_720h",
+      "mean_abs_shap": 2.9835918587747425,
+      "rank": 9
+    },
+    {
+      "feature": "price_roll_q95_168h",
+      "mean_abs_shap": 2.71908082228481,
+      "rank": 10
+    }
+  ],
+  "shap_vs_permutation_rank_spearman": 0.6923076923076923
+}

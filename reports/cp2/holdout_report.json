@@ -1,7 +1,7 @@
 {
   "champion_mae": 25.907780440955044,
   "champion_mean_pinball": 6.708294915819919,
-  "code_sha": "073c22ea15b51b7d4f9ae1dc82b0a538391c14a5",
+  "code_sha": "bca46fc684f22e7127b42304e3880f2907ff9baf",
   "crossing_violations_final": 0,
   "cutoffs": {
     "final_calibration_window": "2026-04-09..2026-06-07",
@@ -10,6 +10,7 @@
     "raw_model_fit_precedes_snapshot_by_delivery_days": "152",
     "snapshot_cutoff": "2026-09-06"
   },
+  "differences_from_previous_run": {},
   "dm": {
     "analysis": "probabilistic_daily_vector_pinball",
     "comparator": "similar_day_naive",
@@ -26,6 +27,7 @@
   },
   "dm_label": "Pre-specified one-shot holdout DM test on a fixed 90-day window - confirmatory-style, not power-qualified.",
   "evaluated_once": true,
+  "evaluation_decision_taken_once": true,
   "final_coverage": {
     "50": 0.44074074074074077,
     "80": 0.7592592592592593,
@@ -51,7 +53,9 @@
     "80": 0.5990740740740741,
     "95": 0.8393518518518519
   },
+  "reproduces_previous_run_exactly": true,
   "retrain_after_holdout": false,
+  "retune_after_holdout": false,
   "selected_catalog": "base",
   "sequential_equivalence": {
     "days_checked": 90,
@@ -60,5 +64,6 @@
   },
   "similar_day_naive_mae": 27.75776736111111,
   "similar_day_naive_mean_pinball": 13.878883680555557,
-  "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00"
+  "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+  "working_tree_dirty_at_run": true
 }
