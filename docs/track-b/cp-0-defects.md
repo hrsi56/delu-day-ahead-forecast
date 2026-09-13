@@ -1,7 +1,23 @@
 # CP-0 operational defects — the Gauntlet contract's own findings
 
-**Status: OPEN — 20 defects. 17 ACCEPTED · 1 MOOT · 2 REMEDIED but not re-tested · 1 amendment
-WAIVED BY OWNER.**
+**Status: CLOSED 2026-09-14 — 20 defects. 17 ACCEPTED · 1 MOOT · 2 REMEDIED AND RE-TESTED · 1
+amendment WAIVED BY OWNER.**
+
+**The closure condition below was met in full and the ledger is closed.** Both outstanding remedies
+were re-tested under a task-scoped Governance Lockdown suspension granted 2026-09-14:
+
+- **D-CP0-19** was exercised for real by **M1/CP-1's landing** on 2026-09-14 — a squash landing
+  (`5651c9a`, one parent) in which `main` does **not** contain the candidate SHAs the verdicts cite,
+  which is precisely the condition the defect described. Both tags were taken, the branch was
+  reclaimed, and all four cited SHAs were verified reachable from `evidence/cp-1` **after** deletion.
+  **The guard also caught a live error in the same cycle:** `land/cp-1` was initially created on the
+  wrong commit and was corrected before reclamation.
+- **D-CP0-20** was re-tested by a purpose-built falsifiable check, `scripts/governance_selftest.py`,
+  run against the whole governance corpus. **Its negative control is the genuine pre-remedy sentence
+  recovered from `d91b8c3:orchestrator-role.md`**: the check reports a defect on that text and
+  reports none on the remedy that replaced it, so it discriminates rather than pattern-matching a
+  phrase. Two further controls confirm a quoted denial without a citation marker, and an unquoted
+  live rule, both still fail. Live corpus: eight documents, **PASS**.
 
 The v6.6 amendment was ratified 2026-08-05, hardened across seven independent review rounds, and put
 to its acceptance test on 2026-08-06 by the clean-room CP-0 re-run. **That run returned `PASS` on all
@@ -16,10 +32,16 @@ observed behaviour.**
   `started_at_utc` requirement entirely, so there is nothing left to re-test. AMD-G7 failed its
   acceptance test, self-reported by the executor; the owner-authorized remedy is recorded at
   `6ea6a20`. The defect definition and its historical evidence are unchanged.
-- **D-CP0-19 — REMEDIED 2026-08-06; remedy EXERCISED AND HELD at CP-1's landing, 2026-09-14.** Found by the reclamation guard at landing.
-  **Evidence:** CP-1 landed as a **squash** (`5651c9a`, one parent), so the candidate SHAs the verdicts cite are **not** reachable from `main` — precisely the condition this defect was about. Both tags were taken: `land/cp-1` → `5651c9a`, `evidence/cp-1` → `24f59b5`. After `gauntlet/cp-1` was deleted, all four cited SHAs (`368822de`, `cd9b6dd`, `c0b6e180`, `8adddcb`) were verified reachable from `evidence/cp-1`, with both Integration verdicts readable through it. **Whether this constitutes the re-test this ledger's closure condition requires is an Owner acceptance judgement, recorded here and not decided by the Orchestrator.**
-- **D-CP0-20 — REMEDIED 2026-08-10, not re-tested.** Found by an agent reading the corpus to document
-  it. Fixed under **the first authorized suspension of the Governance Lockdown**.
+- **D-CP0-19 — REMEDIED 2026-08-06; RE-TESTED 2026-09-14 at CP-1's landing.** Found by the reclamation guard at landing.
+  **Evidence:** CP-1 landed as a **squash** (`5651c9a`, one parent), so the candidate SHAs the verdicts cite are **not** reachable from `main` — precisely the condition this defect was about. Both tags were taken: `land/cp-1` → `5651c9a`, `evidence/cp-1` → `24f59b5`. After `gauntlet/cp-1` was deleted, all four cited SHAs (`368822de`, `cd9b6dd`, `c0b6e180`, `8adddcb`) were verified reachable from `evidence/cp-1`, with both Integration verdicts readable through it. **The Owner accepted this as the re-test on 2026-09-14.** It is stronger than a synthetic exercise would have been: the remedy ran under live conditions, in the case that makes the second tag necessary, and its guard caught a real error in the same cycle.
+- **D-CP0-20 — REMEDIED 2026-08-10; RE-TESTED 2026-09-14.** Found by an agent reading the corpus to
+  document it. Fixed under **the first authorized suspension of the Governance Lockdown**.
+  **Re-test:** `scripts/governance_selftest.py` asserts the invariant the remedy established — *no
+  role may be denied the means to meet an obligation it carries* — rather than the absence of a
+  phrase. A capability denial fails the check only when it is **unconditional** and nothing preserves
+  the dependent obligation; the conditional accommodation that names a route is the remedy's shape
+  and passes. Validated against the real pre-remedy text from Git history, which it flags, and the
+  real post-remedy text, which it does not. Live corpus clean.
 - **AMD-G5 — WAIVED BY OWNER, 2026-09-04.** The `BRIEF_INVALID` negative control was skipped at the
   CP-0 re-run and, after being re-proposed twice, was **declined as an informed owner decision** — a
   deliberate risk acceptance, not an oversight, and **not an open item**. **What is waived is the
@@ -35,7 +57,9 @@ observed behaviour.**
   or special form. The waiver is moot as well as closed: the mechanism it spared no longer exists,
   and the pre-dispatch validation that was its compensating control still stands.
 
-**This ledger stays OPEN.** It closes when **D-CP0-19's and D-CP0-20's** remedies are re-tested. The
+**This ledger is CLOSED (2026-09-14).** It closed when **D-CP0-19's and D-CP0-20's** remedies were
+re-tested — see the header for the evidence. The condition itself is reproduced unchanged below, as
+the record of what closure required. The
 D-CP0-18 clause was struck from this condition on 2026-09-07 under an owner-authorized, task-scoped
 suspension of the Governance Lockdown, because capstone v6.7 retired the requirement that defect
 remediated; the AMD-G5 clause was struck from it on 2026-09-04 under the same kind of suspension,
@@ -778,7 +802,7 @@ Baseline 128 → 141; post-amendment 153 → **168** (R7 added later by G10); `A
 
 ## D-CP0-18 — `started_at_utc` is required but unobtainable without an instruction to fetch it
 
-**Status: REMEDIED 2026-09-03 under owner authorization; not re-tested.**
+**Status: MOOT 2026-09-07 — remedied 2026-09-03 under owner authorization, never re-tested, and nothing left to re-test.** Capstone v6.7 retired the requirement this defect served, so the clause naming it was struck from the closure condition the same day. *(This line previously read "REMEDIED … not re-tested", contradicting the header's MOOT disposition; corrected 2026-09-14 as a consistency edit during closure.)*
 
 **Statement.** AMD-G7 requires the Lead to emit `started_at_utc` together with its verified
 repository state as the **first observable output**. `engineering-role.md` step 1 says *what* must be
