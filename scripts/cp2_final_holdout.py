@@ -17,6 +17,7 @@ ships.
 from __future__ import annotations
 
 import json
+import pathlib
 import shutil
 import time
 from pathlib import Path
@@ -194,7 +195,7 @@ def main() -> None:
     report = {
         "evaluated_once": True,
         "evaluation_decision_taken_once": True,
-        "execution_note": "This deterministic script was executed five times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and four completed runs that produced identical metrics and an identical artifact fingerprint. No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
+        "execution_note": "This deterministic script was executed several times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and five completed runs that produced identical metrics and an identical artifact fingerprint (reproduces_previous_run_exactly records the comparison). No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
         "retrain_after_holdout": False,
         "retune_after_holdout": False,
         "source_tree_dirty_when_run_started": tree_dirty_at_start,
@@ -278,9 +279,15 @@ def main() -> None:
         )
         if enabled:
             try:
-                mlflow.pyfunc.log_model(
-                    artifact_path="champion", python_model=champion, code_paths=["src/delu_forecast"]
+                logged = mlflow.pyfunc.log_model(
+                    name="champion", python_model=champion, code_paths=["src/delu_forecast"]
                 )
+                # MLflow 3 stores this as a LoggedModel entity, not under the run's
+                # artifact tree, so `runs/artifacts/list` will not show it. The URI
+                # below is where a reader actually finds it.
+                mlflow.log_param("champion_model_uri", logged.model_uri)
+                print(f"champion logged model: {logged.model_uri}")
+                pathlib.Path("reports/cp2/champion_model_uri.txt").write_text(logged.model_uri + "\n")
             except Exception as error:  # noqa: BLE001 - artifact upload is evidence, not a gate
                 from delu_forecast.tracking import redact
 

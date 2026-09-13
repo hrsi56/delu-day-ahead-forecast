@@ -27,7 +27,7 @@ import shap
 from sklearn.inspection import permutation_importance
 
 from delu_forecast.benchmark import DUNKELFLAUTE_VRE_SHARE_THRESHOLD, dunkelflaute_days
-from delu_forecast.experiment import load_inputs, mask_for
+from delu_forecast.experiment import experiment_params, load_inputs, mask_for
 from delu_forecast.metrics import (
     COVERAGE_LEVELS,
     QUANTILES,
@@ -245,7 +245,11 @@ def main() -> None:
     with run("diagnostics::champion", enabled=enabled, tags={"stage": "diagnostics"}):
         log_decision_record(
             enabled,
-            params={"selected_catalog": selected, "shap_surface": summary["shap_surface"]},
+            params=experiment_params(selected, inputs, {
+                "selected_catalog": selected,
+                "shap_surface": summary["shap_surface"],
+                "dunkelflaute_definition": summary["dunkelflaute_definition"],
+            }),
             metrics={"shap_vs_permutation_rank_spearman": rank_agreement},
             artifacts=[
                 OUT / "shap_ranking.csv", OUT / "permutation_importance.csv", OUT / "regime_table.csv",
