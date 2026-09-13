@@ -186,6 +186,33 @@ class ChampionModel(mlflow.pyfunc.PythonModel):
         }
 
 
+#: What the champion is allowed to see at the 12:00 gate. `vre_actual_mw` is here
+#: and `actual_load_mw` is not: A75 aggregate generation is a LAG input admitted
+#: only through the D-2-bounded trailing window, while actual load is never a
+#: champion input at all (§5.2, §9.4-5).
+CHAMPION_INPUT_COLUMNS: dict[str, tuple[str, ...]] = {
+    "base": ("timestamp_utc", "delivery_date", "local_hour", "price_eur_mwh", "load_forecast_mw"),
+    "base_plus_residual_load_proxy": (
+        "timestamp_utc", "delivery_date", "local_hour", "price_eur_mwh", "load_forecast_mw", "vre_actual_mw",
+    ),
+}
+
+
+def gate_feasible_frame(snapshot: pd.DataFrame, catalog: str) -> pd.DataFrame:
+    """Project a snapshot down to the columns the champion may consume.
+
+    The champion refuses a frame carrying post-gate A69, so the caller narrows it
+    first -- the same narrowing the CP-3 CLI performs when it pulls its three
+    feeds. Keeping the refusal in the model rather than trusting the caller is the
+    point: a future helper that forgets to narrow gets an exception, not a leak.
+    """
+    columns = CHAMPION_INPUT_COLUMNS[catalog]
+    missing = [column for column in columns if column not in snapshot.columns]
+    if missing:
+        raise ValueError(f"snapshot lacks champion input columns {missing}")
+    return snapshot.loc[:, list(columns)].copy()
+
+
 def target_series(snapshot: pd.DataFrame) -> pd.Series:
     frame = snapshot.set_index("timestamp_utc") if "timestamp_utc" in snapshot.columns else snapshot
     return pd.Series(
@@ -217,11 +244,13 @@ __all__ = [
     "BERLIN",
     "ChampionModel",
     "Cutoffs",
+    "CHAMPION_INPUT_COLUMNS",
     "FORBIDDEN_CHAMPION_INPUT_COLUMNS",
     "LGBM_PARAMS",
     "SEED",
     "dump_json",
     "fit_quantile_heads",
+    "gate_feasible_frame",
     "head_label",
     "predict_raw_heads",
     "target_series",

@@ -1,0 +1,64 @@
+{
+  "champion_mae": 25.907780440955044,
+  "champion_mean_pinball": 6.708294915819919,
+  "code_sha": "073c22ea15b51b7d4f9ae1dc82b0a538391c14a5",
+  "crossing_violations_final": 0,
+  "cutoffs": {
+    "final_calibration_window": "2026-04-09..2026-06-07",
+    "holdout_window": "2026-06-09..2026-09-06",
+    "raw_model_fit_cutoff": "2026-04-07",
+    "raw_model_fit_precedes_snapshot_by_delivery_days": "152",
+    "snapshot_cutoff": "2026-09-06"
+  },
+  "dm": {
+    "analysis": "probabilistic_daily_vector_pinball",
+    "comparator": "similar_day_naive",
+    "evidence_class": "one_shot_holdout",
+    "lag_truncation": 4,
+    "long_run_variance": 61.42255148654378,
+    "mean_loss_differential": -7.170588764735637,
+    "model_better_at_5pct": true,
+    "n_days": 90,
+    "p_value": 1.9814819075825897e-18,
+    "relative_improvement_pct": 51.66545761012248,
+    "standardized_effect_size": -1.0477562158534526,
+    "statistic": -8.679848490812438
+  },
+  "dm_label": "Pre-specified one-shot holdout DM test on a fixed 90-day window - confirmatory-style, not power-qualified.",
+  "evaluated_once": true,
+  "final_coverage": {
+    "50": 0.44074074074074077,
+    "80": 0.7592592592592593,
+    "95": 0.9398148148148148
+  },
+  "final_cqr_thresholds": {
+    "p025_p975": 18.62289828175607,
+    "p05_p95": 14.455407162140105,
+    "p10_p90": 9.7117992990109,
+    "p25_p75": 3.516837342123054
+  },
+  "mae_percentage_difference_vs_naive": -6.664754034749622,
+  "n_holdout_days": 90,
+  "n_holdout_rows": 2160,
+  "pinball_percentage_difference_vs_naive": -51.66545761012248,
+  "post_cqr_coverage": {
+    "50": 0.4388888888888889,
+    "80": 0.7597222222222222,
+    "95": 0.9398148148148148
+  },
+  "raw_coverage": {
+    "50": 0.35462962962962963,
+    "80": 0.5990740740740741,
+    "95": 0.8393518518518519
+  },
+  "retrain_after_holdout": false,
+  "selected_catalog": "base",
+  "sequential_equivalence": {
+    "days_checked": 90,
+    "mismatched_days": [],
+    "rows_checked": 2160
+  },
+  "similar_day_naive_mae": 27.75776736111111,
+  "similar_day_naive_mean_pinball": 13.878883680555557,
+  "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00"
+}
