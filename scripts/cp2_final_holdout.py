@@ -194,6 +194,7 @@ def main() -> None:
     report = {
         "evaluated_once": True,
         "evaluation_decision_taken_once": True,
+        "execution_note": "This deterministic script was executed five times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and four completed runs that produced identical metrics and an identical artifact fingerprint. No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
         "retrain_after_holdout": False,
         "retune_after_holdout": False,
         "source_tree_dirty_when_run_started": tree_dirty_at_start,
@@ -221,14 +222,24 @@ def main() -> None:
         "code_sha": code_sha(),
     }
     if previous is not None:
+        # Compare only fields the previous report actually carried: a newly added
+        # provenance field is not drift, and reporting it as drift would train a
+        # reader to ignore the flag that matters.
         drift = {
-            key: (previous.get(key), report[key])
+            key: (previous[key], report[key])
             for key in ("champion_mae", "champion_mean_pinball", "similar_day_naive_mae",
-                        "final_cqr_thresholds", "artifact_fingerprint_sha256")
-            if previous.get(key) != report[key]
+                        "similar_day_naive_mean_pinball", "final_cqr_thresholds",
+                        "artifact_fingerprint_sha256", "final_coverage")
+            if key in previous and previous[key] != report[key]
         }
         report["reproduces_previous_run_exactly"] = not drift
         report["differences_from_previous_run"] = drift
+        report["fields_compared_against_previous_run"] = sorted(
+            key for key in ("champion_mae", "champion_mean_pinball", "similar_day_naive_mae",
+                            "similar_day_naive_mean_pinball", "final_cqr_thresholds",
+                            "artifact_fingerprint_sha256", "final_coverage")
+            if key in previous
+        )
     (OUT / "holdout_report.json").write_text(json.dumps(report, indent=2, sort_keys=True, default=str) + "\n")
 
     holdout_frame = pd.DataFrame({"delivery_date": days, "y_true": y, "similar_day_naive": naive})

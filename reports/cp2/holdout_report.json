@@ -1,7 +1,9 @@
 {
+  "artifact_bytes_are_not_stable": "MLflow stamps a fresh model_uuid and creation time into MLmodel and cloudpickle is not byte-reproducible, so models/champion changes on every save while the model does not. artifact_fingerprint_sha256 -- catalog, feature list, quantiles, the four thresholds and the nine boosters' own serializations -- is the identity to check.",
+  "artifact_fingerprint_sha256": "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb",
   "champion_mae": 25.907780440955044,
   "champion_mean_pinball": 6.708294915819919,
-  "code_sha": "bca46fc684f22e7127b42304e3880f2907ff9baf",
+  "code_sha": "01a1548152f581b995415faa6788298e10effc01",
   "crossing_violations_final": 0,
   "cutoffs": {
     "final_calibration_window": "2026-04-09..2026-06-07",
@@ -10,7 +12,12 @@
     "raw_model_fit_precedes_snapshot_by_delivery_days": "152",
     "snapshot_cutoff": "2026-09-06"
   },
-  "differences_from_previous_run": {},
+  "differences_from_previous_run": {
+    "artifact_fingerprint_sha256": [
+      null,
+      "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb"
+    ]
+  },
   "dm": {
     "analysis": "probabilistic_daily_vector_pinball",
     "comparator": "similar_day_naive",
@@ -53,7 +60,7 @@
     "80": 0.5990740740740741,
     "95": 0.8393518518518519
   },
-  "reproduces_previous_run_exactly": true,
+  "reproduces_previous_run_exactly": false,
   "retrain_after_holdout": false,
   "retune_after_holdout": false,
   "selected_catalog": "base",
@@ -65,5 +72,5 @@
   "similar_day_naive_mae": 27.75776736111111,
   "similar_day_naive_mean_pinball": 13.878883680555557,
   "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
-  "working_tree_dirty_at_run": true
+  "source_tree_dirty_when_run_started": false
 }
