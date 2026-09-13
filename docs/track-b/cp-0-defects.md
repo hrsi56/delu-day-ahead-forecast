@@ -16,7 +16,8 @@ observed behaviour.**
   `started_at_utc` requirement entirely, so there is nothing left to re-test. AMD-G7 failed its
   acceptance test, self-reported by the executor; the owner-authorized remedy is recorded at
   `6ea6a20`. The defect definition and its historical evidence are unchanged.
-- **D-CP0-19 — REMEDIED 2026-08-06, not re-tested.** Found by the reclamation guard at landing.
+- **D-CP0-19 — REMEDIED 2026-08-06; remedy EXERCISED AND HELD at CP-1's landing, 2026-09-14.** Found by the reclamation guard at landing.
+  **Evidence:** CP-1 landed as a **squash** (`5651c9a`, one parent), so the candidate SHAs the verdicts cite are **not** reachable from `main` — precisely the condition this defect was about. Both tags were taken: `land/cp-1` → `5651c9a`, `evidence/cp-1` → `24f59b5`. After `gauntlet/cp-1` was deleted, all four cited SHAs (`368822de`, `cd9b6dd`, `c0b6e180`, `8adddcb`) were verified reachable from `evidence/cp-1`, with both Integration verdicts readable through it. **Whether this constitutes the re-test this ledger's closure condition requires is an Owner acceptance judgement, recorded here and not decided by the Orchestrator.**
 - **D-CP0-20 — REMEDIED 2026-08-10, not re-tested.** Found by an agent reading the corpus to document
   it. Fixed under **the first authorized suspension of the Governance Lockdown**.
 - **AMD-G5 — WAIVED BY OWNER, 2026-09-04.** The `BRIEF_INVALID` negative control was skipped at the
