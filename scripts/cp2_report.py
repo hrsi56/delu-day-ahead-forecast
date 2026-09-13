@@ -71,6 +71,9 @@ def main() -> None:
     per_fold = pd.read_csv(OUT / "development_metrics.csv")
     regime = pd.read_csv(OUT / "regime_table.csv")
     reliability = pd.read_csv(OUT / "reliability_three_stage.csv")
+    timings = json.loads((OUT / "timings.json").read_text()) if (OUT / "timings.json").exists() else {}
+    uri_file = OUT / "champion_model_uri.txt"
+    model_uri = uri_file.read_text().strip() if uri_file.exists() else "see the champion run"
     shap_rank = pd.read_csv(OUT / "shap_ranking.csv")
     permutation = pd.read_csv(OUT / "permutation_importance.csv")
 
@@ -358,6 +361,23 @@ code SHA, fold spec, feature list, seed, hyperparameters, metrics and artifact l
 `evidence_class` on the DM artifacts. The link is the `.mlflow` tracking URI, never the repository
 root — the root redirects an anonymous visitor to a sign-in page while the tracking URI is
 anonymously readable.
+
+### Compute footprint (§9.3)
+
+Measured wall clock on {timings.get("hardware", "Apple M3, 16 GB, CPU only")},
+Python {timings.get("python", "3.13")}, from `reports/cp2/timings.json`:
+
+| Stage | Seconds |
+|---|---|
+| Development (baselines + both catalogs, 5 folds) | {timings.get("development_seconds", "-")} |
+| §7.2 post-gate benchmark | {timings.get("benchmark_seconds", "-")} |
+| Final fit, freeze, sequential proof, holdout | {timings.get("holdout_seconds", "-")} |
+| Diagnostics (SHAP, permutation, regime, reliability) | {timings.get("diagnostics_seconds", "-")} |
+| **Total** | **{timings.get("total_seconds", "-")}** |
+
+No GPU, no cloud compute, $0 run rate. The champion's frozen artifact is
+{Path("models/champion/python_model.pkl").stat().st_size / 1_048_576:.1f} MB on disk and is logged
+to MLflow as `{model_uri}`.
 
 **No hyperparameter search was run.** One frozen LightGBM configuration is used by every arm: §4.1
 and §7.2 both require a matched tuning budget across arms, and a budget of zero is the only one

@@ -14,6 +14,7 @@ uncalibrated comparison is what §7.2 forbids.
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 
 import numpy as np
@@ -26,7 +27,7 @@ from delu_forecast.experiment import (
 from delu_forecast.metrics import mae, pinball_matrix, pooled_mean_pinball
 from delu_forecast.model import SEED, fit_quantile_heads, predict_raw_heads
 from delu_forecast.schema import BENCHMARK_ADDITIONS
-from delu_forecast.tracking import configure_tracking, log_decision_record, run
+from delu_forecast.tracking import configure_tracking, log_decision_record, record_timing, run
 
 OUT = Path("reports/cp2")
 LIMITATION = (
@@ -65,6 +66,7 @@ def run_raw_arm(inputs, arm: str) -> dict[str, object]:
 
 
 def main() -> None:
+    started = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
     inputs = load_inputs()
     enabled = configure_tracking()
@@ -118,6 +120,7 @@ def main() -> None:
                 },
                 artifacts=[OUT / "a69_benchmark.json"],
             )
+    record_timing("benchmark_seconds", time.time() - started)
 
 
 if __name__ == "__main__":

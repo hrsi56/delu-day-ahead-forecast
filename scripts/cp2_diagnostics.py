@@ -14,6 +14,7 @@ same rows as a secondary, explicitly labelled in-sample read.
 from __future__ import annotations
 
 import json
+import time
 from datetime import date
 from pathlib import Path
 
@@ -39,7 +40,7 @@ from delu_forecast.metrics import (
 )
 from delu_forecast.model import SEED, fit_quantile_heads, predict_raw_heads
 from delu_forecast.postprocess import QUANTILE_LABELS
-from delu_forecast.tracking import configure_tracking, log_decision_record, run
+from delu_forecast.tracking import configure_tracking, log_decision_record, record_timing, run
 
 OUT = Path("reports/cp2")
 MEDIAN = "p50"
@@ -77,6 +78,7 @@ def _stratum_metrics(y, matrix, days, label, n_thin=THIN_STRATUM_ROWS):
 
 
 def main() -> None:
+    started = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
     inputs = load_inputs()
     enabled = configure_tracking()
@@ -257,6 +259,7 @@ def main() -> None:
                 OUT / "fig_reliability_three_stage.png", OUT / "diagnostics.json",
             ],
         )
+    record_timing("diagnostics_seconds", time.time() - started)
 
 
 if __name__ == "__main__":

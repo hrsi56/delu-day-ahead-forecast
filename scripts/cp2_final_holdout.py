@@ -48,6 +48,7 @@ from delu_forecast.model import (
 )
 from delu_forecast.postprocess import QUANTILE_LABELS
 from delu_forecast.tracking import (
+    record_timing,
     code_sha,
     configure_tracking,
     log_decision_record,
@@ -293,6 +294,7 @@ def main() -> None:
 
                 print(f"model artifact upload failed (disclosed, non-gating): {redact(str(error))[:300]}")
     print(f"elapsed {time.time() - started:.1f}s")
+    record_timing("holdout_seconds", time.time() - started)
 
 
 if __name__ == "__main__":

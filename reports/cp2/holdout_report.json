@@ -3,7 +3,7 @@
   "artifact_fingerprint_sha256": "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb",
   "champion_mae": 25.907780440955044,
   "champion_mean_pinball": 6.708294915819919,
-  "code_sha": "08c82ab75f724726f31efb50ec19e1be83f41dd9",
+  "code_sha": "f7fecd78407cc46eb3361dddd410addf27b12e52",
   "crossing_violations_final": 0,
   "cutoffs": {
     "final_calibration_window": "2026-04-09..2026-06-07",
@@ -30,7 +30,7 @@
   "dm_label": "Pre-specified one-shot holdout DM test on a fixed 90-day window - confirmatory-style, not power-qualified.",
   "evaluated_once": true,
   "evaluation_decision_taken_once": true,
-  "execution_note": "This deterministic script was executed five times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and four completed runs that produced identical metrics and an identical artifact fingerprint. No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
+  "execution_note": "This deterministic script was executed several times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and five completed runs that produced identical metrics and an identical artifact fingerprint (reproduces_previous_run_exactly records the comparison). No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
   "fields_compared_against_previous_run": [
     "artifact_fingerprint_sha256",
     "champion_mae",

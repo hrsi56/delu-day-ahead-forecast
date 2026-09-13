@@ -39,7 +39,7 @@ from delu_forecast.metrics import (
     point_forecast_quantiles,
     pooled_mean_pinball,
 )
-from delu_forecast.tracking import configure_tracking, log_decision_record, public_tracking_url, run
+from delu_forecast.tracking import record_timing, configure_tracking, log_decision_record, public_tracking_url, run
 
 OUT = Path("reports/cp2")
 EVIDENCE_CLASS = "development_post_selection"
@@ -253,6 +253,7 @@ def main() -> None:
     print(json.dumps(dm_results, indent=2, default=str))
     print(f"\ntracking: {public_tracking_url()}")
     print(f"elapsed {time.time() - started:.1f}s")
+    record_timing("development_seconds", time.time() - started)
 
 
 if __name__ == "__main__":
