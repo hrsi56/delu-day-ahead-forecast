@@ -118,6 +118,12 @@ def main() -> None:
     # -- 2. the four final CQR thresholds, estimated once -------------------
     raw_calibration = predict_raw_heads(heads, inputs.matrix(selected, calibration_rows))
     thresholds = fit_cqr_thresholds(raw_calibration, inputs.target[calibration_rows])
+    calibration_frame = pd.DataFrame(
+        {"delivery_date": inputs.delivery_dates[calibration_rows], "y_true": inputs.target[calibration_rows]}
+    )
+    for position, label in enumerate(QUANTILE_LABELS):
+        calibration_frame[f"raw_{label}"] = raw_calibration[:, position]
+    calibration_frame.to_parquet(OUT / "final_calibration_predictions.parquet", index=False)
     print(f"final CQR thresholds from {int(calibration_rows.sum())} rows: {thresholds_to_json(thresholds)}")
 
     # -- 3. freeze -----------------------------------------------------------

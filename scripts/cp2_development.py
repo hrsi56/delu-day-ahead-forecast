@@ -21,6 +21,7 @@ from delu_forecast.experiment import (
     CATALOG_AUGMENTED,
     CATALOG_BASE,
     baseline_predictions,
+    calibration_frame,
     experiment_params,
     load_inputs,
     mask_for,
@@ -77,6 +78,22 @@ def main() -> None:
         print(f"  arm {arm}: {time.time() - elapsed:.1f}s")
     predictions = pd.concat([stacked_frame(arms[arm]) for arm in arms], ignore_index=True)
     predictions.to_parquet(OUT / "development_predictions.parquet", index=False)
+    calibration = pd.concat([calibration_frame(arms[arm]) for arm in arms], ignore_index=True)
+    calibration.to_parquet(OUT / "development_calibration_predictions.parquet", index=False)
+    (OUT / "development_fold_thresholds.json").write_text(
+        json.dumps(
+            {
+                "note": "recompute these from development_calibration_predictions.parquet: "
+                "E_i = max(q_lo - y, y - q_hi) per pair, ascending sort, one-based rank "
+                "k = ceil((n_cal+1)(1-alpha)) read as scores[k-1]",
+                "alphas": {"p025_p975": 0.05, "p05_p95": 0.10, "p10_p90": 0.20, "p25_p75": 0.50},
+                "thresholds": {arm: {item.fold: item.thresholds for item in results} for arm, results in arms.items()},
+                "n_calibration": {arm: {item.fold: item.n_calibration for item in results} for arm, results in arms.items()},
+            },
+            indent=2, sort_keys=True,
+        )
+        + "\n"
+    )
 
     # -- matched-row proof -------------------------------------------------
     keys = {

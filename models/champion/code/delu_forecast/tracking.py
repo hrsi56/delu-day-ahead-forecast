@@ -89,6 +89,31 @@ def snapshot_hash(path: Path | str = "data/snapshot.parquet") -> str:
     return digest.hexdigest()
 
 
+TIMINGS_PATH = Path("reports/cp2/timings.json")
+
+
+def record_timing(stage: str, seconds: float, path: Path | str = TIMINGS_PATH) -> None:
+    """Merge one stage's wall-clock into reports/cp2/timings.json.
+
+    §9.3 asks for a stated compute footprint. Measuring it beats asserting it,
+    and a merged file lets `make cp2` leave one coherent record of the whole
+    pipeline on the hardware it actually ran on.
+    """
+    import json
+    import platform
+
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.loads(target.read_text()) if target.exists() else {}
+    payload.setdefault("hardware", f"{platform.machine()} / {platform.system()} {platform.release()}, CPU only")
+    payload.setdefault("python", platform.python_version())
+    payload[stage] = round(float(seconds), 1)
+    payload["total_seconds"] = round(
+        sum(value for key, value in payload.items() if key not in {"hardware", "python", "total_seconds"}), 1
+    )
+    target.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+
+
 @contextlib.contextmanager
 def run(name: str, *, enabled: bool, tags: dict[str, Any] | None = None) -> Iterator[Any]:
     """Start an MLflow run, or yield None when tracking is not configured.
@@ -132,6 +157,7 @@ __all__ = [
     "configure_tracking",
     "log_decision_record",
     "public_tracking_url",
+    "record_timing",
     "redact",
     "run",
     "snapshot_hash",
