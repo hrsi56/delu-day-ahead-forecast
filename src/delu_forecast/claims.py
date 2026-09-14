@@ -280,8 +280,15 @@ def build_claims() -> Claims:
     champion_rows = pooled[pooled["model"] == selected].set_index("stage")
 
     pkl_bytes = (REPO_ROOT / "models/champion/python_model.pkl").stat().st_size
+    # The published size describes the committed artifact, so transient bytecode
+    # is excluded. MLflow puts `models/champion/code` on `sys.path` when it loads
+    # the pyfunc, and under some import orders Python then writes ~74 KB of
+    # `__pycache__` there -- which would silently move a number printed on four
+    # public surfaces depending on whether anything had loaded the model first.
     directory_bytes = sum(
-        path.stat().st_size for path in (REPO_ROOT / "models/champion").rglob("*") if path.is_file()
+        path.stat().st_size
+        for path in (REPO_ROOT / "models/champion").rglob("*")
+        if path.is_file() and "__pycache__" not in path.parts and path.suffix != ".pyc"
     )
 
     values: dict[str, str] = {

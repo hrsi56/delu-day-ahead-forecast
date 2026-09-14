@@ -156,3 +156,57 @@ def test_every_required_claim_key_resolves():
     claims = build_claims()
     for key in REQUIRED_ON_EVERY_SURFACE:
         assert claims[key], f"claim {key} is empty"
+
+
+def test_the_published_artifact_size_ignores_transient_bytecode(tmp_path, monkeypatch):
+    """A published number must not depend on whether the model was loaded first.
+
+    MLflow adds `models/champion/code` to `sys.path` when it loads the pyfunc, and
+    under some import orders Python writes `__pycache__` there. Before this was
+    excluded, `champion_dir_bytes` — printed on all four surfaces — moved by tens
+    of kilobytes depending on execution order.
+    """
+    import json
+    import shutil
+
+    from delu_forecast import claims as claims_module
+
+    root = tmp_path / "repo"
+    (root / "models" / "champion" / "code" / "delu_forecast").mkdir(parents=True)
+    real = claims_module.REPO_ROOT
+    for relative in (
+        "models/champion/champion_card.json",
+        "models/champion/python_model.pkl",
+        "reports/cp2/holdout_report.json",
+        "reports/cp2/catalog_selection.json",
+        "reports/cp2/a69_benchmark.json",
+        "reports/cp2/dm_development.json",
+        "reports/cp2/development_pooled_metrics.csv",
+    ):
+        (root / relative).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(real / relative, root / relative)
+
+    def size(with_cache: bool) -> str:
+        cache = root / "models" / "champion" / "code" / "delu_forecast" / "__pycache__"
+        if with_cache:
+            cache.mkdir(exist_ok=True)
+            (cache / "claims.cpython-313.pyc").write_bytes(b"x" * 73_554)
+        elif cache.exists():
+            shutil.rmtree(cache)
+        monkeypatch.setattr(claims_module, "REPO_ROOT", root)
+        claims_module.build_claims.cache_clear()
+        return claims_module.build_claims()["champion_dir_bytes"]
+
+    try:
+        clean, polluted = size(False), size(True)
+        assert clean == polluted, (
+            f"the published directory size moved when bytecode appeared: {clean} -> {polluted}"
+        )
+        # Positive control: the sum is real, not a hardcoded constant.
+        (root / "models" / "champion" / "extra.bin").write_bytes(b"y" * 1000)
+        claims_module.build_claims.cache_clear()
+        assert claims_module.build_claims()["champion_dir_bytes"] != clean
+    finally:
+        monkeypatch.undo()
+        claims_module.build_claims.cache_clear()
+        assert json.loads((real / "models/champion/champion_card.json").read_text())
