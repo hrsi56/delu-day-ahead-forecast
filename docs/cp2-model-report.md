@@ -390,7 +390,8 @@ Python 3.13.15, from `reports/cp2/timings.json`:
 | **Total** | **695.4** |
 
 No GPU, no cloud compute, $0 run rate. The champion's frozen artifact is
-29.4 MB on disk and is logged
+29.4 MiB (30.8 MB) on disk — the `python_model.pkl` itself, 30,830,306 bytes; the whole
+`models/champion/` directory is 31,623,247 bytes (30.2 MiB) — and is logged
 to MLflow as `models:/m-cc535a4df0f94671a9429ae8b2f0158a`.
 
 **No hyperparameter search was run.** One frozen LightGBM configuration is used by every arm: §4.1
