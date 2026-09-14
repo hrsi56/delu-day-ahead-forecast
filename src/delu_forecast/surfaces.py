@@ -60,7 +60,12 @@ def html_to_text(document: str) -> str:
     body = document
     for block in ("script", "style"):
         body = re.sub(rf"<{block}\b.*?</{block}>", " ", body, flags=re.DOTALL | re.IGNORECASE)
-    return normalise(html.unescape(_TAG.sub(" ", body)).replace(" ", " "))
+    # `<code>x</code>` is the HTML rendering of Markdown's `x`, so restore the
+    # backticks before the tags go. Without this a claim containing a code span
+    # could never match on both a Markdown surface and an HTML one, and the two
+    # would be reported as disagreeing while saying exactly the same thing.
+    body = re.sub(r"<code>(.*?)</code>", r"`\1`", body, flags=re.DOTALL | re.IGNORECASE)
+    return normalise(html.unescape(_TAG.sub(" ", body)).replace("\u00a0", " "))
 
 
 @dataclass(frozen=True)

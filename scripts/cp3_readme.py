@@ -18,7 +18,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from delu_forecast.claims import build_claims, limitation_bullets  # noqa: E402
+from delu_forecast.claims import (  # noqa: E402
+    build_claims,
+    limitation_bullets,
+    reproducibility_bullets,
+)
 
 README = ROOT / "README.md"
 HEADING = "## CP-3 showcase and release"
@@ -28,6 +32,7 @@ NEXT_HEADING = "## Setup\n"
 def build_section() -> str:
     C = build_claims()
     limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
+    reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
     return f"""{HEADING}
 
 **Deployment status — read this before clicking.** The Pages export and the Space bundle are built
@@ -120,6 +125,13 @@ written separately per surface is how a limitation ends up on one page and nowhe
 
 And one on the environment: {C["floor_change"]} None of this is engineered around; a floor-aware
 tail would reopen scope this project deliberately closed.
+
+### Reproducibility statement
+
+§10 item (12) fixes what a complete one contains, and it too is rendered from one place onto every
+surface:
+
+{reproduction}
 
 ### Link discipline
 

@@ -18,8 +18,12 @@ from delu_forecast.claims import (
     LIMITATION_KEYS,
     LIMITATION_LABELS,
     LIMITATION_TOPICS,
+    REPRODUCIBILITY_KEYS,
+    REPRODUCIBILITY_LABELS,
+    REPRODUCIBILITY_TOPICS,
     build_claims,
     limitation_bullets,
+    reproducibility_bullets,
 )
 from delu_forecast.surfaces import (
     PAGES_PATH,
@@ -110,3 +114,62 @@ def test_the_floor_change_one_liner_is_present_where_the_plan_requires_it(human_
         assert surface.carries("floor_change", claims["floor_change"]), surface.name
     assert "2026-05-28" in claims["floor_change"]
     assert "600" in claims["floor_change"]
+
+
+# -- §10 item (12): the reproducibility statement -----------------------------
+
+
+def test_the_set_covers_every_element_section_10_item_12_names():
+    """The plan's own list, transcribed once and checked against the claim keys."""
+    assert set(REPRODUCIBILITY_TOPICS) == {
+        "tagged_commit",
+        "mlflow_permalink",
+        "registered_champion",
+        "pages_canonical",
+        "duckdb_sql",
+        "four_cutoffs",
+        "attribution",
+    }
+    assert set(REPRODUCIBILITY_LABELS) == set(REPRODUCIBILITY_KEYS)
+    assert len(reproducibility_bullets(build_claims())) == len(REPRODUCIBILITY_KEYS)
+
+
+@pytest.mark.parametrize("key", REPRODUCIBILITY_KEYS)
+def test_every_reproducibility_element_appears_on_every_human_surface(human_surfaces, key):
+    claims = build_claims()
+    missing = [surface.name for surface in human_surfaces if not surface.carries(key, claims[key])]
+    assert not missing, f"{key} missing from: {', '.join(missing)}"
+
+
+def test_the_registered_champion_element_names_the_model_and_the_alias():
+    """The round-2 defect: §10 item (12) requires the registered `champion` alias
+    in the reproducibility statement, and it was on none of the three surfaces."""
+    import json
+
+    from delu_forecast.claims import REPO_ROOT
+
+    text = build_claims()["repro_registered_champion"]
+    record = json.loads((REPO_ROOT / "reports" / "cp3" / "mlflow_registration.json").read_text())
+    assert record["registered_model"] in text
+    assert f"`{record['alias']}` alias" in text
+    assert "release" in text and "lineage" in text
+    # ...and says plainly that it is evidence, not a runtime dependency (§9.1).
+    assert "never queries the registry" in text
+
+
+def test_positive_control_a_reproducibility_element_dropped_is_caught(human_surfaces):
+    claims = build_claims()
+    key = "repro_registered_champion"
+    card = next(surface for surface in human_surfaces if surface.name == "Space card")
+    stripped = Surface(card.name, card.path, card.text.replace(normalise(claims[key]), ""))
+    assert stripped.text != card.text, "the control did not modify anything"
+    assert not stripped.carries(key, claims[key])
+    others = [surface for surface in human_surfaces if surface.name != "Space card"]
+    assert all(surface.carries(key, claims[key]) for surface in others)
+
+
+def test_the_four_cutoffs_element_names_all_four():
+    claims = build_claims()
+    text = claims["repro_four_cutoffs"]
+    for key in ("snapshot_cutoff", "raw_model_fit_cutoff", "final_calibration_window", "holdout_window"):
+        assert claims[key] in text, f"{key} absent from the four-cutoffs element"

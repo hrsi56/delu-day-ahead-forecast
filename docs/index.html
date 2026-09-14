@@ -328,23 +328,23 @@ byte-reproducible, so <code>models/champion/</code> changes while the model does
 fingerprint is computed over the catalog, the feature list, the nine quantiles, the four thresholds
 and the nine boosters' own serializations.</p>
 <ul>
-<li><strong>Experiment records:</strong> <a href="https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow">https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow</a> — the
-<code>.mlflow</code> tracking URI, which is anonymously readable. The DagsHub repository UI is
-deliberately not linked: it redirects an anonymous visitor to a sign-in page.</li>
-<li><strong>Code and snapshot:</strong> <a href="https://github.com/hrsi56/delu-day-ahead-forecast">https://github.com/hrsi56/delu-day-ahead-forecast</a>.
-<code>uv sync</code>, then <code>make train</code> after checking out the tagged commit reproduces
-the champion from the committed snapshot; <code>uv run python predict_next_day.py</code> runs it
-offline; <code>make test</code> runs the invariant suite including the CQR order-statistic fixture;
-<code>make sql</code> runs the DuckDB queries. The whole showcase also runs as a container —
-<code>docker build -t delu-showcase .</code> then
-<code>docker run -p 7860:7860 delu-showcase</code> — which is the same image the Space serves, with
-the champion and the snapshot bundled inside it.</li>
-<li><strong>SQL:</strong> hand-authored DuckDB queries in <code>sql/feature_queries.sql</code>
-express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python
-pipeline.</li>
-<li><strong>Interactive demo:</strong>
-<a href="https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast">interactive demo — may take ~30 s to wake if asleep</a> — the same bundled artifact, with the
-holdout period shown as a historical out-of-sample replay.</li>
+<li><strong>Tagged commit.</strong> Check out the tagged commit and run <code>uv sync</code> then <code>make train</code>: the champion is rebuilt from the committed snapshot with pinned dependencies and fixed seeds, no extra fetch.</li>
+<li><strong>MLflow permalinks.</strong> Every decision-bearing run — the three baselines, both catalog candidates, both benchmark arms, the champion's final fit and holdout, and the diagnostics — is public at https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow with snapshot hash, code SHA, fold spec, feature list, seed, hyperparameters, metrics and artifact links.</li>
+<li><strong>The registered <code>champion</code> alias.</strong> The champion is registered on that MLflow instance as the model <code>delu-day-ahead-champion</code> under the <code>champion</code> alias, carrying release and lineage tags — <code>release_status=portfolio_release</code>, the source run id, the code commit, the snapshot hash and the four cutoffs. It is portfolio evidence only: the deployed demo loads the bundled artifact and never queries the registry.</li>
+<li><strong>Canonical entry point.</strong> The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast is linked from it.</li>
+<li><strong>DuckDB SQL.</strong> The hand-authored DuckDB queries in <code>sql/feature_queries.sql</code> express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with <code>make sql</code>.</li>
+<li><strong>The four cutoffs.</strong> All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.</li>
+<li><strong>Attribution.</strong> Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.</li>
+<li><strong>Run it yourself.</strong> Clone
+<a href="https://github.com/hrsi56/delu-day-ahead-forecast">https://github.com/hrsi56/delu-day-ahead-forecast</a>, then <code>uv sync</code>, then
+<code>uv run python predict_next_day.py --level 80 --self-check</code> forecasts a delivery day
+offline from the bundled snapshot and re-proves the gate boundary as it goes;
+<code>make test</code> runs the invariant suite including the CQR order-statistic fixture;
+<code>make sql</code> runs the DuckDB queries; and
+<code>docker build -t delu-showcase . &amp;&amp; docker run -p 7860:7860 delu-showcase</code>
+builds and serves the same image the Space runs, champion and snapshot bundled inside it.</li>
+<li><strong>Compute.</strong> Apple M3, 16&nbsp;GB, CPU only, no GPU, $0 run rate; the whole
+pipeline — development, benchmark, final fit and diagnostics — runs in well under an hour.</li>
 </ul>
 
 <footer>

@@ -363,6 +363,14 @@ def build_claims() -> Claims:
         "limitation_staleness": LIMITATION_STALENESS,
         "limitation_mtu_averaging": LIMITATION_MTU_AVERAGING,
         "limitation_not_an_operations_system": LIMITATION_NOT_AN_OPERATIONS_SYSTEM,
+        # -- §10 item (12), the complete reproducibility statement -------------
+        "repro_tagged_commit": REPRO_TAGGED_COMMIT,
+        "repro_mlflow_permalink": REPRO_MLFLOW_PERMALINK,
+        "repro_registered_champion": REPRO_REGISTERED_CHAMPION,
+        "repro_pages_canonical": REPRO_PAGES_CANONICAL,
+        "repro_duckdb_sql": REPRO_DUCKDB_SQL,
+        "repro_four_cutoffs": REPRO_FOUR_CUTOFFS,
+        "repro_attribution": ATTRIBUTION,
         # -- links -------------------------------------------------------------
         "mlflow_url": MLFLOW_URL,
         "pages_url": PAGES_URL,
@@ -400,6 +408,57 @@ def forbidden_dagshub_links(text: str) -> list[str]:
     return found
 
 
+#: §10 item (12) enumerates what a complete reproducibility statement contains.
+#: Same treatment as the limitations set, and for the same reason: the round-2
+#: review found the registered `champion` alias on none of the three surfaces
+#: because each wrote its own reproduction prose.
+REPRODUCIBILITY_TOPICS: tuple[str, ...] = (
+    "tagged_commit",
+    "mlflow_permalink",
+    "registered_champion",
+    "pages_canonical",
+    "duckdb_sql",
+    "four_cutoffs",
+    "attribution",
+)
+
+REPRO_TAGGED_COMMIT = (
+    "Check out the tagged commit and run `uv sync` then `make train`: the champion is rebuilt from the "
+    "committed snapshot with pinned dependencies and fixed seeds, no extra fetch."
+)
+
+REPRO_MLFLOW_PERMALINK = (
+    "Every decision-bearing run — the three baselines, both catalog candidates, both benchmark arms, "
+    "the champion's final fit and holdout, and the diagnostics — is public at "
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow with snapshot hash, code SHA, fold spec, "
+    "feature list, seed, hyperparameters, metrics and artifact links."
+)
+
+REPRO_REGISTERED_CHAMPION = (
+    "The champion is registered on that MLflow instance as the model `delu-day-ahead-champion` under "
+    "the `champion` alias, carrying release and lineage tags — `release_status=portfolio_release`, the "
+    "source run id, the code commit, the snapshot hash and the four cutoffs. It is portfolio evidence "
+    "only: the deployed demo loads the bundled artifact and never queries the registry."
+)
+
+REPRO_PAGES_CANONICAL = (
+    "The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the "
+    "canonical entry point, and the interactive Space at "
+    "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast is linked from it."
+)
+
+REPRO_DUCKDB_SQL = (
+    "The hand-authored DuckDB queries in `sql/feature_queries.sql` express the same calendar-day lag "
+    "and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed "
+    "Parquet with `make sql`."
+)
+
+REPRO_FOUR_CUTOFFS = (
+    "All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final "
+    "calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06."
+)
+
+
 #: Claim keys for the §10 item (11) set, in reading order.
 LIMITATION_KEYS: tuple[str, ...] = tuple(f"limitation_{topic}" for topic in LIMITATION_TOPICS)
 
@@ -426,6 +485,30 @@ def limitation_bullets(claims, *, bold: str = "**") -> list[str]:
     ]
 
 
+#: Claim keys for the §10 item (12) set, in the order the plan lists them.
+REPRODUCIBILITY_KEYS: tuple[str, ...] = tuple(
+    f"repro_{topic}" for topic in REPRODUCIBILITY_TOPICS
+)
+
+REPRODUCIBILITY_LABELS: dict[str, str] = {
+    "repro_tagged_commit": "Tagged commit",
+    "repro_mlflow_permalink": "MLflow permalinks",
+    "repro_registered_champion": "The registered `champion` alias",
+    "repro_pages_canonical": "Canonical entry point",
+    "repro_duckdb_sql": "DuckDB SQL",
+    "repro_four_cutoffs": "The four cutoffs",
+    "repro_attribution": "Attribution",
+}
+
+
+def reproducibility_bullets(claims, *, bold: str = "**") -> list[str]:
+    """The §10 item (12) set as ready-to-render bullets, one per element."""
+    return [
+        f"{bold}{REPRODUCIBILITY_LABELS[key]}.{bold} {claims[key]}"
+        for key in REPRODUCIBILITY_KEYS
+    ]
+
+
 __all__ = [
     "ATTRIBUTION",
     "BENCHMARK_LIMITATION",
@@ -439,6 +522,9 @@ __all__ = [
     "LIMITATION_KEYS",
     "LIMITATION_LABELS",
     "LIMITATION_TOPICS",
+    "REPRODUCIBILITY_KEYS",
+    "REPRODUCIBILITY_LABELS",
+    "REPRODUCIBILITY_TOPICS",
     "MLFLOW_URL",
     "PAGES_URL",
     "REPO_ROOT",
@@ -451,4 +537,5 @@ __all__ = [
     "build_claims",
     "forbidden_dagshub_links",
     "limitation_bullets",
+    "reproducibility_bullets",
 ]

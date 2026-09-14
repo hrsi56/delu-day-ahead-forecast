@@ -38,7 +38,11 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from delu_forecast.claims import build_claims, limitation_bullets  # noqa: E402
+from delu_forecast.claims import (  # noqa: E402
+    build_claims,
+    limitation_bullets,
+    reproducibility_bullets,
+)
 from delu_forecast.postprocess import QUANTILE_LABELS  # noqa: E402
 from delu_forecast.showcase import (  # noqa: E402
     INTERVAL_LEVELS,
@@ -56,8 +60,9 @@ BUILD_RECORD = ROOT / "reports" / "cp3" / "pages_build.json"
 #: it reads two of the nine quantiles already stored at each point.
 LOAD_SCALES: tuple[float, ...] = tuple(round(0.90 + 0.02 * index, 2) for index in range(11))
 
-#: Only the bullets' own `**lead-in.**` is turned into markup.
+#: Only the bullets' own `**lead-in.**` and `backticks` become markup.
 BOLD = re.compile(r"\*\*(.+?)\*\*")
+CODE = re.compile(r"`([^`]+)`")
 
 
 def data_uri(path: Path) -> str:
@@ -238,6 +243,14 @@ def build_html() -> str:
     limitations = "\n".join(
         "<li>" + BOLD.sub(r"<strong>\1</strong>", esc(bullet)) + "</li>"
         for bullet in limitation_bullets(C)
+    )
+    # §10 item (12): the same treatment, so no surface can carry a partial
+    # reproducibility statement. `CODE` turns the bullets' own backticks into
+    # <code>, after escaping, so the sentence itself stays byte-identical to
+    # the Markdown surfaces once markup is stripped.
+    reproduction = "\n".join(
+        "<li>" + CODE.sub(r"<code>\1</code>", BOLD.sub(r"<strong>\1</strong>", esc(bullet))) + "</li>"
+        for bullet in reproducibility_bullets(C)
     )
     level_inputs = "".join(
         f"<label><input type='radio' name='lvl' value='{level}'"
@@ -538,23 +551,17 @@ byte-reproducible, so <code>models/champion/</code> changes while the model does
 fingerprint is computed over the catalog, the feature list, the nine quantiles, the four thresholds
 and the nine boosters' own serializations.</p>
 <ul>
-<li><strong>Experiment records:</strong> <a href="{C['mlflow_url']}">{C['mlflow_url']}</a> — the
-<code>.mlflow</code> tracking URI, which is anonymously readable. The DagsHub repository UI is
-deliberately not linked: it redirects an anonymous visitor to a sign-in page.</li>
-<li><strong>Code and snapshot:</strong> <a href="{C['github_url']}">{C['github_url']}</a>.
-<code>uv sync</code>, then <code>make train</code> after checking out the tagged commit reproduces
-the champion from the committed snapshot; <code>uv run python predict_next_day.py</code> runs it
-offline; <code>make test</code> runs the invariant suite including the CQR order-statistic fixture;
-<code>make sql</code> runs the DuckDB queries. The whole showcase also runs as a container —
-<code>docker build -t delu-showcase .</code> then
-<code>docker run -p 7860:7860 delu-showcase</code> — which is the same image the Space serves, with
-the champion and the snapshot bundled inside it.</li>
-<li><strong>SQL:</strong> hand-authored DuckDB queries in <code>sql/feature_queries.sql</code>
-express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python
-pipeline.</li>
-<li><strong>Interactive demo:</strong>
-<a href="{C['space_url']}">{esc(C['space_link_label'])}</a> — the same bundled artifact, with the
-holdout period shown as a historical out-of-sample replay.</li>
+{reproduction}
+<li><strong>Run it yourself.</strong> Clone
+<a href="{C['github_url']}">{C['github_url']}</a>, then <code>uv sync</code>, then
+<code>uv run python predict_next_day.py --level 80 --self-check</code> forecasts a delivery day
+offline from the bundled snapshot and re-proves the gate boundary as it goes;
+<code>make test</code> runs the invariant suite including the CQR order-statistic fixture;
+<code>make sql</code> runs the DuckDB queries; and
+<code>docker build -t delu-showcase . &amp;&amp; docker run -p 7860:7860 delu-showcase</code>
+builds and serves the same image the Space runs, champion and snapshot bundled inside it.</li>
+<li><strong>Compute.</strong> Apple M3, 16&nbsp;GB, CPU only, no GPU, $0 run rate; the whole
+pipeline — development, benchmark, final fit and diagnostics — runs in well under an hour.</li>
 </ul>
 
 <footer>

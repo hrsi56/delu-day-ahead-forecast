@@ -22,7 +22,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from delu_forecast.claims import build_claims, limitation_bullets  # noqa: E402
+from delu_forecast.claims import (  # noqa: E402
+    build_claims,
+    limitation_bullets,
+    reproducibility_bullets,
+)
 
 CARD = ROOT / "space" / "README.md"
 BUNDLE = ROOT / "dist" / "space"
@@ -56,6 +60,7 @@ GITATTRIBUTES = """*.pkl filter=lfs diff=lfs merge=lfs -text
 def build_card() -> str:
     C = build_claims()
     limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
+    reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
     return f"""---
 title: DE-LU Day-Ahead Price Forecasting
 emoji: ⚡
@@ -184,11 +189,10 @@ make train && make holdout                  # reproduce the champion and the hol
 docker build -t delu-showcase . && docker run -p 7860:7860 delu-showcase
 ```
 
-Experiment records: [{C['mlflow_url']}]({C['mlflow_url']}) — the `.mlflow` tracking URI,
-which is anonymously readable. The DagsHub repository UI is deliberately not linked: it
-redirects an anonymous visitor to a sign-in page.
+{reproduction}
 
-{C['attribution']}
+The DagsHub repository UI is deliberately not linked anywhere: it redirects an anonymous
+visitor to a sign-in page, while the `.mlflow` tracking URI above is anonymously readable.
 """
 
 
