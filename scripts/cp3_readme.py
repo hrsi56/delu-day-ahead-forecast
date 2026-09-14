@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from delu_forecast.claims import build_claims  # noqa: E402
+from delu_forecast.claims import build_claims, limitation_bullets  # noqa: E402
 
 README = ROOT / "README.md"
 HEADING = "## CP-3 showcase and release"
@@ -27,6 +27,7 @@ NEXT_HEADING = "## Setup\n"
 
 def build_section() -> str:
     C = build_claims()
+    limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
     return f"""{HEADING}
 
 **Deployment status — read this before clicking.** The Pages export and the Space bundle are built
@@ -112,15 +113,13 @@ it lives here too rather than in one document only:
 
 > {C["exchangeability"]}
 
-Two further disclosures. {C["assumption_a65"]} {C["assumption_a75"]} And one on the environment:
-{C["floor_change"]}
+§10 item (11) fixes the complete set, and it is rendered from one place onto every surface — prose
+written separately per surface is how a limitation ends up on one page and nowhere else:
 
-Coverage on the crisis stratum and on negative-price hours is materially worse than nominal — the
-bounded target truncates the lower conformity residuals near the floor. The 50 % interval
-under-covers by roughly six points on the holdout window. None of this is engineered around; a
-floor-aware tail would reopen scope this project deliberately closed. This is a portfolio artifact,
-not an operations system: no retraining schedule, no drift gate, no rollback machinery, no
-monitoring surface, no multi-day-ahead forecast.
+{limitations}
+
+And one on the environment: {C["floor_change"]} None of this is engineered around; a floor-aware
+tail would reopen scope this project deliberately closed.
 
 ### Link discipline
 

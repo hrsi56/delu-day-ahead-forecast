@@ -33,14 +33,27 @@ locally with `open docs/index.html` — what you see there is what Pages serves.
 
 ## Step 2 — create and push the Hugging Face Space (about ten minutes, mostly upload)
 
-### 2a. Create the Space
+### 2a. A Hugging Face account first — it does not exist yet
+
+Checked from an unauthenticated client on 2026-09-14:
+`https://huggingface.co/hrsi56` returns **404** and
+`https://huggingface.co/api/spaces?author=hrsi56` returns `[]`. So the account
+itself has to be created before anything below applies, at
+<https://huggingface.co/join>, with the username **`hrsi56`** — every surface
+already links `huggingface.co/spaces/hrsi56/delu-day-ahead-forecast`, so a
+different username means regenerating them (`SPACE_URL` in
+`src/delu_forecast/claims.py`, then `make pages space readme-cp3`).
+
+Account creation is yours: agents do not create accounts or enter passwords.
+
+### 2b. Create the Space
 
 1. Open <https://huggingface.co/new-space>.
 2. **Owner:** `hrsi56`. **Space name:** `delu-day-ahead-forecast`.
 3. **SDK:** *Docker* → *Blank*. **Hardware:** *CPU basic* (free). **Visibility:** *Public*.
 4. Create. Leave it empty; the next step fills it.
 
-### 2b. Build the bundle
+### 2c. Build the bundle
 
 ```bash
 make space
@@ -52,7 +65,7 @@ front-matter, `src/`, `app/`, `sql/`, `predict_next_day.py`, `models/champion/`,
 `data/snapshot.parquet` and the committed `reports/` figures and tables. About
 37 MB.
 
-### 2c. Push it
+### 2d. Push it
 
 `models/champion/python_model.pkl` is ~30 MB, so the Hub wants it through LFS.
 `make space` already writes the matching `.gitattributes` into the bundle.

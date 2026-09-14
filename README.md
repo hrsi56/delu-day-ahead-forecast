@@ -234,15 +234,22 @@ it lives here too rather than in one document only:
 
 > CQR provides finite-sample marginal coverage guarantees under exchangeability. The walk-forward CV mildly violates exchangeability — the crisis regime is not exchangeable with the pre-crisis regime, and the solar-driven negative-price era is not exchangeable with either — so empirical coverage may diverge from nominal on regime-shift folds. This is documented in the reliability diagram (Section 8.4).
 
-Two further disclosures. A65/A01 is pre-gate by explicit assumption, not by measurement: both the existence of the delivery-day load forecast before the 12:00 CET gate and its equality to the archived vector used here are assumed, and the regulatory update provision permits later revisions. A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary. And one on the environment:
-The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.
+§10 item (11) fixes the complete set, and it is rendered from one place onto every surface — prose
+written separately per surface is how a limitation ends up on one page and nowhere else:
 
-Coverage on the crisis stratum and on negative-price hours is materially worse than nominal — the
-bounded target truncates the lower conformity residuals near the floor. The 50 % interval
-under-covers by roughly six points on the holdout window. None of this is engineered around; a
-floor-aware tail would reopen scope this project deliberately closed. This is a portfolio artifact,
-not an operations system: no retraining schedule, no drift gate, no rollback machinery, no
-monitoring surface, no multi-day-ahead forecast.
+- **Exchangeability under regime shift.** CQR provides finite-sample marginal coverage guarantees under exchangeability. The walk-forward CV mildly violates exchangeability — the crisis regime is not exchangeable with the pre-crisis regime, and the solar-driven negative-price era is not exchangeable with either — so empirical coverage may diverge from nominal on regime-shift folds. This is documented in the reliability diagram (Section 8.4).
+- **Development versus one-shot evidence.** The five-fold development results are descriptive post-selection evidence, never confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified and opened once, and the development point-accuracy DM shows no evidence of advantage.
+- **Disclosed assumption — the load forecast.** A65/A01 is pre-gate by explicit assumption, not by measurement: both the existence of the delivery-day load forecast before the 12:00 CET gate and its equality to the archived vector used here are assumed, and the regulatory update provision permits later revisions.
+- **Disclosed assumption — the generation archive.** A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.
+- **The measured cost of the strict gate.** The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.
+- **A two-sided bounded target, live at the floor.** The target is two-sided and bounded: the price is routinely negative and has hit the −500 EUR/MWh floor, which truncates the lower conformity residuals, so the lowest intervals under-cover conditionally near the floor.
+- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window, and coverage on the crisis stratum and on negative-price hours is materially worse still.
+- **Model staleness, with all four cutoffs.** The deployed demo applies a frozen model whose raw-model fit cutoff (2026-04-07) precedes the snapshot cutoff (2026-09-06) by 152 delivery days, with the final calibration window 2026-04-09..2026-06-07 and the holdout window 2026-06-09..2026-09-06 — all four cutoffs published separately because they are four different dates.
+- **The 15-minute MTU averaging choice.** From 2025-10-01 an hourly price is the mean of four quarter-hour prices, so every hour-level statistic here — the negative-hour tally included — depends on that averaging choice, and a quarter-hour tally differs.
+- **Scope.** This is a portfolio artifact, not an operations system: no retraining schedule, no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.
+
+And one on the environment: The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates. None of this is engineered around; a floor-aware
+tail would reopen scope this project deliberately closed.
 
 ### Link discipline
 

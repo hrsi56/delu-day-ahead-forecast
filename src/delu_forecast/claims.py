@@ -114,6 +114,66 @@ ASSUMPTION_A65 = (
     "used here are assumed, and the regulatory update provision permits later revisions."
 )
 
+#: §10 item (11) enumerates the honest-limitations set. Item 5 requires
+#: "Limitations and reproduction instructions are complete", so the set is
+#: rendered from one place onto every human surface and asserted by
+#: `tests/test_21_limitations_are_complete.py`. Prose written separately per
+#: surface is how the 15-minute-MTU limitation came to sit on the Pages export
+#: and nowhere else.
+LIMITATION_TOPICS: tuple[str, ...] = (
+    "exchangeability",
+    "evidence_distinction",
+    "assumption_a65",
+    "assumption_a75",
+    "strict_gate_cost",
+    "bounded_tail",
+    "coverage_divergence",
+    "staleness",
+    "mtu_averaging",
+    "not_an_operations_system",
+)
+
+LIMITATION_EVIDENCE_DISTINCTION = (
+    "The five-fold development results are descriptive post-selection evidence, never "
+    "confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified "
+    "and opened once, and the development point-accuracy DM shows no evidence of advantage."
+)
+
+LIMITATION_STRICT_GATE_COST = (
+    "The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 "
+    "forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it."
+)
+
+LIMITATION_BOUNDED_TAIL = (
+    "The target is two-sided and bounded: the price is routinely negative and has hit the "
+    "−500 EUR/MWh floor, which truncates the lower conformity residuals, so the lowest intervals "
+    "under-cover conditionally near the floor."
+)
+
+LIMITATION_COVERAGE_DIVERGENCE = (
+    "Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so "
+    "the 50 % interval under-covers by roughly six points on the holdout window, and coverage on "
+    "the crisis stratum and on negative-price hours is materially worse still."
+)
+
+LIMITATION_STALENESS = (
+    "The deployed demo applies a frozen model whose raw-model fit cutoff (2026-04-07) precedes the "
+    "snapshot cutoff (2026-09-06) by 152 delivery days, with the final calibration window "
+    "2026-04-09..2026-06-07 and the holdout window 2026-06-09..2026-09-06 — all four cutoffs "
+    "published separately because they are four different dates."
+)
+
+LIMITATION_MTU_AVERAGING = (
+    "From 2025-10-01 an hourly price is the mean of four quarter-hour prices, so every hour-level "
+    "statistic here — the negative-hour tally included — depends on that averaging choice, and a "
+    "quarter-hour tally differs."
+)
+
+LIMITATION_NOT_AN_OPERATIONS_SYSTEM = (
+    "This is a portfolio artifact, not an operations system: no retraining schedule, no drift gate, "
+    "no rollback machinery, no monitoring surface, and no multi-day-ahead forecast."
+)
+
 ASSUMPTION_A75 = (
     "A75 aggregate actual generation is used at its current archived values, which may differ from "
     "the values visible in real time despite the D-2 boundary."
@@ -292,6 +352,17 @@ def build_claims() -> Claims:
         "floor_change": FLOOR_CHANGE,
         "assumption_a65": ASSUMPTION_A65,
         "assumption_a75": ASSUMPTION_A75,
+        # -- §10 item (11), the complete honest-limitations set ----------------
+        "limitation_exchangeability": EXCHANGEABILITY,
+        "limitation_evidence_distinction": LIMITATION_EVIDENCE_DISTINCTION,
+        "limitation_assumption_a65": ASSUMPTION_A65,
+        "limitation_assumption_a75": ASSUMPTION_A75,
+        "limitation_strict_gate_cost": LIMITATION_STRICT_GATE_COST,
+        "limitation_bounded_tail": LIMITATION_BOUNDED_TAIL,
+        "limitation_coverage_divergence": LIMITATION_COVERAGE_DIVERGENCE,
+        "limitation_staleness": LIMITATION_STALENESS,
+        "limitation_mtu_averaging": LIMITATION_MTU_AVERAGING,
+        "limitation_not_an_operations_system": LIMITATION_NOT_AN_OPERATIONS_SYSTEM,
         # -- links -------------------------------------------------------------
         "mlflow_url": MLFLOW_URL,
         "pages_url": PAGES_URL,
@@ -329,6 +400,32 @@ def forbidden_dagshub_links(text: str) -> list[str]:
     return found
 
 
+#: Claim keys for the §10 item (11) set, in reading order.
+LIMITATION_KEYS: tuple[str, ...] = tuple(f"limitation_{topic}" for topic in LIMITATION_TOPICS)
+
+#: The lead-in each surface puts in front of the shared sentence. The label may
+#: differ in styling per surface; the sentence may not differ at all.
+LIMITATION_LABELS: dict[str, str] = {
+    "limitation_exchangeability": "Exchangeability under regime shift",
+    "limitation_evidence_distinction": "Development versus one-shot evidence",
+    "limitation_assumption_a65": "Disclosed assumption — the load forecast",
+    "limitation_assumption_a75": "Disclosed assumption — the generation archive",
+    "limitation_strict_gate_cost": "The measured cost of the strict gate",
+    "limitation_bounded_tail": "A two-sided bounded target, live at the floor",
+    "limitation_coverage_divergence": "Coverage divergence",
+    "limitation_staleness": "Model staleness, with all four cutoffs",
+    "limitation_mtu_averaging": "The 15-minute MTU averaging choice",
+    "limitation_not_an_operations_system": "Scope",
+}
+
+
+def limitation_bullets(claims, *, bold: str = "**") -> list[str]:
+    """The §10 item (11) set as ready-to-render bullets, one per topic."""
+    return [
+        f"{bold}{LIMITATION_LABELS[key]}.{bold} {claims[key]}" for key in LIMITATION_KEYS
+    ]
+
+
 __all__ = [
     "ATTRIBUTION",
     "BENCHMARK_LIMITATION",
@@ -339,6 +436,9 @@ __all__ = [
     "GITHUB_URL",
     "HOLDOUT_DM_LABEL",
     "HOLDOUT_LIMITATION",
+    "LIMITATION_KEYS",
+    "LIMITATION_LABELS",
+    "LIMITATION_TOPICS",
     "MLFLOW_URL",
     "PAGES_URL",
     "REPO_ROOT",
@@ -350,4 +450,5 @@ __all__ = [
     "SPACE_URL",
     "build_claims",
     "forbidden_dagshub_links",
+    "limitation_bullets",
 ]

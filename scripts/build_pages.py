@@ -28,6 +28,7 @@ from __future__ import annotations
 import base64
 import html
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -37,7 +38,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from delu_forecast.claims import build_claims  # noqa: E402
+from delu_forecast.claims import build_claims, limitation_bullets  # noqa: E402
 from delu_forecast.postprocess import QUANTILE_LABELS  # noqa: E402
 from delu_forecast.showcase import (  # noqa: E402
     INTERVAL_LEVELS,
@@ -54,6 +55,9 @@ BUILD_RECORD = ROOT / "reports" / "cp3" / "pages_build.json"
 #: One dimension, eleven points. The level selector is not a second dimension:
 #: it reads two of the nine quantiles already stored at each point.
 LOAD_SCALES: tuple[float, ...] = tuple(round(0.90 + 0.02 * index, 2) for index in range(11))
+
+#: Only the bullets' own `**lead-in.**` is turned into markup.
+BOLD = re.compile(r"\*\*(.+?)\*\*")
 
 
 def data_uri(path: Path) -> str:
@@ -227,6 +231,14 @@ def build_html() -> str:
     reliability = pd.read_csv(ROOT / "reports/cp2/reliability_three_stage.csv")
 
     coverage = {str(level): C[f"holdout_coverage_{level}"] for level in INTERVAL_LEVELS}
+    # §10 item (11): one shared set, rendered onto every surface. The bullets
+    # arrive with a `**bold**` lead-in; only that lead-in becomes markup, so the
+    # limitation sentence itself reaches the page byte-identical to the other
+    # surfaces and the agreement check compares like with like.
+    limitations = "\n".join(
+        "<li>" + BOLD.sub(r"<strong>\1</strong>", esc(bullet)) + "</li>"
+        for bullet in limitation_bullets(C)
+    )
     level_inputs = "".join(
         f"<label><input type='radio' name='lvl' value='{level}'"
         f"{' checked' if level == 80 else ''}> {level}&nbsp;%</label>"
@@ -502,32 +514,9 @@ local inference. This page needs no such wake-up: it is static, and it cannot sl
 
 <h2 id="limitations">11 · Honest limitations</h2>
 <ul>
-<li><strong>Exchangeability under regime shift.</strong> {esc(C['exchangeability'])}</li>
-<li><strong>Development vs one-shot evidence.</strong> The five-fold results are
-<code>{C['development_evidence_class']}</code> — descriptive, post-selection. Only the 90-day
-holdout was pre-specified and opened once, and the point-accuracy DM on the development folds
-(p = {C['development_dm_point_p_value']}) shows no evidence of advantage.</li>
-<li><strong>Not power-qualified.</strong> {esc(C['holdout_dm_label'])}</li>
-<li><strong>Two disclosed assumptions.</strong> {esc(C['assumption_a65'])} {esc(C['assumption_a75'])}</li>
-<li><strong>The strict-gate design has a measured cost:</strong> {C['benchmark_pct']} of pooled
-raw-head pinball loss. {esc(C['benchmark_limitation'])}</li>
-<li><strong>A two-sided bounded target.</strong> The price is routinely negative and has hit the
-−500&nbsp;€/MWh floor, which truncates the lower conformity residuals; coverage on negative-price
-hours is materially worse than nominal. {esc(C['floor_change'])}</li>
-<li><strong>Coverage divergence.</strong> Final empirical coverage is {C['holdout_coverage_50']} /
-{C['holdout_coverage_80']} / {C['holdout_coverage_95']} against 50 / 80 / 95&nbsp;% nominal; the
-50&nbsp;% interval under-covers by roughly six points on this window.</li>
-<li><strong>Model staleness, with all four cutoffs.</strong> {esc(C['shipped_is_evaluated'])} The
-raw-model fit cutoff ({C['raw_model_fit_cutoff']}) precedes the snapshot cutoff
-({C['snapshot_cutoff']}) by {C['staleness_days']} delivery days; the final calibration window is
-{C['final_calibration_window']} and the holdout window is {C['holdout_window']}. The deployed demo
-applies a frozen model and there is no scheduled refresh.</li>
-<li><strong>The 15-minute MTU averaging choice.</strong> From 2025-10-01 an hourly price is the mean
-of four quarter-hour prices. Every hour-level statistic on this page, including the negative-hour
-tally, depends on that choice.</li>
-<li><strong>This is a portfolio artifact, not an operations system.</strong> No retraining schedule,
-no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.</li>
+{limitations}
 </ul>
+<p>{esc(C['floor_change'])}</p>
 <blockquote><p>{esc(C['holdout_limitation'])}</p></blockquote>
 
 <h2 id="repro">12 · Reproducibility</h2>
@@ -556,7 +545,10 @@ deliberately not linked: it redirects an anonymous visitor to a sign-in page.</l
 <code>uv sync</code>, then <code>make train</code> after checking out the tagged commit reproduces
 the champion from the committed snapshot; <code>uv run python predict_next_day.py</code> runs it
 offline; <code>make test</code> runs the invariant suite including the CQR order-statistic fixture;
-<code>make sql</code> runs the DuckDB queries.</li>
+<code>make sql</code> runs the DuckDB queries. The whole showcase also runs as a container —
+<code>docker build -t delu-showcase .</code> then
+<code>docker run -p 7860:7860 delu-showcase</code> — which is the same image the Space serves, with
+the champion and the snapshot bundled inside it.</li>
 <li><strong>SQL:</strong> hand-authored DuckDB queries in <code>sql/feature_queries.sql</code>
 express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python
 pipeline.</li>

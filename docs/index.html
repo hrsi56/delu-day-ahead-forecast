@@ -296,31 +296,17 @@ local inference. This page needs no such wake-up: it is static, and it cannot sl
 <h2 id="limitations">11 · Honest limitations</h2>
 <ul>
 <li><strong>Exchangeability under regime shift.</strong> CQR provides finite-sample marginal coverage guarantees under exchangeability. The walk-forward CV mildly violates exchangeability — the crisis regime is not exchangeable with the pre-crisis regime, and the solar-driven negative-price era is not exchangeable with either — so empirical coverage may diverge from nominal on regime-shift folds. This is documented in the reliability diagram (Section 8.4).</li>
-<li><strong>Development vs one-shot evidence.</strong> The five-fold results are
-<code>development_post_selection</code> — descriptive, post-selection. Only the 90-day
-holdout was pre-specified and opened once, and the point-accuracy DM on the development folds
-(p = 0.948) shows no evidence of advantage.</li>
-<li><strong>Not power-qualified.</strong> Pre-specified one-shot holdout DM test on a fixed 90-day window — confirmatory-style, not power-qualified.</li>
-<li><strong>Two disclosed assumptions.</strong> A65/A01 is pre-gate by explicit assumption, not by measurement: both the existence of the delivery-day load forecast before the 12:00 CET gate and its equality to the archived vector used here are assumed, and the regulatory update provision permits later revisions. A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.</li>
-<li><strong>The strict-gate design has a measured cost:</strong> -19.4926% of pooled
-raw-head pinball loss. This uncalibrated raw-head comparison isolates the information content of post-gate A69. It makes no claim about calibrated interval quality and does not make A69 available at the forecast gate.</li>
-<li><strong>A two-sided bounded target.</strong> The price is routinely negative and has hit the
-−500&nbsp;€/MWh floor, which truncates the lower conformity residuals; coverage on negative-price
-hours is materially worse than nominal. The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.</li>
-<li><strong>Coverage divergence.</strong> Final empirical coverage is 0.4407 /
-0.7593 / 0.9398 against 50 / 80 / 95&nbsp;% nominal; the
-50&nbsp;% interval under-covers by roughly six points on this window.</li>
-<li><strong>Model staleness, with all four cutoffs.</strong> The shipped model is exactly the model the holdout evaluated: there is no retrain and no re-tune after the result was opened. The
-raw-model fit cutoff (2026-04-07) precedes the snapshot cutoff
-(2026-09-06) by 152 delivery days; the final calibration window is
-2026-04-09..2026-06-07 and the holdout window is 2026-06-09..2026-09-06. The deployed demo
-applies a frozen model and there is no scheduled refresh.</li>
-<li><strong>The 15-minute MTU averaging choice.</strong> From 2025-10-01 an hourly price is the mean
-of four quarter-hour prices. Every hour-level statistic on this page, including the negative-hour
-tally, depends on that choice.</li>
-<li><strong>This is a portfolio artifact, not an operations system.</strong> No retraining schedule,
-no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.</li>
+<li><strong>Development versus one-shot evidence.</strong> The five-fold development results are descriptive post-selection evidence, never confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified and opened once, and the development point-accuracy DM shows no evidence of advantage.</li>
+<li><strong>Disclosed assumption — the load forecast.</strong> A65/A01 is pre-gate by explicit assumption, not by measurement: both the existence of the delivery-day load forecast before the 12:00 CET gate and its equality to the archived vector used here are assumed, and the regulatory update provision permits later revisions.</li>
+<li><strong>Disclosed assumption — the generation archive.</strong> A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.</li>
+<li><strong>The measured cost of the strict gate.</strong> The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.</li>
+<li><strong>A two-sided bounded target, live at the floor.</strong> The target is two-sided and bounded: the price is routinely negative and has hit the −500 EUR/MWh floor, which truncates the lower conformity residuals, so the lowest intervals under-cover conditionally near the floor.</li>
+<li><strong>Coverage divergence.</strong> Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window, and coverage on the crisis stratum and on negative-price hours is materially worse still.</li>
+<li><strong>Model staleness, with all four cutoffs.</strong> The deployed demo applies a frozen model whose raw-model fit cutoff (2026-04-07) precedes the snapshot cutoff (2026-09-06) by 152 delivery days, with the final calibration window 2026-04-09..2026-06-07 and the holdout window 2026-06-09..2026-09-06 — all four cutoffs published separately because they are four different dates.</li>
+<li><strong>The 15-minute MTU averaging choice.</strong> From 2025-10-01 an hourly price is the mean of four quarter-hour prices, so every hour-level statistic here — the negative-hour tally included — depends on that averaging choice, and a quarter-hour tally differs.</li>
+<li><strong>Scope.</strong> This is a portfolio artifact, not an operations system: no retraining schedule, no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.</li>
 </ul>
+<p>The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.</p>
 <blockquote><p>The holdout is a single contiguous recent period, so it tests generalization to the most recent regime rather than repeated out-of-sample skill. Its partitions were pinned before development and it was evaluated once, after the complete model and calibration pipeline were frozen, with no subsequent tuning. The 90-day length was fixed by partition design, not by a power calculation, so the Diebold–Mariano result is confirmatory-style but not power-qualified. The model shown is exactly the model evaluated — no refit followed the holdout — so its raw-model fit cutoff precedes the snapshot cutoff by 152 delivery days. Sequential lag features may use earlier holdout observations exactly as they would in live forecasting; no holdout outcome entered fitting or a development decision. Enforcement is procedural: this is a solo build and the discipline is disclosed, not cryptographically guaranteed.</p></blockquote>
 
 <h2 id="repro">12 · Reproducibility</h2>
@@ -349,7 +335,10 @@ deliberately not linked: it redirects an anonymous visitor to a sign-in page.</l
 <code>uv sync</code>, then <code>make train</code> after checking out the tagged commit reproduces
 the champion from the committed snapshot; <code>uv run python predict_next_day.py</code> runs it
 offline; <code>make test</code> runs the invariant suite including the CQR order-statistic fixture;
-<code>make sql</code> runs the DuckDB queries.</li>
+<code>make sql</code> runs the DuckDB queries. The whole showcase also runs as a container —
+<code>docker build -t delu-showcase .</code> then
+<code>docker run -p 7860:7860 delu-showcase</code> — which is the same image the Space serves, with
+the champion and the snapshot bundled inside it.</li>
 <li><strong>SQL:</strong> hand-authored DuckDB queries in <code>sql/feature_queries.sql</code>
 express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python
 pipeline.</li>

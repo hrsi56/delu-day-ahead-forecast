@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from delu_forecast.claims import build_claims  # noqa: E402
+from delu_forecast.claims import build_claims, limitation_bullets  # noqa: E402
 
 CARD = ROOT / "space" / "README.md"
 BUNDLE = ROOT / "dist" / "space"
@@ -55,6 +55,7 @@ GITATTRIBUTES = """*.pkl filter=lfs diff=lfs merge=lfs -text
 
 def build_card() -> str:
     C = build_claims()
+    limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
     return f"""---
 title: DE-LU Day-Ahead Price Forecasting
 emoji: ⚡
@@ -165,16 +166,11 @@ forecast and its named derivatives moves pooled mean pinball loss from
 
 ## Limitations
 
-- {C['exchangeability']}
-- {C['holdout_limitation']}
-- {C['assumption_a65']}
-- {C['assumption_a75']}
-- Coverage on the crisis stratum and on negative-price hours is materially worse than
-  nominal: the bounded target truncates the lower conformity residuals near the floor.
-- {C['sensitivity_probe_label']} They hold every other input fixed, so a large
-  perturbation asks the model a question it was never trained on.
-- This is a portfolio artifact, not an operations system: no retraining schedule, no
-  drift gate, no rollback machinery, no monitoring surface, no multi-day-ahead forecast.
+{limitations}
+- **Scenario probes.** {C['sensitivity_probe_label']} They hold every other input fixed, so a
+  large perturbation asks the model a question it was never trained on.
+
+> {C['holdout_limitation']}
 
 ## Reproduction
 
@@ -203,7 +199,10 @@ _RUNTIME_PARQUET = {"holdout_predictions.parquet"}
 #: `reports/cp3/` holds this checkpoint's own build records -- including this
 #: manifest. Copying it would make `total_bytes` measure its own siblings and the
 #: manifest would stop being reproducible; the Space needs none of it.
-_EXCLUDED_DIRS = {"__pycache__", "cp3"}
+#: `__marimo__` is the session cache marimo writes beside the notebook when the
+#: app runs: gitignored, ~1 MB, and its presence would make the bundle depend on
+#: whether anyone had started the app before building it.
+_EXCLUDED_DIRS = {"__pycache__", "__marimo__", "cp3"}
 
 
 def _ignore(directory: str, names: list[str]) -> set[str]:
