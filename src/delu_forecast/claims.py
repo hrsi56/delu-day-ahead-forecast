@@ -37,7 +37,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 MLFLOW_URL = "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
 
 PAGES_URL = "https://hrsi56.github.io/delu-day-ahead-forecast/"
-SPACE_URL = "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast"
+SPACE_URL = "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast"
 GITHUB_URL = "https://github.com/hrsi56/delu-day-ahead-forecast"
 
 #: §7.1, verbatim. "It carries this label, exactly, wherever it appears."
@@ -459,7 +459,7 @@ REPRO_REGISTERED_CHAMPION = (
 REPRO_PAGES_CANONICAL = (
     "The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the "
     "canonical entry point, and the interactive Space at "
-    "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast is linked from it."
+    "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it."
 )
 
 REPRO_DUCKDB_SQL = (

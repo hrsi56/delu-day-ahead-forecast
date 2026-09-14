@@ -35,10 +35,14 @@ def build_section() -> str:
     reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
     return f"""{HEADING}
 
-**Deployment status.** GitHub Pages is **live** at {C["pages_url"]} — that is the primary link and
-it works now. The Hugging Face Space is built and verified locally but **not yet created**: the
-`hrsi56` Hugging Face account does not exist, and account creation is the owner's step. Until it is
-taken, the Space link below does not resolve. Steps in [`docs/deploy.md`](docs/deploy.md).
+**Deployment status.** GitHub Pages is **live** at {C["pages_url"]} — the primary link, and it works
+now. **The Hugging Face Space is built and verified locally but is not deployed, and the reason is a
+platform change rather than an oversight.** On 2026-07-08 Hugging Face moved the Docker and Gradio
+SDKs behind a paid PRO plan; only Static Spaces remain free. This project runs at a ratified $0 rate,
+so the containerised showcase is not hosted there. **The container is not hypothetical** — it builds,
+and `make container-verify` runs it under `docker run --network none` with every external host
+unreachable. Run it yourself with the commands below; that is the same artifact a hosted Space would
+have served. Steps, if the decision changes: [`docs/deploy.md`](docs/deploy.md).
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live

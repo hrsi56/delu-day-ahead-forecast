@@ -156,10 +156,14 @@ silently when `MLFLOW_TRACKING_URI` is unset.
 
 ## CP-3 showcase and release
 
-**Deployment status.** GitHub Pages is **live** at https://hrsi56.github.io/delu-day-ahead-forecast/ — that is the primary link and
-it works now. The Hugging Face Space is built and verified locally but **not yet created**: the
-`hrsi56` Hugging Face account does not exist, and account creation is the owner's step. Until it is
-taken, the Space link below does not resolve. Steps in [`docs/deploy.md`](docs/deploy.md).
+**Deployment status.** GitHub Pages is **live** at https://hrsi56.github.io/delu-day-ahead-forecast/ — the primary link, and it works
+now. **The Hugging Face Space is built and verified locally but is not deployed, and the reason is a
+platform change rather than an oversight.** On 2026-07-08 Hugging Face moved the Docker and Gradio
+SDKs behind a paid PRO plan; only Static Spaces remain free. This project runs at a ratified $0 rate,
+so the containerised showcase is not hosted there. **The container is not hypothetical** — it builds,
+and `make container-verify` runs it under `docker run --network none` with every external host
+unreachable. Run it yourself with the commands below; that is the same artifact a hosted Space would
+have served. Steps, if the decision changes: [`docs/deploy.md`](docs/deploy.md).
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
@@ -168,7 +172,7 @@ ENTSO-E/SMARD call during a user session. The shipped model is exactly the model
 | Surface | What it is | Runtime calls |
 |---|---|---|
 | **[Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)** — the primary link | The full §10 reading order as one self-contained HTML file, CDN-served by GitHub Pages | **zero** |
-| **[Interactive Space](https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast)** | The marimo app in server mode, Docker SDK, `cpu-basic` | only its own assets |
+| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** | The marimo app in server mode, Docker SDK, `cpu-basic` | only its own assets |
 | **[MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | Every decision-bearing run, anonymously readable | — |
 
 The static page is the first touch precisely because it cannot sleep. The Space is labelled
@@ -263,7 +267,7 @@ surface:
 - **Tagged commit.** Check out the tagged commit and run `uv sync` then `make train`: the champion is rebuilt from the committed snapshot with pinned dependencies and fixed seeds, no extra fetch.
 - **MLflow permalinks.** Every decision-bearing run — the three baselines, both catalog candidates, both benchmark arms, the champion's final fit and holdout, and the diagnostics — is public at https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow with snapshot hash, code SHA, fold spec, feature list, seed, hyperparameters, metrics and artifact links.
 - **The registered `champion` alias.** The champion is registered on that MLflow instance as the model `delu-day-ahead-champion` under the `champion` alias, carrying release and lineage tags — `release_status=portfolio_release`, the source run id, the code commit, the snapshot hash and the four cutoffs. It is portfolio evidence only: the deployed demo loads the bundled artifact and never queries the registry.
-- **Canonical entry point.** The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast is linked from it.
+- **Canonical entry point.** The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it.
 - **DuckDB SQL.** The hand-authored DuckDB queries in `sql/feature_queries.sql` express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with `make sql`.
 - **The four cutoffs.** All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.
 - **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.

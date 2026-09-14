@@ -296,7 +296,7 @@ asks the model a question it was never trained on. The cleared-price line is hid
 scenario is active, because the outcome belongs to the unperturbed day.</p>
 </div>
 <p class="lede">Want to drive the model yourself? The
-<a href="https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast">interactive demo — may take ~30 s to wake if asleep</a> runs the same bundled artifact with live
+<a href="https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast">interactive demo — may take ~30 s to wake if asleep</a> runs the same bundled artifact with live
 local inference. This page needs no such wake-up: it is static, and it cannot sleep.</p>
 
 <h2 id="limitations">11 · Honest limitations</h2>
@@ -337,7 +337,7 @@ and the nine boosters' own serializations.</p>
 <li><strong>Tagged commit.</strong> Check out the tagged commit and run <code>uv sync</code> then <code>make train</code>: the champion is rebuilt from the committed snapshot with pinned dependencies and fixed seeds, no extra fetch.</li>
 <li><strong>MLflow permalinks.</strong> Every decision-bearing run — the three baselines, both catalog candidates, both benchmark arms, the champion's final fit and holdout, and the diagnostics — is public at https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow with snapshot hash, code SHA, fold spec, feature list, seed, hyperparameters, metrics and artifact links.</li>
 <li><strong>The registered <code>champion</code> alias.</strong> The champion is registered on that MLflow instance as the model <code>delu-day-ahead-champion</code> under the <code>champion</code> alias, carrying release and lineage tags — <code>release_status=portfolio_release</code>, the source run id, the code commit, the snapshot hash and the four cutoffs. It is portfolio evidence only: the deployed demo loads the bundled artifact and never queries the registry.</li>
-<li><strong>Canonical entry point.</strong> The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast is linked from it.</li>
+<li><strong>Canonical entry point.</strong> The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it.</li>
 <li><strong>DuckDB SQL.</strong> The hand-authored DuckDB queries in <code>sql/feature_queries.sql</code> express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with <code>make sql</code>.</li>
 <li><strong>The four cutoffs.</strong> All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.</li>
 <li><strong>Attribution.</strong> Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.</li>
