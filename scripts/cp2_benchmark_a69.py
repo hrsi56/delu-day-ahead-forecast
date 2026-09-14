@@ -18,6 +18,7 @@ import time
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from delu_forecast.experiment import (
     experiment_params,
@@ -26,8 +27,18 @@ from delu_forecast.experiment import (
 )
 from delu_forecast.metrics import mae, pinball_matrix, pooled_mean_pinball
 from delu_forecast.model import SEED, fit_quantile_heads, predict_raw_heads
+from delu_forecast.postprocess import QUANTILE_LABELS
 from delu_forecast.schema import BENCHMARK_ADDITIONS
-from delu_forecast.tracking import configure_tracking, log_decision_record, record_timing, run
+from delu_forecast.tracking import (
+    SOURCE_PATHS,
+    code_sha,
+    configure_tracking,
+    log_decision_record,
+    record_timing,
+    run,
+    snapshot_hash,
+    working_tree_dirty,
+)
 
 OUT = Path("reports/cp2")
 LIMITATION = (
@@ -37,13 +48,20 @@ LIMITATION = (
 )
 
 
-def run_raw_arm(inputs, arm: str) -> dict[str, object]:
-    """Fit on proper-training, predict raw heads on eval. No calibration anywhere."""
+def run_raw_arm(inputs, arm: str) -> tuple[dict[str, object], pd.DataFrame]:
+    """Fit on proper-training, predict raw heads on eval. No calibration anywhere.
+
+    Returns the summary *and* the per-row predictions. Persisting them is what
+    makes the one §7.2 headline number recomputable by a reviewer who is not
+    permitted to re-run the training: without them, the augmented arm's pooled
+    loss is the only reported figure that has to be taken on trust.
+    """
     total = 0.0
     count = 0
     absolute = 0.0
     rows = 0
     per_fold: dict[str, float] = {}
+    frames: list[pd.DataFrame] = []
     for fold in inputs.spec.development_folds:
         train = mask_for(inputs, fold.proper_training)
         evaluation = mask_for(inputs, fold.evaluation)
@@ -56,17 +74,24 @@ def run_raw_arm(inputs, arm: str) -> dict[str, object]:
         absolute += float(np.abs(y - raw[:, 4]).sum())
         rows += len(y)
         per_fold[fold.name] = pooled_mean_pinball(y, raw)
-    return {
+        frame = pd.DataFrame({"arm": arm, "fold": fold.name, "delivery_date": inputs.delivery_dates[evaluation]})
+        frame["y_true"] = y
+        for position, label in enumerate(QUANTILE_LABELS):
+            frame[f"raw_{label}"] = raw[:, position]
+        frames.append(frame)
+    summary = {
         "arm": arm,
         "pooled_mean_pinball": total / count,
         "median_mae": absolute / rows,
         "per_fold_pinball": per_fold,
         "n_obs": rows,
     }
+    return summary, pd.concat(frames, ignore_index=True)
 
 
 def main() -> None:
     started = time.time()
+    source_dirty = working_tree_dirty(SOURCE_PATHS)
     OUT.mkdir(parents=True, exist_ok=True)
     inputs = load_inputs()
     enabled = configure_tracking()
@@ -74,8 +99,11 @@ def main() -> None:
     strict_arm = selected
     augmented_arm = f"{selected}+a69"
 
-    strict = run_raw_arm(inputs, strict_arm)
-    augmented = run_raw_arm(inputs, augmented_arm)
+    strict, strict_rows = run_raw_arm(inputs, strict_arm)
+    augmented, augmented_rows = run_raw_arm(inputs, augmented_arm)
+    pd.concat([strict_rows, augmented_rows], ignore_index=True).to_parquet(
+        OUT / "a69_benchmark_predictions.parquet", index=False
+    )
 
     # The strict arm is the selected development arm re-fit under identical
     # settings; if it does not reproduce, nothing downstream is trustworthy.
@@ -99,7 +127,11 @@ def main() -> None:
         "strict_arm_reproduces_development_selection_run": reproduced,
         "development_pooled_mean_pinball_for_selected_catalog": development,
         "limitation": LIMITATION,
+        "per_row_predictions": "reports/cp2/a69_benchmark_predictions.parquet -- both arms' raw head predictions on every evaluation row, so the headline percentage difference can be recomputed without re-running the training",
         "seed": SEED,
+        "code_sha": code_sha(),
+        "snapshot_sha256": snapshot_hash(),
+        "uncommitted_source_when_run_started": source_dirty,
     }
     (OUT / "a69_benchmark.json").write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
 

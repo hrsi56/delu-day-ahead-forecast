@@ -93,6 +93,18 @@ def main() -> None:
     holdout_dm = holdout["dm"]
 
     headline = pooled[pooled["stage"].isin(["final", "point"])]
+    mae_by_fold = per_fold.pivot_table(index="fold", columns="model", values="mae_final_p50")
+    pinball_by_fold = per_fold.pivot_table(index="fold", columns="model", values="pinball_final")
+    weights = per_fold[per_fold["model"] == selection["selected_catalog"]].set_index("fold")["n_eval"]
+    weights = weights / weights.sum()
+    champion_column = selection["selected_catalog"]
+    mae_wins = int((mae_by_fold[champion_column] < mae_by_fold["similar_day_naive"]).sum())
+    pinball_wins = int((pinball_by_fold[champion_column] < pinball_by_fold["similar_day_naive"]).sum())
+    n_folds = int(len(mae_by_fold))
+    mae_contribution = (mae_by_fold[champion_column] - mae_by_fold["similar_day_naive"]) * weights
+    worst_fold = str(mae_contribution.idxmax())
+    worst_contribution = float(mae_contribution.max())
+    pooled_mae_gap = float(mae_contribution.sum())
     fold_view = per_fold.pivot_table(index="fold", columns="model", values="mae_final_p50").reset_index()
     fold_pinball = per_fold.pivot_table(index="fold", columns="model", values="pinball_final").reset_index()
 
@@ -165,6 +177,14 @@ undefined for a point forecast and is not reported for them.
 
 {markdown_table(headline, ["model", "stage", "n_obs", "mae_p50", "mean_pinball"])}
 
+**What the pinball margin does and does not measure.** A point forecast scored on pinball is
+structurally disadvantaged against a nine-quantile model: it can never be paid for a well-placed
+tail, only penalised for a badly placed one. So the champion's pinball advantage over the naive
+comparators is largely the value of *having* a predictive distribution, not evidence that its median
+is better — the MAE column is the point-accuracy comparison, and it reads differently. §7.1 pins
+this comparison, and the report states the mechanism rather than letting the larger number stand
+unqualified.
+
 Per-fold MAE on the median:
 
 {markdown_table(fold_view, list(fold_view.columns), floats=2)}
@@ -173,12 +193,15 @@ Per-fold mean pinball loss:
 
 {markdown_table(fold_pinball, list(fold_pinball.columns))}
 
-**Read this honestly.** The champion wins decisively on probabilistic loss and *loses* on point MAE,
-and both facts come from the same place: fold 3, the crisis-peak block. An expanding-window model
-trained only on pre-crisis data cannot follow an August-2022 level shift, while persistence tracks it
-by construction. Four of the five folds have the champion at or ahead of the similar-day naive on
-MAE; fold 3 alone moves the pooled figure. The plan reports results and gates none of them, and the
-≥15% pinball improvement is a narrative target only.
+**Read this honestly, and read the tallies rather than a summary of them.** The champion beats the
+similar-day naive on mean pinball loss in **{pinball_wins} of {n_folds} folds** and on median MAE in
+**{mae_wins} of {n_folds}**. So the probabilistic win is broad and the point-accuracy loss is not: the
+pooled MAE gap of {pooled_mae_gap:+.2f} EUR/MWh is produced almost entirely by **{worst_fold}**, the
+crisis-peak block, which contributes {worst_contribution:+.2f} of it on its own while three folds
+contribute negative (champion-favourable) amounts. An expanding-window model trained only on
+pre-crisis data cannot follow an August-2022 level shift; persistence tracks it by construction. The
+plan reports results and gates none of them, and the ≥15% pinball improvement is a narrative target
+only.
 
 ### Both DM analyses, development evidence class
 

@@ -40,7 +40,17 @@ from delu_forecast.metrics import (
     point_forecast_quantiles,
     pooled_mean_pinball,
 )
-from delu_forecast.tracking import record_timing, configure_tracking, log_decision_record, public_tracking_url, run
+from delu_forecast.tracking import (
+    SOURCE_PATHS,
+    code_sha,
+    configure_tracking,
+    log_decision_record,
+    public_tracking_url,
+    record_timing,
+    run,
+    snapshot_hash,
+    working_tree_dirty,
+)
 
 OUT = Path("reports/cp2")
 EVIDENCE_CLASS = "development_post_selection"
@@ -50,6 +60,7 @@ HEADLINE_COMPARATOR = "similar_day_naive"
 
 def main() -> None:
     started = time.time()
+    source_dirty = working_tree_dirty(SOURCE_PATHS)
     OUT.mkdir(parents=True, exist_ok=True)
     inputs = load_inputs()
     enabled = configure_tracking()
@@ -134,6 +145,9 @@ def main() -> None:
         "eval_rows_with_null_residual_load_proxy": proxy_nan_eval,
         "seed": 42,
         "evidence_class": EVIDENCE_CLASS,
+        "code_sha": code_sha(),
+        "snapshot_sha256": snapshot_hash(),
+        "uncommitted_source_when_run_started": source_dirty,
     }
     print(f"\npooled raw pinball  base={pooled[CATALOG_BASE]!r}  augmented={pooled[CATALOG_AUGMENTED]!r}")
     print(f"percentage difference (augmented vs base) = {difference_pct:+.6f}%   selected: {selected}\n")

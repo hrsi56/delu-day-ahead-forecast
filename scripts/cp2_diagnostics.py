@@ -40,7 +40,16 @@ from delu_forecast.metrics import (
 )
 from delu_forecast.model import SEED, fit_quantile_heads, predict_raw_heads
 from delu_forecast.postprocess import QUANTILE_LABELS
-from delu_forecast.tracking import configure_tracking, log_decision_record, record_timing, run
+from delu_forecast.tracking import (
+    SOURCE_PATHS,
+    code_sha,
+    configure_tracking,
+    log_decision_record,
+    record_timing,
+    run,
+    snapshot_hash,
+    working_tree_dirty,
+)
 
 OUT = Path("reports/cp2")
 MEDIAN = "p50"
@@ -79,6 +88,7 @@ def _stratum_metrics(y, matrix, days, label, n_thin=THIN_STRATUM_ROWS):
 
 def main() -> None:
     started = time.time()
+    source_dirty = working_tree_dirty(SOURCE_PATHS)
     OUT.mkdir(parents=True, exist_ok=True)
     inputs = load_inputs()
     enabled = configure_tracking()
@@ -242,6 +252,9 @@ def main() -> None:
         "n_dunkelflaute_days_in_snapshot": int(flags.sum()),
         "quantiles": list(QUANTILES),
         "coverage_levels": [name for name, _, _ in COVERAGE_LEVELS],
+        "code_sha": code_sha(),
+        "snapshot_sha256": snapshot_hash(),
+        "uncommitted_source_when_run_started": source_dirty,
     }
     (OUT / "diagnostics.json").write_text(json.dumps(summary, indent=2, sort_keys=True, default=str) + "\n")
 

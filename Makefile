@@ -1,4 +1,4 @@
-.PHONY: audit spectral sql test train benchmark holdout diagnostics report cp2
+.PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2
 
 test:
 	uv run pytest -q
@@ -31,4 +31,7 @@ diagnostics:
 report:
 	uv run python scripts/cp2_report.py
 
-cp2: train benchmark holdout diagnostics report
+readme:
+	uv run python scripts/cp2_readme.py
+
+cp2: train benchmark holdout diagnostics report readme

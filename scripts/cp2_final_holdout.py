@@ -61,7 +61,7 @@ from delu_forecast.tracking import (
 OUT = Path("reports/cp2")
 MODEL_DIR = Path("models/champion")
 DM_LABEL = (
-    "Pre-specified one-shot holdout DM test on a fixed 90-day window - "
+    "Pre-specified one-shot holdout DM test on a fixed 90-day window \u2014 "
     "confirmatory-style, not power-qualified."
 )
 
@@ -111,6 +111,7 @@ def main() -> None:
             raise AssertionError(f"{name} set contains {overlap} holdout rows")
     if (fit_rows & calibration_rows).any():
         raise AssertionError("the raw-fit set and the final calibration slice overlap")
+    fit_window_rows = int(window_mask(inputs.delivery_dates, fit_window).sum())
     raw_fit_cutoff = max(inputs.delivery_dates[fit_rows])
     print(f"raw heads fit on {int(fit_rows.sum())} rows through {raw_fit_cutoff}")
 
@@ -203,7 +204,8 @@ def main() -> None:
     report = {
         "evaluated_once": True,
         "evaluation_decision_taken_once": True,
-        "execution_note": "This deterministic script was executed several times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and five completed runs that produced identical metrics and an identical artifact fingerprint (reproduces_previous_run_exactly records the comparison). No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
+        "execution_note": "'Evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run -- the Integration Critic must re-run it from a clean worktree to verify, which is a reproduction rather than a second evaluation. This script was run repeatedly while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and every completed run reproduced the previous run's metrics and artifact fingerprint exactly (see reproduces_previous_run_exactly). No catalog, hyperparameter, threshold or analysis choice was changed after any of them. The authoritative run count is the public MLflow record, not a number written here: a hardcoded count cannot update itself and was wrong once already.",
+        "completed_runs_recorded": (previous.get("completed_runs_recorded", 0) + 1) if previous else 1,
         "retrain_after_holdout": False,
         "retune_after_holdout": False,
         "uncommitted_source_when_run_started": source_dirty_at_start,
@@ -211,6 +213,10 @@ def main() -> None:
         "artifact_fingerprint_sha256": champion.fingerprint(),
         "artifact_bytes_are_not_stable": "MLflow stamps a fresh model_uuid and creation time into MLmodel and cloudpickle is not byte-reproducible, so models/champion changes on every save while the model does not. artifact_fingerprint_sha256 -- catalog, feature list, quantiles, the four thresholds and the nine boosters' own serializations -- is the identity to check.",
         "selected_catalog": selected,
+        "n_raw_fit_rows": int(fit_rows.sum()),
+        "n_rows_before_embargo_a": fit_window_rows,
+        "n_rows_before_embargo_a_ineligible": fit_window_rows - int(fit_rows.sum()),
+        "eligibility_rule": "a row is eligible when its target is finite and every `base` feature is non-null; the rule depends on neither the augmented nor the A69 columns, so every arm sees identical rows. Ineligible rows are the feature warm-up (720h rolling window), the DST-null calendar-day lags, and days with a missing A65 hour.",
         "n_holdout_rows": int(holdout_rows.sum()),
         "n_holdout_days": len(holdout_days),
         "champion_mae": champion_mae,
