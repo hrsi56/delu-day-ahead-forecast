@@ -41,17 +41,36 @@ def build_section() -> str:
         "worst_fold": str(contribution.idxmax()),
         "worst_contribution": float(contribution.max()),
         "pooled_gap": float(contribution.sum()),
+        "augmented_fold_wins": int(
+            (
+                per_fold.pivot_table(index="fold", columns="model", values="pinball_raw")
+                .loc[:, ["base", "base_plus_residual_load_proxy"]]
+                .idxmin(axis=1)
+                == "base_plus_residual_load_proxy"
+            ).sum()
+        ),
     }
 
     return f"""{HEADING}
 
-**Selected catalog: `{champion}`.** The two frozen catalogs were compared once on raw heads over the
-five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget: pooled mean
-pinball loss `{selection["pooled_mean_pinball"]["base"]}` for `base` against
-`{selection["pooled_mean_pinball"]["base_plus_residual_load_proxy"]}` for
-`base + residual_load_proxy`, a difference of
-{selection["percentage_difference_augmented_vs_base"]:+.4f}%. The domain feature did not earn its
-place, so the champion ships strict-gate as `base`. That is a reportable result, not a failure.
+**The two-arm comparison, numbers first.** The two frozen catalogs were compared once on raw heads
+over the five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget. Pooled
+observation-weighted mean pinball loss, unrounded as stored:
+
+| Arm | Pooled raw-head mean pinball loss |
+|---|---|
+| `base` | `{selection["pooled_mean_pinball"]["base"]}` |
+| `base + residual_load_proxy` | `{selection["pooled_mean_pinball"]["base_plus_residual_load_proxy"]}` |
+
+Percentage difference (augmented vs base): **{selection["percentage_difference_augmented_vs_base"]:+.4f}%**.
+
+**Selected catalog: `{champion}`.** The augmented catalog ships only if its unrounded stored pooled
+loss is lower; it is not, so the champion ships strict-gate as `base`. The domain feature did not
+earn its place on the pooled metric that decides, and that is a reportable result, not a failure.
+The fold-level picture is not uniform — the augmented arm is lower on
+{tallies["augmented_fold_wins"]} of the {tallies["n_folds"]} folds, and the report gives that table —
+but §4.1 fixes the rule as pooled and fixes it before fitting, so the split is disclosed and the
+decision is not revisited.
 
 **Development metrics are descriptive post-selection evidence** (`evidence_class =
 development_post_selection`), never confirmatory superiority. The champion beats the similar-day

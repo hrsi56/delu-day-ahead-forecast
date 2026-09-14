@@ -93,6 +93,16 @@ def main() -> None:
     holdout_dm = holdout["dm"]
 
     headline = pooled[pooled["stage"].isin(["final", "point"])]
+    raw_by_fold = per_fold.pivot_table(index="fold", columns="model", values="pinball_raw")
+    arm_columns = ["base", "base_plus_residual_load_proxy"]
+    raw_split = raw_by_fold.loc[:, arm_columns].copy()
+    raw_split["pct_vs_base"] = (
+        100.0 * (raw_split["base_plus_residual_load_proxy"] - raw_split["base"]) / raw_split["base"]
+    )
+    raw_split["lower_arm"] = raw_split[arm_columns].idxmin(axis=1)
+    raw_split = raw_split.reset_index()
+    augmented_fold_wins = int((raw_split["lower_arm"] == "base_plus_residual_load_proxy").sum())
+    n_raw_folds = int(len(raw_split))
     mae_by_fold = per_fold.pivot_table(index="fold", columns="model", values="mae_final_p50")
     pinball_by_fold = per_fold.pivot_table(index="fold", columns="model", values="pinball_final")
     weights = per_fold[per_fold["model"] == selection["selected_catalog"]].set_index("fold")["n_eval"]
@@ -158,12 +168,24 @@ Equality: {selection["equality"]}.
 
 **Selected catalog: `{selection["selected_catalog"]}`.** The augmented catalog ships only if its
 unrounded stored pooled loss is lower; it is not, so `base` ships. The domain feature did not earn
-its place, and that is a result rather than a failure — the champion ships strict-gate with no
+its place *on the metric that decides*, and that is a result rather than a failure — the champion ships strict-gate with no
 forced headline. {selection["eval_rows_with_null_residual_load_proxy"]:,} of the evaluation rows
 carry a null `residual_load_proxy` (its 42-complete-day window is unsatisfied there, chiefly a
 missing A75 hour on 2025-07-09 that invalidates the following 42 target days); those rows stay in
 both arms with LightGBM handling the missing value natively, so no row is deleted from the arm that
 does not need the feature.
+
+**The decision was pooled, and the pooled number is the rule — but the fold-level picture is not
+uniform, and a reader tallying `development_metrics.csv` will find that out.** On the decision
+metric, the augmented arm is *lower* on {augmented_fold_wins} of the {n_raw_folds} folds:
+
+{markdown_table(raw_split, ["fold", "base", "base_plus_residual_load_proxy", "pct_vs_base", "lower_arm"], floats=4)}
+
+So the honest reading is narrower than "the proxy does not help": it does not lower the pooled
+observation-weighted loss, and the pooled gap is driven mostly by fold 2. §4.1 fixes the rule as
+pooled and fixes it *before* fitting precisely so that a fold-level split cannot be mined after the
+fact for the answer one prefers — which is why this table is reported and the decision is not
+revisited.
 
 This is an ordinary development-stage model-selection decision, labelled as such, not a confirmatory
 result.
