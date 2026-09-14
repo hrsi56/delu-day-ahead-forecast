@@ -1,0 +1,73 @@
+{
+  "checked_at_utc": "2026-09-14T18:52:01+00:00",
+  "client": "unauthenticated urllib -- no cookies, no token, no logged-in browser",
+  "forbidden_paths": [
+    "dagshub.com/hrsi56/delu-day-ahead-forecast/experiments",
+    "dagshub.com/hrsi56/delu-day-ahead-forecast/models",
+    "dagshub.com/hrsi56/delu-day-ahead-forecast/src",
+    "dagshub.com/hrsi56/delu-day-ahead-forecast/annotations"
+  ],
+  "gated_dagshub_paths_probed_without_following_redirects": {
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast": {
+      "location": "/user/login",
+      "status": 302
+    },
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast/experiments": {
+      "location": "/user/login",
+      "status": 302
+    },
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast/models": {
+      "location": "/user/login",
+      "status": 302
+    },
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast/src/main": {
+      "location": "/user/login",
+      "status": 302
+    }
+  },
+  "links": {
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow": {
+      "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/",
+      "on_surfaces": [
+        "Pages export",
+        "README",
+        "Space card"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast",
+      "on_surfaces": [
+        "Pages export",
+        "Space card"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://hrsi56.github.io/delu-day-ahead-forecast/": {
+      "final_url": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+      "on_surfaces": [
+        "README",
+        "Space card"
+      ],
+      "resolves": false,
+      "status": 404
+    },
+    "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast": {
+      "final_url": "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast",
+      "on_surfaces": [
+        "Pages export",
+        "README"
+      ],
+      "resolves": false,
+      "status": 401
+    }
+  },
+  "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow",
+  "unresolved": [
+    "https://hrsi56.github.io/delu-day-ahead-forecast/",
+    "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast"
+  ],
+  "unresolved_reason": "Both are the URLs publication creates. Deployment is owner-only and was not performed by this checkpoint: GitHub Pages is not enabled and the Space is not created. See docs/deploy.md."
+}
