@@ -92,8 +92,13 @@ naive on mean pinball loss in 5 of the 5 evaluation
 blocks and on median MAE in 3 of 5: the probabilistic win is
 broad, the point-accuracy loss is not. The pooled MAE gap of +9.29 EUR/MWh
 comes almost entirely from **fold_3**, the crisis-peak block, which contributes
-+10.87 of it alone — an expanding-window model trained only on
-pre-crisis data cannot follow an August-2022 level shift, and persistence can. Full tables, both DM
++10.87 of it alone. The mechanism is measured, not assumed: the model did see the crisis — that fold's training ran to 2022-04-29 and included
+5,784 crisis hours at a 173 EUR/MWh mean and a 700 EUR/MWh maximum — but **61.3% of the evaluation
+block sits above the 99th percentile of everything it ever saw, while only 2.45% exceeds its
+maximum.** So this is shrinkage toward the training level, not an extrapolation wall: a leaf's value
+is an average over the training rows that fall in it, and the far more numerous moderate-price rows
+pull the prediction down. Persistence has no training distribution at all, so it carries the level
+for free. Full tables, both DM
 analyses, the three-stage reliability read, SHAP, permutation importance and the regime-stratified
 table are in [`docs/cp2-model-report.md`](docs/cp2-model-report.md) and `reports/cp2/`.
 
@@ -151,11 +156,10 @@ silently when `MLFLOW_TRACKING_URI` is unset.
 
 ## CP-3 showcase and release
 
-**Deployment status — read this before clicking.** The Pages export and the Space bundle are built
-and verified locally, but **publication is the owner's step and has not been taken**: GitHub Pages
-is not yet enabled and the Space is not yet created, so the two links below do not resolve yet. The
-exact steps, in order, are in [`docs/deploy.md`](docs/deploy.md). Delete this paragraph once both
-are live.
+**Deployment status.** GitHub Pages is **live** at https://hrsi56.github.io/delu-day-ahead-forecast/ — that is the primary link and
+it works now. The Hugging Face Space is built and verified locally but **not yet created**: the
+`hrsi56` Hugging Face account does not exist, and account creation is the owner's step. Until it is
+taken, the Space link below does not resolve. Steps in [`docs/deploy.md`](docs/deploy.md).
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
@@ -243,7 +247,7 @@ written separately per surface is how a limitation ends up on one page and nowhe
 - **Disclosed assumption — the generation archive.** A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.
 - **The measured cost of the strict gate.** The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.
 - **A two-sided bounded target, live at the floor.** The target is two-sided and bounded: the price is routinely negative and has hit the −500 EUR/MWh floor, which truncates the lower conformity residuals, so the lowest intervals under-cover conditionally near the floor.
-- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window, and coverage on the crisis stratum and on negative-price hours is materially worse still.
+- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window. On the crisis stratum it does not merely diverge, it collapses: over the August-2022 peak weeks the 95 % interval covered 0.194 of outcomes. The mechanism is measured — that fold's CQR thresholds were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; it is the defect the planned v2 targets, and it is not fixed in this release.
 - **Model staleness, with all four cutoffs.** The deployed demo applies a frozen model whose raw-model fit cutoff (2026-04-07) precedes the snapshot cutoff (2026-09-06) by 152 delivery days, with the final calibration window 2026-04-09..2026-06-07 and the holdout window 2026-06-09..2026-09-06 — all four cutoffs published separately because they are four different dates.
 - **The 15-minute MTU averaging choice.** From 2025-10-01 an hourly price is the mean of four quarter-hour prices, so every hour-level statistic here — the negative-hour tally included — depends on that averaging choice, and a quarter-hour tally differs.
 - **Scope.** This is a portfolio artifact, not an operations system: no retraining schedule, no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.

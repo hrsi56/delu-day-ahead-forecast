@@ -152,8 +152,13 @@ LIMITATION_BOUNDED_TAIL = (
 
 LIMITATION_COVERAGE_DIVERGENCE = (
     "Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so "
-    "the 50 % interval under-covers by roughly six points on the holdout window, and coverage on "
-    "the crisis stratum and on negative-price hours is materially worse still."
+    "the 50 % interval under-covers by roughly six points on the holdout window. On the crisis "
+    "stratum it does not merely diverge, it collapses: over the August-2022 peak weeks the 95 % "
+    "interval covered 0.194 of outcomes. The mechanism is measured — that fold's CQR thresholds "
+    "were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to "
+    "an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not "
+    "multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; "
+    "it is the defect the planned v2 targets, and it is not fixed in this release."
 )
 
 LIMITATION_STALENESS = (
@@ -324,6 +329,9 @@ def build_claims() -> Claims:
         "development_evidence_class": point_dm["evidence_class"],
         "development_dm_point_p_value": _fmt(point_dm["p_value"], 3),
         "development_dm_point_statistic": _fmt(point_dm["statistic"], 4),
+        "development_dm_point_statistic_abs": _fmt(abs(point_dm["statistic"]), 4),
+        "development_dm_point_relative": f'{abs(point_dm["relative_improvement_pct"]):.2f}% '
+        + ("worse" if point_dm["relative_improvement_pct"] < 0 else "better"),
         "development_dm_pinball_p_value": f"{pinball_dm['p_value']:.5f}",
         "development_dm_pinball_statistic": _fmt(pinball_dm["statistic"], 4),
         "development_days": str(point_dm["n_days"]),

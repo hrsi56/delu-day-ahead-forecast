@@ -35,11 +35,10 @@ def build_section() -> str:
     reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
     return f"""{HEADING}
 
-**Deployment status — read this before clicking.** The Pages export and the Space bundle are built
-and verified locally, but **publication is the owner's step and has not been taken**: GitHub Pages
-is not yet enabled and the Space is not yet created, so the two links below do not resolve yet. The
-exact steps, in order, are in [`docs/deploy.md`](docs/deploy.md). Delete this paragraph once both
-are live.
+**Deployment status.** GitHub Pages is **live** at {C["pages_url"]} — that is the primary link and
+it works now. The Hugging Face Space is built and verified locally but **not yet created**: the
+`hrsi56` Hugging Face account does not exist, and account creation is the owner's step. Until it is
+taken, the Space link below does not resolve. Steps in [`docs/deploy.md`](docs/deploy.md).
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live

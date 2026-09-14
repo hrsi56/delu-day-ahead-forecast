@@ -89,8 +89,13 @@ naive on mean pinball loss in {tallies["pinball_wins"]} of the {tallies["n_folds
 blocks and on median MAE in {tallies["mae_wins"]} of {tallies["n_folds"]}: the probabilistic win is
 broad, the point-accuracy loss is not. The pooled MAE gap of {tallies["pooled_gap"]:+.2f} EUR/MWh
 comes almost entirely from **{tallies["worst_fold"]}**, the crisis-peak block, which contributes
-{tallies["worst_contribution"]:+.2f} of it alone — an expanding-window model trained only on
-pre-crisis data cannot follow an August-2022 level shift, and persistence can. Full tables, both DM
+{tallies["worst_contribution"]:+.2f} of it alone. The mechanism is measured, not assumed: the model did see the crisis — that fold's training ran to 2022-04-29 and included
+5,784 crisis hours at a 173 EUR/MWh mean and a 700 EUR/MWh maximum — but **61.3% of the evaluation
+block sits above the 99th percentile of everything it ever saw, while only 2.45% exceeds its
+maximum.** So this is shrinkage toward the training level, not an extrapolation wall: a leaf's value
+is an average over the training rows that fall in it, and the far more numerous moderate-price rows
+pull the prediction down. Persistence has no training distribution at all, so it carries the level
+for free. Full tables, both DM
 analyses, the three-stage reliability read, SHAP, permutation importance and the regime-stratified
 table are in [`docs/cp2-model-report.md`](docs/cp2-model-report.md) and `reports/cp2/`.
 

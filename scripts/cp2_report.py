@@ -225,8 +225,17 @@ similar-day naive on mean pinball loss in **{pinball_wins} of {n_folds} folds** 
 **{mae_wins} of {n_folds}**. So the probabilistic win is broad and the point-accuracy loss is not: the
 pooled MAE gap of {pooled_mae_gap:+.2f} EUR/MWh is produced almost entirely by **{worst_fold}**, the
 crisis-peak block, which contributes {worst_contribution:+.2f} of it on its own while three folds
-contribute negative (champion-favourable) amounts. An expanding-window model trained only on
-pre-crisis data cannot follow an August-2022 level shift; persistence tracks it by construction. The
+contribute negative (champion-favourable) amounts.
+
+**The mechanism is measured, not assumed.** Contrary to the obvious reading, the model did see the crisis — that fold's training ran to 2022-04-29 and included
+5,784 crisis hours at a 173 EUR/MWh mean and a 700 EUR/MWh maximum — but **61.3% of the evaluation
+block sits above the 99th percentile of everything it ever saw, while only 2.45% exceeds its
+maximum.** So this is shrinkage toward the training level, not an extrapolation wall: a leaf's value
+is an average over the training rows that fall in it, and the far more numerous moderate-price rows
+pull the prediction down. Persistence has no training distribution at all, so it carries the level
+for free.
+
+The
 plan reports results and gates none of them, and the ≥15% pinball improvement is a narrative target
 only.
 

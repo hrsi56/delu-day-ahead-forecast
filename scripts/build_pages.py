@@ -415,11 +415,17 @@ no result gates anything.</p>
 <tr><td>Probabilistic daily-vector pinball</td><td>similar-day naive</td><td class="n">{C['development_dm_pinball_statistic']}</td><td class="n">{C['development_dm_pinball_p_value']}</td><td class="n">{C['development_days']}</td></tr>
 <tr><td>Point median absolute error</td><td>similar-day naive</td><td class="n">{C['development_dm_point_statistic']}</td><td class="n">{C['development_dm_point_p_value']}</td><td class="n">{C['development_days']}</td></tr>
 </tbody></table></div>
-<p><strong>The point-accuracy test shows no evidence of advantage</strong> — p =
-{C['development_dm_point_p_value']}, reported here rather than omitted or reframed. The
+<p><strong>The point-accuracy test does not merely fail to show an advantage — it shows a
+deficit.</strong> The test is one-sided (reject if DM &lt; −1.645) and the statistic is
+<em>+{C['development_dm_point_statistic_abs']}</em>, p = {C['development_dm_point_p_value']}: the champion's median is
+{C['development_dm_point_relative']} against the naive over the development folds. Reported here rather than
+omitted or reframed. The
 probabilistic win is broad and the point-accuracy win is not: the pooled MAE gap comes almost
-entirely from the crisis-peak fold, where an expanding-window model trained only on pre-crisis data
-cannot follow an August-2022 level shift and persistence tracks it by construction. Note also that
+entirely from the crisis-peak fold. The mechanism is measured, not assumed: the model did see the
+crisis (that fold's training included 5,784 crisis hours at a €173 mean and a €700 maximum), but
+<strong>61.3% of the evaluation block sits above the 99th percentile of everything it ever saw while
+only 2.45% exceeds its maximum</strong> — shrinkage toward the training level, not an extrapolation
+wall. Persistence has no training distribution and carries the level for free. Note also that
 a point forecast scored on pinball is structurally disadvantaged against a nine-quantile model, so
 the pinball margin is largely the value of <em>having</em> a predictive distribution.</p>
 {table(pooled)}
