@@ -3,8 +3,7 @@
   "artifact_fingerprint_sha256": "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb",
   "champion_mae": 25.907780440955044,
   "champion_mean_pinball": 6.708294915819919,
-  "code_sha": "380e7a0e9d37844da6d463ab67b33bc904b304e2",
-  "completed_runs_recorded": 1,
+  "code_sha": "525fc2d4c5bc8763b0da30197030740c49c73b34",
   "crossing_violations_final": 0,
   "cutoffs": {
     "final_calibration_window": "2026-04-09..2026-06-07",
@@ -32,7 +31,7 @@
   "eligibility_rule": "a row is eligible when its target is finite and every `base` feature is non-null; the rule depends on neither the augmented nor the A69 columns, so every arm sees identical rows. Ineligible rows are the feature warm-up (720h rolling window), the DST-null calendar-day lags, and days with a missing A65 hour.",
   "evaluated_once": true,
   "evaluation_decision_taken_once": true,
-  "execution_note": "'Evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run -- the Integration Critic must re-run it from a clean worktree to verify, which is a reproduction rather than a second evaluation. This script was run repeatedly while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and every completed run reproduced the previous run's metrics and artifact fingerprint exactly (see reproduces_previous_run_exactly). No catalog, hyperparameter, threshold or analysis choice was changed after any of them. The authoritative run count is the public MLflow record, not a number written here: a hardcoded count cannot update itself and was wrong once already.",
+  "execution_note": "'Evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run -- the Integration Critic must re-run it from a clean worktree to verify, which is a reproduction rather than a second evaluation. This script was run repeatedly while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and every completed run reproduced the previous run's metrics and artifact fingerprint exactly (see reproduces_previous_run_exactly). No catalog, hyperparameter, threshold or analysis choice was changed after any of them. The authoritative run count is the public MLflow record, not a number written here. No count is kept in this file: a hardcoded one cannot update itself and was wrong once, and a local counter resets whenever a previous report lacked the field and was wrong differently.",
   "fields_compared_against_previous_run": [
     "artifact_fingerprint_sha256",
     "champion_mae",

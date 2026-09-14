@@ -63,13 +63,24 @@ two-arm comparison alone decides.
 
 ## CP-2 model, calibration and analysis
 
-**Selected catalog: `base`.** The two frozen catalogs were compared once on raw heads over the
-five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget: pooled mean
-pinball loss `13.015841509664993` for `base` against
-`13.064197422052183` for
-`base + residual_load_proxy`, a difference of
-+0.3715%. The domain feature did not earn its
-place, so the champion ships strict-gate as `base`. That is a reportable result, not a failure.
+**The two-arm comparison, numbers first.** The two frozen catalogs were compared once on raw heads
+over the five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget. Pooled
+observation-weighted mean pinball loss, unrounded as stored:
+
+| Arm | Pooled raw-head mean pinball loss |
+|---|---|
+| `base` | `13.015841509664993` |
+| `base + residual_load_proxy` | `13.064197422052183` |
+
+Percentage difference (augmented vs base): **+0.3715%**.
+
+**Selected catalog: `base`.** The augmented catalog ships only if its unrounded stored pooled
+loss is lower; it is not, so the champion ships strict-gate as `base`. The domain feature did not
+earn its place on the pooled metric that decides, and that is a reportable result, not a failure.
+The fold-level picture is not uniform — the augmented arm is lower on
+2 of the 5 folds, and the report gives that table —
+but §4.1 fixes the rule as pooled and fixes it before fitting, so the split is disclosed and the
+decision is not revisited.
 
 **Development metrics are descriptive post-selection evidence** (`evidence_class =
 development_post_selection`), never confirmatory superiority. The champion beats the similar-day
