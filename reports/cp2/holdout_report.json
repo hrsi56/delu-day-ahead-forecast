@@ -3,7 +3,8 @@
   "artifact_fingerprint_sha256": "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb",
   "champion_mae": 25.907780440955044,
   "champion_mean_pinball": 6.708294915819919,
-  "code_sha": "0da432eef6bbaef7f4d654c9fc64851fd6e7084e",
+  "code_sha": "380e7a0e9d37844da6d463ab67b33bc904b304e2",
+  "completed_runs_recorded": 1,
   "crossing_violations_final": 0,
   "cutoffs": {
     "final_calibration_window": "2026-04-09..2026-06-07",
@@ -27,10 +28,11 @@
     "standardized_effect_size": -1.0477562158534526,
     "statistic": -8.679848490812438
   },
-  "dm_label": "Pre-specified one-shot holdout DM test on a fixed 90-day window - confirmatory-style, not power-qualified.",
+  "dm_label": "Pre-specified one-shot holdout DM test on a fixed 90-day window \u2014 confirmatory-style, not power-qualified.",
+  "eligibility_rule": "a row is eligible when its target is finite and every `base` feature is non-null; the rule depends on neither the augmented nor the A69 columns, so every arm sees identical rows. Ineligible rows are the feature warm-up (720h rolling window), the DST-null calendar-day lags, and days with a missing A65 hour.",
   "evaluated_once": true,
   "evaluation_decision_taken_once": true,
-  "execution_note": "This deterministic script was executed several times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and five completed runs that produced identical metrics and an identical artifact fingerprint (reproduces_previous_run_exactly records the comparison). No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
+  "execution_note": "'Evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run -- the Integration Critic must re-run it from a clean worktree to verify, which is a reproduction rather than a second evaluation. This script was run repeatedly while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and every completed run reproduced the previous run's metrics and artifact fingerprint exactly (see reproduces_previous_run_exactly). No catalog, hyperparameter, threshold or analysis choice was changed after any of them. The authoritative run count is the public MLflow record, not a number written here: a hardcoded count cannot update itself and was wrong once already.",
   "fields_compared_against_previous_run": [
     "artifact_fingerprint_sha256",
     "champion_mae",
@@ -54,6 +56,9 @@
   "mae_percentage_difference_vs_naive": -6.664754034749622,
   "n_holdout_days": 90,
   "n_holdout_rows": 2160,
+  "n_raw_fit_rows": 62688,
+  "n_rows_before_embargo_a": 63695,
+  "n_rows_before_embargo_a_ineligible": 1007,
   "pinball_percentage_difference_vs_naive": -51.66545761012248,
   "post_cqr_coverage": {
     "50": 0.4388888888888889,

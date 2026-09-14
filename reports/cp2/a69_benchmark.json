@@ -21,14 +21,17 @@
     "dunkelflaute_flag"
   ],
   "calibrated": false,
+  "code_sha": "380e7a0e9d37844da6d463ab67b33bc904b304e2",
   "coverage_reported": false,
   "deployable_artifact": false,
   "development_pooled_mean_pinball_for_selected_catalog": 13.015841509664993,
   "headline_metric": "pooled mean pinball loss across nine quantiles and five folds, raw heads",
   "limitation": "This uncalibrated raw-head comparison isolates the information content of post-gate A69. It makes no claim about calibrated interval quality and does not make A69 available at the forecast gate.",
+  "per_row_predictions": "reports/cp2/a69_benchmark_predictions.parquet -- both arms' raw head predictions on every evaluation row, so the headline percentage difference can be recomputed without re-running the training",
   "percentage_difference_a69_vs_strict": -19.492607337797907,
   "registry_version": false,
   "seed": 42,
+  "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
   "strict_arm": {
     "arm": "base",
     "median_mae": 41.75983235890547,
@@ -43,5 +46,6 @@
     "pooled_mean_pinball": 13.015841509664993
   },
   "strict_arm_reproduces_development_selection_run": true,
+  "uncommitted_source_when_run_started": false,
   "value_of_post_gate_information_pct": 19.492607337797907
 }

@@ -90,6 +90,7 @@
   "narrative_target_is_not_a_gate": true,
   "narrative_target_pinball_improvement_pct": 15.0,
   "selection": {
+    "code_sha": "380e7a0e9d37844da6d463ab67b33bc904b304e2",
     "equality": false,
     "eval_rows_with_null_residual_load_proxy": 456,
     "evidence_class": "development_post_selection",
@@ -106,6 +107,8 @@
     },
     "rule": "the augmented catalog ships only if its unrounded stored pooled mean pinball loss is lower; equality defaults to base",
     "seed": 42,
-    "selected_catalog": "base"
+    "selected_catalog": "base",
+    "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+    "uncommitted_source_when_run_started": false
   }
 }

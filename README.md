@@ -63,33 +63,37 @@ two-arm comparison alone decides.
 
 ## CP-2 model, calibration and analysis
 
-**Selected catalog: `base`.** The two frozen catalogs were compared once on raw
-heads over the five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget:
-pooled mean pinball loss `13.015841509664993` for `base` against
+**Selected catalog: `base`.** The two frozen catalogs were compared once on raw heads over the
+five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget: pooled mean
+pinball loss `13.015841509664993` for `base` against
 `13.064197422052183` for
 `base + residual_load_proxy`, a difference of
-+0.3715%. The domain feature did not earn its place, so
-the champion ships strict-gate as `base`. That is a reportable result, not a failure.
++0.3715%. The domain feature did not earn its
+place, so the champion ships strict-gate as `base`. That is a reportable result, not a failure.
 
 **Development metrics are descriptive post-selection evidence** (`evidence_class =
-development_post_selection`), never confirmatory superiority. Over the five evaluation blocks the
-champion beats the similar-day naive on mean pinball loss and loses to it on median MAE, and both
-come from the crisis-peak fold, where an expanding-window model cannot follow an August-2022 level
-shift and persistence can. Full tables, both DM analyses, the three-stage reliability read, SHAP,
-permutation importance and the regime-stratified table are in
-[`docs/cp2-model-report.md`](docs/cp2-model-report.md) and `reports/cp2/`.
+development_post_selection`), never confirmatory superiority. The champion beats the similar-day
+naive on mean pinball loss in 5 of the 5 evaluation
+blocks and on median MAE in 3 of 5: the probabilistic win is
+broad, the point-accuracy loss is not. The pooled MAE gap of +9.29 EUR/MWh
+comes almost entirely from **fold_3**, the crisis-peak block, which contributes
++10.87 of it alone — an expanding-window model trained only on
+pre-crisis data cannot follow an August-2022 level shift, and persistence can. Full tables, both DM
+analyses, the three-stage reliability read, SHAP, permutation importance and the regime-stratified
+table are in [`docs/cp2-model-report.md`](docs/cp2-model-report.md) and `reports/cp2/`.
 
 **One pre-specified holdout evaluation, opened once.** Champion MAE 25.91 vs
 similar-day naive 27.76 EUR/MWh
 (-6.7%); champion mean pinball loss
 6.708 vs 13.879
 (-51.7%); final empirical coverage
-0.441 / 0.759 / 0.940
-at the 50 / 80 / 95 % nominal levels; probabilistic daily-vector DM statistic
--8.68, p = 2e-18, standardized effect size
--1.05, over 90 delivery days.
+0.441 / 0.759 /
+0.940 at the 50 / 80 / 95 % nominal levels; probabilistic
+daily-vector DM statistic -8.68, p = 2e-18,
+standardized effect size -1.05, over
+90 delivery days.
 
-> Pre-specified one-shot holdout DM test on a fixed 90-day window - confirmatory-style, not power-qualified.
+> Pre-specified one-shot holdout DM test on a fixed 90-day window — confirmatory-style, not power-qualified.
 
 **The shipped model is exactly the model the holdout evaluated.** There is no retrain and no re-tune
 after the result was opened. The frozen artifact is `models/champion/`, a single `mlflow.pyfunc`
@@ -108,8 +112,8 @@ fresh UUID and creation time on every save.
 | `holdout_window` | 2026-06-09..2026-09-06 |
 
 The raw-model fit cutoff precedes the snapshot cutoff by
-152 delivery days (1 + 60 + 1 + 90). That is
-what shipping the evaluated model costs, and it is stated plainly rather than apologised for.
+152 delivery days (1 + 60 + 1 + 90). That
+is what shipping the evaluated model costs, and it is stated plainly rather than apologised for.
 
 **What the post-gate forecast would have been worth.** A controlled ablation, raw heads, neither arm
 calibrated: adding the delivery-day A69 forecast and its derivatives lowers pooled mean pinball loss
@@ -120,8 +124,8 @@ by 19.49%
 
 **Experiment records** for every decision-bearing run — the three baselines, both catalog
 candidates, both benchmark arms, the champion's final fit and holdout — are public at
-<https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow> with snapshot hash, code SHA, fold spec,
-feature list, seed, hyperparameters, metrics and artifact links.
+<https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow> with snapshot hash, code SHA, fold spec, feature list, seed, hyperparameters,
+metrics and artifact links.
 
 Reproduce with `make cp2` after `uv sync`; every stage runs offline and MLflow logging is skipped
 silently when `MLFLOW_TRACKING_URI` is unset.
