@@ -80,6 +80,8 @@ def main() -> None:
     cutoffs = holdout["cutoffs"]
     base_loss = selection["pooled_mean_pinball"]["base"]
     augmented_loss = selection["pooled_mean_pinball"]["base_plus_residual_load_proxy"]
+    agreement = diagnostics.get("frozen_vs_fold5_shap_agreement",
+                                {"top5_overlap": 0, "top10_overlap": 0, "rank_spearman": float("nan")})
     dm_headline = next(
         item for item in development["dm_tests"]
         if item["comparator"] == "similar_day_naive" and item["analysis"] == "probabilistic_daily_vector_pinball"
@@ -311,8 +313,9 @@ version for the A69 arm, and A69 is never reclassified KFT.
 {diagnostics["shap_surface"]}. The frozen champion was fit on every development row, so SHAP on it
 over the validation tail would be in-sample; the holdout is closed to development diagnostics. Both
 reads are committed — `reports/cp2/shap_ranking.csv` (out of sample, headline) and
-`reports/cp2/shap_ranking_frozen_champion_in_sample.csv` (labelled in-sample) — and they agree on
-the leading features.
+`reports/cp2/shap_ranking_frozen_champion_in_sample.csv` (labelled in-sample). Their agreement is
+measured rather than asserted: {agreement["top5_overlap"]}/5 and {agreement["top10_overlap"]}/10
+overlap at the top, Spearman rank correlation {agreement["rank_spearman"]:.3f} across all features.
 
 Top 10 by mean |SHAP| (p50 head):
 

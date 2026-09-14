@@ -150,6 +150,12 @@ def main() -> None:
     )
     frozen_ranking["rank"] = frozen_ranking.index + 1
     frozen_ranking.to_csv(OUT / "shap_ranking_frozen_champion_in_sample.csv", index=False)
+    frozen_merge = ranking.merge(frozen_ranking, on="feature", suffixes=("_fold5", "_frozen"))
+    frozen_agreement = {
+        "rank_spearman": float(frozen_merge["rank_fold5"].corr(frozen_merge["rank_frozen"], method="spearman")),
+        "top10_overlap": int(len(set(ranking["feature"].head(10)) & set(frozen_ranking["feature"].head(10)))),
+        "top5_overlap": int(len(set(ranking["feature"].head(5)) & set(frozen_ranking["feature"].head(5)))),
+    }
 
     # ---- regime-stratified error table -------------------------------------
     predictions = pd.read_parquet(OUT / "development_predictions.parquet")
@@ -225,6 +231,7 @@ def main() -> None:
         "permutation_top10": permutation_table.head(10).to_dict("records"),
         "shap_vs_permutation_rank_spearman": rank_agreement,
         "frozen_champion_shap_top10_in_sample": frozen_ranking.head(10).to_dict("records"),
+        "frozen_vs_fold5_shap_agreement": frozen_agreement,
         "scoping": "SHAP on the p50 head explains central tendency, not interval width. Interval "
         "width is driven by the inter-quantile spread and the CQR shift Q. SHAP explains the "
         "selected champion; it is not the incremental-value test -- that is the §4.1 two-arm "
