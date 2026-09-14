@@ -11,9 +11,14 @@ narrative report reliably introduces, and this removes it.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from delu_forecast.claims import build_claims  # noqa: E402
 
 OUT = Path("reports/cp2")
 DOC = Path("docs/cp2-model-report.md")
@@ -424,7 +429,8 @@ Python {timings.get("python", "3.13")}, from `reports/cp2/timings.json`:
 | **Total** | **{timings.get("total_seconds", "-")}** |
 
 No GPU, no cloud compute, $0 run rate. The champion's frozen artifact is
-{Path("models/champion/python_model.pkl").stat().st_size / 1_048_576:.1f} MB on disk and is logged
+{build_claims()["champion_pkl_size"]} on disk — the `python_model.pkl` itself, {build_claims()["champion_pkl_bytes"]} bytes; the whole
+`models/champion/` directory is {build_claims()["champion_dir_bytes"]} bytes ({build_claims()["champion_dir_size"]}) — and is logged
 to MLflow as `{model_uri}`.
 
 **No hyperparameter search was run.** One frozen LightGBM configuration is used by every arm: §4.1

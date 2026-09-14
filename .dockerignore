@@ -1,0 +1,18 @@
+.git
+.github
+.venv
+.pytest_cache
+__pycache__
+**/__pycache__
+*.pyc
+.DS_Store
+docs/
+site/
+tmp/
+data/spike/
+data/raw/
+reports/cp2/*.parquet
+# ...except the one the showcase can read at runtime.
+!reports/cp2/holdout_predictions.parquet
+*.pdf
+*.docx

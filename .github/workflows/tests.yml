@@ -18,3 +18,8 @@ jobs:
       # visible as its own green check rather than implied by a suite total.
       - name: CQR order-statistic fixture (§6.2)
         run: uv run pytest tests/test_10_cqr_order_statistic.py -q
+      # CP-3 items 3 and 5, for the same reason: a hiring manager reading four
+      # surfaces that disagree, or a static page that phones home, is a release
+      # defect and should be a red check rather than a discovery.
+      - name: Cross-surface agreement and zero runtime calls (CP-3 items 3, 5)
+        run: uv run python scripts/verify_release.py

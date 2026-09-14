@@ -1,0 +1,26 @@
+{
+  "app_port": 7860,
+  "bundle": "dist/space",
+  "card": "space/README.md",
+  "deployment": "owner-only; this script assembles and pushes nothing",
+  "paths": [
+    "Dockerfile",
+    ".dockerignore",
+    "pyproject.toml",
+    "uv.lock",
+    "predict_next_day.py",
+    "src",
+    "app",
+    "sql",
+    "models/champion",
+    "data/snapshot.parquet",
+    "data/snapshot.sha256",
+    "data/partitions.json",
+    "data/README.md",
+    "reports",
+    "README.md",
+    ".gitattributes"
+  ],
+  "sdk": "docker",
+  "total_bytes": 38225840
+}
