@@ -1,0 +1,44 @@
+{
+  "booster_bytes": {
+    "p025": 3460531,
+    "p05": 3443518,
+    "p10": 3421607,
+    "p25": 3403039,
+    "p50": 3394815,
+    "p75": 3398163,
+    "p90": 3416469,
+    "p95": 3437669,
+    "p975": 3447879
+  },
+  "browser_champion_sha256": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
+  "default_day": "2026-09-06",
+  "file_bytes": {
+    "browser_champion.py": 11000,
+    "calendar.json": 5158,
+    "champion.json": 1254,
+    "fixture.json": 180878,
+    "p025.txt": 3460531,
+    "p05.txt": 3443518,
+    "p10.txt": 3421607,
+    "p25.txt": 3403039,
+    "p50.txt": 3394815,
+    "p75.txt": 3398163,
+    "p90.txt": 3416469,
+    "p95.txt": 3437669,
+    "p975.txt": 3447879,
+    "series.json": 158937
+  },
+  "fixture_days": 43,
+  "fixture_fail_closed_rows": 2,
+  "fixture_rows": 1031,
+  "history_days_per_window": 31,
+  "payload_dir": "app/public",
+  "regimes": [
+    "crisis",
+    "dst-spring-forward",
+    "post-crisis (holdout)",
+    "pre-crisis"
+  ],
+  "series_rows": 4007,
+  "uncompressed_bytes": 31180917
+}

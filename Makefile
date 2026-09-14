@@ -1,5 +1,6 @@
 .PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2 \
-        pages space register showcase cli container container-verify readme-cp3 verify cp3
+        pages space register showcase cli container container-verify readme-cp3 verify cp3 \
+        wasm-payload wasm wasm-serve cp3b
 
 test:
 	uv run pytest -q
@@ -75,3 +76,19 @@ verify:
 	uv run python scripts/verify_release.py
 
 cp3: pages space readme-cp3 register verify
+
+# --- M3.5/CP-3B: the WASM showcase ----------------------------------------
+# The browser payload is derived from the committed champion, never committed
+# itself. `make test` needs it; CI builds it before pytest.
+wasm-payload:
+	uv run python scripts/build_wasm_payload.py
+
+wasm: wasm-payload
+	uv run python scripts/build_wasm_space.py
+
+# Serve the export locally. html-wasm REQUIRES http:// -- file:// cannot work.
+wasm-serve:
+	@echo "serving dist/space-wasm at http://127.0.0.1:8820 (ctrl-c to stop)"
+	cd dist/space-wasm && uv run python -m http.server 8820 --bind 127.0.0.1
+
+cp3b: wasm verify
