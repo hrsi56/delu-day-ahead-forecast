@@ -200,9 +200,20 @@ redirects an anonymous visitor to a sign-in page.
 #: holdout frame is readable by the showcase, so only it travels.
 _RUNTIME_PARQUET = {"holdout_predictions.parquet"}
 
+#: `reports/cp3/` holds this checkpoint's own build records -- including this
+#: manifest. Copying it would make `total_bytes` measure its own siblings and the
+#: manifest would stop being reproducible; the Space needs none of it.
+_EXCLUDED_DIRS = {"__pycache__", "cp3"}
+
 
 def _ignore(directory: str, names: list[str]) -> set[str]:
-    skipped = {name for name in names if name in {"__pycache__", ".DS_Store"} or name.endswith(".pyc")}
+    skipped = {
+        name
+        for name in names
+        if name in {".DS_Store"}
+        or name.endswith(".pyc")
+        or (name in _EXCLUDED_DIRS and Path(directory, name).is_dir())
+    }
     skipped |= {
         name for name in names if name.endswith(".parquet") and name not in _RUNTIME_PARQUET
     }

@@ -14,5 +14,7 @@ data/raw/
 reports/cp2/*.parquet
 # ...except the one the showcase can read at runtime.
 !reports/cp2/holdout_predictions.parquet
+# CP-3 build records are checkpoint evidence, not runtime data.
+reports/cp3/
 *.pdf
 *.docx

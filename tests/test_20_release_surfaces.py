@@ -152,3 +152,23 @@ def test_the_pages_export_carries_the_whole_section_10_reading_order():
         'id="forecast"', 'id="limitations"', 'id="repro"',
     ):
         assert anchor in page, anchor
+
+
+def test_the_container_was_actually_exercised_with_the_network_disabled():
+    """Item 1 says the container runs locally. `scripts/verify_container.py`
+    records the run; this asserts the record describes a real offline success,
+    not an intention. Re-run it with `make container-verify`."""
+    record = json.loads((REPO_ROOT / "reports" / "cp3" / "container_check.json").read_text())
+    assert record["passed"] is True
+    probe = record["steps"]["offline_probe"]["detail"]
+    assert probe["app_health_status"] == 200
+    assert probe["app_index_bytes"] > 10_000
+    for host in ("outbound_network", "cdn.jsdelivr.net", "huggingface.co", "dagshub.com"):
+        assert probe[host].startswith("unreachable"), (
+            f"{host} was reachable, so the offline run proves nothing"
+        )
+    cli = record["steps"]["cli_offline"]["detail"]
+    assert cli["exit_code"] == 0
+    assert cli["delivery_day_prices_change_nothing"] is True
+    assert cli["positive_control_d_minus_1_changes_output"] is True
+    assert record["steps"]["marimo_server_mode"]["ok"] is True

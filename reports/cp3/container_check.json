@@ -1,0 +1,44 @@
+{
+  "build_context": "PJM",
+  "checked_at_utc": "2026-09-14T18:48:57+00:00",
+  "docker_host": "Ubuntu 24.04.4 LTS / aarch64 / 4 CPU",
+  "docker_server_version": "29.5.2",
+  "image": "delu-showcase:verify",
+  "image_size": "1.66GB",
+  "passed": true,
+  "steps": {
+    "build": {
+      "detail": "DEPRECATED: The legacy builder is deprecated and will be removed in a future release.\n            Install the buildx component to build images with BuildKit:\n            https://docs.docker.com/go/buildx/",
+      "ok": true
+    },
+    "cli_offline": {
+      "detail": {
+        "delivery_day_prices_change_nothing": true,
+        "exit_code": 0,
+        "positive_control_d_minus_1_changes_output": true,
+        "tail": "    passed: True"
+      },
+      "ok": true
+    },
+    "marimo_server_mode": {
+      "detail": "        \u279c  Network: http://c52f764fbd86:7860",
+      "ok": true
+    },
+    "offline_probe": {
+      "detail": {
+        "app_health_body": "{\"status\":\"healthy\"}",
+        "app_health_status": 200,
+        "app_index_bytes": 23961,
+        "cdn.jsdelivr.net": "unreachable (URLError)",
+        "dagshub.com": "unreachable (URLError)",
+        "huggingface.co": "unreachable (URLError)",
+        "outbound_network": "unreachable (OSError)"
+      },
+      "ok": true
+    },
+    "run_offline": {
+      "detail": "c52f764fbd86",
+      "ok": true
+    }
+  }
+}
