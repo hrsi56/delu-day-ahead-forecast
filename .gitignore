@@ -13,6 +13,10 @@ __pycache__/
 .env
 *.env
 
+# CP-3 deployable bundle: a copy of committed files, assembled by
+# `make space` for the owner to push. Never a second source of truth.
+/dist/
+
 # Scratch data / probe evidence. CP-1's frozen snapshot and manifests are
 # explicitly committed; transient downloads remain ignored.
 data/*
@@ -28,3 +32,7 @@ data/raw/
 
 # macOS custom folder icon (filename ends with CR)
 Icon?
+
+# marimo's per-session cache, written beside the notebook when the app runs.
+app/__marimo__/
+__marimo__/

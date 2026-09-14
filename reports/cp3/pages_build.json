@@ -1,0 +1,12 @@
+{
+  "build_path": "purpose-built static assembly (\u00a79.2 fallback)",
+  "built_on": "2026-09-14",
+  "bytes": 1006064,
+  "load_scale_points": 11,
+  "marimo_export_external_hosts": [
+    "cdn.jsdelivr.net"
+  ],
+  "marimo_export_external_reference_count": 181,
+  "marimo_export_html_rejected_because": "measured 2026-09-14 with marimo 0.24.2: `marimo export html` emits 181 external references to cdn.jsdelivr.net (frontend JS bundle, CSS and five web fonts), so the page cannot render without network. CP-3 item 3 requires zero runtime calls.",
+  "output": "docs/index.html"
+}

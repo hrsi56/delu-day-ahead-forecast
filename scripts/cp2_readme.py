@@ -10,24 +10,31 @@ and hand-maintained prose is where those drift out of agreement with the data.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from delu_forecast.claims import MLFLOW_URL as TRACKING_URL  # noqa: E402
+from delu_forecast.claims import build_claims  # noqa: E402
+
 OUT = Path("reports/cp2")
 README = Path("README.md")
 HEADING = "## CP-2 model, calibration and analysis"
-NEXT_HEADING = "## Setup\n"
-TRACKING_URL = "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
+NEXT_HEADING = "## CP-3 showcase and release\n"
 
 
 def build_section() -> str:
+    # Every published number comes from the one claim set the README, the Pages
+    # export, the Space card and the MLflow record all render from (CP-3 item 5).
+    # Rounding a figure differently here is exactly the drift that item exists to
+    # catch, so this file no longer formats any of them itself.
+    C = build_claims()
     selection = json.loads((OUT / "catalog_selection.json").read_text())
-    holdout = json.loads((OUT / "holdout_report.json").read_text())
-    benchmark = json.loads((OUT / "a69_benchmark.json").read_text())
     per_fold = pd.read_csv(OUT / "development_metrics.csv")
-    cutoffs = holdout["cutoffs"]
-    champion = selection["selected_catalog"]
+    champion = C["selected_catalog"]
 
     mae = per_fold.pivot_table(index="fold", columns="model", values="mae_final_p50")
     pinball = per_fold.pivot_table(index="fold", columns="model", values="pinball_final")
@@ -59,10 +66,10 @@ observation-weighted mean pinball loss, unrounded as stored:
 
 | Arm | Pooled raw-head mean pinball loss |
 |---|---|
-| `base` | `{selection["pooled_mean_pinball"]["base"]}` |
-| `base + residual_load_proxy` | `{selection["pooled_mean_pinball"]["base_plus_residual_load_proxy"]}` |
+| `base` | `{C["catalog_base_loss"]}` |
+| `base + residual_load_proxy` | `{C["catalog_augmented_loss"]}` |
 
-Percentage difference (augmented vs base): **{selection["percentage_difference_augmented_vs_base"]:+.4f}%**.
+Percentage difference (augmented vs base): **{C["catalog_pct"]}**.
 
 **Selected catalog: `{champion}`.** The augmented catalog ships only if its unrounded stored pooled
 loss is lower; it is not, so the champion ships strict-gate as `base`. The domain feature did not
@@ -73,7 +80,11 @@ but §4.1 fixes the rule as pooled and fixes it before fitting, so the split is 
 decision is not revisited.
 
 **Development metrics are descriptive post-selection evidence** (`evidence_class =
-development_post_selection`), never confirmatory superiority. The champion beats the similar-day
+{C["development_evidence_class"]}`), never confirmatory superiority. The point-accuracy DM on those
+folds shows **no evidence of advantage** — p = {C["development_dm_point_p_value"]}, statistic
+{C["development_dm_point_statistic"]}, over {C["development_days"]} days — reported here rather than
+omitted. The probabilistic daily-vector DM on the same folds reads statistic
+{C["development_dm_pinball_statistic"]}, p = {C["development_dm_pinball_p_value"]}. The champion beats the similar-day
 naive on mean pinball loss in {tallies["pinball_wins"]} of the {tallies["n_folds"]} evaluation
 blocks and on median MAE in {tallies["mae_wins"]} of {tallies["n_folds"]}: the probabilistic win is
 broad, the point-accuracy loss is not. The pooled MAE gap of {tallies["pooled_gap"]:+.2f} EUR/MWh
@@ -83,45 +94,49 @@ pre-crisis data cannot follow an August-2022 level shift, and persistence can. F
 analyses, the three-stage reliability read, SHAP, permutation importance and the regime-stratified
 table are in [`docs/cp2-model-report.md`](docs/cp2-model-report.md) and `reports/cp2/`.
 
-**One pre-specified holdout evaluation, opened once.** Champion MAE {holdout["champion_mae"]:.2f} vs
-similar-day naive {holdout["similar_day_naive_mae"]:.2f} EUR/MWh
-({holdout["mae_percentage_difference_vs_naive"]:+.1f}%); champion mean pinball loss
-{holdout["champion_mean_pinball"]:.3f} vs {holdout["similar_day_naive_mean_pinball"]:.3f}
-({holdout["pinball_percentage_difference_vs_naive"]:+.1f}%); final empirical coverage
-{holdout["final_coverage"]["50"]:.3f} / {holdout["final_coverage"]["80"]:.3f} /
-{holdout["final_coverage"]["95"]:.3f} at the 50 / 80 / 95 % nominal levels; probabilistic
-daily-vector DM statistic {holdout["dm"]["statistic"]:.2f}, p = {holdout["dm"]["p_value"]:.2g},
-standardized effect size {holdout["dm"]["standardized_effect_size"]:.2f}, over
-{holdout["dm"]["n_days"]} delivery days.
+**One pre-specified holdout evaluation, opened once.** Champion MAE {C["holdout_mae_champion"]} vs
+similar-day naive {C["holdout_mae_naive"]} EUR/MWh
+({C["holdout_mae_pct"]}); champion mean pinball loss
+{C["holdout_pinball_champion"]} vs {C["holdout_pinball_naive"]}
+({C["holdout_pinball_pct"]}); final empirical coverage
+{C["holdout_coverage_50"]} / {C["holdout_coverage_80"]} /
+{C["holdout_coverage_95"]} at the 50 / 80 / 95 % nominal levels; probabilistic
+daily-vector DM statistic {C["holdout_dm_statistic"]}, p = {C["holdout_dm_p_value"]},
+standardized effect size {C["holdout_dm_effect_size"]}, over
+{C["holdout_days"]} delivery days ({C["holdout_rows"]} rows).
 
-> {holdout["dm_label"]}
+> {C["holdout_dm_label"]}
 
-**The shipped model is exactly the model the holdout evaluated.** There is no retrain and no re-tune
-after the result was opened. The frozen artifact is `models/champion/`, a single `mlflow.pyfunc`
-wrapping the nine quantile heads, the selected catalog's feature pipeline, the four CQR thresholds
-and the isotonic ordering guard. Its identity is the `artifact_fingerprint_sha256` recorded in
-`models/champion/champion_card.json`; the pickle's own bytes are not stable, because MLflow stamps a
-fresh UUID and creation time on every save.
+**{C["shipped_is_evaluated"]}** The frozen artifact is `models/champion/`, a single
+`mlflow.pyfunc` wrapping the {C["champion_quantiles"]} quantile heads, the selected catalog's
+{C["champion_features"]}-feature pipeline, the four CQR thresholds and the isotonic ordering guard,
+fit on {C["champion_fit_rows"]} rows and calibrated on {C["champion_calibration_rows"]}. Its identity
+is `artifact_fingerprint_sha256` `{C["champion_fingerprint"]}`, recorded in
+`models/champion/champion_card.json` and computed over the catalog, the feature list, the nine
+quantiles, the four thresholds and the nine boosters' own serializations; the pickle's own bytes are
+not stable, because MLflow stamps a fresh UUID and creation time on every save.
+`python_model.pkl` is {C["champion_pkl_bytes"]} bytes = {C["champion_pkl_size"]}; the whole
+`models/champion/` directory is {C["champion_dir_bytes"]} bytes = {C["champion_dir_size"]}. The
+snapshot it reads is pinned at `sha256` `{C["snapshot_sha256"]}`.
 
 **Four cutoffs, stated separately because they are four different dates:**
 
 | Cutoff | Value |
 |---|---|
-| `snapshot_cutoff` | {cutoffs["snapshot_cutoff"]} |
-| `raw_model_fit_cutoff` | {cutoffs["raw_model_fit_cutoff"]} |
-| `final_calibration_window` | {cutoffs["final_calibration_window"]} |
-| `holdout_window` | {cutoffs["holdout_window"]} |
+| `snapshot_cutoff` | {C["snapshot_cutoff"]} |
+| `raw_model_fit_cutoff` | {C["raw_model_fit_cutoff"]} |
+| `final_calibration_window` | {C["final_calibration_window"]} |
+| `holdout_window` | {C["holdout_window"]} |
 
 The raw-model fit cutoff precedes the snapshot cutoff by
-{cutoffs["raw_model_fit_precedes_snapshot_by_delivery_days"]} delivery days (1 + 60 + 1 + 90). That
+{C["staleness_days"]} delivery days (1 + 60 + 1 + 90). That
 is what shipping the evaluated model costs, and it is stated plainly rather than apologised for.
 
 **What the post-gate forecast would have been worth.** A controlled ablation, raw heads, neither arm
-calibrated: adding the delivery-day A69 forecast and its derivatives lowers pooled mean pinball loss
-by {abs(benchmark["percentage_difference_a69_vs_strict"]):.2f}%
-(`{benchmark["strict_arm"]["pooled_mean_pinball"]}` → `{benchmark["a69_augmented_arm"]["pooled_mean_pinball"]}`).
+calibrated: adding the delivery-day A69 forecast and its derivatives moves pooled mean pinball loss
+from `{C["benchmark_strict_loss"]}` to `{C["benchmark_a69_loss"]}` — **{C["benchmark_pct"]}**.
 
-> {benchmark["limitation"]}
+> {C["benchmark_limitation"]}
 
 **Experiment records** for every decision-bearing run — the three baselines, both catalog
 candidates, both benchmark arms, the champion's final fit and holdout — are public at
