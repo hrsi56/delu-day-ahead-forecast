@@ -71,11 +71,22 @@ def code_sha() -> str:
         return "unknown"
 
 
-def working_tree_dirty() -> bool:
+SOURCE_PATHS: tuple[str, ...] = ("src", "scripts", "tests", "pyproject.toml", "uv.lock", "data")
+
+
+def working_tree_dirty(paths: tuple[str, ...] | None = None) -> bool:
+    """Is the tree dirty? Scoped to `paths` when given.
+
+    A pipeline stage that runs after earlier stages have rewritten their own
+    generated artifacts will always see a dirty tree, which says nothing about
+    provenance. What matters for a decision-bearing run is whether the *source*
+    that produced it was committed, so the callers pass `SOURCE_PATHS`.
+    """
+    command = ["git", "status", "--porcelain=v1"]
+    if paths:
+        command += ["--", *paths]
     try:
-        output = subprocess.run(
-            ["git", "status", "--porcelain=v1"], capture_output=True, text=True, check=True
-        ).stdout
+        output = subprocess.run(command, capture_output=True, text=True, check=True).stdout
     except (subprocess.CalledProcessError, FileNotFoundError):
         return True
     return bool(output.strip())
@@ -160,6 +171,7 @@ __all__ = [
     "record_timing",
     "redact",
     "run",
+    "SOURCE_PATHS",
     "snapshot_hash",
     "tracking_enabled",
     "working_tree_dirty",

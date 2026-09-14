@@ -95,6 +95,9 @@ class FoldPredictions:
     thresholds: dict[str, float]
     n_train: int
     n_calibration: int
+    calibration_dates: pd.Index | None = None
+    calibration_y: np.ndarray | None = None
+    calibration_raw: np.ndarray | None = None
     metrics: dict[str, float] = field(default_factory=dict)
 
 
@@ -128,6 +131,9 @@ def run_fold_arm(inputs: Inputs, fold: DevelopmentFold, arm: str, *, seed: int =
         thresholds=thresholds_to_json(thresholds),
         n_train=int(train.sum()),
         n_calibration=int(calibration.sum()),
+        calibration_dates=inputs.delivery_dates[calibration],
+        calibration_y=inputs.target[calibration],
+        calibration_raw=raw_calibration,
     )
     result.metrics = {
         "n_eval": float(evaluation.sum()),
@@ -176,6 +182,26 @@ def stacked_frame(results: list[FoldPredictions]) -> pd.DataFrame:
         for stage, matrix in (("raw", item.raw), ("cqr", item.post_cqr), ("final", item.final)):
             for position, label in enumerate(QUANTILE_LABELS):
                 frame[f"{stage}_{label}"] = matrix[:, position]
+        frames.append(frame)
+    return pd.concat(frames, ignore_index=True)
+
+
+def calibration_frame(results: list[FoldPredictions]) -> pd.DataFrame:
+    """Persist each fold's raw calibration-set predictions and targets.
+
+    §6.2 requires the Integration Critic to recompute the four real-fold CQR
+    thresholds independently, which is only possible if the inputs to that
+    computation are on disk. Storing the thresholds alone would ask the reviewer
+    to take them on trust.
+    """
+    frames = []
+    for item in results:
+        if item.calibration_raw is None:
+            continue
+        frame = pd.DataFrame({"fold": item.fold, "arm": item.arm, "delivery_date": item.calibration_dates})
+        frame["y_true"] = item.calibration_y
+        for position, label in enumerate(QUANTILE_LABELS):
+            frame[f"raw_{label}"] = item.calibration_raw[:, position]
         frames.append(frame)
     return pd.concat(frames, ignore_index=True)
 
@@ -233,6 +259,7 @@ __all__ = [
     "Inputs",
     "assert_no_reserved_rows",
     "baseline_predictions",
+    "calibration_frame",
     "experiment_params",
     "load_inputs",
     "mask_for",

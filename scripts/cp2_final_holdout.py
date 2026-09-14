@@ -52,6 +52,7 @@ from delu_forecast.tracking import (
     code_sha,
     configure_tracking,
     log_decision_record,
+    SOURCE_PATHS,
     run,
     snapshot_hash,
     working_tree_dirty,
@@ -93,7 +94,7 @@ def sequential_equivalence(champion: ChampionModel, snapshot: pd.DataFrame, days
 def main() -> None:
     started = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
-    tree_dirty_at_start = working_tree_dirty()
+    source_dirty_at_start = working_tree_dirty(SOURCE_PATHS)
     inputs = load_inputs()
     enabled = configure_tracking()
     spec = inputs.spec
@@ -205,7 +206,8 @@ def main() -> None:
         "execution_note": "This deterministic script was executed several times while CP-2 was authored: once aborted on the runtime firewall before any outcome was read, and five completed runs that produced identical metrics and an identical artifact fingerprint (reproduces_previous_run_exactly records the comparison). No catalog, hyperparameter, threshold or analysis choice was changed after any of them -- 'evaluated exactly once' is a statement about the evaluation decision, not about how many times a deterministic script may be run. The Integration Critic must re-run it from a clean worktree to verify, which is a reproduction.",
         "retrain_after_holdout": False,
         "retune_after_holdout": False,
-        "source_tree_dirty_when_run_started": tree_dirty_at_start,
+        "uncommitted_source_when_run_started": source_dirty_at_start,
+        "source_paths_checked": list(SOURCE_PATHS),
         "artifact_fingerprint_sha256": champion.fingerprint(),
         "artifact_bytes_are_not_stable": "MLflow stamps a fresh model_uuid and creation time into MLmodel and cloudpickle is not byte-reproducible, so models/champion changes on every save while the model does not. artifact_fingerprint_sha256 -- catalog, feature list, quantiles, the four thresholds and the nine boosters' own serializations -- is the identity to check.",
         "selected_catalog": selected,
