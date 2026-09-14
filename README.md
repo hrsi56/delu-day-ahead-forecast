@@ -61,6 +61,86 @@ and weekly recurrence in the time domain. These are price diagnostics: they do
 not validate or justify retaining `residual_load_proxy`, which the frozen CP-2
 two-arm comparison alone decides.
 
+## CP-2 model, calibration and analysis
+
+**The two-arm comparison, numbers first.** The two frozen catalogs were compared once on raw heads
+over the five pinned folds with matched rows, seed, hyperparameters and (zero) tuning budget. Pooled
+observation-weighted mean pinball loss, unrounded as stored:
+
+| Arm | Pooled raw-head mean pinball loss |
+|---|---|
+| `base` | `13.015841509664993` |
+| `base + residual_load_proxy` | `13.064197422052183` |
+
+Percentage difference (augmented vs base): **+0.3715%**.
+
+**Selected catalog: `base`.** The augmented catalog ships only if its unrounded stored pooled
+loss is lower; it is not, so the champion ships strict-gate as `base`. The domain feature did not
+earn its place on the pooled metric that decides, and that is a reportable result, not a failure.
+The fold-level picture is not uniform — the augmented arm is lower on
+2 of the 5 folds, and the report gives that table —
+but §4.1 fixes the rule as pooled and fixes it before fitting, so the split is disclosed and the
+decision is not revisited.
+
+**Development metrics are descriptive post-selection evidence** (`evidence_class =
+development_post_selection`), never confirmatory superiority. The champion beats the similar-day
+naive on mean pinball loss in 5 of the 5 evaluation
+blocks and on median MAE in 3 of 5: the probabilistic win is
+broad, the point-accuracy loss is not. The pooled MAE gap of +9.29 EUR/MWh
+comes almost entirely from **fold_3**, the crisis-peak block, which contributes
++10.87 of it alone — an expanding-window model trained only on
+pre-crisis data cannot follow an August-2022 level shift, and persistence can. Full tables, both DM
+analyses, the three-stage reliability read, SHAP, permutation importance and the regime-stratified
+table are in [`docs/cp2-model-report.md`](docs/cp2-model-report.md) and `reports/cp2/`.
+
+**One pre-specified holdout evaluation, opened once.** Champion MAE 25.91 vs
+similar-day naive 27.76 EUR/MWh
+(-6.7%); champion mean pinball loss
+6.708 vs 13.879
+(-51.7%); final empirical coverage
+0.441 / 0.759 /
+0.940 at the 50 / 80 / 95 % nominal levels; probabilistic
+daily-vector DM statistic -8.68, p = 2e-18,
+standardized effect size -1.05, over
+90 delivery days.
+
+> Pre-specified one-shot holdout DM test on a fixed 90-day window — confirmatory-style, not power-qualified.
+
+**The shipped model is exactly the model the holdout evaluated.** There is no retrain and no re-tune
+after the result was opened. The frozen artifact is `models/champion/`, a single `mlflow.pyfunc`
+wrapping the nine quantile heads, the selected catalog's feature pipeline, the four CQR thresholds
+and the isotonic ordering guard. Its identity is the `artifact_fingerprint_sha256` recorded in
+`models/champion/champion_card.json`; the pickle's own bytes are not stable, because MLflow stamps a
+fresh UUID and creation time on every save.
+
+**Four cutoffs, stated separately because they are four different dates:**
+
+| Cutoff | Value |
+|---|---|
+| `snapshot_cutoff` | 2026-09-06 |
+| `raw_model_fit_cutoff` | 2026-04-07 |
+| `final_calibration_window` | 2026-04-09..2026-06-07 |
+| `holdout_window` | 2026-06-09..2026-09-06 |
+
+The raw-model fit cutoff precedes the snapshot cutoff by
+152 delivery days (1 + 60 + 1 + 90). That
+is what shipping the evaluated model costs, and it is stated plainly rather than apologised for.
+
+**What the post-gate forecast would have been worth.** A controlled ablation, raw heads, neither arm
+calibrated: adding the delivery-day A69 forecast and its derivatives lowers pooled mean pinball loss
+by 19.49%
+(`13.015841509664993` → `10.478714632475889`).
+
+> This uncalibrated raw-head comparison isolates the information content of post-gate A69. It makes no claim about calibrated interval quality and does not make A69 available at the forecast gate.
+
+**Experiment records** for every decision-bearing run — the three baselines, both catalog
+candidates, both benchmark arms, the champion's final fit and holdout — are public at
+<https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow> with snapshot hash, code SHA, fold spec, feature list, seed, hyperparameters,
+metrics and artifact links.
+
+Reproduce with `make cp2` after `uv sync`; every stage runs offline and MLflow logging is skipped
+silently when `MLFLOW_TRACKING_URI` is unset.
+
 ## Setup
 
 ```

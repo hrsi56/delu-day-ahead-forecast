@@ -63,6 +63,11 @@ def _calendar_day_lag(series: pd.Series, days: int) -> pd.Series:
     return pd.Series(series.reindex(source_index).to_numpy(), index=series.index)
 
 
+def calendar_day_lag(price: pd.Series, days: int) -> pd.Series:
+    """Public §4.0 calendar-day/local-hour lag, shared with the CP-2 baselines."""
+    return _calendar_day_lag(price, days)
+
+
 def _delivery_day_hours(delivery_day: date) -> pd.DatetimeIndex:
     return pd.date_range(
         pd.Timestamp(delivery_day, tz=BERLIN).tz_convert("UTC"),
