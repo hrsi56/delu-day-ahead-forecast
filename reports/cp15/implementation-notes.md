@@ -41,6 +41,9 @@ estimator throughput benchmark. The reported fold peak RSS comes from the
 Python worker's `resource.getrusage(RUSAGE_SELF).ru_maxrss` (bytes on macOS).
 The separate `/usr/bin/time -l` logs wrap `uv` and must not be mistaken for the
 Python worker's memory measurement.
+Their `real` wall time does cover the complete invocation. Both that value and
+the narrower fold-loop timer are reported: the latter starts after input/feature
+construction and warm-up boundary discovery, so it excludes those initial costs.
 
 ## LEAR implementation provenance
 

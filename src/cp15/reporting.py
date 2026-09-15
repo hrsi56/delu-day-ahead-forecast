@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 
 import pandas as pd
 
@@ -30,6 +31,9 @@ def resources(output):
         fits = pd.read_parquet(output / 'folds' / f'{fold}-fits.parquet')
         run = json.loads((output / 'folds' / f'{fold}-run.json').read_text())
         origins = json.loads((output / 'folds' / f'{fold}-origins.json').read_text())
+        timing = re.search(r'^\s*([0-9.]+)\s+real\s+', (output / 'execution' / f'{fold}.log').read_text(), re.MULTILINE)
+        if timing is None:
+            raise ValueError(f'missing completed whole-command timing: {fold}')
         for policy in POLICIES:
             own = fits.loc[fits.policy.eq(policy)]
             component_names = COMPONENTS.get(policy, ())
@@ -44,10 +48,11 @@ def resources(output):
                 'component_logical_fit_calls': int(component.fit_calls.sum()),
                 'component_fit_seconds': float(component.fit_seconds.sum()),
                 'shared_fold_wall_seconds': run['runtime_seconds'],
+                'shared_full_command_wall_seconds': float(timing.group(1)),
                 'shared_process_peak_rss_bytes': run['max_rss_bytes'],
                 'origin_count': run['origin_count'], 'cache_hit_origins': run['cache_hits'],
                 'memory_scope': 'whole fold process, includes every policy; not per-estimator allocation',
-                'runtime_scope': 'fit durations from original fitting, including cache-reused fits; fold wall time includes all policies and overhead',
+                'runtime_scope': 'original fit durations include cache-reused fits; fold loop excludes initial input/features and warmup-boundary discovery; full command wall time includes setup and teardown',
             })
         for policy in ('B2', 'B3', 'A1', 'A2', 'A4'):
             for phase in ('warmup', 'evaluation'):
@@ -138,12 +143,15 @@ def render(output):
         '## Fit provenance and resources',
         table(resource_frame[['fold', 'policy', 'direct_logical_fit_calls', 'direct_fit_seconds',
                               'component_policies', 'component_fit_seconds', 'shared_fold_wall_seconds',
+                              'shared_full_command_wall_seconds',
                               'shared_process_peak_rss_bytes', 'cache_hit_origins']]),
         'Direct model-fit counts include four chronological validation penalties and one final refit per hourly LEAR '
         'model; LGBM has one fit per day. A3/A5 reuse their fitted components; B0/B1 have no fit. Component costs are '
         'shown separately, so summing them again would double count. Process RSS and fold wall time are shared '
-        'measurements repeated for each arm, not invented estimator-specific allocations. Common feature preparation, '
-        'ensemble arithmetic and residual emission are included in fold runtime but not separately timed. '
+        'measurements repeated for each arm, not invented estimator-specific allocations. '
+        'Initial input/feature preparation and warm-up boundary discovery are excluded from the fold-loop timer; '
+        'the separate whole-command wall time includes them, plus process startup/teardown. '
+        'Ensemble arithmetic and residual emission are included in fold-loop runtime but not separately timed. '
         'Cached central forecasts keep original fitting durations; cache counts distinguish execution reuse. '
         'Lasso continuation calls are separately recorded in each fit record and do not add statistical grid choices.',
         '`lineage_summary.csv` separates genuine warm-up and evaluation fits. Each `folds/*-fits.parquet` records '
