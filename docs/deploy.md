@@ -1,138 +1,134 @@
-# Deployment — owner-only, two steps
+# Deployment — owner-only
 
-CP-3 built and verified every release artifact locally. **Nothing was published:**
-no Space was created, GitHub Pages was not enabled, and nothing was pushed. Both
-steps below are the owner's, and each is reversible.
+Nothing in this repository publishes anything. Every step below is the owner's, and each is
+reversible.
 
-Do them in this order. Pages first, because the Space card links it.
+**Current state (M3.5/CP-3B).** GitHub Pages is **live** at
+<https://hrsi56.github.io/delu-day-ahead-forecast/> — the primary link, which fetches nothing and
+cannot fail when a CDN does. The interactive demo is **built and verified locally** as a Hugging Face
+**Static** Space and awaits the one step below.
 
----
-
-## Step 1 — enable GitHub Pages (about one minute)
-
-The page is already committed at [`docs/index.html`](index.html), together with a
-`docs/.nojekyll` so GitHub serves the file as-is instead of running Jekyll over it.
-
-1. Open <https://github.com/hrsi56/delu-day-ahead-forecast/settings/pages>.
-2. **Source:** *Deploy from a branch*.
-3. **Branch:** `main`, **folder:** `/docs`. Save.
-4. Wait for the green check on the Pages deployment (usually under a minute).
-
-**The URL that then exists:**
-
-> <https://hrsi56.github.io/delu-day-ahead-forecast/>
-
-This is the primary recruiter URL — the one on the CV and LinkedIn. It is static,
-CDN-served, cannot sleep, and performs zero runtime calls.
-
-**Check after deploying:** open it in a private window and confirm the fan chart
-renders and both controls respond. If anything looks wrong, the same file opens
-locally with `open docs/index.html` — what you see there is what Pages serves.
+Why Static: on 2026-07-08 Hugging Face moved the Docker and Gradio SDKs behind a paid plan, and a free
+Docker Space sleeps. A Static Space executes nothing on the server — the champion runs in the
+visitor's browser under Pyodide — so there is nothing to put to sleep. The container remains runnable
+locally as verified evidence (`make container-verify`); it is not what gets hosted.
 
 ---
 
-## Step 2 — create and push the Hugging Face Space (about ten minutes, mostly upload)
+## The one remaining step — create and upload the Static Space (about ten minutes, mostly upload)
 
-### 2a. A Hugging Face account first — it does not exist yet
+The account is **`Yarden-Viktor`**. Every surface already links
+`https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast`, so the owner and name below
+must match exactly.
 
-Checked from an unauthenticated client on 2026-09-14:
-`https://huggingface.co/hrsi56` returns **404** and
-`https://huggingface.co/api/spaces?author=hrsi56` returns `[]`. So the account
-itself has to be created before anything below applies, at
-<https://huggingface.co/join>, with the username **`hrsi56`** — every surface
-already links `huggingface.co/spaces/hrsi56/delu-day-ahead-forecast`, so a
-different username means regenerating them (`SPACE_URL` in
-`src/delu_forecast/claims.py`, then `make pages space readme-cp3`).
+### 1. The Space already exists — confirm it
 
-Account creation is yours: agents do not create accounts or enter passwords.
-
-### 2b. Create the Space
-
-1. Open <https://huggingface.co/new-space>.
-2. **Owner:** `hrsi56`. **Space name:** `delu-day-ahead-forecast`.
-3. **SDK:** *Docker* → *Blank*. **Hardware:** *CPU basic* (free). **Visibility:** *Public*.
-4. Create. Leave it empty; the next step fills it.
-
-### 2c. Build the bundle
+As of 2026-09-15 00:37 UTC, `Yarden-Viktor/delu-day-ahead-forecast` exists on Hugging Face as a
+**Static**, **public** Space holding only Hugging Face's template files (`.gitattributes`,
+`README.md`, `index.html`, `style.css`). This checkpoint did not create it — nothing here calls
+Hugging Face. Confirm it is still Static and public:
 
 ```bash
-make space
+curl -s https://huggingface.co/api/spaces/Yarden-Viktor/delu-day-ahead-forecast | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['sdk'], 'private' if d['private'] else 'public')"
 ```
 
-That writes `dist/space/` (gitignored — it is a copy of committed files, never a
-second source of truth): the `Dockerfile`, the Space card as `README.md` with its
-front-matter, `src/`, `app/`, `sql/`, `predict_next_day.py`, `models/champion/`,
-`data/snapshot.parquet` and the committed `reports/` figures and tables. About
-37 MB.
+It should print `static public`. If the Space was deleted, recreate it at
+<https://huggingface.co/new-space>: owner `Yarden-Viktor`, name `delu-day-ahead-forecast`, SDK
+**Static**, **Public**.
 
-### 2d. Push it
+The upload below replaces the template's `index.html` and `README.md` and adds everything else;
+`style.css` from the template is unused and harmless.
 
-`models/champion/python_model.pkl` is ~30 MB, so the Hub wants it through LFS.
-`make space` already writes the matching `.gitattributes` into the bundle.
+### 2. Build the directory
 
 ```bash
-cd dist/space
+make wasm
+```
+
+That regenerates the browser payload from the committed champion, re-proves the model-identity gate,
+exports the notebook with `marimo export html-wasm`, and assembles **`dist/space-wasm/`** — about 42 MB
+uncompressed across ~740 files (Hugging Face serves Static Spaces uncompressed and routes binary files through a redirect, so the nine boosters ship as base64-encoded gzip text): `index.html`, marimo's `assets/`, `public/` (the nine boosters, the row
+slice, the equivalence fixture, `browser_champion.py`), the Space card as `README.md` with
+`sdk: static`, and `.gitattributes` routing binary assets through LFS. It exits non-zero if the bundle
+is malformed, if the shipped module differs from the verified one, or if any internal file leaked into
+it.
+
+Optional but worth thirty seconds — see it work before uploading:
+
+```bash
+make wasm-serve
+```
+
+and open <http://127.0.0.1:8820>. It must be served over HTTP; `file://` cannot run a WASM notebook.
+First load takes a while: it downloads the Python runtime.
+
+### 3. Upload it
+
+The simplest route handles LFS for you:
+
+```bash
+hf auth login
+hf upload Yarden-Viktor/delu-day-ahead-forecast dist/space-wasm . --repo-type space
+```
+
+Or with git, from inside `dist/space-wasm`:
+
+```bash
 git init -b main
 git lfs install
 git add -A
-git commit -m "Deploy the frozen DE-LU day-ahead champion"
-git remote add origin https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast
+git commit -m "Deploy the DE-LU day-ahead champion as a Static Space"
+git remote add origin https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast
 git push -u origin main
 ```
 
-Authenticate with a Hugging Face **write** token when prompted (username
-`hrsi56`, password = the token), or run `huggingface-cli login` first.
+Authenticate with a Hugging Face **write** token when asked. Agents never enter tokens.
 
 **The URL that then exists:**
 
-> <https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast>
+> <https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast>
 
-The first build takes roughly 10–15 minutes — it installs the locked dependency
-set and copies the bundled model. Watch the **Logs** tab; the Space is up when
-marimo prints `URL: http://0.0.0.0:7860`.
+A Static Space has no build step, so it is live as soon as the upload finishes.
 
-**Check after deploying:** the app loads, the quantile-level selector switches
-between 50 / 80 / 95 %, the load-forecast slider redraws the fan, and the
-*historical out-of-sample replay* label is visible above the chart.
+### 4. Check it
+
+Two URLs will work: the Space page, which wraps the app in Hugging Face's own chrome, and the app
+itself at <https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/>, which loads nothing but
+the app.
+
+Open it in a private window. Within about a minute the page should show the fan chart, both controls
+should respond, the *historical out-of-sample replay* label should sit above the chart, and the
+identity panel should read **bitwise identical** with a maximum absolute deviation of **0.0** over 54
+delivery days. The download table at the bottom reports what the visit cost.
+
+Then:
+
+```bash
+uv run python scripts/check_links.py
+```
+
+should report `unresolved: []`.
 
 ---
 
 ## What does **not** need doing
 
-- **No secret, on either platform.** The champion and the snapshot are bundled in
-  the image. The Space needs no DagsHub token, no ENTSO-E token, and no MLflow
-  tracking URI; it never queries the registry and makes no live API call during a
-  user session.
-- **No keep-alive, on any platform.** The free tier sleeps after inactivity and
-  takes about 30 s to wake. That is disclosed wherever the Space is linked and is
-  never on the path of a first visit, because the static page carries the first
-  touch and cannot sleep.
-- **No refresh schedule.** The release is frozen. A future manual refresh is
-  permitted but never required.
-- **No MLflow step.** The champion is already registered as
-  `delu-day-ahead-champion` version 1 with the `champion` alias and 35
-  release/lineage tags, and it is anonymously readable at
+- **No secret, anywhere.** The Static Space needs no token, no tracking URI, no API key. It makes no
+  call to ENTSO-E, SMARD or any model registry.
+- **No keep-alive, on any platform** — and none would help: a Static Space has nothing to keep alive.
+- **No refresh schedule.** The release is frozen.
+- **No MLflow step.** The champion is already registered as `delu-day-ahead-champion` version 1 under
+  the `champion` alias, anonymously readable at
   <https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow>.
 
-## After both steps
+## After the Space is live
 
-Both URLs are already written into the README, the static page and the Space
-card, so nothing needs editing once they resolve — except the one
-**Deployment status** line in the README's CP-3 section, which says they are not
-yet live. Delete that line.
-
-Then rebuild and re-verify, which should report no change:
-
-```bash
-make verify
-```
+The README's CP-3 section says the Space "awaits the owner's deploy". Update that sentence in
+`scripts/cp3_readme.py` — the generator, never `README.md` itself — then `make readme-cp3 verify`.
 
 ## Link discipline, one warning
 
-Link the experiment tracking **only** as
-<https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow>. Verified from an
-unauthenticated client on 2026-09-14: the DagsHub repository root, `/experiments`,
-`/models` and `/src/main` all answer `302 → /user/login` for a connected
-repository. A link to any of those lands a hiring manager on a sign-in page.
-`make verify` and `tests/test_17_cross_surface_agreement.py` fail if one appears
-on any surface — including on the CV and LinkedIn, which the tests cannot see.
+Link the experiment tracking **only** as <https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow>.
+The DagsHub repository root, `/experiments`, `/models` and `/src/main` all redirect an anonymous visitor
+to a sign-in page. `make verify` fails if one appears on any surface in this repository — but it cannot
+see the CV or LinkedIn.

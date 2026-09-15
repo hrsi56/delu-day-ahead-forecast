@@ -1,0 +1,98 @@
+{
+  "date": "2026-09-15",
+  "final_bundle_render": {
+    "cell_errors": 0,
+    "console_errors": 0,
+    "controls": {
+      "level": "50 % selected: band changed, coverage annotation 0.4407",
+      "load_forecast": "slider to x 0.99 via keyboard events: 'Scenario active' rendered, inference re-ran"
+    },
+    "every_number_computed_claim_on_page": false,
+    "header_renders_shared_claim": true,
+    "identity_panel": "bitwise identical",
+    "repeat_visit_cache_claim_on_page": false,
+    "sensitivity_probe_label_on_first_render": true,
+    "served_by": "scripts/measure_wasm_load.py --emulate-hf, fresh loopback ports",
+    "undefined_rows_block": "4 rows are undefined by design \u2014 derived from data"
+  },
+  "item_1_controls_driven": {
+    "console_errors": 0,
+    "fan_chart": "1 inline SVG chart",
+    "load_forecast_control": "slider advanced with keyboard events on its role=slider thumb to x 1.01 (aria-valuenow 1.01): all nine heads re-ran in the browser; 'Scenario active' rendered; cleared-price line hidden (0 dashed polylines).",
+    "quantile_selector": "95 % selected through the component's own radio button: the band polygon changed; annotation read 'empirical coverage at this level over the 90-day holdout was 0.9398'.",
+    "runtime": "marimo_pinned_runtime",
+    "sensitivity_probe_label_on_first_render": true,
+    "served_from": "dist/space-wasm over HTTP, uncompressed (file:// cannot run a WASM notebook)"
+  },
+  "item_2_full_pipeline_in_page": {
+    "delivery_days": 54,
+    "max_abs_deviation": 0.0,
+    "null_rows_reproduced_as_null": true,
+    "page_verdict": "bitwise identical",
+    "quantile_values_compared": 11628,
+    "rows": 1296,
+    "runtime": "marimo_pinned_runtime",
+    "undefined_rows_rendered_from_data": [
+      "2025-10-27 02:00 price_lag_24h",
+      "2025-10-28 02:00 price_lag_48h",
+      "2026-03-30 02:00 price_lag_24h",
+      "2026-03-31 02:00 price_lag_48h"
+    ],
+    "what": "The identity panel of the exported notebook, served uncompressed from dist/space-wasm on a cold loopback origin, recomputing all 54 committed fixture days through features, nine heads (inflated from gzip in the browser), CQR and isotonic, against outputs recorded from the frozen mlflow.pyfunc champion."
+  },
+  "item_2_raw_heads_cross_build": {
+    "heads_bitwise_identical": 9,
+    "max_abs_deviation": 0.0,
+    "max_relative_deviation": 0.0,
+    "runtime": "probe_runtime",
+    "what": "All nine boosters loaded from model_to_string() text and predicted on the champion's own 24-row feature matrix for 2026-09-06; compared with the host (LightGBM 4.7.0, macOS arm64)."
+  },
+  "item_3_delivery_day_availability_in_pyodide": {
+    "d_minus_1": "2026-09-05",
+    "d_minus_1_control_max_abs_difference": 220.9433340396028,
+    "d_minus_1_rows_mutated": 24,
+    "delivery_day": "2026-09-06",
+    "masked_max_abs_difference": 0.0,
+    "masked_output_bitwise_identical": true,
+    "masked_rows": 24,
+    "note": "Identical to the CP-3 host figure (220.9433340396028) to full float precision: same delivery day, bitwise-equal pipeline.",
+    "runtime": "marimo_pinned_runtime",
+    "what": "app/public/browser_champion.py executed in Pyodide on the final payload, boosters inflated from gzip in the browser: the delivery day's 24 prices set to NaN, then separately every D-1 price raised by 250 EUR/MWh."
+  },
+  "item_4_first_visit_under_hf_serving": {
+    "app_origin": {
+      "direct_200": 305,
+      "redirect_302": 9,
+      "requests": 314
+    },
+    "cdn_stand_in": {
+      "bytes": 922341,
+      "requests": 8
+    },
+    "console_errors": 0,
+    "identity_panel": "bitwise identical, 54 days, 1,296 rows, 11,628 values",
+    "page_rendered_through_redirects": true,
+    "redirected_fonts_loaded": [
+      "Lora",
+      "PT Sans",
+      "Fira Mono"
+    ],
+    "repeat_visit": "Reloading re-fetched every file as a full 200 with no conditional request \u2014 this automated browser did not use its HTTP cache for these responses \u2014 so repeat-visit behaviour is stated as derived from response headers, not measured.",
+    "runtime": "marimo_pinned_runtime",
+    "served_by": "scripts/measure_wasm_load.py --emulate-hf on fresh loopback ports"
+  },
+  "purpose": "Evidence gathered in real browsers, as opposed to host-side tests. Items 1, 2 and 3 of M3.5/CP-3B each require a property to hold in the browser, so each is recorded here as observed. Reproduce with `make wasm && make wasm-serve` and the probes described below.",
+  "revision": "Round 4: re-observed on the final bundle after the round-2 Integration review \u2014 shared 'what runs live' claim, no unmeasured repeat-visit statement, notebook free of typed counts \u2014 under emulated Hugging Face serving.",
+  "runtimes_observed": {
+    "marimo_pinned_runtime": "Pyodide v314.0.0 as pinned by marimo 0.24.2, Python 3.14.2, LightGBM 4.6.0, numpy 2.4.3, wasm32",
+    "probe_runtime": "Pyodide 0.28.3, Python 3.13.2, LightGBM 4.6.0, numpy 2.2.5, wasm32 (OpenMP disabled)"
+  },
+  "static_page_non_regression": {
+    "console_errors": 0,
+    "images_complete": 7,
+    "network_requests": 1,
+    "page": "docs/index.html with the corrected Space link label (about 54 MB)",
+    "resource_timing_entries": 0,
+    "space_link": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast"
+  }
+}

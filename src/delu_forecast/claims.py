@@ -89,8 +89,17 @@ SENSITIVITY_PROBE_LABEL = (
     "Scenario perturbations are ceteris-paribus sensitivity probes and may be out of distribution."
 )
 
-#: §9.2: free-tier sleep is disclosed, not performance-gated.
-SPACE_LINK_LABEL = "interactive demo — may take ~30 s to wake if asleep"
+#: The label every surface puts on the link to the Space. Until M3.5 it read
+#: "interactive demo — may take ~30 s to wake if asleep", which was true of a free
+#: Docker Space and is false of a Static Space: a Static Space executes nothing on
+#: the server, so there is nothing to put to sleep (verified 2026-09-15 via the
+#: HF API, stage=RUNNING on long-dormant Static Spaces). What a visitor does pay is
+#: download weight, so the label now states that instead -- the cost that is real
+#: rather than the one that no longer exists. The figure is filled in from
+#: reports/cp3b/network.json by build_claims(); this template is not a number.
+SPACE_LINK_LABEL_TEMPLATE = (
+    "interactive demo — runs in your browser, no server; the first visit downloads about {mb} MB"
+)
 
 #: §9.3 attribution statement.
 ATTRIBUTION = (
@@ -136,7 +145,8 @@ LIMITATION_TOPICS: tuple[str, ...] = (
 LIMITATION_EVIDENCE_DISTINCTION = (
     "The five-fold development results are descriptive post-selection evidence, never "
     "confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified "
-    "and opened once, and the development point-accuracy DM shows no evidence of advantage."
+    "and opened once, and on the development folds the point-accuracy DM shows a deficit, not "
+    "merely the absence of an advantage."
 )
 
 LIMITATION_STRICT_GATE_COST = (
@@ -284,6 +294,15 @@ def build_claims() -> Claims:
     selected = holdout["selected_catalog"]
     champion_rows = pooled[pooled["model"] == selected].set_index("stage")
 
+    # M3.5/CP-3B: the Static Space's measured cost and its model-identity proof.
+    network = _read_json("reports/cp3b/network.json")
+    equivalence = _read_json("reports/cp3b/equivalence.json")
+    cold_bytes = int(network["totals"]["bytes"])
+    cold_mb = round(cold_bytes / 1_000_000)
+    fixture = equivalence["fixture"]
+    gate = equivalence["gate"]
+    availability = equivalence["delivery_day_availability"]
+
     pkl_bytes = (REPO_ROOT / "models/champion/python_model.pkl").stat().st_size
     # The published size describes the committed artifact, so transient bytecode
     # is excluded. MLflow puts `models/champion/code` on `sys.path` when it loads
@@ -329,6 +348,14 @@ def build_claims() -> Claims:
         "development_evidence_class": point_dm["evidence_class"],
         "development_dm_point_p_value": _fmt(point_dm["p_value"], 3),
         "development_dm_point_statistic": _fmt(point_dm["statistic"], 4),
+        "development_dm_point_reading": (
+            f"The development point-accuracy DM does not merely fail to show an advantage — it "
+            f"shows a deficit: the test is one-sided (reject if DM < −1.645), the statistic is "
+            f"+{abs(point_dm['statistic']):.4f} with p = {point_dm['p_value']:.3f}, and the "
+            f"champion's median is {abs(point_dm['relative_improvement_pct']):.2f}% "
+            f"{'worse' if point_dm['relative_improvement_pct'] < 0 else 'better'} than the "
+            f"similar-day naive over the development folds."
+        ),
         "development_dm_point_statistic_abs": _fmt(abs(point_dm["statistic"]), 4),
         "development_dm_point_relative": f'{abs(point_dm["relative_improvement_pct"]):.2f}% '
         + ("worse" if point_dm["relative_improvement_pct"] < 0 else "better"),
@@ -362,7 +389,65 @@ def build_claims() -> Claims:
         "exchangeability": EXCHANGEABILITY,
         "replay_label": REPLAY_LABEL,
         "sensitivity_probe_label": SENSITIVITY_PROBE_LABEL,
-        "space_link_label": SPACE_LINK_LABEL,
+        "space_link_label": SPACE_LINK_LABEL_TEMPLATE.format(mb=cold_mb),
+        # -- M3.5/CP-3B: the WASM showcase ------------------------------------
+        # Two-decimal millions, not exact bytes: the surfaces are themselves among
+        # the files counted, so an exact count printed on them oscillates by one
+        # byte with no fixed point (see reports/cp3b/network.json). Exact bytes
+        # live in the record.
+        "wasm_cold_load_bytes": f"{cold_bytes / 1_000_000:.2f} million bytes",
+        "wasm_cold_load_mb": str(cold_mb),
+        "wasm_cold_load_requests": str(network["totals"]["requests"]),
+        "wasm_cold_load_hosts": str(len(network["hosts"])),
+        "wasm_cold_load": (
+            f"The interactive demo runs entirely in your browser, so the first visit downloads "
+            f"about {cold_mb} MB — a Python runtime, the nine gradient-boosted models and the "
+            f"notebook interface — in {network['totals']['requests']} requests from "
+            f"{len(network['hosts'])} hosts. There is no server to wake. A repeat visit "
+            f"transferred about {network['repeat_visit']['bytes'] / 1_000_000:.1f} MB: the page's "
+            f"text revalidated, and the fonts and images Hugging Face serves through expiring "
+            f"signed links were fetched again."
+        ),
+        "space_app_url": network["via_the_huggingface_page"]["app_url"],
+        "wasm_wrapper_disclosure": (
+            f"Opened through huggingface.co, Hugging Face's own page adds its document and "
+            f"{network['via_the_huggingface_page']['requests'] - 1} requests from huggingface.co, "
+            f"js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about "
+            f"{network['via_the_huggingface_page']['measured_bytes'] / 1_000_000:.1f} MB measurable, "
+            f"on a page Hugging Face controls — and runs the app in an iframe. The app alone is at "
+            f"{network['via_the_huggingface_page']['app_url']}."
+        ),
+        # What runs live on the Space and what is a committed result. One sentence,
+        # shared by the page header and the Space card: the card once said "every
+        # number on the page is computed in your browser", which the page itself
+        # contradicted.
+        "wasm_what_runs_live": (
+            "The forecast and the model-identity check are computed in your browser by the "
+            "champion itself; the evaluation figures — coverage, cutoffs, holdout metrics, "
+            "limitations — are the committed results of the one-shot evaluation, which is spent "
+            "and is not re-run."
+        ),
+        "wasm_availability_statement": (
+            f"Setting the delivery day's {availability['masked_rows']} prices to missing changes "
+            f"the forecast by exactly {availability['masked_max_abs_difference']!r}; raising all "
+            f"{availability['d_minus_1_rows_mutated_by_plus_250']} D−1 prices by 250 EUR/MWh moves "
+            f"it by {availability['d_minus_1_control_max_abs_difference']:.4f} EUR/MWh."
+        ),
+        "wasm_fixture_days": str(fixture["delivery_days"]),
+        "wasm_fixture_rows": f"{fixture['rows']:,}",
+        "wasm_fixture_values": f"{fixture['quantile_values_compared']:,}",
+        "wasm_max_deviation": repr(float(gate["max_abs_deviation"])),
+        "wasm_d_minus_1_control": f"{availability['d_minus_1_control_max_abs_difference']:.4f}",
+        "wasm_identity": (
+            f"The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own "
+            f"nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in "
+            f"the browser — and on a committed {fixture['delivery_days']}-day fixture spanning all "
+            f"three regimes, both daylight-saving transitions, and federal holidays and bridge days "
+            f"({fixture['rows']:,} rows, "
+            f"{fixture['quantile_values_compared']:,} quantile values) its output equals the "
+            f"frozen artifact bitwise: maximum absolute deviation "
+            f"{float(gate['max_abs_deviation'])!r}."
+        ),
         "attribution": ATTRIBUTION,
         "floor_change": FLOOR_CHANGE,
         "assumption_a65": ASSUMPTION_A65,
@@ -547,7 +632,7 @@ __all__ = [
     "REQUIRED_ON_EVERY_SURFACE",
     "SENSITIVITY_PROBE_LABEL",
     "SHIPPED_IS_EVALUATED",
-    "SPACE_LINK_LABEL",
+    "SPACE_LINK_LABEL_TEMPLATE",
     "SPACE_URL",
     "build_claims",
     "forbidden_dagshub_links",

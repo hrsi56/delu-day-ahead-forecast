@@ -80,10 +80,8 @@ but §4.1 fixes the rule as pooled and fixes it before fitting, so the split is 
 decision is not revisited.
 
 **Development metrics are descriptive post-selection evidence** (`evidence_class =
-{C["development_evidence_class"]}`), never confirmatory superiority. The point-accuracy DM on those
-folds shows **no evidence of advantage** — p = {C["development_dm_point_p_value"]}, statistic
-{C["development_dm_point_statistic"]}, over {C["development_days"]} days — reported here rather than
-omitted. The probabilistic daily-vector DM on the same folds reads statistic
+{C["development_evidence_class"]}`), never confirmatory superiority. **{C["development_dm_point_reading"]}**
+Reported here rather than omitted or reframed. The probabilistic daily-vector DM on the same folds reads statistic
 {C["development_dm_pinball_statistic"]}, p = {C["development_dm_pinball_p_value"]}. The champion beats the similar-day
 naive on mean pinball loss in {tallies["pinball_wins"]} of the {tallies["n_folds"]} evaluation
 blocks and on median MAE in {tallies["mae_wins"]} of {tallies["n_folds"]}: the probabilistic win is

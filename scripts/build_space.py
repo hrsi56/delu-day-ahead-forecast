@@ -57,47 +57,14 @@ GITATTRIBUTES = """*.pkl filter=lfs diff=lfs merge=lfs -text
 """
 
 
-def build_card() -> str:
-    C = build_claims()
-    limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
-    reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
-    return f"""---
-title: DE-LU Day-Ahead Price Forecasting
-emoji: ⚡
-colorFrom: blue
-colorTo: indigo
-sdk: docker
-app_port: 7860
-pinned: false
-short_description: Probabilistic DE-LU day-ahead price forecast, strict-gate, one-shot evaluated
-tags:
-  - energy
-  - time-series
-  - probabilistic-forecasting
-  - conformal-prediction
-  - lightgbm
----
+def card_body(C, deployed: str, limitations: str, reproduction: str) -> str:
+    """Everything after a card's introduction, shared by the container card and
+    the Static Space card so the two cannot drift in what they claim.
 
-# DE-LU day-ahead price forecasting — interactive deep dive
-
-Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
-electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
-nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
-
-**The static report is the primary entry point: [{C['pages_url']}]({C['pages_url']}).**
-It is CDN-served, cannot sleep, and performs zero runtime calls. This Space is the
-interactive deep dive it fronts. On the free tier the Space sleeps after inactivity and
-takes roughly 30 s to wake — that is disclosed, not optimised away, and it is never on
-the path of a first visit.
-
-> **{C['replay_label']}**
-
-Anything this Space renders over the holdout window {C['holdout_window']} is a replay of
-a frozen model against a period it never trained on. It is never presented as a live
-forecast, and the demo makes no live API call during a session: the champion and the
-data snapshot are **bundled in the image**.
-
-## The four cutoffs, stated separately because they are four different dates
+    `deployed` is the one section that genuinely differs: what artifact the card
+    describes and how it executes.
+    """
+    return f"""## The four cutoffs, stated separately because they are four different dates
 
 | Cutoff | Value |
 |---|---|
@@ -110,21 +77,7 @@ data snapshot are **bundled in the image**.
 {C['staleness_days']} delivery days; that is what shipping the evaluated model costs, and
 it is stated rather than hidden. {C['floor_change']}
 
-## What is deployed
-
-The artifact in this image is the **same bundled champion the holdout evaluated** —
-`artifact_fingerprint_sha256` `{C['champion_fingerprint']}`: the selected
-`{C['selected_catalog']}` catalog's feature pipeline, {C['champion_quantiles']} LightGBM
-quantile heads, four CQR thresholds and the isotonic ordering guard, wrapped in one
-`mlflow.pyfunc`. `python_model.pkl` is {C['champion_pkl_bytes']} bytes =
-{C['champion_pkl_size']}; the whole `models/champion/` directory is
-{C['champion_dir_bytes']} bytes = {C['champion_dir_size']}. The frozen snapshot it reads
-is pinned at `sha256` `{C['snapshot_sha256']}`.
-
-The pickle's bytes are deliberately not the identity to check — MLflow stamps a fresh
-UUID and creation time on every save — so the fingerprint above is computed over the
-catalog, the feature list, the nine quantiles, the four thresholds and the nine boosters'
-own serializations.
+{deployed}
 
 ## Selected catalog
 
@@ -157,9 +110,8 @@ p-value **{C['holdout_dm_p_value']}**, standardized effect size
 
 The five pinned development folds carry `evidence_class =
 {C['development_evidence_class']}` — descriptive post-selection evidence, never
-confirmatory. The **point-accuracy DM on those folds shows no evidence of advantage**
-(p = {C['development_dm_point_p_value']}); the probabilistic win is broad and the
-point-accuracy win is not. That is reported here rather than omitted.
+confirmatory. **{C['development_dm_point_reading']}** The probabilistic win is broad and
+the point-accuracy win is not. That is reported here rather than omitted.
 
 ## What the post-gate forecast would have been worth
 
@@ -196,6 +148,70 @@ visitor to a sign-in page, while the `.mlflow` tracking URI above is anonymously
 """
 
 
+def docker_deployed_section(C) -> str:
+    return f"""## What is deployed
+
+The artifact in this image is the **same bundled champion the holdout evaluated** —
+`artifact_fingerprint_sha256` `{C['champion_fingerprint']}`: the selected
+`{C['selected_catalog']}` catalog's feature pipeline, {C['champion_quantiles']} LightGBM
+quantile heads, four CQR thresholds and the isotonic ordering guard, wrapped in one
+`mlflow.pyfunc`. `python_model.pkl` is {C['champion_pkl_bytes']} bytes =
+{C['champion_pkl_size']}; the whole `models/champion/` directory is
+{C['champion_dir_bytes']} bytes = {C['champion_dir_size']}. The frozen snapshot it reads
+is pinned at `sha256` `{C['snapshot_sha256']}`.
+
+The pickle's bytes are deliberately not the identity to check — MLflow stamps a fresh
+UUID and creation time on every save — so the fingerprint above is computed over the
+catalog, the feature list, the nine quantiles, the four thresholds and the nine boosters'
+own serializations.
+"""
+
+
+def build_card() -> str:
+    C = build_claims()
+    limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
+    reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
+    return f"""---
+title: DE-LU Day-Ahead Price Forecasting
+emoji: ⚡
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+short_description: Probabilistic DE-LU day-ahead price forecast, strict-gate, one-shot evaluated
+tags:
+  - energy
+  - time-series
+  - probabilistic-forecasting
+  - conformal-prediction
+  - lightgbm
+---
+
+# DE-LU day-ahead price forecasting — interactive deep dive
+
+Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
+electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
+nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
+
+**The static report is the primary entry point: [{C['pages_url']}]({C['pages_url']}).**
+It is CDN-served and performs zero runtime calls. **This card describes the container
+bundle, which is not what Hugging Face hosts.** On 2026-07-08 Hugging Face moved the Docker
+SDK behind a paid plan, and a free Docker Space sleeps after inactivity. The hosted
+interactive demo is therefore a Static Space built from `app/wasm_showcase.py`, which
+cannot sleep; this bundle remains runnable locally and is verified under
+`docker run --network none` by `make container-verify`.
+
+> **{C['replay_label']}**
+
+Anything this Space renders over the holdout window {C['holdout_window']} is a replay of
+a frozen model against a period it never trained on. It is never presented as a live
+forecast, and the demo makes no live API call during a session: the champion and the
+data snapshot are **bundled in the image**.
+
+{card_body(C, docker_deployed_section(C), limitations, reproduction)}"""
+
+
 #: Development prediction frames are CP-2 evidence, not runtime inputs. Only the
 #: holdout frame is readable by the showcase, so only it travels.
 _RUNTIME_PARQUET = {"holdout_predictions.parquet"}
@@ -206,20 +222,32 @@ _RUNTIME_PARQUET = {"holdout_predictions.parquet"}
 #: `__marimo__` is the session cache marimo writes beside the notebook when the
 #: app runs: gitignored, ~1 MB, and its presence would make the bundle depend on
 #: whether anyone had started the app before building it.
+#: `reports/cp3b/` is the WASM checkpoint's evidence (network logs, equivalence
+#: records) -- it changes on every WASM rebuild and would make this manifest stale
+#: for reasons that have nothing to do with the container.
 _EXCLUDED_DIRS = {"__pycache__", "__marimo__", "cp3"}
+
+#: ...except the two records `claims.py` reads. The claim set must build wherever
+#: the app runs; excluding its inputs crashed the CLI inside the container, and
+#: `make container-verify` caught it.
+_CP3B_CLAIM_INPUTS = {"network.json", "equivalence.json"}
 
 
 def _ignore(directory: str, names: list[str]) -> set[str]:
     skipped = {
         name
         for name in names
-        if name in {".DS_Store"}
+        # The CP-3B browser payload is the Static Space's, not the container's.
+        if (Path(directory).name == "app" and name == "public")
+        or name in {".DS_Store"}
         or name.endswith(".pyc")
         or (name in _EXCLUDED_DIRS and Path(directory, name).is_dir())
     }
     skipped |= {
         name for name in names if name.endswith(".parquet") and name not in _RUNTIME_PARQUET
     }
+    if Path(directory).name == "cp3b":
+        skipped |= {name for name in names if name not in _CP3B_CLAIM_INPUTS}
     return skipped
 
 

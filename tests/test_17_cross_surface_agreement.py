@@ -30,9 +30,9 @@ def surfaces() -> list[Surface]:
     return load_surfaces()
 
 
-def test_all_four_surfaces_exist(surfaces):
+def test_every_bound_surface_exists(surfaces):
     names = {surface.name for surface in surfaces}
-    assert names == {"README", "Space card", "Pages export", "MLflow record"}
+    assert names == {"README", "Space card", "Static Space card", "Pages export", "MLflow record"}
     for surface in surfaces:
         assert surface.path.exists(), surface.path
         assert surface.text, f"{surface.name} is empty"
@@ -182,6 +182,8 @@ def test_the_published_artifact_size_ignores_transient_bytecode(tmp_path, monkey
         "reports/cp2/a69_benchmark.json",
         "reports/cp2/dm_development.json",
         "reports/cp2/development_pooled_metrics.csv",
+        "reports/cp3b/network.json",
+        "reports/cp3b/equivalence.json",
     ):
         (root / relative).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(real / relative, root / relative)

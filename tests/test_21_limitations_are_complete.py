@@ -29,6 +29,7 @@ from delu_forecast.surfaces import (
     PAGES_PATH,
     README_PATH,
     SPACE_CARD_PATH,
+    STATIC_SPACE_CARD_PATH,
     Surface,
     html_to_text,
     normalise,
@@ -36,7 +37,7 @@ from delu_forecast.surfaces import (
 
 #: The MLflow record carries tags, not prose, so the limitations set is asserted
 #: on the three human surfaces. §10 item (11) is a reading-order requirement.
-HUMAN_SURFACES = ("README", "Space card", "Pages export")
+HUMAN_SURFACES = ("README", "Space card", "Static Space card", "Pages export")
 
 
 @pytest.fixture(scope="module")
@@ -44,6 +45,7 @@ def human_surfaces() -> list[Surface]:
     return [
         Surface("README", README_PATH, normalise(README_PATH.read_text())),
         Surface("Space card", SPACE_CARD_PATH, normalise(SPACE_CARD_PATH.read_text())),
+        Surface("Static Space card", STATIC_SPACE_CARD_PATH, normalise(STATIC_SPACE_CARD_PATH.read_text())),
         Surface("Pages export", PAGES_PATH, html_to_text(PAGES_PATH.read_text())),
     ]
 

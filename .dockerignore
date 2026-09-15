@@ -16,5 +16,15 @@ reports/cp2/*.parquet
 !reports/cp2/holdout_predictions.parquet
 # CP-3 build records are checkpoint evidence, not runtime data.
 reports/cp3/
+# CP-3B evidence stays out of the image -- except the two records claims.py
+# reads, because the claim set must build wherever the app runs.
+reports/cp3b/*
+!reports/cp3b/network.json
+!reports/cp3b/equivalence.json
 *.pdf
 *.docx
+# CP-3B browser payload and marimo session cache: the container serves the
+# server-mode app from the bundled pyfunc and needs neither.
+app/public/
+app/__marimo__/
+space-wasm/

@@ -1,6 +1,6 @@
 {
   "build_context": "PJM",
-  "checked_at_utc": "2026-09-14T18:48:57+00:00",
+  "checked_at_utc": "2026-09-15T09:23:33+00:00",
   "docker_host": "Ubuntu 24.04.4 LTS / aarch64 / 4 CPU",
   "docker_server_version": "29.5.2",
   "image": "delu-showcase:verify",
@@ -21,7 +21,7 @@
       "ok": true
     },
     "marimo_server_mode": {
-      "detail": "        \u279c  Network: http://c52f764fbd86:7860",
+      "detail": "        \u279c  Network: http://83886195100b:7860",
       "ok": true
     },
     "offline_probe": {
@@ -37,7 +37,7 @@
       "ok": true
     },
     "run_offline": {
-      "detail": "c52f764fbd86",
+      "detail": "83886195100b",
       "ok": true
     }
   }

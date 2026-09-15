@@ -1,0 +1,68 @@
+{
+  "booster_base64_bytes": {
+    "p025": 1650668,
+    "p05": 1653128,
+    "p10": 1651248,
+    "p25": 1649392,
+    "p50": 1651996,
+    "p75": 1645208,
+    "p90": 1644828,
+    "p95": 1646044,
+    "p975": 1641040
+  },
+  "booster_bytes": {
+    "p025": 3460531,
+    "p05": 3443518,
+    "p10": 3421607,
+    "p25": 3403039,
+    "p50": 3394815,
+    "p75": 3398163,
+    "p90": 3416469,
+    "p95": 3437669,
+    "p975": 3447879
+  },
+  "booster_gzip_bytes": {
+    "p025": 1237999,
+    "p05": 1239846,
+    "p10": 1238435,
+    "p25": 1237044,
+    "p50": 1238995,
+    "p75": 1233905,
+    "p90": 1233620,
+    "p95": 1234532,
+    "p975": 1230778
+  },
+  "browser_champion_sha256": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
+  "default_day": "2026-09-06",
+  "file_bytes": {
+    "browser_champion.py": 11000,
+    "calendar.json": 8686,
+    "champion.json": 1254,
+    "fixture.json": 227460,
+    "p025.txt.gz.b64": 1650668,
+    "p05.txt.gz.b64": 1653128,
+    "p10.txt.gz.b64": 1651248,
+    "p25.txt.gz.b64": 1649392,
+    "p50.txt.gz.b64": 1651996,
+    "p75.txt.gz.b64": 1645208,
+    "p90.txt.gz.b64": 1644828,
+    "p95.txt.gz.b64": 1646044,
+    "p975.txt.gz.b64": 1641040,
+    "series.json": 281855
+  },
+  "fixture_days": 54,
+  "fixture_fail_closed_rows": 4,
+  "fixture_rows": 1296,
+  "history_days_per_window": 31,
+  "payload_dir": "app/public",
+  "regimes": [
+    "crisis",
+    "dst-fall-back",
+    "dst-spring-forward",
+    "post-crisis (holdout)",
+    "post-crisis (holidays, bridge days)",
+    "pre-crisis"
+  ],
+  "series_rows": 7248,
+  "uncompressed_bytes": 15363807
+}

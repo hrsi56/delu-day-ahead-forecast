@@ -83,10 +83,8 @@ but §4.1 fixes the rule as pooled and fixes it before fitting, so the split is 
 decision is not revisited.
 
 **Development metrics are descriptive post-selection evidence** (`evidence_class =
-development_post_selection`), never confirmatory superiority. The point-accuracy DM on those
-folds shows **no evidence of advantage** — p = 0.948, statistic
-1.6228, over 448 days — reported here rather than
-omitted. The probabilistic daily-vector DM on the same folds reads statistic
+development_post_selection`), never confirmatory superiority. **The development point-accuracy DM does not merely fail to show an advantage — it shows a deficit: the test is one-sided (reject if DM < −1.645), the statistic is +1.6228 with p = 0.948, and the champion's median is 28.58% worse than the similar-day naive over the development folds.**
+Reported here rather than omitted or reframed. The probabilistic daily-vector DM on the same folds reads statistic
 -2.5517, p = 0.00536. The champion beats the similar-day
 naive on mean pinball loss in 5 of the 5 evaluation
 blocks and on median MAE in 3 of 5: the probabilistic win is
@@ -162,8 +160,13 @@ platform change rather than an oversight.** On 2026-07-08 Hugging Face moved the
 SDKs behind a paid PRO plan; only Static Spaces remain free. This project runs at a ratified $0 rate,
 so the containerised showcase is not hosted there. **The container is not hypothetical** — it builds,
 and `make container-verify` runs it under `docker run --network none` with every external host
-unreachable. Run it yourself with the commands below; that is the same artifact a hosted Space would
-have served. Steps, if the decision changes: [`docs/deploy.md`](docs/deploy.md).
+unreachable. Run it yourself with the commands below.
+
+**What the Space will be instead: a Static Space, which cannot sleep.** The interactive demo is now a
+marimo notebook exported with `marimo export html-wasm`: the champion's own boosters execute in the
+visitor's browser under Pyodide, and Hugging Face serves nothing but files. It is built and verified
+locally and awaits the owner's upload — steps in [`docs/deploy.md`](docs/deploy.md). The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0.
+The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 352 requests from 5 hosts. There is no server to wake. A repeat visit transferred about 1.0 MB: the page's text revalidated, and the fonts and images Hugging Face serves through expiring signed links were fetched again. Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
@@ -172,20 +175,22 @@ ENTSO-E/SMARD call during a user session. The shipped model is exactly the model
 | Surface | What it is | Runtime calls |
 |---|---|---|
 | **[Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)** — the primary link | The full §10 reading order as one self-contained HTML file, CDN-served by GitHub Pages | **zero** |
-| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** | The marimo app in server mode, Docker SDK, `cpu-basic` | only its own assets |
+| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** | The marimo notebook exported to WebAssembly, served by a free **Static** Space; inference runs in the browser | about 57 MB on a first visit, 352 requests, 5 hosts |
 | **[MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | Every decision-bearing run, anonymously readable | — |
 
-The static page is the first touch precisely because it cannot sleep. The Space is labelled
-*"interactive demo — may take ~30 s to wake if asleep"* wherever it is linked, because the Hugging Face free tier sleeps after
-inactivity; that is disclosed, not engineered around, and no keep-alive of any kind runs on any
-platform.
+The static page is the first touch precisely because it fetches nothing and cannot fail when a CDN
+does. The Space is labelled *"interactive demo — runs in your browser, no server; the first visit downloads about 57 MB"* wherever it is linked. The old label warned of
+a ~30 s wake-up; a Static Space executes nothing on the server, so there is nothing to wake, and the
+cost a visitor actually pays is download weight — so that is what the label now states. No keep-alive
+of any kind runs on any platform.
 
 **Run it yourself, offline:**
 
 ```bash
 uv sync
 uv run python predict_next_day.py --level 80 --self-check   # bundled snapshot, no network
-uv run marimo run app/showcase.py                            # the showcase, server mode
+uv run marimo run app/showcase.py                            # the container's showcase, server mode
+make wasm && make wasm-serve                                 # the Static Space, at http://127.0.0.1:8820
 docker build -t delu-showcase . && docker run -p 7860:7860 delu-showcase
 make pages                                                   # rebuild docs/index.html
 ```
@@ -215,7 +220,8 @@ CQR thresholds and isotonic last, in one `mlflow.pyfunc`. Snapshot `sha256`
 p 1.98e-18, effect -1.0478. Selected catalog
 `base` (`13.015841509664993` vs `13.064197422052183`,
 +0.371516%). Development evidence class `development_post_selection`, with the
-point-accuracy DM at p = 0.948 — no evidence of advantage. Post-gate
+point-accuracy DM at p = 0.948 — a deficit, not merely no advantage
+(28.58% worse). Post-gate
 benchmark `13.015841509664993` → `10.478714632475889`, **-19.4926%**.
 
 > Pre-specified one-shot holdout DM test on a fixed 90-day window — confirmatory-style, not power-qualified.
@@ -246,7 +252,7 @@ it lives here too rather than in one document only:
 written separately per surface is how a limitation ends up on one page and nowhere else:
 
 - **Exchangeability under regime shift.** CQR provides finite-sample marginal coverage guarantees under exchangeability. The walk-forward CV mildly violates exchangeability — the crisis regime is not exchangeable with the pre-crisis regime, and the solar-driven negative-price era is not exchangeable with either — so empirical coverage may diverge from nominal on regime-shift folds. This is documented in the reliability diagram (Section 8.4).
-- **Development versus one-shot evidence.** The five-fold development results are descriptive post-selection evidence, never confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified and opened once, and the development point-accuracy DM shows no evidence of advantage.
+- **Development versus one-shot evidence.** The five-fold development results are descriptive post-selection evidence, never confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified and opened once, and on the development folds the point-accuracy DM shows a deficit, not merely the absence of an advantage.
 - **Disclosed assumption — the load forecast.** A65/A01 is pre-gate by explicit assumption, not by measurement: both the existence of the delivery-day load forecast before the 12:00 CET gate and its equality to the archived vector used here are assumed, and the regulatory update provision permits later revisions.
 - **Disclosed assumption — the generation archive.** A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.
 - **The measured cost of the strict gate.** The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.

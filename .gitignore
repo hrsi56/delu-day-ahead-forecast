@@ -13,6 +13,13 @@ __pycache__/
 .env
 *.env
 
+# CP-3B browser payload: the nine boosters as text, the row slice, the calendar
+# facts and the equivalence fixture. All of it is derived losslessly and
+# deterministically from the committed models/champion/ by `make wasm-payload`,
+# so committing 31 MB of it would duplicate the artifact rather than preserve
+# anything. Tests fail loudly with that instruction when it is absent.
+/app/public/
+
 # CP-3 deployable bundle: a copy of committed files, assembled by
 # `make space` for the owner to push. Never a second source of truth.
 /dist/

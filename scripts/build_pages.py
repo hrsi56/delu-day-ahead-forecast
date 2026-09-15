@@ -528,8 +528,9 @@ asks the model a question it was never trained on. The cleared-price line is hid
 scenario is active, because the outcome belongs to the unperturbed day.</p>
 </div>
 <p class="lede">Want to drive the model yourself? The
-<a href="{C['space_url']}">{esc(C['space_link_label'])}</a> runs the same bundled artifact with live
-local inference. This page needs no such wake-up: it is static, and it cannot sleep.</p>
+<a href="{C['space_url']}">{esc(C['space_link_label'])}</a> runs the champion's own boosters in
+your browser, proved bitwise equal to the frozen artifact over {C['wasm_fixture_days']} delivery days.
+This page stays the first touch because it downloads nothing and cannot fail when a CDN does.</p>
 
 <h2 id="limitations">11 · Honest limitations</h2>
 <ul>

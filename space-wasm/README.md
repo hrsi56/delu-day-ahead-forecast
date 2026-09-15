@@ -3,38 +3,34 @@ title: DE-LU Day-Ahead Price Forecasting
 emoji: ⚡
 colorFrom: blue
 colorTo: indigo
-sdk: docker
-app_port: 7860
+sdk: static
+app_file: index.html
 pinned: false
-short_description: Probabilistic DE-LU day-ahead price forecast, strict-gate, one-shot evaluated
+short_description: DE-LU day-ahead price forecast, running in your browser
 tags:
   - energy
   - time-series
   - probabilistic-forecasting
   - conformal-prediction
   - lightgbm
+  - pyodide
 ---
 
-# DE-LU day-ahead price forecasting — interactive deep dive
+# DE-LU day-ahead price forecasting — running in your browser
 
 Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
 electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
 nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
 
 **The static report is the primary entry point: [https://hrsi56.github.io/delu-day-ahead-forecast/](https://hrsi56.github.io/delu-day-ahead-forecast/).**
-It is CDN-served and performs zero runtime calls. **This card describes the container
-bundle, which is not what Hugging Face hosts.** On 2026-07-08 Hugging Face moved the Docker
-SDK behind a paid plan, and a free Docker Space sleeps after inactivity. The hosted
-interactive demo is therefore a Static Space built from `app/wasm_showcase.py`, which
-cannot sleep; this bundle remains runnable locally and is verified under
-`docker run --network none` by `make container-verify`.
+It is CDN-served and performs zero runtime calls. This Space is the interactive deep dive it
+fronts: interactive demo — runs in your browser, no server; the first visit downloads about 57 MB.
 
 > **Historical out-of-sample replay — the frozen champion forecasting a 90-day period it never trained on. This is not a live forecast.**
 
-Anything this Space renders over the holdout window 2026-06-09..2026-09-06 is a replay of
-a frozen model against a period it never trained on. It is never presented as a live
-forecast, and the demo makes no live API call during a session: the champion and the
-data snapshot are **bundled in the image**.
+Anything this Space renders over the holdout window 2026-06-09..2026-09-06 is a replay of a frozen
+model against a period it never trained on. It is never presented as a live forecast, and the page
+makes no call to ENTSO-E, SMARD or any model registry: the rows it forecasts from ship with it.
 
 ## The four cutoffs, stated separately because they are four different dates
 
@@ -49,21 +45,40 @@ The shipped model is exactly the model the holdout evaluated: there is no retrai
 152 delivery days; that is what shipping the evaluated model costs, and
 it is stated rather than hidden. The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.
 
-## What is deployed
+## What is deployed — and why it is still the evaluated model
 
-The artifact in this image is the **same bundled champion the holdout evaluated** —
-`artifact_fingerprint_sha256` `57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb`: the selected
-`base` catalog's feature pipeline, 9 LightGBM
-quantile heads, four CQR thresholds and the isotonic ordering guard, wrapped in one
-`mlflow.pyfunc`. `python_model.pkl` is 30,830,306 bytes =
-29.4 MiB (30.8 MB); the whole `models/champion/` directory is
-31,623,247 bytes = 30.2 MiB. The frozen snapshot it reads
-is pinned at `sha256` `7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00`.
+**This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
+no process to put to sleep. The forecast and the model-identity check are computed in your browser by the champion itself; the evaluation figures — coverage, cutoffs, holdout metrics, limitations — are the committed results of the one-shot evaluation, which is spent and is not re-run. The champion's nine LightGBM boosters run in
+Pyodide.
 
-The pickle's bytes are deliberately not the identity to check — MLflow stamps a fresh
-UUID and creation time on every save — so the fingerprint above is computed over the
-catalog, the feature list, the nine quantiles, the four thresholds and the nine boosters'
-own serializations.
+The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0.
+
+That comparison is not a claim printed from a file — **the page runs it in front of you** and
+reports the result, against outputs recorded from the frozen `mlflow.pyfunc` champion before the
+page existed. The boosters were trained with LightGBM on macOS ARM and execute here under a
+WebAssembly build with OpenMP disabled; that the two agree bitwise was the first thing measured,
+because it was the one result that could have made this page impossible.
+
+- `artifact_fingerprint_sha256` `57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb` — the same value in
+  `models/champion/champion_card.json`, the one-shot holdout report and the registered `champion`
+  alias.
+- The snapshot the fixture rows come from is pinned at `sha256` `7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00`.
+- §5.2 holds on the browser path too. Setting the delivery day's 24 prices to missing changes the forecast by exactly 0.0; raising all 24 D−1 prices by 250 EUR/MWh moves it by 220.9433 EUR/MWh.
+
+### What a first visit costs
+
+The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 352 requests from 5 hosts. There is no server to wake. A repeat visit transferred about 1.0 MB: the page's text revalidated, and the fonts and images Hugging Face serves through expiring signed links were fetched again. Measured on a cold cache against the way Hugging Face actually serves a
+Static Space — files uncompressed, binary files through a redirect to `us.aws.cdn.hf.co`:
+57.25 million bytes. Most of it is the Python runtime and its scientific wheels from
+`cdn.jsdelivr.net`. The nine boosters come from this Space itself as base64-encoded gzip: the
+platform does not compress, and it would serve a binary file through an uncacheable redirect, so
+the model ships as compressed text instead. The page prints its own measured download table at the
+bottom.
+
+Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
+
+If you want the report without any download, the [static report](https://hrsi56.github.io/delu-day-ahead-forecast/) fetches nothing
+at all.
 
 
 ## Selected catalog

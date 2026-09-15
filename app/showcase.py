@@ -261,12 +261,10 @@ def _(C, mo):
         | Probabilistic daily-vector pinball | similar-day naive | {C['development_dm_pinball_statistic']} | {C['development_dm_pinball_p_value']} | {C['development_days']} |
         | Point median absolute error | similar-day naive | {C['development_dm_point_statistic']} | {C['development_dm_point_p_value']} | {C['development_days']} |
 
-        **The point-accuracy test shows no evidence of advantage** (p =
-        {C['development_dm_point_p_value']}). Reported, not omitted and not reframed:
-        the probabilistic win is broad and the point-accuracy win is not, and the pooled
-        MAE gap comes almost entirely from the crisis-peak fold, where an
-        expanding-window model trained only on pre-crisis data cannot follow an
-        August-2022 level shift and persistence can.
+        **{C['development_dm_point_reading']}** Reported, not omitted and not
+        reframed: the probabilistic win is broad and the point-accuracy win is not, and the
+        pooled MAE gap comes almost entirely from the crisis-peak fold. The mechanism is in
+        the static report and `docs/cp2-model-report.md`.
 
         ### The one-shot holdout — opened exactly once
 

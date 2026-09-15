@@ -72,7 +72,7 @@ def main() -> int:
     if failures:
         print(f"FAIL — {len(failures)} problem(s)")
         return 1
-    print("PASS — every bound claim agrees on all four surfaces; the page fetches nothing")
+    print("PASS — every bound claim agrees on every surface; the static page fetches nothing")
     return 0
 
 

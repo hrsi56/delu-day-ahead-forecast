@@ -12,6 +12,10 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --locked --dev
+      # The browser payload is derived from the committed champion rather than
+      # committed; the WASM equivalence gate needs it present.
+      - name: Build the browser payload (M3.5 item 2)
+        run: uv run python scripts/build_wasm_payload.py
       - run: uv run pytest -q
       # The §6.2 CQR order-statistic fixture is required on every push from M2.
       # It is inside the run above; naming it separately makes the requirement
@@ -23,3 +27,6 @@ jobs:
       # defect and should be a red check rather than a discovery.
       - name: Cross-surface agreement and zero runtime calls (CP-3 items 3, 5)
         run: uv run python scripts/verify_release.py
+      # The hard gate: the browser model is the frozen champion, bitwise.
+      - name: WASM model-identity equivalence (CP-3B item 2)
+        run: uv run pytest tests/test_22_wasm_equivalence.py -q
