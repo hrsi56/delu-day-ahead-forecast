@@ -52,5 +52,23 @@
     "passed": 47,
     "skipped_missing_production_outputs": 5,
     "seconds": 3.95
+  },
+  "early_independent_fit_lineage_check": {
+    "exit_code": 0,
+    "method": "tests/cp15/test_saved_evidence.py original fixture plus check_fit_records on cached fits.json, independently reconstructed eligible positions and 168-hour normalization",
+    "origins": [
+      {
+        "day": "2020-06-02",
+        "model_records": 74,
+        "long_history_start": "2019-01-01"
+      },
+      {
+        "day": "2021-03-01",
+        "model_records": 74,
+        "long_history_start": "2019-03-04"
+      }
+    ],
+    "cache_fingerprint": "9967a0d99c94a258701ecb8ab0967e2eb59c69c28a85cbf9e402322b3d5dde0a",
+    "scored": false
   }
 }
