@@ -293,10 +293,13 @@ def main() -> int:
 
     total_rows = sum(d["rows"] for d in per_day)
     fail_closed = sum(d["fail_closed_rows"] for d in per_day)
+    # claims.json is excluded: scripts/build_wasm_space.py rewrites it last, from
+    # the evidence the gate writes after this step, so a size recorded here could
+    # only ever describe a file that is about to be replaced.
     sizes = {
         p.name: p.stat().st_size
         for p in sorted(OUT.rglob("*"))
-        if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc"
+        if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc" and p.name != "claims.json"
     }
     payload_bytes = sum(sizes.values())
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
