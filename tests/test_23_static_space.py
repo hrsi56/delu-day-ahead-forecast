@@ -159,6 +159,14 @@ def test_the_bundle_manifest_is_clean_and_complete():
     ).hexdigest()
 
 
+def test_the_payload_and_bundle_carry_no_compiled_bytecode():
+    """A .pyc is neither source nor reproducible; it must never reach the Space."""
+    payload = json.loads((REPO_ROOT / "reports" / "cp3b" / "payload.json").read_text())
+    assert not any(name.endswith(".pyc") for name in payload["file_bytes"])
+    manifest = json.loads(BUNDLE_MANIFEST.read_text())
+    assert "compiled bytecode present in the bundle" not in manifest["problems"]
+
+
 def test_the_export_allowlist_cannot_admit_a_governance_file():
     import sys
 

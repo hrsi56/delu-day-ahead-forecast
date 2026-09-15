@@ -33,6 +33,10 @@ def load():
 
     if not (PUBLIC / "fixture.json").exists():
         raise SystemExit("app/public/ is absent; run `make wasm-payload` first")
+    # Import the shipped bytes -- but never let Python write __pycache__ into
+    # app/public/: marimo copies that directory wholesale into the Space, and a
+    # .pyc is neither source nor reproducible (it embeds source metadata).
+    sys.dont_write_bytecode = True
     sys.path.insert(0, str(PUBLIC))
     from browser_champion import BrowserChampion  # the shipped bytes, not app/
 

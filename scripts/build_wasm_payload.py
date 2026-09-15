@@ -87,6 +87,10 @@ def target_days() -> list[tuple[str, date]]:
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "boosters").mkdir(exist_ok=True)
+    import shutil
+
+    for stale in list(OUT.rglob("__pycache__")):
+        shutil.rmtree(stale, ignore_errors=True)
     champion = load_champion()
     snapshot = load_snapshot()
     claims = build_claims()
@@ -243,7 +247,11 @@ def main() -> int:
 
     total_rows = sum(d["rows"] for d in per_day)
     fail_closed = sum(d["fail_closed_rows"] for d in per_day)
-    sizes = {p.name: p.stat().st_size for p in sorted(OUT.rglob("*")) if p.is_file()}
+    sizes = {
+        p.name: p.stat().st_size
+        for p in sorted(OUT.rglob("*"))
+        if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc"
+    }
     payload_bytes = sum(sizes.values())
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(

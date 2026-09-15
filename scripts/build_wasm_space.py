@@ -161,6 +161,14 @@ def main() -> int:
         if entry.name not in ALLOWED_ROOT:
             removed.append(entry.name)
             shutil.rmtree(entry) if entry.is_dir() else entry.unlink()
+    # Nested, not just the root: `public/` is copied wholesale by the export, so
+    # bytecode written by any host-side import of the shipped module travels too.
+    for cache in list(BUNDLE.rglob("__pycache__")):
+        removed.append(str(cache.relative_to(BUNDLE)))
+        shutil.rmtree(cache)
+    for compiled in list(BUNDLE.rglob("*.pyc")):
+        removed.append(str(compiled.relative_to(BUNDLE)))
+        compiled.unlink()
     shutil.copy2(CARD, BUNDLE / "README.md")
     (BUNDLE / ".gitattributes").write_text(GITATTRIBUTES)
 
@@ -178,6 +186,8 @@ def main() -> int:
     module_sha = hashlib.sha256(shipped.read_bytes()).hexdigest() if shipped.exists() else None
     if module_sha != hashlib.sha256(source.read_bytes()).hexdigest():
         problems.append("public/browser_champion.py differs from app/browser_champion.py")
+    if any(p.suffix == ".pyc" or "__pycache__" in p.parts for p in BUNDLE.rglob("*")):
+        problems.append("compiled bytecode present in the bundle")
     for leak in ("CLAUDE.md", "AGENTS.md", ".env"):
         if any(p.name == leak for p in BUNDLE.rglob("*")):
             problems.append(f"{leak} present in the bundle")
