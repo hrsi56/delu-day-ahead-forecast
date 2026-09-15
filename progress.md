@@ -1,188 +1,188 @@
-# Yarden's Triple-Track Progress Log
+# Programme state — DE-LU day-ahead forecasting
 
-*Living document, maintained under `orchestrator-role.md`. **Updated 2026-09-15: v1 COMPLETE and the programme is now SINGLE-TRACK.** `capstone_v20.md` — *From frozen artifact to running system* — is the only active plan. `capstone_V6_8.md` is closed as an active plan and kept as v1's ratified record. **Track C is cancelled and has left this project.** [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) · [Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) · [MLflow](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow). **`capstone_V6_8.md` and `capstone_M4_v2-plan.md` are history, not instruction** — the first is v1's ratified record, the second the reasoning behind M4. `program-stage-sequence.md` describes the completed v1 arc only. `main` = `origin/main` = **`4f73fed`**.*
+*Orchestrator-owned. **Regenerated 2026-09-15 for handover**, replacing a file that had accreted
+through a three-track programme that no longer exists. Written for the Orchestrator who picks this
+up next.*
 
----
+**The one active plan: [`capstone_v20.md`](capstone_v20.md) — *From frozen artifact to running
+system*, ratified 2026-09-15.** Everything else named in this file is history, reference, or
+environment.
 
-## Current Position
-
-### Track B — the only track
-
-- **Anchor:** **`capstone_V6_8.md` v6.8**, owner-ratified 2026-09-09. Amendment record: `capstone_V6_7-to-V6_8-amendments.md` at root. The v6.7 record remains at `docs/track-b/capstone_V6_6-to-V6_7-amendments.md`, whose **post-ratification repair addendum** supersedes its *Application scope* bullet and acceptance items 1, 12 and 15.
-- **Position: M0 DONE. M0.5/CP-0 CLOSED and RETIRED. M1/CP-1 CLOSED 2026-09-14.** Landed by the owner at **`5651c9a`** (squash, 48 files, 4,550 insertions), tagged **`land/cp-1` → `5651c9a`** and **`evidence/cp-1` → `24f59b5`**, both pushed; `gauntlet/cp-1` reclaimed. *(historical)*
-- **CP-1 attempt 2 passes, and the Orchestrator verified it independently rather than accepting the verdict.** Candidate `8adddcb…`, evidence tip `24f59b5…`, fresh Integration `PASS` on all ten items at `docs/track-b/evidence/cp-1/integration-v68.md`. **Own checks:** mutating every hour of delivery day `D` moves **zero** price-derived cells on any row of `D`, on an ordinary 24-hour day and on both DST days; rolling values are constant across the whole day; and the **positive control passes** — mutating a `D−1` price moves 121 cells, so the fix is not the degenerate all-null route. 25 tests pass, the snapshot hash verifies, the SQL artifact no longer contains `ROWS BETWEEN` or a fixed-offset `LAG`, the candidate→evidence delta is verdict-only, and the superseded attempt-1 verdict is preserved and marked. The Lead touched no governance file, no anchor and no program state.
-- **The chain lives at a tag, not a branch.** `gauntlet/cp-1` is deleted. Every SHA the verdicts cite — `368822de`, `cd9b6dd`, `c0b6e180`, `8adddcb` — was verified reachable from **`evidence/cp-1`** *after* deletion, with both Integration verdicts readable through it. The landing was a squash with one parent, so `main` does **not** contain those SHAs; the second tag is the only thing that preserves them. **The pre-landing audit and the two amendment reviews are not in the history** — held externally by owner decision, and no tag preserves what was never committed.
-- **CP-1 attempt 1 returned `PASS` and was refused landing.** The Lead delivered ten items and a fresh Integration `PASS` at candidate `368822de…`, evidence tip `c0b6e180…`. An **independent pre-landing audit returned `FAIL`** and the owner ruled **DO NOT LAND** on 2026-09-09. **The defect was in the ratified plan, not the work** — v6.7 defined price-feature availability per row, which is right for a rolling one-step-ahead forecast and wrong for a whole-curve forecast issued once at the 12:00 D-1 gate. Exposure measured at **95.83% of rows**. `gauntlet/cp-1` is preserved and **the remediation builds on it**, on both reviewers' recommendation.
-- **The SMARD route stands and is not implicated.** The bulk pull ran through SMARD under §3's ratified fallback-primary clause; ENTSO-E returned mid-checkpoint and closed item 5's reconciliation. Ingestion, snapshot, hash, manifest, reconciliation, partitions, the A75 proxy, the schema firewall, spectral artifacts and CI **all passed the audit** and carry forward.
-- **What the remediation must repair** is concentrated: the price portion of the feature layer, the §9.6 SQL artifact, §9.4 tests 2/3/8 plus a new test 9, the leakage audit and the README. Everything else on the branch is retained.
-- **Next: M3/CP-3 — showcase and release, six items.** The last engineering checkpoint. Bundled champion and CLI, the quantile selector and one load-forecast control, the static Pages export as the primary recruiter URL, the HF Space as the labelled deep dive, cross-surface agreement on every claim and all four cutoffs, and one fresh Integration `PASS`.
-- **M3/CP-3 DISPATCHED 2026-09-14.** Six items, approximately 10 hours, against the v6.8 anchor. **The last engineering checkpoint.** Deployment is explicitly withheld from the Lead — building and proving the artifacts is CP-3; publishing them is REL-1, owner-executed, after this closes.
-- **⚠ DagsHub link discipline — diagnosed 2026-09-14, and it is not fixable.** The repository is public, but **DagsHub gates its entire web UI for connected (mirror) repositories**: `/`, `/experiments`, `/models` and `/src/main` all return `302 → /user/login` anonymously. Changing the default landing tab does not help — that hypothesis was tested and was wrong. What *is* anonymously open is **`…forecast.mlflow`**, verified serving real MLflow content and live runs, plus `raw/` file paths. **Every public link to experiment tracking must use the `.mlflow` URL**, which is what §9.1 names anyway. Carried into the CP-3 brief as a verified constraint.
-- **✅ A stale public description was found and corrected 2026-09-14.** The DagsHub repository — the surface the CV will link — read *"PJM Western Hub Day-Ahead Price Forecasting Tool, **v5.4**"*: the wrong market, abandoned at the June 2026 conversion, and a version fourteen releases old. Found by reading the settings page rather than by any check we had. It now reads `German DE-LU … v6.8`. **The stale text existed only on DagsHub**; nothing in the repository carried it. Track C went live the same day, so this was the one public surface a reader would have hit first.
-- **One CP-3 item-5 mismatch is deliberately NOT pre-fixed; the other was, and the difference is the bar.** The §7.1/§6.2 verbatim paragraphs sit in `docs/cp2-model-report.md` and not the README — **left for CP-3**, because that is item 5's own work across four surfaces, three of which do not exist yet. **The artifact size mislabel was corrected 2026-09-14 instead**, after the owner asked whether CP-3 would actually fix it and the answer turned out to be no: **item 5 governs README, Pages, Space metadata and MLflow links, and the CP-2 report is none of those.** No CP-3 item mentions artifact size at all, so a `PASS` was achievable with a factual error standing on a public document while Track C is live. The Orchestrator's earlier "it will be caught in CP-3" position rested on an unverified assumption; the owner's question exposed it. The report now names both figures — `python_model.pkl` 30,830,306 B = 29.4 MiB = 30.8 MB, and `models/champion/` 31,623,247 B = 30.2 MiB — because two correct numbers measuring different things is how the next cross-surface mismatch would have started.
-- **M3/CP-3 CLOSED 2026-09-15 — the last engineering checkpoint.** Landed at **`155b0f8`** (squash, 41 files, +6,747/−63), tagged **`land/cp-3` → `155b0f8`** and **`evidence/cp-3` → `73da531`**, both pushed; `gauntlet/cp-3` reclaimed after the tag was verified to preserve the candidate `9380aac`.
-- **The Lead returned `BLOCKED`, not `PASS`, and that was correct.** Item 4 requires a deployed Hugging Face Space; the brief withheld publication authority. A brief cannot narrow a bar — it can narrow *authority*, which leaves the bar unreachable, and that has to be said rather than wrapped. The owner granted publication authority on 2026-09-15 and the item closes on the condition originally written for it.
-- **Verified independently before landing, not accepted on a green run.** 148 tests from a clean `uv run pytest`; item 3 re-scanned with an independent matcher (0 fetching references, 7 `data:` URIs, the only external hrefs being plain `<a>` navigation); `make verify` PASS with 0 disagreements across four surfaces; the `220.9433` D−1 positive control re-run.
-- **The Lead caught two factual errors in the Orchestrator's own brief, and both stand.** (1) The brief gave the champion's crossing counts as `20,721 → 8,311 → 0`; that is the **two arms stacked**. The champion (`base`) alone is **`10,158 → 4,412 → 0`**. (2) `scripts/cp2_report.py:427` divided by `1_048_576` while labelling the result `MB`, so `make report` would have silently reverted the `61271ce` fix — the output was corrected and the generator was not. Second time a Lead has caught a brief error; the first was wrong SMARD filter IDs.
-- **REL-1 part one DONE 2026-09-15.** GitHub Pages enabled from `main` `/docs` via `gh api`, built, and verified live: **HTTP 200, byte-identical to `docs/index.html`**. <https://hrsi56.github.io/delu-day-ahead-forecast/> is the primary recruiter URL and it works now.
-- **⛔ REL-1 part two BLOCKED on an owner action the Orchestrator may not take.** The Hugging Face Space cannot be created because **the `hrsi56` Hugging Face account does not exist** (verified: `huggingface.co/hrsi56` → 404). Account creation and password entry are prohibited actions for an agent under any authorization. `dist/space/` is assembled and verified (37,105,186 bytes, 95 entries); once the account exists the push is a single command. The README states the gap plainly rather than linking a dead URL.
-- **Three factual defects were found on public surfaces after landing, and all three were fixed at the generator.** (1) **The fold_3 mechanism sentence was wrong on all four surfaces** — it read *"trained only on pre-crisis data cannot follow an August-2022 level shift"*, but that fold's training ran to 2022-04-29 and **did** include 5,784 crisis hours (mean €173, max €700), and only **2.45%** of the evaluation block exceeds that maximum. The measured mechanism is shrinkage toward the training level: **61.3%** of the block sits above the 99th percentile of everything the model ever saw. (2) The Pages export called `p=0.948` *"no evidence of advantage"*; the test is one-sided with statistic **+1.6228**, i.e. **28.58% worse**. (3) The coverage-divergence limitation said the crisis stratum was *"materially worse still"* without the number — it now carries **0.194**, its mechanism, and an explicit statement that v2 targets it and this release does not fix it.
-- **✅ M3.5/CP-3B CLOSED 2026-09-15.** Landed at **`7f16f4e`** (squash, `land/cp-3b`); reviewed chain at **`evidence/cp-3b` → `0adc309`**, candidate `55a70e7` verified reachable *after* branch deletion. The champion now runs in the browser under Pyodide on a free Static Space. **185 tests** (was 148).
-- **The Lead returned `INCOMPLETE`, and it landed anyway on the owner's direction.** Items 1–5 built and verified; **item 6 — a fresh Integration Critic `PASS` binding the final candidate — was never obtained**, because the re-review was cut off twice by usage limits. That is recorded in the landing commit rather than smoothed over. The Orchestrator's own verification stands in for the missing sixth review.
-- **The hard gate, re-verified independently rather than re-run.** Rebuilt the browser champion the way the notebook does and compared it against the frozen `mlflow.pyfunc` on delivery days the Lead's fixture does **not** contain: 8 days, 1,728 values, **max |deviation| 0.0**, NaN patterns identical row by row. The Lead's own 54-day fixture: 1,296 rows, 11,628 values, same `0.0`. Four positive controls all break the gate. **The 238 days where the browser fails closed are never offered** — the app has no day selector, it forecasts `2026-09-06`, and that day is inside the proved fixture; `series.json` is a sparse 302-day payload, so a day without a full 720h window must fail closed rather than fabricate.
-- **The schema firewall refused the Orchestrator's own verification input** until the post-gate A69 columns were dropped. R-2 working exactly as designed, on an input it had never seen.
-- **✅ REL-1 COMPLETE 2026-09-15.** All four conditions in `program-stage-sequence.md` line 20 met: Pages live, **Space live**, MLflow public, `main` landed by hand with both tags. The Space is 739 files, static, public, `stage=RUNNING`, verified in a real browser — Pyodide boots, the boosters execute, the fan chart renders, and the page says *"Recomputed in your browser just now."*
-- **A cold first visit can meet a 429.** Immediately after upload, Hugging Face's own edge rate-limited a burst of ~176 parallel asset requests and the page rendered blank; a reload cleared it. Transient, but a first-time visitor can hit it.
-- **Every surface now addresses the decision trail directly — owner requirement, 2026-09-15.** Built into `claims.py` so no surface can drift: three surfaces presented by *what they answer*, not what they are; the `delu-cp2` experiment, the model registry and the tracking root each deep-linked; the nine decision-bearing runs listed **by name** rather than id (several were reproduced; no single id is canonical); and a named, deliberately empty slot for v2. **`check_links` unauthenticated: all seven published links 200**, with the four DagsHub repository-UI URLs that 302 to `/user/login` kept as the control that shows why every published link uses the `.mlflow` host.
-- **v2's runs will land in a separate `delu-m4` experiment**, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed.
-- **📕 `capstone_V6_8.md` CLOSED as an active plan, 2026-09-15.** v1 is complete: CP-1, CP-2, CP-3 and CP-3B landed, REL-1 complete, three public surfaces live. **The anchor itself is not edited** — it stays the ratified historical record of v1. All forward work moves to **`capstone_v20.md`** (**RATIFIED** 2026-09-15), which carries M4, a new M5, and the MLflow integration that makes the tracking server load-bearing rather than decorative.
-- **The new anchor's shape, and the two design findings that shaped it.** **(1)** A frozen-and-waiting model (M4) and a daily-retrained model (M5) **cannot be the same artifact** — a model retrained daily has no clean test set, ever. They are separated into two evidence classes that may never be quoted interchangeably: *one-shot confirmatory* for M4, *prospective/prequential* for the daily service. **(2)** Daily retraining fixes **input staleness only** — not hyperparameters, not the feature catalog, and **not a regime break**: in August 2022 a daily-retrained model would still have had almost all its training mass in the moderate regime. **M5 without M4's calibration fix would reproduce v1's failure exactly**, which is why the dependency runs that way and is written down.
-- **Topology verified, not assumed.** **DagsHub provides tracking, registry and storage — no compute**, so training cannot run there. **GitHub Actions is free and unmetered for public repositories**, so it does. Actions computes → DagsHub records → git publishes → Pages serves. The daily pull uses **SMARD** and not ENTSO-E, because `entsoe-py` passes its token as a query parameter and that means the token in CI logs.
-- **MLflow's "physical use" has a falsifiable bar:** something must break if the tracking server is down. The daily job resolves the model from the **registry**, and builds the scorecard by **querying** for yesterday's logged forecast — so the record of *"what I predicted yesterday"* lives on a third-party server, not in a file this repository could rewrite. The price is designed rather than discovered: an outage **fails the build loudly and publishes nothing**, and the page keeps yesterday's committed content with its own visible date.
-- **⚠ A live gap on a public surface, now scheduled for repair.** An anonymous visitor who clicks through to MLflow **today** counts **10 runs named `champion::final-fit-and-holdout`** against a headline claim of *"evaluated exactly once"*. The reconciliation was written in advance and is honest — *"a statement about the evaluation decision, not about how many times a deterministic script may be run"* — but it lives in `reports/cp2/holdout_report.json`, not where the reader is standing. Fixed in two parts: the reconciliation becomes a rendered claim now, and CP-9 adds a build-time "what the tracking server says" panel.
-- **✅ M4 / v2 RATIFIED 2026-09-15** — `capstone_M4_v2-plan.md`, four decisions taken. **(1)** C-2/ACI is in, granting the §13 sequential-conformal amendment scoped to C-2; C-3 rejected before any run and **not implemented**. **(2)** Track 2 / CP-5 is **IN scope** — the owner's ground was *"the goal now is a working product, not experiments and not research"*, and a DE-LU forecaster that ignores gate-legal weather forecasts is not a serious product. The Orchestrator had recommended deferring it. **(3)** 90 delivery days; earliest evaluation **2026-12-06**. **(4)** CP-3B item 6 closed as NOT COMPLETED.
-- **Track 2 entering did not cost attribution, because the design absorbed it.** Both tracks would have landed in the same one-shot window and a joint improvement could not be attributed to either. §6 now freezes **two** artifacts before the wait — `v2-calibration-only` and `v2-full` — and pre-registers a **primary endpoint** (coverage: the calibration fix vs v1) and a **secondary endpoint** (point accuracy: the data track isolated). One extra evaluation of an already-frozen artifact, not a second holdout.
-- **One owner premise corrected before it entered the plan.** The proposal was that accumulated buffer days could remove C-2's two-day requirement. Two things were conflated: **C-2's lag is forecast geometry, not waiting** — at the 12:00 D−1 origin, D−1 is still in delivery, so the last fully observed day is D−2, and no buffer shortens that (it is also harmless: adaptation is slightly slower). And **the buffer is real but small and already counted** — the v1 snapshot is fully consumed through 2026-09-06, 9 new days exist as of 2026-09-15, and 90 new days from 2026-09-07 completes 2026-12-05, which is where the date came from. The owner's conclusion (*we are not waiting idly*) is right; the window does not shrink.
-- **⚠ CP-3B item 6 is closed as NOT COMPLETED** — `docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md`. Round 1 FAIL, round 2 FAIL (fixed), round 3 interrupted twice by usage limits; **no verdict binds the final candidate `55a70e7`**. The Lead returned `INCOMPLETE`, the owner directed release, and the gap is recorded rather than renamed. The Orchestrator's own verification is documented there for exactly what it is and is not. **Named as a non-precedent:** M4's briefs state that no landing occurs without a fresh Integration verdict binding the final candidate, because CP-4 is where an independent verdict is the substance rather than the bookkeeping. `capstone_M4_v2-plan.md`. Targets the one measured defect — the interval collapse under regime shift — as a **calibration-method** change needing no new data. Carries a pre-registered anti-overtuning discipline (fold_3 is a diagnostic control, never a selection metric; a falsification threshold of +0.20 absolute coverage written before any run) and a **computed** holdout protocol: 90 delivery days, earliest test **2026-12-06**, with the ±3.8 pp coverage CI and the |d| ≥ 0.26 DM power limit stated in advance.
-- **Gas re-closed on fresh evidence 2026-09-15.** Every TTF/THE source found is commercial with redistribution-prohibiting terms; ACER publishes a daily **LNG** assessment, not a hub price; Trading Hub Europe publishes consumption, not prices. **Gate-legal weather forecasts start 2024** — Open-Meteo's fixed-lead-time endpoints; its 2017-depth Historical Forecast API stitches short-lead runs and is look-ahead. **Neither source reaches folds 1–3.** The §0-item-3 adjudication of 2026-06-12 stands.
-- **TRIG-C FIRED 2026-09-14 — Track C is live.** The activation trigger is "after flagship M2", and M2 has closed.
-- **The arc is three checkpoints:** M1/CP-1 (data and fixed features, 10 items) → M2/CP-2 (model, calibration, analysis, 10 items) → M3/CP-3 (showcase and release, 6 items). CP-4 and CP-5 are retired. 56 future checkboxes became 26.
-- **What exists on `main` now.** The full CP-1 data layer: ingestion, the committed snapshot (`data/snapshot.parquet`, 67,343 UTC hours, hash pinned), source manifest and attribution, ENTSO-E↔SMARD reconciliation, the five pinned partitions, both frozen catalogs with delivery-day-safe price features, the A75 residual proxy, the champion/benchmark schema firewall, the DuckDB SQL artifact, three spectral figures, **25 passing tests** and a thin CI. **CP-2 starts from this.**
-- **Defect ledger: CLOSED 2026-09-14.** `docs/track-b/cp-0-defects.md`: 17 ACCEPTED · D-CP0-18 MOOT · **D-CP0-19 and D-CP0-20 re-tested** · AMD-G5 WAIVED. D-CP0-19 was exercised for real by CP-1's squash landing and its guard caught a live tag error in the same cycle; D-CP0-20 was re-tested by `scripts/governance_selftest.py`, whose **negative control is the genuine pre-remedy sentence from `d91b8c3`** — it flags that text and not the remedy, so it discriminates rather than grepping a phrase. Twenty defects, opened 2026-08-05, closed after 40 days.
-- **Governance Lockdown in force** since 2026-08-08 (`f45e577`). **Eight** task-scoped suspensions granted and spent: the v6.7 application; three 2026-09-07 repair rounds; the 2026-09-08 merge repair; the 2026-09-08 `AGENTS.md` Q&A-capture section; the 2026-09-09 v6.8 amendment; and its extension for the §3 EUA contradiction, plus the second-review SQL correction. None granted publication or unrelated authority.
-- **`AGENTS.md` § *Interview-answer capture* is new (2026-09-08).** Reasoning worth defending in an interview is filed when it happens. **Orchestrator-only** — a Lead names a trigger in one line of its return and files nothing, so the Track B firewall stays closed.
-
-### Track C — CANCELLED 2026-09-15
-
-**Removed from this project by owner decision, not completed and not deferred.** Outreach, CV
-surfaces, LinkedIn, target research, application-pipeline state and interview rehearsal leave this
-repository. `TRIG-C` and `C-1` are struck from `program-stage-sequence.md`.
-
-What it leaves behind, finished and not to be extended from this plan:
-
-- **Three live public surfaces** — [static report](https://hrsi56.github.io/delu-day-ahead-forecast/), [Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast), [MLflow](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow).
-- **`שאלות תשובות.docx`, 25 entries.** A closed v1 record. This plan files no further entries.
-- The repository's public metadata: MIT licence, homepage, ten topics.
-
-**The programme is now single-track.** `capstone_v20.md` is the only active plan.
+`main` = `origin/main` = **`2517e55`** · tree clean · one branch · 191 tests pass.
 
 ---
 
-## Setup State
+## 1. Where the programme stands
 
-- **Project Knowledge swap — owner action pending:** **`capstone_V6_8.md`**, `program-stage-sequence.md` v8, this file, and the current role/router docs. Replace v6.7 if it was loaded.
-- **NotebookLM:** not required. Load the syllabus only if an optional Track A block is actually run.
-- **Role routing:** `AGENTS.md` is the canonical router and carries both the Governance Lockdown and § *Interview-answer capture*; `CLAUDE.md` points to it only; `orchestrator-role.md` governs program management; `engineering-role.md` governs Track B execution.
-- **Canonical templates:** `docs/track-b/gauntlet-templates.md` — four forms.
-- **PRE-1 — `ENTSOE_API_TOKEN` RESTORED; live verification BLOCKED ON ENTSO-E (2026-09-08).** The token is present in the current process, in `launchctl`, and in a fresh login shell (36 characters; never printed, never stored in this repository). **The fault is entirely theirs**, established on four controls: general internet healthy; `transparency.entsoe.eu` serving `200` in under a second; the API returning an error **with no token at all**; and a deliberately invalid all-zeros token returning the **identical** response rather than a `401`. ENTSO-E migrated production infrastructure on **2026-09-07 from 16:00 CEST**, and its 2026-09-08 notice states the migration completed and that **"the External API remains temporarily unavailable and will be re-enabled as soon as technically possible"** — no date. The symptom moved from `599 uu-gateway-router/connectTimeout` to a bare **`404 page not found`** on every path. **The endpoint has not moved** — DNS and certificate unchanged, so the pinned `entsoe-py` 0.8.0 base URL stays correct and no client change is warranted. Re-check with `~/pre1_check.py`, which also tests whether the temporary 30-day request cap is still in force.
-- **PRE-2 — CLOSED 2026-09-14. DagsHub MLflow is live and publicly inspectable.** Repo `hrsi56/delu-day-ahead-forecast`, tracking URI **`https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow`**. Verified: the API reports `private=False`; **the MLflow UI answers anonymously with `HTTP 200` and real MLflow content** — `<title>MLflow</title>`, zero sign-in markers — which is what §9.1 requires; the MLflow API answers anonymously for reads and under basic auth for writes. `DAGSHUB_USER_TOKEN` and `MLFLOW_TRACKING_URI` are in `~/.zshrc`.
-  - **Auth is basic, not Bearer.** Bearer returns `401`; `user:token` and `token:token` both return `200`. The stock `mlflow` Python client reads `MLFLOW_TRACKING_USERNAME`/`MLFLOW_TRACKING_PASSWORD`, which are **not** set — the Lead bridges them from `DAGSHUB_USER_TOKEN` in one line. Not blocking, and named in the CP-2 brief.
-  - **⚠ Carry into CP-3: link the MLflow UI, never the repo root.** `https://dagshub.com/hrsi56/delu-day-ahead-forecast` still returns `302 → /user/login` anonymously despite `private=False`, while the `.mlflow` URL serves correctly. §9.1 says README, CV and LinkedIn link **the MLflow UI**; linking the repo root would land a hiring manager on a sign-in page.
-  - **Method note for future prerequisite checks:** an earlier probe reported both variables absent and was **wrong**. `zsh -lc` is a login but *non-interactive* shell and does not source `~/.zshrc`; `zsh -ic` does. The ENTSO-E token had masked this because `launchctl setenv` propagates to every process. **Use `zsh -ic` to verify anything set in `~/.zshrc`.**
-- **Credential hazard, carried into every brief:** `entsoe-py` 0.8.0 passes `securityToken` as a **query parameter**, so the token appears verbatim in request URLs *and inside raised exception text*. Redact before logging.
+**v1 is complete, live, and closed. v2 has not started.**
 
-## Strategic Anchors
+| | | |
+|---|---|---|
+| **M1 / CP-1** | Data layer, fixed features | `land/cp-1` · `evidence/cp-1` |
+| **M2 / CP-2** | Model, calibration, analysis | `land/cp-2` · `evidence/cp-2` |
+| **M3 / CP-3** | Showcase and release | `land/cp-3` · `evidence/cp-3` |
+| **M3.5 / CP-3B** | WASM showcase on a Static Space | `land/cp-3b` · `evidence/cp-3b` |
+| **REL-1** | Publish | **complete** — all four conditions met |
+| **CP-10 → CP-14** | `capstone_v20.md` §9 | **not started** |
 
-- **Target:** a working system, built to `capstone_v20.md`. Career positioning left this repository with Track C on 2026-09-15.
-- **Authoritative document:** **`capstone_v20.md`** — *From frozen artifact to running system*, ratified 2026-09-15. **This file decides what is law.** `capstone_V6_8.md` is v1's ratified record and is history, not instruction; where the two differ, v20 §11 lists every point explicitly. `capstone_M4_v2-plan.md` is the reasoning behind M4, superseded by v20 §4–§5.
-- **Optional reference:** `syllabus_v3_2.md` v3.2 — demoted 2026-09-06, banner-marked at v6.7, not an anchor, not retired.
-- **Planning aid:** `program-stage-sequence.md` — **historical**; it maps the completed CP-1 → CP-3 arc. The live checkpoint sequence is `capstone_v20.md` §9 (CP-10 → CP-14).
-- **Optional future projects, neither scheduled:** the companion `Binary Classification Mini-Capstone.md` and `aws-extension-spec_v1_1.md` (**STALE / NOT SCHEDULED**). Each needs a new explicit owner instruction after CP-3.
-- **Governance record:** `docs/track-b/rule-inventory.md` and `docs/track-b/cp-0-defects.md`. Both locked. Amendment sheets: `capstone_V6_1-to-V6_2` … `V6_5-to-V6_6` and **`capstone_V6_7-to-V6_8-amendments.md`** at root; `docs/track-b/capstone_V6_6-to-V6_7-amendments.md`.
-- **Repos:** flagship `hrsi56/delu-day-ahead-forecast` (local `/Users/djourno/Downloads/PJM`); public method repo `hrsi56/Zero-Trust-Hierarchy`.
-- **Budget/hardware:** $0 expected run rate, $65/month ceiling; M3, 16 GB, CPU-only.
-- **Language:** replies and briefs in English; Hebrew input fine. The interview Q&A document is Hebrew.
+### The three live surfaces
 
-## Standing Scope Decisions
+| | |
+|---|---|
+| **[Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)** | The primary link. The full §10 reading order in one self-contained file that makes **zero network calls** — it cannot sleep and cannot break when a CDN does. |
+| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** · [app direct](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/) | The champion's own boosters running in the browser under Pyodide, proved **bitwise equal** to the frozen artifact. A Static Space executes nothing, so it never sleeps. ~57 MB first visit, ~1 MB after. |
+| **[MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | Every decision-bearing run, anonymously readable. |
 
-- **Point-in-time availability is ASSUMED, not measured (2026-09-06).** A65/A01 is KFT by Reg. 543/2013 Art. 6(2)(b), corroborated by the 2026-06-12 spike. **Disclosed as an assumption** in §5.2 and the public limitations; no document may call it empirically demonstrated.
-- **A75 revision is the second disclosed assumption (2026-09-07).** The 42-day trailing window uses the archive's current actuals rather than the values visible in real time. Same disclosure class.
-- **Track A is optional (2026-09-06).** No learning checkpoint blocks any Track B or Track C work.
-- **Results are reported, never gated (2026-09-07).** No checkpoint requires a favourable p-value, effect size, coverage figure, ranking, direction or timing threshold. **Zero quantile crossing after CQR-then-isotonic is the one retained hard gate**, because it is a correctness property. An unfavourable result constrains the public claim and never blocks completion.
-- **The shipped model is the holdout-evaluated model (2026-09-07).** No retrain after the holdout. All four cutoffs published separately.
-- **The delivery-day availability invariant (2026-09-09, v6.8, §5.2).** For every forecast of delivery day `D` produced at the 12:00 CET D-1 origin, **every price-derived feature may consume only prices whose delivery date is earlier than `D`.** Row-wise `t−1` is not a sufficient boundary. Rolling price features are frozen at a D-1 boundary for the whole curve; calendar-day lag matching is explicit and fails closed. **This is the rule a per-row formulation got wrong for two plan versions.**
-- **A rule can be correct, correctly implemented, and still wrong for the forecast shape (2026-09-09).** The v6.7 boundary is right for a rolling one-step-ahead forecast and wrong for a whole-curve forecast issued once. It survived a full ratification, seven earlier review rounds, four independent audits and its own Integration Critic, because everyone downstream inherited the same unexamined premise. **When reviewing, re-derive the forecast shape before checking anything against it.**
-- **Constrain semantics, not syntax (2026-09-09).** The first correction banned `LAG(price, n)` by name; the second review proved with executable SQL that the same operator over a delivery-date × local-hour grid is correct. A bar that names forbidden syntax excludes valid implementations and misses invalid ones.
-- **The data window starts 2019-01-01 and not earlier.** DE-LU split from DE-AT-LU on **2018-10-01**; pre-split prices are a different market product, not more of the same series.
-- **SMARD is the ratified fallback-primary (§3).** Invoking it when ENTSO-E degrades is an execution decision, not an amendment. **The cost is real and must be stated:** a single source cannot satisfy CP-1 item 5's cross-source reconciliation.
-- **Governance Lockdown (2026-08-08, prime directive, owned by `AGENTS.md`).** Halt and request a task-scoped suspension. `progress.md` is Orchestrator-owned state.
-- **Interview-answer capture (2026-09-08, `AGENTS.md`).** Orchestrator files; Track B agents name triggers in their returns. **Presentation is the owner's** — agents write content and do not render or visually verify documents.
-- **AMD-G5 negative control — WAIVED KNOWINGLY, 2026-09-04. Do not raise it again.**
-- **Owner observance constraint.** No scheduled work on Friday or Shabbat.
-- **A scheduler's advertised behaviour is not its behaviour (2026-09-06).** Never place a hard-deadline job on GitHub Actions' free scheduler.
-- **A third party's platform is not a dependency you control (2026-09-08).** ENTSO-E postponed one migration three times and disabled its public API for days with no ETA. Design for source degradation; the plan already did, which is the only reason CP-1 could start.
-- **Reviews of the execution contract are unscoped by default.** A scope claim is an instruction not to look.
-- **Authority limits are stated as scope, never as capability** (D-CP0-20). **Enforced, not merely asserted:** `scripts/governance_selftest.py` fails on any unconditional capability denial in the governance corpus. Run it after editing any role or governance document.
-- **v6.7 execution contract:** one fresh Integration Critic per checkpoint from a clean detached checkout; Builder ≠ Critic; two terminal SHAs with a verdict-only delta; three terminal statuses; an approximate hour timebox; delegation is the Lead's choice; branch accountability and owner-only landing unchanged.
-- **Strict-gate architecture:** delivery-day A69 and derivatives forbidden from champion runtime; **lagged actuals through D-2 are permitted LAG inputs**.
-- **Market/data:** DE-LU via ENTSO-E + SMARD, CC BY 4.0. No gas layer, no external weather.
-- **Model/scope:** single LightGBM quantile ensemble; CQR then isotonic; no neural challenger, trading layer, live session pulls, DVC, or enterprise monitoring.
-- **Track B authority:** the Orchestrator decides what, when, which repo, which checkpoint, and the timebox; the Engineering Lead decides how; the checkpoint return closes a checkpoint.
-- **Publication authority:** all agent work stays local. No push, no PR, no agent commit to `main`. Landing is an owner-authored squash plus **two** tags.
-- **Branch policy:** parallel work expected; every agent-opened branch declared in its terminal return; unaccounted branches escalated, never auto-deleted.
+### What v1 actually claims
 
-## Session Log — newest first
+The champion beats the similar-day naive on the one-shot holdout on **both** metrics — MAE
+25.9078 vs 27.7578 (−6.66 %), mean pinball 6.7083 vs 13.8789 (−51.67 %), DM p 1.98e−18 — and that is
+the only confirmatory evidence in the project. Everything else is `development_post_selection`.
 
-- **2026-09-14 (latest) — the CP-0 defect ledger is CLOSED, 40 days after it opened.** The closure condition required D-CP0-19's and D-CP0-20's remedies to be re-tested. **D-CP0-19** was re-tested by CP-1's landing itself — a squash landing is exactly the case where `main` lacks the cited SHAs, both tags were taken, the branch was reclaimed, and the chain survived; the guard also caught a real error mid-cycle when `land/cp-1` was first created on the wrong commit. **D-CP0-20 had no failure mode**, so continuous use of a shell was not evidence, and saying otherwise would have contradicted the interview answer filed the day before. A falsifiable check was built instead — `scripts/governance_selftest.py` — asserting the invariant the remedy established (*no role may be denied the means to meet an obligation it carries*) rather than the absence of a phrase. **Its negative control is the real pre-remedy sentence recovered from `d91b8c3`:** the check flags that text, does not flag the remedy that replaced it, and still flags a quoted denial lacking a citation marker. A first version passed the corpus for the wrong reason — the sentence splitter broke the citation lead-in away from its quotation — and was widened before being trusted. Live corpus: eight documents, clean. One consistency edit surfaced during closure: D-CP0-18's detail section still read *"REMEDIED … not re-tested"*, contradicting the header's MOOT disposition since 2026-09-07.
-- **2026-09-14 — M1/CP-1 closed.** The owner landed the remediation by hand at **`5651c9a`** — `git merge --squash` then an authored commit, 48 files and 4,550 insertions — took both tags, pushed, and reclaimed `gauntlet/cp-1`. The Orchestrator ran the §4 inspection **after** deletion and confirmed the tag-before-delete guarantee held: all four cited SHAs reachable from `evidence/cp-1`, both verdicts readable, no orphaned worktree, no stale ref. **The amendment record was repointed from the deleted branch to the tag** under § *Branch and ref lifecycle* — the citation follows the ref. **D-CP0-19's remedy was exercised for real by this landing** and held; that evidence is recorded in the ledger and the closure judgement is left to the owner. One interview answer was filed — *"How did you make sure your features weren't leaking?"* — the arc from a passing-but-wrong test, through the independent audit, to the positive control that makes the new test capable of failing.
-- **2026-09-09 — v6.8 ratified after two independent review rounds; CP-1 remediation dispatched.** The owner ratified `capstone_V6_8.md` and the anchor moved. **Round 1** of the review found six further items: the **HIGH** one was that §9.6 still mandated the retired algorithm by its SQL name and the rejected candidate had implemented it literally — in an artifact that sits in the **public §10 reading order**, so it would have published the wrong methodology. Also: the rolling-window length was implementable two ways across DST; tests 2 and 9 were satisfiable by an all-null implementation; the amendment record falsely claimed the audit was branch-reachable; §3's EUA row contradicted §4 (**pre-existing in v6.7**, fixed under an extended suspension); and §9.4 still said "All eight". **Round 2 returned `RATIFY WITH CHANGES` and the reviewer reversed its own wording** — it had banned `LAG(price, n)` by syntax, then proved with executable SQL that the same operator over a delivery-date × local-hour grid implements `D−1` matching exactly: 7,512 target rows across both DST transitions, zero mismatches at offsets 1, 2 and 7. §9.6 and CP-1 item 3 now constrain **semantics, not syntax**. Round 2 also demonstrated that the corrected rules are **jointly implementable**, by building an implementation that satisfies all three — nine target-day cases, 216 same-day mutations, daily constancy, and rejection of both all-null and `D−2`-frozen implementations.
-- **2026-09-09 — CP-1 attempt 1 rejected. The plan was wrong, not the work.** The Lead returned `PASS` on all ten items with a fresh Integration `PASS` at `368822de…`. An independent pre-landing audit returned **`FAIL`**: v6.7's per-row availability boundary let rolling price features for delivery day `D` consume earlier hours of `D` itself — **95.83% of rows**, 64,537 of 67,343 — and on the 25-hour fall-back day a fixed 24-row UTC lag resolved to a same-day price. Fresh pre-gate inference could never have reproduced the historical feature matrix. **The Lead implemented the ratified specification correctly**; the specification was wrong, and it had survived four prior independent audits. Owner ruled **DO NOT LAND**. Both reviewers recommended building the remediation on `gauntlet/cp-1` rather than restarting: the ingestion, snapshot, reconciliation, partitions, proxy, firewall, spectral artifacts and CI all passed and are worth keeping.
-- **2026-09-08 — CP-1 dispatched on the SMARD route.** The brief names `main` @ `7aaa02b` as expected state, cites the complete §12 CP-1 checklist without narrowing it, sets an approximate **10-hour** timebox, and records the ENTSO-E outage with §3's fallback-primary clause as the authorization. It hands the Lead the nine verified SMARD filters and their spans, and names four things to handle explicitly: **item 5 cannot close from one source** and `INCOMPLETE` is the expected, correct terminal status; **series mapping is the Lead's to establish and document**, since SMARD's labels and aggregation scope are not automatically identical to ENTSO-E's document types; the **~25h A65/A01 head gap is an ENTSO-E archive property** whose presence on the SMARD path is unverified; and if ENTSO-E returns mid-checkpoint, the **30-day request cap** and the **`securityToken`-in-URL leak** both apply.
-- **2026-09-08 — `AGENTS.md` § *Interview-answer capture* added under the fifth suspension.** Triggers: resolved uncertainty, a decision whose reasoning is not self-evident, an approach chosen over a live alternative, a failure traced to a cause, a `progress.md` entry a stranger would find interesting, or an owner request. **Filing is Orchestrator-only by owner decision**, so the Track B isolation boundary stays closed and no checkpoint is paused. Entries go to `שאלות תשובות.docx` via **`scripts/qa_append.py`** — stdlib-only, splices paragraphs before `<w:sectPr>`, derives numbering from existing headings, carries `<w:bidi/>`/`<w:rtl/>`, converts `**bold**` with `w:bCs` so emphasis applies to Hebrew, and restores from backup on a failed write. Verified over two consecutive appends on a copy. **Additive only: one hunk, fourteen insertions, zero deletions.**
-- **2026-09-08 — the ENTSO-E API went down, was diagnosed, and stayed down.** Four controls isolated the fault away from us, then ENTSO-E's own notice board supplied the cause: production migration on 2026-09-07 from 16:00 CEST, completed 2026-09-08, with the External API **deliberately disabled** pending stabilisation and no committed date. An earlier reading in-session that the endpoint had moved was **wrong and corrected** — DNS and certificate are unchanged. **SMARD was then verified live as a complete substitute** for the bulk pull: all nine series CP-1 needs, keyless, `HTTP 200`, spanning 2018-09-30 (2016-12-25 for actual generation) → 2026-09-06. Data publication is also running several hours late during stabilisation, which degrades freshness at the pull date but not the historical span.
-- **2026-09-08 — the v6.7 application landed at `30b1b9f` through a mis-resolved merge; repaired at `c8dd5cc`.** `30b1b9f` merged `d65879b` (the correct application) with `b67e065`, a pre-v6.7 snapshot carrying unresolved `git stash pop` markers. It published **six stray conflict markers**, **eighteen duplicated lines**, and a **resurrected `capstone_V6_6.md`** (605 lines, undoing the v6.7 rename). Both parents were diffed before any line was removed: **nothing was lost**, and the one genuinely newer thing `b67e065` carried — the AWS-spec renumbering that stops DEC-AWS reserving a version number — was retained. The repair was deletion-only, 24 lines and one file, after which the three affected governance files were **byte-identical to `d65879b`**. `30b1b9f` remains in public history with its markers: a forward fix, deliberately not a history rewrite on a portfolio remote.
-- **2026-09-07 — fourth independent read-only audit returned `FAIL`; all seven findings repaired under the third suspension.** Made §9.4 and its §13 interview script explicit that the eight tests and thin CI are CP-1 requirements that do not yet exist; removed the last live weekly-snapshot claim; narrowed the Month-0 archive finding to its single sampled day; corrected addendum R-2 to the actual five-hunk CP-0 diff; restored the ratified companion plan byte-for-byte from the Owner's source (`SHA-256 1a26f069b0b98a541644559a25f5c838e002761773f1c80563fa98426172d817`); and repointed the stage map to the real *Track C activation rules* heading.
-- **2026-09-07 — third independent audit returned `PASS WITH NON-BLOCKING NOTES`.** It re-derived the baseline, re-ran all 16 acceptance items, verified the partition arithmetic (242 = 90+1+60+1+90; the 152-day raw-model-fit cutoff), counted the checkboxes (10/10/6) and the 54 retired rule IDs against `168 − 54 + 13 = 127`, and **verified the three Reg. 543/2013 citations against the EUR-Lex consolidated text `02013R0543-20200101`** — Art. 6(2)(b), 16(2)(b) and 14(2)(d) all correct as cited. It confirmed from installed code that `entsoe-py` 0.8.0 expands `curveType A03` to a gap-free 15-minute grid, and that the price path's inclusive right endpoint produces 97 rows on a midnight-to-midnight day — **the half-open Berlin slice is the correct normalization, never a fixed trim to 96**. **No methodological, leakage or governance defect was found.** Its one declined finding — a proposed standard-error rule on the §4.1 two-arm comparison — was **rejected by the owner** as reintroducing the selection machinery AMD-2 removed.
-- **2026-09-07 — second re-verification returned `FAIL`; complete repair authorized; `AGENTS.md` repaired across seven sites** (three reported, four more found on a full scan). No policy moved; every edit repointed a citation or named retired machinery as retired.
-- **2026-09-07 — v6.7 ratified and applied.** The capstone rewritten and renamed; `engineering-role.md` and the templates collapsed to one review and four forms; the stage map rebuilt as v8; `D-CP0-18` dispositioned MOOT; 38 anchor citations repointed; `src/pit_capture/` and `tests/pit_capture/` removed after `evidence/cp-0` was verified before and after.
-- **2026-09-06 — structural change: capture dropped, Track A demoted.** The owner ended the point-in-time capture effort after six days of operational friction and directed that the data be assumed present on the strength of the regulation. **The Orchestrator's contribution to that friction is recorded plainly: recommending GitHub Actions for a hard-deadline job, and directing a token-file command without first checking where the token lived.**
-- **2026-09-06 — GitHub Actions capture failed its first real day.** All four scheduled runs fired 3.0–3.7 hours late, every one past the 12:00 Berlin gate. Fail-closed behaviour was the only reason this cost a day rather than a corrupted ledger.
-- **2026-09-04 — AMD-G5 waived; publication-metadata question closed on live evidence.** Record at `docs/pit-metadata-investigation.md`.
-- **2026-08-10 — D-CP0-20 found and remedied.** `orchestrator-role.md` denied the Orchestrator a shell while the receipt gate required it. Third instance of one pattern: the rule was right and the thing making it executable was absent.
-- **2026-08-08 — Governance Lockdown ratified; CP-0 landed (`a911191`), tagged and reclaimed.**
-- **2026-08-05/06 — v6.6 ratified and hardened.** Rule inventory 141 → 168; seven independent review rounds; a clean-room CP-0 re-run validated what text review could not.
-- **2026-06-12 — Month-0 de-risking spike.** Eight probes; record at `docs/spike-feed-status.md`, evidence `20fc1ff`. Findings that still bind: revision metadata is a dead end; feature feeds are natively PT15M; A69 initial publication is post-gate; ENTSO-E↔SMARD agree 96/96 within €0.01; **A65 present at 15:35 CEST D-1**, the corroborating evidence the KFT assumption rests on.
-- **2026-06 — launch and conversion:** G0-mid and L1–L4; the M0 spike and v6.1; PJM→DE-LU conversion; program launch 2026-06-09.
+**Two results are deliberately unflattering and must stay that way.** The point-MAE DM in
+development is `p = 0.948` with statistic **+1.6228** — the median is 28.58 % *worse* than the
+naive, dominated by fold_3, the August-2022 crisis peak. And the 95 % interval covered **0.194** of
+outcomes over the August-2022 peak weeks. **That collapse is the defect `capstone_v20.md` exists to
+fix**, and it is documented on every public surface. It is not a bug to quietly repair.
 
 ---
 
-## Blockers / Open Questions
+## 2. What happens next
 
-- **CLOSED 2026-09-08 — ENTSO-E's API returned.** PRE-1 passed and the temporary 30-day request cap was lifted; the reconciliation ran and CP-1 item 5 closed on the first attempt.
-- **CLOSED 2026-09-14 — the defect ledger.** The defect was *"`LAND` tags the landing point or the reviewed chain, and the contract named only one"*. CP-1 landed as a squash, both tags were taken, the branch was reclaimed, and the cited chain survived — the remedy was **exercised under live conditions and held**. Evidence is recorded in `docs/track-b/cp-0-defects.md`. **Whether that satisfies the ledger's closure condition is an acceptance judgement was put to the owner, who accepted it. D-CP0-20 was then re-tested with a purpose-built falsifiable check and the ledger closed.
-- **CLOSED 2026-09-14 — the owner's income runway.** Opened 2026-09-06 after the Lab Engineer role ended in July 2026. **Owner's answer: there is time.** The program's shape is therefore confirmed as-is — build the artifact to CP-3, then publish, then apply. Track C stays frozen until its CP-2 trigger, and a parallel-ladder role like the 2026-09-06 Kamada posting remains declined on its merits rather than deferred for income. **Reopen only if the runway changes**; nothing downstream is waiting on it now.
-- **✅ RESOLVED 2026-09-15 — the Hugging Face account, and a platform change behind it.** The account **exists as `Yarden-Viktor`**, not `hrsi56`; every surface had been pointing at a Space URL that could never resolve, and that is fixed in `claims.py`. The deeper issue: **HF moved the Docker and Gradio SDKs behind a paid PRO plan on 2026-07-08**, two months before CP-3 ran. `capstone_V6_8.md` §9.2 specifies "free tier, Docker SDK, `cpu-basic`" — that combination no longer exists, **and the CP-3 brief repeated the stale constraint to the Lead as fact.** Orchestrator error: a brief asserting a platform fact must re-verify it.
-- **The decision, and the fact it rests on.** The owner's condition was *"if marimo never sleeps and it's free, build it; if it sleeps and recruiters can't reach it, do a static page instead."* **Verified empirically rather than reasoned:** the HF API reports `stage=RUNNING` for long-dormant Static Spaces (`CompVis/stable-diffusion-license`, `nanotron/ultrascale-playbook`, `HuggingFaceFW/blogpost-fineweb-v1`, `Xenova/whisper-web`) and `stage=SLEEPING` for free Docker Spaces. The docs define sleep as *"go to sleep and stop executing"*; a Static Space executes nothing. **Static does not sleep. A free Docker Space would have been a demo that sleeps.**
-- **M3.5/CP-3B DRAFTED 2026-09-15 — the WASM showcase.** marimo exported with `html-wasm`, real champion inference in the browser via Pyodide, on a free Static Space. Six items, ~6 hours. **The hard gate is item 2: model identity.** `mlflow.pyfunc` will not load under Pyodide, so the browser path is a re-implementation, and all four surfaces assert *"the shipped model is exactly the model the holdout evaluated."* The bar requires proven equivalence on a committed ≥30-day multi-regime fixture, with a positive control that perturbs a CQR threshold and requires the comparison to fail — and `BLOCKED` rather than a weakened claim if equivalence cannot be reached. **Owner-granted amendment: §9.2's "server mode — not WASM" is suspended for this checkpoint only.** Pages remains the primary recruiter URL and is not touched.
-- **✅ CLOSED 2026-09-15 — the Static Space.** Created by the owner, deployed by the Orchestrator with `HF_TOKEN` reaching the session through process inheritance (`launchctl setenv` worked this time because the terminal was launched after it). `hf upload` returned **402 Payment Required** because the CLI calls repo-create even when the repo exists and defaults to a compute SDK; `HfApi.upload_folder` against the existing Static Space worked. Token never printed, logged or committed.
-- **OPEN — M4/v2 ratification.** `capstone_M4_v2-plan.md` is DRAFT. Three owner decisions in its §11: whether to ratify at all (C-2/ACI needs the §13 sequential-conformal amendment; C-1 and C-3 do not), whether CP-5's data track is in or out, and whether the 2026-12-06 evaluation date stands.
-- **NOTED, not a defect — 576 vs 573 negative hours in 2025.** The regulator's official count is 573; this snapshot yields **576**, of which **51** fall after the 2025-10-01 MTU transition where an hour is the mean of four quarter-hours. The plan cites the official figure as an external statistic, so neither number is wrong — but any surface quoting one should say which it means. Filed as interview answer 15.
-- **Convention note — the amendment sheet's location.** Every prior sheet sits at the repository root; the v6.7 sheet is at `docs/track-b/`. A one-line `mv` plus citation repoint if wanted.
-- Optional/non-blocking: `.zshrc` line-137 dangling-source warning.
+`capstone_v20.md` §9. Five checkpoints, dependencies stated per row.
 
-**Closed since the last regeneration:** the mis-resolved merge (repaired and published at `c8dd5cc`); the token-absence blocker (restored; what remains is ENTSO-E's own outage); the question of whether the API endpoint had moved (it had not); and the absence of any rule capturing interview-grade reasoning (`AGENTS.md` § *Interview-answer capture*).
+| | | Depends on |
+|---|---|---|
+| **before CP-10** | the §2.4 run-count reconciliation — **already done 2026-09-15**, not a checkpoint | — |
+| **CP-10** | M4 calibration: C-1 scaled conformal and C-2 ACI, selection on folds {1,2,4,5} only | — |
+| **CP-11** | Freeze `v2-calibration-only` and `v2-full`; the 90-day clock starts | CP-10 |
+| **CP-12** | The daily service + MLflow on the critical path | CP-11 |
+| **CP-13** | The live scorecard | CP-12 |
+| **CP-14** | The one-shot evaluation | CP-11 + 90 delivery days |
 
----
-
-## Notes for Future Sessions
-
-- **M2/CP-2 CLOSED 2026-09-14, `PASS` on the first attempt.** Landed by the owner at **`ab4e7c8`** (squash, 80 files, +13,282/−8), tagged **`land/cp-2` → `ab4e7c8`** and **`evidence/cp-2` → `e491079`**, both pushed; the branch was reclaimed. ~6 hours against a 12-hour timebox, three fresh Integration rounds (rounds 1 and 2 superseded by repair and retained). **Read the chain at the tag, not at a branch** — `gauntlet/cp-2` is deleted, and `5fcc40b`, `70212a7`, `f3a1b7d` and `e491079` were each verified reachable from `evidence/cp-2` **after** deletion, with all four verdict files readable through it.
-- **Verified independently by the Orchestrator, not accepted on the verdict.** The one hard gate holds and **the zero is earned, not vacuous**: quantile crossings run `20,721 → 8,311 → 0` on development (21,494 rows) and `1,724 → 700 → 0` on the holdout (2,160 rows), with a positive control confirming an inverted pair is detected. 65 tests pass. Selection numbers reproduce to the digit. `evaluated_once: True`, `retrain_after_holdout: False`. MLflow answers anonymously (`delu-cp2`). No token in any tracked file. `main` untouched, delta evidence-only, no orphaned worktree, no tag, and no governance, anchor or program-state file touched.
-- **The results are honest, including where they are unflattering.** The domain feature **lost**: `base` 13.0158 vs `base + residual_load_proxy` 13.0642, +0.3715%, so `base` ships — reported before the conclusion, with the per-fold split disclosing that the augmented arm wins 2 of 5. The champion wins pinball in all five folds and **loses MAE in two**, with the point-MAE DM at `p = 0.948` — no evidence of advantage, stated plainly. The strict gate was priced at **19.49% of pooled pinball** and declined anyway, because delivery-day A69 publishes after the 12:00 gate.
-- **What the Lead did that a passing suite would not have caught:** a truncated-history equivalence proof over all 90 holdout days (2,160 rows, zero mismatches) rather than an assertion; the runtime firewall firing in production use rather than only in a test; discovering the pyfunc pickle is not byte-stable and replacing the file hash with a semantic fingerprint; and finding two false claims in its own generated prose by tallying the data. It also **checked a Critic finding and refused it** — round 3 misquoted A75 as A65 — recording the disagreement instead of churning a fourth cycle. Ten items: baselines and the LightGBM quantile ensemble on the five pinned folds, the two-arm raw-head comparison, CQR then isotonic-last with the `n_cal=20` fixture, the one-shot holdout, SHAP and permutation importance, the regime table, the §7.2 A69 benchmark, and MLflow records.
-- **Do not accept a `PASS` on the strength of a green test run.** CP-1 attempt 1 passed ten tests and its own Integration review while carrying a 95.83% leak. **An independent pre-landing audit is now the practice, not the exception** — it is what caught it, and it paid for itself on its first use.
-- **At each Track B `PASS`:** close only that checkpoint, run the §4 landing inspection, take one disposition, take **both** tags, regenerate this file, and ask "Authorize the next stage?"
-- **File the Q&A entries the return names.** `AGENTS.md` § *Interview-answer capture*; use `python3 scripts/qa_append.py`. Never hand-edit the `.docx`, never render it.
-- **Re-check ENTSO-E before CP-2**, with `~/pre1_check.py` — it reports both service restoration and whether the 30-day request cap is still in force. Item 5 closes in a short follow-up once it returns.
-- **Pre-dispatch brief validation is the operative front gate.** A malformed brief is corrected in conversation before repository work begins.
-- **Do not re-raise:** AMD-G5, the publication-metadata substitution, the point-in-time capture ledger, the four-catalog selection system, or the forward confirmatory audit. All closed owner decisions with their reasoning recorded.
-- **Both disclosed assumptions must appear wherever the leakage audit is claimed** — A65 pre-gate availability and A75 revision — in §5.2, the README limitations, and the static page.
-- **The holdout is opened once.** Its DM result is labelled *confirmatory-style, not power-qualified*. No re-tuning, no second run, and the model that ships is the model that was evaluated.
-- **A conflict marker in a governance file is a first-class defect.** Grep for `^<<<<<<<`, `^=======$`, `^>>>>>>>`, `Updated upstream` and `Stashed changes` when opening an orchestration session — `30b1b9f` published six of them.
-- After CP-3, ask whether the companion or any cloud work is worth opening. Neither starts on its own.
+**Read §13 of the plan before writing the first brief.** It is written for the Engineering Lead and
+states what to read, what not to touch, and the standards that are not negotiable.
 
 ---
 
-*Update, 2026-09-09. **v6.8 ratified; the anchor moved.** Rewritten: the header and both anchor pointers; Track B's position block (attempt 1 rejected, what carries forward, what the remediation must repair); the tree-state bullet; the Lockdown count (eight suspensions); the Project-Knowledge swap; the Track C interview-prep line. Added: three Standing Scope Decisions — the delivery-day invariant, the forecast-shape lesson, and constrain-semantics-not-syntax; two Session Log entries; a Blocker recording CP-1 still open and PRE-1 closed; and a Note that a green test run is not evidence of a closed checkpoint. Nothing else moved.*
+## 3. Open items
 
-*(Superseded — regeneration diff, 2026-09-08. **A full regeneration on CP-1 dispatch**, replacing the 2026-09-07 file. **Rewritten:** the header (`main` = `origin/main` = `7aaa02b`, everything landed — nothing uncommitted); Track B's position block (CP-1 dispatched, the SMARD route and its authorization, the expected `INCOMPLETE`, what the tree actually contains); Setup State (PRE-1 reframed as blocked on ENTSO-E with the four controls, plus the `entsoe-py` credential hazard); Blockers (reordered so the two genuinely open items lead). **Added:** four Standing Scope Decisions — the 2019 window start and why, SMARD as ratified fallback-primary with its reconciliation cost, interview-answer capture, and third-party platform fragility; a Track C line recording that interview prep has begun ahead of activation; three Session Log entries for 2026-09-08; and Notes covering the Q&A filing duty and the ENTSO-E re-check. **Compressed:** the 2026-09-07 audit cluster, from five entries to three, with every evidence citation, SHA and adjudication retained. **Removed:** nothing material — the CP-0 history, its tags, the AMD-G5 waiver, the scheduler lesson, the observance constraint, the income-runway question and the Month-0 spike findings all stand. **Nothing ratified was changed by this file.** `capstone_V6_7.md` v6.7 remains the anchor.*)*
+- **⚠ CP-3B item 6 was never completed.** No Integration Critic verdict binds its final candidate
+  `55a70e7`: round 1 FAIL, round 2 FAIL then repaired, round 3 cut off twice by usage limits. The
+  Lead returned `INCOMPLETE`; the owner directed release. Recorded at
+  [`docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md`](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md)
+  with the Orchestrator's substitute verification described for exactly what it is and is not.
+  **This is not a precedent** — `capstone_v20.md` §9 forbids landing without a binding verdict, and
+  every brief must say so.
+- **A cold first visit to the Space can meet a `429`.** Immediately after an upload, Hugging Face's
+  own edge rate-limited a burst of ~176 parallel asset requests and the page rendered blank; a
+  reload cleared it. Transient, but a first-time visitor can hit it.
+- **`reports/cp3/pages_build.json` stamps `built_on` with the build date**, so regenerating on a
+  later day dirties that record. No published surface moves. Fold it into the next regeneration.
+
+**Closed and not to be re-opened:** the CP-0 defect ledger (20 defects, closed 2026-09-14); the
+ENTSO-E outage (resolved, and the v2 daily path uses SMARD anyway); PRE-2 / DagsHub MLflow; the
+`hrsi56` vs `Yarden-Viktor` Hugging Face account; the missing LICENSE.
+
+---
+
+## 4. Lessons that cost something
+
+Each of these was paid for once. None should be re-learned.
+
+- **A green test run is not evidence.** CP-1's first attempt returned `PASS` from its own Integration
+  Critic while **95.83 % of its rows leaked**, because every test inherited the same wrong premise.
+  An independent pre-landing audit caught it and paid for itself on first use.
+- **Where a test asserts something does *not* happen, it needs a positive control that proves it can
+  fail.** An assertion satisfiable by an inert implementation is not an assertion.
+- **Fix the generator, not the output.** A value corrected in a file while the script that writes
+  that file still emits the old one is silently reverted by the next build. This happened here: a
+  MiB/MB label was fixed in a report while `scripts/cp2_report.py` still divided by 1,048,576 and
+  wrote `MB`.
+- **A brief that asserts a platform fact must re-verify it.** The CP-3 brief told a Lead that
+  Hugging Face's free tier served Docker Spaces. It had stopped two months earlier. The Lead built
+  the whole container path against a constraint that no longer existed.
+- **Tell a Lead to verify the state it is told it is starting from.** Two separate Leads caught
+  factual errors in Orchestrator-issued briefs — wrong SMARD filter IDs, and crossing counts that
+  were the two arms stacked rather than the champion's. Both were right.
+- **Read a return for protocol defects as well as for its verdict**, and verify the hard gate
+  independently rather than re-running the Lead's own suite.
+- **Grep for conflict markers when opening a session** — `^<<<<<<<`, `^=======$`, `^>>>>>>>`,
+  `Updated upstream`, `Stashed changes`. Commit `30b1b9f` published six of them to a public repo.
+- **The holdout is opened once.** v1's is spent permanently. v2 gets its own, and the model that
+  ships is the model that was evaluated.
+
+---
+
+## 5. Environment and access
+
+- **Role routing.** `AGENTS.md` is the canonical router and carries the Governance Lockdown;
+  `CLAUDE.md` points at it only; `orchestrator-role.md` governs programme management;
+  `engineering-role.md` governs execution. `docs/track-b/gauntlet-templates.md` has the four forms.
+  > Both `orchestrator-role.md` and `program-stage-sequence.md` carry a **scope-narrowed header**:
+  > everything in them about Track A or Track C is historical. Their Track B governance is unchanged.
+- **Credentials — never printed, logged or committed.**
+  - `MLFLOW_TRACKING_URI`, `MLFLOW_TRACKING_USERNAME`, `MLFLOW_TRACKING_PASSWORD` in `~/.zshrc`.
+    **Auth is HTTP basic, not Bearer** — Bearer returns `401`.
+  - `HF_TOKEN` via `launchctl setenv`, reaching a session by **process inheritance**. It authenticates
+    as `Yarden-Viktor`.
+  - `ENTSOE_API_TOKEN` present. **`entsoe-py` 0.8.0 passes it as a query parameter**, so it appears
+    in request URLs *and in raised exception text* — redact before logging, and prefer SMARD in any
+    unattended job.
+  - **Verify anything set in `~/.zshrc` with `zsh -ic`, not `zsh -lc`.** A login but non-interactive
+    shell does not source it; an earlier probe reported variables absent and was wrong.
+- **Link discipline.** The DagsHub *repository* UI answers `302 → /user/login` anonymously despite
+  `private=False`. **Every public link uses the `.mlflow` host**; `scripts/check_links.py` carries the
+  four gated URLs as a control.
+- **Hugging Face.** Account `Yarden-Viktor`. Docker and Gradio Spaces moved behind paid PRO on
+  2026-07-08; **only Static Spaces are free**, and a Static Space never sleeps.
+  `hf upload` returns `402` because the CLI calls repo-create even when the repo exists — use
+  `HfApi.upload_folder` against the existing Space.
+- **Compute.** DagsHub gives tracking, registry and storage and **no compute**. GitHub Actions is
+  **free and unmetered for public repositories**. Local: Apple M3, 16 GB, CPU-only, **$0 run rate**.
+- **Which check covers what.** `make verify` binds the item-5 *claim* set across surfaces — cutoffs,
+  catalog, metrics, evidence class, benchmark. It does **not** check URLs; the test suite and
+  `scripts/check_links.py` do. Naming the wrong one in a bar was a real defect found at handover.
+
+---
+
+## 6. Standing scope decisions
+
+**Out, with the reasoning recorded so it is not re-litigated:**
+
+- **Track C — cancelled 2026-09-15.** Outreach, CV surfaces, LinkedIn, target research and interview
+  rehearsal left this repository. `TRIG-C` and `C-1` are struck. `שאלות תשובות.docx` is closed at
+  **25 entries** and receives no further entries; `AGENTS.md` § *Interview-answer capture* is
+  suspended accordingly and retained rather than deleted, so reinstating it is one owner line.
+- **Track A — out**, as it already was in practice. `syllabus_v3_2.md` gated nothing.
+- **No fuel-price layer.** Re-closed on evidence 2026-09-15: every TTF/THE source found is
+  commercial with redistribution-prohibiting terms; ACER publishes a daily *LNG* assessment, not a
+  hub price. A reproducible open repository that cannot legally ship its own inputs is not
+  reproducible — see [`DATA-LICENSE.md`](DATA-LICENSE.md).
+- **Gate-legal weather forecasts begin in 2024.** Open-Meteo's archive reaches 2017 but stitches
+  short-lead-time runs, which is look-ahead. **Folds 1–3 are unreachable**, so the data track cannot
+  touch the crisis regime and no surface may imply it can.
+- **The §5.2 delivery-day availability invariant is law.** Masking delivery-day prices must change
+  the output by exactly `0.0`; a D−1 mutation must move it. Currently `220.9433` EUR/MWh.
+- **Amendments granted and spent:** WASM for CP-3B only (§9.2's "server mode, not WASM"), and
+  sequential conformal for C-2 only (§13's EnbPI/SPCI exclusion).
+- **Optional, unscheduled, neither starts on its own:** `Binary Classification Mini-Capstone.md` and
+  `aws-extension-spec_v1_1.md` (stale).
+
+---
+
+## 7. Where the history lives
+
+This file no longer narrates it. It is preserved and addressable:
+
+- **The reviewed chains** — `evidence/cp-0`, `evidence/cp-1`, `evidence/cp-2`, `evidence/cp-3`,
+  `evidence/cp-3b`. Each landing was a squash with one parent, so the candidate SHAs are **not** on
+  `main` and the tag is the only thing preserving them. Verdicts are at
+  `docs/track-b/evidence/<cp>/`.
+- **v1's ratified plan** — `capstone_V6_8.md`, with its amendment sheets. History, not instruction.
+- **M4's reasoning** — `capstone_M4_v2-plan.md`, including the one Orchestrator recommendation the
+  owner overruled and why. Superseded by `capstone_v20.md` §4–§5.
+- **The defect ledger** — `docs/track-b/cp-0-defects.md`, closed 2026-09-14 after 40 days.
+- **v1's results** — `docs/cp2-model-report.md` and `reports/cp2/`. Evidence; not to be changed.
+- **Everything else** — `git log`. Commit messages in this repository carry the reasoning, not just
+  the change.
