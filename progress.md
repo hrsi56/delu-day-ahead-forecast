@@ -8,13 +8,18 @@ up next.*
 system*, ratified 2026-09-15.** Everything else named in this file is history, reference, or
 environment.
 
-`main` = `origin/main` = **`8d56942`** · tree clean · one branch · 191 tests pass.
+**Verified starting state, 2026-09-15:** `main` = `origin/main` = live remote `main` =
+**`24da4bd13188a4d0e4e7589c61206d8cd62e5ae8`**; tree clean before CP-10 briefing.
+191 passing tests and the completed repository audit are accepted from the handover, not rerun.
+At brief delivery, local unstaged changes are this file and `docs/track-b/cp-10-brief.md`;
+no commit, stage, branch, worktree, tag or publication was made by the Orchestrator.
 
 ---
 
 ## 1. Where the programme stands
 
-**v1 is complete, live, and closed. v2 has not started.**
+**v1 is complete, live, and closed. CP-10 is owner-authorized and briefed; engineering execution
+and its terminal packet are pending. No v2 artifact is frozen and the 90-day clock has not started.**
 
 | | | |
 |---|---|---|
@@ -23,7 +28,8 @@ environment.
 | **M3 / CP-3** | Showcase and release | `land/cp-3` · `evidence/cp-3` |
 | **M3.5 / CP-3B** | WASM showcase on a Static Space | `land/cp-3b` · `evidence/cp-3b` |
 | **REL-1** | Publish | **complete** — all four conditions met |
-| **CP-10 → CP-14** | `capstone_v20.md` §9 | **not started** |
+| **CP-10** | M4 calibration, `capstone_v20.md` §9 | **authorized and briefed 2026-09-15; awaiting Engineering Lead return** |
+| **CP-11 → CP-14** | `capstone_v20.md` §9 | **not started; not authorized** |
 
 ### The three live surfaces
 
@@ -62,6 +68,19 @@ fix**, and it is documented on every public surface. It is not a bug to quietly 
 
 **Read §13 of the plan before writing the first brief.** It is written for the Engineering Lead and
 states what to read, what not to touch, and the standards that are not negotiable.
+
+**Current handoff — CP-10 only:** [Engineering Lead launch brief](docs/track-b/cp-10-brief.md),
+authorized by the owner on 2026-09-15, approximate **4-hour** timebox. The owner carries the one
+complete prompt to the Lead and returns one `PASS` / `BLOCKED` / `INCOMPLETE` packet. No executor
+was launched by the Orchestrator. A fresh Integration verdict must bind the exact final candidate;
+CP-3B's missing item 6 is explicitly not a precedent. An unfavourable calibration result does not
+weaken the correctness bar or block an honestly completed checkpoint. Closure and any later
+checkpoint remain separate decisions under the existing return/disposition contract.
+
+**Session record, 2026-09-15:** owner authorized the proposed CP-10 scope and requested that the
+four `launchctl` variable names be recorded in both brief and progress. Corrected the stale
+`8d56942` starting-state reference to the verified commit above. Preserved the handover's existing
+decisions, open items and historical evidence; no governance or ratified anchor was changed.
 
 ---
 
@@ -122,8 +141,15 @@ Each of these was paid for once. None should be re-learned.
   > Both `orchestrator-role.md` and `program-stage-sequence.md` carry a **scope-narrowed header**:
   > everything in them about Track A or Track C is historical. Their Track B governance is unchanged.
 - **Credentials — never printed, logged or committed.**
+  - **Owner-confirmed 2026-09-15: available through `launchctl`:** `DAGSHUB_USER_TOKEN`,
+    `MLFLOW_TRACKING_URI`, `HF_TOKEN`, `ENTSOE_API_TOKEN`. This is supplied access information,
+    not an Orchestrator credential test; no values were read. Check inherited process variables
+    first; an already-running session may not have inherited later `launchctl` settings. If
+    necessary, capture `launchctl getenv <name>` privately inside the consuming process and
+    report presence/absence only, never raw output. Access does not authorize publication or cost.
   - `MLFLOW_TRACKING_URI`, `MLFLOW_TRACKING_USERNAME`, `MLFLOW_TRACKING_PASSWORD` in `~/.zshrc`.
-    **Auth is HTTP basic, not Bearer** — Bearer returns `401`.
+    **Auth is HTTP basic, not Bearer** — Bearer returns `401`. `DAGSHUB_USER_TOKEN` being present
+    does not by itself establish that the MLflow client is configured.
   - `HF_TOKEN` via `launchctl setenv`, reaching a session by **process inheritance**. It authenticates
     as `Yarden-Viktor`.
   - `ENTSOE_API_TOKEN` present. **`entsoe-py` 0.8.0 passes it as a query parameter**, so it appears
