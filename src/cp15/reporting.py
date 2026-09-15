@@ -37,6 +37,8 @@ def resources(output):
             records.append({
                 'fold': fold, 'policy': policy,
                 'direct_logical_fit_calls': int(own.fit_calls.sum()),
+                'direct_solver_calls': int(own.solver_calls.fillna(own.fit_calls).sum()),
+                'numerical_continuation_calls': int((own.solver_calls.fillna(own.fit_calls) - own.fit_calls).sum()),
                 'direct_fit_seconds': float(own.fit_seconds.sum()),
                 'component_policies': '+'.join(component_names) or 'none',
                 'component_logical_fit_calls': int(component.fit_calls.sum()),
