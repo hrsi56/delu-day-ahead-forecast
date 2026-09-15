@@ -1,0 +1,57 @@
+{
+  "c3": "Not implemented: regime taxonomy would encode dates chosen after inspecting price history; \u00a74.3 pre-run rejection.",
+  "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+  "falsification": {
+    "absolute_improvement_over_literal": 0.5233295454545455,
+    "baseline_literal": 0.194,
+    "coverage_95": 0.7173295454545454,
+    "covered_95": 1515,
+    "fix_worked": true,
+    "n_days": 88,
+    "n_obs": 2112,
+    "recommended_frozen_artifact": "no new artifact frozen by CP-10",
+    "required_absolute_improvement": 0.2,
+    "result": "fix cleared the pre-registered falsification threshold",
+    "threshold": 0.394,
+    "window_end": "2022-09-28",
+    "window_note": "Full eligible fold_3 block, as \u00a74.2 rule 5 specifies. The literal 0.194 is from the shorter historical August peak subset; peak_windows.csv reports that same subset separately.",
+    "window_start": "2022-07-01"
+  },
+  "pooled_mean_pinball": {
+    "c1_head_spread": 4.41040055552245,
+    "c1_price_volatility": 4.385529023835001,
+    "c2_aci_gamma_0.000001": 4.466063444067072,
+    "c2_aci_gamma_0.000005": 4.464562255433474,
+    "c2_aci_gamma_0.00001": 4.462436310235377,
+    "c2_aci_gamma_0.00002": 4.4600879204929385
+  },
+  "same_window_diagnostic": {
+    "absolute_improvement": 0.12745098039215688,
+    "clears_20_percentage_point_improvement": false,
+    "interpretation": "The original peak-week defect remains unresolved; literal full-fold rule-5 clearance must not be read as fixing that defect.",
+    "n_obs": 408,
+    "recommended_frozen_artifact": "v1",
+    "selected_coverage_95": 0.32107843137254904,
+    "selection_influence": "none; reported diagnostic only",
+    "v1_coverage_95": 0.19362745098039216,
+    "window_end": "2022-08-31",
+    "window_start": "2022-08-15"
+  },
+  "selected_aci_gamma": "0.00002",
+  "selected_candidate": "c1_price_volatility",
+  "selection_folds": [
+    "fold_1",
+    "fold_2",
+    "fold_4",
+    "fold_5"
+  ],
+  "selection_n_obs": 8635,
+  "tie_order": [
+    "c1_head_spread",
+    "c1_price_volatility",
+    "c2_aci_gamma_0.000001",
+    "c2_aci_gamma_0.000005",
+    "c2_aci_gamma_0.00001",
+    "c2_aci_gamma_0.00002"
+  ]
+}

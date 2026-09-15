@@ -186,3 +186,55 @@ def test_rule5_reports_both_outcomes_and_exact_boundary():
     assert failed['recommended_frozen_artifact']=='v1'
     assert falsification(.394)['fix_worked'] is True
     assert falsification(.8)['fix_worked'] is True
+
+
+def test_c1_full_feature_model_calibration_pipeline_masks_d_with_d_minus_1_control():
+    from conftest import synthetic_snapshot
+    from delu_forecast.features import build_feature_catalog
+    from delu_forecast.model import fit_quantile_heads, predict_raw_heads
+    from delu_forecast.schema import validate_champion_runtime_schema
+    frame=synthetic_snapshot(date(2025,1,1),date(2025,4,17))
+    rng=np.random.default_rng(83)
+    frame['price_eur_mwh']=rng.normal(60,20,len(frame))
+    target=date(2025,4,15)
+    features=build_feature_catalog(frame,'base')
+    complete=features.notna().all(axis=1).to_numpy()
+    train=complete & (frame.delivery_date.to_numpy()<date(2025,3,1))
+    params={'objective':'quantile','n_estimators':12,'num_leaves':7,'learning_rate':.2,
+            'min_child_samples':5,'n_jobs':1,'deterministic':True,'force_row_wise':True,'verbose':-1}
+    heads=fit_quantile_heads(features.loc[train],frame.price_eur_mwh.to_numpy()[train],seed=42,params=params)
+    calmask=(frame.delivery_date.to_numpy()>=date(2025,3,1)) & (frame.delivery_date.to_numpy()<date(2025,3,11))
+    raw_cal=predict_raw_heads(heads,features.loc[calmask]); cal_y=frame.price_eur_mwh.to_numpy()[calmask]
+    days=pd.Index(frame.delivery_date); rows=days==target
+    price=pd.Series(frame.price_eur_mwh.to_numpy(),index=pd.DatetimeIndex(frame.timestamp_utc))
+    for method in ('spread','volatility'):
+        cs=head_spread(raw_cal) if method=='spread' else price_volatility(price,days[calmask])
+        thresholds=fit_scaled(raw_cal,cal_y,cs)
+        def pipeline(snap):
+            fs=build_feature_catalog(snap,'base')
+            validate_champion_runtime_schema(fs.columns,'base')
+            raw=predict_raw_heads(heads,fs.loc[rows])
+            ps=pd.Series(snap.price_eur_mwh.to_numpy(),index=pd.DatetimeIndex(snap.timestamp_utc))
+            scale=head_spread(raw) if method=='spread' else price_volatility(ps,days[rows])
+            return predict_scaled(raw,thresholds,scale)
+        baseline=pipeline(frame)
+        masked=frame.copy(); masked.loc[rows,'price_eur_mwh']=np.nan
+        assert np.max(abs(pipeline(masked)-baseline))==0.0
+        positive=frame.copy(); positive.loc[days==target-timedelta(days=1),'price_eur_mwh']+=10000
+        assert np.max(abs(pipeline(positive)-baseline))>0.0
+        assert crossing_violations(baseline)==0
+        broken=baseline.copy(); broken[:,0]=broken[:,8]+1
+        assert crossing_violations(broken)>0
+
+
+def test_actual_wrong_d_minus_1_feedback_gate_is_caught(monkeypatch):
+    import delu_forecast.calibration_comparison as implementation
+    cal,cy,raw,days,y=aci_fixture()
+    masked=y.copy(); masked[-2:]=np.nan
+    safe,_=aci_predict(cal,cy,raw,days,masked,gamma='0.00002',observed_days=set(days))
+    assert np.isfinite(safe).all()
+    # Actual mutant of the temporal boundary: using D-1 tries to consume the
+    # hidden label and fails. This control exercises the same production loop.
+    monkeypatch.setattr(implementation,'timedelta',lambda **kwargs:timedelta(days=1))
+    with pytest.raises(ValueError,match='missing released feedback'):
+        aci_predict(cal,cy,raw,days,masked,gamma='0.00002',observed_days=set(days))
