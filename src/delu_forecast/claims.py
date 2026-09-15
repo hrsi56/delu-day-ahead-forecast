@@ -582,7 +582,15 @@ REPRO_MLFLOW_PERMALINK = (
     "Every decision-bearing run — the three baselines, both catalog candidates, both benchmark arms, "
     "the champion's final fit and holdout, and the diagnostics — is public at "
     "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow with snapshot hash, code SHA, fold spec, "
-    "feature list, seed, hyperparameters, metrics and artifact links."
+    "feature list, seed, hyperparameters, metrics and artifact links. "
+    "Counting runs there will not give you 'one', and it is not meant to: the tracking server shows "
+    "several runs named `champion::final-fit-and-holdout`, because the script is deterministic and was "
+    "re-run while CP-2 was authored — once aborted on the runtime firewall before any outcome was read, "
+    "and every completed run reproducing the previous run's metrics and artifact fingerprint exactly. "
+    "\u201cEvaluated exactly once\u201d is a statement about the evaluation decision, not about how many times "
+    "a deterministic script may be executed — an Integration Critic re-running it from a clean worktree "
+    "is reproducing the result, not taking a second look at the holdout. No catalog, hyperparameter, "
+    "threshold or analysis choice was changed after any of them."
 )
 
 REPRO_REGISTERED_CHAMPION = (

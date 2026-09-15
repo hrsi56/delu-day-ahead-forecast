@@ -1,3 +1,23 @@
+> ## ⚠ SCOPE NARROWED 2026-09-15 — read this before anything below
+>
+> **The programme is now single-track.** The active and only plan is **`capstone_v20.md` —
+> *From frozen artifact to running system***. `capstone_V6_8.md` is closed as an active plan and
+> remains the ratified historical record of v1.
+>
+> **Track C is cancelled and has left this repository.** Outreach, CV surfaces, LinkedIn, target
+> research, application-pipeline state and interview rehearsal are no longer this project's work.
+> **`TRIG-C` and `C-1` are retired.** Every reference to Track C below is historical: do not act on
+> it, do not propose it, do not track its state.
+>
+> **Track A remains what it already was in practice — out.** It gated nothing and gates nothing.
+>
+> Everything else in this file that governs Track B — the checkpoint contract, briefs, the isolation
+> boundary, publication authority, the Governance Lockdown, and how a terminal return is read — is
+> **unchanged and still in force.**
+>
+> Owner-granted, 2026-09-15, with explicit authority to edit every file in the project to bring it
+> into line.
+
 <!-- orchestrator-role.md — revised for Claude Opus 4.8, 2026-07-02.
      Updated 2026-09-07 (v6.7 scope and governance reduction): the flagship anchor is
      capstone v6.7; the stage map is v8. TRACK A IS OPTIONAL — the syllabus is a parallel

@@ -1,12 +1,12 @@
 # Yarden's Triple-Track Progress Log
 
-*Living document, maintained under `orchestrator-role.md`. **Updated 2026-09-15: M3/CP-3 and M3.5/CP-3B CLOSED. REL-1 COMPLETE — all three public surfaces live.** [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) · [Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) · [MLflow](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow). Anchors: **`capstone_V6_8.md` v6.8** (ratified 2026-09-09); `program-stage-sequence.md` **v8**. A successor stage, `capstone_M4_v2-plan.md`, is DRAFT and awaiting ratification. `main` = `origin/main` = **`99c9250`**.*
+*Living document, maintained under `orchestrator-role.md`. **Updated 2026-09-15: v1 COMPLETE and the programme is now SINGLE-TRACK.** `capstone_v20.md` — *From frozen artifact to running system* — is the only active plan. `capstone_V6_8.md` is closed as an active plan and kept as v1's ratified record. **Track C is cancelled and has left this project.** [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) · [Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) · [MLflow](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow). Anchors: **`capstone_V6_8.md` v6.8** (ratified 2026-09-09); `program-stage-sequence.md` **v8**. A successor stage, `capstone_M4_v2-plan.md`, is DRAFT and awaiting ratification. `main` = `origin/main` = **`99c9250`**.*
 
 ---
 
 ## Current Position
 
-### Track B — Capstone Builds: the critical path, and the only one
+### Track B — the only track
 
 - **Anchor:** **`capstone_V6_8.md` v6.8**, owner-ratified 2026-09-09. Amendment record: `capstone_V6_7-to-V6_8-amendments.md` at root. The v6.7 record remains at `docs/track-b/capstone_V6_6-to-V6_7-amendments.md`, whose **post-ratification repair addendum** supersedes its *Application scope* bullet and acceptance items 1, 12 and 15.
 - **Position: M0 DONE. M0.5/CP-0 CLOSED and RETIRED. M1/CP-1 CLOSED 2026-09-14.** Landed by the owner at **`5651c9a`** (squash, 48 files, 4,550 insertions), tagged **`land/cp-1` → `5651c9a`** and **`evidence/cp-1` → `24f59b5`**, both pushed; `gauntlet/cp-1` reclaimed. **Next Track B action: exactly one M2/CP-2 brief, on owner authorization.**
@@ -35,7 +35,7 @@
 - **A cold first visit can meet a 429.** Immediately after upload, Hugging Face's own edge rate-limited a burst of ~176 parallel asset requests and the page rendered blank; a reload cleared it. Transient, but a first-time visitor can hit it.
 - **Every surface now addresses the decision trail directly — owner requirement, 2026-09-15.** Built into `claims.py` so no surface can drift: three surfaces presented by *what they answer*, not what they are; the `delu-cp2` experiment, the model registry and the tracking root each deep-linked; the nine decision-bearing runs listed **by name** rather than id (several were reproduced; no single id is canonical); and a named, deliberately empty slot for v2. **`check_links` unauthenticated: all seven published links 200**, with the four DagsHub repository-UI URLs that 302 to `/user/login` kept as the control that shows why every published link uses the `.mlflow` host.
 - **v2's runs will land in a separate `delu-m4` experiment**, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed.
-- **📕 `capstone_V6_8.md` CLOSED as an active plan, 2026-09-15.** v1 is complete: CP-1, CP-2, CP-3 and CP-3B landed, REL-1 complete, three public surfaces live. **The anchor itself is not edited** — it stays the ratified historical record of v1. All forward work moves to **`capstone-completion-and-corrections.md`** (DRAFT, awaiting ratification), which carries M4, a new M5, and the MLflow integration that makes the tracking server load-bearing rather than decorative.
+- **📕 `capstone_V6_8.md` CLOSED as an active plan, 2026-09-15.** v1 is complete: CP-1, CP-2, CP-3 and CP-3B landed, REL-1 complete, three public surfaces live. **The anchor itself is not edited** — it stays the ratified historical record of v1. All forward work moves to **`capstone_v20.md`** (DRAFT, awaiting ratification), which carries M4, a new M5, and the MLflow integration that makes the tracking server load-bearing rather than decorative.
 - **The new anchor's shape, and the two design findings that shaped it.** **(1)** A frozen-and-waiting model (M4) and a daily-retrained model (M5) **cannot be the same artifact** — a model retrained daily has no clean test set, ever. They are separated into two evidence classes that may never be quoted interchangeably: *one-shot confirmatory* for M4, *prospective/prequential* for the daily service. **(2)** Daily retraining fixes **input staleness only** — not hyperparameters, not the feature catalog, and **not a regime break**: in August 2022 a daily-retrained model would still have had almost all its training mass in the moderate regime. **M5 without M4's calibration fix would reproduce v1's failure exactly**, which is why the dependency runs that way and is written down.
 - **Topology verified, not assumed.** **DagsHub provides tracking, registry and storage — no compute**, so training cannot run there. **GitHub Actions is free and unmetered for public repositories**, so it does. Actions computes → DagsHub records → git publishes → Pages serves. The daily pull uses **SMARD** and not ENTSO-E, because `entsoe-py` passes its token as a query parameter and that means the token in CI logs.
 - **MLflow's "physical use" has a falsifiable bar:** something must break if the tracking server is down. The daily job resolves the model from the **registry**, and builds the scorecard by **querying** for yesterday's logged forecast — so the record of *"what I predicted yesterday"* lives on a third-party server, not in a file this repository could rewrite. The price is designed rather than discovered: an outage **fails the build loudly and publishes nothing**, and the page keeps yesterday's committed content with its own visible date.
@@ -52,15 +52,19 @@
 - **Governance Lockdown in force** since 2026-08-08 (`f45e577`). **Eight** task-scoped suspensions granted and spent: the v6.7 application; three 2026-09-07 repair rounds; the 2026-09-08 merge repair; the 2026-09-08 `AGENTS.md` Q&A-capture section; the 2026-09-09 v6.8 amendment; and its extension for the §3 EUA contradiction, plus the second-review SQL correction. None granted publication or unrelated authority.
 - **`AGENTS.md` § *Interview-answer capture* is new (2026-09-08).** Reasoning worth defending in an interview is filed when it happens. **Orchestrator-only** — a Lead names a trigger in one line of its return and files nothing, so the Track B firewall stays closed.
 
-### Track C — Marketing: ACTIVE from 2026-09-14
+### Track C — CANCELLED 2026-09-15
 
-- **TRIG-C fired when M2/CP-2 closed.** Outreach, interview prep, target research and pipeline-building are continuously active. **Nothing gates applications.**
-- **✅ The artifact is LIVE as of 2026-09-15: <https://hrsi56.github.io/delu-day-ahead-forecast/>.** This is the primary link for CV, LinkedIn and every outreach message. It is a single self-contained HTML file that makes **zero** runtime calls, so it cannot sleep, cannot break on a CDN outage, and renders offline. The Space link is the labelled deep dive and does not resolve until the Hugging Face account exists.
-- **C-1 is the next Track C action:** put the Pages URL on the CV and LinkedIn as the primary project link.
-- **Last published artifact:** `hrsi56/Zero-Trust-Hierarchy`, public, carrying the method article, rulebook, forms and a Pages rendering, plus three Code-Graph-RAG documents at `3ab7e1f`. Separate history and remote.
-- CV iteration budget: three slots across the year.
-- **A live job posting was assessed 2026-09-06** (Kamada QA Specialist, Beer-Sheva): not a DS role and not a route to one. **Settled 2026-09-14** — the owner confirmed there is runway, so the recommendation stands on its merits: a parallel career ladder, declined.
-- **Interview prep: `שאלות תשובות.docx` carries TWENTY entries** as of 2026-09-15. The twelve newest: the `p=0.948` point-accuracy deficit and its single-fold decomposition; the domain feature that lost by 0.371516% and why the margin is one fold; **the real defect — the 0.194 coverage collapse, its measured mechanism, and what fixing it requires**; why `marimo export html` was rejected (181 CDN references, measured); why limitations and reproducibility became one shared claim set; how a delivery-day boundary is *proved* rather than asserted (`0.0` masked, `220.94` positive control); the 576-vs-573 negative-hour count and why the MTU averaging explains it; the `BLOCKED` verdict and why a brief cannot narrow a bar; the two factual errors a Lead caught in the Orchestrator's brief; what to do with a model that failed; the pre-registered anti-overtuning discipline; and how the minimum credible test window was computed. Earlier entries — the four newest from CP-2: proving no look-ahead by truncated-history equivalence; why the champion wins pinball everywhere and loses MAE in the crisis-peak folds; pricing the strict gate at 19.49% and declining it anyway; and why a frozen ML artifact needs a semantic fingerprint rather than a file hash. Earlier entries — the ENTSO-E outage and SMARD fallback; the 2019 window start; and how the SMARD series mapping was verified against the authoritative source rather than trusted.
+**Removed from this project by owner decision, not completed and not deferred.** Outreach, CV
+surfaces, LinkedIn, target research, application-pipeline state and interview rehearsal leave this
+repository. `TRIG-C` and `C-1` are struck from `program-stage-sequence.md`.
+
+What it leaves behind, finished and not to be extended from this plan:
+
+- **Three live public surfaces** — [static report](https://hrsi56.github.io/delu-day-ahead-forecast/), [Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast), [MLflow](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow).
+- **`שאלות תשובות.docx`, 25 entries.** A closed v1 record. This plan files no further entries.
+- The repository's public metadata: MIT licence, homepage, ten topics.
+
+**The programme is now single-track.** `capstone_v20.md` is the only active plan.
 
 ---
 

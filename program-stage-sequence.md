@@ -1,3 +1,23 @@
+> ## ⚠ SCOPE NARROWED 2026-09-15 — read this before anything below
+>
+> **The programme is now single-track.** The active and only plan is **`capstone_v20.md` —
+> *From frozen artifact to running system***. `capstone_V6_8.md` is closed as an active plan and
+> remains the ratified historical record of v1.
+>
+> **Track C is cancelled and has left this repository.** Outreach, CV surfaces, LinkedIn, target
+> research, application-pipeline state and interview rehearsal are no longer this project's work.
+> **`TRIG-C` and `C-1` are retired.** Every reference to Track C below is historical: do not act on
+> it, do not propose it, do not track its state.
+>
+> **Track A remains what it already was in practice — out.** It gated nothing and gates nothing.
+>
+> Everything else in this file that governs Track B — the checkpoint contract, briefs, the isolation
+> boundary, publication authority, the Governance Lockdown, and how a terminal return is read — is
+> **unchanged and still in force.**
+>
+> Owner-granted, 2026-09-15, with explicit authority to edit every file in the project to bring it
+> into line.
+
 # Program Stage Sequence — Capstone-First Routing Map (v8)
 
 **Rebuilt at v6.7 (2026-09-07).** v7 linearized a syllabus-first program in which learning months gated engineering milestones. That contract is retired: **Track A is an optional parallel resource and gates nothing.** This map routes the work that is actually on the critical path, and offers the learning material as a sidecar indexed by the task it helps with.
@@ -15,10 +35,10 @@
 | 0 | **PRE-1 — API token** | Yarden (manual) | `README.md` § *Setup* | Before CP-1 is briefed, `ENTSOE_API_TOKEN` is present in the execution environment and one read-only ENTSO-E request succeeds without exposing the value. **Status lives only in `progress.md`; this static map does not claim the prerequisite is currently open or closed.** |
 | 1 | **M1 / CP-1 — Data layer and fixed features** | Engineering Lead | capstone §3, §4.0–§4.2, §5.1–§5.2, §9.3–§9.4, §9.6, and the complete CP-1 checklist in §12 | CP-1 returns `PASS` — 10 items, one fresh Integration verdict |
 | 2 | **M2 / CP-2 — Model, calibration, analysis** | Engineering Lead | capstone §4.1, §5.1, §6.1–§6.3, §7.1–§7.2, §8.1–§8.4, §9.1, §9.3–§9.4, and the complete CP-2 checklist in §12 | CP-2 returns `PASS` — 10 items, one fresh Integration verdict |
-| 3 | **TRIG-C — Track C activation** | Orchestrator | `orchestrator-role.md` § *Track C activation rules* | State flip in `progress.md` after CP-2 lands. Outreach, interview prep, target research and pipeline-building become continuously active. **Nothing gates applications** — Yarden opens them when he chooses |
+| 3 | ~~**TRIG-C — Track C activation**~~ **RETIRED 2026-09-15** | Orchestrator | `orchestrator-role.md` § *Track C activation rules* | State flip in `progress.md` after CP-2 lands. Outreach, interview prep, target research and pipeline-building become continuously active. **Nothing gates applications** — Yarden opens them when he chooses |
 | 4 | **M3 / CP-3 — Showcase and release** | Engineering Lead | capstone §9.1–§9.3, §9.6, §10, §10.1, and the complete CP-3 checklist in §12 | CP-3 returns `PASS` — 6 items, one fresh Integration verdict |
 | 5 | **REL-1 — Publish** | Yarden (manual) | — | Pages live, Space live, MLflow public, `main` landed by hand with both tags. **Owner-only; never delegated** |
-| 6 | **C-1 — Portfolio surfaces** | Yarden / C-Claude | `orchestrator-role.md` § *Track C activation rules* | CV and LinkedIn carry the Pages URL as primary. Optional, after release, never a checkpoint item |
+| 6 | ~~**C-1 — Portfolio surfaces**~~ **RETIRED 2026-09-15** | Yarden / C-Claude | `orchestrator-role.md` § *Track C activation rules* | CV and LinkedIn carry the Pages URL as primary. Optional, after release, never a checkpoint item |
 
 **That is the whole critical path.** Every checkpoint closes on its own complete checklist plus one fresh Integration-Critic `PASS`; the disposition and reclamation procedure is `docs/track-b/gauntlet-templates.md` §4 under `AGENTS.md` § *Branch and ref lifecycle*.
 

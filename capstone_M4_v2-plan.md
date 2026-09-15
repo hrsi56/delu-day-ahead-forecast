@@ -1,6 +1,6 @@
 > ## ⚠ SUPERSEDED 2026-09-15
 >
-> **M4 has moved to a new anchor: [`capstone-completion-and-corrections.md`](capstone-completion-and-corrections.md).**
+> **M4 has moved to a new anchor: [`capstone_v20.md`](capstone_v20.md).**
 > Its §4 (calibration) and §5 (the frozen 90-day holdout) replace §4–§6 of this document, re-derived
 > rather than copied so the stage fits the system that document builds around it.
 >

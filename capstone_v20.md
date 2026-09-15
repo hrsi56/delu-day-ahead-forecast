@@ -1,15 +1,33 @@
-# Capstone — Completion and Corrections
+# Capstone v20 — From frozen artifact to running system
 
-**Anchor document. Status: DRAFT, awaiting owner ratification.** Authored by the Orchestrator
-2026-09-15 on the owner's instruction of the same date.
+**Anchor document. Status: RATIFIED 2026-09-15.** Authored by the Orchestrator on the owner's
+instruction of the same date and ratified the same day on the decisions in §12.
+
+**This is the only active plan in this repository.** An Engineering Lead reading this file, the
+briefs derived from it, and `engineering-role.md` has everything needed to build the whole
+programme. Nothing outside this document is in scope.
 
 **This document closes `capstone_V6_8.md` as an active plan.** v6.8 is complete: M1/CP-1, M2/CP-2,
 M3/CP-3 and M3.5/CP-3B all landed, REL-1 is complete, and all three public surfaces are live. v6.8
 remains the **ratified historical record of v1** and is not edited. Everything forward lives here.
 
-**`capstone_M4_v2-plan.md` is superseded by §4–§6 of this document** and should carry a pointer
-rather than a second copy of the stage. It is not deleted; it is the record of how M4 was reasoned
-out and ratified on 2026-09-15.
+**`capstone_M4_v2-plan.md` is superseded by §4–§6 of this document.** It is not deleted; it is the
+record of how M4 was reasoned out and ratified on 2026-09-15.
+
+### Scope — deliberately narrowed, 2026-09-15
+
+**Track C is cancelled and leaves this project.** Outreach, CV surfaces, LinkedIn, interview
+rehearsal and target research are no longer part of this repository's programme. `TRIG-C` and `C-1`
+are retired from `program-stage-sequence.md`. `שאלות תשובות.docx` stays in the repository as a
+finished v1 record and receives no further entries from this plan.
+
+**Track A is likewise out**, as it already was in practice: the syllabus was an optional resource
+and gated nothing.
+
+> **One track, one document.** Everything an Engineering Lead needs is here. Anything not described
+> in this file is out of scope for this repository, and an agent that finds itself reasoning about
+> applications, portfolio surfaces or learning material has drifted and should say so in its return
+> rather than act on it.
 
 ---
 
@@ -120,7 +138,7 @@ in `reports/cp2/holdout_report.json`, not on the surface the reader is standing 
 **Fix, in two parts:**
 
 - **Now:** the reconciliation becomes a claim in `claims.py` and renders on every surface.
-- **With §7:** the page carries a **"what the tracking server says"** panel, built from a real query
+- **With CP-13:** the page carries a **"what the tracking server says"** panel, built from a real query
   at render time and baked into the static HTML. A reader who does not click sees what the record
   contains; a reader who does click and counts finds the answer where they are standing. The page
   still makes **zero runtime calls** — the query happens at build time, not in the visitor's browser.
@@ -309,8 +327,17 @@ Scheduled after ~13:00 CET, when the day-ahead auction has published (clearing 1
    enforced.
 5. **Forecast** delivery day D+1 and log the full nine-quantile vector to MLflow.
 6. **Score** the forecast made for the most recent fully settled day, read back from MLflow (§2.1).
-7. **Register** the new model version; move the `daily` alias to it. **`champion` is untouched** —
-   that alias belongs to the frozen v1 artifact.
+7. **Register** the new model version; move the **`daily-demo`** alias to it. **`champion` is never
+   touched by this job.**
+
+   > **The alias names carry the routing rule so it cannot be missed by anyone browsing the
+   > registry.** `champion` is the model of record. `daily-demo` says both what it is — retrained
+   > daily — and what it is for: a demonstration, not a source of results. A reader who sees
+   > `champion` and `daily-demo` side by side reads the hierarchy correctly on sight.
+   >
+   > **`champion` does not move to v2 until v2 has passed its one-shot holdout (§5).** Promoting an
+   > untested model to the alias that means *the model of record* is exactly the silent
+   > claim-inflation this document exists to prevent.
 8. **Render and commit** the page (§7).
 
 **Track 2's data feeds enter here as well as in `v2-full`:** Open-Meteo fixed-lead-time weather
@@ -432,6 +459,13 @@ product exists and functions.
 > 3. **The scorecard never implies the frozen model produced it, and the report never implies the
 >    daily model produced it.** Each number carries its source model beside it.
 
+**These are enforced structurally, not by review.** Every figure produced by the daily service lives
+in a separate claim namespace under a `live_` prefix, and the report, README and Space-card
+generators **cannot read that namespace at all** — a mix-up is a build error, not something a
+reviewer has to catch. The guard ships before the first live claim exists, with a positive control
+that makes it fire: a synthetic `live_*` key injected into a record-model surface must fail the
+build. A guard that has never been shown to fail is not a guard.
+
 **Why the demo is still worth building under those restrictions.** Because the thing it proves is
 not available any other way. A frozen model with a good holdout proves *the method works*. A service
 that pulls real data every morning, refuses bad input, retrains, publishes, and scores itself in
@@ -444,7 +478,7 @@ claim a hiring manager cannot check from a notebook.
 
 | Object | Where it lives | Consequence |
 |---|---|---|
-| Deployed daily model | registry, alias `daily` | promotion is an alias move, not a commit |
+| Deployed daily model | registry, alias `daily-demo` | promotion is an alias move, not a commit |
 | Frozen v1 champion | registry, alias `champion` | **never moved by the daily job** |
 | Frozen M4 artifacts | registry, `delu-m4`, tagged `frozen-awaiting-holdout` | the freeze date is third-party evidence |
 | Every forecast vector | run artifact, `daily::<date>` | the scorecard is built by querying it |
@@ -464,23 +498,36 @@ printed, logged or committed; CI output is checked for leakage as a gate.
 
 ## 9. Checkpoints
 
-| | Stage | Bar |
-|---|---|---|
-| **CP-9** | MLflow integration (§2) | The registry is the source of the model; the scorecard reads from the tracking server; a simulated outage is shown to fail the build loudly and publish nothing; §2.4's reconciliation claim renders on every surface |
-| **CP-10** | M4 calibration (§4) | All candidates implemented with exact fixtures; selection on {1,2,4,5}; the full table including fold_3 for **every** candidate including losers; rule-5 falsification evaluated and reported; zero crossings; positive controls on every negative assertion |
-| **CP-11** | Freeze (§5) | Both artifacts frozen, fingerprinted, registered, tagged; the 90-day clock starts and its start date is on the tracking record; interim status published per §7.3; **nothing evaluated** |
-| **CP-12** | The daily service (§6) | SMARD ingest; every §6.3 gate implemented **with a positive control that makes it fire**; a deliberately corrupted input must stop the run and publish nothing |
-| **CP-13** | The live scorecard (§7) | Page re-rendered and committed by the job; zero runtime calls preserved; no date filter; evidence classes labelled beside every number; staleness banner proved by a simulated missed run |
-| **CP-14** | M4 one-shot evaluation (§5) | ≥ 90 delivery days after the CP-11 freeze; fresh snapshot; one embargo day; **opened exactly once**; primary and secondary endpoints; the power limitation stated |
+**Five, not six.** The draft's CP-9 bundled two things that do not belong together: a live defect on
+a public surface, and registry-read infrastructure whose only consumer is the daily service built
+three checkpoints later. Building the second before the first has a consumer is building a bridge to
+nowhere. So the defect is repaired outside the checkpoint sequence as ordinary maintenance, and the
+infrastructure moves to the checkpoint that uses it.
 
-Each follows the existing contract: one brief in, one packet out, one fresh Integration Critic,
-`PASS`/`BLOCKED`/`INCOMPLETE`, owner-authored landing.
+**Repaired first, not as a checkpoint — §2.4's run-count reconciliation.** It is a live mismatch on a
+published surface and it takes one commit: the reconciliation becomes a claim in `claims.py` and
+renders everywhere. No checkpoint, no brief, no Critic. Done before CP-10 is dispatched.
+
+| | Stage | Depends on | Bar |
+|---|---|---|---|
+| **CP-10** | **M4 calibration** (§4) | — | All §4.3 candidates implemented with exact fixtures; selection on folds {1,2,4,5} only; the full table including fold_3 for **every** candidate **including the losers**; rule-5 falsification evaluated and reported whichever way it lands; zero crossings; a positive control on every negative assertion; C-2's two-day lag proved with the masking control rather than assumed |
+| **CP-11** | **Freeze** (§5) | CP-10 | `v2-calibration-only` and `v2-full` both frozen, fingerprinted, registered in `delu-m4`, tagged `frozen-awaiting-holdout`; the freeze date on the tracking record, not only in a commit message; the 90-day clock starts; interim status published per §7.3; **nothing evaluated** |
+| **CP-12** | **The daily service + MLflow on the critical path** (§2, §6) | CP-11 | SMARD ingest; the job resolves its model from the **registry** and reads yesterday's forecast by **querying** the tracking server, so a simulated outage is shown to fail the build loudly and publish nothing; every §6.3 gate implemented **with a positive control that makes it fire**; a deliberately corrupted input must stop the run and publish nothing; `daily-demo` alias moves, `champion` provably untouched |
+| **CP-13** | **The live scorecard** (§7) | CP-12 | Page re-rendered and committed by the job; `docs/index.html` still makes **zero runtime calls**, re-scanned independently; **no date filter**; the `live_` namespace guard shipped with its positive control; every number carries its source model; the staleness banner proved by a simulated missed run |
+| **CP-14** | **M4 one-shot evaluation** (§5) | CP-11 + 90 delivery days | Fresh snapshot; one embargo day; **opened exactly once**; primary and secondary endpoints per §5.2; v1 and v2 compared on equal footing; the §5.3 power limitation stated in the report rather than discovered by a reader |
+
+**CP-12, CP-13 and CP-14 are independent of each other after CP-11.** The daily service and the
+scorecard can be built during the 90-day wait; CP-14 fires when the clock ends regardless of where
+the service stands. Nothing in CP-12 or CP-13 may touch the frozen artifacts.
+
+Each checkpoint follows the existing execution contract: one brief in, one packet out, one fresh
+Integration Critic, `PASS`/`BLOCKED`/`INCOMPLETE`, owner-authored landing.
 
 **No landing without a verdict binding the final candidate.** CP-3B landed with item 6 unmet —
 recorded at `docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md` — because its review was cut off
-twice. **That is not a precedent, and every brief in this document says so.**
-
----
+twice. **That is not a precedent, and every brief in this document says so.** CP-10 decides whether
+a calibration method works and CP-12 ships unattended code that publishes without a human: both are
+places where an independent verdict is the substance rather than the bookkeeping.
 
 ## 10. What this is NOT
 
@@ -514,20 +561,43 @@ Stated explicitly, with the original reasoning answered rather than ignored.
 
 ---
 
-## 12. Open decisions for the owner
+## 12. The decisions, as taken
 
-1. **Ratify this document as the forward anchor**, closing `capstone_V6_8.md` as an active plan and
-   pointing `capstone_M4_v2-plan.md` here.
-2. **The daily model's alias name** — `daily` is proposed, deliberately distinct from `champion` so
-   that no tooling, link or reader can confuse the retrained model with the frozen evaluated one.
-2b. **How hard to enforce §7.3's routing.** The recommendation is a **separate claim namespace** in
-   `claims.py` — daily figures live under a `live_*` prefix that the report and README generators
-   cannot read at all, so a mix-up is a build error rather than a review catch. That is stricter
-   than a convention and costs one afternoon.
-3. **How long the scorecard runs before it goes on the CV.** A record with four days in it invites a
-   different reading from one with sixty. The recommendation is that the link goes up immediately
-   and the scorecard simply shows however many days exist, labelled — but a deliberate wait is a
-   legitimate alternative and should be a decision rather than a drift.
-4. **The document's name.** *"Completion and Corrections"* describes §2's repairs accurately but
-   undersells §6 and §7, which are a larger build than v1 was. Renaming is cosmetic and entirely
-   the owner's call.
+Ratified 2026-09-15. Where the Orchestrator's recommendation and the owner's decision differed, both
+are recorded.
+
+| # | Decision | Taken | Orchestrator's recommendation |
+|---|---|---|---|
+| 1 | **Ratify as the forward anchor**, closing `capstone_V6_8.md` as an active plan | **Yes** | Same, conditional on Track C not being blocked by it. **The owner resolved that differently and more decisively: Track C is cancelled outright** and leaves this repository. |
+| 2 | **Alias: `champion` + `daily-demo`** | **Yes** | The Orchestrator proposed `demo` over `daily` because role matters more than cadence. The owner's `daily-demo` carries both, and is better. |
+| 2b | **Enforce §7.3's routing structurally** — a `live_` namespace the record-model generators cannot read | **Yes** | Same. The argument is empirical: the same claim architecture caught two real drifts on 2026-09-15 alone, both as build errors rather than review catches. |
+| 3 | **Publish the scorecard as soon as it exists**, labelled with however many days it has | **Yes** | Same — and now moot inside this repository, since the surfaces it would have fed are out of scope. |
+| 4 | **Name: `capstone_v20.md`, "From frozen artifact to running system"** | **Yes** | The Orchestrator recommended renaming; the owner chose the name. |
+| 5 | **CP-9's ordering** | **Fixed** | The owner's ruling: *the Orchestrator wrote CP-9 and chose its contents, so an ordering mistake is the Orchestrator's to repair, and the whole document must be coherent.* Accepted. CP-9 is dissolved: its live defect becomes ordinary maintenance done before CP-10, and its registry-read infrastructure moves into CP-12 where it has a consumer. Six checkpoints become five. |
+| 6 | **Sequencing against Track C** | **Removed from the question** | Superseded by decision 1. |
+
+## 13. What an Engineering Lead needs to know before starting
+
+**Read this file, `engineering-role.md`, and the brief you are given. Nothing else.**
+
+- **`capstone_V6_8.md` is history, not instruction.** It is the ratified record of v1 and is accurate
+  about what v1 did. Where it and this document differ, **this document governs** — §11 lists every
+  such point explicitly so you never have to guess.
+- **`capstone_M4_v2-plan.md` is reasoning, not instruction.** Read it if you want to know *why* M4 is
+  shaped this way; build from §4–§5 here.
+- **v1's artifacts are evidence and are not yours to change.** `models/champion/`, `data/snapshot.parquet`,
+  `data/partitions.json`, `docs/cp2-model-report.md`, `reports/cp2/`, and every `land/*` and
+  `evidence/*` tag stay exactly as they are — including the 0.194 coverage collapse, which is
+  documented deliberately and is not a defect to fix.
+- **The one hard gate in the whole programme is correctness**, not performance: zero quantile
+  crossings after the full pipeline. Every other number is reported, never gated. An unfavourable
+  result constrains the public claim and blocks nothing.
+- **Where a test asserts that something does not happen, it needs a positive control that proves it
+  can fail.** This is not a style preference. CP-1's first attempt returned `PASS` from its own
+  Integration Critic while 95.83 % of its rows leaked, because every test inherited the same wrong
+  premise.
+- **Fix the generator, not the output.** A published value corrected in a file while the script that
+  writes that file still emits the old one will be silently reverted by the next build. This has
+  already happened once in this repository.
+- **Verify the state you are told you are starting from**, and report any material mismatch. Two
+  separate Leads have caught factual errors in Orchestrator-issued briefs; both were right to.
