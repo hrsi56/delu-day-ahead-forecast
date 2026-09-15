@@ -8,7 +8,7 @@ up next.*
 system*, ratified 2026-09-15.** Everything else named in this file is history, reference, or
 environment.
 
-`main` = `origin/main` = **`2517e55`** · tree clean · one branch · 191 tests pass.
+`main` = `origin/main` = **`8d56942`** · tree clean · one branch · 191 tests pass.
 
 ---
 
