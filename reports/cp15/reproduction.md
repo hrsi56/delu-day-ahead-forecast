@@ -119,3 +119,8 @@ API/resource probe, not a model-quality estimate.
 
 Only the later fresh Integration verdict can certify the exact final candidate.
 Builder checks and passing inherited tests do not substitute for that review.
+The candidate's `report.md` therefore labels engineering review as pending.
+After review, `docs/track-b/evidence/cp-15/report.md` records the actual engineering
+verdict alongside product feasibility and the same reviewed results, binding
+the candidate SHA. This status copy and the verdict are evidence-only additions;
+the candidate's statistical artifacts remain unchanged.
