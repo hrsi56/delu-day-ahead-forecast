@@ -20,14 +20,31 @@ a model that retrains every day on real data, publishes a forecast, and scores y
 in public — with MLflow as the system of record rather than a screenshot, and with the one rigorous
 confirmatory test preserved rather than dissolved into the daily churn.
 
+### Two models, two jobs, and the division is absolute
+
+**This is the load-bearing distinction in the whole document. Everything else follows from it.**
+
+| | **v2 — frozen** | **the daily model** |
+|---|---|---|
+| **What it is for** | **the model of record.** Every result, every metric, every comparison, every claim on every surface, and the line on the CV | **the demo.** One job: show that the system runs end to end in production |
+| **Lifecycle** | trained once, frozen, fingerprinted, set aside untouched, tested **exactly once** after 90 days | retrained from scratch every morning; no version survives the day |
+| **Evidence class** | **one-shot confirmatory** | **prospective observation of a running service** |
+| **What it proves** | whether the model is good | whether the *system* works — ingest, unattended training, calibration, publication, honest public scoring |
+| **What it may never do** | — | **supply a performance claim.** Its numbers describe a running service; they are not this project's statement of model quality |
+
+> **v2 frozen carries all the results. The daily model carries none of them.** It is product proof:
+> evidence that the pipeline exists and runs, not evidence about how well the model forecasts. A
+> rolling error figure from the live service has no clean test set behind it and never will, and it
+> is never quoted as if it did.
+
 **Four things are built, in order, and each depends on the one before it:**
 
-| | Stage | What it produces | Evidence class |
-|---|---|---|---|
-| **§2** | MLflow as system of record | The tracking server on the critical path | infrastructure |
-| **§4** | **M4** — regime-robust calibration | `v2-calibration-only`, `v2-full`, frozen | **confirmatory** (§5) |
-| **§6** | **M5** — the daily retraining service | a fresh model every day | **prospective** |
-| **§7** | The live scorecard | yesterday scored, today forecast, in public | **prospective** |
+| | Stage | What it produces |
+|---|---|---|
+| **§2** | MLflow as system of record | the tracking server on the critical path |
+| **§4** | **M4** — regime-robust calibration | `v2-calibration-only`, `v2-full`, **the models of record** |
+| **§6** | **M5** — the daily retraining service | v2's recipe, retrained daily, for the demo only |
+| **§7** | The live scorecard | yesterday scored, today forecast, in public |
 
 ---
 
@@ -271,6 +288,13 @@ snapshot is fully consumed through 2026-09-06, and the days accruing since are a
 **Based on M4 and running only after it freezes.** A fresh model every day, trained on real data
 pulled that morning, never stale in its inputs.
 
+**Its role is the demo and nothing else.** It is **v2's recipe retrained** — the CP-1 feature
+catalog, the CP-2 hyperparameters, and M4's calibration method, all frozen; only the data is new. So
+it demonstrates the validated method running in production rather than being a second, unvalidated
+model. **It supplies no result to any surface except the live scorecard**, and the scorecard's own
+numbers describe the service, not the model's skill. Every metric this project quotes about model
+quality comes from frozen v2 and its one-shot holdout.
+
 ### 6.1 What it does, once per day
 
 Scheduled after ~13:00 CET, when the day-ahead auction has published (clearing 12:45–12:57 CET):
@@ -379,19 +403,40 @@ and the running coverage will wander around nominal rather than sitting on it. T
 A public, unfilterable, daily-updating error record is the single most falsifiable artifact in this
 project, which is precisely why it is worth more than another chart.
 
-### 7.3 Evidence class — the line that must never blur
+### 7.3 Which model is quoted where — the line that must never blur
 
-| Surface | Model | Evidence class | May claim |
+**Frozen v2 is the model of record and supplies every result. The daily model supplies one page and
+no results.** This table is the routing rule, and it is enforced by `claims.py`: a number sourced
+from the daily service cannot be rendered into a slot that belongs to the model of record, because
+the two are different claim namespaces.
+
+| Surface / number | Model | Evidence class | May claim |
 |---|---|---|---|
-| v1 report, v1 holdout | frozen v1 champion | **one-shot confirmatory** | probabilistic skill on that window, nothing wider |
-| M4 holdout (§5) | frozen `v2-*` | **one-shot confirmatory** | whether the calibration fix works |
-| Live scorecard | daily model, retrained | **prospective / prequential** | observed performance since day one, no more |
+| The report, all metrics, SHAP, regimes, reliability | **frozen v2** | **one-shot confirmatory** | whether the model is good, on the evaluated window and nothing wider |
+| The M4 holdout result (§5) | **frozen v2** | **one-shot confirmatory** | whether the calibration fix works |
+| The CV line, any figure quoted in an interview | **frozen v2** | **one-shot confirmatory** | — |
+| v1's preserved report | frozen v1 champion | **one-shot confirmatory** | what v1 achieved, including its 0.194 collapse |
+| **The live scorecard only** | **daily model** | **prospective observation of a running service** | that the system runs, ingests, trains unattended, calibrates, publishes and scores itself in public |
 
 **The daily model has no clean test set and never will** — every version of it has seen everything up
-to yesterday. Its evidence is the prospective record and only the prospective record. **A rolling
-error figure from the live service may never be quoted as, compared with, or substituted for a
-confirmatory holdout result, on any surface.** They answer different questions and the page states
-which is which, beside each number.
+to yesterday, by construction. It is not a second opinion on model quality; it is proof that the
+product exists and functions.
+
+> **Three prohibitions, and they are absolute.**
+>
+> 1. **A rolling figure from the live service may never be quoted as, compared with, or substituted
+>    for a confirmatory holdout result** — not on the page, not in the README, not on the CV, not in
+>    a room.
+> 2. **The daily model's numbers never appear in a headline claim about forecast quality.** They
+>    appear on the scorecard, labelled, and nowhere else.
+> 3. **The scorecard never implies the frozen model produced it, and the report never implies the
+>    daily model produced it.** Each number carries its source model beside it.
+
+**Why the demo is still worth building under those restrictions.** Because the thing it proves is
+not available any other way. A frozen model with a good holdout proves *the method works*. A service
+that pulls real data every morning, refuses bad input, retrains, publishes, and scores itself in
+public with no ability to pick its days proves *the engineering works* — and that is the half of the
+claim a hiring manager cannot check from a notebook.
 
 ---
 
@@ -442,6 +487,9 @@ twice. **That is not a precedent, and every brief in this document says so.**
 - **Not a trading layer.** No position, no P&L, no execution, no financial advice. A published
   forecast and its error record, nothing else.
 - **Not a claim that daily retraining fixes regime shift.** §6.2 says the opposite, in advance.
+- **Not a second source of performance claims.** The daily model supplies the live scorecard and
+  nothing else. Every figure this project states about forecast quality comes from frozen v2 and its
+  one-shot holdout (§7.3).
 - **Not a licence to touch the M4 holdout.** The daily service never reads, writes, or aliases the
   frozen artifacts.
 - **Not a filtered scorecard.** No date picker, ever.
@@ -472,6 +520,10 @@ Stated explicitly, with the original reasoning answered rather than ignored.
    pointing `capstone_M4_v2-plan.md` here.
 2. **The daily model's alias name** — `daily` is proposed, deliberately distinct from `champion` so
    that no tooling, link or reader can confuse the retrained model with the frozen evaluated one.
+2b. **How hard to enforce §7.3's routing.** The recommendation is a **separate claim namespace** in
+   `claims.py` — daily figures live under a `live_*` prefix that the report and README generators
+   cannot read at all, so a mix-up is a build error rather than a review catch. That is stricter
+   than a convention and costs one afternoon.
 3. **How long the scorecard runs before it goes on the CV.** A record with four days in it invites a
    different reading from one with sixty. The recommendation is that the link goes up immediately
    and the scorecard simply shows however many days exist, labelled — but a deliberate wait is a
