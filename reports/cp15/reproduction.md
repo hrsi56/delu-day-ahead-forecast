@@ -7,6 +7,13 @@ before loading comparison inputs. The snapshot scan projects only the four
 permitted fields and filters the 2019-01-01 through 2026-04-07 boundary before
 materializing rows. No remote experiment service is required.
 
+The inherited WASM regression tests require the ignored `app/public/` payload.
+For detached CP-15 review, the Lead copies it byte-identically from the retained
+checkpoint checkout and records the payload file hashes in `validation.json`.
+It is an inherited test fixture, not a CP-15 application change. A standalone
+clone can obtain this prerequisite using the existing repository's WASM payload
+build instructions; keep that setup separate from CP-15 forecast regeneration.
+
 ## Frozen core environment and controls
 
 The executed core interpreter is CPython **3.13.15**, macOS arm64. All package

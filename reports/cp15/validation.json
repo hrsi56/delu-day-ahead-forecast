@@ -70,5 +70,26 @@
     ],
     "cache_fingerprint": "9967a0d99c94a258701ecb8ab0967e2eb59c69c28a85cbf9e402322b3d5dde0a",
     "scored": false
+  },
+  "inherited_ignored_regression_payload": {
+    "path": "app/public",
+    "status": "existing bytes preserved; copied unchanged into detached review checkout",
+    "sha256": {
+      "app/public/boosters/p025.txt.gz.b64": "85ae2592fe697836189827512b290a96978cf3d5b00947900e93ac01a2e2d315",
+      "app/public/boosters/p05.txt.gz.b64": "d5799cf048897c3f7eb2edaa0df6e5607adb36fbe94e3c664818beec768158b6",
+      "app/public/boosters/p10.txt.gz.b64": "3dca55ab58a42c8598312642bd9b25c39ba9587486bd2e4269a6386fed737d13",
+      "app/public/boosters/p25.txt.gz.b64": "ced00cc3f42d5e6c7523c085e32a0a76da315c03805698c7f9f683e178a62c7e",
+      "app/public/boosters/p50.txt.gz.b64": "8899b82d302e9baafeb45ffe0c2d2ea744eadecbdc1751ee1068fb60e03fc620",
+      "app/public/boosters/p75.txt.gz.b64": "7e359cce866231c25e67b60050b4e84740f71a8229f994c4d7f6b8982b5bfb30",
+      "app/public/boosters/p90.txt.gz.b64": "16eb7ca1a1cb2d7f8ec59d7f681a274297686405391ce25d8124410e002d6d33",
+      "app/public/boosters/p95.txt.gz.b64": "90a5a5b60209ac77186dc803002d1cd072f72df67c9c818468bb9a260be458a6",
+      "app/public/boosters/p975.txt.gz.b64": "e48e332acf293a690569073d0872ec540c111ee142be8fbb3210bf700f3ccec9",
+      "app/public/browser_champion.py": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
+      "app/public/calendar.json": "eb20b64a50c19eb8bd9ff40284375eff4e4b4985a1cc8a53344b761a5dad1354",
+      "app/public/champion.json": "71e76f7fe2c7bf6d681b67b698d7603793a691e2a016562de33061089b961071",
+      "app/public/claims.json": "ff96b781f88cd5b27f0c2d95c28683704f248eee1f60b46421271034869ef080",
+      "app/public/fixture.json": "9673ebd3d6416895ed96b932a90ee573cadce798b98c0857f3f28df4195d7510",
+      "app/public/series.json": "91c12ed636865520a3a6beb02bb6ed567390bc88334ca53241b66eeff05af656"
+    }
   }
 }
