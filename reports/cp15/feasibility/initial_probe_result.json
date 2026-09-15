@@ -1,0 +1,64 @@
+{
+  "status": "completed_unscored",
+  "evidence_class": "development_post_selection",
+  "model_id": "amazon/chronos-2",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "model_files": {
+    "README.md": {
+      "sha256": "c7b29bc88f5bc3ebc6e7213b6353be80090d671fefa4aa74ed20498838c16558",
+      "bytes": 7773
+    },
+    "config.json": {
+      "sha256": "ef1143bfdc9c0376d9a056eefca46cb4b1ec3d0ffacd541ff56feb40fb708031",
+      "bytes": 1067
+    },
+    "model.safetensors": {
+      "sha256": "ddcda3c7508bf2528087723e98a20707cc04b7f370ae275a9fd88078ddba4f42",
+      "bytes": 477930472
+    }
+  },
+  "model_cache_snapshot": "data/cp15-probe-cache/huggingface/models--amazon--chronos-2/snapshots/29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "device": "cpu",
+  "dtype": "float32",
+  "torch_threads": 2,
+  "torch_interop_threads": 1,
+  "seed": 42,
+  "training_or_finetuning": false,
+  "prediction_calls": 2,
+  "download_or_cache_seconds": 16.278950374995475,
+  "model_load_seconds": 0.05191341700265184,
+  "inference_seconds": 0.10754637500212993,
+  "positive_control_seconds": 0.039248457993380725,
+  "prediction_rows": 24,
+  "prediction_columns": [
+    "item_id",
+    "timestamp",
+    "target_name",
+    "predictions",
+    "0.1",
+    "0.5",
+    "0.9"
+  ],
+  "external_covariate_control": {
+    "change": "only future load multiplied by 1.2",
+    "maximum_prediction_delta_eur_mwh": 41.91291809082031,
+    "outcomes_used": false
+  },
+  "python": "3.12.14",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "finished_at_utc": "2026-09-15T21:23:38.652194+00:00",
+  "attribution": "Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de \u2014 CC BY 4.0.",
+  "hashes": {
+    "/Users/djourno/Downloads/PJM-cp15-feasibility/src/cp15/feasibility_probe.py": "5ff9656e9521960bf9330e5878ed2fb009d236c045e1b1e5302193fb814ddd14",
+    "reports/cp15/feasibility/requirements.freeze.txt": "3e1537b98e4fbeab01eb83f3f3e1e7e56a89a1453cdb89e5cb49cc5f531dcebc",
+    "reports/cp15/feasibility/input_manifest.json": "473f93e61e0e25bda49b5684c0e3c621db1417b5187db5f13f7740e0f5cea6a0",
+    "reports/cp15/feasibility/probe_predictions_unscored.csv": "c19601e65f775236f6c570cadc10747ffbb6f60b088f0e81f30598deafc45fe6"
+  },
+  "limitations": [
+    "Single origin and two inference calls, not a neural benchmark or accuracy claim.",
+    "Foundation-model pretraining overlap with historical electricity data is not ruled out.",
+    "Inherited load vintage assumption is retained, not independently proven.",
+    "No GPU/MPS run; process RSS does not measure total unified-memory pressure."
+  ]
+}

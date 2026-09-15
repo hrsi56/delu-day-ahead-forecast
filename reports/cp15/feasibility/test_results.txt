@@ -1,0 +1,12 @@
+..                                                                       [100%]
+=============================== warnings summary ===============================
+::test_input_projection_never_materializes_delivery_day_targets
+  /Users/djourno/Downloads/PJM-cp15-feasibility/src/cp15/feasibility_probe.py:58: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+    context_start = start - pd.Timedelta(hours=168)
+
+::test_input_projection_never_materializes_delivery_day_targets
+  /Users/djourno/Downloads/PJM-cp15-feasibility/src/cp15/feasibility_probe.py:91: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+    "context_last_utc": (start-pd.Timedelta(hours=1)).isoformat(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 2 warnings in 0.58s

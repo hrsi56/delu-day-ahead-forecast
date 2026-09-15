@@ -1,0 +1,6 @@
+/Users/djourno/Downloads/PJM-cp15-feasibility/src/cp15/feasibility_probe.py:58: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+  context_start = start - pd.Timedelta(hours=168)
+/Users/djourno/Downloads/PJM-cp15-feasibility/src/cp15/feasibility_probe.py:91: DeprecationWarning: The 'generic' unit for NumPy timedelta is deprecated, and will raise an error in the future. This includes implicit conversion of bare integers (e.g. `+ 1`). Please use a specific unit instead.
+  "context_last_utc": (start-pd.Timedelta(hours=1)).isoformat(),
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!

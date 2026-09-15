@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/Users/djourno/Downloads/PJM-cp15-feasibility/data/cp15-probe-env/bin/python",
+    "src/cp15/feasibility_probe.py",
+    "--offline"
+  ],
+  "cwd": "/private/tmp/cp15-lead-probe-reproduction",
+  "exit_code": 0,
+  "comparisons": {
+    "context.csv": {
+      "expected_sha256": "30ea75f943effa86c6b1f15b081ac46998ba4f1f6cc115df7ea2fa9b5e33155d",
+      "actual_sha256": "30ea75f943effa86c6b1f15b081ac46998ba4f1f6cc115df7ea2fa9b5e33155d",
+      "identical": true
+    },
+    "future_load.csv": {
+      "expected_sha256": "309ac82240296f96632f02ddf741a9f36318e547b221ddee96305106ce252aa3",
+      "actual_sha256": "309ac82240296f96632f02ddf741a9f36318e547b221ddee96305106ce252aa3",
+      "identical": true
+    },
+    "input_manifest.json": {
+      "expected_sha256": "473f93e61e0e25bda49b5684c0e3c621db1417b5187db5f13f7740e0f5cea6a0",
+      "actual_sha256": "473f93e61e0e25bda49b5684c0e3c621db1417b5187db5f13f7740e0f5cea6a0",
+      "identical": true
+    },
+    "probe_predictions_unscored.csv": {
+      "expected_sha256": "c19601e65f775236f6c570cadc10747ffbb6f60b088f0e81f30598deafc45fe6",
+      "actual_sha256": "c19601e65f775236f6c570cadc10747ffbb6f60b088f0e81f30598deafc45fe6",
+      "identical": true
+    }
+  },
+  "all_identical": true
+}
