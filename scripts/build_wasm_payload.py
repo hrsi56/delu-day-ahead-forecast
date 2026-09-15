@@ -186,6 +186,15 @@ def main() -> int:
         + "\n"
     )
 
+    # -- the claim set, so the browser retypes nothing ---------------------
+    # The WASM page is another public surface. It renders every number from the
+    # same dict the README, the Pages export, the Space card and the MLflow
+    # record render from; `tests/test_22` asserts this file equals build_claims()
+    # exactly, so the page cannot drift from them.
+    (OUT / "claims.json").write_text(
+        json.dumps(dict(claims.values), indent=1, sort_keys=True) + "\n"
+    )
+
     # -- the module the browser executes -----------------------------------
     # Shipped as data so the notebook fetches exactly the bytes
     # tests/test_22_wasm_equivalence.py imported and checked. Two copies that can

@@ -295,3 +295,22 @@ def test_the_notebook_fetches_the_module_this_test_verified():
     digest = hashlib.sha256(source).hexdigest()
     manifest = json.loads((REPO_ROOT / "reports/cp3b/payload.json").read_text())
     assert manifest["browser_champion_sha256"] == digest
+
+
+def test_the_browser_page_renders_from_the_one_claim_set():
+    """Item 5 carried into the browser: the WASM surface retypes nothing.
+
+    Every number the page shows comes from this file, and this file is
+    `build_claims()` verbatim — so the page cannot round a figure differently
+    from the README, the Pages export, the Space card or the MLflow record.
+    """
+    from delu_forecast.claims import build_claims
+
+    shipped = _load("claims.json")
+    assert shipped == dict(build_claims().values), (
+        "app/public/claims.json has drifted from claims.py — re-run `make wasm-payload`"
+    )
+    for key in ("snapshot_cutoff", "raw_model_fit_cutoff", "final_calibration_window",
+                "holdout_window", "replay_label", "sensitivity_probe_label",
+                "shipped_is_evaluated", "holdout_dm_label"):
+        assert shipped[key], key
