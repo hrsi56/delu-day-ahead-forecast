@@ -417,6 +417,22 @@ def build_claims() -> Claims:
             f"on a page Hugging Face controls — and runs the app in an iframe. The app alone is at "
             f"{network['via_the_huggingface_page']['app_url']}."
         ),
+        # What runs live on the Space and what is a committed result. One sentence,
+        # shared by the page header and the Space card: the card once said "every
+        # number on the page is computed in your browser", which the page itself
+        # contradicted.
+        "wasm_what_runs_live": (
+            "The forecast and the model-identity check are computed in your browser by the "
+            "champion itself; the evaluation figures — coverage, cutoffs, holdout metrics, "
+            "limitations — are the committed results of the one-shot evaluation, which is spent "
+            "and is not re-run."
+        ),
+        "wasm_availability_statement": (
+            f"Setting the delivery day's {availability['masked_rows']} prices to missing changes "
+            f"the forecast by exactly {availability['masked_max_abs_difference']!r}; raising all "
+            f"{availability['d_minus_1_rows_mutated_by_plus_250']} D−1 prices by 250 EUR/MWh moves "
+            f"it by {availability['d_minus_1_control_max_abs_difference']:.4f} EUR/MWh."
+        ),
         "wasm_fixture_days": str(fixture["delivery_days"]),
         "wasm_fixture_rows": f"{fixture['rows']:,}",
         "wasm_fixture_values": f"{fixture['quantile_values_compared']:,}",

@@ -212,3 +212,94 @@ def test_the_browser_run_record_carries_the_in_browser_evidence():
     )
     assert record["static_page_non_regression"]["network_requests"] == 1
     assert record["static_page_non_regression"]["resource_timing_entries"] == 0
+
+
+# -- overclaims in hand-written prose -----------------------------------------
+# Round 2 of the Integration review failed items 4 and 5 on two sentences typed
+# outside claims.py: a repeat-visit cache claim the record says was never
+# measured, and "every number on the page is computed in your browser". These
+# guards scan every WASM-facing prose source, not just the claim set.
+
+PROSE_SOURCES = (
+    REPO_ROOT / "app" / "wasm_showcase.py",
+    CARD,
+    REPO_ROOT / "README.md",
+    REPO_ROOT / "docs" / "index.html",
+    REPO_ROOT / "scripts" / "build_wasm_space.py",
+)
+
+_REPEAT_VISIT_CACHE_CLAIMS = re.compile(
+    r"(served|come|comes|loaded|loads) from (your|the) browser('s)? cache"
+    r"|repeat visits? (is|are) (served|free|instant|cached)",
+    re.IGNORECASE,
+)
+_EVERYTHING_LIVE_CLAIMS = re.compile(
+    r"every (number|figure)[^.]{0,40}(computed|calculated) (here|in your browser|live)"
+    r"|nothing (on this page )?is precomputed",
+    re.IGNORECASE,
+)
+
+
+def _repeat_visit_overclaims(text: str) -> list[str]:
+    return [m.group(0) for m in _REPEAT_VISIT_CACHE_CLAIMS.finditer(" ".join(text.split()))]
+
+
+def _everything_live_overclaims(text: str) -> list[str]:
+    return [m.group(0) for m in _EVERYTHING_LIVE_CLAIMS.finditer(" ".join(text.split()))]
+
+
+def test_no_surface_claims_a_repeat_visit_the_record_did_not_measure():
+    record = json.loads(NETWORK.read_text())
+    if record["repeat_visit"]["measured"]:
+        return
+    for source in PROSE_SOURCES:
+        found = _repeat_visit_overclaims(source.read_text())
+        assert not found, f"{source.name} claims repeat-visit caching that was not measured: {found}"
+
+
+def test_positive_control_the_repeat_visit_guard_catches_the_round_2_sentence():
+    assert _repeat_visit_overclaims("page and is counted separately. A repeat visit is served from your browser cache.")
+    assert _repeat_visit_overclaims("Repeat visits come from your browser cache, and there is no server to wake.")
+    assert not _repeat_visit_overclaims(
+        "On a repeat visit a browser can revalidate the page's text rather than download it again."
+    )
+
+
+def test_no_surface_claims_every_number_is_computed_live():
+    for source in PROSE_SOURCES:
+        found = _everything_live_overclaims(source.read_text())
+        assert not found, f"{source.name} overclaims what runs live: {found}"
+
+
+def test_positive_control_the_live_computation_guard_catches_the_round_2_sentence():
+    assert _everything_live_overclaims(
+        "It executes nothing on Hugging Face's side: every number on the page is computed in your browser, by Pyodide."
+    )
+    assert _everything_live_overclaims("Every number below is computed here. Nothing is precomputed and replayed at you.")
+    assert not _everything_live_overclaims(
+        "The forecast and the model-identity check are computed in your browser by the champion itself."
+    )
+
+
+def test_the_notebook_does_not_type_the_fixture_size():
+    """The page computes and prints the fixture size; a typed count goes stale (it did: 43 vs 54)."""
+    days = json.loads(EQUIVALENCE.read_text())["fixture"]["delivery_days"]
+    source = NOTEBOOK.read_text()
+    for stale in {days, 43}:
+        assert f"{stale} delivery days" not in source, f"'{stale} delivery days' is typed into the notebook"
+    assert "× 9 quantiles" not in source
+
+
+def test_the_card_states_the_availability_control_exactly():
+    claims = build_claims()
+    text = " ".join(CARD.read_text().split())
+    assert claims["wasm_availability_statement"] in text
+    assert "a D−1 price moves it" not in text, "the control raises all D−1 prices, not one"
+    assert " ".join(claims["wasm_what_runs_live"].split()) in text
+
+
+def test_out_of_band_sizes_name_a_method_that_works():
+    record = json.loads(NETWORK.read_text())
+    marimo = record["hosts"]["wasm.marimo.app"]
+    assert "HEAD" not in marimo["source"].split("(")[0], "that endpoint answers HEAD with 405"
+    assert marimo["bytes"] == 28126

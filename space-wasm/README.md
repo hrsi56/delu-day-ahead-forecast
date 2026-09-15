@@ -47,9 +47,9 @@ it is stated rather than hidden. The day-ahead price floor moved to −600 EUR/M
 
 ## What is deployed — and why it is still the evaluated model
 
-**This is a Static Space. It executes nothing on Hugging Face's side**: every number on the page
-is computed in your browser, by Pyodide, from the champion's own nine LightGBM boosters. A Static
-Space cannot sleep, because there is no process to put to sleep.
+**This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
+no process to put to sleep. The forecast and the model-identity check are computed in your browser by the champion itself; the evaluation figures — coverage, cutoffs, holdout metrics, limitations — are the committed results of the one-shot evaluation, which is spent and is not re-run. The champion's nine LightGBM boosters run in
+Pyodide.
 
 The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0.
 
@@ -63,14 +63,13 @@ because it was the one result that could have made this page impossible.
   `models/champion/champion_card.json`, the one-shot holdout report and the registered `champion`
   alias.
 - The snapshot the fixture rows come from is pinned at `sha256` `7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00`.
-- §5.2 holds on the browser path too: masking the delivery day's own prices changes the output by
-  exactly 0.0, and mutating a D−1 price moves it by 220.9433 EUR/MWh.
+- §5.2 holds on the browser path too. Setting the delivery day's 24 prices to missing changes the forecast by exactly 0.0; raising all 24 D−1 prices by 250 EUR/MWh moves it by 220.9433 EUR/MWh.
 
 ### What a first visit costs
 
 The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 345 requests from 5 hosts. There is no server to wake. On a repeat visit a browser can revalidate the page's text rather than download it again, but Hugging Face serves the fonts and images through expiring signed links, so those are fetched each time. Measured on a cold cache against the way Hugging Face actually serves a
 Static Space — files uncompressed, binary files through a redirect to `us.aws.cdn.hf.co`:
-57.25 million bytes. Most of it is the Python runtime and its scientific wheels from
+57.16 million bytes. Most of it is the Python runtime and its scientific wheels from
 `cdn.jsdelivr.net`. The nine boosters come from this Space itself as base64-encoded gzip: the
 platform does not compress, and it would serve a binary file through an uncacheable redirect, so
 the model ships as compressed text instead. The page prints its own measured download table at the

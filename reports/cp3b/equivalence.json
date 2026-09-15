@@ -1,12 +1,6 @@
 {
   "artifact_fingerprint_sha256": "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb",
   "compared_against": "frozen mlflow.pyfunc champion, models/champion/",
-  "cross_build": {
-    "browser": "LightGBM 4.6.0 Pyodide wasm32 (OpenMP disabled), numpy 2.2.5 / 2.4.3",
-    "host": "LightGBM 4.7.0, macOS arm64, numpy 2.4.6",
-    "measured_in": "a real browser, 2026-09-15, all nine heads, max |deviation| 0.0",
-    "raw_head_bitwise_in_browser": true
-  },
   "delivery_day_availability": {
     "d_minus_1": "2026-09-05",
     "d_minus_1_control_max_abs_difference": 220.9433340396028,

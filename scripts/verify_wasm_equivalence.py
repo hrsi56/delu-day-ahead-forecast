@@ -171,12 +171,6 @@ def main() -> int:
             "d_minus_1_rows_mutated_by_plus_250": mutated_rows,
             "d_minus_1_control_max_abs_difference": control_diff,
         },
-        "cross_build": {
-            "host": "LightGBM 4.7.0, macOS arm64, numpy 2.4.6",
-            "browser": "LightGBM 4.6.0 Pyodide wasm32 (OpenMP disabled), numpy 2.2.5 / 2.4.3",
-            "raw_head_bitwise_in_browser": True,
-            "measured_in": "a real browser, 2026-09-15, all nine heads, max |deviation| 0.0",
-        },
     }
     RECORD.parent.mkdir(parents=True, exist_ok=True)
     RECORD.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")

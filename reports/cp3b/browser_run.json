@@ -1,5 +1,20 @@
 {
   "date": "2026-09-15",
+  "final_bundle_render": {
+    "cell_errors": 0,
+    "console_errors": 0,
+    "controls": {
+      "level": "50 % selected: band changed, coverage annotation 0.4407",
+      "load_forecast": "slider to x 0.99 via keyboard events: 'Scenario active' rendered, inference re-ran"
+    },
+    "every_number_computed_claim_on_page": false,
+    "header_renders_shared_claim": true,
+    "identity_panel": "bitwise identical",
+    "repeat_visit_cache_claim_on_page": false,
+    "sensitivity_probe_label_on_first_render": true,
+    "served_by": "scripts/measure_wasm_load.py --emulate-hf, fresh loopback ports",
+    "undefined_rows_block": "4 rows are undefined by design \u2014 derived from data"
+  },
   "item_1_controls_driven": {
     "console_errors": 0,
     "fan_chart": "1 inline SVG chart",
@@ -67,7 +82,7 @@
     "served_by": "scripts/measure_wasm_load.py --emulate-hf on fresh loopback ports"
   },
   "purpose": "Evidence gathered in real browsers, as opposed to host-side tests. Items 1, 2 and 3 of M3.5/CP-3B each require a property to hold in the browser, so each is recorded here as observed. Reproduce with `make wasm && make wasm-serve` and the probes described below.",
-  "revision": "Round 3: re-observed on the final bundle (boosters as base64 gzip text) under emulated Hugging Face serving \u2014 text direct and uncompressed with an ETag; binary files through a no-store 302 to a separate CDN origin.",
+  "revision": "Round 4: re-observed on the final bundle after the round-2 Integration review \u2014 shared 'what runs live' claim, no unmeasured repeat-visit statement, notebook free of typed counts \u2014 under emulated Hugging Face serving.",
   "runtimes_observed": {
     "marimo_pinned_runtime": "Pyodide v314.0.0 as pinned by marimo 0.24.2, Python 3.14.2, LightGBM 4.6.0, numpy 2.4.3, wasm32",
     "probe_runtime": "Pyodide 0.28.3, Python 3.13.2, LightGBM 4.6.0, numpy 2.2.5, wasm32 (OpenMP disabled)"

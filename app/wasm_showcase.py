@@ -14,8 +14,8 @@ The model is not a re-training or a re-fit. It is the same nine boosters, the
 same base catalog, the same four CQR thresholds and the same isotonic step,
 executing in the browser because `mlflow.pyfunc` does not load under Pyodide.
 `tests/test_22_wasm_equivalence.py` proves that composition equals the frozen
-champion bitwise over 43 delivery days spanning all three regimes and a DST
-transition — max |deviation| 0.0.
+champion bitwise over the committed fixture in tests/fixtures/ — the page
+reports the size and result it computes, rather than a number typed here.
 
 Two controls only (§9.2): the quantile-level selector, and one load-forecast
 scenario probe. Both are served by real local inference in the browser.
@@ -104,13 +104,9 @@ def _(CLAIMS, META, mo):
         f"""
         # DE-LU day-ahead price forecasting — running in your browser
 
-        The **forecast** below and the **identity check** further down are computed here,
-        in your browser, by the champion itself: nine LightGBM quantile heads, CQR
-        calibration, isotonic last, executing in WebAssembly — there is no server. The
-        **evaluation figures** — coverage, cutoffs, holdout metrics, limitations — are
-        the committed results of the one-shot evaluation, read from the same claim set
-        as every other surface of this project. The holdout is spent; it is not re-run
-        here, and nothing on this page could re-run it.
+        {CLAIMS['wasm_what_runs_live']} The model executes in WebAssembly — there is no
+        server — and the committed results are read from the same claim set as every other
+        surface of this project.
 
         > **{CLAIMS['replay_label']}**
 
@@ -271,7 +267,7 @@ def _(CHAMPION, CLAIMS, META, PAIRS, fan_svg, level, load_scale, mo, np):
         mo.md(_note),
         mo.md(
             f"Recomputed in your browser just now: {int(np.isfinite(_final).all(axis=1).sum())} "
-            f"hours × 9 quantiles, {len(_labels)} heads, CQR then isotonic."
+            f"hours × {len(_labels)} quantile heads, CQR then isotonic."
         ),
     ])
     return
@@ -358,7 +354,7 @@ def _(CHAMPION, FIXTURE, META, mo, np):
 
 
 @app.cell
-def _(mo):
+def _(CLAIMS, mo):
     # Item 4: this page necessarily reaches a CDN for Pyodide and its wheels, and
     # pulls the nine boosters from its own origin. Rather than describe that, it
     # reads its own Resource Timing entries -- from inside the worker, where the
@@ -428,10 +424,13 @@ def _(mo):
         "nine gradient-boosted models so the inference is real rather than replayed, and "
         "the honest thing to do with that cost is print it.\n\n"
     )
+    # No claim about repeat visits is made here beyond what the record supports: a
+    # repeat visit was not measured, and the figures quoted come from claims.py.
     _outro = (
         "\n\nMeasured in this browser session, from the Python runtime's own Resource "
-        "Timing entries. The notebook interface is served from this Space alongside the "
-        "page and is counted separately. A repeat visit is served from your browser cache."
+        "Timing entries; the notebook interface is served from this Space alongside the "
+        "page and is counted separately. For a first visit in full: "
+        + CLAIMS["wasm_cold_load"]
     )
     mo.md(_intro + _network_md + _outro)
     return

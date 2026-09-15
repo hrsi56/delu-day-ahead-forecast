@@ -68,9 +68,9 @@ GITATTRIBUTES = """*.png filter=lfs diff=lfs merge=lfs -text
 def static_deployed_section(C) -> str:
     return f"""## What is deployed — and why it is still the evaluated model
 
-**This is a Static Space. It executes nothing on Hugging Face's side**: every number on the page
-is computed in your browser, by Pyodide, from the champion's own nine LightGBM boosters. A Static
-Space cannot sleep, because there is no process to put to sleep.
+**This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
+no process to put to sleep. {C['wasm_what_runs_live']} The champion's nine LightGBM boosters run in
+Pyodide.
 
 {C['wasm_identity']}
 
@@ -84,8 +84,7 @@ because it was the one result that could have made this page impossible.
   `models/champion/champion_card.json`, the one-shot holdout report and the registered `champion`
   alias.
 - The snapshot the fixture rows come from is pinned at `sha256` `{C['snapshot_sha256']}`.
-- §5.2 holds on the browser path too: masking the delivery day's own prices changes the output by
-  exactly 0.0, and mutating a D−1 price moves it by {C['wasm_d_minus_1_control']} EUR/MWh.
+- §5.2 holds on the browser path too. {C['wasm_availability_statement']}
 
 ### What a first visit costs
 
