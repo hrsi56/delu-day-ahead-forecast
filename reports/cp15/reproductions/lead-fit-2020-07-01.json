@@ -1,0 +1,63 @@
+{
+  "fold": "fold_1",
+  "day": "2020-07-01",
+  "production_protocol_unchanged": true,
+  "uncached": true,
+  "comparisons": {
+    "B0": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "B2": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "B3": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A1": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A2": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A4": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A3": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A5": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    }
+  },
+  "model_records_matched": 74,
+  "identity_fields_matched": [
+    "history_start",
+    "history_end_exclusive",
+    "n_train",
+    "train_rows_sha256",
+    "train_target_sha256",
+    "normalization_rows_sha256",
+    "model_sha256"
+  ],
+  "causal_controls": {
+    "D_and_future_target_mask_maximum_delta": 0,
+    "future_load_changed_after_D": true,
+    "all_model_hashes_identical_under_mask": true,
+    "positive_D_minus_1_price_add_500_maximum_deltas": {
+      "B2": 485.17021664721653,
+      "B3": 39.37352693513883,
+      "A1": 425.36057961143297,
+      "A2": 190.44574325474906,
+      "A4": 287.7812685709952
+    }
+  },
+  "elapsed_seconds": 117.24783383299655
+}

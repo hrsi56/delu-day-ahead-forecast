@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "predictions": 19440,
+  "fit_records": 8806,
+  "issued_rows": 22848,
+  "origins": 119,
+  "checks": [
+    "all9 row counts",
+    "every consumed issued error",
+    "every emitted residual quantile",
+    "all fit-window/normalization/target hashes"
+  ]
+}

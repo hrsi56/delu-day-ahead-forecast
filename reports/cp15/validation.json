@@ -91,5 +91,27 @@
       "app/public/fixture.json": "9673ebd3d6416895ed96b932a90ee573cadce798b98c0857f3f28df4195d7510",
       "app/public/series.json": "91c12ed636865520a3a6beb02bb6ed567390bc88334ca53241b66eeff05af656"
     }
+  },
+  "lead_production_reproduction": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python -m cp15.reproduce_fit --fold fold_1 --day 2020-07-01 --causal-controls --output /tmp/cp15-lead-fit-control-2020-07-01.json",
+      "exit_code": 0,
+      "result": "reproductions/lead-fit-2020-07-01.json",
+      "maximum_original_prediction_delta": 0,
+      "all_74_model_records_match": true,
+      "causal_mask_maximum_delta": 0,
+      "all_five_fitted_policies_respond_to_D_minus_1_control": true
+    }
+  ],
+  "fold_1_saved_replay": {
+    "exit_code": 0,
+    "result": "reproductions/fold-1-independent-audit.json",
+    "method": "Independent check_feedback, check_reconstructed_intervals and check_fit_records helpers on all fold_1 saved Parquet artifacts; no CP15 scoring or model routines used"
+  },
+  "market_boundary_control": {
+    "command": "uv run --frozen pytest -q tests/cp15/test_pipeline.py -k market_boundary",
+    "exit_code": 0,
+    "passed": 1,
+    "seconds": 1.23
   }
 }

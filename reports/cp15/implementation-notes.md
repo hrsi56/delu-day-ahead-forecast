@@ -34,6 +34,14 @@ and is labeled as shared, not attributed to a single estimator. Ensembles and
 B0/B1 perform no model fits. Cached central forecasts retain their original fit
 records; cache hits are counted separately from logical policy fits.
 
+Regression tests, independent artifact checks, and the first uncached
+representative reproduction briefly overlapped the fold queues on the same
+machine. Timing reflects this shared local workload; it is not an isolated
+estimator throughput benchmark. The reported fold peak RSS comes from the
+Python worker's `resource.getrusage(RUSAGE_SELF).ru_maxrss` (bytes on macOS).
+The separate `/usr/bin/time -l` logs wrap `uv` and must not be mistaken for the
+Python worker's memory measurement.
+
 ## LEAR implementation provenance
 
 The model uses separate hourly L1 regressions with cross-hour price lags and
