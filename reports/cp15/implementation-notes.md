@@ -24,6 +24,17 @@ convergence. Per-hour fit records retain total iterations and solver calls for
 every grid penalty and final fit. The complete core is rerun under its new
 source fingerprint, including earlier successful warm-up origins.
 
+## Residual-state controls
+
+Implementation review also corrected the treatment of late-arriving truth:
+buffer retention now selects the latest 28 complete delivery dates, rather than
+arrival order. An older recovered day cannot displace a newer date. Backward
+release-origin calls are refused; repeated calls at the same origin remain
+idempotent. Positive and negative fixtures cover both rules. These enforce the
+registered dated-buffer and single-consumption policy; they do not change its
+28-day horizon or D-2 delay. Saved issued forecasts, released errors and actual
+quantiles are independently replayed in the production evidence audit.
+
 ## Execution and resource accounting
 
 Origins execute chronologically within each fold; at most two independent fold

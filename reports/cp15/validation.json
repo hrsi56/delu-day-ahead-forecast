@@ -139,5 +139,27 @@
     ],
     "all_completed_checks_exit_code": 0,
     "checks": "Independent B0 calendar-lag lookup; A3 and A5 component arithmetic; exact every issued hour including warm-up"
+  },
+  "preserved_implementation_logs": {
+    "reports/cp15/execution/initial-warmup-fold-1.log": {
+      "source": "data/cp15-fold1-run.log",
+      "sha256": "beeb3d1ed4b19e549659c0bde01238569793c357a4d55e4de6c6b89b434f87e8"
+    },
+    "reports/cp15/execution/initial-warmup-fold-2.log": {
+      "source": "data/cp15-fold2-run.log",
+      "sha256": "79d33d7db581918c3744d9cf72fee2b8f5c930ec9a70c96f005b16a096300d93"
+    },
+    "reports/cp15/execution/convergence-diagnostic.log": {
+      "source": "data/cp15-convergence-diagnostic.log",
+      "sha256": "fe46697598399d8e4c0e6ffa6a6fed120b4251d23598766ecf9ce0be629a0237"
+    },
+    "reports/cp15/execution/convergence-repaired.log": {
+      "source": "data/cp15-convergence-repaired.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/cp15/execution/pre-output-regression.log": {
+      "source": "data/cp15-pre-output-regression.log",
+      "sha256": "5b6c300b1e7116e3f903866a18efa89a8b21b476ff0b7ea45c2ed08a6277f0ed"
+    }
   }
 }

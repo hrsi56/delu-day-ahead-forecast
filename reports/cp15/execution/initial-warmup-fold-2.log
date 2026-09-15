@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 131, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 126, in main
+    if args.fold:run_fold(data,args.fold,output,cache)
+                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 52, in run_fold
+    rows,centers,logs,hit=day_predictions(data,d,cache)
+                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 33, in day_predictions
+    center,log=fit_day(data,d,p,rows=rows);centers[p]=center;fits.extend(log)
+               ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM-cp-15/src/cp15/models.py", line 70, in fit_day
+    model=_lasso(it,target[inner],rel*unit,p,model)
+  File "/Users/djourno/Downloads/PJM-cp-15/src/cp15/models.py", line 30, in _lasso
+    if any(issubclass(w.category,ConvergenceWarning) for w in caught):raise RuntimeError('LEAR convergence failure')
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: LEAR convergence failure

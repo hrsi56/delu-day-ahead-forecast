@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 131, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 124, in main
+    rows,centers,logs,_=day_predictions(data,args.reproduce_day,cache,force=True)
+                        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM-cp-15/scripts/cp15_forecasting.py", line 33, in day_predictions
+    center,log=fit_day(data,d,p,rows=rows);centers[p]=center;fits.extend(log)
+               ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM-cp-15/src/cp15/models.py", line 71, in fit_day
+    model=_lasso(it,target[inner],rel*unit,p,model)
+  File "/Users/djourno/Downloads/PJM-cp-15/src/cp15/models.py", line 31, in _lasso
+    raise RuntimeError(f'LEAR convergence failure: alpha={alpha}, shape={x.shape}, n_iter={model.n_iter_}, dual_gap={model.dual_gap_}; '+str([str(w.message) for w in caught]))
+RuntimeError: LEAR convergence failure: alpha=0.0008207878053009869, shape=(56, 350), n_iter=20000, dual_gap=8.386406227109797e-05; ['Objective did not converge. You might want to increase the number of iterations, check the scale of the features or consider increasing regularisation. Duality gap: 4.696387e-03, tolerance: 3.773e-03']
