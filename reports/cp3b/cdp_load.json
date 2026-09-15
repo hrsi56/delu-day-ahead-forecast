@@ -1,0 +1,5738 @@
+{
+  "byte_definition": "Network.loadingFinished / redirectResponse encodedDataLength: bytes Chrome received for each request, headers and body, as encoded on the wire",
+  "chrome": "Google Chrome 152.0.7977.83",
+  "instrument": "headless Chrome over the DevTools protocol, brand-new profile, page and every worker attached",
+  "server_status_counts": {
+    "app 200": 307,
+    "app 302": 23,
+    "app 304": 306,
+    "cdn 200": 23
+  },
+  "serving": "scripts/measure_wasm_load.py --emulate-hf (HTTP/1.1; text direct with ETag; binary files as a no-store 302 to a CDN stand-in)",
+  "visits": {
+    "first": {
+      "bytes": 57252166,
+      "contexts": {
+        "page": 314,
+        "worker": 38
+      },
+      "errors": [],
+      "hosts": {
+        "cdn.jsdelivr.net": {
+          "bytes": 31936965,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 18
+        },
+        "files.pythonhosted.org": {
+          "bytes": 2755848,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 4
+        },
+        "the Space's static host (emulated)": {
+          "bytes": 21545223,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 0,
+          "redirects": 12,
+          "requests": 317
+        },
+        "us.aws.cdn.hf.co (emulated)": {
+          "bytes": 985713,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 12
+        },
+        "wasm.marimo.app": {
+          "bytes": 28417,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 1
+        }
+      },
+      "requests": 352,
+      "requests_detail": [
+        {
+          "bytes": 1218,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/Lora-VariableFont_wght-CZceb_kH.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1210,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/PTSans-Regular-Bam3NpBI.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1202,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/gradient-yHQUC_QB.png",
+          "status": 302
+        },
+        {
+          "bytes": 1207,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/PTSans-Bold-C_DwAp7Z.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1199,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/noise-60BoTA8O.png",
+          "status": 302
+        },
+        {
+          "bytes": 75879,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/index.html",
+          "status": 200
+        },
+        {
+          "bytes": 1212,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/FiraMono-Regular-CEsLFVD9.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1209,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/FiraMono-Bold-C6PDArdf.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 823,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/markdown-renderer-B7zTpxjS.css",
+          "status": 200
+        },
+        {
+          "bytes": 379841,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/index-C7yAojRA.css",
+          "status": 200
+        },
+        {
+          "bytes": 1211,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/FiraMono-Medium-D5MAsWEG.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 10179,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cells-D-c15Ks-.css",
+          "status": 200
+        },
+        {
+          "bytes": 83918,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/Lora-VariableFont_wght-CZceb_kH.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 113791,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/PTSans-Regular-Bam3NpBI.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 116367,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/PTSans-Bold-C_DwAp7Z.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 45660,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/noise-60BoTA8O.png",
+          "status": 200
+        },
+        {
+          "bytes": 371352,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/gradient-yHQUC_QB.png",
+          "status": 200
+        },
+        {
+          "bytes": 1505,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/JsonOutput-BQtz7-np.css",
+          "status": 200
+        },
+        {
+          "bytes": 62910,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/FiraMono-Regular-CEsLFVD9.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 67630,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/FiraMono-Bold-C6PDArdf.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 62522,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/FiraMono-Medium-D5MAsWEG.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 1130,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/rolldown-runtime-B0Z9INg1.js",
+          "status": 200
+        },
+        {
+          "bytes": 7762,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-CBDbhulC.js",
+          "status": 200
+        },
+        {
+          "bytes": 9213,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useEvent-xfs0Sn4r.js",
+          "status": 200
+        },
+        {
+          "bytes": 494,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/compiler-runtime-CYIjoINj.js",
+          "status": 200
+        },
+        {
+          "bytes": 3813,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-dom-BQrReHnR.js",
+          "status": 200
+        },
+        {
+          "bytes": 1253,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/debounce-aFmHgJZY.js",
+          "status": 200
+        },
+        {
+          "bytes": 974,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isObject-BCaOs5rp.js",
+          "status": 200
+        },
+        {
+          "bytes": 373,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isSymbol-oX0TOjjx.js",
+          "status": 200
+        },
+        {
+          "bytes": 853,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/now-Cmx0b_zA.js",
+          "status": 200
+        },
+        {
+          "bytes": 1919,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_initCloneObject-CM3WilQg.js",
+          "status": 200
+        },
+        {
+          "bytes": 108425,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/schemas-aTUejmFi.js",
+          "status": 200
+        },
+        {
+          "bytes": 664,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/jsx-runtime-B74pBk57.js",
+          "status": 200
+        },
+        {
+          "bytes": 7697,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isArrayLikeObject-DnwgSs_Z.js",
+          "status": 200
+        },
+        {
+          "bytes": 1913,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_baseMerge-DLqSVasz.js",
+          "status": 200
+        },
+        {
+          "bytes": 978,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/objects-snlMn4yk.js",
+          "status": 200
+        },
+        {
+          "bytes": 280,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/invariant-Ci2dTZ72.js",
+          "status": 200
+        },
+        {
+          "bytes": 12906,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useEventListener-92uWqz-P.js",
+          "status": 200
+        },
+        {
+          "bytes": 6926,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/utils-D5Ywm7-q.js",
+          "status": 200
+        },
+        {
+          "bytes": 465156,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/index-4n22QjCD.js",
+          "status": 200
+        },
+        {
+          "bytes": 556,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/Deferred-CrTnjj37.js",
+          "status": 200
+        },
+        {
+          "bytes": 7933,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/config-BlNM0caL.js",
+          "status": 200
+        },
+        {
+          "bytes": 967,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/constants-BDbGiS7O.js",
+          "status": 200
+        },
+        {
+          "bytes": 13063,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/session-Sz5nSFku.js",
+          "status": 200
+        },
+        {
+          "bytes": 598,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/clsx-DB0hHKMi.js",
+          "status": 200
+        },
+        {
+          "bytes": 20586,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cn-ldLVeaqm.js",
+          "status": 200
+        },
+        {
+          "bytes": 28423,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/fullscreen-BH2jz-F4.js",
+          "status": 200
+        },
+        {
+          "bytes": 4597,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/menu-items-BSRA2YI9.js",
+          "status": 200
+        },
+        {
+          "bytes": 353,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/check-BoA6XBpj.js",
+          "status": 200
+        },
+        {
+          "bytes": 27004,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DzCQtGkt.js",
+          "status": 200
+        },
+        {
+          "bytes": 4519,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/button-Dh8EwhsF.js",
+          "status": 200
+        },
+        {
+          "bytes": 3416,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useNumberFormatter-DHJ9s6Vk.js",
+          "status": 200
+        },
+        {
+          "bytes": 12605,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/alert-dialog-CA-2mBs3.js",
+          "status": 200
+        },
+        {
+          "bytes": 2838,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/context-Do8M9TDF.js",
+          "status": 200
+        },
+        {
+          "bytes": 1458,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/createLucideIcon-B7HeEoG2.js",
+          "status": 200
+        },
+        {
+          "bytes": 4001,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/circle-ByJdIf5p.js",
+          "status": 200
+        },
+        {
+          "bytes": 25332,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/select-nLt2y0Sw.js",
+          "status": 200
+        },
+        {
+          "bytes": 9800,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tooltip-BUtPzKB4.js",
+          "status": 200
+        },
+        {
+          "bytes": 1489,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/arrays-BqUx5USx.js",
+          "status": 200
+        },
+        {
+          "bytes": 59058,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-CZNULd6Z.js",
+          "status": 200
+        },
+        {
+          "bytes": 533,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/once-Haz_uxEL.js",
+          "status": 200
+        },
+        {
+          "bytes": 1375,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/capabilities-D8kPgMKr.js",
+          "status": 200
+        },
+        {
+          "bytes": 2927,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cjs-C49f7GXV.js",
+          "status": 200
+        },
+        {
+          "bytes": 569,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/requests-C6_IaFh7.js",
+          "status": 200
+        },
+        {
+          "bytes": 1275,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/createReducer-B_XmHROl.js",
+          "status": 200
+        },
+        {
+          "bytes": 35456,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DiYjQAhI.js",
+          "status": 200
+        },
+        {
+          "bytes": 1285,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/strings-CReV1AYG.js",
+          "status": 200
+        },
+        {
+          "bytes": 38452,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/marked.esm-B_3iMIUq.js",
+          "status": 200
+        },
+        {
+          "bytes": 1221,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useLifecycle-BUaJcygz.js",
+          "status": 200
+        },
+        {
+          "bytes": 568,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/database-zap-CloO6gbw.js",
+          "status": 200
+        },
+        {
+          "bytes": 341859,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-BtC9ym6k.js",
+          "status": 200
+        },
+        {
+          "bytes": 832,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/toDate-hGYJX0Ha.js",
+          "status": 200
+        },
+        {
+          "bytes": 47059,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-B8pdsUrS.js",
+          "status": 200
+        },
+        {
+          "bytes": 1504,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDebounce-DgpSQhrP.js",
+          "status": 200
+        },
+        {
+          "bytes": 399,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/uuid-k9DpjH68.js",
+          "status": 200
+        },
+        {
+          "bytes": 1862,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/numbers-Bc-r3jsC.js",
+          "status": 200
+        },
+        {
+          "bytes": 2039,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/use-toast-DpWHUGuF.js",
+          "status": 200
+        },
+        {
+          "bytes": 17169,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/write-secret-modal-D6zoZgLY.js",
+          "status": 200
+        },
+        {
+          "bytes": 81866,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/input-DEbY281O.js",
+          "status": 200
+        },
+        {
+          "bytes": 382,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/plus-C4J9gIE1.js",
+          "status": 200
+        },
+        {
+          "bytes": 2364,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/badge-BSgtkC2e.js",
+          "status": 200
+        },
+        {
+          "bytes": 557,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/trash-2-D_HX-0qx.js",
+          "status": 200
+        },
+        {
+          "bytes": 24478,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DkPPv0FB.js",
+          "status": 200
+        },
+        {
+          "bytes": 1441,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/preload-helper-HclGiUj8.js",
+          "status": 200
+        },
+        {
+          "bytes": 83943,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Dw9YRsCU.js",
+          "status": 200
+        },
+        {
+          "bytes": 28492,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-B0RXffUm.js",
+          "status": 200
+        },
+        {
+          "bytes": 2004,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useTheme-C-ri8BtY.js",
+          "status": 200
+        },
+        {
+          "bytes": 44800,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-CKUpxYGQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 3318,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/stex-Dc5bKD4z.js",
+          "status": 200
+        },
+        {
+          "bytes": 2302,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useAsyncData-Buhk-UgR.js",
+          "status": 200
+        },
+        {
+          "bytes": 1074,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/paths-zcL04qUW.js",
+          "status": 200
+        },
+        {
+          "bytes": 1961,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/get-DjNf4SIX.js",
+          "status": 200
+        },
+        {
+          "bytes": 44127,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Cx4BE7jC.js",
+          "status": 200
+        },
+        {
+          "bytes": 551,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_hasPath-BmRQipI0.js",
+          "status": 200
+        },
+        {
+          "bytes": 27353,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/purify.es-DrVcFY1Q.js",
+          "status": 200
+        },
+        {
+          "bytes": 719,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_baseSet-gX6o3Pih.js",
+          "status": 200
+        },
+        {
+          "bytes": 796,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/hasIn-yw4sIeJR.js",
+          "status": 200
+        },
+        {
+          "bytes": 751,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pick-Bs4cJfJU.js",
+          "status": 200
+        },
+        {
+          "bytes": 1452,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/errors-DzO-nXy-.js",
+          "status": 200
+        },
+        {
+          "bytes": 11129,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/switch-DjXr9Y9D.js",
+          "status": 200
+        },
+        {
+          "bytes": 465,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/copy-BMXKNElG.js",
+          "status": 200
+        },
+        {
+          "bytes": 841,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/eye-off-CFuPxa9F.js",
+          "status": 200
+        },
+        {
+          "bytes": 1223,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/copy-DlEomWzI.js",
+          "status": 200
+        },
+        {
+          "bytes": 460,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/extends-CvVTau-c.js",
+          "status": 200
+        },
+        {
+          "bytes": 706,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useAddCell-DdB_uBif.js",
+          "status": 200
+        },
+        {
+          "bytes": 10107,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/esm-BHMOvJzM.js",
+          "status": 200
+        },
+        {
+          "bytes": 4330,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/LazyAnyLanguageCodeMirror-LboTfNDv.js",
+          "status": 200
+        },
+        {
+          "bytes": 20457,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/readonly-python-code-DpIyjHqY.js",
+          "status": 200
+        },
+        {
+          "bytes": 1584,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/copy-icon-z8fuTE3w.js",
+          "status": 200
+        },
+        {
+          "bytes": 5634,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/markdown-renderer-BZKlbm2Q.js",
+          "status": 200
+        },
+        {
+          "bytes": 1507,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useRunCells-CX7oW5zy.js",
+          "status": 200
+        },
+        {
+          "bytes": 23863,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/micromark-factory-space-D9Dr-k4J.js",
+          "status": 200
+        },
+        {
+          "bytes": 6327,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/RenderHTML-DwhMAd9l.js",
+          "status": 200
+        },
+        {
+          "bytes": 760,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/blob-B2d_dHwI.js",
+          "status": 200
+        },
+        {
+          "bytes": 5377,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/share-CPtBiNgr.js",
+          "status": 200
+        },
+        {
+          "bytes": 568,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/events-CbeVJ6OD.js",
+          "status": 200
+        },
+        {
+          "bytes": 3456,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ErrorBoundary-CDVGFYfr.js",
+          "status": 200
+        },
+        {
+          "bytes": 5109,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tabs-Cy1qXLzH.js",
+          "status": 200
+        },
+        {
+          "bytes": 359,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/chevron-right-CKA5zVsM.js",
+          "status": 200
+        },
+        {
+          "bytes": 9239,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/config-B-r81uZ6.js",
+          "status": 200
+        },
+        {
+          "bytes": 33637,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/state-Di9TbuV9.js",
+          "status": 200
+        },
+        {
+          "bytes": 550,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/refresh-cw-Bf-rx_aV.js",
+          "status": 200
+        },
+        {
+          "bytes": 837,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/table-CUK1W5bI.js",
+          "status": 200
+        },
+        {
+          "bytes": 14594,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/html-to-image-D6GUC5q6.js",
+          "status": 200
+        },
+        {
+          "bytes": 23175,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dropdown-menu-C40jM9o4.js",
+          "status": 200
+        },
+        {
+          "bytes": 9300,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/download-DMxOzI7b.js",
+          "status": 200
+        },
+        {
+          "bytes": 3320,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tree-actions-CG5g7aUQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 480,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/external-link-Bp3BxyRA.js",
+          "status": 200
+        },
+        {
+          "bytes": 442658,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/chunk-5FQGJX7Z-CRg4xQWg.js",
+          "status": 200
+        },
+        {
+          "bytes": 1268,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/spinner-Ck-Hgfvj.js",
+          "status": 200
+        },
+        {
+          "bytes": 455,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ellipsis-Dfik_tuW.js",
+          "status": 200
+        },
+        {
+          "bytes": 620,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/hat-glasses-C8LSY3HT.js",
+          "status": 200
+        },
+        {
+          "bytes": 470,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/message-circle-BQB1AIAg.js",
+          "status": 200
+        },
+        {
+          "bytes": 601,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/package-DPlscLzt.js",
+          "status": 200
+        },
+        {
+          "bytes": 4945,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/datasource-DrODSIs0.js",
+          "status": 200
+        },
+        {
+          "bytes": 758,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/kbd-Cwh96ZBE.js",
+          "status": 200
+        },
+        {
+          "bytes": 2539,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useInstallPackage-DsD08SLK.js",
+          "status": 200
+        },
+        {
+          "bytes": 2193,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/alert-dmKwNsrp.js",
+          "status": 200
+        },
+        {
+          "bytes": 1037,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/state-B6AklCzD.js",
+          "status": 200
+        },
+        {
+          "bytes": 3202,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cell-link-6burT2XF.js",
+          "status": 200
+        },
+        {
+          "bytes": 460,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isValid-nQ3Iam8J.js",
+          "status": 200
+        },
+        {
+          "bytes": 18432,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/VisuallyHidden-CBMDmozt.js",
+          "status": 200
+        },
+        {
+          "bytes": 7472,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/en-US-yTIMUO13.js",
+          "status": 200
+        },
+        {
+          "bytes": 2946,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDateFormatter-BiqAQ-zI.js",
+          "status": 200
+        },
+        {
+          "bytes": 30713,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/MarimoErrorOutput-DqpoYOvw.js",
+          "status": 200
+        },
+        {
+          "bytes": 38426,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dates-B58T85Jq.js",
+          "status": 200
+        },
+        {
+          "bytes": 4871,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/defaultLocale-CNPGWpMu.js",
+          "status": 200
+        },
+        {
+          "bytes": 2027,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/precisionRound-Bq_nmf5u.js",
+          "status": 200
+        },
+        {
+          "bytes": 1143442,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cells-Cp-G34Rz.js",
+          "status": 200
+        },
+        {
+          "bytes": 20469,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vega-loader.browser-AQmjV9CX.js",
+          "status": 200
+        },
+        {
+          "bytes": 27102,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tooltip-BG35uS_N.js",
+          "status": 200
+        },
+        {
+          "bytes": 13082,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/defaultLocale-Dm4DaIgg.js",
+          "status": 200
+        },
+        {
+          "bytes": 8607,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-icons.esm-hr79-MCS.js",
+          "status": 200
+        },
+        {
+          "bytes": 4602,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/emotion-is-prop-valid.esm-nLO-SoUf.js",
+          "status": 200
+        },
+        {
+          "bytes": 3173,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/error-banner-Dw5YY9wq.js",
+          "status": 200
+        },
+        {
+          "bytes": 457,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useIframeCapabilities-C7Di8f2y.js",
+          "status": 200
+        },
+        {
+          "bytes": 3583,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/table-DmqOOjfe.js",
+          "status": 200
+        },
+        {
+          "bytes": 493,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/formats-C6s96nu2.js",
+          "status": 200
+        },
+        {
+          "bytes": 532,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/utils-49LGK4zG.js",
+          "status": 200
+        },
+        {
+          "bytes": 435,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/chart-no-axes-column-ChZdjJhj.js",
+          "status": 200
+        },
+        {
+          "bytes": 25881,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-resizable-panels.browser.esm-BSRAHC4P.js",
+          "status": 200
+        },
+        {
+          "bytes": 4136,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useBoolean-BXC4CItZ.js",
+          "status": 200
+        },
+        {
+          "bytes": 503,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/square-function-DkZweMAs.js",
+          "status": 200
+        },
+        {
+          "bytes": 11020,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/spec-DKsAmLTi.js",
+          "status": 200
+        },
+        {
+          "bytes": 437,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/code-xml-B7x62Eeh.js",
+          "status": 200
+        },
+        {
+          "bytes": 1036,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/semaphore-BjoL5P0h.js",
+          "status": 200
+        },
+        {
+          "bytes": 499,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/file-DF8n85RA.js",
+          "status": 200
+        },
+        {
+          "bytes": 760,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/fileToBase64-NhpNrK5l.js",
+          "status": 200
+        },
+        {
+          "bytes": 1034,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/file-headphone-rFCxFRI8.js",
+          "status": 200
+        },
+        {
+          "bytes": 498,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/image-ab13yGv4.js",
+          "status": 200
+        },
+        {
+          "bytes": 3105,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/file-icons-DdGYuADJ.js",
+          "status": 200
+        },
+        {
+          "bytes": 639,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/markdown-export-0rLbaq8b.js",
+          "status": 200
+        },
+        {
+          "bytes": 471,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/globe-BQf75qV_.js",
+          "status": 200
+        },
+        {
+          "bytes": 2923,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/glide-utils-UGsrRHYj.js",
+          "status": 200
+        },
+        {
+          "bytes": 12976,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/data-grid-types-DgHVN_Zz.js",
+          "status": 200
+        },
+        {
+          "bytes": 6612,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/column-preview-riSXbYe_.js",
+          "status": 200
+        },
+        {
+          "bytes": 376,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/square-B58Ib8Ir.js",
+          "status": 200
+        },
+        {
+          "bytes": 494,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/triangle-alert-MihykDYG.js",
+          "status": 200
+        },
+        {
+          "bytes": 1044,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/prop-types-Djf4O40e.js",
+          "status": 200
+        },
+        {
+          "bytes": 2144,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/bundle.esm-DzY74mzC.js",
+          "status": 200
+        },
+        {
+          "bytes": 4114,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/renderShortcut-X-CJUSM8.js",
+          "status": 200
+        },
+        {
+          "bytes": 60856,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/es-CrFhA96G.js",
+          "status": 200
+        },
+        {
+          "bytes": 2147,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/icons-CjLa9BiH.js",
+          "status": 200
+        },
+        {
+          "bytes": 1127,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pathUtils-Cryrlpma.js",
+          "status": 200
+        },
+        {
+          "bytes": 472,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDeepCompareMemoize-CLytDdMl.js",
+          "status": 200
+        },
+        {
+          "bytes": 5048,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/floating-outline-DaUHnl_e.js",
+          "status": 200
+        },
+        {
+          "bytes": 720,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/manifest.json",
+          "status": 200
+        },
+        {
+          "bytes": 571714,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/JsonOutput-CzIGPEZQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 348,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/name-cell-input-ujOhus_y.css",
+          "status": 200
+        },
+        {
+          "bytes": 11016,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/run-page-9pl8qhQR.js",
+          "status": 200
+        },
+        {
+          "bytes": 380,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/SelectionIndicator-DPl6HPLh.js",
+          "status": 200
+        },
+        {
+          "bytes": 2390,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDeleteCell-Bz49_cFj.js",
+          "status": 200
+        },
+        {
+          "bytes": 514,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/panels-DDsRoC3H.css",
+          "status": 200
+        },
+        {
+          "bytes": 481,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/trash-DS1-SuM0.js",
+          "status": 200
+        },
+        {
+          "bytes": 391,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/code-CF0HKE9K.js",
+          "status": 200
+        },
+        {
+          "bytes": 474,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/process-output-Ck7-P_xp.js",
+          "status": 200
+        },
+        {
+          "bytes": 3993,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/name-cell-input-BMCdK-el.js",
+          "status": 200
+        },
+        {
+          "bytes": 213437,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/layout-DWnrxIo2.js",
+          "status": 200
+        },
+        {
+          "bytes": 20907,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-C--ZICxQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 3039,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/layout-D-WxHzKd.css",
+          "status": 200
+        },
+        {
+          "bytes": 101495,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-BF7Lrekv.js",
+          "status": 200
+        },
+        {
+          "bytes": 40907,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-qvk3g06H.js",
+          "status": 200
+        },
+        {
+          "bytes": 71742,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/esm-DmqQGMel.js",
+          "status": 200
+        },
+        {
+          "bytes": 2188,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DmGtPaVM.js",
+          "status": 200
+        },
+        {
+          "bytes": 30938,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-BaRNSaca.js",
+          "status": 200
+        },
+        {
+          "bytes": 16444,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-CmImLjus.js",
+          "status": 200
+        },
+        {
+          "bytes": 19588,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DPoYlxSC.js",
+          "status": 200
+        },
+        {
+          "bytes": 95216,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DJOWOALB.js",
+          "status": 200
+        },
+        {
+          "bytes": 70990,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Db-HC93w.js",
+          "status": 200
+        },
+        {
+          "bytes": 23169,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-kaLvV_d4.js",
+          "status": 200
+        },
+        {
+          "bytes": 14525,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Cq8NOszX.js",
+          "status": 200
+        },
+        {
+          "bytes": 2518,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/apl-CYIAEF37.js",
+          "status": 200
+        },
+        {
+          "bytes": 2811,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-gELFCfHH.js",
+          "status": 200
+        },
+        {
+          "bytes": 11747,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Bsu3h9O7.js",
+          "status": 200
+        },
+        {
+          "bytes": 992,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/asciiarmor-CF6FHpQl.js",
+          "status": 200
+        },
+        {
+          "bytes": 4201,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/asn1-CmtZ6NID.js",
+          "status": 200
+        },
+        {
+          "bytes": 6421,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cobol-ttQu-eUm.js",
+          "status": 200
+        },
+        {
+          "bytes": 815,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/brainfuck-vE42J6oQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 9630,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/clojure-1zb6N0Kd.js",
+          "status": 200
+        },
+        {
+          "bytes": 24900,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/css-aD3t-znF.js",
+          "status": 200
+        },
+        {
+          "bytes": 22248,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/clike-Bo1_pR8B.js",
+          "status": 200
+        },
+        {
+          "bytes": 982,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cmake-DSEb40G9.js",
+          "status": 200
+        },
+        {
+          "bytes": 3407,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cypher-q6-coHOK.js",
+          "status": 200
+        },
+        {
+          "bytes": 2535,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/commonlisp-DHrixoxv.js",
+          "status": 200
+        },
+        {
+          "bytes": 4066,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/coffeescript-CcHmp8ZW.js",
+          "status": 200
+        },
+        {
+          "bytes": 523,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/diff-CYBnW6ZU.js",
+          "status": 200
+        },
+        {
+          "bytes": 5243,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/crystal-fOwNIMzy.js",
+          "status": 200
+        },
+        {
+          "bytes": 3921,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/d-Drt6ZXrF.js",
+          "status": 200
+        },
+        {
+          "bytes": 2320,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dtd-DqGG8R4P.js",
+          "status": 200
+        },
+        {
+          "bytes": 6504,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/python-C4CVWZ7v.js",
+          "status": 200
+        },
+        {
+          "bytes": 5338,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ecl-BPsxRGqR.js",
+          "status": 200
+        },
+        {
+          "bytes": 4269,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dylan-BTCYgsmh.js",
+          "status": 200
+        },
+        {
+          "bytes": 1917,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/eiffel-BCguJEP-.js",
+          "status": 200
+        },
+        {
+          "bytes": 2505,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/simple-mode-DXiLM1-G.js",
+          "status": 200
+        },
+        {
+          "bytes": 1889,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/factor-ZZBBZpXK.js",
+          "status": 200
+        },
+        {
+          "bytes": 8071,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/erlang-DkHPV6ru.js",
+          "status": 200
+        },
+        {
+          "bytes": 2767,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/forth-DUDizG3o.js",
+          "status": 200
+        },
+        {
+          "bytes": 2094,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/elm-DnNeI1M2.js",
+          "status": 200
+        },
+        {
+          "bytes": 4086,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/fortran-BarbOvgW.js",
+          "status": 200
+        },
+        {
+          "bytes": 4347,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/groovy-cYuFC_ot.js",
+          "status": 200
+        },
+        {
+          "bytes": 4773,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/gas-mybzrfIH.js",
+          "status": 200
+        },
+        {
+          "bytes": 4383,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/haskell-CuLp9g3a.js",
+          "status": 200
+        },
+        {
+          "bytes": 10381,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/gherkin-BlnXaZZf.js",
+          "status": 200
+        },
+        {
+          "bytes": 5037,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mllike-BKN6OcTc.js",
+          "status": 200
+        },
+        {
+          "bytes": 8086,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/haxe-CiIUZbdX.js",
+          "status": 200
+        },
+        {
+          "bytes": 3358,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/lua-DXBxhmso.js",
+          "status": 200
+        },
+        {
+          "bytes": 5489,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/julia-CoYYMTcZ.js",
+          "status": 200
+        },
+        {
+          "bytes": 4302,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/livescript-C1gEZ5Hk.js",
+          "status": 200
+        },
+        {
+          "bytes": 10054,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/idl-BHq7WyPV.js",
+          "status": 200
+        },
+        {
+          "bytes": 3018,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/modelica-DZs5SjV_.js",
+          "status": 200
+        },
+        {
+          "bytes": 17172,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/javascript-D-FtdkNC.js",
+          "status": 200
+        },
+        {
+          "bytes": 2119,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mathematica-CwlrU_TQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 6144,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mirc-CTGUd79I.js",
+          "status": 200
+        },
+        {
+          "bytes": 2290,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ntriples-Ck5rp6GE.js",
+          "status": 200
+        },
+        {
+          "bytes": 2048,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mumps-BNg2Yq-1.js",
+          "status": 200
+        },
+        {
+          "bytes": 1613,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mbox-skR0V6cu.js",
+          "status": 200
+        },
+        {
+          "bytes": 7026,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/nsis-8kQdxo7f.js",
+          "status": 200
+        },
+        {
+          "bytes": 2326,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/octave-BRpd3hBF.js",
+          "status": 200
+        },
+        {
+          "bytes": 3110,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/oz-BUEZmvHT.js",
+          "status": 200
+        },
+        {
+          "bytes": 9960,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/perl-v9vsztCj.js",
+          "status": 200
+        },
+        {
+          "bytes": 2481,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pascal-DBfxUwpj.js",
+          "status": 200
+        },
+        {
+          "bytes": 2741,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pig-CrKTIB-m.js",
+          "status": 200
+        },
+        {
+          "bytes": 7915,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/powershell-89xdb5K_.js",
+          "status": 200
+        },
+        {
+          "bytes": 884,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/properties-DaUFoXFR.js",
+          "status": 200
+        },
+        {
+          "bytes": 1024,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/protobuf-Ci5XvpF4.js",
+          "status": 200
+        },
+        {
+          "bytes": 6865,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pug-DPY-Ajan.js",
+          "status": 200
+        },
+        {
+          "bytes": 2742,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/puppet-Da8ZxG7z.js",
+          "status": 200
+        },
+        {
+          "bytes": 1812,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/rpm-Cv5HmAkX.js",
+          "status": 200
+        },
+        {
+          "bytes": 3150,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/r-vSi6pWDr.js",
+          "status": 200
+        },
+        {
+          "bytes": 3921,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/q-BjtI5Irp.js",
+          "status": 200
+        },
+        {
+          "bytes": 5256,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ruby-UyKn0rKt.js",
+          "status": 200
+        },
+        {
+          "bytes": 9559,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/sas-D3-6PWmJ.js",
+          "status": 200
+        },
+        {
+          "bytes": 6582,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/scheme-DqTb0ELD.js",
+          "status": 200
+        },
+        {
+          "bytes": 2660,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/shell-DySzVBqR.js",
+          "status": 200
+        },
+        {
+          "bytes": 2218,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/smalltalk-CJJAzHnb.js",
+          "status": 200
+        },
+        {
+          "bytes": 23741,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/stylus-uh0Gd-Iz.js",
+          "status": 200
+        },
+        {
+          "bytes": 3556,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/sparql-CjwbV0fX.js",
+          "status": 200
+        },
+        {
+          "bytes": 1841,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/sieve-CoBbN2aF.js",
+          "status": 200
+        },
+        {
+          "bytes": 3988,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/swift-D5IK5OrP.js",
+          "status": 200
+        },
+        {
+          "bytes": 2581,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tcl-BvqzOD3a.js",
+          "status": 200
+        },
+        {
+          "bytes": 8403,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/verilog-DPWRmpYS.js",
+          "status": 200
+        },
+        {
+          "bytes": 1272,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/toml-lWmHdWv5.js",
+          "status": 200
+        },
+        {
+          "bytes": 6969,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/textile--JQHE1pJ.js",
+          "status": 200
+        },
+        {
+          "bytes": 1182,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/troff-r7W702V9.js",
+          "status": 200
+        },
+        {
+          "bytes": 2180,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/turtle-D_5eCUwg.js",
+          "status": 200
+        },
+        {
+          "bytes": 4320,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ttcn-cfg-CHYEAF6D.js",
+          "status": 200
+        },
+        {
+          "bytes": 5069,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ttcn-1CwPIugQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 2674,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/webidl-CNY2gQL0.js",
+          "status": 200
+        },
+        {
+          "bytes": 3879,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vb-Vd6lTutg.js",
+          "status": 200
+        },
+        {
+          "bytes": 5649,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vbscript-CcW6E3ma.js",
+          "status": 200
+        },
+        {
+          "bytes": 2367,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/yacas-BjDXhrkW.js",
+          "status": 200
+        },
+        {
+          "bytes": 3542,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vhdl-sLYad3YP.js",
+          "status": 200
+        },
+        {
+          "bytes": 3702,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mscgen-Bo5N9WUj.js",
+          "status": 200
+        },
+        {
+          "bytes": 2926,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/velocity-CuSicjhq.js",
+          "status": 200
+        },
+        {
+          "bytes": 6384,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/xquery-d3Qdoigy.js",
+          "status": 200
+        },
+        {
+          "bytes": 1979,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/z80-z4BkVl0y.js",
+          "status": 200
+        },
+        {
+          "bytes": 3528,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Bv0S1RlZ.js",
+          "status": 200
+        },
+        {
+          "bytes": 532,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/readonly-code-display--S2daDa6.js",
+          "status": 200
+        },
+        {
+          "bytes": 394,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/arrow-left-DrqK6gPp.js",
+          "status": 200
+        },
+        {
+          "bytes": 295,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/requests-S_7PqcSt.js",
+          "status": 200
+        },
+        {
+          "bytes": 7750,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ws-DLVysDhS.js",
+          "status": 200
+        },
+        {
+          "bytes": 49060,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/panels-CWn0Yh1D.js",
+          "status": 200
+        },
+        {
+          "bytes": 1673,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/runs-euHSzlw_.js",
+          "status": 200
+        },
+        {
+          "bytes": 339,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/shell-DLpUCctE.js",
+          "status": 200
+        },
+        {
+          "bytes": 5605,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/web-vitals-GNyUJRRQ.js",
+          "status": 200
+        },
+        {
+          "bytes": 1200,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/android-chrome-192x192.png",
+          "status": 302
+        },
+        {
+          "bytes": 1185,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/favicon.ico",
+          "status": 302
+        },
+        {
+          "bytes": 18065,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/marimo-icons-C3KxMV9A.js",
+          "status": 200
+        },
+        {
+          "bytes": 14661,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/android-chrome-192x192.png",
+          "status": 200
+        },
+        {
+          "bytes": 15634,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/favicon.ico",
+          "status": 200
+        },
+        {
+          "bytes": 262832,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyodide.asm.mjs",
+          "status": 200
+        },
+        {
+          "bytes": 3450219,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyodide.asm.wasm",
+          "status": 200
+        },
+        {
+          "bytes": 2514827,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/python_stdlib.zip",
+          "status": 200
+        },
+        {
+          "bytes": 28417,
+          "context": "worker",
+          "from_cache": false,
+          "host": "wasm.marimo.app",
+          "path": "/pyodide-lock.json",
+          "status": 200
+        },
+        {
+          "bytes": 111627,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/micropip-0.11.1-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 131430,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/msgspec-0.20.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 94699,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/packaging-26.1-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 109736,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 269483,
+          "context": "worker",
+          "from_cache": false,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/7e/85/545a951eecc270fcd688288c600017e2050a1aacb56c711d208586d3e470/pymdown_extensions-10.21.3-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 109044,
+          "context": "worker",
+          "from_cache": false,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/de/1f/77fa3081e4f66ca3576c896ae5d31c3002ac6607f9747d2e3aa49227e464/markdown-3.10.2-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 447604,
+          "context": "worker",
+          "from_cache": false,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/37/72/e61e3091e0e00fae9d3a8ef85ece9d2cd4b5966058e1f2901ce42679eebf/narwhals-2.19.0-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 1929717,
+          "context": "worker",
+          "from_cache": false,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/cd/52/d12623587fe80b49cd5afe9e739e0359ea1b6fc9f11dfff1ac812fbfaf7f/marimo_base-0.24.2-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 613257,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/docutils-0.22.4-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 94283,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/parso-0.8.6-py2.py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 1238457,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/jedi-0.19.2-py2.py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 176593,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/joblib-1.5.3-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 751913,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/lightgbm-4.6.0-py3-none-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 18624,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/threadpoolctl-3.6.0-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 2886860,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/numpy-2.4.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 9337,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyodide_http-0.2.2-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 4371233,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/scikit_learn-1.8.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 1212145,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pygments-2.20.0-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 13888893,
+          "context": "worker",
+          "from_cache": false,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/scipy-1.17.1-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 1485,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/champion.json",
+          "status": 200
+        },
+        {
+          "bytes": 13156,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/claims.json",
+          "status": 200
+        },
+        {
+          "bytes": 282088,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/series.json",
+          "status": 200
+        },
+        {
+          "bytes": 8917,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/calendar.json",
+          "status": 200
+        },
+        {
+          "bytes": 227693,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/fixture.json",
+          "status": 200
+        },
+        {
+          "bytes": 11229,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/browser_champion.py",
+          "status": 200
+        },
+        {
+          "bytes": 1650910,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p025.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1653370,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p05.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1651490,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p10.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1649634,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p25.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1652238,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p50.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1645450,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p75.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1645070,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p90.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1646286,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p95.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1186,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/favicon.ico",
+          "status": 302
+        },
+        {
+          "bytes": 15634,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/favicon.ico",
+          "status": 200
+        },
+        {
+          "bytes": 1641282,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p975.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1186,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/favicon.ico",
+          "status": 302
+        },
+        {
+          "bytes": 15634,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/favicon.ico",
+          "status": 200
+        }
+      ],
+      "seconds_to_identity_check": 11.0
+    },
+    "repeat": {
+      "bytes": 1046158,
+      "contexts": {
+        "page": 312,
+        "worker": 38
+      },
+      "errors": [],
+      "hosts": {
+        "cdn.jsdelivr.net": {
+          "bytes": 0,
+          "failed": 0,
+          "from_cache": 18,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 18
+        },
+        "files.pythonhosted.org": {
+          "bytes": 0,
+          "failed": 0,
+          "from_cache": 4,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 4
+        },
+        "the Space's static host (emulated)": {
+          "bytes": 76079,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 288,
+          "redirects": 11,
+          "requests": 316
+        },
+        "us.aws.cdn.hf.co (emulated)": {
+          "bytes": 970079,
+          "failed": 0,
+          "from_cache": 0,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 11
+        },
+        "wasm.marimo.app": {
+          "bytes": 0,
+          "failed": 0,
+          "from_cache": 1,
+          "not_modified": 0,
+          "redirects": 0,
+          "requests": 1
+        }
+      },
+      "requests": 350,
+      "requests_detail": [
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/index.html",
+          "status": 200
+        },
+        {
+          "bytes": 1203,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/gradient-yHQUC_QB.png",
+          "status": 302
+        },
+        {
+          "bytes": 1213,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/FiraMono-Regular-CEsLFVD9.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1208,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/PTSans-Bold-C_DwAp7Z.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1200,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/noise-60BoTA8O.png",
+          "status": 302
+        },
+        {
+          "bytes": 1211,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/PTSans-Regular-Bam3NpBI.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1219,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/Lora-VariableFont_wght-CZceb_kH.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 1212,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/FiraMono-Medium-D5MAsWEG.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cells-D-c15Ks-.css",
+          "status": 304
+        },
+        {
+          "bytes": 1210,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/FiraMono-Bold-C6PDArdf.woff2",
+          "status": 302
+        },
+        {
+          "bytes": 45660,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/noise-60BoTA8O.png",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/markdown-renderer-B7zTpxjS.css",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/index-C7yAojRA.css",
+          "status": 304
+        },
+        {
+          "bytes": 83918,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/Lora-VariableFont_wght-CZceb_kH.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 371352,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/gradient-yHQUC_QB.png",
+          "status": 200
+        },
+        {
+          "bytes": 116367,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/PTSans-Bold-C_DwAp7Z.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/JsonOutput-BQtz7-np.css",
+          "status": 304
+        },
+        {
+          "bytes": 62522,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/FiraMono-Medium-D5MAsWEG.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/rolldown-runtime-B0Z9INg1.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-CBDbhulC.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/index-4n22QjCD.js",
+          "status": 304
+        },
+        {
+          "bytes": 67630,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/FiraMono-Bold-C6PDArdf.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 62910,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/FiraMono-Regular-CEsLFVD9.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 113791,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/assets/PTSans-Regular-Bam3NpBI.woff2",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-dom-BQrReHnR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/compiler-runtime-CYIjoINj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useEvent-xfs0Sn4r.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/schemas-aTUejmFi.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isSymbol-oX0TOjjx.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isObject-BCaOs5rp.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/debounce-aFmHgJZY.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/now-Cmx0b_zA.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isArrayLikeObject-DnwgSs_Z.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_initCloneObject-CM3WilQg.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_baseMerge-DLqSVasz.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/objects-snlMn4yk.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/jsx-runtime-B74pBk57.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/invariant-Ci2dTZ72.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/constants-BDbGiS7O.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useEventListener-92uWqz-P.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/Deferred-CrTnjj37.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/utils-D5Ywm7-q.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/session-Sz5nSFku.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/config-BlNM0caL.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/clsx-DB0hHKMi.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cn-ldLVeaqm.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/fullscreen-BH2jz-F4.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DzCQtGkt.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/menu-items-BSRA2YI9.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/button-Dh8EwhsF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/alert-dialog-CA-2mBs3.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/createLucideIcon-B7HeEoG2.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/check-BoA6XBpj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useNumberFormatter-DHJ9s6Vk.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/context-Do8M9TDF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/select-nLt2y0Sw.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/circle-ByJdIf5p.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/arrays-BqUx5USx.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tooltip-BUtPzKB4.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/once-Haz_uxEL.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-CZNULd6Z.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/capabilities-D8kPgMKr.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-BtC9ym6k.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cjs-C49f7GXV.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/createReducer-B_XmHROl.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/strings-CReV1AYG.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DiYjQAhI.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/requests-C6_IaFh7.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-B8pdsUrS.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/marked.esm-B_3iMIUq.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/database-zap-CloO6gbw.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useLifecycle-BUaJcygz.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/numbers-Bc-r3jsC.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/uuid-k9DpjH68.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDebounce-DgpSQhrP.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/toDate-hGYJX0Ha.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/trash-2-D_HX-0qx.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/input-DEbY281O.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/write-secret-modal-D6zoZgLY.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/badge-BSgtkC2e.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/use-toast-DpWHUGuF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/preload-helper-HclGiUj8.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/plus-C4J9gIE1.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DkPPv0FB.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/stex-Dc5bKD4z.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Dw9YRsCU.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-B0RXffUm.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-CKUpxYGQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/purify.es-DrVcFY1Q.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Cx4BE7jC.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useAsyncData-Buhk-UgR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/paths-zcL04qUW.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useTheme-C-ri8BtY.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/get-DjNf4SIX.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_hasPath-BmRQipI0.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/hasIn-yw4sIeJR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pick-Bs4cJfJU.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cells-Cp-G34Rz.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/_baseSet-gX6o3Pih.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/errors-DzO-nXy-.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/switch-DjXr9Y9D.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/copy-BMXKNElG.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/eye-off-CFuPxa9F.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/copy-DlEomWzI.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/extends-CvVTau-c.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/esm-BHMOvJzM.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useAddCell-DdB_uBif.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/micromark-factory-space-D9Dr-k4J.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/copy-icon-z8fuTE3w.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/chunk-5FQGJX7Z-CRg4xQWg.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/RenderHTML-DwhMAd9l.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/markdown-renderer-BZKlbm2Q.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/blob-B2d_dHwI.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useRunCells-CX7oW5zy.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/readonly-python-code-DpIyjHqY.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/events-CbeVJ6OD.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/LazyAnyLanguageCodeMirror-LboTfNDv.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/share-CPtBiNgr.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/state-Di9TbuV9.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/config-B-r81uZ6.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ErrorBoundary-CDVGFYfr.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tabs-Cy1qXLzH.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dropdown-menu-C40jM9o4.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tree-actions-CG5g7aUQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/table-CUK1W5bI.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/download-DMxOzI7b.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/chevron-right-CKA5zVsM.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/refresh-cw-Bf-rx_aV.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ellipsis-Dfik_tuW.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/html-to-image-D6GUC5q6.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/spinner-Ck-Hgfvj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/external-link-Bp3BxyRA.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/message-circle-BQB1AIAg.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/hat-glasses-C8LSY3HT.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/state-B6AklCzD.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/datasource-DrODSIs0.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useInstallPackage-DsD08SLK.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/package-DPlscLzt.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/alert-dmKwNsrp.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/kbd-Cwh96ZBE.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cell-link-6burT2XF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/MarimoErrorOutput-DqpoYOvw.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/VisuallyHidden-CBMDmozt.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/isValid-nQ3Iam8J.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/precisionRound-Bq_nmf5u.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/defaultLocale-CNPGWpMu.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dates-B58T85Jq.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDateFormatter-BiqAQ-zI.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/en-US-yTIMUO13.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tooltip-BG35uS_N.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vega-loader.browser-AQmjV9CX.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/defaultLocale-Dm4DaIgg.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-icons.esm-hr79-MCS.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/emotion-is-prop-valid.esm-nLO-SoUf.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useIframeCapabilities-C7Di8f2y.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/error-banner-Dw5YY9wq.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/utils-49LGK4zG.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/chart-no-axes-column-ChZdjJhj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/formats-C6s96nu2.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/react-resizable-panels.browser.esm-BSRAHC4P.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/table-DmqOOjfe.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/JsonOutput-CzIGPEZQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/square-function-DkZweMAs.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/spec-DKsAmLTi.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/semaphore-BjoL5P0h.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/code-xml-B7x62Eeh.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useBoolean-BXC4CItZ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/image-ab13yGv4.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/fileToBase64-NhpNrK5l.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/file-DF8n85RA.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/file-headphone-rFCxFRI8.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/file-icons-DdGYuADJ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/markdown-export-0rLbaq8b.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/globe-BQf75qV_.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/data-grid-types-DgHVN_Zz.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/glide-utils-UGsrRHYj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/square-B58Ib8Ir.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/column-preview-riSXbYe_.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/bundle.esm-DzY74mzC.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/es-CrFhA96G.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/triangle-alert-MihykDYG.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/renderShortcut-X-CJUSM8.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/icons-CjLa9BiH.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDeepCompareMemoize-CLytDdMl.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pathUtils-Cryrlpma.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/prop-types-Djf4O40e.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/manifest.json",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/floating-outline-DaUHnl_e.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/name-cell-input-ujOhus_y.css",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/run-page-9pl8qhQR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/code-CF0HKE9K.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/useDeleteCell-Bz49_cFj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/layout-DWnrxIo2.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/SelectionIndicator-DPl6HPLh.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/process-output-Ck7-P_xp.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/trash-DS1-SuM0.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/name-cell-input-BMCdK-el.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-BaRNSaca.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-BF7Lrekv.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/esm-DmqQGMel.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/layout-D-WxHzKd.css",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/panels-DDsRoC3H.css",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DmGtPaVM.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-C--ZICxQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-qvk3g06H.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-kaLvV_d4.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DPoYlxSC.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-gELFCfHH.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-DJOWOALB.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-CmImLjus.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Db-HC93w.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Bsu3h9O7.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Cq8NOszX.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/brainfuck-vE42J6oQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/asciiarmor-CF6FHpQl.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/apl-CYIAEF37.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/clike-Bo1_pR8B.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/asn1-CmtZ6NID.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cmake-DSEb40G9.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cobol-ttQu-eUm.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/clojure-1zb6N0Kd.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/css-aD3t-znF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/coffeescript-CcHmp8ZW.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/commonlisp-DHrixoxv.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/python-C4CVWZ7v.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/cypher-q6-coHOK.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/d-Drt6ZXrF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/crystal-fOwNIMzy.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/diff-CYBnW6ZU.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dylan-BTCYgsmh.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/eiffel-BCguJEP-.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ecl-BPsxRGqR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/elm-DnNeI1M2.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dtd-DqGG8R4P.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/simple-mode-DXiLM1-G.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/factor-ZZBBZpXK.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/forth-DUDizG3o.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/erlang-DkHPV6ru.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mllike-BKN6OcTc.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/fortran-BarbOvgW.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/groovy-cYuFC_ot.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/gherkin-BlnXaZZf.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/gas-mybzrfIH.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/haskell-CuLp9g3a.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/julia-CoYYMTcZ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/javascript-D-FtdkNC.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/idl-BHq7WyPV.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/haxe-CiIUZbdX.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/lua-DXBxhmso.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mumps-BNg2Yq-1.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mathematica-CwlrU_TQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/livescript-C1gEZ5Hk.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/modelica-DZs5SjV_.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mbox-skR0V6cu.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mirc-CTGUd79I.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/nsis-8kQdxo7f.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ntriples-Ck5rp6GE.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/octave-BRpd3hBF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/oz-BUEZmvHT.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pascal-DBfxUwpj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/perl-v9vsztCj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pig-CrKTIB-m.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/powershell-89xdb5K_.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/properties-DaUFoXFR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/protobuf-Ci5XvpF4.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/r-vSi6pWDr.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/puppet-Da8ZxG7z.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/q-BjtI5Irp.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/rpm-Cv5HmAkX.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/pug-DPY-Ajan.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/scheme-DqTb0ELD.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/sas-D3-6PWmJ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ruby-UyKn0rKt.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/shell-DySzVBqR.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/smalltalk-CJJAzHnb.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/verilog-DPWRmpYS.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/stylus-uh0Gd-Iz.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/sieve-CoBbN2aF.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/swift-D5IK5OrP.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/sparql-CjwbV0fX.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/troff-r7W702V9.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/textile--JQHE1pJ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/toml-lWmHdWv5.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ttcn-1CwPIugQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/tcl-BvqzOD3a.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ttcn-cfg-CHYEAF6D.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/turtle-D_5eCUwg.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/webidl-CNY2gQL0.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vb-Vd6lTutg.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vbscript-CcW6E3ma.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/velocity-CuSicjhq.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/vhdl-sLYad3YP.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/xquery-d3Qdoigy.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/yacas-BjDXhrkW.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/mscgen-Bo5N9WUj.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/z80-z4BkVl0y.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/dist-Bv0S1RlZ.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/readonly-code-display--S2daDa6.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/requests-S_7PqcSt.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/ws-DLVysDhS.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/runs-euHSzlw_.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/arrow-left-DrqK6gPp.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/shell-DLpUCctE.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/panels-CWn0Yh1D.js",
+          "status": 304
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/web-vitals-GNyUJRRQ.js",
+          "status": 304
+        },
+        {
+          "bytes": 1201,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/android-chrome-192x192.png",
+          "status": 302
+        },
+        {
+          "bytes": 206,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/assets/marimo-icons-C3KxMV9A.js",
+          "status": 304
+        },
+        {
+          "bytes": 14661,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/android-chrome-192x192.png",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "wasm.marimo.app",
+          "path": "/pyodide-lock.json",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyodide.asm.mjs",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/python_stdlib.zip",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/micropip-0.11.1-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/msgspec-0.20.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/de/1f/77fa3081e4f66ca3576c896ae5d31c3002ac6607f9747d2e3aa49227e464/markdown-3.10.2-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/packaging-26.1-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/7e/85/545a951eecc270fcd688288c600017e2050a1aacb56c711d208586d3e470/pymdown_extensions-10.21.3-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/37/72/e61e3091e0e00fae9d3a8ef85ece9d2cd4b5966058e1f2901ce42679eebf/narwhals-2.19.0-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "files.pythonhosted.org",
+          "path": "/packages/cd/52/d12623587fe80b49cd5afe9e739e0359ea1b6fc9f11dfff1ac812fbfaf7f/marimo_base-0.24.2-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyodide.asm.wasm",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/threadpoolctl-3.6.0-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pyodide_http-0.2.2-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/parso-0.8.6-py2.py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/joblib-1.5.3-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/docutils-0.22.4-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/lightgbm-4.6.0-py3-none-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/jedi-0.19.2-py2.py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/pygments-2.20.0-py3-none-any.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/numpy-2.4.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/scikit_learn-1.8.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 0,
+          "context": "worker",
+          "from_cache": true,
+          "host": "cdn.jsdelivr.net",
+          "path": "/pyodide/v314.0.0/full/scipy-1.17.1-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/champion.json",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/claims.json",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/series.json",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/calendar.json",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/fixture.json",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/browser_champion.py",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p025.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p05.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p10.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p25.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p50.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p75.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p90.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p95.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1186,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/favicon.ico",
+          "status": 302
+        },
+        {
+          "bytes": 15634,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/favicon.ico",
+          "status": 200
+        },
+        {
+          "bytes": 206,
+          "context": "worker",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/public/boosters/p975.txt.gz.b64",
+          "status": 200
+        },
+        {
+          "bytes": 1186,
+          "context": "page",
+          "from_cache": false,
+          "host": "the Space's static host (emulated)",
+          "path": "/favicon.ico",
+          "status": 302
+        },
+        {
+          "bytes": 15634,
+          "context": "page",
+          "from_cache": false,
+          "host": "us.aws.cdn.hf.co (emulated)",
+          "path": "/favicon.ico",
+          "status": 200
+        }
+      ],
+      "seconds_to_identity_check": 10.0
+    }
+  }
+}

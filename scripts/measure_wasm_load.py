@@ -75,6 +75,12 @@ _lock = threading.Lock()
 class AppHandler(SimpleHTTPRequestHandler):
     """The Space's static host."""
 
+    # HTTP/1.1, as Hugging Face serves it. The stdlib default is HTTP/1.0, and
+    # Chrome ignores ETag validators on HTTP/1.0 responses -- the first repeat-visit
+    # measurement re-downloaded every file for that reason, and was wrongly
+    # attributed to the browser's cache. Caught in an Integration review.
+    protocol_version = "HTTP/1.1"
+
     def __init__(self, *args, log_path: Path, cdn_port: int | None, **kwargs):
         self.log_path = log_path
         self.cdn_port = cdn_port
@@ -115,6 +121,7 @@ class AppHandler(SimpleHTTPRequestHandler):
             self.send_response(304)
             self.send_header("ETag", tag)
             self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Content-Length", "0")
             self.end_headers()
             _log(self.log_path, {"origin": "app", "path": clean, "status": 304, "wire_bytes": 0})
             return
@@ -130,6 +137,8 @@ class AppHandler(SimpleHTTPRequestHandler):
 
 class CdnHandler(SimpleHTTPRequestHandler):
     """Stands in for us.aws.cdn.hf.co: bytes with CORS and an ETag, no cache-control."""
+
+    protocol_version = "HTTP/1.1"
 
     def __init__(self, *args, log_path: Path, **kwargs):
         self.log_path = log_path

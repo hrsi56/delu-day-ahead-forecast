@@ -8,40 +8,38 @@
   "contrast_with_the_static_page": "docs/index.html fetches nothing: 1 request (itself), 0 resources, verified in a browser. At CP-3, marimo export html was rejected for it because it emitted 181 references to cdn.jsdelivr.net. marimo export html-wasm differs in kind: it bundles marimo's frontend with the page and reaches a CDN only for the Python runtime.",
   "hosts": {
     "cdn.jsdelivr.net": {
-      "bytes": 31898711,
+      "bytes": 31936965,
+      "redirects": 0,
       "requests": 18,
-      "source": "Resource Timing inside the worker on cold loads; equals the sum of the 18 per-URL transfer sizes recorded on a cold load",
-      "what": "Pyodide v314.0.0 core (pyodide.asm.wasm 3.4 MB, python_stdlib.zip 2.5 MB) and wheels: scipy 13.9 MB, scikit-learn 4.4 MB, numpy 2.9 MB, jedi 1.2 MB, pygments 1.2 MB, lightgbm 0.75 MB and seven smaller ones."
+      "source": "DevTools, first visit"
     },
     "files.pythonhosted.org": {
-      "browser_reported_size": 0,
-      "bytes": 2752144,
+      "bytes": 2755848,
+      "redirects": 0,
       "requests": 4,
-      "source": "Content-Length out-of-band; wheels are served unencoded, so Content-Length equals the bytes on the wire",
-      "what": "marimo's own wheels, fetched from PyPI by its WASM bootstrap: marimo_base 1.93 MB, narwhals 0.45 MB, pymdown_extensions 0.27 MB, markdown 0.11 MB."
+      "source": "DevTools, first visit"
     },
     "us.aws.cdn.hf.co": {
-      "bytes": 922341,
-      "requests": 8,
-      "source": "server wire log of the CDN stand-in during the same first visit; bytes are the files' own sizes",
-      "what": "marimo's six web fonts and two background images, reached through the static host's no-store redirects (the favicon redirect was not followed)."
+      "bytes": 985713,
+      "redirects": 0,
+      "requests": 12,
+      "source": "DevTools, first visit (served by the emulator)"
     },
     "wasm.marimo.app": {
-      "browser_reported_size": 0,
-      "bytes": 28126,
+      "bytes": 28417,
+      "redirects": 0,
       "requests": 1,
-      "source": "GET with Accept-Encoding: gzip, deflate, br, out-of-band (the endpoint answers HEAD with 405); served gzip-encoded, 28,126 B on the wire",
-      "what": "pyodide-lock.json \u2014 marimo's lockfile for the Pyodide build it pins; a marimo-operated endpoint contacted once at boot."
+      "source": "DevTools, first visit"
     },
     "yarden-viktor-delu-day-ahead-forecast.static.hf.space": {
-      "bytes": 21560258,
-      "requests": 314,
-      "source": "server wire log of a real first visit (305 direct 200s + 9 no-store 302s of 1,048 B); replaying that visit's requests reproduces the figure byte-for-byte",
-      "what": "the nine boosters as base64 gzip text (14.8 MB), marimo's text interface assets, the row slice, calendar facts, claim set, equivalence fixture and browser_champion.py, the page \u2014 and the 302s for nine binary files."
+      "bytes": 21545223,
+      "redirects": 12,
+      "requests": 317,
+      "source": "DevTools, first visit (served by the emulator)"
     }
   },
   "measured_on": "2026-09-15",
-  "method": "First visit to dist/space-wasm served by scripts/measure_wasm_load.py --emulate-hf on previously unused loopback ports (HTTP cache key includes the port): text served directly and uncompressed with an ETag; binary files answered with a no-store 302 (1,048-byte body) to a second origin standing in for us.aws.cdn.hf.co, with a rotating query. Same-origin and CDN-stand-in bytes from the servers' wire logs; cross-origin CDN bytes from Resource Timing read inside the Pyodide worker. Five cross-origin responses carry no Timing-Allow-Origin, so the browser refuses to size them; those were sized out-of-band: the PyPI wheels by Content-Length (served unencoded), marimo's lockfile by a compressed GET (its endpoint answers HEAD with 405 and serves gzip). The page loaded and rendered completely through the redirects: the identity panel read bitwise identical and all four redirected font families loaded.",
+  "method": "headless Chrome over the DevTools protocol, brand-new profile, page and every worker attached. Bytes are DevTools encodedDataLength: what Chrome received per request, headers and body, as encoded. DevTools is not subject to Timing-Allow-Origin, so every host is sized directly. Reproduce: make wasm && uv run python scripts/record_wasm_load.py (writes reports/cp3b/cdp_load.json).",
   "page": "dist/space-wasm/index.html (marimo export html-wasm, --mode run)",
   "platform_serving_model": {
     "binary_files": "302 from the static host with Cache-Control: no-store and a 1,048-byte body, to us.aws.cdn.hf.co with a signed query that changed on each of three consecutive requests; both hops send Access-Control-Allow-Origin: *.",
@@ -50,19 +48,20 @@
     "verified_on": "live public Static Spaces (nanotron/ultrascale-playbook, xenova/whisper-web), read-only, 2026-09-15"
   },
   "repeat_visit": {
-    "derived_from_headers": "In a browser that caches normally: text files carry an ETag on a stable URL, so they can be revalidated rather than re-downloaded; the ~0.92 MB of fonts and images are reached through no-store redirects to a signed URL that changes every request, so they are fetched again on every visit; jsdelivr's versioned Pyodide files are ordinarily cacheable. Stated as derived, not measured.",
-    "measured": false,
-    "why_not": "The automated browser used here did not serve this page's responses from its HTTP cache on reload: every file came back as a full 200 with no conditional request, so a realistic repeat visit could not be observed."
+    "bytes": 1046158,
+    "measured": true,
+    "requests": 350,
+    "what": "Same profile, second visit: the page's text revalidated (304s), jsDelivr, PyPI and the marimo lockfile came from cache, and the fonts and images behind the no-store redirects were fetched again (970,079 B)."
   },
-  "revision": "Round 3 of this record. Round 1 gzipped same-origin files on the premise that Hugging Face compresses Static Spaces (it does not). Round 2 served every same-origin file directly; a partial Integration review then pointed out that Hugging Face serves binary files through a redirect to a separate CDN host. Both corrections were verified independently on live Static Spaces before being accepted.",
-  "self_reference": "The Space serves files that print the cold-load size, so an exact byte count is not stable on its own surfaces; they publish two-decimal millions of bytes, which a one-byte change cannot move. The exact figure here describes the final bundle.",
+  "revision": "Final: measured in headless Chrome 152 over the DevTools protocol with a brand-new profile, page and Pyodide worker attached, against emulated Hugging Face serving (HTTP/1.1; text direct with ETag; binary files as a no-store 302 to a CDN stand-in). Supersedes the earlier stitched measurements, which missed browser favicon/manifest requests and used an HTTP/1.0 emulator.",
+  "self_reference": "The Space serves files that print this size, so an exact byte count drifts by a few bytes whenever the wording changes; the surfaces publish two-decimal millions, which that drift cannot move.",
   "totals": {
-    "bytes": 57161580,
+    "bytes": 57252166,
     "hosts": 5,
-    "mb_decimal": 57.16,
-    "mib_binary": 54.5,
-    "plain_language": "about 57 MB on a first visit (57,161,580 bytes = 54.5 MiB), from 5 hosts",
-    "requests": 345
+    "mb_decimal": 57.25,
+    "mib_binary": 54.6,
+    "plain_language": "about 57 MB on a first visit (57,252,166 bytes), 352 requests from 5 hosts",
+    "requests": 352
   },
   "units_note": "Published in decimal megabytes (1 MB = 1,000,000 bytes) to two decimals, with exact bytes here.",
   "via_the_huggingface_page": {

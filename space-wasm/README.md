@@ -67,9 +67,9 @@ because it was the one result that could have made this page impossible.
 
 ### What a first visit costs
 
-The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 345 requests from 5 hosts. There is no server to wake. On a repeat visit a browser can revalidate the page's text rather than download it again, but Hugging Face serves the fonts and images through expiring signed links, so those are fetched each time. Measured on a cold cache against the way Hugging Face actually serves a
+The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 352 requests from 5 hosts. There is no server to wake. A repeat visit transferred about 1.0 MB: the page's text revalidated, and the fonts and images Hugging Face serves through expiring signed links were fetched again. Measured on a cold cache against the way Hugging Face actually serves a
 Static Space — files uncompressed, binary files through a redirect to `us.aws.cdn.hf.co`:
-57.16 million bytes. Most of it is the Python runtime and its scientific wheels from
+57.25 million bytes. Most of it is the Python runtime and its scientific wheels from
 `cdn.jsdelivr.net`. The nine boosters come from this Space itself as base64-encoded gzip: the
 platform does not compress, and it would serve a binary file through an uncacheable redirect, so
 the model ships as compressed text instead. The page prints its own measured download table at the
