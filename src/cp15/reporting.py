@@ -170,6 +170,7 @@ def render(output):
         'historical reports; CP-15 WIS is not renamed as that metric.',
         'The inherited A65 load-forecast availability assumption is preserved; the snapshot does not independently '
         'prove every historical issue vintage. Day-ahead D-1 prices are already published at the prior auction. '
+        'D-2 error feedback is the prescribed conservative policy restriction, not a claim that D-1 prices were unavailable. '
         'Origin time is literal fixed CET noon (11:00 UTC), separate from Berlin delivery-day DST. '
         'No pre-2019 inputs, spent holdout, reserved-tail outcomes, A69 or target-day actual predictors entered fitting or selection. '
         'Residual intervals are empirical benchmarks without a finite-sample conformal guarantee. '
