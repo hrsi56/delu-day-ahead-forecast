@@ -143,7 +143,7 @@ docker build -t delu-showcase . && docker run -p 7860:7860 delu-showcase
 - **Canonical entry point.** The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it.
 - **DuckDB SQL.** The hand-authored DuckDB queries in `sql/feature_queries.sql` express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with `make sql`.
 - **The four cutoffs.** All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.
-- **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.
+- **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0. Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the trained champion is a derived work of it. See LICENSE.
 
 The DagsHub repository UI is deliberately not linked anywhere: it redirects an anonymous
 visitor to a sign-in page, while the `.mlflow` tracking URI above is anonymously readable.

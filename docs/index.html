@@ -398,7 +398,7 @@ and the nine boosters' own serializations.</p>
 <li><strong>Canonical entry point.</strong> The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it.</li>
 <li><strong>DuckDB SQL.</strong> The hand-authored DuckDB queries in <code>sql/feature_queries.sql</code> express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with <code>make sql</code>.</li>
 <li><strong>The four cutoffs.</strong> All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.</li>
-<li><strong>Attribution.</strong> Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.</li>
+<li><strong>Attribution.</strong> Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0. Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the trained champion is a derived work of it. See LICENSE.</li>
 <li><strong>Run it yourself.</strong> Clone
 <a href="https://github.com/hrsi56/delu-day-ahead-forecast">https://github.com/hrsi56/delu-day-ahead-forecast</a>, then <code>uv sync</code>, then
 <code>uv run python predict_next_day.py --level 80 --self-check</code> forecasts a delivery day

@@ -141,6 +141,15 @@ ATTRIBUTION = (
     "Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0."
 )
 
+#: Code and data are licensed separately, and the split is load-bearing rather than
+#: administrative: §0 item 3 omitted a gas-price feature precisely because no free,
+#: daily, legally redistributable series existed, and a reproducible open repository
+#: that cannot ship its own inputs is not reproducible.
+LICENSING = (
+    "Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the "
+    "trained champion is a derived work of it. See LICENSE."
+)
+
 #: §9.3: "A second one-liner notes the floor change to -600 EUR/MWh from 2026-05-28".
 FLOOR_CHANGE = (
     "The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift "
@@ -484,6 +493,7 @@ def build_claims() -> Claims:
             f"{float(gate['max_abs_deviation'])!r}."
         ),
         "attribution": ATTRIBUTION,
+        "licensing": LICENSING,
         "floor_change": FLOOR_CHANGE,
         "assumption_a65": ASSUMPTION_A65,
         "assumption_a75": ASSUMPTION_A75,
@@ -505,7 +515,7 @@ def build_claims() -> Claims:
         "repro_pages_canonical": REPRO_PAGES_CANONICAL,
         "repro_duckdb_sql": REPRO_DUCKDB_SQL,
         "repro_four_cutoffs": REPRO_FOUR_CUTOFFS,
-        "repro_attribution": ATTRIBUTION,
+        "repro_attribution": f"{ATTRIBUTION} {LICENSING}",
         # -- links -------------------------------------------------------------
         "mlflow_url": MLFLOW_URL,
         "space_app_url": SPACE_APP_URL,

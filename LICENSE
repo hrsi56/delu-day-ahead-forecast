@@ -1,0 +1,55 @@
+MIT License
+
+Copyright (c) 2026 Yarden Viktor Dejorno
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## The data is not under this licence, and that distinction is deliberate
+
+The MIT terms above cover the **code** in this repository: `src/`, `scripts/`, `tests/`,
+`app/`, `sql/`, the `Makefile`, the `Dockerfile`, and the documentation.
+
+The **redistributed data** carries its own licence and its own obligations:
+
+- `data/snapshot.parquet` and every file derived from it
+- the figures and reports computed from it under `reports/` and `docs/`
+
+> **Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.**
+
+Both sources publish under Creative Commons Attribution 4.0 International
+(https://creativecommons.org/licenses/by/4.0/). Redistribution is permitted **with
+attribution**, which is why the line above appears on every public surface of this
+project rather than only here.
+
+This split was a design constraint from the start, not an afterthought. The project's
+own scope record (`capstone_V6_8.md` §0 item 3) closes a gas-price feature on exactly
+this ground: no free, daily, **legally redistributable** TTF/THE series exists — Yahoo's
+terms prohibit redistribution and Ember's underlying series is licensed — so the feature
+was omitted rather than built on data that could not be committed to a public repository.
+A reproducible open repository that cannot legally ship its own inputs is not
+reproducible.
+
+## The trained model
+
+`models/champion/` is a derived work of the CC BY 4.0 data above. It is released under the
+MIT terms in this file, with the data attribution carried alongside it — in
+`models/champion/champion_card.json`, on the registered `champion` alias, and on every
+public surface.
