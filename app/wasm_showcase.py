@@ -111,8 +111,20 @@ def _(CLAIMS, META, mo):
         > **{CLAIMS['replay_label']}**
 
         This page is the interactive deep dive. The
-        [static report]({CLAIMS['pages_url']}) is the primary entry point; the decision
-        trail is public at [MLflow on DagsHub]({CLAIMS['mlflow_url']}).
+        [static report]({CLAIMS['pages_url']}) is the primary entry point.
+
+        **The decision trail, addressed directly** — every link checked from an
+        unauthenticated client, and all of them use the `.mlflow` tracking host because
+        the DagsHub *repository* UI sends an anonymous visitor to a sign-in page:
+
+        | | |
+        |---|---|
+        | [Experiment `{CLAIMS['mlflow_experiment_name']}`]({CLAIMS['mlflow_experiment_url']}) | every v1 run, side by side |
+        | [Model registry]({CLAIMS['mlflow_models_url']}) | the registered champion and its `champion` alias |
+        | [Tracking root]({CLAIMS['mlflow_url']}) | if a deep link ever moves, start here |
+        | [Source]({CLAIMS['github_url']}) | the repository, tests and evidence chain |
+
+        {CLAIMS['mlflow_next_note']}
 
         **The four cutoffs, stated separately because they are four different dates:**
 

@@ -40,6 +40,41 @@ PAGES_URL = "https://hrsi56.github.io/delu-day-ahead-forecast/"
 SPACE_URL = "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast"
 GITHUB_URL = "https://github.com/hrsi56/delu-day-ahead-forecast"
 
+#: The Space's own app origin. The Space *page* wraps it in Hugging Face chrome;
+#: this serves the notebook directly, and is what a deep link should use.
+SPACE_APP_URL = "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/"
+
+#: Deep links into the tracking server. All verified 2026-09-15 from an
+#: unauthenticated client: the `.mlflow` host answers 200 on each, while the
+#: DagsHub repository UI does not. Run *names* rather than run ids, because a
+#: decision-bearing run was reproduced several times and no single id is the
+#: canonical one -- the name is what a reader should search for.
+MLFLOW_EXPERIMENT_NAME = "delu-cp2"
+MLFLOW_EXPERIMENT_URL = f"{MLFLOW_URL}/#/experiments/0"
+MLFLOW_MODELS_URL = f"{MLFLOW_URL}/#/models"
+MLFLOW_RUN_NAMES = (
+    ("catalog::base", "the selected catalog's development arm"),
+    ("catalog::base_plus_residual_load_proxy", "the domain-feature arm that lost, by +0.371516%"),
+    ("baseline::similar_day_naive", "the headline comparator"),
+    ("baseline::seasonal_naive_168h", "the second baseline"),
+    ("baseline::ridge", "the third baseline"),
+    ("benchmark::base", "the strict-gate arm of the §7.2 benchmark"),
+    ("benchmark::base+a69", "the post-gate arm -- what the unavailable forecast is worth"),
+    ("champion::final-fit-and-holdout", "the frozen champion and the one-shot holdout"),
+    ("diagnostics::champion", "SHAP, permutation importance, regimes, reliability"),
+)
+
+#: v2 has not run. Named here so the surfaces have a place for it rather than
+#: acquiring one ad hoc later, and so a reader can see that the slot is empty
+#: on purpose. `capstone_M4_v2-plan.md` is a draft awaiting ratification.
+MLFLOW_NEXT_EXPERIMENT = "delu-m4"
+MLFLOW_NEXT_NOTE = (
+    "No v2 run exists yet. When M4 is ratified its runs land in a separate "
+    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server, so v1's "
+    "record stays exactly as the one-shot holdout left it and the two are never "
+    "mixed in one experiment."
+)
+
 #: §7.1, verbatim. "It carries this label, exactly, wherever it appears."
 HOLDOUT_DM_LABEL = (
     "Pre-specified one-shot holdout DM test on a fixed 90-day window "
@@ -473,6 +508,12 @@ def build_claims() -> Claims:
         "repro_attribution": ATTRIBUTION,
         # -- links -------------------------------------------------------------
         "mlflow_url": MLFLOW_URL,
+        "space_app_url": SPACE_APP_URL,
+        "mlflow_experiment_name": MLFLOW_EXPERIMENT_NAME,
+        "mlflow_experiment_url": MLFLOW_EXPERIMENT_URL,
+        "mlflow_models_url": MLFLOW_MODELS_URL,
+        "mlflow_next_experiment": MLFLOW_NEXT_EXPERIMENT,
+        "mlflow_next_note": MLFLOW_NEXT_NOTE,
         "pages_url": PAGES_URL,
         "space_url": SPACE_URL,
         "github_url": GITHUB_URL,
@@ -634,6 +675,11 @@ __all__ = [
     "SHIPPED_IS_EVALUATED",
     "SPACE_LINK_LABEL_TEMPLATE",
     "SPACE_URL",
+    "SPACE_APP_URL",
+    "MLFLOW_EXPERIMENT_URL",
+    "MLFLOW_MODELS_URL",
+    "MLFLOW_RUN_NAMES",
+    "MLFLOW_NEXT_EXPERIMENT",
     "build_claims",
     "forbidden_dagshub_links",
     "limitation_bullets",

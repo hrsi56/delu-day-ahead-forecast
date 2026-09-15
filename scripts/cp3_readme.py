@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from delu_forecast.claims import (  # noqa: E402
+    MLFLOW_RUN_NAMES,
     build_claims,
     limitation_bullets,
     reproducibility_bullets,
@@ -31,39 +32,49 @@ NEXT_HEADING = "## Setup\n"
 
 def build_section() -> str:
     C = build_claims()
+    RUN_TABLE = "| Run name | What it decided |\n|---|---|\n" + "\n".join(
+        f"| `{name}` | {what} |" for name, what in MLFLOW_RUN_NAMES
+    )
     limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
     reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
     return f"""{HEADING}
 
-**Deployment status.** GitHub Pages is **live** at {C["pages_url"]} — the primary link, and it works
-now. **The Hugging Face Space is built and verified locally but is not deployed, and the reason is a
-platform change rather than an oversight.** On 2026-07-08 Hugging Face moved the Docker and Gradio
-SDKs behind a paid PRO plan; only Static Spaces remain free. This project runs at a ratified $0 rate,
-so the containerised showcase is not hosted there. **The container is not hypothetical** — it builds,
-and `make container-verify` runs it under `docker run --network none` with every external host
-unreachable. Run it yourself with the commands below.
+### Three public surfaces — all live
 
-**What the Space will be instead: a Static Space, which cannot sleep.** The interactive demo is now a
-marimo notebook exported with `marimo export html-wasm`: the champion's own boosters execute in the
-visitor's browser under Pyodide, and Hugging Face serves nothing but files. It is built and verified
-locally and awaits the owner's upload — steps in [`docs/deploy.md`](docs/deploy.md). {C["wasm_identity"]}
-{C["wasm_cold_load"]} {C["wasm_wrapper_disclosure"]}
+Each one answers a different question, and each stands on its own. The CV carries the first.
 
-**Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
-committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
-ENTSO-E/SMARD call during a user session. {C["shipped_is_evaluated"]}
+| | Surface | Answers | Cost to open |
+|---|---|---|---|
+| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* The full §10 reading order — data, regimes, catalog, validation design, results, SHAP, regimes, reliability, forecast, limitations, reproduction | **zero network calls.** One self-contained file. Cannot sleep, cannot break when a CDN does, renders offline |
+| **2** | **[⚡ Interactive Space]({C["space_url"]})**<br>[direct app]({C["space_app_url"]}) | *Does the thing actually run?* The champion's own boosters executing in your browser under Pyodide — no server | about {C["wasm_cold_load_mb"]} MB first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts; ~1 MB after. **A Static Space executes nothing, so it never sleeps** |
+| **3** | **[🔬 MLflow on DagsHub]({C["mlflow_url"]})** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run, anonymously readable — no sign-in | — |
 
-| Surface | What it is | Runtime calls |
-|---|---|---|
-| **[Static report]({C["pages_url"]})** — the primary link | The full §10 reading order as one self-contained HTML file, CDN-served by GitHub Pages | **zero** |
-| **[Interactive Space]({C["space_url"]})** | The marimo notebook exported to WebAssembly, served by a free **Static** Space; inference runs in the browser | about {C["wasm_cold_load_mb"]} MB on a first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts |
-| **[MLflow on DagsHub]({C["mlflow_url"]})** | Every decision-bearing run, anonymously readable | — |
+{C["wasm_identity"]} {C["wasm_wrapper_disclosure"]}
 
-The static page is the first touch precisely because it fetches nothing and cannot fail when a CDN
-does. The Space is labelled *"{C["space_link_label"]}"* wherever it is linked. The old label warned of
-a ~30 s wake-up; a Static Space executes nothing on the server, so there is nothing to wake, and the
-cost a visitor actually pays is download weight — so that is what the label now states. No keep-alive
-of any kind runs on any platform.
+**Deployment status: complete.** Pages live; the Static Space live and serving. On 2026-07-08 Hugging
+Face moved the Docker and Gradio SDKs behind a paid PRO plan and only Static Spaces stayed free, so
+the containerised path could not be hosted at this project's ratified $0 rate. **The container is not
+abandoned and not hypothetical** — it builds, and `make container-verify` runs it under
+`docker run --network none` with every external host unreachable.
+
+#### The decision trail, addressed directly
+
+Every link below was checked from an **unauthenticated** client. The DagsHub *repository* UI redirects
+an anonymous visitor to a sign-in page; the `.mlflow` tracking host does not, which is why every link
+here uses it.
+
+| | |
+|---|---|
+| **[Experiment `{C["mlflow_experiment_name"]}`]({C["mlflow_experiment_url"]})** | every v1 run, side by side |
+| **[Model registry]({C["mlflow_models_url"]})** | the registered champion and its `champion` alias |
+| **[Tracking root]({C["mlflow_url"]})** | if a deep link ever moves, start here |
+
+Runs are named rather than linked by id, because several decision-bearing runs were reproduced and no
+single id is canonical — the name is what to search for:
+
+{RUN_TABLE}
+
+**Where v2 will go.** {C["mlflow_next_note"]}
 
 **Run it yourself, offline:**
 

@@ -154,35 +154,52 @@ silently when `MLFLOW_TRACKING_URI` is unset.
 
 ## CP-3 showcase and release
 
-**Deployment status.** GitHub Pages is **live** at https://hrsi56.github.io/delu-day-ahead-forecast/ — the primary link, and it works
-now. **The Hugging Face Space is built and verified locally but is not deployed, and the reason is a
-platform change rather than an oversight.** On 2026-07-08 Hugging Face moved the Docker and Gradio
-SDKs behind a paid PRO plan; only Static Spaces remain free. This project runs at a ratified $0 rate,
-so the containerised showcase is not hosted there. **The container is not hypothetical** — it builds,
-and `make container-verify` runs it under `docker run --network none` with every external host
-unreachable. Run it yourself with the commands below.
+### Three public surfaces — all live
 
-**What the Space will be instead: a Static Space, which cannot sleep.** The interactive demo is now a
-marimo notebook exported with `marimo export html-wasm`: the champion's own boosters execute in the
-visitor's browser under Pyodide, and Hugging Face serves nothing but files. It is built and verified
-locally and awaits the owner's upload — steps in [`docs/deploy.md`](docs/deploy.md). The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0.
-The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 352 requests from 5 hosts. There is no server to wake. A repeat visit transferred about 1.0 MB: the page's text revalidated, and the fonts and images Hugging Face serves through expiring signed links were fetched again. Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
+Each one answers a different question, and each stands on its own. The CV carries the first.
 
-**Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
-committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
-ENTSO-E/SMARD call during a user session. The shipped model is exactly the model the holdout evaluated: there is no retrain and no re-tune after the result was opened.
+| | Surface | Answers | Cost to open |
+|---|---|---|---|
+| **1** | **[📄 Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)**<br>the primary link | *Can they reason, and will they tell me what went wrong?* The full §10 reading order — data, regimes, catalog, validation design, results, SHAP, regimes, reliability, forecast, limitations, reproduction | **zero network calls.** One self-contained file. Cannot sleep, cannot break when a CDN does, renders offline |
+| **2** | **[⚡ Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)**<br>[direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/) | *Does the thing actually run?* The champion's own boosters executing in your browser under Pyodide — no server | about 57 MB first visit, 352 requests, 5 hosts; ~1 MB after. **A Static Space executes nothing, so it never sleeps** |
+| **3** | **[🔬 MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run, anonymously readable — no sign-in | — |
 
-| Surface | What it is | Runtime calls |
-|---|---|---|
-| **[Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)** — the primary link | The full §10 reading order as one self-contained HTML file, CDN-served by GitHub Pages | **zero** |
-| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** | The marimo notebook exported to WebAssembly, served by a free **Static** Space; inference runs in the browser | about 57 MB on a first visit, 352 requests, 5 hosts |
-| **[MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | Every decision-bearing run, anonymously readable | — |
+The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0. Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
 
-The static page is the first touch precisely because it fetches nothing and cannot fail when a CDN
-does. The Space is labelled *"interactive demo — runs in your browser, no server; the first visit downloads about 57 MB"* wherever it is linked. The old label warned of
-a ~30 s wake-up; a Static Space executes nothing on the server, so there is nothing to wake, and the
-cost a visitor actually pays is download weight — so that is what the label now states. No keep-alive
-of any kind runs on any platform.
+**Deployment status: complete.** Pages live; the Static Space live and serving. On 2026-07-08 Hugging
+Face moved the Docker and Gradio SDKs behind a paid PRO plan and only Static Spaces stayed free, so
+the containerised path could not be hosted at this project's ratified $0 rate. **The container is not
+abandoned and not hypothetical** — it builds, and `make container-verify` runs it under
+`docker run --network none` with every external host unreachable.
+
+#### The decision trail, addressed directly
+
+Every link below was checked from an **unauthenticated** client. The DagsHub *repository* UI redirects
+an anonymous visitor to a sign-in page; the `.mlflow` tracking host does not, which is why every link
+here uses it.
+
+| | |
+|---|---|
+| **[Experiment `delu-cp2`](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/0)** | every v1 run, side by side |
+| **[Model registry](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/models)** | the registered champion and its `champion` alias |
+| **[Tracking root](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | if a deep link ever moves, start here |
+
+Runs are named rather than linked by id, because several decision-bearing runs were reproduced and no
+single id is canonical — the name is what to search for:
+
+| Run name | What it decided |
+|---|---|
+| `catalog::base` | the selected catalog's development arm |
+| `catalog::base_plus_residual_load_proxy` | the domain-feature arm that lost, by +0.371516% |
+| `baseline::similar_day_naive` | the headline comparator |
+| `baseline::seasonal_naive_168h` | the second baseline |
+| `baseline::ridge` | the third baseline |
+| `benchmark::base` | the strict-gate arm of the §7.2 benchmark |
+| `benchmark::base+a69` | the post-gate arm -- what the unavailable forecast is worth |
+| `champion::final-fit-and-holdout` | the frozen champion and the one-shot holdout |
+| `diagnostics::champion` | SHAP, permutation importance, regimes, reliability |
+
+**Where v2 will go.** No v2 run exists yet. When M4 is ratified its runs land in a separate `delu-m4` experiment on the same tracking server, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment.
 
 **Run it yourself, offline:**
 

@@ -42,6 +42,7 @@ from delu_forecast.claims import (  # noqa: E402
     build_claims,
     limitation_bullets,
     reproducibility_bullets,
+    MLFLOW_RUN_NAMES,
 )
 from delu_forecast.postprocess import QUANTILE_LABELS  # noqa: E402
 from delu_forecast.showcase import (  # noqa: E402
@@ -154,6 +155,13 @@ figcaption{font-size:.85rem;color:var(--mute);margin-top:6px}
 .controls legend{font-size:.78rem;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
 .controls label{margin-right:12px;font-size:.92rem;white-space:nowrap}
 #chart{width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:8px}
+.surfaces{border:1px solid #d7dee6;border-radius:8px;padding:14px 16px;margin:18px 0;background:#fbfcfd}
+.surfaces-lead{margin:0 0 10px}
+.surfaces-table{width:100%;border-collapse:collapse;margin:8px 0 14px;font-size:.94em}
+.surfaces-table th,.surfaces-table td{border:1px solid #e2e8ee;padding:7px 9px;text-align:left;vertical-align:top}
+.surfaces-table th{background:#eef2f6}
+.trail{margin:6px 0 12px}
+.next{margin:10px 0 0;padding-top:9px;border-top:1px dashed #d7dee6;color:#4a5a6a}
 .kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 18px;font-size:.92rem}
 .kv dt{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--mute)}
 .kv dd{margin:0}
@@ -251,6 +259,10 @@ def build_html() -> str:
     reproduction = "\n".join(
         "<li>" + CODE.sub(r"<code>\1</code>", BOLD.sub(r"<strong>\1</strong>", esc(bullet))) + "</li>"
         for bullet in reproducibility_bullets(C)
+    )
+    RUN_ROWS = "\n".join(
+        f"<tr><td><code>{esc(name)}</code></td><td>{esc(what)}</td></tr>"
+        for name, what in MLFLOW_RUN_NAMES
     )
     level_inputs = "".join(
         f"<label><input type='radio' name='lvl' value='{level}'"
@@ -540,6 +552,48 @@ This page stays the first touch because it downloads nothing and cannot fail whe
 <blockquote><p>{esc(C['holdout_limitation'])}</p></blockquote>
 
 <h2 id="repro">12 · Reproducibility</h2>
+
+<div class="surfaces">
+<p class="surfaces-lead"><strong>Three public surfaces, all live.</strong> Each answers a different
+question and each stands on its own. This page is the one that needs no network.</p>
+<table class="surfaces-table">
+<thead><tr><th>Surface</th><th>Answers</th><th>Cost to open</th></tr></thead>
+<tbody>
+<tr><td><strong>📄 Static report</strong> — you are here<br>
+<a href="{C['pages_url']}">{C['pages_url']}</a></td>
+<td>Can they reason, and will they say what went wrong?</td>
+<td><strong>zero network calls</strong></td></tr>
+<tr><td><strong>⚡ Interactive Space</strong><br>
+<a href="{C['space_url']}">the Space</a> · <a href="{C['space_app_url']}">the app directly</a></td>
+<td>Does the thing actually run? The champion's own boosters execute in your browser under
+Pyodide — no server.</td>
+<td>~{C['wasm_cold_load_mb']}&nbsp;MB first visit, ~1&nbsp;MB after. A Static Space executes
+nothing, so it never sleeps.</td></tr>
+<tr><td><strong>🔬 MLflow on DagsHub</strong><br>
+<a href="{C['mlflow_url']}">the tracking server</a></td>
+<td>Is the decision trail real, or is this page the only evidence?</td>
+<td>anonymous, no sign-in</td></tr>
+</tbody></table>
+
+<p><strong>The decision trail, addressed directly.</strong> Every link here was checked from an
+unauthenticated client. The DagsHub <em>repository</em> UI redirects an anonymous visitor to a
+sign-in page; the <code>.mlflow</code> tracking host does not, which is why every link uses it.</p>
+<ul class="trail">
+<li><a href="{C['mlflow_experiment_url']}">Experiment <code>{C['mlflow_experiment_name']}</code></a>
+— every v1 run, side by side</li>
+<li><a href="{C['mlflow_models_url']}">Model registry</a> — the registered champion and its
+<code>champion</code> alias</li>
+<li><a href="{C['mlflow_url']}">Tracking root</a> — if a deep link ever moves, start here</li>
+</ul>
+<p>Runs are named rather than linked by id, because several decision-bearing runs were reproduced and
+no single id is canonical — the name is what to search for:</p>
+<table class="surfaces-table"><thead><tr><th>Run name</th><th>What it decided</th></tr></thead>
+<tbody>
+{RUN_ROWS}
+</tbody></table>
+<p class="next"><strong>Where v2 will go.</strong> {esc(C['mlflow_next_note'])}</p>
+</div>
+
 <dl class="kv">
 <dt>artifact_fingerprint_sha256</dt><dd><code>{C['champion_fingerprint']}</code></dd>
 <dt>snapshot_sha256</dt><dd><code>{C['snapshot_sha256']}</code></dd>

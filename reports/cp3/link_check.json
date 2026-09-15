@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-09-14T19:12:57+00:00",
+  "checked_at_utc": "2026-09-15T14:54:17+00:00",
   "client": "unauthenticated urllib -- no cookies, no token, no logged-in browser",
   "forbidden_paths": [
     "dagshub.com/hrsi56/delu-day-ahead-forecast/experiments",
@@ -26,12 +26,39 @@
     }
   },
   "links": {
+    "http://127.0.0.1:8820": {
+      "error": "URLError: <urlopen error [Errno 61] Connection refused>",
+      "on_surfaces": [
+        "README"
+      ],
+      "resolves": false,
+      "status": null
+    },
     "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow": {
       "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/",
       "on_surfaces": [
         "Pages export",
         "README",
-        "Space card"
+        "Space card",
+        "Static Space card"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/0": {
+      "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/0",
+      "on_surfaces": [
+        "Pages export",
+        "README"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/models": {
+      "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/models",
+      "on_surfaces": [
+        "Pages export",
+        "README"
       ],
       "resolves": true,
       "status": 200
@@ -40,7 +67,8 @@
       "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast",
       "on_surfaces": [
         "Pages export",
-        "Space card"
+        "Space card",
+        "Static Space card"
       ],
       "resolves": true,
       "status": 200
@@ -48,26 +76,39 @@
     "https://hrsi56.github.io/delu-day-ahead-forecast/": {
       "final_url": "https://hrsi56.github.io/delu-day-ahead-forecast/",
       "on_surfaces": [
+        "Pages export",
         "README",
-        "Space card"
+        "Space card",
+        "Static Space card"
       ],
-      "resolves": false,
-      "status": 404
+      "resolves": true,
+      "status": 200
     },
-    "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast": {
-      "final_url": "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast",
+    "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast": {
+      "final_url": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast",
       "on_surfaces": [
         "Pages export",
-        "README"
+        "README",
+        "Space card",
+        "Static Space card"
       ],
-      "resolves": false,
-      "status": 401
+      "resolves": true,
+      "status": 200
+    },
+    "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/": {
+      "final_url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/index.html",
+      "on_surfaces": [
+        "Pages export",
+        "README",
+        "Static Space card"
+      ],
+      "resolves": true,
+      "status": 200
     }
   },
   "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow",
   "unresolved": [
-    "https://hrsi56.github.io/delu-day-ahead-forecast/",
-    "https://huggingface.co/spaces/hrsi56/delu-day-ahead-forecast"
+    "http://127.0.0.1:8820"
   ],
   "unresolved_reason": "Both are the URLs publication creates. Deployment is owner-only and was not performed by this checkpoint: GitHub Pages is not enabled and the Space is not created. See docs/deploy.md."
 }
