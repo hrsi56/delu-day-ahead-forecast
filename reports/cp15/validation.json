@@ -101,6 +101,14 @@
       "all_74_model_records_match": true,
       "causal_mask_maximum_delta": 0,
       "all_five_fitted_policies_respond_to_D_minus_1_control": true
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python -m cp15.reproduce_fit --fold fold_3 --day 2022-08-15 --output /tmp/cp15-lead-fit-control-2022-08-15.json",
+      "exit_code": 0,
+      "result": "reproductions/lead-fit-2022-08-15.json",
+      "maximum_original_prediction_delta": 0,
+      "all_74_model_records_match": true,
+      "seconds": 46.36091558399494
     }
   ],
   "fold_1_saved_replay": {
