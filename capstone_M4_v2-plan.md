@@ -1,3 +1,14 @@
+> ## ⚠ SUPERSEDED 2026-09-15
+>
+> **M4 has moved to a new anchor: [`capstone-completion-and-corrections.md`](capstone-completion-and-corrections.md).**
+> Its §4 (calibration) and §5 (the frozen 90-day holdout) replace §4–§6 of this document, re-derived
+> rather than copied so the stage fits the system that document builds around it.
+>
+> **This file is not deleted and is not the plan of record.** It is the record of how M4 was reasoned
+> out and ratified on 2026-09-15 — the candidate set, the anti-overtuning discipline, the computed
+> window, and the four owner decisions with the one Orchestrator recommendation that was overruled
+> and why. Read it for the reasoning; build from the new anchor.
+
 # M4 / v2 — Regime-robust calibration, and the product feed
 
 **Status: RATIFIED 2026-09-15 by the owner**, on four decisions recorded in §11. Authored by the
