@@ -17,6 +17,11 @@
 >
 > Owner-granted, 2026-09-15, with explicit authority to edit every file in the project to bring it
 > into line.
+>
+> **This table is a completed map.** Every stage in it has landed: CP-1, CP-2, CP-3, CP-3B and REL-1
+> are all done, and the two Track C rows are struck. **The live checkpoint sequence is
+> `capstone_v20.md` §9 — CP-10 → CP-14, with dependencies stated per row.** Read this file for what
+> v1 did, not for what to do next.
 
 # Program Stage Sequence — Capstone-First Routing Map (v8)
 

@@ -69,6 +69,12 @@ This repository is shared by program orchestration and Track B engineering, but 
 
 ## Interview-answer capture
 
+> **⚠ SUSPENDED 2026-09-15, with Track C.** `capstone_v20.md` narrowed the programme to a single
+> track and `שאלות תשובות.docx` is closed at 25 entries as a finished v1 record. **No agent files
+> further entries.** A Lead that meets a trigger still names it in one line in its terminal return —
+> that costs nothing and preserves the reasoning — but nothing is written to the document. The rule
+> below is retained rather than deleted so that reinstating it is a one-line owner decision.
+
 **The project is judged in a room, not only in a repository.** Reasoning that stays in a transcript cannot be defended later. When a session produces an explanation worth giving a hiring manager, it is written down at the time, not reconstructed the week before an interview.
 
 **Triggers — any one.** An agent hits real uncertainty and resolves it; a decision is taken whose reasoning is not self-evident from the artifact; an approach is chosen where a reasonable alternative existed; a failure is traced to a cause; an entry lands in `progress.md` that a stranger would find interesting; or Yarden asks for an explanation of any of these.
