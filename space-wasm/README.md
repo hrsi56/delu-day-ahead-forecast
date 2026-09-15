@@ -24,7 +24,7 @@ nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
 
 **The static report is the primary entry point: [https://hrsi56.github.io/delu-day-ahead-forecast/](https://hrsi56.github.io/delu-day-ahead-forecast/).**
 It is CDN-served and performs zero runtime calls. This Space is the interactive deep dive it
-fronts: interactive demo — runs in your browser, no server; the first visit downloads about 54 MB.
+fronts: interactive demo — runs in your browser, no server; the first visit downloads about 57 MB.
 
 > **Historical out-of-sample replay — the frozen champion forecasting a 90-day period it never trained on. This is not a live forecast.**
 
@@ -68,10 +68,13 @@ because it was the one result that could have made this page impossible.
 
 ### What a first visit costs
 
-The interactive demo runs entirely in your browser, so the first visit downloads about 54 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 337 requests from 4 hosts. Repeat visits come from your browser cache, and there is no server to wake. Measured on a cold cache, served uncompressed exactly as Hugging Face serves
-it: 53.54 million bytes. Most of it is the Python runtime and its scientific wheels from
-`cdn.jsdelivr.net`; the nine boosters come from this Space itself, gzipped at rest because the
-platform does not compress. The page prints its own measured download table at the bottom.
+The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 345 requests from 5 hosts. There is no server to wake. On a repeat visit a browser can revalidate the page's text rather than download it again, but Hugging Face serves the fonts and images through expiring signed links, so those are fetched each time. Measured on a cold cache against the way Hugging Face actually serves a
+Static Space — files uncompressed, binary files through a redirect to `us.aws.cdn.hf.co`:
+57.25 million bytes. Most of it is the Python runtime and its scientific wheels from
+`cdn.jsdelivr.net`. The nine boosters come from this Space itself as base64-encoded gzip: the
+platform does not compress, and it would serve a binary file through an uncacheable redirect, so
+the model ships as compressed text instead. The page prints its own measured download table at the
+bottom.
 
 Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
 

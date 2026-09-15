@@ -112,23 +112,31 @@ def main() -> int:
     claims = build_claims()
 
     # -- the nine boosters, as text ----------------------------------------
-    # Gzip at rest. Hugging Face serves Static Spaces uncompressed even to a
-    # client that asks for gzip (verified on live Spaces, 2026-09-15), so the only
-    # compression a visitor ever gets is the compression shipped in the file.
-    # Lossless: the notebook decompresses to the identical model text, and the
-    # equivalence gate proves the result bitwise. mtime=0 keeps the bytes
-    # reproducible across builds.
+    # Base64 of gzip, as text. Two measured platform facts decide the format
+    # (live Static Spaces, 2026-09-15). First, Hugging Face serves Static Spaces
+    # uncompressed, so shipped compression is the only compression a visitor
+    # gets. Second, binary files are stored through Xet and served as a
+    # `302 cache-control: no-store` to us.aws.cdn.hf.co with a signed URL that
+    # changes on every request -- so a browser can never cache them, and binary
+    # gzip boosters would be re-downloaded (11.1 MB) on every visit. Base64 keeps
+    # the file ASCII text, which the platform serves directly with an ETag: 3.7 MB
+    # more on a first visit, nothing on a repeat one. Lossless either way; the
+    # equivalence gate proves the decoded model bitwise. mtime=0 keeps bytes
+    # reproducible.
+    import base64
     import gzip
 
-    for stale in (OUT / "boosters").glob("*.txt"):
+    for stale in list((OUT / "boosters").glob("*.txt")) + list((OUT / "boosters").glob("*.txt.gz")):
         stale.unlink()
-    booster_bytes, booster_gz_bytes = {}, {}
+    booster_bytes, booster_gz_bytes, booster_b64_bytes = {}, {}, {}
     for label in QUANTILE_LABELS:
         text = champion.heads[label].booster_.model_to_string().encode()
         compressed = gzip.compress(text, compresslevel=9, mtime=0)
-        (OUT / "boosters" / f"{label}.txt.gz").write_bytes(compressed)
+        encoded = base64.b64encode(compressed)
+        (OUT / "boosters" / f"{label}.txt.gz.b64").write_bytes(encoded)
         booster_bytes[label] = len(text)
         booster_gz_bytes[label] = len(compressed)
+        booster_b64_bytes[label] = len(encoded)
 
     # -- champion metadata, read and never recomputed ----------------------
     (OUT / "champion.json").write_text(
@@ -300,6 +308,7 @@ def main() -> int:
                 "uncompressed_bytes": payload_bytes,
                 "booster_bytes": booster_bytes,
                 "booster_gzip_bytes": booster_gz_bytes,
+                "booster_base64_bytes": booster_b64_bytes,
                 "file_bytes": sizes,
                 "series_rows": int(len(rows)),
                 "fixture_days": len(per_day),
@@ -316,7 +325,7 @@ def main() -> int:
     )
     print(f"payload: {payload_bytes:,} bytes across {len(sizes)} files")
     print(f"  boosters: {sum(booster_bytes.values()):,} bytes as text, "
-          f"{sum(booster_gz_bytes.values()):,} gzipped at rest")
+          f"{sum(booster_gz_bytes.values()):,} gzipped, {sum(booster_b64_bytes.values()):,} shipped as base64 text")
     print(f"  series:   {len(rows):,} rows")
     print(f"  fixture:  {len(per_day)} days / {total_rows} rows "
           f"({fail_closed} fail-closed) / regimes {sorted({d['regime'] for d in per_day})}")

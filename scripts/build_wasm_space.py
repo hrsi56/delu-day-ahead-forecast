@@ -89,10 +89,13 @@ because it was the one result that could have made this page impossible.
 
 ### What a first visit costs
 
-{C['wasm_cold_load']} Measured on a cold cache, served uncompressed exactly as Hugging Face serves
-it: {C['wasm_cold_load_bytes']}. Most of it is the Python runtime and its scientific wheels from
-`cdn.jsdelivr.net`; the nine boosters come from this Space itself, gzipped at rest because the
-platform does not compress. The page prints its own measured download table at the bottom.
+{C['wasm_cold_load']} Measured on a cold cache against the way Hugging Face actually serves a
+Static Space — files uncompressed, binary files through a redirect to `us.aws.cdn.hf.co`:
+{C['wasm_cold_load_bytes']}. Most of it is the Python runtime and its scientific wheels from
+`cdn.jsdelivr.net`. The nine boosters come from this Space itself as base64-encoded gzip: the
+platform does not compress, and it would serve a binary file through an uncacheable redirect, so
+the model ships as compressed text instead. The page prints its own measured download table at the
+bottom.
 
 {C['wasm_wrapper_disclosure']}
 
@@ -190,7 +193,7 @@ def main() -> int:
         problems.append("index.html missing")
     if not (BUNDLE / "assets").is_dir() or not any((BUNDLE / "assets").iterdir()):
         problems.append("assets/ missing or empty")
-    boosters = sorted((BUNDLE / "public" / "boosters").glob("*.txt.gz"))
+    boosters = sorted((BUNDLE / "public" / "boosters").glob("*.txt.gz.b64"))
     if len(boosters) != 9:
         problems.append(f"expected 9 boosters, found {len(boosters)}")
     shipped = BUNDLE / "public" / "browser_champion.py"
@@ -198,6 +201,19 @@ def main() -> int:
     module_sha = hashlib.sha256(shipped.read_bytes()).hexdigest() if shipped.exists() else None
     if module_sha != hashlib.sha256(source.read_bytes()).hexdigest():
         problems.append("public/browser_champion.py differs from app/browser_champion.py")
+    # Anything binary under public/ would be stored through Xet and served as a
+    # no-store redirect to a signed, per-request URL -- uncacheable, and an extra
+    # host. The payload must stay text.
+    for payload_file in (BUNDLE / "public").rglob("*"):
+        if payload_file.is_file():
+            head = payload_file.read_bytes()[:8192]
+            try:
+                head.decode("utf-8")
+                binary = b"\x00" in head
+            except UnicodeDecodeError:
+                binary = True
+            if binary:
+                problems.append(f"binary payload file would be redirected through Xet: {payload_file.relative_to(BUNDLE)}")
     if any(p.suffix == ".pyc" or "__pycache__" in p.parts for p in BUNDLE.rglob("*")):
         problems.append("compiled bytecode present in the bundle")
     for leak in ("CLAUDE.md", "AGENTS.md", ".env"):

@@ -46,8 +46,8 @@ make wasm
 ```
 
 That regenerates the browser payload from the committed champion, re-proves the model-identity gate,
-exports the notebook with `marimo export html-wasm`, and assembles **`dist/space-wasm/`** — about 38 MB
-uncompressed across ~740 files (served uncompressed — Hugging Face does not compress Static Spaces, so the nine boosters ship gzipped at rest): `index.html`, marimo's `assets/`, `public/` (the nine boosters, the row
+exports the notebook with `marimo export html-wasm`, and assembles **`dist/space-wasm/`** — about 42 MB
+uncompressed across ~740 files (Hugging Face serves Static Spaces uncompressed and routes binary files through a redirect, so the nine boosters ship as base64-encoded gzip text): `index.html`, marimo's `assets/`, `public/` (the nine boosters, the row
 slice, the equivalence fixture, `browser_champion.py`), the Space card as `README.md` with
 `sdk: static`, and `.gitattributes` routing binary assets through LFS. It exits non-zero if the bundle
 is malformed, if the shipped module differs from the verified one, or if any internal file leaked into

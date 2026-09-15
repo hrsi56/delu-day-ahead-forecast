@@ -403,8 +403,10 @@ def build_claims() -> Claims:
             f"The interactive demo runs entirely in your browser, so the first visit downloads "
             f"about {cold_mb} MB — a Python runtime, the nine gradient-boosted models and the "
             f"notebook interface — in {network['totals']['requests']} requests from "
-            f"{len(network['hosts'])} hosts. Repeat visits come from your browser cache, and "
-            f"there is no server to wake."
+            f"{len(network['hosts'])} hosts. There is no server to wake. On a repeat visit a "
+            f"browser can revalidate the page's text rather than download it again, but Hugging "
+            f"Face serves the fonts and images through expiring signed links, so those are "
+            f"fetched each time."
         ),
         "space_app_url": network["via_the_huggingface_page"]["app_url"],
         "wasm_wrapper_disclosure": (

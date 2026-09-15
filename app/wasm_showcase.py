@@ -55,34 +55,27 @@ def _():
     def read_json(name: str):
         return json.loads(read_text(name))
 
-    async def read_gzip_text(name: str) -> str:
-        """Fetch a gzipped file and return its decompressed text.
+    def read_packed_text(name: str) -> str:
+        """Fetch a base64-encoded gzip file as text and return the original text.
 
-        Hugging Face serves Static Spaces uncompressed, so the boosters ship
-        gzipped at rest and are inflated here. If some other server ever added
-        its own Content-Encoding, the browser would hand over plain text; the
-        magic-byte check keeps that case correct instead of crashing.
+        Why this shape: Hugging Face serves Static Spaces uncompressed, so the
+        boosters must ship compressed; and it serves binary files through a
+        no-store redirect to a signed URL that changes every request, which no
+        browser can cache. Base64 keeps the compressed file plain text, served
+        directly and cached like the rest of the page.
         """
+        import base64
         import gzip
 
-        url = f"{_base()}/{name}"
-        try:
-            from pyodide.http import pyfetch
+        return gzip.decompress(base64.b64decode(read_text(name))).decode()
 
-            data = await (await pyfetch(url)).bytes()
-        except ImportError:
-            from pathlib import Path
-
-            data = Path(url).read_bytes()
-        return (gzip.decompress(data) if data[:2] == b"\x1f\x8b" else data).decode()
-
-    return json, mo, np, read_gzip_text, read_json, read_text
+    return json, mo, np, read_json, read_packed_text, read_text
 
 
 @app.cell
-async def _(read_gzip_text, read_json, read_text):
-    # The heavy cell: nine boosters, about 11 MB gzipped on the wire and 31 MB
-    # of model text once inflated. Everything else is small.
+def _(read_json, read_packed_text, read_text):
+    # The heavy cell: nine boosters, about 15 MB on the wire as base64 gzip and
+    # 31 MB of model text once decoded. Everything else is small.
     import lightgbm as lgb
 
     META = read_json("champion.json")
@@ -97,9 +90,10 @@ async def _(read_gzip_text, read_json, read_text):
     exec(read_text("browser_champion.py"), _module)  # noqa: S102
     BrowserChampion = _module["BrowserChampion"]
 
-    BOOSTERS = {}
-    for _label in META["quantile_labels"]:
-        BOOSTERS[_label] = lgb.Booster(model_str=await read_gzip_text(f"boosters/{_label}.txt.gz"))
+    BOOSTERS = {
+        _label: lgb.Booster(model_str=read_packed_text(f"boosters/{_label}.txt.gz.b64"))
+        for _label in META["quantile_labels"]
+    }
     CHAMPION = BrowserChampion(BOOSTERS, META, SERIES, CALENDAR)
     return CHAMPION, CLAIMS, FIXTURE, META
 

@@ -42,11 +42,12 @@ def load():
 
     read = lambda name: json.loads((PUBLIC / name).read_text())  # noqa: E731
     meta = read("champion.json")
+    import base64
     import gzip
 
     boosters = {
         label: lgb.Booster(
-            model_str=gzip.decompress((PUBLIC / "boosters" / f"{label}.txt.gz").read_bytes()).decode()
+            model_str=gzip.decompress(base64.b64decode((PUBLIC / "boosters" / f"{label}.txt.gz.b64").read_bytes())).decode()
         )
         for label in meta["quantile_labels"]
     }

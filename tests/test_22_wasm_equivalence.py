@@ -49,17 +49,18 @@ def _load(name: str) -> dict:
 def payload():
     import lightgbm as lgb
 
+    import base64
     import gzip
 
     meta = _load("champion.json")
     for label in meta["quantile_labels"]:
-        if not (PUBLIC / "boosters" / f"{label}.txt.gz").exists():
+        if not (PUBLIC / "boosters" / f"{label}.txt.gz.b64").exists():
             raise AssertionError(MISSING)
     # Decompressed exactly as the notebook does: the gzip at rest is part of what
     # the gate has to prove lossless.
     boosters = {
         label: lgb.Booster(
-            model_str=gzip.decompress((PUBLIC / "boosters" / f"{label}.txt.gz").read_bytes()).decode()
+            model_str=gzip.decompress(base64.b64decode((PUBLIC / "boosters" / f"{label}.txt.gz.b64").read_bytes())).decode()
         )
         for label in meta["quantile_labels"]
     }

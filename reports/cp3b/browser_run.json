@@ -44,8 +44,30 @@
     "runtime": "marimo_pinned_runtime",
     "what": "app/public/browser_champion.py executed in Pyodide on the final payload, boosters inflated from gzip in the browser: the delivery day's 24 prices set to NaN, then separately every D-1 price raised by 250 EUR/MWh."
   },
+  "item_4_first_visit_under_hf_serving": {
+    "app_origin": {
+      "direct_200": 305,
+      "redirect_302": 9,
+      "requests": 314
+    },
+    "cdn_stand_in": {
+      "bytes": 922341,
+      "requests": 8
+    },
+    "console_errors": 0,
+    "identity_panel": "bitwise identical, 54 days, 1,296 rows, 11,628 values",
+    "page_rendered_through_redirects": true,
+    "redirected_fonts_loaded": [
+      "Lora",
+      "PT Sans",
+      "Fira Mono"
+    ],
+    "repeat_visit": "Reloading re-fetched every file as a full 200 with no conditional request \u2014 this automated browser did not use its HTTP cache for these responses \u2014 so repeat-visit behaviour is stated as derived from response headers, not measured.",
+    "runtime": "marimo_pinned_runtime",
+    "served_by": "scripts/measure_wasm_load.py --emulate-hf on fresh loopback ports"
+  },
   "purpose": "Evidence gathered in real browsers, as opposed to host-side tests. Items 1, 2 and 3 of M3.5/CP-3B each require a property to hold in the browser, so each is recorded here as observed. Reproduce with `make wasm && make wasm-serve` and the probes described below.",
-  "revision": "Round 2 (after the round-1 Integration Critic): re-observed on the final bundle \u2014 boosters gzipped at rest, the committed 54-day fixture, the corrected page wording.",
+  "revision": "Round 3: re-observed on the final bundle (boosters as base64 gzip text) under emulated Hugging Face serving \u2014 text direct and uncompressed with an ETag; binary files through a no-store 302 to a separate CDN origin.",
   "runtimes_observed": {
     "marimo_pinned_runtime": "Pyodide v314.0.0 as pinned by marimo 0.24.2, Python 3.14.2, LightGBM 4.6.0, numpy 2.4.3, wasm32",
     "probe_runtime": "Pyodide 0.28.3, Python 3.13.2, LightGBM 4.6.0, numpy 2.2.5, wasm32 (OpenMP disabled)"

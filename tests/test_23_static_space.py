@@ -122,6 +122,20 @@ def test_the_network_record_adds_up():
             assert host["bytes"] > 0, name
 
 
+def test_the_network_record_follows_the_verified_serving_model():
+    """Binary files on a Static Space take a no-store redirect to a separate CDN host.
+    The record must count that host and must not claim a repeat visit it did not measure."""
+    record = json.loads(NETWORK.read_text())
+    assert "us.aws.cdn.hf.co" in record["hosts"], "binary files reach a CDN host on Hugging Face"
+    assert record["totals"]["hosts"] == len(record["hosts"]) == 5
+    assert record["repeat_visit"]["measured"] is False
+    assert "derived" in record["repeat_visit"]["derived_from_headers"].lower() or "Stated as derived" in record["repeat_visit"]["derived_from_headers"]
+    claims = build_claims()
+    assert "come from your browser cache" not in claims["wasm_cold_load"], "a repeat visit was not measured"
+    manifest = json.loads(BUNDLE_MANIFEST.read_text())
+    assert not any("binary payload file" in problem for problem in manifest["problems"])
+
+
 def test_the_published_cold_load_figure_is_the_recorded_one():
     claims = build_claims()
     record = json.loads(NETWORK.read_text())
