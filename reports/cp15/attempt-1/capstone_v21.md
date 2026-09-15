@@ -1,19 +1,9 @@
-# Capstone v21-r1 — Adaptive forecasting with measured product quality
+# Capstone v21 — Adaptive forecasting with measured product quality
 
 **Active owner-authorized execution plan · 2026-09-15.** The owner approved execution of the
 research recommendation and the necessary plan change. The Orchestrator drafted this exact text
 under that delegated authority; this is not a claim that the owner reviewed every sentence.
 It replaces v20 for future work. Original v20 remains the historical authority for CP-10.
-
-**Owner-authorized history correction, v21-r1 · 2026-09-16.** The owner approved §5’s
-expanding history capped at 728 calendar days, retaining the deliberate 2019-01-01 boundary,
-and the directly necessary resumption handoff. This is the exact active revision of
-`capstone_v21.md`; the original v21 bytes remain historical authority for CP-15 attempt 1
-at evidence tip `193d9cf48c586b9c4b1f43d7a5677b2d5f400832` (original plan SHA256
-`62e84ceb4f35190c89faffaee4e8af01c5b3c81f9d78f9f3f68556e25f360065`). Its BLOCKED return
-and Integration FAIL are not rescored. The nine-policy set, §8 product criteria and complete
-§12 checklist are unchanged. The amendment authorizes one CP-15 resumption brief; it grants
-no standing governance-edit permission to the Lead.
 
 ## 1. Objective, authority and preserved evidence
 
@@ -102,10 +92,10 @@ All following arms are required; letters are identifiers, not a predicted rankin
 |---|---|---|
 | B0 | Existing similar-day naive | Inherited definition |
 | B1 | Preserved v1 forecast vectors | Exact development replay, no refit |
-| B2 | Daily rolling LEAR, raw target | Expanding from 2019-01-01, capped at 728 calendar days |
-| B3 | Daily rolling LightGBM central forecast, raw target | Expanding from 2019-01-01, capped at 728 calendar days |
-| A1 | B2 with §4 target normalization | Expanding from 2019-01-01, capped at 728 calendar days |
-| A2 | B3 with §4 target normalization | Expanding from 2019-01-01, capped at 728 calendar days |
+| B2 | Daily rolling LEAR, raw target | 728 calendar days |
+| B3 | Daily rolling LightGBM central forecast, raw target | 728 calendar days |
+| A1 | B2 with §4 target normalization | 728 calendar days |
+| A2 | B3 with §4 target normalization | 728 calendar days |
 | A3 | Equal arithmetic mean of A1 and A2 central forecasts | Their histories |
 | A4 | Normalized daily rolling LEAR | 84 calendar days |
 | A5 | Equal arithmetic mean of A1, A2 and A4 central forecasts | Their histories |
@@ -118,29 +108,10 @@ For B3/A2 use the inherited LightGBM p50 objective and CP-2 hyperparameters, wit
 parameters apart from the specified target transformation. No architecture or hyperparameter
 search on outer-fold results. Explain any incompatibility before execution, rather than substitute.
 
-For B2, B3, A1 and A2, use all admissible history from the later of 2019-01-01 or 728
-calendar days before the forecast’s delivery day D, ending at the inherited availability boundary.
-Apply this rule to evaluation and genuine warm-up forecasts alike. A4 uses precisely 84
-preceding calendar days. Preserve minimum training-row sufficiency checks and every original
-evaluation hour.
-
-The 2019 start is deliberate: pre-2018-10-01 DE-AT-LU prices are a different market product.
-No pre-2019 inputs are authorized. To count calendar days unambiguously, for a forecast
-of delivery day D the long-history dates are `[max(2019-01-01, D - 728 calendar days), D)`
-in the inherited market timezone, subject to the unchanged forecast-origin timestamp and
-per-input availability filters. The exclusive right endpoint is the start of delivery day D;
-it is not permission to use any observation unavailable when the forecast was issued.
-A4 analogously uses `[D - 84 calendar days, D)`, subject to the same information boundary.
-At early origins the long history expands; once the full 728 days are supported, it rolls.
-Use this identical rule for the raw/normalized paired arms;
-A3/A5 inherit their components’ histories. Do not extend A4 before 2019 to fill its window.
-
-Predeclare minimum training-row sufficiency and require complete evaluation predictions.
-An intentional boundary-limited long window is not itself a missing-history failure under
-v21-r1. This does not excuse missing inputs within that window, insufficient eligible training
-rows, unavailable row-specific normalization history, or an unsupported warm-up forecast.
-Report any such remaining deficiency; do not silently shorten the authorized windows further
-or drop a fold. Caching identical historical fits is permitted if cutoffs and identity are preserved.
+Use precisely 728 or 84 preceding calendar days; filter by inherited admissibility. Predeclare
+minimum training-row sufficiency and require complete evaluation predictions. If adequate
+prehistory is unavailable, report the exact deficiency; do not silently shorten windows or
+drop a fold. Caching identical historical fits is permitted if cutoffs and identity are preserved.
 
 Also perform a **Chronos-2 feasibility probe**, pinned to an exact public model revision, on
 admissible training/inner-validation data only: load, memory/runtime and external-input support.
@@ -311,16 +282,6 @@ with the plan because the CP-10 base commit predates its correction. This is nar
 packaging, not permission to edit governance or stage progress.md/orchestrator-role.md.
 Verify the supplied rulebook and plan hashes; record the brief's hash before packaging.
 Use a separate checkpoint worktree so the original CP-10 checkout is not switched or cleaned.
-For the owner-authorized v21-r1 resumption, use the retained clean CP-15 worktree on
-`gauntlet/cp-15` at `193d9cf48c586b9c4b1f43d7a5677b2d5f400832`, after verifying ownership
-and state. The replacement brief supplies the exact revised plan and brief bytes for packaging
-on that branch before comparison; the Lead may replace the branch’s working plan with those
-exact bytes, but may not author further governance edits. Retain the original plan, protocol,
-reports and FAIL verdict as historical evidence of attempt 1: their original committed identity
-must remain reachable and any preserved copies must be byte-identical. Do not overwrite or
-relabel the old verdict as a new review; if reusing the canonical verdict filename, first retain
-the original unchanged at a distinct evidence path and record the mapping in the return.
-No branch discard, tag, reclamation or mainline operation is authorized by resumption.
 Keep one Git writer and the inherited fresh-Critic protocol. All work remains local.
 
 Return PASS/BLOCKED/INCOMPLETE using the canonical §3 template, with product_feasibility beside
