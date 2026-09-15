@@ -32,7 +32,8 @@
         "fold_2",
         "fold_4"
       ],
-      "status": "running"
+      "status": "completed",
+      "exit_code": 0
     }
   ],
   "comparison_seeds": {
@@ -121,5 +122,10 @@
     "exit_code": 0,
     "passed": 1,
     "seconds": 1.23
+  },
+  "host_sysctl": {
+    "cpu": "Apple M3",
+    "physical_memory_bytes": "17179869184",
+    "logical_cpus": "8"
   }
 }
