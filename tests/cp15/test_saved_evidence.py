@@ -466,6 +466,27 @@ def test_saved_original_rows_and_exact_native_b1(saved, original):
         np.testing.assert_array_equal(b1[list(QUANTILES)].to_numpy(), preserved[["final_" + q for q in QUANTILES]].to_numpy())
 
 
+def check_issued_policy_definitions(issued, raw):
+    issued, raw = normalized_keys(issued), normalized_keys(raw)
+    values = issued.pivot(index='timestamp_utc', columns='policy', values='central')
+    assert set(values.columns) == set(ROLLING) and np.isfinite(values.to_numpy()).all()
+    np.testing.assert_array_equal(values.A3, (values.A1 + values.A2) / 2)
+    np.testing.assert_array_equal(values.A5, (values.A1 + values.A2 + values.A4) / 3)
+    # Independent calendar-day/local-hour lookup; ambiguous source hours fail closed.
+    raw['hour'] = raw.timestamp_utc.dt.tz_convert('Europe/Berlin').dt.hour
+    source = raw.groupby(['delivery_date', 'hour']).price_eur_mwh.agg(['first', 'size'])
+    unique = source['first'].where(source['size'].eq(1))
+    naive = issued.loc[issued.policy.eq('B0')].sort_values('timestamp_utc')
+    lag = np.where(naive.delivery_date.dt.dayofweek.isin([1, 2, 3, 4]), 1, 7)
+    keys = pd.MultiIndex.from_arrays([
+        naive.delivery_date - pd.to_timedelta(lag, unit='D'),
+        naive.timestamp_utc.dt.tz_convert('Europe/Berlin').dt.hour,
+    ], names=['delivery_date', 'hour'])
+    expected = unique.reindex(keys).to_numpy(float)
+    assert np.isfinite(expected).all(), 'issued B0 used a missing or ambiguous source hour'
+    np.testing.assert_array_equal(naive.central, expected)
+
+
 def test_saved_issued_errors_and_reconstructed_intervals(saved, original):
     raw, eligible, level, scale, spec = original
     complete = []
@@ -478,6 +499,7 @@ def test_saved_issued_errors_and_reconstructed_intervals(saved, original):
         feedback = pd.read_parquet(REPORT / f"folds/{fold}-feedback.parquet")
         origins = json.loads((REPORT / f"folds/{fold}-origins.json").read_text())
         issued = normalized_keys(issued)
+        check_issued_policy_definitions(issued, raw)
         assert set(issued.policy) == set(ROLLING)
         assert np.isfinite(issued[["central", "level", "scale"]].to_numpy(float)).all()
         assert (issued.scale >= 1).all()
@@ -961,3 +983,25 @@ def test_bootstrap_checker_refuses_invalid_calendar_or_protocol(mutation):
         protocol["bootstrap"]["block_days"] = 1
     with pytest.raises(AssertionError):
         independent_bootstrap(daily, protocol)
+
+
+@pytest.mark.parametrize('day,source_day', [('2020-01-08','2020-01-07'), ('2020-01-11','2020-01-04')])
+@pytest.mark.parametrize('mutation', ['none', 'B0', 'A3', 'A5'])
+def test_issued_policy_definition_checker_has_positive_controls(day, source_day, mutation):
+    index = pd.date_range('2020-01-01', '2020-01-12', freq='h', inclusive='left', tz='Europe/Berlin').tz_convert('UTC')
+    raw = pd.DataFrame({'timestamp_utc': index, 'delivery_date': index.tz_convert('Europe/Berlin').date,
+                        'price_eur_mwh': np.arange(len(index), dtype=float)})
+    baseline = raw.loc[pd.to_datetime(raw.delivery_date).eq(pd.Timestamp(source_day)), 'price_eur_mwh'].to_numpy()
+    target = calendar_hours(day)
+    centers = {'B0': baseline, 'B2': baseline+1, 'B3': baseline+2,
+               'A1': baseline+3, 'A2': baseline+6, 'A4': baseline+12}
+    centers['A3'] = baseline+4.5
+    centers['A5'] = baseline+7
+    issued = pd.concat([pd.DataFrame({'policy': policy, 'timestamp_utc': target,
+        'delivery_date': pd.Timestamp(day), 'central': center}) for policy, center in centers.items()], ignore_index=True)
+    if mutation != 'none':
+        issued.loc[issued.policy.eq(mutation), 'central'] += 1
+        with pytest.raises(AssertionError):
+            check_issued_policy_definitions(issued, raw)
+    else:
+        check_issued_policy_definitions(issued, raw)

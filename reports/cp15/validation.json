@@ -127,5 +127,17 @@
     "cpu": "Apple M3",
     "physical_memory_bytes": "17179869184",
     "logical_cpus": "8"
+  },
+  "policy_definition_controls": {
+    "synthetic_tests": 8,
+    "synthetic_test_exit_code": 0,
+    "completed_fold_checks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "all_completed_checks_exit_code": 0,
+    "checks": "Independent B0 calendar-lag lookup; A3 and A5 component arithmetic; exact every issued hour including warm-up"
   }
 }
