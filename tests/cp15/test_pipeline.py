@@ -45,6 +45,15 @@ def test_corrected_history_and_origin_timezone():
         assert origin_utc(d).date()==d-timedelta(days=1)
 
 
+def test_market_boundary_refuses_synthetic_pre2019_row(raw,p):
+    assert prepare(raw,p).frame.delivery_date.min()==date(2019,1,1)
+    changed=raw.copy()
+    changed.loc[0,'delivery_date']=date(2018,12,31)
+    changed.loc[0,'timestamp_utc']=pd.Timestamp('2018-12-31',tz='Europe/Berlin').tz_convert('UTC')
+    with pytest.raises(ValueError,match='pre-2019 input refused'):
+        prepare(changed,p)
+
+
 def test_exact_row_origin_normalization_and_unit_map(raw,p):
     data=prepare(raw,p)
     for d in (date(2019,3,31),date(2019,4,20)):

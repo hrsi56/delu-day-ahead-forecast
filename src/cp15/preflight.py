@@ -1,4 +1,10 @@
-"""Audit exact calendar-window support without fitting or selecting a model.
+"""Historical original-v21 preflight; not the v21-r1 execution rule.
+
+Retained for attempt-1 helper fixtures. Reproduce the complete old audit from
+its original candidate SHA and original protocol, preserved in attempt-1 evidence.
+The current driver uses the owner-ratified capped expanding-history correction.
+
+Audit exact calendar-window support without fitting or selecting a model.
 
 The 728-day requirement cannot be replaced by the available 547 days. This
 audit distinguishes absent leading archive support from ordinary inherited
