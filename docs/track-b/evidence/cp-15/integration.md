@@ -1,13 +1,12 @@
-# Verdict — CP-15 — Integration — FAIL
+# Verdict — CP-15 — Integration — PASS
 
-- Candidate SHA: `f8d0ed2a5f0737f0d088c3474b5a9fe77a406f37`
-- Candidate tree: `f5163f87cf9b0e04470a96b867e720fb1fe78f02`
-- Plan / version / bar: `capstone_v21.md`, v21, complete §12, supported by §§1–8, 11 and 13.
-- Plan SHA256: `62e84ceb4f35190c89faffaee4e8af01c5b3c81f9d78f9f3f68556e25f360065`; independently matched.
-- Worktree: `/Users/djourno/Downloads/critic-cp-15`, detached at the candidate.
-- Worktree clean before and after: yes; empty `git status --porcelain=v1`, unchanged HEAD/tree. Final checks occurred immediately before writing this verdict outside the checkout.
-- Product feasibility: **NOT_DEMONSTRATED**. All six product criteria are **unassessed**, not measured failures. Best observed policy: **none (comparison not run)**. Qualified policy: **none**.
-- Integration is **FAIL**, because substantive requirements are unmet. Review could be performed; therefore the Integration definition of BLOCKED does not apply. The candidate's reported engineering BLOCKED refers to its prehistory obstacle and is not an Integration verdict.
+- Candidate SHA: `fc4aee038cf898998a292506df62ddb0dcfaf22a`
+- Plan / version / bar: `capstone_v21.md`, **v21-r1**, complete §12 supported by §§1–8, 11 and 13.
+- Plan SHA256: `44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3`.
+- Worktree: `/Users/djourno/Downloads/PJM-cp15-r1-critic`, fresh detached candidate checkout supplied by the Lead.
+- Worktree clean before and after: **yes**; `git status --porcelain=v1` empty and HEAD equal to the candidate at both boundaries. Final `git diff --quiet` and `git diff --cached --quiet` also exited 0.
+- Isolation: procedural read-only review; no read-only mount or enforced sandbox is claimed. No candidate file, index, branch or ref was modified by this Critic. Ignored environments/caches and external `/tmp` reproduction files are the only review byproducts. The Lead owns worktree removal and the later evidence commit.
+- **Integration: PASS. product_feasibility: NOT_DEMONSTRATED. Best observed policy: A1. Qualified policy: none.** This certifies the completed development experiment; it does not establish adequate product quality or authorize promotion, publication, or another checkpoint.
 
 ## Verbatim bar excerpt
 
@@ -33,277 +32,106 @@
 >    after review. Record commands actually run, exit codes and limitations. No binding PASS means
 >    no terminal PASS. Candidate-to-evidence-tip changes are confined to this checkpoint's evidence.
 
-The supplied excerpt matches the committed plan.
+The excerpt was confirmed against the actual candidate file. The excerpt is the citation; section numbering is a convenience.
 
 ## Commands actually run
 
-All repository commands used the detached worktree above. No credentials, network requests, Git mutations, or publication were used. Generated environment/browser payload files are ignored; the payload manifest and reproduction outputs were redirected to /tmp as assigned.
+All commands below ran from the detached checkout unless an external artifact path is shown. Exit codes are observed completion codes, not expected values. Output redirections kept full logs outside the checkout.
 
 | Command | Exit | Observed result |
 |---|---:|---|
-| `uv sync --frozen --offline` | 0 | Python 3.13.15; 117 packages installed, including the local project; ignored .venv created. |
-| `uv run --frozen pytest -q tests/cp15` | 0 | 6 passed in 0.03s. |
-| `uv run --frozen python scripts/cp15_forecasting.py --preflight --output /tmp/cp15-critic-reproduction` | 2 | Reported BLOCKED, NOT_DEMONSTRATED, model_fit_count 0. This is the deliberately encoded preflight refusal, not a failed model fit. |
-| `cmp reports/cp15/preflight.json /tmp/cp15-critic-reproduction/preflight.json && cmp reports/cp15/history-windows.csv /tmp/cp15-critic-reproduction/history-windows.csv` (premature first attempt) | 2 | Preflight was still running; first output file did not yet exist. No artifact mismatch was established. |
-| Same two `cmp` commands after preflight completion, followed by `git rev-parse 'HEAD^{tree}'` | 0 | Both files byte-identical; tree matched the supplied candidate tree. |
-| Payload regeneration command below | 0 | 15,363,807 bytes across 14 files; 54 fixture days / 1,296 rows, 4 fail-closed; manifest written to /tmp. Historical frozen-artifact identity replay only. |
-| `uv run --frozen pytest -q` | 0 | **223 passed in 46.53s**. Includes inherited causal, schema, DST, feedback, single-consumption and live-namespace positive/negative controls. |
-| Independent arithmetic command in Appendix A | 0 | All 12 protocol hashes match; all 1,190 calendar/available-row calculations match; original saved base counts 2,160 / 2,159 / 2,112 / 2,160 / 2,156, total 10,747; peak 408 hours / 17 days. |
-| Initial stronger independent eligibility-reconstruction command (Appendix B), and its vectorized retry (Appendix C) | 143 each | Both stopped after several minutes of active CPU computation to bound review time. No results claimed from either. `kill -TERM 39382` and `kill -TERM 40196` each returned 0. The completed Appendix A check does not independently rebuild feature eligibility. |
-| `git symbolic-ref -q HEAD` | 1 | No output: detached HEAD, as required. |
-| Final identity/cleanliness assertions immediately before writing | 0 | HEAD/tree unchanged, status empty, both unstaged and staged diffs empty. |
+| `pwd && git status --porcelain=v1 && git rev-parse HEAD` | 0 | Correct detached worktree; empty status; exact candidate SHA. |
+| `uv sync --frozen --offline --python 3.13.15` | 0 | Created ignored `.venv`; installed frozen core environment and local package, 117 packages. |
+| `OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python scripts/cp15_forecasting.py --inspect > /tmp/cp15-critic-inspect.log 2>&1` | 0 | Original eligible counts 2160/2159/2112/2160/2156. Warm-up starts 2020-06-02, 2021-03-01, 2022-06-02, 2025-03-30, 2025-12-10. |
+| `CP15_REQUIRE_SAVED_EVIDENCE=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen pytest -q > /tmp/cp15-critic-tests.log 2>&1` | 0 | **339 passed, zero skips, 158.16 seconds.** Includes the complete independent saved-evidence checker, mutation controls, CP-15 tests and inherited regression suite/live namespace guards. |
+| `OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python -m cp15.reproduce_fit --fold fold_1 --day 2020-07-01 --causal-controls --output /tmp/cp15-critic-fit-2020-07-01.json > /tmp/cp15-critic-fit1.log 2>&1` | 0 | 24 hours for each of eight new central policies; all differences exactly zero; all 74 model records match the saved history, training, target, normalization and model identities. 103.832 seconds. Future-mask difference exactly zero; all five fitted policies move under D-1 positive control. |
+| `OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python -m cp15.reproduce_fit --fold fold_3 --day 2022-08-15 --output /tmp/cp15-critic-fit-2022-08-15.json > /tmp/cp15-critic-fit3.log 2>&1` | 0 | Crisis origin: all eight 24-hour central vectors exactly match; all 74 model records/identity fields match; 42.823 seconds. |
+| `uv venv --python 3.12.14 data/cp15-probe-env` | 0 | Created ignored isolated probe environment. |
+| `uv pip install --offline --python data/cp15-probe-env/bin/python -r reports/cp15/feasibility/requirements.freeze.txt > /tmp/cp15-critic-probe-install.log 2>&1` | 0 | Installed pinned probe closure offline. |
+| `uv run --frozen python -m cp15.reproduce_probe --python data/cp15-probe-env/bin/python --scratch /tmp/cp15-critic-fresh-probe > /tmp/cp15-critic-probe.log 2>&1` | 0 | Fresh external probe completed unscored; context, future-load, input-manifest and forecast-CSV SHA256 all match. 56.432 seconds, sampled peak process-tree RSS 885,112,832 bytes. |
+| `uv run --frozen python /tmp/cp15-critic-arithmetic.py > /tmp/cp15-critic-arithmetic.log 2>&1` | 0 | Separate Critic-authored audit importing neither CP-15 scoring/model code nor its test helpers. Recomputed per-fold/peak/pooled point, interval, centering, bias, level and shape metrics from predictions; independently applied six criteria/ranking; checked original preregistration bytes, protected input/payload hashes and historical copies against original Git objects. Largest absolute summary difference 5.684341886080802e-14. |
+| `uv run --frozen python /tmp/cp15-critic-provenance.py > /tmp/cp15-critic-provenance.log 2>&1` | 0 | Separate Critic-authored audit verified all **116** manifest digests and **45** resource rows against underlying fit/origin/run/timing records; preserved-path diff empty. |
+| `git diff --name-only 193d9cf48c586b9c4b1f43d7a5677b2d5f400832..HEAD` | 0 | Changes confined to CP-15 source/tests/reports/evidence, authorized exact replacement anchor/brief, and package inclusion in `pyproject.toml`; preserved v1/CP-10 data/model/public paths unchanged. |
+| `git show --format=fuller --stat bb5e67882fcfdf65b963d25ce785a3999816dfc2` | 0 | Exact v21-r1 anchor/protocol and historical preservation committed before completed comparison. The audit also compares those Git blobs byte-for-byte with the candidate. |
+| `git merge-base --is-ancestor fc4aee038cf898998a292506df62ddb0dcfaf22a gauntlet/cp-15` | 0 | Candidate reachable from checkpoint branch at review completion. |
+| `git diff --quiet && git diff --cached --quiet && git status --porcelain=v1 && git rev-parse HEAD` | 0 | No tracked/index delta, empty status, unchanged exact candidate. |
 
-Payload command actually run:
-
-```sh
-uv run --frozen python - <<'PY'
-from pathlib import Path
-import runpy
-ns=runpy.run_path('scripts/build_wasm_payload.py',run_name='cp15_critic_setup')
-ns['main'].__globals__['MANIFEST']=Path('/tmp/cp15-critic-payload-manifest.json')
-raise SystemExit(ns['main']())
-PY
-```
-
-Read-only inspection commands and results:
-
-- Initial `pwd && git rev-parse HEAD && git status --porcelain=v1 && shasum -a 256 capstone_v21.md && cat docs/track-b/gauntlet-templates.md`: exit 0; correct directory/SHA, empty status, matching plan hash, canonical verdict form inspected.
-- `cat capstone_v21.md && cat docs/track-b/cp-15-brief.md`: exit 0; controlling text and immutable brief inspected.
-- `rg --files src/cp15 tests/cp15 reports/cp15 && cat scripts/cp15_forecasting.py && cat reports/cp15/protocol.json`: exit 0; only preflight implementation/tests/reports, no model-comparison artifacts.
-- `cat src/cp15/preflight.py && cat tests/cp15/test_preflight.py && cat reports/cp15/report.md && cat reports/cp15/starting-state.json && cat reports/cp15/validation.json && cat reports/cp15/preflight.json && cat reports/cp15/history-windows.csv`: exit 0; output exceeded display budget. Summary JSON and state were reread in full below; CSV values were checked programmatically.
-- `cat reports/cp15/starting-state.json reports/cp15/validation.json reports/cp15/preflight.json data/partitions.json && cat src/delu_forecast/features.py && rg --files tests | sort && git log --oneline 4039ce24150b36ea233b043061e68eb2be78cbbe..HEAD && git diff --stat 4039ce24150b36ea233b043061e68eb2be78cbbe..HEAD`: exit 0; two CP-15 commits, 13 changed files, no preserved engineering/data paths changed.
-- `cat tests/conftest.py tests/test_24_live_namespace_is_walled_off.py tests/test_13_champion_no_delivery_day_leak.py && git show --stat --oneline 884261d30284877092eadda9bfb6704f0ec1e890 && git rev-parse HEAD^{tree}`: exit 1 because zsh expanded the unquoted braces/glob in the last command; preceding reads and commit inspection succeeded. Quoted tree command subsequently passed.
-- `cat tests/test_25_cp10_calibration.py`: exit 0; inherited D-2, completeness, single-consumption, causal scaling and mutant/positive controls inspected.
-- `git diff --name-only 4039ce24150b36ea233b043061e68eb2be78cbbe..HEAD && git show 884261d30284877092eadda9bfb6704f0ec1e890:reports/cp15/protocol.json && git status --porcelain=v1`: exit 0; immutable packaging/preflight protocol precede implementation; empty status.
-- `ps -axo pid,etime,time,command | rg 'uv run --frozen python|python -$'` and `ps -axo pid,ppid,etime,time,state,comm | awk '$1 == 39306 || $2 == 39306'`: both exit 0; initial independent process was running, with 3:06.65 CPU time after 3:08 elapsed at the second check. A further `ps -axo pid,ppid,etime,time,state,comm | awk '$6 ~ /python3$/ && $5 ~ /R/'` also returned 0, showing the retry active at 2:54 elapsed / 2:52.09 CPU. These inspected process state only.
+Read-only `cat`, `sed`, `rg`, `wc -l`, and `git log --format='%H %s' -8` inspections opened the concrete evidence listed below; all inspection shell invocations returned 0. One initial file inventory used `rg --files cp15 reports/cp15 tests`: `cp15` is not a root directory, so that operand printed “No such file or directory”; the source inventory was immediately corrected to `rg --files src/cp15`. This was an inventory typo, not a missing required artifact. No reproduction or validation failed. External audit scripts and this verdict were written by shell here-docs/Python; those writes exited 0 and did not touch the candidate.
 
 ## Evidence actually inspected
 
-- The exact named plan, canonical §2 verdict form, and `docs/track-b/cp-15-brief.md`.
-- All CP-15 source, driver, tests, and six report artifacts listed by the inventory.
-- `data/partitions.json`; only four explicitly projected snapshot columns with the reader-level predicate `delivery_date <= 2026-04-07`.
-- Original admissible `reports/cp2/development_predictions.parquet` date/target lineage. Other protocol inputs were hashed for immutable identity only.
-- Inherited feature definitions, synthetic fixture generator, tests 13, 24 and 25 as source; complete regression suite executed.
-- Candidate history and change list relative to the supplied CP-10 evidence base; exact protocol in the first CP-15 commit `884261d30284877092eadda9bfb6704f0ec1e890`.
+- Governance/bar: `AGENTS.md`, `engineering-role.md`, `docs/track-b/gauntlet-templates.md` §2 and the exact `capstone_v21.md` controlling checklist/supporting sections. No `progress.md`, Orchestrator role, syllabus, Track A/C or Q&A content was opened.
+- Protocol/state/preservation: `reports/cp15/protocol.json`, `resumption-state.json`, `attempt-1-preservation.json`, Git preregistration `bb5e67882fcfdf65b963d25ce785a3999816dfc2`, original tip `193d9cf48c586b9c4b1f43d7a5677b2d5f400832`, and its mapped original byte blobs. This checks retained historical identity without treating the earlier verdict as this review's authority.
+- Implementation: `src/cp15/data.py`, `models.py`, `residuals.py`, `scoring.py`, `reporting.py`, `reproduce_fit.py`, `reproduce_probe.py`, `feasibility_probe.py`, and `scripts/cp15_forecasting.py`. Inspected inherited `features.py`, the `LGBM_PARAMS` definition in `model.py`, and live-namespace tests. The inherited CP-2 LightGBM objective/parameters match the registered B3/A2 parameters; date-based crisis fields are excluded from fitted input matrices.
+- Fixtures/checker: all six `tests/cp15/test_*.py` files, especially the complete 1,007-line saved-output checker. Its metric/selection/normalization/feedback/fit/bootstrap calculations do not import CP-15 model or scorer routines. Positive and deliberately broken controls cover arithmetic, common-row deletion, changed truth, order/finite/schema checks, zero denominators, all decision criteria, historical normalization, DST 23/24/25-hour completeness, D-2 timing, duplicate consumption, late truth, backward release, chronological fit records, and live-key detection.
+- Saved numerical artifacts actually read through the audits/tests: combined predictions; all five folds' predictions, issued forecasts, fits, feedback, origin and run files; original development prediction vectors; admissible snapshot projection; `per_fold.csv`, `pooled.csv`, `peak.csv`, `daily.csv`, `recovery.csv`, `relative_scores.csv`, `ranking.csv`, `criteria.csv`, `selection.json`, `bootstrap.csv`, `resources.csv`; complete artifact/input digest inventories and execution timing logs. Original rows were rebuilt through the inherited eligibility construction after filtering admissible partitions.
+- Narrative and resource records: `report.md`, `reproduction.md`, `implementation-notes.md`, `validation.json`; resource table and lineage production code. Fixed-tolerance Lasso continuation is explicitly documented; unsuccessful numerical fits are not silently accepted as forecasts.
+- Feasibility: `feasibility/README.md`, `structural_inputs.md`, `source_retrieval_manifest.json`, `model_verification.json`, `input_manifest.json`, exact requirements freeze, saved/fresh `probe_result.json`, fresh resources/comparison and input/output CSV digests. Sheet covers fuel/EUA, load, renewables, capacity/outages, cross-border/weather timing, vintages, access, redistribution and unmeasured missingness; uncertainties remain explicit.
 
-## Independent arithmetic findings
+## Independently observed numerical results
 
-All 12 preregistered input hashes matched. The admissible snapshot has 63,695 rows from 2019-01-01 through 2026-04-07. The completed independent script verified every one of 1,190 CSV rows for calendar boundaries, timezone-aware canonical hours, absent leading days/hours, support flag and available snapshot-row count. It used standard-library zoneinfo UTC arithmetic and NumPy day masks, with no CP-15 imports.
+- All nine policies have **10,747** original eligible hours; **96,723** prediction rows, **45** policy/fold summaries. Full fold 3 is **2,112 hours / 88 represented days** within the unchanged 90-calendar-day window. Peak is exactly **408 hours / 17 days**, 2022-08-15–31, for every arm. No missing required forecast, duplicate target, nonfinite emitted quantile, or crossing was found.
+- Exact B1 final vectors and raw central values match original development replay. B0 calendar-lag values and A3/A5 arithmetic match independently for every saved issued hour, including warm-up.
+- Saved-error replay reconstructs every evaluation interval from immutable issued centers/scales, latest 28 complete released dates and exact linear empirical quantiles. Training, inner-validation and origin-normalization hashes are independently checked for every recorded fit.
+- The full saved checker recomputes all daily, pooled, peak and recovery metrics and all **240** bootstrap contrasts using 7-consecutive-calendar-day paired blocks, 2,000 replicates and seed 15042. Empty inherited days remain calendar gaps and never become zero loss. Numeric tolerance is `atol=rtol=2e-12`.
 
-The original saved base vectors independently count to 2,160 / 2,159 / 2,112 / 2,160 / 2,156 rows across folds 1–5: **10,747** total. The matched peak has **408 hours across 17 days**. There are 90 evaluation and 29 optimistic warm-up origins without 728-day leading support, all in fold 1. The first evaluation shortage is **181 calendar days / 4,345 canonical hours**; the optimistic first warm-up shortage is **210 days / 5,041 hours**.
+| Policy | S_MAE | S_WIS | Peak 95% hits / 408 |
+|---|---:|---:|---:|
+| B0 | 1.0000000000 | 1.0000000000 | 384 |
+| B1 | 1.0518451348 | 0.9856366964 | 79 |
+| B2 | 0.6578109124 | 0.6389910407 | 364 |
+| B3 | 0.7841363978 | 0.7399052225 | 363 |
+| A1 | 0.6722908121 | 0.6460150916 | 378 |
+| A2 | 0.7737135304 | 0.7316680120 | 387 |
+| A3 | 0.6725142581 | 0.6471900504 | 381 |
+| A4 | 0.7646642404 | 0.7334186815 | 370 |
+| A5 | 0.6737799644 | 0.6487132071 | 379 |
 
-**Review limit:** the two attempts to reconstruct feature eligibility independently of the inherited feature builder were stopped for runtime, without completed results. Therefore CSV `inherited_eligible_training_rows` and feature-by-feature eligibility were not independently reconstructed. Their agreement is supported by byte-identical production-preflight reproduction, while the independent original eligible counts above come from the preserved saved base vectors. Neither aborted attempt contributes evidence.
+Ranking is **A1, A3, A5, A4, A2**. A1/A3/A4/A5 fail criteria **1, 2, 5**; A2 fails **1, 2, 4, 5**. Each candidate passes criterion 3 (per-fold 95% coverage) and criterion 6 (complete finite ordered forecasts). Each actual threshold/subcheck in `criteria.csv` is independently checked by the saved-evidence test, including metric-specific peak and B2/B3 comparators. No qualifying policy exists. A1's pooled MAE is better than B2's, but its equal-fold S_MAE does not clear the registered 10% improvement requirement; the declared decision correctly follows the registered weighting.
+
+Production origin reproduction uses the unchanged full statistical protocol, not the smaller synthetic test settings. Its tolerance is `atol=1e-8, rtol=1e-10`, with exact training/target/normalization/model fingerprints required separately. Both sampled origins actually matched **exactly**. On 2020-07-01 the D-and-future price mask plus post-D load mutation changed no forecast/model fingerprint. Adding 500 EUR/MWh only to available D-1 prices moved B2/B3/A1/A2/A4 by maximum absolute differences **485.1702166472 / 39.3735269351 / 425.3605796114 / 190.4457432547 / 287.7812685710**.
+
+The pinned Chronos-2 revision is `29ec3766d36d6f73f0696f85560a422f50e8498c`; model weight SHA256 is `ddcda3c7508bf2528087723e98a20707cc04b7f370ae275a9fd88078ddba4f42`. Its fresh offline reproduction made two CPU calls at the permitted proper-training origin, and changing only future load by 20% moved outputs by **41.91291809082031 EUR/MWh**. It remains unscored and outside the candidate set.
 
 ## Checklist verdict
 
 | # | Checklist item | Verdict | Evidence |
 |---|---|---|---|
-| 1 | Starting state, preservation, exact anchor and preregistration before comparison | PASS for delivered preflight prerequisites | Starting state is recorded; exact plan/rulebook/brief hashes match; immutable packaging and preflight protocol are in the first CP-15 commit; preserved engineering/data paths are unchanged against the supplied base. No comparison occurred. This does not certify a frozen comparison protocol: its choices are explicitly deferred. Other sessions' live checkouts were not independently inspected under isolation. |
-| 2 | All nine policies, common uncertainty, rolling fits, warm-up and causal normalization fixtures | FAIL | Only preflight is implemented. No LEAR/LightGBM rolling policy, normalized policy, ensemble, rolling signed-error distribution, issued warm-up forecasts, or CP-15 fit/normalization fixtures exist. |
-| 3 | Availability, D-2, single consumption, DST, schema and live guards with positive controls | FAIL | Six preflight tests and all inherited tests pass, including applicable positive controls. They do not prove these boundaries for the unimplemented CP-15 fitting/normalization/error-buffer pipeline. |
-| 4 | Matched predictions, every score/diagnostic, independent counts/crossings/denominators | FAIL | Original saved eligible counts and calendar/available-row arithmetic are independently checked; feature-eligibility reconstruction remains limited as stated above. No nine-arm CP-15 predictions, zero-crossing result, §7 scores or diagnostics exist. Counts alone cannot satisfy this item. |
-| 5 | Mechanical ranking and all six product criteria; separate outcomes | FAIL | Report honestly says no best observed policy, no qualified policy and NOT_DEMONSTRATED. There is no ranking or six-criterion calculation with actual values; all six criteria remain unassessed. |
-| 6 | Pinned Chronos-2 probe and structural-input feasibility sheet | FAIL | Neither deliverable exists. Access/resource limits were not tested. The archive obstacle does not demonstrate that these independent feasibility tasks were impossible. No invented benchmark or unsupported access limitation is claimed. |
-| 7 | Reproduction/hashes/seeds/validation/resources/uncertainty and regression | FAIL | Preflight reproduction, input/protocol/dependency hashes, preflight runtime/RSS record and 223 passing tests are present. Full comparison protocol, seeds, penalty grid, chronological validation records, model resources and 2,000-replicate paired 7-day block bootstrap are absent. |
-| 8 | Fresh exact-candidate Integration, saved-metric recomputation and representative-fit reproduction | FAIL | Fresh detached review and causal regression were performed with exact identity/cleanliness checks. CP-15 saved-prediction metrics and representative fits could not be reproduced because they do not exist. This verdict cannot bind a PASS. Lead must commit it only after this review and verify the evidence-only candidate-to-tip delta. |
+| 1 | Starting state; preserve other work, v1/CP-10/restricted partitions; exact anchor and pre-run protocol committed before comparison | **PASS** | Recorded resumption state; inspected Git delta; exact preregistration blobs match; all protected path diffs empty; 116 manifest/input checks plus original historical-byte comparisons; model-input projection filters admissible dates before materialization. Review cannot independently recreate another session's historical working-tree status, but the retained state/diff/provenance evidence is consistent. |
+| 2 | Every B0–B3/A1–A5 policy; common uncertainty; genuine rolling fits, warm-up provenance and causal normalization | **PASS** | Source/protocol match all nine definitions; every fold fit/issued/feedback/origin record independently replayed; exact B1, B0 and ensemble checks; historical per-row normalization and minimum-window sufficiency; fresh representative production fits and synthetic fixtures. |
+| 3 | Availability, D-2, single consumption, DST/schema refusals with positive controls and inherited live guards | **PASS** | 339 passing tests, including full schema/masking/DST/feedback/live namespace controls; full production future-mask zero change; D-1 positive-control movement for all five fitted policies; exact release/error lineage reconstruction. |
+| 4 | Same original eligible hours; complete §7 metrics/diagnostics for every arm; independent count/order/score/window checks | **PASS** | 96,723 rows; original eligible sets and targets match each policy; all emitted vectors finite/ordered; own arithmetic audit plus complete saved-evidence checker verify metrics, exact denominators, peak/recovery and bootstrap tables. |
+| 5 | Mechanical ranking and all six product criteria; both statuses, best observed/qualified policy and failures | **PASS** | All criteria and subchecks independently reproduce; A1 best, none qualifies; failures listed above and with actuals/limits in candidate report/criteria. Candidate report honestly marks Integration pending; this verdict supplies PASS. The subsequent evidence-only report/terminal packet must carry both statuses without modifying the reviewed statistical candidate. |
+| 6 | Pinned Chronos-2 probe and structural input feasibility sheet; honest limitations, no candidate promotion | **PASS** | Fresh isolated offline probe matches four digests, respects proper-training/target projection controls and resource bound. Pinned metadata/license record, documented source retrievals and input-by-input feasibility gaps inspected. No neural score, new fundamental model or new-source performance claim. |
+| 7 | Reproduction/dependency/input/protocol hashes, seeds, chronological validation, resources, dependence-aware uncertainty and regression controls | **PASS** | Frozen offline core/probe installs; all 116 manifest files/input/payload hashes verified; 45 resource rows recomputed; 240 bootstrap contrasts independently rederived; recorded numerical failures/repair; 339-test suite passes with no skip; representative exact reproduction succeeds. |
+| 8 | Fresh independent exact-candidate clean review; independently recompute metrics and causal/fit reproduction; record commands/limitations; later evidence-only commit | **PASS** | This fresh procedural detached review binds the stated full SHA; clean start/end and branch reachability checked; independent arithmetic and saved-evidence audits plus two production fit reproductions completed. Verdict written outside candidate only after checks. Lead must commit it afterwards, preserve prior-attempt verdict, and verify the candidate-to-evidence-tip delta remains confined to `docs/track-b/evidence/cp-15/`. A future evidence-tip SHA does not yet exist at this review boundary and is not falsely certified here. |
 
-## Limitations and disposition of missing work
+## Limitations and handover boundary
 
-No CP-15 saved-prediction MAE, RMSE, WIS, coverage, widths, misses, quantile crossings, uncertainty, or ranking was independently recomputed: there are no CP-15 prediction vectors. The CP-2 read establishes original row/target lineage, not completion of CP-15's B1 reporting obligation. No representative CP-15 rolling fit or genuine warm-up was run: neither code nor results exist. Inherited synthetic fits and frozen identity tests are explicitly not substitutes.
+- This review did **not** refit the entire five-fold experiment from scratch. It independently audited all saved row/fit/residual/scoring evidence and refit two representative full production origins, including the required causal controls. The bar explicitly requires representative reproduction, and that check passed.
+- Timing was observed during concurrent local validation/probe work. Fresh timings are not isolated throughput estimates. Process RSS is not whole-machine memory, and sampled probe RSS can miss brief peaks.
+- Original A65 load-vintage availability is an inherited assumption openly recorded by the plan/protocol; this review does not invent original vintage proof. The feasibility sheet's 16 dated primary-source retrieval records were inspected; no live source refresh or new data acquisition was performed by this Critic. Unverified structural vintage/redistribution/coverage properties remain gaps, not ready inputs.
+- The foundation-model probe cannot establish historical out-of-sample accuracy or exclude pretraining overlap. The 17-day peak is descriptive, and all inference is exploratory after selection.
+- The negative product decision remains controlling. Nothing here authorizes freezing/promoting a policy, publication, a mainline operation, or later-checkpoint work.
+- No engineering changes are requested. The only remaining Lead actions are evidence retention, an evidence-only commit/delta check, accurate terminal reporting, and the delegated cleanup of this review checkout.
 
-The prehistory deficiency is real evidence worth preserving, and the candidate reports it honestly. It does not convert missing experiment and feasibility deliverables into completed acceptance items. No result about whether adaptive forecasting succeeds or fails follows from this candidate.
+## External review artifacts and SHA256
 
-This Critic did not inspect other checkouts, program state, Orchestrator contracts, Track A/C, or later-checkpoint work; did not modify tracked files, manage Git state, or remove this worktree. Historical fixture replay was solely the expressly assigned frozen regression, with no restricted-partition fitting, tuning or selection. The Lead retains sole Git-writing/cleanup responsibility.
+These are the actual outputs of this review. Hashes identify the files even if the Lead relocates copies under the permitted evidence directory. The Critic made no branch/worktree/tag itself; the named review worktree was supplied and remains for Lead cleanup.
 
-## On FAIL only
-
-- **Single largest meaningful gap:** the required nine-policy rolling experiment has not been implemented or run. The candidate establishes a fold-1 archive deficiency, but delivers zero comparison predictions and no basis for the §7/§8 outcome.
-- **Exact next acceptance test:** after an explicitly authorized resolution of fold-1 prehistory, the first-fold rolling pipeline must use the ratified 728-day history and genuine D-2-released warm-up (including the earliest supported issuance), then emit all **2,160 original fold-1 eligible targets for every B0–B3/A1–A5 policy** with finite ordered seven-quantile vectors and per-origin fit/normalization/error lineage. An independent replay must reproduce representative fits and saved-vector scores while delivery-day masking changes predictions by exactly zero and the available D-1 positive control moves them. This is the next necessary test, not a waiver of the remaining full-five-fold, feasibility-sheet/probe and complete §12 obligations.
-
-## Appendix A — completed independent command
-
-```sh
-uv run --frozen python - <<'PY'
-from pathlib import Path
-from datetime import date, datetime, timedelta, timezone
-from zoneinfo import ZoneInfo
-import hashlib,json
-import numpy as np
-import pandas as pd
-p=json.loads(Path('reports/cp15/protocol.json').read_text())
-assert all(hashlib.sha256(Path(k).read_bytes()).hexdigest()==v for k,v in p['input_sha256'].items())
-f=pd.read_parquet('data/snapshot.parquet',columns=['timestamp_utc','delivery_date','price_eur_mwh','load_forecast_mw'],filters=[('delivery_date','<=',date(2026,4,7))])
-s=pd.read_parquet('reports/cp2/development_predictions.parquet',columns=['arm','fold','delivery_date','y_true'])
-s=s[s.arm.eq('base')]
-assert s.groupby('fold').size().tolist()==[2160,2159,2112,2160,2156]
-assert len(s)==10747
-peak=s[s.delivery_date.between(date(2022,8,15),date(2022,8,31))]
-assert len(peak)==408 and peak.delivery_date.nunique()==17
-assert len(f)==63695 and min(f.delivery_date)==date(2019,1,1) and max(f.delivery_date)==date(2026,4,7)
-berlin=ZoneInfo('Europe/Berlin')
-def utc(d): return datetime.combine(d,datetime.min.time(),berlin).astimezone(timezone.utc)
-def hours(a,b): return int((utc(b)-utc(a)).total_seconds()/3600)
-w=pd.read_csv('reports/cp15/history-windows.csv'); days=np.array(f.delivery_date,dtype='datetime64[D]')
-for r in w.itertuples():
-    d=date.fromisoformat(r.origin); a=d-timedelta(days=r.history_days); end=min(d,date(2019,1,1)); absent=max(0,(end-a).days)
-    assert r.required_start==str(a) and r.required_end==str(d-timedelta(days=1))
-    assert r.required_canonical_hours==hours(a,d) and r.absent_leading_calendar_days==absent
-    assert r.absent_leading_canonical_hours==(hours(a,end) if absent else 0)
-    assert bool(r.archive_reaches_required_start)==(absent==0)
-    assert r.available_snapshot_rows==int(((days>=np.datetime64(a))&(days<np.datetime64(d))).sum())
-assert len(w)==1190
-bad=w[~w.archive_reaches_required_start]
-assert len(bad)==119 and set(bad.fold)=={'fold_1'} and set(bad.history_days)=={728}
-print('All',len(p['input_sha256']),'protocol hashes match; 63,695 admissible snapshot rows.')
-print('Original saved base eligibility:',s.groupby('fold').size().to_dict(),'total',len(s),'peak',len(peak),'hours /',peak.delivery_date.nunique(),'days')
-print('All 1,190 calendar-window and available-snapshot-row calculations match.')
-print('Missing fold-1 728-day origins:',bad.groupby('phase').size().to_dict())
-print('Evaluation shortage:',(date(2019,1,1)-date(2018,7,4)).days,hours(date(2018,7,4),date(2019,1,1)))
-print('Optimistic warmup shortage:',(date(2019,1,1)-date(2018,6,5)).days,hours(date(2018,6,5),date(2019,1,1)))
-PY
+```text
+faace5553561aab7a8527b07ddbf9b03fee676b4c74477d82df048f86ef7d99c  /tmp/cp15-critic-arithmetic.py
+67d994d008f2a30a0fdbc8b2698eabfbc6cb06d9f9a9b637acacffc368cf6c2f  /tmp/cp15-critic-arithmetic.json
+ebcecc12e349cfa31a3b50a18288b5e67d7ffe59f6d8ab1b301ac94a248f5d74  /tmp/cp15-critic-provenance.py
+4aba832451d5f9420c57c9b9aa2a2a9fc0a65b5e20a9d36877ec6199a6af8179  /tmp/cp15-critic-provenance.json
+3308fd6c2612802f78a7d33448fa81f2c7889800b932b7a36417d8f88391bfc4  /tmp/cp15-critic-inspect.log
+18979361e883161bb42d9aca967a9d511783cd4b52f1fce043bf758c69ccb36a  /tmp/cp15-critic-tests.log
+12b82f277a5c9cca630eef44056aa919c313bf8a23c1729c43169598867b2844  /tmp/cp15-critic-fit-2020-07-01.json
+2949bebf4e3237d2d237cb75d7901be6c66f99594748091d84e73cb722085b56  /tmp/cp15-critic-fit-2022-08-15.json
+de8ce014622215b78e526fc705db7df2264639b7e635a7b6a48af39c1bdbef86  /tmp/cp15-critic-probe-install.log
+530f4a1d75dffc1e882b4b6c8d4416b09d0807ae9cb869e93b8725f08678c9fe  /tmp/cp15-critic-probe.log
+c2f27de6f1edab37a21c45d26504d4374fac4007ef03e9815382d115337e3fbe  /tmp/cp15-critic-fresh-probe/reproduction-comparison.json
+5802f92432e1f4f320a82166bca2f79c265011905703b8ec29fdb18d6d9fc9dc  /tmp/cp15-critic-fresh-probe/reports/cp15/feasibility/resources.json
 ```
 
-## Appendix B — first bounded, terminated attempt
-
-```sh
-uv run --frozen python - <<'PY'
-from pathlib import Path
-from datetime import date, datetime, timedelta, timezone
-from zoneinfo import ZoneInfo
-import hashlib, json
-import numpy as np
-import pandas as pd
-root=Path('.')
-spec=json.loads((root/'data/partitions.json').read_text())
-protocol=json.loads((root/'reports/cp15/protocol.json').read_text())
-assert all(hashlib.sha256((root/p).read_bytes()).hexdigest()==h for p,h in protocol['input_sha256'].items())
-f=pd.read_parquet('data/snapshot.parquet',columns=['timestamp_utc','delivery_date','price_eur_mwh','load_forecast_mw'],filters=[('delivery_date','<=',date(2026,4,7))])
-assert len(f)==63695 and f.delivery_date.max()==date(2026,4,7)
-berlin=ZoneInfo('Europe/Berlin')
-def utc(d): return datetime.combine(d,datetime.min.time(),berlin).astimezone(timezone.utc)
-def hours(a,b): return int((utc(b)-utc(a)).total_seconds()/3600)
-idx=pd.DatetimeIndex(f.timestamp_utc)
-p=pd.Series(f.price_eur_mwh.to_numpy(),index=idx)
-load=pd.Series(f.load_forecast_mw.to_numpy(),index=idx)
-days=f.delivery_date.to_numpy()
-valid=np.isfinite(f.price_eur_mwh.to_numpy())
-for d in sorted(set(days)):
-    positions=np.flatnonzero(days==d)
-    expected=pd.date_range(utc(d),utc(d+timedelta(days=1)),freq='h',inclusive='left')
-    previous=pd.date_range(end=utc(d)-timedelta(hours=1),periods=720,freq='h')
-    valid[positions] &= np.isfinite(load.reindex(expected).to_numpy()).all() and np.isfinite(p.reindex(previous).to_numpy()).all()
-local=idx.tz_convert('Europe/Berlin').tz_localize(None)
-for lag in [1,2,7]:
-    lag_idx=(local-pd.Timedelta(days=lag)).tz_localize('Europe/Berlin',ambiguous='NaT',nonexistent='NaT').tz_convert('UTC')
-    valid &= np.isfinite(p.reindex(lag_idx).to_numpy())
-saved=pd.read_parquet('reports/cp2/development_predictions.parquet',columns=['arm','fold','delivery_date','y_true'])
-saved=saved[saved.arm.eq('base')]
-expected_summary=json.loads(Path('reports/cp15/preflight.json').read_text())
-for fold,claimed in zip(spec['development_folds'],expected_summary['folds'],strict=True):
-    a,b=map(date.fromisoformat,[fold['evaluation']['start'],fold['evaluation']['end']])
-    inside=(days>=a)&(days<=b)
-    mask=inside&valid
-    ref=saved[saved.fold.eq(fold['name'])]
-    assert np.array_equal(ref.delivery_date.to_numpy(),days[mask])
-    assert np.array_equal(ref.y_true.to_numpy(),f.price_eur_mwh.to_numpy()[mask])
-    counts=(int(mask.sum()),len(set(days[mask])),int(inside.sum()-mask.sum()))
-    assert counts==(claimed['original_eligible_hours'],claimed['represented_delivery_days'],claimed['inherited_excluded_hours'])
-    print(fold['name'],counts)
-w=pd.read_csv('reports/cp15/history-windows.csv')
-archive=min(days)
-for row in w.itertuples():
-    d=date.fromisoformat(row.origin); a=d-timedelta(days=row.history_days)
-    end=min(d,archive); absent=max(0,(end-a).days)
-    mask=(days>=a)&(days<d)
-    assert row.required_start==a.isoformat() and row.required_end==(d-timedelta(days=1)).isoformat()
-    assert row.required_canonical_hours==hours(a,d)
-    assert row.absent_leading_calendar_days==absent
-    assert row.absent_leading_canonical_hours==(hours(a,end) if absent else 0)
-    assert bool(row.archive_reaches_required_start)==(absent==0)
-    assert row.available_snapshot_rows==int(mask.sum())
-    assert row.inherited_eligible_training_rows==int((mask&valid).sum())
-assert len(w)==1190
-bad=w[~w.archive_reaches_required_start]
-assert len(bad)==119 and set(bad.fold)=={'fold_1'} and set(bad.history_days)=={728}
-peak=valid&(days>=date(2022,8,15))&(days<=date(2022,8,31))
-assert peak.sum()==408 and len(set(days[peak]))==17
-print('All 13 protocol input hashes verified; all 1190 window rows independently matched.')
-print('Original eligible total:',len(saved),'peak:',int(peak.sum()),'hours /',len(set(days[peak])),'days')
-print('Missing fold-1 728-day origins:',bad.groupby('phase').size().to_dict())
-print('First evaluation missing days/hours:',(archive-date(2018,7,4)).days,hours(date(2018,7,4),archive))
-print('Optimistic first warmup missing days/hours:',(archive-date(2018,6,5)).days,hours(date(2018,6,5),archive))
-PY
-```
-
-## Appendix C — vectorized retry, also terminated
-
-```sh
-uv run --frozen python - <<'PY'
-from pathlib import Path
-from datetime import date, datetime, timedelta, timezone
-from zoneinfo import ZoneInfo
-import hashlib, json
-import numpy as np
-import pandas as pd
-root=Path('.')
-spec=json.loads((root/'data/partitions.json').read_text())
-protocol=json.loads((root/'reports/cp15/protocol.json').read_text())
-assert all(hashlib.sha256((root/p).read_bytes()).hexdigest()==h for p,h in protocol['input_sha256'].items())
-f=pd.read_parquet('data/snapshot.parquet',columns=['timestamp_utc','delivery_date','price_eur_mwh','load_forecast_mw'],filters=[('delivery_date','<=',date(2026,4,7))])
-assert len(f)==63695 and f.delivery_date.max()==date(2026,4,7)
-berlin=ZoneInfo('Europe/Berlin')
-def utc(d): return datetime.combine(d,datetime.min.time(),berlin).astimezone(timezone.utc)
-def hours(a,b): return int((utc(b)-utc(a)).total_seconds()/3600)
-idx=pd.DatetimeIndex(f.timestamp_utc)
-p=pd.Series(f.price_eur_mwh.to_numpy(),index=idx)
-load=pd.Series(f.load_forecast_mw.to_numpy(),index=idx)
-days=f.delivery_date.to_numpy()
-daynums=np.array(days,dtype='datetime64[D]')
-valid=np.isfinite(f.price_eur_mwh.to_numpy())
-for d in sorted(set(days)):
-    positions=np.flatnonzero(daynums==np.datetime64(d))
-    expected=pd.date_range(utc(d),utc(d+timedelta(days=1)),freq='h',inclusive='left')
-    previous=pd.date_range(end=utc(d)-timedelta(hours=1),periods=720,freq='h')
-    valid[positions] &= np.isfinite(load.reindex(expected).to_numpy()).all() and np.isfinite(p.reindex(previous).to_numpy()).all()
-local=idx.tz_convert('Europe/Berlin').tz_localize(None)
-for lag in [1,2,7]:
-    lag_idx=(local-pd.Timedelta(days=lag)).tz_localize('Europe/Berlin',ambiguous='NaT',nonexistent='NaT').tz_convert('UTC')
-    valid &= np.isfinite(p.reindex(lag_idx).to_numpy())
-saved=pd.read_parquet('reports/cp2/development_predictions.parquet',columns=['arm','fold','delivery_date','y_true'])
-saved=saved[saved.arm.eq('base')]
-expected_summary=json.loads(Path('reports/cp15/preflight.json').read_text())
-for fold,claimed in zip(spec['development_folds'],expected_summary['folds'],strict=True):
-    a,b=map(date.fromisoformat,[fold['evaluation']['start'],fold['evaluation']['end']])
-    inside=(daynums>=np.datetime64(a))&(daynums<=np.datetime64(b))
-    mask=inside&valid
-    ref=saved[saved.fold.eq(fold['name'])]
-    assert np.array_equal(ref.delivery_date.to_numpy(),days[mask])
-    assert np.array_equal(ref.y_true.to_numpy(),f.price_eur_mwh.to_numpy()[mask])
-    counts=(int(mask.sum()),len(set(days[mask])),int(inside.sum()-mask.sum()))
-    assert counts==(claimed['original_eligible_hours'],claimed['represented_delivery_days'],claimed['inherited_excluded_hours'])
-    print(fold['name'],counts)
-w=pd.read_csv('reports/cp15/history-windows.csv')
-archive=min(days)
-for row in w.itertuples():
-    d=date.fromisoformat(row.origin); a=d-timedelta(days=row.history_days)
-    end=min(d,archive); absent=max(0,(end-a).days)
-    mask=(daynums>=np.datetime64(a))&(daynums<np.datetime64(d))
-    assert row.required_start==a.isoformat() and row.required_end==(d-timedelta(days=1)).isoformat()
-    assert row.required_canonical_hours==hours(a,d)
-    assert row.absent_leading_calendar_days==absent
-    assert row.absent_leading_canonical_hours==(hours(a,end) if absent else 0)
-    assert bool(row.archive_reaches_required_start)==(absent==0)
-    assert row.available_snapshot_rows==int(mask.sum())
-    assert row.inherited_eligible_training_rows==int((mask&valid).sum())
-assert len(w)==1190
-bad=w[~w.archive_reaches_required_start]
-assert len(bad)==119 and set(bad.fold)=={'fold_1'} and set(bad.history_days)=={728}
-peak=valid&(daynums>=np.datetime64('2022-08-15'))&(daynums<=np.datetime64('2022-08-31'))
-assert peak.sum()==408 and len(set(days[peak]))==17
-print('All 13 protocol input hashes verified; all 1190 window rows independently matched.')
-print('Original eligible total:',len(saved),'peak:',int(peak.sum()),'hours /',len(set(days[peak])),'days')
-print('Missing fold-1 728-day origins:',bad.groupby('phase').size().to_dict())
-print('First evaluation missing days/hours:',(archive-date(2018,7,4)).days,hours(date(2018,7,4),archive))
-print('Optimistic first warmup missing days/hours:',(archive-date(2018,6,5)).days,hours(date(2018,6,5),archive))
-PY
-```
+Interview-answer trigger: the normalized candidate can improve pooled crisis-heavy MAE while failing a deliberately equal-fold, best-reference improvement screen; the fixed decision rule was applied without changing the target or retrospectively relaxing thresholds.

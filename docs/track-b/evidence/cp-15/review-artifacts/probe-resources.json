@@ -1,0 +1,16 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 56.43206737500441,
+  "peak_sampled_process_tree_rss_bytes": 885112832,
+  "rss_sample_period_seconds": 0.1,
+  "rss_limit_bytes": 4294967296,
+  "wall_time_limit_seconds": 600,
+  "termination_reason": null,
+  "worker_command": [
+    "/Users/djourno/Downloads/PJM-cp15-r1-critic/data/cp15-probe-env/bin/python",
+    "/private/tmp/cp15-critic-fresh-probe/src/cp15/feasibility_probe.py",
+    "--worker",
+    "--offline"
+  ],
+  "host_physical_memory_bytes": 17179869184
+}
