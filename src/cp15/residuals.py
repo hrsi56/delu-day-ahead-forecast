@@ -11,7 +11,7 @@ BUFFER_POLICIES=('B0','B2','B3','A1','A2','A3','A4','A5')
 
 class ResidualBuffer:
     def __init__(self):
-        self.pending={};self.consumed=set();self.buffers={p:deque(maxlen=28) for p in BUFFER_POLICIES};self.trace=[]
+        self.pending={};self.consumed=set();self.buffers={p:deque(maxlen=28) for p in BUFFER_POLICIES};self.trace=[];self.last_origin=None
 
     def issue(self,day,index,centers,scale):
         if day in self.pending or day in self.consumed:raise ValueError('issued day already registered')
@@ -22,6 +22,9 @@ class ResidualBuffer:
         self.pending[day]=(index,{k:np.asarray(v,float).copy() for k,v in centers.items()},scale.copy())
 
     def release(self,origin_day,truth):
+        if self.last_origin is not None and origin_day<self.last_origin:
+            raise ValueError('feedback origin cannot move backwards')
+        self.last_origin=origin_day
         cutoff=origin_day-timedelta(days=2)
         for day in sorted(self.pending):
             if day>cutoff:break

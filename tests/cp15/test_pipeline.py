@@ -185,3 +185,13 @@ def test_late_truth_cannot_displace_newer_complete_days():
     c.release(start+timedelta(days=30),late);assert len(c.buffers['A1'])==27
     c.release(start+timedelta(days=31),lambda ix:np.full(len(ix),18.))
     assert len(c.buffers['A1'])==28 and c.buffers['A1'][0][0]==start
+
+
+def test_feedback_origin_cannot_rewind_but_same_and_next_are_valid():
+    b=ResidualBuffer();d=date(2020,1,1);issue(b,d)
+    read=lambda ix:np.full(len(ix),14.)
+    b.release(d+timedelta(days=2),read)
+    b.release(d+timedelta(days=2),read)
+    assert len(b.buffers['A1'])==1
+    with pytest.raises(ValueError,match='backwards'):b.release(d+timedelta(days=1),read)
+    b.release(d+timedelta(days=3),read);assert len(b.buffers['A1'])==1
