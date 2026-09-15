@@ -1,0 +1,12 @@
+{
+  "aggregate": "equal mean of five fold mean daily losses",
+  "block_days": 7,
+  "confidence": 0.95,
+  "daily_denominator": "represented eligible delivery days; zero-hour days excluded, not zero losses",
+  "evidence_class": "exploratory_post_selection",
+  "method": "paired noncircular moving-block percentile",
+  "pairing": "identical calendar indices across all nine policies and both losses",
+  "peak": "descriptive_only_small_effective_sample",
+  "replicates": 2000,
+  "seed": 15042
+}

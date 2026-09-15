@@ -1,5 +1,5 @@
 {
-  "stage": "pre-output regression; full production-evidence run pending",
+  "stage": "complete candidate validation; fresh independent Integration is recorded only after candidate commit",
   "core_python": "3.13.15 (main, Aug 25 2026, 13:50:12) [Clang 22.1.3 ]",
   "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
   "core_packages": {
@@ -25,7 +25,8 @@
         "fold_3",
         "fold_5"
       ],
-      "status": "running"
+      "status": "completed",
+      "exit_code": 0
     },
     {
       "folds": [
@@ -74,7 +75,7 @@
   },
   "inherited_ignored_regression_payload": {
     "path": "app/public",
-    "status": "existing bytes preserved; copied unchanged into detached review checkout",
+    "status": "existing bytes preserved; byte-identical copies required for detached review checkout",
     "sha256": {
       "app/public/boosters/p025.txt.gz.b64": "85ae2592fe697836189827512b290a96978cf3d5b00947900e93ac01a2e2d315",
       "app/public/boosters/p05.txt.gz.b64": "d5799cf048897c3f7eb2edaa0df6e5607adb36fbe94e3c664818beec768158b6",
@@ -161,5 +162,25 @@
       "source": "data/cp15-pre-output-regression.log",
       "sha256": "5b6c300b1e7116e3f903866a18efa89a8b21b476ff0b7ea45c2ed08a6277f0ed"
     }
+  },
+  "scoring_and_report": {
+    "commands": [
+      "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python scripts/cp15_forecasting.py --score",
+      "uv run --frozen python -m cp15.reporting"
+    ],
+    "exit_code": 0,
+    "prediction_rows": 96723,
+    "original_hours_per_arm": 10747,
+    "policy_fold_rows": 45,
+    "bootstrap_contrasts": 240
+  },
+  "final_regression": {
+    "command": "CP15_REQUIRE_SAVED_EVIDENCE=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen pytest -q",
+    "exit_code": 0,
+    "passed": 339,
+    "skipped": 0,
+    "seconds": 107.97,
+    "log": "reports/cp15/execution/final-regression.log",
+    "log_sha256": "2efa3360101a1ecbab94e86c0212c3bc06e00f294753d5a5073d49465ee4727f"
   }
 }
