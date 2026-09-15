@@ -1,0 +1,31 @@
+[
+  {
+    "worktree": "/Users/djourno/Downloads/PJM-cp15-metrics",
+    "owner": "Engineering Lead lifecycle; bounded metrics Builder content",
+    "purpose": "Independent score implementation and saved-evidence arithmetic/lineage checker",
+    "seed": "bb5e67882fcfdf65b963d25ce785a3999816dfc2",
+    "detached": true,
+    "branch_or_tag_created": false,
+    "imported_source_hashes": {
+      "src/cp15/scoring.py": "837e822e96e5d3b2183faf8d8077bf6b418cbf3e26fcd97251a0987a1a04a9c0",
+      "tests/cp15/test_scoring.py": "ab32593c8bb3f631c4aff8d676589dffa8081cece0982e9822189c680fa09114",
+      "tests/cp15/test_saved_evidence.py": "7b81657e4a94f3f16e732d7f1ecc29bbbf8779399ba8cc3882bfb050fb5254c6"
+    },
+    "lifecycle": "imports verified; scheduled for removal after import",
+    "notes": "No Builder Git mutations. Main, CP-10 and Orchestrator checkouts not owned by these Builders."
+  },
+  {
+    "worktree": "/Users/djourno/Downloads/PJM-cp15-feasibility",
+    "owner": "Engineering Lead lifecycle; bounded feasibility Builder content",
+    "purpose": "Pinned Chronos-2 probe and structural-input feasibility sheet",
+    "seed": "bb5e67882fcfdf65b963d25ce785a3999816dfc2",
+    "detached": true,
+    "branch_or_tag_created": false,
+    "imported_source_hashes": {
+      "src/cp15/feasibility_probe.py": "e0f776b31fc0db6f034d73ca05dc32530d76c884d7cca284a3925352100bd2ad",
+      "tests/cp15/test_feasibility.py": "c4cd45f7af9f0bf7324852fc4732036bf44fadb8b266c0e72da37611b084d438"
+    },
+    "lifecycle": "imports verified; scheduled for removal after import",
+    "notes": "No Builder Git mutations. Main, CP-10 and Orchestrator checkouts not owned by these Builders."
+  }
+]
