@@ -296,13 +296,14 @@ asks the model a question it was never trained on. The cleared-price line is hid
 scenario is active, because the outcome belongs to the unperturbed day.</p>
 </div>
 <p class="lede">Want to drive the model yourself? The
-<a href="https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast">interactive demo — may take ~30 s to wake if asleep</a> runs the same bundled artifact with live
-local inference. This page needs no such wake-up: it is static, and it cannot sleep.</p>
+<a href="https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast">interactive demo — runs in your browser, no server; the first visit downloads about 49 MB</a> runs the champion's own boosters in
+your browser, proved bitwise equal to the frozen artifact over 43 delivery days.
+This page stays the first touch because it downloads nothing and cannot fail when a CDN does.</p>
 
 <h2 id="limitations">11 · Honest limitations</h2>
 <ul>
 <li><strong>Exchangeability under regime shift.</strong> CQR provides finite-sample marginal coverage guarantees under exchangeability. The walk-forward CV mildly violates exchangeability — the crisis regime is not exchangeable with the pre-crisis regime, and the solar-driven negative-price era is not exchangeable with either — so empirical coverage may diverge from nominal on regime-shift folds. This is documented in the reliability diagram (Section 8.4).</li>
-<li><strong>Development versus one-shot evidence.</strong> The five-fold development results are descriptive post-selection evidence, never confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified and opened once, and the development point-accuracy DM shows no evidence of advantage.</li>
+<li><strong>Development versus one-shot evidence.</strong> The five-fold development results are descriptive post-selection evidence, never confirmatory: those folds also chose the catalog. Only the 90-day holdout was pre-specified and opened once, and on the development folds the point-accuracy DM shows a deficit, not merely the absence of an advantage.</li>
 <li><strong>Disclosed assumption — the load forecast.</strong> A65/A01 is pre-gate by explicit assumption, not by measurement: both the existence of the delivery-day load forecast before the 12:00 CET gate and its equality to the archived vector used here are assumed, and the regulatory update provision permits later revisions.</li>
 <li><strong>Disclosed assumption — the generation archive.</strong> A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.</li>
 <li><strong>The measured cost of the strict gate.</strong> The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.</li>

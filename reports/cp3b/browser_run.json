@@ -1,0 +1,53 @@
+{
+  "purpose": "Evidence gathered in real browsers, as opposed to host-side tests. Items 1, 2 and 3 of M3.5/CP-3B each require a property to hold in the browser, so each is recorded here as observed. Reproduce with `make wasm && make wasm-serve` and the probes described below.",
+  "date": "2026-09-15",
+  "runtimes_observed": {
+    "probe_runtime": "Pyodide 0.28.3, Python 3.13.2, LightGBM 4.6.0, numpy 2.2.5, wasm32 (OpenMP disabled)",
+    "marimo_pinned_runtime": "Pyodide v314.0.0 as pinned by marimo 0.24.2, Python 3.14.2, LightGBM 4.6.0, numpy 2.4.3, wasm32"
+  },
+  "item_2_raw_heads_cross_build": {
+    "runtime": "probe_runtime",
+    "what": "All nine boosters loaded from model_to_string() text and predicted on the champion's own 24-row feature matrix for 2026-09-06; compared with the host (LightGBM 4.7.0, macOS arm64).",
+    "heads_bitwise_identical": 9,
+    "max_abs_deviation": 0.0,
+    "max_relative_deviation": 0.0
+  },
+  "item_2_full_pipeline_in_page": {
+    "runtime": "marimo_pinned_runtime",
+    "what": "The identity panel of the exported notebook, served from dist/space-wasm on a cold loopback origin, recomputing all 43 fixture days through features, nine heads, CQR and isotonic, against outputs recorded from the frozen mlflow.pyfunc champion.",
+    "delivery_days": 43,
+    "rows": 1031,
+    "quantile_values_compared": 9261,
+    "null_rows_reproduced_as_null": true,
+    "max_abs_deviation": 0.0,
+    "page_verdict": "bitwise identical"
+  },
+  "item_3_delivery_day_availability_in_pyodide": {
+    "runtime": "marimo_pinned_runtime",
+    "what": "app/public/browser_champion.py executed in Pyodide on the shipped payload: the delivery day's 24 prices set to NaN, then separately every price of D-1 raised by 250 EUR/MWh.",
+    "delivery_day": "2026-09-06",
+    "masked_rows": 24,
+    "masked_max_abs_difference": 0.0,
+    "masked_output_bitwise_identical": true,
+    "d_minus_1": "2026-09-05",
+    "d_minus_1_rows_mutated": 24,
+    "d_minus_1_control_max_abs_difference": 220.9433340396028,
+    "note": "Identical to the CP-3 host figure (220.9433340396028) to full float precision: same delivery day, bitwise-equal pipeline."
+  },
+  "item_1_controls_driven": {
+    "runtime": "marimo_pinned_runtime",
+    "served_from": "dist/space-wasm over HTTP (file:// cannot run a WASM notebook)",
+    "quantile_selector": "95 % selected: band widened; annotation read 'empirical coverage at this level over the 90-day holdout was 0.9398'.",
+    "load_forecast_control": "slider moved to x 1.06: all nine heads re-ran in the browser; 'Scenario active' with the sensitivity-probe label rendered; cleared-price line hidden (0 dashed polylines).",
+    "fan_chart": "1 inline SVG chart, 1 band polygon, median and outcome polylines",
+    "console_errors": 0
+  },
+  "static_page_non_regression": {
+    "page": "docs/index.html after its Space link label changed",
+    "network_requests": 1,
+    "resource_timing_entries": 0,
+    "images_complete": 7,
+    "console_errors": 0,
+    "space_link": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast"
+  }
+}

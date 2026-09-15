@@ -41,8 +41,13 @@ platform change rather than an oversight.** On 2026-07-08 Hugging Face moved the
 SDKs behind a paid PRO plan; only Static Spaces remain free. This project runs at a ratified $0 rate,
 so the containerised showcase is not hosted there. **The container is not hypothetical** — it builds,
 and `make container-verify` runs it under `docker run --network none` with every external host
-unreachable. Run it yourself with the commands below; that is the same artifact a hosted Space would
-have served. Steps, if the decision changes: [`docs/deploy.md`](docs/deploy.md).
+unreachable. Run it yourself with the commands below.
+
+**What the Space will be instead: a Static Space, which cannot sleep.** The interactive demo is now a
+marimo notebook exported with `marimo export html-wasm`: the champion's own boosters execute in the
+visitor's browser under Pyodide, and Hugging Face serves nothing but files. It is built and verified
+locally and awaits the owner's deploy — steps in [`docs/deploy.md`](docs/deploy.md). {C["wasm_identity"]}
+{C["wasm_cold_load"]}
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
@@ -51,20 +56,22 @@ ENTSO-E/SMARD call during a user session. {C["shipped_is_evaluated"]}
 | Surface | What it is | Runtime calls |
 |---|---|---|
 | **[Static report]({C["pages_url"]})** — the primary link | The full §10 reading order as one self-contained HTML file, CDN-served by GitHub Pages | **zero** |
-| **[Interactive Space]({C["space_url"]})** | The marimo app in server mode, Docker SDK, `cpu-basic` | only its own assets |
+| **[Interactive Space]({C["space_url"]})** | The marimo notebook exported to WebAssembly, served by a free **Static** Space; inference runs in the browser | about {C["wasm_cold_load_mb"]} MB on a first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts |
 | **[MLflow on DagsHub]({C["mlflow_url"]})** | Every decision-bearing run, anonymously readable | — |
 
-The static page is the first touch precisely because it cannot sleep. The Space is labelled
-*"{C["space_link_label"]}"* wherever it is linked, because the Hugging Face free tier sleeps after
-inactivity; that is disclosed, not engineered around, and no keep-alive of any kind runs on any
-platform.
+The static page is the first touch precisely because it fetches nothing and cannot fail when a CDN
+does. The Space is labelled *"{C["space_link_label"]}"* wherever it is linked. The old label warned of
+a ~30 s wake-up; a Static Space executes nothing on the server, so there is nothing to wake, and the
+cost a visitor actually pays is download weight — so that is what the label now states. No keep-alive
+of any kind runs on any platform.
 
 **Run it yourself, offline:**
 
 ```bash
 uv sync
 uv run python predict_next_day.py --level 80 --self-check   # bundled snapshot, no network
-uv run marimo run app/showcase.py                            # the showcase, server mode
+uv run marimo run app/showcase.py                            # the container's showcase, server mode
+make wasm && make wasm-serve                                 # the Static Space, at http://127.0.0.1:8820
 docker build -t delu-showcase . && docker run -p 7860:7860 delu-showcase
 make pages                                                   # rebuild docs/index.html
 ```
@@ -94,7 +101,8 @@ CQR thresholds and isotonic last, in one `mlflow.pyfunc`. Snapshot `sha256`
 p {C["holdout_dm_p_value"]}, effect {C["holdout_dm_effect_size"]}. Selected catalog
 `{C["selected_catalog"]}` (`{C["catalog_base_loss"]}` vs `{C["catalog_augmented_loss"]}`,
 {C["catalog_pct"]}). Development evidence class `{C["development_evidence_class"]}`, with the
-point-accuracy DM at p = {C["development_dm_point_p_value"]} — no evidence of advantage. Post-gate
+point-accuracy DM at p = {C["development_dm_point_p_value"]} — a deficit, not merely no advantage
+({C["development_dm_point_relative"]}). Post-gate
 benchmark `{C["benchmark_strict_loss"]}` → `{C["benchmark_a69_loss"]}`, **{C["benchmark_pct"]}**.
 
 > {C["holdout_dm_label"]}

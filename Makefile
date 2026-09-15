@@ -83,7 +83,10 @@ cp3: pages space readme-cp3 register verify
 wasm-payload:
 	uv run python scripts/build_wasm_payload.py
 
+# Payload -> prove the gate -> export and assemble. The gate runs before the
+# export on purpose: a bundle whose model has drifted is never assembled.
 wasm: wasm-payload
+	uv run python scripts/verify_wasm_equivalence.py
 	uv run python scripts/build_wasm_space.py
 
 # Serve the export locally. html-wasm REQUIRES http:// -- file:// cannot work.

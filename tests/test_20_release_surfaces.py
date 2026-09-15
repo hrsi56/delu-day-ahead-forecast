@@ -109,11 +109,15 @@ def test_the_space_card_declares_the_docker_sdk_and_matching_port():
     assert f"EXPOSE {port.group(1)}" in DOCKERFILE.read_text()
 
 
-def test_free_tier_sleep_is_disclosed_and_not_gated():
+def test_the_space_link_discloses_what_a_visit_actually_costs_and_is_not_gated():
+    """CP-3B: a Static Space cannot sleep, so the old ~30 s wake-up label became
+    false. The cost a visitor pays is download weight, measured; the label says
+    that, and the container card says plainly why it is not the hosted demo."""
     claims = build_claims()
-    card = CARD.read_text()
-    assert "sleep" in card.lower()
+    assert "wake" not in claims["space_link_label"] and "asleep" not in claims["space_link_label"]
+    assert claims["wasm_cold_load_mb"] in claims["space_link_label"]
     assert claims["space_link_label"] in PAGE.read_text()
+    assert "sleep" in CARD.read_text().lower(), "the container card must say why it is not hosted"
     # §9.2 retired every timing threshold; none may reappear as a gate.
     for path in (CARD, PAGE, APP):
         text = path.read_text()

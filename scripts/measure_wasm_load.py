@@ -77,12 +77,41 @@ class Handler(SimpleHTTPRequestHandler):
             )
 
 
+def replay(paths_log: Path, directory: Path) -> tuple[int, int]:
+    """Same-origin wire bytes for a recorded cold load, recomputed on the current bundle.
+
+    The request set comes from a real browser cold load (the server log); this
+    re-applies the server's own gzip rule to those exact paths. It lets the
+    published byte count describe the final bundle without re-running a browser
+    after every regeneration of a few-kilobyte JSON file.
+    """
+    seen = {}
+    for line in paths_log.read_text().splitlines():
+        if line.strip():
+            entry = json.loads(line)
+            seen.setdefault(entry["path"].split("?", 1)[0], entry)
+    total = 0
+    for path in seen:
+        file = directory / path.lstrip("/")
+        if file.is_dir() or path == "/":
+            file = file / "index.html"
+        raw = file.read_bytes()
+        total += len(gzip.compress(raw, 6)) if file.suffix.lower() in COMPRESSIBLE else len(raw)
+    return len(seen), total
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8821)
     parser.add_argument("--directory", default="dist/space-wasm")
     parser.add_argument("--log", type=Path, default=Path("/tmp/wasm_wire.jsonl"))
+    parser.add_argument("--replay", type=Path, default=None,
+                        help="recompute same-origin bytes for a recorded cold-load path log, then exit")
     args = parser.parse_args()
+    if args.replay:
+        requests, total = replay(args.replay, Path(args.directory))
+        print(json.dumps({"same_origin_requests": requests, "same_origin_wire_bytes": total}))
+        return 0
     args.log.write_text("")
     handler = partial(Handler, directory=args.directory, log_path=args.log)
     server = ThreadingHTTPServer(("127.0.0.1", args.port), handler)

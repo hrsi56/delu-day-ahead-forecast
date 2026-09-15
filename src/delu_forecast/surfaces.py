@@ -27,6 +27,9 @@ from .claims import REPO_ROOT, REQUIRED_ON_EVERY_SURFACE, build_claims, forbidde
 README_PATH = REPO_ROOT / "README.md"
 PAGES_PATH = REPO_ROOT / "docs" / "index.html"
 SPACE_CARD_PATH = REPO_ROOT / "space" / "README.md"
+#: M3.5/CP-3B: the card the hosted Static Space actually carries. The container
+#: card above stays a surface too -- it is a public file and still makes claims.
+STATIC_SPACE_CARD_PATH = REPO_ROOT / "space-wasm" / "README.md"
 MLFLOW_RECORD_PATH = REPO_ROOT / "reports" / "cp3" / "mlflow_registration.json"
 
 #: Claim key -> MLflow model-version tag key. Identity except where §9.1's tag
@@ -82,9 +85,13 @@ class Surface:
 
 
 def load_surfaces() -> list[Surface]:
-    """The four surfaces item 5 names. A missing one is a hard error, not a skip."""
+    """Every public surface bound to the claim set. A missing one is a hard error, not a skip."""
     surfaces: list[Surface] = []
-    for name, path in (("README", README_PATH), ("Space card", SPACE_CARD_PATH)):
+    for name, path in (
+        ("README", README_PATH),
+        ("Space card", SPACE_CARD_PATH),
+        ("Static Space card", STATIC_SPACE_CARD_PATH),
+    ):
         surfaces.append(Surface(name, path, normalise(path.read_text())))
     surfaces.append(Surface("Pages export", PAGES_PATH, html_to_text(PAGES_PATH.read_text())))
 
@@ -153,6 +160,7 @@ __all__ = [
     "PAGES_PATH",
     "README_PATH",
     "SPACE_CARD_PATH",
+    "STATIC_SPACE_CARD_PATH",
     "Surface",
     "agreement_matrix",
     "disagreements",

@@ -31,6 +31,7 @@ RECORD = ROOT / "reports" / "cp3" / "link_check.json"
 SURFACES = {
     "Pages export": ROOT / "docs" / "index.html",
     "Space card": ROOT / "space" / "README.md",
+    "Static Space card": ROOT / "space-wasm" / "README.md",
     "README": ROOT / "README.md",
 }
 #: The SVG namespace is an XML identifier passed to `createElementNS`, not a URL

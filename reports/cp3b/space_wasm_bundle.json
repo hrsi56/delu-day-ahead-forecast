@@ -1,0 +1,25 @@
+{
+  "asset_files": 710,
+  "boosters": [
+    "p025.txt",
+    "p05.txt",
+    "p10.txt",
+    "p25.txt",
+    "p50.txt",
+    "p75.txt",
+    "p90.txt",
+    "p95.txt",
+    "p975.txt"
+  ],
+  "browser_champion_sha256": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
+  "bundle": "dist/space-wasm",
+  "card": "space-wasm/README.md",
+  "deployment": "owner-only; this script assembles and pushes nothing",
+  "files": 739,
+  "problems": [],
+  "removed_from_export_root": [
+    "CLAUDE.md"
+  ],
+  "sdk": "static",
+  "total_bytes_uncompressed": 57976225
+}
