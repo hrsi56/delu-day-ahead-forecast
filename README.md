@@ -165,8 +165,8 @@ unreachable. Run it yourself with the commands below.
 **What the Space will be instead: a Static Space, which cannot sleep.** The interactive demo is now a
 marimo notebook exported with `marimo export html-wasm`: the champion's own boosters execute in the
 visitor's browser under Pyodide, and Hugging Face serves nothing but files. It is built and verified
-locally and awaits the owner's deploy — steps in [`docs/deploy.md`](docs/deploy.md). The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a 43-day fixture spanning all three regimes and a DST transition (1,031 rows, 9,261 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0.
-The interactive demo runs entirely in your browser, so the first visit downloads about 49 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 337 requests from 4 hosts. Repeat visits come from your browser cache, and there is no server to wake.
+locally and awaits the owner's upload — steps in [`docs/deploy.md`](docs/deploy.md). The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equals the frozen artifact bitwise: maximum absolute deviation 0.0.
+The interactive demo runs entirely in your browser, so the first visit downloads about 54 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 337 requests from 4 hosts. Repeat visits come from your browser cache, and there is no server to wake. Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live
@@ -175,11 +175,11 @@ ENTSO-E/SMARD call during a user session. The shipped model is exactly the model
 | Surface | What it is | Runtime calls |
 |---|---|---|
 | **[Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)** — the primary link | The full §10 reading order as one self-contained HTML file, CDN-served by GitHub Pages | **zero** |
-| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** | The marimo notebook exported to WebAssembly, served by a free **Static** Space; inference runs in the browser | about 49 MB on a first visit, 337 requests, 4 hosts |
+| **[Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)** | The marimo notebook exported to WebAssembly, served by a free **Static** Space; inference runs in the browser | about 54 MB on a first visit, 337 requests, 4 hosts |
 | **[MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | Every decision-bearing run, anonymously readable | — |
 
 The static page is the first touch precisely because it fetches nothing and cannot fail when a CDN
-does. The Space is labelled *"interactive demo — runs in your browser, no server; the first visit downloads about 49 MB"* wherever it is linked. The old label warned of
+does. The Space is labelled *"interactive demo — runs in your browser, no server; the first visit downloads about 54 MB"* wherever it is linked. The old label warned of
 a ~30 s wake-up; a Static Space executes nothing on the server, so there is nothing to wake, and the
 cost a visitor actually pays is download weight — so that is what the label now states. No keep-alive
 of any kind runs on any platform.

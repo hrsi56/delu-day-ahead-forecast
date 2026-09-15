@@ -55,13 +55,34 @@ def _():
     def read_json(name: str):
         return json.loads(read_text(name))
 
-    return json, mo, np, read_json, read_text
+    async def read_gzip_text(name: str) -> str:
+        """Fetch a gzipped file and return its decompressed text.
+
+        Hugging Face serves Static Spaces uncompressed, so the boosters ship
+        gzipped at rest and are inflated here. If some other server ever added
+        its own Content-Encoding, the browser would hand over plain text; the
+        magic-byte check keeps that case correct instead of crashing.
+        """
+        import gzip
+
+        url = f"{_base()}/{name}"
+        try:
+            from pyodide.http import pyfetch
+
+            data = await (await pyfetch(url)).bytes()
+        except ImportError:
+            from pathlib import Path
+
+            data = Path(url).read_bytes()
+        return (gzip.decompress(data) if data[:2] == b"\x1f\x8b" else data).decode()
+
+    return json, mo, np, read_gzip_text, read_json, read_text
 
 
 @app.cell
-def _(read_json, read_text):
-    # The heavy cell: nine boosters, ~31 MB of text over the wire (far less
-    # compressed). Everything else is small.
+async def _(read_gzip_text, read_json, read_text):
+    # The heavy cell: nine boosters, about 11 MB gzipped on the wire and 31 MB
+    # of model text once inflated. Everything else is small.
     import lightgbm as lgb
 
     META = read_json("champion.json")
@@ -76,10 +97,9 @@ def _(read_json, read_text):
     exec(read_text("browser_champion.py"), _module)  # noqa: S102
     BrowserChampion = _module["BrowserChampion"]
 
-    BOOSTERS = {
-        label: lgb.Booster(model_str=read_text(f"boosters/{label}.txt"))
-        for label in META["quantile_labels"]
-    }
+    BOOSTERS = {}
+    for _label in META["quantile_labels"]:
+        BOOSTERS[_label] = lgb.Booster(model_str=await read_gzip_text(f"boosters/{_label}.txt.gz"))
     CHAMPION = BrowserChampion(BOOSTERS, META, SERIES, CALENDAR)
     return CHAMPION, CLAIMS, FIXTURE, META
 
@@ -90,9 +110,13 @@ def _(CLAIMS, META, mo):
         f"""
         # DE-LU day-ahead price forecasting — running in your browser
 
-        Every number below is computed **here**, by the champion itself: nine LightGBM
-        quantile heads, CQR calibration, isotonic last, executing in WebAssembly. There
-        is no server. Nothing is precomputed and replayed at you.
+        The **forecast** below and the **identity check** further down are computed here,
+        in your browser, by the champion itself: nine LightGBM quantile heads, CQR
+        calibration, isotonic last, executing in WebAssembly — there is no server. The
+        **evaluation figures** — coverage, cutoffs, holdout metrics, limitations — are
+        the committed results of the one-shot evaluation, read from the same claim set
+        as every other surface of this project. The holdout is spent; it is not re-run
+        here, and nothing on this page could re-run it.
 
         > **{CLAIMS['replay_label']}**
 
@@ -134,8 +158,23 @@ def _(mo):
         label="Load-forecast scenario (× the delivery day's A65 vector)",
         show_value=True,
     )
-    mo.hstack([level, load_scale], justify="start", gap=2)
+    # §9.2: "The page states once that scenario perturbations are ceteris-paribus
+    # sensitivity probes". Stated with the control, on first render -- not only
+    # after a visitor has already moved it.
     return level, load_scale
+
+
+@app.cell
+def _(CLAIMS, level, load_scale, mo):
+    mo.vstack([
+        mo.hstack([level, load_scale], justify="start", gap=2),
+        mo.md(
+            f"*{CLAIMS['sensitivity_probe_label']} The load-forecast control holds every "
+            "other input fixed, including the price history, so a large perturbation asks "
+            "the model a question it was never trained on.*"
+        ),
+    ])
+    return
 
 
 @app.cell
@@ -264,39 +303,63 @@ def _(CHAMPION, FIXTURE, META, mo, np):
         _cells += int(_both.sum())
 
     _regimes = sorted({e["regime"] for e in _days})
+
+    # Which rows are undefined, and why -- derived from the data, never typed.
+    # Round-1 review caught a hand-written sentence here that named the wrong day.
+    import datetime as _dt
+
+    _names = list(META["features"])
+    _undefined = []
+    for _entry in _days:
+        _matrix, _hours = CHAMPION.features_for_day(_entry["day"])
+        for _i, _hour in enumerate(_hours):
+            _missing = [_names[_j] for _j in range(_matrix.shape[1]) if np.isnan(_matrix[_i, _j])]
+            for _feature in _missing:
+                _back = {"price_lag_24h": 1, "price_lag_48h": 2, "price_lag_168h": 7}.get(_feature)
+                if _back is None:
+                    _why = "incomplete input"
+                else:
+                    _source = (_dt.date.fromisoformat(_entry["day"]) - _dt.timedelta(days=_back)).isoformat()
+                    _count = len(CHAMPION._rows_for_day.get(_source, []))
+                    _why = (
+                        f"sources {_source} {_hour:02d}:00, the hour the spring-forward transition removed"
+                        if _count == 23 else
+                        f"sources {_source} {_hour:02d}:00, the hour the fall-back transition repeated"
+                        if _count == 25 else f"sources {_source}, which is not in the shipped slice"
+                    )
+                _undefined.append(f"{_entry['day']} {_hour:02d}:00 — `{_feature}` {_why}")
+    _undefined_md = "\n".join(f"- {_row}" for _row in _undefined) or "- none"
     _verdict = "bitwise identical" if (_worst == 0.0 and _nulls == 0) else f"DIVERGED by {_worst}"
-    mo.md(
-        f"""
-        ## Is this really the model the holdout evaluated?
-
-        `mlflow.pyfunc` does not load under Pyodide, so what runs here is a
-        re-implementation: the same nine boosters, the same preprocessing, the same four
-        CQR thresholds, the same isotonic step. That makes the claim *"the shipped model
-        is exactly the model the holdout evaluated"* something to prove rather than
-        repeat — so the check runs in your browser, now, against outputs recorded from
-        the frozen artifact before this page existed.
-
-        | | |
-        |---|---|
-        | Delivery days compared | **{len(_days)}** |
-        | Rows | **{_rows}** |
-        | Quantile values compared | **{_cells}** |
-        | Regimes covered | {", ".join(_regimes)} |
-        | Rows the frozen model left undefined, reproduced as undefined | **{_nulls == 0}** |
-        | **Maximum absolute deviation** | **{_worst}** |
-        | Verdict | **{_verdict}** |
-
-        Zero is not a rounding of something small — it is float64 equality on every one
-        of those values. The two undefined rows are the spring-forward day, where the
-        D−1 calendar-day lag has no source hour and the pipeline fails closed instead of
-        inventing a price; this page reproduces the gap rather than filling it.
-
-        The boosters were trained with LightGBM on macOS ARM and are executing here under
-        a WebAssembly build with OpenMP disabled. That they agree bitwise is a measured
-        result, not an assumption — it was the first thing established, because it was
-        the one thing that could have made this page impossible.
-        """
+    # Flat markdown: zero-indent list lines inside an indented f-string defeat
+    # marimo's dedent and turn the whole panel into a code block.
+    _text = (
+        "## Is this really the model the holdout evaluated?\n\n"
+        "`mlflow.pyfunc` does not load under Pyodide, so what runs here is a re-implementation: "
+        "the same nine boosters, the same preprocessing, the same four CQR thresholds, the same "
+        "isotonic step. That makes the claim *\"the shipped model is exactly the model the holdout "
+        "evaluated\"* something to prove rather than repeat — so the check runs in your browser, "
+        "now, against outputs recorded from the frozen artifact and committed to the repository.\n\n"
+        "| | |\n|---|---|\n"
+        f"| Delivery days compared | **{len(_days)}** |\n"
+        f"| Rows | **{_rows}** |\n"
+        f"| Quantile values compared | **{_cells}** |\n"
+        f"| Regimes and calendar cases covered | {', '.join(_regimes)} |\n"
+        f"| Rows the frozen model left undefined, reproduced as undefined | **{_nulls == 0}** |\n"
+        f"| **Maximum absolute deviation** | **{_worst}** |\n"
+        f"| Verdict | **{_verdict}** |\n\n"
+        "Zero is not a rounding of something small — it is float64 equality on every one of "
+        "those values.\n\n"
+        f"**{len(_undefined)} rows are undefined by design**, and are reproduced as undefined here "
+        "rather than filled. In each, a calendar-day price lag lands on an hour a daylight-saving "
+        "transition removed or repeated, and the pipeline fails closed instead of inventing a "
+        "price:\n\n"
+        f"{_undefined_md}\n\n"
+        "The boosters were trained with LightGBM on macOS ARM and are executing here under a "
+        "WebAssembly build with OpenMP disabled. That they agree bitwise is a measured result, "
+        "not an assumption — it was the first thing established, because it was the one thing "
+        "that could have made this page impossible."
     )
+    mo.md(_text)
     return
 
 
@@ -356,9 +419,10 @@ def _(mo):
         if _opaque:
             _lines.append("")
             _lines.append(
-                "Sizes from " + ", ".join(f"`{h}`" for h in _opaque) + " are small wheel "
-                "requests the browser will not size for a cross-origin response; they are "
-                "measured out-of-band and reported in the repository."
+                "The browser will not size cross-origin responses from "
+                + ", ".join(f"`{h}`" for h in _opaque)
+                + " (no Timing-Allow-Origin header); they are sized out-of-band and reported, "
+                "with every other figure here, in the repository's network record."
             )
         _network_md = "\n".join(_lines)
 

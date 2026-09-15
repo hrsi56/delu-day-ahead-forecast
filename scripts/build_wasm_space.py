@@ -89,10 +89,15 @@ because it was the one result that could have made this page impossible.
 
 ### What a first visit costs
 
-{C['wasm_cold_load']} Measured on a cold cache: {C['wasm_cold_load_bytes']}. Most of it is the Python
-runtime and its scientific wheels from `cdn.jsdelivr.net`; the nine boosters come from this Space
-itself. The page prints its own measured download table at the bottom. If you want the report
-without the download, the [static report]({C['pages_url']}) fetches nothing at all.
+{C['wasm_cold_load']} Measured on a cold cache, served uncompressed exactly as Hugging Face serves
+it: {C['wasm_cold_load_bytes']}. Most of it is the Python runtime and its scientific wheels from
+`cdn.jsdelivr.net`; the nine boosters come from this Space itself, gzipped at rest because the
+platform does not compress. The page prints its own measured download table at the bottom.
+
+{C['wasm_wrapper_disclosure']}
+
+If you want the report without any download, the [static report]({C['pages_url']}) fetches nothing
+at all.
 """
 
 
@@ -151,6 +156,13 @@ def main() -> int:
     if not (PUBLIC / "fixture.json").exists():
         raise SystemExit("app/public/ is absent; run `make wasm-payload` first")
 
+    # The claim set depends on reports/cp3b/equivalence.json, which the gate
+    # rewrites after the payload is built. Refresh the page's copy here, last, so
+    # the exported page can never render claims older than the evidence behind them.
+    (PUBLIC / "claims.json").write_text(
+        json.dumps(dict(build_claims().values), indent=1, sort_keys=True) + "\n"
+    )
+
     CARD.parent.mkdir(parents=True, exist_ok=True)
     CARD.write_text(build_card())
     print(f"wrote {CARD}")
@@ -178,7 +190,7 @@ def main() -> int:
         problems.append("index.html missing")
     if not (BUNDLE / "assets").is_dir() or not any((BUNDLE / "assets").iterdir()):
         problems.append("assets/ missing or empty")
-    boosters = sorted((BUNDLE / "public" / "boosters").glob("*.txt"))
+    boosters = sorted((BUNDLE / "public" / "boosters").glob("*.txt.gz"))
     if len(boosters) != 9:
         problems.append(f"expected 9 boosters, found {len(boosters)}")
     shipped = BUNDLE / "public" / "browser_champion.py"

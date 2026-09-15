@@ -1,45 +1,59 @@
 {
-  "attempted_reduction": "scipy (13.9 MB) and scikit-learn (4.4 MB) arrive as LightGBM dependencies that this page never imports \u2014 18.3 MB of the 31.9 MB from the CDN. `micropip.install(\"lightgbm\", deps=False)` does not avoid them: for a package in the Pyodide distribution micropip defers to loadPackage, which resolves Pyodide's own dependency graph regardless. Measured, not assumed; the number is published rather than argued down.",
-  "contrast_with_the_static_page": "docs/index.html fetches nothing at all \u2014 0 external references, 1 request (itself), verified in a browser. At CP-3 `marimo export html` was rejected for that page because it emitted 181 references to cdn.jsdelivr.net. `marimo export html-wasm` is different in kind: it bundles marimo's frontend locally (297 asset files served from the Space) and reaches a CDN only for the Python runtime. The static page remains the first-touch link precisely because it cannot fail when a CDN does.",
+  "attempted_reduction": "scipy (13.9 MB) and scikit-learn (4.4 MB) arrive as LightGBM dependencies this page never imports. micropip.install(\"lightgbm\", deps=False) does not avoid them: micropip defers to Pyodide's own dependency graph for distributed packages. Tried and measured.",
+  "compression": {
+    "at_rest": "The nine boosters ship gzipped (level 9, mtime 0): 30,823,690 B of model text becomes 11,125,154 B on the wire, inflated in the browser. Lossless; the equivalence gate proves the decompressed model bitwise. Without it this first visit would be about 73 MB.",
+    "not_compressed": "marimo's 297 interface assets (7.0 MB) are served as marimo emits them; compressing them would mean modifying marimo's export.",
+    "platform": "none \u2014 Hugging Face Static Spaces serve files as stored"
+  },
+  "contrast_with_the_static_page": "docs/index.html fetches nothing: 1 request (itself), 0 resources, verified in a browser. At CP-3, marimo export html was rejected for it because it emitted 181 references to cdn.jsdelivr.net. marimo export html-wasm differs in kind: it bundles marimo's frontend locally (297 files served from the Space) and reaches a CDN only for the Python runtime.",
   "hosts": {
     "cdn.jsdelivr.net": {
       "bytes": 31898711,
       "requests": 18,
       "source": "Resource Timing (worker)",
-      "what": "Pyodide v314.0.0 core (pyodide.asm.wasm 3.4 MB, python_stdlib.zip 2.5 MB) and its wheels: scipy 13.9 MB, scikit-learn 4.4 MB, numpy 2.9 MB, jedi 1.2 MB, pygments 1.2 MB, lightgbm 0.75 MB, and seven smaller ones."
+      "what": "Pyodide v314.0.0 core (pyodide.asm.wasm 3.4 MB, python_stdlib.zip 2.5 MB) and wheels: scipy 13.9 MB, scikit-learn 4.4 MB, numpy 2.9 MB, jedi 1.2 MB, pygments 1.2 MB, lightgbm 0.75 MB and seven smaller ones."
     },
     "files.pythonhosted.org": {
       "browser_reported_size": 0,
       "bytes": 2752144,
       "requests": 4,
       "source": "HTTP HEAD, out-of-band",
-      "what": "marimo's own wheels, which its WASM bootstrap fetches from PyPI rather than from the Pyodide distribution: marimo_base 1.93 MB, narwhals 0.45 MB, pymdown_extensions 0.27 MB, markdown 0.11 MB."
+      "what": "marimo's own wheels, fetched from PyPI by its WASM bootstrap: marimo_base 1.93 MB, narwhals 0.45 MB, pymdown_extensions 0.27 MB, markdown 0.11 MB."
     },
     "the Space's own origin": {
-      "bytes": 14205139,
+      "bytes": 18780414,
       "requests": 314,
-      "source": "server wire log (gzip) from a real cold load; recomputed for the final bundle by replaying that load's 314 request paths through the server's gzip rule",
-      "what": "The nine boosters as gzipped text (11.2 MB of the total, 3.4 MB each uncompressed compressing to ~1.24 MB), the row slice, the calendar facts, the claim set, browser_champion.py, the equivalence fixture, and marimo's own interface assets (297 files, 2.9 MB)."
+      "source": "server wire log of a real cold browser load, uncompressed as Hugging Face serves it; replaying that load's request paths reproduces the figure byte-for-byte",
+      "what": "the nine boosters gzipped at rest (11.1 MB), marimo's interface assets (297 files, 7.0 MB), the row slice, calendar facts, claim set, equivalence fixture and browser_champion.py (0.54 MB), and the page and icons (0.09 MB)."
     },
     "wasm.marimo.app": {
       "browser_reported_size": 0,
       "bytes": 113533,
       "requests": 1,
       "source": "HTTP HEAD, out-of-band",
-      "what": "pyodide-lock.json \u2014 marimo's package lockfile for the Pyodide version it pins. A marimo-operated endpoint, contacted once at boot; disclosed because a recruiter-facing page that contacts a vendor endpoint should say so."
+      "what": "pyodide-lock.json \u2014 marimo's lockfile for the Pyodide build it pins; a marimo-operated endpoint contacted once at boot."
     }
   },
   "measured_on": "2026-09-15",
-  "method": "Cold-cache load of dist/space-wasm served by scripts/measure_wasm_load.py on a previously unused loopback port (the HTTP cache key includes the port, so the cache is genuinely cold) with gzip enabled, because Hugging Face serves Static Spaces compressed and an uncompressed measurement would misstate the wire cost. Same-origin bytes come from the server's own wire log; cross-origin bytes come from the Resource Timing API read inside the Pyodide worker, where the Python packages are actually fetched. Five cross-origin responses carry no Timing-Allow-Origin header, so the browser refuses to size them; those were measured out-of-band with HTTP HEAD and are marked as such.",
+  "method": "Cold-cache load of dist/space-wasm served by scripts/measure_wasm_load.py on a previously unused loopback port (the HTTP cache key includes the port) with NO compression, because Hugging Face serves Static Spaces uncompressed: on 2026-09-15 live Static Spaces returned JS, CSS and HTML with no Content-Encoding to a client sending Accept-Encoding: gzip, deflate, br. Same-origin bytes come from the server's wire log; cross-origin bytes from Resource Timing read inside the Pyodide worker. Five cross-origin responses carry no Timing-Allow-Origin, so the browser refuses to size them; those were sized out-of-band with HTTP HEAD and are labelled so.",
   "page": "dist/space-wasm/index.html (marimo export html-wasm, --mode run)",
-  "repeat_visit": "Served from the browser cache; the Space itself executes nothing, so there is no cold start to pay.",
-  "self_reference": "The Space serves files that print the cold-load size, so an exact byte count cannot be stable on its own surfaces: printing the total's last digit changes one gzipped file by one byte, and regenerating oscillated between two totals with no fixed point. The public surfaces therefore publish two-decimal millions of bytes, which that oscillation cannot move. The exact figure here (48,969,527 B) is the final bundle: the CDN, PyPI and marimo-endpoint components as observed in a real cold browser load of it, and the same-origin component replayed from that load's own 314 request paths through the server's gzip rule (the replay reproduced the live measurement byte-for-byte before any regeneration).",
+  "repeat_visit": "Served from the browser cache. The Space executes nothing server-side, so there is nothing to wake.",
+  "revision": "Round 2. Round 1 gzipped same-origin files on the premise that Hugging Face compresses Static Spaces; it does not, and the published 49 MB understated a first visit. The round-1 Integration Critic caught it; it was verified independently on live Static Spaces before being accepted.",
+  "self_reference": "The Space serves files that print the cold-load size, so an exact byte count is not stable on its own surfaces; the surfaces publish two-decimal millions of bytes, which a one-byte change cannot move. The exact figure is the final bundle, correct to within a few bytes.",
   "totals": {
-    "bytes": 48969527,
-    "mb_decimal": 48.97,
-    "mib_binary": 46.7,
-    "plain_language": "about 49 MB on a first visit (48,969,527 bytes = 46.7 MiB), from four hosts",
+    "bytes": 53544802,
+    "mb_decimal": 53.54,
+    "mib_binary": 51.1,
+    "plain_language": "about 54 MB on a first visit (53,544,802 bytes = 51.1 MiB), from four hosts",
     "requests": 337
   },
-  "units_note": "Published in decimal megabytes (1 MB = 1,000,000 bytes) with the exact byte count beside it; the binary figure is 46.7 MiB. Stated because CP-3 already paid once for a MiB labelled MB."
+  "units_note": "Published in decimal megabytes (1 MB = 1,000,000 bytes) to two decimals, with exact bytes here.",
+  "via_the_huggingface_page": {
+    "app_url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+    "hosts": 5,
+    "measured_bytes": 1216418,
+    "requests": 202,
+    "url": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast",
+    "what": "Opening the canonical Space link loads Hugging Face's own page, which runs the app in an iframe from the static host. Measured once, read-only, on 2026-09-15 against the already-created Space (then holding template files): the wrapper's document (12,685 B) plus 201 resource entries \u2014 huggingface.co 190 requests 953,085 B, js.stripe.com 2 requests 247,693 B, cdnjs.cloudflare.com 1 request 2,955 B, de5282c3ca0c.edge.sdk.awswaf.com 6 requests (sizes not disclosed by the browser), and the static host 2 requests (the iframe, sized inside it). Hugging Face controls that page and it may change; the app's own figures above do not include it."
+  }
 }

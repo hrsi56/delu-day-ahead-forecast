@@ -1,15 +1,15 @@
 {
   "asset_files": 710,
   "boosters": [
-    "p025.txt",
-    "p05.txt",
-    "p10.txt",
-    "p25.txt",
-    "p50.txt",
-    "p75.txt",
-    "p90.txt",
-    "p95.txt",
-    "p975.txt"
+    "p025.txt.gz",
+    "p05.txt.gz",
+    "p10.txt.gz",
+    "p25.txt.gz",
+    "p50.txt.gz",
+    "p75.txt.gz",
+    "p90.txt.gz",
+    "p95.txt.gz",
+    "p975.txt.gz"
   ],
   "browser_champion_sha256": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
   "bundle": "dist/space-wasm",
@@ -21,5 +21,5 @@
     "CLAUDE.md"
   ],
   "sdk": "static",
-  "total_bytes_uncompressed": 57961491
+  "total_bytes_uncompressed": 38447155
 }

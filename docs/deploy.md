@@ -21,13 +21,23 @@ The account is **`Yarden-Viktor`**. Every surface already links
 `https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast`, so the owner and name below
 must match exactly.
 
-### 1. Create the Space
+### 1. The Space already exists — confirm it
 
-1. Open <https://huggingface.co/new-space>, signed in as `Yarden-Viktor`.
-2. **Space name:** `delu-day-ahead-forecast`.
-3. **SDK:** **Static** (not Docker, not Gradio — both are paid now).
-4. **Visibility:** **Public**.
-5. Create. Leave it empty.
+As of 2026-09-15 00:37 UTC, `Yarden-Viktor/delu-day-ahead-forecast` exists on Hugging Face as a
+**Static**, **public** Space holding only Hugging Face's template files (`.gitattributes`,
+`README.md`, `index.html`, `style.css`). This checkpoint did not create it — nothing here calls
+Hugging Face. Confirm it is still Static and public:
+
+```bash
+curl -s https://huggingface.co/api/spaces/Yarden-Viktor/delu-day-ahead-forecast | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['sdk'], 'private' if d['private'] else 'public')"
+```
+
+It should print `static public`. If the Space was deleted, recreate it at
+<https://huggingface.co/new-space>: owner `Yarden-Viktor`, name `delu-day-ahead-forecast`, SDK
+**Static**, **Public**.
+
+The upload below replaces the template's `index.html` and `README.md` and adds everything else;
+`style.css` from the template is unused and harmless.
 
 ### 2. Build the directory
 
@@ -36,8 +46,8 @@ make wasm
 ```
 
 That regenerates the browser payload from the committed champion, re-proves the model-identity gate,
-exports the notebook with `marimo export html-wasm`, and assembles **`dist/space-wasm/`** — about 58 MB
-uncompressed across ~740 files: `index.html`, marimo's `assets/`, `public/` (the nine boosters, the row
+exports the notebook with `marimo export html-wasm`, and assembles **`dist/space-wasm/`** — about 38 MB
+uncompressed across ~740 files (served uncompressed — Hugging Face does not compress Static Spaces, so the nine boosters ship gzipped at rest): `index.html`, marimo's `assets/`, `public/` (the nine boosters, the row
 slice, the equivalence fixture, `browser_champion.py`), the Space card as `README.md` with
 `sdk: static`, and `.gitattributes` routing binary assets through LFS. It exits non-zero if the bundle
 is malformed, if the shipped module differs from the verified one, or if any internal file leaked into
@@ -82,9 +92,13 @@ A Static Space has no build step, so it is live as soon as the upload finishes.
 
 ### 4. Check it
 
+Two URLs will work: the Space page, which wraps the app in Hugging Face's own chrome, and the app
+itself at <https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/>, which loads nothing but
+the app.
+
 Open it in a private window. Within about a minute the page should show the fan chart, both controls
 should respond, the *historical out-of-sample replay* label should sit above the chart, and the
-identity panel should read **bitwise identical** with a maximum absolute deviation of **0.0** over 43
+identity panel should read **bitwise identical** with a maximum absolute deviation of **0.0** over 54
 delivery days. The download table at the bottom reports what the visit cost.
 
 Then:

@@ -222,7 +222,15 @@ _RUNTIME_PARQUET = {"holdout_predictions.parquet"}
 #: `__marimo__` is the session cache marimo writes beside the notebook when the
 #: app runs: gitignored, ~1 MB, and its presence would make the bundle depend on
 #: whether anyone had started the app before building it.
+#: `reports/cp3b/` is the WASM checkpoint's evidence (network logs, equivalence
+#: records) -- it changes on every WASM rebuild and would make this manifest stale
+#: for reasons that have nothing to do with the container.
 _EXCLUDED_DIRS = {"__pycache__", "__marimo__", "cp3"}
+
+#: ...except the two records `claims.py` reads. The claim set must build wherever
+#: the app runs; excluding its inputs crashed the CLI inside the container, and
+#: `make container-verify` caught it.
+_CP3B_CLAIM_INPUTS = {"network.json", "equivalence.json"}
 
 
 def _ignore(directory: str, names: list[str]) -> set[str]:
@@ -238,6 +246,8 @@ def _ignore(directory: str, names: list[str]) -> set[str]:
     skipped |= {
         name for name in names if name.endswith(".parquet") and name not in _RUNTIME_PARQUET
     }
+    if Path(directory).name == "cp3b":
+        skipped |= {name for name in names if name not in _CP3B_CLAIM_INPUTS}
     return skipped
 
 

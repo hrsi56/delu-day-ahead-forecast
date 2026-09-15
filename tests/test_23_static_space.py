@@ -50,6 +50,10 @@ def test_the_card_carries_the_labels_and_the_measured_cost():
     assert " ".join(claims["wasm_cold_load"].split()) in text
     assert claims["wasm_cold_load_bytes"] in text, "publish the number, not an adjective"
     assert " ".join(claims["wasm_identity"].split()) in text
+    assert " ".join(claims["wasm_wrapper_disclosure"].split()) in text, (
+        "the huggingface.co page adds its own requests; the card must say so"
+    )
+    assert claims["space_app_url"] in text
     # Phrases that *assert* a wake-up. "there is no server to wake" is the denial
     # and is correct, so the bare word is not a finding.
     for phrase in ("asleep", "~30 s", "may take", "cold start"):

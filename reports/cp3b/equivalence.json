@@ -17,19 +17,21 @@
     "masked_rows": 24
   },
   "fixture": {
-    "delivery_days": 43,
-    "fail_closed_rows": 2,
+    "delivery_days": 54,
+    "fail_closed_rows": 4,
     "first_day": "2020-07-01",
     "includes_23_hour_day": true,
     "last_day": "2026-09-06",
-    "quantile_values_compared": 9261,
+    "quantile_values_compared": 11628,
     "regimes": {
       "crisis": 12,
+      "dst-fall-back": 3,
       "dst-spring-forward": 7,
       "post-crisis (holdout)": 12,
+      "post-crisis (holidays, bridge days)": 8,
       "pre-crisis": 12
     },
-    "rows": 1031
+    "rows": 1296
   },
   "gate": {
     "bitwise_identical": true,
@@ -45,22 +47,22 @@
       "max_abs_deviation": 0.010000000000104592,
       "null_mismatches": 0,
       "perturbed_pair": "p025|p975",
-      "rows": 1031,
-      "values": 9261
+      "rows": 1296,
+      "values": 11628
     },
     "median_head_599_of_600_trees": {
       "broke_the_gate": true,
-      "max_abs_deviation": 0.3112537405245419,
+      "max_abs_deviation": 0.42703391961529746,
       "null_mismatches": 0,
-      "rows": 1031,
-      "values": 9261
+      "rows": 1296,
+      "values": 11628
     },
     "p25_p50_heads_swapped": {
       "broke_the_gate": true,
       "max_abs_deviation": 50.20473786601394,
       "null_mismatches": 0,
-      "rows": 1031,
-      "values": 9261
+      "rows": 1296,
+      "values": 11628
     }
   }
 }

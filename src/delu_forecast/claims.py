@@ -406,6 +406,15 @@ def build_claims() -> Claims:
             f"{len(network['hosts'])} hosts. Repeat visits come from your browser cache, and "
             f"there is no server to wake."
         ),
+        "space_app_url": network["via_the_huggingface_page"]["app_url"],
+        "wasm_wrapper_disclosure": (
+            f"Opened through huggingface.co, Hugging Face's own page adds its document and "
+            f"{network['via_the_huggingface_page']['requests'] - 1} requests from huggingface.co, "
+            f"js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about "
+            f"{network['via_the_huggingface_page']['measured_bytes'] / 1_000_000:.1f} MB measurable, "
+            f"on a page Hugging Face controls — and runs the app in an iframe. The app alone is at "
+            f"{network['via_the_huggingface_page']['app_url']}."
+        ),
         "wasm_fixture_days": str(fixture["delivery_days"]),
         "wasm_fixture_rows": f"{fixture['rows']:,}",
         "wasm_fixture_values": f"{fixture['quantile_values_compared']:,}",
@@ -414,8 +423,9 @@ def build_claims() -> Claims:
         "wasm_identity": (
             f"The Space cannot load the packaged `mlflow.pyfunc`, so it runs the champion's own "
             f"nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in "
-            f"the browser — and on a {fixture['delivery_days']}-day fixture spanning all three "
-            f"regimes and a DST transition ({fixture['rows']:,} rows, "
+            f"the browser — and on a committed {fixture['delivery_days']}-day fixture spanning all "
+            f"three regimes, both daylight-saving transitions, and federal holidays and bridge days "
+            f"({fixture['rows']:,} rows, "
             f"{fixture['quantile_values_compared']:,} quantile values) its output equals the "
             f"frozen artifact bitwise: maximum absolute deviation "
             f"{float(gate['max_abs_deviation'])!r}."

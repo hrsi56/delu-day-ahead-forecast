@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 
 import pytest
 
@@ -176,3 +177,44 @@ def test_the_container_was_actually_exercised_with_the_network_disabled():
     assert cli["delivery_day_prices_change_nothing"] is True
     assert cli["positive_control_d_minus_1_changes_output"] is True
     assert record["steps"]["marimo_server_mode"]["ok"] is True
+
+
+def test_every_file_the_claim_set_reads_ships_in_the_container():
+    """claims.py is imported by the CLI and the server-mode app, so every file it
+    reads must survive both the image's .dockerignore and the bundle's filter.
+    CP-3B excluded reports/cp3b/ wholesale and the CLI crashed in the container;
+    this catches that class of error without needing Docker."""
+    import fnmatch
+    import sys
+
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    from build_space import _ignore
+
+    source = (REPO_ROOT / "src" / "delu_forecast" / "claims.py").read_text()
+    inputs = set(re.findall(r'_read_json\("([^"]+)"\)', source)) | {"reports/cp2/development_pooled_metrics.csv"}
+    assert inputs, "claims.py no longer reads files via _read_json; update this test"
+
+    rules = [line.strip() for line in (REPO_ROOT / ".dockerignore").read_text().splitlines()
+             if line.strip() and not line.startswith("#")]
+
+    def docker_ignored(path: str, rule_list=None) -> bool:
+        ignored = False
+        for rule in (rules if rule_list is None else rule_list):
+            negate = rule.startswith("!")
+            pattern = rule[1:] if negate else rule
+            pattern = pattern.rstrip("/")
+            if fnmatch.fnmatch(path, pattern) or fnmatch.fnmatch(path, pattern + "/*") or path.startswith(pattern + "/"):
+                ignored = not negate
+        return ignored
+
+    # Positive control: the exact rule that crashed the container must be caught.
+    assert docker_ignored("reports/cp3b/network.json", ["reports/cp3b/"]), "the guard cannot fail"
+    assert not docker_ignored(
+        "reports/cp3b/network.json", ["reports/cp3b/*", "!reports/cp3b/network.json"]
+    ), "the guard mis-reads a negation"
+
+    for relative in sorted(inputs):
+        assert (REPO_ROOT / relative).exists(), relative
+        assert not docker_ignored(relative), f"{relative} is excluded from the image by .dockerignore"
+        parent, name = str(Path(relative).parent), Path(relative).name
+        assert name not in _ignore(str(REPO_ROOT / parent), [name]), f"{relative} is dropped from dist/space"

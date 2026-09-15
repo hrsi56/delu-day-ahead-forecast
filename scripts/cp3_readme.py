@@ -46,8 +46,8 @@ unreachable. Run it yourself with the commands below.
 **What the Space will be instead: a Static Space, which cannot sleep.** The interactive demo is now a
 marimo notebook exported with `marimo export html-wasm`: the champion's own boosters execute in the
 visitor's browser under Pyodide, and Hugging Face serves nothing but files. It is built and verified
-locally and awaits the owner's deploy — steps in [`docs/deploy.md`](docs/deploy.md). {C["wasm_identity"]}
-{C["wasm_cold_load"]}
+locally and awaits the owner's upload — steps in [`docs/deploy.md`](docs/deploy.md). {C["wasm_identity"]}
+{C["wasm_cold_load"]} {C["wasm_wrapper_disclosure"]}
 
 **Three surfaces, one bundled artifact.** The champion is loaded from the image alongside the
 committed snapshot — there is no registry lookup at runtime, no scheduled refresh, and no live

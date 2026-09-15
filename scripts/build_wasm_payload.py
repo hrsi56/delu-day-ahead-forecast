@@ -65,9 +65,25 @@ HISTORY_DAYS = 31
 WINDOWS: tuple[tuple[str, date, date], ...] = (
     ("pre-crisis", date(2020, 7, 1), date(2020, 7, 12)),
     ("crisis", date(2022, 8, 1), date(2022, 8, 12)),
+    # Round-1 review broke the bridge-day logic and the gate still passed: the
+    # fixture held no holiday. These windows exercise every calendar branch -- a
+    # Monday bridge before a Tuesday holiday, Friday bridges after Thursday
+    # holidays, holidays, and days after holidays.
+    ("post-crisis (holidays, bridge days)", date(2023, 10, 2), date(2023, 10, 4)),
+    ("post-crisis (holidays, bridge days)", date(2024, 12, 25), date(2024, 12, 27)),
+    ("post-crisis (holidays, bridge days)", date(2025, 5, 29), date(2025, 5, 30)),
+    # Both DST directions: the 25-hour day, and the two days after it whose
+    # calendar-day lags land on the repeated hour and must fail closed.
+    ("dst-fall-back", date(2025, 10, 26), date(2025, 10, 28)),
     ("dst-spring-forward", date(2026, 3, 25), date(2026, 3, 31)),
     ("post-crisis (holdout)", date(2026, 8, 26), date(2026, 9, 6)),
 )
+
+#: The expected outputs are a committed artifact, not a by-product of the build.
+#: The build recomputes them from the frozen champion and refuses to continue if
+#: they differ -- so a changed model cannot silently regenerate its own answer
+#: key. `--refresh-fixture` rewrites it, deliberately and visibly in git.
+COMMITTED_FIXTURE = ROOT / "tests" / "fixtures" / "wasm_equivalence_fixture.json"
 
 #: The day the app renders by default: the last in the snapshot, inside the
 #: holdout window, so what it shows is a labelled historical out-of-sample replay.
@@ -96,12 +112,23 @@ def main() -> int:
     claims = build_claims()
 
     # -- the nine boosters, as text ----------------------------------------
-    booster_bytes = {}
+    # Gzip at rest. Hugging Face serves Static Spaces uncompressed even to a
+    # client that asks for gzip (verified on live Spaces, 2026-09-15), so the only
+    # compression a visitor ever gets is the compression shipped in the file.
+    # Lossless: the notebook decompresses to the identical model text, and the
+    # equivalence gate proves the result bitwise. mtime=0 keeps the bytes
+    # reproducible across builds.
+    import gzip
+
+    for stale in (OUT / "boosters").glob("*.txt"):
+        stale.unlink()
+    booster_bytes, booster_gz_bytes = {}, {}
     for label in QUANTILE_LABELS:
-        text = champion.heads[label].booster_.model_to_string()
-        path = OUT / "boosters" / f"{label}.txt"
-        path.write_text(text)
-        booster_bytes[label] = len(text.encode())
+        text = champion.heads[label].booster_.model_to_string().encode()
+        compressed = gzip.compress(text, compresslevel=9, mtime=0)
+        (OUT / "boosters" / f"{label}.txt.gz").write_bytes(compressed)
+        booster_bytes[label] = len(text)
+        booster_gz_bytes[label] = len(compressed)
 
     # -- champion metadata, read and never recomputed ----------------------
     (OUT / "champion.json").write_text(
@@ -232,7 +259,7 @@ def main() -> int:
                 "local_hours": [int(v) for v in forecast["local_hour"]],
             }
         )
-    (OUT / "fixture.json").write_text(
+    fresh = (
         json.dumps(
             {
                 "source": "frozen mlflow.pyfunc champion, models/champion/",
@@ -244,6 +271,17 @@ def main() -> int:
         )
         + "\n"
     )
+    if "--refresh-fixture" in sys.argv or not COMMITTED_FIXTURE.exists():
+        COMMITTED_FIXTURE.parent.mkdir(parents=True, exist_ok=True)
+        COMMITTED_FIXTURE.write_text(fresh)
+        print(f"wrote the committed fixture {COMMITTED_FIXTURE.relative_to(ROOT)}")
+    elif COMMITTED_FIXTURE.read_text() != fresh:
+        raise SystemExit(
+            "the frozen champion no longer reproduces tests/fixtures/wasm_equivalence_fixture.json "
+            "— the model or the fixture changed. Nothing is assembled. If the change is intended, "
+            "re-run with --refresh-fixture and review the diff."
+        )
+    (OUT / "fixture.json").write_text(COMMITTED_FIXTURE.read_text())
 
     total_rows = sum(d["rows"] for d in per_day)
     fail_closed = sum(d["fail_closed_rows"] for d in per_day)
@@ -261,6 +299,7 @@ def main() -> int:
                 "browser_champion_sha256": module_digest,
                 "uncompressed_bytes": payload_bytes,
                 "booster_bytes": booster_bytes,
+                "booster_gzip_bytes": booster_gz_bytes,
                 "file_bytes": sizes,
                 "series_rows": int(len(rows)),
                 "fixture_days": len(per_day),
@@ -276,7 +315,8 @@ def main() -> int:
         + "\n"
     )
     print(f"payload: {payload_bytes:,} bytes across {len(sizes)} files")
-    print(f"  boosters: {sum(booster_bytes.values()):,} bytes")
+    print(f"  boosters: {sum(booster_bytes.values()):,} bytes as text, "
+          f"{sum(booster_gz_bytes.values()):,} gzipped at rest")
     print(f"  series:   {len(rows):,} rows")
     print(f"  fixture:  {len(per_day)} days / {total_rows} rows "
           f"({fail_closed} fail-closed) / regimes {sorted({d['regime'] for d in per_day})}")

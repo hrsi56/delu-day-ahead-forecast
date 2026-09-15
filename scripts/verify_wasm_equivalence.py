@@ -42,8 +42,12 @@ def load():
 
     read = lambda name: json.loads((PUBLIC / name).read_text())  # noqa: E731
     meta = read("champion.json")
+    import gzip
+
     boosters = {
-        label: lgb.Booster(model_str=(PUBLIC / "boosters" / f"{label}.txt").read_text())
+        label: lgb.Booster(
+            model_str=gzip.decompress((PUBLIC / "boosters" / f"{label}.txt.gz").read_bytes()).decode()
+        )
         for label in meta["quantile_labels"]
     }
     return BrowserChampion, meta, boosters, read("series.json"), read("calendar.json"), read("fixture.json")
