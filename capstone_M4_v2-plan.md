@@ -1,8 +1,8 @@
-# M4 / v2 — Regime-robust calibration
+# M4 / v2 — Regime-robust calibration, and the product feed
 
-**Status: DRAFT, awaiting owner ratification.** Authored by the Orchestrator 2026-09-15 on the
-owner's explicit instruction of the same date. Nothing in this document is in force until the owner
-ratifies it. It does not amend `capstone_V6_8.md`; it proposes a successor stage that begins after
+**Status: RATIFIED 2026-09-15 by the owner**, on four decisions recorded in §11. Authored by the
+Orchestrator on the owner's instruction of 2026-09-15. It does not amend `capstone_V6_8.md` except
+where §4 says so explicitly and the owner granted it; it is a successor stage that begins now that
 v6.8's completion definition is met.
 
 **Prerequisite, already met:** M3/CP-3 landed 2026-09-15 (`land/cp-3`), GitHub Pages is live at
@@ -18,8 +18,10 @@ v1 ships a forecaster whose intervals are correctly calibrated in the post-crisi
 shift** (0.194 against a nominal 0.95 over the August-2022 peak weeks). M4 targets that one
 measured defect. It is a **calibration-method** change, not a feature-engineering programme: the
 mechanism is that a split-conformal correction is additive while the failure is multiplicative.
-A second, explicitly secondary track adds two gate-legal data sources that improve the
-post-crisis product and, by construction, **cannot** touch the crisis regime.
+A second track adds two gate-legal data sources. **The owner ratified it as in scope on the
+grounds that the goal is a working product rather than an experiment** — and a production DE-LU
+forecaster that ignores freely available weather forecasts is not a serious product. By
+construction it **cannot** touch the crisis regime, and every surface must say so unprompted.
 
 ---
 
@@ -100,29 +102,48 @@ Candidates, in increasing order of conceptual surface. **Ties resolve upward in 
 becomes multiplicative. Candidate scale estimators, also frozen here: (a) the raw head spread
 `q̂_0.95 − q̂_0.05`; (b) a trailing rolling price volatility computed under the §5.2 boundary.
 
-**C-2 — Adaptive Conformal Inference** (Gibbs & Candès, 2021). Update α online from realized
-coverage: `α_{t+1} = α_t + γ(target − 1{y_t ∈ C_t})`. Needs the realized outcome of delivery day
-D−1 at the D origin — which **is** available and does not violate §5.2, but must be proved with the
-same masking control, not assumed. `γ` is selected on folds {1,2,4,5} from a frozen grid.
+**C-2 — Adaptive Conformal Inference** (Gibbs & Candès, 2021). Update α online from realised
+coverage: `α_{t+1} = α_t + γ(target − 1{y_t ∈ C_t})`. `γ` is selected on folds {1,2,4,5} from a
+frozen grid. The realisation it reads is **D−2's**, not D−1's — see the lag note below.
 
-**C-3 — Mondrian / regime-conditional conformal.** Separate thresholds per regime taxon. **Listed
-for completeness and expected to be rejected** under §3 rule 6, because the regime taxonomy is
-defined by dates we chose knowing the price history. Included so its rejection is recorded rather
-than silent.
+**C-3 — Mondrian / regime-conditional conformal. REJECTED 2026-09-15, before any run, and not
+implemented.** Separate thresholds per regime taxon would require a regime taxonomy, and ours is
+defined by dates chosen *after* seeing the price history — exactly what §3 rule 6 forbids.
+Implementing a method already committed to rejection is wasted effort; the rejection is the
+deliverable. It is recorded here so the boundary is visible rather than silent.
 
 **Bar for Track 1:** the fixture discipline v1 established carries over intact — the `n_cal=20`
 one-based-rank fixture must still reproduce `{20,19,17,11}` → `Q={8,7,5,−1}` for the unscaled path,
 and the scaled path gets its own exact fixture before it is used. Isotonic remains last. Zero
 crossings remains the one hard gate.
 
-**Governance dependency.** `capstone_V6_8.md` §13 excludes sequential conformal (EnbPI / SPCI) and
-states in its own words that *"Reintroducing sequential conformal work would require a new
-owner-ratified amendment."* **C-2 is inside that exclusion. Ratifying this document is that
-amendment.** C-1 and C-3 are not excluded by §13 and need no amendment.
+**Governance dependency — GRANTED.** `capstone_V6_8.md` §13 excludes sequential conformal
+(EnbPI / SPCI) and states in its own words that *"Reintroducing sequential conformal work would
+require a new owner-ratified amendment."* **C-2 is inside that exclusion, and the owner granted the
+amendment on 2026-09-15.** It is scoped to C-2 in this stage and to nothing else.
+
+**Why both C-1 and C-2 run, rather than the simpler one alone.** They fail differently, and that is
+the point. C-1 assumes residual magnitude scales with price level — a modelling assumption that can
+be wrong. C-2 assumes nothing about the mechanism; it watches realised coverage and corrects. Run
+C-1 alone and a null result is uninterpretable: you cannot tell whether the calibration is
+unfixable or whether you guessed the wrong mechanism. Running both makes the experiment
+informative in either direction.
+
+**C-2's feedback lag is two delivery days, and it is structural.** At the 12:00 CET D−1 origin,
+delivery day D−1 is still in progress, so the most recent *fully observed* day is D−2. No amount of
+accumulated history changes this — it is a property of the forecast geometry, not of data
+availability. It is also not a problem: the ACI update reads the most recent *available*
+realisation, and a two-day lag makes adaptation slightly slower, nothing more. **It must be proved
+with the same masking control as every other boundary in this project, not assumed.**
 
 ---
 
-## 5. Track 2 — data (secondary; does not touch the crisis)
+## 5. Track 2 — data (IN SCOPE; does not touch the crisis)
+
+**Ratified in on 2026-09-15.** The owner's ground: *the goal now is a working product, not
+experiments and not research* — and a production DE-LU forecaster that ignores freely available,
+gate-legal weather forecasts is not a serious product. That is correct on the merits, and the
+Orchestrator's earlier "defer it" recommendation undersold it.
 
 **Say this on every surface, unprompted:** neither source reaches the crisis regime. This track
 improves the product that would actually be deployed. It is not a crisis fix and must never be
@@ -157,6 +178,14 @@ confirmatory-class number in the project. v2 needs its own, on data that does no
 3. **Wait.** Accumulate new delivery days past the v1 snapshot cutoff of 2026-09-06.
 4. Pull a fresh snapshot, apply a one-delivery-day embargo, evaluate **exactly once**.
 
+**There is no usable buffer to shorten this with, and the date already assumes we use every day
+that accrues.** The question was asked and checked rather than assumed. The v1 snapshot is
+*fully consumed* through 2026-09-06 — fold_5 → embargo A → final calibration → embargo B → holdout
+leaves nothing untouched inside it. What is genuinely new is the days since the v1 holdout ended:
+**9 as of 2026-09-15**, fewer once publication lag is applied. 90 new delivery days starting
+2026-09-07 completes **2026-12-05**, which is where the target date came from. The accrual is
+already priced in; there is nothing to recover.
+
 **Minimum credible window — computed from v1's own holdout, not guessed.** Day-level coverage
 standard deviation 0.1149; day-level effective sample size 76.7 of 90 (dependence inflation 1.17×):
 
@@ -175,6 +204,18 @@ footing; it gives ±3.8 pp on coverage; and it reaches 80 % power at \|d\| ≥ 0
 
 **Pre-registered limitation, stated now:** a pinball effect smaller than \|d\| ≈ 0.26 **will not be
 detectable** at this window, and the report will say so rather than reading a null as a tie.
+
+**Two arms are frozen, not one — this is how Track 2 enters without confounding the result.**
+Both tracks would otherwise land in the same one-shot window, and a joint improvement could not be
+attributed to either. So **two artifacts are frozen before the wait and both are evaluated on the
+same window**: `v2-calibration-only` (Track 1 alone) and `v2-full` (Track 1 + Track 2). That is one
+extra evaluation of a pre-frozen artifact, not a second holdout, and it is pre-registered here.
+
+- **Primary endpoint:** interval coverage and pinball, `v2-calibration-only` vs v1. This is the
+  question the stage exists to answer.
+- **Secondary endpoint:** point accuracy and pinball, `v2-full` vs `v2-calibration-only`. This is
+  the data track's own contribution, isolated.
+- `v2-full` ships if it does not degrade the primary endpoint. Attribution survives either way.
 
 **Earliest possible test date: 2026-12-06** — 90 delivery days past 2026-09-06, plus the embargo day
 and publication lag. Between ratification and that date the stage is in *built-but-untested* status,
@@ -215,12 +256,18 @@ frame:
 | | | Bar |
 |---|---|---|
 | **CP-4** | Calibration method | All §4 candidates implemented with exact fixtures; selection on folds {1,2,4,5}; full table including fold_3 for every candidate including losers; §3 rule-5 falsification evaluated and reported; zero crossings; positive controls on every negative assertion |
-| **CP-5** | Data arms *(optional; skippable without affecting CP-4)* | Open-Meteo fixed-lead-time ingest with a §5.2 proof; planned-outage ingest with its vintage assumption disclosed; two-arm rule on folds {4,5}; explicit non-coverage statement on every surface |
-| **CP-6** | Freeze and wait | v2 artifact frozen and fingerprinted; interim status published per §7; nothing evaluated |
-| **CP-7** | One-shot evaluation | ≥ 2026-12-06; fresh snapshot; one embargo day; opened exactly once; v1 vs v2 on equal footing; the §6 power limitation stated |
+| **CP-5** | Data arms — **IN SCOPE, not optional** | Open-Meteo fixed-lead-time ingest with a §5.2 proof; planned-outage ingest with its vintage assumption disclosed; two-arm rule on folds {4,5}; explicit non-coverage statement on every surface |
+| **CP-6** | Freeze and wait | **Both** artifacts frozen and fingerprinted — `v2-calibration-only` and `v2-full`; interim status published per §7; nothing evaluated |
+| **CP-7** | One-shot evaluation | ≥ 2026-12-06; fresh snapshot; one embargo day; opened exactly once; primary and secondary endpoints per §6, v1 vs v2 on equal footing; the §6 power limitation stated |
 
 Each checkpoint follows the existing execution contract: one brief in, one packet out, one fresh
 Integration Critic, `PASS`/`BLOCKED`/`INCOMPLETE`, owner-authored landing.
+
+**No landing without a verdict that binds the final candidate.** CP-3B landed with its item 6
+unmet — recorded at `docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md` — because its review was
+cut off twice. **That is not a precedent.** CP-4 decides whether a calibration method works, which
+is precisely where an independent verdict is the substance rather than the bookkeeping. Every brief
+in this stage says so explicitly.
 
 ---
 
@@ -230,17 +277,49 @@ Integration Critic, `PASS`/`BLOCKED`/`INCOMPLETE`, owner-authored landing.
 - **Not a point-forecast programme.** The MAE deficit is a development-fold artifact the holdout
   contradicts; it is not the target.
 - **Not a fuel-price layer.** Re-closed on evidence 2026-09-15.
-- **Not a crisis fix from data.** Track 2 cannot reach 2022 and must never imply it can.
+- **Not a crisis fix from data.** Track 2 cannot reach 2022 and must never imply it can. It is in scope as *product*, and only as product.
 - **Not a replacement for v1.** v1 ships, stays live, and keeps its failure documented.
 - **Not a licence to re-open v1's holdout.** It is spent permanently.
 
 ---
 
-## 11. Open questions for the owner
+## 11. The four decisions, as taken
 
-1. **Ratify?** C-2 (ACI) requires the §13 amendment; C-1 and C-3 do not. Ratifying this document
-   grants it. Declining C-2 still leaves a coherent stage.
-2. **Is CP-5 in or out?** It is genuinely optional and adds real ingest work for a bounded,
-   post-crisis-only gain.
-3. **Does the 2026-12-06 wait stand?** The alternative is a shorter window with a wider CI and a
-   weaker DM, stated as such. My recommendation is that it stands.
+Recorded 2026-09-15. Each was put to the owner with the Orchestrator's recommendation; where the
+two differ, both are stated.
+
+| # | Decision | Taken | Orchestrator's recommendation |
+|---|---|---|---|
+| 1 | **Ratify, and include C-2 (ACI)** — granting the §13 sequential-conformal amendment, scoped to C-2 in this stage | **Yes** | Same. C-1 alone makes a null result uninterpretable. |
+| 1b | **C-3 — document the rejection, do not implement** | **Yes** | Same. |
+| 2 | **Track 2 / CP-5 is IN scope** | **Yes** | **Differed.** The Orchestrator recommended deferring it to avoid confounding one one-shot window. The owner ratified it in, on the ground that the goal is a working product rather than an experiment. **That ground is correct, and it is answered rather than overridden:** §6 freezes two artifacts and pre-registers a primary and a secondary endpoint, so attribution survives. |
+| 3 | **90 delivery days; 2026-12-06 stands** | **Yes** | Same. |
+| 4 | **CP-3B item 6: close it, recorded as NOT COMPLETED** | **Yes** | Same. `docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md`. |
+
+**One owner premise corrected before it entered the plan.** The proposal was that accumulated buffer
+days could remove C-2's two-day requirement. Two different things had been conflated:
+
+- **C-2's two-day lag is not a waiting period and no buffer can shorten it.** At the 12:00 CET D−1
+  origin, delivery day D−1 is still in progress, so the most recent fully observed day is D−2. That
+  is forecast geometry, not data availability. It is also harmless: the update reads the most recent
+  available realisation and adapts slightly more slowly.
+- **The buffer is real but small, and already counted.** The v1 snapshot is fully consumed through
+  2026-09-06; 9 new days exist as of 2026-09-15. 90 new days from 2026-09-07 completes 2026-12-05 —
+  which is where the target date came from in the first place.
+
+The owner's conclusion — *we are not waiting idly* — is right. Build, selection and freeze all run
+during the accrual. What does not happen is the window getting shorter.
+
+---
+
+## 12. Changes from the 2026-09-15 draft
+
+- Status: DRAFT → **RATIFIED**. C-2's §13 amendment **granted**.
+- C-3 moved from *"expected to be rejected"* to **rejected before any run, not implemented**.
+- Track 2 moved from *optional/secondary* to **in scope**, with the owner's product rationale stated.
+- §6 gained the **two-arm freeze** (`v2-calibration-only`, `v2-full`) with primary and secondary
+  endpoints, which is what lets Track 2 be in scope without confounding the one-shot window.
+- §6 gained the **buffer arithmetic**, answering the accrual question with numbers.
+- §4 gained the **feedback-lag note** and corrected the draft's claim that C-2 reads D−1's outcome.
+- §9 gained **no-landing-without-a-binding-verdict**, with CP-3B's unmet item 6 named as the
+  non-precedent it is.
