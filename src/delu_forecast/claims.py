@@ -147,7 +147,7 @@ ATTRIBUTION = (
 #: that cannot ship its own inputs is not reproducible.
 LICENSING = (
     "Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the "
-    "trained champion is a derived work of it. See LICENSE."
+    "trained champion is a derived work of it. See LICENSE and DATA-LICENSE.md."
 )
 
 #: §9.3: "A second one-liner notes the floor change to -600 EUR/MWh from 2026-05-28".
