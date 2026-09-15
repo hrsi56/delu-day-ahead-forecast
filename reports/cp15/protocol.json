@@ -1,0 +1,28 @@
+{
+  "base_sha": "4039ce24150b36ea233b043061e68eb2be78cbbe",
+  "check": "calendar support for exact 728/84-day windows; no model fits, no losses, no ranking",
+  "checkpoint": "cp-15",
+  "eligibility": "inherited base features all non-null and target finite; compare original saved development dates and targets exactly",
+  "evidence_class": "development_post_selection",
+  "future_protocol_choices": "All modelling, quantile, validation, seeds and comparison decisions remain unexecuted; a complete comparison protocol must be committed before any comparison if this blocker is resolved.",
+  "input_sha256": {
+    "AGENTS.md": "4a590cea7fd29f2b230a203f492f179318d50d825aed3d68918b3f7ba932bbee",
+    "capstone_v21.md": "62e84ceb4f35190c89faffaee4e8af01c5b3c81f9d78f9f3f68556e25f360065",
+    "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+    "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+    "data/source_manifest.json": "69bc909326b164b2af8d23307edf180d17193fa18c0faf360549761e2ed7f094",
+    "docs/track-b/cp-15-brief.md": "0853a3578c886bb11d26fae4ca55b1aef031f3f3558da8ea7ce12ac5b3e72efc",
+    "pyproject.toml": "c968b012aa6bda05d5515f4ed262c0e26da361e8d74eaaa73e2278a24bf03557",
+    "reports/cp10/lineage.json": "8fe6477c3f62c71f73de64c77b90d5a1cd44b06f3ae95990eb05b12256433764",
+    "reports/cp10/protocol.json": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5",
+    "reports/cp2/development_baselines.parquet": "47a3186c6a953506313431cbe980650f9e1f76f5f2c84bedd3c2ca2f8e378f69",
+    "reports/cp2/development_predictions.parquet": "563ad94d2b57dc8792451f79ebf60a1669de954ef34717e644b5b9c6904fbdf6",
+    "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+  },
+  "minimum_training_row_sufficiency": "NOT FROZEN: missing leading calendar support requires owner resolution before comparison protocol is completed",
+  "no_comparison_policy": "never shorten the 728-day window, drop fold 1, or report scores from a reduced candidate set",
+  "plan": "capstone_v21.md",
+  "snapshot_predicate": "delivery_date <= partitions.eda_cutoff (2026-04-07); selected columns only before materialization",
+  "stage": "preflight_only_no_comparison_authorized_by_this_protocol",
+  "warmup_bound": "at least 28 complete issued delivery days ending no later than D-2; earliest possible issuance is D-29, earlier if days are incomplete"
+}
