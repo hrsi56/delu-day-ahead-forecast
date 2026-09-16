@@ -45,7 +45,7 @@ No v2 policy is frozen; the 90-day clock has not started.**
 | **M3 / CP-3** | Showcase and release | `land/cp-3` · `evidence/cp-3` |
 | **M3.5 / CP-3B** | WASM showcase on a Static Space | `land/cp-3b` · `evidence/cp-3b` |
 | **REL-1** | Publish | **complete** — all four conditions met |
-| **CP-10** | M4 calibration, original `capstone_v20.md` §9 | **Engineering PASS accepted; inherited work landed with CP-15; primary dirty branch retained for pending orchestration edits** |
+| **CP-10** | M4 calibration, original `capstone_v20.md` §9 | **Engineering PASS accepted; inherited work landed with CP-15; checkpoint branch retired; pending edits retained on `codex/orchestration-pending`** |
 | **CP-11 → CP-14 (old v20)** | Retired future sequence | **never started; superseded by v21** |
 | **CP-15** | Adaptive forecasting feasibility, v21-r1 §12 | **LAND complete; Engineering PASS; product NOT_DEMONSTRATED; A1 best challenger, none qualified; branch reclaimed** |
 | **CP-16 → CP-19** | v21 §10 direction | **not authorized; complete future bars required** |
@@ -83,6 +83,17 @@ used because pickle bytes were not stable. These v1 findings do not preselect CP
 ---
 
 ## 2. What happens next
+
+**CP-10 branch cleanup, 2026-09-16:** the owner requested cleanup after LAND. All 13
+CP-10 experiment paths match main exactly, and its complete commit chain is reachable from
+`evidence/cp-15`. The old `gauntlet/cp-10` name is retired. The primary checkout remains at
+`4039ce24150b36ea233b043061e68eb2be78cbbe`, now on `codex/orchestration-pending`, solely to
+retain its uncommitted orchestration/docs/Q&A work. Renaming preserved all 19 pending files
+byte-for-byte before these operational updates. Historical references below to the CP-10
+branch describe the former name; use `evidence/cp-15` for evidence and the new branch for
+pending work. No checkout or pending content was deleted. This reduces obsolete checkpoint
+names, not the number of checkouts; consolidating the pending work remains separate.
+
 
 **Current disposition — CP-15 LAND, owner-authorized 2026-09-16.** The owner explicitly
 permitted commit, merge and push for this landing. This task-specific instruction authorizes
@@ -680,6 +691,10 @@ This file no longer narrates it. It is preserved and addressable:
   remain owner-only. CP-15 may package exact supplied AGENTS/v21/brief bytes only, under v21 §13.
 
 ## 9. Session Log — newest first
+
+- **CP-10 cleanup, 2026-09-16:** verified every inherited CP-10 path matches main and its
+  evidence chain is tagged; retired `gauntlet/cp-10` by renaming it
+  `codex/orchestration-pending`. Preserved HEAD, all pending files and all three checkouts.
 
 - **CP-15 LAND, 2026-09-16:** owner explicitly authorized landing and publication of the
   completed experiment, including inherited CP-10 work. Squashed the exact reviewed tree

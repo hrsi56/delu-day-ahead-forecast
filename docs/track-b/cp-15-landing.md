@@ -41,7 +41,9 @@ evidence tag, ref reconciliation and preservation of pending work.
 - Current main checkout: `/Users/djourno/Downloads/PJM-main-landing`, created for this landing.
   Read current CP-15 reports/evidence there. Historical briefs/verdicts keep original execution
   paths and branch names as historical facts; retrieve their exact tree through `evidence/cp-15`.
-- Primary `/Users/djourno/Downloads/PJM` on `gauntlet/cp-10` remains dirty and preserved.
+- Primary `/Users/djourno/Downloads/PJM` remains dirty and preserved. After the owner’s
+  cleanup request, `gauntlet/cp-10` was renamed `codex/orchestration-pending`; its HEAD and
+  pending files were preserved. CP-10 history remains reachable through `evidence/cp-15`.
   Its CP-10 code is included in this landing; its pending orchestration/docs/Q&A work is separate.
 - `/Users/djourno/Downloads/PJM-orchestrator-v20-review` on `codex/v20-plan-corrections` remains
   dirty and preserved. Neither retained branch was reset, deleted or published.
