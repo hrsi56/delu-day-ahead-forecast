@@ -1,0 +1,50 @@
+{
+  "artifact_sha256": {
+    "history-windows.csv": "8873a90ff01d7b9d4784e6722235781da30f14f6bcdd12e27d3f2bd4bac26a1d",
+    "preflight.json": "3fb04558c1cec34d22204ba76723c834fc0c4de00747e9423a72fd9a026fef08"
+  },
+  "bootstrap": "not run; no CP-15 loss vectors",
+  "commands": [
+    {
+      "command": "uv sync --frozen --offline",
+      "exit_code": 0,
+      "observed": "117 dependencies installed from local cache; Python 3.13.15; no dependency files modified"
+    },
+    {
+      "command": "uv run --frozen pytest -q tests/cp15",
+      "exit_code": 0,
+      "observed": "6 passed in 0.02s"
+    },
+    {
+      "command": "uv run --frozen python scripts/cp15_forecasting.py --preflight --output reports/cp15",
+      "exit_code": 2,
+      "observed": "BLOCKED; NOT_DEMONSTRATED; 0 fits"
+    },
+    {
+      "command": "/usr/bin/time -l uv run --frozen python scripts/cp15_forecasting.py --preflight --output /tmp/cp15-preflight-reproduction",
+      "exit_code": 2,
+      "maximum_rss_bytes": 188973056,
+      "observed": "BLOCKED; NOT_DEMONSTRATED; 0 fits",
+      "wall_seconds": 19.14
+    },
+    {
+      "command": "cmp reports/cp15/preflight.json /tmp/cp15-preflight-reproduction/preflight.json && cmp reports/cp15/history-windows.csv /tmp/cp15-preflight-reproduction/history-windows.csv",
+      "exit_code": 0,
+      "observed": "both byte-identical"
+    },
+    {
+      "command": "uv run --frozen python - <<'PY'\nfrom pathlib import Path\nimport runpy\nns = runpy.run_path('scripts/build_wasm_payload.py', run_name='cp15_test_setup')\nns['main'].__globals__['MANIFEST'] = Path('/tmp/cp15-payload-manifest.json')\nraise SystemExit(ns['main']())\nPY",
+      "exit_code": 0,
+      "observed": "15363807 payload bytes; 54 days / 1296 fixture rows, 4 fail-closed; ignored app/public populated; manifest redirected"
+    },
+    {
+      "command": "uv run --frozen pytest -q",
+      "exit_code": 0,
+      "observed": "223 passed in 44.11s (217 inherited + 6 CP-15 preflight tests)"
+    }
+  ],
+  "core_fits": 0,
+  "neural_probe": "not run; access/resources not tested",
+  "preflight_protocol_commit": "884261d30284877092eadda9bfb6704f0ec1e890",
+  "regression_purpose": "existing frozen behaviour only; no new fitting, tuning, selection or holdout score analysis"
+}

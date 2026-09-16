@@ -1,0 +1,186 @@
+{
+  "stage": "complete candidate validation; fresh independent Integration is recorded only after candidate commit",
+  "core_python": "3.13.15 (main, Aug 25 2026, 13:50:12) [Clang 22.1.3 ]",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "core_packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "pyarrow": "25.0.1",
+    "scikit-learn": "1.9.1",
+    "lightgbm": "4.7.0",
+    "pytest": "9.1.1"
+  },
+  "pre_output_regression": {
+    "command": "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen pytest -q --ignore=tests/cp15/test_saved_evidence.py",
+    "exit_code": 0,
+    "passed": 278,
+    "seconds": 75.26,
+    "log": "data/cp15-pre-output-regression.log",
+    "log_sha256": "5b6c300b1e7116e3f903866a18efa89a8b21b476ff0b7ea45c2ed08a6277f0ed"
+  },
+  "comparison_queues": [
+    {
+      "folds": [
+        "fold_1",
+        "fold_3",
+        "fold_5"
+      ],
+      "status": "completed",
+      "exit_code": 0
+    },
+    {
+      "folds": [
+        "fold_2",
+        "fold_4"
+      ],
+      "status": "completed",
+      "exit_code": 0
+    }
+  ],
+  "comparison_seeds": {
+    "models": 42,
+    "bootstrap": 15042
+  },
+  "probe_import": {
+    "builder_artifact_hashes_verified": 21,
+    "core_environment_boundary_tests_passed": 2,
+    "lead_external_reproduction_exit_code": 0,
+    "all_four_output_digests_identical": true
+  },
+  "numerical_repairs": "implementation-notes.md; unchanged preregistered protocol; failures not accepted",
+  "pre_output_independent_checker": {
+    "command": "uv run --frozen pytest -q tests/cp15/test_saved_evidence.py",
+    "exit_code": 0,
+    "passed": 47,
+    "skipped_missing_production_outputs": 5,
+    "seconds": 3.95
+  },
+  "early_independent_fit_lineage_check": {
+    "exit_code": 0,
+    "method": "tests/cp15/test_saved_evidence.py original fixture plus check_fit_records on cached fits.json, independently reconstructed eligible positions and 168-hour normalization",
+    "origins": [
+      {
+        "day": "2020-06-02",
+        "model_records": 74,
+        "long_history_start": "2019-01-01"
+      },
+      {
+        "day": "2021-03-01",
+        "model_records": 74,
+        "long_history_start": "2019-03-04"
+      }
+    ],
+    "cache_fingerprint": "9967a0d99c94a258701ecb8ab0967e2eb59c69c28a85cbf9e402322b3d5dde0a",
+    "scored": false
+  },
+  "inherited_ignored_regression_payload": {
+    "path": "app/public",
+    "status": "existing bytes preserved; byte-identical copies required for detached review checkout",
+    "sha256": {
+      "app/public/boosters/p025.txt.gz.b64": "85ae2592fe697836189827512b290a96978cf3d5b00947900e93ac01a2e2d315",
+      "app/public/boosters/p05.txt.gz.b64": "d5799cf048897c3f7eb2edaa0df6e5607adb36fbe94e3c664818beec768158b6",
+      "app/public/boosters/p10.txt.gz.b64": "3dca55ab58a42c8598312642bd9b25c39ba9587486bd2e4269a6386fed737d13",
+      "app/public/boosters/p25.txt.gz.b64": "ced00cc3f42d5e6c7523c085e32a0a76da315c03805698c7f9f683e178a62c7e",
+      "app/public/boosters/p50.txt.gz.b64": "8899b82d302e9baafeb45ffe0c2d2ea744eadecbdc1751ee1068fb60e03fc620",
+      "app/public/boosters/p75.txt.gz.b64": "7e359cce866231c25e67b60050b4e84740f71a8229f994c4d7f6b8982b5bfb30",
+      "app/public/boosters/p90.txt.gz.b64": "16eb7ca1a1cb2d7f8ec59d7f681a274297686405391ce25d8124410e002d6d33",
+      "app/public/boosters/p95.txt.gz.b64": "90a5a5b60209ac77186dc803002d1cd072f72df67c9c818468bb9a260be458a6",
+      "app/public/boosters/p975.txt.gz.b64": "e48e332acf293a690569073d0872ec540c111ee142be8fbb3210bf700f3ccec9",
+      "app/public/browser_champion.py": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
+      "app/public/calendar.json": "eb20b64a50c19eb8bd9ff40284375eff4e4b4985a1cc8a53344b761a5dad1354",
+      "app/public/champion.json": "71e76f7fe2c7bf6d681b67b698d7603793a691e2a016562de33061089b961071",
+      "app/public/claims.json": "ff96b781f88cd5b27f0c2d95c28683704f248eee1f60b46421271034869ef080",
+      "app/public/fixture.json": "9673ebd3d6416895ed96b932a90ee573cadce798b98c0857f3f28df4195d7510",
+      "app/public/series.json": "91c12ed636865520a3a6beb02bb6ed567390bc88334ca53241b66eeff05af656"
+    }
+  },
+  "lead_production_reproduction": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python -m cp15.reproduce_fit --fold fold_1 --day 2020-07-01 --causal-controls --output /tmp/cp15-lead-fit-control-2020-07-01.json",
+      "exit_code": 0,
+      "result": "reproductions/lead-fit-2020-07-01.json",
+      "maximum_original_prediction_delta": 0,
+      "all_74_model_records_match": true,
+      "causal_mask_maximum_delta": 0,
+      "all_five_fitted_policies_respond_to_D_minus_1_control": true
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python -m cp15.reproduce_fit --fold fold_3 --day 2022-08-15 --output /tmp/cp15-lead-fit-control-2022-08-15.json",
+      "exit_code": 0,
+      "result": "reproductions/lead-fit-2022-08-15.json",
+      "maximum_original_prediction_delta": 0,
+      "all_74_model_records_match": true,
+      "seconds": 46.36091558399494
+    }
+  ],
+  "fold_1_saved_replay": {
+    "exit_code": 0,
+    "result": "reproductions/fold-1-independent-audit.json",
+    "method": "Independent check_feedback, check_reconstructed_intervals and check_fit_records helpers on all fold_1 saved Parquet artifacts; no CP15 scoring or model routines used"
+  },
+  "market_boundary_control": {
+    "command": "uv run --frozen pytest -q tests/cp15/test_pipeline.py -k market_boundary",
+    "exit_code": 0,
+    "passed": 1,
+    "seconds": 1.23
+  },
+  "host_sysctl": {
+    "cpu": "Apple M3",
+    "physical_memory_bytes": "17179869184",
+    "logical_cpus": "8"
+  },
+  "policy_definition_controls": {
+    "synthetic_tests": 8,
+    "synthetic_test_exit_code": 0,
+    "completed_fold_checks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "all_completed_checks_exit_code": 0,
+    "checks": "Independent B0 calendar-lag lookup; A3 and A5 component arithmetic; exact every issued hour including warm-up"
+  },
+  "preserved_implementation_logs": {
+    "reports/cp15/execution/initial-warmup-fold-1.log": {
+      "source": "data/cp15-fold1-run.log",
+      "sha256": "beeb3d1ed4b19e549659c0bde01238569793c357a4d55e4de6c6b89b434f87e8"
+    },
+    "reports/cp15/execution/initial-warmup-fold-2.log": {
+      "source": "data/cp15-fold2-run.log",
+      "sha256": "79d33d7db581918c3744d9cf72fee2b8f5c930ec9a70c96f005b16a096300d93"
+    },
+    "reports/cp15/execution/convergence-diagnostic.log": {
+      "source": "data/cp15-convergence-diagnostic.log",
+      "sha256": "fe46697598399d8e4c0e6ffa6a6fed120b4251d23598766ecf9ce0be629a0237"
+    },
+    "reports/cp15/execution/convergence-repaired.log": {
+      "source": "data/cp15-convergence-repaired.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/cp15/execution/pre-output-regression.log": {
+      "source": "data/cp15-pre-output-regression.log",
+      "sha256": "5b6c300b1e7116e3f903866a18efa89a8b21b476ff0b7ea45c2ed08a6277f0ed"
+    }
+  },
+  "scoring_and_report": {
+    "commands": [
+      "OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen python scripts/cp15_forecasting.py --score",
+      "uv run --frozen python -m cp15.reporting"
+    ],
+    "exit_code": 0,
+    "prediction_rows": 96723,
+    "original_hours_per_arm": 10747,
+    "policy_fold_rows": 45,
+    "bootstrap_contrasts": 240
+  },
+  "final_regression": {
+    "command": "CP15_REQUIRE_SAVED_EVIDENCE=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 OMP_NUM_THREADS=4 uv run --frozen pytest -q",
+    "exit_code": 0,
+    "passed": 339,
+    "skipped": 0,
+    "seconds": 107.97,
+    "log": "reports/cp15/execution/final-regression.log",
+    "log_sha256": "2efa3360101a1ecbab94e86c0212c3bc06e00f294753d5a5073d49465ee4727f"
+  }
+}

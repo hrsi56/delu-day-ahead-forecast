@@ -1,0 +1,65 @@
+{
+  "attribution": "SMARD.de, Bundesnetzagentur, CC BY 4.0; data/source_manifest.json and data/README.md retain source-level attribution; no new data pull.",
+  "external_writes": 0,
+  "folds": [
+    {
+      "calendar_evaluation_days": 90,
+      "calibration_rows": 1440,
+      "eligible_evaluation_days": 90,
+      "evaluation_rows": 2160,
+      "fold": "fold_1",
+      "v1_replay_max_abs_difference": 0.0
+    },
+    {
+      "calendar_evaluation_days": 90,
+      "calibration_rows": 1437,
+      "eligible_evaluation_days": 90,
+      "evaluation_rows": 2159,
+      "fold": "fold_2",
+      "v1_replay_max_abs_difference": 0.0
+    },
+    {
+      "calendar_evaluation_days": 90,
+      "calibration_rows": 1436,
+      "eligible_evaluation_days": 90,
+      "evaluation_rows": 2160,
+      "fold": "fold_4",
+      "v1_replay_max_abs_difference": 0.0
+    },
+    {
+      "calendar_evaluation_days": 90,
+      "calibration_rows": 1440,
+      "eligible_evaluation_days": 90,
+      "evaluation_rows": 2156,
+      "fold": "fold_5",
+      "v1_replay_max_abs_difference": 0.0
+    },
+    {
+      "calendar_evaluation_days": 90,
+      "calibration_rows": 1440,
+      "eligible_evaluation_days": 88,
+      "evaluation_rows": 2112,
+      "fold": "fold_3",
+      "v1_replay_max_abs_difference": 0.0
+    }
+  ],
+  "holdout_evaluations": 0,
+  "input_sha256": {
+    "capstone_v20.md": "0902a70151cf2a36ef609c35effe49cce725a63eb8ba78478c43421c0507bda4",
+    "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+    "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+    "data/source_manifest.json": "69bc909326b164b2af8d23307edf180d17193fa18c0faf360549761e2ed7f094",
+    "reports/cp2/catalog_selection.json": "12622076907bebadc55b901def44f4257a3b5308edd7f9e013845ccb29bdd349",
+    "reports/cp2/development_calibration_predictions.parquet": "ebadd93a291157b3932dacd2d163978511fd900afc0f6fb48bc9e39ed241ae49",
+    "reports/cp2/development_predictions.parquet": "563ad94d2b57dc8792451f79ebf60a1669de954ef34717e644b5b9c6904fbdf6",
+    "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+  },
+  "latest_price_timestamp": "2026-04-07 21:00:00+00:00",
+  "new_model_fits": 0,
+  "price_rows_read": 63695,
+  "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5",
+  "source_sha256": {
+    "scripts/cp10_calibration.py": "48a614fe9e4c9771f812baf4dddaa95708c9e3e202734a5e94c5543bc2abb33b",
+    "src/delu_forecast/calibration_comparison.py": "ad857ae6319e41770470d3eaa27558c42ebe876ca7af4abdbfca841429d6089d"
+  }
+}

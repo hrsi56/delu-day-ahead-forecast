@@ -1,0 +1,51 @@
+{
+  "fold": "fold_3",
+  "day": "2022-08-15",
+  "production_protocol_unchanged": true,
+  "uncached": true,
+  "comparisons": {
+    "B0": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "B2": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "B3": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A1": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A2": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A4": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A3": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    },
+    "A5": {
+      "hours": 24,
+      "maximum_absolute_difference": 0.0
+    }
+  },
+  "model_records_matched": 74,
+  "identity_fields_matched": [
+    "history_start",
+    "history_end_exclusive",
+    "n_train",
+    "train_rows_sha256",
+    "train_target_sha256",
+    "normalization_rows_sha256",
+    "model_sha256"
+  ],
+  "elapsed_seconds": 46.36091558399494
+}

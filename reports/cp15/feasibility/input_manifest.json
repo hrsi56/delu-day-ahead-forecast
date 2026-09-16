@@ -1,0 +1,27 @@
+{
+  "delivery_day": "2020-04-01",
+  "partition": "fold_1.proper_training",
+  "origin_utc": "2020-03-31T11:00:00Z",
+  "origin_convention": "D-1 noon fixed CET UTC+01:00",
+  "context_first_utc": "2020-03-24T22:00:00+00:00",
+  "context_last_utc": "2020-03-31T21:00:00+00:00",
+  "price_boundary_exclusive_utc": "2020-03-31T22:00:00+00:00",
+  "context_hours": 168,
+  "forecast_first_utc": "2020-03-31T22:00:00+00:00",
+  "forecast_end_exclusive_utc": "2020-04-01T22:00:00+00:00",
+  "forecast_hours": 24,
+  "context_includes_DST_transition": true,
+  "load_provenance": "Inherited A65 known-future assumption from protocol; snapshot does not prove original issue vintage.",
+  "price_availability": "D-1 day-ahead prices were published at the previous auction; D price never read.",
+  "external_input": "load_forecast_mw, historical context and 24 known-future values via future_df",
+  "prohibited_columns_materialized": [],
+  "scored": false,
+  "attribution": "Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de \u2014 CC BY 4.0.",
+  "input_sha256": {
+    "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+    "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+    "reports/cp15/protocol.json": "051e4b7cdd1d5db68b26e6d6bc17333c4055c4bcbe5ea693d1d647fe355ccdd6",
+    "reports/cp15/feasibility/context.csv": "30ea75f943effa86c6b1f15b081ac46998ba4f1f6cc115df7ea2fa9b5e33155d",
+    "reports/cp15/feasibility/future_load.csv": "309ac82240296f96632f02ddf741a9f36318e547b221ddee96305106ce252aa3"
+  }
+}

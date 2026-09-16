@@ -1,0 +1,28 @@
+{
+  "cache_hits": 0,
+  "central_fingerprint": "9967a0d99c94a258701ecb8ab0967e2eb59c69c28a85cbf9e402322b3d5dde0a",
+  "evaluation_end": "2025-07-29",
+  "evaluation_start": "2025-05-01",
+  "fold": "fold_4",
+  "input_sha256": {
+    "AGENTS.md": "4a590cea7fd29f2b230a203f492f179318d50d825aed3d68918b3f7ba932bbee",
+    "capstone_v21.md": "44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3",
+    "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+    "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+    "docs/track-b/cp-15-resumption-brief.md": "b6a24e40f13f28ad0b459395f6969d29fa6ebc86b5d688fa8ed246475556b280",
+    "reports/cp2/development_baselines.parquet": "47a3186c6a953506313431cbe980650f9e1f76f5f2c84bedd3c2ca2f8e378f69",
+    "reports/cp2/development_predictions.parquet": "563ad94d2b57dc8792451f79ebf60a1669de954ef34717e644b5b9c6904fbdf6",
+    "src/delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+    "src/delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+    "src/delu_forecast/model.py": "fc0d8de59a5dee959e6c697e1f84cfedf0a35ed87df0c7339f4b1b76ae3e2809",
+    "src/delu_forecast/schema.py": "0278537f4f112cb92346ae4169a623eb6df5863bd41dc4bf02737f249b771085",
+    "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+  },
+  "logical_fit_calls": 44104,
+  "max_rss_bytes": 682229760,
+  "model_records": 9016,
+  "origin_count": 122,
+  "protocol_sha256": "051e4b7cdd1d5db68b26e6d6bc17333c4055c4bcbe5ea693d1d647fe355ccdd6",
+  "runtime_seconds": 2664.4563549579907,
+  "warmup_start": "2025-03-30"
+}

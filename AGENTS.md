@@ -8,11 +8,16 @@
 > **The locked set:**
 >
 > - **This rulebook:** `AGENTS.md`, `CLAUDE.md`, `engineering-role.md`, `orchestrator-role.md`,
->   `notebooklm-role.md`, `docs/track-b/gauntlet-templates.md`
-> - **The ratified anchors:** the `capstone_V*.md` named in `progress.md`'s Strategic Anchors, the
->   `syllabus_v*.md` named there, the stage-gated companion plan, and `program-stage-sequence.md`
+>   `notebooklm-role.md`, `docs/track-b/gauntlet-templates.md`. `notebooklm-role.md` remains
+>   locked for historical completeness; Track A is not active.
+> - **The ratified anchors:** all current and historical ratified anchors, regardless of filename
+>   case or whether the active pointer in `progress.md` has changed. This explicitly includes
+>   `capstone_v21.md`, `capstone_v20.md`, `capstone_M4_v2-plan.md`, ratified `capstone_[Vv]*.md`
+>   versions, historical ratified `syllabus_v*.md` versions, the stage-gated companion plan, and
+>   `program-stage-sequence.md`. Historical syllabus anchors remain locked for completeness;
+>   their retention does not reactivate Track A. Supersession never removes a document from this lock.
 > - **The governance record:** `docs/track-b/rule-inventory.md`, `docs/track-b/cp-0-defects.md`, and
->   every `capstone_V*-to-V*-amendments.md` sheet
+>   every capstone amendment sheet, including `capstone_[Vv]*-to-[Vv]*-amendments.md`
 > - **Agent configuration:** `.claude/**`, and any file that configures how agents run in this
 >   repository
 >
@@ -69,12 +74,6 @@ This repository is shared by program orchestration and Track B engineering, but 
 
 ## Interview-answer capture
 
-> **⚠ SUSPENDED 2026-09-15, with Track C.** `capstone_v20.md` narrowed the programme to a single
-> track and `שאלות תשובות.docx` is closed at 25 entries as a finished v1 record. **No agent files
-> further entries.** A Lead that meets a trigger still names it in one line in its terminal return —
-> that costs nothing and preserves the reasoning — but nothing is written to the document. The rule
-> below is retained rather than deleted so that reinstating it is a one-line owner decision.
-
 **The project is judged in a room, not only in a repository.** Reasoning that stays in a transcript cannot be defended later. When a session produces an explanation worth giving a hiring manager, it is written down at the time, not reconstructed the week before an interview.
 
 **Triggers — any one.** An agent hits real uncertainty and resolves it; a decision is taken whose reasoning is not self-evident from the artifact; an approach is chosen where a reasonable alternative existed; a failure is traced to a cause; an entry lands in `progress.md` that a stranger would find interesting; or Yarden asks for an explanation of any of these.
@@ -91,7 +90,7 @@ This repository is shared by program orchestration and Track B engineering, but 
 
 All agent work is local. Publication and mainline history belong to Yarden alone, in every role and every session. No brief, checkpoint authorization, PASS verdict, or convenience argument grants either.
 
-- **Never publish.** No `git push` under any refspec or flag, no pushed tags, no remote branch creation or deletion, no PR, release, or issue, no `gh` command or other call that mutates `origin` or GitHub state. `origin` is a public portfolio repository linked from the CV and LinkedIn; treat every push as an irreversible public act that only its owner may take.
+- **Never publish.** No `git push` under any refspec or flag, no pushed tags, no remote branch creation or deletion, no PR, release, or issue, no `gh` command or other call that mutates `origin` or GitHub state. `origin` is a public repository; treat every push as an irreversible public act that only its owner may take.
 - **Never commit to `main`.** `main` is written by Yarden, by hand, after his own review. Agents leave their work in the working tree and do not stage, commit, amend, rebase, reset, revert, cherry-pick, drop a stash, or check out over uncommitted work on that branch.
 - **Finish, then hand over.** An agent that reaches a point where a commit would normally follow does not stop mid-task to ask. It completes every task inside its authorization, brings the tree to one coherent reviewable state, and only then presents: `git status --porcelain=v1`, `git diff --stat`, the full diff, the list of files touched with a one-line reason each, and a proposed commit message. It then stops and waits. A commit that Yarden defers or refuses is never a reason to redo, revert, or abandon completed work.
 - **Sole commit exception — Track B candidates.** Inside one authorized checkpoint, the Engineering Lead may create/switch to the local disposable branch `gauntlet/<checkpoint>` and serially commit candidate work there, because the isolated Critic protocol requires a full candidate SHA. The sole-Git-writer rule and the Builder restrictions that make it safe are owned by `engineering-role.md` § *Checkpoint execution* steps 3–4; this bullet grants the exception, not the mechanics. Candidate commits stay local, never touch `main`, and are never pushed. Whether any candidate reaches `main` is Yarden's decision alone.
