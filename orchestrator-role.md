@@ -1,8 +1,11 @@
 > ## ⚠ SCOPE NARROWED 2026-09-15 — read this before anything below
 >
-> **The programme is now single-track.** The active and only plan is **`capstone_v20.md` —
-> *From frozen artifact to running system***. `capstone_V6_8.md` is closed as an active plan and
-> remains the ratified historical record of v1.
+> **The programme is single-track.** The active and only plan is **`capstone_v21.md` —
+> *Adaptive forecasting with measured product quality***, owner-authorized 2026-09-15.
+> `capstone_v20.md` remains the historical authority for CP-10; `capstone_V6_8.md` records v1.
+> v21 replaces prior model-specific scope and future checkpoint instructions. Roles, isolation,
+> independent review, Governance Lockdown and owner-only publication remain in force.
+> This pointer update is part of the owner's authorized v21 plan-replacement task.
 >
 > **Track C is cancelled and has left this repository.** Outreach, CV surfaces, LinkedIn, target
 > research, application-pipeline state and interview rehearsal are no longer this project's work.
@@ -39,7 +42,7 @@ Before responding for the first time, read the project files in this order:
 
 1. **`Yarden_Viktor_Dejorno_CV.pdf`** — actual experience, skills, credentials.
 2. **`progress.md`** — durable state across all tracks, and the sole authority on which capstone version is ratified (its Strategic Anchors name it).
-3. **The ratified flagship capstone plan** — the `capstone_V*.md` named in the Strategic Anchors. German DE-LU Day-Ahead Price Forecasting Tool. The current and only build target.
+3. **The ratified flagship capstone plan** — the exact active filename named in the Strategic Anchors (currently `capstone_v21.md`; case is not a version rule). German DE-LU Day-Ahead Price Forecasting Tool. The current and only build target.
 4. **`program-stage-sequence.md`** — the capstone-first routing aid. Planning aid only; never overrides the anchor.
 
 **The syllabus is not on this list (v6.7).** `syllabus_v3_2.md` remains a valid, useful curriculum and a good NotebookLM input, but it is an **optional parallel resource**, not an anchor and not a gate. Read it only when Yarden explicitly asks for a learning block, or when a concrete capstone task needs a theory refresher. No session opens by asking for a Track A status line.
@@ -439,7 +442,7 @@ Don't have NotebookLM teach boilerplate as if Yarden will author it from scratch
 
 ## Development environment
 
-- MacBook Pro M3, 16 GB unified memory, CPU only — no GPU needed under the current ratified plans (no neural challenger; the CNN mini-project trains fine on CPU/MPS).
+- MacBook Pro M3, 16 GB unified memory. The active plan defines compute scope: v21 uses a CPU core comparison and permits a bounded local MPS feasibility probe; no paid compute is authorized.
 - Home dir `/Users/djourno`, macOS, zsh, Homebrew at `/opt/homebrew`.
 - Primary engineering executor: **Claude Code (the Code tab in the Claude desktop app)**, driven by the repo-root `engineering-role.md`; the Lead decides whether any bounded execution is delegated. The flagship repo holds the ratified flagship capstone doc. If the optional companion is ever opened by a new owner instruction, its repository and plan must be resolved then rather than assumed active now.
 - Capstone budget: **$0 expected run rate** (local-only); **$65/month policy ceiling** preserved for safety. Every B-Claude and B-Manual block respects this, in both repos.

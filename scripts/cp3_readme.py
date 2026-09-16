@@ -41,7 +41,7 @@ def build_section() -> str:
 
 ### Three public surfaces — all live
 
-Each one answers a different question, and each stands on its own. The CV carries the first.
+Each one answers a different question, and each stands on its own. The static report is the primary link.
 
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
@@ -74,7 +74,10 @@ single id is canonical — the name is what to search for:
 
 {RUN_TABLE}
 
-**Where v2 will go.** {C["mlflow_next_note"]}
+**Archived v1 release note.** {C["mlflow_next_note"]}
+
+That note predates the current plan. [Current development](#current-development--2026-09-16)
+records the landed CP-10/CP-15 experiments and the unmet product criteria; v1 remains the released model.
 
 **Run it yourself, offline:**
 

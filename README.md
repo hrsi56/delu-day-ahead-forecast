@@ -1,17 +1,69 @@
 # DE-LU Day-Ahead Price Forecasting
 
-**What it is (30-second read).** A portfolio-grade probabilistic tool that forecasts the next delivery day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with calibrated 50 / 80 / 95 % prediction intervals.
+**What it is (30-second read).** A probabilistic forecasting tool whose released v1 forecasts the next delivery day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with calibrated 50 / 80 / 95 % prediction intervals.
 
 - **Problem** — forecast the next delivery day's hourly DE-LU prices at the 12:00 CET day-ahead gate — normally 24 values, 23/25 on DST-transition days — across a three-regime market (the 2021–23 energy crisis, the negative-price/solar era, and Dunkelflaute scarcity).
 - **Approach** — a single LightGBM nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last; walk-forward CV with a one-delivery-day embargo and pinned three-regime folds; **strict-gate features only** — the shipped model uses no input published after the gate (the day-ahead wind/solar forecast is measured in a separate post-gate benchmark, never shipped).
 - **Feature catalog** — frozen before fitting. Calendar and regime features, the day-ahead load forecast, calendar-day-matched price lags and D-1-frozen rolling statistics, plus one candidate domain feature: a residual-load proxy built from a 42-day trailing mean of actual wind and solar generation ending at D-2. Two catalogs, one comparison, and the shipped one is named in the report — including when the domain feature does not earn its place.
 - **Results** — LightGBM vs. similar-day-naïve / 168h-naïve / Ridge, with five-fold DM labeled **development / post-selection**, plus **one pre-specified evaluation on a 90-day holdout** the model never saw — reported once, whatever it says, and labeled *confirmatory-style, not power-qualified*. Three-stage reliability, SHAP, permutation importance, and regime-stratified errors. A separate one-number benchmark measures what the post-gate wind/solar forecast would have been worth.
 - **Honest limitations** — regime-shift exchangeability; two disclosed assumptions (the load forecast's pre-gate availability, and revision in the actual-generation archive); the live negative-price floor; and model staleness, with **four cutoffs published separately** — snapshot, raw-model fit, final calibration, and holdout. The shipped model is exactly the model the holdout evaluated: there is no retrain after the result is opened.
-- **Demo & reproduction** — the **primary link is the static GitHub Pages report** (CDN-served, no container, no cold start); the interactive marimo Space is one labeled click deeper, and what it renders over the holdout period is a **historical out-of-sample replay**, not a live forecast; `make train` after checking out the tagged commit reproduces the champion from the committed snapshot. The release is **frozen** — there is no scheduled refresh. The static page, the container and the Space bundle are built and verified; publication is the owner's step and is not yet taken — see [`docs/deploy.md`](docs/deploy.md).
+- **Demo & reproduction** — the **primary link is the static GitHub Pages report** (CDN-served, no container, no cold start); the interactive marimo Space is one labeled click deeper, and what it renders over the holdout period is a **historical out-of-sample replay**, not a live forecast; `make train` after checking out the tagged commit reproduces the champion from the committed snapshot. The release is **frozen** — there is no scheduled refresh. v1 is published on GitHub Pages, the Static Space and MLflow; subsequent publication remains owner-only — see [`docs/deploy.md`](docs/deploy.md).
 
-**Project shape:** three checkpoints — data and features (CP-1), model and analysis (CP-2), showcase and release (CP-3).
+**Released v1:** data and features (CP-1), model and analysis (CP-2), showcase and release (CP-3), then browser execution (CP-3B).
 
-Full engineering plan: **`capstone_V6_8.md`** (v6.8). Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.
+Active plan: **[capstone v21](capstone_v21.md)**. Historical v1 plan: **[v6.8](capstone_V6_8.md)**. Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0.
+
+## Current development — 2026-09-16
+
+**CP-15 is complete and landed with an independent Engineering PASS. Product feasibility:
+`NOT_DEMONSTRATED`. v1 remains the released model; no replacement is frozen or promoted.**
+
+### What the experiments showed
+
+CP-10 tested calibration without refitting the raw price models. On August 15–31, 2022,
+nominal 95% coverage improved from 79/408 (19.36%) to 131/408 (32.11%), still inadequate.
+Its experiment and evidence landed with CP-15. See the [CP-10 report](reports/cp10/report.md).
+
+CP-15 compared nine policies on the same 10,747 eligible development hours per policy,
+using rolling fits and common residual uncertainty for the new forecasts. **A1 (normalized
+LEAR) ranks first among the five challengers, but no challenger qualifies.** A1 fails the
+predeclared relative MAE improvement, relative weighted interval score improvement, and
+per-fold reference limits. Raw rolling LEAR (B2) has better primary equal-fold scores than
+A1; A1 has better pooled and matched peak results. Weighted interval score penalizes both
+interval width and missed outcomes.
+
+On the same August 15–31, 2022 peak, v1 → A1 MAE is **275.26 → 49.88 EUR/MWh**, nominal
+95% coverage is **79/408 → 378/408**, and mean interval width is **418.24 → 275.86 EUR/MWh**.
+This is observed development improvement, not proof of future performance or product qualification.
+The original v1 development **p = 0.948** and peak **0.194** coverage remain disclosed below.
+
+[CP-15 scientific report](docs/track-b/evidence/cp-15/report.md) ·
+[Independent Integration PASS](docs/track-b/evidence/cp-15/integration.md) ·
+[All product criteria](reports/cp15/criteria.csv) ·
+[Landing and evidence identities](docs/track-b/cp-15-landing.md).
+
+### Information boundary and next decision
+
+The history starts deliberately at **2019-01-01**. Evaluation uses the original development
+hours and remains **development / post-selection**: the known crisis motivated the hypotheses.
+Production causal controls passed, but original historical A65 load-forecast vintage availability
+remains a disclosed assumption. Neither the spent holdout nor reserved outcomes enter model
+selection. The bounded Chronos-2 probe demonstrates feasibility only; it is not a scored or
+historically blind model comparison.
+
+CP-16 requires a complete acceptance bar and a new authorized brief, using the B2/A1 comparison
+and the [structural-input feasibility findings](reports/cp15/feasibility/structural_inputs.md).
+No prospective clock has started. Future confirmation must evaluate forecasts actually issued
+under an explicitly frozen update policy and its prescribed state changes.
+
+### Decision record
+
+The [research memo](docs/track-b/forecasting-research-2026-09-15.md) is historical motivation,
+not a new measured result. The owner-managed Hebrew [Q&A record](שאלות%20תשובות.docx) contains
+30 questions. Track A/C remain outside scope. CP-3B's
+[unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) remains disclosed.
+CP-10's [exact reviewed plan](docs/track-b/anchors/cp-10-capstone_v20.md) is archived byte-for-byte;
+its original provenance hash is unchanged. [progress.md](progress.md) holds current state.
 
 ## CP-1 data and fixed features
 
@@ -156,7 +208,7 @@ silently when `MLFLOW_TRACKING_URI` is unset.
 
 ### Three public surfaces — all live
 
-Each one answers a different question, and each stands on its own. The CV carries the first.
+Each one answers a different question, and each stands on its own. The static report is the primary link.
 
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
@@ -199,7 +251,10 @@ single id is canonical — the name is what to search for:
 | `champion::final-fit-and-holdout` | the frozen champion and the one-shot holdout |
 | `diagnostics::champion` | SHAP, permutation importance, regimes, reliability |
 
-**Where v2 will go.** No v2 run exists yet. When M4 is ratified its runs land in a separate `delu-m4` experiment on the same tracking server, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment.
+**Archived v1 release note.** No v2 run exists yet. When M4 is ratified its runs land in a separate `delu-m4` experiment on the same tracking server, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment.
+
+That note predates the current plan. [Current development](#current-development--2026-09-16)
+records the landed CP-10/CP-15 experiments and the unmet product criteria; v1 remains the released model.
 
 **Run it yourself, offline:**
 

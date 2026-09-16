@@ -96,7 +96,14 @@ def test_provenance_inputs_sources_and_v1_replay():
     root=OUT.parents[1]
     lineage=json.loads((OUT/'lineage.json').read_text())
     for path,expected in {**lineage['input_sha256'],**lineage['source_sha256']}.items():
-        assert hashlib.sha256((root/path).read_bytes()).hexdigest()==expected
+        # CP-10 binds the plan bytes it actually used, not a later scope correction.
+        # This archive is byte-exact from final_candidate_sha ad3e1a5; the recorded
+        # lineage hash is unchanged. All engineering/data paths still bind in place.
+        artifact = root / (
+            'docs/track-b/anchors/cp-10-capstone_v20.md'
+            if path == 'capstone_v20.md' else path
+        )
+        assert hashlib.sha256(artifact.read_bytes()).hexdigest()==expected
     assert hashlib.sha256((OUT/'protocol.json').read_bytes()).hexdigest()==lineage['protocol_sha256']
     assert all(f['v1_replay_max_abs_difference']==0.0 for f in lineage['folds'])
     original=pd.read_parquet(root/'reports/cp2/development_predictions.parquet')

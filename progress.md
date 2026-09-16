@@ -11,7 +11,8 @@ complete execution-ready bar. No new engineering session has been launched by th
 
 **Prior isolated correction, now superseded as a future proposal:** `capstone_v20.md` **v20-r1** was owner-authorized
 and available for review in `/Users/djourno/Downloads/PJM-orchestrator-v20-review`, branch
-`codex/v20-plan-corrections`. It was never adopted on `main` or in the CP-10 checkout; retain its uncommitted work for review.
+`codex/v20-plan-corrections`. It was never adopted on `main` or in the CP-10 checkout. Its superseded draft is now preserved
+in `/Users/djourno/Downloads/PJM-consolidation-backup-2026-09-16/review/`; the temporary checkout is retired.
 v21 carries forward the useful registry/lineage and convention corrections under the new design.
 CP-10 returned against its original v20 anchor; no brief or anchor was changed mid-run.
 The prepared review is at
@@ -26,6 +27,26 @@ no commit, stage, branch, worktree, tag or publication was made by the Orchestra
 ---
 
 ## 1. Current Position
+
+**Current repository state — consolidated 2026-09-16.** The owner explicitly authorized
+resolving pending work, edits, commits, deletion and consolidation to leave only `main`.
+The sole working checkout is `/Users/djourno/Downloads/PJM` on `main`; the temporary landing
+and v20-review worktrees and both `codex/*` branches are retired. Their prior references below
+are historical. Current reports and evidence are at the same relative paths in this sole checkout.
+All retired branch tips are ancestors of the verified `evidence/cp-15` tag.
+
+Pending primary documentation, current routing, research/context-recovery records and the
+owner's byte-exact 30-question Q&A are consolidated. README/site and their generators now
+report completed CP-15, Engineering PASS and product NOT_DEMONSTRATED. CP-10's original
+plan bytes are archived for its unchanged provenance assertion. The superseded v20-r1 draft
+and stale 32-question copy are preserved only in the external cleanup backup; neither replaces
+the adopted documents. Its review is retained as explicitly historical documentation.
+No model promotion, new experiment, acceptance-bar change or prospective clock is authorized.
+
+Backup and per-file accounting: `/Users/djourno/Downloads/PJM-consolidation-backup-2026-09-16/`.
+This owner authorization is scoped to consolidation; it does not alter standing governance.
+The earlier branch-retention/pending-work statements below describe intermediate states now resolved.
+
 
 **v1 is complete, live, and closed. CP-10's engineering PASS is accepted against original v20,
 but the owner rejected proceeding toward landing/freezing as the next objective. The owner has now
@@ -45,7 +66,7 @@ No v2 policy is frozen; the 90-day clock has not started.**
 | **M3 / CP-3** | Showcase and release | `land/cp-3` · `evidence/cp-3` |
 | **M3.5 / CP-3B** | WASM showcase on a Static Space | `land/cp-3b` · `evidence/cp-3b` |
 | **REL-1** | Publish | **complete** — all four conditions met |
-| **CP-10** | M4 calibration, original `capstone_v20.md` §9 | **Engineering PASS accepted; inherited work landed with CP-15; checkpoint branch retired; pending edits retained on `codex/orchestration-pending`** |
+| **CP-10** | M4 calibration, original `capstone_v20.md` §9 | **Engineering PASS accepted; inherited work landed with CP-15; landed with CP-15; pending edits consolidated into main; temporary branch retired** |
 | **CP-11 → CP-14 (old v20)** | Retired future sequence | **never started; superseded by v21** |
 | **CP-15** | Adaptive forecasting feasibility, v21-r1 §12 | **LAND complete; Engineering PASS; product NOT_DEMONSTRATED; A1 best challenger, none qualified; branch reclaimed** |
 | **CP-16 → CP-19** | v21 §10 direction | **not authorized; complete future bars required** |
@@ -84,7 +105,7 @@ used because pickle bytes were not stable. These v1 findings do not preselect CP
 
 ## 2. What happens next
 
-**CP-10 branch cleanup, 2026-09-16:** the owner requested cleanup after LAND. All 13
+**Historical intermediate CP-10 branch cleanup, 2026-09-16 (superseded by consolidation above):** the owner requested cleanup after LAND. All 13
 CP-10 experiment paths match main exactly, and its complete commit chain is reachable from
 `evidence/cp-15`. The old `gauntlet/cp-10` name is retired. The primary checkout remains at
 `4039ce24150b36ea233b043061e68eb2be78cbbe`, now on `codex/orchestration-pending`, solely to
@@ -104,11 +125,11 @@ these operations; it does not amend the standing rulebook or permit model promot
 - Permanent evidence reference: `evidence/cp-15` at `1bdc75b8ab943092bb8de6ba893defb9e12250d8`.
   This preserves both CP-15 attempts and all four inherited CP-10 commits and their candidate SHAs.
 - CP-15's completed branch/worktree are reclaimed. Current evidence paths resolve in
-  `/Users/djourno/Downloads/PJM-main-landing`, the new clean main checkout. Historic briefs,
+  `/Users/djourno/Downloads/PJM`, the sole main checkout after consolidation. Historic briefs,
   verdicts and receipts retain their original execution paths; use this mapping for retrieval.
-- The dirty primary CP-10 checkout and `codex/v20-plan-corrections` checkout remain preserved.
-  Their pending documentation, Q&A and test edits are not included in the experiment landing.
-  CP-10 code is included, but its old checkout remains open for that pending work.
+- Pending documentation, Q&A and test consistency edits were consolidated in a separate
+  commit after the exact experiment landing. Both temporary codex branches and the extra
+  checkouts are retired; the reviewed experiment tree remains accessible at `land/cp-15`.
 - Local backups, full experiment diff, resource-retention mapping and verification records:
   `/Users/djourno/Downloads/PJM-cp15-landing-record-2026-09-16/`.
 - Landing accounting: [CP-15 landing record](docs/track-b/cp-15-landing.md).
@@ -414,9 +435,9 @@ memo in its existing isolated worktree.
 
 - **Q&A owner edit completed.** The owner deleted entries 31 and 32 and reports 30 questions;
   read-only XML inspection confirms questions 1–30 in the primary document. No agent append
-  or correction is pending. The isolated Orchestrator worktree still contains the older
-  32-question copy; it is stale and must not overwrite the owner’s primary document.
-  No DOCX synchronization was performed; the owner manages its content.
+  or correction is pending. The owner’s byte-exact 30-question document is now on main.
+  The stale 32-question copy is retained only in the external consolidation backup.
+  The owner manages its content; no answers were added or rewritten during consolidation.
 - **Product feasibility remains NOT_DEMONSTRATED after completed CP-15.** A1/A3/A4/A5 fail
   criteria 1, 2 and 5; A2 also fails criterion 4. No candidate qualifies. The experiment’s
   engineering requirements, including both feasibility deliverables, passed the binding review.
@@ -425,9 +446,9 @@ memo in its existing isolated worktree.
 - **CP-15 disposition resolved: LAND.** The owner explicitly authorized this experiment landing,
   including commit/merge/push. `land/cp-15` marks the exact reviewed tree; `evidence/cp-15`
   retains the reviewed chain. The completed checkpoint branch/worktree are reclaimed.
-- **CP-10 inherited code landed; pending checkout retained.** Its four commits are included in
-  the CP-15 landing and preserved by `evidence/cp-15`. The primary dirty checkout remains
-  available for separately pending orchestration/docs/Q&A changes; no model promotion follows.
+- **CP-10 code and pending records resolved.** Its four commits landed with CP-15 and remain
+  preserved by `evidence/cp-15`. Pending records were consolidated into main and temporary
+  branches/checkouts retired; no model promotion follows.
 - **Registry-loading correction — adopted in v21 §9 as a future requirement.** Exact initialization
   versions/fingerprints and refusal before outcome access are required, including state lineage
   for prescribed updates. No registry implementation or prospective freeze is claimed.
@@ -642,10 +663,11 @@ The detailed source/disposition inventory is in the context-recovery report abov
 
 ## 7. Where the history lives
 
-**Pending local documentation context (not part of the reviewed experiment landing):** the
-following archive/test consistency edits and the earlier research/handover notes remain in
-the two preserved Orchestrator checkouts unless individually stated otherwise. Main retains
-the original reviewed v20 anchor and test.
+**Consolidated documentation context (separate from the reviewed experiment landing):** the
+following archive/test consistency edits and earlier research/handover notes now live on main.
+The original reviewed v20 bytes remain in the archive and the evidence chain; the root copy
+includes the previously authorized capture-scope clarification. The superseded v20-r1 proposal
+remains external backup material, not an adopted plan.
 
 **CP-10's exact reviewed anchor** is additionally preserved at
 `docs/track-b/anchors/cp-10-capstone_v20.md`, copied byte-for-byte from final candidate
@@ -691,6 +713,12 @@ This file no longer narrates it. It is preserved and addressable:
   remain owner-only. CP-15 may package exact supplied AGENTS/v21/brief bytes only, under v21 §13.
 
 ## 9. Session Log — newest first
+
+- **Repository consolidation, 2026-09-16:** owner authorized full cleanup to one main checkout.
+  Reconciled pending documents, preserved the 30-question Q&A byte-for-byte, updated stale
+  development claims, archived the original CP-10 plan for provenance and retained historical
+  research/recovery notes. Superseded draft and duplicate material are backed up outside the
+  active repository. Retired both codex branches and extra worktrees after verifying preservation.
 
 - **CP-10 cleanup, 2026-09-16:** verified every inherited CP-10 path matches main and its
   evidence chain is tagged; retired `gauntlet/cp-10` by renaming it

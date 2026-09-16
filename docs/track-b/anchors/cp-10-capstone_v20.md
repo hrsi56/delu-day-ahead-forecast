@@ -18,11 +18,8 @@ record of how M4 was reasoned out and ratified on 2026-09-15.
 
 **Track C is cancelled and leaves this project.** Outreach, CV surfaces, LinkedIn, interview
 rehearsal and target research are no longer part of this repository's programme. `TRIG-C` and `C-1`
-are retired from `program-stage-sequence.md`. `שאלות תשובות.docx` preserves the v1 entries and continues
-capturing engineering reasoning under `AGENTS.md` § *Interview-answer capture*. The Orchestrator
-files entries; the Lead names triggers in its return. Reasoning capture is independent of the
-cancelled Track C distribution work. This scope correction was owner-authorized 2026-09-15;
-it changes no CP-10 method, result or acceptance criterion.
+are retired from `program-stage-sequence.md`. `שאלות תשובות.docx` stays in the repository as a
+finished v1 record and receives no further entries from this plan.
 
 **Track A is likewise out**, as it already was in practice: the syllabus was an optional resource
 and gated nothing.

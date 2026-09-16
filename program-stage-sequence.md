@@ -1,8 +1,11 @@
 > ## ⚠ SCOPE NARROWED 2026-09-15 — read this before anything below
 >
-> **The programme is now single-track.** The active and only plan is **`capstone_v20.md` —
-> *From frozen artifact to running system***. `capstone_V6_8.md` is closed as an active plan and
-> remains the ratified historical record of v1.
+> **The programme is single-track.** The active and only plan is **`capstone_v21.md` —
+> *Adaptive forecasting with measured product quality***, owner-authorized 2026-09-15.
+> `capstone_v20.md` remains the historical authority for CP-10; `capstone_V6_8.md` records v1.
+> v21 replaces prior model-specific scope and future checkpoint instructions. Roles, isolation,
+> independent review, Governance Lockdown and owner-only publication remain in force.
+> This pointer update is part of the owner's authorized v21 plan-replacement task.
 >
 > **Track C is cancelled and has left this repository.** Outreach, CV surfaces, LinkedIn, target
 > research, application-pipeline state and interview rehearsal are no longer this project's work.
@@ -20,7 +23,7 @@
 >
 > **This table is a completed map.** Every stage in it has landed: CP-1, CP-2, CP-3, CP-3B and REL-1
 > are all done, and the two Track C rows are struck. **The live checkpoint sequence is
-> `capstone_v20.md` §9 — CP-10 → CP-14, with dependencies stated per row.** Read this file for what
+> `capstone_v21.md` §10; only CP-15 has an execution-ready bar in §12.** Read this file for what
 > v1 did, not for what to do next.
 
 # Program Stage Sequence — Capstone-First Routing Map (v8)

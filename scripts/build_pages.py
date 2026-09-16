@@ -322,6 +322,31 @@ to the interactive Space. Everything below, including the chart, works with the 
 </p>
 </div>
 
+<section class="card" id="development-update" aria-labelledby="development-heading">
+<h2 id="development-heading">Development update · 2026-09-16</h2>
+<p><strong>CP-15 is complete and landed. Engineering PASS; product feasibility NOT_DEMONSTRATED.</strong>
+v1 remains the released model. No replacement is frozen or promoted; the results and historical
+replay below remain v1 evidence.</p>
+<p>Nine policies were compared on the same 10,747 eligible development hours each.
+A1 (normalized LEAR) ranks first among five challengers, but none meets the product criteria.
+A1 fails the relative MAE improvement, relative weighted interval score improvement and per-fold
+reference limits. B2 (raw rolling LEAR) has better primary equal-fold scores; A1 has better pooled
+and matched peak results. Weighted interval score penalizes interval width and missed outcomes.</p>
+<p>On <strong>August 15–31, 2022</strong>, v1 → A1 MAE is <strong>275.26 → 49.88 EUR/MWh</strong>,
+nominal 95% coverage is <strong>79/408 → 378/408</strong>, and mean interval width is
+<strong>418.24 → 275.86 EUR/MWh</strong>. This is observed development improvement, not future confirmation.
+The earlier CP-10 calibration experiment reached 131/408 coverage without refitting the raw models.</p>
+<p>The history deliberately starts in 2019. These known development periods remain
+<code>development_post_selection</code>. Causal controls passed; original historical A65 load-forecast
+vintage availability remains an assumption. Chronos-2 was a feasibility probe only.
+CP-16 needs a complete new acceptance bar and brief. No prospective clock has started.</p>
+<p>Historical v1 <strong>p = 0.948</strong> and peak coverage <strong>0.194</strong> remain unchanged.</p>
+<p><a href="{C['github_url']}/blob/main/docs/track-b/evidence/cp-15/report.md">CP-15 scientific report</a> ·
+<a href="{C['github_url']}/blob/main/docs/track-b/evidence/cp-15/integration.md">Independent review</a> ·
+<a href="{C['github_url']}/blob/main/reports/cp15/criteria.csv">All product criteria</a> ·
+<a href="{C['github_url']}/blob/main/capstone_v21.md">Plan</a></p>
+</section>
+
 <h3>The four cutoffs, stated separately because they are four different dates</h3>
 {cutoff_table}
 <p>The raw-model fit cutoff precedes the snapshot cutoff by <strong>{C['staleness_days']} delivery
@@ -591,7 +616,8 @@ no single id is canonical — the name is what to search for:</p>
 <tbody>
 {RUN_ROWS}
 </tbody></table>
-<p class="next"><strong>Where v2 will go.</strong> {esc(C['mlflow_next_note'])}</p>
+<p class="next"><strong>Archived v1 release note.</strong> {esc(C['mlflow_next_note'])}
+This note predates the <a href="#development-update">current development plan</a>.</p>
 </div>
 
 <dl class="kv">

@@ -1,5 +1,11 @@
 # CP-15 landing record — 2026-09-16
 
+> Subsequent owner-authorized consolidation leaves only `/Users/djourno/Downloads/PJM`
+> on `main`. Temporary checkout paths and retained-branch descriptions below record the
+> landing-time state. Retrieve current evidence from the sole checkout or `evidence/cp-15`.
+> The pending documents/Q&A were consolidated; superseded drafts remain in the external
+> `PJM-consolidation-backup-2026-09-16` backup.
+
 ## Disposition and authority
 
 LAND of the completed experiment and evidence, including four inherited CP-10 commits.
