@@ -1,0 +1,5 @@
+# Bounded saved-result verifier Builder receipt
+
+Session /root/verification_builder worked only in .local/worktrees/cp-16/verification-builder, clean detached seed 9cf64e2403cdcf7d367a06da72688b0d55e39f1f. Owned path tests/cp16/test_saved_results.py was imported byte-for-byte (initial SHA256 9fee64617576518019dce2ba6371a8226f54eefba7bdc6f477f2fa0f4c73d6af). Lead subsequently normalized datetime storage resolution in oracle comparisons. Builder performed syntax compilation only; no fits, tests, production calculations or Git writes. Lead removed this checkpoint-created worktree after import. The Builder is not the final Integration Critic.
+
+The oracle recomputes vector losses, all reported diagnostics and denominators, unchanged six criteria, paired calendar bootstrap and mechanical conclusions independently of cp15/cp16 scorers. It charges one saved-reference and analysis pass when production evidence is actually evaluated under the shared monitor. The implementation and synthetic controls remain subject to final independent review.

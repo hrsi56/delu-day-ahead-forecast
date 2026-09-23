@@ -1,0 +1,45 @@
+[
+  {
+    "day": "2020-07-01",
+    "fold": "fold_1",
+    "label": "origin/causal base",
+    "results": {
+      "A1": {
+        "fingerprints_match": true,
+        "max_abs_difference": 0.0,
+        "primitive_calls": 120
+      },
+      "B2": {
+        "fingerprints_match": true,
+        "max_abs_difference": 0.0,
+        "primitive_calls": 120
+      }
+    }
+  },
+  {
+    "control": "delivery_day_mask",
+    "policies": {
+      "A1": {
+        "fit_records": 24,
+        "max_abs_difference": 0.0
+      },
+      "B2": {
+        "fit_records": 24,
+        "max_abs_difference": 0.0
+      }
+    }
+  },
+  {
+    "control": "available_d1_mutation",
+    "policies": {
+      "A1": {
+        "fit_records": 24,
+        "max_abs_difference": 425.36057961143297
+      },
+      "B2": {
+        "fit_records": 24,
+        "max_abs_difference": 485.17021664721653
+      }
+    }
+  }
+]

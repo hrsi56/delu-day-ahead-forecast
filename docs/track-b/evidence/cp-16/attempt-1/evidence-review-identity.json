@@ -1,0 +1,12 @@
+{
+  "lead_thread_id": "01a0cb93-625c-7213-aa6b-825ac1c4f5a3",
+  "lead_agent": "/root",
+  "role": "CP-16 Engineering Lead",
+  "critic_agent": "/root/integration_critic",
+  "final_candidate_sha": "3a160fd33ed92bb0061144cfbce2323d8b3a7db9",
+  "critic_worktree": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic",
+  "isolation": "fresh clean detached checkout; cooperative read-only protocol, not sandbox-enforced",
+  "verdict": "FAIL",
+  "verdict_sha256": "5c17129a4b72beccfb78c6dc624af0b4f168097576d7dbbd0f8cf351edfdf9cc",
+  "post_return_reads": "none"
+}

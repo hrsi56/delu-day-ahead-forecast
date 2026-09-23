@@ -1,0 +1,50 @@
+[
+  {
+    "day": "2020-07-01",
+    "fold": "fold_1",
+    "label": "independent review representative",
+    "results": {
+      "A1": {
+        "fingerprints_match": true,
+        "max_abs_difference": 0.0,
+        "primitive_calls": 120
+      },
+      "B2": {
+        "fingerprints_match": true,
+        "max_abs_difference": 0.0,
+        "primitive_calls": 120
+      }
+    }
+  },
+  {
+    "day": "2021-04-01",
+    "fold": "fold_2",
+    "label": "independent review representative",
+    "results": {
+      "A1": {
+        "fingerprints_match": true,
+        "max_abs_difference": 0.0,
+        "primitive_calls": 120
+      },
+      "B2": {
+        "fingerprints_match": true,
+        "max_abs_difference": 0.0,
+        "primitive_calls": 120
+      }
+    }
+  },
+  {
+    "control": "target_and_future_mask",
+    "max_abs_difference": {
+      "A1": 0.0,
+      "B2": 0.0
+    }
+  },
+  {
+    "control": "available_d1_mutation",
+    "max_abs_difference": {
+      "A1": 425.36057961143297,
+      "B2": 485.17021664721653
+    }
+  }
+]

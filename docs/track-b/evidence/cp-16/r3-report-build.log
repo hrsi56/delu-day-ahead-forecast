@@ -1,0 +1,63 @@
+{
+  "bootstrap": {
+    "block_days": 7,
+    "calendar_days": 90,
+    "index_sha256": "e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b",
+    "method": "paired noncircular calendar moving-block percentile",
+    "replicates": 2000,
+    "seed": 15042,
+    "shared_index_sets": 1,
+    "undefined_handling": "unresolved; no dropping or redrawing"
+  },
+  "engineering_status": "not assessed by scoring",
+  "failed_criteria": {
+    "V2-H": [
+      1,
+      2
+    ],
+    "V2-P": [
+      1,
+      2
+    ]
+  },
+  "historical_cp15_product_status": "NOT_DEMONSTRATED",
+  "inference": "exploratory post-selection; no equivalence, absence-of-benefit or absence-of-harm claim",
+  "joint_conclusions": {
+    "V2-H-B2": "observed joint improvement",
+    "V2-H-V2-P": "no demonstrated joint preference",
+    "V2-P-B2": "no demonstrated joint preference"
+  },
+  "native_v1_pinball": "preserved separately; mean_pinball_7 is not native v1",
+  "original_section8_status": {
+    "V2-H": "not_met",
+    "V2-P": "not_met"
+  },
+  "pooled_weighting": "eligible hours",
+  "primary_contrast": "V2-H-V2-P",
+  "primary_weighting": "equal-fold B0-normalized eligible-hour losses",
+  "product_delivery_eligibility": "not authorized by research evaluation",
+  "ranking": [
+    "V2-H",
+    "V2-P"
+  ],
+  "ranking_rule": "S_WIS, S_MAE, P on exact ties; descriptive only",
+  "resources": "fit/runtime/memory and failed attempts must be joined from driver resource ledger",
+  "secondary_contrasts": [
+    "V2-H-B2",
+    "V2-P-B2"
+  ],
+  "selection_status": "defined",
+  "support_rule": {
+    "minimum_represented_dates": 56,
+    "role": "reporting only; no product gate"
+  },
+  "validation": {
+    "crossings": 0,
+    "keys_per_policy": 10747,
+    "missing_predictions": 0,
+    "nonfinite_quantiles": 0,
+    "production": true,
+    "rows": 75229
+  }
+}
+Report and candidate resources generated

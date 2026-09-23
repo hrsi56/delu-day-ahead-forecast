@@ -1,0 +1,18 @@
+artifacts {'checked': 19, 'mismatches': [], 'not_opened_outside_assignment': []}
+implementation {'checked': 20, 'mismatches': [], 'not_opened_outside_assignment': []}
+inputs {'checked': 31, 'mismatches': [], 'not_opened_outside_assignment': ['1bdc75b8ab943092bb8de6ba893defb9e12250d8:AGENTS.md', '1bdc75b8ab943092bb8de6ba893defb9e12250d8:capstone_v21.md', 'docs/track-b/cp-15-resumption-brief.md']}
+bar_exact_match True
+prior_protocol_hash_match True
+original_key_counts {'fold_1': 2160, 'fold_2': 2159, 'fold_3': 2112, 'fold_4': 2160, 'fold_5': 2156} total 10747 duplicates 0
+manifest_top_fields ['cache_status', 'caps', 'dependencies', 'estimates', 'folds', 'input_sha256', 'partition_filter', 'python', 'resource_preflight', 'support_failures']
+manifest_fold {'admission': 7, 'date_count': 127, 'evaluation_end': '2020-09-28', 'evaluation_start': '2020-07-01', 'fold': 'fold_1', 'original_target_keys': 2160, 'origins': 127, 'uncached_dates': 8, 'warmup_start': '2020-05-25'}
+manifest_fold {'admission': 7, 'date_count': 127, 'evaluation_end': '2021-06-29', 'evaluation_start': '2021-04-01', 'fold': 'fold_2', 'original_target_keys': 2159, 'origins': 127, 'uncached_dates': 6, 'warmup_start': '2021-02-23'}
+manifest_fold {'admission': 7, 'date_count': 127, 'evaluation_end': '2022-09-28', 'evaluation_start': '2022-07-01', 'fold': 'fold_3', 'original_target_keys': 2112, 'origins': 127, 'uncached_dates': 10, 'warmup_start': '2022-05-25'}
+manifest_fold {'admission': 7, 'date_count': 130, 'evaluation_end': '2025-07-29', 'evaluation_start': '2025-05-01', 'fold': 'fold_4', 'original_target_keys': 2160, 'origins': 130, 'uncached_dates': 8, 'warmup_start': '2025-03-22'}
+manifest_fold {'admission': 7, 'date_count': 127, 'evaluation_end': '2026-04-07', 'evaluation_start': '2026-01-08', 'fold': 'fold_5', 'original_target_keys': 2156, 'origins': 127, 'uncached_dates': 8, 'warmup_start': '2025-12-02'}
+lineage_summary {'admission': 7, 'cache_reproduction': 1, 'execution_stage': 'BLOCKED_replay_allowance_insufficient_no_outer_comparison', 'input_fingerprint': 'b0ccaf4983001e18d636636c006be12270df0361ca872a35ec298e33df049329', 'interrupted_original_lineage_sha256': '094f82aada72ca73d2bffb6f42db26886fb533cc424707399811db71999cee84', 'interrupted_prefix_notice': '37 fold_1 warm-up/admission origins,7 admission dates,8 new component-date pairs preserved; no acceptance claim because interrupted job had monitor coverage gap. One later A1 attempt interrupted before evidence save. All attempts remain charged.', 'new_components': 8, 'origins': 37, 'schema': 'cp16-lineage-v1', 'states': 1}
+cache_reproduction [{'day': '2020-06-02', 'fold': 'fold_1', 'label': 'training-only cache admission', 'results': {'A1': {'fingerprints_match': True, 'max_abs_difference': 0.0, 'primitive_calls': 120}, 'B2': {'fingerprints_match': True, 'max_abs_difference': 0.0, 'primitive_calls': 120}}}]
+admission_dates [('fold_1', '2020-06-23', 24), ('fold_1', '2020-06-24', 24), ('fold_1', '2020-06-25', 24), ('fold_1', '2020-06-26', 24), ('fold_1', '2020-06-27', 24), ('fold_1', '2020-06-28', 24), ('fold_1', '2020-06-29', 24)]
+missing_required_artifacts ['predictions.parquet', 'metrics.csv', 'diagnostics.csv', 'uncertainty.csv', 'criteria.csv']
+raw_interrupted_lineage_matches False
+resource_counts {'component_attempts': 21, 'final_fits': 498, 'inner_fits': 1996, 'machine_seconds': 611.8722240451898, 'main_component_attempts': 17, 'policy_days': 3730, 'primitive_fits': 2494}

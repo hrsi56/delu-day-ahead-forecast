@@ -1,0 +1,85 @@
+fold_1 2020-05-25 fresh_components admission False
+fold_1 2020-05-26 fresh_components admission False
+fold_1 2020-05-27 fresh_components admission False
+fold_1 2020-05-28 fresh_components admission False
+fold_1 2020-05-29 fresh_components admission False
+fold_1 2020-05-30 fresh_components admission False
+fold_1 2020-05-31 fresh_components admission False
+fold_1 2020-06-01 fresh_components admission False
+fold_1 2020-06-02 verified_cp15_cache admission False
+fold_1 2020-06-03 verified_cp15_cache admission False
+fold_1 2020-06-04 verified_cp15_cache admission False
+fold_1 2020-06-05 verified_cp15_cache admission False
+fold_1 2020-06-06 verified_cp15_cache admission False
+fold_1 2020-06-07 verified_cp15_cache admission False
+fold_1 2020-06-08 verified_cp15_cache admission False
+fold_1 2020-06-09 verified_cp15_cache admission False
+fold_1 2020-06-10 verified_cp15_cache admission False
+fold_1 2020-06-11 verified_cp15_cache admission False
+fold_1 2020-06-12 verified_cp15_cache admission False
+fold_1 2020-06-13 verified_cp15_cache admission False
+fold_1 2020-06-14 verified_cp15_cache admission False
+fold_1 2020-06-15 verified_cp15_cache admission False
+fold_1 2020-06-16 verified_cp15_cache admission False
+fold_1 2020-06-17 verified_cp15_cache admission False
+fold_1 2020-06-18 verified_cp15_cache admission False
+fold_1 2020-06-19 verified_cp15_cache admission False
+fold_1 2020-06-20 verified_cp15_cache admission False
+fold_1 2020-06-21 verified_cp15_cache admission False
+fold_1 2020-06-22 verified_cp15_cache admission False
+fold_1 2020-06-23 verified_cp15_cache admission True
+fold_1 2020-06-24 verified_cp15_cache admission True
+fold_1 2020-06-25 verified_cp15_cache admission True
+fold_1 2020-06-26 verified_cp15_cache admission True
+fold_1 2020-06-27 verified_cp15_cache admission True
+fold_1 2020-06-28 verified_cp15_cache admission True
+fold_1 2020-06-29 verified_cp15_cache admission True
+fold_1 2020-06-30 verified_cp15_cache admission False
+Traceback (most recent call last):
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/scripts/cp16_v2.py", line 91, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ~~~~^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/scripts/cp16_v2.py", line 89, in main
+    execute(ROOT,args);return 0
+    ~~~~~~~^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp16/execution.py", line 188, in execute
+    if args.job=='admission':admission(root,out,budget)
+                             ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp16/execution.py", line 96, in admission
+    rows,centers,source=component(data,cache,d,lineage,budget)
+                        ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp16/execution.py", line 61, in component
+    for policy in ('A1','B2'):centers[policy],logs[policy]=fit(data,day,policy,rows=rows)
+                                                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp16/budget.py", line 64, in day
+    return original_day(*args, **kwargs)
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp15/models.py", line 78, in fit_day
+    model=_lasso(it,target[inner],rel*unit,p,model)
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp16/budget.py", line 68, in lasso
+    return original_lasso(*args, **kwargs)
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp15/models.py", line 34, in _lasso
+    model.fit(x,y)
+    ~~~~~~~~~^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/lead/src/cp16/budget.py", line 72, in fit
+    return original_fit(self, *args, **kwargs)
+  File "/Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/sklearn/base.py", line 1403, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/sklearn/linear_model/_coordinate_descent.py", line 1248, in fit
+    _, this_coef, this_dual_gap, this_iter = self.path(
+                                             ~~~~~~~~~^
+        X,
+        ^^
+    ...<19 lines>...
+        sample_weight=sample_weight,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/sklearn/linear_model/_coordinate_descent.py", line 842, in enet_path
+    model = cd_fast.enet_coordinate_descent(
+        coef_,
+    ...<9 lines>...
+        do_screening,
+    )
+KeyboardInterrupt

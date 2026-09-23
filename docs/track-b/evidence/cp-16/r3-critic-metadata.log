@@ -1,0 +1,65 @@
+{
+  "artifact_hashes_verified": 28,
+  "implementation_hashes_verified": 20,
+  "input_hashes_verified": 34,
+  "dependencies_match": true,
+  "bar_matches_assignment": true,
+  "frozen_admission_dates": 35,
+  "preserved_historical_artifacts": 13,
+  "changes_within_envelope": 87,
+  "excluded_original_hours": {
+    "fold_1": {
+      "eligible": 2160,
+      "canonical": 2160,
+      "excluded": 0,
+      "excluded_by_day": {}
+    },
+    "fold_2": {
+      "eligible": 2159,
+      "canonical": 2160,
+      "excluded": 1,
+      "excluded_by_day": {
+        "2021-04-04": 1
+      }
+    },
+    "fold_3": {
+      "eligible": 2112,
+      "canonical": 2160,
+      "excluded": 48,
+      "excluded_by_day": {
+        "2022-07-20": 24,
+        "2022-07-21": 24
+      }
+    },
+    "fold_4": {
+      "eligible": 2160,
+      "canonical": 2160,
+      "excluded": 0,
+      "excluded_by_day": {}
+    },
+    "fold_5": {
+      "eligible": 2156,
+      "canonical": 2159,
+      "excluded": 3,
+      "excluded_by_day": {
+        "2026-03-30": 1,
+        "2026-03-31": 1,
+        "2026-04-05": 1
+      }
+    }
+  },
+  "counts_at_audit": {
+    "analysis_passes": 2,
+    "component_attempts": 121,
+    "final_fits": 2896,
+    "inner_fits": 11588,
+    "machine_seconds": 1936.3960049171583,
+    "main_component_attempts": 93,
+    "policy_days": 6458,
+    "primitive_fits": 14484,
+    "reference_passes": 2
+  },
+  "main_sha": "6621402b2be9aed85be433432bcffffb56adf3e4",
+  "candidate": "bf3ca602e32e99e45c7835e3f95148f62b608099",
+  "clean": true
+}

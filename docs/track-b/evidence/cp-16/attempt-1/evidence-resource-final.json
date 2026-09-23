@@ -1,0 +1,340 @@
+{
+  "caps": {
+    "active_seconds": 144000,
+    "additional_disk_bytes": 21474836480,
+    "analysis_passes": 3,
+    "component_attempts": 2000,
+    "final_fits": 48000,
+    "inner_fits": 192000,
+    "machine_seconds": 86400,
+    "main_component_attempts": 1500,
+    "policy_days": 4500,
+    "primitive_fits": 240000,
+    "reference_passes": 3,
+    "rss_bytes": 10737418240
+  },
+  "counts": {
+    "component_attempts": 21,
+    "final_fits": 498,
+    "inner_fits": 1996,
+    "machine_seconds": 624.0855666692078,
+    "main_component_attempts": 17,
+    "policy_days": 3730,
+    "primitive_fits": 2494
+  },
+  "created_epoch": 1790122606.369416,
+  "events": [
+    {
+      "description": "Conservative charge for preliminary uninstrumented read-only training support audit and environment inspection; no fits or policy predictions. Full subsequent jobs are monitored.",
+      "epoch": 1790122606.3697011,
+      "event": "orientation_compute_upper_bound",
+      "seconds": 300
+    },
+    {
+      "epoch": 1790122788.2992268,
+      "event": "bounded_residual_builder_tests",
+      "initial_fixture_failure": "pandas prohibits direct index mutation; memory-isolation assertion corrected",
+      "jobs": 3,
+      "prediction_calls_including_rejects": 75,
+      "seconds": 5,
+      "successful_policy_days": 114
+    },
+    {
+      "epoch": 1790122889.706605,
+      "event": "bounded_scoring_builder_tests",
+      "fits": 0,
+      "jobs": 2,
+      "production_analysis_passes": 0,
+      "seconds": 7.52
+    },
+    {
+      "epoch": 1790122889.707117,
+      "event": "lead_synthetic_residual_test_reservation",
+      "successful_policy_days": 42
+    },
+    {
+      "builder_control_policy_days": 2652,
+      "counting": "two policies for all issue/predict attempts and pending restoration registrations, including failures and warm-up; no overlap deduction",
+      "event": "residual accounting correction",
+      "lead_control_policy_days": 1002,
+      "no_new_execution": true
+    },
+    {
+      "additional_seconds": 174.05516621124116,
+      "cutoff_epoch": 1790123208.8255749,
+      "event": "conservative_monitor_tail_charge",
+      "includes_idle_after_verified_worker_stop": true
+    }
+  ],
+  "jobs": [
+    {
+      "abort_reason": null,
+      "charged_seconds": 37.35150587500539,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-u",
+        "scripts/cp16_v2.py",
+        "--job",
+        "preflight",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 37.37203487500665,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/preflight.log",
+      "peak_checkpoint_disk_bytes": 360787879,
+      "peak_process_tree_rss_bytes": 1256341504,
+      "running": false,
+      "start_epoch": 1790122606.400693
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 6.111972332990263,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/lead-tests"
+      ],
+      "elapsed_seconds": 6.161533457983751,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/pre-run-tests.log",
+      "peak_checkpoint_disk_bytes": 565719032,
+      "peak_process_tree_rss_bytes": 258179072,
+      "running": false,
+      "start_epoch": 1790122889.746057
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 73.28914383400115,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-u",
+        "scripts/cp16_v2.py",
+        "--job",
+        "admission",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 73.3307927089918,
+      "exit_code": null,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/admission.log",
+      "monitor_failure": "FileNotFoundError on lineage.json.tmp rename; child survived monitor; fixed before further execution",
+      "peak_checkpoint_disk_bytes": 566679249,
+      "peak_process_tree_rss_bytes": 367493120,
+      "reconciled_elapsed_upper_bound_seconds": 247.3443100452423,
+      "reconciled_worker_exit": "explicit SIGINT; KeyboardInterrupt preserved in admission.log",
+      "running": false,
+      "start_epoch": 1790122961.4812632,
+      "unmonitored_rss": "unknown; no retrospective peak claimed"
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 2.0276314999791794,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16/test_monitor.py",
+        "tests/cp16/test_budget_inputs.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/monitor-tests"
+      ],
+      "elapsed_seconds": 2.0894269579730462,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/monitor-regression.log",
+      "peak_checkpoint_disk_bytes": 566908114,
+      "peak_process_tree_rss_bytes": 224919552,
+      "running": false,
+      "start_epoch": 1790123208.859017,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 4.570944374980172,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_02_rolling_closed_left.py",
+        "tests/test_05_schema_firewall.py",
+        "tests/test_08_partition_integrity.py",
+        "tests/test_12_partition_exclusion.py",
+        "tests/test_24_live_namespace_is_walled_off.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/guard-tests"
+      ],
+      "elapsed_seconds": 4.620014332991559,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/inherited-guards.log",
+      "peak_checkpoint_disk_bytes": 567948390,
+      "peak_process_tree_rss_bytes": 311181312,
+      "running": false,
+      "start_epoch": 1790123308.5650718,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 1.7745567919919267,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16/test_budget_inputs.py::test_blocked_protocol_refuses_scientific_job_before_execution",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/blocked-test"
+      ],
+      "elapsed_seconds": 1.8350127500016242,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/blocked-execution-test.log",
+      "peak_checkpoint_disk_bytes": 567967852,
+      "peak_process_tree_rss_bytes": 223870976,
+      "running": false,
+      "start_epoch": 1790123547.1505358,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 5.716557292005746,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16/test_monitor.py",
+        "tests/cp16/test_budget_inputs.py",
+        "tests/cp16/test_scoring.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-tests"
+      ],
+      "elapsed_seconds": 5.761920416989597,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-tests.log",
+      "peak_checkpoint_disk_bytes": 450961819,
+      "peak_process_tree_rss_bytes": 257785856,
+      "running": false,
+      "start_epoch": 1790123750.5978901,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 4.472959082981106,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_02_rolling_closed_left.py",
+        "tests/test_05_schema_firewall.py",
+        "tests/test_08_partition_integrity.py",
+        "tests/test_12_partition_exclusion.py",
+        "tests/test_24_live_namespace_is_walled_off.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-guards"
+      ],
+      "elapsed_seconds": 4.527521416981472,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-guards.log",
+      "peak_checkpoint_disk_bytes": 450962844,
+      "peak_process_tree_rss_bytes": 311836672,
+      "running": false,
+      "start_epoch": 1790123792.6248388,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 0.5081425410171505,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/audit.py"
+      ],
+      "elapsed_seconds": 0.5582393330114428,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-audit.log",
+      "peak_checkpoint_disk_bytes": 453909699,
+      "peak_process_tree_rss_bytes": 117800960,
+      "running": false,
+      "start_epoch": 1790123837.30392,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 0.7701755000161938,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit.py"
+      ],
+      "elapsed_seconds": 0.8181357500143349,
+      "exit_code": 1,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-final-audit.log",
+      "peak_checkpoint_disk_bytes": 453911635,
+      "peak_process_tree_rss_bytes": 145113088,
+      "running": false,
+      "start_epoch": 1790123875.0691378,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 0.504355624987511,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit_normalized.py"
+      ],
+      "elapsed_seconds": 0.5475725409924053,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-final-audit-normalized.log",
+      "peak_checkpoint_disk_bytes": 453913948,
+      "peak_process_tree_rss_bytes": 117604352,
+      "running": false,
+      "start_epoch": 1790123895.693473,
+      "supervisor_error": null
+    }
+  ],
+  "terminal_qualifications": {
+    "active_effort": "approximately0.5hours; conservative upper bound1hour, far below40-active-hour ceiling",
+    "candidate_sha": "3a160fd33ed92bb0061144cfbce2323d8b3a7db9",
+    "global_BLAS_threads": "UNKNOWN for early Builder jobs; Lead/Integration monitored command environments pin BLAS/OpenMP to1",
+    "global_max_CPU_workers": "NOT MEASURED for early Builder jobs; each later monitored job uses one worker; no actual over-cap concurrency established",
+    "global_peak_RSS": "UNKNOWN during the original monitor gap and early Builder jobs; no actual memory ceiling exceedance established",
+    "independent_review": {
+      "agent": "/root/integration_critic",
+      "analysis_passes": 0,
+      "component_attempts": 0,
+      "policy_days": 0,
+      "reference_passes": 0,
+      "test_passes": 59
+    },
+    "monitored_peak_RSS_bytes": 1256341504,
+    "peak_checkpoint_disk_upper_bound_bytes": 567967852,
+    "remaining_policy_days": 770,
+    "replay_counts": "Conservative issue/predict/warm-up/failed-attempt/pending-registration accounting; no overlap discounts",
+    "required_remaining_production_policy_days": 1200,
+    "status": "BLOCKED; Integration FAIL",
+    "supersedes": "Aggregate resource claims in candidate reports/v2-causal/resources.json summary are qualified by this final evidence and Integration verdict; original snapshot preserved.",
+    "zero_activity": [
+      "dataset/model downloads",
+      "new sources",
+      "B0/B1/B3 fits",
+      "neural/VRE/weather/economic runs",
+      "production bootstrap",
+      "saved-reference score passes",
+      "operational days",
+      "schedules",
+      "GPU/cloud",
+      "remote mutation",
+      "external cost"
+    ]
+  }
+}

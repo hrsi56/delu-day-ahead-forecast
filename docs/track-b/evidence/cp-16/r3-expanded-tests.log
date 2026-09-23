@@ -1,0 +1,38 @@
+............................................F........................... [ 56%]
+.......................................................                  [100%]
+=================================== FAILURES ===================================
+______________ test_oracle_hand_calculated_emitted_median_and_wis ______________
+
+    def test_oracle_hand_calculated_emitted_median_and_wis():
+        frame=pd.DataFrame(dict(policy=["V2-H"]*3,fold=["fold_1"]*3,
+            timestamp_utc=pd.date_range("2020-07-01",periods=3,freq="h",tz="UTC"),
+            delivery_date=[pd.Timestamp("2020-07-01")]*3,y_true=[0.,5.,10.],central=[0.,5.,10.],
+            scale=[1.]*3,p025=[1.]*3,p10=[2.]*3,p25=[3.]*3,p50=[4.]*3,
+            p75=[5.]*3,p90=[6.]*3,p975=[7.]*3))
+>       result=summarize(losses(frame))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/cp16/test_saved_results.py:348: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x =   policy    fold             timestamp_utc  ...       wis   pinball  hour
+0   V2-H  fold_1 2020-07-01 00:00:00+00:00  ...442857  0.221429     3
+2   V2-H  fold_1 2020-07-01 02:00:00+00:00  ...  4.585714  2.292857     4
+
+[3 rows x 35 columns]
+
+    def summarize(x):
+        dates = sorted(x.delivery_date.dt.strftime("%Y-%m-%d").unique().tolist())
+        result = dict(n_hours=len(x), n_days=len(dates), first_delivery_date=dates[0] if dates else None,
+                      last_delivery_date=dates[-1] if dates else None, represented_dates=json.dumps(dates),
+                      MAE=x.ae.mean(), RMSE=np.sqrt(x.se.mean()), WIS=x.wis.mean(), mean_pinball_7=x.pinball.mean(),
+                      raw_central_MAE=x.central_ae.mean(), centering_effect=(x.ae-x.central_ae).mean(),
+>                     bias=x.bias_value.mean(), daily_mean_level_MAE=x.groupby(["fold", "delivery_date"]).level.first().mean(),
+                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      within_day_shape_MAE=x["shape"].mean(), missing_count=0, crossings=0)
+E       AttributeError: 'NoneType' object has no attribute 'first'
+
+tests/cp16/test_saved_results.py:130: AttributeError
+=========================== short test summary info ============================
+FAILED tests/cp16/test_saved_results.py::test_oracle_hand_calculated_emitted_median_and_wis
+1 failed, 126 passed, 6 deselected in 10.18s

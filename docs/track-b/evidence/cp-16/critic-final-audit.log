@@ -1,0 +1,6 @@
+raw_interrupted_prefix_preserved_except_labeled_status True
+Traceback (most recent call last):
+  File "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit.py", line 14, in <module>
+    assert got.equals(want)
+           ~~~~~~~~~~^^^^^^
+AssertionError
