@@ -2,7 +2,7 @@
  "implementation_sha256_after": {
   "scripts/cp20_weather.py": "320b898c7ef8efb18972a3e34eaa5e7c05ee41ba294a835492d4c6c84e77cacd",
   "src/cp20/budget.py": "fb7aa302d49df929a5dccd48d74d597012f1222608ac1ab2652d456fe9ddfb5f",
-  "src/cp20/extract.py": "02f539f7a1d2c05cfa42bf821f2f97b72e6744d003f0627e69aef38423f4ec85",
+  "src/cp20/extract.py": "845ba91c0ee2a38505fa5abb3126e2f2d2eac0ccf384da94fa040ed9e7d9bf9c",
   "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
   "src/cp20/gfs.py": "67532e850425f2788f3428ab6e63fdaa191cdc5722db33a13c3ba65cc99b7784",
   "src/cp20/net.py": "19e5248cf215289efddc61ed34910df99c3a318238b00c0c1dcf7daafcc07ccd",
@@ -44,6 +44,14 @@
    "evidence": "reports/weather-ablation/throughput-probe.json and feasibility.json: link ~1.2-2.8 MB/s aggregate, AWS single connection 2.76 MB/s, NCAR per-connection limited",
    "id": "r4-endpoint-lanes",
    "kind": "scheduling efficiency, no scientific or data effect"
+  },
+  {
+   "change": "Retained-raw review-sample runs keep production <= 2 so their third attempt serves independent review; all other runs may use up to 3 production attempts. The section 15.5 cap of 3 per target message including review is unchanged and still enforced before each request.",
+   "effective": "resume pass after full-job index 16",
+   "id": "r5-attempt-allowance-by-review-role",
+   "kind": "attempt accounting policy within the unchanged 3-per-message cap",
+   "review_implication": "independent review re-decodes only retained-raw sample runs, which never exceed 2 production attempts",
+   "trigger": "2021-01-04 f021 production attempts 1 and 2 were both interrupted by the Lead (restart test SIGTERM, then the stop for the throughput probe); the full job refused a third production attempt under the internal 2-attempt reservation and recorded the run as failed (not imputed)."
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

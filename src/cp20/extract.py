@@ -5,8 +5,9 @@ Usage: python -m cp20.extract --manifest M --out DIR --select subset|all [--work
 
 * One exclusive lock per output directory; a second instance exits immediately.
 * Every target message attempt is appended (and fsynced) to ``attempts.jsonl`` and
-  charged to the ledger *before* its requests are sent. Production uses at most two
-  attempts per message; the third is reserved for independent review.
+  charged to the ledger *before* its requests are sent. At most three attempts per message
+  in total; for retained-raw review-sample runs production stops at two so the third
+  remains for independent review.
 * A run is complete only when its ``runs/<run>.json`` exists with status ``complete`` and
   its ``runs/<run>.npz`` matches the recorded sha256; completed runs are re-validated
   and reused on resume, never refetched. Partial runs are discarded, their attempts kept.
@@ -36,7 +37,11 @@ from .gfs import (FIELDS, GROUPS, LEADS, BOX_LATS, BOX_LONS, Contradiction, Inte
                   version_evidence)
 from .net import Fetcher, TransferError
 
-PRODUCTION_ATTEMPTS = 2
+# Section 15.5 allows 3 attempts per target message including retries and review. Runs whose
+# retained raw messages feed independent review keep their third attempt for that review;
+# other runs may use all three in production (e.g. after interruptions), never more.
+REVIEW_SAMPLE_PRODUCTION_ATTEMPTS = 2
+PRODUCTION_ATTEMPTS = 3
 # Observed pgrb2.0p25 .idx objects are ~33 KB (admission inventory); the bound is charged up front.
 IDX_BOUND = 100_000
 _decode_lock = threading.Lock()
@@ -59,9 +64,9 @@ class Attempts:
     def used(self, run, lead):
         return max(self.counts.get((run, lead, f), 0) for f in FIELDS)
 
-    def begin(self, run, lead, endpoint, purpose):
+    def begin(self, run, lead, endpoint, purpose, limit=REVIEW_SAMPLE_PRODUCTION_ATTEMPTS):
         with self.lock:
-            if self.used(run, lead) >= PRODUCTION_ATTEMPTS:
+            if self.used(run, lead) >= limit:
                 raise IntegrityError(f'{run} f{lead:03d}: production attempt allowance exhausted')
             self.budget.reserve(message_attempts=len(FIELDS))
             with self.path.open('a') as fh:
@@ -174,7 +179,8 @@ class Extractor:
         return messages, trace
 
     def _lead(self, run, lead, rec, endpoint, purpose):
-        self.attempts.begin(run.isoformat(), lead, endpoint, purpose)
+        limit = REVIEW_SAMPLE_PRODUCTION_ATTEMPTS if rec['retain_raw'] else PRODUCTION_ATTEMPTS
+        self.attempts.begin(run.isoformat(), lead, endpoint, purpose, limit)
         trace = None
         if endpoint == 'aws':
             messages = self._aws_lead(run, lead, rec)

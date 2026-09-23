@@ -138,10 +138,10 @@ def output_frame(data, fold, day, rows, centers, q, arm):
     return item
 
 
-def replay(data, fold, dates, sources, states, truth, predict_days, lineage, phase, frames, budget):
+def replay(data, fold, dates, sources, states, truth, predict_days, lineage, phase, frames, budget, arms=ARMS):
     """Advance both arms over the same dates; identical release/issue/support rules."""
     for d in dates:
-        for arm in ARMS:
+        for arm in arms:
             budget.reserve(policy_days=1)
             state = states[arm]
             state.release(d, truth)
@@ -264,3 +264,43 @@ def score(root: Path):
     lineage['execution_stage'] = 'scored_development_post_selection'
     atomic(out / 'lineage.json', lineage)
     print(json.dumps(tables['summary']['joint_conclusions']), json.dumps(lineage['h0_verification']), flush=True)
+
+
+def h0_dryrun(root: Path, out_path: Path):
+    """Preparation check (charged, local output only): H0 alone through the same replay,
+    admission then evaluation, compared with the accepted CP-16 V2-H vectors. No fit, no weather."""
+    identities(root)
+    m = origin_manifest(root)
+    budget = ledger()
+    lineage = {'origins': []}
+    frames = []
+    for f in m['folds']:
+        first = date.fromisoformat(f['evaluation_start'])
+        early, _ = load(root, before=first)
+        truth = pd.Series(early.y, index=early.index)
+        states = {'H0': SharedResidualState()}
+        days = {date.fromisoformat(x['day']) for x in f['admission']}
+        replay(early, f['fold'], list(pd.date_range(f['warmup_start'], first - timedelta(days=1)).date),
+               {'H0': H0Components(root, f['fold'], early)}, states, lambda ix: truth.reindex(ix).to_numpy(),
+               days, lineage, 'training_only', None, budget, arms=('H0',))
+        full, _ = load(root)
+        truth = pd.Series(full.y, index=full.index)
+        states = {'H0': SharedResidualState.from_dict(states['H0'].to_dict())}
+        replay(full, f['fold'], list(pd.date_range(first, f['evaluation_end']).date),
+               {'H0': H0Components(root, f['fold'], full)}, states, lambda ix: truth.reindex(ix).to_numpy(),
+               None, lineage, 'evaluation', frames, budget, arms=('H0',))
+        print(f['fold'], 'H0 dry replay done', flush=True)
+    ours = pd.concat(frames, ignore_index=True)
+    accepted = pd.read_parquet(root / 'reports/v2-causal/predictions.parquet', filters=[('policy', '==', 'V2-H')])
+    cols = ['fold', 'timestamp_utc', 'y_true', 'central', 'scale', 'level', *LABELS]
+    a = ours[cols].sort_values(['fold', 'timestamp_utc']).reset_index(drop=True)
+    b = accepted[cols].sort_values(['fold', 'timestamp_utc']).reset_index(drop=True)
+    num = ['y_true', 'central', 'scale', 'level', *LABELS]
+    result = {'rows': len(a), 'keys_equal': a[['fold', 'timestamp_utc']].astype(str).equals(b[['fold', 'timestamp_utc']].astype(str)),
+              'bitwise_equal': bool(np.array_equal(a[num].to_numpy(float), b[num].to_numpy(float))),
+              'max_abs_difference': float(np.max(np.abs(a[num].to_numpy(float) - b[num].to_numpy(float)))),
+              'admission_vectors': sum(1 for r in lineage['origins'] if r['phase'] == 'training_only' and r['predicted']),
+              'sources': pd.Series([r['source'] for r in lineage['origins']]).value_counts().to_dict(),
+              'policy_days_charged': len(lineage['origins'])}
+    atomic(out_path, result)
+    print(json.dumps(result), flush=True)
