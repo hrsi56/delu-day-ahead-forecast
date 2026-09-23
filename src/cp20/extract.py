@@ -26,7 +26,7 @@ import signal
 import sys
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from collections import deque
 
 import numpy as np
 
@@ -348,8 +348,13 @@ def main():
     elif args.select != 'all':
         wanted = set(args.select.split(','))
         runs = [r for r in runs if r['run_00z'] in wanted]
-    # NCAR runs first (slowest, date-ordered for offset learning), then AWS.
-    runs = sorted(runs, key=lambda r: (r['primary_endpoint'] != 'ncar', r['run_00z']))
+    # Endpoint lanes: AWS nearly saturates the local link on one connection while NCAR is
+    # per-connection limited, so one worker prefers AWS and the rest prefer NCAR (date order,
+    # which also keeps the NCAR offset predictions local); an idle lane takes the other queue.
+    runs = sorted(runs, key=lambda r: r['run_00z'])
+    lanes = {'ncar': deque(r for r in runs if r['primary_endpoint'] == 'ncar'),
+             'aws': deque(r for r in runs if r['primary_endpoint'] == 'aws')}
+    prefs = ['aws'] + ['ncar'] * (args.workers - 1) if args.workers > 1 else ['ncar']
     ex = Extractor(args, budget)
 
     def on_signal(signum, _frame):
@@ -362,13 +367,26 @@ def main():
         inventory_added(ex, added)
     elif added:
         raise SystemExit('added runs require --inventory-added targeted checks first')
-    print(f'extraction start: {len(runs)} runs, workers={args.workers}', flush=True)
-    with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for future in [pool.submit(ex.run, r) for r in runs]:
+    print(f'extraction start: {len(runs)} runs, workers={args.workers}, lanes={prefs}', flush=True)
+    qlock = threading.Lock()
+
+    def lane(pref):
+        other = 'aws' if pref == 'ncar' else 'ncar'
+        while not ex.stop.is_set():
+            with qlock:
+                queue = lanes[pref] if lanes[pref] else lanes[other]
+                if not queue:
+                    return
+                rec = queue.popleft()
             try:
-                future.result()
+                ex.run(rec)
             except Exception as exc:  # noqa: BLE001 - an unexpected worker error halts cleanly
-                ex._halt('worker_error', {'error': repr(exc)})
+                ex._halt('worker_error', {'run': rec['run_00z'], 'error': repr(exc)})
+    threads = [threading.Thread(target=lane, args=(p,), daemon=True) for p in prefs]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
     ex._save_progress()
     done = [r['run_00z'] for r in runs if ex.completed(r['run_00z'])]
     summary = {'selected': len(runs), 'complete': len(done), 'failed': sorted(set(ex.progress['failed'])),

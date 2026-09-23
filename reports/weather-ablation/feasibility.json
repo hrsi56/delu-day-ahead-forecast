@@ -1,0 +1,153 @@
+{
+ "active_hours_so_far_upper_bound": 0.7337750025590261,
+ "basis": "bytes charged per single-pass completed subset run x remaining runs (+5%); bandwidth-bound wall time; machine = workers x wall",
+ "decision": {
+  "lanes": [
+   "aws",
+   "ncar"
+  ],
+  "machine_stop_line_hours": 85,
+  "reason": "link-bound: one AWS connection nearly saturates the ~2-3 MB/s link; NCAR is per-connection limited; machine time is charged workers x wall, so two lanes minimise charged hours and keep two workers free for concurrent preparation",
+  "transfer_stop_line_gib": 150,
+  "workers": 2
+ },
+ "fits": {
+  "assumed_seconds_per_component_day": 18.0,
+  "controls_component_days": 28,
+  "hg_main_component_days": 1276,
+  "machine_hours": 6.82,
+  "primitive_fits_nominal": 163680,
+  "review_reserve_component_days": 60
+ },
+ "measured_subset": {
+  "aws": {
+   "completed_runs": 2,
+   "max_charged_bytes_per_run": 58939736,
+   "median_charged_bytes_per_run": 58939736
+  },
+  "ncar": {
+   "completed_runs": 6,
+   "max_charged_bytes_per_run": 151946308,
+   "median_charged_bytes_per_run": 82218713
+  }
+ },
+ "other_machine_hours": {
+  "assembly_protocol_tests_scoring_report": 3.0,
+  "critic_review_reserve": 10.0
+ },
+ "per_run_bytes_used": {
+  "aws": 49418811,
+  "ncar": 82029967
+ },
+ "policy_days_plan": {
+  "controls": 14,
+  "independent_review_reserve": 1376,
+  "paired_admission_plus_comparison": 1276
+ },
+ "remaining_runs": {
+  "aws": 1742,
+  "ncar": 726
+ },
+ "remaining_transfer_gib": 142.42100626621396,
+ "retried_runs_excluded": [
+  "2019-01-01",
+  "2019-03-30",
+  "2019-06-13",
+  "2019-10-26",
+  "2021-01-04",
+  "2021-02-02",
+  "2021-03-23"
+ ],
+ "scenarios": {
+  "nominal_probe_aggregate": {
+   "aggregate_MBps": 1.9,
+   "extraction_machine_hours": 44.71444182578948,
+   "extraction_wall_hours": 22.35722091289474,
+   "total_machine_hours": 65.64480619213228,
+   "within_machine_cap": true
+  },
+  "pessimistic_observed_sustained": {
+   "aggregate_MBps": 1.2,
+   "extraction_machine_hours": 70.79786622416667,
+   "extraction_wall_hours": 35.398933112083334,
+   "total_machine_hours": 91.72823059050947,
+   "within_machine_cap": true
+  }
+ },
+ "single_pass_runs": [
+  "2020-10-24",
+  "2021-03-22"
+ ],
+ "stop_lines": {
+  "extraction_machine_hours_cumulative": 85,
+  "extraction_transfer_gib": 150,
+  "rationale": "leave >=35 machine-hours and >=10 GiB for fitting, controls, scoring and independent review"
+ },
+ "subset_verification": {
+  "endpoints": "NCAR v14/v15.1 and the 2021-02-02 NCAR fill; AWS v15.1 (2021-03-22, no atmos/) and v16 (2021-03-23); remaining subset runs (8 added, 2022-08-25, 2024-09-15, 2026-04-06, 2021-01-04) continue inside the full job",
+  "restart": "SIGTERM at 5 complete runs (job 11): FAILED marker abort_reason=monitor_signal_15, child exit -9 after the 30 s grace, 6 complete runs preserved; resumed job 12 revalidated (sha256) and reused all 6, refetched none; cumulative ledger continued, attempt 2 recorded for partial leads",
+  "runs_complete": 8
+ },
+ "throughput_probe": {
+  "range_bytes": 6000000,
+  "results": [
+   {
+    "endpoint": "aws",
+    "parallel_aggregate_MBps": 1.912732835200489,
+    "parallel_per_connection_MBps": [
+     0.7306175244800389,
+     0.6379173624317885,
+     0.8840288390870081
+    ],
+    "single_connection_MBps": 2.755533442419613
+   },
+   {
+    "endpoint": "ncar",
+    "parallel_aggregate_MBps": 2.3821663603560923,
+    "parallel_per_connection_MBps": [
+     1.002663575331435,
+     2.0479681671614642,
+     0.7945703119289658
+    ],
+    "single_connection_MBps": 0.3326078978261994
+   }
+  ],
+  "utc": "2026-09-23T17:25:56Z"
+ },
+ "totals_vs_caps": {
+  "added_disk_gib_upper": [
+   3.583572816848755,
+   40.0
+  ],
+  "aggregate_rss_gib_upper": [
+   3.0,
+   10.0
+  ],
+  "component_attempts": [
+   1364,
+   4000
+  ],
+  "main_component_attempts": [
+   1276,
+   3000
+  ],
+  "message_attempts": [
+   131870.0,
+   371400
+  ],
+  "policy_days": [
+   2666,
+   9000
+  ],
+  "primitive_fits_nominal": [
+   163680,
+   480000
+  ],
+  "transfer_gib": [
+   145.81229564473034,
+   160.0
+  ]
+ },
+ "verdict": "feasible_within_all_caps_with_reserves",
+ "workers_for_extraction": 2
+}
