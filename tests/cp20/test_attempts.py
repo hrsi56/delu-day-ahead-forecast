@@ -1,5 +1,5 @@
-"""Attempt allowance: 2 production per message (third kept for review); Owner decision O1 adds
-up to two production attempts only where pre-run testing consumed attempts, logged separately."""
+"""O2 attempt ledger: only responses that fail integrity/decoding/validation (or 4xx/wrong size)
+count; network failures, stops and discarded tries are logged separately; O1 stays as recorded."""
 import json
 
 import pytest
@@ -9,14 +9,6 @@ from cp20.budget import Budget
 from cp20.gfs import FIELDS, IntegrityError
 
 
-def seed(path, run, lead, n, epoch):
-    with path.open('a') as fh:
-        for k in range(n):
-            for f in FIELDS:
-                fh.write(json.dumps({'run': run, 'lead': lead, 'field': f, 'endpoint': 'aws', 'attempt': k + 1,
-                                     'purpose': 'production', 'epoch': epoch}) + '\n')
-
-
 @pytest.fixture
 def ledger(tmp_path):
     b = Budget(tmp_path / 'ledger.json')
@@ -24,34 +16,35 @@ def ledger(tmp_path):
     return b
 
 
-@pytest.mark.parametrize('prerun,post,allowed', [(0, 0, 2), (1, 0, 2), (2, 0, 2), (0, 1, 1), (1, 1, 1), (2, 1, 1), (2, 2, 0), (0, 2, 0)])
-def test_production_allowance_with_owner_prerun_replacements(tmp_path, ledger, prerun, post, allowed):
-    path = tmp_path / 'attempts.jsonl'
-    seed(path, '2021-01-04', 21, prerun, extract.PRERUN_CUTOFF_EPOCH - 100)
-    seed(path, '2021-01-04', 21, post, extract.PRERUN_CUTOFF_EPOCH + 100)
-    a = extract.Attempts(path, ledger)
-    for _ in range(allowed):
-        a.begin('2021-01-04', 21, 'aws', 'production')
+def test_only_failed_responses_count_and_uncounted_are_logged_separately(tmp_path, ledger):
+    a = extract.Attempts(tmp_path / 'attempts.jsonl', ledger)
+    for outcome in ('interrupted_by_stop', 'discarded_with_run', 'success', 'interrupted_by_cap'):
+        a.end('2021-01-09', 21, 'aws', a.begin('2021-01-09', 21, 'aws', 'production'), outcome)
+    assert a.used('2021-01-09', 21) == 0
+    a.end('2021-01-09', 21, 'aws', a.begin('2021-01-09', 21, 'aws', 'production'), 'integrity_failure')
+    a.end('2021-01-09', 21, 'ncar', a.begin('2021-01-09', 21, 'ncar', 'alternate_endpoint'), 'object_failure')
     with pytest.raises(IntegrityError, match='allowance exhausted'):
-        a.begin('2021-01-04', 21, 'aws', 'production')
-    total = prerun + post + allowed
-    assert total == extract.PRODUCTION_ATTEMPTS + min(2, prerun)
-    replacements = max(0, total - extract.PRODUCTION_ATTEMPTS) - max(0, prerun + post - extract.PRODUCTION_ATTEMPTS)
+        a.begin('2021-01-09', 21, 'aws', 'integrity_retry')
     counts = ledger.read()['counts']
-    assert counts.get('message_attempts', 0) == 5 * allowed
-    assert counts.get('prerun_replacement_attempts', 0) == 5 * replacements
-    logged = path.with_name('prerun_replacement_attempts.jsonl')
-    lines = logged.read_text().splitlines() if logged.exists() else []
-    assert len(lines) == 5 * replacements
-    assert all(json.loads(l)['owner_decision'] == 'O1' and json.loads(l)['purpose'].startswith('owner_approved_prerun_replacement')
-               for l in lines)
+    assert counts['message_attempts'] == 10 and counts['message_tries'] == 30
+    assert counts['uncounted_message_tries'] == 15
+    unc = [json.loads(l) for l in (tmp_path / 'uncounted-attempts.jsonl').read_text().splitlines()]
+    assert len(unc) == 15 and {u['owner_decision'] for u in unc} == {'O2'}
+    # Reloading reproduces the allowance state from the outcome log.
+    assert extract.Attempts(tmp_path / 'attempts.jsonl', ledger).used('2021-01-09', 21) == 2
 
 
-def test_review_attempt_is_never_consumed_by_ordinary_production(tmp_path, ledger):
+@pytest.mark.parametrize('prerun,extra_allowed', [(0, 0), (1, 1), (2, 2), (3, 2)])
+def test_o1_extra_counted_attempts_for_prerun_consumption(tmp_path, ledger, prerun, extra_allowed):
     path = tmp_path / 'attempts.jsonl'
+    with path.open('w') as fh:
+        for _ in range(prerun):
+            for f in FIELDS:
+                fh.write(json.dumps({'run': '2021-01-04', 'lead': 21, 'field': f, 'epoch': extract.PRERUN_CUTOFF_EPOCH - 5}) + '\n')
     a = extract.Attempts(path, ledger)
-    a.begin('2025-01-01', 24, 'aws', 'production')
-    a.begin('2025-01-01', 24, 'ncar', 'alternate_endpoint')
+    for _ in range(extract.PRODUCTION_ATTEMPTS + extra_allowed):
+        a.end('2021-01-04', 21, 'aws', a.begin('2021-01-04', 21, 'aws', 'production'), 'integrity_failure')
     with pytest.raises(IntegrityError):
-        a.begin('2025-01-01', 24, 'aws', 'transient_retry')
-    assert a.used('2025-01-01', 24) == 2 < 3
+        a.begin('2021-01-04', 21, 'aws', 'production')
+    replaced = tmp_path / 'prerun_replacement_attempts.jsonl'
+    assert (len(replaced.read_text().splitlines()) if replaced.exists() else 0) == 5 * extra_allowed

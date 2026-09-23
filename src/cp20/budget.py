@@ -34,7 +34,8 @@ REQUIRED_RUNS = 2476
 TARGET_MESSAGES = 123800
 # Uncapped informational counters that are still recorded cumulatively.
 TRACKED = {'requests', 'failed_requests', 'runs_completed', 'decoded_messages',
-           'prerun_replacement_attempts'}  # Owner decision O1; also inside message_attempts
+           'prerun_replacement_attempts',  # Owner decision O1; also inside message_attempts
+           'message_tries', 'uncounted_message_tries', 'network_retries'}  # Owner decision O2
 # Gauges are peaks or live sums, not cumulative consumption.
 GAUGES = {'rss_bytes', 'additional_disk_bytes', 'workers'}
 # Conservative effort start: the CP-20 session began before the ledger existed.
@@ -117,6 +118,13 @@ class Budget:
             for key, value in increments.items():
                 counts[key] = counts.get(key, 0) + value
             return dict(counts)
+
+    def headroom(self, **increments):
+        """Refuse (without charging) if a later charge of these increments would exceed a cap."""
+        counts = self.read()['counts']
+        for key, value in increments.items():
+            if key in CAPS and counts.get(key, 0) + value > CAPS[key]:
+                raise CapExceeded(f'CP-20 cap refuses next operation: {key}')
 
     def add_time(self, seconds):
         """Machine time is charged as it elapses; the monitor aborts at the cap."""

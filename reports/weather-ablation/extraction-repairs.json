@@ -1,11 +1,12 @@
 {
  "implementation_sha256_after": {
   "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
-  "src/cp20/budget.py": "142f378b559c3b8b622481ab0c01fd8d5198cad2fbd971f4d7e068de77283c3f",
-  "src/cp20/extract.py": "cef945a43884e54f86319144efaee1fe99bfe1303a82ba81beeee26930f25cb7",
+  "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
+  "src/cp20/chain.py": "e44bab8e7dc0f114090699ff13255bcfa5ab9f989e51ed6d3be972d056167c41",
+  "src/cp20/extract.py": "c6512bb195742304e9f56ea01778f5347fe2ba4b1c906b284754de88bb4d2897",
   "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
   "src/cp20/gfs.py": "f4a300ba63943827bd2de63f27ed573d3b12308c7534a5695c2dd8a828c38807",
-  "src/cp20/net.py": "ee231dfedc50addbf0d81e586277e96d32e9e57415d5ae3fab065b458af3eb21",
+  "src/cp20/net.py": "d07f58136695aff4f125551c4e78f44e55950b93d32daa74dbcb8c9a2e1c9f3d",
   "src/cp20/plan.py": "eca2f62c986cd2dfbcaa96e9e2ec2be71af4f9a8687b43f3a969e3c95aa13808",
   "src/cp20/probe.py": "d6a6d188f7dd51dfe00a30da6f0675e0f87e8b559a81fb19ab9567aab8f3e256",
   "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5"
@@ -29,6 +30,18 @@
    "source": "Owner instruction in the CP-20 session, 2026-09-23 (after 2021-01-04 failed with production attempt allowance exhausted)",
    "table": "reports/weather-ablation/prerun-attempts.csv",
    "text": "Approve up to two additional production attempts per target message whose allowance was consumed by pre-run testing; log them separately. No other cap changes."
+  },
+  {
+   "id": "O2",
+   "implementation": "attempts.jsonl logs every try (message_tries); attempt-outcomes.jsonl records each outcome; only integrity_failure, object_failure (4xx/wrong size) and validation_failure count (message_attempts, per-message allowance 2 production + O1 extra, third kept for review); network, stop, cap and discarded-with-run outcomes go to uncounted-attempts.jsonl (uncounted_message_tries). Legacy tries backfilled (source \"O2 backfill\"): {'validation_failure': 4, 'success': 300, 'interrupted_or_discarded': 63, 'network_failure': 10}. The ledger message_attempts total keeps the 1,885 pre-O2 charges unchanged (conservative; not reset).",
+   "source": "Owner instruction in the CP-20 session, 2026-09-23 (issued as a pasted block; confirmed by the Owner in the next message)",
+   "text": "A message attempt counts only when a response was received and the message failed validation, decoding or integrity checks. Network stalls, timeouts, connection failures and Lead-initiated stops do not consume the per-message allowance; they are logged separately and remain bounded by the transfer and machine-hour caps. Restore the allowance of every message that lost attempts to those causes. O1 stays as recorded. No other cap changes."
+  },
+  {
+   "id": "S1",
+   "implementation": "src/cp20/net.py (r9), src/cp20/extract.py no-data watchdog, src/cp20/chain.py phases",
+   "source": "Owner standing instruction, same message as the O2 confirmation",
+   "text": "Run the rest of the extraction unattended. Network problems are never a reason to stop or ask. Stop only when a cap is about to be exhausted, when data contradicts the admission, when no data at all arrives for 60 minutes (then report), or when all runs are done. Harden the network layer (watchdog deadline, per-attempt buffers, backoff with jitter up to 10 minutes). Run NCAR now with 3 workers, AWS alone after NCAR finishes, and finally retry the failed days."
   }
  ],
  "repairs": [
@@ -89,6 +102,7 @@
    "effective": "relaunch after full job 23",
    "id": "r7-network-stall-handling",
    "kind": "network robustness, no scientific or data effect; attempt caps unchanged",
+   "status": "circuit-breaker halt superseded by r9 (Owner S1); deadline and cause routing retained in hardened form",
    "tests": "tests/cp20/test_retry_routing.py",
    "trigger": "full job 23: AWS range for 2021-01-04 f021 u10+v10 trickled at ~600 B/s for >7 min (nettop), never tripping the 60 s no-byte read timeout; an earlier 2021-01-08 f024 range took 164 s"
   },
@@ -120,6 +134,13 @@
    "id": "r8-single-endpoint-jobs-and-draining-stops",
    "kind": "scheduling and stop handling, no scientific or data effect",
    "supersedes": "r4 endpoint lanes"
+  },
+  {
+   "change": "watchdog-enforced wall-clock deadline per request (reader thread, caller waits at most the deadline, socket shut down); a per-request buffer (no partial resume); healthy keep-alive reused, a failed or expired request retried on a fresh connection after exponential backoff with +-50% jitter capped at 600 s, without limit and uncounted; every retry reserves its bytes before sending; the 5-failures halt removed; a 60-minute no-received-data watchdog stops the job (exit 6) for a report; single-endpoint phases chained by src/cp20/chain.py",
+   "effective": "chain launch after job 26",
+   "id": "r9-network-hardening-O2-S1",
+   "kind": "network robustness and attempt accounting per Owner decisions O2/S1; no scientific or data effect",
+   "tests": "tests/cp20/test_fetcher_watchdog.py (local trickling server), tests/cp20/test_attempts.py, tests/cp20/test_retry_routing.py"
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

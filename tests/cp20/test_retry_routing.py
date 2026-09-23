@@ -1,10 +1,10 @@
-"""Per-lead retry routing: network stalls retry the same endpoint on a fresh connection, object
-failures use the one alternate endpoint, bursts halt resumably; attempts stay within the ledger."""
+"""Per-lead routing under O2: integrity/object failures use the one alternate endpoint then
+retry, a network error (raised only after a stop request) abandons the run uncounted, and an
+exhausted counted allowance records a non-imputable failure."""
 import argparse
 import json
 
 import numpy as np
-import pytest
 
 from cp20 import extract
 from cp20.budget import Budget
@@ -24,41 +24,41 @@ REC = {'run_00z': '2022-01-10', 'delivery_day': '2022-01-11', 'primary_endpoint'
 
 
 def scripted(ex, script, calls):
-    def lead(run, lead, rec, endpoint, purpose):
-        ex.attempts.begin(run.isoformat(), lead, endpoint, purpose)
+    def body(run, lead, rec, endpoint, purpose):
         calls.append((lead, endpoint, purpose))
         outcome = script.get((lead, len([c for c in calls if c[0] == lead])))
         if outcome is not None:
             raise outcome
-        box = np.zeros((34, 41))
-        return {f: (b'x', box, {'field': f, 'lead': lead, 'endpoint': endpoint, 'meta': {}}) for f in FIELDS}, None
-    ex._lead = lead
+        return {f: (b'x', np.zeros((34, 41)), {'field': f, 'lead': lead, 'endpoint': endpoint, 'meta': {}}) for f in FIELDS}, None
+    ex._lead_body = body
 
 
-def test_network_stall_retries_same_endpoint_object_error_uses_alternate(tmp_path):
+def test_object_and_integrity_failures_use_alternate_then_count(tmp_path):
     ex = make(tmp_path)
     calls = []
-    scripted(ex, {(21, 1): NetworkError('stalled'), (24, 1): ObjectError('HTTP 404'), (27, 1): IntegrityError('no 7777')}, calls)
+    scripted(ex, {(24, 1): ObjectError('HTTP 404'), (27, 1): IntegrityError('no 7777')}, calls)
     ex.run(REC)
-    assert (21, 'aws', 'transient_retry') in calls and (24, 'ncar', 'alternate_endpoint') in calls
-    assert (27, 'ncar', 'alternate_endpoint') in calls
+    assert (24, 'ncar', 'alternate_endpoint') in calls and (27, 'ncar', 'alternate_endpoint') in calls
     assert json.loads((tmp_path / 'out/runs/2022-01-10.json').read_text())['status'] == 'complete'
-    assert max(ex.attempts.used('2022-01-10', l) for l in LEADS) == 2
+    assert ex.attempts.used('2022-01-10', 24) == 1 and ex.attempts.used('2022-01-10', 21) == 0
 
 
-def test_two_failures_exhaust_production_and_record_nonimputable_failure(tmp_path):
+def test_network_error_after_stop_abandons_run_without_counting(tmp_path):
     ex = make(tmp_path)
     calls = []
-    scripted(ex, {(21, 1): NetworkError('stalled'), (21, 2): NetworkError('stalled again')}, calls)
+    scripted(ex, {(27, 1): NetworkError('stop requested during backoff')}, calls)
     ex.run(REC)
     assert not (tmp_path / 'out/runs/2022-01-10.json').exists()
+    assert max(ex.attempts.used('2022-01-10', l) for l in LEADS) == 0
+    outcomes = [json.loads(l)['outcome'] for l in (tmp_path / 'out/attempt-outcomes.jsonl').read_text().splitlines()]
+    assert 'interrupted_by_stop' in outcomes and 'discarded_with_run' in outcomes
+
+
+def test_two_counted_failures_exhaust_and_record_nonimputable_failure(tmp_path):
+    ex = make(tmp_path)
+    calls = []
+    scripted(ex, {(21, 1): IntegrityError('bad'), (21, 2): IntegrityError('bad again')}, calls)
+    ex.run(REC)
     failed = json.loads((tmp_path / 'out/failures.jsonl').read_text().splitlines()[0])
     assert failed['imputable'] is False and 'allowance exhausted' in failed['failures'][-1]['error']
     assert ex.attempts.used('2022-01-10', 21) == 2
-
-
-def test_network_failure_burst_halts_resumably(tmp_path):
-    ex = make(tmp_path)
-    for _ in range(4):
-        assert not ex._network_failure()
-    assert ex._network_failure() and ex.reason == 'network_degraded' and ex.stop.is_set()

@@ -12,9 +12,10 @@ Usage: python -m cp20.extract --manifest M --out DIR --select subset|all [--work
 * A run is complete only when its ``runs/<run>.json`` exists with status ``complete`` and
   its ``runs/<run>.npz`` matches the recorded sha256; completed runs are re-validated
   and reused on resume, never refetched. Partial runs are discarded, their attempts kept.
-* Exit codes: 0 all selected runs complete; 2 stopped/partial (signal or stop line);
-  4 material contradiction with admission (evidence written, task must stop);
-  5 finished with runs that failed after the bounded attempts (classified, not imputed).
+* Exit codes: 0 all selected runs complete; 2 stopped/partial (stop request); 4 material
+  contradiction with admission (evidence written, task must stop); 5 finished with runs that
+  failed after the bounded counted attempts (not imputed); 6 no data received for 60
+  minutes; 7 a cap or stop line would be crossed. Network problems never stop the job.
 """
 from __future__ import annotations
 
@@ -36,11 +37,12 @@ from .budget import Budget, CapExceeded, GIB, atomic
 from .gfs import (FIELDS, GROUPS, LEADS, BOX_LATS, BOX_LONS, Contradiction, IntegrityError, NcarLocator,
                   OffsetModel, aws_url, check_frame, decode, ncar_url, parse_idx, sha, version,
                   version_evidence)
-from .net import Fetcher, NetworkError, TransferError
+from .net import Fetcher, NetworkError, ObjectError, TransferError
 
 # Section 15.5: 3 attempts per target message including retries and review. Production uses at
 # most 2, so every message keeps one attempt for independent review (r5 reverted).
 PRODUCTION_ATTEMPTS = 2
+NO_DATA_SECONDS = 3600.0
 # Owner decision O1 (2026-09-23, in session): up to two additional production attempts per target
 # message whose allowance was consumed by pre-run testing (subset jobs 3, 11 and 12, i.e. every
 # attempt logged before the full extraction job started), logged separately; no other cap change.
@@ -55,24 +57,45 @@ def _date(s):
     return dt.date.fromisoformat(s)
 
 
+COUNTED_OUTCOMES = frozenset({'integrity_failure', 'object_failure', 'validation_failure'})
+
+
 class Attempts:
+    """Per-message attempt ledger under Owner decision O2.
+
+    Every try is logged in ``attempts.jsonl`` (charged as ``message_tries``) and gets an
+    outcome in ``attempt-outcomes.jsonl``. Only a try whose response arrived and whose message
+    failed integrity, decoding or validation checks (or whose object answered 4xx / wrong size)
+    counts against the per-message allowance and ``message_attempts``. Network failures,
+    expired deadlines, Lead-initiated stops and tries discarded with their run are logged
+    in ``uncounted-attempts.jsonl`` (``uncounted_message_tries``) and never consume it.
+    Production may use 2 counted attempts (the third stays for review) plus the O1 extra.
+    """
+
     def __init__(self, path: Path, budget: Budget):
         self.path, self.budget, self.lock = path, budget, threading.Lock()
+        self.outcomes = path.with_name('attempt-outcomes.jsonl')
+        self.uncounted = path.with_name('uncounted-attempts.jsonl')
         self.replacements = path.with_name('prerun_replacement_attempts.jsonl')
-        self.counts, self.prerun = {}, {}
+        self.prerun, self.counted = {}, {}
         if path.exists():
             for line in path.read_text().splitlines():
                 r = json.loads(line)
                 key = (r['run'], r['lead'], r['field'])
-                self.counts[key] = self.counts.get(key, 0) + 1
                 if r['epoch'] < PRERUN_CUTOFF_EPOCH:
                     self.prerun[key] = self.prerun.get(key, 0) + 1
+        if self.outcomes.exists():
+            for line in self.outcomes.read_text().splitlines():
+                r = json.loads(line)
+                if r['outcome'] in COUNTED_OUTCOMES:
+                    key = (r['run'], r['lead'], r['field'])
+                    self.counted[key] = self.counted.get(key, 0) + 1
 
     def used(self, run, lead):
-        return max(self.counts.get((run, lead, f), 0) for f in FIELDS)
+        return max(self.counted.get((run, lead, f), 0) for f in FIELDS)
 
     def extra(self, run, lead):
-        """Owner-approved O1 allowance: replaces attempts consumed by pre-run testing, at most two."""
+        """Owner decision O1 (as recorded): up to two extra where pre-run testing consumed tries."""
         return min(PRERUN_REPLACEMENT_MAX, max(self.prerun.get((run, lead, f), 0) for f in FIELDS))
 
     def begin(self, run, lead, endpoint, purpose):
@@ -83,22 +106,41 @@ class Attempts:
             replacement = used >= PRODUCTION_ATTEMPTS
             if replacement:
                 purpose = f'owner_approved_prerun_replacement:{purpose}'
-                self.budget.reserve(message_attempts=len(FIELDS), prerun_replacement_attempts=len(FIELDS))
-            else:
-                self.budget.reserve(message_attempts=len(FIELDS))
+            self.budget.headroom(message_attempts=len(FIELDS))
+            self.budget.reserve(message_tries=len(FIELDS))
+            try_id = f'{run}:{lead}:{time.time():.6f}:{threading.get_ident()}'
             with self.path.open('a') as fh:
                 for field in FIELDS:
-                    key = (run, lead, field)
-                    self.counts[key] = self.counts.get(key, 0) + 1
-                    record = {'run': run, 'lead': lead, 'field': field, 'endpoint': endpoint,
-                              'attempt': self.counts[key], 'purpose': purpose, 'epoch': time.time()}
+                    record = {'run': run, 'lead': lead, 'field': field, 'endpoint': endpoint, 'try_id': try_id,
+                              'counted_before': self.counted.get((run, lead, field), 0), 'purpose': purpose,
+                              'epoch': time.time()}
                     fh.write(json.dumps(record) + '\n')
                     if replacement:
                         with self.replacements.open('a') as rf:
-                            rf.write(json.dumps({**record, 'prerun_attempts': self.prerun.get(key, 0),
+                            rf.write(json.dumps({**record, 'prerun_attempts': self.prerun.get((run, lead, field), 0),
                                                  'owner_decision': 'O1'}) + '\n')
                 fh.flush()
                 os.fsync(fh.fileno())
+            return try_id
+
+    def end(self, run, lead, endpoint, try_id, outcome, detail=''):
+        counted = outcome in COUNTED_OUTCOMES
+        with self.lock:
+            if counted:
+                self.budget.reserve(message_attempts=len(FIELDS))
+            elif outcome != 'success':
+                self.budget.reserve(uncounted_message_tries=len(FIELDS))
+            with self.outcomes.open('a') as fh:
+                for field in FIELDS:
+                    rec = {'run': run, 'lead': lead, 'field': field, 'endpoint': endpoint, 'try_id': try_id,
+                           'outcome': outcome, 'counted': counted, 'detail': str(detail)[:300], 'epoch': time.time()}
+                    fh.write(json.dumps(rec) + '\n')
+                    if counted:
+                        key = (run, lead, field)
+                        self.counted[key] = self.counted.get(key, 0) + 1
+                    elif outcome != 'success':
+                        with self.uncounted.open('a') as uf:
+                            uf.write(json.dumps({**rec, 'owner_decision': 'O2'}) + '\n')
 
 
 def priors(admission: Path) -> dict:
@@ -125,7 +167,9 @@ class Extractor:
         self.args, self.budget = args, budget
         self.out = Path(args.out)
         (self.out / 'runs').mkdir(parents=True, exist_ok=True)
-        self.fetcher = Fetcher(budget, self.out / 'requests.jsonl', int(args.stop_transfer_gib * GIB))
+        self.stop = threading.Event()
+        self.drain = threading.Event()
+        self.fetcher = Fetcher(budget, self.out / 'requests.jsonl', int(args.stop_transfer_gib * GIB), stop_event=self.stop)
         self.attempts = Attempts(self.out / 'attempts.jsonl', budget)
         model_path = self.out / 'offset_model.json'
         learned = {}
@@ -134,12 +178,9 @@ class Extractor:
                 learned.setdefault(tuple(item['key']), []).append((_date(item['run']), item['frac']))
         self.model = OffsetModel(priors(Path(args.admission)), learned)
         self.locator = NcarLocator(self.fetcher, self.model)
-        self.stop = threading.Event()
-        self.drain = threading.Event()
         self.reason = None
         self.lock = threading.Lock()
         self.progress = {'complete': 0, 'reused': 0, 'failed': [], 'started_epoch': time.time()}
-        self.network_failures = []
 
     # ------------------------------------------------------------ completion / resume
     def completed(self, run):
@@ -203,7 +244,28 @@ class Extractor:
         return messages, trace
 
     def _lead(self, run, lead, rec, endpoint, purpose):
-        self.attempts.begin(run.isoformat(), lead, endpoint, purpose)
+        try_id = self.attempts.begin(run.isoformat(), lead, endpoint, purpose)
+        try:
+            out, trace = self._lead_body(run, lead, rec, endpoint, purpose)
+        except NetworkError as exc:  # only raised once a stop was requested
+            self.attempts.end(run.isoformat(), lead, endpoint, try_id, 'interrupted_by_stop', exc)
+            raise
+        except ObjectError as exc:
+            self.attempts.end(run.isoformat(), lead, endpoint, try_id, 'object_failure', exc)
+            raise
+        except Contradiction as exc:
+            self.attempts.end(run.isoformat(), lead, endpoint, try_id, 'validation_failure', exc)
+            raise
+        except IntegrityError as exc:
+            self.attempts.end(run.isoformat(), lead, endpoint, try_id, 'integrity_failure', exc)
+            raise
+        except CapExceeded as exc:
+            self.attempts.end(run.isoformat(), lead, endpoint, try_id, 'interrupted_by_cap', exc)
+            raise
+        self.attempts.end(run.isoformat(), lead, endpoint, try_id, 'success')
+        return out, trace, try_id
+
+    def _lead_body(self, run, lead, rec, endpoint, purpose):
         trace = None
         if endpoint == 'aws':
             messages = self._aws_lead(run, lead, rec)
@@ -236,43 +298,49 @@ class Extractor:
             return
         began = time.time()
         data = np.full((len(FIELDS), len(LEADS), len(BOX_LATS), len(BOX_LONS)), np.nan)
-        records, traces, failures = [], {}, []
+        records, traces, failures, done_tries = [], {}, [], []
         raw = self.out / 'raw' / key
+
+        def discard():  # O2: tries of an abandoned run are logged as uncounted
+            for lead_done, endpoint_done, try_id in done_tries:
+                self.attempts.end(key, lead_done, endpoint_done, try_id, 'discarded_with_run')
         for j, lead in enumerate(LEADS):
             if self.stop.is_set():
-                return  # partial run discarded; attempts already recorded
+                discard()
+                return  # partial run discarded (hard stop); never imputed
             result = None
             endpoint, purpose = rec['primary_endpoint'], 'production'
             alternate_used = False
             while True:
                 try:
-                    result, trace = self._lead(run, lead, rec, endpoint, purpose)
+                    result, trace, try_id = self._lead(run, lead, rec, endpoint, purpose)
+                    done_tries.append((lead, endpoint, try_id))
                     if trace is not None:
                         traces[f'f{lead:03d}'] = trace
                     break
+                except NetworkError:
+                    discard()
+                    return  # a stop was requested while retrying the network; uncounted (O2)
+                except Contradiction as exc:
+                    self._halt('contradiction', {'run': key, 'lead': lead, 'endpoint': endpoint, 'error': str(exc)})
+                    discard()
+                    return
+                except CapExceeded as exc:
+                    self._halt('cap_or_stop_line', {'run': key, 'lead': lead, 'error': str(exc)})
+                    discard()
+                    return
                 except (IntegrityError, TransferError) as exc:
                     failures.append({'lead': lead, 'endpoint': endpoint, 'purpose': purpose, 'error': str(exc)[:300],
                                      'kind': type(exc).__name__})
                     if 'allowance exhausted' in str(exc):
                         break
-                    if isinstance(exc, NetworkError):
-                        # A network stall is not an object failure: retry the same endpoint on a fresh
-                        # connection; a burst of network failures halts (resumable) before attempts burn.
-                        if self._network_failure():
-                            return
-                        purpose = 'transient_retry'
-                    elif rec['alternate_endpoint'] and not alternate_used:
+                    if rec['alternate_endpoint'] and not alternate_used:
                         endpoint, purpose, alternate_used = rec['alternate_endpoint'], 'alternate_endpoint', True
                     else:
-                        purpose = 'transient_retry'
+                        purpose = 'integrity_retry'
                     continue
-                except Contradiction as exc:
-                    self._halt('contradiction', {'run': key, 'lead': lead, 'endpoint': endpoint, 'error': str(exc)})
-                    return
-                except CapExceeded as exc:
-                    self._halt('cap_or_stop_line', {'run': key, 'lead': lead, 'error': str(exc)})
-                    return
             if result is None:
+                discard()
                 self._failed_run(rec, failures, began)
                 return
             for i, field in enumerate(FIELDS):
@@ -298,15 +366,6 @@ class Extractor:
             self.progress['complete'] += 1
             self._save_progress()
         print(key, 'complete', round(time.time() - began, 1), 's', flush=True)
-
-    def _network_failure(self, window=600.0, limit=5):
-        now = time.time()
-        with self.lock:
-            self.network_failures = [t for t in self.network_failures if now - t < window] + [now]
-            burst = len(self.network_failures) >= limit
-        if burst:
-            self._halt('network_degraded', {'failures_in_window': len(self.network_failures), 'window_s': window})
-        return burst
 
     def _failed_run(self, rec, failures, began):
         path = self.out / 'failures.jsonl'
@@ -381,6 +440,7 @@ def main():
     ap.add_argument('--workers', type=int, default=int(os.environ.get('CP20_WORKERS', '1')))
     ap.add_argument('--stop-transfer-gib', type=float, default=150.0)
     ap.add_argument('--inventory-added', action='store_true')
+    ap.add_argument('--exclude', default='', help='comma-separated runs deferred to a later phase')
     ap.add_argument('--endpoint', choices=['aws', 'ncar'], required=True,
                     help='one endpoint per job: concurrent AWS and NCAR bulk flows collapse the AWS flow on this link')
     args = ap.parse_args()
@@ -404,7 +464,9 @@ def main():
     # Single-endpoint jobs (r8): diagnosis showed that an AWS range collapses to a trickle while
     # an NCAR bulk flow is active on this link, although either endpoint alone is healthy. Runs
     # are processed in date order (which also keeps NCAR offset predictions local).
-    runs = sorted((r for r in runs if r['primary_endpoint'] == args.endpoint), key=lambda r: r['run_00z'])
+    deferred = set(filter(None, args.exclude.split(',')))
+    runs = sorted((r for r in runs if r['primary_endpoint'] == args.endpoint and r['run_00z'] not in deferred),
+                  key=lambda r: r['run_00z'])
     queue = deque(runs)
     ex = Extractor(args, budget)
 
@@ -435,11 +497,24 @@ def main():
                 ex.run(rec)
             except Exception as exc:  # noqa: BLE001 - an unexpected worker error halts cleanly
                 ex._halt('worker_error', {'run': rec['run_00z'], 'error': repr(exc)})
+    finished = threading.Event()
+
+    def watchdog():
+        # Standing instruction: network trouble never stops the job; only a total absence of
+        # received data for 60 minutes does (then the Lead reports).
+        while not finished.wait(30):
+            idle = time.time() - ex.fetcher.last_data
+            if idle > NO_DATA_SECONDS and not ex.stop.is_set():
+                ex._halt('no_data_60_minutes', {'seconds_without_data': round(idle)})
+                return
     threads = [threading.Thread(target=lane, args=(k,), daemon=True) for k in range(args.workers)]
+    guard = threading.Thread(target=watchdog, daemon=True)
+    guard.start()
     for t in threads:
         t.start()
     for t in threads:
         t.join()
+    finished.set()
     ex._save_progress()
     done = [r['run_00z'] for r in runs if ex.completed(r['run_00z'])]
     summary = {'selected': len(runs), 'complete': len(done), 'failed': sorted(set(ex.progress['failed'])),
@@ -450,6 +525,10 @@ def main():
     print(json.dumps(summary), flush=True)
     if ex.reason == 'contradiction':
         return 4
+    if ex.reason == 'no_data_60_minutes':
+        return 6
+    if ex.reason == 'cap_or_stop_line':
+        return 7
     if ex.reason is not None:
         return 2
     if summary['failed']:
