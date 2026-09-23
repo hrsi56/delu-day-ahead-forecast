@@ -1,8 +1,8 @@
 {
  "implementation_sha256_after": {
-  "scripts/cp20_weather.py": "320b898c7ef8efb18972a3e34eaa5e7c05ee41ba294a835492d4c6c84e77cacd",
+  "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
   "src/cp20/budget.py": "142f378b559c3b8b622481ab0c01fd8d5198cad2fbd971f4d7e068de77283c3f",
-  "src/cp20/extract.py": "1a80c0c61d944d346de1c77b8fb5173d02dafc4e656e2653bd4094c1a879773a",
+  "src/cp20/extract.py": "cef945a43884e54f86319144efaee1fe99bfe1303a82ba81beeee26930f25cb7",
   "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
   "src/cp20/gfs.py": "f4a300ba63943827bd2de63f27ed573d3b12308c7534a5695c2dd8a828c38807",
   "src/cp20/net.py": "ee231dfedc50addbf0d81e586277e96d32e9e57415d5ae3fab065b458af3eb21",
@@ -91,6 +91,35 @@
    "kind": "network robustness, no scientific or data effect; attempt caps unchanged",
    "tests": "tests/cp20/test_retry_routing.py",
    "trigger": "full job 23: AWS range for 2021-01-04 f021 u10+v10 trickled at ~600 B/s for >7 min (nettop), never tripping the 60 s no-byte read timeout; an earlier 2021-01-08 f024 range took 164 s"
+  },
+  {
+   "change": "one endpoint per extraction job (--endpoint aws|ncar; the single job-name lock prevents overlap); first intentional stop drains (no new run starts, in-flight runs finish and are saved), a second stop is immediate; the monitor waits up to 1,200 s for a drain after an intentional stop but still stops within 30 s at any cap",
+   "diagnosis": {
+    "aws_median_MBps_per_request": {
+     "job16 (17:28-17:34Z)": 3.78,
+     "job23": 0.16,
+     "job25": 0.24
+    },
+    "conclusion": "the AWS flow collapses only while an NCAR bulk flow shares the local link; the collapse mechanism is in the network path (outside the repository), the trigger was the two-lane concurrent scheduling (r4); r7 code is not the cause (slowdown began in job 23 before r7)",
+    "concurrent_reproduction_18:05Z": "AWS keep-alive range with an NCAR bulk flow active: 1.05 MB in 71 s then stalled; NCAR 0.76-1.73 MB/s. Subset jobs 11/12 showed the same pattern (AWS ~0.17 MB/s beside NCAR).",
+    "evidence": "reports/weather-ablation/diagnostics/",
+    "idle_single_connection_18:04Z": {
+     "aws": [
+      2.09,
+      2.39
+     ],
+     "ncar": 0.98
+    },
+    "ncar_median_MBps": {
+     "job16": 0.46,
+     "job23": 0.54,
+     "job25": 0.53
+    }
+   },
+   "effective": "from the AWS confirmation job after job 25",
+   "id": "r8-single-endpoint-jobs-and-draining-stops",
+   "kind": "scheduling and stop handling, no scientific or data effect",
+   "supersedes": "r4 endpoint lanes"
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

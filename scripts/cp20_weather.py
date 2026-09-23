@@ -35,6 +35,7 @@ for name in BLAS:
 from cp20.budget import Budget, CAPS, GIB, TIMEBOX_ACTIVE_SECONDS, atomic, dir_bytes, pid_alive  # noqa: E402
 
 TICK = 1.0
+DRAIN_SECONDS = 1200.0  # an intentional stop lets in-flight runs finish; caps still stop within 30 s
 DISK_EVERY = 30.0
 RECONCILE_TAIL_SECONDS = 60.0
 
@@ -141,7 +142,10 @@ def monitor(args):
     stop = {'signal': None}
 
     def on_signal(signum, _frame):
+        stop['count'] = stop.get('count', 0) + 1
         stop['signal'] = signum
+        if stop['count'] > 1 and proc is not None and proc.poll() is None:
+            os.killpg(proc.pid, signal.SIGTERM)  # second request: immediate stop in the child
     for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
         signal.signal(sig, on_signal)
     try:
@@ -194,8 +198,9 @@ def monitor(args):
                     break
             if reason and proc.poll() is None:
                 os.killpg(proc.pid, signal.SIGTERM)
+                grace = DRAIN_SECONDS if reason.startswith('monitor_signal') else 30
                 try:
-                    proc.wait(timeout=30)
+                    proc.wait(timeout=grace)
                 except subprocess.TimeoutExpired:
                     os.killpg(proc.pid, signal.SIGKILL)
                     proc.wait()

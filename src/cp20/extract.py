@@ -135,6 +135,7 @@ class Extractor:
         self.model = OffsetModel(priors(Path(args.admission)), learned)
         self.locator = NcarLocator(self.fetcher, self.model)
         self.stop = threading.Event()
+        self.drain = threading.Event()
         self.reason = None
         self.lock = threading.Lock()
         self.progress = {'complete': 0, 'reused': 0, 'failed': [], 'started_epoch': time.time()}
@@ -380,6 +381,8 @@ def main():
     ap.add_argument('--workers', type=int, default=int(os.environ.get('CP20_WORKERS', '1')))
     ap.add_argument('--stop-transfer-gib', type=float, default=150.0)
     ap.add_argument('--inventory-added', action='store_true')
+    ap.add_argument('--endpoint', choices=['aws', 'ncar'], required=True,
+                    help='one endpoint per job: concurrent AWS and NCAR bulk flows collapse the AWS flow on this link')
     args = ap.parse_args()
     if not 1 <= args.workers <= 4 or args.workers > int(os.environ.get('CP20_WORKERS', args.workers)):
         raise SystemExit('workers must be within the monitor-declared allowance (<=4)')
@@ -398,18 +401,20 @@ def main():
     elif args.select != 'all':
         wanted = set(args.select.split(','))
         runs = [r for r in runs if r['run_00z'] in wanted]
-    # Endpoint lanes: AWS nearly saturates the local link on one connection while NCAR is
-    # per-connection limited, so one worker prefers AWS and the rest prefer NCAR (date order,
-    # which also keeps the NCAR offset predictions local); an idle lane takes the other queue.
-    runs = sorted(runs, key=lambda r: r['run_00z'])
-    lanes = {'ncar': deque(r for r in runs if r['primary_endpoint'] == 'ncar'),
-             'aws': deque(r for r in runs if r['primary_endpoint'] == 'aws')}
-    prefs = ['aws'] + ['ncar'] * (args.workers - 1) if args.workers > 1 else ['ncar']
+    # Single-endpoint jobs (r8): diagnosis showed that an AWS range collapses to a trickle while
+    # an NCAR bulk flow is active on this link, although either endpoint alone is healthy. Runs
+    # are processed in date order (which also keeps NCAR offset predictions local).
+    runs = sorted((r for r in runs if r['primary_endpoint'] == args.endpoint), key=lambda r: r['run_00z'])
+    queue = deque(runs)
     ex = Extractor(args, budget)
 
     def on_signal(signum, _frame):
+        # First stop request drains: no new run starts, in-flight runs finish and are saved.
+        # A second request stops immediately (partial runs discarded, never imputed).
         ex.reason = ex.reason or f'signal_{signum}'
-        ex.stop.set()
+        if ex.drain.is_set():
+            ex.stop.set()
+        ex.drain.set()
     signal.signal(signal.SIGTERM, on_signal)
     signal.signal(signal.SIGINT, on_signal)
     added = [r for r in runs if not r['admission']['inventoried']]
@@ -417,14 +422,12 @@ def main():
         inventory_added(ex, added)
     elif added:
         raise SystemExit('added runs require --inventory-added targeted checks first')
-    print(f'extraction start: {len(runs)} runs, workers={args.workers}, lanes={prefs}', flush=True)
+    print(f'extraction start: {len(runs)} {args.endpoint} runs, workers={args.workers}', flush=True)
     qlock = threading.Lock()
 
-    def lane(pref):
-        other = 'aws' if pref == 'ncar' else 'ncar'
-        while not ex.stop.is_set():
+    def lane(_):
+        while not ex.stop.is_set() and not ex.drain.is_set():
             with qlock:
-                queue = lanes[pref] if lanes[pref] else lanes[other]
                 if not queue:
                     return
                 rec = queue.popleft()
@@ -432,7 +435,7 @@ def main():
                 ex.run(rec)
             except Exception as exc:  # noqa: BLE001 - an unexpected worker error halts cleanly
                 ex._halt('worker_error', {'run': rec['run_00z'], 'error': repr(exc)})
-    threads = [threading.Thread(target=lane, args=(p,), daemon=True) for p in prefs]
+    threads = [threading.Thread(target=lane, args=(k,), daemon=True) for k in range(args.workers)]
     for t in threads:
         t.start()
     for t in threads:
@@ -442,7 +445,8 @@ def main():
     summary = {'selected': len(runs), 'complete': len(done), 'failed': sorted(set(ex.progress['failed'])),
                'halt_reason': ex.reason, 'requests_this_invocation': ex.fetcher.stats,
                'finished_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}
-    atomic(out / f'summary-{args.select if args.select in ("subset", "all") else "custom"}.json', summary)
+    summary['drained'] = ex.drain.is_set() and not ex.stop.is_set()
+    atomic(out / f'summary-{args.select if args.select in ("subset", "all") else "custom"}-{args.endpoint}.json', summary)
     print(json.dumps(summary), flush=True)
     if ex.reason == 'contradiction':
         return 4
