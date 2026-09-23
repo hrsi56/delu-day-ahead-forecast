@@ -35,7 +35,8 @@ from .budget import Budget, CapExceeded
 ALLOWED_HOSTS = {'noaa-gfs-bdp-pds.s3.amazonaws.com': 'aws', 'tds.gdex.ucar.edu': 'ncar'}
 ALLOWANCE = 4096  # response headers + request line, charged per request up front
 USER_AGENT = 'PJM-cp20-gfs-extraction/1.0 (read-only research)'
-DEADLINE_BASE_S, DEADLINE_PER_BYTE_S = 30.0, 1e-5
+# r11 (Owner, 2026-09-24): 15 s + 5 us per expected byte (was 30 s + 10 us); latency-bound link.
+DEADLINE_BASE_S, DEADLINE_PER_BYTE_S = 15.0, 5e-6
 CHUNK = 32768
 BACKOFF_BASE_S, BACKOFF_MAX_S = 5.0, 600.0
 
