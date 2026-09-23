@@ -1,0 +1,38 @@
+{
+ "chain": {
+  "controller_code": "src/cp20/chain.py at d4b6977 (loaded 2026-09-23T18:53:42Z; the running controller keeps that plan: ncar-all, aws-all, retry-aws, retry-ncar)",
+  "controller_pid": 28278
+ },
+ "phases": [
+  {
+   "basis": "reconstructed: d4b6977 committed 18:53:34Z, chain launched 18:53:42Z from a clean tree, no code file modified until the r10 swap at 22:28:13Z (git log, file mtimes); pre-r10 extractor did not self-record",
+   "dirty_paths": [],
+   "git_head": "d4b6977",
+   "implementation_sha256": {
+    "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
+    "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
+    "src/cp20/chain.py": "e44bab8e7dc0f114090699ff13255bcfa5ab9f989e51ed6d3be972d056167c41",
+    "src/cp20/extract.py": "c6512bb195742304e9f56ea01778f5347fe2ba4b1c906b284754de88bb4d2897",
+    "src/cp20/gfs.py": "f4a300ba63943827bd2de63f27ed573d3b12308c7534a5695c2dd8a828c38807",
+    "src/cp20/net.py": "d07f58136695aff4f125551c4e78f44e55950b93d32daa74dbcb8c9a2e1c9f3d"
+   },
+   "job_index": 33,
+   "phase": "ncar-all",
+   "start_utc": "2026-09-23T18:53:42Z"
+  },
+  {
+   "phase": "aws-all",
+   "status": "starts after ncar-all; runs 097a2e9 (recorded by the job itself)"
+  },
+  {
+   "phase": "retry-aws",
+   "status": "recorded by the job itself"
+  },
+  {
+   "phase": "retry-ncar",
+   "status": "recorded by the job itself; verifies r10 on 5 failed days first"
+  }
+ ],
+ "rule": "each extraction process imports its code when it starts, so a chain phase runs the committed working tree at its own start; from r10 every job appends its git HEAD, dirty paths and implementation sha256 to .local/artifacts/cp-20/weather/job-code-versions.jsonl",
+ "schema": "cp20-chain-code-versions-v1"
+}
