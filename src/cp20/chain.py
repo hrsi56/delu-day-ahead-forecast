@@ -49,8 +49,12 @@ def phase(name, endpoint, workers, select='all', exclude=''):
     status(phases=state['phases'])
     code = subprocess.call(cmd, cwd=ROOT)
     marker = json.loads((A / 'markers' / ('gfs-extract.DONE.json' if code == 0 else 'gfs-extract.FAILED.json')).read_text())
+    versions = A / 'weather/job-code-versions.jsonl'
+    ran = [json.loads(l) for l in versions.read_text().splitlines()] if versions.exists() else []
+    ran = [r for r in ran if r['start_epoch'] >= began]
     state = status()
-    state['phases'][-1].update(end_epoch=time.time(), monitor_exit=code, marker=marker)
+    state['phases'][-1].update(end_epoch=time.time(), monitor_exit=code, marker=marker,
+                               code_version=ran[0]['code_version'] if ran else 'not recorded (pre-r10 extractor)')
     status(phases=state['phases'])
     return code, marker
 

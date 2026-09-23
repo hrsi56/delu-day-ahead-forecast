@@ -43,6 +43,13 @@ from .net import Fetcher, NetworkError, ObjectError, TransferError
 # most 2, so every message keeps one attempt for independent review (r5 reverted).
 PRODUCTION_ATTEMPTS = 2
 NO_DATA_SECONDS = 3600.0
+# r10: every extraction job records the code it actually runs; jobs carrying these flags
+# run the locator fix and the O2 amendment A1 (locator-defect attempts do not count).
+CODE_FLAGS = {'locator_fix_r10': True, 'o2_amendment_a1': True}
+IMPLEMENTATION = ('src/cp20/budget.py', 'src/cp20/net.py', 'src/cp20/gfs.py', 'src/cp20/extract.py',
+                  'src/cp20/chain.py', 'scripts/cp20_weather.py')
+LOCATOR_DEFECT = 'broken GRIB chain'
+VERIFY_N = 5
 # Owner decision O1 (2026-09-23, in session): up to two additional production attempts per target
 # message whose allowance was consumed by pre-run testing (subset jobs 3, 11 and 12, i.e. every
 # attempt logged before the full extraction job started), logged separately; no other cap change.
@@ -72,8 +79,10 @@ class Attempts:
     Production may use 2 counted attempts (the third stays for review) plus the O1 extra.
     """
 
-    def __init__(self, path: Path, budget: Budget):
+    def __init__(self, path: Path, budget: Budget, fixed_since: float | None = None):
         self.path, self.budget, self.lock = path, budget, threading.Lock()
+        self.fixed_since = fixed_since
+        self.a1_restored = []
         self.outcomes = path.with_name('attempt-outcomes.jsonl')
         self.uncounted = path.with_name('uncounted-attempts.jsonl')
         self.replacements = path.with_name('prerun_replacement_attempts.jsonl')
@@ -88,6 +97,12 @@ class Attempts:
             for line in self.outcomes.read_text().splitlines():
                 r = json.loads(line)
                 if r['outcome'] in COUNTED_OUTCOMES:
+                    # O2 amendment A1: attempts consumed by the r10 locator defect, recorded before
+                    # the first job running the fix, do not count.
+                    if (self.fixed_since is not None and LOCATOR_DEFECT in r.get('detail', '')
+                            and r['epoch'] < self.fixed_since):
+                        self.a1_restored.append(r)
+                        continue
                     key = (r['run'], r['lead'], r['field'])
                     self.counted[key] = self.counted.get(key, 0) + 1
 
@@ -162,15 +177,46 @@ def priors(admission: Path) -> dict:
     return out
 
 
+def code_version(root: Path) -> dict:
+    import subprocess
+    head = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=root, capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(['git', 'status', '--porcelain', '--', 'src/cp20', 'scripts'], cwd=root,
+                           capture_output=True, text=True).stdout.splitlines()
+    return {'git_head': head, 'dirty_paths': dirty,
+            'sha256': {f: sha((root / f).read_bytes()) for f in IMPLEMENTATION}, **CODE_FLAGS}
+
+
+def record_job(out: Path, args) -> tuple[dict, float]:
+    """Append this job's code version; return it and the first start epoch of any fixed-code job."""
+    root = Path(__file__).resolve().parents[2]
+    rec = {'job_index': os.environ.get('CP20_JOB_INDEX'), 'job_name': os.environ.get('CP20_JOB_NAME'),
+           'start_epoch': time.time(), 'start_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+           'endpoint': args.endpoint, 'select': args.select if len(args.select) < 200 else f'{len(args.select.split(","))} runs',
+           'exclude': args.exclude, 'workers': args.workers, 'code_version': code_version(root)}
+    path = out / 'job-code-versions.jsonl'
+    with path.open('a') as fh:
+        fh.write(json.dumps(rec, sort_keys=True) + '\n')
+    first = min(json.loads(l)['start_epoch'] for l in path.read_text().splitlines()
+                if json.loads(l)['code_version'].get('locator_fix_r10'))
+    return rec, first
+
+
+def locator_defect_runs(out: Path) -> set:
+    path = out / 'failures.jsonl'
+    if not path.exists():
+        return set()
+    return {json.loads(l)['run'] for l in path.read_text().splitlines() if LOCATOR_DEFECT in l}
+
+
 class Extractor:
-    def __init__(self, args, budget):
+    def __init__(self, args, budget, fixed_since=None):
         self.args, self.budget = args, budget
         self.out = Path(args.out)
         (self.out / 'runs').mkdir(parents=True, exist_ok=True)
         self.stop = threading.Event()
         self.drain = threading.Event()
         self.fetcher = Fetcher(budget, self.out / 'requests.jsonl', int(args.stop_transfer_gib * GIB), stop_event=self.stop)
-        self.attempts = Attempts(self.out / 'attempts.jsonl', budget)
+        self.attempts = Attempts(self.out / 'attempts.jsonl', budget, fixed_since)
         model_path = self.out / 'offset_model.json'
         learned = {}
         if model_path.exists():
@@ -468,7 +514,17 @@ def main():
     runs = sorted((r for r in runs if r['primary_endpoint'] == args.endpoint and r['run_00z'] not in deferred),
                   key=lambda r: r['run_00z'])
     queue = deque(runs)
-    ex = Extractor(args, budget)
+    job, fixed_since = record_job(out, args)
+    print('code version:', json.dumps(job['code_version'], sort_keys=True), flush=True)
+    ex = Extractor(args, budget, fixed_since)
+    if ex.attempts.a1_restored:
+        path = out / 'o2-a1-restored-attempts.jsonl'
+        seen = {json.loads(l)['try_id'] + json.loads(l)['field'] for l in path.read_text().splitlines()} if path.exists() else set()
+        with path.open('a') as fh:
+            for r in ex.attempts.a1_restored:
+                if r['try_id'] + r['field'] not in seen:
+                    fh.write(json.dumps({**r, 'restored_by': 'O2 amendment A1', 'job_index': job['job_index']}) + '\n')
+        budget.event('o2_a1_restored', job_index=job['job_index'], records=len(ex.attempts.a1_restored))
 
     def on_signal(signum, _frame):
         # First stop request drains: no new run starts, in-flight runs finish and are saved.
@@ -507,9 +563,30 @@ def main():
             if idle > NO_DATA_SECONDS and not ex.stop.is_set():
                 ex._halt('no_data_60_minutes', {'seconds_without_data': round(idle)})
                 return
-    threads = [threading.Thread(target=lane, args=(k,), daemon=True) for k in range(args.workers)]
     guard = threading.Thread(target=watchdog, daemon=True)
     guard.start()
+    verification = out / 'locator-fix-verification.json'
+    defect = [r for r in runs if r['run_00z'] in locator_defect_runs(out) and not ex.completed(r['run_00z'])]
+    if args.endpoint == 'ncar' and defect and not (verification.exists()
+                                                  and json.loads(verification.read_text())['status'] == 'passed'):
+        # Verify the r10 locator fix on a handful of failed days (spread across the list) before the rest.
+        k = min(VERIFY_N, len(defect))
+        pick = [defect[round(i * (len(defect) - 1) / (k - 1))] for i in range(k)] if k > 1 else defect[:1]
+        print('locator fix verification on', [r['run_00z'] for r in pick], flush=True)
+        for rec in pick:
+            if ex.stop.is_set() or ex.drain.is_set():
+                break
+            ex.run(rec)
+        ok = [r['run_00z'] for r in pick if ex.completed(r['run_00z'])]
+        passed = len(ok) == len(pick) and not ex.stop.is_set()
+        atomic(verification, {'status': 'passed' if passed else 'failed', 'runs': [r['run_00z'] for r in pick],
+                              'completed': ok, 'job_index': job['job_index'], 'code_version': job['code_version'],
+                              'utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())})
+        if not passed and not ex.stop.is_set():
+            ex._halt('locator_fix_unverified', {'runs': [r['run_00z'] for r in pick], 'completed': ok})
+        picked = {r['run_00z'] for r in pick}
+        queue = deque(r for r in queue if r['run_00z'] not in picked)
+    threads = [threading.Thread(target=lane, args=(k,), daemon=True) for k in range(args.workers)]
     for t in threads:
         t.start()
     for t in threads:
@@ -529,6 +606,8 @@ def main():
         return 6
     if ex.reason == 'cap_or_stop_line':
         return 7
+    if ex.reason == 'locator_fix_unverified':
+        return 8
     if ex.reason is not None:
         return 2
     if summary['failed']:

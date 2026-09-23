@@ -221,3 +221,62 @@ def test_bounded_window_never_exceeds_the_cap_for_large_learned_errors():
     found, _ = gfs.NcarLocator(FakeFetcher(data), model).find_group('https://tds.gdex.ucar.edu/x', RUN, 24, len(data),
                                                                     ('u10', 'v10'), trace)
     assert found['u10'].offset == true and trace[0]['window_bytes'] <= 1_000_000 + 300_000 + 3 * 600_000
+
+
+def file_with_tiny_constant_fields(run, lead):
+    """Like synthetic_file, but tiny near-constant messages (categorical ice pellets 0/1/194,
+    179-656 bytes, correct reference time) sit in the chain before each target group."""
+    parts, layout = [], {}
+    def add(name, blob):
+        layout[name] = (sum(map(len, parts)), len(blob))
+        parts.append(blob)
+    tiny = lambda n, size: add(n, message(run, 1, 194, 1, 0, 0, lead, size))
+    for i in range(20):
+        add(f'pre{i}', message(run, 0, 0, 100, 0, 0, lead, 200_000 + 997 * i))
+    tiny('ice_a', 179)
+    tiny('ice_b', 656)
+    add('u10', message(run, 2, 2, 103, 10, 0, lead, 300_000))
+    add('v10', message(run, 2, 3, 103, 10, 0, lead, 290_000))
+    for i in range(6):
+        add(f'mid{i}', message(run, 0, 1, 1, 0, 0, lead, 200_000))
+    tiny('ice_c', 311)
+    a, _ = gfs.dswrf_bounds(lead)
+    add('dswrf', message(run, 4, 192, 1, 0, 8, a, 120_000))
+    for i in range(6):
+        add(f'late{i}', message(run, 0, 1, 1, 0, 0, lead, 200_000))
+    tiny('ice_d', 180)
+    add('u100', message(run, 2, 2, 103, 100, 0, lead, 310_000))
+    add('v100', message(run, 2, 3, 103, 100, 0, lead, 305_000))
+    for i in range(5):
+        add(f'post{i}', message(run, 0, 3, 1, 0, 0, lead, 200_000))
+    return b''.join(parts), layout
+
+
+def test_tiny_message_reached_by_the_chain_is_accepted_r10():
+    data, layout = file_with_tiny_constant_fields(RUN, 24)
+    info = gfs.parse_header(data[layout['ice_a'][0]:layout['ice_a'][0] + 320])
+    assert info['length'] == 179 and gfs.plausible(info, RUN, chained=True)
+    assert not gfs.plausible(info, RUN)            # still refused as a scanned first header
+    for group in gfs.GROUPS:
+        true = layout[group[0]][0]
+        # Prediction 600 kB late with a prior: the window starts well before the tiny messages.
+        loc, found, window, trace = locate(data, 24, {group[0]: (true + 600_000) / len(data)}, group)
+        for name in group:
+            assert (found[name].offset, found[name].length) == layout[name]
+
+
+def test_window_starting_on_a_tiny_message_resynchronises_past_it():
+    data, layout = file_with_tiny_constant_fields(RUN, 24)
+    start = layout['ice_a'][0]
+    loc = gfs.NcarLocator(FakeFetcher(data), gfs.OffsetModel({}))
+    base, win = loc._window('https://tds.gdex.ucar.edu/x', RUN, start, 700_000, len(data), 'p')
+    first = loc._first_header(base, win, RUN)
+    assert first == layout['u10'][0]              # tiny headers are skipped only as scan starts
+
+
+def test_pre_r10_rule_reproduces_the_broken_chain_defect(monkeypatch):
+    data, layout = file_with_tiny_constant_fields(RUN, 24)
+    original = gfs.plausible
+    monkeypatch.setattr(gfs, 'plausible', lambda info, run, chained=False: original(info, run))
+    with pytest.raises(gfs.IntegrityError, match='broken GRIB chain'):
+        locate(data, 24, {'u10': (layout['u10'][0] + 600_000) / len(data)}, ('u10', 'v10'))

@@ -122,9 +122,21 @@ def parse_header(buf: bytes) -> dict | None:
     return info
 
 
-def plausible(info: dict | None, run: dt.date) -> bool:
-    """A real message start: edition 2, bounded length, reference time = the run at 00 UTC."""
-    return bool(info and 2000 < info['length'] < 20_000_000 and info.get('ref') == (run.year, run.month, run.day, 0)
+MIN_GRIB2_BYTES = 100      # sections 0-8 of the smallest complete GRIB2 message exceed this
+MIN_SCAN_START_BYTES = 2000
+
+
+def plausible(info: dict | None, run: dt.date, *, chained: bool = False) -> bool:
+    """A real message start: edition 2, bounded length, reference time = the run at 00 UTC.
+
+    A header found by *scanning* a window for the magic ``GRIB`` must also exceed 2,000 bytes
+    (a stray pattern inside packed data could otherwise resynchronise the chain). A header
+    reached by *following* the length chain from a validated header needs only a valid
+    structure: near-constant fields such as categorical ice pellets (0/1/194) are 179-656
+    bytes and are genuine messages (r10; rejecting them was the "broken GRIB chain" defect).
+    """
+    floor = MIN_GRIB2_BYTES if chained else MIN_SCAN_START_BYTES
+    return bool(info and floor < info['length'] < 20_000_000 and info.get('ref') == (run.year, run.month, run.day, 0)
                 and 'template' in info)
 
 
@@ -378,7 +390,7 @@ class NcarLocator:
                                                 byte_range=(off, min(size - 1, off + HEADER_BYTES - 1)))
                     info = parse_header(hb)
                     hops += 1
-                if not plausible(info, run):
+                if not plausible(info, run, chained=True):
                     raise IntegrityError(f'broken GRIB chain at {off}')
                 name = identify(info, lead)
                 if name is not None and name not in group and FIELD_ORDER[name] > FIELD_ORDER[group[-1]]:

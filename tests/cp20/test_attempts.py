@@ -48,3 +48,17 @@ def test_o1_extra_counted_attempts_for_prerun_consumption(tmp_path, ledger, prer
         a.begin('2021-01-04', 21, 'aws', 'production')
     replaced = tmp_path / 'prerun_replacement_attempts.jsonl'
     assert (len(replaced.read_text().splitlines()) if replaced.exists() else 0) == 5 * extra_allowed
+
+
+def test_o2_amendment_a1_restores_locator_defect_attempts_only_before_the_fix(tmp_path, ledger):
+    a = extract.Attempts(tmp_path / 'attempts.jsonl', ledger)
+    for _ in range(2):
+        a.end('2019-02-08', 39, 'ncar', a.begin('2019-02-08', 39, 'ncar', 'production'), 'integrity_failure',
+              'broken GRIB chain at 143168896')
+    a.end('2019-02-09', 39, 'ncar', a.begin('2019-02-09', 39, 'ncar', 'production'), 'integrity_failure', 'no 7777')
+    fixed_since = __import__('time').time() + 1
+    b = extract.Attempts(tmp_path / 'attempts.jsonl', ledger, fixed_since)
+    assert b.used('2019-02-08', 39) == 0 and len(b.a1_restored) == 10
+    assert b.used('2019-02-09', 39) == 1                       # other integrity failures still count
+    c = extract.Attempts(tmp_path / 'attempts.jsonl', ledger, fixed_since=0.0)
+    assert c.used('2019-02-08', 39) == 2                       # after the fix a broken chain counts again
