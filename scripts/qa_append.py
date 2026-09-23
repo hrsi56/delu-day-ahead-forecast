@@ -33,6 +33,8 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 DEFAULT_DOCX = Path(__file__).resolve().parents[1] / "שאלות תשובות.docx"
+#: Recovery backups stay inside the project, per AGENTS.md § Project-local working files.
+BACKUP_DIR = Path(__file__).resolve().parents[1] / ".local" / "tmp"
 
 FONTS = '<w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>'
 RTL = "<w:rtl/>"
@@ -88,10 +90,30 @@ def _para(text: str) -> str:
     )
 
 
+#: A paragraph opening tag with or without attributes. Word stamps revision ids
+#: (`<w:p w:rsidR="...">`) on every paragraph it saves, so a literal `<w:p>` stops
+#: matching the moment the document is opened and re-saved by hand. `(?:\s[^>]*)?`
+#: accepts both forms and still excludes `<w:pPr>`, `<w:pStyle>` and `<w:pBdr>`.
+_PARA = re.compile(r"<w:p(?:\s[^>]*)?>.*?</w:p>", re.S)
+_SECTPR = re.compile(r"<w:sectPr(?:\s[^>]*)?>")
+
+
+def _headings(document_xml: str) -> list[int]:
+    numbers = []
+    for para in _PARA.findall(document_xml):
+        if 'w:val="Heading2"' not in para:
+            continue
+        text = "".join(re.findall(r"<w:t[^>]*>(.*?)</w:t>", para, re.S))
+        match = re.match(r"\s*(\d+)", text)
+        if match:
+            numbers.append(int(match.group(1)))
+    return numbers
+
+
 def next_number(document_xml: str) -> int:
     """One past the highest leading integer among existing Heading2 paragraphs."""
     numbers = []
-    for para in re.findall(r"<w:p>.*?</w:p>", document_xml, re.S):
+    for para in _PARA.findall(document_xml):
         if 'w:val="Heading2"' not in para:
             continue
         text = "".join(re.findall(r"<w:t[^>]*>(.*?)</w:t>", para, re.S))
@@ -110,22 +132,48 @@ def append_entry(docx: Path, question: str, answers: list[str]) -> int:
         blobs = {name: zf.read(name) for name in names}
 
     xml = blobs["word/document.xml"].decode("utf-8")
-    if "<w:sectPr>" not in xml:
+    sects = list(_SECTPR.finditer(xml))
+    if not sects:
         sys.exit("error: no <w:sectPr> in word/document.xml — unexpected layout")
+    before = _headings(xml)
+    if not before:
+        # Refuse rather than number from 1. A document with entries in it whose
+        # headings cannot be read is a parsing failure, not an empty document.
+        if 'w:val="Heading2"' in xml:
+            sys.exit("error: Heading2 paragraphs present but unreadable — refusing to guess a number")
 
     number = next_number(xml)
     block = _rule() + _heading(f"{number}. {question}") + "".join(_para(a) for a in answers)
-    xml = xml.replace("<w:sectPr>", block + "<w:sectPr>", 1)
+    # The body-level section properties are the last <w:sectPr> in the body. Section
+    # breaks put earlier ones inside <w:pPr>; splicing before those would land the
+    # entry mid-document.
+    cut = sects[-1].start()
+    xml = xml[:cut] + block + xml[cut:]
     blobs["word/document.xml"] = xml.encode("utf-8")
 
-    backup = docx.with_suffix(docx.suffix + ".bak")
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+    backup = BACKUP_DIR / (docx.name + ".bak")
     shutil.copy2(docx, backup)
     try:
         with zipfile.ZipFile(docx, "w", zipfile.ZIP_DEFLATED) as zf:
             for name in names:  # original order preserved
                 zf.writestr(name, blobs[name])
+        with zipfile.ZipFile(docx) as zf:
+            after = _headings(zf.read("word/document.xml").decode("utf-8"))
+        # Two different failures, reported as what they are. A wrong number sorts to
+        # the front of the list, so comparing tails would print identical values and
+        # read as a false alarm.
+        want = max(before, default=0) + 1
+        if number != want:
+            raise RuntimeError(f"post-write check failed: numbered #{number}, next free number is #{want}")
+        if sorted(after) != sorted(before + [number]):
+            raise RuntimeError(
+                f"post-write check failed: expected {len(before) + 1} headings ending at #{want}, "
+                f"found {len(after)} ending at #{max(after, default=0)}"
+            )
     except Exception:
-        shutil.copy2(backup, docx)
+        shutil.copy2(backup, docx)  # if this raises, the backup survives as the only good copy
+        backup.unlink()
         raise
     backup.unlink()
     return number
