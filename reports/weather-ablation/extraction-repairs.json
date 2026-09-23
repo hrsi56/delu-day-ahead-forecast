@@ -2,11 +2,11 @@
  "implementation_sha256_after": {
   "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
   "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
-  "src/cp20/chain.py": "8c62188f55dc40157f0c6d1516dd80040596d4cd34cc619fd24912f4410bacfc",
+  "src/cp20/chain.py": "320f817972d445737234ba2c2c71328e4a28bd8f2f504738270eaad17f5b2ae8",
   "src/cp20/extract.py": "c6604ce10e4bbe6171bccccc5ec8d01aed3dce76cb31187abdd54255c9715e1b",
   "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
   "src/cp20/gfs.py": "153a4210b5f7d5c3a4ea6e5e0bae4d20d796bcfed9f2b1f2f6da018f4affb498",
-  "src/cp20/net.py": "d07f58136695aff4f125551c4e78f44e55950b93d32daa74dbcb8c9a2e1c9f3d",
+  "src/cp20/net.py": "4a9726e29dadbc8eef482793416d222902b8eb214133c3e1016e8853c8a34549",
   "src/cp20/plan.py": "eca2f62c986cd2dfbcaa96e9e2ec2be71af4f9a8687b43f3a969e3c95aa13808",
   "src/cp20/probe.py": "d6a6d188f7dd51dfe00a30da6f0675e0f87e8b559a81fb19ab9567aab8f3e256",
   "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5"
@@ -48,6 +48,24 @@
    "implementation": "r10; Attempts ignores integrity_failure outcomes whose detail contains \"broken GRIB chain\" and whose epoch precedes the first extraction job running the fix (job-code-versions.jsonl, flag locator_fix_r10); restored records logged in o2-a1-restored-attempts.jsonl",
    "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block with the Owner's own request to record per-phase code versions)",
    "text": "Root cause of the NCAR \"broken GRIB chain\" failures: valid tiny GRIB2 messages (0/1/194 categorical ice pellets, 179-656 bytes, correct reference time) rejected by plausible()'s length > 2000 guard. Fix the locator; test with a tiny constant-field message; verify on a handful of failed days before re-running all. Do not stop the running chain. Amend O2: attempts consumed by this locator bug do not count; restore them. After the AWS phase, re-run the failed NCAR days with the fix. Record which code version each chain phase actually ran."
+  },
+  {
+   "id": "O3",
+   "implementation": "ledger effort pauses: three retroactive waits (conservative boundaries) and, from now, a pause opened at each RUNNING handback and closed on resumption",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
+   "text": "Time when a detached job runs unattended and the Lead is only waiting does not count as active hours. Machine-hours and transfer are still charged in full."
+  },
+  {
+   "id": "O4",
+   "implementation": "pending (r12); machine time stays charged as wall x declared workers",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
+   "text": "Concurrent HTTP requests inside one worker process are not extra workers. Implement concurrent range requests within a run (up to 4 at a time per worker for AWS; NCAR modest, back off on 429), keeping every per-message check, hash and ledger entry unchanged; test; swap in at a safe boundary; record the code version per phase."
+  },
+  {
+   "id": "O-run-plan-2026-09-24",
+   "implementation": "r11 (47607df); job 36 drained at 23:15:02Z (drained=true, 51 runs); chain run 2 started 23:15:14Z",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
+   "text": "Gracefully stop the AWS job and restart the chain with 4 AWS workers and the shorter deadline (15 s + 5 us per byte); run the NCAR re-run with 4 workers; raise the extraction machine-hour stop line from 85 to 100 within the 120 cap. Nothing else changes: no skipped checks, no imputation, no change to what counts as a completed day."
   }
  ],
  "repairs": [
@@ -156,6 +174,14 @@
    "id": "r10-locator-tiny-chained-messages",
    "kind": "NCAR locator defect fix; no scientific or data effect",
    "tests": "tests/cp20/test_gfs_locator.py::test_tiny_message_reached_by_the_chain_is_accepted_r10, ::test_window_starting_on_a_tiny_message_resynchronises_past_it, ::test_pre_r10_rule_reproduces_the_broken_chain_defect; tests/cp20/test_attempts.py::test_o2_amendment_a1_restores_locator_defect_attempts_only_before_the_fix"
+  },
+  {
+   "change": "request deadline 15 s + 5 us per expected byte (was 30 s + 10 us); chain plan aws-all (4 workers, deferred failed AWS days) -> retry-aws (4) -> retry-ncar (4, r10 five-day verification first); stop line 100 machine-hours; prior chain status kept as chain-status.run1.json",
+   "commit": "47607df",
+   "effective": "chain run 2 (job 37 onward)",
+   "evidence": "Owner measurement: AWS worker averaged 0.26 MB/s over an hour while single requests ran at a median 4.8 MB/s on a 290 Mbps line: latency-bound serial requests",
+   "id": "r11-deadline-and-chain-plan",
+   "kind": "throughput and scheduling per Owner instruction; no scientific or data effect"
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

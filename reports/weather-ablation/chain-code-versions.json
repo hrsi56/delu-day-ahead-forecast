@@ -1,7 +1,18 @@
 {
  "chain": {
-  "controller_code": "src/cp20/chain.py at d4b6977 (loaded 2026-09-23T18:53:42Z; the running controller keeps that plan: ncar-all, aws-all, retry-aws, retry-ncar)",
-  "controller_pid": 28278
+  "run1": {
+   "controller_code": "d4b6977",
+   "controller_pid": 28278,
+   "ended": "stopped after the drained aws-all job (by design)",
+   "plan": "ncar-all(3) -> aws-all(1) -> retry-aws(1) -> retry-ncar(3)",
+   "status_file": "chain-status.run1.json"
+  },
+  "run2": {
+   "controller_code": "47607df",
+   "controller_pid": 37191,
+   "plan": "aws-all(4) -> retry-aws(4) -> retry-ncar(4)",
+   "status_file": "chain-status.json"
+  }
  },
  "phases": [
   {
@@ -21,16 +32,30 @@
    "start_utc": "2026-09-23T18:53:42Z"
   },
   {
-   "phase": "aws-all",
-   "status": "starts after ncar-all; runs 097a2e9 (recorded by the job itself)"
+   "basis": "self-recorded (job-code-versions.jsonl)",
+   "dirty_paths": [],
+   "end": "drained stop 2026-09-23T23:15:02Z for the Owner re-plan; 51 runs completed",
+   "git_head": "69b268a",
+   "job_index": 36,
+   "phase": "aws-all (chain run 1)",
+   "start_utc": "2026-09-23T22:37:54Z"
   },
   {
-   "phase": "retry-aws",
-   "status": "recorded by the job itself"
+   "basis": "self-recorded",
+   "dirty_paths": [],
+   "git_head": "47607df",
+   "job_index": 37,
+   "phase": "aws-all (chain run 2)",
+   "start_utc": "2026-09-23T23:15:14Z",
+   "workers": 4
   },
   {
-   "phase": "retry-ncar",
-   "status": "recorded by the job itself; verifies r10 on 5 failed days first"
+   "phase": "retry-aws (chain run 2)",
+   "status": "self-recorded at start"
+  },
+  {
+   "phase": "retry-ncar (chain run 2)",
+   "status": "self-recorded at start; r10 five-day verification first"
   }
  ],
  "rule": "each extraction process imports its code when it starts, so a chain phase runs the committed working tree at its own start; from r10 every job appends its git HEAD, dirty paths and implementation sha256 to .local/artifacts/cp-20/weather/job-code-versions.jsonl",
