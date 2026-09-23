@@ -92,8 +92,8 @@ def test_real_state_restart_and_saved_cache_refusals():
     from cp16.inputs import load, SavedComponents
     from cp16.residuals import SharedResidualState
     budget=Budget(os.environ['CP16_LEDGER'])
-    # Conservatively charge all 37 reconstructed warm-up dates plus the evaluated date.
-    budget.reserve(policy_days=76)
+    # Conservatively charge 37 warm-up dates plus first evaluation for EACH restart path.
+    budget.reserve(policy_days=152)
     frozen=json.loads((ROOT/'docs/track-b/evidence/cp-16/r3-admission-lineage.json').read_text())
     data,_=load(ROOT);cache=SavedComponents(ROOT,'fold_1',data);d=date(2020,7,1)
     rows,centers,_=cache.get(d)

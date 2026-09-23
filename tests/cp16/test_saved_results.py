@@ -127,7 +127,7 @@ def summarize(x):
                   last_delivery_date=dates[-1] if dates else None, represented_dates=json.dumps(dates),
                   MAE=x.ae.mean(), RMSE=np.sqrt(x.se.mean()), WIS=x.wis.mean(), mean_pinball_7=x.pinball.mean(),
                   raw_central_MAE=x.central_ae.mean(), centering_effect=(x.ae-x.central_ae).mean(),
-                  bias=x.bias_value.mean(), daily_mean_level_MAE=x.groupby(["fold", "delivery_date"]).level.first().mean(),
+                  bias=x.bias_value.mean(), daily_mean_level_MAE=x.groupby(["fold", "delivery_date"])["level"].first().mean(),
                   within_day_shape_MAE=x["shape"].mean(), missing_count=0, crossings=0)
     for nominal, *_ in INTERVALS:
         widths = x[f"width{nominal}"]

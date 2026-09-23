@@ -1,4 +1,5 @@
 {
+  "active_effort_upper_bound_seconds": 5349.135131120682,
   "caps": {
     "active_seconds": 144000,
     "additional_disk_bytes": 21474836480,
@@ -8,21 +9,28 @@
     "inner_fits": 192000,
     "machine_seconds": 86400,
     "main_component_attempts": 1500,
-    "policy_days": 4500,
+    "policy_days": 9000,
     "primitive_fits": 240000,
     "reference_passes": 3,
     "rss_bytes": 10737418240
   },
   "counts": {
-    "component_attempts": 21,
-    "final_fits": 498,
-    "inner_fits": 1996,
-    "machine_seconds": 611.8722240451898,
-    "main_component_attempts": 17,
-    "policy_days": 3730,
-    "primitive_fits": 2494
+    "analysis_passes": 1,
+    "component_attempts": 113,
+    "final_fits": 2704,
+    "inner_fits": 10820,
+    "machine_seconds": 1796.6100488341472,
+    "main_component_attempts": 93,
+    "policy_days": 5022,
+    "primitive_fits": 13524,
+    "reference_passes": 1
   },
   "created_epoch": 1790122606.369416,
+  "effort": {
+    "basis": "Prior effort retained conservatively as 1h; current session wall time bounds resumed active effort, excludes intervening Owner idle. No counter reset.",
+    "historical_upper_bound_seconds": 3600,
+    "resumed_epoch": 1790159989.9296389
+  },
   "events": [
     {
       "description": "Conservative charge for preliminary uninstrumented read-only training support audit and environment inspection; no fits or policy predictions. Full subsequent jobs are monitored.",
@@ -64,6 +72,28 @@
       "cutoff_epoch": 1790123208.8255749,
       "event": "conservative_monitor_tail_charge",
       "includes_idle_after_verified_worker_stop": true
+    },
+    {
+      "epoch": 1790160589.929641,
+      "event": "v21-r3-authorized-resumption",
+      "historical_counts_preserved": {
+        "component_attempts": 21,
+        "final_fits": 498,
+        "inner_fits": 1996,
+        "machine_seconds": 624.0855666692078,
+        "main_component_attempts": 17,
+        "policy_days": 3730,
+        "primitive_fits": 2494
+      },
+      "historical_limitations": "Retained in attempt-1; no retrospective compliance claimed.",
+      "policy_cap_after": 9000,
+      "policy_cap_before": 4500
+    },
+    {
+      "event": "resumption-readonly-orientation-upper-bound",
+      "fits": 0,
+      "policy_days": 0,
+      "seconds": 300
     }
   ],
   "jobs": [
@@ -202,58 +232,521 @@
       "running": false,
       "start_epoch": 1790123547.1505358,
       "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 5.716557292005746,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16/test_monitor.py",
+        "tests/cp16/test_budget_inputs.py",
+        "tests/cp16/test_scoring.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-tests"
+      ],
+      "elapsed_seconds": 5.761920416989597,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-tests.log",
+      "peak_checkpoint_disk_bytes": 450961819,
+      "peak_process_tree_rss_bytes": 257785856,
+      "running": false,
+      "start_epoch": 1790123750.5978901,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 4.472959082981106,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_02_rolling_closed_left.py",
+        "tests/test_05_schema_firewall.py",
+        "tests/test_08_partition_integrity.py",
+        "tests/test_12_partition_exclusion.py",
+        "tests/test_24_live_namespace_is_walled_off.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-guards"
+      ],
+      "elapsed_seconds": 4.527521416981472,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-guards.log",
+      "peak_checkpoint_disk_bytes": 450962844,
+      "peak_process_tree_rss_bytes": 311836672,
+      "running": false,
+      "start_epoch": 1790123792.6248388,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 0.5081425410171505,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/audit.py"
+      ],
+      "elapsed_seconds": 0.5582393330114428,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-audit.log",
+      "peak_checkpoint_disk_bytes": 453909699,
+      "peak_process_tree_rss_bytes": 117800960,
+      "running": false,
+      "start_epoch": 1790123837.30392,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 0.7701755000161938,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit.py"
+      ],
+      "elapsed_seconds": 0.8181357500143349,
+      "exit_code": 1,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-final-audit.log",
+      "peak_checkpoint_disk_bytes": 453911635,
+      "peak_process_tree_rss_bytes": 145113088,
+      "running": false,
+      "start_epoch": 1790123875.0691378,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "charged_seconds": 0.504355624987511,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit_normalized.py"
+      ],
+      "elapsed_seconds": 0.5475725409924053,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/critic-final-audit-normalized.log",
+      "peak_checkpoint_disk_bytes": 453913948,
+      "peak_process_tree_rss_bytes": 117604352,
+      "running": false,
+      "start_epoch": 1790123895.693473,
+      "supervisor_error": null
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 36.256995083997026,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "scripts/cp16_v2.py",
+        "--job",
+        "preflight",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 36.297625749983126,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-preflight.log",
+      "peak_checkpoint_disk_bytes": 335021072,
+      "peak_process_tree_rss_bytes": 908771328,
+      "pid": 91520,
+      "running": false,
+      "start_epoch": 1790160619.523511,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 7.005541874998016,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16",
+        "tests/cp15/test_pipeline.py",
+        "-k",
+        "not test_fit_delivery_mask_positive_d1_and_rolling_refit",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/r3-prerun"
+      ],
+      "elapsed_seconds": 7.046665708010551,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-prerun-tests.log",
+      "peak_checkpoint_disk_bytes": 335048724,
+      "peak_process_tree_rss_bytes": 288931840,
+      "pid": 91784,
+      "running": false,
+      "start_epoch": 1790160703.025804,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 0.9711566249898169,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-c",
+        "import numpy,sklearn,lightgbm,json; from threadpoolctl import threadpool_info; info=threadpool_info(); print(json.dumps(info,indent=2)); assert all(p[\"num_threads\"]==1 for p in info)"
+      ],
+      "elapsed_seconds": 1.0174854589859024,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-threadpools.log",
+      "peak_checkpoint_disk_bytes": 335053649,
+      "peak_process_tree_rss_bytes": 191430656,
+      "pid": 92104,
+      "running": false,
+      "start_epoch": 1790160741.543891,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 690.2499388750002,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-u",
+        "scripts/cp16_v2.py",
+        "--job",
+        "admission",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 690.2886292079929,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-admission.log",
+      "peak_checkpoint_disk_bytes": 461944249,
+      "peak_process_tree_rss_bytes": 664076288,
+      "pid": 92342,
+      "running": false,
+      "start_epoch": 1790160758.180178,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 11.377450332976878,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16",
+        "tests/cp15/test_pipeline.py",
+        "tests/test_02_rolling_closed_left.py",
+        "tests/test_05_schema_firewall.py",
+        "tests/test_08_partition_integrity.py",
+        "tests/test_12_partition_exclusion.py",
+        "tests/test_24_live_namespace_is_walled_off.py",
+        "--ignore=tests/cp16/test_state_results.py",
+        "-k",
+        "not test_fit_delivery_mask_positive_d1_and_rolling_refit and not test_saved_metric_and_diagnostic_tables and not test_saved_all_six_criteria_and_research_summary and not test_saved_uncertainty_and_joint_conclusions",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/r3-expanded"
+      ],
+      "elapsed_seconds": 11.424241332977545,
+      "exit_code": 1,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-expanded-tests.log",
+      "peak_checkpoint_disk_bytes": 345976998,
+      "peak_process_tree_rss_bytes": 356171776,
+      "pid": 95606,
+      "running": false,
+      "start_epoch": 1790161504.673291,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 1.2206717919907533,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/cp16/test_saved_results.py",
+        "-k",
+        "not test_saved_metric_and_diagnostic_tables and not test_saved_all_six_criteria_and_research_summary and not test_saved_uncertainty_and_joint_conclusions",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/r3-oracle-repair"
+      ],
+      "elapsed_seconds": 1.2740309169748798,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-oracle-repair.log",
+      "peak_checkpoint_disk_bytes": 345978595,
+      "peak_process_tree_rss_bytes": 162414592,
+      "pid": 95700,
+      "running": false,
+      "start_epoch": 1790161535.8741848,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 74.48213512499933,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-u",
+        "scripts/cp16_v2.py",
+        "--job",
+        "controls",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 74.53516945798765,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-controls.log",
+      "peak_checkpoint_disk_bytes": 345980452,
+      "peak_process_tree_rss_bytes": 944914432,
+      "pid": 95791,
+      "running": false,
+      "start_epoch": 1790161553.529239,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 47.16388054200797,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-u",
+        "scripts/cp16_v2.py",
+        "--job",
+        "comparison",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 47.21610754201538,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-comparison.log",
+      "peak_checkpoint_disk_bytes": 353785245,
+      "peak_process_tree_rss_bytes": 966000640,
+      "pid": 95967,
+      "running": false,
+      "start_epoch": 1790161648.156936,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "abort_reason": null,
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 3.379634667013306,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-u",
+        "scripts/cp16_v2.py",
+        "--job",
+        "score",
+        "--ledger",
+        "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json"
+      ],
+      "elapsed_seconds": 3.421095375000732,
+      "exit_code": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-score.log",
+      "peak_checkpoint_disk_bytes": 356257042,
+      "peak_process_tree_rss_bytes": 377995264,
+      "pid": 96212,
+      "running": false,
+      "start_epoch": 1790161707.7841122,
+      "supervisor_error": null,
+      "worker_policy": "one serialized compute process tree"
+    },
+    {
+      "blas_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "charged_seconds": 0.003608166007325053,
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-16/resumption/build_report.py"
+      ],
+      "pid": 96298,
+      "running": true,
+      "start_epoch": 1790161739.061013,
+      "worker_policy": "one serialized compute process tree"
+    }
+  ],
+  "regenerated_main_fit_costs": [
+    {
+      "component": "A1",
+      "fit_seconds": 33.64369612518931,
+      "fold": "fold_1",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "B2",
+      "fit_seconds": 28.349304209987167,
+      "fold": "fold_1",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "A1",
+      "fit_seconds": 47.64989950400195,
+      "fold": "fold_2",
+      "new_hourly_fit_records": 144,
+      "primitive_calls": 720
+    },
+    {
+      "component": "B2",
+      "fit_seconds": 40.404686538822716,
+      "fold": "fold_2",
+      "new_hourly_fit_records": 144,
+      "primitive_calls": 720
+    },
+    {
+      "component": "A1",
+      "fit_seconds": 87.26423478676588,
+      "fold": "fold_3",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "B2",
+      "fit_seconds": 41.19167195915361,
+      "fold": "fold_3",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "A1",
+      "fit_seconds": 80.35673837384093,
+      "fold": "fold_4",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "B2",
+      "fit_seconds": 68.29201216693036,
+      "fold": "fold_4",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "A1",
+      "fit_seconds": 78.556679997826,
+      "fold": "fold_5",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
+    },
+    {
+      "component": "B2",
+      "fit_seconds": 69.74467583425576,
+      "fold": "fold_5",
+      "new_hourly_fit_records": 192,
+      "primitive_calls": 960
     }
   ],
   "summary": {
-    "BLAS_threads": 1,
+    "BLAS_threads_current": 1,
+    "GPU_jobs": 0,
     "VRE_fits": 0,
-    "active_effort_upper_bound_seconds": 3600,
-    "approximate_elapsed_hours": 0.5,
+    "active_effort_upper_bound_seconds": 5349.180616140366,
+    "active_hard_cap_hours": 40,
+    "admission_policy_days_completed": 70,
     "approximate_timebox_hours": 32,
-    "bootstrap_analysis_passes": 0,
+    "automated_schedules": 0,
     "bootstrap_seeds": [
       15042
     ],
-    "central_configurations": 2,
     "cloud_jobs": 0,
-    "completed_admission_policy_days": 14,
-    "counter_method": "conservative debit includes all synthetic warm-up and rejected issue/predict attempts plus pending restoration; no overlap discount",
-    "deficit_before_remaining_controls_or_review": 430,
+    "component_configurations": 2,
     "economic_runs": 0,
     "ensemble_members": 2,
     "external_cost_USD": 0,
     "feature_recipes": 1,
-    "gpu_jobs": 0,
-    "max_CPU_workers": 1,
+    "historic_memory_gap": "UNKNOWN; see attempt-1 and resumption-notice. Regeneration is not retrospective compliance.",
+    "historic_thread_enforcement": "Unsupported for early Builder jobs; resumed jobs pinned and runtime inspected.",
+    "historical_policy_days_unchanged": 3730,
+    "hour_aware_recipes": 1,
+    "max_CPU_workers_current": 1,
     "model_seeds": [
       42
     ],
     "neural_candidates": 0,
     "new_B0_B1_B3_fits": 0,
-    "new_feature_recipes": 0,
-    "new_model_dataset_download_bytes": 0,
+    "new_download_bytes": 0,
+    "new_output_policies": 2,
     "new_sources": 0,
     "operational_days": 0,
     "outer_selection_trials": 0,
-    "output_policies_implemented": 2,
-    "peak_monitored_disk_upper_bound_bytes": 567948390,
+    "peak_monitored_disk_upper_bound_bytes": 567967852,
     "peak_monitored_rss_bytes": 1256341504,
+    "policy_days_remaining": 3978,
     "pooled_controls": 1,
-    "production_policy_days_reserved": 76,
-    "remaining_full_production_policy_days": 1200,
-    "remaining_policy_days": 770,
+    "recombination_searches": 0,
     "remote_mutations": 0,
-    "required_admission_policy_days": 70,
-    "residual_recipes": 1,
-    "review_accounting": "This candidate snapshot ends before final independent review; final ledger is committed as evidence/resource-final.json afterward.",
-    "saved_reference_metric_passes": 0,
-    "saved_reference_policies_planned": 5,
-    "schedules": 0,
-    "scored_policies": 0,
-    "status": "BLOCKED",
-    "synthetic_policy_days": 3654,
-    "unique_date_fold_keys_planned": 638,
-    "unmonitored_peak_rss": "UNKNOWN; interrupted admission cannot evidence uninterrupted memory enforcement",
+    "review_accounting": "Candidate snapshot before final Integration. Final cumulative ledger, including all review attempts, is docs/track-b/evidence/cp-16/resource-final.json at evidence tip.",
+    "saved_references": 5,
+    "scored_policies": 7,
+    "unique_date_fold_keys": 638,
     "weather_probes": 0
   }
 }
