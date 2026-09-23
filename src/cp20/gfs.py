@@ -199,6 +199,32 @@ def validate(meta: dict, run: dt.date, lead: int, field: str) -> None:
         raise Contradiction(f'{run} f{lead:03d} {field} metadata contradicts admission: {wrong}')
 
 
+# Code-table keys are compared as WMO/NCEP integer codes; ecCodes' native string form is an
+# abbreviation (e.g. typeOfFirstFixedSurface 103 -> 'sfc', typeOfProcessedData 1 -> 'fc').
+INT_KEYS = frozenset({'typeOfFirstFixedSurface', 'typeOfProcessedData', 'stepUnits', 'discipline',
+                      'parameterCategory', 'parameterNumber', 'productDefinitionTemplateNumber',
+                      'productionStatusOfProcessedData', 'significanceOfReferenceTime', 'typeOfGeneratingProcess',
+                      'generatingProcessIdentifier', 'typeOfStatisticalProcessing', 'indicatorOfUnitForTimeRange',
+                      'jScansPositively', 'iScansNegatively', 'editionNumber', 'subCentre'})
+ABBREVIATED = ('typeOfFirstFixedSurface', 'typeOfProcessedData', 'centre')
+
+
+def read_meta(gid, field: str) -> dict:
+    import eccodes
+    meta = {}
+    for key in META_KEYS + (PDT8_KEYS if field == 'dswrf' else ()):
+        try:
+            meta[key] = eccodes.codes_get(gid, key, ktype=int) if key in INT_KEYS else eccodes.codes_get(gid, key)
+        except eccodes.KeyValueNotFoundError:
+            meta[key] = None
+    for key in ABBREVIATED:
+        try:
+            meta[f'{key}_native'] = eccodes.codes_get(gid, key)
+        except eccodes.KeyValueNotFoundError:
+            meta[f'{key}_native'] = None
+    return meta
+
+
 def decode(msg: bytes, run: dt.date, lead: int, field: str):
     """Decode locally; validate every expected key; return (metadata, 34x41 float64 box, quantum)."""
     import eccodes
@@ -207,12 +233,7 @@ def decode(msg: bytes, run: dt.date, lead: int, field: str):
     except Exception as exc:  # noqa: BLE001
         raise IntegrityError(f'ecCodes cannot open message: {exc}') from exc
     try:
-        meta = {}
-        for key in META_KEYS + (PDT8_KEYS if field == 'dswrf' else ()):
-            try:
-                meta[key] = eccodes.codes_get(gid, key)
-            except eccodes.KeyValueNotFoundError:
-                meta[key] = None
+        meta = read_meta(gid, field)
         eccodes.codes_set(gid, 'missingValue', MISSING)
         values = eccodes.codes_get_values(gid)
     except Contradiction:

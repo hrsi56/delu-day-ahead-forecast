@@ -1,0 +1,15 @@
+# CP-20 job gfs-extract index 3 start 2026-09-23T17:07:58Z
+added inventory 2023-03-24 True True
+added inventory 2023-03-25 True True
+added inventory 2023-03-26 True True
+added inventory 2023-03-27 True True
+added inventory 2023-03-28 True True
+added inventory 2023-03-29 True True
+added inventory 2023-03-30 True True
+added inventory 2023-03-31 True True
+extraction start: 20 runs, workers=4
+HALT contradiction {'run': '2019-03-30', 'lead': 21, 'endpoint': 'ncar', 'error': "2019-03-30 f021 u10 metadata contradicts admission: {'typeOfFirstFixedSurface': ('sfc', 103), 'typeOfProcessedData': ('fc', 1)}"}
+HALT contradiction {'run': '2019-10-26', 'lead': 21, 'endpoint': 'ncar', 'error': "2019-10-26 f021 u10 metadata contradicts admission: {'typeOfFirstFixedSurface': ('sfc', 103), 'typeOfProcessedData': ('fc', 1)}"}
+HALT contradiction {'run': '2019-01-01', 'lead': 21, 'endpoint': 'ncar', 'error': "2019-01-01 f021 u10 metadata contradicts admission: {'typeOfFirstFixedSurface': ('sfc', 103), 'typeOfProcessedData': ('fc', 1)}"}
+HALT contradiction {'run': '2019-06-13', 'lead': 21, 'endpoint': 'ncar', 'error': "2019-06-13 f021 u10 metadata contradicts admission: {'typeOfFirstFixedSurface': ('sfc', 103), 'typeOfProcessedData': ('fc', 1)}"}
+{"selected": 20, "complete": 0, "failed": [], "halt_reason": "contradiction", "requests_this_invocation": {"requests": 105, "bytes": 101498841}, "finished_utc": "2026-09-23T17:10:22Z"}
