@@ -187,3 +187,25 @@ def test_idx_parsing_requires_exact_unique_records():
 def test_box_is_the_fixed_inclusive_proxy_grid():
     assert gfs.BOX_LATS[0] == 55.25 and gfs.BOX_LATS[-1] == 47.0 and len(gfs.BOX_LATS) == 34
     assert gfs.BOX_LONS[0] == 5.5 and gfs.BOX_LONS[-1] == 15.5 and len(gfs.BOX_LONS) == 41
+
+
+@pytest.mark.parametrize('shift', [-400_000, -100_000, 0, 120_000, 600_000])
+def test_learned_tight_window_extends_or_falls_back_and_stays_exact(shift):
+    # Large filler messages (900 kB) make a tight window hold no message start at all.
+    data, layout = synthetic_file(RUN, 24, filler=900_000)
+    v = gfs.version(RUN)
+    for group in gfs.GROUPS:
+        true = layout[group[0]][0]
+        model = gfs.OffsetModel({}, {(v, 24, group[0]): [(RUN - dt.timedelta(days=1), (true + shift) / len(data))]})
+        model._err[(v, 24, group[0])] = [50_000]          # learned history -> tight window (150 kB back)
+        fetcher = FakeFetcher(data)
+        loc = gfs.NcarLocator(fetcher, model)
+        trace = []
+        found, window = loc.find_group('https://tds.gdex.ucar.edu/x', RUN, 24, len(data), group, trace)
+        for name in group:
+            assert (found[name].offset, found[name].length) == layout[name]
+        first, blob, _ = loc.payload('https://tds.gdex.ucar.edu/x', RUN, 24, found, window, 'p')
+        end = layout[group[-1]][0] + layout[group[-1]][1]
+        assert blob == data[first:end]
+        if shift == 0:
+            assert trace[0]['try'] == 0 and trace[0]['window_bytes'] <= 2 * 150_000 + 320 + 3 * 600_000

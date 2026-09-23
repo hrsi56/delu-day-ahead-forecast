@@ -317,17 +317,28 @@ class OffsetModel:
 
 
 class NcarLocator:
-    MIN_BACK, MAX_HOPS, WINDOW = 400_000, 40, 1_150_000
+    MIN_BACK, MAX_HOPS, WINDOW = 150_000, 40, 1_150_000
+    EXTEND, MAX_EXTEND = 600_000, 3
 
     def __init__(self, fetcher, model: OffsetModel):
         self.fetcher, self.model = fetcher, model
 
-    def _window(self, url, run, start, length, size, purpose):
-        end = min(size - 1, start + length - 1)
+    def _get(self, url, start, end, size, purpose):
         _, headers, body = self.fetcher.get(url, purpose, byte_range=(start, end))
         total = headers.get('Content-Range', '').rpartition('/')[2]
         if total != str(size):
             raise Contradiction(f'{url} size {total} differs from the admission inventory size {size}')
+        return body
+
+    def _window(self, url, run, start, length, size, purpose):
+        """Read a resynchronisation window, extending it only while it holds no message start."""
+        end = min(size - 1, start + length - 1)
+        body = self._get(url, start, end, size, purpose)
+        for _ in range(self.MAX_EXTEND):
+            if self._first_header(start, body, run) is not None or start + len(body) >= size:
+                break
+            nxt = start + len(body)
+            body += self._get(url, nxt, min(size - 1, nxt + self.EXTEND - 1), size, purpose + ' extension')
         return start, body
 
     def _first_header(self, base, body, run):
@@ -344,12 +355,16 @@ class NcarLocator:
         v, anchor = version(run), group[0]
         frac, err, source = self.model.predict(v, lead, anchor, run)
         pred = int(frac * size) if frac is not None else None
-        back = max(self.MIN_BACK, 3 * err) if err is not None else 2_500_000
-        attempts = [back, 4_000_000, 9_000_000] if pred is not None else []
-        for k, margin in enumerate(attempts):
+        if err is not None:  # learned with an error history: a tight window around the prediction
+            back = max(self.MIN_BACK, 3 * err)
+            first_length = 2 * back + HEADER_BYTES
+        else:
+            back, first_length = 2_500_000, self.WINDOW
+        attempts = [(back, first_length), (4_000_000, self.WINDOW + 300_000), (9_000_000, self.WINDOW + 300_000)] \
+            if pred is not None else []
+        for k, (margin, length) in enumerate(attempts):
             start = max(0, pred - margin)
-            base, win = self._window(url, run, start, self.WINDOW + (0 if k == 0 else 300_000), size,
-                                     f'ncar window {run} f{lead:03d} {anchor}')
+            base, win = self._window(url, run, start, length, size, f'ncar window {run} f{lead:03d} {anchor}')
             off = self._first_header(base, win, run)
             hops, found, overshoot = 0, {}, False
             while off is not None and off < size:

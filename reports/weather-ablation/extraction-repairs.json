@@ -2,11 +2,11 @@
  "implementation_sha256_after": {
   "scripts/cp20_weather.py": "320b898c7ef8efb18972a3e34eaa5e7c05ee41ba294a835492d4c6c84e77cacd",
   "src/cp20/budget.py": "fb7aa302d49df929a5dccd48d74d597012f1222608ac1ab2652d456fe9ddfb5f",
-  "src/cp20/extract.py": "8de854a21e17e98baa7f7357301d8da345d79610da2b6ee47a55a9db0b4b99d5",
-  "src/cp20/gfs.py": "e7197fb9dac9b7c7665998aced5c2e4bf70e0c7615a7a68ef0dedb4c78ccf4a1",
+  "src/cp20/extract.py": "864a02abcef8425ff2d4ca95ffb25910d1e53ea9341780f403d19d0134ff33ef",
+  "src/cp20/gfs.py": "67532e850425f2788f3428ab6e63fdaa191cdc5722db33a13c3ba65cc99b7784",
   "src/cp20/net.py": "19e5248cf215289efddc61ed34910df99c3a318238b00c0c1dcf7daafcc07ccd",
   "src/cp20/plan.py": "eca2f62c986cd2dfbcaa96e9e2ec2be71af4f9a8687b43f3a969e3c95aa13808",
-  "src/cp20/weather.py": "f16b16cea3847c8df24a76678ea338371677f67c7047366102389738158e36f8"
+  "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5"
  },
  "repairs": [
   {
@@ -21,6 +21,20 @@
    "job": "gfs-extract index 3 (representative subset, attempt 1)",
    "repair": "read_meta() reads code-table keys with ktype=int and keeps the native abbreviations as *_native evidence; synthetic ecCodes round-trip tests added (tests/cp20/test_gfs_eccodes.py). The halt mechanism itself worked as designed.",
    "symptom": "Halt \"contradiction\" at f021 of the first four NCAR runs: typeOfFirstFixedSurface read as sfc and typeOfProcessedData as fc."
+  },
+  {
+   "change": "AWS .idx body bound (charged up front) lowered from 400,000 to 100,000 bytes (observed ~33-41 KB); an oversize idx fails loudly as a transfer error.",
+   "effective": "from gfs-extract job index 12 (resumed subset, 2026-09-23T17:20:22Z), which ran this working-tree change before its commit",
+   "id": "r2-idx-charge-bound",
+   "kind": "accounting efficiency, no scientific or data effect"
+  },
+  {
+   "change": "With a same-version/lead learned error history the resynchronisation window is sized 2 x max(150 kB, 3 x recent max error) around the prediction and extended in 600 kB steps only while it holds no GRIB2 start; priors and fallbacks keep the 1.15 MB window. Located offsets are still verified by header chaining, framing, sha256, decode and metadata validation.",
+   "effective": "full extraction launch onward (not used by subset jobs 11/12)",
+   "evidence": "subset: ~11 header hops and three 1.15 MB windows per NCAR lead; windows equalled payload bytes",
+   "id": "r3-ncar-tight-window",
+   "kind": "NCAR locator efficiency, no scientific or data effect",
+   "tests": "tests/cp20/test_gfs_locator.py::test_learned_tight_window_extends_or_falls_back_and_stays_exact"
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

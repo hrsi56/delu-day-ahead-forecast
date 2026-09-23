@@ -207,6 +207,10 @@ class WeatherDesign:
                                 + json.dumps([str(i) for i in table.index]).encode()).hexdigest()
         return cls(table, digest)
 
+    def present(self, dates: np.ndarray, hours: np.ndarray) -> np.ndarray:
+        keys = pd.MultiIndex.from_arrays([pd.Index(pd.to_datetime(dates).date), hours])
+        return np.asarray(keys.isin(self.table.index))
+
     def matrix(self, dates: np.ndarray, hours: np.ndarray, required: np.ndarray) -> np.ndarray:
         """Rows aligned to the modelling inputs; ``required`` rows must have a weather record."""
         keys = pd.MultiIndex.from_arrays([pd.Index(pd.to_datetime(dates).date), hours])

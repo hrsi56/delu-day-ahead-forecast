@@ -37,6 +37,8 @@ from .gfs import (FIELDS, GROUPS, LEADS, BOX_LATS, BOX_LONS, Contradiction, Inte
 from .net import Fetcher, TransferError
 
 PRODUCTION_ATTEMPTS = 2
+# Observed pgrb2.0p25 .idx objects are ~33 KB (admission inventory); the bound is charged up front.
+IDX_BOUND = 100_000
 _decode_lock = threading.Lock()
 
 
@@ -131,7 +133,7 @@ class Extractor:
     # ------------------------------------------------------------ one (run, lead)
     def _aws_lead(self, run, lead, rec):
         url = aws_url(run, lead)
-        _, _, idx = self.fetcher.get(url + '.idx', f'aws idx {run} f{lead:03d}', max_body=400_000)
+        _, _, idx = self.fetcher.get(url + '.idx', f'aws idx {run} f{lead:03d}', max_body=IDX_BOUND)
         size = rec['object_bytes'][f'f{lead:03d}'].get('aws')
         found = parse_idx(idx.decode('utf8', 'replace'), run, lead, size)
         messages, spans = {}, []
