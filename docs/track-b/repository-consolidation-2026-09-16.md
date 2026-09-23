@@ -13,7 +13,7 @@ consolidation to leave only main. This is task-scoped authority, not a permanent
 - No scientific output, model, CP-15 plan/brief, product criterion or verdict changed.
   Product feasibility stays NOT_DEMONSTRATED; no model promotion or next experiment.
 - The owner's 30-question Q&A is preserved byte-for-byte. The superseded v20-r1 draft and
-  stale 32-question Q&A are backed up outside the active repository, not adopted.
+  stale 32-question Q&A are preserved in the Git-ignored `.local/artifacts/` directory inside the project, not adopted.
 
 ## Pending work resolved
 
@@ -41,6 +41,6 @@ The active v21-r1 plan, AGENTS and CP-15 briefs already match main; no duplicate
   match the reviewed evidence tip. No experiment source/results/model changes.
 - Both pending checkouts were backed up with per-file hashes before cleanup.
 
-Local recovery packet: `/Users/djourno/Downloads/PJM-consolidation-backup-2026-09-16/`.
+Local recovery packet: `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-consolidation-backup-2026-09-16/`.
 It includes the original pending files, binary diffs, manifest, superseded v20-r1 draft,
-full consolidation diff and per-file accounting. Backups are outside the active repository.
+full consolidation diff and per-file accounting. Backups are inside the project under `.local/artifacts/`, ignored by Git.

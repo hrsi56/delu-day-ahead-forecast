@@ -43,3 +43,9 @@ Icon?
 # marimo's per-session cache, written beside the notebook when the app runs.
 app/__marimo__/
 __marimo__/
+
+# Project-local scratch, handoff packets, recovery backups and temporary worktrees.
+/.local/
+
+# Microsoft Office creates these while a document is open.
+~$*.docx

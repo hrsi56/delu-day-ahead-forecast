@@ -1,5 +1,5 @@
 > Historical review, superseded by v21. The unadopted v20-r1 draft is retained in
-> `/Users/djourno/Downloads/PJM-consolidation-backup-2026-09-16/review/capstone_v20.md`.
+> `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-consolidation-backup-2026-09-16/review/capstone_v20.md`.
 > Its temporary branch/worktree was retired during owner-authorized consolidation.
 > The original review below is retained as history.
 

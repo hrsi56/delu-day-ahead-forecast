@@ -58,6 +58,17 @@
 > bookkeeping and require no Lockdown suspension. This exception does not authorize changing defect
 > definitions, acceptance criteria, historical evidence, ratified anchors, or governance policy.
 
+## Project-local working files
+
+Keep all agent-created temporary worktrees, handoff packets, scratch files, caches and recovery
+backups inside this project. Use the Git-ignored `.local/` directory (for example,
+`.local/worktrees/`, `.local/artifacts/` and `.local/tmp/`). Do not create sibling folders or
+files in Downloads or elsewhere outside the project unless the Owner explicitly requests that
+location. Commit durable decisions and required evidence in their normal project paths;
+`.local/` is local recovery material, not the sole copy of required evidence. Remove disposable
+artifacts when finished and account for retained recovery material. This containment rule does
+not relax role isolation, evidence preservation, worktree lifecycle or publication authority.
+
 # Project role router
 
 This repository is shared by program orchestration and Track B engineering, but those execution contexts are isolated. Establish the role before mutating anything.
@@ -80,7 +91,7 @@ This repository is shared by program orchestration and Track B engineering, but 
 
 **Who files — the Orchestrator, and only the Orchestrator.** An Engineering Lead or bounded subagent that meets a trigger **names it in one line in its terminal return** and files nothing itself. The Track B isolation boundary is not opened for this, and no checkpoint is ever paused to write an entry.
 
-**How.** `python3 scripts/qa_append.py -q "<question>" -a "<paragraph>" [-a ...]` appends to `שאלות תשובות.docx`. It numbers the entry, carries the document's RTL markup, and accepts `**bold**` inline. Never hand-edit the `.docx`.
+**How.** `python3 scripts/qa_append.py -q "<question>" -a "<paragraph>" [-a ...]` appends to `שאלות תשובות.docx`. It numbers the entry, carries the document's RTL markup, and accepts `**bold**` inline. agents Never hand-edit the `.docx`.
 
 **Format.** The question as a hiring manager would ask it. The answer in Yarden's voice — Hebrew, first person plural, no hedging — stating what was actually done, including when the answer is "we hit a wall and took the other road." A trigger that yields no answer worth defending is not filed.
 

@@ -3,8 +3,8 @@
 > Subsequent owner-authorized consolidation leaves only `/Users/djourno/Downloads/PJM`
 > on `main`. Temporary checkout paths and retained-branch descriptions below record the
 > landing-time state. Retrieve current evidence from the sole checkout or `evidence/cp-15`.
-> The pending documents/Q&A were consolidated; superseded drafts remain in the external
-> `PJM-consolidation-backup-2026-09-16` backup.
+> The pending documents/Q&A were consolidated; superseded drafts remain in the project-local
+> `.local/artifacts/PJM-consolidation-backup-2026-09-16` archive.
 
 ## Disposition and authority
 
@@ -55,11 +55,11 @@ evidence tag, ref reconciliation and preservation of pending work.
   dirty and preserved. Neither retained branch was reset, deleted or published.
 - Created tags: only `land/cp-15` and `evidence/cp-15`. No new branch was created.
 - Local backup/verification packet:
-  `/Users/djourno/Downloads/PJM-cp15-landing-record-2026-09-16/`.
+  `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-landing-record-2026-09-16/`.
   `pending-work-manifest.json` records pre-landing file hashes; `checkpoint-local-artifacts.json`
   maps retained caches/logs. `landed-experiment.diff` contains the full experiment diff.
 - Original detailed per-file engineering rationale remains in
-  `/Users/djourno/Downloads/PJM-cp15-r1-handoff/files-changed.md`.
+  `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-r1-handoff/files-changed.md`.
 
 ## Next decision
 
