@@ -1,5 +1,12 @@
 # Preparation packet 4.0a — one existing-input v2 experiment
 
+> Subsequent disposition, 2026-09-23: CP-16 landed and closed under the Owner's explicit
+> local integration/cleanup authorization. Use `land/cp-16` for the squash landing and
+> `evidence/cp-16` for the complete reviewed chain. `gauntlet/cp-16` and its Lead checkout
+> are retired. Pending/retention statements below describe the historical document state;
+> see [the landing record](cp-16-landing-2026-09-23.md) for current status and citation mapping.
+
+
 **2026-09-23 · 4.0a/4.0b COMPLETE; v21-r3 CAP/COUNTING CHANGE RATIFIED; CP-16 RESUMPTION AUTHORIZED.**
 
 The Owner has ratified the exact v21-r3 replay-cap/counting change and authorized resumption

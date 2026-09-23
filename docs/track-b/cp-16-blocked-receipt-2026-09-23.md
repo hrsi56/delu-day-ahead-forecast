@@ -1,5 +1,12 @@
 # CP-16 Orchestrator receipt — BLOCKED / independent Integration FAIL
 
+> Subsequent disposition, 2026-09-23: CP-16 landed and closed under the Owner's explicit
+> local integration/cleanup authorization. Use `land/cp-16` for the squash landing and
+> `evidence/cp-16` for the complete reviewed chain. `gauntlet/cp-16` and its Lead checkout
+> are retired. Pending/retention statements below describe the historical document state;
+> see [the landing record](cp-16-landing-2026-09-23.md) for current status and citation mapping.
+
+
 **2026-09-23. CP-16 remains open and blocked; no resumption, amendment or disposition authorized by this receipt.**
 
 ## Evidence and gate decision

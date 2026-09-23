@@ -1,6 +1,6 @@
 # Programme state — DE-LU day-ahead forecasting
 
-*Orchestrator-owned. **Updated 2026-09-23 for accepted CP-16 Engineering PASS; Owner disposition/reclamation pending; prior FAIL and CP-15 evidence preserved.**
+*Orchestrator-owned. **Updated 2026-09-23: CP-16 landed and administratively closed; pending work consolidated; only main and the primary checkout remain. Prior FAIL and CP-15 evidence preserved.**
 Single-track programme; current authority is below, historical checkpoint evidence remains intact.*
 
 **Ratified authority for CP-16: v21-r3**, cap/counting change ratified and resumption authorized
@@ -9,7 +9,7 @@ Single-track programme; current authority is below, historical checkpoint eviden
 successors without another routine approval round. Preserve the prior BLOCKED/independent FAIL,
 all evidence/limits and 3,730 historical policy-days. The completed return reports 6,458/9,000
 cumulative (2,542 unspent); the 5,270 resumption balance is historical, not current. Engineering
-PASS is accepted; disposition/reclamation are pending. No experiment or executor launch here.
+PASS is accepted; Owner-authorized LAND and reclamation are complete. See the [landing record](docs/track-b/cp-16-landing-2026-09-23.md). No new experiment or executor launch.
 Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`, SHA256
 `44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3`.
 
@@ -32,13 +32,15 @@ no commit, stage, branch, worktree, tag or publication was made by the Orchestra
 
 ## 1. Current Position
 
-**CP-16 Engineering PASS accepted, 2026-09-23; disposition/reclamation pending.**
+**CP-16 Engineering PASS accepted, LAND complete and administratively closed, 2026-09-23.**
 [Orchestrator receipt](docs/track-b/cp-16-pass-receipt-2026-09-23.md) records the gate and limits.
 Final candidate `bf3ca602e32e99e45c7835e3f95148f62b608099`; evidence tip
 `5ec8a92a4032569b31a1a4f0bb3c512793d15a78`. Fresh independent Integration PASS binds the
 candidate and all ten §14.8 items. Prescribed receipt checks confirm seven commits, an
 exclusively evidence-path terminal delta, available cited commits and a clean Lead checkout.
-The Critic checkout is removed. Main remains `6621402b2be9aed85be433432bcffffb56adf3e4`.
+The Critic checkout was already removed. The exact reviewed tree landed at `land/cp-16`
+(`d62769c0cf23c5c252213da92d7f39684e4aa284`); subsequent main commits preserve the separate
+pending maintenance, Q&A and planning work and this closure. The Lead checkout is now removed.
 
 Independent review reports 84 CP-16 checks and 48 inherited guards passing, all 75,229 forecast
 rows, and exact independent H/P replay (21,494 rows). Complete point/interval metrics,
@@ -57,10 +59,13 @@ and canonical packet. Historical monitoring gaps and independent FAIL remain pre
 required evidence was regenerated, not retrospectively certified. Unspent capacity grants
 no further run after the terminal stop.
 
-Recommend **LAND as a research record**, awaiting Owner disposition and Owner-authored
-mainline integration. Retain `gauntlet/cp-16` and `.local/worktrees/cp-16/lead`, clean at the
-evidence tip, seven ahead/zero behind main. No disposition tags, deletion or reclamation yet;
-CP-16 is not administratively closed. No later checkpoint, promotion, publication or clock.
+The Owner explicitly authorized local squash landing, separate commits for pending work,
+and cleanup to main only in this task, overriding the usual owner-executed Git restriction
+for this operation. `land/cp-16` marks the landing; `evidence/cp-16` preserves the full
+reviewed chain at `5ec8a92a4032569b31a1a4f0bb3c512793d15a78`, including prior FAIL.
+After tag/reachability verification, `gauntlet/cp-16` and its clean Lead worktree were removed.
+CP-16 is administratively closed. See the [landing and citation map](docs/track-b/cp-16-landing-2026-09-23.md).
+No later checkpoint, promotion, publication or prospective clock was authorized.
 Captured the Lead's new interview trigger as Q&A entry 32; the preceding 31 entries are intact.
 
 **Historical v21-r3 resumption issuance, 2026-09-23 — now returned PASS.**
@@ -190,7 +195,7 @@ No v2 policy is frozen; the 90-day clock has not started.**
 | **CP-10** | M4 calibration, original `capstone_v20.md` §9 | **Engineering PASS accepted; inherited work landed with CP-15; landed with CP-15; pending edits consolidated into main; temporary branch retired** |
 | **CP-11 → CP-14 (old v20)** | Retired future sequence | **never started; superseded by v21** |
 | **CP-15** | Adaptive forecasting feasibility, v21-r1 §12 | **LAND complete; Engineering PASS; product NOT_DEMONSTRATED; A1 best challenger, none qualified; branch reclaimed** |
-| **CP-16** | Ratified v21-r3 §14 / existing-input v2 | **Engineering PASS accepted; research result complete; Owner disposition/reclamation pending; no promotion** |
+| **CP-16** | Ratified v21-r3 §14 / existing-input v2 | **LAND complete; administratively closed; research PASS; no promotion** |
 | **CP-17 → CP-19** | Future qualified-policy/live sequence | **not authorized; future complete bars and stage authority required** |
 
 ### The three live surfaces
@@ -256,9 +261,9 @@ these operations; it does not amend the standing rulebook or permit model promot
   `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-landing-record-2026-09-16/`.
 - Landing accounting: [CP-15 landing record](docs/track-b/cp-15-landing.md).
   No policy freeze, promotion, holdout opening or prospective clock follows this landing.
-- Next step: Owner decides disposition of accepted CP-16 research work; LAND recommended.
-  Preserve its reviewed chain and Lead checkout pending that decision; no next run or promotion;
-  the existing-input H/P comparison is unchanged. Later weather,
+- Next step: scope a bounded weather-archive admission task and a local research presentation
+  from the existing accepted evidence; neither starts automatically. CP-16 LAND/reclamation
+  are complete and the H/P comparison is unchanged. Later weather,
   architecture and live work remain separate. `NOT_DEMONSTRATED` remains the historical
   CP-15 product conclusion; no new result is claimed.
 
@@ -415,7 +420,7 @@ in CP-15. No reserved outcome partition is opened.
 | Checkpoint | Next purpose | Current authority |
 |---|---|---|
 | CP-15 | Completed adaptive forecasting experiment | LAND complete; Engineering PASS; product NOT_DEMONSTRATED |
-| CP-16 | Ratified existing-input v2 H/P research comparison, v21-r3 §14 | Engineering PASS accepted; research result complete; Owner disposition/reclamation pending; no promotion |
+| CP-16 | Ratified existing-input v2 H/P research comparison, v21-r3 §14 | LAND complete; administratively closed; research PASS; no promotion |
 | CP-17 | Freeze/register a qualified update policy | Requires demonstrated feasibility and future complete bar |
 | CP-18 | Operate that policy and its scorecard | Requires future bar and explicit publication authority |
 | CP-19 | Prospective evaluation | Requires policy freeze, elapsed horizon and future complete bar |
@@ -522,11 +527,11 @@ registry-loading corrections, reconciled the daily alias and dependency prose, a
 availability citations. No code, test, result, active brief, candidate or verdict was inspected or
 changed. No stage, commit, tag, publication, merge or ref deletion was performed.
 
-**Next orchestration action:** await Owner disposition of CP-16; recommend LAND for the
-independently verified research record. Any mainline integration is Owner-authored. Preserve
-the exact candidate/evidence chain, prior FAIL and all debits. Perform only separately
-authorized disposition/reclamation after required evidence preservation; do not open CP-17
-or schedule further experiments from remaining allowance. No executor is launched here.
+**Next orchestration action:** use the completed CP-16 landing record; do not repeat
+disposition or reclamation. Recommend a bounded §4.1 archive-admission brief and local
+research presentation from accepted CP-15/16 evidence, without inventing a new product
+threshold. These are recommendations, not execution/publication grants. Do not open CP-17
+or spend the completed checkpoint's unused allowance. No executor is launched here.
 
 
 **Receipt session, 2026-09-15:** terminal packet and committed verdict read; prescribed Git
@@ -558,10 +563,10 @@ memo in its existing isolated worktree.
 
 ## 3. Blockers / Open Questions
 
-- **CP-16 engineering complete; Owner disposition pending, 2026-09-23.** Accepted PASS under
-  v21-r3 after fresh independent Integration; no execution blocker. Final usage 6,458/9,000,
-  with historical 3,730 intact. Recommend LAND of the research record; retain branch/evidence
-  until explicit disposition and prescribed preservation/reclamation. Both H/P miss original
+- **CP-16 closed after Owner-authorized LAND/reclamation, 2026-09-23.** Accepted PASS under
+  v21-r3 after fresh independent Integration. Final usage 6,458/9,000,
+  with historical 3,730 intact. The reviewed chain is retained by `evidence/cp-16`;
+  only main and the primary checkout remain. Both H/P miss original
   §8 criteria 1–2; no product promotion. Historical monitoring gaps remain disclosed, not
   retroactively cured. Further checkpoint authority is absent.
 
@@ -829,7 +834,7 @@ This file no longer narrates it. It is preserved and addressable:
 
 - **Ratified authority:** `capstone_v21.md` v21-r3, ratified 2026-09-23, SHA256
   `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed`, complete §14 / ten-item §14.8.
-  CP-16 Engineering PASS now accepted under this unchanged authority; disposition pending.
+  CP-16 Engineering PASS accepted under this unchanged authority; LAND and reclamation complete.
   Historical v21-r2 identities and original BLOCKED/FAIL remain preserved in §1 above.
   Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`; CP-15 is closed, §12 unchanged.
 - **Historical authorities:** original `capstone_v20.md` for CP-10; `capstone_V6_8.md` for v1.
@@ -850,6 +855,16 @@ This file no longer narrates it. It is preserved and addressable:
   only its exact supplied anchor/amendment/issued brief under §14.7; no governance authoring.
 
 ## 9. Session Log — newest first
+
+- **CP-16 LAND and repository consolidation, 2026-09-23:** Owner explicitly authorized
+  the assistant to squash CP-16, commit all pending work in separate logical commits and
+  remove extra branches/worktrees. Exact evidence-tip tree landed at `land/cp-16`
+  (`d62769c0cf23c5c252213da92d7f39684e4aa284`); `evidence/cp-16` retains the seven-commit
+  candidate/evidence chain. Original 23 pending files were preserved byte-for-byte in the
+  landing and four subsequent commits before these closure notes. Only main and the primary
+  checkout remain. Existing stash and historical recovery archives are preserved; no push.
+  Q&A unchanged by this task; its prior edits and 32-entry state are committed. No new
+  experiment, engineering review, product promotion or threshold change.
 
 - **CP-16 PASS receipt, 2026-09-23:** read canonical return and fresh independent verdict
   binding `bf3ca602e32e99e45c7835e3f95148f62b608099`; verified seven-commit chain, evidence-only
