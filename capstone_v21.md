@@ -1,3 +1,16 @@
+# Capstone v21-r4 — direct-GFS research amendment (ratified)
+
+**CP-20 ratified and separately authorized to execute · 2026-09-23.** Owner ratifies the
+revised §15 specification and all approved ceilings, and authorizes local candidate/evidence
+commits and exact immutable packaging under §15.7. This issuance changes status/identities only.
+The ratified CP-16 v21-r3 bytes remain at `evidence/cp-16:capstone_v21.md`, SHA256
+`67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed`.
+The historical text below is retained; CP-16 is closed per its landing record, not resumed
+by this document. Only new §15 governs the authorized CP-20 weather experiment. CP-17–19 and
+all existing substantive requirements remain unchanged.
+
+---
+
 # Capstone v21-r3 — Adaptive forecasting with measured product quality (ratified)
 
 **Owner-ratified resource amendment and CP-16 resumption authorization · 2026-09-23.**
@@ -297,6 +310,7 @@ metrics must be ratified before that stage starts. **No clock starts in CP-15.**
 |---|---|---|
 | CP-15 | Adaptive point forecasting and common residual uncertainty; model/data feasibility probes | Complete bar below; execute only on receipt of its brief |
 | CP-16 | One existing-input v2 central-blend/hour-aware-versus-pooled research experiment | Ratified v21-r3 §14 specification/checklist; CP-16 resumption authorized 2026-09-23 under §14.5; no promotion or later-stage authorization |
+| CP-20 | Direct-GFS paired ablation: weather-augmented minus no-weather V2-H | Ratified v21-r4 §15; CP-20 execution and §15.7 immutable packaging authorized 2026-09-23; research only |
 | CP-17 | Freeze the selected update policy and register verified initialization | Requires demonstrated feasibility and complete future bar |
 | CP-18 | Run the same policy and build the live scorecard from recorded issued predictions | Requires operational and publication authorization |
 | CP-19 | Evaluate the preregistered prospective policy | Requires CP-17 plus elapsed horizon and complete future bar |
@@ -726,3 +740,217 @@ retain partial evidence and return PASS/BLOCKED/INCOMPLETE under templates §3 a
 A missing required forecast/review cannot support PASS. No automatic additional family,
 comparison, budget extension, next-checkpoint planning, mainline action or publication.
 Reasoning-capture triggers are named by the Lead in its return; it does not edit Q&A.
+
+
+## 15. CP-20 — direct-GFS paired research ablation (v21-r4 ratified)
+
+**Ratified and separately authorized for CP-20 execution, 2026-09-23.** Owner approves the
+revised three-feature specification and all §15.5 ceilings, including 120 aggregate machine-hours.
+Owner D1/D3 select research only; D2 fixes the comparator and endpoint rule below.
+This issuance records authority and identities only; the approved scientific and resource
+requirements are unchanged. The task-scoped recording suspension ends at the Orchestrator's
+terminal return and grants no Lead authority to edit governance. CP-17–19 retain their roles and are not opened. This is programme 4.4D,
+not VRE modelling, product qualification, an economic experiment or prospective operation.
+
+### 15.1 Inheritance, population and arms
+
+Inherit §§14.1–14.4 unchanged for original target keys/folds, component training/selection,
+normalization, chronology, H residual construction, metrics/diagnostics, bootstrap mechanics
+and evidence labels, except the explicitly replaced arms, weather treatment and contrasts
+here. Inherit §§2–3, all six §8 diagnostics and §9 restrictions. Preserve historical CP-15/16
+results, FAILs, debits and limits. §14 remains the unchanged historical CP-16 contract.
+
+- **H0:** no-weather V2-H exactly as §14.2: inherited A1/B2 50/50 central blend and H layer.
+- **HG:** the same A1/B2 recipes with only the §15.2–15.3 weather columns appended to each
+  hourly regressor; same 50/50 central blend, price-only A1 scale, H recipe and failure rules.
+  Each arm uses its own genuinely issued central errors, but identical buffer dates,
+  release/support/update rules. Do not share residual values across different forecasts.
+- Same histories, eligible rows, chronological four-penalty selection procedure, numerical
+  settings and fixed seed 42; selected penalties may differ because inputs differ. No extra
+  interaction, lag, feature subset, blend weight or residual tuning. No pooled-P arm here.
+- Reuse identity-verified H0/component caches and five saved B0/B1/B2/B3/A1 references;
+  independent representative H0 reproduction must match accepted CP-16 vectors. HG components
+  must be fitted with their own causal weather inputs, not relabelled cached no-weather fits.
+- Both arms cover exactly §14.1's **10,747** keys (including fold 5 through **2026-04-07**):
+  **21,494** contrast rows; with five saved references, **75,229** scored rows. Preserve
+  original exclusions; missing weather never removes a target or shortens price history.
+- Freeze the existing CP-16 input-manifest's **638 fold/date origins**, 35 training-only
+  admission dates and genuine warm-up (2020-05-25 / 2021-02-23 / 2022-05-25 / 2025-03-22 /
+  2025-12-02). No earlier warm-up search. The §14.2 60-date limit remains an outer bound.
+
+### 15.2 Admitted source, conversion and one weather recipe
+
+Use only operational **GFS 0.25° D−1 00 UTC** via the dossier's NCAR d084001 / NOAA AWS
+endpoints. Admission is accepted for the inventoried scope under its disclosed assumptions:
+NCAR-only field presence is inferred from file integrity/size plus sampled version layouts;
+public availability before D−1 11:00 UTC is **reconstructed availability**, not a daily-delivery
+guarantee. NCEP completion averages do not independently establish public dissemination lag.
+Carry these assumptions, known endpoint defects, source fingerprints and the post-sample
+radiation-precision-check disclosure into protocol/report. Admission does not certify live use.
+ICON remains NOT_ADMITTED and is excluded. No reanalysis, hindcast, later cycle or pre-2019 input.
+
+The dossier inventoried 2,468 runs using CP-15 warm-up. This CP-16-style warm-up requires
+**2,476** unique runs: the extra **2023-03-24..31** eight runs must receive targeted GFS
+field/lead/availability checks before fitting. Do not label them already admitted. Verify
+actual field metadata during extraction, including previously inferred NCAR fields; a material
+contradiction to admission or unsupported version/units stops the task with evidence.
+
+Freeze this single conversion before fitting or scoring:
+
+1. Decode u/v at **10 m and 100 m above ground** (m/s) and surface **DSWRF** (W/m²).
+   Pressure levels never substitute for above-ground heights. Validate init/valid time,
+   grid, forecast status and version per message. Needed endpoints are f021,024,…,048.
+   Use the inventoried endpoint; for added runs use AWS first. At most one same-product
+   alternate-endpoint attempt per failed object; compare metadata, retain hashes and defects.
+2. Wind: linearly interpolate each component between bracketing three-hour endpoints to
+   canonical delivery-hour starts **h22–h46**, with no extrapolation. Then compute
+   **sqrt(u²+v²) per grid cell**, separately at **10 m and 100 m**, before spatial averaging.
+   Radiation: at each grid
+   point recover three-hour means from documented six-hour-reset averages: use A(L−3,L)
+   directly at L≡3 mod6, otherwise **2A(L−6,L)−A(L−6,L−3)** at L≡0 mod6. Assign the block
+   mean to each constituent hour [h,h+1); no solar-shape disaggregation or extra interpolation.
+   Validate actual averaging bounds, not lead number alone. For negative block means, permit
+   only values ≥−3q, q=max packing quantum of contributing messages; clip those to zero
+   before aggregation and log count/magnitude/version. Below −3q or unknown quantum/bounds
+   is a conversion failure, not a fitted tolerance. Disclose coarse v14/v15 precision.
+3. Use the fixed rectangular proxy **47–55.25°N, 5.5–15.5°E**, inclusive grid centres,
+   cosine(latitude) area weights normalized over that fixed grid. Apply them to the per-cell
+   wind-speed magnitudes at each height and to converted DSWRF, separately per hour. Mean
+   wind speed is the weighted mean of cell speeds, not the magnitude of mean u/v.
+   No power curve, capacity weights, learned geographic mask, VRE conversion or provider search. Call it
+   a regional weather proxy, not an exact DE-LU polygon or power-generation forecast.
+   Do not renormalize over missing cells. Nonfinite required support makes the weather vector
+   missing under §15.3. Store grid/weights, units and conversion fingerprints.
+4. Append only **three same-target-local-hour weather columns** to each A1/B2 hourly design:
+   **mean wind speed at 10 m, mean wind speed at 100 m, mean DSWRF**. Inherited imputation
+   adds their **three missing indicators**. The five native extraction fields remain
+   **u10, v10, u100, v100 and DSWRF**. No cross-hour expansion or feature search.
+   On repeated local hours average the two canonical weather vectors as the inherited LEAR
+   local-hour design does; preserve both canonical outputs/targets. A missing spring hour
+   remains absent. Require all repeated-hour inputs or mark the local-hour vector missing.
+
+### 15.3 Missing-input and transform rule
+
+Weather for **delivery 2019-01-01 is structurally missing** because its run would be
+2018-12-31; do not import it or remove its otherwise eligible training row. For any confirmed
+missing/late/nonfinite weather vector after the bounded endpoint attempts, set all three
+derived weather columns missing and mark all three indicators. Apply the inherited CP-15 LEAR
+imputer/scaler: per-feature **training-partition median**, all-null column → 0, missing
+indicator per feature, then training-only StandardScaler. Fit them independently inside each
+inner-training split and final training window; never use validation/outer outcomes or future
+weather to impute. No interpolation across dates, forward fill or zero-radiation shortcut.
+This is the same rule in training, admission, warm-up and evaluation. HG still emits its own
+fitted-component/H forecast; it does not switch silently to H0 or borrow H0's residuals.
+
+Complete the required extraction/status ledger before fitting: classify structural missing,
+confirmed archive absence, documented lateness and invalid support separately. Failed/unattempted
+retrieval due to exhausted resources, absent admission evidence or unknown schema is **BLOCKED**,
+not missing-data imputation. Confirmed missing weather is an explicit part of the HG policy;
+report dates/counts and all-imputed origins, not an unqualified complete-weather claim.
+Price/load/component/state failures retain §14.2's failure rule; weather fallback cannot cure
+insufficient common history, an invalid fit or a missing eligible forecast. Freeze the recipe,
+conversion fixtures and complete missingness manifest before any fit/outer scoring.
+
+### 15.4 Comparison and claims
+
+The sole primary contrast is **HG − H0**, for each paired equal-fold normalized score.
+Use §14.4's seed 15042, one shared 2,000-replicate seven-calendar-day block index set per
+analysis pass and its exact paired score-difference/95% percentile procedure. Apply
+**upper CI(ΔS_WIS)<0 AND upper CI(ΔS_MAE)≤0** to those differences, not to marginal-score
+intervals or point estimates. Otherwise report **no demonstrated joint preference**, with
+mixed outcomes/undefined intervals explicit; never equivalence or absence of benefit/harm.
+If descriptive ordering is reported, lower S_WIS then S_MAE, with H0 on exact ties; it is not
+promotion. Original §8 diagnostics are unchanged for both arms, with saved B0–B3 comparators.
+Keep all §14.3 per-fold/hour/block/peak diagnostics and §14.4 scientific limitations.
+All results are **development_post_selection**. Historical economics is descriptive only;
+zero new economic runs/thresholds. Negative results complete valid research; no result opens
+VRE, CP-17–19, public surfaces, live selection or a prospective clock.
+
+### 15.5 Owner-approved ceilings — CP-20 execution authorized
+
+**D4 approved, 2026-09-23:** 120 aggregate machine-hours; all other caps below approved as
+drafted. These are **CP-20-specific** ceilings, not feasibility guarantees, estimates or targets.
+The Lead retains the existing pre-run feasibility responsibility. No transfer of CP-16's unspent allowance
+or reset of its 6,458 policy-days/other debits. Report prior-task totals separately from new
+CP-20 increments. Use §14.5's counting units and forward-looking synthetic-test/real-replay/fit
+distinctions unchanged. Charge preparation, failures, warm-up, controls, repairs and independent
+review to applicable caps. Stop before the first exhausted cap and retain partial evidence.
+
+| Dimension | Owner-approved maximum |
+|---|---|
+| Policies/configurations | **2** arms, **5** saved references, **7** scored policies; **1** weather feature/conversion/missingness recipe, **1** fixed H recipe; **2** inherited A1/B2 component recipes per arm; **2** components/blend, weight 1/2; **0** additional ensembles/configurations/outer-selection trials |
+| Seeds/inner selection | Fixed fitting seed **42**, bootstrap seed **15042**; no seed search; **4** inherited penalties per hourly fit, same chronological inner split/tie rule |
+| Dates/main fits | **638** fold/date origins/arm, **35** admission dates/arm within those, ≤**60** warm-up dates/fold; **3,000** main component-day attempts across both arms (contains cache misses; nominal all-fresh need 2×638×2=2,552) |
+| All fitting | **4,000** component-day attempts total; **480,000** primitive Lasso attempts: ≤**384,000** inner and ≤**96,000** final refits (4,000×24×(4+1)); retries/solver continuations count, not extra recipes |
+| Replay | **9,000** new policy-days total; ≤**6** full-equivalent paired passes (conservative envelope 750×2×6); actual reused/recomputed real-data state work charged under §14.5 |
+| References/uncertainty | **3** metric-only full reference passes; **3** bootstrap analysis passes including independent review, **2,000** replicates each; **0** new B0/B1/B3 fits/reference calibration |
+| Weather/extraction | **1** product, **2** named access endpoints; **2,476** unique 00 UTC runs; **5** fields×**10** leads/run (≤**123,800** target messages); **3** decode/extraction attempts per target message including retries/review; **160 GiB** cumulative new transfer including metadata, dependencies, failed/duplicate requests; **0** whole global multi-field run-file downloads or unrelated data/model downloads |
+| Compute/effort | **120 aggregate machine-hours** including network/extraction jobs, summed across concurrent jobs; **4** workers, BLAS **1**, **0** GPU/cloud; approximate **64-active-hour** timebox, hard **80 active hours** including verification/return |
+| Memory/storage/cost | **10 GiB** aggregate process-tree RSS; **40 GiB** additional peak disk including environments/worktrees/cache/evidence; **$0**; inherited admission cache (~1.73 GiB) measured as retained baseline, not deleted or hidden |
+| Other work | **0** ICON/VRE/neural candidates, feature/recombination searches, new economic runs, operational days, schedules or remote mutations |
+
+Rationale: the dossier estimates ~101 GiB of target-message payload and ~55 sequential NCAR
+hours plus 7–22 AWS hours. Transfer/compute margins cover indexes, failures and review; they do
+not prove feasibility. Stream verified messages to bounded regional artifacts; retain original
+sample raw files, per-message hashes/URLs and reproducible acquisition records. Do not retain
+~101 GiB of globals under a 40 GiB disk cap. No unverified NCSS shortcut is included.
+Before dependent work, the Lead completes §14.6 E1–E4 for **CP-20**, estimating extraction,
+admission, production, controls and independent verification against every cap. Insufficient
+allowance/material discrepancy returns a concrete blocker, not a new unapproved recipe.
+
+### 15.6 Complete CP-20 acceptance checklist
+
+All ten items are mandatory. They inherit the verification standard of §14.8; the weather
+additions and H0/HG scope replace CP-16-specific H/P wording, not its scientific safeguards.
+
+1. Verify repository/input state, retain prior evidence and other-session work; after Owner
+   ratification/execution grant only, package exact supplied anchor/amendment/brief and commit
+   the frozen protocol/input/conversion/missingness/budget manifests before comparison.
+2. Close the eight-run admission extension; validate all extracted field/lead/version metadata,
+   source/endpoint identity and historical availability basis. Preserve inferred versus decoded
+   evidence, 2019 structural missingness and all dossier exceptions; record every extraction gap.
+3. Implement exactly H0/HG and the frozen conversion/fallback; show only the predefined weather
+   treatment differs. Verify H0 against accepted CP-16 vectors and reproduce representative
+   weather-component fits. Training-only admission must precede outer scoring; no tuning to gain.
+4. Prove §14.8 item 3's causal/state/DST/cache controls, plus positive/negative weather-origin,
+   accumulation, units, packing/clipping, aggregation and missingness controls. Verify pre-2019
+   refusal and independent reconstruction from retained raw samples without rerunning admission.
+5. Produce all original eligible keys for both arms and the required reference metrics; no
+   denominator changes. Independently verify emitted p50/ordered vectors, all §14.3 diagnostics
+   and support counts, including fallback incidence; inherited failures still preclude PASS.
+6. Apply HG−H0 paired endpoint rule and all six original §8 diagnostics; keep point/interval
+   effects, uncertainty, negative/mixed findings, post-selection labels and research/product
+   distinctions. No promotion, economic threshold or claim of guaranteed availability/coverage.
+7. Enforce/report every §15.5 cap from the first job, all attempts and independent review;
+   preserve historical debits/monitoring limitations. Exhaustion yields BLOCKED/INCOMPLETE,
+   never implicit permission to impute unfinished extraction or shrink evaluation.
+8. Supply protocol, lineage, decoded weather/features, predictions, metrics/diagnostics,
+   uncertainty, criteria, failure/resource logs, rights notices and executable reproduction
+   commands; preserve invalid outputs/repairs and run relevant inherited regression guards.
+9. Obtain **one fresh independent Integration-Critic PASS** binding the exact final candidate
+   in a clean detached checkout and this entire checklist, with independent saved-vector
+   metrics/paired uncertainty and representative conversion/component/causal/state reproduction.
+10. Return canonical packet, final candidate and evidence-tip SHAs, evidence-only terminal
+    delta, reachable history, all resources and branch/worktree accounting; stop at CP-20's
+    local result. No mainline action, publication, later checkpoint or executor self-ratification.
+
+### 15.7 Paths and entry authority
+
+Under the recorded CP-20 execution authorization: `src/cp20/`, `tests/cp20/`,
+`scripts/cp20_weather.py`, `reports/weather-ablation/`, `docs/track-b/evidence/cp-20/`,
+`pyproject.toml`/`uv.lock` if necessary; ignored material under `.local/{worktrees,artifacts,tmp}/cp-20/`.
+Use admitted files read-only from `reports/weather-admission/` and `.local/weather-admission/`;
+put extended inventories/extraction evidence in `reports/weather-ablation/`. Preserve CP-15/16
+code, reports, data, model registries, public surfaces, Q&A, progress and all other locked files.
+Include the exact accepted `reports/weather-admission/` bundle and intake receipt in the
+candidate when absent from its base; preserve their manifest identity, without revising them.
+
+Accountable executor: CP-20 Engineering Lead; reviewer: its fresh independent Integration
+Critic under `engineering-role.md`. The Owner separately authorizes local
+`gauntlet/cp-20` candidate/evidence commits and exact immutable packaging of this ratified
+anchor, `docs/track-b/capstone_v21-r3-to-v21-r4-amendments.md` and
+`docs/track-b/cp-20-direct-weather-brief.md`, together with the admission package above.
+Ratification and CP-20 execution authority are **GRANTED, 2026-09-23**. The Lead owns the
+existing pre-run checks, including feasibility and the eight added GFS runs; no further Owner
+approval is needed unless a concrete blocker exceeds this scope. No scientific/budget change,
+later checkpoint, governance edit, mainline operation or publication is authorized.

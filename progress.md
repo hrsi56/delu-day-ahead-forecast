@@ -3,13 +3,17 @@
 *Orchestrator-owned. **Updated 2026-09-23: CP-16 landed and administratively closed; pending work consolidated; only main and the primary checkout remain. Prior FAIL and CP-15 evidence preserved.**
 Single-track programme; current authority is below, historical checkpoint evidence remains intact.*
 
-**Ratified authority for CP-16: v21-r3**, cap/counting change ratified and resumption authorized
-2026-09-23. [capstone_v21.md](capstone_v21.md) SHA256:
+**Current authority:** CP-20 v21-r4 in `capstone_v21.md` is **RATIFIED**, 2026-09-23.
+CP-20 execution and §15.7 local candidate/evidence packaging are separately **AUTHORIZED**.
+Issued brief ready for Owner transfer; no executor launched here. Prior ratified bytes remain preserved.
+
+**Ratified historical authority for CP-16: v21-r3**, cap/counting change ratified and resumption authorized
+2026-09-23. Exact bytes at `evidence/cp-16:capstone_v21.md`, SHA256:
 `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed`. The Owner expressly approves these consistent
 successors without another routine approval round. Preserve the prior BLOCKED/independent FAIL,
 all evidence/limits and 3,730 historical policy-days. The completed return reports 6,458/9,000
 cumulative (2,542 unspent); the 5,270 resumption balance is historical, not current. Engineering
-PASS is accepted; Owner-authorized LAND and reclamation are complete. See the [landing record](docs/track-b/cp-16-landing-2026-09-23.md). No new experiment or executor launch.
+PASS is accepted; Owner-authorized LAND and reclamation are complete. See the [landing record](docs/track-b/cp-16-landing-2026-09-23.md). No CP-16 resumption follows; CP-20 is separately authorized below.
 Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`, SHA256
 `44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3`.
 
@@ -31,6 +35,40 @@ no commit, stage, branch, worktree, tag or publication was made by the Orchestra
 ---
 
 ## 1. Current Position
+
+**Weather/content intake complete; CP-20 ratified and authorized, issued for Owner transfer.**
+[Receipt and preservation accounting](docs/track-b/weather-content-intake-2026-09-23.md): GFS
+ADMIT for the inventoried scope under inferred NCAR field presence and reconstructed-availability
+assumptions; ICON NOT_ADMITTED. Preserve structural 2019-01-01 missing weather and the post-sample
+radiation-check disclosure. The no-fallback contradiction is corrected. Content is accepted as
+an [unpublished local draft](docs/track-b/research-content/cp15-cp16-update.md) for Owner review;
+no README/site edit. No new model result or repeated engineering checks.
+
+The two Owner-declared Claude worktrees had no unique commits. Their 54 weather / 2 content
+files and 4,583 recovery files were imported with matching hashes; absent destinations meant
+no overwrite. The two tips at `110ce15e8b8fff4cc9b08e33e1b948ad9a50c310` are preserved by
+`archive/weather-admission-20260923` and `archive/cp15-cp16-content-20260923`; both named
+branches/worktrees were then removed as authorized. Main HEAD/index unchanged; recovery now
+lives in main's `.local/weather-admission/`. Original executor bytes and manifests are retained
+under `.local/artifacts/weather-intake-cp20-20260923/`.
+
+[Issued CP-20 brief](docs/track-b/cp-20-direct-weather-brief.md) and
+[amendment](docs/track-b/capstone_v21-r3-to-v21-r4-amendments.md) implement 4.0b for 4.4D.
+Ratified anchor SHA256: `150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167`.
+D1/D3: research only; D2: HG−H0 paired endpoint rule, §8 unchanged, descriptive economics.
+D4 ceilings are **approved**: 120 aggregate machine-hours, all other §15.5 caps unchanged.
+The bounded revision uses area-weighted per-cell wind speeds at 10/100 m plus mean DSWRF,
+three features/indicators from the unchanged five native fields. Full-specification ratification
+and CP-20 execution/local candidate-packaging authority are **granted, 2026-09-23**. The
+status/identity-only issuance suspension ends at terminal return. CP-17–19 unchanged; no executor
+launched or experiment run by the Orchestrator.
+Eight GFS runs (2023-03-24..31) need targeted verification because CP-16 admission warm-up
+starts earlier than the dossier's CP-15 basis. These and Lead feasibility/accounting/conversion
+fixtures remain mandatory pre-fit checks, not another Owner approval round. Escalate only a
+concrete blocker beyond authorized scope. No issuance blocker remains.
+Issued amendment SHA256: `3e0bdf6a343d5336f406f0eeb726b1b65c0f767ec8d9418a7d8118902e1ace55`.
+Issued brief SHA256: `28a4e195fa7f66ff3270d5d54e477478e90aa42124bceb1ee529f95f5761883e`.
+Interview lesson captured as Q&A entry 33 via the prescribed appender; prior 32 preserved.
 
 **CP-16 Engineering PASS accepted, LAND complete and administratively closed, 2026-09-23.**
 [Orchestrator receipt](docs/track-b/cp-16-pass-receipt-2026-09-23.md) records the gate and limits.
@@ -93,7 +131,10 @@ and limitations, and obtain fresh independent Integration against the complete b
 feasibility, resource allocation and monitoring repairs are Lead-owned, not new Owner ballots.
 Weather admission §4.1 is no prerequisite. No new general review or accounting-design round.
 
-| Current successor | SHA256 |
+Historical issued CP-16 identities below refer to exact bytes at `evidence/cp-16`, not the
+ratified v21-r4 successor now in `capstone_v21.md`.
+
+| Historical CP-16 successor | SHA256 |
 |---|---|
 | [v21-r3 anchor](capstone_v21.md) | `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed` |
 | [v21-r2→v21-r3 amendment](docs/track-b/capstone_v21-r2-to-v21-r3-amendments.md) | `b2acadbfedecb22302a001f0935bd596d2c36a975742911e389b24e12a47142c` |
@@ -261,9 +302,9 @@ these operations; it does not amend the standing rulebook or permit model promot
   `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-landing-record-2026-09-16/`.
 - Landing accounting: [CP-15 landing record](docs/track-b/cp-15-landing.md).
   No policy freeze, promotion, holdout opening or prospective clock follows this landing.
-- Next step: scope a bounded weather-archive admission task and a local research presentation
-  from the existing accepted evidence; neither starts automatically. CP-16 LAND/reclamation
-  are complete and the H/P comparison is unchanged. Later weather,
+- Next step: transfer the issued CP-20 direct-GFS brief; weather admission and local research content
+  have returned and are accepted with their documented limits. CP-16 LAND/reclamation
+  are complete and the H/P comparison is unchanged. CP-20 execution is authorized; pre-run checks remain. Later weather,
   architecture and live work remain separate. `NOT_DEMONSTRATED` remains the historical
   CP-15 product conclusion; no new result is claimed.
 
@@ -527,11 +568,10 @@ registry-loading corrections, reconciled the daily alias and dependency prose, a
 availability citations. No code, test, result, active brief, candidate or verdict was inspected or
 changed. No stage, commit, tag, publication, merge or ref deletion was performed.
 
-**Next orchestration action:** use the completed CP-16 landing record; do not repeat
-disposition or reclamation. Recommend a bounded §4.1 archive-admission brief and local
-research presentation from accepted CP-15/16 evidence, without inventing a new product
-threshold. These are recommendations, not execution/publication grants. Do not open CP-17
-or spend the completed checkpoint's unused allowance. No executor is launched here.
+**Next orchestration action:** Owner transfers the issued CP-20 handoff to the Engineering
+Lead; await one canonical checkpoint return. Lead owns pre-run feasibility and eight-run
+verification within §15. No later checkpoint, CP-16 allowance transfer or repeated closure.
+Weather/content returns are imported; content remains local. No executor launched here.
 
 
 **Receipt session, 2026-09-15:** terminal packet and committed verdict read; prescribed Git
@@ -563,12 +603,18 @@ memo in its existing isolated worktree.
 
 ## 3. Blockers / Open Questions
 
+- **CP-20 authorized; execution checks outstanding:** ratification/execution granted; all caps
+  approved, including 120 machine-hours. No unresolved issuance blocker. The eight-run GFS extension and
+  Lead feasibility/accounting must pass before fitting; they are not claimed complete.
+  Weather admission remains conditional on its documented assumptions. Content effort/round
+  accounting was not reported; acceptance is local-draft content, not certified resource usage.
+
 - **CP-16 closed after Owner-authorized LAND/reclamation, 2026-09-23.** Accepted PASS under
   v21-r3 after fresh independent Integration. Final usage 6,458/9,000,
   with historical 3,730 intact. The reviewed chain is retained by `evidence/cp-16`;
   only main and the primary checkout remain. Both H/P miss original
   §8 criteria 1–2; no product promotion. Historical monitoring gaps remain disclosed, not
-  retroactively cured. Further checkpoint authority is absent.
+  retroactively cured. CP-20 has its separate grant; CP-17–19 remain unauthorized.
 
 - **Q&A owner correction preserved; CP-16 capture appended.** The Owner’s prior deletion of
   old entries 31/32 left 30 questions. Those entries remain unchanged; the Orchestrator now
@@ -832,29 +878,74 @@ This file no longer narrates it. It is preserved and addressable:
 
 ## 8. Strategic Anchors
 
-- **Ratified authority:** `capstone_v21.md` v21-r3, ratified 2026-09-23, SHA256
+- **Historical ratified authority:** `evidence/cp-16:capstone_v21.md` v21-r3, ratified 2026-09-23, SHA256
   `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed`, complete §14 / ten-item §14.8.
   CP-16 Engineering PASS accepted under this unchanged authority; LAND and reclamation complete.
   Historical v21-r2 identities and original BLOCKED/FAIL remain preserved in §1 above.
   Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`; CP-15 is closed, §12 unchanged.
+- **Current ratified authority:** `capstone_v21.md` v21-r4, §15 CP-20, ratified 2026-09-23; SHA256
+  `150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167`. Separate CP-20 execution/§15.7 packaging grant recorded; full ten-item §15.6 applies.
 - **Historical authorities:** original `capstone_v20.md` for CP-10; `capstone_V6_8.md` for v1.
   Original v20 methods and bar remain unchanged; only its reasoning-capture scope paragraph was
   reconciled with the restored rule. Isolated v20-r1 retains its separate, superseded corrections.
 - **Target:** DE-LU hourly day-ahead price forecasting with the inherited forecast-origin and
   eligibility contract; improve point predictions and honest, useful uncertainty.
-- **Budget/hardware:** local M3 / 16 GB; approved CP-16 §14.5 ceilings include CPU only,
-  zero GPU/cloud/model-data downloads and zero external spending. These are maximum allowances,
-  not spending targets or runtime estimates; the separate execution grant covers CP-16 only.
-  Earlier CP-15 MPS probe authority is historical.
+- **Budget/hardware:** local M3 / 16 GB; CP-20 approved §15.5 ceilings, including 120 aggregate
+  machine-hours, 80-active-hour hard stop, CPU only and zero GPU/cloud/external cost. Ceilings
+  are not feasibility guarantees. Historical CP-15/16 budgets/debits remain separate.
 - **Language:** English. **Track A/C:** outside programme scope, as recorded above.
 - **Governance:** AGENTS.md canonical; engineering-role.md and templates unchanged. All current
   and historical ratified anchors stay locked regardless of filename case, explicitly including
   v21, v20 and the M4 companion. Retired NotebookLM/syllabus material remains locked for completeness.
   Routing pointers and active capture instructions are reconciled; publication and mainline history
-  remain owner-only. Historical CP-15 packaging authority is in §13. Current CP-16 may package
-  only its exact supplied anchor/amendment/issued brief under §14.7; no governance authoring.
+  remain owner-only. Historical CP-15/16 packaging authority is in §§13/14.7. Current CP-20 may package
+  only exact supplied documents/admission evidence under §15.7; no governance authoring.
 
 ## 9. Session Log — newest first
+
+- **CP-20 ratification and issuance, 2026-09-23:** Owner ratified revised v21-r4 and separately
+  authorized CP-20 execution, local candidate/evidence commits and exact §15.7 packaging.
+  Verified starting brief/amendment against the completed revision return; recorded status-only
+  successors in dependency order. Science, checklist and all caps preserved. Updated current
+  routing/anchors; older session records retained. Lead owns feasibility/eight-run prechecks;
+  no routine approval round. No executor, experiment, Q&A edit, staging/commit or publication.
+
+- **Bounded CP-20 wind/D4 revision, 2026-09-23:** per Owner instruction, derive speeds from
+  per-cell time-interpolated u/v before unchanged area weighting; three features/indicators,
+  five native extraction fields unchanged. D4 approved at 120 aggregate machine-hours with
+  all other caps unchanged; ceilings do not guarantee feasibility. Updated anchor → amendment
+  → brief hashes and dependent routing. Ratification/execution still pending. Existing grid,
+  missing support, radiation conversion, paired rule, disclosures and post-selection labels
+  preserved; no experiment, general review, executor, Q&A edit, staging/commit or publication.
+
+- **Weather/content intake, reclamation and CP-20 draft, 2026-09-23:** accepted GFS ADMIT and
+  ICON NOT_ADMITTED under disclosed assumptions; accepted local research draft, corrected
+  fallback wording and unnecessary claim-approval gaps. Imported 54+2 files and moved 4,583
+  recovery files with hash verification; preserved original bytes/config copies and tagged
+  both zero-unique-commit tips before authorized branch/worktree removal. Only main remains.
+  Identified eight additional GFS runs for CP-16-style warm-up. Drafted only §10/new §15 and
+  revision references under scoped suspension, one-page brief/amendment; CP-17–19 and all
+  old substantive requirements retained. Ratification/caps/execution pending; no experiments,
+  staging, commits, mainline operation or publication. Updated only affected routing; captured
+  Q&A entry 33, prior 32 intact. The two prior handoffs are now completed historical inputs.
+
+- **Focused handoff corrections and execution approval, 2026-09-23:** Owner approved the
+  named executors' bounded work and corrected historical reconstructed-availability evidence,
+  same-product NOAA AWS access, six-field ICON radiation handling and secure gated-access
+  verification. Recorded Owner-reported OCF terms acceptance/token availability without using
+  or inspecting the token. Content now states A1 criterion-5 fold-1 MAE failure, all-fold WIS
+  passes, both H/P passes and the limits of causal attribution. All other scope/resource caps
+  retained; one consistency check only. No executor launch, retrieval, experiment, locked edit,
+  general review, staging/commit or publication. Owner carries both corrected handoffs.
+
+- **Two executor handoffs, 2026-09-23:** read the completed landing record from clean main
+  `110ce15e8b8fff4cc9b08e33e1b948ad9a50c310`; prepared one-page weather-admission and
+  CP-15/16 research-content briefs under the existing programme requirements. Weather has
+  a 16-active-hour stop, 2 archives/24 sampled runs/48 decoding attempts, 4 GiB transfer
+  and explicit local resource ceilings; content has 8 active hours and one correction round.
+  Current routing changed from recommended briefs to prepared handoffs; all earlier status,
+  evidence and open items remain. No execution, download, experiment, general review,
+  closure/disposition action, locked edit, Q&A change, staging, commit or publication.
 
 - **CP-16 LAND and repository consolidation, 2026-09-23:** Owner explicitly authorized
   the assistant to squash CP-16, commit all pending work in separate logical commits and
@@ -1024,7 +1115,8 @@ This file no longer narrates it. It is preserved and addressable:
 - CP-15 distinguishes experiment validity from product feasibility. The Owner chose the
   fixed B2/A1 blend with H/P control as the bounded intermediate research step; its documents
   completed under v21-r3 with accepted Engineering PASS; original BLOCKED/FAIL remains.
-  Await Owner disposition/reclamation, not another run. No product qualification or automatic
+  Disposition/reclamation are complete. CP-20 is separately ratified and authorized; its
+  pre-run checks remain mandatory. No product qualification or automatic
   later checkpoint follows. Later information/architecture choices remain separate.
 - No CP-16–CP-19 executor starts without its own complete bar and brief. No prospective clock
   starts until an eligible policy and its update/evaluation rules are frozen.
