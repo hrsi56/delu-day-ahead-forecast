@@ -2,10 +2,10 @@
  "implementation_sha256_after": {
   "scripts/cp20_weather.py": "320b898c7ef8efb18972a3e34eaa5e7c05ee41ba294a835492d4c6c84e77cacd",
   "src/cp20/budget.py": "142f378b559c3b8b622481ab0c01fd8d5198cad2fbd971f4d7e068de77283c3f",
-  "src/cp20/extract.py": "3fba33a974ae10f0df5c835dfd796e41488ace95558b60092ec89ab328a1b6c5",
+  "src/cp20/extract.py": "1a80c0c61d944d346de1c77b8fb5173d02dafc4e656e2653bd4094c1a879773a",
   "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
   "src/cp20/gfs.py": "f4a300ba63943827bd2de63f27ed573d3b12308c7534a5695c2dd8a828c38807",
-  "src/cp20/net.py": "19e5248cf215289efddc61ed34910df99c3a318238b00c0c1dcf7daafcc07ccd",
+  "src/cp20/net.py": "ee231dfedc50addbf0d81e586277e96d32e9e57415d5ae3fab065b458af3eb21",
   "src/cp20/plan.py": "eca2f62c986cd2dfbcaa96e9e2ec2be71af4f9a8687b43f3a969e3c95aa13808",
   "src/cp20/probe.py": "d6a6d188f7dd51dfe00a30da6f0675e0f87e8b559a81fb19ab9567aab8f3e256",
   "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5"
@@ -83,6 +83,14 @@
    "id": "r6-ncar-bounded-window",
    "kind": "NCAR locator efficiency, no scientific or data effect",
    "tests": "tests/cp20/test_gfs_locator.py::test_bounded_window_never_exceeds_the_cap_for_large_learned_errors"
+  },
+  {
+   "change": "per-request deadline 30 s + 1e-5 s x expected bytes with 32 kB reads; failed/stalled connections are closed; NetworkError (timeouts, stalls, 5xx/429) retries the same endpoint (transient_retry), ObjectError/IntegrityError (4xx, size mismatch, framing/decode) uses the one alternate endpoint; >=5 network failures within 600 s halt the job resumably (network_degraded) instead of exhausting message attempts",
+   "effective": "relaunch after full job 23",
+   "id": "r7-network-stall-handling",
+   "kind": "network robustness, no scientific or data effect; attempt caps unchanged",
+   "tests": "tests/cp20/test_retry_routing.py",
+   "trigger": "full job 23: AWS range for 2021-01-04 f021 u10+v10 trickled at ~600 B/s for >7 min (nettop), never tripping the 60 s no-byte read timeout; an earlier 2021-01-08 f024 range took 164 s"
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

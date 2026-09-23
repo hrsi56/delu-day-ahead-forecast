@@ -36,7 +36,7 @@ from .budget import Budget, CapExceeded, GIB, atomic
 from .gfs import (FIELDS, GROUPS, LEADS, BOX_LATS, BOX_LONS, Contradiction, IntegrityError, NcarLocator,
                   OffsetModel, aws_url, check_frame, decode, ncar_url, parse_idx, sha, version,
                   version_evidence)
-from .net import Fetcher, TransferError
+from .net import Fetcher, NetworkError, TransferError
 
 # Section 15.5: 3 attempts per target message including retries and review. Production uses at
 # most 2, so every message keeps one attempt for independent review (r5 reverted).
@@ -138,6 +138,7 @@ class Extractor:
         self.reason = None
         self.lock = threading.Lock()
         self.progress = {'complete': 0, 'reused': 0, 'failed': [], 'started_epoch': time.time()}
+        self.network_failures = []
 
     # ------------------------------------------------------------ completion / resume
     def completed(self, run):
@@ -240,17 +241,30 @@ class Extractor:
             if self.stop.is_set():
                 return  # partial run discarded; attempts already recorded
             result = None
-            plan = [(rec['primary_endpoint'], 'production')]
-            plan.append((rec['alternate_endpoint'], 'alternate_endpoint') if rec['alternate_endpoint']
-                        else (rec['primary_endpoint'], 'transient_retry'))
-            for endpoint, purpose in plan:
+            endpoint, purpose = rec['primary_endpoint'], 'production'
+            alternate_used = False
+            while True:
                 try:
                     result, trace = self._lead(run, lead, rec, endpoint, purpose)
                     if trace is not None:
                         traces[f'f{lead:03d}'] = trace
                     break
                 except (IntegrityError, TransferError) as exc:
-                    failures.append({'lead': lead, 'endpoint': endpoint, 'purpose': purpose, 'error': str(exc)[:300]})
+                    failures.append({'lead': lead, 'endpoint': endpoint, 'purpose': purpose, 'error': str(exc)[:300],
+                                     'kind': type(exc).__name__})
+                    if 'allowance exhausted' in str(exc):
+                        break
+                    if isinstance(exc, NetworkError):
+                        # A network stall is not an object failure: retry the same endpoint on a fresh
+                        # connection; a burst of network failures halts (resumable) before attempts burn.
+                        if self._network_failure():
+                            return
+                        purpose = 'transient_retry'
+                    elif rec['alternate_endpoint'] and not alternate_used:
+                        endpoint, purpose, alternate_used = rec['alternate_endpoint'], 'alternate_endpoint', True
+                    else:
+                        purpose = 'transient_retry'
+                    continue
                 except Contradiction as exc:
                     self._halt('contradiction', {'run': key, 'lead': lead, 'endpoint': endpoint, 'error': str(exc)})
                     return
@@ -283,6 +297,15 @@ class Extractor:
             self.progress['complete'] += 1
             self._save_progress()
         print(key, 'complete', round(time.time() - began, 1), 's', flush=True)
+
+    def _network_failure(self, window=600.0, limit=5):
+        now = time.time()
+        with self.lock:
+            self.network_failures = [t for t in self.network_failures if now - t < window] + [now]
+            burst = len(self.network_failures) >= limit
+        if burst:
+            self._halt('network_degraded', {'failures_in_window': len(self.network_failures), 'window_s': window})
+        return burst
 
     def _failed_run(self, rec, failures, began):
         path = self.out / 'failures.jsonl'
