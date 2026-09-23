@@ -1,18 +1,22 @@
 # Programme state — DE-LU day-ahead forecasting
 
-*Orchestrator-owned. **Updated 2026-09-16 for the owner-authorized CP-15 landing under v21-r1.**
+*Orchestrator-owned. **Updated 2026-09-23 for accepted CP-16 Engineering PASS; Owner disposition/reclamation pending; prior FAIL and CP-15 evidence preserved.**
 Single-track programme; current authority is below, historical checkpoint evidence remains intact.*
 
-**The one active plan: [`capstone_v21.md`](capstone_v21.md) — *Adaptive forecasting with measured
-product quality*, revision **v21-r1**, history correction owner-authorized 2026-09-16.** The owner approved execution of the research
-direction and necessary plan replacement; the Orchestrator drafted the detailed specification
-under that authority. This does not claim sentence-by-sentence owner review. Only CP-15 has a
-complete execution-ready bar. No new engineering session has been launched by the Orchestrator.
+**Ratified authority for CP-16: v21-r3**, cap/counting change ratified and resumption authorized
+2026-09-23. [capstone_v21.md](capstone_v21.md) SHA256:
+`67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed`. The Owner expressly approves these consistent
+successors without another routine approval round. Preserve the prior BLOCKED/independent FAIL,
+all evidence/limits and 3,730 historical policy-days. The completed return reports 6,458/9,000
+cumulative (2,542 unspent); the 5,270 resumption balance is historical, not current. Engineering
+PASS is accepted; disposition/reclamation are pending. No experiment or executor launch here.
+Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`, SHA256
+`44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3`.
 
 **Prior isolated correction, now superseded as a future proposal:** `capstone_v20.md` **v20-r1** was owner-authorized
 and available for review in `/Users/djourno/Downloads/PJM-orchestrator-v20-review`, branch
 `codex/v20-plan-corrections`. It was never adopted on `main` or in the CP-10 checkout. Its superseded draft is now preserved
-in `/Users/djourno/Downloads/PJM-consolidation-backup-2026-09-16/review/`; the temporary checkout is retired.
+in `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-consolidation-backup-2026-09-16/review/`; the temporary checkout is retired.
 v21 carries forward the useful registry/lineage and convention corrections under the new design.
 CP-10 returned against its original v20 anchor; no brief or anchor was changed mid-run.
 The prepared review is at
@@ -28,7 +32,125 @@ no commit, stage, branch, worktree, tag or publication was made by the Orchestra
 
 ## 1. Current Position
 
-**Current repository state — consolidated 2026-09-16.** The owner explicitly authorized
+**CP-16 Engineering PASS accepted, 2026-09-23; disposition/reclamation pending.**
+[Orchestrator receipt](docs/track-b/cp-16-pass-receipt-2026-09-23.md) records the gate and limits.
+Final candidate `bf3ca602e32e99e45c7835e3f95148f62b608099`; evidence tip
+`5ec8a92a4032569b31a1a4f0bb3c512793d15a78`. Fresh independent Integration PASS binds the
+candidate and all ten §14.8 items. Prescribed receipt checks confirm seven commits, an
+exclusively evidence-path terminal delta, available cited commits and a clean Lead checkout.
+The Critic checkout is removed. Main remains `6621402b2be9aed85be433432bcffffb56adf3e4`.
+
+Independent review reports 84 CP-16 checks and 48 inherited guards passing, all 75,229 forecast
+rows, and exact independent H/P replay (21,494 rows). Complete point/interval metrics,
+diagnostics, paired uncertainty and all six original §8 criteria were independently checked.
+H ranks above P descriptively, but H−P has **no demonstrated joint preference**: WIS improves,
+while the MAE interval upper endpoint is **+0.000003857628092332211**, not zero. No equivalence
+or absence-of-benefit/harm claim. H−B2 meets the exploratory joint-improvement rule; P−B2 does
+not. Both H/P fail original criteria 1–2 and meet 3–6; no product promotion or live eligibility.
+All findings remain `development_post_selection`; CP-15 stays `NOT_DEMONSTRATED`.
+
+Final cumulative usage: **6,458/9,000 policy-days**, including all 3,730 historical days;
+**14,484/240,000 primitive fits**, 121/2,000 component attempts (main 93/1,500),
+**0.554636/24 machine-hours**, effort upper bound 1.828/40 hours, measured RSS 1.170/10 GiB
+and disk upper bound 0.529/20 GiB. Other scope counters and terminal totals are in the receipt
+and canonical packet. Historical monitoring gaps and independent FAIL remain preserved;
+required evidence was regenerated, not retrospectively certified. Unspent capacity grants
+no further run after the terminal stop.
+
+Recommend **LAND as a research record**, awaiting Owner disposition and Owner-authored
+mainline integration. Retain `gauntlet/cp-16` and `.local/worktrees/cp-16/lead`, clean at the
+evidence tip, seven ahead/zero behind main. No disposition tags, deletion or reclamation yet;
+CP-16 is not administratively closed. No later checkpoint, promotion, publication or clock.
+Captured the Lead's new interview trigger as Q&A entry 32; the preceding 31 entries are intact.
+
+**Historical v21-r3 resumption issuance, 2026-09-23 — now returned PASS.**
+The Owner approved 6 full-equivalent H/P passes / 9,000 cumulative policy-days and the exact
+forward-looking counting rule in §14.5. Preserve the original 3,730 debit, leaving 5,270 for
+subsequent work; every other resource ceiling/debit, scientific rule, candidate, data boundary,
+metric and claims contract remains unchanged. Purely synthetic no-real-data fixture/state tests
+consume compute/memory/storage/effort but no replay days; real-data replay retains its unit
+including warm-up, controls, failures and reproduction. Fitting counters retain their units;
+no added policy-day charge per primitive fit. No reset or historical compliance is inferred.
+
+At resumption issuance, `gauntlet/cp-16` / `.local/worktrees/cp-16/lead` were clean at evidence tip
+`41b0e6d222a3d65d474ac5974c6eb7017db317e8`; prior candidate
+`3a160fd33ed92bb0061144cfbce2323d8b3a7db9`, independent FAIL and all evidence remain.
+Main stays `6621402b2be9aed85be433432bcffffb56adf3e4`. No discard or restart. The
+[blocked receipt](docs/track-b/cp-16-blocked-receipt-2026-09-23.md) is historical: the 5/7,500
+proposal and pending Owner decision are now superseded by this explicit 6/9,000 grant.
+There were no outer scores; historical monitoring gaps remain disclosed. The 59 bounded
+checks reported in the prior verdict do not establish completion or a scientific result.
+
+The resumption required the Lead to report an estimate covering remaining admission,
+production, necessary controls and independent verification within all remaining allowances.
+Regenerate inadequately monitored evidence needed for scores/acceptance, preserve originals
+and limitations, and obtain fresh independent Integration against the complete bar. E1–E4,
+feasibility, resource allocation and monitoring repairs are Lead-owned, not new Owner ballots.
+Weather admission §4.1 is no prerequisite. No new general review or accounting-design round.
+
+| Current successor | SHA256 |
+|---|---|
+| [v21-r3 anchor](capstone_v21.md) | `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed` |
+| [v21-r2→v21-r3 amendment](docs/track-b/capstone_v21-r2-to-v21-r3-amendments.md) | `b2acadbfedecb22302a001f0935bd596d2c36a975742911e389b24e12a47142c` |
+| [Issued resumption brief](docs/track-b/cp-16-v2-brief.md) | `bd67e5852a2f59f15fac9d85214cf3d9e77483743b1728ab7e0cc80057471921` |
+| [One-page handoff](docs/track-b/cp-16-engineering-handoff.md) | `088d0b8c64e7c6004577a323cf906b54a9026d3fc2c39d08faf53050b8310b1e` |
+
+The Owner carried the one-page handoff to the existing Lead; that bounded resumption has
+returned PASS. The document-task suspension ended at its return. The unchanged brief is the
+historical authority for this completed local run, not a new run or next-checkpoint grant.
+No mainline changes, publication, later checkpoint or further governance edits were granted.
+The two-active-hour limit applied to that document task, not this receipt or a renewed run.
+
+**Historical preparation/issuance receipt — 4.0a/4.0b complete, v21-r2 ratified, 2026-09-23.**
+O1 (point/interval research delivery), O2 (comparison, uncertainty/claims, original six §8
+criteria and descriptive economics), O3 (all ceilings), and O4 preparation remain approved.
+The subsequent Owner grant ratifies the completed specification/full checklist and separately
+authorizes CP-16 only. The recording suspension covers only status reconciliation in the
+anchor and amendment; that suspension ended at its handoff and grants no further governance edits.
+
+Unchanged v21-r2 attempt identities, computed anchor → amendment → brief:
+
+| Historical document | Historical SHA256 |
+|---|---|
+| Historical v21-r2 anchor (at CP-16 evidence tip) | `a05700ef6de700a956f6d8725cd45ecbc13f2384f780c309fffc5ba835d80a2d` |
+| [Amendment record](docs/track-b/capstone_v21-r1-to-v21-r2-amendments.md) | `09c663359ac2471a8adbc9865d8cbfa2a25e86062aebf8428411bb74614fadab` |
+| Historical issued CP-16 brief (at CP-16 evidence tip) | `1545089898aa47aa5384f5c6bcd07fda5ec7c0c98649cb44f2adba26cd0667ee` |
+
+Historical prepared grant identities are retained in the anchor, original amendment and
+[packet 4.0a](docs/track-b/v2-decision-brief-packet.md), including prepared anchor
+`18ec0abacb80cd490c560f1027e50814e9e7f657ecd96bddf1e096af9ee33469`. The
+original handoff belonged to the returned attempt; its historical hash is retained in the
+new amendment. The same handoff path now holds the authorized one-page successor above.
+Execution permits the local candidate branch/commits and exact immutable packaging under the
+brief and role. It permits no mainline change, publication, later checkpoint or governance edit.
+The live-system objective, claims contract and complete checklist remain unchanged; v21-r3
+changes only the specified replay allowance/counting rule and its authority references.
+No demonstrated joint preference is not equivalence or absence of benefit; mixed outcomes
+remain explicit. Ceilings are maxima, not spending targets or validated runtime estimates.
+E1–E4 remain Lead-owned; the returned attempt exposed incomplete pre-run accounting and
+resource-evidence gaps. The cap decision is now resolved by v21-r3 above; those evidence gaps
+remain disclosed. Current acceptance relies on regenerated, independently reviewed evidence;
+historical monitoring compliance has not been retrospectively certified.
+
+**Programme navigation-only revision recorded, 2026-09-23.** Reviewed the supplied navigation
+diff/validation: 24 indexed work items, stable anchors and clickable dependencies, preserved
+substantive requirements and compatible packet references. Historical plan input
+`eb3c295581eb4731834458709c6b8678ef5cc2d86eb903b082a661529bd615d5` remains in packet 4.0a; current navigation
+identity is `7fdd8205a06845e1bf34e3bba3028b78fb7c5c15013e2f9703e0ed602c4ed837`.
+The earlier independent review examined the historical bytes only. This task did not rewrite
+the programme proposal. No experiment, dispatch, staging, commit, publication, Q&A change,
+model promotion or prospective clock. The scoped O4 suspension is spent at terminal return.
+
+**Workspace containment, owner-directed 2026-09-16:** all five project-created sibling folders
+were removed from Downloads. Retained handoffs, recovery copies and diagnostic material now
+live under this project's Git-ignored `.local/artifacts/`; retained file hashes were verified.
+Redundant environments, downloaded model cache and generated caches were deleted (about 2.1 GB).
+Durable decisions and required experiment evidence remain committed in their normal paths.
+Only main and the original project checkout remain. AGENTS now requires future temporary
+artifacts/worktrees to stay inside the project unless the owner specifies another location.
+[Storage and retention map](docs/track-b/local-artifacts.md).
+
+**Historical consolidation receipt — 2026-09-16 (current CP-16 grant is above).** The owner explicitly authorized
 resolving pending work, edits, commits, deletion and consolidation to leave only `main`.
 The sole working checkout is `/Users/djourno/Downloads/PJM` on `main`; the temporary landing
 and v20-review worktrees and both `codex/*` branches are retired. Their prior references below
@@ -38,12 +160,11 @@ All retired branch tips are ancestors of the verified `evidence/cp-15` tag.
 Pending primary documentation, current routing, research/context-recovery records and the
 owner's byte-exact 30-question Q&A are consolidated. README/site and their generators now
 report completed CP-15, Engineering PASS and product NOT_DEMONSTRATED. CP-10's original
-plan bytes are archived for its unchanged provenance assertion. The superseded v20-r1 draft
-and stale 32-question copy are preserved only in the external cleanup backup; neither replaces
+plan bytes are archived for its unchanged provenance assertion. The superseded v20-r1 draft are preserved only in the project-local recovery archive; neither replaces
 the adopted documents. Its review is retained as explicitly historical documentation.
 No model promotion, new experiment, acceptance-bar change or prospective clock is authorized.
 
-Backup and per-file accounting: `/Users/djourno/Downloads/PJM-consolidation-backup-2026-09-16/`.
+Backup and per-file accounting: `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-consolidation-backup-2026-09-16/`.
 This owner authorization is scoped to consolidation; it does not alter standing governance.
 The earlier branch-retention/pending-work statements below describe intermediate states now resolved.
 
@@ -69,7 +190,8 @@ No v2 policy is frozen; the 90-day clock has not started.**
 | **CP-10** | M4 calibration, original `capstone_v20.md` §9 | **Engineering PASS accepted; inherited work landed with CP-15; landed with CP-15; pending edits consolidated into main; temporary branch retired** |
 | **CP-11 → CP-14 (old v20)** | Retired future sequence | **never started; superseded by v21** |
 | **CP-15** | Adaptive forecasting feasibility, v21-r1 §12 | **LAND complete; Engineering PASS; product NOT_DEMONSTRATED; A1 best challenger, none qualified; branch reclaimed** |
-| **CP-16 → CP-19** | v21 §10 direction | **not authorized; complete future bars required** |
+| **CP-16** | Ratified v21-r3 §14 / existing-input v2 | **Engineering PASS accepted; research result complete; Owner disposition/reclamation pending; no promotion** |
+| **CP-17 → CP-19** | Future qualified-policy/live sequence | **not authorized; future complete bars and stage authority required** |
 
 ### The three live surfaces
 
@@ -131,14 +253,15 @@ these operations; it does not amend the standing rulebook or permit model promot
   commit after the exact experiment landing. Both temporary codex branches and the extra
   checkouts are retired; the reviewed experiment tree remains accessible at `land/cp-15`.
 - Local backups, full experiment diff, resource-retention mapping and verification records:
-  `/Users/djourno/Downloads/PJM-cp15-landing-record-2026-09-16/`.
+  `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-landing-record-2026-09-16/`.
 - Landing accounting: [CP-15 landing record](docs/track-b/cp-15-landing.md).
   No policy freeze, promotion, holdout opening or prospective clock follows this landing.
-- Next step: define the bounded CP-16 experiment and its complete bar from the CP-15 result.
-  Keep B2 and A1 as references; prioritize demonstrably available historical input vintages
-  and stronger challengers, then adaptive uncertainty. This is planning direction only:
-  the exact candidate set, acceptance bar and new brief need owner authorization and a
-  scoped amendment to the locked plan. `NOT_DEMONSTRATED` remains the product conclusion.
+- Next step: Owner decides disposition of accepted CP-16 research work; LAND recommended.
+  Preserve its reviewed chain and Lead checkout pending that decision; no next run or promotion;
+  the existing-input H/P comparison is unchanged. Later weather,
+  architecture and live work remain separate. `NOT_DEMONSTRATED` remains the historical
+  CP-15 product conclusion; no new result is claimed.
+
 
 
 **Historical receipt before disposition — completed CP-15, 2026-09-16: Engineering PASS accepted;
@@ -146,7 +269,7 @@ product_feasibility = NOT_DEMONSTRATED.** A1 (normalized LEAR) ranks first among
 qualified policy: none. This accepts experiment completion, not checkpoint closure, model
 promotion, a relaxed product screen, publication, or authorization for the next checkpoint.
 
-- Full owner-supplied packet: `/Users/djourno/Downloads/PJM-cp15-r1-handoff/checkpoint-return.md`.
+- Full owner-supplied packet: `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-r1-handoff/checkpoint-return.md`.
   Candidate: `fc4aee038cf898998a292506df62ddb0dcfaf22a`; evidence tip:
   `1bdc75b8ab943092bb8de6ba893defb9e12250d8`; pre-run protocol:
   `bb5e67882fcfdf65b963d25ce785a3999816dfc2`. Binding verdict and final scientific report:
@@ -292,7 +415,7 @@ in CP-15. No reserved outcome partition is opened.
 | Checkpoint | Next purpose | Current authority |
 |---|---|---|
 | CP-15 | Completed adaptive forecasting experiment | LAND complete; Engineering PASS; product NOT_DEMONSTRATED |
-| CP-16 | Stronger neural/structural challengers and adaptive uncertainty | Requires results, exact method set, bar and new brief |
+| CP-16 | Ratified existing-input v2 H/P research comparison, v21-r3 §14 | Engineering PASS accepted; research result complete; Owner disposition/reclamation pending; no promotion |
 | CP-17 | Freeze/register a qualified update policy | Requires demonstrated feasibility and future complete bar |
 | CP-18 | Operate that policy and its scorecard | Requires future bar and explicit publication authority |
 | CP-19 | Prospective evaluation | Requires policy freeze, elapsed horizon and future complete bar |
@@ -399,10 +522,12 @@ registry-loading corrections, reconciled the daily alias and dependency prose, a
 availability citations. No code, test, result, active brief, candidate or verdict was inspected or
 changed. No stage, commit, tag, publication, merge or ref deletion was performed.
 
-**Next orchestration action:** prepare the CP-16 scope decision from the landed experiment.
-B2 and A1 are the reference pair suggested by the results; neither is promoted. The full
-future bar and exact candidates require a scoped plan amendment and a new brief. Preserve
-the 2019 boundary, original eligible hours, released v1 evidence and attempt-1 FAIL.
+**Next orchestration action:** await Owner disposition of CP-16; recommend LAND for the
+independently verified research record. Any mainline integration is Owner-authored. Preserve
+the exact candidate/evidence chain, prior FAIL and all debits. Perform only separately
+authorized disposition/reclamation after required evidence preservation; do not open CP-17
+or schedule further experiments from remaining allowance. No executor is launched here.
+
 
 **Receipt session, 2026-09-15:** terminal packet and committed verdict read; prescribed Git
 checks passed; engineering PASS accepted without converting it into a successful calibration-fix
@@ -433,11 +558,19 @@ memo in its existing isolated worktree.
 
 ## 3. Blockers / Open Questions
 
-- **Q&A owner edit completed.** The owner deleted entries 31 and 32 and reports 30 questions;
-  read-only XML inspection confirms questions 1–30 in the primary document. No agent append
-  or correction is pending. The owner’s byte-exact 30-question document is now on main.
-  The stale 32-question copy is retained only in the external consolidation backup.
-  The owner manages its content; no answers were added or rewritten during consolidation.
+- **CP-16 engineering complete; Owner disposition pending, 2026-09-23.** Accepted PASS under
+  v21-r3 after fresh independent Integration; no execution blocker. Final usage 6,458/9,000,
+  with historical 3,730 intact. Recommend LAND of the research record; retain branch/evidence
+  until explicit disposition and prescribed preservation/reclamation. Both H/P miss original
+  §8 criteria 1–2; no product promotion. Historical monitoring gaps remain disclosed, not
+  retroactively cured. Further checkpoint authority is absent.
+
+- **Q&A owner correction preserved; CP-16 capture appended.** The Owner’s prior deletion of
+  old entries 31/32 left 30 questions. Those entries remain unchanged; the Orchestrator now
+  appended a new entry 31 for the CP-16 warm-up accounting/supervisor lesson through the
+  prescribed script. The accepted PASS receipt now adds a new entry 32 on the joint-preference
+  boundary. Current working document has 32 questions, retaining the preceding 31; neither
+  older deleted answer was restored. No rendering/layout review; presentation remains the Owner’s.
 - **Product feasibility remains NOT_DEMONSTRATED after completed CP-15.** A1/A3/A4/A5 fail
   criteria 1, 2 and 5; A2 also fails criterion 4. No candidate qualifies. The experiment’s
   engineering requirements, including both feasibility deliverables, passed the binding review.
@@ -635,12 +768,11 @@ The detailed source/disposition inventory is in the context-recovery report abov
 - **Reasoning capture — reinstated by the owner, 2026-09-15.** `AGENTS.md` § *Interview-answer
   capture* applies to ongoing engineering decisions, independently of Track C distribution.
   Only the Orchestrator files entries through `scripts/qa_append.py`; the Lead names a trigger in
-  its return. The owner-edited primary `שאלות תשובות.docx` now has **30 questions**, verified
-  by read-only XML inspection. The owner removed entries 31 and 32; earlier session records
-  describing their creation are historical, not the present count. No agent append is pending
-  for this correction. The isolated worktree’s older 32-question copy is stale; preserve the
-  primary owner-edited document. CP-15’s comparison is now complete; this receipt makes no
-  Q&A edit. The Lead’s new interview-capture trigger is retained in the current receipt.
+  its return. The primary `שאלות תשובות.docx` now has **32 questions**: the Owner’s preserved
+  30 entries plus new CP-16 accounting (31) and joint-preference/Engineering PASS (32) captures.
+  The Owner’s earlier deletion of old entries 31/32 remains respected; those historical answers
+  were not restored. Both new entries used the prescribed appender, without rendering/layout
+  review; the captures do not change historical verdicts or confer product qualification.
 - **Track A — out**, as it already was in practice. `syllabus_v3_2.md` gated nothing.
 - **No implemented fuel-price layer.** v21 permits a read-only structural-input feasibility sheet;
   it does not grant purchase or redistribution rights. Earlier source finding, 2026-09-15: every TTF/THE source found is
@@ -667,7 +799,7 @@ The detailed source/disposition inventory is in the context-recovery report abov
 following archive/test consistency edits and earlier research/handover notes now live on main.
 The original reviewed v20 bytes remain in the archive and the evidence chain; the root copy
 includes the previously authorized capture-scope clarification. The superseded v20-r1 proposal
-remains external backup material, not an adopted plan.
+remains project-local recovery material, not an adopted plan.
 
 **CP-10's exact reviewed anchor** is additionally preserved at
 `docs/track-b/anchors/cp-10-capstone_v20.md`, copied byte-for-byte from final candidate
@@ -695,24 +827,97 @@ This file no longer narrates it. It is preserved and addressable:
 
 ## 8. Strategic Anchors
 
-- **Only active plan:** `capstone_v21.md`, revision **v21-r1**, original design authorized
-  2026-09-15 and capped expanding-history correction approved 2026-09-16. Active checkpoint
-  none: CP-15 is landed/closed; §12 remains its immutable bar. CP-16 is direction only,
-  awaiting a complete authorized bar and brief.
+- **Ratified authority:** `capstone_v21.md` v21-r3, ratified 2026-09-23, SHA256
+  `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed`, complete §14 / ten-item §14.8.
+  CP-16 Engineering PASS now accepted under this unchanged authority; disposition pending.
+  Historical v21-r2 identities and original BLOCKED/FAIL remain preserved in §1 above.
+  Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`; CP-15 is closed, §12 unchanged.
 - **Historical authorities:** original `capstone_v20.md` for CP-10; `capstone_V6_8.md` for v1.
   Original v20 methods and bar remain unchanged; only its reasoning-capture scope paragraph was
   reconciled with the restored rule. Isolated v20-r1 retains its separate, superseded corrections.
 - **Target:** DE-LU hourly day-ahead price forecasting with the inherited forecast-origin and
   eligibility contract; improve point predictions and honest, useful uncertainty.
-- **Budget/hardware:** local M3 / 16 GB, CPU core and bounded local MPS probe; no external spending.
+- **Budget/hardware:** local M3 / 16 GB; approved CP-16 §14.5 ceilings include CPU only,
+  zero GPU/cloud/model-data downloads and zero external spending. These are maximum allowances,
+  not spending targets or runtime estimates; the separate execution grant covers CP-16 only.
+  Earlier CP-15 MPS probe authority is historical.
 - **Language:** English. **Track A/C:** outside programme scope, as recorded above.
 - **Governance:** AGENTS.md canonical; engineering-role.md and templates unchanged. All current
   and historical ratified anchors stay locked regardless of filename case, explicitly including
   v21, v20 and the M4 companion. Retired NotebookLM/syllabus material remains locked for completeness.
   Routing pointers and active capture instructions are reconciled; publication and mainline history
-  remain owner-only. CP-15 may package exact supplied AGENTS/v21/brief bytes only, under v21 §13.
+  remain owner-only. Historical CP-15 packaging authority is in §13. Current CP-16 may package
+  only its exact supplied anchor/amendment/issued brief under §14.7; no governance authoring.
 
 ## 9. Session Log — newest first
+
+- **CP-16 PASS receipt, 2026-09-23:** read canonical return and fresh independent verdict
+  binding `bf3ca602e32e99e45c7835e3f95148f62b608099`; verified seven-commit chain, evidence-only
+  delta to `5ec8a92a4032569b31a1a4f0bb3c512793d15a78`, cited commit availability and topology.
+  Accepted all-ten-item Engineering PASS; documented H−P no joint preference, H−B2 exploratory
+  improvement, H/P original §8 failures, 6,458 cumulative replay days and historical limits.
+  Replaced awaiting-execution/return fields with completed research/disposition pending;
+  earlier receipts, grants, debits and other open items retained. No checkpoint closure,
+  promotion, next brief, governance/source/evidence edits, engineering rerun, stage/commit,
+  ref operation or publication. New durable receipt and required Q&A entry 32 only alongside
+  progress; prior 31 entries preserved. LAND recommended, not decided or performed.
+
+- **v21-r3 ratification/resumption, 2026-09-23:** Owner approved 6/9,000 cumulative policy-days
+  and the exact synthetic-versus-real-data counting rule, with historical 3,730 untouched.
+  Recorded scoped suspension, ratification and CP-16 resumption grant including consistent
+  successors; resolved pending 5/7,500 cap/disposition routing without another approval round.
+  Updated only anchor/accounting references, new amendment, brief, one-page handoff, packet
+  and this state. Regenerated the complete progress document with omission review; prior
+  grants, failed attempt, all other open items and historical evidence retained. Branch/worktree,
+  debits, FAIL, science, complete checklist and all other caps preserved. No engineering runs,
+  executor launch, stage/commit, ref operation, publication or new Q&A entry. Lead owns future
+  feasibility/regeneration/review; weather §4.1 is no prerequisite. Two-active-hour document
+  limit checked in `.local/artifacts/cp16-v21-r3-2026-09-23/validation.json`.
+
+- **CP-16 blocked receipt, 2026-09-23:** read terminal return and committed independent FAIL;
+  ran prescribed Git packet checks, confirming both SHAs, evidence-only delta and retained
+  clean candidate branch. Recorded 3,730/4,500 debit, 770 remaining against 1,200 needed,
+  absent outer results, and historical resource-monitoring gaps. Replaced stale awaiting-
+  delivery/routine-preflight state with the evidenced blocked attempt and pending material
+  Owner cap decision; no other open item pruned. No closure, amendment, ratification of new
+  caps, resumption, executor dispatch, engineering rerun, ref/index/commit or publication.
+  Appended Q&A entry 31 through the required script; earlier 30 entries preserved. Durable
+  receipt: `docs/track-b/cp-16-blocked-receipt-2026-09-23.md`. Previous issuance and preparation
+  records below remain historical; their spent suspensions do not reopen.
+
+- **Ratification/execution recording, 2026-09-23:** verified all three Owner-named prepared
+  hashes; recorded ratification of completed v21-r2 science/full checklist and the separate
+  CP-16-only execution grant, including status/identity successors. Resolved all current
+  pending-authority fields in the anchor, amendment, brief, packet and this state document;
+  retained prepared identities, navigation provenance and earlier receipts as history.
+  Issued the full brief and a complete human-carried handoff; no executor launched or run.
+  Recomputed anchor → amendment → brief identities and verified copies/checklist/ceilings.
+  Regenerated this complete state document; omission review accounts for every replaced
+  pending field as resolved by this grant, with no open item or history silently dropped.
+  Five existing authorized documents changed; other starting files, index, refs and worktrees
+  preserved. No stage/commit, publication, experiment, Q&A or prospective clock. Recording
+  suspension ends at return; CP-16 execution grant persists within the brief/role boundaries.
+
+- **4.0b completion and navigation receipt, 2026-09-23:** Owner approved O1–O3 and scoped
+  O4 edits; completed additive v21-r2, amendment record and final proposed CP-16 brief.
+  Reconciled packet/status; original plan hash preserved and navigation-only current identity
+  recorded without extending independent-review coverage. All original anchor body bytes
+  except the CP-16 row are preserved; substantive §§8–9/CP-15 checklist unchanged. Updated
+  current pointers, next-step/blocker and budget state to replace resolved 4.0a decisions.
+  Final ratification/execution remain pending; no experiment, dispatch, stage/commit, ref
+  mutation or publication. The two-file suspension is spent at this terminal handoff.
+
+- **4.0a preparation, 2026-09-23:** completed the Owner-authorized v2 decision/brief packet
+  and document consistency check against the current proposal and exact September 23 review.
+  Four material Owner decisions remain marked; technical defaults and finite budgets are
+  proposals only. No ratified anchor, review, engineering, Q&A or Git ref changed. Recorded
+  this operational receipt in place; 4.0b and execution remain unauthorized.
+
+- **Downloads cleanup, 2026-09-16:** owner rejected external project folders and authorized
+  complete remediation. Moved all five related folders into `.local/artifacts/`, verified
+  retained hashes, removed about 2.1 GB of disposable environments/caches, and repointed
+  current documentation. Added project-containment instructions and Git ignores. Unrelated
+  Downloads content and the owner's open Word document were left untouched.
 
 - **Repository consolidation, 2026-09-16:** owner authorized full cleanup to one main checkout.
   Reconciled pending documents, preserved the 30-question Q&A byte-for-byte, updated stale
@@ -801,9 +1006,11 @@ This file no longer narrates it. It is preserved and addressable:
 
 ## 10. Notes for Future Sessions
 
-- CP-15 now distinguishes experiment validity from product feasibility. Use its B2/A1 tradeoff
-  when the owner chooses
-  whether to refine adaptation, add information or prioritize the named stronger challengers.
+- CP-15 distinguishes experiment validity from product feasibility. The Owner chose the
+  fixed B2/A1 blend with H/P control as the bounded intermediate research step; its documents
+  completed under v21-r3 with accepted Engineering PASS; original BLOCKED/FAIL remains.
+  Await Owner disposition/reclamation, not another run. No product qualification or automatic
+  later checkpoint follows. Later information/architecture choices remain separate.
 - No CP-16–CP-19 executor starts without its own complete bar and brief. No prospective clock
   starts until an eligible policy and its update/evaluation rules are frozen.
 - Carry forward known weather-vintage, fuel-rights, delayed-feedback and registry-loading limits;
