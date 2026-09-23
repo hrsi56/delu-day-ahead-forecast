@@ -1,0 +1,29 @@
+{
+  "additional_evidence_directory": "docs/track-b/evidence/cp-16; final Integration and terminal additions are outside this pre-review manifest",
+  "artifact_sha256": {
+    "reports/v2-causal/failures.csv": "949b71871fb78dc20583275416e4c36644f87c41c8db5f1f6ff14a199f8fe1d4",
+    "reports/v2-causal/input-manifest.json": "dd88b764f4b057129409765f6e2706ec77f958c79e551f0b44f633932d050af2",
+    "reports/v2-causal/lineage.json": "4d2cf3558742bbac5152af4589640bdb334eb748ec52cb98dc5780fa7c444c87",
+    "reports/v2-causal/protocol.json": "8b3a693018a74b4e3c544f2ab53c1659fc05b0f18735eb4a0fbc804e6c993a2b",
+    "reports/v2-causal/report.md": "56bfd91b89490ec6b091f461f358c976dd1da9fdfb85052ab901505134e5aae4",
+    "reports/v2-causal/reproduce.md": "74869cc945fd90c88d6a18bae1a155c05a827f3ebb90d9d5cf247b584f582e4f",
+    "reports/v2-causal/resources.json": "ead6f25808d59bf6333cf232fe9da310a020d5a019a69883db73cb418401fea2",
+    "scripts/cp16_v2.py": "46b4c5bea8d205e82df13f34c58364a471d0bd1244aecb82912405eaeb74b890",
+    "src/cp16/__init__.py": "527054074035bff88c3907ae548d6f745c532c79a18eee2f7206e05f3df32519",
+    "src/cp16/budget.py": "03a62a0f358b9614fd4e133f6c1052580e3e6ac2a1c735f13bc4547891150d75",
+    "src/cp16/execution.py": "b97b32bd4773cef5a28d454799eb3fa8e8982ac3866014c39748fc3bb71438ca",
+    "src/cp16/inputs.py": "b55d1c3de588b8042bd22a9e9ed114b72fbcdb50b0e0aa127be9e5ffa8370967",
+    "src/cp16/preflight.py": "e2846c3f55cf4f11449faef6f0584203d36391f0c0f144312bada6615ae74270",
+    "src/cp16/residuals.py": "f91065b555ff36f6d5b2eba0fb0704d8d27b1399417fe71d64f4152dbc11f9fa",
+    "src/cp16/scoring.py": "fdbeee87fd98cad3e1060cf9b6756815953597b5ddc1ae792e6818c446073c42",
+    "tests/cp16/test_budget_inputs.py": "ac18de893de526368197fce81ec58a960308dbba8c9677c032569bb66690855e",
+    "tests/cp16/test_monitor.py": "a9b6b2f69ff833800c7411cf3473e8c360db6f825150b3e4b860dc09038fd561",
+    "tests/cp16/test_residuals.py": "313ae086c2fbbc5088a450e8b94ce3ec968174cc48601ea2b5df061d32416916",
+    "tests/cp16/test_scoring.py": "0bfdcb4e01cfeb3d610418aa76be281b53bbb96f7414ab202980be94302bfa92"
+  },
+  "baseline": "6621402b2be9aed85be433432bcffffb56adf3e4",
+  "checkpoint": "CP-16",
+  "evidence_class": "development_post_selection",
+  "original_pre_run_commit": "e625967e20f3f79f2c4d07c9b414065ff0717d02",
+  "result": "partial admission only; no comparison predictions or scores"
+}

@@ -182,7 +182,9 @@ def score(root,out,budget):
 
 
 def execute(root,args):
-    check_protocol(root)
+    p=check_protocol(root)
+    if p.get('execution_status','').startswith('BLOCKED'):
+        raise RuntimeError('CP-16 scientific execution is blocked pending amended authority and budget')
     out=args.output;out.mkdir(parents=True,exist_ok=True);budget=Budget(args.ledger)
     try:
         if args.job=='admission':admission(root,out,budget)

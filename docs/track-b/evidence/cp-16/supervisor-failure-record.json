@@ -1,0 +1,10 @@
+{
+  "command": "python scripts/cp16_v2.py --monitor --ledger <shared-cp16-ledger> --project-root <PJM> --log <cp16/admission.log> -- python -u scripts/cp16_v2.py --job admission --ledger <shared-cp16-ledger>",
+  "supervisor_exit_code": 1,
+  "exception": "FileNotFoundError: lineage.json.tmp disappeared between is_file() and stat() in scripts/cp16_v2.py disk enumeration",
+  "worker": "survived supervisor exit; explicitly interrupted by Lead SIGINT; exact worker exit code not reaped by original supervisor",
+  "worker_trace": "preserved admission.log ends KeyboardInterrupt in sklearn enet_path",
+  "partial_evidence": "interrupted-admission-lineage.json",
+  "remedy": "rename-safe disk enumeration; fail-closed process-group termination on any monitor exception; final interval charged",
+  "original_source_commit": "e625967e20f3f79f2c4d07c9b414065ff0717d02"
+}

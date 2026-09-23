@@ -37,3 +37,11 @@ def test_budget_refuses_contract_replacement(tmp_path):
     path=tmp_path/'budget.json';b=Budget(path);b.reserve(policy_days=2)
     state=b.read();state['caps']['policy_days']+=1;path.write_text(json.dumps(state))
     with pytest.raises(ValueError,match='contract changed'):Budget(path).reserve(policy_days=1)
+
+
+def test_blocked_protocol_refuses_scientific_job_before_execution(tmp_path,monkeypatch):
+    from types import SimpleNamespace
+    import cp16.execution as module
+    monkeypatch.setattr(module,'check_protocol',lambda root:{'execution_status':'BLOCKED pending amended authority'})
+    with pytest.raises(RuntimeError,match='blocked pending amended authority'):
+        module.execute(tmp_path,SimpleNamespace(job='admission'))

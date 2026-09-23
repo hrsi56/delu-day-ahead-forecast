@@ -13,6 +13,19 @@ for name in ('OPENBLAS_NUM_THREADS','VECLIB_MAXIMUM_THREADS','OMP_NUM_THREADS','
 from cp16.budget import Budget, atomic, CAPS
 
 
+def checkpoint_bytes(paths):
+    """Atomic evidence renames may remove a file after directory enumeration."""
+    total=0
+    for base in paths:
+        if not base.exists():continue
+        for path in base.rglob('*'):
+            try:
+                if path.is_file() and not path.is_symlink():total+=path.stat().st_size
+            except FileNotFoundError:
+                continue
+    return total
+
+
 def monitor(args):
     import psutil
     budget=Budget(args.ledger)
@@ -27,7 +40,7 @@ def monitor(args):
         state['jobs'].append({'command':command,'start_epoch':started,'running':True})
         job_index=len(state['jobs'])-1
     args.log.parent.mkdir(parents=True,exist_ok=True)
-    peak=0;disk_peak=0;reason=None;last_tick=began
+    peak=0;disk_peak=0;reason=None;last_tick=began;supervisor_error=None
     try:
         with args.log.open('w') as log:
             proc=subprocess.Popen(command,cwd=ROOT,env={**os.environ,'PYTHONPATH':str(ROOT/'src'),
@@ -53,7 +66,7 @@ def monitor(args):
                     # Counting the entire pre-existing Git store is conservative;
                     # it includes every byte of new candidate/evidence history.
                     paths=[args.project_root/'.git',args.project_root/'.local/worktrees/cp-16',args.project_root/'.local/artifacts/cp-16',args.project_root/'.local/tmp/cp-16']
-                    disk=sum(p.stat().st_size for base in paths if base.exists() for p in base.rglob('*') if p.is_file() and not p.is_symlink())
+                    disk=checkpoint_bytes(paths)
                     disk_peak=max(disk_peak,disk)
                     if disk>=CAPS['additional_disk_bytes']:reason='additional_disk_bytes'
                 if reason:
@@ -64,11 +77,21 @@ def monitor(args):
                     break
                 if proc.poll() is not None:break
                 time.sleep(.2)
+    except BaseException as exc:
+        supervisor_error=repr(exc)
+        # A failed monitor must not leave a fit running without resource guards.
+        if 'proc' in locals() and proc.poll() is None:
+            import signal
+            os.killpg(proc.pid,signal.SIGTERM)
+            try:proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:os.killpg(proc.pid,signal.SIGKILL);proc.wait()
+        raise
     finally:
         with budget.transaction() as state:
+            state['counts']['machine_seconds']=state['counts'].get('machine_seconds',0)+time.monotonic()-last_tick
             state['jobs'][job_index].update(running=False,exit_code=proc.returncode if 'proc' in locals() else None,
                 elapsed_seconds=time.monotonic()-began,peak_process_tree_rss_bytes=peak,
-                peak_checkpoint_disk_bytes=disk_peak,abort_reason=reason,log=str(args.log))
+                peak_checkpoint_disk_bytes=disk_peak,abort_reason=reason,supervisor_error=supervisor_error,log=str(args.log))
     print({'exit_code':proc.returncode,'elapsed_seconds':time.monotonic()-began,'peak_rss_bytes':peak,'abort_reason':reason},flush=True)
     return proc.returncode if not reason else 3
 
