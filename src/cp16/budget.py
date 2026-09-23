@@ -9,7 +9,7 @@ import time
 
 CAPS = {'component_attempts': 2000, 'main_component_attempts': 1500,
         'primitive_fits': 240000, 'inner_fits': 192000, 'final_fits': 48000,
-        'policy_days': 4500, 'reference_passes': 3, 'analysis_passes': 3,
+        'policy_days': 9000, 'reference_passes': 3, 'analysis_passes': 3,
         'machine_seconds': 86400, 'active_seconds': 144000,
         'rss_bytes': 10 * 1024**3, 'additional_disk_bytes': 20 * 1024**3}
 

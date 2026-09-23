@@ -11,9 +11,9 @@ from cp15.data import RAW_COLUMNS, prepare, sha, array_hash, history_start, orig
 from delu_forecast.folds import load_partition_spec
 
 SUPPLIED = {
- 'capstone_v21.md': 'a05700ef6de700a956f6d8725cd45ecbc13f2384f780c309fffc5ba835d80a2d',
- 'docs/track-b/capstone_v21-r1-to-v21-r2-amendments.md': '09c663359ac2471a8adbc9865d8cbfa2a25e86062aebf8428411bb74614fadab',
- 'docs/track-b/cp-16-v2-brief.md': '1545089898aa47aa5384f5c6bcd07fda5ec7c0c98649cb44f2adba26cd0667ee'}
+ 'capstone_v21.md': '67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed',
+ 'docs/track-b/capstone_v21-r2-to-v21-r3-amendments.md': 'b2acadbfedecb22302a001f0935bd596d2c36a975742911e389b24e12a47142c',
+ 'docs/track-b/cp-16-v2-brief.md': 'bd67e5852a2f59f15fac9d85214cf3d9e77483743b1728ab7e0cc80057471921'}
 EVIDENCE = '1bdc75b8ab943092bb8de6ba893defb9e12250d8'
 
 
@@ -75,7 +75,7 @@ class SavedComponents:
         result = {}; records = {}
         for policy in ('A1','B2'):
             arm = issued.loc[issued.policy.eq(policy)].sort_values('timestamp_utc')
-            if not pd.DatetimeIndex(arm.timestamp_utc).equals(self.data.index[rows]):
+            if not pd.DatetimeIndex(arm.timestamp_utc).as_unit('ns').equals(self.data.index[rows].as_unit('ns')):
                 raise ValueError('cache target identity mismatch')
             if not arm.origin_utc.eq(origin_utc(day)).all(): raise ValueError('cache origin mismatch')
             if not np.array_equal(arm.scale.to_numpy(),self.data.scale[rows]):

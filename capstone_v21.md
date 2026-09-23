@@ -1,13 +1,37 @@
-# Capstone v21-r2 — Adaptive forecasting with measured product quality (ratified)
+# Capstone v21-r3 — Adaptive forecasting with measured product quality (ratified)
 
-**Owner ratification and separate CP-16 execution authorization · 2026-09-23.**
-The Owner ratified the completed v21-r2 scientific specification and full CP-16 checklist,
-and separately authorized execution of CP-16 only under the approved scope, claims contract
-and resource ceilings. These grants follow O1–O3 approval and completed O4 document preparation;
-they are not inferred from those earlier approvals. The Owner also expressly approved the
-resulting status-and-identity-only successor documents without another approval round.
+**Owner-ratified resource amendment and CP-16 resumption authorization · 2026-09-23.**
+The Owner ratified exactly the §14.5 cap/counting change: **6 full-equivalent H/P passes /
+9,000 cumulative policy-days**, retaining the entire **3,730** historical debit and all other
+resource ceilings/debits, scientific requirements, candidates, data boundaries, metrics and
+claims. The forward-looking rule and resumption conditions are specified in §14.5. This is a
+maximum allowance, not a spending target or guaranteed feasibility; no reset or retrospective
+monitoring compliance is granted. The Owner expressly authorized resumption under the resulting
+consistent anchor/issued brief and these implementing successors without another approval round.
 
-The grant binds these prepared identities, retained as historical inputs:
+The task-scoped suspension covers this anchor's §14.5 and directly necessary revision/status/
+accounting references, plus `docs/track-b/capstone_v21-r2-to-v21-r3-amendments.md` only.
+It ends at this Orchestrator task's return and transfers no governance-edit authority to the
+Lead. No experiment or executor launch occurs in this document task. The existing authorized
+local candidate/evidence workflow and exact immutable packaging remain available to the Lead;
+no mainline staging/commits/merges, publication, later checkpoint or other governance edit.
+
+**Resume the existing CP-16 checkpoint.** Preserve `gauntlet/cp-16`, the reviewed candidate
+`3a160fd33ed92bb0061144cfbce2323d8b3a7db9`, evidence tip
+`41b0e6d222a3d65d474ac5974c6eb7017db317e8`, independent FAIL, interrupted evidence and all
+historical limitations. No scientific result follows from that interrupted attempt. The Lead
+performs the §14.5 feasibility/accounting and evidence-regeneration conditions before dependent
+experimental work. Weather admission under programme §4.1 is not a prerequisite.
+
+Historical issued v21-r2 identities (exact bytes retained at the evidence tip above):
+
+| Historical document | SHA256 |
+|---|---|
+| `capstone_v21.md`, v21-r2 | `a05700ef6de700a956f6d8725cd45ecbc13f2384f780c309fffc5ba835d80a2d` |
+| `docs/track-b/capstone_v21-r1-to-v21-r2-amendments.md` | `09c663359ac2471a8adbc9865d8cbfa2a25e86062aebf8428411bb74614fadab` |
+| `docs/track-b/cp-16-v2-brief.md` | `1545089898aa47aa5384f5c6bcd07fda5ec7c0c98649cb44f2adba26cd0667ee` |
+
+Historical prepared identities from the original v21-r2 ratification remain:
 
 | Prepared document ratified by the Owner | Historical SHA256 |
 |---|---|
@@ -15,29 +39,14 @@ The grant binds these prepared identities, retained as historical inputs:
 | `docs/track-b/capstone_v21-r1-to-v21-r2-amendments.md` | `af082cf0d7b2ef240cf86aefb43e605f573fbe0debe61f4ebae4a128f8302b89` |
 | `docs/track-b/cp-16-v2-brief.md` | `b5c5fd66c985b60e01af8d230f89574d0cea5430e28a1882374725f7dbe920bc` |
 
-This successor records that grant only; the experiment, full checklist, ceilings and other
-substantive requirements are unchanged. The task-scoped Governance Lockdown suspension
-covers only this anchor and its named amendment record for authorization/status reconciliation.
-It permits no experiment in the Orchestrator recording task and transfers no governance-edit
-authority to the executor. Exact successor identities are recorded downstream in the amendment,
-issued brief and handoff, avoiding a self-referential hash.
-
-The historical v21-r1 authority for CP-15 remains preserved byte-for-byte at
-`evidence/cp-15:capstone_v21.md`, SHA256
+Historical v21-r1 for CP-15 remains at `evidence/cp-15:capstone_v21.md`, SHA256
 `44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3`.
-**v21-r2 is now the ratified authority for CP-16.** The research experiment is an intermediate
-step toward the unchanged programme live-system objective. CP-15, its v21-r1 record and
-substantive §§8–9 remain unchanged.
-
-**Scope of this execution grant:** CP-16 follows only §14 and its issued brief. The original
-CP-15-only readiness, methods, paths and handoff below remain historical CP-15 instructions;
-they neither govern CP-16 entry nor replace its distinct §14 specification. Completing the
-bounded research evaluation may lead to a local result and separate research disposition
-without weather admission, 4.7T or live operation. The grant permits the local candidate
-branch, candidate/evidence commits and exact immutable document packaging specified by the
-brief and engineering role. It grants no mainline change, publication, model promotion,
-registry mutation, CP-17/18/19 authority, further governance edit or prospective clock.
-Historical CP-15 statements below are retained verbatim except §10's specified CP-16 row.
+v21-r3 is the current CP-16 authority; the research step serves the unchanged live-system
+objective. The complete §14.8 checklist and substantive §§8–9 remain unchanged. CP-16 follows
+§14 and its issued brief; the original CP-15-only readiness, methods, paths and handoff below
+remain historical instructions, not CP-16 entry authority. No publication, model promotion,
+registry mutation, CP-17/18/19 authority or prospective clock follows. Original CP-15 text
+is preserved except the previously amended §10 CP-16 status row.
 
 
 **Active owner-authorized execution plan · 2026-09-15.** The owner approved execution of the
@@ -287,7 +296,7 @@ metrics must be ratified before that stage starts. **No clock starts in CP-15.**
 | Checkpoint | Purpose | Authorization in this version |
 |---|---|---|
 | CP-15 | Adaptive point forecasting and common residual uncertainty; model/data feasibility probes | Complete bar below; execute only on receipt of its brief |
-| CP-16 | One existing-input v2 central-blend/hour-aware-versus-pooled research experiment | Ratified §14 specification/checklist; CP-16 execution separately authorized 2026-09-23; no promotion or later-stage authorization |
+| CP-16 | One existing-input v2 central-blend/hour-aware-versus-pooled research experiment | Ratified v21-r3 §14 specification/checklist; CP-16 resumption authorized 2026-09-23 under §14.5; no promotion or later-stage authorization |
 | CP-17 | Freeze the selected update policy and register verified initialization | Requires demonstrated feasibility and complete future bar |
 | CP-18 | Run the same policy and build the live scorecard from recorded issued predictions | Requires operational and publication authorization |
 | CP-19 | Evaluate the preregistered prospective policy | Requires CP-17 plus elapsed horizon and complete future bar |
@@ -384,9 +393,9 @@ This does not reopen Track A/C or permit the Lead to read or edit the document.
 
 ## 14. CP-16 — bounded existing-input v2 research experiment
 
-**Complete specification and checklist ratified; CP-16 execution separately authorized
-2026-09-23.** The numerical and scientific choices below implement approved O1–O3.
-The separate execution grant is recorded above. No new product gate is substituted for §8.
+**Complete specification/checklist remain ratified; CP-16 resumption authorized 2026-09-23.**
+O1–O3 remain controlling except the expressly amended §14.5 cap/counting rule in v21-r3.
+The resumption grant is recorded above. No new product gate is substituted for §8.
 
 Forecast origin: **D−1 11:00 UTC (12:00 fixed UTC+01:00 CET)**; delivery dates/hours use
 **Europe/Berlin**, including 23/24/25-hour days. Inputs retain the **2019-01-01** floor.
@@ -545,11 +554,12 @@ Historical economics can be cited only with its original population, assumptions
 post-selection limitations. A material change to this approved economic scope requires Owner authorization and
 a complete economic-policy contract before execution; do not insert a battery configuration as an unapproved default here.
 
-### 14.5 Owner-approved numerical ceilings — CP-16 execution authorized
+### 14.5 Owner-approved numerical ceilings — v21-r3 resumption authorized
 
 These are Owner-approved maximum allowances, **not spending targets, measured costs or
-validated runtime estimates**. The separate CP-16 execution grant is recorded above. Count warm-up, inner fits,
-controls, failures, corrections and independent reproduction against the same totals. Stop
+validated runtime estimates**. The CP-16 resumption grant is recorded above. Charge warm-up,
+inner fits, controls, failures, corrections and independent reproduction to their applicable
+counters under the rule below; carry forward every historical debit. Stop
 on the first exhausted hard cap; retain evidence and return BLOCKED/INCOMPLETE as appropriate.
 No model-quality-driven repeat, automatic retry, new family or automatic increase is allowed.
 
@@ -564,13 +574,48 @@ No model-quality-driven repeat, automatic retry, new family or automatic increas
 | Main component fitting | At most **1,500** component-day fitting attempts (750 × 2), cache hits require no new fit |
 | Total component fitting, including controls/review/failures | **2,000** component-day attempts, including the 1,500 above; remaining **500** cover representative reproduction, controls and necessary defect repair, not a second full model comparison |
 | Primitive estimator fits / inherited selection | **240,000** Lasso fit attempts total: 2,000 × 24 hours × (4 inner penalties + 1 final refit). At most **192,000** inner-penalty trials and **48,000** final hourly refits, both subsets of that total. Early failure still counts; a smaller fixture does not create extra attempts. |
-| Residual replay / regeneration | At most **3** full-equivalent H/P passes, **4,500** policy-days total (750 × 2 × 3), including admission, diagnostics, controls, corrections and independent review; **0** extra scored recipes |
+| Residual replay / regeneration | At most **6** full-equivalent H/P passes, **9,000** cumulative policy-days total (750 × 2 × 6), including admission, diagnostics, controls, corrections and independent review; **0** extra scored recipes |
 | Saved-reference processing | At most **3** metric-only complete passes across **5** saved reference policies; **0** B0/B1/B3 model refits or new reference calibration |
 | Bootstrap / uncertainty | **1** joint 2,000-replicate index set for planned contrasts per analysis pass; at most **3** analysis passes including independent verification; no seed search |
 | Compute | **24 machine-hours**, aggregate elapsed execution time of all compute jobs on this one local machine, summed across simultaneous jobs; includes tests/reproduction and failed jobs, excludes human idle time; **4** CPU workers maximum, BLAS threads **1**, **0** GPU/cloud jobs |
 | Active human/agent effort | Approximate checkpoint timebox **32 hours**; separate hard ceiling **40 active hours**, including protocol, implementation, corrections and review. No unlimited extension at the approximate timebox. |
 | Memory / storage | **10 GiB** aggregate process-tree resident memory; **20 GiB** additional disk including worktrees, environments, caches and outputs; **0 bytes** of new dataset/model downloads |
 | Other work / cost | **0** new sources/providers, weather probes, neural candidates, VRE fits, recombination searches, economic runs, operational days, automated schedules or remote mutations; **$0** external cost |
+
+**Forward-looking counting rule — Owner-ratified v21-r3, 2026-09-23.**
+
+Purely synthetic fixture and state tests, which use no real research data, are charged to
+the compute, memory, storage and effort ceilings but not to the policy-day counter.
+
+Forecast/state replay using real research data remains charged to the policy-day counter
+using the existing policy-day unit, including warm-up, controls, failed attempts and
+independent reproduction. Calling a replay a “test” does not exempt it.
+
+Model fitting remains charged to the existing component-day and primitive-fit counters.
+This amendment neither changes those units nor creates an additional policy-day charge for
+each primitive estimator fit. Real-data replay performed alongside fitting still incurs its
+applicable replay charge.
+
+The historical **3,730** debit stands in full under its original accounting basis and is not
+re-scored under this rule. The revised cumulative ceiling therefore leaves **5,270** policy-days
+for subsequent work under the revised counting rule. Every other resource debit is preserved.
+This change is forward-looking. It does not retroactively establish compliant accounting or
+monitoring, and it grants no reset. The allowance is a maximum, not a spending target or a
+guarantee of feasibility.
+
+**Resumption conditions.** Before further experimental execution, the Lead checks that all
+remaining work fits the revised accounting and every other remaining allowance, and reports
+the estimate, including admission, production, necessary controls and independent verification.
+Historical monitoring gaps remain disclosed. Regenerate evidence from inadequately monitored
+work wherever it is required to support scored results or acceptance criteria. Preserve the
+original evidence and its limitations; later monitoring does not prove historical compliance.
+Preserve the existing candidate branch, evidence, independent FAIL verdict and all debits;
+resume the existing checkpoint, without discarding it or restarting from scratch. The Lead
+owns feasibility, resource allocation, monitoring repairs and independently verified completion
+within this scope; these are execution responsibilities, not further Owner parameter decisions.
+The required independent Integration review and complete acceptance criteria remain unchanged;
+no scientific result is inferred from the interrupted attempt. Weather admission under
+programme §4.1 is not a prerequisite for this resumption.
 
 The fit counts are arithmetic envelopes from the inherited 24-hour/four-penalty recipe,
 not a claim that every origin needs refitting or that the caps suffice. E1 must enumerate
@@ -610,16 +655,16 @@ parameters to the Owner for approval or silently weaken the experiment to fit a 
 Preserve `src/cp15/`, `reports/cp15/`, prior evidence, v1 models/data/report/public surfaces,
 all other locked documents, Q&A and unrelated pending work. Reuse by import/read without
 altering them. All outputs are local. The disposable branch is **`gauntlet/cp-16`**,
-created only in the authorized execution task, declared with its worktrees in the return.
+retained for this authorized resumption, declared with its worktrees in the return.
 Only the Lead writes checkpoint Git history. No branch/worktree/tag is created during this recording task.
 
-The Owner separately authorized CP-16 execution, including the local candidate branch,
-candidate/evidence commits and byte-for-byte packaging of the exact supplied ratified anchor,
-amendment record and issued brief, including their authorized status-and-identity-only
-successors. The Lead may not edit those locked documents, amend its own bar, copy unrelated
-pending work or stage `progress.md`. Neither the completed 4.0b suspension nor this recording
-suspension transfers to the Lead. The recording suspension is spent at this task's return;
-CP-16 execution authority persists within the issued brief and engineering-role boundaries.
+The Owner authorized CP-16 resumption on its existing candidate branch, including local
+candidate/evidence commits and byte-for-byte packaging of the supplied v21-r3 anchor,
+`docs/track-b/capstone_v21-r2-to-v21-r3-amendments.md` and issued CP-16 brief. Preserve the
+previous immutable documents in the existing commit history. The Lead may not author locked
+documents, amend its own bar, copy unrelated pending work or stage `progress.md`. This scoped
+suspension ends at the Orchestrator's return and does not transfer to the Lead; the resumption
+grant persists within §14.5, the issued brief and engineering-role boundaries.
 
 ### 14.8 Complete CP-16 acceptance checklist
 
@@ -670,8 +715,8 @@ does require a complete valid evaluation and fresh binding Integration PASS.
 
 ### 14.9 Entry authority and terminal boundary
 
-The Owner ratified this specification and separately authorized CP-16 execution on 2026-09-23,
-including this status-and-identity-only successor. Read `AGENTS.md`, `engineering-role.md`,
+The Owner ratified the v21-r3 cap/counting change and authorized CP-16 resumption on
+2026-09-23, including its consistent successors. Read `AGENTS.md`, `engineering-role.md`,
 this exact ratified revision and `docs/track-b/cp-16-v2-brief.md`. The complete §14.8 checklist
 controls; CP-15's §12 is not the CP-16 bar. Preserve the role's information-isolation rules.
 

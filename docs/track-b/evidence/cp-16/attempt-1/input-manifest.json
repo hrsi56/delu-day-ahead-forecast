@@ -9,7 +9,7 @@
     "inner_fits": 192000,
     "machine_seconds": 86400,
     "main_component_attempts": 1500,
-    "policy_days": 9000,
+    "policy_days": 4500,
     "primitive_fits": 240000,
     "reference_passes": 3,
     "rss_bytes": 10737418240
@@ -15987,12 +15987,12 @@
   "input_sha256": {
     "1bdc75b8ab943092bb8de6ba893defb9e12250d8:AGENTS.md": "4a590cea7fd29f2b230a203f492f179318d50d825aed3d68918b3f7ba932bbee",
     "1bdc75b8ab943092bb8de6ba893defb9e12250d8:capstone_v21.md": "44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3",
-    "capstone_v21.md": "67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed",
+    "capstone_v21.md": "a05700ef6de700a956f6d8725cd45ecbc13f2384f780c309fffc5ba835d80a2d",
     "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
     "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
-    "docs/track-b/capstone_v21-r2-to-v21-r3-amendments.md": "b2acadbfedecb22302a001f0935bd596d2c36a975742911e389b24e12a47142c",
+    "docs/track-b/capstone_v21-r1-to-v21-r2-amendments.md": "09c663359ac2471a8adbc9865d8cbfa2a25e86062aebf8428411bb74614fadab",
     "docs/track-b/cp-15-resumption-brief.md": "b6a24e40f13f28ad0b459395f6969d29fa6ebc86b5d688fa8ed246475556b280",
-    "docs/track-b/cp-16-v2-brief.md": "bd67e5852a2f59f15fac9d85214cf3d9e77483743b1728ab7e0cc80057471921",
+    "docs/track-b/cp-16-v2-brief.md": "1545089898aa47aa5384f5c6bcd07fda5ec7c0c98649cb44f2adba26cd0667ee",
     "reports/cp15/folds/fold_1-fits.parquet": "f2aad789fe984b5155adbfdbe6aee87436d3f064ccbb591acf750dfe1e065221",
     "reports/cp15/folds/fold_1-issued.parquet": "b7b291ab8ae70727095860bcb606d62ecb57770847233337c902ff32447e12b8",
     "reports/cp15/folds/fold_1-run.json": "564740e0484261fdf58a8874f43ce81b451737fa49bad66629e07bde2f2af8cf",
@@ -16023,8 +16023,8 @@
   "partition_filter": "2019-01-01 <= delivery_date < fold D0 for E1; never beyond 2026-04-07 thereafter",
   "python": "3.13.15 (main, Aug 25 2026, 13:50:12) [Clang 22.1.3 ]",
   "resource_preflight": {
-    "disk_free_bytes": 102679400448,
-    "memory_available_bytes": 3761537024,
+    "disk_free_bytes": 102386167808,
+    "memory_available_bytes": 4488691712,
     "physical_memory_bytes": 17179869184
   },
   "support_failures": []

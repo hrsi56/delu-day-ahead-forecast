@@ -47,6 +47,8 @@ def monitor(args):
                 'CP16_LEDGER':str(args.ledger),'PYTHONDONTWRITEBYTECODE':'1'},stdout=log,stderr=subprocess.STDOUT,
                 start_new_session=True)
             parent=psutil.Process(proc.pid)
+            with budget.transaction() as state:
+                state['jobs'][job_index].update(pid=proc.pid,blas_environment={k:os.environ[k] for k in ('OPENBLAS_NUM_THREADS','VECLIB_MAXIMUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS')},worker_policy='one serialized compute process tree')
             while True:
                 now=time.monotonic();delta=now-last_tick;last_tick=now
                 with budget.transaction() as state:
@@ -54,8 +56,11 @@ def monitor(args):
                     state['jobs'][job_index]['charged_seconds']=now-began
                     elapsed=now-began
                     if state['counts']['machine_seconds']>=CAPS['machine_seconds']:reason='machine_seconds'
-                    # Conservative wall-clock upper bound also protects the active-effort ceiling.
-                    if time.time()-state['created_epoch']>=CAPS['active_seconds']:reason='active_seconds'
+                    # Retain historical effort; exclude the Owner pause between terminal returns.
+                    effort=state.get('effort',{})
+                    active=effort.get('historical_upper_bound_seconds',0)+time.time()-effort.get('resumed_epoch',state['created_epoch'])
+                    state['active_effort_upper_bound_seconds']=active
+                    if active>=CAPS['active_seconds']:reason='active_seconds'
                 try:
                     processes=[parent,*parent.children(recursive=True),psutil.Process()]
                     rss=sum(p.memory_info().rss for p in processes if p.is_running())

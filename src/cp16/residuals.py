@@ -22,7 +22,7 @@ def _index(day, index):
     index = pd.DatetimeIndex(index)
     if index.tz is None:
         raise ValueError('canonical timestamps must be timezone aware')
-    index = index.tz_convert('UTC').copy(deep=True)
+    index = index.tz_convert('UTC').as_unit('ns').copy(deep=True)
     if (not len(index) or index.has_duplicates or not index.is_monotonic_increasing
             or not index.isin(day_hours(_date(day))).all()):
         raise ValueError('invalid canonical delivery-day timestamps')
@@ -108,7 +108,7 @@ class SharedResidualState:
             if day > cutoff:
                 break
             issued = self._pending[day]
-            if not issued.index.equals(day_hours(day)):
+            if not issued.index.equals(day_hours(day).as_unit('ns')):
                 self.trace.append({'origin': str(origin_day), 'feedback_day': str(day),
                                    'status': 'incomplete_issued_day', 'n': len(issued.index)})
                 self._consumed.add(day)
