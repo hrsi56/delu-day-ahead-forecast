@@ -47,3 +47,15 @@ def test_successful_monitor_has_actual_exit_and_output(tmp_path):
     assert driver().monitor(args)==0
     assert 'monitored-positive-control' in args.log.read_text()
     assert Budget(args.ledger).read()['jobs'][0]['exit_code']==0
+
+
+def test_resumed_effort_keeps_prior_debit_but_excludes_owner_pause(tmp_path):
+    import time
+    args=argparse.Namespace(ledger=tmp_path/'ledger.json',log=tmp_path/'child.log',
+        command=[sys.executable,'-c','print("resumed")'],project_root=tmp_path)
+    b=Budget(args.ledger)
+    with b.transaction() as state:
+        state['created_epoch']=0
+        state['effort']={'historical_upper_bound_seconds':3600,'resumed_epoch':time.time()}
+    assert driver().monitor(args)==0
+    assert 3600<=b.read()['active_effort_upper_bound_seconds']<3700

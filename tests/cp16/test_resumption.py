@@ -63,3 +63,17 @@ def test_cp16_partition_projection_occurs_before_materialization(monkeypatch):
     assert m.load(Path('.'),before=date(2020,7,1))[0]=='filtered-frame'
     assert seen==[(['timestamp_utc','delivery_date','price_eur_mwh','load_forecast_mw'],
         [('delivery_date','>=',date(2019,1,1)),('delivery_date','<=',date(2026,4,7)),('delivery_date','<',date(2020,7,1))])]
+
+
+def test_learned_transforms_fit_training_only_with_positive_control():
+    from cp15.models import prepared_linear
+    train=np.array([[1.,np.nan],[3.,4.],[5.,8.]])
+    other=np.array([[100.,1000.]])
+    x,z,fill,scaler=prepared_linear(train,other)
+    _,_,fill2,scaler2=prepared_linear(train,other*1000)
+    np.testing.assert_array_equal(fill,[3.,6.])
+    np.testing.assert_array_equal(fill,fill2)
+    np.testing.assert_array_equal(scaler.mean_,scaler2.mean_)
+    np.testing.assert_array_equal(scaler.scale_,scaler2.scale_)
+    _,_,fill3,scaler3=prepared_linear(train+7,other)
+    assert not np.array_equal(fill,fill3) and not np.array_equal(scaler.mean_,scaler3.mean_)
