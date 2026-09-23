@@ -33,7 +33,8 @@ ATTEMPTS_PER_MESSAGE = 3
 REQUIRED_RUNS = 2476
 TARGET_MESSAGES = 123800
 # Uncapped informational counters that are still recorded cumulatively.
-TRACKED = {'requests', 'failed_requests', 'runs_completed', 'decoded_messages'}
+TRACKED = {'requests', 'failed_requests', 'runs_completed', 'decoded_messages',
+           'prerun_replacement_attempts'}  # Owner decision O1; also inside message_attempts
 # Gauges are peaks or live sums, not cumulative consumption.
 GAUGES = {'rss_bytes', 'additional_disk_bytes', 'workers'}
 # Conservative effort start: the CP-20 session began before the ledger existed.

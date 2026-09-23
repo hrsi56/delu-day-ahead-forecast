@@ -317,7 +317,7 @@ class OffsetModel:
 
 
 class NcarLocator:
-    MIN_BACK, MAX_HOPS, WINDOW = 150_000, 40, 1_150_000
+    MIN_BACK, MAX_BACK, FORWARD, MAX_HOPS, WINDOW = 300_000, 1_000_000, 300_000, 40, 1_150_000
     EXTEND, MAX_EXTEND = 600_000, 3
 
     def __init__(self, fetcher, model: OffsetModel):
@@ -355,9 +355,9 @@ class NcarLocator:
         v, anchor = version(run), group[0]
         frac, err, source = self.model.predict(v, lead, anchor, run)
         pred = int(frac * size) if frac is not None else None
-        if err is not None:  # learned with an error history: a tight window around the prediction
-            back = max(self.MIN_BACK, 3 * err)
-            first_length = 2 * back + HEADER_BYTES
+        if err is not None:  # learned with an error history: a bounded window around the prediction
+            back = min(self.MAX_BACK, max(self.MIN_BACK, int(1.25 * err)))
+            first_length = back + self.FORWARD
         else:
             back, first_length = 2_500_000, self.WINDOW
         attempts = [(back, first_length), (4_000_000, self.WINDOW + 300_000), (9_000_000, self.WINDOW + 300_000)] \

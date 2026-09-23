@@ -5,9 +5,10 @@ Usage: python -m cp20.extract --manifest M --out DIR --select subset|all [--work
 
 * One exclusive lock per output directory; a second instance exits immediately.
 * Every target message attempt is appended (and fsynced) to ``attempts.jsonl`` and
-  charged to the ledger *before* its requests are sent. At most three attempts per message
-  in total; for retained-raw review-sample runs production stops at two so the third
-  remains for independent review.
+  charged to the ledger *before* its requests are sent. Production uses at most two
+  attempts per message; the third is reserved for independent review. Owner decision O1
+  adds up to two production attempts only where pre-run testing consumed attempts; those
+  are also logged in ``prerun_replacement_attempts.jsonl`` and a separate ledger counter.
 * A run is complete only when its ``runs/<run>.json`` exists with status ``complete`` and
   its ``runs/<run>.npz`` matches the recorded sha256; completed runs are re-validated
   and reused on resume, never refetched. Partial runs are discarded, their attempts kept.
@@ -37,11 +38,14 @@ from .gfs import (FIELDS, GROUPS, LEADS, BOX_LATS, BOX_LONS, Contradiction, Inte
                   version_evidence)
 from .net import Fetcher, TransferError
 
-# Section 15.5 allows 3 attempts per target message including retries and review. Runs whose
-# retained raw messages feed independent review keep their third attempt for that review;
-# other runs may use all three in production (e.g. after interruptions), never more.
-REVIEW_SAMPLE_PRODUCTION_ATTEMPTS = 2
-PRODUCTION_ATTEMPTS = 3
+# Section 15.5: 3 attempts per target message including retries and review. Production uses at
+# most 2, so every message keeps one attempt for independent review (r5 reverted).
+PRODUCTION_ATTEMPTS = 2
+# Owner decision O1 (2026-09-23, in session): up to two additional production attempts per target
+# message whose allowance was consumed by pre-run testing (subset jobs 3, 11 and 12, i.e. every
+# attempt logged before the full extraction job started), logged separately; no other cap change.
+PRERUN_CUTOFF_EPOCH = 1790184500.409214  # start_epoch of gfs-extract job index 16 (--select all)
+PRERUN_REPLACEMENT_MAX = 2
 # Observed pgrb2.0p25 .idx objects are ~33 KB (admission inventory); the bound is charged up front.
 IDX_BOUND = 100_000
 _decode_lock = threading.Lock()
@@ -54,27 +58,45 @@ def _date(s):
 class Attempts:
     def __init__(self, path: Path, budget: Budget):
         self.path, self.budget, self.lock = path, budget, threading.Lock()
-        self.counts = {}
+        self.replacements = path.with_name('prerun_replacement_attempts.jsonl')
+        self.counts, self.prerun = {}, {}
         if path.exists():
             for line in path.read_text().splitlines():
                 r = json.loads(line)
                 key = (r['run'], r['lead'], r['field'])
                 self.counts[key] = self.counts.get(key, 0) + 1
+                if r['epoch'] < PRERUN_CUTOFF_EPOCH:
+                    self.prerun[key] = self.prerun.get(key, 0) + 1
 
     def used(self, run, lead):
         return max(self.counts.get((run, lead, f), 0) for f in FIELDS)
 
-    def begin(self, run, lead, endpoint, purpose, limit=REVIEW_SAMPLE_PRODUCTION_ATTEMPTS):
+    def extra(self, run, lead):
+        """Owner-approved O1 allowance: replaces attempts consumed by pre-run testing, at most two."""
+        return min(PRERUN_REPLACEMENT_MAX, max(self.prerun.get((run, lead, f), 0) for f in FIELDS))
+
+    def begin(self, run, lead, endpoint, purpose):
         with self.lock:
-            if self.used(run, lead) >= limit:
+            used, extra = self.used(run, lead), self.extra(run, lead)
+            if used >= PRODUCTION_ATTEMPTS + extra:
                 raise IntegrityError(f'{run} f{lead:03d}: production attempt allowance exhausted')
-            self.budget.reserve(message_attempts=len(FIELDS))
+            replacement = used >= PRODUCTION_ATTEMPTS
+            if replacement:
+                purpose = f'owner_approved_prerun_replacement:{purpose}'
+                self.budget.reserve(message_attempts=len(FIELDS), prerun_replacement_attempts=len(FIELDS))
+            else:
+                self.budget.reserve(message_attempts=len(FIELDS))
             with self.path.open('a') as fh:
                 for field in FIELDS:
                     key = (run, lead, field)
                     self.counts[key] = self.counts.get(key, 0) + 1
-                    fh.write(json.dumps({'run': run, 'lead': lead, 'field': field, 'endpoint': endpoint,
-                                         'attempt': self.counts[key], 'purpose': purpose, 'epoch': time.time()}) + '\n')
+                    record = {'run': run, 'lead': lead, 'field': field, 'endpoint': endpoint,
+                              'attempt': self.counts[key], 'purpose': purpose, 'epoch': time.time()}
+                    fh.write(json.dumps(record) + '\n')
+                    if replacement:
+                        with self.replacements.open('a') as rf:
+                            rf.write(json.dumps({**record, 'prerun_attempts': self.prerun.get(key, 0),
+                                                 'owner_decision': 'O1'}) + '\n')
                 fh.flush()
                 os.fsync(fh.fileno())
 
@@ -179,8 +201,7 @@ class Extractor:
         return messages, trace
 
     def _lead(self, run, lead, rec, endpoint, purpose):
-        limit = REVIEW_SAMPLE_PRODUCTION_ATTEMPTS if rec['retain_raw'] else PRODUCTION_ATTEMPTS
-        self.attempts.begin(run.isoformat(), lead, endpoint, purpose, limit)
+        self.attempts.begin(run.isoformat(), lead, endpoint, purpose)
         trace = None
         if endpoint == 'aws':
             messages = self._aws_lead(run, lead, rec)
