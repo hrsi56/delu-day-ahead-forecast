@@ -1,0 +1,3979 @@
+{
+ "archive": "GFS 0.25 deg pgrb2",
+ "comparisons": {},
+ "derived": {
+  "all_supports_within_decoded_leads": true,
+  "hour_support": {
+   "23": {
+    "ssrd_block": "21-24",
+    "wind_endpoints": [
+     21,
+     24
+    ]
+   },
+   "24": {
+    "ssrd_block": "24-27",
+    "wind_endpoints": [
+     24
+    ]
+   },
+   "25": {
+    "ssrd_block": "24-27",
+    "wind_endpoints": [
+     24,
+     27
+    ]
+   },
+   "26": {
+    "ssrd_block": "24-27",
+    "wind_endpoints": [
+     24,
+     27
+    ]
+   },
+   "27": {
+    "ssrd_block": "27-30",
+    "wind_endpoints": [
+     27
+    ]
+   },
+   "28": {
+    "ssrd_block": "27-30",
+    "wind_endpoints": [
+     27,
+     30
+    ]
+   },
+   "29": {
+    "ssrd_block": "27-30",
+    "wind_endpoints": [
+     27,
+     30
+    ]
+   },
+   "30": {
+    "ssrd_block": "30-33",
+    "wind_endpoints": [
+     30
+    ]
+   },
+   "31": {
+    "ssrd_block": "30-33",
+    "wind_endpoints": [
+     30,
+     33
+    ]
+   },
+   "32": {
+    "ssrd_block": "30-33",
+    "wind_endpoints": [
+     30,
+     33
+    ]
+   },
+   "33": {
+    "ssrd_block": "33-36",
+    "wind_endpoints": [
+     33
+    ]
+   },
+   "34": {
+    "ssrd_block": "33-36",
+    "wind_endpoints": [
+     33,
+     36
+    ]
+   },
+   "35": {
+    "ssrd_block": "33-36",
+    "wind_endpoints": [
+     33,
+     36
+    ]
+   },
+   "36": {
+    "ssrd_block": "36-39",
+    "wind_endpoints": [
+     36
+    ]
+   },
+   "37": {
+    "ssrd_block": "36-39",
+    "wind_endpoints": [
+     36,
+     39
+    ]
+   },
+   "38": {
+    "ssrd_block": "36-39",
+    "wind_endpoints": [
+     36,
+     39
+    ]
+   },
+   "39": {
+    "ssrd_block": "39-42",
+    "wind_endpoints": [
+     39
+    ]
+   },
+   "40": {
+    "ssrd_block": "39-42",
+    "wind_endpoints": [
+     39,
+     42
+    ]
+   },
+   "41": {
+    "ssrd_block": "39-42",
+    "wind_endpoints": [
+     39,
+     42
+    ]
+   },
+   "42": {
+    "ssrd_block": "42-45",
+    "wind_endpoints": [
+     42
+    ]
+   },
+   "43": {
+    "ssrd_block": "42-45",
+    "wind_endpoints": [
+     42,
+     45
+    ]
+   },
+   "44": {
+    "ssrd_block": "42-45",
+    "wind_endpoints": [
+     42,
+     45
+    ]
+   },
+   "45": {
+    "ssrd_block": "45-48",
+    "wind_endpoints": [
+     45
+    ]
+   }
+  },
+  "ssrd_3h_blocks": {
+   "18-21": {
+    "max": 0.0,
+    "mean": 0.0,
+    "method": "direct 18-21 h average",
+    "min": 0.0,
+    "n_below_minus1": 0
+   },
+   "21-24": {
+    "max": 0.0,
+    "mean": 0.0,
+    "method": "2*A(18-24) - A(18-21)",
+    "min": 0.0,
+    "n_below_minus1": 0
+   },
+   "24-27": {
+    "max": 0.0,
+    "mean": 0.0,
+    "method": "direct 24-27 h average",
+    "min": 0.0,
+    "n_below_minus1": 0
+   },
+   "27-30": {
+    "max": 30.0,
+    "mean": 13.911047345767575,
+    "method": "2*A(24-30) - A(24-27)",
+    "min": 2.0,
+    "n_below_minus1": 0
+   },
+   "30-33": {
+    "max": 430.0,
+    "mean": 310.8106169296987,
+    "method": "direct 30-33 h average",
+    "min": 30.0,
+    "n_below_minus1": 0
+   },
+   "33-36": {
+    "max": 790.0,
+    "mean": 593.8665710186514,
+    "method": "2*A(30-36) - A(30-33)",
+    "min": 110.0,
+    "n_below_minus1": 0
+   },
+   "36-39": {
+    "max": 670.0,
+    "mean": 520.738880918221,
+    "method": "direct 36-39 h average",
+    "min": 90.0,
+    "n_below_minus1": 0
+   },
+   "39-42": {
+    "max": 214.0,
+    "mean": 152.43185078909613,
+    "method": "2*A(36-42) - A(36-39)",
+    "min": 18.0,
+    "n_below_minus1": 0
+   },
+   "42-45": {
+    "max": 0.0,
+    "mean": 0.0,
+    "method": "direct 42-45 h average",
+    "min": 0.0,
+    "n_below_minus1": 0
+   },
+   "45-48": {
+    "max": 0.0,
+    "mean": 0.0,
+    "method": "2*A(42-48) - A(42-45)",
+    "min": 0.0,
+    "n_below_minus1": 0
+   }
+  },
+  "wind": {
+   "f021": {
+    "share_points_100_ge_10": 0.9741750358680057,
+    "speed100_max": 12.521389041445492,
+    "speed100_mean": 4.92394001906995,
+    "speed10_max": 9.400809052029247,
+    "speed10_mean": 2.7205719916064175
+   },
+   "f024": {
+    "share_points_100_ge_10": 0.96987087517934,
+    "speed100_max": 12.319349010182574,
+    "speed100_mean": 4.855527262285967,
+    "speed10_max": 10.425476538382794,
+    "speed10_mean": 2.812590515349121
+   },
+   "f027": {
+    "share_points_100_ge_10": 0.9555236728837877,
+    "speed100_max": 12.852461490014349,
+    "speed100_mean": 4.827033492706421,
+    "speed10_max": 11.222838919678889,
+    "speed10_mean": 2.9270015960709768
+   },
+   "f030": {
+    "share_points_100_ge_10": 0.9626972740315638,
+    "speed100_max": 14.103469670316226,
+    "speed100_mean": 4.973955886717949,
+    "speed10_max": 11.800390631425977,
+    "speed10_mean": 3.2038561128296217
+   },
+   "f033": {
+    "share_points_100_ge_10": 0.9842180774748924,
+    "speed100_max": 14.71709989448148,
+    "speed100_mean": 5.276106233500617,
+    "speed10_max": 12.521210425774102,
+    "speed10_mean": 4.090148777823294
+   },
+   "f036": {
+    "share_points_100_ge_10": 0.9921090387374462,
+    "speed100_max": 14.352417047142657,
+    "speed100_mean": 5.778270407444493,
+    "speed10_max": 11.805010395873778,
+    "speed10_mean": 4.537423317688017
+   },
+   "f039": {
+    "share_points_100_ge_10": 0.9992826398852224,
+    "speed100_max": 13.730464282371045,
+    "speed100_mean": 6.232976462033846,
+    "speed10_max": 11.255179473763812,
+    "speed10_mean": 4.700717685520387
+   },
+   "f042": {
+    "share_points_100_ge_10": 0.9992826398852224,
+    "speed100_max": 12.82796626252711,
+    "speed100_mean": 7.013050901604433,
+    "speed10_max": 10.224054202589345,
+    "speed10_mean": 3.788391613726472
+   },
+   "f045": {
+    "share_points_100_ge_10": 0.996413199426112,
+    "speed100_max": 11.794590749525458,
+    "speed100_mean": 6.873808169645324,
+    "speed10_max": 9.474682565884898,
+    "speed10_mean": 3.665982946407193
+   },
+   "f048": {
+    "share_points_100_ge_10": 0.9971305595408895,
+    "speed100_max": 11.364772019919156,
+    "speed100_mean": 6.173664198876362,
+    "speed10_max": 6.81050007696721,
+    "speed10_mean": 3.2643319520582668
+   }
+  }
+ },
+ "endpoint": "ncar",
+ "hour_map": {
+  "delivery_day": "2019-03-31",
+  "hour_start_leads": [
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45
+  ],
+  "n_hours": 23
+ },
+ "leads": {
+  "f021": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.0,
+       "munich_48.25N_11.5E": 0.0,
+       "north_sea_coast_54.0N_8.0E": 0.0
+      }
+     },
+     "byte_range": [
+      167548042,
+      167768152
+     ],
+     "bytes": 220111,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 8,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 21,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 3,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 18,
+      "stepRange": "18-21",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190330,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:13:12Z",
+     "sha256": "27eb2b42eefc299822e0917039ef39e17f44002cb0838307b365e4c378094e49"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 8.364384765625001,
+      "mean": 1.8407118818373385,
+      "min": -1.795615234375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 1.6343847656250001,
+       "munich_48.25N_11.5E": -0.225615234375,
+       "north_sea_coast_54.0N_8.0E": 5.034384765625
+      }
+     },
+     "byte_range": [
+      146201876,
+      147010944
+     ],
+     "bytes": 809069,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 21,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 21,
+      "stepRange": "21",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190330,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:13:11Z",
+     "sha256": "db47847db8fd1f4b8d28679e2f3886fb9006b03084ef71e48f8c2a7faabe4c12"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 12.4477294921875,
+      "mean": 3.4840566083998383,
+      "min": -3.3222705078125,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 4.1977294921875,
+       "munich_48.25N_11.5E": -0.6422705078125001,
+       "north_sea_coast_54.0N_8.0E": 6.2877294921875
+      }
+     },
+     "byte_range": [
+      186421502,
+      187236004
+     ],
+     "bytes": 814503,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 21,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 21,
+      "stepRange": "21",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190330,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:13:13Z",
+     "sha256": "84f26a33863a84c4e50669556640a61bb8ef96dd9bd3553b9ef57a28a1edb9dd"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.1421435546875003,
+      "mean": -0.2827703620987266,
+      "min": -7.8878564453125,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 1.7021435546875001,
+       "munich_48.25N_11.5E": 0.2221435546875,
+       "north_sea_coast_54.0N_8.0E": -3.9678564453125
+      }
+     },
+     "byte_range": [
+      147010945,
+      147790694
+     ],
+     "bytes": 779750,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 21,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 21,
+      "stepRange": "21",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190330,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:13:11Z",
+     "sha256": "992475110341254534b913c2663ef78822b08600c182903e6b237103752c8c21"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 5.6150537109375005,
+      "mean": -0.9077583407124283,
+      "min": -9.4149462890625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 2.7450537109375,
+       "munich_48.25N_11.5E": 0.0650537109375,
+       "north_sea_coast_54.0N_8.0E": -5.6149462890625
+      }
+     },
+     "byte_range": [
+      187236005,
+      188030697
+     ],
+     "bytes": 794693,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 21,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 21,
+      "stepRange": "21",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190330,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:13:13Z",
+     "sha256": "406887dd4eb826d98e24d0a4645774868f9b8d4abbc483c21a06045a2ff065ae"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 216533982,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 11,
+      "window_start": 141943903
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 163164234
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 9,
+      "window_start": 181786156
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f021.grib2"
+   }
+  },
+  "f024": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.0,
+       "munich_48.25N_11.5E": 0.0,
+       "north_sea_coast_54.0N_8.0E": 0.0
+      }
+     },
+     "byte_range": [
+      169102779,
+      169534517
+     ],
+     "bytes": 431739,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 24,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 6,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 18,
+      "stepRange": "18-24",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:13:49Z",
+     "sha256": "effefa9daf0b83b9b3176aaa2f2bbbb3ee4e100e1e55ed337435548260783224"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 8.8526806640625,
+      "mean": 1.7681541217382533,
+      "min": -2.0973193359375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 3.4126806640625,
+       "munich_48.25N_11.5E": 0.8726806640625,
+       "north_sea_coast_54.0N_8.0E": 2.6726806640625003
+      }
+     },
+     "byte_range": [
+      146600051,
+      147406277
+     ],
+     "bytes": 806227,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 24,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 24,
+      "stepRange": "24",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:13:47Z",
+     "sha256": "f0815bbad3f70719189febd10232134a8c95c0004d984885570446087c62bf32"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 12.17193115234375,
+      "mean": 3.168954107867423,
+      "min": -3.34806884765625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 7.1019311523437505,
+       "munich_48.25N_11.5E": 1.23193115234375,
+       "north_sea_coast_54.0N_8.0E": 3.00193115234375
+      }
+     },
+     "byte_range": [
+      188184698,
+      188996882
+     ],
+     "bytes": 812185,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 24,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 24,
+      "stepRange": "24",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:13:51Z",
+     "sha256": "1c8c74fd2668313c3e0c09806dcd903464bd0e2ac61695bfe72889dcf87ba230"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.0730712890625003,
+      "mean": -0.8269071901340566,
+      "min": -7.8569287109375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -0.0569287109375,
+       "munich_48.25N_11.5E": 0.3230712890625,
+       "north_sea_coast_54.0N_8.0E": -7.3269287109375005
+      }
+     },
+     "byte_range": [
+      147406278,
+      148184455
+     ],
+     "bytes": 778178,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 24,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 24,
+      "stepRange": "24",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:13:48Z",
+     "sha256": "b7fc894660d5ca5ec618dc0a9344479ed7ebab9b4d030aa48498e6044b5b38dd"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 4.3542626953125,
+      "mean": -1.799173459637285,
+      "min": -9.2857373046875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -0.9057373046875,
+       "munich_48.25N_11.5E": 0.0642626953125,
+       "north_sea_coast_54.0N_8.0E": -8.8657373046875
+      }
+     },
+     "byte_range": [
+      188996883,
+      189790766
+     ],
+     "bytes": 793884,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 24,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 24,
+      "stepRange": "24",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:13:51Z",
+     "sha256": "95a2c52d0c086a662dcdb31a78453ab42fe17f08b12da86174a4247ff9946932"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 218235946,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 8,
+      "window_start": 143091027
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 164478150
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 9,
+      "window_start": 183246441
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f024.grib2"
+   }
+  },
+  "f027": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.0,
+       "munich_48.25N_11.5E": 0.0,
+       "north_sea_coast_54.0N_8.0E": 0.0
+      }
+     },
+     "byte_range": [
+      168066831,
+      168280876
+     ],
+     "bytes": 214046,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 8,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 27,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 3,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 24,
+      "stepRange": "24-27",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 300
+     },
+     "retrieved_utc": "2026-09-23T13:14:17Z",
+     "sha256": "205f3c7c6b949609110f88cc63e2e6976eaeeef669f1addbe9b43eb46c1d212e"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 8.46291015625,
+      "mean": 1.663354919521162,
+      "min": -2.08708984375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 2.7829101562500003,
+       "munich_48.25N_11.5E": 0.97291015625,
+       "north_sea_coast_54.0N_8.0E": 3.20291015625
+      }
+     },
+     "byte_range": [
+      146384006,
+      147189898
+     ],
+     "bytes": 805893,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 27,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 27,
+      "stepRange": "27",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 300
+     },
+     "retrieved_utc": "2026-09-23T13:14:15Z",
+     "sha256": "07a56be97462e0d85f0819d1e3277407009d3af75040c9a84e26404f68f46c34"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 11.7470361328125,
+      "mean": 2.7205153293691717,
+      "min": -3.9029638671875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 4.9370361328125005,
+       "munich_48.25N_11.5E": 1.4970361328125001,
+       "north_sea_coast_54.0N_8.0E": 3.5970361328125002
+      }
+     },
+     "byte_range": [
+      186908476,
+      187718764
+     ],
+     "bytes": 810289,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 27,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 27,
+      "stepRange": "27",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 300
+     },
+     "retrieved_utc": "2026-09-23T13:14:19Z",
+     "sha256": "69491c3f346f4092226ec8438e017c1979ac6c57a5c4d75a7084ee59c261c326"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.6121118164062502,
+      "mean": -1.315865228070077,
+      "min": -9.54788818359375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -1.94788818359375,
+       "munich_48.25N_11.5E": 0.85211181640625,
+       "north_sea_coast_54.0N_8.0E": -7.67788818359375
+      }
+     },
+     "byte_range": [
+      147189899,
+      147968421
+     ],
+     "bytes": 778523,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 27,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 27,
+      "stepRange": "27",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 300
+     },
+     "retrieved_utc": "2026-09-23T13:14:15Z",
+     "sha256": "0c76308f4739ac78ddb391fcffc39e926c50d0ddba2d1201783a86ea60f40fe2"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.53207275390625,
+      "mean": -2.5273605316030756,
+      "min": -11.10792724609375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -4.16792724609375,
+       "munich_48.25N_11.5E": 0.92207275390625,
+       "north_sea_coast_54.0N_8.0E": -8.82792724609375
+      }
+     },
+     "byte_range": [
+      187718765,
+      188511524
+     ],
+     "bytes": 792760,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 27,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 27,
+      "stepRange": "27",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 300
+     },
+     "retrieved_utc": "2026-09-23T13:14:19Z",
+     "sha256": "4e2eb9a7c22a73d0796b0e04955f6dc651d3621145cb251f313a07c4a5d3844b"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 216835929,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 8,
+      "window_start": 142147416
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 163397337
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 9,
+      "window_start": 182045227
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f027.grib2"
+   }
+  },
+  "f030": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 15.0,
+      "mean": 6.955523672883787,
+      "min": 1.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 11.0,
+       "munich_48.25N_11.5E": 8.0,
+       "north_sea_coast_54.0N_8.0E": 5.0
+      }
+     },
+     "byte_range": [
+      169486540,
+      169909485
+     ],
+     "bytes": 422946,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 30,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 6,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 24,
+      "stepRange": "24-30",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 600
+     },
+     "retrieved_utc": "2026-09-23T13:14:45Z",
+     "sha256": "2b2b084a7ca51fb1faa3dc88cc6ab8be8b7067266c66a9e4e2a7289c12ab99c9"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 10.5957958984375,
+      "mean": 1.4081918812208571,
+      "min": -2.5842041015625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 2.6057958984375,
+       "munich_48.25N_11.5E": 0.9757958984375,
+       "north_sea_coast_54.0N_8.0E": 2.9657958984375
+      }
+     },
+     "byte_range": [
+      146476302,
+      147284255
+     ],
+     "bytes": 807954,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 30,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 30,
+      "stepRange": "30",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 600
+     },
+     "retrieved_utc": "2026-09-23T13:14:44Z",
+     "sha256": "30cf50f2b19a82d2ebe1052984ead499efe81eaa6d3f621aebe541447febfc34"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 13.33027587890625,
+      "mean": 2.0367608143438396,
+      "min": -5.09972412109375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 3.95027587890625,
+       "munich_48.25N_11.5E": 1.51027587890625,
+       "north_sea_coast_54.0N_8.0E": 3.2502758789062502
+      }
+     },
+     "byte_range": [
+      188446403,
+      189260426
+     ],
+     "bytes": 814024,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 12,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 30,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 30,
+      "stepRange": "30",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 600
+     },
+     "retrieved_utc": "2026-09-23T13:14:48Z",
+     "sha256": "5470f79745e0aea67f75a3aaec631d4e3efd040a7a107be1213656940ba1456c"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.29966796875,
+      "mean": -1.8496433655398135,
+      "min": -10.56033203125,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -2.83033203125,
+       "munich_48.25N_11.5E": 0.68966796875,
+       "north_sea_coast_54.0N_8.0E": -8.15033203125
+      }
+     },
+     "byte_range": [
+      147284256,
+      148063179
+     ],
+     "bytes": 778924,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 30,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 30,
+      "stepRange": "30",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 600
+     },
+     "retrieved_utc": "2026-09-23T13:14:44Z",
+     "sha256": "582235251d8962ff51e05f154b33d4242035f68727723e53aec9f8865225dfa2"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.10439453125,
+      "mean": -3.0990990125089666,
+      "min": -11.85560546875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -4.71560546875,
+       "munich_48.25N_11.5E": 0.8343945312500001,
+       "north_sea_coast_54.0N_8.0E": -9.13560546875
+      }
+     },
+     "byte_range": [
+      189260427,
+      190051680
+     ],
+     "bytes": 791254,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 30,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 30,
+      "stepRange": "30",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 600
+     },
+     "retrieved_utc": "2026-09-23T13:14:48Z",
+     "sha256": "7cd05273c47d925c2ad730051bec64982b0d22e1c1e1f44c835b385c229c678e"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 218476855,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 7,
+      "window_start": 143253400
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 164664132
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 10,
+      "window_start": 183453141
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f030.grib2"
+   }
+  },
+  "f033": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 430.0,
+      "mean": 310.8106169296987,
+      "min": 30.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 210.0,
+       "munich_48.25N_11.5E": 370.0,
+       "north_sea_coast_54.0N_8.0E": 280.0
+      }
+     },
+     "byte_range": [
+      166768814,
+      166988732
+     ],
+     "bytes": 219919,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 8,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 33,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 3,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 30,
+      "stepRange": "30-33",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 900
+     },
+     "retrieved_utc": "2026-09-23T13:15:11Z",
+     "sha256": "3af3a338bf57cf7155c16a30756c92d8c8dc295a21a8e9927b06df886a72d07a"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 10.6105126953125,
+      "mean": 0.902019151553533,
+      "min": -4.3694873046875005,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 2.8405126953125,
+       "munich_48.25N_11.5E": -0.5794873046875,
+       "north_sea_coast_54.0N_8.0E": 0.4605126953125
+      }
+     },
+     "byte_range": [
+      145269481,
+      146077408
+     ],
+     "bytes": 807928,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 33,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 33,
+      "stepRange": "33",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 900
+     },
+     "retrieved_utc": "2026-09-23T13:15:10Z",
+     "sha256": "588fcdec24b55722db00cd99d429e587e333fb805631432e1fb7ae751cf5653a"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 12.539965820312501,
+      "mean": 1.1193704114172345,
+      "min": -5.8700341796875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 4.0999658203125,
+       "munich_48.25N_11.5E": -0.8300341796875,
+       "north_sea_coast_54.0N_8.0E": 0.5199658203125
+      }
+     },
+     "byte_range": [
+      185689971,
+      186504907
+     ],
+     "bytes": 814937,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 12,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 33,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 33,
+      "stepRange": "33",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 900
+     },
+     "retrieved_utc": "2026-09-23T13:15:13Z",
+     "sha256": "88b41fe140bc65b6d7de2b5779cc85ad7da76d3445e142c5365d16af93b2833d"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.9877880859375,
+      "mean": -3.136982358825772,
+      "min": -10.1522119140625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -3.5422119140625,
+       "munich_48.25N_11.5E": -0.5422119140625,
+       "north_sea_coast_54.0N_8.0E": -8.7022119140625
+      }
+     },
+     "byte_range": [
+      146077409,
+      146856490
+     ],
+     "bytes": 779082,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 33,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 33,
+      "stepRange": "33",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 900
+     },
+     "retrieved_utc": "2026-09-23T13:15:10Z",
+     "sha256": "3b76f10cc8aa51a189e2b00c7d52d0195b4463635d0b7c0940d95d8b66e7dde0"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 1.2569531250000001,
+      "mean": -4.042652326936873,
+      "min": -11.383046875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -5.283046875,
+       "munich_48.25N_11.5E": -0.643046875,
+       "north_sea_coast_54.0N_8.0E": -9.593046875
+      }
+     },
+     "byte_range": [
+      186504908,
+      187295564
+     ],
+     "bytes": 790657,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 33,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 33,
+      "stepRange": "33",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 900
+     },
+     "retrieved_utc": "2026-09-23T13:15:13Z",
+     "sha256": "79a93ac2c317a31b4c1f28cae3802be963cc4608f4025fddfed461a6d783b645"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 215667473,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 9,
+      "window_start": 141359876
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 162495289
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 9,
+      "window_start": 181042691
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f033.grib2"
+   }
+  },
+  "f036": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 600.0,
+      "mean": 452.338593974175,
+      "min": 90.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 310.0,
+       "munich_48.25N_11.5E": 540.0,
+       "north_sea_coast_54.0N_8.0E": 460.0
+      }
+     },
+     "byte_range": [
+      168829736,
+      169072424
+     ],
+     "bytes": 242689,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 8,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 36,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 6,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 30,
+      "stepRange": "30-36",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 1200
+     },
+     "retrieved_utc": "2026-09-23T13:15:43Z",
+     "sha256": "c849f3615615b648728bf37d5cb5ce39c5f4225c9da71eff6eb011d791872f67"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 10.65392333984375,
+      "mean": 0.324949164807882,
+      "min": -4.75607666015625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 2.87392333984375,
+       "munich_48.25N_11.5E": -2.56607666015625,
+       "north_sea_coast_54.0N_8.0E": -0.03607666015625
+      }
+     },
+     "byte_range": [
+      146052450,
+      146861770
+     ],
+     "bytes": 809321,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 36,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 36,
+      "stepRange": "36",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1200
+     },
+     "retrieved_utc": "2026-09-23T13:15:42Z",
+     "sha256": "79eab2198965a60ac26590ac6fd5b211a77072950c76206e89d483fb55524a18"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 13.0573291015625,
+      "mean": 0.3512745821937767,
+      "min": -6.1126708984375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 3.8573291015625,
+       "munich_48.25N_11.5E": -3.4126708984375003,
+       "north_sea_coast_54.0N_8.0E": 0.0073291015625
+      }
+     },
+     "byte_range": [
+      187815118,
+      188633505
+     ],
+     "bytes": 818388,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 12,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 36,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 36,
+      "stepRange": "36",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1200
+     },
+     "retrieved_utc": "2026-09-23T13:15:46Z",
+     "sha256": "8c5b5dfdc17e754775f4ca7c1a0bd474bcc2afbcdc2811dfb3b6bcd5770bb02c"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 1.72310546875,
+      "mean": -3.6097281037033717,
+      "min": -9.46689453125,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -3.24689453125,
+       "munich_48.25N_11.5E": -1.43689453125,
+       "north_sea_coast_54.0N_8.0E": -8.30689453125
+      }
+     },
+     "byte_range": [
+      146861771,
+      147639850
+     ],
+     "bytes": 778080,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 36,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 36,
+      "stepRange": "36",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1200
+     },
+     "retrieved_utc": "2026-09-23T13:15:42Z",
+     "sha256": "8ae5d8645b4f039f44aa84e8bfce53d4697d4de738a37c4f49827781c2539e8d"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.06407958984375,
+      "mean": -4.584873064388674,
+      "min": -10.55592041015625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -4.51592041015625,
+       "munich_48.25N_11.5E": -1.85592041015625,
+       "north_sea_coast_54.0N_8.0E": -9.125920410156251
+      }
+     },
+     "byte_range": [
+      188633506,
+      189425721
+     ],
+     "bytes": 792216,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 36,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 36,
+      "stepRange": "36",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1200
+     },
+     "retrieved_utc": "2026-09-23T13:15:46Z",
+     "sha256": "8b640054399f1e2b8c40412ef671af7943e9e6d99b1ae9ad30de6423457f59f3"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 217799052,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 8,
+      "window_start": 142796561
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 164140868
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 9,
+      "window_start": 182871586
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f036.grib2"
+   }
+  },
+  "f039": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 670.0,
+      "mean": 520.738880918221,
+      "min": 90.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 530.0,
+       "munich_48.25N_11.5E": 590.0,
+       "north_sea_coast_54.0N_8.0E": 570.0
+      }
+     },
+     "byte_range": [
+      168405432,
+      168632873
+     ],
+     "bytes": 227442,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 8,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 39,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 3,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 36,
+      "stepRange": "36-39",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 1500
+     },
+     "retrieved_utc": "2026-09-23T13:16:19Z",
+     "sha256": "ed5e74c0b43fde04de775e07030c723f09911b9590ae9e9eed1ded4526e93165"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 8.9260693359375,
+      "mean": -0.49705118056178277,
+      "min": -4.6839306640625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 1.5660693359375,
+       "munich_48.25N_11.5E": -2.8139306640625,
+       "north_sea_coast_54.0N_8.0E": -0.4639306640625
+      }
+     },
+     "byte_range": [
+      146922310,
+      147732615
+     ],
+     "bytes": 810306,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 39,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 39,
+      "stepRange": "39",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1500
+     },
+     "retrieved_utc": "2026-09-23T13:16:18Z",
+     "sha256": "6a843e59447fba5602f803ad9968ba472c4da2282374add000a9f462bb2cdbfc"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 11.169543457031251,
+      "mean": -0.825772181419252,
+      "min": -6.36045654296875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 2.11954345703125,
+       "munich_48.25N_11.5E": -3.84045654296875,
+       "north_sea_coast_54.0N_8.0E": -0.47045654296875
+      }
+     },
+     "byte_range": [
+      187404019,
+      188222951
+     ],
+     "bytes": 818933,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 12,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 39,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 39,
+      "stepRange": "39",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1500
+     },
+     "retrieved_utc": "2026-09-23T13:16:21Z",
+     "sha256": "600d98bc482d7a992da196cd582c3759b02d24a4b8c56d362c8df124d5c5847b"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 1.68314453125,
+      "mean": -3.943397792996772,
+      "min": -8.92685546875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -4.64685546875,
+       "munich_48.25N_11.5E": -1.6668554687500001,
+       "north_sea_coast_54.0N_8.0E": -8.17685546875
+      }
+     },
+     "byte_range": [
+      147732616,
+      148513147
+     ],
+     "bytes": 780532,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 39,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 39,
+      "stepRange": "39",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1500
+     },
+     "retrieved_utc": "2026-09-23T13:16:18Z",
+     "sha256": "7a16f7fa334c7d36a53a3aad273d5b9ea968d0b207dd856e0b18395f400a148e"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.3556494140625,
+      "mean": -5.188948864273224,
+      "min": -10.9943505859375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -6.4243505859375,
+       "munich_48.25N_11.5E": -2.1943505859375,
+       "north_sea_coast_54.0N_8.0E": -8.9643505859375
+      }
+     },
+     "byte_range": [
+      188222952,
+      189016584
+     ],
+     "bytes": 793633,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 39,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 39,
+      "stepRange": "39",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1500
+     },
+     "retrieved_utc": "2026-09-23T13:16:21Z",
+     "sha256": "a660a8bd970efdc26f84c19513d7a4d7518e454c1231650f5385d6cd3a7883f1"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 217260331,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 12,
+      "window_start": 142433463
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 163724975
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 10,
+      "window_start": 182409363
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f039.grib2"
+   }
+  },
+  "f042": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 427.0,
+      "mean": 336.5853658536585,
+      "min": 66.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 334.0,
+       "munich_48.25N_11.5E": 373.0,
+       "north_sea_coast_54.0N_8.0E": 376.0
+      }
+     },
+     "byte_range": [
+      169439943,
+      169878561
+     ],
+     "bytes": 438619,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 42,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 6,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 36,
+      "stepRange": "36-42",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 1800
+     },
+     "retrieved_utc": "2026-09-23T13:16:39Z",
+     "sha256": "203dd89ded08c6443ead5812cc5da0478bd48b608caad4d0dfb6802188a54bc6"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 5.82831298828125,
+      "mean": -1.0801733818765693,
+      "min": -6.8516870117187505,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.11831298828125,
+       "munich_48.25N_11.5E": -2.00168701171875,
+       "north_sea_coast_54.0N_8.0E": -1.73168701171875
+      }
+     },
+     "byte_range": [
+      146641007,
+      147451573
+     ],
+     "bytes": 810567,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 42,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 42,
+      "stepRange": "42",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1800
+     },
+     "retrieved_utc": "2026-09-23T13:16:38Z",
+     "sha256": "e62c5fd6e4a49ed108be4daa3e9393d31524f23793a491d87be040c86c434fc4"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 7.19899658203125,
+      "mean": -2.5933348383417774,
+      "min": -8.56100341796875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.02899658203125,
+       "munich_48.25N_11.5E": -3.95100341796875,
+       "north_sea_coast_54.0N_8.0E": -1.87100341796875
+      }
+     },
+     "byte_range": [
+      188590665,
+      189411883
+     ],
+     "bytes": 821219,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 12,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 42,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 42,
+      "stepRange": "42",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1800
+     },
+     "retrieved_utc": "2026-09-23T13:16:42Z",
+     "sha256": "65a60b2de9d446e0bb4bf780dac3d94c56544676b24261e86e48fe784112c48e"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.74179443359375,
+      "mean": -3.1208669724320752,
+      "min": -8.93820556640625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -4.20820556640625,
+       "munich_48.25N_11.5E": -0.71820556640625,
+       "north_sea_coast_54.0N_8.0E": -7.95820556640625
+      }
+     },
+     "byte_range": [
+      147451574,
+      148231877
+     ],
+     "bytes": 780304,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 42,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 42,
+      "stepRange": "42",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1800
+     },
+     "retrieved_utc": "2026-09-23T13:16:38Z",
+     "sha256": "713801e7c9a52d298819308385e6cb17e3512b6cb9319a5f83112c5ee69941f1"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 1.37376220703125,
+      "mean": -5.60246447876502,
+      "min": -11.50623779296875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -6.70623779296875,
+       "munich_48.25N_11.5E": -1.32623779296875,
+       "north_sea_coast_54.0N_8.0E": -8.656237792968751
+      }
+     },
+     "byte_range": [
+      189411884,
+      190206825
+     ],
+     "bytes": 794942,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 42,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 42,
+      "stepRange": "42",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 1800
+     },
+     "retrieved_utc": "2026-09-23T13:16:42Z",
+     "sha256": "4e63a55a6a157f53b9529b5a845925a70c69607ae71b96bc4e6ec6eec56903e4"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 218210542,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 8,
+      "window_start": 143073905
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 164458538
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 10,
+      "window_start": 183224645
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f042.grib2"
+   }
+  },
+  "f045": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.0,
+       "munich_48.25N_11.5E": 0.0,
+       "north_sea_coast_54.0N_8.0E": 0.0
+      }
+     },
+     "byte_range": [
+      169041109,
+      169260319
+     ],
+     "bytes": 219211,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 8,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 45,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 3,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 42,
+      "stepRange": "42-45",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190331,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:17:03Z",
+     "sha256": "671bdd22e29491e3455a4b62743ea9f107366fb66a1bd5cc43c86191743bd80a"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.3232177734375,
+      "mean": -1.9054551103501614,
+      "min": -6.3567822265625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -0.9767822265625,
+       "munich_48.25N_11.5E": -2.6667822265625,
+       "north_sea_coast_54.0N_8.0E": -3.0367822265625
+      }
+     },
+     "byte_range": [
+      147254489,
+      148064884
+     ],
+     "bytes": 810396,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 45,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 45,
+      "stepRange": "45",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:17:02Z",
+     "sha256": "6877d3b43feee357b6d78977c6267ef171bd22e9f9560ee46adf09b635f9ba8c"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 4.03078125,
+      "mean": -4.102748161764707,
+      "min": -10.84921875,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -1.77921875,
+       "munich_48.25N_11.5E": -5.69921875,
+       "north_sea_coast_54.0N_8.0E": -3.25921875
+      }
+     },
+     "byte_range": [
+      187900581,
+      188722239
+     ],
+     "bytes": 821659,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 12,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 45,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 45,
+      "stepRange": "45",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:17:05Z",
+     "sha256": "b51c2ec301533ebe64dc116b3d6fd39d2a5a42b71bfac351612b7fef04a86d9d"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.1971435546875,
+      "mean": -2.5099583104487984,
+      "min": -9.3328564453125,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -3.2028564453125,
+       "munich_48.25N_11.5E": -2.3328564453125002,
+       "north_sea_coast_54.0N_8.0E": -6.4928564453125
+      }
+     },
+     "byte_range": [
+      148064885,
+      148845244
+     ],
+     "bytes": 780360,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 45,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 45,
+      "stepRange": "45",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:17:02Z",
+     "sha256": "0a4f95e87cfe101f95678f415d1a6bf0a53b2c5424afb11f44f8c07418a50f17"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.8608984375,
+      "mean": -4.494065694494261,
+      "min": -10.9091015625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -5.4191015625,
+       "munich_48.25N_11.5E": -4.1491015625,
+       "north_sea_coast_54.0N_8.0E": -6.969101562500001
+      }
+     },
+     "byte_range": [
+      188722240,
+      189518356
+     ],
+     "bytes": 796117,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 45,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 45,
+      "stepRange": "45",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190331,
+      "validityTime": 2100
+     },
+     "retrieved_utc": "2026-09-23T13:17:05Z",
+     "sha256": "1c9cad062f40d551d623d64ece7b5d0845c8a1ce4354e52333ac90c927846204"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 217706043,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 12,
+      "window_start": 142733872
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 164069065
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 10,
+      "window_start": 182791784
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f045.grib2"
+   }
+  },
+  "f048": {
+   "fields": {
+    "ssrd": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 0.0,
+      "mean": 0.0,
+      "min": 0.0,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": 0.0,
+       "munich_48.25N_11.5E": 0.0,
+       "north_sea_coast_54.0N_8.0E": 0.0
+      }
+     },
+     "byte_range": [
+      169061895,
+      169494167
+     ],
+     "bytes": 432273,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 48,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "indicatorOfUnitForTimeRange": 1,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "lengthOfTimeRange": 6,
+      "level": 0,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "Surface downward short-wave radiation flux",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 4,
+      "parameterNumber": 192,
+      "productDefinitionTemplateNumber": 8,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "sdswrf",
+      "significanceOfReferenceTime": 1,
+      "startStep": 42,
+      "stepRange": "42-48",
+      "stepType": "avg",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "surface",
+      "typeOfStatisticalProcessing": 0,
+      "units": "W m**-2",
+      "validityDate": 20190401,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:17:18Z",
+     "sha256": "11bc726f37142d8af4a7322af5d2bc4cd0c3e97fc035aadbe0e0d3915f47522c"
+    },
+    "u10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.82193359375,
+      "mean": -2.288095100654591,
+      "min": -6.06806640625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -0.89806640625,
+       "munich_48.25N_11.5E": -4.26806640625,
+       "north_sea_coast_54.0N_8.0E": -4.16806640625
+      }
+     },
+     "byte_range": [
+      146297991,
+      147104400
+     ],
+     "bytes": 806410,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 48,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre U wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 48,
+      "stepRange": "48",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190401,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:17:18Z",
+     "sha256": "56758a1b697216240cd252c0624efc9e9b22a25c8c44ab3959387a350987be10"
+    },
+    "u_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.0306396484375,
+      "mean": -4.752674555292773,
+      "min": -10.7693603515625,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -1.7893603515625,
+       "munich_48.25N_11.5E": -8.4193603515625,
+       "north_sea_coast_54.0N_8.0E": -4.3993603515625
+      }
+     },
+     "byte_range": [
+      188133536,
+      188946954
+     ],
+     "bytes": 813419,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 48,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "U component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 2,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "u",
+      "significanceOfReferenceTime": 1,
+      "startStep": 48,
+      "stepRange": "48",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190401,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:17:21Z",
+     "sha256": "d97a740fdf59e86109be4c54d7492e4b52a1bb7d370b2b368ec1b7c6c930beb1"
+    },
+    "v10": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 2.72962890625,
+      "mean": -1.7798689416696558,
+      "min": -6.26037109375,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -2.69037109375,
+       "munich_48.25N_11.5E": -0.60037109375,
+       "north_sea_coast_54.0N_8.0E": -4.53037109375
+      }
+     },
+     "byte_range": [
+      147104401,
+      147882608
+     ],
+     "bytes": 778208,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 48,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 10,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "10 metre V wind component",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "10v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 48,
+      "stepRange": "48",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190401,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:17:18Z",
+     "sha256": "8e19d98dc8ec7a3090f6d66a03d20d1c54e1266bbac5c0eaf252cc010b1471b1"
+    },
+    "v_hub": {
+     "box": {
+      "box_cols": 41,
+      "box_rows": 34,
+      "max": 3.4497216796875,
+      "mean": -3.0421864982178084,
+      "min": -7.1302783203125,
+      "n": 1394,
+      "n_nonfinite": 0,
+      "spots": {
+       "berlin_52.5N_13.5E": -4.6602783203125,
+       "munich_48.25N_11.5E": -0.45027832031250004,
+       "north_sea_coast_54.0N_8.0E": -4.8102783203125
+      }
+     },
+     "byte_range": [
+      188946955,
+      189740950
+     ],
+     "bytes": 793996,
+     "idx_line": null,
+     "meta": {
+      "Ni": 1440,
+      "Nj": 721,
+      "bitsPerValue": 11,
+      "centre": "kwbc",
+      "dataDate": 20190330,
+      "dataTime": 0,
+      "discipline": 0,
+      "endStep": 48,
+      "generatingProcessIdentifier": 96,
+      "gridType": "regular_ll",
+      "iDirectionIncrementInDegrees": 0.25,
+      "jDirectionIncrementInDegrees": 0.25,
+      "jScansPositively": 0,
+      "latitudeOfFirstGridPointInDegrees": 90.0,
+      "latitudeOfLastGridPointInDegrees": -90.0,
+      "level": 100,
+      "longitudeOfFirstGridPointInDegrees": 0.0,
+      "longitudeOfLastGridPointInDegrees": 359.75,
+      "name": "V component of wind",
+      "numberOfMissing": 0,
+      "packingType": "grid_complex_spatial_differencing",
+      "parameterCategory": 2,
+      "parameterNumber": 3,
+      "productDefinitionTemplateNumber": 0,
+      "productionStatusOfProcessedData": 0,
+      "shortName": "v",
+      "significanceOfReferenceTime": 1,
+      "startStep": 48,
+      "stepRange": "48",
+      "stepType": "instant",
+      "stepUnits": 1,
+      "typeOfGeneratingProcess": 2,
+      "typeOfLevel": "heightAboveGround",
+      "units": "m s**-1",
+      "validityDate": 20190401,
+      "validityTime": 0
+     },
+     "retrieved_utc": "2026-09-23T13:17:21Z",
+     "sha256": "5642f48554172fa798070996d05e440234e30ea8a7817fbc48936a651c86e99f"
+    }
+   },
+   "missing_fields": [],
+   "source": {
+    "file_bytes": 218299763,
+    "locate_trace": [
+     {
+      "attempt": 0,
+      "found": [
+       "u10",
+       "v10"
+      ],
+      "frac": 0.674,
+      "group": [
+       "u10",
+       "v10"
+      ],
+      "hops": 7,
+      "window_start": 143134040
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "ssrd"
+      ],
+      "frac": 0.772,
+      "group": [
+       "ssrd"
+      ],
+      "hops": 9,
+      "window_start": 164527417
+     },
+     {
+      "attempt": 0,
+      "found": [
+       "u_hub",
+       "v_hub"
+      ],
+      "frac": 0.858,
+      "group": [
+       "u_hub",
+       "v_hub"
+      ],
+      "hops": 9,
+      "window_start": 183301196
+     }
+    ],
+    "url": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/2019/20190330/gfs.0p25.2019033000.f048.grib2"
+   }
+  }
+ },
+ "run_init_utc": "2019-03-30T00:00Z"
+}

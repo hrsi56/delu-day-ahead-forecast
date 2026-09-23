@@ -1,0 +1,299 @@
+{
+ "title": "Programme 4.1 weather-archive admission - frozen sample manifest and pre-registered rules",
+ "frozen_utc": "2026-09-23T12:50:58Z",
+ "frozen_before": "any sample GRIB/zarr data retrieval and any field-level inventory; selection used only public file-existence metadata (OCF tree listing), dated schedule sources and plan documents",
+ "repository_head": "110ce15e8b8fff4cc9b08e33e1b948ad9a50c310",
+ "authority": {
+  "anchor": "capstone_v21.md (v21-r3) sections 2-3",
+  "programme": "docs/track-b/v3-plan-handoff-2026-09-22.md work-4-1, section-4-b, 5.9, 3.2",
+  "handoff": "Weather-archive admission executor handoff, Engineering Lead, 2026-09-23 (Owner-carried)"
+ },
+ "inputs": {
+  "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+  "reports/cp15/lineage_summary.csv": "273e093498089d27dab0efd0a9ce2279d7656deb0436f61f84847d60b77bb561"
+ },
+ "information_boundary": {
+  "origin": "D-1 12:00 fixed CET = D-1 11:00 UTC (inherited v1 convention, CP-15 protocol.origin.timestamp)",
+  "run": "D-1 00 UTC initialization; admissible only if every required output was available before D-1 11:00 UTC",
+  "delivery_calendar": "Europe/Berlin; D has 23/24/25 canonical hours",
+  "hour_starts": "relative to D-1 00 UTC: CEST day h22..h45; CET day h23..h46; spring-forward day h23..h45 (23 h); fall-back day h22..h46 (25 h); union h22..h46"
+ },
+ "required_windows": {
+  "rule": "history [max(2019-01-01, W-728 d), D) applied to genuine warm-up and evaluation forecasts; W = first genuine warm-up delivery day from CP-15 lineage; required delivery days = first history start .. fold evaluation end; required runs = delivery day - 1 at 00 UTC",
+  "folds": {
+   "fold_1": {
+    "delivery_days": [
+     "2019-01-01",
+     "2020-09-28"
+    ],
+    "runs_00z": [
+     "2019-01-01",
+     "2020-09-27"
+    ],
+    "evaluation": [
+     "2020-07-01",
+     "2020-09-28"
+    ],
+    "first_warmup_delivery": "2020-06-02"
+   },
+   "fold_2": {
+    "delivery_days": [
+     "2019-03-04",
+     "2021-06-29"
+    ],
+    "runs_00z": [
+     "2019-03-03",
+     "2021-06-28"
+    ],
+    "evaluation": [
+     "2021-04-01",
+     "2021-06-29"
+    ],
+    "first_warmup_delivery": "2021-03-01"
+   },
+   "fold_3": {
+    "delivery_days": [
+     "2020-06-04",
+     "2022-09-28"
+    ],
+    "runs_00z": [
+     "2020-06-03",
+     "2022-09-27"
+    ],
+    "evaluation": [
+     "2022-07-01",
+     "2022-09-28"
+    ],
+    "first_warmup_delivery": "2022-06-02"
+   },
+   "fold_4": {
+    "delivery_days": [
+     "2023-04-02",
+     "2025-07-29"
+    ],
+    "runs_00z": [
+     "2023-04-01",
+     "2025-07-28"
+    ],
+    "evaluation": [
+     "2025-05-01",
+     "2025-07-29"
+    ],
+    "first_warmup_delivery": "2025-03-30"
+   },
+   "fold_5": {
+    "delivery_days": [
+     "2023-12-13",
+     "2026-04-07"
+    ],
+    "runs_00z": [
+     "2023-12-12",
+     "2026-04-06"
+    ],
+    "evaluation": [
+     "2026-01-08",
+     "2026-04-07"
+    ],
+    "first_warmup_delivery": "2025-12-10"
+   }
+  },
+  "boundary_resolution": "Delivery day 2019-01-01 would need the 2018-12-31 00 UTC run, a pre-2019 input. It is not imported: weather inputs for delivery 2019-01-01 are structurally missing by the 2019 floor (to be handled by the 4.4D frozen missing-input fallback), are excluded from the archive-coverage denominator, and are not an archive gap. Earliest admissible run: 2019-01-01 00 UTC (delivery 2019-01-02)."
+ },
+ "archives": {
+  "GFS": {
+   "product": "NCEP GFS 0.25 deg pgrb2 operational forecast, 00 UTC cycle",
+   "endpoints": {
+    "NCAR": "https://tds.gdex.ucar.edu/thredds/fileServer/files/g/d084001/YYYY/YYYYMMDD/gfs.0p25.YYYYMMDD00.fFFF.grib2 (dataset d084001)",
+    "AWS": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.YYYYMMDD/00/[atmos/]gfs.t00z.pgrb2.0p25.fFFF (+ .idx); NCAR-linked NODD copy"
+   },
+   "endpoint_rule": "Prefer AWS where it has the run (idx enables exact range reads); NCAR for runs AWS lacks. Cross-endpoint compatibility accepted only if target GRIB messages are byte-identical (sha256) on sampled overlap runs and inventory file sizes agree across the overlap.",
+   "leads": [
+    21,
+    24,
+    27,
+    30,
+    33,
+    36,
+    39,
+    42,
+    45,
+    48
+   ],
+   "fields": {
+    "u10": "UGRD:10 m above ground",
+    "v10": "VGRD:10 m above ground",
+    "u_hub": "UGRD:100 m above ground (documented height-above-ground level; near-hub)",
+    "v_hub": "VGRD:100 m above ground",
+    "ssrd": "DSWRF:surface (time-averaged downward shortwave flux)",
+    "ssrd_component_note": "GFS provides total DSWRF, counted as the radiation field; 6th slot recorded as not applicable"
+   }
+  },
+  "ICON": {
+   "product": "DWD ICON-EU 0.0625 deg regular lat-lon, 00 UTC cycle, archived by Open Climate Fix",
+   "endpoint": "https://huggingface.co/datasets/openclimatefix/dwd-icon-eu/resolve/d3dea71c0edcb04e08e396ab4bf55afd1fdcfcf5/data/Y/M/D/YYYYMMDD_00.zarr.zip (gated; token access)",
+   "revision": "d3dea71c0edcb04e08e396ab4bf55afd1fdcfcf5",
+   "steps": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+   ],
+   "fields": {
+    "u10": "u_10m",
+    "v10": "v_10m",
+    "u_hub": "UNSUPPORTED - archive carries only 10 m and isobaric u/v; pressure levels are not turbine heights; not retrieved",
+    "v_hub": "UNSUPPORTED - as u_hub",
+    "aswdir_s": "aswdir_s (mean since forecast start)",
+    "aswdifd_s": "aswdifd_s (mean since forecast start)"
+   }
+  }
+ },
+ "domain": {
+  "box": "lat 47.0..55.25 N, lon 5.5..15.5 E (Germany incl. margin); decoded evidence reports box statistics, not a zonal aggregation recipe"
+ },
+ "samples": {
+  "GFS": [
+   {
+    "run": "2019-01-01",
+    "why": "earliest admissible run (2019 floor); GFS v14 spectral; NCAR"
+   },
+   {
+    "run": "2019-03-30",
+    "why": "spring-forward delivery 2019-03-31 (23 h); v14; NCAR"
+   },
+   {
+    "run": "2019-06-13",
+    "why": "first v15.1 FV3 00 UTC run (schema/model change 2019-06-12 12Z); NCAR"
+   },
+   {
+    "run": "2019-10-26",
+    "why": "fall-back delivery 2019-10-27 (25 h); v15.1; NCAR"
+   },
+   {
+    "run": "2020-10-24",
+    "why": "fall-back delivery 2020-10-25 (25 h); v15.1; folds 2-3; NCAR"
+   },
+   {
+    "run": "2021-03-23",
+    "why": "first v16 00 UTC run (2021-03-22 12Z change; path adds atmos/); AWS decode + NCAR byte comparison"
+   },
+   {
+    "run": "2022-03-26",
+    "why": "spring-forward delivery 2022-03-27; crisis; AWS"
+   },
+   {
+    "run": "2022-08-25",
+    "why": "crisis peak inside fold 3 evaluation; AWS"
+   },
+   {
+    "run": "2024-03-30",
+    "why": "spring-forward delivery 2024-03-31; folds 4-5 modern; AWS"
+   },
+   {
+    "run": "2024-10-26",
+    "why": "fall-back delivery 2024-10-27; folds 4-5 modern; AWS"
+   },
+   {
+    "run": "2026-03-28",
+    "why": "spring-forward delivery 2026-03-29 inside fold 5 evaluation (NCAR-updating 2026 tail); AWS + NCAR byte comparison"
+   },
+   {
+    "run": "2026-04-06",
+    "why": "last required run (fold 5 end 2026-04-07); AWS + NCAR byte comparison"
+   }
+  ],
+  "ICON": [
+   {
+    "run": "2020-06-03",
+    "why": "earliest required run the archive can serve (fold 3 history start); early schema"
+   },
+   {
+    "run": "2020-10-24",
+    "why": "fall-back delivery 2020-10-25 (25 h); fold 3"
+   },
+   {
+    "run": "2021-03-27",
+    "why": "spring-forward delivery 2021-03-28 (23 h); fold 3"
+   },
+   {
+    "run": "2022-03-26",
+    "why": "spring-forward delivery 2022-03-27; crisis; fold 3"
+   },
+   {
+    "run": "2022-08-25",
+    "why": "crisis peak inside fold 3 evaluation"
+   },
+   {
+    "run": "2023-02-28",
+    "why": "last early-schema 00 UTC run before March 2023 schema change"
+   },
+   {
+    "run": "2023-03-25",
+    "why": "new schema; spring-forward delivery 2023-03-26 (2024/2025 spring-forward runs are absent from the archive)"
+   },
+   {
+    "run": "2023-04-01",
+    "why": "fold 4 earliest required run; new schema"
+   },
+   {
+    "run": "2024-10-26",
+    "why": "fall-back delivery 2024-10-27; folds 4-5"
+   },
+   {
+    "run": "2025-07-28",
+    "why": "fold 4 last required run; modern summer radiation"
+   }
+  ],
+  "substitution_rule": "If a listed run proves absent/undecodable, record the failure (counts toward attempts) and substitute the nearest later existing run in the same category only when a category would otherwise be uncovered; never exceed 12 GFS + 12 ICON runs."
+ },
+ "admission_rule": {
+  "scope": "archive x fold x field (u10, v10, u_hub, v_hub, radiation)",
+  "ADMIT_requires_all": [
+   "authenticated/free access verified for the archive",
+   "inventory: every required D-1 00 UTC run in the fold window present with every required lead/step for the field (100%; runs lacking in one GFS endpoint may be supplied by the other)",
+   "field present per run (GFS: idx-verified where an idx exists; otherwise file present and size-consistent with its model version plus decoded layout of that version; ICON: zarr chunk objects covering the domain and steps present)",
+   "decoded samples of this archive covering the fold's model version/schema pass metadata, unit, averaging and alignment checks",
+   "reconstructed availability before D-1 11:00 UTC for the cycle and every required lead from dated producer-side evidence bracketing the fold window, with no documented intervening change that could move publication beyond the margin"
+  ],
+  "otherwise": "NOT_ADMITTED, classified as ARCHIVE_ABSENCE, FIELD_UNSUPPORTED, AVAILABILITY_UNPROVEN, ACCESS_GAP or BUDGET_GAP, with gap list and counts",
+  "not_claimed": "Historical admission does not certify live suitability (4.9); schedules/averages do not prove uninterrupted delivery"
+ },
+ "decoding": {
+  "bundle": "one run: all native fields x required leads, decoded locally from raw bytes (eccodes 2.49 for GRIB2; zarr 2.18.7 + ocf_blosc2 for ICON)",
+  "attempt_cap": 48
+ },
+ "ceilings": {
+  "active_hours": 16,
+  "transfer_GiB": 4,
+  "stop_line_GiB": 3.85,
+  "additional_disk_GiB": 8,
+  "aggregate_RSS_GiB": 8,
+  "machine_hours": 8,
+  "cpu_cores": 4,
+  "usd": 0,
+  "fits_model_runs": 0,
+  "full_archive_downloads": 0
+ }
+}

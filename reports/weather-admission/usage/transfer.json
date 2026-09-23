@@ -1,0 +1,74 @@
+{
+ "requests": 51092,
+ "bytes": 3678795640,
+ "gib": 3.4261,
+ "by_category": {
+  "sample retrieval (ICON)": {
+   "requests": 523,
+   "mib": 1920.2
+  },
+  "sample retrieval (GFS)": {
+   "requests": 2140,
+   "mib": 695.8
+  },
+  "inventory (GFS)": {
+   "requests": 39704,
+   "mib": 590.7
+  },
+  "inventory (ICON)": {
+   "requests": 8458,
+   "mib": 200.6
+  },
+  "dependencies": {
+   "requests": 1,
+   "mib": 39.7
+  },
+  "debug/probe/discovery": {
+   "requests": 122,
+   "mib": 26.7
+  },
+  "cross-endpoint comparison": {
+   "requests": 91,
+   "mib": 25.5
+  },
+  "sources and dated captures": {
+   "requests": 50,
+   "mib": 8.9
+  },
+  "access verification": {
+   "requests": 3,
+   "mib": 0.3
+  }
+ },
+ "errors": 30,
+ "http_status_counts": {
+  "200": 7832,
+  "0": 13,
+  "206": 43230,
+  "400": 3,
+  "404": 12,
+  "504": 2
+ },
+ "decode_attempts": {
+  "total": 34,
+  "success": 22,
+  "failure": 12,
+  "by_archive": {
+   "GFS:success": 12,
+   "ICON:failure": 9,
+   "GFS:failure": 3,
+   "ICON:success": 10
+  }
+ },
+ "resource_samples": 127,
+ "max_concurrent_processes": 9,
+ "max_summed_cpu_percent": 99.8,
+ "max_summed_rss_mib": 562.3,
+ "mean_summed_cpu_percent": 9.4,
+ "integrated_cpu_hours_sampled": 0.066,
+ "max_cores_equivalent": 1.0,
+ "sampled_span": [
+  "2026-09-23T13:10:13Z",
+  "2026-09-23T13:53:47Z"
+ ]
+}

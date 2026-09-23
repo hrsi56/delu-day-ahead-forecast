@@ -1,0 +1,51 @@
+archive,fold,field,required_runs,covered_runs,missing_runs,missing_in_evaluation_or_warmup,field_basis_idx_verified,field_basis_version_layout,boundary_structural_missing
+GFS,fold_1,u10,636,636,0,0,0,636,delivery 2019-01-01 (pre-2019 run excluded)
+ICON,fold_1,u10,636,260,376,7,,,delivery 2019-01-01 (pre-2019 run excluded)
+GFS,fold_1,v10,636,636,0,0,0,636,delivery 2019-01-01 (pre-2019 run excluded)
+ICON,fold_1,v10,636,260,376,7,,,delivery 2019-01-01 (pre-2019 run excluded)
+GFS,fold_1,u_hub,636,636,0,0,0,636,delivery 2019-01-01 (pre-2019 run excluded)
+ICON,fold_1,u_hub,636,0,636,119,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_1,v_hub,636,636,0,0,0,636,delivery 2019-01-01 (pre-2019 run excluded)
+ICON,fold_1,v_hub,636,0,636,119,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_1,radiation,636,636,0,0,0,636,delivery 2019-01-01 (pre-2019 run excluded)
+ICON,fold_1,radiation,636,261,375,7,,,delivery 2019-01-01 (pre-2019 run excluded)
+GFS,fold_2,u10,849,849,0,0,178,671,
+ICON,fold_2,u10,849,514,335,1,,,
+GFS,fold_2,v10,849,849,0,0,178,671,
+ICON,fold_2,v10,849,514,335,1,,,
+GFS,fold_2,u_hub,849,849,0,0,178,671,
+ICON,fold_2,u_hub,849,0,849,121,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_2,v_hub,849,849,0,0,178,671,
+ICON,fold_2,v_hub,849,0,849,121,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_2,radiation,849,849,0,0,178,671,
+ICON,fold_2,radiation,849,515,334,1,,,
+GFS,fold_3,u10,847,847,0,0,634,213,
+ICON,fold_3,u10,847,808,39,11,,,
+GFS,fold_3,v10,847,847,0,0,634,213,
+ICON,fold_3,v10,847,808,39,11,,,
+GFS,fold_3,u_hub,847,847,0,0,634,213,
+ICON,fold_3,u_hub,847,0,847,119,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_3,v_hub,847,847,0,0,634,213,
+ICON,fold_3,v_hub,847,0,847,119,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_3,radiation,847,847,0,0,634,213,
+ICON,fold_3,radiation,847,808,39,11,,,
+GFS,fold_4,u10,850,850,0,0,850,0,
+ICON,fold_4,u10,850,673,177,6,,,
+GFS,fold_4,v10,850,850,0,0,850,0,
+ICON,fold_4,v10,850,673,177,6,,,
+GFS,fold_4,u_hub,850,850,0,0,850,0,
+ICON,fold_4,u_hub,850,0,850,122,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_4,v_hub,850,850,0,0,850,0,
+ICON,fold_4,v_hub,850,0,850,122,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_4,radiation,850,850,0,0,850,0,
+ICON,fold_4,radiation,850,672,178,6,,,
+GFS,fold_5,u10,847,847,0,0,847,0,
+ICON,fold_5,u10,847,450,397,119,,,
+GFS,fold_5,v10,847,847,0,0,847,0,
+ICON,fold_5,v10,847,450,397,119,,,
+GFS,fold_5,u_hub,847,847,0,0,847,0,
+ICON,fold_5,u_hub,847,0,847,119,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_5,v_hub,847,847,0,0,847,0,
+ICON,fold_5,v_hub,847,0,847,119,,,FIELD_UNSUPPORTED: archive has 10 m and isobaric winds only
+GFS,fold_5,radiation,847,847,0,0,847,0,
+ICON,fold_5,radiation,847,449,398,119,,,

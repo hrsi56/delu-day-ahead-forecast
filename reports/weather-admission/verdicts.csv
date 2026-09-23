@@ -1,0 +1,51 @@
+archive,fold,field,verdict,reasons,access,coverage,decoded_versions,decoded_samples_pass,availability
+GFS,fold_1,u10,ADMIT,,verified,636/636,"v14,v15.1",True,RECONSTRUCTED: before=2019-01-21 inside=4 after=2020-10-31; max 48h-products avg end 03:45:31 UTC
+ICON,fold_1,u10,NOT_ADMITTED,ARCHIVE_ABSENCE (376 of 636 runs; 7 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,260/636,early,True,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_1,v10,ADMIT,,verified,636/636,"v14,v15.1",True,RECONSTRUCTED: before=2019-01-21 inside=4 after=2020-10-31; max 48h-products avg end 03:45:31 UTC
+ICON,fold_1,v10,NOT_ADMITTED,ARCHIVE_ABSENCE (376 of 636 runs; 7 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,260/636,early,True,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_1,u_hub,ADMIT,,verified,636/636,"v14,v15.1",True,RECONSTRUCTED: before=2019-01-21 inside=4 after=2020-10-31; max 48h-products avg end 03:45:31 UTC
+ICON,fold_1,u_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/636,early,,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_1,v_hub,ADMIT,,verified,636/636,"v14,v15.1",True,RECONSTRUCTED: before=2019-01-21 inside=4 after=2020-10-31; max 48h-products avg end 03:45:31 UTC
+ICON,fold_1,v_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/636,early,,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_1,radiation,ADMIT,,verified,636/636,"v14,v15.1",True,RECONSTRUCTED: before=2019-01-21 inside=4 after=2020-10-31; max 48h-products avg end 03:45:31 UTC
+ICON,fold_1,radiation,NOT_ADMITTED,ARCHIVE_ABSENCE (375 of 636 runs; 7 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,261/636,early,True,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_2,u10,ADMIT,,verified,849/849,"v14,v15.1,v16",True,RECONSTRUCTED: before=2019-01-21 inside=5 after=2021-12-06; max 48h-products avg end 03:57:43 UTC
+ICON,fold_2,u10,NOT_ADMITTED,ARCHIVE_ABSENCE (335 of 849 runs; 1 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,514/849,early,True,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_2,v10,ADMIT,,verified,849/849,"v14,v15.1,v16",True,RECONSTRUCTED: before=2019-01-21 inside=5 after=2021-12-06; max 48h-products avg end 03:57:43 UTC
+ICON,fold_2,v10,NOT_ADMITTED,ARCHIVE_ABSENCE (335 of 849 runs; 1 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,514/849,early,True,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_2,u_hub,ADMIT,,verified,849/849,"v14,v15.1,v16",True,RECONSTRUCTED: before=2019-01-21 inside=5 after=2021-12-06; max 48h-products avg end 03:57:43 UTC
+ICON,fold_2,u_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/849,early,,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_2,v_hub,ADMIT,,verified,849/849,"v14,v15.1,v16",True,RECONSTRUCTED: before=2019-01-21 inside=5 after=2021-12-06; max 48h-products avg end 03:57:43 UTC
+ICON,fold_2,v_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/849,early,,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_2,radiation,ADMIT,,verified,849/849,"v14,v15.1,v16",True,RECONSTRUCTED: before=2019-01-21 inside=5 after=2021-12-06; max 48h-products avg end 03:57:43 UTC
+ICON,fold_2,radiation,NOT_ADMITTED,ARCHIVE_ABSENCE (334 of 849 runs; 1 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,515/849,early,True,NOT ESTABLISHED: before=None inside=1 after=2022-03-08; latest listed publication 20 03:44 (server time); archive span covers window=False
+GFS,fold_3,u10,ADMIT,,verified,847/847,"v15.1,v16",True,RECONSTRUCTED: before=2019-08-18 inside=5 after=2023-04-19; max 48h-products avg end 03:59:02 UTC
+ICON,fold_3,u10,NOT_ADMITTED,ARCHIVE_ABSENCE (39 of 847 runs; 11 in warm-up/evaluation),verified,808/847,early,True,RECONSTRUCTED: before=2020-01-22 inside=3 after=2022-12-04; latest listed publication 20 03:44 (server time); archive span covers window=True
+GFS,fold_3,v10,ADMIT,,verified,847/847,"v15.1,v16",True,RECONSTRUCTED: before=2019-08-18 inside=5 after=2023-04-19; max 48h-products avg end 03:59:02 UTC
+ICON,fold_3,v10,NOT_ADMITTED,ARCHIVE_ABSENCE (39 of 847 runs; 11 in warm-up/evaluation),verified,808/847,early,True,RECONSTRUCTED: before=2020-01-22 inside=3 after=2022-12-04; latest listed publication 20 03:44 (server time); archive span covers window=True
+GFS,fold_3,u_hub,ADMIT,,verified,847/847,"v15.1,v16",True,RECONSTRUCTED: before=2019-08-18 inside=5 after=2023-04-19; max 48h-products avg end 03:59:02 UTC
+ICON,fold_3,u_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/847,early,,RECONSTRUCTED: before=2020-01-22 inside=3 after=2022-12-04; latest listed publication 20 03:44 (server time); archive span covers window=True
+GFS,fold_3,v_hub,ADMIT,,verified,847/847,"v15.1,v16",True,RECONSTRUCTED: before=2019-08-18 inside=5 after=2023-04-19; max 48h-products avg end 03:59:02 UTC
+ICON,fold_3,v_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/847,early,,RECONSTRUCTED: before=2020-01-22 inside=3 after=2022-12-04; latest listed publication 20 03:44 (server time); archive span covers window=True
+GFS,fold_3,radiation,ADMIT,,verified,847/847,"v15.1,v16",True,RECONSTRUCTED: before=2019-08-18 inside=5 after=2023-04-19; max 48h-products avg end 03:59:02 UTC
+ICON,fold_3,radiation,NOT_ADMITTED,ARCHIVE_ABSENCE (39 of 847 runs; 11 in warm-up/evaluation),verified,808/847,early,True,RECONSTRUCTED: before=2020-01-22 inside=3 after=2022-12-04; latest listed publication 20 03:44 (server time); archive span covers window=True
+GFS,fold_4,u10,ADMIT,,verified,850/850,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-01-08; max 48h-products avg end 04:00:09 UTC
+ICON,fold_4,u10,NOT_ADMITTED,ARCHIVE_ABSENCE (177 of 850 runs; 6 in warm-up/evaluation),verified,673/850,late,True,RECONSTRUCTED: before=2023-01-04 inside=9 after=2025-11-14; latest listed publication 03:13:00 (server time); archive span covers window=True
+GFS,fold_4,v10,ADMIT,,verified,850/850,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-01-08; max 48h-products avg end 04:00:09 UTC
+ICON,fold_4,v10,NOT_ADMITTED,ARCHIVE_ABSENCE (177 of 850 runs; 6 in warm-up/evaluation),verified,673/850,late,True,RECONSTRUCTED: before=2023-01-04 inside=9 after=2025-11-14; latest listed publication 03:13:00 (server time); archive span covers window=True
+GFS,fold_4,u_hub,ADMIT,,verified,850/850,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-01-08; max 48h-products avg end 04:00:09 UTC
+ICON,fold_4,u_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/850,late,,RECONSTRUCTED: before=2023-01-04 inside=9 after=2025-11-14; latest listed publication 03:13:00 (server time); archive span covers window=True
+GFS,fold_4,v_hub,ADMIT,,verified,850/850,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-01-08; max 48h-products avg end 04:00:09 UTC
+ICON,fold_4,v_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/850,late,,RECONSTRUCTED: before=2023-01-04 inside=9 after=2025-11-14; latest listed publication 03:13:00 (server time); archive span covers window=True
+GFS,fold_4,radiation,ADMIT,,verified,850/850,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-01-08; max 48h-products avg end 04:00:09 UTC
+ICON,fold_4,radiation,NOT_ADMITTED,ARCHIVE_ABSENCE (178 of 850 runs; 6 in warm-up/evaluation),verified,672/850,late,True,RECONSTRUCTED: before=2023-01-04 inside=9 after=2025-11-14; latest listed publication 03:13:00 (server time); archive span covers window=True
+GFS,fold_5,u10,ADMIT,,verified,847/847,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-06-14; max 48h-products avg end 04:00:09 UTC
+ICON,fold_5,u10,NOT_ADMITTED,ARCHIVE_ABSENCE (397 of 847 runs; 119 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,450/847,late,True,NOT ESTABLISHED: before=2023-07-03 inside=10 after=None; latest listed publication 03:14:08 (server time); archive span covers window=False
+GFS,fold_5,v10,ADMIT,,verified,847/847,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-06-14; max 48h-products avg end 04:00:09 UTC
+ICON,fold_5,v10,NOT_ADMITTED,ARCHIVE_ABSENCE (397 of 847 runs; 119 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,450/847,late,True,NOT ESTABLISHED: before=2023-07-03 inside=10 after=None; latest listed publication 03:14:08 (server time); archive span covers window=False
+GFS,fold_5,u_hub,ADMIT,,verified,847/847,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-06-14; max 48h-products avg end 04:00:09 UTC
+ICON,fold_5,u_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/847,late,,NOT ESTABLISHED: before=2023-07-03 inside=10 after=None; latest listed publication 03:14:08 (server time); archive span covers window=False
+GFS,fold_5,v_hub,ADMIT,,verified,847/847,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-06-14; max 48h-products avg end 04:00:09 UTC
+ICON,fold_5,v_hub,NOT_ADMITTED,FIELD_UNSUPPORTED,verified,0/847,late,,NOT ESTABLISHED: before=2023-07-03 inside=10 after=None; latest listed publication 03:14:08 (server time); archive span covers window=False
+GFS,fold_5,radiation,ADMIT,,verified,847/847,v16,True,RECONSTRUCTED: before=2023-04-19 inside=5 after=2026-06-14; max 48h-products avg end 04:00:09 UTC
+ICON,fold_5,radiation,NOT_ADMITTED,ARCHIVE_ABSENCE (398 of 847 runs; 119 in warm-up/evaluation); AVAILABILITY_UNPROVEN,verified,449/847,late,True,NOT ESTABLISHED: before=2023-07-03 inside=10 after=None; latest listed publication 03:14:08 (server time); archive span covers window=False
