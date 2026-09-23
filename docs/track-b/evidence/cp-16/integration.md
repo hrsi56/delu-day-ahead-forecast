@@ -1,15 +1,18 @@
-# Verdict — CP-16 — Integration — FAIL
+# Verdict — CP-16 — Integration — PASS
 
-- Candidate SHA: `3a160fd33ed92bb0061144cfbce2323d8b3a7db9`
-- Plan / version / bar: `capstone_v21.md`, `v21-r2`, §14.8, all ten items; applicable §§2–9 and complete §14 read.
-- Independent Critic canonical agent identity: `/root/integration_critic`.
-- Review checkout: `/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic`, clean detached HEAD at the candidate throughout review.
-- Worktree clean before and after: **yes**; `git status --porcelain=v1` returned empty and `git rev-parse HEAD` returned the full candidate SHA before and after checks. No candidate edits or Git mutations made.
-- Verdict scope: the complete acceptance bar. A review could be performed; missing required artifacts and unperformed mandatory checks mean FAIL, not Critic BLOCKED. The Lead's operational BLOCKED return is a separate status.
+- Candidate SHA: `bf3ca602e32e99e45c7835e3f95148f62b608099`.
+- Plan / version / bar: `capstone_v21.md`, `v21-r3`, complete §14.8, with §§2–9 and complete §14 controlling.
+- Anchor SHA256: `67d2176865fea4d6ada0b13bafb128016970d78337d5a936890ddbff7c3ad6ed` (independently verified).
+- Reviewer: fresh independent bounded Integration Critic `/root/integration_r3`, assigned by CP-16 Engineering Lead `/root`. No Builder story or conversation history was supplied; review used the committed candidate, assignment and actual execution.
+- Checkout: `/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic-r3`, fresh detached HEAD at the candidate. Cooperative read-only isolation; no sandbox-enforced immutability is claimed.
+- Worktree clean before and after: **yes**, empty `git status --porcelain=v1`; HEAD unchanged. No candidate file or Git state changed. The shared ignored resource ledger and reviewer evidence were written outside the checkout as assigned.
+- This PASS binds engineering evaluation at the candidate. It does not promote a model, authorize delivery/publication, or certify the post-review evidence commit before it exists. Item 10's necessary post-review mechanics are explicitly identified below.
 
 ## Verbatim bar excerpt
 
-The following excerpt was compared byte-for-byte (apart from surrounding blank lines) with the assignment and the committed anchor. It matched.
+The excerpt below was checked byte-for-byte against the assigned excerpt and the candidate plan. It is the citation.
+
+### 14.8 Complete CP-16 acceptance checklist
 
 Every item is mandatory. Engineering PASS does not require a positive research finding; it
 does require a complete valid evaluation and fresh binding Integration PASS.
@@ -59,67 +62,118 @@ does require a complete valid evaluation and fresh binding Integration PASS.
 
 ## Commands actually run
 
-All commands except the initial absolute-path assignment read ran with working directory `/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic`. The initial assignment read ran from the project root and opened only `.local/tmp/cp-16/integration-assignment.md`; it did not interpret root-checkout code or evidence.
-
-For the five monitored commands below the exact common prefix was:
+All compute commands ran serially from the detached checkout through the candidate monitor and the same cumulative ledger. The definitions used were:
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic/src /Users/djourno/Downloads/PJM/.venv/bin/python scripts/cp16_v2.py --monitor --ledger /Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json --project-root /Users/djourno/Downloads/PJM --log LOG -- COMMAND
+CP16_PY=/Users/djourno/Downloads/PJM/.venv/bin/python
+CP16_BUDGET=/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/budget.json
+CP16_PROJECT=/Users/djourno/Downloads/PJM
+CP16_LOGS=/Users/djourno/Downloads/PJM/.local/artifacts/cp-16
 ```
 
-| LOG under `/Users/djourno/Downloads/PJM/.local/artifacts/cp-16/` | COMMAND, appended to the exact prefix | Exit | Observed output |
-|---|---|---:|---|
-| `critic-tests.log` | `/Users/djourno/Downloads/PJM/.venv/bin/python -m pytest tests/cp16/test_monitor.py tests/cp16/test_budget_inputs.py tests/cp16/test_scoring.py -q -p no:cacheprovider --basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-tests` | 0 | **34 passed in 4.88s**; monitor elapsed 5.762243s; peak RSS 257785856 bytes; no abort. |
-| `critic-guards.log` | `/Users/djourno/Downloads/PJM/.venv/bin/python -m pytest tests/test_02_rolling_closed_left.py tests/test_05_schema_firewall.py tests/test_08_partition_integrity.py tests/test_12_partition_exclusion.py tests/test_24_live_namespace_is_walled_off.py -q -p no:cacheprovider --basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-guards` | 0 | **25 passed in 3.39s**; monitor elapsed 4.527949s; peak RSS 311836672 bytes; no abort. |
-| `critic-audit.log` | `/Users/djourno/Downloads/PJM/.venv/bin/python /Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/audit.py` | 0 | 19 artifact, 20 implementation and 31 in-scope input hashes matched; exact bar and historical protocol hash matched; 10747 original keys, zero duplicates, fold counts 2160/2159/2112/2160/2156; five required output files absent; only seven fold-1 admission dates. Monitor elapsed 0.558750s. |
-| `critic-final-audit.log` | `/Users/djourno/Downloads/PJM/.venv/bin/python /Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit.py` | 1 | Raw interrupted lineage hash/prefix preserved. Audit then failed its direct `DatetimeIndex.equals` assertion because JSON timestamps parsed at microsecond precision and Parquet timestamps at millisecond precision. No candidate defect inferred from this failed audit. Monitor elapsed 0.818456s; failed job retained and charged. |
-| `critic-final-audit-normalized.log` | `/Users/djourno/Downloads/PJM/.venv/bin/python /Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic/final_audit_normalized.py` | 0 | Printed `datetime64[us, UTC]` versus `datetime64[ms, UTC]` in all five folds; after converting both to nanoseconds, every exact UTC target key matched. Raw interrupted lineage content was preserved except labeled status/additional notices. Monitor elapsed 0.547886s. |
+1. **Exit 0**:
 
-Supporting audit scripts are at the exact command paths above. Each only reads candidate evidence and prints findings. These scripts/logs are retained under authorized `.local` paths for Lead import; no durable candidate source was edited. Unit-test temporary ledgers are synthetic fixtures inside the designated pytest basetemps; every actual review compute job used the existing shared ledger. No new blank production ledger was created.
+```sh
+"$CP16_PY" scripts/cp16_v2.py --monitor --ledger "$CP16_BUDGET" --project-root "$CP16_PROJECT" --log "$CP16_LOGS/r3-critic-tests.log" -- env CP16_REQUIRE_SAVED_EVIDENCE=1 "$CP16_PY" -m pytest tests/cp16 -q -s -p no:cacheprovider --basetemp="$CP16_PROJECT/.local/tmp/cp-16/r3-critic-tests"
+```
 
-Read-only shell inspection commands also exited 0: `git status --porcelain=v1`; `git rev-parse HEAD`; `git log -6 --format='%H %s'`; `git show -s --format='%H %ct %s' e625967e20f3f79f2c4d07c9b414065ff0717d02`; `git diff --name-only 6621402b2be9aed85be433432bcffffb56adf3e4 HEAD`; `rg --files reports/v2-causal docs/track-b/evidence/cp-16 src/cp16 tests/cp16`; and `cat`/`sed`/`tail` reads of the evidence and code named below. The baseline-to-candidate path list contains only the three supplied immutable governance documents and authorized CP-16 source, tests, driver, reports and evidence paths. No inherited CP-15, v1, mainline or unrelated program-state path appears. The pre-run commit was reachable and its protocol SHA256 matched `b35bdf131d4620d7a3821c7832d7aea9ea4674500d70db3422a12cb371c355b4`.
+Observed **84 passed in 41.09 seconds**; wrapper elapsed 42.039104 seconds, peak process-tree RSS 743,636,992 bytes, no abort. The separate saved-vector oracle does not import the CP-15/CP-16 scorer or models: it recomputed all metrics, diagnostic rows and denominators, criteria, ranking and 2,000 paired bootstrap replicates to atol/rtol `2e-12`. Its hand-calculated WIS, tamper, missing-calendar/variable-hour and tie controls also passed. The independent state oracle rebuilt all 638 real date-fold origins and all **21,494 H/P evaluation rows**, with **maximum absolute difference 0.0**, exact buffer/scale/central hashes, exact admission vector hashes, and matching persisted final states. Real admission-state restart matched saved first-evaluation vectors; wrong origin, scale, keys and training cache identities were refused. Synthetic tests cover D−2/D−1, consume-once, partial truth/day, 23/24/25-hour canonical identity, sparse fallback, linear quantiles/ties, issued versus current scale, positive sensitivity, and resource refusal/monitor failure. Real replay charged 1,276 + 152 policy-days; saved-reference and analysis counters each increased by one.
+
+2. **Exit 0**:
+
+```sh
+"$CP16_PY" scripts/cp16_v2.py --monitor --ledger "$CP16_BUDGET" --project-root "$CP16_PROJECT" --log "$CP16_LOGS/r3-critic-components.log" -- "$CP16_PY" tests/cp16/reproduce_components.py --output "$CP16_LOGS/r3-critic-components.json"
+```
+
+Observed wrapper elapsed 90.968863 seconds, peak RSS 1,008,713,728 bytes, no abort. Fresh A1/B2 fits on fold 1 / 2020-07-01 and fold 2 / 2021-04-01 each reproduced with **0.0** maximum absolute forecast difference and exact model, imputer, scaler, training-target, normalization, hourly-training, inner-training and validation fingerprints. Each fitted component used 120 primitive calls. Delivery-day/future mutation gave **A1=0.0, B2=0.0**; the available D−1 positive mutation gave **A1=425.36057961143297, B2=485.17021664721653**. Limits were component atol `1e-8`, rtol `1e-10`, exact fingerprints and exact zero/nonzero causal assertions. Charged eight policy-days, eight component attempts and 960 primitive fits (768 inner, 192 final).
+
+3. **Exit 0**:
+
+```sh
+"$CP16_PY" scripts/cp16_v2.py --monitor --ledger "$CP16_BUDGET" --project-root "$CP16_PROJECT" --log "$CP16_LOGS/r3-critic-guards.log" -- "$CP16_PY" -m pytest tests/cp15/test_pipeline.py tests/test_02_rolling_closed_left.py tests/test_05_schema_firewall.py tests/test_08_partition_integrity.py tests/test_12_partition_exclusion.py tests/test_24_live_namespace_is_walled_off.py -k 'not test_fit_delivery_mask_positive_d1_and_rolling_refit' -q -p no:cacheprovider --basetemp="$CP16_PROJECT/.local/tmp/cp-16/r3-critic-guards"
+```
+
+Observed **48 passed, 3 deselected in 5.00 seconds**; wrapper elapsed 5.969266 seconds, peak RSS 340,770,816 bytes, no abort. Deselection was the three explicitly excluded inherited model-fit cases, not a failed test. Applicable schema, rolling, partition and live-namespace guards passed. Synthetic inherited checks also verified origin-specific 168-hour transforms and DST handling. No live mutation or unauthorized reference model fit occurred.
+
+4. **Exit 0**, reviewer-authored metadata audit (no new outcome scoring or real replay):
+
+```sh
+"$CP16_PY" scripts/cp16_v2.py --monitor --ledger "$CP16_BUDGET" --project-root "$CP16_PROJECT" --log "$CP16_LOGS/r3-critic-metadata.log" -- "$CP16_PY" "$CP16_PROJECT/.local/tmp/cp-16/critic-r3/metadata_audit.py"
+```
+
+Observed 28 artifact hashes, 20 implementation hashes, 34 input identities and all pinned installed dependencies matching. The exact complete protocol is present unchanged in pre-run commit `9cf64e2403cdcf7d367a06da72688b0d55e39f1f`; all 35 training-only admission dates and their committed freeze match `225cc92b53f917d920a037881604d1cd6cc6e9db`. Thirteen preserved historical report/evidence artifacts match their original bytes at `41b0e6d222a3d65d474ac5974c6eb7017db317e8`. All 87 changed files are within the supplied governance packaging and CP-16 envelope. No changes to inherited CP-15 source/results, data, models or CP-2 results. All cited earlier candidates/freeze commits remain ancestors of `gauntlet/cp-16`. Wrapper elapsed 0.800119 seconds, peak RSS 132,972,544 bytes, no abort.
+
+Read-only inspection commands also returned exit 0: `git status --porcelain=v1`, `git rev-parse HEAD`, `shasum -a 256 capstone_v21.md`, `git log --format='%H %s' -10`, `git diff --stat main...HEAD`, `git worktree list`, `git branch -vv`, `git rev-list --left-right --count main...gauntlet/cp-16`, `git tag --list 'land/cp-16*' 'evidence/cp-16*' 'archive/cp-16*'`, and `git log --format='%H %cI %s' 41b0e6d222a3d65d474ac5974c6eb7017db317e8..HEAD`. File inspection used `cat`, `sed`, `rg`, and `tail` on the evidence/source paths listed below. Initial and final status were empty; main remained `6621402b2be9aed85be433432bcffffb56adf3e4`; candidate branch was six ahead/zero behind main; no CP-16 disposition tags existed.
 
 ## Evidence actually inspected
 
-- Exact assignment; committed `capstone_v21.md`, named amendment and `docs/track-b/cp-16-v2-brief.md`; canonical Integration verdict form in `docs/track-b/gauntlet-templates.md` §2.
-- All existing `reports/v2-causal/` artifact types: protocol, input manifest, artifact manifest, lineage, resources, failures, report and reproduction instructions. The JSON audit examined full identities, fold/origin/key collections, admission entries and component-reproduction summaries. It did not refit the reported components.
-- `docs/track-b/evidence/cp-16/resource-accounting-audit.md`, `residual-builder-audit.md`, `supervisor-failure-record.json`, raw `interrupted-admission-lineage.json`, and the preserved admission log ending in `KeyboardInterrupt` inside a Lasso fit. Candidate monitor/input/scoring tests and inherited guards were actually rerun as above.
-- `src/cp16/inputs.py`, `residuals.py`, `execution.py`, `budget.py`, driver `scripts/cp16_v2.py`, scoring population/metrics/criteria implementation and corresponding monitor/input/scoring tests. Code inspection is not substituted for missing executed causal/component/state verification.
-- Saved CP-15 B0 target metadata, projected to fold/timestamp/date only. Exact manifest key comparison and counts were independently performed. The main audit hashed immutable bytes, including snapshot bytes, without materializing prohibited outcomes. Inherited partition tests read timestamp metadata, not held-out outcomes. No spent holdout or reserved-tail outcomes were fitted, scored or selected on.
-- Existing shared ledger before review and monitor-written job records. No residual state execution, model fitting, full saved-reference score pass or production bootstrap pass was performed by this Critic. Synthetic scoring fixtures do not constitute independently recomputed saved-prediction metrics.
-
-## Findings
-
-The candidate is explicitly partial. `predictions.parquet`, `metrics.csv`, `diagnostics.csv`, `uncertainty.csv` and `criteria.csv` are absent from `reports/v2-causal/`. Only 7 of 35 required admission dates (14 of 70 policy-days) are recorded. Preserved lineage contains 37 fold-1 origins, 8 fresh component-date pairs, one fold's state, and one cached-date A1/B2 reproduction whose reported differences are exactly zero. Those reported component differences were inspected, not independently reproduced here. There is no outer H/P comparison to score or rank and no new §8 diagnosis.
-
-The intended original population is intact: all 10747 exact UTC keys match the saved reference, with the five mandated fold counts. This establishes population identity only; it does not establish the 75229 required finite ordered prediction rows.
-
-The corrected replay debit is 3730/4500, leaving 770. The recorded planned complete pass requires 1276 policy-days, of which 1200 remain; the shortfall is already 430 before remaining controls and independent reproduction. The full residual suite's conservative 1002-policy-day debit exceeds the remaining allowance. Neither that suite nor a new comparison was run. A smaller synthetic control would not remedy the missing complete evaluation, so further residual spending was avoided. No cap amendment is authorized by this verdict.
-
-Resource enforcement is not fully demonstrated. The admission monitor originally crashed on a disappearing atomic-rename temporary file and left the worker running until explicit interruption. The original worker exit was not reaped; peak RSS in that gap is unknown. The fail-closed repair passes the observed regression tests, but it cannot retrospectively prove uninterrupted enforcement. Early synthetic Builder jobs were also outside the Lead supervisor and retrospectively debited. Their durable command records set `PYTHONPATH` but do not record a BLAS-thread pin, measured thread count, or aggregate concurrency. Consequently the global `resources.json` summary claims `BLAS_threads=1` and `max_CPU_workers=1` are unsupported for all checkpoint jobs. This is an evidence limitation/overclaim, not proof of a CPU or memory ceiling exceedance. Scope those claims to monitored jobs and report the earlier unknowns explicitly.
-
-The review added five monitored jobs, including the failed timestamp-audit attempt, and no fit/replay counts. Their elapsed times total about 12.215 seconds; final exact aggregate machine accounting is in the shared ledger after monitor finalization. The last in-job snapshot was 623.792378 machine-seconds and is not the final ledger total. Fit counts remained 21 component attempts, 17 main component attempts, 2494 primitive calls, 1996 inner and 498 final calls; policy-days remained 3730. No bootstrap/reference production analysis pass was used by this review. Lead must preserve the finalized resource ledger with the terminal packet.
-
-The report correctly distinguishes incomplete Engineering work, historical CP-15 NOT_DEMONSTRATED, unassessed research results and no delivery/promotion authority. An incomplete evaluation is not an honestly negative completed research finding. No predictive benefit, absence of benefit, equivalence or supported preference can be inferred.
+- Exact assignment, `engineering-role.md`, canonical template §2 and terminal §3, controlling plan §§2–9 and complete §14, issued CP-16 brief.
+- All `src/cp16/*.py`, the driver, inherited `src/cp15/data.py` and `models.py`, and the independent saved-vector/state/component checks plus residual, input, resumption, monitor and relevant inherited pipeline tests. Production scoring implementation was checked against the independent scalar/vector oracles and the ratified formulas.
+- `reports/v2-causal/protocol.json`, `input-manifest.json`, `artifact-manifest.json`, lineage/admission state through independent verification, predictions through both independent audits, every numeric table through the independent table checker, empty current failures, `resources.json`, report and reproduction instructions.
+- `data/partitions.json`; permitted projected raw inputs only through monitored replay/component checks. No spent holdout/reserved-tail outcomes were materialized by review. Input hashing is identity verification, not outcome access for fitting or selection.
+- Resumption feasibility and limitation notices; historical packet/reviewer identity to establish their historical status; all 13 preserved historical artifacts by byte comparison; prior FAIL/candidate chain by reachability. Current fresh reviewer identity is recorded in this verdict and must replace the historical top-level reviewer record during terminal evidence packaging.
+- Actual new review command logs, component JSON, metadata script/output and shared budget ledger. No orchestrator, progress, syllabus or Track A/C document was read.
 
 ## Checklist verdict
 
 | # | Checklist item | Verdict | Evidence |
 |---|---|---|---|
-| 1 | Actual state, preserved inputs, committed protocol and identities | PASS | Candidate clean and exact SHA; immutable supplied inputs and current source/artifact identities matched; pre-run protocol commit reachable before recorded admission; authorized baseline delta only; original target keys matched exactly. Resource-accounting completeness is separately failed under item 7. |
-| 2 | Fixed blend and frozen H/P constructions admitted on permitted training data | FAIL | Shared implementation visibly uses the fixed central/scale/error state and differs only in hour pooling, but only fold-1 admission exists. Required all-fold training-only admission/freeze is incomplete. Source review cannot certify the whole construction. |
-| 3 | Complete causal, component, state, cache, DST and positive/negative controls | FAIL | 25 inherited guards and bounded monitor/input checks pass. Required origin mutation fits, full training admission, independent component and representative state replay were not completed for this review; saved partial logs are insufficient. |
-| 4 | Complete original forecasts and exact denominators | FAIL | Original 10747 keys and all fold counts verified; required 75229 output rows absent. No finite/ordered-vector or emitted-p50 claim can be made for missing outputs. |
-| 5 | Independently recomputed saved scores, diagnostics and references | FAIL | Synthetic scoring tests pass, including WIS fixture and population refusal. Actual comparison predictions and metric/diagnostic tables are absent, so emitted-vector scores, all references and denominators could not be independently recomputed as required. |
-| 6 | Frozen research inference and all six original product diagnostics | FAIL | Rules and separation of statuses are documented, but actual ranking, paired intervals and six diagnostic results are unassessed. Appropriate withholding of conclusions does not complete the evaluation. |
-| 7 | Every numeric cap enforced and reported, including failures/review | FAIL | Warm-up accounting corrected to 3730/4500 and work stopped without unauthorized extension. Original supervision gap and early unmonitored Builder resource limits are not certifiable; aggregate BLAS/worker summary claims need qualification. Repairs and final monitored tests do not erase the gap. |
-| 8 | Complete durable artifacts, reproducibility, controls and disclosures | FAIL | Partial protocol/lineage/failure/resource evidence, notices and safe checks are present; missing prediction/metric/diagnostic/uncertainty/criteria deliverables and unperformed mandatory reproduction prevent completion. Defects and interrupted evidence are preserved honestly. |
-| 9 | Fresh exact-candidate Integration PASS with independent reproduction | FAIL | This is a fresh independent clean-checkout review binding the stated SHA, but mandatory saved-vector recomputation and component/state reproduction are absent; therefore no Integration PASS. |
-| 10 | Complete canonical terminal packet and bounded local stop | FAIL | Candidate lacks the terminal checkpoint return and eventual evidence-tip SHA/delta, which necessarily follow review; those must be assembled by Lead. No future-stage or publication work was performed in this review. Even a complete non-PASS return cannot cure items 2–9. |
+| 1 | Repository/input preservation and committed complete pre-run identities | PASS | Clean exact candidate; 34 input/20 implementation hashes and dependencies match; protocol freeze precedes admission and evaluation in candidate history; original and historical artifacts unchanged/reachable; complete permitted keys and origin manifest verified. |
+| 2 | Fixed A1/B2 central blend and only H/P pooling difference | PASS | Shared state and emitted-vector parity checks; blend uses genuine central forecasts and issued A1 scale; fixed n/(n+56), 14-day fallback and 28-day buffer; all 35 training-only dates frozen before outer comparison; no alternative recipe. |
+| 3 | Causal/component/state invariants, controls and forbidden boundaries | PASS | Independent complete H/P state replay, real restart/cache refusals, exact fresh component/fingerprint reproduction, exactly-zero delivery mutation and nonzero D−1 control; synthetic/DST/scale tests and 48 inherited guards. Load predicate/projection precedes outcome materialization. |
+| 4 | Every original eligible target, denominators and valid emitted quantiles | PASS | 75,229 rows, seven policies ×10,747 identical keys; fold counts 2,160/2,159/2,112/2,160/2,156; immutable matched truth/references; zero missing/nonfinite/crossings/failures. Central and shifted p50 separately retained and scored. Original exclusions independently enumerated below. |
+| 5 | Independently verified scores, diagnostics and immutable references | PASS | Independent formulas recalculate MAE/RMSE/WIS, central effect, coverage/width/misses, daily level/shape, hours/blocks/peak/recovery and all denominators within 2e-12; five saved references match original vectors exactly; native nine-quantile v1 pinball stays separate. |
+| 6 | Frozen ranking, paired uncertainty and six original diagnostics | PASS | Independent full 2,000-replicate bootstrap and index fingerprint; all 42 criterion rows; H then P descriptive ranking; primary no demonstrated joint preference; H−B2 joint improvement and P−B2 mixed evidence correctly disclosed; both new §8 results not_met, historical CP-15 NOT_DEMONSTRATED, no delivery authorization. |
+| 7 | Every cap and cumulative historical/review accounting | PASS | Same persistent ledger, pre-call fit/replay reservations, fail-closed monitor controls; historical3,730 retained unchanged; final review counters below every cap; historical RSS/thread gaps explicitly unknown rather than retrospectively certified; required evidence regenerated. Details below. |
+| 8 | Durable complete artifacts, reproducibility and defect disclosure | PASS | All required artifacts present and hashed, production/verification commands executable, tests and regression controls pass, prior failed/invalid evidence retained, resumption repair/fixture defect disclosed, current outputs development_post_selection with inherited limits. New local reviewer files must be imported into evidence in terminal packaging. |
+| 9 | Fresh exact-candidate independent Integration | PASS | This clean detached read-only review independently recomputed metrics/uncertainty, every H/P vector and representative components/causal controls; commands/exits/tolerances preserved. Reviewer did not build or repair the candidate. |
+| 10 | Canonical terminal packet, two SHAs, evidence-only delta and local stop | PASS for candidate readiness; post-review mechanics unverified | Candidate contains all evaluation evidence and a valid prescribed two-SHA procedure. The historical packet is not the current terminal return. Lead must import this verdict/logs/script, refresh reviewer identity/resource snapshot and canonical packet under evidence paths, commit evidence only, name actual evidence tip and verify delta/reachability, then remove the assigned Critic checkout and stop. No claim that these future steps already occurred. |
 
-## On FAIL only
+## Independent population and research observations
 
-- **Single largest meaningful gap:** the bounded experiment never reached a complete five-fold evaluation. No H/P comparison predictions or downstream scores/diagnostics/uncertainty exist, and the recorded remaining replay allowance is insufficient for the outstanding production work before mandatory review.
-- **Exact next acceptance test:** only under properly amended authority sufficient for the complete work, preserve existing debits and invalidated evidence, complete all 35 training-only admission dates and every prescribed causal/control/reproduction check, then produce exactly 75229 finite ordered rows (10747 exact original keys for each of seven policies; fold counts 2160/2159/2112/2160/2156). A fresh independent Critic must recompute emitted-p50 MAE, seven-quantile WIS, equal-fold B0 normalization, all diagnostics, original six §8 criteria and the frozen 2000-replicate paired bootstrap from saved vectors; verify component/state reproduction at component atol 1e-8/rtol 1e-10, scoring atol/rtol 2e-12, and exactly 0.0 leakage with moving positive controls; verify complete instrumented resource evidence; and bind all ten items to a new clean final candidate. Current authority does not permit increasing the replay ceiling or silently omitting required work.
+Original exclusions relative to actual local canonical calendars: fold1 0; fold2 one hour on 2021-04-04; fold3 24 hours each on 2022-07-20 and 2022-07-21; fold4 0; fold5 one hour each on 2026-03-30, 2026-03-31 and 2026-04-05. Fold5's full calendar contains2,159 hours because of spring DST; its three original exclusions leave2,156. These are inherited exclusions, not new failed issuances. Full fold3 is2,112 hours/88 represented dates; peak2022-08-15..31 is408 hours/17 dates.
 
-No program-state, Q&A, locked-governance, next-checkpoint, publication or mainline mutation was performed. Lead owns byte-for-byte verdict import, terminal evidence accounting and removal of this checkpoint-created Critic checkout.
+H/P primary equal-fold scores are H: S_MAE0.6440721386286878, S_WIS0.6160299894915677; P: S_MAE0.6457675850846845, S_WIS0.6287217727210093. H−P MAE difference−0.0016954464559965077 has 95% interval [−0.003623724975937509, +0.000003857628092332211]; WIS difference−0.012691783229441422 has interval [−0.015571242603026905, −0.010911902067713655]. The small positive MAE endpoint cannot be rounded to zero to pass the joint rule. Thus **no demonstrated joint preference**, without claiming equivalence or no benefit/harm. Both policies fail unchanged original criteria1 and2; criteria3–6 are met. These are post-selection research findings, not promotion authority.
+
+## Resource and scope accounting
+
+After the four monitored reviewer commands, shared cumulative totals were:
+
+| Resource | Observed cumulative | Cap |
+|---|---:|---:|
+| Policy-days | 6,458 (includes historical3,730) | 9,000 |
+| Component attempts / main subset | 121 /93 | 2,000 /1,500 |
+| Primitive fits / inner / final | 14,484 /11,588 /2,896 | 240,000 /192,000 /48,000 |
+| Saved-reference passes / analysis passes | 2 /2 | 3 /3 |
+| Charged machine seconds | 1,936.6892893761687 | 86,400 |
+| Active effort upper bound at last sample | 5,716.285843133926 seconds | 144,000 |
+| Highest measured historical process-tree RSS | 1,256,341,504 bytes | 10,737,418,240 |
+| Highest measured checkpoint disk upper bound | 567,967,852 bytes | 21,474,836,480 |
+
+The final Lead handover must refresh elapsed/effort accounting through terminal packaging. The observed reviewer runs added1,436 policy-days, eight attempts,960 primitive calls and one reference/analysis pass each. No full-suite retry was made. Fixed scope: two new policies plus five saved references; one hourly residual recipe plus one pooled control; two inherited central configurations; one inherited feature recipe; seeds42/15042; two blend members;638 unique date-fold keys (each fold≤150),35 admission dates ×two policies. Zero alternative outer-score trials, new reference fits, sources, downloads, economic/weather/neural/VRE runs, GPU/cloud jobs, external cost, schedules or remote mutations. Resumed numerical compute is serialized with BLAS environment one; actual resumed threadpool evidence is preserved. Historical monitor-failure RSS and early thread claims remain unknown, as explicitly permitted/disclosed by the resumption contract; regenerated evidence supplies current acceptance.
+
+## Terminal evidence obligations and accountability
+
+No branch, worktree or tag was created by this Critic. The Lead-created fresh detached `critic-r3` checkout remains clean at the reviewed SHA for Lead removal after evidence import. The active `gauntlet/cp-16` and `lead` checkout remain owned by the Lead. No mainline or publication operation was performed. The historical candidate/evidence, protocol and admission commits are reachable on the candidate branch.
+
+This is the engineering verdict, not the canonical checkpoint return. Before a terminal checkpoint PASS, the Lead must preserve the current review evidence under `docs/track-b/evidence/cp-16/`, update only that evidence directory for the canonical return/current reviewer identity/final resource accounting, and verify:
+
+```sh
+git diff --name-only bf3ca602e32e99e45c7835e3f95148f62b608099..<actual_evidence_tip_sha>
+git merge-base --is-ancestor bf3ca602e32e99e45c7835e3f95148f62b608099 gauntlet/cp-16
+```
+
+The first command must name nothing outside the checkpoint evidence directory. Actual evidence tip, final canonical packet, final effort accounting, verdict import and worktree removal are necessarily unverified post-review actions. Any source/report/protocol change requires a new final candidate and fresh independent review. No next checkpoint or live-policy selection is authorized by this PASS.
+
+Interview-answer capture trigger for Lead return: preserving missing calendar dates and variable-hour denominators in paired bootstrap, and why a tiny positive MAE confidence endpoint prevents joint preference despite a supported WIS gain. Critic files no Q&A.
+
+## Reviewer artifacts and hashes
+
+Paths below are local reviewer artifacts for durable import; the metadata script contains only provenance/identity/metadata checks and no new outcome scoring. The Lead must not leave these as sole ignored copies.
+
+caf89182cd7c27e9b0f1ad5148cdbd68e7880530add4fda57ba2fc29859a5f55  /Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-critic-tests.log
+11966cc2b8bb78eb60357c8d48530562b29fb9934e439413fe30c9029c675e1c  /Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-critic-components.log
+2f89f5f81c6c8f6d5b313f4b1c5563cac3f3d643a6faf86602b7bd1f34360071  /Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-critic-components.json
+e95df1f8d9f2aaf0bb91bc3ed446f855b9d79cb6eb79bddc056714a27baf9854  /Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-critic-guards.log
+6ee391f0f0dc1e6f970925641880d6d599c9623ce15d6e0382f81e77e6cd2237  /Users/djourno/Downloads/PJM/.local/artifacts/cp-16/r3-critic-metadata.log
+bfd7b8326cebb90ae278ce0c6b47db2cdfa36316c01c305c0f79552a771c7d49  /Users/djourno/Downloads/PJM/.local/tmp/cp-16/critic-r3/metadata_audit.py

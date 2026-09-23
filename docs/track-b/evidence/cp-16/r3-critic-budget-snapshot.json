@@ -19,7 +19,7 @@
     "component_attempts": 121,
     "final_fits": 2896,
     "inner_fits": 11588,
-    "machine_seconds": 1996.6892893761687,
+    "machine_seconds": 1936.6892893761687,
     "main_component_attempts": 93,
     "policy_days": 6458,
     "primitive_fits": 14484,
@@ -101,14 +101,6 @@
       "event": "independent_saved_vector_analysis",
       "policy_days": 0,
       "reference_passes": 1
-    },
-    {
-      "epoch": 1790162368.966766,
-      "event": "terminal_local_metadata_bookkeeping_upper_bound",
-      "fits": 0,
-      "policy_days": 0,
-      "scope": "verdict import, final ledger/packet, diff/hash/ref/worktree checks and local cleanup; no experimental execution",
-      "seconds": 60
     }
   ],
   "jobs": [
@@ -777,55 +769,5 @@
       "supervisor_error": null,
       "worker_policy": "one serialized compute process tree"
     }
-  ],
-  "terminal_summary": {
-    "active_effort_upper_bound_seconds": 6579.5281772613525,
-    "approximate_elapsed_hours_nearest_half": 1.0,
-    "closing_effort_allowance_seconds": 600,
-    "closing_effort_basis": "Conservative ten-minute allowance for evidence-only packaging and final checks after this snapshot, included in active upper bound; actual final receipt verifies within it.",
-    "fixed_scope": {
-      "BLAS_threads_current": 1,
-      "GPU_jobs": 0,
-      "VRE_fits": 0,
-      "admission_policy_days_completed": 70,
-      "automated_schedules": 0,
-      "bootstrap_seeds": [
-        15042
-      ],
-      "cloud_jobs": 0,
-      "component_configurations": 2,
-      "economic_runs": 0,
-      "ensemble_members": 2,
-      "external_cost_USD": 0,
-      "feature_recipes": 1,
-      "hour_aware_recipes": 1,
-      "max_CPU_workers_current": 1,
-      "model_seeds": [
-        42
-      ],
-      "neural_candidates": 0,
-      "new_B0_B1_B3_fits": 0,
-      "new_download_bytes": 0,
-      "new_output_policies": 2,
-      "new_sources": 0,
-      "operational_days": 0,
-      "outer_selection_trials": 0,
-      "pooled_controls": 1,
-      "recombination_searches": 0,
-      "remote_mutations": 0,
-      "saved_references": 5,
-      "scored_policies": 7,
-      "unique_date_fold_keys": 638,
-      "weather_probes": 0
-    },
-    "historical_gaps": "Unknown interrupted-worker RSS and unsupported early Builder thread/concurrency enforcement remain preserved; no retrospective compliance claim.",
-    "machine_hours": 0.5546359137156024,
-    "peak_checkpoint_disk_upper_bound_bytes": 567967852,
-    "peak_monitored_rss_bytes": 1256341504,
-    "policy_days_forward": 2728,
-    "policy_days_historical": 3730,
-    "policy_days_remaining": 2542,
-    "terminal_disk_measured_bytes": 388786054,
-    "terminal_disk_upper_bound_bytes": 435068744
-  }
+  ]
 }

@@ -1,12 +1,12 @@
 {
-  "lead_thread_id": "01a0cb93-625c-7213-aa6b-825ac1c4f5a3",
-  "lead_agent": "/root",
-  "role": "CP-16 Engineering Lead",
-  "critic_agent": "/root/integration_critic",
-  "final_candidate_sha": "3a160fd33ed92bb0061144cfbce2323d8b3a7db9",
-  "critic_worktree": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic",
-  "isolation": "fresh clean detached checkout; cooperative read-only protocol, not sandbox-enforced",
-  "verdict": "FAIL",
-  "verdict_sha256": "5c17129a4b72beccfb78c6dc624af0b4f168097576d7dbbd0f8cf351edfdf9cc",
-  "post_return_reads": "none"
+  "lead": "/root CP-16 Engineering Lead",
+  "reviewer": "/root/integration_r3",
+  "candidate_sha": "bf3ca602e32e99e45c7835e3f95148f62b608099",
+  "review_worktree": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-16/critic-r3",
+  "isolation": "fresh detached checkout; cooperative read-only, not enforced sandbox",
+  "clean_before_and_after": true,
+  "verdict": "PASS",
+  "verdict_sha256": "e78c0701c921d466b4d083da93ef936502b4329c36067085601eea4fb11cf5bb",
+  "prior_review": "attempt-1/evidence-review-identity.json and attempt-1/evidence-integration.md",
+  "removal": "Lead removes checkpoint-created Critic worktree after importing verdict; final handover records actual topology."
 }
