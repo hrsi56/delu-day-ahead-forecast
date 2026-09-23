@@ -3,7 +3,7 @@
   "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
   "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
   "src/cp20/chain.py": "320f817972d445737234ba2c2c71328e4a28bd8f2f504738270eaad17f5b2ae8",
-  "src/cp20/extract.py": "c6604ce10e4bbe6171bccccc5ec8d01aed3dce76cb31187abdd54255c9715e1b",
+  "src/cp20/extract.py": "b07b3e3961f2f7df6cb77e20886b8e226e2d5892a5ccb1990605d8ea63bc946c",
   "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
   "src/cp20/gfs.py": "153a4210b5f7d5c3a4ea6e5e0bae4d20d796bcfed9f2b1f2f6da018f4affb498",
   "src/cp20/net.py": "4a9726e29dadbc8eef482793416d222902b8eb214133c3e1016e8853c8a34549",
@@ -57,7 +57,7 @@
   },
   {
    "id": "O4",
-   "implementation": "pending (r12); machine time stays charged as wall x declared workers",
+   "implementation": "r12 (1b5997d): per-worker persistent lead pools (AWS 4, NCAR 2 concurrent leads per run); per-lead tries, framing/decode/metadata checks, sha256 and attempt/ledger entries unchanged; a run is saved only when all ten leads succeed; machine time still charged as wall x declared workers; 429/5xx back off with jitter (r9). Swapped in at a drained stop of job 37 (23:19:48Z); chain run 3 from job 38.",
    "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
    "text": "Concurrent HTTP requests inside one worker process are not extra workers. Implement concurrent range requests within a run (up to 4 at a time per worker for AWS; NCAR modest, back off on 429), keeping every per-message check, hash and ledger entry unchanged; test; swap in at a safe boundary; record the code version per phase."
   },
@@ -182,6 +182,18 @@
    "evidence": "Owner measurement: AWS worker averaged 0.26 MB/s over an hour while single requests ran at a median 4.8 MB/s on a 290 Mbps line: latency-bound serial requests",
    "id": "r11-deadline-and-chain-plan",
    "kind": "throughput and scheduling per Owner instruction; no scientific or data effect"
+  },
+  {
+   "commit": "1b5997d",
+   "effective": "chain run 3 (job 38 onward)",
+   "id": "r12-concurrent-leads-O4",
+   "kind": "throughput per Owner decision O4; no scientific or data effect",
+   "measured": {
+    "job36_serial_1_worker_runs_per_h": 35,
+    "job37_serial_4_workers_runs_per_h": "~400",
+    "job38_concurrent_4x4_runs_per_h": 757
+   },
+   "tests": "tests/cp20/test_concurrent_leads.py (overlap up to the pool size; concurrent == sequential records and arrays; failing lead discards siblings uncounted; stop discards)"
   }
  ],
  "schema": "cp20-extraction-repairs-v1"

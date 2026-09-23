@@ -10,6 +10,13 @@
   "run2": {
    "controller_code": "47607df",
    "controller_pid": 37191,
+   "ended": "stopped after the drained aws-all job at the O4 boundary (by design)",
+   "plan": "aws-all(4) -> retry-aws(4) -> retry-ncar(4)",
+   "status_file": "chain-status.run2.json"
+  },
+  "run3": {
+   "controller_code": "1b5997d",
+   "controller_pid": 37458,
    "plan": "aws-all(4) -> retry-aws(4) -> retry-ncar(4)",
    "status_file": "chain-status.json"
   }
@@ -43,6 +50,7 @@
   {
    "basis": "self-recorded",
    "dirty_paths": [],
+   "end": "drained stop 2026-09-23T23:19:48Z at the O4 safe boundary; 72 runs completed",
    "git_head": "47607df",
    "job_index": 37,
    "phase": "aws-all (chain run 2)",
@@ -50,11 +58,21 @@
    "workers": 4
   },
   {
-   "phase": "retry-aws (chain run 2)",
+   "basis": "self-recorded",
+   "dirty_paths": [],
+   "git_head": "1b5997d",
+   "job_index": 38,
+   "o4_concurrent_leads": true,
+   "phase": "aws-all (chain run 3)",
+   "start_utc": "2026-09-23T23:19:53Z",
+   "workers": 4
+  },
+  {
+   "phase": "retry-aws (chain run 3)",
    "status": "self-recorded at start"
   },
   {
-   "phase": "retry-ncar (chain run 2)",
+   "phase": "retry-ncar (chain run 3)",
    "status": "self-recorded at start; r10 five-day verification first"
   }
  ],
