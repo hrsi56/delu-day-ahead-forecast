@@ -30,6 +30,7 @@ import sys
 import threading
 import time
 from collections import deque
+from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
@@ -45,11 +46,13 @@ PRODUCTION_ATTEMPTS = 2
 NO_DATA_SECONDS = 3600.0
 # r10: every extraction job records the code it actually runs; jobs carrying these flags
 # run the locator fix and the O2 amendment A1 (locator-defect attempts do not count).
-CODE_FLAGS = {'locator_fix_r10': True, 'o2_amendment_a1': True}
+CODE_FLAGS = {'locator_fix_r10': True, 'o2_amendment_a1': True, 'o4_concurrent_leads_r12': True}
 IMPLEMENTATION = ('src/cp20/budget.py', 'src/cp20/net.py', 'src/cp20/gfs.py', 'src/cp20/extract.py',
                   'src/cp20/chain.py', 'scripts/cp20_weather.py')
 LOCATOR_DEFECT = 'broken GRIB chain'
 VERIFY_N = 5
+# Owner decision O4 (r12): concurrent requests inside one worker are not extra workers.
+PER_RUN_CONCURRENCY = {'aws': 4, 'ncar': 2}
 # Owner decision O1 (2026-09-23, in session): up to two additional production attempts per target
 # message whose allowance was consumed by pre-run testing (subset jobs 3, 11 and 12, i.e. every
 # attempt logged before the full extraction job started), logged separately; no other cap change.
@@ -333,7 +336,40 @@ class Extractor:
         return out, trace
 
     # ------------------------------------------------------------ one run
-    def run(self, rec):
+    def _lead_with_retries(self, run, lead, rec, abandon):
+        """One lead's tries (unchanged per-message path): ('ok', result, trace, try_id, endpoint, failures),
+        ('failed', failures), or ('stopped', failures) when a stop, halt or sibling failure intervened."""
+        key = rec['run_00z']
+        endpoint, purpose = rec['primary_endpoint'], 'production'
+        alternate_used, failures = False, []
+        while True:
+            if self.stop.is_set() or abandon.is_set():
+                return ('stopped', failures)
+            try:
+                result, trace, try_id = self._lead(run, lead, rec, endpoint, purpose)
+                return ('ok', result, trace, try_id, endpoint, failures)
+            except NetworkError:
+                return ('stopped', failures)  # a stop was requested while retrying the network (O2)
+            except Contradiction as exc:
+                self._halt('contradiction', {'run': key, 'lead': lead, 'endpoint': endpoint, 'error': str(exc)})
+                return ('stopped', failures)
+            except CapExceeded as exc:
+                self._halt('cap_or_stop_line', {'run': key, 'lead': lead, 'error': str(exc)})
+                return ('stopped', failures)
+            except (IntegrityError, TransferError) as exc:
+                failures.append({'lead': lead, 'endpoint': endpoint, 'purpose': purpose, 'error': str(exc)[:300],
+                                 'kind': type(exc).__name__})
+                if 'allowance exhausted' in str(exc):
+                    return ('failed', failures)
+                if rec['alternate_endpoint'] and not alternate_used:
+                    endpoint, purpose, alternate_used = rec['alternate_endpoint'], 'alternate_endpoint', True
+                else:
+                    purpose = 'integrity_retry'
+
+    def run(self, rec, pool=None):
+        """Extract one run. With ``pool`` (O4, r12) its ten leads proceed concurrently inside this
+        worker: up to 4 leads for AWS and 2 for NCAR at a time; each lead keeps its own tries,
+        checks, hashes and ledger entries; the run is saved only if every lead succeeded."""
         run = _date(rec['run_00z'])
         key = rec['run_00z']
         if self.stop.is_set():
@@ -344,51 +380,36 @@ class Extractor:
             return
         began = time.time()
         data = np.full((len(FIELDS), len(LEADS), len(BOX_LATS), len(BOX_LONS)), np.nan)
-        records, traces, failures, done_tries = [], {}, [], []
+        records, traces, failures = [], {}, []
         raw = self.out / 'raw' / key
+        abandon = threading.Event()
 
-        def discard():  # O2: tries of an abandoned run are logged as uncounted
-            for lead_done, endpoint_done, try_id in done_tries:
-                self.attempts.end(key, lead_done, endpoint_done, try_id, 'discarded_with_run')
-        for j, lead in enumerate(LEADS):
-            if self.stop.is_set():
-                discard()
-                return  # partial run discarded (hard stop); never imputed
-            result = None
-            endpoint, purpose = rec['primary_endpoint'], 'production'
-            alternate_used = False
-            while True:
-                try:
-                    result, trace, try_id = self._lead(run, lead, rec, endpoint, purpose)
-                    done_tries.append((lead, endpoint, try_id))
-                    if trace is not None:
-                        traces[f'f{lead:03d}'] = trace
+        def task(lead):
+            out = self._lead_with_retries(run, lead, rec, abandon)
+            if out[0] != 'ok':
+                abandon.set()  # siblings not yet started are skipped; running ones finish
+            return out
+        if pool is None:
+            outcomes = []
+            for lead in LEADS:
+                outcomes.append(task(lead))
+                if outcomes[-1][0] != 'ok':
                     break
-                except NetworkError:
-                    discard()
-                    return  # a stop was requested while retrying the network; uncounted (O2)
-                except Contradiction as exc:
-                    self._halt('contradiction', {'run': key, 'lead': lead, 'endpoint': endpoint, 'error': str(exc)})
-                    discard()
-                    return
-                except CapExceeded as exc:
-                    self._halt('cap_or_stop_line', {'run': key, 'lead': lead, 'error': str(exc)})
-                    discard()
-                    return
-                except (IntegrityError, TransferError) as exc:
-                    failures.append({'lead': lead, 'endpoint': endpoint, 'purpose': purpose, 'error': str(exc)[:300],
-                                     'kind': type(exc).__name__})
-                    if 'allowance exhausted' in str(exc):
-                        break
-                    if rec['alternate_endpoint'] and not alternate_used:
-                        endpoint, purpose, alternate_used = rec['alternate_endpoint'], 'alternate_endpoint', True
-                    else:
-                        purpose = 'integrity_retry'
-                    continue
-            if result is None:
-                discard()
+        else:
+            outcomes = [f.result() for f in [pool.submit(task, lead) for lead in LEADS]]
+        for out in outcomes:
+            failures.extend(out[-1])
+        done_tries = [(lead, out[4], out[3]) for lead, out in zip(LEADS, outcomes) if out[0] == 'ok']
+        if len(outcomes) != len(LEADS) or any(out[0] != 'ok' for out in outcomes):
+            for lead_done, endpoint_done, try_id in done_tries:  # O2: uncounted, never imputed
+                self.attempts.end(key, lead_done, endpoint_done, try_id, 'discarded_with_run')
+            if any(out[0] == 'failed' for out in outcomes) and not self.stop.is_set():
                 self._failed_run(rec, failures, began)
-                return
+            return
+        for j, (lead, out) in enumerate(zip(LEADS, outcomes)):
+            result, trace = out[1], out[2]
+            if trace is not None:
+                traces[f'f{lead:03d}'] = trace
             for i, field in enumerate(FIELDS):
                 msg, box, record = result[field]
                 data[i, j] = box
@@ -544,13 +565,16 @@ def main():
     qlock = threading.Lock()
 
     def lane(_):
+        # One persistent lead pool per worker keeps its keep-alive sessions across runs.
+        pool = ThreadPoolExecutor(max_workers=PER_RUN_CONCURRENCY[args.endpoint])
         while not ex.stop.is_set() and not ex.drain.is_set():
             with qlock:
                 if not queue:
+                    pool.shutdown(wait=True)
                     return
                 rec = queue.popleft()
             try:
-                ex.run(rec)
+                ex.run(rec, pool)
             except Exception as exc:  # noqa: BLE001 - an unexpected worker error halts cleanly
                 ex._halt('worker_error', {'run': rec['run_00z'], 'error': repr(exc)})
     finished = threading.Event()
@@ -573,10 +597,12 @@ def main():
         k = min(VERIFY_N, len(defect))
         pick = [defect[round(i * (len(defect) - 1) / (k - 1))] for i in range(k)] if k > 1 else defect[:1]
         print('locator fix verification on', [r['run_00z'] for r in pick], flush=True)
+        verify_pool = ThreadPoolExecutor(max_workers=PER_RUN_CONCURRENCY[args.endpoint])
         for rec in pick:
             if ex.stop.is_set() or ex.drain.is_set():
                 break
-            ex.run(rec)
+            ex.run(rec, verify_pool)
+        verify_pool.shutdown(wait=True)
         ok = [r['run_00z'] for r in pick if ex.completed(r['run_00z'])]
         passed = len(ok) == len(pick) and not ex.stop.is_set()
         atomic(verification, {'status': 'passed' if passed else 'failed', 'runs': [r['run_00z'] for r in pick],
