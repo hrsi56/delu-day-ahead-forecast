@@ -55,13 +55,18 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 |---|---|---|
 | 1 | NWP archive-depth gate (4.1) | ✅ Done: GFS admitted |
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
-| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) revision 2, after an external review, awaits approval; no phase started |
+| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) revision 3 approved 2026-09-24; executed as task PRES-1 ([Lead brief](docs/track-b/pres-1-brief-2026-09-24.md)); no phase started |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ⬜ Not started |
 | 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
 | 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
+
+**Next Track B task: PRES-1, presentation release 1.** The
+[brief](docs/track-b/pres-1-brief-2026-09-24.md) for an Engineering Lead was issued on 2026-09-24.
+It carries out the approved plan: a v1–v3 history page, and MLflow backfill and tracking. The
+first stop is the D1 visual specimen, which needs the Owner's approval.
 
 **Next pending Track B checkpoint: CP-21, the first v3 extension.** It is not authorized yet:
 the Owner has not chosen the extension (see Blockers). Opening it needs a v21-r5 amendment and a
@@ -101,7 +106,9 @@ No optional learning block is active.
 
 - **ACTION-REQUIRED (Owner), pending since 2026-09-24:** restart the Claude desktop app, PyCharm
   and any terminal opened before the DagsHub token rotation. Until then those processes hold the
-  revoked value. This item stays pending until the Owner confirms it.
+  revoked value. This item stays pending until the Owner confirms it. It matters most before the
+  PRES-1 Lead session opens, because its Phase F upload reads the token from the session's
+  environment.
 
 ---
 
@@ -201,6 +208,23 @@ Session Log.
   - the repository is the source of truth: MLflow mirrors it, and the page never reads MLflow;
   - checkpoints track locally and publish to MLflow at landing;
   - the Model Registry holds only runnable, frozen policies.
+- **Presentation decisions (plan §16, 2026-09-24):**
+  - **Generation naming:** `vN · <adopted change>`.
+    - A number is given only after adoption, and none is reserved in advance (for example, for
+      DDNN or VRE).
+    - A rejected experiment stays a branch with a descriptive name.
+    - "Final candidate" and "Live" are statuses of a version, not names.
+  - **Independent check:** mandatory for presentation releases. It is done by a checker that did
+    not write the changes, and it covers the data, the claims, the charts, the links and the
+    reading experience. The Owner's visual approvals at D1 and at the end come in addition to it.
+  - **The MLflow step** is carried in briefs until its route has completed and been verified
+    once. Then it goes into the landing templates. The Owner granted the Lockdown suspension for
+    that edit, and it is applied in a separate task.
+  - **The capability probe** is local plus read-only against DagsHub, with no public write probe.
+    Capabilities are verified against the service after the authorized upload.
+  - **The experiment is `delu-generations`,** on every surface; `delu-cp2` stays untouched.
+  - **The contribution statement is required,** in the Owner's wording (plan §8.9).
+  - **The visual tokens in plan §7.3** are the D1 starting point.
 - **Credentials.** They are stored as `~/.zshrc` exports mirrored in `launchctl`, on a
   single-user, biometric-locked machine. Agents never view or hand-type a value and use
   credentials only as stored variables. The secret guard is mandatory (`AGENTS.md` §
@@ -285,6 +309,44 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Plan revision 3 approved and PRES-1 issued, 2026-09-24.**
+  - **The Owner answered all nine §16 questions:**
+    - approval;
+    - the naming rule, `vN · <adopted change>`;
+    - a Lead executor with a mandatory independent check;
+    - the MLflow step carried in briefs, then fixed in the templates under a granted suspension;
+    - a local plus read-only probe;
+    - the experiment name `delu-generations`;
+    - a required contribution statement, whose wording the Owner supplied;
+    - the demo device test, completed;
+    - the tokens accepted.
+  - **Recorded:** the decisions in the plan's §16, the naming rule in §7.7 and the contribution
+    statement in §8.9.
+  - **Issued:** the [PRES-1 Engineering Lead brief](docs/track-b/pres-1-brief-2026-09-24.md). It
+    covers a local branch, three stops, per-action authority for public steps, an explicit MLflow
+    section, ceilings (a target of 40 active hours, a hard stop at 56, $0, no research budget)
+    and a template-based return.
+  - No site, README, MLflow, template or engineering change was made. There was no commit (per
+    plan §13).
+
+- **Design review and plan revision 3, 2026-09-24.** A second external reviewer wrote a
+  [design review](docs/track-b/presentation-design-review-v2-2026-09-24.md) of revision 2, as
+  committed by the Owner in `7d9959b`.
+  - **Checked:**
+    - the review covers exactly that revision (plan hash `d9d30a9b…`);
+    - revision 2 contradicted itself on the demo states (its §7.7 against the Phase 0 row);
+    - `<data>` is invalid inside SVG;
+    - the proposed palette passes 4.5:1 for all text, but its three generation colours share
+      almost the same luminance.
+  - **Revision 3:**
+    - §7 becomes a design specification: composition, tokens, components and states, chart
+      grammar, the chapter as a decision story, lineage with branches, navigation, demo states
+      and accessibility;
+    - D1 becomes a desktop and mobile visual specimen with reader tasks;
+    - the markup contracts for HTML and SVG are split;
+    - each public action needs its own instruction.
+  - No site, README, MLflow or engineering change was made.
+
 - **External presentation review and plan revision 2, 2026-09-24.** An external reviewer wrote
   [a review](docs/track-b/presentation-review-and-corrections-2026-09-24.md) of the approved plan.
   - **Checked independently:**
@@ -366,21 +428,15 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Presentation and tracking plan, revision 2, awaits approval (asked 2026-09-24).** Revision 2
-  of the [plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) takes in the
-  [external review](docs/track-b/presentation-review-and-corrections-2026-09-24.md). R1–R6 stand.
-  Its §16 lists eight questions:
-  1. approve the revision;
-  2. public names for future generations;
-  3. the executor, and whether the independent claim and render check is required;
-  4. whether the MLflow landing step goes into the templates now (this needs a suspension) or is
-     carried in briefs;
-  5. the capability probe: local only, or an authorized write probe on DagsHub as well;
-  6. whether to rename the published `delu-m4` slot to `delu-generations`;
-  7. whether to include a contribution statement;
-  8. the Owner's own device test of the demo, for Phase 0.
-
-  Only Phase F's public MLflow upload needs the rotated token. The earlier phases are local.
+- **PRES-1 issued; awaiting the Lead's Stop 1, the D1 specimen (2026-09-24).**
+  - **Commit first:** the approved plan and the [brief](docs/track-b/pres-1-brief-2026-09-24.md)
+    must be committed to `main` before the Lead starts, because the brief's identity checks read
+    them there.
+  - **Where to start the session:** in the project folder, not in an app-managed worktree.
+  - **Owner decision 8** says the demo device test was completed. Its device, browser and outcome
+    are not yet recorded; the Lead asks for them at Stop 1 if they are still missing.
+  - **Template follow-up:** after the first verified MLflow route, apply the template text the
+    Lead proposes, under the Owner's 2026-09-24 grant.
 - **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
   The recommended order:
   1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
@@ -439,11 +495,13 @@ Session Log.
   - no data after 2026-04-07;
   - a TabPFN run needs 4.6L's licence-use table first;
   - positive controls must survive the model's own transforms (see Lessons).
-- **[Next]** Once plan revision 2 is approved, run its phases in order:
-  - phase 0 (demo diagnosis) and phases A–C (content, evidence layer, local MLflow preparation)
-    can run in parallel;
-  - then D1 (prototype review), D2 and E (the review packet);
-  - then F, the authorized publication sequence.
+- **[Next]** The Owner takes three steps:
+  1. commits the approved plan and the PRES-1 brief;
+  2. restarts the Claude app;
+  3. opens a new Engineering Lead session in the project folder with the PRES-1 prompt.
+
+  The Lead then runs phases 0 and A–C, stops at D1 (Stop 1) and at E (Stop 2), and performs each
+  public step in Phase F only on the Owner's explicit instruction.
 
   Before Phase F's public MLflow upload, the Owner restarts the apps, so the upload uses the
   rotated token.
