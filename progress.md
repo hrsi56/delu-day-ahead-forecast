@@ -55,7 +55,7 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 |---|---|---|
 | 1 | NWP archive-depth gate (4.1) | ✅ Done: GFS admitted |
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
-| 3 | Presentation around v2 (4.3R) | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md) only. Publication moves to the end and will add CP-20 |
+| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) approved 2026-09-24; phases A–E not started |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ⬜ Not started |
 | 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
@@ -87,8 +87,9 @@ README and site describe v1 and CP-15. CP-16 and CP-20 are not yet on any public
 
 ### Track C — marketing
 
-Cancelled 2026-09-15; no outreach or CV surfaces live in this repository. Public presentation of
-the programme's results (4.3C/4.10R) comes at the end, after the holidays (Owner, 2026-09-24).
+Cancelled 2026-09-15; no outreach or CV surfaces live in this repository. The public site shows
+v1–v3 now and grows with each generation. CV use comes at the end, after the holidays (Owner,
+2026-09-24).
 
 ### Track A
 
@@ -183,7 +184,22 @@ Session Log.
   test more important.
 - **Final sequence.** The fresh-data test (4.7T) is reserved for the end. Only the final model
   built goes live (CP-17 freeze, then at least 90 consecutive days, then CP-19); the current HG
-  is not frozen. Public presentation and CV use come last, after the holidays.
+  is not frozen. CV use comes last, after the holidays. *Amended 2026-09-24:* the public site is
+  updated as each generation lands, starting with v1–v3 now.
+- **One scrolling history page.** The public report is a single page that stays single however
+  many generations exist. Chapters run newest first, with the live model eventually at the top.
+  Each generation is shown with its results, statistics, and pros and cons, including
+  generations that were not adopted.
+- **MLflow is the visible cross-version tool.** v2/v3 runs are backfilled, and future checkpoints
+  are tracked in MLflow. `delu-cp2` (v1's record) stays untouched. The design is in the
+  [presentation and tracking plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md).
+- **Presentation and tracking rules (plan R1–R6, approved 2026-09-24):**
+  - v1's holdout moves into the v1 chapter and is not deleted;
+  - agents build the page and charts from data, and the Owner reviews visually before any push;
+  - version numbers go only to adopted models;
+  - the repository is the source of truth: MLflow mirrors it, and the page never reads MLflow;
+  - checkpoints track locally and publish to MLflow at landing;
+  - the Model Registry holds only runnable, frozen policies.
 - **Credentials.** They are stored as `~/.zshrc` exports mirrored in `launchctl`, on a
   single-user, biometric-locked machine. Agents never view or hand-type a value and use
   credentials only as stored variables. The secret guard is mandatory (`AGENTS.md` §
@@ -268,6 +284,20 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Presentation and tracking plan, 2026-09-24.** The Owner decided on one scrolling history page
+  (newest first, live at the top at the end), showing v1–v3 on the site now, and MLflow as the
+  visible cross-version tool, with v2/v3 backfilled and future work tracked.
+  - Reviewed the live page, its generator, the site-shaping commits (155b0f8, 8341fba, 7f16f4e,
+    99c9250, 5b94b8f) and the public MLflow state: only `delu-cp2`, with 55 runs, and the
+    `champion` registry entry.
+  - Drafted the [plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md): phases A–E,
+    14 invariants and the MLflow tracking specification.
+  - **Standing-decision amendment:** the public site is now updated as generations land; only CV
+    use stays at the end.
+  - The Owner approved the plan with R1–R6 as written, and they were recorded as standing rules.
+    The plan and this state were committed and pushed at the Owner's instruction.
+  - No site, README, MLflow or engineering change was made.
+
 - **Progress regeneration, credentials rule and secret guard, 2026-09-24.** Done at the Owner's
   explicit request.
   - **This file:** regenerated under the contract. The Owner ratified four standing decisions:
@@ -315,6 +345,14 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
+- **Presentation and tracking plan approved 2026-09-24; three §13 questions remain open.** They
+  are in the [plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md):
+  1. public names for future generations;
+  2. the executor, and whether an independent claim check is required before the push;
+  3. whether the MLflow landing step goes into the templates now (this needs a suspension) or is
+     carried in briefs.
+
+  Phase C (MLflow) must run from a process that holds the rotated token.
 - **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
   The recommended order:
   1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
@@ -362,11 +400,14 @@ Session Log.
   - no data after 2026-04-07;
   - a TabPFN run needs 4.6L's licence-use table first;
   - positive controls must survive the model's own transforms (see Lessons).
+- **[Next]** Run the approved presentation and tracking plan's phases A–E. Phase C runs after the
+  Owner restarts the apps, so it uses the rotated token.
 - **[End of programme, after the holidays]**
-  1. The 4.7T fresh-data test on the unused period.
-  2. The CP-17 freeze and a live run of at least 90 days for the final model only.
-  3. Public presentation and CV (4.3C/4.10R), adding CP-16 and CP-20 to the README and site.
-     Presentation is the Owner's.
+  1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
+     2026-09-07 separately.
+  2. The CP-17 freeze and a live run of at least 90 days for the final model only. The live panel
+     goes at the top of the page.
+  3. CV use. Presentation is the Owner's.
 - **[Any future adaptive-conformal method]** Define the alpha convention explicitly
   ([Gibbs–Candès miscoverage](https://arxiv.org/html/2106.00170v3#S2.E2)), with hit/miss
   direction fixtures.
