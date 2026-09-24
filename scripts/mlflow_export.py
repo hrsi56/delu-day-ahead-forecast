@@ -36,6 +36,19 @@ from delu_forecast.research_claims import POLICY_NAMES  # noqa: E402
 
 EXPORT_DIR = ROOT / "reports" / "presentation" / "mlflow-export"
 EXPERIMENT = "delu-generations"
+
+#: Experiment-level tags. The kind tag stops MLflow 3.5's UI from asking an anonymous reader to
+#: confirm an inferred experiment type (observed in the 2026-09-24 rehearsal).
+EXPERIMENT_TAGS = {
+    "mlflow.experimentKind": "custom_model_development",
+    "mlflow.note.content": (
+        "Every policy evaluated since v1, once each, nested under the checkpoint that produced it: "
+        "CP-10 (calibration branch, not adopted), CP-15 (model-comparison study), CP-16 (v2) and "
+        "CP-20 (v3). Backfilled from the committed evidence of "
+        "https://github.com/hrsi56/delu-day-ahead-forecast; development evidence after selection. "
+        "v1's own runs stay in delu-cp2."
+    ),
+}
 FOLDS = ("fold_1", "fold_2", "fold_3", "fold_4", "fold_5")
 
 # --------------------------------------------------------------------------- the manifest (§10.3)
@@ -612,6 +625,7 @@ def manifest(files: dict[str, dict]) -> dict:
     parents = [run for run in runs if run["parent"] is None]
     return {
         "experiment": EXPERIMENT,
+        "experiment_tags": EXPERIMENT_TAGS,
         "counts": {"parents": len(parents), "children": len(runs) - len(parents), "total": len(runs)},
         "runs": runs,
         "metric_units": {key: metric_unit(key) for run in runs for key in run["metrics"]},

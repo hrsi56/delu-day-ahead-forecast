@@ -162,6 +162,10 @@ def verify(base: str, *, check_upload_tags: bool = True) -> dict:
         report["passed"] = False
         return report
     report["experiment_id"] = experiment["experiment_id"]
+    experiment_tags = {tag["key"]: tag["value"] for tag in experiment.get("tags", [])}
+    for key, value in manifest.get("experiment_tags", {}).items():
+        if experiment_tags.get(key) != value:
+            problems.append(f"experiment tag {key} differs")
     found: dict[str, list[dict]] = {}
     for run in reader.runs(experiment["experiment_id"]):
         key = _tags(run).get("delu.run_key")

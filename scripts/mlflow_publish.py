@@ -100,7 +100,9 @@ def preconditions(*, strict: bool) -> tuple[dict, dict[str, dict], str]:
 
 def scan(runs: dict[str, dict], secrets) -> None:
     files = {"export": {"runs": list(runs.values())}}
-    findings = E.outbound_findings(E.outbound_strings(files), secrets)
+    items = list(E.outbound_strings(files))
+    items += [(f"experiment tag {key}", f"{key}={value}") for key, value in E.EXPERIMENT_TAGS.items()]
+    findings = E.outbound_findings(items, secrets)
     if findings:
         raise Refused("; ".join(dict.fromkeys(findings)))
 
@@ -212,6 +214,11 @@ def publish(uri: str, runs: dict[str, dict], tool_sha: str, writes: Writes) -> l
     experiment_id = experiment.experiment_id if experiment else client.create_experiment(E.EXPERIMENT)
     if experiment is None:
         writes.tick()
+    present = dict(experiment.tags) if experiment else {}
+    for key, value in E.EXPERIMENT_TAGS.items():
+        if present.get(key) != value:
+            client.set_experiment_tag(experiment_id, key, value)
+            writes.tick()
     log: list[dict] = []
     for checkpoint in ("cp10", "cp15", "cp16", "cp20"):
         parent = runs[checkpoint]

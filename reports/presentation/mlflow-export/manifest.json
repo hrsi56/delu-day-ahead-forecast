@@ -5,6 +5,10 @@
   "total": 23
  },
  "experiment": "delu-generations",
+ "experiment_tags": {
+  "mlflow.experimentKind": "custom_model_development",
+  "mlflow.note.content": "Every policy evaluated since v1, once each, nested under the checkpoint that produced it: CP-10 (calibration branch, not adopted), CP-15 (model-comparison study), CP-16 (v2) and CP-20 (v3). Backfilled from the committed evidence of https://github.com/hrsi56/delu-day-ahead-forecast; development evidence after selection. v1's own runs stay in delu-cp2."
+ },
  "metric_units": {
   "daily_mae_eur": "EUR/MWh",
   "delta_fold_mae_eur_vs_b0": "EUR/MWh, paired mean daily loss difference",
