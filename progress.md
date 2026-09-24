@@ -753,6 +753,11 @@ ENTSO-E outage (resolved, and the v2 daily path uses SMARD anyway); PRE-2 / Dags
 
 Each of these was paid for once. None should be re-learned.
 
+- **Scan for secret values, not only secret shapes.** On 2026-09-24 a pattern-based pre-push
+  scan passed a pytest log whose environment dump held the DagsHub token, which is a bare
+  40-character hex value. Before any push, search outgoing files and history for the actual
+  values of local secret variables. Tests must not dump the environment on a missing variable.
+
 - **Compression must preserve decision reasons.** `8d56942` removed the 2019 market boundary
   and other standing context while claiming every load-bearing fact survived. That omission
   became operationally relevant in CP-15. Read the surviving decision record before proposing
@@ -968,6 +973,16 @@ This file no longer narrates it. It is preserved and addressable:
   packaging authority ended at its landing; no governance authoring.
 
 ## 9. Session Log — newest first
+
+- **DagsHub token exposure and rotation, 2026-09-24.** A value-based scan found that the CP-20
+  landing push published the DagsHub user token inside a Critic pytest log (an environment
+  dump).
+  - The Owner regenerated the token.
+  - Local configuration was synchronized to the new value.
+  - No other secret appears in any ref or history.
+  - By Owner decision, there is no log redaction or history rewrite, because the value is
+    revoked.
+  - See the [credential exposure record](docs/track-b/credential-exposure-2026-09-24.md).
 
 - **CP-20 receipt, LAND, reclamation and push, 2026-09-24.** The Owner explicitly authorized
   the assistant to act in place of the Orchestrator: land CP-20 in the prescribed order, carry
