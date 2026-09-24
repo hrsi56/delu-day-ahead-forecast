@@ -1,0 +1,116 @@
+# CP-20 job critic-guards index 68 start 2026-09-24T06:17:01Z
+.........................F...........................................EEE [ 66%]
+...................................FF                                    [100%]
+==================================== ERRORS ====================================
+__________ ERROR at setup of test_saved_metric_and_diagnostic_tables ___________
+
+    @pytest.fixture(scope="module")
+    def evidence():
+        if not (REPORT/"predictions.parquet").exists():
+            if os.environ.get("CP16_REQUIRE_SAVED_EVIDENCE")=="1":
+                pytest.fail("required saved CP-16 predictions are absent")
+            pytest.skip("saved production vectors absent; require with CP16_REQUIRE_SAVED_EVIDENCE=1")
+        ledger = os.environ.get("CP16_LEDGER")
+>       assert ledger, "CP16_LEDGER is required before production verification"
+E       AssertionError: CP16_LEDGER is required before production verification
+E       assert None
+
+tests/cp16/test_saved_results.py:279: AssertionError
+______ ERROR at setup of test_saved_all_six_criteria_and_research_summary ______
+
+    @pytest.fixture(scope="module")
+    def evidence():
+        if not (REPORT/"predictions.parquet").exists():
+            if os.environ.get("CP16_REQUIRE_SAVED_EVIDENCE")=="1":
+                pytest.fail("required saved CP-16 predictions are absent")
+            pytest.skip("saved production vectors absent; require with CP16_REQUIRE_SAVED_EVIDENCE=1")
+        ledger = os.environ.get("CP16_LEDGER")
+>       assert ledger, "CP16_LEDGER is required before production verification"
+E       AssertionError: CP16_LEDGER is required before production verification
+E       assert None
+
+tests/cp16/test_saved_results.py:279: AssertionError
+________ ERROR at setup of test_saved_uncertainty_and_joint_conclusions ________
+
+    @pytest.fixture(scope="module")
+    def evidence():
+        if not (REPORT/"predictions.parquet").exists():
+            if os.environ.get("CP16_REQUIRE_SAVED_EVIDENCE")=="1":
+                pytest.fail("required saved CP-16 predictions are absent")
+            pytest.skip("saved production vectors absent; require with CP16_REQUIRE_SAVED_EVIDENCE=1")
+        ledger = os.environ.get("CP16_LEDGER")
+>       assert ledger, "CP16_LEDGER is required before production verification"
+E       AssertionError: CP16_LEDGER is required before production verification
+E       assert None
+
+tests/cp16/test_saved_results.py:279: AssertionError
+=================================== FAILURES ===================================
+___________ test_inherited_identity_positive_and_wrong_input_refusal ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x119320180>
+
+    def test_inherited_identity_positive_and_wrong_input_refusal(monkeypatch):
+        import cp16.inputs as module
+>       p, hashes=identities(ROOT)
+                  ^^^^^^^^^^^^^^^^
+
+tests/cp16/test_budget_inputs.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/djourno/Downloads/PJM/.local/worktrees/cp-20/critic')
+
+    def identities(root):
+        root = Path(root)
+        p = json.loads((root/'reports/cp15/protocol.json').read_text())
+        result = {}
+        for name, expected in SUPPLIED.items():
+>           if sha(root/name) != expected: raise ValueError('wrong supplied input: '+name)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: wrong supplied input: capstone_v21.md
+
+src/cp16/inputs.py:25: ValueError
+_________________ test_independent_all_origin_residual_replay __________________
+
+    def test_independent_all_origin_residual_replay():
+>       budget=Budget(os.environ['CP16_LEDGER'])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/cp16/test_state_results.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OSLogRateLimit': '64', 'MLFLOW_TRACKING_USERNAME': '5b09e4159ff84f7fdd4de0d1237a8b0ddb7ed994', 'MLFLOW_TRACK...FALSE', 'PYTEST_CURRENT_TEST': 'tests/cp16/test_state_results.py::test_independent_all_origin_residual_replay (call)'})
+key = 'CP16_LEDGER'
+
+>   ???
+E   KeyError: 'CP16_LEDGER'
+
+<frozen os>:717: KeyError
+_______________ test_real_state_restart_and_saved_cache_refusals _______________
+
+    def test_real_state_restart_and_saved_cache_refusals():
+        from cp16.inputs import load, SavedComponents
+        from cp16.residuals import SharedResidualState
+>       budget=Budget(os.environ['CP16_LEDGER'])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/cp16/test_state_results.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = environ({'OSLogRateLimit': '64', 'MLFLOW_TRACKING_USERNAME': '5b09e4159ff84f7fdd4de0d1237a8b0ddb7ed994', 'MLFLOW_TRACK...', 'PYTEST_CURRENT_TEST': 'tests/cp16/test_state_results.py::test_real_state_restart_and_saved_cache_refusals (call)'})
+key = 'CP16_LEDGER'
+
+>   ???
+E   KeyError: 'CP16_LEDGER'
+
+<frozen os>:717: KeyError
+--------------------------- Captured stdout teardown ---------------------------
+
+CP16_RESIDUAL_RESOURCE_COUNTS={"prediction_calls_including_rejected": 27, "successful_policy_days": 42, "successful_policy_target_rows": 1008}
+=========================== short test summary info ============================
+FAILED tests/cp16/test_budget_inputs.py::test_inherited_identity_positive_and_wrong_input_refusal
+FAILED tests/cp16/test_state_results.py::test_independent_all_origin_residual_replay
+FAILED tests/cp16/test_state_results.py::test_real_state_restart_and_saved_cache_refusals
+ERROR tests/cp16/test_saved_results.py::test_saved_metric_and_diagnostic_tables
+ERROR tests/cp16/test_saved_results.py::test_saved_all_six_criteria_and_research_summary
+ERROR tests/cp16/test_saved_results.py::test_saved_uncertainty_and_joint_conclusions
+3 failed, 103 passed, 3 errors in 7.55s

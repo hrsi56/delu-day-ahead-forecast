@@ -1,5 +1,5 @@
 {
- "active_hours": 3.299,
+ "active_hours": 3.924,
  "active_hours_basis": "from the conservative session start 2026-09-23T15:50Z minus recorded pauses (usage-limit idle gap; Owner decision O3: unattended waits)",
  "active_hours_hard_stop": 80.0,
  "active_hours_timebox": 64.0,
@@ -8,27 +8,27 @@
  "caps_vs_use": {
   "active_seconds": {
    "cap": 288000,
-   "used": 11877.1
+   "used": 14126.1
   },
   "analysis_passes": {
    "cap": 3,
-   "used": 1
+   "used": 2
   },
   "component_attempts": {
    "cap": 4000,
-   "used": 1312
+   "used": 1348
   },
   "final_fits": {
    "cap": 96000,
-   "used": 31464
+   "used": 32312
   },
   "inner_fits": {
    "cap": 384000,
-   "used": 125856
+   "used": 129248
   },
   "machine_seconds": {
    "cap": 432000,
-   "used": 143255.69889028926
+   "used": 143805.4461461682
   },
   "main_component_attempts": {
    "cap": 3000,
@@ -36,19 +36,19 @@
   },
   "message_attempts": {
    "cap": 371400,
-   "used": 6685
+   "used": 7835
   },
   "policy_days": {
    "cap": 9000,
-   "used": 1937
+   "used": 3231
   },
   "primitive_fits": {
    "cap": 480000,
-   "used": 157320
+   "used": 161560
   },
   "reference_passes": {
    "cap": 3,
-   "used": 1
+   "used": 2
   },
   "transfer_bytes": {
    "cap": 171798691840,
@@ -389,6 +389,111 @@
    },
    "jobs": 2
   },
+  "critic-components": {
+   "charged_machine_hours": 0.115,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-convert": {
+   "charged_machine_hours": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-decode": {
+   "charged_machine_hours": 0.003,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-guards": {
+   "charged_machine_hours": 0.003,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic-guards-listed": {
+   "charged_machine_hours": 0.002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-levelmae": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-misc": {
+   "charged_machine_hours": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-refusals": {
+   "charged_machine_hours": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-replay": {
+   "charged_machine_hours": 0.006,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-requests": {
+   "charged_machine_hours": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-requests2": {
+   "charged_machine_hours": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-scoring": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-static": {
+   "charged_machine_hours": 0.003,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-tests": {
+   "charged_machine_hours": 0.003,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-tests-wx": {
+   "charged_machine_hours": 0.002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
   "diag-concurrent": {
    "charged_machine_hours": 0.04,
    "exit_codes": {
@@ -404,12 +509,12 @@
    "jobs": 1
   },
   "finalise": {
-   "charged_machine_hours": 0.001,
+   "charged_machine_hours": 0.002,
    "exit_codes": {
-    "0": 2,
+    "0": 5,
     "None": 1
    },
-   "jobs": 3
+   "jobs": 6
   },
   "gfs-extract": {
    "charged_machine_hours": 36.89,
@@ -423,11 +528,11 @@
    "jobs": 13
   },
   "guards": {
-   "charged_machine_hours": 0.002,
+   "charged_machine_hours": 0.006,
    "exit_codes": {
-    "0": 1
+    "0": 3
    },
-   "jobs": 1
+   "jobs": 3
   },
   "h0-dryrun": {
    "charged_machine_hours": 0.035,
@@ -479,11 +584,11 @@
    "jobs": 1
   },
   "tests": {
-   "charged_machine_hours": 0.011,
+   "charged_machine_hours": 0.017,
    "exit_codes": {
-    "0": 4
+    "0": 6
    },
-   "jobs": 4
+   "jobs": 6
   },
   "tests-arms": {
    "charged_machine_hours": 0.002,
@@ -532,11 +637,11 @@
    "jobs": 2
   },
   "tests-wx": {
-   "charged_machine_hours": 0.003,
+   "charged_machine_hours": 0.007,
    "exit_codes": {
-    "0": 3
+    "0": 5
    },
-   "jobs": 3
+   "jobs": 5
   },
   "throughput-probe": {
    "charged_machine_hours": 0.031,
@@ -553,9 +658,9 @@
    "jobs": 1
   }
  },
- "jobs_total": 56,
+ "jobs_total": 80,
  "ledger": ".local/artifacts/cp-20/ledger/budget.json (cumulative, never reset)",
- "machine_hours": 39.793,
+ "machine_hours": 39.946,
  "machine_hours_cap": 120.0,
  "message_attempts_note": "ledger message_attempts is the cumulative charge: 1,885 pre-O2 charges plus the 4,800 locator-defect failures later restored under O2-A1 (not refunded in the ledger); message_tries counts every try of any outcome",
  "pauses": [
@@ -584,7 +689,7 @@
    1790225937.052619
   ]
  ],
- "peak_added_disk_gib": 1.989,
+ "peak_added_disk_gib": 2.182,
  "peak_aggregate_rss_gib": 3.725,
  "rss_cap_gib": 10.0,
  "schema": "cp20-resources-v1",

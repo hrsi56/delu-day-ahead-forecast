@@ -4,7 +4,8 @@ Writes reports/weather-ablation/resources.json (cumulative ledger vs the section
 extraction accounting), failures.csv (failed/stopped jobs and extraction failure classes, all
 later resolved or superseded), report.md (``cp20.report.render`` over the saved tables) and
 artifact-manifest.json (sha256 of every CP-20 report artifact plus the freeze commits).
-Run under the monitor after ``score``.
+Run under the monitor after ``score`` as ``python -m cp20.finalise`` (moved from
+``scripts/cp20_finalise.py`` into the section 15.7 paths after the first Integration review).
 """
 from __future__ import annotations
 
@@ -14,19 +15,23 @@ import json
 import os
 from pathlib import Path
 import subprocess
-import sys
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'src'))
-from cp20.budget import CAPS, GIB, HOUR, TIMEBOX_ACTIVE_SECONDS, Budget, atomic  # noqa: E402
-from cp20.report import render  # noqa: E402
+from .budget import CAPS, GIB, HOUR, TIMEBOX_ACTIVE_SECONDS, Budget, atomic
+from .report import render
+
+ROOT = Path(__file__).resolve().parents[2]
 
 OUT = ROOT / 'reports/weather-ablation'
 PROJECT = Path(os.environ.get('CP20_PROJECT_ROOT', '/Users/djourno/Downloads/PJM'))
 A = PROJECT / '.local/artifacts/cp-20'
 WEATHER = A / 'weather'
+# Failed jobs whose resolution is not a later successful job of the same name.
+JOB_NOTES = {68: ('Integration attempt 1 ran the whole tests/cp16 directory beyond the listed guards: 3 failed, '
+                  '3 errors (CP16_LEDGER unset; v21-r3 anchor identity). tests/cp16, src/cp15, src/cp16 and '
+                  'capstone_v21.md are identical to main 88c68cf, so these are inherited, not CP-20 regressions; '
+                  'the listed guards passed in job 69')}
 
 
 def sha(path) -> str:
@@ -125,10 +130,14 @@ def resources() -> dict:
 
 def failures(res: dict) -> pd.DataFrame:
     rows = []
-    for j in Budget(A / 'ledger/budget.json').read()['jobs']:
+    jobs = Budget(A / 'ledger/budget.json').read()['jobs']
+    for j in jobs:
         if j.get('exit_code') not in (0, None) or j.get('abort_reason'):
+            later = [k['index'] for k in jobs if k['name'] == j['name'] and k['index'] > j['index'] and k.get('exit_code') == 0]
+            resolution = (JOB_NOTES.get(j['index']) or (f"later successful job(s) of the same name: {', '.join(map(str, later))}" if later
+                                                        else 'not superseded; see the job log'))
             rows.append({'kind': 'job', 'job_index': j['index'], 'name': j['name'], 'exit_code': j.get('exit_code'),
-                         'abort_reason': j.get('abort_reason'), 'resolution': 'superseded by a later job of the same name'})
+                         'abort_reason': j.get('abort_reason'), 'resolution': resolution})
     for cls, n in Counter(r['class'] for r in jsonl('failures.jsonl')).items():
         rows.append({'kind': 'extraction_run_failure_records', 'name': cls, 'count': n,
                      'resolution': 'every affected run later completed; none imputed'})
@@ -174,7 +183,7 @@ def main():
         'admission_freeze_commit': git('log', '-1', '--format=%H', '--diff-filter=A', '--', 'reports/weather-ablation/lineage.json'),
         'weather_design_sha256': json.loads((OUT / 'protocol.json').read_text())['weather_design_sha256'],
         'artifact_sha256': {n: sha(ROOT / n) for n in names},
-        'finaliser': 'scripts/cp20_finalise.py (formatting only; added after the pre-fit freeze)'})
+        'finaliser': 'src/cp20/finalise.py (formatting only; added after the pre-fit freeze)'})
     print(json.dumps({k: res[k] for k in ('machine_hours', 'active_hours', 'transfer_gib', 'jobs_total')}))
 
 

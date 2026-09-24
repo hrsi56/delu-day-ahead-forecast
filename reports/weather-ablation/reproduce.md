@@ -81,10 +81,10 @@ $PY scripts/cp20_weather.py --monitor --name comparison --workers 1 --log $A/log
 $PY scripts/cp20_weather.py --monitor --name controls --workers 1 --log $A/logs/controls.log -- $PY -u -c "from pathlib import Path; from cp20.controls import run; run(Path('.'))"
 $PY scripts/cp20_weather.py --monitor --name controls-supplement --workers 1 --log $A/logs/controls-supplement.log -- $PY -u -c "from pathlib import Path; from cp20.controls_supplement import run; run(Path('.'))"
 $PY scripts/cp20_weather.py --monitor --name score --workers 1 --log $A/logs/score.log -- $PY -u -c "from pathlib import Path; from cp20.execution import score; score(Path('.'))"
-$PY scripts/cp20_weather.py --monitor --name finalise --workers 1 --log $A/logs/finalise.log -- $PY -u scripts/cp20_finalise.py
+$PY scripts/cp20_weather.py --monitor --name finalise --workers 1 --log $A/logs/finalise.log -- $PY -u -m cp20.finalise
 ```
 
-`controls-supplement` (repair r13) and `scripts/cp20_finalise.py` (formatting only) were added
+`controls-supplement` (repair r13) and `cp20.finalise` (formatting only) were added
 after the pre-fit freeze; see `post-freeze-repairs.json`.
 
 HG component caches live in `$A/hg-components/<fold>/<day>.json`, each content-hashed and bound
@@ -96,7 +96,7 @@ comparison refuses an uncommitted admission freeze.
 
 ```sh
 $PY scripts/cp20_weather.py --monitor --name tests --workers 1 --log $A/logs/tests.log -- $PY -m pytest tests/cp20 -q -p no:cacheprovider --basetemp=$P/.local/tmp/cp-20/pytest
-$PY scripts/cp20_weather.py --monitor --name tests-wx --workers 1 --log $A/logs/tests-wx.log -- $WX -m pytest --noconftest tests/cp20/test_gfs_eccodes.py tests/cp20/test_gfs_locator.py -q -p no:cacheprovider --basetemp=$P/.local/tmp/cp-20/pytest-wx
+$PY scripts/cp20_weather.py --monitor --name tests-wx --workers 1 --log $A/logs/tests-wx.log -- $WX -m pytest --noconftest tests/cp20/test_gfs_eccodes.py tests/cp20/test_gfs_locator.py tests/cp20/test_fetcher_watchdog.py tests/cp20/test_attempts.py tests/cp20/test_retry_routing.py tests/cp20/test_concurrent_leads.py -q -p no:cacheprovider --basetemp=$P/.local/tmp/cp-20/pytest-wx
 $PY scripts/cp20_weather.py --monitor --name guards --workers 1 --log $A/logs/guards.log -- $PY -m pytest tests/test_02_rolling_closed_left.py tests/test_05_schema_firewall.py tests/test_08_partition_integrity.py tests/test_12_partition_exclusion.py tests/test_24_live_namespace_is_walled_off.py tests/cp16/test_residuals.py tests/cp16/test_scoring.py -q -p no:cacheprovider --basetemp=$P/.local/tmp/cp-20/guards
 ```
 

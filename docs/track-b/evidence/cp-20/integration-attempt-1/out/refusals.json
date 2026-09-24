@@ -1,0 +1,8 @@
+{
+ "prepare_pre2019": "refused: pre-2019 input refused",
+ "history_start_A1_2019_06_01": "2019-01-01",
+ "history_start_B2_2020_12_31": "2019-01-03",
+ "history_start_A4_pre2019": "refused: pre-2019 history forbidden",
+ "missing_day_nonimputable_class": "refused: network_failure is not an imputable missing-weather class",
+ "check_protocol_at_clean_candidate": "ValueError: frozen input changed since pre-fit freeze: reports/weather-ablation/prerun-attempts.csv"
+}

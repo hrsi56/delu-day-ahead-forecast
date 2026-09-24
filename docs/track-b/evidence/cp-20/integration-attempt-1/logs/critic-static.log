@@ -1,0 +1,73 @@
+# CP-20 job critic-static index 59 start 2026-09-24T06:03:46Z
+PASS issued_document_sha256
+PASS intake_receipt_present
+PASS admission_bundle_hash_lists_match_present_files :: {'checked': 853, 'bad': []}
+FAIL protocol_frozen_hashes_match_candidate_bytes :: {'reports/weather-ablation/prerun-attempts.csv': {'section': 'frozen_inputs_sha256', 'frozen': '859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06', 'candidate': 'bef7f523df319428bcb416efef43c2df01a58bbab1efad43f87c83f49b2c2457', 'candidate_with_CRLF': '859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06'}}
+FAIL artifact_manifest_hashes_match_candidate_bytes :: {'reports/weather-ablation/prerun-attempts.csv': '859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06'}
+PASS predictions_rows_75229 :: 75229
+PASS seven_policies_10747_each :: {'A1': 10747, 'B0': 10747, 'B1': 10747, 'B2': 10747, 'B3': 10747, 'H0': 10747, 'HG': 10747}
+PASS contrast_rows_21494 :: 21494
+PASS fold_counts :: {'fold_1': 2160, 'fold_2': 2159, 'fold_3': 2112, 'fold_4': 2160, 'fold_5': 2156}
+PASS identical_keys_all_policies
+PASS no_duplicate_policy_keys
+PASS all_finite
+PASS ordered_quantiles_no_crossing
+PASS evidence_class_label :: ['development_post_selection']
+PASS origin_is_D_minus_1_1100_utc
+PASS delivery_date_is_berlin_local_date
+PASS H0_p50_emitted_separately_from_central :: 1.0
+PASS HG_p50_emitted_separately_from_central :: 1.0
+PASS H0_bitwise_equals_CP16_V2H_all_10747 :: {'rows': 10747, 'keys_equal': True, 'bitwise': True, 'max_abs': 0.0}
+PASS saved_references_bitwise_equal_cp15 :: {'B0': True, 'B1': True, 'B2': True, 'B3': True, 'A1': True}
+PASS H0_HG_same_truth_scale_level
+PASS HG_central_differs_from_H0 :: 0.9995347538848051
+PASS fold3_88_dates_peak_408h_17d :: {'f3_dates': 88, 'peak_rows': 408, 'peak_days': 17}
+PASS cp16_manifest_638_origins_35_admission :: {'origins': 638, 'admission': 35}
+PASS warmup_starts :: {'fold_1': '2020-05-25', 'fold_2': '2021-02-23', 'fold_3': '2022-05-25', 'fold_4': '2025-03-22', 'fold_5': '2025-12-02'}
+PASS run_manifest_2476_runs_plus_structural_2019_01_01 :: {'runs': 2476, 'structural': ['2019-01-01']}
+PASS run_manifest_days_equal_required_union :: {'need': 2477, 'manifest': 2477}
+PASS run_is_delivery_minus_1
+PASS run_manifest_version_by_date
+PASS eight_added_runs_2023_03_24_31 :: ['2023-03-24', '2023-03-25', '2023-03-26', '2023-03-27', '2023-03-28', '2023-03-29', '2023-03-30', '2023-03-31']
+PASS no_run_before_2019
+PASS availability_bracketed_all_runs :: []
+PASS messages_123800_unique :: 123800
+PASS messages_leads_fields
+FAIL messages_metadata_all_valid :: {'dataDate': 0, 'dataTime': 0, 'validityDate': 0, 'validityTime': 0, 'shortName': 74280, 'wind_level': 0, 'wind_typeOfLevel': 0, 'wind_units': 0, 'wind_step': 0, 'wind_param': 0, 'wind_surface': 0, 'dswrf_bounds': 0, 'dswrf_units_surface': 0, 'dswrf_param': 0, 'production_status': 0, 'processed_type': 0, 'generating_process': 0, 'centre': 0, 'quantum': 0, 'box_nonfinite': 0, 'bytes': 0, 'version': 0, 'dswrf_precision_vs_version': 0, 'url': 0}
+PASS messages_by_endpoint :: {'aws': 87200, 'ncar': 36600}
+PASS endpoint_is_primary_or_named_alternate :: []
+alternate endpoint messages 0 0
+PASS run_records_complete_and_npz_sha256 :: {'records': 2476, 'bad': []}
+PASS grid_metadata_every_message :: []
+PASS run_record_sha_equals_messages_parquet :: []
+PASS cp20_retained_raw_sha256_equals_messages :: {'files': 1150, 'runs': 23, 'bad': []}
+PASS admission_600_retained_samples_byte_identical :: {'files': 600, 'compared_to_cp20': 600, 'runs': ['2019-01-01', '2019-03-30', '2019-06-13', '2019-10-26', '2020-10-24', '2021-03-23', '2022-03-26', '2022-08-25', '2024-03-30', '2024-10-26', '2026-03-28', '2026-04-06'], 'bad': []}
+PASS sample_hash_comparison_csv_600_identical
+PASS features_cover_every_canonical_hour_of_required_days :: {'rows': 59446, 'expected': 59446}
+PASS features_status_classes :: {'ok': 59422, 'structural_missing_pre_2019_run': 24}
+PASS structural_rows_are_2019_01_01_all_nan
+PASS ok_rows_finite
+PASS feature_run_is_D_minus_1_00z
+PASS feature_lead_hours_22_to_46 :: [22, 46]
+PASS features_dswrf_nonnegative_wind_positive
+PASS local_hour_cells_59440_repeated_6 :: {'cells': 59440, 'repeated': 6}
+PASS weather_design_sha256_matches_protocol
+PASS clipping_log_within_minus_3q
+PASS hg_cache_638_items_identity_bound :: {'items': 638, 'sources': {'fresh_hg_components': 636, 'original_no_eligible_hours': 2}, 'bad': []}
+PASS hg_fit_history_windows :: []
+hg fit accounting {'hour_fits': 30504, 'solver_calls_main': 152520, 'train_rows_weather_missing_sum': 0, 'forecast_rows_weather_missing_sum': 0}
+PASS ledger_caps_equal_section_15_5
+PASS ledger_counts_within_caps :: {}
+PASS ledger_peaks_within_caps :: {'additional_disk_bytes': 2327818676, 'rss_bytes': 3999416320}
+PASS no_running_jobs_in_ledger
+PASS all_jobs_blas_1
+PASS workers_le_4
+PASS primitive_split :: {'primitive_fits': 157320, 'inner_fits': 125856, 'final_fits': 31464}
+PASS protocol_commit_before_any_hg_fit :: {'protocol_commit': 1790226101, 'first_hg_job': 1790226121.8266869}
+PASS admission_commit_before_outer_scoring :: {'admission_commit': 1790226833, 'comparison_start': [1790228361.887671, 1790228890.18844]}
+PASS protocol_unchanged_since_freeze_commit
+PASS admission_freeze_lineage_70_vectors_stage
+PASS admission_vectors_preserved_in_final_lineage
+PASS admission_dates_equal_cp16_manifest
+PASS no_predictions_committed_at_admission_freeze
+FAILURES: ['protocol_frozen_hashes_match_candidate_bytes', 'artifact_manifest_hashes_match_candidate_bytes', 'messages_metadata_all_valid']
