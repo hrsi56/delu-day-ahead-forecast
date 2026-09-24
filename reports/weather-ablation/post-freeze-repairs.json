@@ -1,0 +1,46 @@
+{
+ "integration_attempts": [
+  {
+   "attempt": 1,
+   "candidate": "a7943fb6262c1a50b729bd92fe701c8be9428038",
+   "findings": [
+    "frozen-input hash mismatch for prerun-attempts.csv (line endings) -> r14",
+    "scripts/cp20_finalise.py outside section 15.7 paths -> moved to src/cp20/finalise.py"
+   ],
+   "record": "docs/track-b/evidence/cp-20/integration-attempt-1/integration.md",
+   "verdict": "FAIL"
+  }
+ ],
+ "note": "Changes made after the pre-fit protocol freeze (255ecfb). None alters the frozen implementation, frozen inputs, fitted components, predictions or scores; extraction-repairs.json (r1-r12) is itself frozen and is not edited.",
+ "repairs": [
+  {
+   "defect": "the frozen available-weather positive control (all available weather x3.0) is invariant under the inherited training-only StandardScaler; its observed movement (<=4.4e-13 EUR/MWh) is floating-point round-off, so it passed on noise and cannot show that HG uses weather",
+   "file": "src/cp20/controls_supplement.py",
+   "first_run": "job 50 exited 1 before writing any output (pandas copy-on-write returned a read-only array); its base refit was charged and stays charged",
+   "fix": "explicit copy (to_numpy(copy=True)); job 51 exit 0, all four mutations passed",
+   "found_by": "CP-20 Engineering Lead reading the controls output before scoring",
+   "id": "r13",
+   "job": "controls-supplement",
+   "repair": "kept the frozen control and its output unchanged, relabelled as a units/scaling-invariance check; added two non-affine positive controls on the same two days (target-day D-1 weather shift; seeded permutation of training-history weather) with a 1e-6 EUR/MWh pass threshold; base refit must reproduce the cached HG component"
+  },
+  {
+   "file": "src/cp20/finalise.py",
+   "id": "finaliser",
+   "moved_from": "scripts/cp20_finalise.py (outside the section 15.7 paths; finding 2 of Integration attempt 1)",
+   "purpose": "formatting only: resources.json from the cumulative ledger, failures.csv, report.md via the frozen cp20.report.render plus an appended post-freeze section, artifact-manifest.json"
+  },
+  {
+   "file": "reports/weather-ablation/rights-notice.md",
+   "id": "rights-notice",
+   "purpose": "section 15.6 item 8 rights notice for the committed weather-derived artifacts; DATA-LICENSE.md is unchanged (Owner decision per the admission record)"
+  },
+  {
+   "defect": "prerun-attempts.csv was written with CRLF line endings; protocol.json and artifact-manifest.json record the sha256 of those bytes (859ba632...), but core.autocrlf=input committed an LF-normalised blob (bef7f523...), so check_protocol refused in any clean checkout and every reproduce.md section 4 command stopped (Integration attempt 1, largest gap)",
+   "file": "reports/weather-ablation/.gitattributes",
+   "found_by": "Integration Critic attempt 1 (FAIL) at a7943fb6262c1a50b729bd92fe701c8be9428038",
+   "id": "r14",
+   "repair": "store prerun-attempts.csv byte-for-byte (-text); the committed blob now hashes to the frozen 859ba632...; protocol.json, the CSV content and every result file are unchanged"
+  }
+ ],
+ "schema": "cp20-post-freeze-repairs-v1"
+}

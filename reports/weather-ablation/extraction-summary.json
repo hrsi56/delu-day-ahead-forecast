@@ -1,0 +1,56 @@
+{
+ "added_runs_checked": 8,
+ "added_runs_passed": 8,
+ "classified_missing_runs": [],
+ "complete_runs": 2476,
+ "feature_hours": 59446,
+ "feature_ranges": {
+  "wx_dswrf_mean": [
+   0.0,
+   868.0539499614248
+  ],
+  "wx_wind100_mean": [
+   1.0836292742672868,
+   19.08025308897751
+  ],
+  "wx_wind10_mean": [
+   0.9805973873245102,
+   12.263036533877361
+  ]
+ },
+ "feature_status": {
+  "ok": 59422,
+  "structural_missing_pre_2019_run": 24
+ },
+ "files_sha256": {
+  "extended-inventory.csv": "4c8642d951d55f9997be1074dda5ebcbdef2ce6f2c8bf94113aeefc5c4d01c82",
+  "messages.parquet": "ed018bbe31ea65cdf51a17e82d6b57dd2465afac6f1210b788cac45dfa6f605b",
+  "missingness.csv": "39f349535cc0178a8a45dab6ab2575285df82a53cf33f2cc7df17166ec45338f",
+  "radiation-clipping.csv": "14e6ad70cbdc7c1aa322fa637ee2bc6edd8d2883d34555bca976d9954a9ec93f",
+  "runs.csv": "b85cba52e8bfc7a52af7023a44c72ba309c7633bbbe08dcf846c2446b708638b",
+  "sample-hash-comparison.csv": "4446811ac6a400668f1aa5fc0fdd4a2e5ed55d10b7439e73c106e81daf33eed8",
+  "weather-features.parquet": "66b8264bb6e124ae0cc540a40ff00d0e9f625cabee6e0ebb6e4605c3e7ea1b58"
+ },
+ "local_hour_cells": 59440,
+ "local_hour_cells_missing": 24,
+ "messages_by_endpoint": {
+  "aws": 87200,
+  "ncar": 36600
+ },
+ "messages_by_purpose": {
+  "integrity_retry": 5,
+  "production": 123790,
+  "transient_retry": 5
+ },
+ "nonfinite_box_values": 0,
+ "payload_bytes": 111315461152,
+ "repeated_local_hours": 6,
+ "required_runs": 2476,
+ "sample_hash_comparisons": 600,
+ "sample_hash_identical": 600,
+ "structural_missing_days": [
+  "2019-01-01"
+ ],
+ "target_messages": 123800,
+ "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0"
+}

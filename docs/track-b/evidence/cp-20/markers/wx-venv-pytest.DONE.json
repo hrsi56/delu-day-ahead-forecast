@@ -1,0 +1,28 @@
+{
+ "abort_reason": null,
+ "active_seconds_upper_bound": 1668.2853870391846,
+ "cumulative_counts": {
+  "active_seconds": 0,
+  "analysis_passes": 0,
+  "component_attempts": 0,
+  "final_fits": 0,
+  "inner_fits": 0,
+  "machine_seconds": 1197.5010416640143,
+  "main_component_attempts": 0,
+  "message_attempts": 20,
+  "policy_days": 0,
+  "primitive_fits": 0,
+  "reference_passes": 0,
+  "transfer_bytes": 745743935
+ },
+ "elapsed_seconds": 2.192764042003546,
+ "exit_code": 0,
+ "job": "wx-venv-pytest",
+ "job_index": 5,
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/wx-venv-pytest.log",
+ "peak_rss_bytes": 37306368,
+ "status": "success",
+ "supervisor_error": null,
+ "timebox_exceeded": false,
+ "written_utc": "2026-09-23T17:11:49Z"
+}

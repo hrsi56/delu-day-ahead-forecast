@@ -1,0 +1,8328 @@
+{
+ "2019-01-01": {
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2019-03-30": {
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2019-06-13": {
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2019-10-26": {
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2020-10-24": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2021-02-02": {
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2021-03-22": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 10.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 1.0,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2021-03-23": {
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2022-03-26": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2022-08-25": {
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-24": {
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-25": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-26": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-27": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-28": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-29": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-30": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2023-03-31": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2024-03-30": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2024-09-15": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2024-10-26": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2026-03-28": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ },
+ "2026-04-06": {
+  "dswrf:21": {
+   "startStep": 18,
+   "endStep": 21,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:21": {
+   "startStep": 21,
+   "endStep": 21,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:24": {
+   "startStep": 18,
+   "endStep": 24,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:24": {
+   "startStep": 24,
+   "endStep": 24,
+   "quantum": 0.01,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:27": {
+   "startStep": 24,
+   "endStep": 27,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:27": {
+   "startStep": 27,
+   "endStep": 27,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:30": {
+   "startStep": 24,
+   "endStep": 30,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:30": {
+   "startStep": 30,
+   "endStep": 30,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:33": {
+   "startStep": 30,
+   "endStep": 33,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:33": {
+   "startStep": 33,
+   "endStep": 33,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:36": {
+   "startStep": 30,
+   "endStep": 36,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:36": {
+   "startStep": 36,
+   "endStep": 36,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:39": {
+   "startStep": 36,
+   "endStep": 39,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:39": {
+   "startStep": 39,
+   "endStep": 39,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:42": {
+   "startStep": 36,
+   "endStep": 42,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:42": {
+   "startStep": 42,
+   "endStep": 42,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:45": {
+   "startStep": 42,
+   "endStep": 45,
+   "quantum": 0.02,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:45": {
+   "startStep": 45,
+   "endStep": 45,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "dswrf:48": {
+   "startStep": 42,
+   "endStep": 48,
+   "quantum": 0.016,
+   "units": "W m**-2",
+   "typeOfLevel": "surface",
+   "level": 0
+  },
+  "u100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "u10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  },
+  "v100:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 100
+  },
+  "v10:48": {
+   "startStep": 48,
+   "endStep": 48,
+   "quantum": 0.1,
+   "units": "m s**-1",
+   "typeOfLevel": "heightAboveGround",
+   "level": 10
+  }
+ }
+}

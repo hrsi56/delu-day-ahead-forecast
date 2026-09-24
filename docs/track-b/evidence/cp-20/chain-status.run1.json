@@ -1,0 +1,87 @@
+{
+ "phases": [
+  {
+   "phase": "ncar-all",
+   "endpoint": "ncar",
+   "workers": 3,
+   "start_epoch": 1790189622.711052,
+   "end_epoch": 1790203073.865508,
+   "monitor_exit": 5,
+   "marker": {
+    "abort_reason": null,
+    "active_seconds_upper_bound": 19141.311036109924,
+    "cumulative_counts": {
+     "active_seconds": 0,
+     "analysis_passes": 0,
+     "component_attempts": 0,
+     "final_fits": 0,
+     "inner_fits": 0,
+     "machine_seconds": 49267.302889791055,
+     "main_component_attempts": 0,
+     "message_attempts": 6685,
+     "policy_days": 638,
+     "primitive_fits": 0,
+     "reference_passes": 0,
+     "transfer_bytes": 23687812957
+    },
+    "elapsed_seconds": 13450.990276749973,
+    "exit_code": 5,
+    "job": "gfs-extract",
+    "job_index": 33,
+    "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/gfs-extract.log",
+    "peak_rss_bytes": 140951552,
+    "status": "failed_or_partial",
+    "supervisor_error": null,
+    "timebox_exceeded": false,
+    "written_utc": "2026-09-23T22:37:53Z"
+   }
+  },
+  {
+   "phase": "aws-all",
+   "endpoint": "aws",
+   "workers": 1,
+   "start_epoch": 1790203073.865856,
+   "end_epoch": 1790205302.270317,
+   "monitor_exit": 2,
+   "marker": {
+    "abort_reason": "monitor_signal_15",
+    "active_seconds_upper_bound": 21369.716886997223,
+    "cumulative_counts": {
+     "active_seconds": 0,
+     "analysis_passes": 0,
+     "component_attempts": 0,
+     "final_fits": 0,
+     "inner_fits": 0,
+     "machine_seconds": 51555.58818858207,
+     "main_component_attempts": 0,
+     "message_attempts": 6685,
+     "policy_days": 638,
+     "primitive_fits": 0,
+     "reference_passes": 0,
+     "transfer_bytes": 25348539396
+    },
+    "elapsed_seconds": 2228.34425991599,
+    "exit_code": 2,
+    "job": "gfs-extract",
+    "job_index": 36,
+    "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/gfs-extract.log",
+    "peak_rss_bytes": 129187840,
+    "status": "failed_or_partial",
+    "supervisor_error": null,
+    "timebox_exceeded": false,
+    "written_utc": "2026-09-23T23:15:02Z"
+   }
+  }
+ ],
+ "started_epoch": 1790189622.710485,
+ "pid": 28278,
+ "deferred_failed_days": "2021-01-08,2021-01-09,2021-01-11,2021-01-12",
+ "result": "stopped",
+ "current": "aws-all",
+ "stopped_in": "aws-all",
+ "reason": [
+  "monitor_signal_15",
+  2
+ ],
+ "end_epoch": 1790205302.270648
+}

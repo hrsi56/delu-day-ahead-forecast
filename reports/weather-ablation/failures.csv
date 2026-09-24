@@ -1,0 +1,25 @@
+kind,job_index,name,exit_code,abort_reason,resolution,count
+job,3,gfs-extract,4,,"later successful job(s) of the same name: 38, 39, 40",
+job,4,tests-eccodes,1,,"later successful job(s) of the same name: 8, 20",
+job,6,tests-eccodes,4,,"later successful job(s) of the same name: 8, 20",
+job,7,tests-eccodes,1,,"later successful job(s) of the same name: 8, 20",
+job,9,tests-weather,1,,later successful job(s) of the same name: 10,
+job,11,gfs-extract,-9,monitor_signal_15,"later successful job(s) of the same name: 38, 39, 40",
+job,12,gfs-extract,-9,monitor_signal_15,"later successful job(s) of the same name: 38, 39, 40",
+job,16,gfs-extract,-9,monitor_signal_15,"later successful job(s) of the same name: 38, 39, 40",
+job,19,tests-attempts,1,,later successful job(s) of the same name: 22,
+job,21,tests-attempts,1,,later successful job(s) of the same name: 22,
+job,23,gfs-extract,2,monitor_signal_15,"later successful job(s) of the same name: 38, 39, 40",
+job,25,gfs-extract,2,,"later successful job(s) of the same name: 38, 39, 40",
+job,30,gfs-extract,2,,"later successful job(s) of the same name: 38, 39, 40",
+job,33,gfs-extract,5,,"later successful job(s) of the same name: 38, 39, 40",
+job,36,gfs-extract,2,monitor_signal_15,"later successful job(s) of the same name: 38, 39, 40",
+job,37,gfs-extract,2,monitor_signal_15,"later successful job(s) of the same name: 38, 39, 40",
+job,50,controls-supplement,1,,later successful job(s) of the same name: 51,
+job,68,critic-guards,1,,"Integration attempt 1 ran the whole tests/cp16 directory beyond the listed guards: 3 failed, 3 errors (CP16_LEDGER unset; v21-r3 anchor identity). tests/cp16, src/cp15, src/cp16 and capstone_v21.md are identical to main 88c68cf, so these are inherited, not CP-20 regressions; the listed guards passed in job 69",
+extraction_run_failure_records,,extraction_failed_after_bounded_attempts,,,every affected run later completed; none imputed,482
+message_attempt_outcome,,validation_failure,,,"see extraction-repairs.json (r1-r12, O1, O2, O2-A1)",20
+message_attempt_outcome,,interrupted_or_discarded,,,"see extraction-repairs.json (r1-r12, O1, O2, O2-A1)",315
+message_attempt_outcome,,network_failure,,,"see extraction-repairs.json (r1-r12, O1, O2, O2-A1)",50
+message_attempt_outcome,,integrity_failure,,,"see extraction-repairs.json (r1-r12, O1, O2, O2-A1)",4800
+message_attempt_outcome,,discarded_with_run,,,"see extraction-repairs.json (r1-r12, O1, O2, O2-A1)",1855

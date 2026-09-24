@@ -1,0 +1,163 @@
+{
+ "scale_mismatch_rows": 0,
+ "scale_checked_days": 636,
+ "h0_source_counts": {
+  "cp16": 38,
+  "cp15": 598
+ },
+ "eval_rows": 21494,
+ "eval_bitwise_equal_rows": 21494,
+ "eval_max_abs": 0.0,
+ "central_bitwise_equal": true,
+ "admission_vectors_matched": 70,
+ "admission_meta_matched": 70,
+ "admission_total": 70,
+ "eval_meta_matched": 896,
+ "eval_meta_total": 896,
+ "failures": [],
+ "fallback_hour_cells": 0,
+ "hour_cells": 23184,
+ "buffer_dates_equal_between_arms": true,
+ "incomplete_or_pending_events": [
+  [
+   "H0",
+   "fold_2",
+   "2021-03-31",
+   "2021-03-29",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_2",
+   "2021-04-01",
+   "2021-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_2",
+   "2021-04-06",
+   "2021-04-04",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_2",
+   "2021-03-31",
+   "2021-03-29",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_2",
+   "2021-04-01",
+   "2021-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_2",
+   "2021-04-06",
+   "2021-04-04",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_4",
+   "2025-04-02",
+   "2025-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_4",
+   "2025-04-03",
+   "2025-04-01",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_4",
+   "2025-04-08",
+   "2025-04-06",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_4",
+   "2025-04-02",
+   "2025-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_4",
+   "2025-04-03",
+   "2025-04-01",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_4",
+   "2025-04-08",
+   "2025-04-06",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_5",
+   "2026-04-01",
+   "2026-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_5",
+   "2026-04-02",
+   "2026-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_5",
+   "2026-04-07",
+   "2026-04-05",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_5",
+   "2026-04-01",
+   "2026-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_5",
+   "2026-04-02",
+   "2026-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_5",
+   "2026-04-07",
+   "2026-04-05",
+   "incomplete_day_never_buffered"
+  ]
+ ],
+ "hg_cache_scale_sha_equal": true,
+ "eval_origin_meta_by_arm": {},
+ "final_state_buffer_equal": {
+  "H0:fold_1": true,
+  "HG:fold_1": true,
+  "H0:fold_2": true,
+  "HG:fold_2": true,
+  "H0:fold_3": true,
+  "HG:fold_3": true,
+  "H0:fold_4": true,
+  "HG:fold_4": true,
+  "H0:fold_5": true,
+  "HG:fold_5": true
+ }
+}

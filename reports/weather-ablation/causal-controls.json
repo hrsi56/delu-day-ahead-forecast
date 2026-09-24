@@ -1,0 +1,71 @@
+{
+ "controls": [
+  {
+   "available_d1_price_mutation": {
+    "A1": 437.5844787016467,
+    "B2": 420.2016505256707
+   },
+   "available_weather_mutation": {
+    "A1": 6.039613253960852e-14,
+    "B2": 7.815970093361102e-14
+   },
+   "day": "2020-07-01",
+   "delivery_day_and_future_mask": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "fold": "fold_1",
+   "future_weather_mutation": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "hg_reproduction_max_abs": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "n_hours": 24,
+   "neutralised_weather_vs_h0": {
+    "A1": 3.552713678800501e-15,
+    "B2": 0.0
+   },
+   "weather_changes_hg_vs_h0": {
+    "A1": 3.410988945571642,
+    "B2": 5.733107169452282
+   }
+  },
+  {
+   "available_d1_price_mutation": {
+    "A1": 517.9248172534185,
+    "B2": 430.2086549266156
+   },
+   "available_weather_mutation": {
+    "A1": 1.0658141036401503e-13,
+    "B2": 4.405364961712621e-13
+   },
+   "day": "2025-05-01",
+   "delivery_day_and_future_mask": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "fold": "fold_4",
+   "future_weather_mutation": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "hg_reproduction_max_abs": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "n_hours": 24,
+   "neutralised_weather_vs_h0": {
+    "A1": 1.4210854715202004e-14,
+    "B2": 1.4210854715202004e-14
+   },
+   "weather_changes_hg_vs_h0": {
+    "A1": 33.526282757148664,
+    "B2": 23.658052038276196
+   }
+  }
+ ],
+ "fits": "each control fits A1 and B2 once; charged to component/primitive counters, not main"
+}

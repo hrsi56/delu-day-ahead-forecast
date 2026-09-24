@@ -1,0 +1,48 @@
+# CP-20 job assemble index 41 start 2026-09-24T05:00:01Z
+{
+ "required_runs": 2476,
+ "complete_runs": 2476,
+ "classified_missing_runs": [],
+ "target_messages": 123800,
+ "messages_by_endpoint": {
+  "aws": 87200,
+  "ncar": 36600
+ },
+ "messages_by_purpose": {
+  "production": 123790,
+  "integrity_retry": 5,
+  "transient_retry": 5
+ },
+ "payload_bytes": 111315461152,
+ "nonfinite_box_values": 0,
+ "feature_hours": 59446,
+ "feature_status": {
+  "ok": 59422,
+  "structural_missing_pre_2019_run": 24
+ },
+ "structural_missing_days": [
+  "2019-01-01"
+ ],
+ "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0",
+ "local_hour_cells": 59440,
+ "local_hour_cells_missing": 24,
+ "repeated_local_hours": 6,
+ "sample_hash_comparisons": 600,
+ "sample_hash_identical": 600,
+ "added_runs_checked": 8,
+ "added_runs_passed": 8,
+ "feature_ranges": {
+  "wx_wind10_mean": [
+   0.9805973873245102,
+   12.263036533877361
+  ],
+  "wx_wind100_mean": [
+   1.0836292742672868,
+   19.08025308897751
+  ],
+  "wx_dswrf_mean": [
+   0.0,
+   868.0539499614248
+  ]
+ }
+}

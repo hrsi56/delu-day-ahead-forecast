@@ -1,0 +1,170 @@
+# CP-20 job critic2-replay index 85 start 2026-09-24T06:40:32Z
+reserved {'analysis_passes': 3, 'component_attempts': 1348, 'decoded_messages': 125950, 'failed_requests': 938, 'final_fits': 32312, 'inner_fits': 129248, 'machine_seconds': 143841.48784604223, 'main_component_attempts': 1272, 'message_attempts': 7835, 'message_tries': 128955, 'network_retries': 927, 'policy_days': 4507, 'prerun_replacement_attempts': 5, 'primitive_fits': 161560, 'reference_passes': 3, 'requests': 216635, 'transfer_bytes': 146033509110, 'uncounted_message_tries': 1855}
+fold_1 {"scale_mismatch_rows": 0, "scale_checked_days": 127, "h0_source_counts": {"cp16": 8, "cp15": 119}, "eval_rows": 4320, "eval_bitwise_equal_rows": 4320, "eval_max_abs": 0.0, "central_bitwise_equal": true, "admission_vectors_matched": 14, "admission_meta_matched": 14, "admission_total": 14, "eval_meta_matched": 180, "eval_meta_total": 180, "failures": [], "fallback_hour_cells": 0, "hour_cells": 4656, "buffer_dates_equal_between_arms": true, "hg_cache_scale_sha_equal": true}
+fold_2 {"scale_mismatch_rows": 0, "scale_checked_days": 254, "h0_source_counts": {"cp16": 14, "cp15": 240}, "eval_rows": 8638, "eval_bitwise_equal_rows": 8638, "eval_max_abs": 0.0, "central_bitwise_equal": true, "admission_vectors_matched": 28, "admission_meta_matched": 28, "admission_total": 28, "eval_meta_matched": 360, "eval_meta_total": 360, "failures": [], "fallback_hour_cells": 0, "hour_cells": 9312, "buffer_dates_equal_between_arms": true, "hg_cache_scale_sha_equal": true, "final_state_buffer_equal": {"H0:fold_1": true, "HG:fold_1": true}}
+fold_3 {"scale_mismatch_rows": 0, "scale_checked_days": 379, "h0_source_counts": {"cp16": 22, "cp15": 357}, "eval_rows": 12862, "eval_bitwise_equal_rows": 12862, "eval_max_abs": 0.0, "central_bitwise_equal": true, "admission_vectors_matched": 42, "admission_meta_matched": 42, "admission_total": 42, "eval_meta_matched": 536, "eval_meta_total": 536, "failures": [], "fallback_hour_cells": 0, "hour_cells": 13872, "buffer_dates_equal_between_arms": true, "hg_cache_scale_sha_equal": true, "final_state_buffer_equal": {"H0:fold_1": true, "HG:fold_1": true, "H0:fold_2": true, "HG:fold_2": true}}
+fold_4 {"scale_mismatch_rows": 0, "scale_checked_days": 509, "h0_source_counts": {"cp16": 30, "cp15": 479}, "eval_rows": 17182, "eval_bitwise_equal_rows": 17182, "eval_max_abs": 0.0, "central_bitwise_equal": true, "admission_vectors_matched": 56, "admission_meta_matched": 56, "admission_total": 56, "eval_meta_matched": 716, "eval_meta_total": 716, "failures": [], "fallback_hour_cells": 0, "hour_cells": 18528, "buffer_dates_equal_between_arms": true, "hg_cache_scale_sha_equal": true, "final_state_buffer_equal": {"H0:fold_1": true, "HG:fold_1": true, "H0:fold_2": true, "HG:fold_2": true, "H0:fold_3": true, "HG:fold_3": true}}
+fold_5 {"scale_mismatch_rows": 0, "scale_checked_days": 636, "h0_source_counts": {"cp16": 38, "cp15": 598}, "eval_rows": 21494, "eval_bitwise_equal_rows": 21494, "eval_max_abs": 0.0, "central_bitwise_equal": true, "admission_vectors_matched": 70, "admission_meta_matched": 70, "admission_total": 70, "eval_meta_matched": 896, "eval_meta_total": 896, "failures": [], "fallback_hour_cells": 0, "hour_cells": 23184, "buffer_dates_equal_between_arms": true, "hg_cache_scale_sha_equal": true, "final_state_buffer_equal": {"H0:fold_1": true, "HG:fold_1": true, "H0:fold_2": true, "HG:fold_2": true, "H0:fold_3": true, "HG:fold_3": true, "H0:fold_4": true, "HG:fold_4": true}}
+{
+ "scale_mismatch_rows": 0,
+ "scale_checked_days": 636,
+ "h0_source_counts": {
+  "cp16": 38,
+  "cp15": 598
+ },
+ "eval_rows": 21494,
+ "eval_bitwise_equal_rows": 21494,
+ "eval_max_abs": 0.0,
+ "central_bitwise_equal": true,
+ "admission_vectors_matched": 70,
+ "admission_meta_matched": 70,
+ "admission_total": 70,
+ "eval_meta_matched": 896,
+ "eval_meta_total": 896,
+ "failures": [],
+ "fallback_hour_cells": 0,
+ "hour_cells": 23184,
+ "buffer_dates_equal_between_arms": true,
+ "incomplete_or_pending_events": [
+  [
+   "H0",
+   "fold_2",
+   "2021-03-31",
+   "2021-03-29",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_2",
+   "2021-04-01",
+   "2021-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_2",
+   "2021-04-06",
+   "2021-04-04",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_2",
+   "2021-03-31",
+   "2021-03-29",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_2",
+   "2021-04-01",
+   "2021-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_2",
+   "2021-04-06",
+   "2021-04-04",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_4",
+   "2025-04-02",
+   "2025-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_4",
+   "2025-04-03",
+   "2025-04-01",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_4",
+   "2025-04-08",
+   "2025-04-06",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_4",
+   "2025-04-02",
+   "2025-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_4",
+   "2025-04-03",
+   "2025-04-01",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_4",
+   "2025-04-08",
+   "2025-04-06",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_5",
+   "2026-04-01",
+   "2026-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_5",
+   "2026-04-02",
+   "2026-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "H0",
+   "fold_5",
+   "2026-04-07",
+   "2026-04-05",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_5",
+   "2026-04-01",
+   "2026-03-30",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_5",
+   "2026-04-02",
+   "2026-03-31",
+   "incomplete_day_never_buffered"
+  ],
+  [
+   "HG",
+   "fold_5",
+   "2026-04-07",
+   "2026-04-05",
+   "incomplete_day_never_buffered"
+  ]
+ ],
+ "hg_cache_scale_sha_equal": true,
+ "eval_origin_meta_by_arm": {},
+ "final_state_buffer_equal": {
+  "H0:fold_1": true,
+  "HG:fold_1": true,
+  "H0:fold_2": true,
+  "HG:fold_2": true,
+  "H0:fold_3": true,
+  "HG:fold_3": true,
+  "H0:fold_4": true,
+  "HG:fold_4": true,
+  "H0:fold_5": true,
+  "HG:fold_5": true
+ }
+}

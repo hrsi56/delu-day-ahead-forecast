@@ -1,0 +1,26 @@
+{
+ "utc": "2026-09-23T17:25:56Z",
+ "range_bytes": 6000000,
+ "results": [
+  {
+   "endpoint": "aws",
+   "single_connection_MBps": 2.755533442419613,
+   "parallel_per_connection_MBps": [
+    0.7306175244800389,
+    0.6379173624317885,
+    0.8840288390870081
+   ],
+   "parallel_aggregate_MBps": 1.912732835200489
+  },
+  {
+   "endpoint": "ncar",
+   "single_connection_MBps": 0.3326078978261994,
+   "parallel_per_connection_MBps": [
+    1.002663575331435,
+    2.0479681671614642,
+    0.7945703119289658
+   ],
+   "parallel_aggregate_MBps": 2.3821663603560923
+  }
+ ]
+}

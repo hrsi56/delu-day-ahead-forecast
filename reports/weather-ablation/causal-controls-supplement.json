@@ -1,0 +1,62 @@
+{
+ "all_passed": true,
+ "controls": [
+  {
+   "base_refit_vs_cached_hg": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "day": "2020-07-01",
+   "fold": "fold_1",
+   "target_day_weather_shift": {
+    "A1": 370.10749609660024,
+    "B2": 899.6620841374897
+   },
+   "target_day_weather_shift_passed": true,
+   "target_rows_shifted": 24,
+   "training_rows_permuted": 13102,
+   "training_weather_permutation": {
+    "A1": 3.53860507168525,
+    "B2": 5.733107169452282
+   },
+   "training_weather_permutation_passed": true,
+   "uniform_scaling_x3_invariance": {
+    "A1": 6.039613253960852e-14,
+    "B2": 7.815970093361102e-14
+   }
+  },
+  {
+   "base_refit_vs_cached_hg": {
+    "A1": 0.0,
+    "B2": 0.0
+   },
+   "day": "2025-05-01",
+   "fold": "fold_4",
+   "target_day_weather_shift": {
+    "A1": 19141.061707921494,
+    "B2": 7461.879954872928
+   },
+   "target_day_weather_shift_passed": true,
+   "target_rows_shifted": 24,
+   "training_rows_permuted": 51209,
+   "training_weather_permutation": {
+    "A1": 33.526282757148664,
+    "B2": 23.133850440792344
+   },
+   "training_weather_permutation_passed": true,
+   "uniform_scaling_x3_invariance": {
+    "A1": 1.0658141036401503e-13,
+    "B2": 4.405364961712621e-13
+   }
+  }
+ ],
+ "reason": "The frozen ``controls.py`` positive control multiplies all available weather by 3.0. The inherited LEAR recipe standardises every column on the training split, so a uniform positive rescaling of a column (training and forecast rows alike) cancels exactly: the observed movement (<= 4.4e-13) is floating-point round-off, not sensitivity. That result is kept as a units/scaling-invariance check; it is not a valid positive control.",
+ "repair": "r13",
+ "seed": 15042,
+ "shift": {
+  "wx_dswrf_mean": 200.0,
+  "wx_wind100_mean": 5.0,
+  "wx_wind10_mean": 5.0
+ },
+ "threshold_eur_mwh": 1e-06
+}

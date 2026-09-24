@@ -1,0 +1,200 @@
+{
+ "implementation_sha256_after": {
+  "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
+  "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
+  "src/cp20/chain.py": "320f817972d445737234ba2c2c71328e4a28bd8f2f504738270eaad17f5b2ae8",
+  "src/cp20/extract.py": "b07b3e3961f2f7df6cb77e20886b8e226e2d5892a5ccb1990605d8ea63bc946c",
+  "src/cp20/feasibility.py": "6c037a23522fdfb9f767215cc788551595d388e4267bde63511ddafa6618de96",
+  "src/cp20/gfs.py": "153a4210b5f7d5c3a4ea6e5e0bae4d20d796bcfed9f2b1f2f6da018f4affb498",
+  "src/cp20/net.py": "4a9726e29dadbc8eef482793416d222902b8eb214133c3e1016e8853c8a34549",
+  "src/cp20/plan.py": "eca2f62c986cd2dfbcaa96e9e2ec2be71af4f9a8687b43f3a969e3c95aa13808",
+  "src/cp20/probe.py": "d6a6d188f7dd51dfe00a30da6f0675e0f87e8b559a81fb19ab9567aab8f3e256",
+  "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5"
+ },
+ "owner_decisions": [
+  {
+   "affected": {
+    "exhausted_before_O1": [
+     "2021-01-04 f021"
+    ],
+    "incomplete_runs": [
+     "2021-01-04",
+     "2022-08-25",
+     "2023-03-24"
+    ],
+    "messages": 470,
+    "runs": 11
+   },
+   "id": "O1",
+   "implementation": "extra = min(2, attempts logged before the full-extraction start epoch 1790184500.409214, i.e. subset jobs 3, 11, 12); production limit = 2 + extra; attempts beyond 2 are tagged owner_approved_prerun_replacement, appended to prerun_replacement_attempts.jsonl and counted in ledger counter prerun_replacement_attempts (still inside message_attempts). All section 15.5 caps unchanged.",
+   "source": "Owner instruction in the CP-20 session, 2026-09-23 (after 2021-01-04 failed with production attempt allowance exhausted)",
+   "table": "reports/weather-ablation/prerun-attempts.csv",
+   "text": "Approve up to two additional production attempts per target message whose allowance was consumed by pre-run testing; log them separately. No other cap changes."
+  },
+  {
+   "id": "O2",
+   "implementation": "attempts.jsonl logs every try (message_tries); attempt-outcomes.jsonl records each outcome; only integrity_failure, object_failure (4xx/wrong size) and validation_failure count (message_attempts, per-message allowance 2 production + O1 extra, third kept for review); network, stop, cap and discarded-with-run outcomes go to uncounted-attempts.jsonl (uncounted_message_tries). Legacy tries backfilled (source \"O2 backfill\"): {'validation_failure': 4, 'success': 300, 'interrupted_or_discarded': 63, 'network_failure': 10}. The ledger message_attempts total keeps the 1,885 pre-O2 charges unchanged (conservative; not reset).",
+   "source": "Owner instruction in the CP-20 session, 2026-09-23 (issued as a pasted block; confirmed by the Owner in the next message)",
+   "text": "A message attempt counts only when a response was received and the message failed validation, decoding or integrity checks. Network stalls, timeouts, connection failures and Lead-initiated stops do not consume the per-message allowance; they are logged separately and remain bounded by the transfer and machine-hour caps. Restore the allowance of every message that lost attempts to those causes. O1 stays as recorded. No other cap changes."
+  },
+  {
+   "id": "S1",
+   "implementation": "src/cp20/net.py (r9), src/cp20/extract.py no-data watchdog, src/cp20/chain.py phases",
+   "source": "Owner standing instruction, same message as the O2 confirmation",
+   "text": "Run the rest of the extraction unattended. Network problems are never a reason to stop or ask. Stop only when a cap is about to be exhausted, when data contradicts the admission, when no data at all arrives for 60 minutes (then report), or when all runs are done. Harden the network layer (watchdog deadline, per-attempt buffers, backoff with jitter up to 10 minutes). Run NCAR now with 3 workers, AWS alone after NCAR finishes, and finally retry the failed days."
+  },
+  {
+   "id": "O2-A1",
+   "implementation": "r10; Attempts ignores integrity_failure outcomes whose detail contains \"broken GRIB chain\" and whose epoch precedes the first extraction job running the fix (job-code-versions.jsonl, flag locator_fix_r10); restored records logged in o2-a1-restored-attempts.jsonl",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block with the Owner's own request to record per-phase code versions)",
+   "text": "Root cause of the NCAR \"broken GRIB chain\" failures: valid tiny GRIB2 messages (0/1/194 categorical ice pellets, 179-656 bytes, correct reference time) rejected by plausible()'s length > 2000 guard. Fix the locator; test with a tiny constant-field message; verify on a handful of failed days before re-running all. Do not stop the running chain. Amend O2: attempts consumed by this locator bug do not count; restore them. After the AWS phase, re-run the failed NCAR days with the fix. Record which code version each chain phase actually ran."
+  },
+  {
+   "id": "O3",
+   "implementation": "ledger effort pauses: three retroactive waits (conservative boundaries) and, from now, a pause opened at each RUNNING handback and closed on resumption",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
+   "text": "Time when a detached job runs unattended and the Lead is only waiting does not count as active hours. Machine-hours and transfer are still charged in full."
+  },
+  {
+   "id": "O4",
+   "implementation": "r12 (1b5997d): per-worker persistent lead pools (AWS 4, NCAR 2 concurrent leads per run); per-lead tries, framing/decode/metadata checks, sha256 and attempt/ledger entries unchanged; a run is saved only when all ten leads succeed; machine time still charged as wall x declared workers; 429/5xx back off with jitter (r9). Swapped in at a drained stop of job 37 (23:19:48Z); chain run 3 from job 38.",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
+   "text": "Concurrent HTTP requests inside one worker process are not extra workers. Implement concurrent range requests within a run (up to 4 at a time per worker for AWS; NCAR modest, back off on 429), keeping every per-message check, hash and ledger entry unchanged; test; swap in at a safe boundary; record the code version per phase."
+  },
+  {
+   "id": "O-run-plan-2026-09-24",
+   "implementation": "r11 (47607df); job 36 drained at 23:15:02Z (drained=true, 51 runs); chain run 2 started 23:15:14Z",
+   "source": "Owner instruction in the CP-20 session, 2026-09-24 (pasted block replacing the options 1-2 message)",
+   "text": "Gracefully stop the AWS job and restart the chain with 4 AWS workers and the shorter deadline (15 s + 5 us per byte); run the NCAR re-run with 4 workers; raise the extraction machine-hour stop line from 85 to 100 within the 120 cap. Nothing else changes: no skipped checks, no imputation, no change to what counts as a completed day."
+  }
+ ],
+ "repairs": [
+  {
+   "cause": "ecCodes codes_get returns code-table keys as abbreviations; the validator compared them with integer codes. Confirmed on a locally built ecCodes GRIB2 sample: sfc<->103 and fc<->1. The decoded messages matched admission; this was a validator defect, not a data contradiction.",
+   "consumed": {
+    "message_attempts": 20,
+    "note": "2019-01-01, 2019-03-30, 2019-06-13 and 2019-10-26 f021 (all five fields) used production attempt 1; the rerun uses attempt 2. No box data from the halted job was kept (no run completed)."
+   },
+   "detected_utc": "2026-09-23T17:10:22Z",
+   "evidence": "reports/weather-ablation/defects/r1-validator-code-key-type/",
+   "id": "r1-validator-code-key-type",
+   "job": "gfs-extract index 3 (representative subset, attempt 1)",
+   "repair": "read_meta() reads code-table keys with ktype=int and keeps the native abbreviations as *_native evidence; synthetic ecCodes round-trip tests added (tests/cp20/test_gfs_eccodes.py). The halt mechanism itself worked as designed.",
+   "symptom": "Halt \"contradiction\" at f021 of the first four NCAR runs: typeOfFirstFixedSurface read as sfc and typeOfProcessedData as fc."
+  },
+  {
+   "change": "AWS .idx body bound (charged up front) lowered from 400,000 to 100,000 bytes (observed ~33-41 KB); an oversize idx fails loudly as a transfer error.",
+   "effective": "from gfs-extract job index 12 (resumed subset, 2026-09-23T17:20:22Z), which ran this working-tree change before its commit",
+   "id": "r2-idx-charge-bound",
+   "kind": "accounting efficiency, no scientific or data effect"
+  },
+  {
+   "change": "With a same-version/lead learned error history the resynchronisation window is sized 2 x max(150 kB, 3 x recent max error) around the prediction and extended in 600 kB steps only while it holds no GRIB2 start; priors and fallbacks keep the 1.15 MB window. Located offsets are still verified by header chaining, framing, sha256, decode and metadata validation.",
+   "effective": "full extraction launch onward (not used by subset jobs 11/12)",
+   "evidence": "subset: ~11 header hops and three 1.15 MB windows per NCAR lead; windows equalled payload bytes",
+   "id": "r3-ncar-tight-window",
+   "kind": "NCAR locator efficiency, no scientific or data effect",
+   "status": "amended by r6 (the 3x-error rule produced multi-MB windows on real consecutive-day errors of 0.2-0.9 MB); used only by full job index 16 for 2019-01-02..03",
+   "tests": "tests/cp20/test_gfs_locator.py::test_learned_tight_window_extends_or_falls_back_and_stays_exact"
+  },
+  {
+   "change": "Workers take runs from endpoint lanes (one AWS-preferring, the rest NCAR-preferring, date order), an idle lane drains the other queue; replaces a single NCAR-first queue.",
+   "effective": "full extraction launch onward",
+   "evidence": "reports/weather-ablation/throughput-probe.json and feasibility.json: link ~1.2-2.8 MB/s aggregate, AWS single connection 2.76 MB/s, NCAR per-connection limited",
+   "id": "r4-endpoint-lanes",
+   "kind": "scheduling efficiency, no scientific or data effect"
+  },
+  {
+   "change": "Retained-raw review-sample runs keep production <= 2 so their third attempt serves independent review; all other runs may use up to 3 production attempts. The section 15.5 cap of 3 per target message including review is unchanged and still enforced before each request.",
+   "effective": "resume pass after full-job index 16",
+   "id": "r5-attempt-allowance-by-review-role",
+   "kind": "attempt accounting policy within the unchanged 3-per-message cap",
+   "review_implication": "independent review re-decodes only retained-raw sample runs, which never exceed 2 production attempts",
+   "status": "superseded and reverted before any use (no attempt was made under r5): replaced by Owner decision O1; production is again <=2 for every message so each keeps one review attempt",
+   "trigger": "2021-01-04 f021 production attempts 1 and 2 were both interrupted by the Lead (restart test SIGTERM, then the stop for the throughput probe); the full job refused a third production attempt under the internal 2-attempt reservation and recorded the run as failed (not imputed)."
+  },
+  {
+   "change": "Learned window: back = clamp(1.25 x recent max error, 300 kB, 1.0 MB), window ends 300 kB past the prediction, extended in 600 kB steps only if it holds no GRIB2 start; priors/fallbacks unchanged (1.15 MB).",
+   "effective": "relaunch after job 16",
+   "evidence": "full job 16, 2019-01-02: consecutive-day errors median 235 kB, max 924 kB; 108 hops and 34.5 MB windows",
+   "id": "r6-ncar-bounded-window",
+   "kind": "NCAR locator efficiency, no scientific or data effect",
+   "tests": "tests/cp20/test_gfs_locator.py::test_bounded_window_never_exceeds_the_cap_for_large_learned_errors"
+  },
+  {
+   "change": "per-request deadline 30 s + 1e-5 s x expected bytes with 32 kB reads; failed/stalled connections are closed; NetworkError (timeouts, stalls, 5xx/429) retries the same endpoint (transient_retry), ObjectError/IntegrityError (4xx, size mismatch, framing/decode) uses the one alternate endpoint; >=5 network failures within 600 s halt the job resumably (network_degraded) instead of exhausting message attempts",
+   "effective": "relaunch after full job 23",
+   "id": "r7-network-stall-handling",
+   "kind": "network robustness, no scientific or data effect; attempt caps unchanged",
+   "status": "circuit-breaker halt superseded by r9 (Owner S1); deadline and cause routing retained in hardened form",
+   "tests": "tests/cp20/test_retry_routing.py",
+   "trigger": "full job 23: AWS range for 2021-01-04 f021 u10+v10 trickled at ~600 B/s for >7 min (nettop), never tripping the 60 s no-byte read timeout; an earlier 2021-01-08 f024 range took 164 s"
+  },
+  {
+   "change": "one endpoint per extraction job (--endpoint aws|ncar; the single job-name lock prevents overlap); first intentional stop drains (no new run starts, in-flight runs finish and are saved), a second stop is immediate; the monitor waits up to 1,200 s for a drain after an intentional stop but still stops within 30 s at any cap",
+   "diagnosis": {
+    "aws_median_MBps_per_request": {
+     "job16 (17:28-17:34Z)": 3.78,
+     "job23": 0.16,
+     "job25": 0.24
+    },
+    "conclusion": "the AWS flow collapses only while an NCAR bulk flow shares the local link; the collapse mechanism is in the network path (outside the repository), the trigger was the two-lane concurrent scheduling (r4); r7 code is not the cause (slowdown began in job 23 before r7)",
+    "concurrent_reproduction_18:05Z": "AWS keep-alive range with an NCAR bulk flow active: 1.05 MB in 71 s then stalled; NCAR 0.76-1.73 MB/s. Subset jobs 11/12 showed the same pattern (AWS ~0.17 MB/s beside NCAR).",
+    "evidence": "reports/weather-ablation/diagnostics/",
+    "idle_single_connection_18:04Z": {
+     "aws": [
+      2.09,
+      2.39
+     ],
+     "ncar": 0.98
+    },
+    "ncar_median_MBps": {
+     "job16": 0.46,
+     "job23": 0.54,
+     "job25": 0.53
+    }
+   },
+   "effective": "from the AWS confirmation job after job 25",
+   "id": "r8-single-endpoint-jobs-and-draining-stops",
+   "kind": "scheduling and stop handling, no scientific or data effect",
+   "supersedes": "r4 endpoint lanes"
+  },
+  {
+   "change": "watchdog-enforced wall-clock deadline per request (reader thread, caller waits at most the deadline, socket shut down); a per-request buffer (no partial resume); healthy keep-alive reused, a failed or expired request retried on a fresh connection after exponential backoff with +-50% jitter capped at 600 s, without limit and uncounted; every retry reserves its bytes before sending; the 5-failures halt removed; a 60-minute no-received-data watchdog stops the job (exit 6) for a report; single-endpoint phases chained by src/cp20/chain.py",
+   "effective": "chain launch after job 26",
+   "id": "r9-network-hardening-O2-S1",
+   "kind": "network robustness and attempt accounting per Owner decisions O2/S1; no scientific or data effect",
+   "tests": "tests/cp20/test_fetcher_watchdog.py (local trickling server), tests/cp20/test_attempts.py, tests/cp20/test_retry_routing.py"
+  },
+  {
+   "change": "size guard kept only for the first header found by scanning a window (MIN_SCAN_START_BYTES 2000); headers reached by following the chain need only a valid structure (> 100 bytes, edition 2, reference time, product template); NCAR jobs verify the fix on 5 failed days spread across the list before the rest and stop the chain (exit 8) if any fails; each extraction job appends its git HEAD, dirty paths and implementation sha256 to job-code-versions.jsonl; chain phases attach it",
+   "commit": "097a2e9",
+   "defect": "plausible() required length > 2000 bytes for every header, so a valid tiny near-constant message reached by the length chain raised \"broken GRIB chain\"; NCAR phase (job 33) recorded 461 such failed days by 2026-09-23T22:26Z (the Owner verified 457 at the break offsets); files intact, not archive absence",
+   "effective": "every extraction job started after 2026-09-23T22:28:13Z",
+   "id": "r10-locator-tiny-chained-messages",
+   "kind": "NCAR locator defect fix; no scientific or data effect",
+   "tests": "tests/cp20/test_gfs_locator.py::test_tiny_message_reached_by_the_chain_is_accepted_r10, ::test_window_starting_on_a_tiny_message_resynchronises_past_it, ::test_pre_r10_rule_reproduces_the_broken_chain_defect; tests/cp20/test_attempts.py::test_o2_amendment_a1_restores_locator_defect_attempts_only_before_the_fix"
+  },
+  {
+   "change": "request deadline 15 s + 5 us per expected byte (was 30 s + 10 us); chain plan aws-all (4 workers, deferred failed AWS days) -> retry-aws (4) -> retry-ncar (4, r10 five-day verification first); stop line 100 machine-hours; prior chain status kept as chain-status.run1.json",
+   "commit": "47607df",
+   "effective": "chain run 2 (job 37 onward)",
+   "evidence": "Owner measurement: AWS worker averaged 0.26 MB/s over an hour while single requests ran at a median 4.8 MB/s on a 290 Mbps line: latency-bound serial requests",
+   "id": "r11-deadline-and-chain-plan",
+   "kind": "throughput and scheduling per Owner instruction; no scientific or data effect"
+  },
+  {
+   "commit": "1b5997d",
+   "effective": "chain run 3 (job 38 onward)",
+   "id": "r12-concurrent-leads-O4",
+   "kind": "throughput per Owner decision O4; no scientific or data effect",
+   "measured": {
+    "job36_serial_1_worker_runs_per_h": 35,
+    "job37_serial_4_workers_runs_per_h": "~400",
+    "job38_concurrent_4x4_runs_per_h": 757
+   },
+   "tests": "tests/cp20/test_concurrent_leads.py (overlap up to the pool size; concurrent == sequential records and arrays; failing lead discards siblings uncounted; stop discards)"
+  }
+ ],
+ "schema": "cp20-extraction-repairs-v1"
+}

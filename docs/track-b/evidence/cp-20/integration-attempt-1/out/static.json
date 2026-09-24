@@ -1,0 +1,481 @@
+{
+ "results": {
+  "issued_document_sha256": {
+   "ok": true,
+   "detail": null
+  },
+  "intake_receipt_present": {
+   "ok": true,
+   "detail": null
+  },
+  "admission_bundle_hash_lists_match_present_files": {
+   "ok": true,
+   "detail": {
+    "checked": 853,
+    "bad": []
+   }
+  },
+  "protocol_frozen_hashes_match_candidate_bytes": {
+   "ok": false,
+   "detail": {
+    "reports/weather-ablation/prerun-attempts.csv": {
+     "section": "frozen_inputs_sha256",
+     "frozen": "859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06",
+     "candidate": "bef7f523df319428bcb416efef43c2df01a58bbab1efad43f87c83f49b2c2457",
+     "candidate_with_CRLF": "859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06"
+    }
+   }
+  },
+  "artifact_manifest_hashes_match_candidate_bytes": {
+   "ok": false,
+   "detail": {
+    "reports/weather-ablation/prerun-attempts.csv": "859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06"
+   }
+  },
+  "predictions_rows_75229": {
+   "ok": true,
+   "detail": 75229
+  },
+  "seven_policies_10747_each": {
+   "ok": true,
+   "detail": {
+    "A1": 10747,
+    "B0": 10747,
+    "B1": 10747,
+    "B2": 10747,
+    "B3": 10747,
+    "H0": 10747,
+    "HG": 10747
+   }
+  },
+  "contrast_rows_21494": {
+   "ok": true,
+   "detail": 21494
+  },
+  "fold_counts": {
+   "ok": true,
+   "detail": {
+    "fold_1": 2160,
+    "fold_2": 2159,
+    "fold_3": 2112,
+    "fold_4": 2160,
+    "fold_5": 2156
+   }
+  },
+  "identical_keys_all_policies": {
+   "ok": true,
+   "detail": null
+  },
+  "no_duplicate_policy_keys": {
+   "ok": true,
+   "detail": null
+  },
+  "all_finite": {
+   "ok": true,
+   "detail": null
+  },
+  "ordered_quantiles_no_crossing": {
+   "ok": true,
+   "detail": null
+  },
+  "evidence_class_label": {
+   "ok": true,
+   "detail": [
+    "development_post_selection"
+   ]
+  },
+  "origin_is_D_minus_1_1100_utc": {
+   "ok": true,
+   "detail": null
+  },
+  "delivery_date_is_berlin_local_date": {
+   "ok": true,
+   "detail": null
+  },
+  "H0_p50_emitted_separately_from_central": {
+   "ok": true,
+   "detail": 1.0
+  },
+  "HG_p50_emitted_separately_from_central": {
+   "ok": true,
+   "detail": 1.0
+  },
+  "H0_bitwise_equals_CP16_V2H_all_10747": {
+   "ok": true,
+   "detail": {
+    "rows": 10747,
+    "keys_equal": true,
+    "bitwise": true,
+    "max_abs": 0.0
+   }
+  },
+  "saved_references_bitwise_equal_cp15": {
+   "ok": true,
+   "detail": {
+    "B0": true,
+    "B1": true,
+    "B2": true,
+    "B3": true,
+    "A1": true
+   }
+  },
+  "H0_HG_same_truth_scale_level": {
+   "ok": true,
+   "detail": null
+  },
+  "HG_central_differs_from_H0": {
+   "ok": true,
+   "detail": 0.9995347538848051
+  },
+  "fold3_88_dates_peak_408h_17d": {
+   "ok": true,
+   "detail": {
+    "f3_dates": 88,
+    "peak_rows": 408,
+    "peak_days": 17
+   }
+  },
+  "cp16_manifest_638_origins_35_admission": {
+   "ok": true,
+   "detail": {
+    "origins": 638,
+    "admission": 35
+   }
+  },
+  "warmup_starts": {
+   "ok": true,
+   "detail": {
+    "fold_1": "2020-05-25",
+    "fold_2": "2021-02-23",
+    "fold_3": "2022-05-25",
+    "fold_4": "2025-03-22",
+    "fold_5": "2025-12-02"
+   }
+  },
+  "run_manifest_2476_runs_plus_structural_2019_01_01": {
+   "ok": true,
+   "detail": {
+    "runs": 2476,
+    "structural": [
+     "2019-01-01"
+    ]
+   }
+  },
+  "run_manifest_days_equal_required_union": {
+   "ok": true,
+   "detail": {
+    "need": 2477,
+    "manifest": 2477
+   }
+  },
+  "run_is_delivery_minus_1": {
+   "ok": true,
+   "detail": null
+  },
+  "run_manifest_version_by_date": {
+   "ok": true,
+   "detail": null
+  },
+  "eight_added_runs_2023_03_24_31": {
+   "ok": true,
+   "detail": [
+    "2023-03-24",
+    "2023-03-25",
+    "2023-03-26",
+    "2023-03-27",
+    "2023-03-28",
+    "2023-03-29",
+    "2023-03-30",
+    "2023-03-31"
+   ]
+  },
+  "no_run_before_2019": {
+   "ok": true,
+   "detail": null
+  },
+  "availability_bracketed_all_runs": {
+   "ok": true,
+   "detail": []
+  },
+  "messages_123800_unique": {
+   "ok": true,
+   "detail": 123800
+  },
+  "messages_leads_fields": {
+   "ok": true,
+   "detail": null
+  },
+  "messages_metadata_all_valid": {
+   "ok": false,
+   "detail": {
+    "dataDate": 0,
+    "dataTime": 0,
+    "validityDate": 0,
+    "validityTime": 0,
+    "shortName": 74280,
+    "wind_level": 0,
+    "wind_typeOfLevel": 0,
+    "wind_units": 0,
+    "wind_step": 0,
+    "wind_param": 0,
+    "wind_surface": 0,
+    "dswrf_bounds": 0,
+    "dswrf_units_surface": 0,
+    "dswrf_param": 0,
+    "production_status": 0,
+    "processed_type": 0,
+    "generating_process": 0,
+    "centre": 0,
+    "quantum": 0,
+    "box_nonfinite": 0,
+    "bytes": 0,
+    "version": 0,
+    "dswrf_precision_vs_version": 0,
+    "url": 0
+   }
+  },
+  "messages_by_endpoint": {
+   "ok": true,
+   "detail": {
+    "aws": 87200,
+    "ncar": 36600
+   }
+  },
+  "messages_by_version": {
+   "v14": 8150,
+   "v15.1": 32450,
+   "v16": 83200
+  },
+  "endpoint_is_primary_or_named_alternate": {
+   "ok": true,
+   "detail": []
+  },
+  "alternate_endpoint_messages": {
+   "count": 0,
+   "runs": []
+  },
+  "run_records_complete_and_npz_sha256": {
+   "ok": true,
+   "detail": {
+    "records": 2476,
+    "bad": []
+   }
+  },
+  "grid_metadata_every_message": {
+   "ok": true,
+   "detail": []
+  },
+  "run_record_sha_equals_messages_parquet": {
+   "ok": true,
+   "detail": []
+  },
+  "cp20_retained_raw_sha256_equals_messages": {
+   "ok": true,
+   "detail": {
+    "files": 1150,
+    "runs": 23,
+    "bad": []
+   }
+  },
+  "admission_600_retained_samples_byte_identical": {
+   "ok": true,
+   "detail": {
+    "files": 600,
+    "compared_to_cp20": 600,
+    "runs": [
+     "2019-01-01",
+     "2019-03-30",
+     "2019-06-13",
+     "2019-10-26",
+     "2020-10-24",
+     "2021-03-23",
+     "2022-03-26",
+     "2022-08-25",
+     "2024-03-30",
+     "2024-10-26",
+     "2026-03-28",
+     "2026-04-06"
+    ],
+    "bad": []
+   }
+  },
+  "sample_hash_comparison_csv_600_identical": {
+   "ok": true,
+   "detail": null
+  },
+  "features_cover_every_canonical_hour_of_required_days": {
+   "ok": true,
+   "detail": {
+    "rows": 59446,
+    "expected": 59446
+   }
+  },
+  "features_status_classes": {
+   "ok": true,
+   "detail": {
+    "ok": 59422,
+    "structural_missing_pre_2019_run": 24
+   }
+  },
+  "structural_rows_are_2019_01_01_all_nan": {
+   "ok": true,
+   "detail": null
+  },
+  "ok_rows_finite": {
+   "ok": true,
+   "detail": null
+  },
+  "feature_run_is_D_minus_1_00z": {
+   "ok": true,
+   "detail": null
+  },
+  "feature_lead_hours_22_to_46": {
+   "ok": true,
+   "detail": [
+    22,
+    46
+   ]
+  },
+  "features_dswrf_nonnegative_wind_positive": {
+   "ok": true,
+   "detail": null
+  },
+  "local_hour_cells_59440_repeated_6": {
+   "ok": true,
+   "detail": {
+    "cells": 59440,
+    "repeated": 6
+   }
+  },
+  "weather_design_sha256_matches_protocol": {
+   "ok": true,
+   "detail": null
+  },
+  "clipping_log_within_minus_3q": {
+   "ok": true,
+   "detail": null
+  },
+  "hg_cache_638_items_identity_bound": {
+   "ok": true,
+   "detail": {
+    "items": 638,
+    "sources": {
+     "fresh_hg_components": 636,
+     "original_no_eligible_hours": 2
+    },
+    "bad": []
+   }
+  },
+  "hg_fit_history_windows": {
+   "ok": true,
+   "detail": []
+  },
+  "hg_fit_accounting": {
+   "hour_fits": 30504,
+   "solver_calls_main": 152520,
+   "train_rows_weather_missing_sum": 0,
+   "forecast_rows_weather_missing_sum": 0
+  },
+  "ledger_caps_equal_section_15_5": {
+   "ok": true,
+   "detail": null
+  },
+  "ledger_counts_within_caps": {
+   "ok": true,
+   "detail": {}
+  },
+  "ledger_peaks_within_caps": {
+   "ok": true,
+   "detail": {
+    "additional_disk_bytes": 2327818676,
+    "rss_bytes": 3999416320
+   }
+  },
+  "no_running_jobs_in_ledger": {
+   "ok": true,
+   "detail": null
+  },
+  "all_jobs_blas_1": {
+   "ok": true,
+   "detail": null
+  },
+  "workers_le_4": {
+   "ok": true,
+   "detail": null
+  },
+  "primitive_split": {
+   "ok": true,
+   "detail": {
+    "primitive_fits": 157320,
+    "inner_fits": 125856,
+    "final_fits": 31464
+   }
+  },
+  "ledger_counts": {
+   "analysis_passes": 1,
+   "component_attempts": 1312,
+   "decoded_messages": 125950,
+   "failed_requests": 938,
+   "final_fits": 31464,
+   "inner_fits": 125856,
+   "machine_seconds": 143290.71016599625,
+   "main_component_attempts": 1272,
+   "message_attempts": 6685,
+   "message_tries": 128955,
+   "network_retries": 927,
+   "policy_days": 1937,
+   "prerun_replacement_attempts": 5,
+   "primitive_fits": 157320,
+   "reference_passes": 1,
+   "requests": 216635,
+   "transfer_bytes": 146033509110,
+   "uncounted_message_tries": 1855
+  },
+  "main_solver_calls_vs_ledger": {
+   "main_solver_calls_from_cache_logs": 152520,
+   "ledger_primitive_fits_total": 157320
+  },
+  "protocol_commit_before_any_hg_fit": {
+   "ok": true,
+   "detail": {
+    "protocol_commit": 1790226101,
+    "first_hg_job": 1790226121.8266869
+   }
+  },
+  "admission_commit_before_outer_scoring": {
+   "ok": true,
+   "detail": {
+    "admission_commit": 1790226833,
+    "comparison_start": [
+     1790228361.887671,
+     1790228890.18844
+    ]
+   }
+  },
+  "protocol_unchanged_since_freeze_commit": {
+   "ok": true,
+   "detail": null
+  },
+  "admission_freeze_lineage_70_vectors_stage": {
+   "ok": true,
+   "detail": null
+  },
+  "admission_vectors_preserved_in_final_lineage": {
+   "ok": true,
+   "detail": null
+  },
+  "admission_dates_equal_cp16_manifest": {
+   "ok": true,
+   "detail": null
+  },
+  "no_predictions_committed_at_admission_freeze": {
+   "ok": true,
+   "detail": null
+  }
+ },
+ "failures": [
+  "protocol_frozen_hashes_match_candidate_bytes",
+  "artifact_manifest_hashes_match_candidate_bytes",
+  "messages_metadata_all_valid"
+ ]
+}

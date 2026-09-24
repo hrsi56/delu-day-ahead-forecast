@@ -1,0 +1,13 @@
+scope,candidate,baseline,metric,difference,ci_lower,ci_upper,status,undefined_replicates,replicates,estimand,confidence,evidence_class
+fold_1,HG,H0,MAE,-1.0568775077080046,-1.6765662626114164,-0.5212095504165768,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_1,HG,H0,WIS,-0.6477003323495039,-1.01275232920474,-0.35598004229867525,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_2,HG,H0,MAE,-1.076266161201147,-1.996859263806638,-0.2643651654693269,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_2,HG,H0,WIS,-0.8471394585486971,-1.4318023314496544,-0.393523717892896,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_3,HG,H0,MAE,-3.1782372305718454,-6.089829306144048,0.03687700160989306,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_3,HG,H0,WIS,-2.4294440795608274,-4.023143370614526,-0.7751608725395348,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_4,HG,H0,MAE,-1.4881315027950706,-2.7231726574338713,-0.20103752114857618,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_4,HG,H0,WIS,-1.0290126050119017,-1.793812676567589,-0.30339521559099114,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_5,HG,H0,MAE,-3.1011517190158138,-4.186992920206246,-1.6990429942376863,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+fold_5,HG,H0,WIS,-1.9804085956025421,-2.43524429772757,-1.2767746793683077,resolved,0,2000,paired mean daily loss difference,0.95,descriptive_paired_daily
+equal_fold,HG,H0,MAE,-0.07831150099532369,-0.10059575155295458,-0.05703087928591252,resolved,0,2000,equal-fold B0-normalized eligible-hour mean difference,0.95,exploratory_post_selection
+equal_fold,HG,H0,WIS,-0.08381129930970188,-0.10438268112867141,-0.0655398413208593,resolved,0,2000,equal-fold B0-normalized eligible-hour mean difference,0.95,exploratory_post_selection

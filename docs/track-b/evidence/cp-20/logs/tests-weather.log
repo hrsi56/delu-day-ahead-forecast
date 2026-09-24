@@ -1,0 +1,47 @@
+# CP-20 job tests-weather index 9 start 2026-09-23T17:12:12Z
+......F..............................................                    [100%]
+=================================== FAILURES ===================================
+____ test_quantum_is_max_of_contributing_messages_and_unknown_quantum_fails ____
+
+    def test_quantum_is_max_of_contributing_messages_and_unknown_quantum_fails():
+        data = with_leads('dswrf', lambda l: 0.0)
+        data[4, 1, 0, 0] = -0.75        # block -1.5 at f024: allowed only if q >= 0.5
+        b, log = wx.radiation_block(data[4], NORMAL_BOUNDS, [0.5 if l == 21 else 0.01 for l in wx.LEADS], 24)
+        assert b is not None and log['quantum'] == 0.5
+        b, log = wx.radiation_block(data[4], NORMAL_BOUNDS, [0.01] * 10, 24)
+        assert b is None
+>       b, log = wx.radiation_block(data[4], NORMAL_BOUNDS, [None] * 10, 24)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/cp20/test_weather_conversion.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = array([[[ 0.  ,  0.  ,  0.  , ...,  0.  ,  0.  ,  0.  ],
+        [ 0.  ,  0.  ,  0.  , ...,  0.  ,  0.  ,  0.  ],
+    ...  0.  , ...,  0.  ,  0.  ,  0.  ],
+        [ 0.  ,  0.  ,  0.  , ...,  0.  ,  0.  ,  0.  ]]],
+      shape=(10, 34, 41))
+bounds = [(18, 21), (18, 24), (24, 27), (24, 30), (30, 33), (30, 36), ...]
+quanta = [None, None, None, None, None, None, ...], end = 24
+
+    def radiation_block(a: np.ndarray, bounds: list, quanta: list, end: int):
+        """Three-hour block mean (end-3, end] per cell with the quantum-bounded clipping rule."""
+        k = LEADS.index(end)
+        if end % 6 == 3:
+            if tuple(bounds[k]) != (end - 3, end):
+                raise ConversionRefused(f'averaging bounds {bounds[k]} at f{end:03d}')
+            block, q = a[k].copy(), quanta[k]
+        else:
+            if tuple(bounds[k]) != (end - 6, end) or tuple(bounds[k - 1]) != (end - 6, end - 3):
+                raise ConversionRefused(f'averaging bounds {bounds[k - 1]}/{bounds[k]} at f{end:03d}')
+>           block, q = 2.0 * a[k] - a[k - 1], max(quanta[k], quanta[k - 1])
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'
+
+src/cp20/weather.py:88: TypeError
+=========================== short test summary info ============================
+FAILED tests/cp20/test_weather_conversion.py::test_quantum_is_max_of_contributing_messages_and_unknown_quantum_fails
+1 failed, 52 passed in 0.92s
+# CP-20 job tests-weather index 10 start 2026-09-23T17:12:21Z
+.....................................................                    [100%]
+53 passed in 0.64s
