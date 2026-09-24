@@ -17,6 +17,24 @@ International](https://creativecommons.org/licenses/by/4.0/). Redistribution is 
 **with attribution**, which is why that line appears on every public surface of this project
 rather than only here.
 
+## Weather-derived research inputs carry their own attribution
+
+The CP-20 research ablation adds weather aggregates under `reports/weather-ablation/`. They are
+derived from NCEP GFS 0.25° operational forecasts, obtained from the NCAR GDEX archive and the
+NOAA Open Data Dissemination program on AWS.
+
+> **Weather: derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR GDEX d084001
+> (doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS. Modified and aggregated by this
+> project; not an official NOAA product.**
+
+- The committed values are **modified** regional aggregates, not original NOAA products. They
+  imply no endorsement by NOAA, NCEP or NCAR.
+- No raw GRIB bytes and no decoded grids are committed.
+- The weather inputs are not part of `data/snapshot.parquet` or the v1 champion.
+
+The source terms, the modification statement and the exact scope are in
+[`reports/weather-ablation/rights-notice.md`](reports/weather-ablation/rights-notice.md).
+
 ## The trained model
 
 `models/champion/` is a **derived work** of the CC BY 4.0 data above. It is released under the

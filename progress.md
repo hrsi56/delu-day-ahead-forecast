@@ -1,11 +1,12 @@
 # Programme state — DE-LU day-ahead forecasting
 
-*Orchestrator-owned. **Updated 2026-09-23: CP-16 landed and administratively closed; pending work consolidated; only main and the primary checkout remain. Prior FAIL and CP-15 evidence preserved.**
+*Orchestrator-owned. **Updated 2026-09-24: CP-20 Engineering PASS accepted; LAND, reclamation and push complete under explicit Owner authorization. CP-16 and CP-15 evidence preserved.**
 Single-track programme; current authority is below, historical checkpoint evidence remains intact.*
 
 **Current authority:** CP-20 v21-r4 in `capstone_v21.md` is **RATIFIED**, 2026-09-23.
-CP-20 execution and §15.7 local candidate/evidence packaging are separately **AUTHORIZED**.
-Issued brief ready for Owner transfer; no executor launched here. Prior ratified bytes remain preserved.
+CP-20 Engineering PASS is accepted; LAND, reclamation and push are complete, 2026-09-24
+([landing record](docs/track-b/cp-20-landing-2026-09-24.md)). No later checkpoint is
+authorized. Prior ratified bytes remain preserved.
 
 **Ratified historical authority for CP-16: v21-r3**, cap/counting change ratified and resumption authorized
 2026-09-23. Exact bytes at `evidence/cp-16:capstone_v21.md`, SHA256:
@@ -36,7 +37,61 @@ no commit, stage, branch, worktree, tag or publication was made by the Orchestra
 
 ## 1. Current Position
 
-**Weather/content intake complete; CP-20 ratified and authorized, issued for Owner transfer.**
+**CP-20 Engineering PASS accepted; LAND complete and administratively closed, 2026-09-24.**
+The [landing record](docs/track-b/cp-20-landing-2026-09-24.md) holds the receipt checks,
+decisions, retained local material and citation map.
+
+- Final candidate: `3e9ff8b500c2c655fea810ae11886503927f176c`.
+- Evidence tip: `a7a9b2e3a4d0147a0c82835a853277e9c81c7945` (`evidence/cp-20`). It includes the
+  Integration attempt-1 FAIL at `a7943fb`.
+- Squash landing: `f450bc1a98c70544d8b1fb84c3496986551abb7f` (`land/cp-20`).
+- A fresh independent Integration PASS binds the candidate and all ten §15.6 items.
+
+HG−H0 meets the observed-joint-improvement rule:
+
+| Measure | Difference | 95% interval |
+|---|---|---|
+| ΔS_WIS | −0.0838 | [−0.1044, −0.0655] |
+| ΔS_MAE | −0.0783 | [−0.1006, −0.0570] |
+
+- All five folds favour HG; the fold-3 MAE interval crosses zero.
+- H0 reproduces CP-16 V2-H bitwise on 10,747 keys.
+- As diagnostics, HG meets all six original §8 criteria and H0 misses criteria 1–2.
+- All results are `development_post_selection`. There is no promotion, product qualification,
+  economic threshold or live eligibility.
+
+**Extraction:** 2,476/2,476 runs and 123,800 messages validated; only 2019-01-01 is
+structurally missing.
+
+**CP-20 usage:**
+
+| Resource | Used / cap |
+|---|---|
+| Machine-hours | 40.1 / 120 |
+| Transfer | 136.0 / 160 GiB |
+| Policy-days | 4,525 / 9,000 |
+| Component attempts | 1,384 / 4,000 |
+| Primitive fits | 165,870 / 480,000 |
+| Analysis and reference passes | 3 / 3 each, exhausted |
+
+CP-16's totals remain separate. Post-freeze repairs r13 (supplementary positive controls) and
+r14 (byte-exact CSV) remain disclosed.
+
+For this task only, the Owner explicitly authorized the assistant to land, record decisions,
+reclaim, commit and push. This overrides the usual owner-executed Git and publication
+restriction for this operation only. The Owner's decisions:
+
+1. LAND.
+2. The pasted O1, O2, O2-A1, S1, O3, O4 and run-plan records are confirmed.
+3. Weather attribution is added to `DATA-LICENSE.md`.
+4. No further CP-20 scoring.
+5. The unused app branch is deleted.
+6. Local weather material is retained.
+
+`gauntlet/cp-20` and its clean Lead worktree are removed.
+
+**Historical, 2026-09-23 — weather/content intake complete; CP-20 ratified, authorized and
+issued (since returned PASS and landed).**
 [Receipt and preservation accounting](docs/track-b/weather-content-intake-2026-09-23.md): GFS
 ADMIT for the inventoried scope under inferred NCAR field presence and reconstructed-availability
 assumptions; ICON NOT_ADMITTED. Preserve structural 2019-01-01 missing weather and the post-sample
@@ -237,6 +292,7 @@ No v2 policy is frozen; the 90-day clock has not started.**
 | **CP-11 → CP-14 (old v20)** | Retired future sequence | **never started; superseded by v21** |
 | **CP-15** | Adaptive forecasting feasibility, v21-r1 §12 | **LAND complete; Engineering PASS; product NOT_DEMONSTRATED; A1 best challenger, none qualified; branch reclaimed** |
 | **CP-16** | Ratified v21-r3 §14 / existing-input v2 | **LAND complete; administratively closed; research PASS; no promotion** |
+| **CP-20** | Ratified v21-r4 §15 / direct-GFS weather ablation | **LAND complete; administratively closed; research PASS; HG−H0 observed joint improvement; no promotion** |
 | **CP-17 → CP-19** | Future qualified-policy/live sequence | **not authorized; future complete bars and stage authority required** |
 
 ### The three live surfaces
@@ -302,11 +358,11 @@ these operations; it does not amend the standing rulebook or permit model promot
   `/Users/djourno/Downloads/PJM/.local/artifacts/PJM-cp15-landing-record-2026-09-16/`.
 - Landing accounting: [CP-15 landing record](docs/track-b/cp-15-landing.md).
   No policy freeze, promotion, holdout opening or prospective clock follows this landing.
-- Next step: transfer the issued CP-20 direct-GFS brief; weather admission and local research content
-  have returned and are accepted with their documented limits. CP-16 LAND/reclamation
-  are complete and the H/P comparison is unchanged. CP-20 execution is authorized; pre-run checks remain. Later weather,
-  architecture and live work remain separate. `NOT_DEMONSTRATED` remains the historical
-  CP-15 product conclusion; no new result is claimed.
+- Next step: CP-20 is landed and closed.
+  - Record its measured-quality finding in the 4.7 disposition.
+  - Decide whether the local research content (4.3C/4.10R) should cover it.
+  - Optional 4.4V, 4.5, 4.6 or 4.8 work, and any live route, each need their own authorization.
+  - `NOT_DEMONSTRATED` remains the historical CP-15 product conclusion. No promotion follows CP-20.
 
 
 
@@ -462,6 +518,7 @@ in CP-15. No reserved outcome partition is opened.
 |---|---|---|
 | CP-15 | Completed adaptive forecasting experiment | LAND complete; Engineering PASS; product NOT_DEMONSTRATED |
 | CP-16 | Ratified existing-input v2 H/P research comparison, v21-r3 §14 | LAND complete; administratively closed; research PASS; no promotion |
+| CP-20 | Ratified direct-GFS HG−H0 research ablation, v21-r4 §15 | LAND complete; administratively closed; research PASS; no promotion |
 | CP-17 | Freeze/register a qualified update policy | Requires demonstrated feasibility and future complete bar |
 | CP-18 | Operate that policy and its scorecard | Requires future bar and explicit publication authority |
 | CP-19 | Prospective evaluation | Requires policy freeze, elapsed horizon and future complete bar |
@@ -568,10 +625,15 @@ registry-loading corrections, reconciled the daily alias and dependency prose, a
 availability citations. No code, test, result, active brief, candidate or verdict was inspected or
 changed. No stage, commit, tag, publication, merge or ref deletion was performed.
 
-**Next orchestration action:** Owner transfers the issued CP-20 handoff to the Engineering
-Lead; await one canonical checkpoint return. Lead owns pre-run feasibility and eight-run
-verification within §15. No later checkpoint, CP-16 allowance transfer or repeated closure.
-Weather/content returns are imported; content remains local. No executor launched here.
+**Next orchestration action:** use the completed CP-20 landing record; do not repeat the
+receipt, disposition or reclamation.
+
+- Record CP-20 in the 4.7 quality/delivery disposition.
+- Propose whether the 4.3C/4.10R content should include it.
+- Do not open CP-17, spend CP-20's remaining allowance or schedule further experiments without
+  a new authorization.
+
+No executor is launched here.
 
 
 **Receipt session, 2026-09-15:** terminal packet and committed verdict read; prescribed Git
@@ -603,18 +665,21 @@ memo in its existing isolated worktree.
 
 ## 3. Blockers / Open Questions
 
-- **CP-20 authorized; execution checks outstanding:** ratification/execution granted; all caps
-  approved, including 120 machine-hours. No unresolved issuance blocker. The eight-run GFS extension and
-  Lead feasibility/accounting must pass before fitting; they are not claimed complete.
-  Weather admission remains conditional on its documented assumptions. Content effort/round
-  accounting was not reported; acceptance is local-draft content, not certified resource usage.
+- **CP-20 closed after Owner-authorized LAND/reclamation, 2026-09-24.** PASS accepted under
+  v21-r4 after one Integration FAIL and one fresh PASS; `evidence/cp-20` retains the reviewed chain.
+  - Analysis and reference passes are exhausted, so any further CP-20 scoring needs a cap decision.
+  - Weather admission remains conditional on its documented assumptions.
+  - The CP-20 return reports that the full `tests/cp16` directory has 3 failures and 3 errors on
+    main, as it did before CP-20. The listed guards pass. This inherited test debt is unresolved.
+  - Content effort/round accounting was not reported. Acceptance is local-draft content, not
+    certified resource usage.
 
 - **CP-16 closed after Owner-authorized LAND/reclamation, 2026-09-23.** Accepted PASS under
   v21-r3 after fresh independent Integration. Final usage 6,458/9,000,
   with historical 3,730 intact. The reviewed chain is retained by `evidence/cp-16`;
   only main and the primary checkout remain. Both H/P miss original
   §8 criteria 1–2; no product promotion. Historical monitoring gaps remain disclosed, not
-  retroactively cured. CP-20 has its separate grant; CP-17–19 remain unauthorized.
+  retroactively cured. CP-20 is closed; CP-17–19 remain unauthorized.
 
 - **Q&A owner correction preserved; CP-16 capture appended.** The Owner’s prior deletion of
   old entries 31/32 left 30 questions. Those entries remain unchanged; the Orchestrator now
@@ -885,6 +950,7 @@ This file no longer narrates it. It is preserved and addressable:
   Historical v21-r1 remains at `evidence/cp-15:capstone_v21.md`; CP-15 is closed, §12 unchanged.
 - **Current ratified authority:** `capstone_v21.md` v21-r4, §15 CP-20, ratified 2026-09-23; SHA256
   `150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167`. Separate CP-20 execution/§15.7 packaging grant recorded; full ten-item §15.6 applies.
+  CP-20 Engineering PASS accepted under this unchanged authority; LAND and reclamation complete.
 - **Historical authorities:** original `capstone_v20.md` for CP-10; `capstone_V6_8.md` for v1.
   Original v20 methods and bar remain unchanged; only its reasoning-capture scope paragraph was
   reconciled with the restored rule. Isolated v20-r1 retains its separate, superseded corrections.
@@ -898,10 +964,25 @@ This file no longer narrates it. It is preserved and addressable:
   and historical ratified anchors stay locked regardless of filename case, explicitly including
   v21, v20 and the M4 companion. Retired NotebookLM/syllabus material remains locked for completeness.
   Routing pointers and active capture instructions are reconciled; publication and mainline history
-  remain owner-only. Historical CP-15/16 packaging authority is in §§13/14.7. Current CP-20 may package
-  only exact supplied documents/admission evidence under §15.7; no governance authoring.
+  remain owner-only. Historical CP-15/16 packaging authority is in §§13/14.7. CP-20's §15.7
+  packaging authority ended at its landing; no governance authoring.
 
 ## 9. Session Log — newest first
+
+- **CP-20 receipt, LAND, reclamation and push, 2026-09-24.** The Owner explicitly authorized
+  the assistant to act in place of the Orchestrator: land CP-20 in the prescribed order, carry
+  out the post-landing decisions, commit and push.
+  - Receipt checks confirmed PASS at `3e9ff8b`, a 57-path evidence-only terminal delta and 286
+    added in-scope files.
+  - The exact evidence-tip tree landed at `land/cp-20`
+    (`f450bc1a98c70544d8b1fb84c3496986551abb7f`). `evidence/cp-20` retains the 23-commit chain,
+    including the attempt-1 FAIL.
+  - Removed `gauntlet/cp-20`, its clean Lead worktree and the unused
+    `claude/cp-20-weather-augmentation-7c081b`.
+  - Added the weather attribution to `DATA-LICENSE.md` and retained the local weather material.
+  - The other session's branch and worktree and the GitHub Desktop stash are untouched.
+  - No experiment was rerun, and there was no Q&A edit (the return names no interview trigger),
+    promotion or threshold change.
 
 - **CP-20 ratification and issuance, 2026-09-23:** Owner ratified revised v21-r4 and separately
   authorized CP-20 execution, local candidate/evidence commits and exact §15.7 packaging.
@@ -1115,8 +1196,8 @@ This file no longer narrates it. It is preserved and addressable:
 - CP-15 distinguishes experiment validity from product feasibility. The Owner chose the
   fixed B2/A1 blend with H/P control as the bounded intermediate research step; its documents
   completed under v21-r3 with accepted Engineering PASS; original BLOCKED/FAIL remains.
-  Disposition/reclamation are complete. CP-20 is separately ratified and authorized; its
-  pre-run checks remain mandatory. No product qualification or automatic
+  Disposition/reclamation are complete. CP-20 is landed and closed; its HG−H0 improvement is
+  `development_post_selection` research, not a product qualification. No automatic
   later checkpoint follows. Later information/architecture choices remain separate.
 - No CP-16–CP-19 executor starts without its own complete bar and brief. No prospective clock
   starts until an eligible policy and its update/evaluation rules are frozen.

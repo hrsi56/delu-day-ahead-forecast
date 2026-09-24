@@ -26,6 +26,21 @@ No model retraining or new engineering verdict is claimed.
 Retained regular-file content: 286,327,196 bytes; removed file content: 2,105,180,117 bytes.
 Filesystem allocated space can differ. Retained files were hash-verified after relocation.
 
+## Added 2026-09-24: CP-20 weather material
+
+Keep these. They are the only copies of the decoded weather and are expensive to rebuild.
+Sizes and content are in the [CP-20 landing record](cp-20-landing-2026-09-24.md#retained-local-material).
+
+- `.local/artifacts/cp-20/weather/runs/`: decoded GFS box grids for all 2,476 CP-20 runs.
+  New features from the same five fields, leads and box need no download.
+- `.local/artifacts/cp-20/weather/raw/`: retained original GRIB sample messages for 23 dates.
+- `.local/artifacts/cp-20/`: extraction environment, cached HG component fits, ledger, logs,
+  markers and Critic outputs.
+- `.local/weather-admission/`: admission samples and recovery files.
+- `.local/artifacts/cp20-landing-2026-09-24/`: landing recovery bundle and snapshots.
+
+Per the CP-20 rights notice, decoded grids and raw samples are not redistributed.
+
 ## Future locations
 
 - Temporary worktrees: `.local/worktrees/`.
