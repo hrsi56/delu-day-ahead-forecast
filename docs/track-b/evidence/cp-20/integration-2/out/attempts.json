@@ -1,0 +1,138 @@
+{
+ "outcome_counts": {
+  "validation_failure": 20,
+  "success": 125655,
+  "interrupted_or_discarded": 315,
+  "network_failure": 50,
+  "integrity_failure": 4800,
+  "discarded_with_run": 1855
+ },
+ "counted_flag_counts": {
+  "true": 4820,
+  "false": 127875
+ },
+ "messages_with_outcomes": 123800,
+ "messages_with_success": 123800,
+ "max_success_per_message": 2,
+ "dist_all_tries": {
+  "1": 119205,
+  "2": 320,
+  "3": 4250,
+  "4": 25
+ },
+ "dist_counted_failures_O2_O2A1": {
+  "1": 20
+ },
+ "dist_response_tries": {
+  "1": 119535,
+  "2": 1855,
+  "3": 2410
+ },
+ "retained_messages": 1150,
+ "retained_eligible": 1035,
+ "retained_max_response_tries_plus_reviews": 3,
+ "retained_max_all_tries_plus_reviews": 3,
+ "retained_over3_response_basis": [],
+ "excluded_are_those_with_2_response_tries": false,
+ "excluded_dist": {
+  "(2, 2)": 20,
+  "(1, 2)": 95
+ },
+ "eligible_dist": {
+  "(1, 1)": 1035
+ },
+ "messages_over_3_all_tries": 25,
+ "messages_over_3_all_tries_examples": [
+  [
+   "('2019-05-03', 27, 'u10')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 27, 'v10')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 27, 'u100')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 27, 'v100')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 27, 'dswrf')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 33, 'u10')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 33, 'v10')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 33, 'u100')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 33, 'v100')",
+   4,
+   3,
+   0
+  ],
+  [
+   "('2019-05-03', 33, 'dswrf')",
+   4,
+   3,
+   0
+  ]
+ ],
+ "messages_over_3_response_tries": 0,
+ "messages_over_2_counted_failures": 0,
+ "largest_unranged_idx_or_listing_bytes": 135370,
+ "status_counts": {
+  "206": 199086,
+  "200": 17520,
+  "0": 8
+ },
+ "requests": 216614,
+ "request_hosts": {
+  "noaa-gfs-bdp-pds.s3.amazonaws.com": 70871,
+  "tds.gdex.ucar.edu": 145743
+ },
+ "largest_request_bytes": 4728200,
+ "unranged_by_suffix": {
+  "idx": 17490,
+  "listing": 32
+ },
+ "request_keys_example": [
+  "body_bytes",
+  "charged_bytes",
+  "elapsed_s",
+  "endpoint",
+  "error",
+  "purpose",
+  "range",
+  "status",
+  "t_utc",
+  "url",
+  "wire_bytes_estimate"
+ ]
+}

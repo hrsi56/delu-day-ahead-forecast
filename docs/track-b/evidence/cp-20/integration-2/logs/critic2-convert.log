@@ -1,0 +1,92 @@
+# CP-20 job critic2-convert index 88 start 2026-09-24T06:50:45Z
+{
+ "runs": 23,
+ "hours_reconstructed": 495,
+ "hours_skipped_missing_decode": 55,
+ "max_abs": {
+  "wind10": 0.0,
+  "wind100": 0.0,
+  "dswrf": 0.0
+ },
+ "clip_count_mismatch": 0,
+ "status_mismatch": 0,
+ "missing_feature_rows": 0,
+ "units_levels": {
+  "dswrf": [
+   [
+    "W m**-2",
+    "surface",
+    0
+   ]
+  ],
+  "u100": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    100
+   ]
+  ],
+  "u10": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    10
+   ]
+  ],
+  "v100": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    100
+   ]
+  ],
+  "v10": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    10
+   ]
+  ]
+ },
+ "sensitivity_max_abs": {
+  "magnitude_of_mean_u_v_wind100": 9.401572095563512,
+  "unweighted_mean_wind10": 0.17363933841820867,
+  "no_deaveraging_dswrf": 209.79910148283295,
+  "lead_shift_plus3_wind100": 1.7248155984537323
+ },
+ "dst_days": [
+  [
+   "2019-03-31",
+   23
+  ],
+  [
+   "2019-10-27",
+   25
+  ],
+  [
+   "2020-10-25",
+   25
+  ],
+  [
+   "2022-03-27",
+   23
+  ],
+  [
+   "2023-03-26",
+   23
+  ],
+  [
+   "2024-03-31",
+   23
+  ],
+  [
+   "2024-10-27",
+   25
+  ],
+  [
+   "2026-03-29",
+   23
+  ]
+ ],
+ "within_1e-9": true
+}

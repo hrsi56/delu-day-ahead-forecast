@@ -1,0 +1,208 @@
+{
+ "runs": 23,
+ "hours_reconstructed": 495,
+ "hours_skipped_missing_decode": 55,
+ "max_abs": {
+  "wind10": 0.0,
+  "wind100": 0.0,
+  "dswrf": 0.0
+ },
+ "clip_count_mismatch": 0,
+ "status_mismatch": 0,
+ "missing_feature_rows": 0,
+ "units_levels": {
+  "dswrf": [
+   [
+    "W m**-2",
+    "surface",
+    0
+   ]
+  ],
+  "u100": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    100
+   ]
+  ],
+  "u10": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    10
+   ]
+  ],
+  "v100": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    100
+   ]
+  ],
+  "v10": [
+   [
+    "m s**-1",
+    "heightAboveGround",
+    10
+   ]
+  ]
+ },
+ "sensitivity_max_abs": {
+  "magnitude_of_mean_u_v_wind100": 9.401572095563512,
+  "unweighted_mean_wind10": 0.17363933841820867,
+  "no_deaveraging_dswrf": 209.79910148283295,
+  "lead_shift_plus3_wind100": 1.7248155984537323
+ },
+ "dst_days": [
+  [
+   "2019-03-31",
+   23
+  ],
+  [
+   "2019-10-27",
+   25
+  ],
+  [
+   "2020-10-25",
+   25
+  ],
+  [
+   "2022-03-27",
+   23
+  ],
+  [
+   "2023-03-26",
+   23
+  ],
+  [
+   "2024-03-31",
+   23
+  ],
+  [
+   "2024-10-27",
+   25
+  ],
+  [
+   "2026-03-29",
+   23
+  ]
+ ],
+ "per_run": {
+  "2019-01-01": {
+   "delivery": "2019-01-02",
+   "hours": 24,
+   "reconstructed": 23
+  },
+  "2019-03-30": {
+   "delivery": "2019-03-31",
+   "hours": 23,
+   "reconstructed": 22
+  },
+  "2019-06-13": {
+   "delivery": "2019-06-14",
+   "hours": 24,
+   "reconstructed": 22
+  },
+  "2019-10-26": {
+   "delivery": "2019-10-27",
+   "hours": 25,
+   "reconstructed": 23
+  },
+  "2020-10-24": {
+   "delivery": "2020-10-25",
+   "hours": 25,
+   "reconstructed": 25
+  },
+  "2021-02-02": {
+   "delivery": "2021-02-03",
+   "hours": 24,
+   "reconstructed": 0
+  },
+  "2021-03-22": {
+   "delivery": "2021-03-23",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2021-03-23": {
+   "delivery": "2021-03-24",
+   "hours": 24,
+   "reconstructed": 20
+  },
+  "2022-03-26": {
+   "delivery": "2022-03-27",
+   "hours": 23,
+   "reconstructed": 23
+  },
+  "2022-08-25": {
+   "delivery": "2022-08-26",
+   "hours": 24,
+   "reconstructed": 7
+  },
+  "2023-03-24": {
+   "delivery": "2023-03-25",
+   "hours": 24,
+   "reconstructed": 20
+  },
+  "2023-03-25": {
+   "delivery": "2023-03-26",
+   "hours": 23,
+   "reconstructed": 23
+  },
+  "2023-03-26": {
+   "delivery": "2023-03-27",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2023-03-27": {
+   "delivery": "2023-03-28",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2023-03-28": {
+   "delivery": "2023-03-29",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2023-03-29": {
+   "delivery": "2023-03-30",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2023-03-30": {
+   "delivery": "2023-03-31",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2023-03-31": {
+   "delivery": "2023-04-01",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2024-03-30": {
+   "delivery": "2024-03-31",
+   "hours": 23,
+   "reconstructed": 23
+  },
+  "2024-09-15": {
+   "delivery": "2024-09-16",
+   "hours": 24,
+   "reconstructed": 24
+  },
+  "2024-10-26": {
+   "delivery": "2024-10-27",
+   "hours": 25,
+   "reconstructed": 25
+  },
+  "2026-03-28": {
+   "delivery": "2026-03-29",
+   "hours": 23,
+   "reconstructed": 23
+  },
+  "2026-04-06": {
+   "delivery": "2026-04-07",
+   "hours": 24,
+   "reconstructed": 24
+  }
+ },
+ "within_1e-9": true
+}

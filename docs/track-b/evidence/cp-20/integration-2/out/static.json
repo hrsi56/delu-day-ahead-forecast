@@ -1,0 +1,696 @@
+{
+ "checks": [
+  {
+   "check": "head_is_candidate",
+   "ok": true,
+   "head": "3e9ff8b500c2c655fea810ae11886503927f176c"
+  },
+  {
+   "check": "worktree_clean",
+   "ok": true
+  },
+  {
+   "check": "bar_excerpt_verbatim_worktree",
+   "ok": true,
+   "excerpt_lines": 35,
+   "line": 901
+  },
+  {
+   "check": "bar_excerpt_verbatim_git_head",
+   "ok": true
+  },
+  {
+   "check": "issued_sha256:capstone_v21.md",
+   "ok": true
+  },
+  {
+   "check": "issued_sha256:docs/track-b/capstone_v21-r3-to-v21-r4-amendments.md",
+   "ok": true
+  },
+  {
+   "check": "issued_sha256:docs/track-b/cp-20-direct-weather-brief.md",
+   "ok": true
+  },
+  {
+   "check": "intake_receipt_present",
+   "ok": true
+  },
+  {
+   "check": "protocol_all_hashes_match_candidate_bytes",
+   "ok": true,
+   "mismatches": {},
+   "counted": {
+    "implementation_sha256": 26,
+    "frozen_inputs_sha256": 17,
+    "issued_and_inherited_sha256": 41
+   }
+  },
+  {
+   "check": "artifact_manifest_hashes_match_candidate_bytes",
+   "ok": true,
+   "entries": 41,
+   "mismatches": {},
+   "other_keys": {
+    "admission_freeze_commit": "30a958ae2619b4131a61c9e636ee2d9f5d3108a2",
+    "evidence_class": "development_post_selection",
+    "finaliser": "src/cp20/finalise.py (formatting only; added after the pre-fit freeze)",
+    "protocol_freeze_commit": "255ecfba2abc929673ba6b67c3650cb6fa1a4137",
+    "schema": "cp20-artifact-manifest-v1",
+    "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0"
+   }
+  },
+  {
+   "check": "artifact_manifest_covers_tracked_outputs",
+   "ok": true,
+   "unlisted": [],
+   "tracked": 42
+  },
+  {
+   "check": "candidate_check_protocol_clean_checkout",
+   "ok": true
+  },
+  {
+   "check": "protocol_committed_once_at_prefit_freeze",
+   "ok": true,
+   "commits": [
+    [
+     "255ecfba2abc929673ba6b67c3650cb6fa1a4137",
+     "2026-09-24T08:01:41+03:00"
+    ]
+   ]
+  },
+  {
+   "check": "lineage_commits",
+   "ok": true,
+   "commits": [
+    [
+     "2dac186a20622562c2c635d22a79d4b283dfaed1",
+     "2026-09-24T08:50:26+03:00"
+    ],
+    [
+     "30a958ae2619b4131a61c9e636ee2d9f5d3108a2",
+     "2026-09-24T08:13:53+03:00"
+    ]
+   ]
+  },
+  {
+   "check": "admission_freeze_stage",
+   "ok": true
+  },
+  {
+   "check": "admission_records_unchanged_after_freeze",
+   "ok": true
+  },
+  {
+   "check": "admission_origins_unchanged_after_freeze",
+   "ok": true,
+   "frozen_origins": 376,
+   "final_origins": 1276
+  },
+  {
+   "check": "predictions_and_metrics_single_commit",
+   "ok": true,
+   "predictions": [
+    [
+     "2dac186a20622562c2c635d22a79d4b283dfaed1",
+     "2026-09-24T08:50:26+03:00"
+    ]
+   ],
+   "metrics": [
+    [
+     "2dac186a20622562c2c635d22a79d4b283dfaed1",
+     "2026-09-24T08:50:26+03:00"
+    ]
+   ]
+  },
+  {
+   "check": "frozen_inputs_not_recommitted_after_freeze_except_r14",
+   "ok": true,
+   "changed": {
+    "reports/weather-ablation/prerun-attempts.csv": [
+     [
+      "86659265f0686eac61119b836f4ce2cbec98788d",
+      "2026-09-24T09:27:17+03:00"
+     ]
+    ]
+   }
+  },
+  {
+   "check": "r14_prerun_attempts_content_equal_modulo_eol",
+   "ok": true,
+   "freeze_blob_sha": "bef7f523df319428bcb416efef43c2df01a58bbab1efad43f87c83f49b2c2457",
+   "now_sha": "859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06",
+   "frozen": "859ba632ce912ed4998869eda5d2d0558633d104d199aff1e4adcf3339d5fb06"
+  },
+  {
+   "check": "implementation_unchanged_since_freeze_commit",
+   "ok": true,
+   "changed": []
+  },
+  {
+   "check": "lineage_protocol_sha_equals_protocol_bytes",
+   "ok": true
+  },
+  {
+   "check": "branch_diff_within_section_15_7_paths",
+   "ok": true,
+   "files": 229,
+   "outside": [],
+   "non_additions": []
+  },
+  {
+   "check": "main_is_ancestor",
+   "ok": true,
+   "main": "88c68cf6d8a520374d4b7ec60753a38a7b576544"
+  },
+  {
+   "check": "admission_report_files_rehash",
+   "ok": true,
+   "files": 53,
+   "bad": []
+  },
+  {
+   "check": "admission_raw_samples_byte_identity",
+   "ok": false,
+   "samples": 800,
+   "bad": []
+  },
+  {
+   "check": "cp16_origins_638",
+   "ok": true,
+   "per_fold": [
+    127,
+    127,
+    127,
+    130,
+    127
+   ]
+  },
+  {
+   "check": "run_manifest_equals_independent_union",
+   "ok": true,
+   "union": 2477,
+   "manifest": 2477
+  },
+  {
+   "check": "run_manifest_2476_runs",
+   "ok": true
+  },
+  {
+   "check": "run_is_delivery_minus_one",
+   "ok": true
+  },
+  {
+   "check": "structural_missing_only_2019_01_01",
+   "ok": true
+  },
+  {
+   "check": "no_pre_2019_runs",
+   "ok": true
+  },
+  {
+   "check": "version_timeline",
+   "ok": true,
+   "bad": [],
+   "counts": {
+    "v14": 163,
+    "v15.1": 649,
+    "v16": 1664
+   }
+  },
+  {
+   "check": "eight_added_runs",
+   "ok": true,
+   "added": [
+    "2023-03-24",
+    "2023-03-25",
+    "2023-03-26",
+    "2023-03-27",
+    "2023-03-28",
+    "2023-03-29",
+    "2023-03-30",
+    "2023-03-31"
+   ]
+  },
+  {
+   "check": "availability_bracketed_all",
+   "ok": true,
+   "bases": {
+    "reconstructed_availability_ncep_48h_products_30day_average": 2476
+   }
+  },
+  {
+   "check": "extended_inventory_added_runs_pass",
+   "ok": true
+  },
+  {
+   "check": "messages_123800_unique",
+   "ok": true
+  },
+  {
+   "check": "messages_leads_fields",
+   "ok": true
+  },
+  {
+   "check": "messages_metadata_all_valid",
+   "ok": false,
+   "problems": {
+    "dataDate": 0,
+    "dataTime": 0,
+    "validityDate": 0,
+    "validityTime": 0,
+    "wind_level": 0,
+    "wind_typeOfLevel": 0,
+    "wind_surface103": 0,
+    "wind_instant": 0,
+    "wind_units": 0,
+    "wind_param": 0,
+    "dswrf_bounds": 0,
+    "dswrf_avg": 0,
+    "dswrf_units": 0,
+    "dswrf_surface": 0,
+    "dswrf_param": 24760,
+    "production_status_operational": 0,
+    "processed_forecast": 0,
+    "process_96": 0,
+    "centre_kwbc": 0,
+    "packing_quantum": 0,
+    "numberOfMissing": 0,
+    "box_nonfinite": 0,
+    "version": 0,
+    "endpoint_is_manifest_primary": 0,
+    "url_pattern": 0,
+    "byte_len": 0
+   },
+   "shortnames": {
+    "dswrf": [
+     "sdswrf"
+    ],
+    "u10": [
+     "10u"
+    ],
+    "u100": [
+     "u"
+    ],
+    "v10": [
+     "10v"
+    ],
+    "v100": [
+     "v"
+    ]
+   },
+   "endpoints": {
+    "aws": 87200,
+    "ncar": 36600
+   },
+   "hosts": [
+    "noaa-gfs-bdp-pds.s3.amazonaws.com",
+    "tds.gdex.ucar.edu"
+   ],
+   "dswrf_quantum_by_version": {
+    "v14": [
+     1.0,
+     10.0
+    ],
+    "v15.1": [
+     1.0,
+     10.0
+    ],
+    "v16": [
+     0.016,
+     0.02
+    ]
+   },
+   "purposes": {
+    "production": 123790,
+    "integrity_retry": 5,
+    "transient_retry": 5
+   },
+   "largest_message_bytes": 1049269
+  },
+  {
+   "check": "run_records_complete_and_npz_hashes",
+   "ok": true,
+   "bad_records": [],
+   "bad_npz": [],
+   "runs_csv_mismatch": [],
+   "runs": 2476
+  },
+  {
+   "check": "run_record_messages_equal_messages_parquet",
+   "ok": true,
+   "bad": []
+  },
+  {
+   "check": "grid_regular_ll_1440x721_all_messages",
+   "ok": true,
+   "bad": []
+  },
+  {
+   "check": "retained_raw_messages_sha256_equal_recorded",
+   "ok": true,
+   "files": 1150,
+   "bad": [],
+   "runs": 23,
+   "versions": {
+    "v14": 2,
+    "v15.1": 5,
+    "v16": 16
+   }
+  },
+  {
+   "check": "admission_samples_byte_identical_to_cp20_extraction",
+   "ok": true,
+   "rows": 600,
+   "bad": []
+  },
+  {
+   "check": "features_cover_every_canonical_hour",
+   "ok": true,
+   "rows": 59446,
+   "expected": 59446
+  },
+  {
+   "check": "features_weather_origin_d1_00z_lead_22_46",
+   "ok": true,
+   "lead_range": [
+    22,
+    46
+   ]
+  },
+  {
+   "check": "features_status",
+   "ok": true,
+   "counts": {
+    "ok": 59422,
+    "structural_missing_pre_2019_run": 24
+   }
+  },
+  {
+   "check": "dst_days_present",
+   "ok": true,
+   "n23": 8,
+   "n25": 6
+  },
+  {
+   "check": "predictions_75229_rows_7x10747",
+   "ok": true,
+   "counts": {
+    "A1": 10747,
+    "B0": 10747,
+    "B1": 10747,
+    "B2": 10747,
+    "B3": 10747,
+    "H0": 10747,
+    "HG": 10747
+   }
+  },
+  {
+   "check": "identical_key_sets_all_policies",
+   "ok": true
+  },
+  {
+   "check": "contrast_rows_21494",
+   "ok": true
+  },
+  {
+   "check": "fold_counts_peak_fold3",
+   "ok": true,
+   "fold_counts": [
+    2160,
+    2159,
+    2112,
+    2160,
+    2156
+   ],
+   "peak": 408
+  },
+  {
+   "check": "finite_ordered_quantiles",
+   "ok": true
+  },
+  {
+   "check": "emitted_p50_distinct_from_central",
+   "ok": true,
+   "share_p50_ne_central": 1.0
+  },
+  {
+   "check": "evidence_class_label",
+   "ok": true
+  },
+  {
+   "check": "H0_bitwise_equal_cp16_V2H",
+   "ok": true,
+   "max_abs": 0.0
+  },
+  {
+   "check": "saved_references_bitwise_equal_cp15",
+   "ok": true,
+   "bad": {}
+  },
+  {
+   "check": "H0_HG_same_truth_scale_level",
+   "ok": true
+  },
+  {
+   "check": "HG_central_differs_from_H0",
+   "ok": true,
+   "share_differs": 0.9995347538848051
+  },
+  {
+   "check": "hg_cache_638_entries_one_per_origin",
+   "ok": true,
+   "files": 638
+  },
+  {
+   "check": "hg_cache_digests_and_identity",
+   "ok": true,
+   "digest_bad": [],
+   "ident_bad": [],
+   "identity": {
+    "input_fingerprint": "132369044ef45e3af3205de9ee3831a40e579070e7f16a96061d1708dc37a591",
+    "protocol_sha256": "6964223c53a084012c79033a8ffc36106710e122ea7b8800471fab4d462db714",
+    "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0"
+   }
+  },
+  {
+   "check": "hg_cache_blend_equals_emitted_HG_central",
+   "ok": true,
+   "bad": [],
+   "rows_compared": 10747
+  },
+  {
+   "check": "ordering_protocol_warmup_admission_freeze_evaluation_comparison",
+   "ok": true,
+   "protocol_commit": 1790226101,
+   "warm": [
+    1790226133.8225868,
+    1790226763.1292167
+   ],
+   "admission_job": [
+    1790226773.381999,
+    1790226811.1034482
+   ],
+   "freeze_commit": 1790226833,
+   "evaluation": [
+    1790226861.916723,
+    1790228357.159633
+   ],
+   "comparison_start": 1790228361.887671,
+   "n_warm": 188,
+   "n_eval": 450
+  },
+  {
+   "check": "ledger_caps_equal_section_15_5",
+   "ok": true
+  },
+  {
+   "check": "ledger_counts_within_caps",
+   "ok": true,
+   "over": {},
+   "counts": {
+    "analysis_passes": 2,
+    "component_attempts": 1348,
+    "decoded_messages": 125950,
+    "failed_requests": 938,
+    "final_fits": 32312,
+    "inner_fits": 129248,
+    "machine_seconds": 143837.31439520922,
+    "main_component_attempts": 1272,
+    "message_attempts": 7835,
+    "message_tries": 128955,
+    "network_retries": 927,
+    "policy_days": 3231,
+    "prerun_replacement_attempts": 5,
+    "primitive_fits": 161560,
+    "reference_passes": 2,
+    "requests": 216635,
+    "transfer_bytes": 146033509110,
+    "uncounted_message_tries": 1855
+   },
+   "peaks": {
+    "additional_disk_bytes": 2527355641,
+    "rss_bytes": 3999416320
+   }
+  },
+  {
+   "check": "all_jobs_blas_1_workers_le_4",
+   "ok": true,
+   "jobs": 84,
+   "blas_bad": []
+  },
+  {
+   "check": "concurrent_workers_le_4",
+   "ok": true,
+   "peak_concurrent_workers": 4
+  },
+  {
+   "check": "failures_csv_lists_every_failed_ledger_job",
+   "ok": true,
+   "missing": [],
+   "failed": [
+    [
+     3,
+     "gfs-extract",
+     4,
+     null
+    ],
+    [
+     4,
+     "tests-eccodes",
+     1,
+     null
+    ],
+    [
+     6,
+     "tests-eccodes",
+     4,
+     null
+    ],
+    [
+     7,
+     "tests-eccodes",
+     1,
+     null
+    ],
+    [
+     9,
+     "tests-weather",
+     1,
+     null
+    ],
+    [
+     11,
+     "gfs-extract",
+     -9,
+     "monitor_signal_15"
+    ],
+    [
+     12,
+     "gfs-extract",
+     -9,
+     "monitor_signal_15"
+    ],
+    [
+     16,
+     "gfs-extract",
+     -9,
+     "monitor_signal_15"
+    ],
+    [
+     19,
+     "tests-attempts",
+     1,
+     null
+    ],
+    [
+     21,
+     "tests-attempts",
+     1,
+     null
+    ],
+    [
+     23,
+     "gfs-extract",
+     2,
+     "monitor_signal_15"
+    ],
+    [
+     25,
+     "gfs-extract",
+     2,
+     null
+    ],
+    [
+     30,
+     "gfs-extract",
+     2,
+     null
+    ],
+    [
+     33,
+     "gfs-extract",
+     5,
+     null
+    ],
+    [
+     36,
+     "gfs-extract",
+     2,
+     "monitor_signal_15"
+    ],
+    [
+     37,
+     "gfs-extract",
+     2,
+     "monitor_signal_15"
+    ],
+    [
+     50,
+     "controls-supplement",
+     1,
+     null
+    ],
+    [
+     68,
+     "critic-guards",
+     1,
+     null
+    ]
+   ]
+  },
+  {
+   "check": "snapshot_prefix_of_live_ledger",
+   "ok": true,
+   "snapshot_jobs": 81,
+   "live_jobs": 84,
+   "after_snapshot": [
+    [
+     81,
+     "precheck",
+     0,
+     1.1
+    ],
+    [
+     82,
+     "precheck-tests",
+     0,
+     10.2
+    ],
+    [
+     83,
+     "critic2-static",
+     null,
+     18.3
+    ]
+   ],
+   "count_deltas": {
+    "machine_seconds": 29.651954208035022
+   }
+  }
+ ],
+ "failed": [
+  "admission_raw_samples_byte_identity",
+  "messages_metadata_all_valid"
+ ]
+}

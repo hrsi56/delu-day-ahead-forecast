@@ -1,0 +1,168 @@
+# CP-20 job critic2-scoring index 84 start 2026-09-24T06:38:41Z
+reserved {'analysis_passes': 3, 'component_attempts': 1348, 'decoded_messages': 125950, 'failed_requests': 938, 'final_fits': 32312, 'inner_fits': 129248, 'machine_seconds': 143838.34563137623, 'main_component_attempts': 1272, 'message_attempts': 7835, 'message_tries': 128955, 'network_retries': 927, 'policy_days': 3231, 'prerun_replacement_attempts': 5, 'primitive_fits': 161560, 'reference_passes': 3, 'requests': 216635, 'transfer_bytes': 146033509110, 'uncounted_message_tries': 1855}
+{
+ "rows_scored": 75229,
+ "summary_cells_compared": 1022,
+ "summary_cells_in_candidate": 1022,
+ "summary_missing": [],
+ "max_abs_diff_by_column": {
+  "MAE": 1.4210854715202004e-14,
+  "RMSE": 2.842170943040401e-14,
+  "WIS": 2.842170943040401e-14,
+  "mean_pinball_7": 3.552713678800501e-15,
+  "raw_central_MAE": 2.842170943040401e-14,
+  "centering_effect": 4.440892098500626e-16,
+  "bias": 2.842170943040401e-14,
+  "daily_mean_level_MAE": 7.105427357601002e-15,
+  "within_day_shape_MAE": 7.105427357601002e-15,
+  "coverage50": 8.326672684688674e-17,
+  "mean_width50": 1.4210854715202004e-14,
+  "median_width50": 2.842170943040401e-14,
+  "p95_width50": 2.842170943040401e-14,
+  "coverage80": 1.1102230246251565e-16,
+  "mean_width80": 2.842170943040401e-14,
+  "median_width80": 5.684341886080802e-14,
+  "p95_width80": 5.684341886080802e-14,
+  "coverage95": 1.1102230246251565e-16,
+  "mean_width95": 5.684341886080802e-14,
+  "median_width95": 5.684341886080802e-14,
+  "p95_width95": 5.684341886080802e-14
+ },
+ "count_or_support_mismatches": [],
+ "daily_rows_matched": true,
+ "daily_max_abs_diff": {
+  "MAE": 2.842170943040401e-14,
+  "WIS": 5.684341886080802e-14,
+  "coverage95": 1.1102230246251565e-16,
+  "hit_count95": 0.0,
+  "lower_miss_count95": 0.0,
+  "upper_miss_count95": 0.0,
+  "mean_width95": 5.684341886080802e-14
+ },
+ "daily_nan_pattern_ok": true,
+ "daily_n_hours_equal": true,
+ "S_scores": {
+  "B0": {
+   "MAE": 1.0,
+   "WIS": 1.0
+  },
+  "B1": {
+   "MAE": 1.051845134839199,
+   "WIS": 0.9856366964174134
+  },
+  "B2": {
+   "MAE": 0.6578109123747921,
+   "WIS": 0.6389910407326589
+  },
+  "B3": {
+   "MAE": 0.7841363977682992,
+   "WIS": 0.7399052224715813
+  },
+  "A1": {
+   "MAE": 0.6722908121370033,
+   "WIS": 0.646015091607363
+  },
+  "H0": {
+   "MAE": 0.6440721386286878,
+   "WIS": 0.6160299894915677
+  },
+  "HG": {
+   "MAE": 0.5657606376333641,
+   "WIS": 0.532218690181866
+  }
+ },
+ "S_max_abs_diff": 2.220446049250313e-16,
+ "pooled_ratio_max_abs_diff": 0.0,
+ "criteria_rows": 42,
+ "criteria_candidate_rows": 42,
+ "criteria_mismatches": [],
+ "criteria_max_abs_diff": 7.105427357601002e-15,
+ "section8_status": {
+  "H0": "not_met",
+  "HG": "met"
+ },
+ "section8_failed_criteria": {
+  "H0": [
+   1,
+   2
+  ],
+  "HG": []
+ },
+ "bootstrap_index_sha256": "e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b",
+ "lineage_index_sha256": "e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b",
+ "equal_fold_HG_minus_H0": {
+  "MAE": {
+   "point": -0.07831150099532369,
+   "ci_lower": -0.10059575155295458,
+   "ci_upper": -0.05703087928591252,
+   "undefined": 0
+  },
+  "WIS": {
+   "point": -0.08381129930970188,
+   "ci_lower": -0.10438268112867141,
+   "ci_upper": -0.06553984132085941,
+   "undefined": 0
+  }
+ },
+ "per_fold_daily_HG_minus_H0": {
+  "fold_1:MAE": [
+   -1.0568775077080046,
+   -1.6765662626114164,
+   -0.5212095504165768
+  ],
+  "fold_1:WIS": [
+   -0.6477003323495039,
+   -1.01275232920474,
+   -0.35598004229867525
+  ],
+  "fold_2:MAE": [
+   -1.076266161201147,
+   -1.996859263806638,
+   -0.2643651654693269
+  ],
+  "fold_2:WIS": [
+   -0.8471394585486971,
+   -1.4318023314496544,
+   -0.393523717892896
+  ],
+  "fold_3:MAE": [
+   -3.1782372305718454,
+   -6.089829306144048,
+   0.03687700160989306
+  ],
+  "fold_3:WIS": [
+   -2.4294440795608345,
+   -4.023143370614529,
+   -0.7751608725395348
+  ],
+  "fold_4:MAE": [
+   -1.4881315027950706,
+   -2.7231726574338713,
+   -0.20103752114857618
+  ],
+  "fold_4:WIS": [
+   -1.0290126050119017,
+   -1.793812676567589,
+   -0.30339521559099114
+  ],
+  "fold_5:MAE": [
+   -3.1011517190158138,
+   -4.186992920206246,
+   -1.6990429942376863
+  ],
+  "fold_5:WIS": [
+   -1.9804085956025421,
+   -2.43524429772757,
+   -1.2767746793683077
+  ]
+ },
+ "uncertainty_max_abs_diff": 7.105427357601002e-15,
+ "joint_rule_observed_joint_improvement": true,
+ "candidate_joint_conclusion": {
+  "HG-H0": "observed joint improvement"
+ },
+ "descriptive_order": [
+  "HG",
+  "H0"
+ ]
+}
