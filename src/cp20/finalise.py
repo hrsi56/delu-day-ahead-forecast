@@ -115,9 +115,10 @@ def resources() -> dict:
         'peak_aggregate_rss_gib': round(peaks.get('rss_bytes', 0) / GIB, 3), 'rss_cap_gib': CAPS['rss_bytes'] / GIB,
         'peak_added_disk_gib': round(peaks.get('additional_disk_bytes', 0) / GIB, 3), 'added_disk_cap_gib': CAPS['additional_disk_bytes'] / GIB,
         'workers_max': CAPS['workers'], 'blas_threads': 1,
-        'message_attempts_note': ('ledger message_attempts is the cumulative charge: 1,885 pre-O2 charges plus the 4,800 '
-                                  'locator-defect failures later restored under O2-A1 (not refunded in the ledger); '
-                                  'message_tries counts every try of any outcome'),
+        'message_attempts_note': ('ledger message_attempts is the cumulative charge: 1,885 pre-O2 charges, the 4,800 '
+                                  'locator-defect failures later restored under O2-A1 (not refunded in the ledger) and one '
+                                  'charge per retained raw message decoded by an Integration review; message_tries counts '
+                                  'every extraction try of any outcome'),
         'tracked': {k: counts.get(k, 0) for k in ('requests', 'failed_requests', 'network_retries', 'message_tries',
                                                     'uncounted_message_tries', 'decoded_messages', 'runs_completed',
                                                     'prerun_replacement_attempts')},

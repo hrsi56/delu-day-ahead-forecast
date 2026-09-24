@@ -1,5 +1,5 @@
 {
- "active_seconds_upper_bound": 14127.018164157867,
+ "active_seconds_upper_bound": 14139.357743263245,
  "caps": {
   "active_seconds": 288000,
   "additional_disk_bytes": 42949672960,
@@ -24,7 +24,7 @@
   "failed_requests": 938,
   "final_fits": 32312,
   "inner_fits": 129248,
-  "machine_seconds": 143806.5565190432,
+  "machine_seconds": 143807.6624410012,
   "main_component_attempts": 1272,
   "message_attempts": 7835,
   "message_tries": 128955,
@@ -3372,17 +3372,51 @@
    "stop_machine_seconds": null,
    "supervisor_error": null,
    "workers": 1
+  },
+  {
+   "abort_reason": null,
+   "blas_environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+   },
+   "charged_seconds": 1.105921957991086,
+   "child_pid": 45851,
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-u",
+    "-m",
+    "cp20.finalise"
+   ],
+   "elapsed_seconds": 1.1844904579920694,
+   "end_epoch": 1790231250.0794969,
+   "exit_code": 0,
+   "index": 80,
+   "live_rss_bytes": 0,
+   "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/finalise.log",
+   "monitor_pid": 45849,
+   "name": "finalise",
+   "peak_added_disk_bytes": 2343550280,
+   "peak_aggregate_rss_bytes": 0,
+   "peak_process_tree_rss_bytes": 0,
+   "running": false,
+   "start_epoch": 1790231248.892566,
+   "stop_machine_seconds": null,
+   "supervisor_error": null,
+   "workers": 1
   }
  ],
  "last_disk": {
-  "added_bytes": 2343484989,
-  "cp20_local_bytes": 2286915298,
-  "epoch": 1790231237.739707,
-  "git_bytes": 308893289,
-  "worktree_bytes": 183918478
+  "added_bytes": 2343550280,
+  "cp20_local_bytes": 2286917116,
+  "epoch": 1790231250.079495,
+  "git_bytes": 308954667,
+  "worktree_bytes": 183920573
  },
  "peaks": {
-  "additional_disk_bytes": 2343484989,
+  "additional_disk_bytes": 2343550280,
   "rss_bytes": 3999416320
  },
  "schema": "cp20-ledger-v1"

@@ -159,7 +159,7 @@ No new economic calculation, optimiser, annualisation or threshold. Historical e
 
 ```json
 {
- "active_hours": 3.924,
+ "active_hours": 3.927,
  "active_hours_basis": "from the conservative session start 2026-09-23T15:50Z minus recorded pauses (usage-limit idle gap; Owner decision O3: unattended waits)",
  "active_hours_hard_stop": 80.0,
  "active_hours_timebox": 64.0,
@@ -168,7 +168,7 @@ No new economic calculation, optimiser, annualisation or threshold. Historical e
  "caps_vs_use": {
   "active_seconds": {
    "cap": 288000,
-   "used": 14126.1
+   "used": 14138.5
   },
   "analysis_passes": {
    "cap": 3,
@@ -188,7 +188,7 @@ No new economic calculation, optimiser, annualisation or threshold. Historical e
   },
   "machine_seconds": {
    "cap": 432000,
-   "used": 143805.4461461682
+   "used": 143806.5565190432
   },
   "main_component_attempts": {
    "cap": 3000,
@@ -414,10 +414,10 @@ No new economic calculation, optimiser, annualisation or threshold. Historical e
   "finalise": {
    "charged_machine_hours": 0.002,
    "exit_codes": {
-    "0": 5,
+    "0": 6,
     "None": 1
    },
-   "jobs": 6
+   "jobs": 7
   },
   "gfs-extract": {
    "charged_machine_hours": 36.89,
@@ -561,11 +561,11 @@ No new economic calculation, optimiser, annualisation or threshold. Historical e
    "jobs": 1
   }
  },
- "jobs_total": 80,
+ "jobs_total": 81,
  "ledger": ".local/artifacts/cp-20/ledger/budget.json (cumulative, never reset)",
  "machine_hours": 39.946,
  "machine_hours_cap": 120.0,
- "message_attempts_note": "ledger message_attempts is the cumulative charge: 1,885 pre-O2 charges plus the 4,800 locator-defect failures later restored under O2-A1 (not refunded in the ledger); message_tries counts every try of any outcome",
+ "message_attempts_note": "ledger message_attempts is the cumulative charge: 1,885 pre-O2 charges, the 4,800 locator-defect failures later restored under O2-A1 (not refunded in the ledger) and one charge per retained raw message decoded by an Integration review; message_tries counts every extraction try of any outcome",
  "pauses": [
   [
    1790179666,
@@ -592,7 +592,7 @@ No new economic calculation, optimiser, annualisation or threshold. Historical e
    1790225937.052619
   ]
  ],
- "peak_added_disk_gib": 2.182,
+ "peak_added_disk_gib": 2.183,
  "peak_aggregate_rss_gib": 3.725,
  "rss_cap_gib": 10.0,
  "schema": "cp20-resources-v1",
