@@ -1,6 +1,7 @@
 .PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2 \
         pages space register showcase cli container container-verify readme-cp3 verify cp3 \
-        wasm-payload wasm wasm-serve cp3b readme-research
+        wasm-payload wasm wasm-serve cp3b readme-research \
+        mlflow-export mlflow-dry-run mlflow-verify-local
 
 test:
 	uv run pytest -q
@@ -100,3 +101,16 @@ wasm-serve:
 	cd dist/space-wasm && uv run python -m http.server 8820 --bind 127.0.0.1
 
 cp3b: wasm verify
+
+# --- PRES-1: the delu-generations MLflow mirror (presentation plan §10) -----
+# The export is committed and is the only payload. Nothing here publishes: a
+# public upload is `scripts/mlflow_publish.py --target public`, run only on the
+# Owner's instruction for that action (plan §13).
+mlflow-export:
+	uv run python scripts/mlflow_export.py
+
+mlflow-dry-run:
+	uv run python scripts/mlflow_publish.py --dry-run
+
+mlflow-verify-local:
+	uv run python scripts/verify_mlflow_mirror.py verify --target local

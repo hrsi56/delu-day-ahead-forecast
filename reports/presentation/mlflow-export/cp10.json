@@ -1,0 +1,2010 @@
+{
+ "checkpoint": "CP-10",
+ "experiment": "delu-generations",
+ "runs": [
+  {
+   "artifacts": [
+    {
+     "bytes": 1930,
+     "content": "{\"comparability\":{\"aggregation\":\"per_fold; selection on folds fold_1, fold_2, fold_4, fold_5\",\"comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"keys\":10747,\"keys_sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"population_id\":\"cp10-fold-block\",\"quantiles\":\"v1 nine quantiles\",\"reference\":\"v1 unscaled CQR, reported but outside the §4.3 candidate set\",\"scores\":{\"selection_scalar\":\"sum of pinball losses / (9 * eligible observations), after isotonic; exact ties use candidate_order\"},\"target\":\"DE-LU day-ahead price per delivery hour, EUR/MWh, delivery calendar Europe/Berlin\"},\"inputs\":[],\"metric_units\":{},\"metrics\":{},\"params\":{\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\"},\"parent\":null,\"run_key\":\"cp10\",\"run_name\":\"CP-10 · calibration only (branch)\",\"tags\":{\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.children\":\"cp10/v1_reference,cp10/c1_head_spread,cp10/c1_price_volatility,cp10/c2_aci_gamma_0.000001,cp10/c2_aci_gamma_0.000005,cp10/c2_aci_gamma_0.00001,cp10/c2_aci_gamma_0.00002\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.population_id\":\"cp10-fold-block\",\"delu.role\":\"checkpoint\",\"delu.run_key\":\"cp10\",\"mlflow.note.content\":\"CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "63d0f8a40f337a1983d0703b5825f9c7c23a6d436ebaff94787a925c8027c9c8"
+    },
+    {
+     "bytes": 780,
+     "content": "# CP-10 · calibration only (branch)\n\nBackfilled from committed evidence by the PRES-1 export (`cp10`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/protocol.json (blob 8da7b10e78499a4a89b61e771793da0fef622ce7)\n",
+     "path": "README.md",
+     "sha256": "e1adc07a9e03e04bb035496c5e18bee301a33161f408be552b97ec7b19bb7052"
+    }
+   ],
+   "comparability": {
+    "aggregation": "per_fold; selection on folds fold_1, fold_2, fold_4, fold_5",
+    "comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "keys": 10747,
+    "keys_sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+    "population_id": "cp10-fold-block",
+    "quantiles": "v1 nine quantiles",
+    "reference": "v1 unscaled CQR, reported but outside the §4.3 candidate set",
+    "scores": {
+     "selection_scalar": "sum of pinball losses / (9 * eligible observations), after isotonic; exact ties use candidate_order"
+    },
+    "target": "DE-LU day-ahead price per delivery hour, EUR/MWh, delivery calendar Europe/Berlin"
+   },
+   "inputs": [],
+   "metric_provenance": {},
+   "metric_units": {},
+   "metrics": {},
+   "params": {
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5"
+   },
+   "parent": null,
+   "run_key": "cp10",
+   "run_name": "CP-10 · calibration only (branch)",
+   "tags": {
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.children": "cp10/v1_reference,cp10/c1_head_spread,cp10/c1_price_volatility,cp10/c2_aci_gamma_0.000001,cp10/c2_aci_gamma_0.000005,cp10/c2_aci_gamma_0.00001,cp10/c2_aci_gamma_0.00002",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.population_id": "cp10-fold-block",
+    "delu.role": "checkpoint",
+    "delu.run_key": "cp10",
+    "mlflow.note.content": "CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4563,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.3902777777777778},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.23714682723483094},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.20880681818181818},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.46805555555555556},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.5148423005565863}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6763888888888889},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.5062528948587309},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.3527462121212121},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.8125},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.7866419294990723}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8944444444444445},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.8832792959703566},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.5553977272727273},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.9625},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9239332096474954}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.6128886954178006},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.03914109230744},{\"step\":3,\"timestamp\":1664323200000,\"value\":140.9928521771404},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.06527158805811},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.168349101365912}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.8280287265968118},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.868723904214101},{\"step\":3,\"timestamp\":1664323200000,\"value\":39.97523437353311},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.092275591775728},{\"step\":5,\"timestamp\":1775520000000,\"value\":6.080453057639732}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.19362745098039216}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":79.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\",\"reference\":\"v1 unscaled CQR, reported but outside the §4.3 candidate set\"},\"parent\":\"cp10\",\"run_key\":\"cp10/v1_reference\",\"run_name\":\"CP-10 · v1_reference · v1 unscaled CQR (reference)\",\"tags\":{\"delu.adopted\":\"n/a\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"v1_reference\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"v1 unscaled CQR (reference)\",\"delu.role\":\"reference\",\"delu.run_key\":\"cp10/v1_reference\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"v1 unscaled CQR (reference). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "33852bd4c9774ce558ffd944960cd8d2ebeebdbc1f4b27c74eef9476b85cea1e"
+    },
+    {
+     "bytes": 959,
+     "content": "# CP-10 · v1_reference · v1 unscaled CQR (reference)\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/v1_reference`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "6f537fdbe30c96d7ffc54110103e2ad16859760df06fc5c87e1803f43da3bd29"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.v1_reference.fold_1.coverage_50#value",
+     "cp10.metrics.v1_reference.fold_2.coverage_50#value",
+     "cp10.metrics.v1_reference.fold_3.coverage_50#value",
+     "cp10.metrics.v1_reference.fold_4.coverage_50#value",
+     "cp10.metrics.v1_reference.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.v1_reference.fold_1.coverage_80#value",
+     "cp10.metrics.v1_reference.fold_2.coverage_80#value",
+     "cp10.metrics.v1_reference.fold_3.coverage_80#value",
+     "cp10.metrics.v1_reference.fold_4.coverage_80#value",
+     "cp10.metrics.v1_reference.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.v1_reference.fold_1.coverage_95#value",
+     "cp10.metrics.v1_reference.fold_2.coverage_95#value",
+     "cp10.metrics.v1_reference.fold_3.coverage_95#value",
+     "cp10.metrics.v1_reference.fold_4.coverage_95#value",
+     "cp10.metrics.v1_reference.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.v1_reference.fold_1.mae#value",
+     "cp10.metrics.v1_reference.fold_2.mae#value",
+     "cp10.metrics.v1_reference.fold_3.mae#value",
+     "cp10.metrics.v1_reference.fold_4.mae#value",
+     "cp10.metrics.v1_reference.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.v1_reference.fold_1.mean_pinball#value",
+     "cp10.metrics.v1_reference.fold_2.mean_pinball#value",
+     "cp10.metrics.v1_reference.fold_3.mean_pinball#value",
+     "cp10.metrics.v1_reference.fold_4.mean_pinball#value",
+     "cp10.metrics.v1_reference.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.v1_reference.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.v1_reference.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.v1_reference.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.3902777777777778
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.23714682723483094
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.20880681818181818
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.46805555555555556
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.5148423005565863
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6763888888888889
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.5062528948587309
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.3527462121212121
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.8125
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.7866419294990723
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8944444444444445
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.8832792959703566
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.5553977272727273
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.9625
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9239332096474954
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.6128886954178006
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.03914109230744
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 140.9928521771404
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.06527158805811
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.168349101365912
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.8280287265968118
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.868723904214101
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 39.97523437353311
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.092275591775728
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 6.080453057639732
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.19362745098039216
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 79.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5",
+    "reference": "v1 unscaled CQR, reported but outside the §4.3 candidate set"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/v1_reference",
+   "run_name": "CP-10 · v1_reference · v1 unscaled CQR (reference)",
+   "tags": {
+    "delu.adopted": "n/a",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "v1_reference",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "v1 unscaled CQR (reference)",
+    "delu.role": "reference",
+    "delu.run_key": "cp10/v1_reference",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "v1 unscaled CQR (reference). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4601,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.36157407407407405},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.30430754979157015},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.28172348484848486},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.4393518518518518},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.4930426716141002}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6550925925925926},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.6433534043538676},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.4588068181818182},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.7768518518518519},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.761595547309833}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8648148148148148},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.9458082445576655},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.6856060606060606},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.9527777777777777},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9211502782931354}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.6021031212304715},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.037843343777315},{\"step\":3,\"timestamp\":1664323200000,\"value\":141.00851570123106},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.05377581163934},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.16558821873429}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.8560612181060085},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.5851392742172665},{\"step\":3,\"timestamp\":1664323200000,\"value\":35.50129421704562},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.057080807911485},{\"step\":5,\"timestamp\":1775520000000,\"value\":6.146617035112938}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.4411764705882353}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":180.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\",\"scale\":\"max(raw_p95 - raw_p05, 1 EUR/MWh); no pre-sorting of raw heads\"},\"parent\":\"cp10\",\"run_key\":\"cp10/c1_head_spread\",\"run_name\":\"CP-10 · c1_head_spread · scaled conformal, head spread\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"c1_head_spread\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"scaled conformal, head spread\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp10/c1_head_spread\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"scaled conformal, head spread. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "7f52e243014445b7f8bdb031ad8a9a6e55729d0d69c5394f93231bf234cb1db5"
+    },
+    {
+     "bytes": 965,
+     "content": "# CP-10 · c1_head_spread · scaled conformal, head spread\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/c1_head_spread`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "61156bcfcc9baf26a9e2414798f499ab9ec98d50f9dd2cf3d17e8860201b8787"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.c1_head_spread.fold_1.coverage_50#value",
+     "cp10.metrics.c1_head_spread.fold_2.coverage_50#value",
+     "cp10.metrics.c1_head_spread.fold_3.coverage_50#value",
+     "cp10.metrics.c1_head_spread.fold_4.coverage_50#value",
+     "cp10.metrics.c1_head_spread.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.c1_head_spread.fold_1.coverage_80#value",
+     "cp10.metrics.c1_head_spread.fold_2.coverage_80#value",
+     "cp10.metrics.c1_head_spread.fold_3.coverage_80#value",
+     "cp10.metrics.c1_head_spread.fold_4.coverage_80#value",
+     "cp10.metrics.c1_head_spread.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.c1_head_spread.fold_1.coverage_95#value",
+     "cp10.metrics.c1_head_spread.fold_2.coverage_95#value",
+     "cp10.metrics.c1_head_spread.fold_3.coverage_95#value",
+     "cp10.metrics.c1_head_spread.fold_4.coverage_95#value",
+     "cp10.metrics.c1_head_spread.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.c1_head_spread.fold_1.mae#value",
+     "cp10.metrics.c1_head_spread.fold_2.mae#value",
+     "cp10.metrics.c1_head_spread.fold_3.mae#value",
+     "cp10.metrics.c1_head_spread.fold_4.mae#value",
+     "cp10.metrics.c1_head_spread.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.c1_head_spread.fold_1.mean_pinball#value",
+     "cp10.metrics.c1_head_spread.fold_2.mean_pinball#value",
+     "cp10.metrics.c1_head_spread.fold_3.mean_pinball#value",
+     "cp10.metrics.c1_head_spread.fold_4.mean_pinball#value",
+     "cp10.metrics.c1_head_spread.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.c1_head_spread.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.c1_head_spread.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.c1_head_spread.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.36157407407407405
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.30430754979157015
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.28172348484848486
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.4393518518518518
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.4930426716141002
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6550925925925926
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.6433534043538676
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.4588068181818182
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.7768518518518519
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.761595547309833
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8648148148148148
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.9458082445576655
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.6856060606060606
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.9527777777777777
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9211502782931354
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.6021031212304715
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.037843343777315
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 141.00851570123106
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.05377581163934
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.16558821873429
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.8560612181060085
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.5851392742172665
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 35.50129421704562
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.057080807911485
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 6.146617035112938
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.4411764705882353
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 180.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5",
+    "scale": "max(raw_p95 - raw_p05, 1 EUR/MWh); no pre-sorting of raw heads"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/c1_head_spread",
+   "run_name": "CP-10 · c1_head_spread · scaled conformal, head spread",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "c1_head_spread",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "scaled conformal, head spread",
+    "delu.role": "candidate",
+    "delu.run_key": "cp10/c1_head_spread",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "scaled conformal, head spread. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4634,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.42407407407407405},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.32607688744789254},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.296875},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.46620370370370373},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.5333951762523191}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6972222222222222},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.6345530338119499},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.4706439393939394},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.8180555555555555},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.8112244897959183}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8986111111111111},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.9124594719777674},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.7173295454545454},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.9708333333333333},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9559369202226345}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.624001277341018},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.03896664569375},{\"step\":3,\"timestamp\":1664323200000,\"value\":141.007962544039},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.068712258943876},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.161208804905776}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.808680392562321},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.705378623029025},{\"step\":3,\"timestamp\":1664323200000,\"value\":35.85621802725599},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.083709259848602},{\"step\":5,\"timestamp\":1775520000000,\"value\":5.947388230281989}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.32107843137254904}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":131.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\",\"scale\":\"price volatility over 168 hours, ddof 1\"},\"parent\":\"cp10\",\"run_key\":\"cp10/c1_price_volatility\",\"run_name\":\"CP-10 · c1_price_volatility · scaled conformal, price volatility (selected)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"c1_price_volatility\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"scaled conformal, price volatility (selected)\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp10/c1_price_volatility\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"scaled conformal, price volatility (selected). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "287a4740bce5307a944f87e72a41a6e3eb17eb98f783d65c293fa41b76ecb185"
+    },
+    {
+     "bytes": 991,
+     "content": "# CP-10 · c1_price_volatility · scaled conformal, price volatility (selected)\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/c1_price_volatility`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "35b2eb16ad4925967540bccb6fe0aa8ad175b9ad6e8376dee58a70f6bc78c791"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.c1_price_volatility.fold_1.coverage_50#value",
+     "cp10.metrics.c1_price_volatility.fold_2.coverage_50#value",
+     "cp10.metrics.c1_price_volatility.fold_3.coverage_50#value",
+     "cp10.metrics.c1_price_volatility.fold_4.coverage_50#value",
+     "cp10.metrics.c1_price_volatility.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.c1_price_volatility.fold_1.coverage_80#value",
+     "cp10.metrics.c1_price_volatility.fold_2.coverage_80#value",
+     "cp10.metrics.c1_price_volatility.fold_3.coverage_80#value",
+     "cp10.metrics.c1_price_volatility.fold_4.coverage_80#value",
+     "cp10.metrics.c1_price_volatility.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.c1_price_volatility.fold_1.coverage_95#value",
+     "cp10.metrics.c1_price_volatility.fold_2.coverage_95#value",
+     "cp10.metrics.c1_price_volatility.fold_3.coverage_95#value",
+     "cp10.metrics.c1_price_volatility.fold_4.coverage_95#value",
+     "cp10.metrics.c1_price_volatility.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.c1_price_volatility.fold_1.mae#value",
+     "cp10.metrics.c1_price_volatility.fold_2.mae#value",
+     "cp10.metrics.c1_price_volatility.fold_3.mae#value",
+     "cp10.metrics.c1_price_volatility.fold_4.mae#value",
+     "cp10.metrics.c1_price_volatility.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.c1_price_volatility.fold_1.mean_pinball#value",
+     "cp10.metrics.c1_price_volatility.fold_2.mean_pinball#value",
+     "cp10.metrics.c1_price_volatility.fold_3.mean_pinball#value",
+     "cp10.metrics.c1_price_volatility.fold_4.mean_pinball#value",
+     "cp10.metrics.c1_price_volatility.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.c1_price_volatility.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.c1_price_volatility.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.c1_price_volatility.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.42407407407407405
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.32607688744789254
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.296875
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.46620370370370373
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.5333951762523191
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6972222222222222
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.6345530338119499
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.4706439393939394
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.8180555555555555
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.8112244897959183
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8986111111111111
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.9124594719777674
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.7173295454545454
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.9708333333333333
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9559369202226345
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.624001277341018
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.03896664569375
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 141.007962544039
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.068712258943876
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.161208804905776
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.808680392562321
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.705378623029025
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 35.85621802725599
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.083709259848602
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 5.947388230281989
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.32107843137254904
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 131.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5",
+    "scale": "price volatility over 168 hours, ddof 1"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/c1_price_volatility",
+   "run_name": "CP-10 · c1_price_volatility · scaled conformal, price volatility (selected)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "c1_price_volatility",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "scaled conformal, price volatility (selected)",
+    "delu.role": "candidate",
+    "delu.run_key": "cp10/c1_price_volatility",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "scaled conformal, price volatility (selected). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4750,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.3902777777777778},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.23761000463177398},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.20880681818181818},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.46805555555555556},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.5148423005565863}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6763888888888889},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.5062528948587309},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.3527462121212121},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.8125},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.7866419294990723}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8958333333333334},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.8832792959703566},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.5582386363636364},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.9625},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9239332096474954}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.612876355139795},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.03914109230744},{\"step\":3,\"timestamp\":1664323200000,\"value\":140.99285945546478},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.06527158805811},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.168349101365912}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.8267968513580375},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.8682749811317105},{\"step\":3,\"timestamp\":1664323200000,\"value\":39.93903978567154},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.092275591775728},{\"step\":5,\"timestamp\":1775520000000,\"value\":6.080081483342706}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.19362745098039216}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":79.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"aci_gamma\":\"0.000001\",\"aci_update\":\"c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day\",\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\"},\"parent\":\"cp10\",\"run_key\":\"cp10/c2_aci_gamma_0.000001\",\"run_name\":\"CP-10 · c2_aci_gamma_0.000001 · adaptive conformal, gamma 0.000001\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"c2_aci_gamma_0.000001\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"adaptive conformal, gamma 0.000001\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp10/c2_aci_gamma_0.000001\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"adaptive conformal, gamma 0.000001. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "4504e5fad12591129bda89820ea82de23ea351522bf9a3f0a2d04ca53f4e8a30"
+    },
+    {
+     "bytes": 984,
+     "content": "# CP-10 · c2_aci_gamma_0.000001 · adaptive conformal, gamma 0.000001\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/c2_aci_gamma_0.000001`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "a18c4dc9330053a4456c44733d22b196485fca6d76e531e87a9439b9e182de14"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_1.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_2.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_3.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_4.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_1.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_2.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_3.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_4.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_1.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_2.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_3.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_4.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_1.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_2.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_3.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_4.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_1.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_2.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_3.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_4.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000001.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.c2_aci_gamma_0.000001.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.c2_aci_gamma_0.000001.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.c2_aci_gamma_0.000001.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.3902777777777778
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.23761000463177398
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.20880681818181818
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.46805555555555556
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.5148423005565863
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6763888888888889
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.5062528948587309
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.3527462121212121
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.8125
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.7866419294990723
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8958333333333334
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.8832792959703566
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.5582386363636364
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.9625
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9239332096474954
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.612876355139795
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.03914109230744
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 140.99285945546478
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.06527158805811
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.168349101365912
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.8267968513580375
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.8682749811317105
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 39.93903978567154
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.092275591775728
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 6.080081483342706
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.19362745098039216
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 79.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "aci_gamma": "0.000001",
+    "aci_update": "c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day",
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.000001",
+   "run_name": "CP-10 · c2_aci_gamma_0.000001 · adaptive conformal, gamma 0.000001",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "c2_aci_gamma_0.000001",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "adaptive conformal, gamma 0.000001",
+    "delu.role": "candidate",
+    "delu.run_key": "cp10/c2_aci_gamma_0.000001",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "adaptive conformal, gamma 0.000001. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4745,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.3912037037037037},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.238073182028717},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.20880681818181818},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.4685185185185185},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.5148423005565863}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6787037037037037},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.509031959240389},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.3541666666666667},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.8125},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.7866419294990723}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8962962962962963},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.8832792959703566},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.5591856060606061},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.9625},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9239332096474954}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.613025115160395},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.03914018488047},{\"step\":3,\"timestamp\":1664323200000,\"value\":140.99293336146408},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.065326023736237},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.168349346062012}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.826333570596778},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.863304310659008},{\"step\":3,\"timestamp\":1664323200000,\"value\":39.90548993658733},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.092277321627888},{\"step\":5,\"timestamp\":1775520000000,\"value\":6.079509063891451}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.19362745098039216}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":79.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"aci_gamma\":\"0.000005\",\"aci_update\":\"c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day\",\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\"},\"parent\":\"cp10\",\"run_key\":\"cp10/c2_aci_gamma_0.000005\",\"run_name\":\"CP-10 · c2_aci_gamma_0.000005 · adaptive conformal, gamma 0.000005\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"c2_aci_gamma_0.000005\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"adaptive conformal, gamma 0.000005\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp10/c2_aci_gamma_0.000005\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"adaptive conformal, gamma 0.000005. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "521ffbfee5ffb5c3bdbeaf10e204b736cd60f1d2dc40417c84de74a1f483cc45"
+    },
+    {
+     "bytes": 984,
+     "content": "# CP-10 · c2_aci_gamma_0.000005 · adaptive conformal, gamma 0.000005\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/c2_aci_gamma_0.000005`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "f400d9b9aa0bee0c16c7736d3c8dd7ba51477e0964fd04814239c35efb2df91c"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_1.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_2.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_3.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_4.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_1.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_2.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_3.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_4.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_1.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_2.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_3.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_4.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_1.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_2.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_3.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_4.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_1.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_2.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_3.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_4.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.000005.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.c2_aci_gamma_0.000005.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.c2_aci_gamma_0.000005.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.c2_aci_gamma_0.000005.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.3912037037037037
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.238073182028717
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.20880681818181818
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.4685185185185185
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.5148423005565863
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6787037037037037
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.509031959240389
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.3541666666666667
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.8125
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.7866419294990723
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8962962962962963
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.8832792959703566
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.5591856060606061
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.9625
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9239332096474954
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.613025115160395
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.03914018488047
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 140.99293336146408
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.065326023736237
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.168349346062012
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.826333570596778
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.863304310659008
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 39.90548993658733
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.092277321627888
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 6.079509063891451
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.19362745098039216
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 79.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "aci_gamma": "0.000005",
+    "aci_update": "c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day",
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.000005",
+   "run_name": "CP-10 · c2_aci_gamma_0.000005 · adaptive conformal, gamma 0.000005",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "c2_aci_gamma_0.000005",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "adaptive conformal, gamma 0.000005",
+    "delu.role": "candidate",
+    "delu.run_key": "cp10/c2_aci_gamma_0.000005",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "adaptive conformal, gamma 0.000005. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4753,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.3912037037037037},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.238073182028717},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.20880681818181818},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.4689814814814815},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.5148423005565863}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6814814814814815},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.5108846688281612},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.35511363636363635},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.812962962962963},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.7866419294990723}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8967592592592593},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.8842056507642427},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.5653409090909091},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.9625},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9239332096474954}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.613100520629383},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.039131453478877},{\"step\":3,\"timestamp\":1664323200000,\"value\":140.99299885496157},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.065331831729964},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.168352425499368}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.8250610368707156},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.855656393631979},{\"step\":3,\"timestamp\":1664323200000,\"value\":39.825845757374985},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.092242939545287},{\"step\":5,\"timestamp\":1775520000000,\"value\":6.079962335794281}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.19852941176470587}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":81.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"aci_gamma\":\"0.00001\",\"aci_update\":\"c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day\",\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\"},\"parent\":\"cp10\",\"run_key\":\"cp10/c2_aci_gamma_0.00001\",\"run_name\":\"CP-10 · c2_aci_gamma_0.00001 · adaptive conformal, gamma 0.00001\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"c2_aci_gamma_0.00001\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"adaptive conformal, gamma 0.00001\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp10/c2_aci_gamma_0.00001\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"adaptive conformal, gamma 0.00001. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "929b903f5553f49a5a59c8536ce8c389384028e4a1de3c7622196961b0b66659"
+    },
+    {
+     "bytes": 981,
+     "content": "# CP-10 · c2_aci_gamma_0.00001 · adaptive conformal, gamma 0.00001\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/c2_aci_gamma_0.00001`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "3c1e327f13da3ee959ebc19e00ba0672f68ec3992892c76eed1a285de3c14053"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_1.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_2.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_3.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_4.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_1.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_2.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_3.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_4.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_1.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_2.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_3.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_4.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_1.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_2.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_3.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_4.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_1.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_2.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_3.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_4.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00001.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.c2_aci_gamma_0.00001.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.c2_aci_gamma_0.00001.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.c2_aci_gamma_0.00001.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.3912037037037037
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.238073182028717
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.20880681818181818
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.4689814814814815
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.5148423005565863
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6814814814814815
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.5108846688281612
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.35511363636363635
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.812962962962963
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.7866419294990723
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8967592592592593
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.8842056507642427
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.5653409090909091
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.9625
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9239332096474954
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.613100520629383
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.039131453478877
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 140.99299885496157
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.065331831729964
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.168352425499368
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.8250610368707156
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.855656393631979
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 39.825845757374985
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.092242939545287
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 6.079962335794281
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.19852941176470587
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 81.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "aci_gamma": "0.00001",
+    "aci_update": "c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day",
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.00001",
+   "run_name": "CP-10 · c2_aci_gamma_0.00001 · adaptive conformal, gamma 0.00001",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "c2_aci_gamma_0.00001",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "adaptive conformal, gamma 0.00001",
+    "delu.role": "candidate",
+    "delu.run_key": "cp10/c2_aci_gamma_0.00001",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "adaptive conformal, gamma 0.00001. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 4812,
+     "content": "{\"inputs\":[{\"context\":\"evaluation\",\"digest\":\"8b57df9e1a8f9066585b536da3d41d2a5e12\",\"name\":\"cp10-fold-block\",\"profile\":\"10747 evaluation hours\",\"sha256\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"source\":\"reports/cp10/predictions.parquet\"},{\"context\":\"training\",\"digest\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de3\",\"name\":\"market-snapshot\",\"profile\":\"committed SMARD/ENTSO-E snapshot\",\"sha256\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\",\"source\":\"data/snapshot.parquet\"}],\"metric_units\":{\"fold_coverage50\":\"fraction\",\"fold_coverage80\":\"fraction\",\"fold_coverage95\":\"fraction\",\"fold_mae_eur\":\"EUR/MWh\",\"fold_pinball9_eur\":\"EUR/MWh\",\"peak_coverage95\":\"fraction\",\"peak_hits95\":\"count\",\"peak_mae_eur\":\"EUR/MWh\"},\"metrics\":{\"fold_coverage50\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.3921296296296296},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.238073182028717},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.21070075757575757},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.46944444444444444},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.5134508348794063}],\"fold_coverage80\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.6842592592592592},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.5141269106067624},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.35984848484848486},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.812962962962963},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.7857142857142857}],\"fold_coverage95\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":0.8972222222222223},{\"step\":2,\"timestamp\":1624924800000,\"value\":0.8865215377489578},{\"step\":3,\"timestamp\":1664323200000,\"value\":0.5733901515151515},{\"step\":4,\"timestamp\":1753747200000,\"value\":0.962037037037037},{\"step\":5,\"timestamp\":1775520000000,\"value\":0.9243970315398887}],\"fold_mae_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":6.613451941130909},{\"step\":2,\"timestamp\":1624924800000,\"value\":20.03912292549571},{\"step\":3,\"timestamp\":1664323200000,\"value\":140.99355559461648},{\"step\":4,\"timestamp\":1753747200000,\"value\":20.065445423970978},{\"step\":5,\"timestamp\":1775520000000,\"value\":23.16838729425198}],\"fold_pinball9_eur\":[{\"step\":1,\"timestamp\":1601251200000,\"value\":1.8235972395157376},{\"step\":2,\"timestamp\":1624924800000,\"value\":4.846940513037577},{\"step\":3,\"timestamp\":1664323200000,\"value\":39.6315598109563},{\"step\":4,\"timestamp\":1753747200000,\"value\":5.092233097851605},{\"step\":5,\"timestamp\":1775520000000,\"value\":6.080761176760176}],\"peak_coverage95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":0.20588235294117646}],\"peak_hits95\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":84.0}],\"peak_mae_eur\":[{\"step\":0,\"timestamp\":1661904000000,\"value\":275.25954291591773}]},\"params\":{\"aci_gamma\":\"0.00002\",\"aci_update\":\"c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day\",\"anchor_version\":\"capstone_v20.md §4, §9 CP-10\",\"catalog\":\"base\",\"evidence_class\":\"development_calibration_comparison; no holdout evaluation, no artifact freeze\",\"isotonic\":\"last, existing PAVA, feedback uses final emitted intervals\",\"protocol_sha256\":\"ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5\"},\"parent\":\"cp10\",\"run_key\":\"cp10/c2_aci_gamma_0.00002\",\"run_name\":\"CP-10 · c2_aci_gamma_0.00002 · adaptive conformal, gamma 0.00002 (selected gamma)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"true\",\"delu.checkpoint\":\"CP-10\",\"delu.comparability_id\":\"8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92\",\"delu.datasets\":\"{\\\"cp10-fold-block\\\":\\\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\\\",\\\"market-snapshot\\\":\\\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\\\"}\",\"delu.evidence_class\":\"development_calibration_comparison\",\"delu.evidence_ref\":\"evidence/cp-15@4039ce2\",\"delu.generation\":\"none\",\"delu.model_code_sha\":\"ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803\",\"delu.original_completed_utc\":\"unknown\",\"delu.policy_code\":\"c2_aci_gamma_0.00002\",\"delu.population_id\":\"cp10-fold-block\",\"delu.public_name\":\"adaptive conformal, gamma 0.00002 (selected gamma)\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp10/c2_aci_gamma_0.00002\",\"delu.source_blobs\":\"{\\\"reports/cp10/metrics.csv\\\":\\\"058b0f538df6091a17305c414e4b114d1c940b62\\\",\\\"reports/cp10/peak_windows.csv\\\":\\\"4a33ec625812496a8973606dcb02e44856657468\\\"}\",\"mlflow.note.content\":\"adaptive conformal, gamma 0.00002 (selected gamma). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.\"}}\n",
+     "path": "summary.json",
+     "sha256": "cc8b6d9440342c1e8bb4968078d09e8f4ba3564ded7074f91f184f7e4e00beac"
+    },
+    {
+     "bytes": 998,
+     "content": "# CP-10 · c2_aci_gamma_0.00002 · adaptive conformal, gamma 0.00002 (selected gamma)\n\nBackfilled from committed evidence by the PRES-1 export (`cp10/c2_aci_gamma_0.00002`). Development evidence; nothing here is a live or confirmatory result.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-10/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-15-landing.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the evidence tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/metrics.csv (blob 058b0f538df6091a17305c414e4b114d1c940b62)\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp10/peak_windows.csv (blob 4a33ec625812496a8973606dcb02e44856657468)\n",
+     "path": "README.md",
+     "sha256": "b377550eebcdabe16357e2b327b76a622c24d3ff22e6288f2872791f72c94515"
+    }
+   ],
+   "inputs": [
+    {
+     "context": "evaluation",
+     "digest": "8b57df9e1a8f9066585b536da3d41d2a5e12",
+     "name": "cp10-fold-block",
+     "profile": "10747 evaluation hours",
+     "sha256": "8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf",
+     "source": "reports/cp10/predictions.parquet"
+    },
+    {
+     "context": "training",
+     "digest": "7dd2dc73407706ca6bd3c1ad51d201ac0de3",
+     "name": "market-snapshot",
+     "profile": "committed SMARD/ENTSO-E snapshot",
+     "sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+     "source": "data/snapshot.parquet"
+    }
+   ],
+   "metric_provenance": {
+    "fold_coverage50": [
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_1.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_2.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_3.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_4.coverage_50#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_5.coverage_50#value"
+    ],
+    "fold_coverage80": [
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_1.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_2.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_3.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_4.coverage_80#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_5.coverage_80#value"
+    ],
+    "fold_coverage95": [
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_1.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_2.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_3.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_4.coverage_95#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_5.coverage_95#value"
+    ],
+    "fold_mae_eur": [
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_1.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_2.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_3.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_4.mae#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_5.mae#value"
+    ],
+    "fold_pinball9_eur": [
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_1.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_2.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_3.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_4.mean_pinball#value",
+     "cp10.metrics.c2_aci_gamma_0.00002.fold_5.mean_pinball#value"
+    ],
+    "peak_coverage95": [
+     "cp10.peak_windows.c2_aci_gamma_0.00002.coverage_95#value"
+    ],
+    "peak_hits95": [
+     "cp10.peak_windows.c2_aci_gamma_0.00002.covered_95#value"
+    ],
+    "peak_mae_eur": [
+     "cp10.peak_windows.c2_aci_gamma_0.00002.mae#value"
+    ]
+   },
+   "metric_units": {
+    "fold_coverage50": "fraction",
+    "fold_coverage80": "fraction",
+    "fold_coverage95": "fraction",
+    "fold_mae_eur": "EUR/MWh",
+    "fold_pinball9_eur": "EUR/MWh",
+    "peak_coverage95": "fraction",
+    "peak_hits95": "count",
+    "peak_mae_eur": "EUR/MWh"
+   },
+   "metrics": {
+    "fold_coverage50": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.3921296296296296
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.238073182028717
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.21070075757575757
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.46944444444444444
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.5134508348794063
+     }
+    ],
+    "fold_coverage80": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.6842592592592592
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.5141269106067624
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.35984848484848486
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.812962962962963
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.7857142857142857
+     }
+    ],
+    "fold_coverage95": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 0.8972222222222223
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 0.8865215377489578
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 0.5733901515151515
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 0.962037037037037
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 0.9243970315398887
+     }
+    ],
+    "fold_mae_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 6.613451941130909
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 20.03912292549571
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 140.99355559461648
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 20.065445423970978
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 23.16838729425198
+     }
+    ],
+    "fold_pinball9_eur": [
+     {
+      "step": 1,
+      "timestamp": 1601251200000,
+      "value": 1.8235972395157376
+     },
+     {
+      "step": 2,
+      "timestamp": 1624924800000,
+      "value": 4.846940513037577
+     },
+     {
+      "step": 3,
+      "timestamp": 1664323200000,
+      "value": 39.6315598109563
+     },
+     {
+      "step": 4,
+      "timestamp": 1753747200000,
+      "value": 5.092233097851605
+     },
+     {
+      "step": 5,
+      "timestamp": 1775520000000,
+      "value": 6.080761176760176
+     }
+    ],
+    "peak_coverage95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 0.20588235294117646
+     }
+    ],
+    "peak_hits95": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 84.0
+     }
+    ],
+    "peak_mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1661904000000,
+      "value": 275.25954291591773
+     }
+    ]
+   },
+   "params": {
+    "aci_gamma": "0.00002",
+    "aci_update": "c += gamma * (nominal_coverage - inclusive_hit); process each released hourly observation once in stored chronological order, before predicting a whole delivery day",
+    "anchor_version": "capstone_v20.md §4, §9 CP-10",
+    "catalog": "base",
+    "evidence_class": "development_calibration_comparison; no holdout evaluation, no artifact freeze",
+    "isotonic": "last, existing PAVA, feedback uses final emitted intervals",
+    "protocol_sha256": "ad1154ff33d3bcd946eae97b27a696391a09cf3505b12d3bb4695092c142e4e5"
+   },
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.00002",
+   "run_name": "CP-10 · c2_aci_gamma_0.00002 · adaptive conformal, gamma 0.00002 (selected gamma)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "true",
+    "delu.checkpoint": "CP-10",
+    "delu.comparability_id": "8a1960d3540844499ef293259088ed9798556a0aceca21c3287830c89f97bf92",
+    "delu.datasets": "{\"cp10-fold-block\":\"8b57df9e1a8f9066585b536da3d41d2a5e1211355ba6499e162d90669c3108bf\",\"market-snapshot\":\"7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00\"}",
+    "delu.evidence_class": "development_calibration_comparison",
+    "delu.evidence_ref": "evidence/cp-15@4039ce2",
+    "delu.generation": "none",
+    "delu.model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
+    "delu.original_completed_utc": "unknown",
+    "delu.policy_code": "c2_aci_gamma_0.00002",
+    "delu.population_id": "cp10-fold-block",
+    "delu.public_name": "adaptive conformal, gamma 0.00002 (selected gamma)",
+    "delu.role": "candidate",
+    "delu.run_key": "cp10/c2_aci_gamma_0.00002",
+    "delu.source_blobs": "{\"reports/cp10/metrics.csv\":\"058b0f538df6091a17305c414e4b114d1c940b62\",\"reports/cp10/peak_windows.csv\":\"4a33ec625812496a8973606dcb02e44856657468\"}",
+    "mlflow.note.content": "adaptive conformal, gamma 0.00002 (selected gamma). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+   }
+  }
+ ]
+}
