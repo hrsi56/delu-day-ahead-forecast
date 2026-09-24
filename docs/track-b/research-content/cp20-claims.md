@@ -47,6 +47,7 @@ exploratory ([R20](../../../reports/weather-ablation/report.md) L5, [I20](../evi
 | DEMO | [reports/presentation/release-checks/2026-09-24-demo.json](../../../reports/presentation/release-checks/2026-09-24-demo.json) |
 | CAP | [capstone_v21.md](../../../capstone_v21.md) (v21-r4): §7, §8, §14.4, §15.1–15.4 |
 | PLAN | [presentation-and-tracking-plan-2026-09-24.md](../presentation-and-tracking-plan-2026-09-24.md) (revision 3, Owner-approved) |
+| REV | The Owner's D1 editorial review, 2026-09-25 (not committed on this branch; its copy is applied here and recorded in `reports/presentation/d1/specimen.md`) |
 
 ## Claim map: CP-20
 
@@ -131,19 +132,19 @@ These claims carry the page's own wording. Numbers in them come from the records
 
 | ID | Claim | Source → table/row | Status |
 |---|---|---|---|
-| P01 | Title: "Forecasting tomorrow's electricity prices." | PLAN §8.1 | Copy |
-| P02 | Supporting sentence: "Explore the released demo and follow how successive research models were compared and improved." | PLAN §8.1 | Copy |
-| P03 | Status pair: released demo **v1**; latest research **v3**, Development · post-selection. | PLAN §8.1; C95 | O |
-| P04 | The opening's one summary value: v3 against v2, normalized point error −0.0783 [−0.1006, −0.0570], development after selection. | C69 (U20 L12) | S |
-| P05 | The product preview is v1's saved historical replay: the default delivery day, ×1.00 load scenario, 80% level. | V1 (`replay_label`); `scripts/build_pages.py` fan-chart payload | S |
-| P06 | Lineage: v1 → v2 → v3 are the adopted generations; CP-10 (calibration only) is a branch, not adopted; CP-15 (model comparison) is a branch that informed v2. | PLAN §7.7, §8.4; C95; SEL10; RK15 | O/S |
+| P01 | Eyebrow and title: "German–Luxembourg electricity market"; "Day-ahead electricity forecasts, with uncertainty." | PLAN §8.1; REV §4A | Copy |
+| P02 | Description: "Explore hourly price forecasts and prediction intervals on historical days. See how successive research models improved, what failed, and how each result was checked." | PLAN §8.1; REV §4A | Copy |
+| P03 | Status pair: demo **v1** · Released model; research **v3** · Weather features, Development · post-selection. | PLAN §8.1; REV §4A; C95 | O |
+| P04 | The opening's research takeaway, qualitative and with no number: adding weather inputs improved both point-error and interval scores against v2 in development tests; performance on future data is still to be evaluated. It rests on both equal-fold differences and their 95% intervals lying wholly below zero (ΔS_MAE −0.0783 [−0.1006, −0.0570]; ΔS_WIS −0.0838 [−0.1044, −0.0655]), shown in the v3 chapter. | C69, C70 (U20 L12–13); C95 | S |
+| P05 | The product preview, labelled "Historical forecast · v1": v1's saved historical replay for the default delivery day, ×1.00 load scenario, 80% level, captioned as a historical replay, not a live forecast; "Explore this forecast" opens the replay in the original v1 report. | V1 (`replay_label`); `scripts/build_pages.py` fan-chart payload; REV §4A | S |
+| P06 | Lineage in plain words: v1 is the released demo; v2 changed the forecasting approach (blended LEAR, hour-aware intervals); v3 added weather inputs. Two branches: the calibration experiment (CP-10), not adopted because recalibrating v1 was not enough, and the model comparison study (CP-15), which informed v2. | PLAN §7.7, §8.4; REV §4B; C95; SEL10; RK15 | O/S |
 | P07 | The overview comparison: seven policies, equal-fold S_MAE and S_WIS against the similar-day naive on the identical 10,747 hours, development after selection; reference lines at 1.00 and at the diagnostic limits 0.59203 and 0.57509, which are not certification. | C74; C77 (C20 L2–3) | S |
 | P08 | Fairness note: the shared population of 10,747 hours over 448 days, equal-fold scoring and development status; one level deeper, the bootstrap settings and the fold table. | C63; C68; M20 L2 (`n_days`) | S/Def |
 | P09 | F07 note: v1 scores 1.05 here and "28.58% worse" in its own report over the same 448 days. v1's report compares with the raw similar-day naive (MAE 32.45 EUR/MWh) and pools all days; this comparison weights five folds equally against the naive's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own MAE is 41.74 EUR/MWh in both. | DM2 (`relative_improvement_pct`, `n_days`); PM2 L4, L8; M20 L2, L8, L45 | S |
-| P10 | Planned, not evaluated: 4.6 DDNN/TabPFN, 4.4V VRE, 4.5 three-block LightGBM, 4.8 recombination, 4.7T and live; each with its question and the evidence that would decide it, "subject to the active plan"; no score, version number or date. | PLAN §8.6 | O |
+| P10 | Planned, not evaluated: a one-sentence teaser, then a closed disclosure with descriptive names first — alternative model families (4.6 DDNN/TabPFN), wind and solar generation forecasts (4.4V VRE), models for different parts of the day (4.5 three-block LightGBM), combining models (4.8), and fresh-data evaluation then live operation (4.7T and live); each with its question and the evidence that would decide it, "subject to the active plan"; no score, version number or date. | PLAN §8.6; REV §4B | O |
 | P11 | v1 chapter: the one-shot holdout values under the exact label; the two unflattering results (development point DM p = 0.948, a deficit; 0.194 crisis coverage); the crisis lesson: bias −269.45, level MAE 269.45 against shape MAE 66.88 EUR/MWh on the crisis window. | V1 (`holdout_*`, `development_dm_point_*`, `limitation_coverage_divergence`); PK15 L8 (`bias`, `daily_mean_level_MAE`, `within_day_shape_MAE`) | S |
 | P12 | CP-10: recalibrating v1 without refitting raised crisis-window 95% coverage from 19.36% to 32.11% (79/408 → 131/408); not adopted. | PW10 L2, L4; SEL10 `same_window_diagnostic` | S |
-| P13 | Demo startup information: about 57 MB on a first visit; the measured time to a visible forecast with its browser, device and date; the date last verified. | V1 (`wasm_cold_load_mb`); DEMO `runs` | S |
+| P13 | Demo startup: a short visible note (runs in the browser; about 57 MB on a first visit; startup time varies) and a closed disclosure with what the demo does and the recorded cold-start measurement — seconds, browser, machine and date read from the release record, never typed into the generator. | V1 (`wasm_cold_load_mb`); DEMO `runs`, `playwright_host`, `date`; REV §4A | S |
 | P14 | Adoption labels and evidence badges are separate signals; "Adopted" never implies deployment or outside validation. | PLAN §7.8 | Def |
 | P15 | Contribution statement: the Owner's own wording, displayed as written. Not a research claim. | PLAN §8.9 | O |
 

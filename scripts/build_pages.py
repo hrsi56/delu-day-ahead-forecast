@@ -109,12 +109,16 @@ MONO_STACK = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace'
 #: whose viewBox fits the 390 px column, so chart text stays at or above 12 px there
 #: (plan §6 invariant 23; asserted by tests/test_31_page_structure.py from these constants).
 DESKTOP_W = 760
-MOBILE_W = 320
+MOBILE_W = 296
 CHART_FONT = 13
 MOBILE_BREAKPOINT = 820
 MOBILE_MAX_W = 440
-#: The chart column at a 390 px viewport: 390 − 2 × 16 px gutter − 2 × 12 px panel padding.
+#: The chart column at a 390 px viewport: 390 − 2 × 16 px gutter − 2 × 12 px panel padding; at 320 px the
+#: page uses 12 px gutters and 8 px panel padding (the ≤340 px rule in `css()`).
 MOBILE_COLUMN_AT_390 = 390 - 2 * 16 - 2 * 12
+MOBILE_COLUMN_AT_320 = 320 - 2 * 12 - 2 * 8
+#: Characters of 13 px chart text that fit one phone line.
+MOBILE_LINE_CHARS = 39
 
 ROLE_STYLE = {
     "v3": {"color": TOKENS["v3"], "marker": "circle", "filled": True},
@@ -214,18 +218,18 @@ def mlflow_index() -> dict:
 
 def evidence_row(*, compare: str | None, review: tuple[str, str], source: tuple[str, str],
                  extra: list[tuple[str, str]] | None = None) -> str:
-    """"Compare these runs in MLflow · Reviewed result · Source data". An unpublished destination
-    is shown as unavailable, never as a link that looks complete (plan §7.9, invariant 16)."""
+    """"Compare experiment runs · Read the review · View source values" (plan §7.9, review §4E).
+    An unpublished destination is shown as unavailable, never as a link that looks complete."""
     routes = mlflow_index().get("routes", {})
     items = []
     if compare is not None:
         url = routes.get(compare)
         if url:
-            items.append(f'<a class="ev external" href="{attr(url)}">Compare these runs in MLflow</a>')
+            items.append(f'<a class="ev external" href="{attr(url)}">Compare experiment runs</a>')
         else:
             items.append(
                 f'<span class="ev is-unavailable" data-unpublished="mlflow:{attr(compare)}">'
-                "MLflow comparison <span class=\"why\">(link added when the runs are published)</span></span>"
+                "Compare experiment runs <span class=\"why\">(link added when the runs are published)</span></span>"
             )
     items.append(f'<a class="ev external" href="{attr(review[1])}">{esc(review[0])}</a>')
     items.append(f'<a class="ev external" href="{attr(source[1])}">{esc(source[0])}</a>')
@@ -321,19 +325,20 @@ def marker(x: float, y: float, role: str, *, size: float = 6.0, extra: str = "")
     style = ROLE_STYLE[role]
     colour = style["color"]
     fill = colour if style["filled"] else TOKENS["surface"]
-    common = f'fill="{fill}" stroke="{colour}" stroke-width="1.8"{extra}'
     if style["marker"] == "circle":
-        return f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size:.1f}" {common}/>'
-    if style["marker"] == "square":
+        shape = f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{size:.1f}" '
+    elif style["marker"] == "square":
         s = size * 0.9
-        return f'<rect x="{x - s:.1f}" y="{y - s:.1f}" width="{2 * s:.1f}" height="{2 * s:.1f}" {common}/>'
-    if style["marker"] == "triangle":
+        shape = f'<rect x="{x - s:.1f}" y="{y - s:.1f}" width="{2 * s:.1f}" height="{2 * s:.1f}" '
+    elif style["marker"] == "triangle":
         s = size * 1.15
-        points = f"{x:.1f},{y - s:.1f} {x + s:.1f},{y + s * 0.8:.1f} {x - s:.1f},{y + s * 0.8:.1f}"
-        return f'<polygon points="{points}" {common}/>'
-    s = size * 1.1
-    points = f"{x:.1f},{y - s:.1f} {x + s:.1f},{y:.1f} {x:.1f},{y + s:.1f} {x - s:.1f},{y:.1f}"
-    return f'<polygon points="{points}" {common}/>'
+        shape = f'<polygon points="{x:.1f},{y - s:.1f} {x + s:.1f},{y + s * 0.8:.1f} {x - s:.1f},{y + s * 0.8:.1f}" '
+    else:
+        s = size * 1.1
+        shape = f'<polygon points="{x:.1f},{y - s:.1f} {x + s:.1f},{y:.1f} {x:.1f},{y + s:.1f} {x - s:.1f},{y:.1f}" '
+    # A surface-coloured ring under the mark keeps touching or overlapping marks distinct.
+    ring = shape + f'fill="{TOKENS["surface"]}" stroke="{TOKENS["surface"]}" stroke-width="4.6" aria-hidden="true"/>'
+    return ring + shape + f'fill="{fill}" stroke="{colour}" stroke-width="1.8"{extra}/>'
 
 
 def svg_wrap(width: float, height: float, body: str, *, title: str, desc: str, variant: str,
@@ -428,16 +433,21 @@ def _interval_marks(scale: Scale, y: float, record: R.EvidenceRecord, role: str,
 
 
 def _row_value_text(scale: Scale, x_mark: float, y: float, row: Row, claim_id: str, x_right: float,
-                    size: int = CHART_FONT) -> str:
+                    size: int = CHART_FONT, *, x_left: float | None = None) -> str:
     claim_id = row.claim or claim_id
     record = R.get(row.record_id)
     weight = "600" if row.bold else None
     if record.interval is not None:
         low = RC.svg_value(row.record_id, "ci_low")
-        high = RC.svg_value(row.record_id, "ci_high")
+        if (row.record_id, "ci_high") in RC.EXACT_FIELDS:
+            high = "see below"  # printed in full under the plot, never rounded (invariant 9)
+        else:
+            high = RC.svg_value(row.record_id, "ci_high")
         text = f"{RC.svg_value(row.record_id)} [{low}, {high}]"
-        drop = 19 if len(text) > 30 else 0  # the exact endpoint is too long for the value column
-        return svg_text(x_right, y + 4.5 + drop, text, size=size, anchor="end",
+        if x_left is not None:
+            return svg_text(x_left, y + 4.5, text, size=size, anchor="start",
+                            extra=RC.svg_binding(claim_id, row.record_id) + HALO, weight=weight)
+        return svg_text(x_right, y + 4.5, text, size=size, anchor="end",
                         extra=RC.svg_binding(claim_id, row.record_id) + HALO, weight=weight)
     near_right = x_mark > x_right - 58
     return value_label(x_mark + (-10 if near_right else 10), y + 4.5, claim_id, row.record_id,
@@ -526,30 +536,38 @@ def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str
                     parts.append(_row_value_text(scale, scale(record.value), cy, row, claim_id, x1))
     desktop = svg_wrap(DESKTOP_W, height, "".join(parts), title=title, desc=desc, variant="d", chart_id=chart_id)
 
-    # ---- phone: stacked panels; each row is a label line, then its mark (and its values)
+    # ---- phone: stacked panels; each row is its label (wrapped), then its mark, then its values
     parts = []
     y_cursor = 0.0
-    m_row = 58 if has_interval else 44
     for panel in panels:
-        x0, x1 = 14.0, MOBILE_W - 14.0
+        x0, x1 = 22.0, MOBILE_W - 18.0  # room for a centred edge tick label such as "−0.12"
         scale = Scale(panel.scale_id, panel.domain[0], panel.domain[1], x0, x1, _check_panel_units(panel))
         parts.append(svg_text(0, y_cursor + 16, panel.title, weight="600"))
-        sub_lines = _wrap(panel.subtitle, 44)
+        sub_lines = _wrap(panel.subtitle, MOBILE_LINE_CHARS)
         for line_index, line in enumerate(sub_lines):
             parts.append(svg_text(0, y_cursor + 34 + 17 * line_index, line, fill=TOKENS["text-2"]))
         y_cursor += 17 * (len(sub_lines) - 1)
         label_y = y_cursor + 54 + (len(panel.refs) - 1) * 17
         top = label_y + 12
-        bottom = top + len(panel.rows) * m_row
+        layout, y = [], top
+        for row in panel.rows:
+            lines = _wrap(row.label, MOBILE_LINE_CHARS)
+            has_ci = R.get(row.record_id).interval is not None
+            y_label = y + 15
+            y_mark = y_label + 17 * (len(lines) - 1) + 18
+            layout.append((row, lines, y_label, y_mark))
+            y = y_mark + (40 if has_ci else 26)
+        bottom = y
         refs_and_ticks(panel, scale, top, bottom, label_y, True)
-        for index, row in enumerate(panel.rows):
-            y_label = top + index * m_row + 15
-            y_mark = y_label + 18
+        for row, lines, y_label, y_mark in layout:
             record = R.get(row.record_id)
-            parts.append(svg_text(0, y_label, row.label, weight="600" if row.bold else None))
+            for line_index, line in enumerate(lines):
+                # reference lines cross the label line on a phone; the halo keeps the label legible
+                parts.append(svg_text(0, y_label + 17 * line_index, line, weight="600" if row.bold else None,
+                                      extra=' data-structural="label"' * any(c.isdigit() for c in line) + HALO))
             if record.interval is not None:
                 parts.append(_interval_marks(scale, y_mark, record, row.role, row.claim or claim_id))
-                parts.append(_row_value_text(scale, 0, y_mark + 14, row, claim_id, MOBILE_W))
+                parts.append(_row_value_text(scale, 0, y_mark + 19, row, claim_id, MOBILE_W, x_left=0))
             parts.append(marker(scale(record.value), y_mark, row.role,
                                 extra=RC.svg_binding(row.claim or claim_id, row.record_id)))
             if record.interval is None:
@@ -640,7 +658,8 @@ def multi_rows(chart_id: str, claim_id: str, panels: list[tuple[str, str, tuple[
     width_each = (DESKTOP_W - gap * (len(panels) - 1)) / len(panels)
     for p_index, panel in enumerate(panels):
         x_label = p_index * (width_each + gap)
-        body, bottom = draw(DESKTOP_W, x_label, x_label + 72, x_label + width_each - 18, panel, 0, 0, False)
+        label_w = max(72, round(8.2 * max(len(row.label) for row in panel[2])) + 14)
+        body, bottom = draw(DESKTOP_W, x_label, x_label + label_w, x_label + width_each - 18, panel, 0, 0, False)
         desktop_parts.append(body)
         heights.append(bottom)
     note = svg_text(0, max(heights) + 18, scale_note, fill=TOKENS["text-2"]) if scale_note else ""
@@ -652,9 +671,9 @@ def multi_rows(chart_id: str, claim_id: str, panels: list[tuple[str, str, tuple[
         mobile_parts.append(body)
         cursor = bottom + 18
     if scale_note:
-        for line_index, line in enumerate(_wrap(scale_note, 44)):
+        for line_index, line in enumerate(_wrap(scale_note, MOBILE_LINE_CHARS)):
             mobile_parts.append(svg_text(0, cursor + line_index * 17, line, fill=TOKENS["text-2"]))
-        cursor += 17 * len(_wrap(scale_note, 44)) + 6
+        cursor += 17 * len(_wrap(scale_note, MOBILE_LINE_CHARS)) + 6
     mobile = svg_wrap(MOBILE_W, cursor, "".join(mobile_parts), title=title, desc=desc, variant="m", chart_id=chart_id)
     return f'<div class="chart" data-chart-id="{chart_id}">{desktop}{mobile}</div>'
 
@@ -717,16 +736,16 @@ def hour_panels(chart_id: str, claim_id: str, series: tuple[tuple[str, str], ...
     for fold in folds:
         body, cursor = draw(DESKTOP_W, 48, DESKTOP_W - 40, cursor, fold, 90)
         parts.append(body)
-    parts.append(svg_text(0, cursor, "x: local delivery hour (Europe/Berlin) · y: MAE, EUR/MWh · each fold on its own scale",
+    parts.append(svg_text(0, cursor + 14, "x: local delivery hour (Europe/Berlin) · y: MAE, EUR/MWh · each fold on its own scale",
                           fill=TOKENS["text-2"]))
-    desktop = svg_wrap(DESKTOP_W, cursor + 10, "".join(parts), title=title, desc=desc, variant="d", chart_id=chart_id)
+    desktop = svg_wrap(DESKTOP_W, cursor + 24, "".join(parts), title=title, desc=desc, variant="d", chart_id=chart_id)
     parts, cursor = [], 0.0
     for fold in folds:
         body, cursor = draw(MOBILE_W, 44, MOBILE_W - 34, cursor, fold, 96)
         parts.append(body)
-    for index, line in enumerate(_wrap("x: local delivery hour · y: MAE, EUR/MWh · each fold on its own scale", 44)):
-        parts.append(svg_text(0, cursor + index * 17, line, fill=TOKENS["text-2"]))
-    mobile = svg_wrap(MOBILE_W, cursor + 40, "".join(parts), title=title, desc=desc, variant="m", chart_id=chart_id)
+    for index, line in enumerate(_wrap("x: local delivery hour · y: MAE, EUR/MWh · each fold on its own scale", MOBILE_LINE_CHARS)):
+        parts.append(svg_text(0, cursor + 14 + index * 17, line, fill=TOKENS["text-2"]))
+    mobile = svg_wrap(MOBILE_W, cursor + 54, "".join(parts), title=title, desc=desc, variant="m", chart_id=chart_id)
     return f'<div class="chart" data-chart-id="{chart_id}">{desktop}{mobile}</div>'
 
 
@@ -817,10 +836,11 @@ def preview_chart(payload: dict) -> str:
 
 
 def lineage() -> str:
+    """The main line of adopted generations, in plain words; canonical names stay in the chapters."""
     main = [
-        ("v1", "released LightGBM", "Released product · the demo runs it", "#v1", "v1"),
-        ("v2", "blended LEAR, hour-aware intervals", "Adopted in research", "#v2", "v2"),
-        ("v3", "weather features", "Adopted in research · not in the demo", "#v3", "v3"),
+        ("v1", "released model", "The released demo", "#v1", "v1"),
+        ("v2", "a new forecasting approach", "Blended LEAR, hour-aware intervals · adopted in research", "#v2", "v2"),
+        ("v3", "adds weather inputs", "Adopted in research · not in the demo", "#v3", "v3"),
     ]
     nodes = "".join(
         f'<li class="node node-{role}"><a href="{href}"><span class="dot" aria-hidden="true"></span>'
@@ -829,48 +849,59 @@ def lineage() -> str:
         for label, name, status, href, role in main
     )
     branches = (
-        '<ul class="branches" aria-label="Experiments and studies that branched off">'
-        f'<li class="branch branch-after-v1"><a href="#road-to-v2"><span class="branch-name">Calibration experiment '
-        f'({S("checkpoint", "CP-10")})</span><span class="branch-status">{esc(RC.NOT_ADOPTED)} · recalibrating '
-        f'{ver("v1")} was not enough</span></a></li>'
-        f'<li class="branch branch-before-v2"><a href="#road-to-v2"><span class="branch-name">Model-comparison study '
-        f'({S("checkpoint", "CP-15")})</span><span class="branch-status">Study · informed {ver("v2")}</span></a></li>'
-        f'<li class="branch branch-after-v2"><a href="#v3"><span class="branch-name">Weather-feature bundle '
-        f'({S("checkpoint", "CP-20")})</span><span class="branch-status">Evaluated against {ver("v2")} · adopted as '
-        f'{ver("v3")}</span></a></li></ul>'
+        f'<p class="branches-head">Experiments between {ver("v1")} and {ver("v2")}</p>'
+        '<ul class="branches" aria-label="Experiments that informed the decisions">'
+        f'<li class="branch"><a href="#road-to-v2"><span class="branch-name">Calibration experiment</span>'
+        f'<span class="branch-status">{esc(RC.NOT_ADOPTED)} · recalibrating {ver("v1")} was not enough · '
+        f'{S("checkpoint", "CP-10")}</span></a></li>'
+        f'<li class="branch"><a href="#road-to-v2"><span class="branch-name">Model comparison study</span>'
+        f'<span class="branch-status">Informed {ver("v2")} · {S("checkpoint", "CP-15")}</span></a></li></ul>'
     )
     return (
-        '<div class="lineage"><p class="lineage-caption">Adopted generations sit on the main line. Experiments and '
-        'studies branch off it, marked with what they informed.</p>'
+        f'<div class="lineage"><p class="lineage-caption">{ver("v1")} is the released demo. {ver("v2")} changed the '
+        f'forecasting approach; {ver("v3")} added weather inputs. The branches show experiments that informed those '
+        "decisions.</p>"
         f'<ol class="mainline" aria-label="Adopted generations, oldest first">{nodes}</ol>{branches}</div>'
     )
 
 
+#: Descriptive names first; work-item numbers and prerequisites are the detail layer.
 PLANNED_WORK = (
-    ("4.6", "DDNN / TabPFN", "Does a distributional network, or a tabular foundation model, beat v3?",
+    ("Alternative model families", "4.6", "DDNN / TabPFN",
+     "Does a distributional network, or a tabular foundation model, beat v3?",
      "A licence and resource entry, then one predefined comparison"),
-    ("4.4V", "VRE", "Does an in-house wind and solar generation forecast add information beyond direct weather?",
+    ("Wind and solar generation forecasts", "4.4V", "VRE",
+     "Does an in-house wind and solar generation forecast add information beyond direct weather?",
      "A held-forward generation model, then an ablation"),
-    ("4.5", "Three-block LightGBM", "Does capacity per block help?", "A per-block comparison"),
-    ("4.8", "Recombination", "Does combining adopted models help?", "A predefined combination test"),
-    ("4.7T and live", "Fresh data and live operation", "How does the final model perform on data that was never used?",
+    ("Models for different parts of the day", "4.5", "Three-block LightGBM",
+     "Does capacity per block help?", "A per-block comparison"),
+    ("Combining models", "4.8", "Recombination", "Does combining adopted models help?",
+     "A predefined combination test"),
+    ("Fresh-data evaluation, then live operation", "4.7T and live", "Final evaluation",
+     "How does the final model perform on data that was never used?",
      "The final fresh-data test, then at least 90 live days"),
 )
 
 
 def planned_work() -> str:
     items = "".join(
-        f'<li class="planned-item"><p class="planned-name">{S("work-item", item)} · {esc(name)}</p>'
+        f'<li class="planned-item"><p class="planned-name">{esc(name)}</p>'
         f'<dl><dt>Question it will test</dt><dd>{_structural_versions(question)}</dd>'
-        f'<dt>Evidence that would decide it</dt><dd>{_structural_versions(evidence)}</dd></dl></li>'
-        for item, name, question, evidence in PLANNED_WORK
+        f'<dt>Evidence that would decide it</dt><dd>{_structural_versions(evidence)}</dd>'
+        f'<dt>Work item</dt><dd>{S("work-item", item)} · {esc(code)}</dd></dl></li>'
+        for name, item, code, question, evidence in PLANNED_WORK
+    )
+    teaser = ("Next, we will test alternative models, renewable-generation forecasts and model combinations, "
+              "followed by evaluation on fresh data. These steps are planned, not evaluated.")
+    body = (
+        "<p>Each item is subject to the active plan and would be compared with the current research model on "
+        "identical hours and information. None has a score, a version number or a date.</p>"
+        f'<ol class="planned-list">{items}</ol>'
     )
     return (
         '<section class="planned" aria-labelledby="planned-h" data-research="planned">'
-        f'<h3 id="planned-h">{esc(RC.PLANNED)}</h3>'
-        "<p>Each item is subject to the active plan and would be compared with the current research model on "
-        "identical hours and information. None has a score, a version number or a date.</p>"
-        f'<ol class="planned-list">{items}</ol></section>'
+        f'<h3 id="planned-h">{esc(RC.PLANNED)}</h3><p>{esc(teaser)}</p>'
+        + disclosure("planned-detail", "See planned experiments", body) + "</section>"
     )
 
 
@@ -898,12 +929,12 @@ def system_view() -> str:
     steps = [
         ("Source data and vintages", "ENTSO-E and SMARD prices and load forecasts; for v3, the GFS weather run of the "
          "day before", "implemented"),
-        ("Availability checks", "Only information published before the forecast origin; delivery-day prices never "
+        ("Information cutoff", "Only information available before the day-ahead auction; delivery-day prices never "
          "enter", "implemented"),
         ("Features", "Calendar, price lags, load forecast; weather for v3", "implemented"),
         ("Model and interval policy", "v1: LightGBM quantiles with conformal calibration; v2 and v3: blended LEAR "
          "with hour-aware residual intervals", "implemented"),
-        ("Evaluation and artifacts", "Five pinned development folds, the same hours for every policy; committed "
+        ("Evaluation and artifacts", "Five historical test periods, the same hours for every policy; committed "
          "predictions, metrics and reviews", "implemented"),
         ("Report, demo and tracking", "This page, the in-browser v1 demo, and the MLflow mirror of the committed "
          "evidence", "implemented"),
@@ -914,12 +945,14 @@ def system_view() -> str:
         f'{" · planned" if state == "planned" else ""}</span><span class="flow-body">{_structural_versions(body)}</span></li>'
         for title, body, state in steps
     )
+    audit = github("docs/data-leakage-audit.md")
     return (
         '<ol class="flow" aria-label="Data flow, from source data to report">' + items + "</ol>"
-        '<p class="flow-note"><strong>Where the information cutoff sits.</strong> A forecast for a delivery day uses '
-        "only what was published before the day-ahead auction the day before: the checks between source data and "
-        "features enforce it, and each is tested with a control that must fail when the boundary is crossed. "
-        "Dashed outlines mark planned parts.</p>"
+        '<p class="flow-note"><strong>The information cutoff.</strong> Inputs are restricted to what was available '
+        "before the forecast's cutoff, and the price-derived features are tested with controls that fail when the "
+        "boundary is crossed. Source-availability assumptions, such as when the archived load forecast was "
+        f'first published, are documented rather than measured: <a class="quiet external" href="{attr(audit)}">the '
+        "availability assumptions</a>. Dashed outlines mark planned parts.</p>"
     )
 
 
@@ -999,14 +1032,17 @@ def fold_table() -> str:
     )
 
 
+def c2a_panels() -> list[Panel]:
+    return [Panel("Difference, v3 − v2", "normalized score · negative favours v3",
+                  (Row("Point error (ΔS_MAE)", _HG_MAE, "v3", bold=True, claim="C69"),
+                   Row("Interval score (ΔS_WIS)", _HG_WIS, "v3", bold=True, claim="C70")),
+                  domain=(-0.12, 0.02), step=0.02,
+                  refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))]
+
+
 def c2a_chart() -> str:
     return single_rows(
-        "v3-c2a", "C69",
-        [Panel("Difference, v3 − v2", "normalized score · negative favours v3",
-               (Row("Point error (ΔS_MAE)", _HG_MAE, "v3", bold=True, claim="C69"),
-                Row("Interval score (ΔS_WIS)", _HG_WIS, "v3", bold=True, claim="C70")),
-               domain=(-0.12, 0.02), step=0.02,
-               refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))],
+        "v3-c2a", "C69", c2a_panels(),
         title="v3 minus v2: equal-fold normalized differences with 95 percent confidence intervals",
         desc="Two rows, point error and interval score. Each shows the estimated difference as a dot and its "
              "95 percent confidence interval as a line; both lie wholly left of zero, which favours v3.",
@@ -1014,15 +1050,19 @@ def c2a_chart() -> str:
     )
 
 
-def c2b_chart() -> str:
+def c2b_panels() -> list[Panel]:
     def panel(metric: str, title: str) -> Panel:
         return Panel(title, "EUR/MWh, paired mean daily loss · negative favours v3",
                      tuple(Row(f"Fold {fold[-1]}" + (" (crisis)" if fold == "fold_3" else ""),
                                f"cp20.uncertainty.HG-H0.{fold}.{metric}", "v3") for fold in FOLDS),
                      domain=(-7.0, 1.0), step=1.0,
                      refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))
+    return [panel("MAE", "Point error, v3 − v2"), panel("WIS", "Interval score, v3 − v2")]
+
+
+def c2b_chart() -> str:
     return single_rows(
-        "v3-c2b", "C72", [panel("MAE", "Point error, v3 − v2"), panel("WIS", "Interval score, v3 − v2")],
+        "v3-c2b", "C72", c2b_panels(),
         title="v3 minus v2 per fold, in EUR/MWh, with 95 percent confidence intervals",
         desc="Five folds in two panels. Every point estimate is below zero. In fold 3, the 2022 crisis, the "
              "point-error interval crosses zero.",
@@ -1030,7 +1070,7 @@ def c2b_chart() -> str:
     )
 
 
-def c3_chart() -> str:
+def c3_panels():
     def rows(metric: str) -> tuple[MultiRow, ...]:
         out = []
         for fold in FOLDS:
@@ -1040,10 +1080,13 @@ def c3_chart() -> str:
             hi = math.ceil(top * 1.08 / magnitude * 2) * magnitude / 2
             out.append(MultiRow(f"Fold {fold[-1]}", tuple((role, rid) for role, rid in ids.items()), domain=(0.0, hi)))
         return tuple(out)
+    return [("MAE by fold, EUR/MWh", "lower is better", rows("MAE"), None, 1.0),
+            ("WIS by fold, EUR/MWh", "lower is better", rows("WIS"), None, 1.0)]
+
+
+def c3_chart() -> str:
     return multi_rows(
-        "v3-c3", "C74",
-        [("MAE by fold, EUR/MWh", "lower is better", rows("MAE"), None, 1.0),
-         ("WIS by fold, EUR/MWh", "lower is better", rows("WIS"), None, 1.0)],
+        "v3-c3", "C74", c3_panels(),
         title="MAE and WIS per fold for v1, v2 and v3",
         desc="For each fold, three markers on that fold's own scale: v1 triangle, v2 square, v3 circle, with the "
              "values printed underneath.",
@@ -1051,7 +1094,7 @@ def c3_chart() -> str:
     )
 
 
-def c4_chart() -> str:
+def c4_panels() -> list[Panel]:
     rows_mae = (Row("v1 · released LightGBM", "cp15.peak.B1.MAE", "v1", bold=True),
                 Row("Normalized LEAR (study)", "cp15.peak.A1.MAE", "study"),
                 Row("v2", "cp20.criteria.H0.c4.peak.MAE", "v2", bold=True),
@@ -1060,17 +1103,20 @@ def c4_chart() -> str:
                  Row("Normalized LEAR (study)", "cp15.peak.A1.hit_count95", "study"),
                  Row("v2", "cp20.diagnostics.H0.peak.hit_count95", "v2", bold=True),
                  Row("v3", "cp20.diagnostics.HG.peak.hit_count95", "v3", bold=True))
+    return [Panel("MAE, EUR/MWh", "lower is better", rows_mae, domain=(0.0, 300.0), step=50.0),
+            Panel("Hours inside the 95% interval", "count of hours in the window", rows_hits, domain=(0.0, 420.0), step=100.0)]
+
+
+def c4_chart() -> str:
     return single_rows(
-        "v3-c4", "C79",
-        [Panel("MAE, EUR/MWh", "lower is better", rows_mae, domain=(0.0, 300.0), step=50.0),
-         Panel("Hours inside the 95% interval", "count of hours in the window", rows_hits, domain=(0.0, 420.0), step=100.0)],
+        "v3-c4", "C79", c4_panels(),
         title="The 2022 crisis window: point error and hours inside the 95 percent interval",
         desc="Four policies on the matched crisis window, delivery 15 to 31 August 2022. Descriptive only.",
         label_width=210,
     )
 
 
-def c6_chart() -> str:
+def c6_panels():
     def rows(kind: str) -> tuple[MultiRow, ...]:
         out = []
         for level in ("50", "80", "95"):
@@ -1079,17 +1125,20 @@ def c6_chart() -> str:
             ref = Ref(f"nominal {level}%", at=int(level) / 100) if kind == "coverage" else None
             out.append(MultiRow(f"{level}% interval", marks, ref=ref))
         return tuple(out)
+    return [("Coverage (fraction)", "closer to nominal is better", rows("coverage"), (0.3, 1.0), 0.1),
+            ("Mean interval width, EUR/MWh", "narrower at equal coverage is better", rows("width"), (0.0, 140.0), 20.0)]
+
+
+def c6_chart() -> str:
     return multi_rows(
-        "v3-c6", "C80",
-        [("Coverage (fraction)", "closer to nominal is better", rows("coverage"), (0.3, 1.0), 0.1),
-         ("Mean interval width, EUR/MWh", "narrower at equal coverage is better", rows("width"), (0.0, 140.0), 20.0)],
+        "v3-c6", "C80", c6_panels(),
         title="Coverage and mean interval width at 50, 80 and 95 percent, pooled",
         desc="For each nominal level, coverage and mean width for v1, v2 and v3. A black tick marks the nominal "
              "coverage. Higher coverage is not better on its own if the intervals widen.",
     )
 
 
-def v2_chart2() -> str:
+def v2_chart2_panels() -> list[Panel]:
     def panel(metric: str, title: str) -> Panel:
         return Panel(title, "normalized score · negative favours the first policy",
                      (Row("v2 − daily LEAR", f"cp16.uncertainty.V2-H-B2.equal_fold.{metric}", "v2", bold=True,
@@ -1101,17 +1150,21 @@ def v2_chart2() -> str:
                      domain=(-0.04, 0.01), step=0.01,
                      refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),),
                      exact_hi=("cp16.uncertainty.V2-H-V2-P.equal_fold.MAE",) if metric == "MAE" else ())
+    return [panel("MAE", "Point error (ΔS_MAE)"), panel("WIS", "Interval score (ΔS_WIS)")]
+
+
+def v2_chart2() -> str:
     return single_rows(
-        "v2-chart2", "C37", [panel("MAE", "Point error (ΔS_MAE)"), panel("WIS", "Interval score (ΔS_WIS)")],
+        "v2-chart2", "C37", v2_chart2_panels(),
         title="v2's paired equal-fold differences with 95 percent confidence intervals",
         desc="Three contrasts in two panels. Against daily LEAR both intervals lie below zero. Against the pooled "
              "control the interval-score interval is below zero but the point-error interval ends just above zero, "
-             "printed in full.",
+             "printed in full under the plot.",
         label_width=170, row_h=56,
     )
 
 
-def v2_chart1() -> str:
+def v2_chart1_panels() -> list[Panel]:
     rows = (("V2-H", "v2", "v2 · hour-aware intervals", True), ("V2-P", "control", "v2 control · pooled intervals", False),
             ("B2", "reference", "Daily LEAR (reference)", False), ("A1", "study", "Normalized LEAR (study)", False),
             ("B3", "reference", "Daily LightGBM (reference)", False), ("B1", "v1", "v1 (development replay)", True))
@@ -1123,14 +1176,84 @@ def v2_chart1() -> str:
                      domain=(0.55, 1.1), step=0.1,
                      refs=(Ref("naive {v}", f"cp16.metrics.B0.equal_fold.{field}", dash=None, colour=TOKENS["text"], option="p=2"),
                            Ref("limit {v}", limit)))
+    return [panel("S_MAE", "Point error (S_MAE)", "cp16.criteria.V2-H.c1.equal_fold.S_MAE.upper_limit"),
+            panel("S_WIS", "Interval quality (S_WIS)", "cp16.criteria.V2-H.c2.equal_fold.S_WIS.upper_limit")]
+
+
+def v2_chart1() -> str:
     return single_rows(
-        "v2-chart1", "C31",
-        [panel("S_MAE", "Point error (S_MAE)", "cp16.criteria.V2-H.c1.equal_fold.S_MAE.upper_limit"),
-         panel("S_WIS", "Interval quality (S_WIS)", "cp16.criteria.V2-H.c2.equal_fold.S_WIS.upper_limit")],
+        "v2-chart1", "C31", v2_chart1_panels(),
         title="Equal-fold scores at the time of v2",
         desc="Six policies from the v2 study; both v2 arms have the lowest ratios but stay above the diagnostic limits.",
         label_width=236,
     )
+
+
+# --------------------------------------------------------------------------- value tables (§7.5, review R07)
+
+
+def _label(text: str) -> str:
+    """Fixed table copy: versions, dates and levels, plus fold numbers and policy codes, as structural numerals."""
+    out = _structural_versions(text)
+    out = re.sub(r"\bFold (\d)\b", lambda m: S("fold", "Fold " + m.group(1)), out)
+    return re.sub(r"\(([A-Z]\d)\)", lambda m: "(" + S("code", m.group(1)) + ")", out)
+
+
+def _unit_header(record_id: str) -> str:
+    return _label(R.get(record_id).unit)
+
+
+def values_table(ident: str, claim_id: str, panels: list[Panel]) -> str:
+    """Every plotted value of a row chart, with its interval and unit, from the same typed rows."""
+    labels = [row.label for row in panels[0].rows]
+    head = '<th scope="col">Row</th>' + "".join(
+        f'<th scope="col">{_label(panel.title)}<br><span class="unit">{_unit_header(panel.rows[0].record_id)}</span></th>'
+        for panel in panels)
+    body = []
+    for index, label in enumerate(labels):
+        cells = [f'<th scope="row">{_label(label)}</th>']
+        for panel in panels:
+            row = panel.rows[index]
+            record = R.get(row.record_id)
+            claim = row.claim or claim_id
+            text = value(row.record_id, claim)
+            if record.interval is not None:
+                text += f' <span class="ci">{interval(row.record_id, claim)}</span>'
+            cells.append(f'<td class="n exact">{text}</td>')
+        body.append("<tr>" + "".join(cells) + "</tr>")
+    table_html = (f'<div class="scroll" role="region" aria-label="Values" tabindex="0"><table class="data">'
+                  f"<thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>")
+    return disclosure(ident, "View values", table_html)
+
+
+def multi_values_table(ident: str, claim_id: str, panels) -> str:
+    parts = []
+    for title, _subtitle, rows, _domain, _step in panels:
+        roles = [role for role, _ in rows[0].marks]
+        head = '<th scope="col">Row</th>' + "".join(f'<th scope="col">{ver(role) if role.startswith("v") else esc(role)}</th>'
+                                                    for role in roles)
+        body = "".join(
+            f'<tr><th scope="row">{_label(row.label)}</th>'
+            + "".join(f'<td class="n">{value(record_id, claim_id)}</td>' for _, record_id in row.marks) + "</tr>"
+            for row in rows)
+        parts.append(f'<div class="scroll" role="region" aria-label="{attr(title)}" tabindex="0"><table class="data">'
+                     f"<caption>{_label(title)}</caption><thead><tr>{head}</tr></thead>"
+                     f"<tbody>{body}</tbody></table></div>")
+    return disclosure(ident, "View values", "".join(parts))
+
+
+def hour_values_table(ident: str, claim_id: str, series: tuple[tuple[str, str], ...]) -> str:
+    head = '<th scope="col">Hour</th>' + "".join(
+        f'<th scope="col">{S("fold", "Fold " + fold[-1])} {ver(role)}</th>' for fold in FOLDS for role, _ in series)
+    body = []
+    for hour in range(24):
+        cells = "".join(f'<td class="n">{value(f"cp20.diagnostics.{code}.{fold}.hour_{hour:02d}.MAE", claim_id)}</td>'
+                        for fold in FOLDS for _, code in series)
+        body.append(f'<tr><th scope="row">{S("hour", str(hour))}</th>{cells}</tr>')
+    table_html = ('<div class="scroll" role="region" aria-label="MAE by hour and fold" tabindex="0"><table class="data">'
+                  "<caption>MAE by local hour, EUR/MWh</caption>"
+                  f"<thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>")
+    return disclosure(ident, "View values", table_html)
 
 
 def legend(roles: tuple[str, ...]) -> str:
@@ -1150,15 +1273,20 @@ def legend(roles: tuple[str, ...]) -> str:
 def demo_measurement() -> dict:
     record = json.loads(DEMO_CHECK.read_text())
     run = next(r for r in record["runs"] if r.get("engine") == "chrome" and r.get("viewport") == "1440x900")
+    host = record["playwright_host"]
     return {"seconds": run["seconds_to_visible_forecast"], "browser": run["browser_version"],
+            "machine": "a Mac" if "Darwin" in host else host,
             "date": record["date"], "path": str(DEMO_CHECK.relative_to(ROOT))}
 
 
 def header() -> str:
     return (
         '<header class="site-header"><div class="header-inner">'
-        '<a class="brand" href="#top">DE-LU day-ahead price forecasting</a>'
-        '<nav class="main-nav" aria-label="Main"><a href="#results">Results</a><a href="#journey">Journey</a>'
+        '<a class="brand" href="#top" aria-label="DE-LU day-ahead price forecasting, back to the top">'
+        '<span class="brand-full">DE-LU day-ahead price forecasting</span>'
+        '<span class="brand-short" aria-hidden="true">DE-LU forecasts</span>'
+        '<span class="brand-tiny" aria-hidden="true">DE-LU</span></a>'
+        '<nav class="main-nav" aria-label="Main"><a href="#research-results">Results</a><a href="#journey">Journey</a>'
         '<a href="#evidence">Evidence</a></nav></div></header>'
     )
 
@@ -1167,63 +1295,68 @@ def opening(C, payload) -> str:
     demo = demo_measurement()
     measured = (f'<span data-release-check="{attr(demo["path"])}#seconds_to_visible_forecast">'
                 f'{esc(demo["seconds"])}</span>')
+    details = (
+        f"<p>The demo runs the released model on historical delivery days. Change the interval level or load "
+        f"scenario to explore its forecasts. Calculations run locally in your browser. In the recorded cold-start "
+        f"test, a forecast appeared after {measured} seconds in Chrome {S('version', demo['browser'].split('.')[0])} "
+        f"on {esc(demo['machine'])}, measured {S('date', demo['date'])}. Other devices and connections may take longer.</p>"
+    )
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">
-  <p class="eyebrow">German–Luxembourg day-ahead electricity prices</p>
-  <h1 id="title">Forecasting tomorrow's electricity prices.</h1>
-  <p class="lede">Explore the released demo and follow how successive research models were compared and improved.</p>
+  <p class="eyebrow">German–Luxembourg electricity market</p>
+  <h1 id="title">Day-ahead electricity forecasts, with uncertainty.</h1>
+  <p class="lede">Explore hourly price forecasts and prediction intervals on historical days. See how successive
+   research models improved, what failed, and how each result was checked.</p>
   <dl class="status-pair">
-   <div class="status status-released"><dt>Released demo</dt><dd><span class="gen gen-v1">{ver("v1")}</span> · released LightGBM</dd></div>
-   <div class="status status-research"><dt>Latest research</dt><dd><span class="gen gen-v3">{ver("v3")}</span> · weather features
+   <div class="status status-released"><dt>Demo</dt><dd><span class="gen gen-v1">{ver("v1")}</span> · Released model</dd></div>
+   <div class="status status-research"><dt>Research</dt><dd><span class="gen gen-v3">{ver("v3")}</span> · Weather features
     {badge(RC.BADGE_DEVELOPMENT)}</dd></div>
   </dl>
   <div class="actions">
    <a class="btn-primary external" href="{attr(C['space_url'])}"><span>Try the {ver("v1")} demo</span></a>
-   <a class="quiet" href="#results">Compare research results</a>
-   <a class="quiet" href="#evidence">View code and evidence</a>
+   <a class="quiet" href="#research-results">Compare model results</a>
+   <a class="quiet" href="#evidence">Code and evidence</a>
   </div>
-  <p class="startup">The demo replays {ver("v1")} over its holdout days: you pick a day's interval level and a
-   load scenario, and the forecast is computed in your browser from a static Hugging Face page, with no server
-   behind it. The first visit downloads about
-   {v1("wasm_cold_load_mb", "P13")} MB; a forecast appeared after {measured} s in Chrome
-   {S("version", demo["browser"].split(".")[0])} on a Mac with an empty cache, measured {S("date", demo["date"])}.
-   Times vary with the device and the connection.</p>
+  <p class="startup">Runs in your browser. First visit downloads about {v1("wasm_cold_load_mb", "P13")} MB; startup
+   time varies.</p>
+  {disclosure("demo-details", "What the demo does and startup details", details)}
  </div>
  <figure class="preview panel">
-  <figcaption class="preview-label"><span class="badge badge-replay">Historical replay</span>
-   <span>{ver("v1")} forecasting a holdout day it never trained on · not a live forecast</span></figcaption>
+  <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver("v1")}</span>
+   <span>Forecast and observed price for a held-out day. This is a historical replay, not a live forecast.</span></figcaption>
   {preview_chart(payload)}
-  <p class="preview-key"><span class="key-median">median forecast</span> <span class="key-band">80% interval</span>
-   <span class="key-actual">price that cleared</span></p>
-  <p class="preview-links"><a class="quiet" href="#forecast">Open the interactive replay (in the original {ver("v1")} report)</a>
-   <a class="quiet" href="#system">How it works</a></p>
+  <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
+   <span class="key-actual">Observed price</span></p>
+  <p class="preview-links"><a class="quiet" href="#forecast">Explore this forecast</a>
+   <span class="preview-note">Opens the replay in the original {ver("v1")} report.</span></p>
  </figure>
- <div class="opening-summary" data-research="opening">{block("opening.summary")}</div>
+ <div class="opening-summary" data-research="opening"><p class="summary-label">Latest research</p>{block("opening.summary")}</div>
 </section>"""
 
 
 def results() -> str:
     hours = value("cp20.metrics.B0.pooled.n_hours", "P07")
     return f"""
-<section class="section" id="results" aria-labelledby="results-h" data-research="results">
- <h2 id="results-h">What improved, and was the comparison fair?</h2>
+<section class="section" id="research-results" aria-labelledby="results-h" data-research="results">
+ <h2 id="results-h">How the models compare</h2>
  <figure class="panel analytical" aria-labelledby="overview-title">
-  <h3 class="panel-title" id="overview-title">Each adopted generation lowered both errors, on the same hours</h3>
-  <p class="panel-sub">Equal-fold score relative to the similar-day naive · identical {hours} hours ·
-   development, post-selection</p>
+  {block("overview.finding", tag="h3", cls="panel-title")}
+  <p class="panel-sub">Point-error and interval scores relative to a simple similar-day forecast · the same {hours}
+   hours for every policy · development results after selection</p>
   {legend(("v3", "v2", "v1", "reference", "study"))}
   {overview_chart()}
-  {block("overview.finding", cls="finding")}
+  {block("overview.howto", cls="finding")}
   {block("overview.qualification", cls="qualification")}
-  {evidence_row(compare="overview", review=("Reviewed result", github("docs/track-b/evidence/cp-20/integration.md")),
-                source=("Source rows", github("reports/weather-ablation/metrics.csv", "evidence/cp-20", 44)))}
-  {disclosure("overview-table", "Table: the seven policies", overview_table())}
+  {block("overview.v1pointer", cls="qualification")}
+  {evidence_row(compare="overview", review=("Read the review", github("docs/track-b/evidence/cp-20/integration.md")),
+                source=("View source values", github("reports/weather-ablation/metrics.csv", "evidence/cp-20", 44)))}
+  {disclosure("overview-table", "View values", overview_table())}
  </figure>
  <div class="fairness">
-  <h3>Was the comparison fair?</h3>
+  <h3>A fair comparison</h3>
   {block("overview.fairness")}
-  {disclosure("fairness-detail", "Bootstrap settings and the five folds",
+  {disclosure("fairness-detail", "Bootstrap settings and the five historical test periods",
               block("overview.fairness.detail") + fold_table())}
  </div>
  {disclosure("definitions", "Definitions, and why v1 scores differently in its own report",
@@ -1241,15 +1374,6 @@ def chapter_header(gen: str, name: str, when: str, adoption_text: str, badge_tex
     )
 
 
-def outcome_tile(title: str, record_id: str, claim_id: str) -> str:
-    return (
-        f'<div class="outcome"><p class="outcome-title">{_structural_versions(title)}</p>'
-        f'<p class="outcome-value">{value(record_id, claim_id)}</p>'
-        f'<p class="outcome-interval">{S("level", "95%")} confidence interval {interval(record_id, claim_id)}</p>'
-        f'<p class="outcome-badge">{badge(RC.BADGE_DEVELOPMENT)}</p></div>'
-    )
-
-
 def story(steps: list[tuple[str, str]]) -> str:
     return '<ol class="story">' + "".join(
         f'<li class="story-step"><h3 class="story-label">{esc(label)}</h3>{body}</li>' for label, body in steps
@@ -1264,87 +1388,89 @@ def feature_change() -> str:
         '<div class="fc-arrow" aria-hidden="true">+</div>'
         f'<div class="fc-col fc-added"><p class="fc-head">added in {ver("v3")}</p><ul>'
         f'<li>wind speed at {S("height", "10 m")}</li><li>wind speed at {S("height", "100 m")}</li>'
-        "<li>solar radiation</li><li>a missing indicator for each</li></ul></div></div>"
+        '<li>solar radiation</li></ul><p class="fc-note">each with a missing-data indicator</p></div></div>'
     )
 
 
 def v3_chapter(*, open_folds: bool = False) -> str:
     cp20 = "evidence/cp-20"
-    protocol = "".join(block(key) for key in ("v3.controls", "v3.controls.supplement", "v3.review", "v3.cost",
-                                              "v3.dependency"))
+    protocol = "".join(block(key) for key in ("v3.criteria", "v3.controls", "v3.controls.supplement", "v3.review",
+                                              "v3.cost", "v3.dependency"))
     protocol += f'<p class="attribution-line"><span data-structural="attribution">{esc(GFS_ATTRIBUTION)}</span></p>'
-    folds = (c2b_chart() + '<p class="chart-note">' + _structural_versions("The same folds in absolute terms, for v1, v2 and v3:")
-             + "</p>" + c3_chart())
+    folds = (c2b_chart() + values_table("v3-c2b-values", "C72", c2b_panels())
+             + '<p class="chart-note">' + _structural_versions("The same periods in absolute terms, for v1, v2 and v3:")
+             + "</p>" + c3_chart() + multi_values_table("v3-c3-values", "C74", c3_panels()))
+    crisis_note = ('<p class="chart-note">' + _structural_versions(
+        "The crisis window, delivery 2022-08-15 to 2022-08-31, is the 17 days of the 2022 price peak inside fold 3; "
+        "its figures are for those days only, not the whole fold.").replace("17 days", S("count", "17") + " days")
+        .replace("fold 3", "fold " + S("fold", "3")) + "</p>")
     return f"""
 <article class="chapter" id="v3" aria-labelledby="v3-h" data-research="v3">
- {chapter_header("v3", "weather features", "Latest research · evaluated 2026-09-24", RC.ADOPTED + " in research · the current research model, not in the demo",
-                 RC.BADGE_DEVELOPMENT, "development", "v3")}
- {story([("Problem", block("v3.problem")), ("Hypothesis", block("v3.hypothesis")),
-         ("Change", block("v3.change"))])}
- {feature_change()}
- <div class="outcomes" aria-label="Primary outcomes, v3 against v2">
-  {outcome_tile("Normalized point error, v3 − v2", _HG_MAE, "C69")}
-  {outcome_tile("Normalized interval score, v3 − v2", _HG_WIS, "C70")}
- </div>
+ {chapter_header("v3", "weather features", "Latest research · evaluated 2026-09-24",
+                 RC.ADOPTED + " in research · not in the demo", RC.BADGE_DEVELOPMENT, "development", "v3")}
+ {block("v3.subtitle", cls="chapter-sub")}
+ <div class="change"><h3 class="story-label">What changed</h3>{block("v3.change")}{feature_change()}</div>
  <figure class="panel analytical" aria-labelledby="c2a-title">
-  <h3 class="panel-title" id="c2a-title">{_structural_versions("v3 lowers both errors against v2, and both intervals stay below zero")}</h3>
-  <p class="panel-sub">{_structural_versions("Equal-fold normalized difference, v3 − v2 · paired 95% confidence interval · identical hours · development, post-selection")}</p>
+  <h3 class="panel-title" id="c2a-title">{_structural_versions("Weather inputs improved both development scores against v2.")}</h3>
+  <p class="panel-sub">{_structural_versions("Difference in normalized score, v3 − v2 · paired 95% confidence interval · identical hours · development, post-selection")}</p>
   {c2a_chart()}
   {block("v3.result", cls="finding")}
   {block("v3.caveat.fold3", cls="qualification")}
-  {evidence_row(compare="cp20", review=("Reviewed result", github("docs/track-b/evidence/cp-20/integration.md")),
-                source=("Source rows", github("reports/weather-ablation/uncertainty.csv", cp20, 12)),
-                extra=[("Report", github("reports/weather-ablation/report.md", cp20))])}
+  {evidence_row(compare="cp20", review=("Read the review", github("docs/track-b/evidence/cp-20/integration.md")),
+                source=("View source values", github("reports/weather-ablation/uncertainty.csv", cp20, 12)),
+                extra=[("Full report", github("reports/weather-ablation/report.md", cp20))])}
+  {values_table("v3-c2a-values", "C69", c2a_panels())}
  </figure>
  <div class="helps-hurts">{block("v3.helps")}{block("v3.hurts")}</div>
- <aside class="caveats" aria-label="Critical caveats">
-  <h3>Before you read more into it</h3>
+ <aside class="caveats" aria-label="What this result does not establish">
+  <h3>What this result does not establish</h3>
   {block("v3.caveat.bundle")}{block("v3.caveat.development")}
  </aside>
- <div class="decision"><h3 class="story-label">Decision</h3>{block("v3.criteria")}{block("v3.decision")}</div>
+ <div class="decision"><h3 class="story-label">Decision</h3>{block("v3.decision")}</div>
  <div class="disclosures">
   {disclosure("v3-features", "How the weather features are built", block("v3.recipe") + block("v3.missing") + block("v3.availability"))}
-  {disclosure("v3-folds", "Consistency across folds", folds, open_=open_folds)}
-  {disclosure("v3-crisis", "Crisis window", '<p class="chart-note">' + _structural_versions("The crisis window, delivery 2022-08-15 to 2022-08-31, is the 17 days of the 2022 price peak inside fold 3; its figures are for those days only, not the whole fold.").replace("17 days", S("count", "17") + " days").replace("fold 3", "fold " + S("fold", "3")) + "</p>" + c4_chart() + '<p class="chart-note">' + RC.render("v3.helps") + "</p>")}
+  {disclosure("v3-folds", "Consistency across the five periods", folds, open_=open_folds)}
+  {disclosure("v3-crisis", "Crisis window", crisis_note + c4_chart() + values_table("v3-c4-values", "C79", c4_panels()))}
   {disclosure("v3-hours", "Hours of the day", hour_panels("v3-c5", "C82", (("v2", "H0"), ("v3", "HG")),
               title="MAE by local hour, v2 against v3, per fold",
               desc="Five panels, one per fold, each on its own scale: v2 dashed with squares, v3 solid with circles. Descriptive only.")
-              + '<p class="chart-note">Descriptive only: no hour or block effect is claimed.</p>')}
-  {disclosure("v3-coverage", "Coverage and interval width", c6_chart() + block("v3.hurts"))}
-  {disclosure("v3-protocol", "Protocol and review details", protocol)}
+              + '<p class="chart-note">Descriptive only: no hour or block effect is claimed.</p>'
+              + hour_values_table("v3-c5-values", "C82", (("v2", "H0"), ("v3", "HG"))))}
+  {disclosure("v3-coverage", "Coverage and interval width", c6_chart() + multi_values_table("v3-c6-values", "C80", c6_panels()))}
+  {disclosure("v3-protocol", "Criteria, controls and review", protocol)}
  </div>
 </article>"""
 
 
 def v2_chapter() -> str:
     cp16 = "evidence/cp-16"
+    branches = block("v2.branch.cp10") + block("v2.branch.cp15")
+    scores = v2_chart1() + block("v2.result.pb2") + block("v2.result.criteria")
     return f"""
 <article class="chapter" id="v2" aria-labelledby="v2-h" data-research="v2">
  {chapter_header("v2", "blended LEAR, hour-aware intervals", "Evaluated 2026-09-23 · the road from v1",
                  RC.ADOPTED + " in research · the model v3 builds on", RC.BADGE_DEVELOPMENT, "development", "v2")}
+ {block("v2.subtitle", cls="chapter-sub")}
  <div class="road" id="road-to-v2">
-  {story([("Problem", block("v2.problem")),
-          ("Branch · " + RC.NOT_ADOPTED.lower(), block("v2.branch.cp10")),
-          ("Branch · study", block("v2.branch.cp15")),
-          ("Change", block("v2.change"))])}
- </div>
- <div class="outcomes" aria-label="Primary outcomes, v2 against daily LEAR">
-  {outcome_tile("Normalized point error, v2 − daily LEAR", "cp16.uncertainty.V2-H-B2.equal_fold.MAE", "C37")}
-  {outcome_tile("Normalized interval score, v2 − daily LEAR", "cp16.uncertainty.V2-H-B2.equal_fold.WIS", "C37")}
+  {story([("Problem", block("v2.problem")), ("What informed the change", block("v2.informed")),
+          ("What changed", block("v2.change"))])}
  </div>
  <figure class="panel analytical" aria-labelledby="v2c2-title">
-  <h3 class="panel-title" id="v2c2-title">Against daily LEAR both errors fall; against its own pooled control, no demonstrated joint preference</h3>
-  <p class="panel-sub">{_structural_versions("Equal-fold normalized differences · paired 95% confidence intervals · identical hours · development, post-selection")}</p>
+  <h3 class="panel-title" id="v2c2-title">{_structural_versions("v2 improved on daily LEAR; the interval-method comparison was inconclusive on joint improvement.")}</h3>
+  <p class="panel-sub">{_structural_versions("Difference in normalized score · paired 95% confidence intervals · identical hours · development, post-selection")}</p>
   {v2_chart2()}
-  {block("v2.result.hb2", cls="finding")}
-  {block("v2.result.hp", cls="qualification")}
-  {evidence_row(compare="cp16", review=("Reviewed result", github("docs/track-b/evidence/cp-16/integration.md")),
-                source=("Source rows", github("reports/v2-causal/uncertainty.csv", cp16, 32)))}
+  {block("v2.interpretation", cls="finding")}
+  {evidence_row(compare="cp16", review=("Read the review", github("docs/track-b/evidence/cp-16/integration.md")),
+                source=("View source values", github("reports/v2-causal/uncertainty.csv", cp16, 32)))}
+  {values_table("v2-chart2-values", "C37", v2_chart2_panels())}
  </figure>
- {block("v2.result.pb2")}{block("v2.result.criteria")}
- <aside class="caveats" aria-label="Limitations"><h3>Limitations</h3>{block("v2.limitation")}</aside>
+ <aside class="caveats" aria-label="What this result does not establish"><h3>What this result does not establish</h3>
+  {block("v2.limitation")}</aside>
  <div class="decision"><h3 class="story-label">Decision</h3>{block("v2.decision")}</div>
- <div class="disclosures">{disclosure("v2-scores", "The equal-fold scores at the time of v2", v2_chart1())}</div>
+ <div class="disclosures">
+  {disclosure("v2-branches", "The two branches before v2", branches)}
+  {disclosure("v2-scores", "Scores and criteria at the time of v2", scores + values_table("v2-chart1-values", "C31", v2_chart1_panels()))}
+ </div>
 </article>"""
 
 
@@ -1352,7 +1478,7 @@ def v1_chapter(C, archive: str) -> str:
     return f"""
 <article class="chapter" id="v1" aria-labelledby="v1-h" data-research="v1">
  {chapter_header("v1", "released LightGBM", "Released 2026-09-15 · the product the demo runs",
-                 "Released product", None, "holdout", "v1")}
+                 "Released model", None, "holdout", "v1")}
  {block("v1.what")}
  <div class="panel holdout">
   <p class="holdout-head">The one-shot holdout {badge(RC.BADGE_V1_HOLDOUT, "holdout")}</p>
@@ -1361,16 +1487,16 @@ def v1_chapter(C, archive: str) -> str:
  </div>
  {block("v1.unflattering")}
  {block("v1.lesson")}
- <p class="chapter-links"><a class="quiet" href="#forecast">Open the interactive replay</a>
+ <p class="chapter-links"><a class="quiet" href="#forecast">Explore the interactive replay</a>
   <a class="quiet external" href="{attr(C['space_url'])}">Try the {ver("v1")} demo</a></p>
  <details class="disclosure archive" id="v1-archive">
   <summary><span class="marker" aria-hidden="true"></span><span>The original {ver("v1")} report (published
    {S("date", "2026-09-15")}), preserved</span></summary>
   <div class="disclosure-body">
    <p class="archive-note">Preserved as published, including its interactive fan chart. Its own styles are kept
-    separate from the rest of this page. <a href="#results">Back to the overview</a></p>
+    separate from the rest of this page. <a href="#research-results">Back to the model comparison</a></p>
    <div class="v1-archive">{archive}</div>
-   <p class="archive-note"><a href="#results">Back to the overview</a> · <a href="#v1">Back to v1</a></p>
+   <p class="archive-note"><a href="#research-results">Back to the model comparison</a> · <a href="#v1">Back to v1</a></p>
   </div>
  </details>
 </article>"""
@@ -1392,44 +1518,49 @@ def jump_row() -> str:
 
 
 def rail(generations: tuple[str, ...] = ("v3", "v2", "v1")) -> str:
+    """The generation rail. The page's own routes live in the header only (review §5.1)."""
     links = "".join(f'<li><a href="#{g}" class="rail-{g if g in ("v1", "v2", "v3") else "x"}">'
                     f'<span class="dot" aria-hidden="true"></span>{ver(g)}</a></li>' for g in generations)
-    return ('<nav class="rail" aria-label="Generations"><p class="rail-head">Generations</p><ol>' + links + "</ol>"
-            '<p class="rail-head">Page</p><ol class="rail-page"><li><a href="#results">Results</a></li>'
-            '<li><a href="#journey">Journey</a></li><li><a href="#evidence">Evidence</a></li></ol></nav>')
+    return ('<nav class="rail" aria-label="Generations"><p class="rail-head">Generations</p><ol>' + links
+            + "</ol></nav>")
 
 
 def evidence_section(C) -> str:
     rebuild = rebuild_measurement()
     runtime = ""
     if rebuild:
-        runtime = (f' It took <span data-release-check="{attr(rebuild["path"])}#seconds">{esc(rebuild["seconds"])}</span> s '
+        runtime = (f'The rebuild took <span data-release-check="{attr(rebuild["path"])}#seconds">{esc(rebuild["seconds"])}</span> s '
                    f'on the build machine ({esc(rebuild["machine"])}), measured {S("date", rebuild["date"])}.')
     tracking = mlflow_index().get("routes", {})
-    experiment_link = (f'<a class="quiet external" href="{attr(tracking["experiment"])}">Experiment '
-                       f'<code>delu-generations</code></a>' if tracking.get("experiment") else
-                       '<span class="ev is-unavailable" data-unpublished="mlflow:experiment">Experiment '
-                       '<code>delu-generations</code> (available after the tracking upload)</span>')
+    if tracking.get("experiment"):
+        track = (f'<p>Experiment runs, metrics and artifacts can be inspected in '
+                 f'<a class="quiet external" href="{attr(tracking["experiment"])}">MLflow</a>. The published page is '
+                 "built from saved repository evidence and works independently of the tracking service.</p>")
+    else:
+        track = ('<p>Experiment runs, metrics and artifacts will be inspectable in MLflow once they are published '
+                 '<span class="ev is-unavailable" data-unpublished="mlflow:experiment">(link added when the runs '
+                 "are published)</span>. This page is built from saved repository evidence and works independently "
+                 "of the tracking service.</p>")
     return f"""
 <section class="section" id="evidence" aria-labelledby="evidence-h">
  <h2 id="evidence-h">How the system works, and how to check it</h2>
  <div id="system" class="system"><h3>How the system works</h3>{system_view()}</div>
- <div id="reproduce" class="reproduce"><h3>Reproduce</h3>
-  <p>Rebuild this page, the README research block and the tracking export from the committed evidence alone
-   (no fit, no download):</p>
-  <pre><code>uv sync
-uv run python scripts/rebuild_presentation.py</code></pre>
-  <p>{runtime.strip()} Each generation's full experiment has its own reproduction instructions:
+ <div id="reproduce" class="reproduce"><h3>Rebuild the report from saved evidence</h3>
+  <p>First install the pinned dependencies; this downloads packages once:</p>
+  <pre><code>uv sync</code></pre>
+  <p>Then rebuild this page, the README research block, the demo's description cards and the tracking export from the
+   committed evidence alone, with no model fit and no data download:</p>
+  <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
+  <p>{runtime} Each generation's full experiment has its own reproduction instructions:
    <a class="quiet external" href="{attr(github("reports/weather-ablation/reproduce.md", "evidence/cp-20"))}">{ver("v3")}</a>,
    <a class="quiet external" href="{attr(github("reports/v2-causal/reproduce.md", "evidence/cp-16"))}">{ver("v2")}</a>,
    <a class="quiet external" href="{attr(github("reports/cp15/reproduction.md", "evidence/cp-15"))}">the model comparison</a>,
    and <a href="#repro">{ver("v1")}</a>.</p>
  </div>
  <div class="tracking"><h3>Tracking</h3>
-  <p>MLflow on DagsHub mirrors the committed evidence; this page never reads it. {experiment_link} holds every
-   policy since {ver("v1")} once, and <a class="quiet external" href="{attr(C['mlflow_experiment_url'])}">experiment
-   <code>{esc(C['mlflow_experiment_name'])}</code></a> keeps {ver("v1")}'s own runs.</p>
-  <p><a class="quiet external" href="{attr(C['github_url'])}">Code and evidence on GitHub</a></p>
+  {track}
+  <p><a class="quiet external" href="{attr(C['mlflow_experiment_url'])}">Experiment <code>{esc(C['mlflow_experiment_name'])}</code></a>
+   keeps {ver("v1")}'s own runs. <a class="quiet external" href="{attr(C['github_url'])}">Code and evidence on GitHub</a></p>
  </div>
 </section>"""
 
@@ -1485,6 +1616,7 @@ data{{font-variant-numeric:tabular-nums}}
 .header-inner{{max-width:var(--content);margin:0 auto;height:100%;display:flex;align-items:center;
  justify-content:space-between;gap:16px;padding:0 24px}}
 .brand{{font-weight:650;color:var(--text);text-decoration:none;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.brand-short,.brand-tiny{{display:none}}
 .main-nav{{display:flex;gap:4px}}
 .main-nav a{{color:var(--text);text-decoration:none;font-size:15px;padding:0 12px;min-height:44px;display:inline-flex;
  align-items:center;border-radius:8px}}
@@ -1532,6 +1664,9 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .btn-primary:hover{{background:var(--primary-hover);color:#fff}}
 .btn-primary:active{{background:var(--primary-pressed)}}
 .quiet{{display:inline-block;padding:9px 0;line-height:26px;font-weight:550}}
+p .quiet,li .quiet{{display:inline;padding:0;line-height:inherit}}
+.branches-head{{font-size:13px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:24px 0 0}}
+.fc-note{{font-size:14px;color:var(--text-2);margin:6px 0 0}}
 .external::after{{content:" \\2197";font-size:.85em}}
 .startup{{font-size:14px;line-height:22px;color:var(--text-2);max-width:52ch}}
 .preview{{margin:0}}
@@ -1602,7 +1737,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .node-name{{display:block;font-weight:700;font-size:17px}}
 .node-status{{display:block;font-size:14px;color:var(--text-2)}}
 .branches{{list-style:none;padding:0;margin:8px 0 32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
-.branch a{{display:block;border:1px dashed var(--text-2);border-radius:10px;padding:10px 12px;color:var(--text);
+.branch a{{display:block;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);
  text-decoration:none;background:transparent}}
 .branch-name{{display:block;font-weight:600;font-size:15px}}
 .branch-status{{display:block;font-size:14px;color:var(--text-2)}}
@@ -1662,8 +1797,8 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
 }}
 @media (max-width:620px){{
  .header-inner{{padding:0 16px}}
- .brand{{display:none}}
- .main-nav{{width:100%;justify-content:space-between}}
+ .brand-full{{display:none}}.brand-short{{display:inline}}
+ .main-nav a{{padding:0 8px}}
  .page{{padding:0 16px 64px}}
  h1{{font-size:34px;line-height:1.12}}
  h2{{font-size:25px}}
@@ -1681,12 +1816,31 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
  .outcome{{min-width:0}}
  .statement{{font-size:17px}}
 }}
+@media (max-width:440px){{
+ .brand-short{{display:none}}.brand-tiny{{display:inline}}
+ .reproduce pre{{white-space:pre-wrap;overflow-wrap:anywhere}}
+}}
+@media (max-width:340px){{
+ .header-inner,.page{{padding-left:12px;padding-right:12px}}
+ .panel{{padding:12px 8px}}
+ .main-nav a{{padding:0 6px;font-size:14px}}
+}}
+.opening-copy details.disclosure{{margin-top:4px;border-bottom:1px solid var(--border)}}
+.opening-copy details.disclosure>summary{{font-size:14px;font-weight:600;color:var(--text-2)}}
+.opening-copy .disclosure-body p{{font-size:14px;line-height:22px;color:var(--text-2)}}
+.summary-label{{font-size:13px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px;color:var(--text-2)}}
+.opening-summary p[data-block]{{font-size:17px;line-height:27px;color:var(--text)}}
+.chapter-sub{{font-size:19px;line-height:29px;color:var(--text);max-width:60ch;margin:0 0 20px}}
+.change{{margin:0 0 24px}}
+.preview-note{{font-size:13px;color:var(--text-2)}}
+td .ci,td .unit,th .unit{{color:var(--text-2);font-weight:400}}
+th .unit{{font-size:12px}}
 /* v1's archived report: its own scoped styles, deliberately (invariant 24) */
 .v1-archive{{--ink:#16202b;--mute:#5a6a7a;--rule:#d7dee6;--band:#3a6ea5;--warn:#8a4b2a;color:var(--ink)}}
 .v1-archive .v1-title{{font-size:26px;line-height:1.2;margin:.4em 0 .3em}}
 .v1-archive h4{{font-size:20px;margin:2.2em 0 .5em;padding-top:.5em;border-top:1px solid var(--rule)}}
 .v1-archive h5{{font-size:14px;margin:1.6em 0 .4em;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}}
-.v1-archive p,.v1-archive li{{max-width:74ch}}
+.v1-archive p,.v1-archive li{{max-width:74ch;overflow-wrap:break-word}}
 .v1-archive a{{color:#1d4e89}}
 .v1-archive code,.v1-archive .mono{{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}}
 .v1-archive .lede{{font-size:17px;color:var(--mute);max-width:74ch}}
@@ -1703,6 +1857,21 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
 .v1-archive figure{{margin:20px 0}}
 .v1-archive figure img{{width:100%;height:auto;border:1px solid var(--rule);border-radius:8px;background:#fff}}
 .v1-archive figcaption{{font-size:.85rem;color:var(--mute);margin-top:6px}}
+.v1-archive figure{{position:relative}}
+.v1-archive figure img[data-enlarge]{{cursor:zoom-in}}
+.v1-archive figure img[data-enlarge]:focus-visible{{outline:3px solid var(--accent);outline-offset:2px}}
+.v1-archive figure:has(img[data-enlarge])::after{{content:"Enlarge";position:absolute;top:8px;right:8px;font-size:12px;
+ line-height:18px;padding:2px 8px;border-radius:9px;background:rgba(24,24,27,.72);color:#fff;pointer-events:none}}
+dialog.figure-view{{width:min(96vw,1640px);max-width:none;max-height:94vh;padding:0;border:1px solid var(--border);
+ border-radius:10px;background:var(--surface)}}
+dialog.figure-view::backdrop{{background:rgba(24,24,27,.6)}}
+.figure-view .figure-bar{{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 12px;
+ border-bottom:1px solid var(--border);position:sticky;top:0;left:0;background:var(--surface)}}
+.figure-view .figure-bar p{{margin:0;font-size:14px;color:var(--text-2)}}
+.figure-view button{{min-height:44px;min-width:44px;font:inherit;font-weight:600;border:1px solid var(--border);
+ border-radius:8px;background:var(--surface);color:var(--text);padding:0 14px;cursor:pointer}}
+.figure-view .figure-scroll{{overflow:auto;max-height:calc(94vh - 62px)}}
+.figure-view .figure-scroll img{{display:block;width:auto;max-width:none;height:auto}}
 .v1-archive .figrow{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}}
 .v1-archive .controls{{display:flex;flex-wrap:wrap;gap:22px;align-items:center;margin:16px 0 6px}}
 .v1-archive .controls fieldset{{border:1px solid var(--rule);border-radius:8px;padding:8px 14px;margin:0}}
@@ -1731,9 +1900,18 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
 
 CHART_JS = """
 (function(){
- var D=window.__FAN__,W=960,H=380,ML=58,MR=16,MT=18,MB=34;
+ var D=window.__FAN__,W=960,H=380,ML=58,MR=16,MT=18,MB=34,FS=11,STEP=2;
  var n=D.hours.length,dom=D.domain;
  var svg=document.getElementById('chart');
+ // Draw at the chart's rendered width, so a phone gets a phone geometry and 12 px text instead of a
+ // shrunk desktop drawing. The data, controls and their behaviour are unchanged.
+ function geometry(){
+  var w=Math.round(svg.getBoundingClientRect().width)||960;
+  W=Math.max(280,Math.min(960,w));
+  var narrow=W<600;
+  H=narrow?300:380;ML=narrow?44:58;MR=narrow?10:16;MT=narrow?22:18;FS=12;STEP=narrow?4:2;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+ }
  function X(i){return ML+(W-ML-MR)*(n<2?0.5:i/(n-1));}
  function Y(v){return MT+(H-MT-MB)*(1-(v-dom[0])/(dom[1]-dom[0]));}
  function state(){
@@ -1755,16 +1933,17 @@ CHART_JS = """
   return e;
  }
  function draw(){
+  geometry();
   var s=state(),pair=D.levels[s.lv],rows=D.series[s.sc];
   if(!pair||!rows){throw new Error('fan chart lookup miss: level '+s.lv+', scale '+s.sc);}
   var li=D.labels.indexOf(pair[0]),hi=D.labels.indexOf(pair[1]),mi=D.labels.indexOf('p50');
   while(svg.firstChild){svg.removeChild(svg.firstChild);}
   ticks().forEach(function(t){
    svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:Y(t),y2:Y(t),stroke:t===0?'#9aa7b4':'#eceff3','stroke-width':t===0?1.2:1}));
-   svg.appendChild(el('text',{x:ML-8,y:Y(t)+4,'text-anchor':'end',fill:'#5a6a7a','font-size':11},t));
+   svg.appendChild(el('text',{x:ML-8,y:Y(t)+4,'text-anchor':'end',fill:'#5a6a7a','font-size':FS},t));
   });
-  for(var i=0;i<n;i+=2){
-   svg.appendChild(el('text',{x:X(i),y:H-12,'text-anchor':'middle',fill:'#5a6a7a','font-size':11},D.hours[i]));
+  for(var i=0;i<n;i+=STEP){
+   svg.appendChild(el('text',{x:X(i),y:H-12,'text-anchor':'middle',fill:'#5a6a7a','font-size':FS},D.hours[i]));
   }
   var up=[],down=[];
   for(var j=0;j<n;j++){up.push(X(j)+','+Y(rows[j][hi]));}
@@ -1778,8 +1957,8 @@ CHART_JS = """
    for(var a=0;a<n;a++){act.push(X(a)+','+Y(D.actual[a]));}
    svg.appendChild(el('polyline',{points:act.join(' '),fill:'none',stroke:'#b03a2e','stroke-width':1.6,'stroke-dasharray':'6 4'}));
   }
-  svg.appendChild(el('text',{x:ML,y:MT-4,fill:'#5a6a7a','font-size':11},
-   'EUR/MWh  ·  local hour (Europe/Berlin)  ·  delivery day '+D.delivery_day));
+  svg.appendChild(el('text',{x:ML,y:MT-6,fill:'#5a6a7a','font-size':FS},
+   W<600?('EUR/MWh · local hour · '+D.delivery_day):('EUR/MWh  ·  local hour (Europe/Berlin)  ·  delivery day '+D.delivery_day)));
   document.getElementById('scaleval').textContent='\\u00d7 '+s.sc;
   document.getElementById('cov').textContent=window.__COV__[s.lv];
   document.getElementById('scenario').style.display=(s.sc==='1.00')?'none':'block';
@@ -1787,12 +1966,45 @@ CHART_JS = """
  }
  Array.prototype.forEach.call(document.querySelectorAll('input[name=lvl]'),function(r){r.addEventListener('change',draw);});
  document.getElementById('scale').addEventListener('input',draw);
+ var archive=document.getElementById('v1-archive');
+ if(archive){archive.addEventListener('toggle',function(){if(archive.open){draw();}});}
+ var pending=null;
+ window.addEventListener('resize',function(){clearTimeout(pending);pending=setTimeout(draw,150);});
  draw();
 })();
 """
 
 #: Opening a closed disclosure when a link targets something inside it (Safari does not), and a
 #: small IntersectionObserver that marks the current generation in the desktop rail (§7.10).
+# v1's archived figures are drawn for a wide page; any of them opens at its full size, scrollable on a
+# phone. The enlarged view reuses the embedded image, so nothing is fetched.
+FIGURE_JS = """
+(function(){
+ var view=document.getElementById('figure-view'),full=document.getElementById('figure-full');
+ if(!view||typeof view.showModal!=='function'){return;}
+ var opener=null;
+ function open(img){
+  opener=img;full.src=img.src;full.alt=img.alt;
+  view.showModal();
+  // Fit the width on a wide screen; on a phone, about twice the screen width, so the figure's own
+  // text reads at roughly 13 px and needs only a short pan.
+  var box=view.clientWidth-2,natural=img.naturalWidth||1600;
+  full.style.width=Math.min(natural,box<700?Math.max(720,2*box):box)+'px';
+  document.getElementById('figure-close').focus();
+ }
+ Array.prototype.forEach.call(document.querySelectorAll('.v1-archive figure img'),function(img){
+  img.setAttribute('data-enlarge','');img.setAttribute('tabindex','0');img.setAttribute('role','button');
+  img.setAttribute('aria-label','Enlarge figure: '+img.alt);
+  img.addEventListener('click',function(){open(img);});
+  img.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(img);}});
+ });
+ document.getElementById('figure-close').addEventListener('click',function(){view.close();});
+ view.addEventListener('click',function(e){if(e.target===view){view.close();}});
+ view.addEventListener('close',function(){full.removeAttribute('src');if(opener){opener.focus();}});
+})();
+"""
+
+
 NAV_JS = """
 (function(){
  function reveal(hash,scroll){
@@ -2281,7 +2493,7 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
 {journey()}
 {results()}
 <section class="section chapters" id="chapters" aria-labelledby="chapters-h">
- <h2 id="chapters-h">How it improved, newest first</h2>
+ <h2 id="chapters-h">How the research improved, newest first</h2>
  <p>Each chapter follows one decision: the problem, the change, what was measured, what it does not show, and
   what was decided. Scrolling down goes back in time.</p>
  {jump}
@@ -2298,8 +2510,13 @@ figure is embedded, and it makes no runtime call. <a href="#top">Back to the top
 window.__FAN__={json.dumps(payload, separators=(",", ":"))};
 window.__COV__={json.dumps(coverage, separators=(",", ":"))};
 </script>
+<dialog class="figure-view" id="figure-view" aria-label="Enlarged figure">
+<div class="figure-bar"><p>Scroll to see the whole figure.</p><button type="button" id="figure-close">Close</button></div>
+<div class="figure-scroll"><img id="figure-full" alt=""></div>
+</dialog>
 <script>{CHART_JS}</script>
 <script>{NAV_JS}</script>
+<script>{FIGURE_JS}</script>
 </body>
 </html>
 """

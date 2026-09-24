@@ -20,23 +20,23 @@ Active plan: **[capstone v21](capstone_v21.md)**. Historical v1 plan: **[v6.8](c
 
 **v1 is the released product and the model the demo runs. v3 is the current research model.** Every result below is development evidence after selection, on the same historical hours for every policy. Nothing here promotes a model, starts a live policy or makes an economic claim. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#journey) tells the whole story with charts, and every number is bound to a committed file.
 
-Latest research result: v3 minus v2 in point error, each measured as a ratio to a simple similar-day forecast on the same historical hours: −0.0783 [−0.1006, −0.0570]; negative favours v3. Development evidence on known historical periods, not yet a test on new data.
+Adding weather inputs improved both point-error and interval scores compared with v2 in development tests. Performance on future data is still to be evaluated.
 
 ### v3 · weather features (CP-20)
 
-Three weather features from the day-before GFS forecast were appended to v2's two component models, each with a missing indicator. The blend, the interval layer, the histories, the folds and the seed stayed exactly as in v2.
+v2 used price history, the load forecast and calendar inputs. v3 added forecast wind speed and solar radiation available before the auction, while retaining the same underlying modeling setup for the comparison.
 
 - Normalized point error −0.0783 [−0.1006, −0.0570].
 - Normalized interval score −0.0838 [−0.1044, −0.0655].
 
-Both 95% intervals lie wholly below zero, so the plan's joint improvement rule is met: an observed joint improvement over v2, development evidence after selection. All five folds favour v3.
+Both estimated score differences favour v3, and their aggregate 95% confidence intervals remain below zero: an observed joint improvement over v2, as development evidence after selection. The exact values and intervals are shown in the chart.
 
-- **The gain belongs to the bundle.** The three features were added together, and no arm isolates wind at 10 m, wind at 100 m or radiation, so the improvement is not attributed to any one of them.
-- **In fold 3, the 2022 crisis, the MAE interval crosses zero:** −3.18 [−6.09, +0.037] EUR/MWh.
+- The gain belongs to the three-feature bundle; this comparison does not isolate an individual feature's contribution.
+- The point-error result is less certain in the 2022 crisis fold: its confidence interval crosses zero, −3.18 [−6.09, +0.037] EUR/MWh.
 
 ### v2 · blended LEAR, hour-aware intervals (CP-16), and the road to it
 
-**First attempt, not adopted (CP-10).** Recalibrating v1 without refitting it raised crisis-window 95% coverage from 19.36% to 32.11%. Not enough: the model itself had to adapt.
+**Calibration experiment, not adopted (CP-10).** Recalibrating v1 without refitting it raised crisis-window 95% coverage from 19.36% to 32.11%. Not enough: the model itself had to adapt.
 
 Against the daily LEAR reference, v2 meets the joint improvement rule as exploratory evidence: point error −0.0137 [−0.0236, −0.0053], interval score −0.0230 [−0.0337, −0.0118].
 
@@ -44,7 +44,7 @@ Against its pooled control, there is **no demonstrated joint preference**: the i
 
 ### Reading the comparison
 
-Every policy is scored on the same 10,747 hours over 448 delivery days in five folds. Each fold counts equally, so the 2022 crisis fold is not diluted by the calmer ones, and every score is a ratio to the similar-day naive on the same fold.
+Every policy was evaluated on the same 10,747 hours across five historical test periods, called folds below; the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not evidence from a new future-data test.
 
 **Why v1 scores 1.0518 here but 28.58% worse in its own report.** Both figures describe the same 448 development days. v1's report compared its daily absolute error with the raw similar-day naive (MAE 32.45 EUR/MWh) and pooled all days, so the 2022 crisis dominates. This comparison gives each of the five folds equal weight, and its naive reference is the forecast's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own error is 41.74 EUR/MWh in both. v1's original nine-quantile pinball is a different score from the seven-quantile WIS used here.
 

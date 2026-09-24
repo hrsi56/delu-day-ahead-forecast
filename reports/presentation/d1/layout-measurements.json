@@ -1,263 +1,735 @@
 {
-  "320": [
-    {
-      "chart_texts_measured": 435,
-      "clientWidth": 320,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/reflow-320/index-320.png",
-      "scrollWidth": 320,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 10.64,
-      "width": 320
-    }
-  ],
+  "round": "D1 correction round after the Owner's editorial review of 2026-09-25",
   "browser": "Google Chrome 153 (Playwright, headless), fresh context per width",
-  "checked_at_utc": "2026-09-24T22:59:46+00:00",
+  "commands": [
+    "scripts/check_reader_paths.py screens <specimen>/index.html --width 1440 --width 768 --width 390 --width 360 --width 320 [--open-all]",
+    "scripts/check_reader_paths.py charts docs/index.html",
+    "scripts/check_reader_paths.py route docs/index.html"
+  ],
+  "checked_at_utc": "2026-09-24T23:54:05+00:00",
   "default": [
     {
-      "chart_texts_measured": 436,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 1440,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/index-1440.png",
+      "scrollWidth": 1440,
       "clientWidth": 1440,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/index-1440.png",
-      "scrollWidth": 1440,
-      "smallest_at": "preview:d",
-      "smallest_chart_text_px": 12.26,
-      "width": 1440
+      "chart_texts_measured": 453,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 435,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 768,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/index-768.png",
+      "scrollWidth": 768,
       "clientWidth": 768,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/index-768.png",
-      "scrollWidth": 768,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 17.88,
-      "width": 768
+      "chart_texts_measured": 454,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 435,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 390,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/index-390.png",
+      "scrollWidth": 390,
       "clientWidth": 390,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/index-390.png",
-      "scrollWidth": 390,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 13.49,
-      "width": 390
+      "chart_texts_measured": 448,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 435,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 360,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/index-360.png",
+      "scrollWidth": 360,
       "clientWidth": 360,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/index-360.png",
-      "scrollWidth": 360,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 12.27,
-      "width": 360
+      "chart_texts_measured": 448,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 436,
-      "clientWidth": 1440,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 320,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/index-320.png",
+      "scrollWidth": 320,
+      "clientWidth": 320,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "stress-7.html",
-      "screenshot": "screenshots/stress-7-1440.png",
-      "scrollWidth": 1440,
-      "smallest_at": "preview:d",
-      "smallest_chart_text_px": 12.26,
-      "width": 1440
-    },
-    {
-      "chart_texts_measured": 435,
-      "clientWidth": 768,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "stress-7.html",
-      "screenshot": "screenshots/stress-7-768.png",
-      "scrollWidth": 768,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 17.88,
-      "width": 768
-    },
-    {
-      "chart_texts_measured": 435,
-      "clientWidth": 390,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "stress-7.html",
-      "screenshot": "screenshots/stress-7-390.png",
-      "scrollWidth": 390,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 13.49,
-      "width": 390
-    },
-    {
-      "chart_texts_measured": 435,
-      "clientWidth": 360,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "stress-7.html",
-      "screenshot": "screenshots/stress-7-360.png",
-      "scrollWidth": 360,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 12.27,
-      "width": 360
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 1440,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "token-sheet.html",
-      "screenshot": "screenshots/token-sheet-1440.png",
-      "scrollWidth": 1440,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 1440
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 768,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "token-sheet.html",
-      "screenshot": "screenshots/token-sheet-768.png",
-      "scrollWidth": 768,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 768
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 390,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "token-sheet.html",
-      "screenshot": "screenshots/token-sheet-390.png",
-      "scrollWidth": 390,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 390
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 360,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "token-sheet.html",
-      "screenshot": "screenshots/token-sheet-360.png",
-      "scrollWidth": 360,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 360
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 1440,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "demo-states.html",
-      "screenshot": "screenshots/demo-states-1440.png",
-      "scrollWidth": 1440,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 1440
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 768,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "demo-states.html",
-      "screenshot": "screenshots/demo-states-768.png",
-      "scrollWidth": 768,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 768
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 390,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "demo-states.html",
-      "screenshot": "screenshots/demo-states-390.png",
-      "scrollWidth": 390,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 390
-    },
-    {
-      "chart_texts_measured": 0,
-      "clientWidth": 360,
-      "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "demo-states.html",
-      "screenshot": "screenshots/demo-states-360.png",
-      "scrollWidth": 360,
-      "smallest_at": null,
-      "smallest_chart_text_px": null,
-      "width": 360
+      "chart_texts_measured": 448,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     }
   ],
   "open-all": [
     {
-      "chart_texts_measured": 436,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 1440,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/open-all/index-1440.png",
+      "scrollWidth": 1440,
       "clientWidth": 1440,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/open-all/index-1440.png",
-      "scrollWidth": 1440,
-      "smallest_at": "preview:d",
-      "smallest_chart_text_px": 12.26,
-      "width": 1440
+      "chart_texts_measured": 453,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 435,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 768,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/open-all/index-768.png",
+      "scrollWidth": 768,
       "clientWidth": 768,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/open-all/index-768.png",
-      "scrollWidth": 768,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 17.88,
-      "width": 768
+      "chart_texts_measured": 454,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 435,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 390,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/open-all/index-390.png",
+      "scrollWidth": 390,
       "clientWidth": 390,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/open-all/index-390.png",
-      "scrollWidth": 390,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 13.49,
-      "width": 390
+      "chart_texts_measured": 448,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     },
     {
-      "chart_texts_measured": 435,
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 360,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/open-all/index-360.png",
+      "scrollWidth": 360,
       "clientWidth": 360,
       "horizontal_overflow": false,
-      "overflowing_elements": [],
-      "page": "index.html",
-      "screenshot": "screenshots/open-all/index-360.png",
-      "scrollWidth": 360,
-      "smallest_at": "preview:m",
-      "smallest_chart_text_px": 12.27,
-      "width": 360
+      "chart_texts_measured": 448,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
+    },
+    {
+      "page": ".local/artifacts/presentation/d1-r2/index.html",
+      "width": 320,
+      "screenshot": ".local/artifacts/presentation/d1-r2/screenshots/open-all/index-320.png",
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "horizontal_overflow": false,
+      "chart_texts_measured": 448,
+      "smallest_chart_text_px": 12,
+      "smallest_at": "v1-replay",
+      "overflowing_elements": []
     }
   ],
-  "screenshots": ".local/artifacts/presentation/d1/screenshots/ (not committed, plan \u00a711.3)"
+  "charts": {
+    "1440/closed/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/closed/preview.png",
+      "texts": 13,
+      "smallest_text_px": 12.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/closed/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/closed/overview.png",
+      "texts": 43,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/closed/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/closed/v3-c2a.png",
+      "texts": 15,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/closed/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/closed/v2-chart2.png",
+      "texts": 31,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/preview.png",
+      "texts": 13,
+      "smallest_text_px": 12.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/overview.png",
+      "texts": 43,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v3-c2a.png",
+      "texts": 15,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v3-c2b": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v3-c2b.png",
+      "texts": 44,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v3-c3": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v3-c3.png",
+      "texts": 95,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v3-c4": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v3-c4.png",
+      "texts": 28,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v3-c5": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v3-c5.png",
+      "texts": 64,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v3-c6": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v3-c6.png",
+      "texts": 65,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v2-chart2.png",
+      "texts": 31,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v2-chart1": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v2-chart1.png",
+      "texts": 38,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v1-replay": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v1-replay.png",
+      "texts": 17,
+      "smallest_text_px": 12,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v1-replay-controls": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/1440/open/v1-replay-controls.png",
+      "texts": 0,
+      "smallest_text_px": null,
+      "overlaps": [],
+      "clipped": []
+    },
+    "1440/open/v1-figures": [
+      0.193,
+      0.193,
+      0.193,
+      0.919,
+      0.482,
+      0.482,
+      1.226
+    ],
+    "1440/overflow_px": 0,
+    "1440/figure_view": {
+      "open": true,
+      "image_width_px": 1378,
+      "focus": "figure-close",
+      "closed_by_escape": true,
+      "focus_after": "IMG"
+    },
+    "390/closed/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/closed/preview.png",
+      "texts": 9,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/closed/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/closed/overview.png",
+      "texts": 44,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/closed/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/closed/v3-c2a.png",
+      "texts": 11,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/closed/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/closed/v2-chart2.png",
+      "texts": 35,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/preview.png",
+      "texts": 9,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/overview.png",
+      "texts": 44,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v3-c2a.png",
+      "texts": 11,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v3-c2b": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v3-c2b.png",
+      "texts": 36,
+      "smallest_text_px": 15.72,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v3-c3": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v3-c3.png",
+      "texts": 96,
+      "smallest_text_px": 15.72,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v3-c4": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v3-c4.png",
+      "texts": 32,
+      "smallest_text_px": 15.72,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v3-c5": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v3-c5.png",
+      "texts": 65,
+      "smallest_text_px": 15.72,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v3-c6": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v3-c6.png",
+      "texts": 65,
+      "smallest_text_px": 15.72,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v2-chart2.png",
+      "texts": 35,
+      "smallest_text_px": 14.58,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v2-chart1": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v2-chart1.png",
+      "texts": 44,
+      "smallest_text_px": 15.72,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v1-replay": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v1-replay.png",
+      "texts": 11,
+      "smallest_text_px": 12,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v1-replay-controls": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/390/open/v1-replay-controls.png",
+      "texts": 0,
+      "smallest_text_px": null,
+      "overlaps": [],
+      "clipped": []
+    },
+    "390/open/v1-figures": [
+      0.224,
+      0.224,
+      0.224,
+      0.344,
+      0.367,
+      0.367,
+      0.459
+    ],
+    "390/overflow_px": 0,
+    "390/figure_view": {
+      "open": true,
+      "image_width_px": 740,
+      "focus": "figure-close",
+      "closed_by_escape": true,
+      "focus_after": "IMG"
+    },
+    "360/closed/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/closed/preview.png",
+      "texts": 9,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/closed/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/closed/overview.png",
+      "texts": 44,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/closed/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/closed/v3-c2a.png",
+      "texts": 11,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/closed/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/closed/v2-chart2.png",
+      "texts": 35,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/preview.png",
+      "texts": 9,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/overview.png",
+      "texts": 44,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v3-c2a.png",
+      "texts": 11,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v3-c2b": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v3-c2b.png",
+      "texts": 36,
+      "smallest_text_px": 14.41,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v3-c3": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v3-c3.png",
+      "texts": 96,
+      "smallest_text_px": 14.41,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v3-c4": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v3-c4.png",
+      "texts": 32,
+      "smallest_text_px": 14.41,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v3-c5": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v3-c5.png",
+      "texts": 65,
+      "smallest_text_px": 14.41,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v3-c6": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v3-c6.png",
+      "texts": 65,
+      "smallest_text_px": 14.41,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v2-chart2.png",
+      "texts": 35,
+      "smallest_text_px": 13.26,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v2-chart1": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v2-chart1.png",
+      "texts": 44,
+      "smallest_text_px": 14.41,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v1-replay": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v1-replay.png",
+      "texts": 11,
+      "smallest_text_px": 12,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v1-replay-controls": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/360/open/v1-replay-controls.png",
+      "texts": 0,
+      "smallest_text_px": null,
+      "overlaps": [],
+      "clipped": []
+    },
+    "360/open/v1-figures": [
+      0.205,
+      0.205,
+      0.205,
+      0.315,
+      0.336,
+      0.336,
+      0.421
+    ],
+    "360/overflow_px": 0,
+    "320/closed/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/closed/preview.png",
+      "texts": 9,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/closed/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/closed/overview.png",
+      "texts": 44,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/closed/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/closed/v3-c2a.png",
+      "texts": 11,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/closed/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/closed/v2-chart2.png",
+      "texts": 35,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/preview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/preview.png",
+      "texts": 9,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/overview": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/overview.png",
+      "texts": 44,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v3-c2a": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v3-c2a.png",
+      "texts": 11,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v3-c2b": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v3-c2b.png",
+      "texts": 36,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v3-c3": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v3-c3.png",
+      "texts": 96,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v3-c4": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v3-c4.png",
+      "texts": 32,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v3-c5": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v3-c5.png",
+      "texts": 65,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v3-c6": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v3-c6.png",
+      "texts": 65,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v2-chart2": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v2-chart2.png",
+      "texts": 35,
+      "smallest_text_px": 12.21,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v2-chart1": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v2-chart1.png",
+      "texts": 44,
+      "smallest_text_px": 13,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v1-replay": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v1-replay.png",
+      "texts": 11,
+      "smallest_text_px": 12,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v1-replay-controls": {
+      "screenshot": ".local/artifacts/presentation/d1-r2/charts/320/open/v1-replay-controls.png",
+      "texts": 0,
+      "smallest_text_px": null,
+      "overlaps": [],
+      "clipped": []
+    },
+    "320/open/v1-figures": [
+      0.185,
+      0.185,
+      0.185,
+      0.285,
+      0.304,
+      0.304,
+      0.379
+    ],
+    "320/overflow_px": 0
+  },
+  "route": {
+    "390x844": {
+      "viewport": "390x844",
+      "landmarks": {
+        "preview": 841,
+        "research_takeaway": 1396,
+        "journey": 1615,
+        "comparison": 2572,
+        "v3": 5509,
+        "v2": 8346,
+        "v1": 11167,
+        "evidence": 12392,
+        "page_height": 15519,
+        "screens_to_preview": 1.0,
+        "screens_to_comparison": 3.05
+      },
+      "replay": {
+        "archive_open": true,
+        "hash": "#forecast",
+        "chart_width_px": 358,
+        "viewbox_width": 358,
+        "smallest_text_px": 12,
+        "coverage_at_95": "0.9398",
+        "scenario_caveat_shown": true
+      },
+      "archive_results_link_stays_in_v1": true
+    },
+    "360x780": {
+      "viewport": "360x780",
+      "landmarks": {
+        "preview": 920,
+        "research_takeaway": 1477,
+        "journey": 1696,
+        "comparison": 2679,
+        "v3": 5575,
+        "v2": 8490,
+        "v1": 11364,
+        "evidence": 12667,
+        "page_height": 16046,
+        "screens_to_preview": 1.18,
+        "screens_to_comparison": 3.43
+      },
+      "replay": {
+        "archive_open": true,
+        "hash": "#forecast",
+        "chart_width_px": 328,
+        "viewbox_width": 328,
+        "smallest_text_px": 12,
+        "coverage_at_95": "0.9398",
+        "scenario_caveat_shown": true
+      },
+      "archive_results_link_stays_in_v1": true
+    },
+    "320x640": {
+      "viewport": "320x640",
+      "landmarks": {
+        "preview": 974,
+        "research_takeaway": 1546,
+        "journey": 1792,
+        "comparison": 2774,
+        "v3": 5649,
+        "v2": 8629,
+        "v1": 11556,
+        "evidence": 12955,
+        "page_height": 16514,
+        "screens_to_preview": 1.52,
+        "screens_to_comparison": 4.33
+      },
+      "replay": {
+        "archive_open": true,
+        "hash": "#forecast",
+        "chart_width_px": 296,
+        "viewbox_width": 296,
+        "smallest_text_px": 12,
+        "coverage_at_95": "0.9398",
+        "scenario_caveat_shown": true
+      },
+      "archive_results_link_stays_in_v1": true
+    },
+    "1440x900": {
+      "viewport": "1440x900",
+      "landmarks": {
+        "preview": 104,
+        "research_takeaway": 982,
+        "journey": 1147,
+        "comparison": 1813,
+        "v3": 3330,
+        "v2": 5246,
+        "v1": 7161,
+        "evidence": 8041,
+        "page_height": 10140,
+        "screens_to_preview": 0.12,
+        "screens_to_comparison": 2.01
+      }
+    }
+  },
+  "screenshots": ".local/artifacts/presentation/d1-r2/ (not committed, plan \u00a711.3)"
 }

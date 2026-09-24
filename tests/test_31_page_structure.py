@@ -1,7 +1,7 @@
 """Presentation plan §9.5 and §7.10–§7.12: the built page's structure.
 
 Every table sits in a scroll wrapper, internal anchors resolve, the size budget holds, phone chart
-variants keep their text at 12 px or more at a 390 px viewport, every chart mark is labelled,
+variants keep their text at 12 px or more at 390 and 320 px viewports, ids are unique, every chart mark is labelled,
 badge texts are exact and long values can wrap, and v1's archived fan chart keeps its behaviour.
 """
 
@@ -75,9 +75,30 @@ def test_every_internal_anchor_resolves(document):
     targets = set(re.findall(r'href="#([^"]+)"', document))
     missing = sorted(target for target in targets if target not in ids)
     assert not missing, missing
-    for anchor in ("results", "journey", "evidence", "v1", "v2", "v3", "v1-archive", "forecast", "repro",
+    for anchor in ("research-results", "journey", "evidence", "v1", "v2", "v3", "v1-archive", "forecast", "repro",
                    "development-update", "system", "reproduce", "contribution", "attribution"):
         assert f'id="{anchor}"' in document, anchor
+
+
+def duplicate_ids(document: str) -> list[str]:
+    seen, duplicates = set(), set()
+    for ident in re.findall(r'\bid="([^"]+)"', document):
+        (duplicates if ident in seen else seen).add(ident)
+    return sorted(duplicates)
+
+
+def test_every_id_is_unique_so_the_archive_keeps_its_own_links(document):
+    """The v1 report's "Results" link must reach v1's results, not the research comparison."""
+    assert not duplicate_ids(document), duplicate_ids(document)
+    archive = document.index('id="v1-archive"')
+    assert document.index('id="results"') > archive
+    assert document.index('id="research-results"') < archive
+    assert 'href="#results"' in document[archive:]
+    assert 'href="#results"' not in document[:archive]
+
+
+def test_negative_control_a_duplicate_id_is_caught(document):
+    assert duplicate_ids(document.replace('id="research-results"', 'id="results"', 1)) == ["results"]
 
 
 def test_the_size_budget_holds(document):
@@ -88,13 +109,14 @@ def _svgs(document: str, variant: str) -> list[str]:
     return re.findall(rf'<svg class="{variant}" viewBox="[^"]*".*?</svg>', document, re.DOTALL)
 
 
-def test_phone_chart_variants_render_text_at_12px_or_more_at_390(document):
-    """Invariant 23: dedicated phone variants, not shrunk desktop SVGs."""
+@pytest.mark.parametrize("column", [B.MOBILE_COLUMN_AT_390, B.MOBILE_COLUMN_AT_320], ids=["390px", "320px"])
+def test_phone_chart_variants_render_text_at_12px_or_more(document, column):
+    """Invariant 23: dedicated phone variants, not shrunk desktop SVGs, legible down to the 320 px reflow."""
     phones = _svgs(document, "m")
     assert len(phones) >= 10
     for svg in phones:
         width = float(re.search(r'viewBox="0 0 ([\d.]+) ', svg).group(1))
-        rendered = min(B.MOBILE_COLUMN_AT_390, B.MOBILE_MAX_W, width * 10)
+        rendered = min(column, B.MOBILE_MAX_W, width * 10)
         scale = rendered / width
         sizes = [float(size) for size in re.findall(r'<text [^>]*font-size="([\d.]+)"', svg)]
         assert sizes, "a chart without text"
@@ -164,3 +186,10 @@ def test_sticky_header_never_covers_anchored_headings():
 
 def test_the_stress_case_is_never_the_published_page(document):
     assert "placeholder generation" not in document and "Local stress case" not in document
+
+
+def test_v1s_archived_figures_open_full_size_without_fetching(document):
+    """The archive's wide figures are unreadable at column width on a phone; each opens full size."""
+    assert 'id="figure-view"' in document and 'id="figure-full"' in document
+    assert "full.src=img.src" in document, "the enlarged view must reuse the embedded image"
+    assert "overflow-wrap:break-word" in B.css(), "long URLs in the archive must wrap on a phone"

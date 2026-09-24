@@ -113,28 +113,31 @@ _PB_MAE = "cp16.uncertainty.V2-P-B2.equal_fold.MAE"
 _PB_WIS = "cp16.uncertainty.V2-P-B2.equal_fold.WIS"
 
 BLOCKS: tuple[Block, ...] = (
-    # ---- opening -------------------------------------------------------------
+    # ---- opening (D1 editorial review §4A) ------------------------------------
     _block("opening.summary", "P04",
-           """Latest research result: {s:version:v3} minus {s:version:v2} in point error, each measured as a
-           ratio to a simple similar-day forecast on the same historical hours: {r:%s} {r:%s|ci}; negative
-           favours {s:version:v3}. Development evidence on known historical periods, not yet a test on new
-           data.""" % (_HG_MAE, _HG_MAE)),
-    # ---- overview ------------------------------------------------------------
+           """Adding weather inputs improved both point-error and interval scores compared with
+           {s:version:v2} in development tests. Performance on future data is still to be evaluated."""),
+    # ---- overview (§4B) ------------------------------------------------------------
     _block("overview.finding", "P07",
-           """{s:version:v3}'s equal-fold point error is {r:cp20.metrics.HG.equal_fold.S_MAE} and its
-           interval score {r:cp20.metrics.HG.equal_fold.S_WIS} times the similar-day naive's, the
-           lowest of the seven policies. {s:version:v1}'s development replay scores
-           {r:cp20.metrics.B1.equal_fold.S_MAE} and {r:cp20.metrics.B1.equal_fold.S_WIS}."""),
+           """{s:version:v3} has the lowest point-error and interval scores among the seven evaluated
+           policies on this shared development comparison."""),
+    _block("overview.howto", "C68",
+           """Lower is better. Each score compares a model with a simple similar-day forecast, which scores
+           {r:cp20.metrics.B0.equal_fold.S_MAE|p=2}. The interval score accounts for both interval width and
+           missed outcomes."""),
     _block("overview.qualification", "P07",
-           """These are development results after selection: the folds are known historical periods,
-           and the dashed limits are the plan's diagnostic criteria {s:criterion:1–2}
+           """The dashed lines mark the plan's diagnostic limits for these two scores
            ({r:cp20.criteria.HG.c1.equal_fold.S_MAE.upper_limit} and
-           {r:cp20.criteria.HG.c2.equal_fold.S_WIS.upper_limit}), not a certification."""),
+           {r:cp20.criteria.HG.c2.equal_fold.S_WIS.upper_limit}): screening thresholds, not a
+           certification."""),
+    _block("overview.v1pointer", "P09",
+           """{s:version:v1} appears here as its development replay; its separate holdout results are in the
+           {s:version:v1} chapter."""),
     _block("overview.fairness", "P08",
-           """Every policy is scored on the same {r:cp20.metrics.B0.pooled.n_hours} hours over
-           {r:cp20.metrics.B0.pooled.n_days} delivery days in five folds. Each fold counts equally, so
-           the {s:date:2022} crisis fold is not diluted by the calmer ones, and every score is a ratio
-           to the similar-day naive on the same fold."""),
+           """Every policy was evaluated on the same {r:cp20.metrics.B0.pooled.n_hours} hours across five
+           historical test periods, called folds below; the third covers the {s:date:2022} price crisis. Scores
+           are normalized within each period, then averaged with equal weight.
+           These are development results, not evidence from a new future-data test."""),
     _block("overview.fairness.detail", "P08",
            """Paired intervals come from a moving-block bootstrap with seed
            {r:cp20.protocol.bootstrap_seed}, {r:cp20.protocol.replicates} replicates and
@@ -150,60 +153,54 @@ BLOCKS: tuple[Block, ...] = (
            each of the five folds equal weight, and its naive reference is the forecast's emitted
            median after the common residual layer (MAE {r:cp20.metrics.B0.pooled.MAE} EUR/MWh).
            {s:version:v1}'s own error is {r:cp20.metrics.B1.pooled.MAE} EUR/MWh in both.
-           {s:version:v1}'s original
-           nine-quantile pinball is a different score from the seven-quantile WIS used here."""),
+           {s:version:v1}'s original nine-quantile pinball is a different score from the seven-quantile
+           WIS used here."""),
     _block("overview.definitions", "C68",
-           """**S_MAE** is the mean over the five folds of a policy's MAE divided by the similar-day
-           naive's MAE on the same fold; **S_WIS** does the same for the weighted interval score,
-           which rewards narrow intervals and penalizes missed outcomes. Lower is better for both, and
-           the naive scores {r:cp20.metrics.B0.equal_fold.S_MAE} by definition. MAE uses the emitted
+           """**S_MAE** is the mean over the five historical test periods (folds) of a policy's MAE divided by
+           the similar-day naive's MAE in the same period; **S_WIS** does the same for the weighted interval
+           score, which rewards narrow intervals and penalizes missed outcomes. MAE uses the emitted
            median."""),
-    # ---- v3 chapter ----------------------------------------------------------
-    _block("v3.problem", "C95", """{s:version:v2} used market data only: prices, the load forecast and
-           the calendar."""),
-    _block("v3.hypothesis", "C95", """Forecast wind and solar drive both the level and the shape of
-           the next day's prices, so a weather forecast available before the auction should improve
-           point and interval forecasts together."""),
-    _block("v3.change", "C65", """Three weather features from the day-before GFS forecast were appended
-           to {s:version:v2}'s two component models, each with a missing indicator. The blend, the
-           interval layer, the histories, the folds and the seed stayed exactly as in
-           {s:version:v2}."""),
-    # README-only: the page draws the same two values as outcome tiles.
+    # ---- v3 chapter (§4C) -------------------------------------------------------------
+    _block("v3.subtitle", "C95", """Adding weather information improved both forecast scores."""),
+    _block("v3.change", "C65", """{s:version:v2} used price history, the load forecast and calendar inputs.
+           {s:version:v3} added forecast wind speed and solar radiation available before the auction, while
+           retaining the same underlying modeling setup for the comparison."""),
+    # README-only: the page shows these two values once, in the main chart and its table.
     _block("v3.outcome.mae", "C69", """Normalized point error {r:%s} {r:%s|ci}""" % (_HG_MAE, _HG_MAE), "readme"),
     _block("v3.outcome.wis", "C70", """Normalized interval score {r:%s} {r:%s|ci}""" % (_HG_WIS, _HG_WIS), "readme"),
-    _block("v3.result", "C71", """Both {s:level:95%} intervals lie wholly below zero, so the plan's joint
-           improvement rule is met: an observed joint improvement over {s:version:v2}, development
-           evidence after selection. All five folds favour {s:version:v3}."""),
+    _block("v3.result", "C71", """Both estimated score differences favour {s:version:v3}, and their aggregate
+           {s:level:95%} confidence intervals remain below zero: an observed joint improvement over
+           {s:version:v2}, as development evidence after selection. The exact values and intervals are shown
+           in the chart."""),
     _block("v3.criteria", "C78", """As a diagnostic, {s:version:v3} is the first policy evaluated
            against the original criteria to meet all six; {s:version:v2} misses criteria
            {s:criterion:1} and {s:criterion:2}. This is a development diagnostic, not a product
            qualification."""),
-    _block("v3.helps", "C79", """**Where it helps:** in the {s:date:2022} crisis window, MAE goes from
+    _block("v3.helps", "C79", """**Where it helps most:** in the {s:date:2022} price peak, a short window inside the crisis fold, MAE goes from
            {r:cp20.criteria.H0.c4.peak.MAE} to {r:cp20.criteria.HG.c4.peak.MAE} EUR/MWh, and the hours
            inside the {s:level:95%} interval from {r:cp20.diagnostics.H0.peak.hit_count95} to
            {r:cp20.diagnostics.HG.peak.hit_count95} of {r:cp20.diagnostics.HG.peak.n_hours}.
            Descriptive only: {r:cp20.diagnostics.HG.peak.n_days} days."""),
-    _block("v3.hurts", "C80", """**What it gives up:** {s:version:v3}'s intervals are narrower in every
-           fold, and in exchange its pooled {s:level:95%} coverage is slightly lower than {s:version:v2}'s,
-           {r:cp20.metrics.HG.pooled.coverage95} against {r:cp20.metrics.H0.pooled.coverage95}."""),
-    _block("v3.caveat.bundle", "C83", """**The gain belongs to the bundle.** The three features were
-           added together, and no arm isolates wind at {s:height:10 m}, wind at {s:height:100 m} or
-           radiation, so the improvement is not attributed to any one of them."""),
-    _block("v3.caveat.fold3", "C73", """**In fold {s:fold:3}, the {s:date:2022} crisis, the MAE
-           interval crosses zero:** {r:cp20.uncertainty.HG-H0.fold_3.MAE}
+    _block("v3.hurts", "C80", """**What else changes:** the intervals are narrower in every period, while
+           pooled {s:level:95%} coverage is slightly lower, {r:cp20.metrics.HG.pooled.coverage95} against
+           {r:cp20.metrics.H0.pooled.coverage95} for {s:version:v2}."""),
+    _block("v3.caveat.fold3", "C73", """The point-error result is less certain in the {s:date:2022} crisis
+           fold: its confidence interval crosses zero, {r:cp20.uncertainty.HG-H0.fold_3.MAE}
            {r:cp20.uncertainty.HG-H0.fold_3.MAE|ci} EUR/MWh."""),
-    _block("v3.caveat.development", "C84", """**Development evidence.** The folds are known historical
-           periods and the {s:date:2022} crisis motivated these hypotheses, so the results cannot
-           become unseen evidence. No prospective clock has started."""),
-    _block("v3.decision", "C95", """Adopted as the current research model, **{s:version:v3} · weather features**.
-           Adopted means adopted within this research programme: {s:version:v3} does not run in the
-           demo, and nothing here implies deployment or outside validation."""),
+    _block("v3.caveat.bundle", "C83", """The gain belongs to the three-feature bundle; this comparison does not
+           isolate an individual feature's contribution."""),
+    _block("v3.caveat.development", "C84", """These are development results on known historical periods,
+           which also motivated the research questions. Performance on future data has not yet been
+           evaluated."""),
+    _block("v3.decision", "C95", """We retained **{s:version:v3} · weather features** as the current research
+           model. The demo continues to run {s:version:v1}; {s:version:v3} has not yet been evaluated on future
+           data."""),
     _block("v3.recipe", "C66", """Operational NCEP GFS {s:grid:0.25°}, the {s:time:00 UTC} run of the
            day before delivery. Wind components are interpolated to each delivery hour; wind speed is
            computed per grid cell before a cos(latitude)-weighted average over the fixed box
            {s:coordinates:47–55.25°N, 5.5–15.5°E}; radiation is de-averaged from the forecast's running
-           means. A regional weather proxy: not the DE-LU zone's exact outline and not a generation
-           forecast."""),
+           means. Each feature has a missing indicator. A regional weather proxy: not the DE-LU zone's exact
+           outline and not a generation forecast."""),
     _block("v3.missing", "C67", """Only delivery {s:date:2019-01-01} has no weather, structurally: its
            run would be {s:date:2018-12-31}, before the input floor. Nothing was imputed from a failed
            retrieval."""),
@@ -228,60 +225,70 @@ BLOCKS: tuple[Block, ...] = (
            transferred; {r:cp20.resources.machine_hours} machine-hours; external cost
            ${r:cp20.resources.external_cost_usd}."""),
     _block("v3.dependency", "C93", """{s:version:v3} needs one GFS retrieval per delivery day."""),
-    # ---- v2 chapter ----------------------------------------------------------
-    _block("v2.problem", "C53", """{s:version:v1} collapsed in the {s:date:2022} crisis. In the crisis
-           window its MAE was {r:cp15.peak.B1.MAE} EUR/MWh, and {r:cp15.peak.B1.hit_count95} of
-           {r:cp15.peak.B1.n_hours} hours fell inside its {s:level:95%} interval."""),
-    _block("v2.branch.cp10", "P12", """**First attempt, not adopted ({s:checkpoint:CP-10}).** Recalibrating
-           {s:version:v1} without refitting it raised crisis-window {s:level:95%} coverage from
+    # ---- v2 chapter (§4D) -------------------------------------------------------------
+    _block("v2.subtitle", "P12", """Recalibration alone was not enough; the forecasting model had to
+           change."""),
+    _block("v2.problem", "C53", """{s:version:v1} substantially underestimated prices during the
+           {s:date:2022} crisis. Recalibrating its intervals improved coverage, but the improvement was
+           insufficient."""),
+    _block("v2.informed", "C21", """A comparison of nine forecasting policies informed the move to a blend of
+           two LEAR forecasts (LEAR: a regularized linear model fitted separately for each hour). The simpler
+           daily LEAR reference remained a strong benchmark."""),
+    _block("v2.change", "C10", """{s:version:v2} combines the two forecasts and uses intervals that account
+           for the hour of the day. A control version uses the same blend with a pooled interval method,
+           allowing the interval approaches to be compared."""),
+    _block("v2.interpretation", "C34", """Against daily LEAR, {s:version:v2} improved both development
+           scores. Against the same blend with pooled intervals, the comparison did not establish improvement
+           on both scores: the interval score improved, but the point-error confidence interval extends
+           slightly above zero, to {r:%s|exact_hi}. This is not equivalence.""" % _HP_MAE),
+    _block("v2.branch.cp10", "P12", """**Calibration experiment, not adopted ({s:checkpoint:CP-10}).**
+           Recalibrating {s:version:v1} without refitting it raised crisis-window {s:level:95%} coverage from
            {r:cp10.peak_windows.v1_reference.coverage_95|pct} to
            {r:cp10.peak_windows.c1_price_volatility.coverage_95|pct}. Not enough: the model itself
            had to adapt."""),
-    _block("v2.branch.cp15", "C21", """**The study that informed {s:version:v2} ({s:checkpoint:CP-15}).** Nine policies
+    _block("v2.branch.cp15", "C21", """**Model comparison, a study ({s:checkpoint:CP-15}).** Nine policies
            were compared on the same hours. Normalized LEAR cut crisis-window MAE to
            {r:cp15.peak.A1.MAE} EUR/MWh, but no policy met the product criteria
            (`NOT_DEMONSTRATED`), and the daily LEAR reference had the better primary scores:
            {r:cp15.relative_scores.B2.S_MAE} and {r:cp15.relative_scores.B2.S_WIS} against
            {r:cp15.relative_scores.A1.S_MAE} and {r:cp15.relative_scores.A1.S_WIS}."""),
-    _block("v2.change", "C10", """{s:version:v2} blends the two central forecasts {s:ratio:50/50} and adds
-           hour-aware residual intervals (H). A control arm (P) keeps the same blend with pooled
-           intervals, so H against P measures hour awareness alone."""),
+    # README-only: the page states these in the interpretation and carries them in the chart and table.
     _block("v2.result.hb2", "C37", """Against the daily LEAR reference, {s:version:v2} meets the joint
            improvement rule as exploratory evidence: point error {r:%s} {r:%s|ci}, interval score
-           {r:%s} {r:%s|ci}.""" % (_HB_MAE, _HB_MAE, _HB_WIS, _HB_WIS)),
+           {r:%s} {r:%s|ci}.""" % (_HB_MAE, _HB_MAE, _HB_WIS, _HB_WIS), "readme"),
     _block("v2.result.hp", "C34", """Against its pooled control, there is **no demonstrated joint
            preference**: the interval score improves, {r:%s} {r:%s|ci}, but the point-error interval
            ends just above zero, {r:%s} [{r:%s|lo}, {r:%s|exact_hi}]. This is not
-           equivalence.""" % (_HP_WIS, _HP_WIS, _HP_MAE, _HP_MAE, _HP_MAE)),
+           equivalence.""" % (_HP_WIS, _HP_WIS, _HP_MAE, _HP_MAE, _HP_MAE), "readme"),
     _block("v2.result.pb2", "C38", """The pooled control against the daily LEAR reference does not meet
            the rule either: its interval-score interval, {r:%s|ci}, spans zero.""" % _PB_WIS),
     _block("v2.result.criteria", "C39", """Both {s:version:v2} arms miss criteria {s:criterion:1–2}
            ({r:cp16.metrics.V2-H.equal_fold.S_MAE} and {r:cp16.metrics.V2-P.equal_fold.S_MAE} against
            {r:cp16.criteria.V2-H.c1.equal_fold.S_MAE.upper_limit}) and meet criteria
            {s:criterion:3–6}."""),
-    _block("v2.limitation", "C41", """The improvement over the daily LEAR reference is not attributed
-           to hour-aware intervals alone, because the pooled control passes the same fold criterion;
-           the split between the blend and the interval layer is not isolated."""),
-    _block("v2.decision", "C95", """Adopted as the research model that {s:version:v3} builds on:
+    _block("v2.limitation", "C41", """The gain over daily LEAR is not attributed to hour-aware intervals
+           alone: the pooled control also passes the same per-period criterion, and the experiment does not
+           separate the blend from the interval layer."""),
+    _block("v2.decision", "C95", """Adopted in research as the model {s:version:v3} builds on:
            **{s:version:v2} · blended LEAR, hour-aware intervals**."""),
-    # ---- v1 chapter ----------------------------------------------------------
-    _block("v1.what", "P11", """{s:version:v1} is the released product: a LightGBM nine-quantile
-           ensemble with calibrated {s:level:50 / 80 / 95%} intervals, evaluated once on a
-           pre-specified holdout and shipped exactly as evaluated. The demo runs it in your
-           browser."""),
-    _block("v1.holdout", "P11", """On the one-shot {v1:holdout_days}-day holdout: MAE
-           {v1:holdout_mae_champion} against {v1:holdout_mae_naive} EUR/MWh for the similar-day naive;
-           mean pinball loss {v1:holdout_pinball_champion} against {v1:holdout_pinball_naive}; DM
-           p = {v1:holdout_dm_p_value}."""),
-    _block("v1.unflattering", "P11", """**Two unflattering results, kept in view.** On the development
-           folds the point-accuracy test shows a deficit, not merely no advantage: statistic
+    # ---- v1 chapter (§4E) -------------------------------------------------------------
+    _block("v1.what", "P11", """{s:version:v1} is the released model and the one the demo runs: a
+           LightGBM ensemble that forecasts nine quantiles for every hour of the next day, calibrated into
+           {s:level:50 / 80 / 95%} prediction intervals, and shipped exactly as it was evaluated."""),
+    _block("v1.holdout", "P11", """On its pre-specified {v1:holdout_days}-day holdout, {s:version:v1}
+           beat the similar-day naive: MAE {v1:holdout_mae_champion} against {v1:holdout_mae_naive} EUR/MWh,
+           and mean pinball loss {v1:holdout_pinball_champion} against {v1:holdout_pinball_naive}
+           (Diebold–Mariano p = {v1:holdout_dm_p_value})."""),
+    _block("v1.unflattering", "P11", """**Where it falls short.** On the development folds its point
+           accuracy is worse than the naive's, a deficit rather than merely no advantage: statistic
            +{v1:development_dm_point_statistic_abs}, p = {v1:development_dm_point_p_value}, the median
-           {v1:development_dm_point_relative} than the naive. And over the August {s:date:2022} peak
-           weeks its {s:level:95%} interval covered {r:cp15.peak.B1.coverage95|p=3} of outcomes."""),
-    _block("v1.lesson", "P11", """**The lesson from the crisis:** the errors were about price level, not
-           shape. On the crisis window the bias was {r:cp15.peak.B1.bias} EUR/MWh; the daily
-           mean-level error was {r:cp15.peak.B1.daily_mean_level_MAE} against a within-day shape error
-           of {r:cp15.peak.B1.within_day_shape_MAE}."""),
+           {v1:development_dm_point_relative}. Over the August {s:date:2022} peak weeks its {s:level:95%}
+           interval covered {r:cp15.peak.B1.coverage95|p=3} of outcomes."""),
+    _block("v1.lesson", "P11", """**Why:** {s:version:v1} substantially underestimated prices during the
+           crisis; the errors were about price level, not shape. On the crisis window the bias was
+           {r:cp15.peak.B1.bias} EUR/MWh, and the daily mean-level error was
+           {r:cp15.peak.B1.daily_mean_level_MAE} against a within-day shape error of
+           {r:cp15.peak.B1.within_day_shape_MAE}."""),
 )
 
 BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
@@ -487,7 +494,8 @@ WITHHELD_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
         ("W17", r"\b(wind|radiation|solar)[^.]{0,40}\b(drives|explains|is responsible for) the (gain|improvement)\b"),
         ("W18", r"\bpeer[- ]review|external validation|externally validated\b"),
         ("W19", r"\b(v3 runs in|runs v3|try the v3|v3 demo|live v3)\b"),
-        ("W20", r"\bv3\b[^.]{0,60}\b\d+(\.\d+)?\s?(%|x\b|times\b)[^.]{0,30}\bv1\b"),
+        # A nominal interval level ("the 95% interval") is not a relative gain.
+        ("W20", r"\bv3\b[^.]{0,60}\b\d+(\.\d+)?\s?(%(?!\s+(prediction |confidence )?interval)|x\b|times\b)[^.]{0,30}\bv1\b"),
         ("W21", r"(?<!never )(?<!not )\bconfirmatory\b(?!-style)"),
     )
 )

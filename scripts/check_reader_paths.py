@@ -14,6 +14,11 @@ tool environment under `.local/tools/`, and this script never runs in CI.
         --engine chrome --engine webkit --viewport 1440x900 --viewport 390x844 \\
         --out reports/presentation/release-checks/<date>-demo.json
 
+`screens` takes full-page screenshots with layout measurements; `charts` photographs every chart
+at each width, closed and with every disclosure open, and measures text overlap, clipping and the
+smallest rendered text; `route` follows the preview into v1's interactive replay on phones and
+records where the page's landmarks fall.
+
 `--engine chrome` drives the installed Google Chrome through Playwright's `channel="chrome"`;
 `--engine webkit` drives Playwright's WebKit build, which is the Safari engine but not Safari.
 Neither substitutes for a check on a real iPhone, which the record keeps separate.
@@ -122,7 +127,7 @@ def probe_demo(playwright, engine: str, width: int, height: int, url: str, timeo
 MEASURE_JS = """
 () => {
   const doc = document.documentElement;
-  const texts = [...document.querySelectorAll('.chart svg text')].filter(t => {
+  const texts = [...document.querySelectorAll('.chart svg text, svg#chart text')].filter(t => {
     const svg = t.closest('svg'); const box = t.getBoundingClientRect();
     return svg && getComputedStyle(svg).display !== 'none' && box.width > 0 && box.height > 0;
   });
@@ -131,7 +136,8 @@ MEASURE_JS = """
     const svg = t.closest('svg');
     const scale = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
     const size = parseFloat(t.getAttribute('font-size') || '13') * scale;
-    if (smallest === null || size < smallest) { smallest = size; where = svg.dataset.chart + ':' + svg.dataset.variant; }
+    if (smallest === null || size < smallest) {
+      smallest = size; where = svg.id === 'chart' ? 'v1-replay' : svg.dataset.chart + ':' + svg.dataset.variant; }
   }
   const overflow = [...document.querySelectorAll('body *')].filter(e => {
     const r = e.getBoundingClientRect(); return r.right > doc.clientWidth + 1 && !e.closest('.scroll, pre');
@@ -169,6 +175,133 @@ def screens(playwright, pages: list[str], widths: list[int], out: Path, open_all
     return results
 
 
+CHART_JS = """
+(root) => {
+  const out = {texts: 0, smallest_text_px: null, overlaps: [], clipped: []};
+  const svgs = root.tagName.toLowerCase() === 'svg' ? [root] : [...root.querySelectorAll('svg')];
+  for (const svg of svgs.filter(s => s.getBoundingClientRect().width > 0 && getComputedStyle(s).display !== 'none')) {
+    const sb = svg.getBoundingClientRect();
+    const vb = svg.viewBox.baseVal && svg.viewBox.baseVal.width ? svg.viewBox.baseVal.width : sb.width;
+    const boxes = [...svg.querySelectorAll('text')].filter(t => t.textContent.trim()).map(t => {
+      const b = t.getBoundingClientRect();
+      return {t: t.textContent.trim().slice(0, 40), x0: b.left, x1: b.right, y0: b.top, y1: b.bottom,
+              px: parseFloat(t.getAttribute('font-size') || '13') * sb.width / vb};
+    });
+    out.texts += boxes.length;
+    for (const b of boxes) {
+      out.smallest_text_px = out.smallest_text_px === null ? b.px : Math.min(out.smallest_text_px, b.px);
+      if (b.x0 < sb.left - 1 || b.x1 > sb.right + 1 || b.y0 < sb.top - 1 || b.y1 > sb.bottom + 1) out.clipped.push(b.t);
+    }
+    for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
+      const a = boxes[i], c = boxes[j];
+      const ox = Math.min(a.x1, c.x1) - Math.max(a.x0, c.x0), oy = Math.min(a.y1, c.y1) - Math.max(a.y0, c.y0);
+      if (ox > 1.5 && oy > 2.5) out.overlaps.push([a.t, c.t]);
+    }
+  }
+  if (out.smallest_text_px !== null) out.smallest_text_px = Math.round(out.smallest_text_px * 100) / 100;
+  return out;
+}
+"""
+
+PHONES = ((390, 844), (360, 780), (320, 640))
+
+
+def charts(playwright, target: str, out: Path) -> dict:
+    """Every chart at 1,440/390/360/320 px, closed and with every disclosure open (the Owner's D1 review)."""
+    browser = _launch(playwright, "chrome")
+    url = Path(target).resolve().as_uri()
+    results: dict = {}
+    for width, height, scale in ((1440, 900, 1), (390, 844, 2), (360, 780, 2), (320, 640, 2)):
+        context = browser.new_context(viewport={"width": width, "height": height}, device_scale_factor=scale)
+        page = context.new_page()
+        page.goto(url, wait_until="load")
+        page.add_style_tag(content=".site-header{position:static !important}")  # keep it off the crops
+        for state in ("closed", "open"):
+            if state == "open":
+                page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
+                page.wait_for_timeout(500)
+            targets = [("preview", page.locator(".preview.panel").first)]
+            targets += [(h.get_attribute("data-chart-id"), h) for h in page.locator("div.chart[data-chart-id]").all()]
+            targets += [("v1-replay", page.locator("svg#chart")), ("v1-replay-controls", page.locator("#v1-archive .controls"))]
+            for name, locator in targets:
+                if not locator.is_visible():
+                    continue
+                shot = out / str(width) / state / f"{name}.png"
+                shot.parent.mkdir(parents=True, exist_ok=True)
+                locator.scroll_into_view_if_needed()
+                locator.screenshot(path=str(shot))
+                results[f"{width}/{state}/{name}"] = {"screenshot": str(shot), **locator.evaluate(CHART_JS)}
+            figures = page.locator("#v1-archive figure img").all()
+            if state == "open" and figures:
+                results[f"{width}/open/v1-figures"] = [
+                    round(f.bounding_box()["width"] / f.evaluate("i => i.naturalWidth"), 3) for f in figures]
+        results[f"{width}/overflow_px"] = page.evaluate(
+            "document.documentElement.scrollWidth - document.documentElement.clientWidth")
+        if width in (1440, 390):
+            page.locator("#v1-archive figure img").first.click()
+            page.wait_for_timeout(300)
+            page.screenshot(path=str(out / str(width) / "figure-view.png"))
+            opened = page.evaluate("[document.getElementById('figure-view').open,"
+                                   " Math.round(document.getElementById('figure-full').getBoundingClientRect().width),"
+                                   " document.activeElement.id]")
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(150)
+            results[f"{width}/figure_view"] = {"open": opened[0], "image_width_px": opened[1], "focus": opened[2],
+                                               "closed_by_escape": not page.evaluate(
+                                                   "document.getElementById('figure-view').open"),
+                                               "focus_after": page.evaluate("document.activeElement.tagName")}
+        context.close()
+    browser.close()
+    return results
+
+
+LANDMARKS_JS = """() => { const y = s => { const e = document.querySelector(s);
+    return e ? Math.round(e.getBoundingClientRect().top + scrollY) : null; };
+  return {preview: y('.preview.panel'), research_takeaway: y('.opening-summary'), journey: y('#journey'),
+          comparison: y('#research-results'), v3: y('#v3'), v2: y('#v2'), v1: y('#v1'), evidence: y('#evidence'),
+          page_height: document.documentElement.scrollHeight}; }"""
+
+REPLAY_JS = """() => { const svg = document.getElementById('chart'), box = svg.getBoundingClientRect();
+  const sizes = [...svg.querySelectorAll('text')].map(t => parseFloat(t.getAttribute('font-size')) * box.width / svg.viewBox.baseVal.width);
+  return {archive_open: document.getElementById('v1-archive').open, hash: location.hash,
+          chart_width_px: Math.round(box.width), viewbox_width: svg.viewBox.baseVal.width,
+          smallest_text_px: Math.round(Math.min(...sizes) * 100) / 100}; }"""
+
+
+def route(playwright, target: str, out: Path) -> dict:
+    """The preview-to-replay route on phones, the archive's own Results link, and landmark positions."""
+    browser = _launch(playwright, "chrome")
+    url = Path(target).resolve().as_uri()
+    results: dict = {}
+    for width, height in PHONES + ((1440, 900),):
+        page = browser.new_page(viewport={"width": width, "height": height})
+        page.goto(url, wait_until="load")
+        page.wait_for_timeout(300)
+        marks = page.evaluate(LANDMARKS_JS)
+        marks["screens_to_preview"] = round(marks["preview"] / height, 2)
+        marks["screens_to_comparison"] = round(marks["comparison"] / height, 2)
+        entry = {"viewport": f"{width}x{height}", "landmarks": marks}
+        if (width, height) in PHONES:
+            page.get_by_role("link", name="Explore this forecast").click()
+            page.wait_for_timeout(600)
+            entry["replay"] = page.evaluate(REPLAY_JS)
+            page.screenshot(path=str(out / f"route-{width}.png"))
+            page.locator('#v1-archive a[href="#results"]').first.click()
+            page.wait_for_timeout(300)
+            entry["archive_results_link_stays_in_v1"] = page.evaluate(
+                "!!document.getElementById('results').closest('#v1-archive')")
+            page.locator("input[name='lvl'][value='95']").check()
+            page.locator("#scale").fill("6")
+            page.wait_for_timeout(200)
+            entry["replay"]["coverage_at_95"] = page.evaluate("document.getElementById('cov').textContent.trim()")
+            entry["replay"]["scenario_caveat_shown"] = page.evaluate(
+                "getComputedStyle(document.getElementById('scenario')).display !== 'none'")
+        results[entry["viewport"]] = entry
+        page.close()
+    browser.close()
+    return results
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -184,6 +317,12 @@ def main() -> int:
     shots.add_argument("--open-all", action="store_true", help="open every disclosure first")
     shots.add_argument("--out", type=Path, required=True)
     shots.add_argument("--record", type=Path, default=None)
+    for name, text in (("charts", "photograph and measure every chart at four widths"),
+                       ("route", "follow the preview into v1's replay on phones; record landmarks")):
+        sub_parser = sub.add_parser(name, help=text)
+        sub_parser.add_argument("page")
+        sub_parser.add_argument("--out", type=Path, required=True)
+        sub_parser.add_argument("--record", type=Path, required=True)
     args = parser.parse_args()
 
     try:
@@ -193,6 +332,19 @@ def main() -> int:
             "Playwright is not installed here. It lives in a tool environment under "
             ".local/tools/, never in the project; see this script's docstring."
         )
+
+    if args.command in ("charts", "route"):
+        args.out.mkdir(parents=True, exist_ok=True)
+        with sync_playwright() as playwright:
+            results = (charts if args.command == "charts" else route)(playwright, args.page, args.out)
+        args.record.parent.mkdir(parents=True, exist_ok=True)
+        args.record.write_text(json.dumps({"checked_at_utc": _utc(), "results": results}, indent=2) + "\n")
+        problems = [key for key, value in results.items() if isinstance(value, dict)
+                    and (value.get("overlaps") or value.get("clipped")
+                         or (value.get("smallest_text_px") or 99) < 12)]
+        problems += [key for key, value in results.items() if key.endswith("overflow_px") and value]
+        print("\n".join(problems) or "no overlap, clipping, text under 12 px or horizontal overflow")
+        return 1 if problems else 0
 
     if args.command == "screens":
         args.out.mkdir(parents=True, exist_ok=True)

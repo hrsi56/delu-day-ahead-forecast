@@ -180,13 +180,12 @@ def startup_markup(C, state: str = "loading") -> str:
     return f"""<div id="delu-status" class="delu-status" data-state="{state}" role="status" aria-live="polite">
  <div class="delu-card">
   <p class="delu-title" data-show="loading">Starting the v1 demo</p>
-  <p class="delu-body" data-show="loading">It runs entirely in your browser. The first visit downloads about
-   {C['wasm_cold_load_mb']} MB, a Python runtime and the model, so it can take a minute or more. Nothing is sent to a
-   server.</p>
+  <p class="delu-body" data-show="loading">Forecast calculations run locally in your browser. The first visit
+   downloads about {C['wasm_cold_load_mb']} MB, a Python runtime and the model, so it can take a minute or more.</p>
   <p class="delu-title" data-show="failure">The demo did not start</p>
   <p class="delu-body" data-show="failure">A file it needs did not load, or it has not finished starting after
-   several minutes. A slow or filtered connection, or a browser that blocks the runtime, can cause this. The report
-   has the same results and needs no download.</p>
+   several minutes. A slow or filtered connection, or a browser that blocks the runtime, can cause this. You can view
+   the saved forecast and research results in the report without loading the model.</p>
   <p class="delu-title" data-show="retrying">Retrying</p>
   <p class="delu-body" data-show="retrying">Reloading the demo.</p>
   <p class="delu-body" data-show="ready">The v1 demo is running in your browser.</p>

@@ -7,7 +7,8 @@ and open the evidence for one claim.
 | Reader | Status |
 |---|---|
 | Agent without context (a fresh subagent that saw only the page as a visitor sees it) | Done, below |
-| The Owner | To do at Stop 1 |
+| The Owner | Done at Stop 1: editorial review of 2026-09-25, which returned D1 for the correction round below |
+| Agent without context, round 2 | Done on the corrected page, below |
 | A person who does not know the project | Optional, to do |
 
 ## Agent reader
@@ -61,3 +62,68 @@ left the reader unsure how good the product is until the Definitions disclosure.
   more belongs above the fold is a design decision.
 - **The full H−P endpoint looks like a bug to a newcomer.** It is printed in full by invariant 9.
 - **The phone header drops the site title** to fit the three navigation links.
+
+## Round 2: after the Owner's editorial review (2026-09-25)
+
+The Owner returned D1 for a correction round (review document
+`docs/track-b/presentation-d1-editorial-review-2026-09-25.md` in the main checkout, SHA-256
+`2193d2e5245bc1a3dbc70bf719c3265ebd84439a8afd9cf3e02b83b41f77b5f5`, not committed on this branch).
+The review asks that the rerun record whether the reader can explain what improved, not merely
+locate a number.
+
+**What the new reader was given.** A fresh subagent with no context got the same kind of pack as
+before, built from the corrected `docs/index.html` with every disclosure closed: 12 desktop screens
+at 1,440 × 900, 19 phone screens at 390 × 844, the visible text and the visible links. It opened no
+other file.
+
+| # | Task | Answer (summary) | First found (desktop) | Phone |
+|---|---|---|---|---|
+| 1 | Find the product | Next-day hourly price forecasts with a range of likely prices; "Try the v1 demo" runs in the browser, about 57 MB | Screen 1 | Screen 1 |
+| 2 | Released and research versions | v1 is released and runs in the demo; v3, with weather features, is the latest research and not in the demo | Screen 1 | Screen 1 |
+| 3 | Explain what improved | v3 added wind and sun forecasts to v2; both the best-guess price and the ranges got somewhat more accurate than v2's, on the historical periods used to develop and choose the model; not yet tested on new data, and less certain in the 2022 crisis | Screen 2 (headline), screen 5 (certainty) | Screen 2 |
+| 4 | A rejected idea | Recalibrating v1's ranges helped a little but not enough, so the model was changed instead | Screen 2 | Screen 3 |
+| 5 | A remaining uncertainty | Performance on future data is unknown; the gain cannot be pinned to one weather input | Screen 2 | Screen 2 |
+| 6 | Evidence for one claim | "View source values" → `reports/weather-ablation/uncertainty.csv` at `evidence/cp-20`, line 12; or the full CP-20 report | Screen 3 | — |
+
+**Result.** The reader explained the improvement in its own words, with its comparator (v2), its
+scope (development, historical periods) and its main qualification (the 2022 crisis fold), without
+copying a number. In round 1 the same task needed three screens and was answered with the
+normalized difference itself.
+
+**Research progress against the released product.** No confusion. It named "Adopted in research ·
+not in the demo" and "The demo continues to run v1" as clear, and noted two weaker nudges.
+
+### Changed in response (round 2)
+
+| Finding | Change |
+|---|---|
+| Phone lineage: the two experiment cards follow v3, so they read as later than v3 | A label, "Experiments between v1 and v2", heads the branch cards; they have solid outlines, because dashed outlines mean "planned" on this page |
+| "less certain in the 2022 crisis fold" next to "Where it helps: in the 2022 crisis window" reads as a mixed message; fold, window and period seem interchangeable | "Where it helps most: in the 2022 price peak, a short window inside the crisis fold, …"; the fair-comparison note now introduces the five historical test periods as "folds" and says the third covers the 2022 crisis |
+| "the three-feature bundle" beside a list of four items | The missing-data indicator is a note under the three features, not a fourth item |
+| "How it improved, newest first" could suggest the product improved | "How the research improved, newest first" |
+| "Space cards" is internal vocabulary | "the demo's description cards" |
+| Line spacing jumped around inline links on phones | Links inside running text are inline, with no extra padding |
+| The rebuild command was cut off at the right edge on phones | Command blocks wrap on phones; the copied text is unchanged |
+
+### Checked and left as they are
+
+- **The full H−P endpoint and "see below" look like a formatting bug to a newcomer.** Invariant 9
+  prints the endpoint in full. The interpretation under the chart says in words that the point-error
+  interval "extends slightly above zero" before giving the endpoint, and the chart row points to the
+  full value printed under the plot instead of repeating it.
+- **"Compare experiment runs (link added when the runs are published)" appears four times** while
+  the v1 archive already links its MLflow experiment. The new runs are not published yet (F1
+  needs the Owner's explicit instruction), so each evidence row says so; the text goes once F1
+  lands.
+- **The released v1 scores worse than the naive in the development comparison (1.0518) but beat it
+  on its holdout.** Both statements are true and deliberate. The v1 row carries "Development
+  replay; its separate holdout results are in the v1 chapter", and the v1 chapter reconciles them
+  under "Where it falls short".
+- **About 25 links "without text"** are links inside the closed v1 archive, whose text is hidden
+  while the archive is closed. The extraction read them as empty; they have text when open.
+- **"Explore this forecast" might land on nothing.** A browser check (`check_reader_paths.py
+  route`) shows it opens the archive and lands on the replay at 390, 360 and 320 px.
+- **The preview label under the sticky header on phone screen 2** is where the screen boundary
+  fell in the pack; scrolling shows it.
+- **Jargon in deeper sections** (S_MAE, post-selection, "trained champion" in the archived v1
+  report). The Owner's review (§5.6) keeps formulas and internal codes in the deeper layers.

@@ -84,9 +84,10 @@ def test_date_guard_negative_control():
 
 
 def test_the_exact_endpoint_is_forced_wherever_it_is_rendered():
-    html = RC.render("v2.result.hp")
-    assert "+0.000003857628092332211" in html
-    assert "0.0000]" not in html and "0.0000<" not in html
+    for key, surface in (("v2.interpretation", RC.PAGE), ("v2.result.hp", RC.README)):
+        html = RC.render(key, surface=surface)
+        assert "+0.000003857628092332211" in html, key
+        assert "0.0000]" not in html and "0.0000<" not in html, key
     # Even a template that asks for the rounded endpoint gets the full value.
     forced = RC.render_template("C34", "{r:cp16.uncertainty.V2-H-V2-P.equal_fold.MAE|hi}")
     assert "+0.000003857628092332211" in forced
@@ -133,6 +134,7 @@ def test_negative_control_an_unknown_record_is_caught():
         ("The model passed peer review.", "W18"),
         ("Try the v3 demo in your browser.", "W19"),
         ("v3 is 46% better than v1.", "W20"),
+        ("v3 cuts the error 46% relative to v1.", "W20"),
         ("The holdout gave a confirmatory result.", "W21"),
         ("It has a coverage guarantee.", "W15"),
     ],
