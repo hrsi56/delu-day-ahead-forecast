@@ -1,6 +1,6 @@
 .PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2 \
         pages space register showcase cli container container-verify readme-cp3 verify cp3 \
-        wasm-payload wasm wasm-serve cp3b
+        wasm-payload wasm wasm-serve cp3b readme-research
 
 test:
 	uv run pytest -q
@@ -49,6 +49,11 @@ space:
 
 readme-cp3:
 	uv run python scripts/cp3_readme.py
+
+# PRES-1 (presentation plan §9.4): the README's research block, generated between its markers
+# from the same claim templates the page renders.
+readme-research:
+	uv run python scripts/readme_research.py
 
 # §9.1 registration is NON-GATING: a registry or metadata failure is disclosed
 # in reports/cp3/mlflow_registration.json and the release proceeds.

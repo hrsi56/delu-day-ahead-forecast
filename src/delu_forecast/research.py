@@ -1,0 +1,1022 @@
+"""Typed evidence records for the research generations (presentation plan §9.1–§9.2).
+
+v1's published claims come from `claims.py`, which reads CP-2's artifacts. Everything a public
+surface says about CP-10, CP-15, CP-16 and CP-20 comes from here instead: one typed record per
+value, each carrying the file it was read from, the git blob that file must still be, the row it
+came from, its unit, aggregation, population, comparator and evidence class.
+
+**This module reads committed files. It never scores, fits or recomputes anything.** A record's
+value is the exact text of one cell in one committed row; formatting for display happens once,
+in `display()`, so "0.5658" is one rounding of one saved number on every surface.
+
+Provenance is checked from bytes, not from Git: the committed CI checkout is shallow and carries
+no tags, so each source file's expected blob SHA is recorded in `SOURCES` next to the evidence
+tag that preserves it, and `validate()` recomputes the blob from the file on disk.
+`tests/test_29_research_evidence.py` re-derives every record and carries the negative controls.
+"""
+
+from __future__ import annotations
+
+import csv
+import hashlib
+import io
+import json
+from dataclasses import dataclass, field
+from decimal import Decimal
+from functools import lru_cache
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+#: The last development delivery date. No v2+ record may describe anything after it, and no
+#: v2+ model is scored on v1's holdout window (plan §6 invariant 10).
+EVIDENCE_BOUNDARY = "2026-04-07"
+
+MINUS = "−"
+
+
+class EvidenceError(ValueError):
+    """A record no longer matches its committed source."""
+
+
+# --------------------------------------------------------------------------- sources
+
+
+@dataclass(frozen=True)
+class Source:
+    path: str
+    tag: str
+    blob: str
+
+
+def _source(path: str, tag: str, blob: str) -> tuple[str, Source]:
+    return path, Source(path, tag, blob)
+
+
+#: Every file a record may be read from, with the evidence tag that preserves it and the Git
+#: blob SHA its committed bytes must hash to. The tag is the checkpoint that produced the file:
+#: CP-10's files landed with CP-15, and CP-16's are also reachable from `evidence/cp-20`.
+SOURCES: dict[str, Source] = dict(
+    [
+        # CP-20 (v3)
+        _source("reports/weather-ablation/metrics.csv", "evidence/cp-20", "91be7505842cdec6062fd0bcbc7f88f2f3ec031c"),
+        _source("reports/weather-ablation/uncertainty.csv", "evidence/cp-20", "aa3028f17bbe7f6c0dcc65f91266fc00b29b0207"),
+        _source("reports/weather-ablation/criteria.csv", "evidence/cp-20", "ec377d647ff5eee68346fd5fcddaa6a2dbd2aa16"),
+        _source("reports/weather-ablation/diagnostics.csv", "evidence/cp-20", "e1c8e11b9fccd3e61f7fb9f0ab904c410f89bc72"),
+        _source("reports/weather-ablation/protocol.json", "evidence/cp-20", "13095656266eaf9de92e0e0da038fd1a324eee23"),
+        _source("reports/weather-ablation/extraction-summary.json", "evidence/cp-20", "22349d9cfd7eba20f4ab5ef93deb1c884a49e01d"),
+        _source("reports/weather-ablation/missingness.csv", "evidence/cp-20", "4c1603696964f51819d094c5227a1fe2f946b043"),
+        _source("reports/weather-ablation/causal-controls.json", "evidence/cp-20", "adbd9973300b2aaec3175ad46c05c84282e7ccd3"),
+        _source("reports/weather-ablation/causal-controls-supplement.json", "evidence/cp-20", "05ea6d8f0b3d7f3538f50e0941a1c88e68414bf9"),
+        _source("reports/weather-ablation/weather-features.parquet", "evidence/cp-20", "8704810f2778b8432ebb7289f808abec96730256"),
+        _source("docs/track-b/evidence/cp-20/resource-final.json", "evidence/cp-20", "f50cf0e8e5c0ee94495ee4982dc5e4d704de6f72"),
+        # CP-16 (v2)
+        _source("reports/v2-causal/metrics.csv", "evidence/cp-16", "a194e3c3e46b963eaa2dd3c65c8e79627062b5e5"),
+        _source("reports/v2-causal/uncertainty.csv", "evidence/cp-16", "59cef0552f86cf939d507b30c4f46fe83cef5248"),
+        _source("reports/v2-causal/criteria.csv", "evidence/cp-16", "29c0b5bf5c3b251e1cde32f0c28310f924edfa3c"),
+        _source("reports/v2-causal/diagnostics.csv", "evidence/cp-16", "bd5aed0726dac95e83423ccf4f498edae230eefb"),
+        _source("reports/v2-causal/protocol.json", "evidence/cp-16", "53f096ad464a1c27fec8013fffb20c49696f6f74"),
+        # CP-15 (the model-comparison study) and CP-10 (landed with it)
+        _source("reports/cp15/peak.csv", "evidence/cp-15", "6e36a4fc724753f6a6eef277465f0f5b26446892"),
+        _source("reports/cp15/relative_scores.csv", "evidence/cp-15", "854f1b3e865887d39e87a3380ff7f427b927d793"),
+        _source("reports/cp15/pooled.csv", "evidence/cp-15", "3e5cb75c3db7e82064a64c0f31971330095858ab"),
+        _source("reports/cp15/per_fold.csv", "evidence/cp-15", "56779e3646426f2c7791536cdc509134d85afa51"),
+        _source("reports/cp15/daily.csv", "evidence/cp-15", "941b833627d66da19f6ae9955f4406d12cfae46c"),
+        _source("reports/cp15/bootstrap.csv", "evidence/cp-15", "8a0fa9d96458ad870c2bd91954df80d594ecdfe8"),
+        _source("reports/cp15/bootstrap_metadata.json", "evidence/cp-15", "096047ae36cb6708b5ac739e3bab7af72a621b1d"),
+        _source("reports/cp15/ranking.csv", "evidence/cp-15", "68d549bcdf68cb7acb369f471bdb3d73a02744b5"),
+        _source("reports/cp15/criteria.csv", "evidence/cp-15", "79aed270c3ef26f76e14134be6e6e4782a0c9ad8"),
+        _source("reports/cp15/protocol.json", "evidence/cp-15", "b3a926e93f59a4e4d736e194a56c7ac678d810a9"),
+        _source("reports/cp10/metrics.csv", "evidence/cp-15", "058b0f538df6091a17305c414e4b114d1c940b62"),
+        _source("reports/cp10/peak_windows.csv", "evidence/cp-15", "4a33ec625812496a8973606dcb02e44856657468"),
+        _source("reports/cp10/selection.json", "evidence/cp-15", "f27eee818bea83314df32da55db2e56ee20fb8af"),
+        _source("reports/cp10/protocol.json", "evidence/cp-15", "8da7b10e78499a4a89b61e771793da0fef622ce7"),
+        # CP-2 (v1's own development record, for the F07 note)
+        _source("reports/cp2/dm_development.json", "evidence/cp-2", "05b225ef472fc2368526c95381ae773fdaf92aec"),
+        _source("reports/cp2/development_pooled_metrics.csv", "evidence/cp-2", "5ee7d18e3636256a24e72707a9ec1300c825b48d"),
+    ]
+)
+
+
+def blob_sha(data: bytes) -> str:
+    """The Git blob SHA-1 of `data`, computed without Git."""
+    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+
+
+def source_bytes(path: str) -> bytes:
+    return (REPO_ROOT / path).read_bytes()
+
+
+def check_source(path: str) -> None:
+    """Raise unless `path` is a registered source whose bytes still hash to its recorded blob."""
+    source = SOURCES.get(path)
+    if source is None:
+        raise EvidenceError(f"{path} is not a registered evidence source")
+    actual = blob_sha(source_bytes(path))
+    if actual != source.blob:
+        raise EvidenceError(
+            f"{path} has changed: blob {actual} is not the {source.blob} preserved by {source.tag}"
+        )
+
+
+def _csv(path: str) -> list[tuple[int, dict[str, str]]]:
+    """(physical line, row) pairs, every cell as its exact committed text."""
+    reader = csv.DictReader(io.StringIO(source_bytes(path).decode("utf-8"), newline=""))
+    out = []
+    for row in reader:
+        out.append((reader.line_num, dict(row)))
+    return out
+
+
+@lru_cache(maxsize=None)
+def _csv_cached(path: str) -> tuple[tuple[int, tuple[tuple[str, str], ...]], ...]:
+    return tuple((line, tuple(row.items())) for line, row in _csv(path))
+
+
+def _rows(path: str) -> list[tuple[int, dict[str, str]]]:
+    return [(line, dict(items)) for line, items in _csv_cached(path)]
+
+
+@lru_cache(maxsize=None)
+def _json(path: str) -> dict:
+    return json.loads(source_bytes(path))
+
+
+def _json_get(document: dict, dotted: str):
+    node = document
+    for part in dotted.split("."):
+        node = node[int(part)] if isinstance(node, list) else node[part]
+    return node
+
+
+# --------------------------------------------------------------------------- the record
+
+
+@dataclass(frozen=True)
+class Interval:
+    """A confidence interval of an estimated difference -- never a forecast interval."""
+
+    method: str
+    level: float
+    seed: int
+    replicates: int
+    block_days: int
+
+
+@dataclass(frozen=True)
+class EvidenceRecord:
+    record_id: str
+    checkpoint: str
+    generation: str | None
+    policy_code: str | None
+    source_path: str
+    selector: tuple[tuple[str, str], ...]
+    field: str
+    metric: str
+    unit: str
+    aggregation: str
+    population_id: str
+    comparator: str | None
+    evidence_class: str
+    window: tuple[str, str] | None
+    display_precision: int
+    raw: str
+    source_line: int | None = None
+    interval: Interval | None = None
+    ci_low_raw: str | None = None
+    ci_high_raw: str | None = None
+    detail: tuple[tuple[str, str], ...] = field(default=())
+
+    @property
+    def value(self) -> float:
+        return float(self.raw)
+
+    @property
+    def ci_low(self) -> float | None:
+        return None if self.ci_low_raw is None else float(self.ci_low_raw)
+
+    @property
+    def ci_high(self) -> float | None:
+        return None if self.ci_high_raw is None else float(self.ci_high_raw)
+
+    @property
+    def source(self) -> Source:
+        return SOURCES[self.source_path]
+
+    @property
+    def source_revision(self) -> str:
+        return f"{self.source.tag} (blob {self.source.blob})"
+
+    def selector_dict(self) -> dict[str, str]:
+        return dict(self.selector)
+
+
+# --------------------------------------------------------------------------- units
+
+UNIT_RATIO = "ratio to the similar-day naive (B0)"
+UNIT_EUR = "EUR/MWh"
+UNIT_FRACTION = "fraction"
+UNIT_COUNT = "count"
+UNIT_NORM_DIFF = "normalized score difference"
+UNIT_EUR_DIFF = "EUR/MWh, paired mean daily loss difference"
+UNIT_HOURS = "hours"
+UNIT_DAYS = "days"
+UNIT_PERCENT = "percent"
+UNIT_GIB = "GiB"
+UNIT_MACHINE_HOURS = "machine-hours"
+UNIT_USD = "USD"
+UNIT_RUNS = "runs"
+UNIT_MESSAGES = "messages"
+UNIT_SEED = "seed"
+UNIT_REPLICATES = "replicates"
+UNIT_LABEL = "label"
+
+#: CSV column -> (metric name, unit, display precision). One place, so a unit cannot drift
+#: between the record that carries it and the check that validates it.
+FIELD_SPECS: dict[str, tuple[str, str, int]] = {
+    "S_MAE": ("S_MAE", UNIT_RATIO, 4),
+    "S_WIS": ("S_WIS", UNIT_RATIO, 4),
+    "MAE": ("MAE", UNIT_EUR, 2),
+    "WIS": ("WIS", UNIT_EUR, 2),
+    "RMSE": ("RMSE", UNIT_EUR, 2),
+    "bias": ("bias", UNIT_EUR, 2),
+    "raw_central_MAE": ("raw central MAE", UNIT_EUR, 2),
+    "daily_mean_level_MAE": ("daily mean-level MAE", UNIT_EUR, 2),
+    "within_day_shape_MAE": ("within-day shape MAE", UNIT_EUR, 2),
+    "mean_width50": ("mean 50% interval width", UNIT_EUR, 2),
+    "mean_width80": ("mean 80% interval width", UNIT_EUR, 2),
+    "mean_width95": ("mean 95% interval width", UNIT_EUR, 2),
+    "coverage50": ("50% coverage", UNIT_FRACTION, 4),
+    "coverage80": ("80% coverage", UNIT_FRACTION, 4),
+    "coverage95": ("95% coverage", UNIT_FRACTION, 4),
+    "hit_count50": ("hits inside the 50% interval", UNIT_COUNT, 0),
+    "hit_count80": ("hits inside the 80% interval", UNIT_COUNT, 0),
+    "hit_count95": ("hits inside the 95% interval", UNIT_COUNT, 0),
+    "n_hours": ("hours", UNIT_HOURS, 0),
+    "n_days": ("days", UNIT_DAYS, 0),
+    # CP-10's own column names (native nine-quantile scores)
+    "mae": ("MAE", UNIT_EUR, 2),
+    "mean_pinball": ("nine-quantile mean pinball loss", UNIT_EUR, 2),
+    "coverage_50": ("50% coverage", UNIT_FRACTION, 4),
+    "coverage_80": ("80% coverage", UNIT_FRACTION, 4),
+    "coverage_95": ("95% coverage", UNIT_FRACTION, 4),
+    "covered_95": ("hits inside the 95% interval", UNIT_COUNT, 0),
+    "n_obs": ("hours", UNIT_HOURS, 0),
+    "mae_p50": ("MAE", UNIT_EUR, 2),
+    "rank": ("rank", UNIT_COUNT, 0),
+}
+
+#: Metric-row fields published as records, per aggregation.
+SCORE_FIELDS = ("S_MAE", "S_WIS")
+ROW_FIELDS = (
+    "MAE", "WIS", "RMSE", "bias", "raw_central_MAE", "daily_mean_level_MAE", "within_day_shape_MAE",
+    "coverage50", "coverage80", "coverage95", "hit_count50", "hit_count80", "hit_count95",
+    "mean_width50", "mean_width80", "mean_width95", "n_hours", "n_days",
+)
+PEAK_FIELDS = (
+    "MAE", "WIS", "bias", "daily_mean_level_MAE", "within_day_shape_MAE", "coverage95",
+    "hit_count95", "mean_width95", "n_hours", "n_days",
+)
+
+#: Which adopted generation a policy is, if any. References and study arms have none.
+GENERATION_OF = {"B1": "v1", "V2-H": "v2", "H0": "v2", "HG": "v3"}
+
+EVIDENCE_CLASS_DEVELOPMENT = "development_post_selection"
+EVIDENCE_CLASS_CALIBRATION = "development_calibration_comparison"
+
+#: Scope column value -> aggregation name (plan §9.2).
+AGGREGATION_OF_SCOPE = {
+    "equal_fold": "equal_fold",
+    "pooled": "pooled",
+    "per_fold": "per_fold",
+    "peak": "peak_window",
+    "hour": "hour",
+    "daily": "daily",
+}
+
+POPULATIONS = {
+    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16 and CP-20",
+    "crisis-window-408h": "the matched crisis window, delivery 2022-08-15..31",
+    "cp10-fold-block": "CP-10's full fold blocks (its own calibration comparison)",
+    "cp10-crisis-window-408h": "CP-10's matched crisis window, delivery 2022-08-15..31",
+    "v1-development": "v1's own development evaluation (CP-2)",
+    "cp20-extraction": "the CP-20 GFS extraction",
+    "cp20-resources": "the CP-20 cumulative resource ledger",
+    "protocol": "a frozen protocol setting",
+}
+
+
+def _population(scope: str, fold: str | None) -> str:
+    if scope in ("per_fold", "hour", "daily") and fold:
+        return f"common-10747h/{fold}"
+    if scope == "peak":
+        return "crisis-window-408h"
+    return "common-10747h"
+
+
+# --------------------------------------------------------------------------- builders
+
+
+def _metrics_key(row: dict[str, str]) -> str:
+    return row["scope"] if row["scope"] in ("pooled", "equal_fold") else row["fold"]
+
+
+def _windows_by_policy(rows) -> dict[str, tuple[str, str]]:
+    return {
+        row["policy"]: (row["first_delivery_date"], row["last_delivery_date"])
+        for _, row in rows
+        if row.get("scope") == "pooled"
+    }
+
+
+def _metric_records(prefix: str, checkpoint: str, path: str) -> list[EvidenceRecord]:
+    rows = _rows(path)
+    pooled_window = _windows_by_policy(rows)
+    records = []
+    for line, row in rows:
+        policy, scope = row["policy"], row["scope"]
+        key = _metrics_key(row)
+        fields = SCORE_FIELDS if scope == "equal_fold" else ROW_FIELDS
+        window = pooled_window[policy] if scope == "equal_fold" else (
+            row["first_delivery_date"], row["last_delivery_date"]
+        )
+        for column in fields:
+            if row.get(column, "") == "":
+                continue
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(
+                EvidenceRecord(
+                    record_id=f"{prefix}.metrics.{policy}.{key}.{column}",
+                    checkpoint=checkpoint,
+                    generation=GENERATION_OF.get(policy),
+                    policy_code=policy,
+                    source_path=path,
+                    selector=(("policy", policy), ("scope", scope), ("fold", row["fold"])),
+                    field=column,
+                    metric=metric,
+                    unit=unit,
+                    aggregation=AGGREGATION_OF_SCOPE[scope],
+                    population_id=_population(scope, row["fold"]),
+                    comparator="B0" if column in SCORE_FIELDS else None,
+                    evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                    window=window,
+                    display_precision=precision,
+                    raw=row[column],
+                    source_line=line,
+                )
+            )
+    return records
+
+
+def _interval(checkpoint: str) -> Interval:
+    """The bootstrap settings, read from the checkpoint's own frozen record. CP-16 inherited
+    CP-15's recorded settings unchanged (capstone §14.4)."""
+    if checkpoint == "CP-20":
+        comparison = _json("reports/weather-ablation/protocol.json")["comparison"]
+        return Interval(
+            method="paired noncircular moving-block percentile bootstrap",
+            level=0.95,
+            seed=int(comparison["bootstrap_seed"]),
+            replicates=int(comparison["replicates"]),
+            block_days=int(comparison["block_days"]),
+        )
+    meta = _json("reports/cp15/bootstrap_metadata.json")
+    return Interval(
+        method=meta["method"] + " bootstrap",
+        level=float(meta["confidence"]),
+        seed=int(meta["seed"]),
+        replicates=int(meta["replicates"]),
+        block_days=int(meta["block_days"]),
+    )
+
+
+def _uncertainty_records(prefix: str, checkpoint: str, path: str, windows) -> list[EvidenceRecord]:
+    records = []
+    interval = _interval(checkpoint)
+    for line, row in _rows(path):
+        scope, candidate, baseline, metric = row["scope"], row["candidate"], row["baseline"], row["metric"]
+        equal = scope == "equal_fold"
+        confidence = float(row.get("confidence") or interval.level)
+        replicates = int(row.get("replicates") or interval.replicates)
+        records.append(
+            EvidenceRecord(
+                record_id=f"{prefix}.uncertainty.{candidate}-{baseline}.{scope}.{metric}",
+                checkpoint=checkpoint,
+                generation=GENERATION_OF.get(candidate),
+                policy_code=candidate,
+                source_path=path,
+                selector=(("scope", scope), ("candidate", candidate), ("baseline", baseline), ("metric", metric)),
+                field="difference",
+                metric=f"delta_{'S_' if equal else ''}{metric}",
+                unit=UNIT_NORM_DIFF if equal else UNIT_EUR_DIFF,
+                aggregation="equal_fold_contrast" if equal else "per_fold_contrast",
+                population_id="common-10747h" if equal else f"common-10747h/{scope}",
+                comparator=baseline,
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                window=windows["all" if equal else scope],
+                display_precision=4 if equal else 2,
+                raw=row["difference"],
+                source_line=line,
+                interval=Interval(interval.method, confidence, interval.seed, replicates, interval.block_days),
+                ci_low_raw=row["ci_lower"],
+                ci_high_raw=row["ci_upper"],
+                detail=tuple(
+                    (key, row[key]) for key in ("status", "estimand", "evidence_class") if key in row
+                ),
+            )
+        )
+    return records
+
+
+def _fold_windows(path: str) -> dict[str, tuple[str, str]]:
+    """Fold windows as the metrics file records them (the B0 rows)."""
+    windows = {}
+    for _, row in _rows(path):
+        if row["policy"] != "B0":
+            continue
+        key = "all" if row["scope"] == "pooled" else row["fold"]
+        if row["scope"] in ("pooled", "per_fold"):
+            windows[key] = (row["first_delivery_date"], row["last_delivery_date"])
+    return windows
+
+
+def _criteria_records(prefix: str, checkpoint: str, path: str, windows) -> list[EvidenceRecord]:
+    records = []
+    for line, row in _rows(path):
+        policy, criterion, metric, scope = row["policy"], row["criterion"], row["metric"], row["scope"]
+        base = f"{prefix}.criteria.{policy}.c{criterion}.{scope}.{metric}"
+        # criterion 6's "complete_finite_ordered" is the share of eligible targets that pass.
+        name, unit, precision = FIELD_SPECS.get(metric, (metric, UNIT_FRACTION, 4))
+        if scope == "peak":
+            window, population = ("2022-08-15", "2022-08-31"), "crisis-window-408h"
+        elif scope.startswith("fold_"):
+            window, population = windows[scope], f"common-10747h/{scope}"
+        else:
+            window, population = windows["all"], "common-10747h"
+        selector = (("policy", policy), ("criterion", criterion), ("metric", metric), ("scope", scope))
+        for column, suffix in (("actual", ""), ("upper_limit", ".upper_limit"), ("lower_limit", ".lower_limit")):
+            if row.get(column, "") == "":
+                continue
+            records.append(
+                EvidenceRecord(
+                    record_id=base + suffix,
+                    checkpoint=checkpoint,
+                    generation=GENERATION_OF.get(policy),
+                    policy_code=policy,
+                    source_path=path,
+                    selector=selector,
+                    field=column,
+                    metric=f"criterion {criterion} {name}",
+                    unit=unit,
+                    aggregation=AGGREGATION_OF_SCOPE.get(scope, "all_eligible") if scope != "peak" else "peak_window",
+                    population_id=population,
+                    comparator=row.get("comparator") or None,
+                    evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                    window=window,
+                    display_precision=5 if column != "actual" and unit == UNIT_RATIO else precision,
+                    raw=row[column],
+                    source_line=line,
+                )
+            )
+        status_column = "status" if "status" in row else "passed"
+        records.append(
+            EvidenceRecord(
+                record_id=base + ".status",
+                checkpoint=checkpoint,
+                generation=GENERATION_OF.get(policy),
+                policy_code=policy,
+                source_path=path,
+                selector=selector,
+                field=status_column,
+                metric=f"criterion {criterion} status",
+                unit=UNIT_LABEL,
+                aggregation="criterion",
+                population_id=population,
+                comparator=row.get("comparator") or None,
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                window=window,
+                display_precision=0,
+                raw=row[status_column],
+                source_line=line,
+            )
+        )
+    return records
+
+
+def _diagnostic_records(prefix: str, checkpoint: str, path: str) -> list[EvidenceRecord]:
+    records = []
+    for line, row in _rows(path):
+        scope, policy, fold = row["scope"], row["policy"], row["fold"]
+        if scope == "peak":
+            key, fields = "peak", PEAK_FIELDS
+        elif scope == "hour":
+            key, fields = f"{fold}.hour_{int(row['group']):02d}", ("MAE", "WIS", "n_hours")
+        else:
+            continue
+        for column in fields:
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(
+                EvidenceRecord(
+                    record_id=f"{prefix}.diagnostics.{policy}.{key}.{column}",
+                    checkpoint=checkpoint,
+                    generation=GENERATION_OF.get(policy),
+                    policy_code=policy,
+                    source_path=path,
+                    selector=(("policy", policy), ("fold", fold), ("scope", scope), ("group", row["group"])),
+                    field=column,
+                    metric=metric,
+                    unit=unit,
+                    aggregation=AGGREGATION_OF_SCOPE[scope],
+                    population_id=_population(scope, fold),
+                    comparator=None,
+                    evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                    window=(row["first_delivery_date"], row["last_delivery_date"]),
+                    display_precision=precision,
+                    raw=row[column],
+                    source_line=line,
+                    detail=(("row_evidence_class", row.get("evidence_class", "")),
+                            ("support_status", row.get("support_status", ""))),
+                )
+            )
+    return records
+
+
+def _cp15_records() -> list[EvidenceRecord]:
+    records = []
+    pooled = _rows("reports/cp15/pooled.csv")
+    window_of = {row["policy"]: (row["first_delivery_date"], row["last_delivery_date"]) for _, row in pooled}
+    for line, row in pooled:
+        for column in ROW_FIELDS:
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(EvidenceRecord(
+                record_id=f"cp15.pooled.{row['policy']}.{column}", checkpoint="CP-15",
+                generation=GENERATION_OF.get(row["policy"]), policy_code=row["policy"],
+                source_path="reports/cp15/pooled.csv", selector=(("policy", row["policy"]),),
+                field=column, metric=metric, unit=unit, aggregation="pooled",
+                population_id="common-10747h", comparator=None,
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=window_of[row["policy"]],
+                display_precision=precision, raw=row[column], source_line=line,
+            ))
+    for line, row in _rows("reports/cp15/per_fold.csv"):
+        for column in ROW_FIELDS:
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(EvidenceRecord(
+                record_id=f"cp15.per_fold.{row['policy']}.{row['fold']}.{column}", checkpoint="CP-15",
+                generation=GENERATION_OF.get(row["policy"]), policy_code=row["policy"],
+                source_path="reports/cp15/per_fold.csv",
+                selector=(("policy", row["policy"]), ("fold", row["fold"])),
+                field=column, metric=metric, unit=unit, aggregation="per_fold",
+                population_id=f"common-10747h/{row['fold']}", comparator=None,
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                window=(row["first_delivery_date"], row["last_delivery_date"]),
+                display_precision=precision, raw=row[column], source_line=line,
+            ))
+    for line, row in _rows("reports/cp15/relative_scores.csv"):
+        for column in SCORE_FIELDS:
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(EvidenceRecord(
+                record_id=f"cp15.relative_scores.{row['policy']}.{column}", checkpoint="CP-15",
+                generation=GENERATION_OF.get(row["policy"]), policy_code=row["policy"],
+                source_path="reports/cp15/relative_scores.csv", selector=(("policy", row["policy"]),),
+                field=column, metric=metric, unit=unit, aggregation="equal_fold",
+                population_id="common-10747h", comparator="B0",
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=window_of[row["policy"]],
+                display_precision=precision, raw=row[column], source_line=line,
+            ))
+    for line, row in _rows("reports/cp15/peak.csv"):
+        for column in PEAK_FIELDS:
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(EvidenceRecord(
+                record_id=f"cp15.peak.{row['policy']}.{column}", checkpoint="CP-15",
+                generation=GENERATION_OF.get(row["policy"]), policy_code=row["policy"],
+                source_path="reports/cp15/peak.csv", selector=(("policy", row["policy"]),),
+                field=column, metric=metric, unit=unit, aggregation="peak_window",
+                population_id="crisis-window-408h", comparator=None,
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                window=(row["first_delivery_date"], row["last_delivery_date"]),
+                display_precision=precision, raw=row[column], source_line=line,
+                detail=(("row_evidence_class", row["evidence_class"]),),
+            ))
+    fold_windows = {}
+    for _, row in _rows("reports/cp15/per_fold.csv"):
+        fold_windows[row["fold"]] = (row["first_delivery_date"], row["last_delivery_date"])
+    fold_windows["all"] = window_of["B0"]
+    interval = _interval("CP-15")
+    for line, row in _rows("reports/cp15/bootstrap.csv"):
+        scope, candidate, baseline, metric = row["scope"], row["candidate"], row["baseline"], row["metric"]
+        equal = scope == "equal_fold"
+        records.append(EvidenceRecord(
+            record_id=f"cp15.bootstrap.{candidate}-{baseline}.{scope}.{metric}", checkpoint="CP-15",
+            generation=GENERATION_OF.get(candidate), policy_code=candidate,
+            source_path="reports/cp15/bootstrap.csv",
+            selector=(("scope", scope), ("candidate", candidate), ("baseline", baseline), ("metric", metric)),
+            field="difference", metric=f"delta_{'S_' if equal else ''}{metric}",
+            unit=UNIT_NORM_DIFF if equal else UNIT_EUR_DIFF,
+            aggregation="equal_fold_contrast" if equal else "per_fold_contrast",
+            population_id="common-10747h" if equal else f"common-10747h/{scope}", comparator=baseline,
+            evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=fold_windows["all" if equal else scope],
+            display_precision=4 if equal else 2, raw=row["difference"], source_line=line,
+            interval=Interval(interval.method, interval.level, interval.seed, int(row["replicates"]), interval.block_days),
+            ci_low_raw=row["ci_lower"], ci_high_raw=row["ci_upper"],
+        ))
+    for line, row in _rows("reports/cp15/ranking.csv"):
+        for column in ("rank", "failed_criteria", "product_feasibility"):
+            records.append(EvidenceRecord(
+                record_id=f"cp15.ranking.{row['policy']}.{column}", checkpoint="CP-15",
+                generation=None, policy_code=row["policy"], source_path="reports/cp15/ranking.csv",
+                selector=(("policy", row["policy"]),), field=column, metric=column,
+                unit=UNIT_COUNT if column == "rank" else UNIT_LABEL, aggregation="equal_fold",
+                population_id="common-10747h", comparator="B0",
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=window_of[row["policy"]],
+                display_precision=0, raw=row[column], source_line=line,
+            ))
+    return records
+
+
+def _cp10_records() -> list[EvidenceRecord]:
+    records = []
+    for line, row in _rows("reports/cp10/metrics.csv"):
+        for column in ("mae", "mean_pinball", "coverage_50", "coverage_80", "coverage_95", "covered_95", "n_obs"):
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(EvidenceRecord(
+                record_id=f"cp10.metrics.{row['candidate']}.{row['fold']}.{column}", checkpoint="CP-10",
+                generation=None, policy_code=row["candidate"], source_path="reports/cp10/metrics.csv",
+                selector=(("candidate", row["candidate"]), ("fold", row["fold"])), field=column,
+                metric=metric, unit=unit, aggregation="per_fold", population_id="cp10-fold-block",
+                comparator=None, evidence_class=EVIDENCE_CLASS_CALIBRATION,
+                window=(row["window_start"], row["window_end"]), display_precision=precision,
+                raw=row[column], source_line=line,
+            ))
+    for line, row in _rows("reports/cp10/peak_windows.csv"):
+        for column in ("mae", "mean_pinball", "coverage_95", "covered_95", "n_obs"):
+            metric, unit, precision = FIELD_SPECS[column]
+            records.append(EvidenceRecord(
+                record_id=f"cp10.peak_windows.{row['candidate']}.{column}", checkpoint="CP-10",
+                generation=None, policy_code=row["candidate"], source_path="reports/cp10/peak_windows.csv",
+                selector=(("candidate", row["candidate"]),), field=column, metric=metric, unit=unit,
+                aggregation="peak_window", population_id="cp10-crisis-window-408h", comparator=None,
+                evidence_class=EVIDENCE_CLASS_CALIBRATION, window=(row["window_start"], row["window_end"]),
+                display_precision=precision, raw=row[column], source_line=line,
+            ))
+    return records
+
+
+def _json_record(record_id, checkpoint, path, dotted, *, unit, precision, population, window=None,
+                 evidence_class=EVIDENCE_CLASS_DEVELOPMENT, metric=None) -> EvidenceRecord:
+    value = _json_get(_json(path), dotted)
+    return EvidenceRecord(
+        record_id=record_id, checkpoint=checkpoint, generation=None, policy_code=None,
+        source_path=path, selector=(("json", dotted),), field=dotted.split(".")[-1],
+        metric=metric or dotted.split(".")[-1], unit=unit, aggregation="record",
+        population_id=population, comparator=None, evidence_class=evidence_class,
+        window=window, display_precision=precision, raw=_json_text(value),
+    )
+
+
+def _json_text(value) -> str:
+    return repr(value) if isinstance(value, float) else str(value)
+
+
+def _json_records() -> list[EvidenceRecord]:
+    ex = "reports/weather-ablation/extraction-summary.json"
+    rf = "docs/track-b/evidence/cp-20/resource-final.json"
+    cp20 = "reports/weather-ablation/protocol.json"
+    cp15 = "reports/cp15/bootstrap_metadata.json"
+    sel10 = "reports/cp10/selection.json"
+    dm2 = "reports/cp2/dm_development.json"
+    development = next((row["first_delivery_date"], row["last_delivery_date"])
+                       for _, row in _rows("reports/cp15/pooled.csv") if row["policy"] == "B1")
+    records = [
+        _json_record("cp20.extraction.complete_runs", "CP-20", ex, "complete_runs", unit=UNIT_RUNS, precision=0,
+                     population="cp20-extraction"),
+        _json_record("cp20.extraction.target_messages", "CP-20", ex, "target_messages", unit=UNIT_MESSAGES,
+                     precision=0, population="cp20-extraction"),
+        _json_record("cp20.resources.transfer_gib", "CP-20", rf, "transfer_gib", unit=UNIT_GIB, precision=1,
+                     population="cp20-resources"),
+        _json_record("cp20.resources.machine_hours", "CP-20", rf, "machine_hours", unit=UNIT_MACHINE_HOURS,
+                     precision=2, population="cp20-resources"),
+        _json_record("cp20.resources.external_cost_usd", "CP-20", rf, "external_cost_usd", unit=UNIT_USD,
+                     precision=0, population="cp20-resources"),
+        _json_record("cp20.protocol.bootstrap_seed", "CP-20", cp20, "comparison.bootstrap_seed", unit=UNIT_SEED,
+                     precision=0, population="protocol"),
+        _json_record("cp20.protocol.replicates", "CP-20", cp20, "comparison.replicates", unit=UNIT_REPLICATES,
+                     precision=0, population="protocol"),
+        _json_record("cp20.protocol.block_days", "CP-20", cp20, "comparison.block_days", unit=UNIT_DAYS,
+                     precision=0, population="protocol"),
+        _json_record("cp15.bootstrap_metadata.seed", "CP-15", cp15, "seed", unit=UNIT_SEED, precision=0,
+                     population="protocol"),
+        _json_record("cp15.bootstrap_metadata.replicates", "CP-15", cp15, "replicates", unit=UNIT_REPLICATES,
+                     precision=0, population="protocol"),
+        _json_record("cp15.bootstrap_metadata.block_days", "CP-15", cp15, "block_days", unit=UNIT_DAYS,
+                     precision=0, population="protocol"),
+        _json_record("cp10.selection.v1_coverage_95", "CP-10", sel10, "same_window_diagnostic.v1_coverage_95",
+                     unit=UNIT_FRACTION, precision=4, population="cp10-crisis-window-408h",
+                     window=("2022-08-15", "2022-08-31"), evidence_class=EVIDENCE_CLASS_CALIBRATION),
+        _json_record("cp10.selection.selected_coverage_95", "CP-10", sel10,
+                     "same_window_diagnostic.selected_coverage_95", unit=UNIT_FRACTION, precision=4,
+                     population="cp10-crisis-window-408h", window=("2022-08-15", "2022-08-31"),
+                     evidence_class=EVIDENCE_CLASS_CALIBRATION),
+    ]
+    point = next(i for i, t in enumerate(_json(dm2)["dm_tests"])
+                 if t["analysis"] == "point_median_absolute_error" and t["comparator"] == "similar_day_naive")
+    for key, unit, precision in (("relative_improvement_pct", UNIT_PERCENT, 2), ("n_days", UNIT_DAYS, 0),
+                                 ("mean_loss_differential", UNIT_EUR, 3), ("p_value", UNIT_LABEL, 3)):
+        records.append(_json_record(f"cp2.dm_development.point_vs_naive.{key}", "CP-2", dm2,
+                                    f"dm_tests.{point}.{key}", unit=unit, precision=precision,
+                                    population="v1-development", window=development))
+    for line, row in _rows("reports/cp2/development_pooled_metrics.csv"):
+        records.append(EvidenceRecord(
+            record_id=f"cp2.development_pooled_metrics.{row['model']}.{row['stage']}.MAE", checkpoint="CP-2",
+            generation="v1" if row["model"] == "base" else None, policy_code=row["model"],
+            source_path="reports/cp2/development_pooled_metrics.csv",
+            selector=(("model", row["model"]), ("stage", row["stage"])), field="mae_p50",
+            metric="MAE", unit=UNIT_EUR, aggregation="pooled", population_id="v1-development",
+            comparator=None, evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=development,
+            display_precision=2, raw=row["mae_p50"], source_line=line,
+        ))
+    return records
+
+
+@lru_cache(maxsize=1)
+def records() -> dict[str, EvidenceRecord]:
+    """Every published evidence record, keyed by `record_id`."""
+    cp20_windows = _fold_windows("reports/weather-ablation/metrics.csv")
+    cp16_windows = _fold_windows("reports/v2-causal/metrics.csv")
+    built: list[EvidenceRecord] = []
+    built += _metric_records("cp20", "CP-20", "reports/weather-ablation/metrics.csv")
+    built += _uncertainty_records("cp20", "CP-20", "reports/weather-ablation/uncertainty.csv", cp20_windows)
+    built += _criteria_records("cp20", "CP-20", "reports/weather-ablation/criteria.csv", cp20_windows)
+    built += _diagnostic_records("cp20", "CP-20", "reports/weather-ablation/diagnostics.csv")
+    built += _metric_records("cp16", "CP-16", "reports/v2-causal/metrics.csv")
+    built += _uncertainty_records("cp16", "CP-16", "reports/v2-causal/uncertainty.csv", cp16_windows)
+    built += _criteria_records("cp16", "CP-16", "reports/v2-causal/criteria.csv", cp16_windows)
+    built += _diagnostic_records("cp16", "CP-16", "reports/v2-causal/diagnostics.csv")
+    built += _cp15_records()
+    cp15_windows = {row["fold"]: (row["first_delivery_date"], row["last_delivery_date"])
+                    for _, row in _rows("reports/cp15/per_fold.csv")}
+    cp15_windows["all"] = cp20_windows["all"]
+    built += _criteria_records("cp15", "CP-15", "reports/cp15/criteria.csv", cp15_windows)
+    built += _cp10_records()
+    built += _json_records()
+    out: dict[str, EvidenceRecord] = {}
+    for record in built:
+        if record.record_id in out:
+            raise EvidenceError(f"duplicate record id {record.record_id}")
+        out[record.record_id] = record
+    return out
+
+
+def get(record_id: str) -> EvidenceRecord:
+    try:
+        return records()[record_id]
+    except KeyError:
+        raise EvidenceError(f"no evidence record {record_id!r}") from None
+
+
+# --------------------------------------------------------------------------- daily series
+
+
+@dataclass(frozen=True)
+class DailyPoint:
+    delivery_date: str
+    fold: str
+    n_hours: int
+    raw: str
+    source_line: int
+
+    @property
+    def value(self) -> float:
+        return float(self.raw)
+
+
+#: Where each policy's committed daily rows are, by the checkpoint that produced the policy.
+DAILY_SOURCES = {
+    "CP-15": ("reports/cp15/daily.csv", None),
+    "CP-16": ("reports/v2-causal/diagnostics.csv", "daily"),
+    "CP-20": ("reports/weather-ablation/diagnostics.csv", "daily"),
+}
+
+
+def daily_series(checkpoint: str, policy: str, column: str = "MAE") -> tuple[DailyPoint, ...]:
+    """A policy's committed daily rows, in delivery order. Days with no eligible hour carry no
+    loss and are left out rather than written as zero."""
+    path, scope = DAILY_SOURCES[checkpoint]
+    points = []
+    for line, row in _rows(path):
+        if row["policy"] != policy or (scope and row["scope"] != scope):
+            continue
+        if int(float(row["n_hours"])) == 0 or row[column] == "":
+            continue
+        points.append(DailyPoint(row["delivery_date"], row["fold"], int(float(row["n_hours"])), row[column], line))
+    points.sort(key=lambda point: point.delivery_date)
+    if not points:
+        raise EvidenceError(f"no daily rows for {policy} in {path}")
+    return tuple(points)
+
+
+# --------------------------------------------------------------------------- validation
+
+
+def _expected_unit(record: EvidenceRecord) -> str:
+    if record.unit == UNIT_LABEL or record.selector[0][0] == "json":
+        return record.unit
+    if record.field == "difference":
+        return UNIT_NORM_DIFF if record.selector_dict()["scope"] == "equal_fold" else UNIT_EUR_DIFF
+    column = record.field
+    if record.field in ("actual", "upper_limit", "lower_limit"):
+        column = record.selector_dict()["metric"]
+    spec = FIELD_SPECS.get(column)
+    return spec[1] if spec else UNIT_FRACTION
+
+
+def _expected_aggregation(record: EvidenceRecord) -> str | None:
+    selector = record.selector_dict()
+    if record.field == "difference":
+        return "equal_fold_contrast" if selector["scope"] == "equal_fold" else "per_fold_contrast"
+    if "scope" in selector and record.field not in ("actual", "upper_limit", "lower_limit", "status", "passed"):
+        return AGGREGATION_OF_SCOPE[selector["scope"]]
+    return None
+
+
+class FreshRead:
+    """One fresh read of the committed sources, independent of the registry's caches.
+
+    Each file is read and hashed once, and its rows are indexed once per selector shape, so
+    re-deriving thousands of records costs one pass over each file rather than one per record.
+    """
+
+    def __init__(self) -> None:
+        self._checked: set[str] = set()
+        self._rows: dict[str, list[dict[str, str]]] = {}
+        self._docs: dict[str, dict] = {}
+        self._index: dict[tuple[str, tuple[str, ...]], dict[tuple[str, ...], list[dict[str, str]]]] = {}
+
+    def check(self, path: str) -> None:
+        if path not in self._checked:
+            check_source(path)
+            self._checked.add(path)
+
+    def document(self, path: str) -> dict:
+        self.check(path)
+        if path not in self._docs:
+            self._docs[path] = json.loads(source_bytes(path))
+        return self._docs[path]
+
+    def matches(self, path: str, selector: dict[str, str]) -> list[dict[str, str]]:
+        self.check(path)
+        if path not in self._rows:
+            self._rows[path] = [row for _, row in _csv(path)]
+        keys = tuple(sorted(selector))
+        index = self._index.get((path, keys))
+        if index is None:
+            index = {}
+            for row in self._rows[path]:
+                index.setdefault(tuple(row.get(key) for key in keys), []).append(row)
+            self._index[(path, keys)] = index
+        return index.get(tuple(selector[key] for key in keys), [])
+
+
+def rederive(record: EvidenceRecord, fresh: FreshRead | None = None) -> dict[str, str]:
+    """Read the record's cells afresh from the committed file: value and interval endpoints."""
+    fresh = fresh or FreshRead()
+    selector = record.selector_dict()
+    if "json" in selector:
+        return {"value": _json_text(_json_get(fresh.document(record.source_path), selector["json"]))}
+    matches = fresh.matches(record.source_path, selector)
+    if len(matches) != 1:
+        raise EvidenceError(f"{record.record_id}: selector {selector} matches {len(matches)} rows")
+    row = matches[0]
+    if record.field not in row:
+        raise EvidenceError(f"{record.record_id}: no column {record.field!r}")
+    out = {"value": row[record.field]}
+    if record.interval is not None:
+        out["ci_low"], out["ci_high"] = row["ci_lower"], row["ci_upper"]
+    return out
+
+
+def validate(record: EvidenceRecord, fresh: FreshRead | None = None) -> None:
+    """Raise `EvidenceError` unless the record still re-derives from its committed source row."""
+    derived = rederive(record, fresh)
+    if derived["value"] != record.raw:
+        raise EvidenceError(f"{record.record_id}: committed value {derived['value']!r} != record {record.raw!r}")
+    if record.interval is not None:
+        if (derived["ci_low"], derived["ci_high"]) != (record.ci_low_raw, record.ci_high_raw):
+            raise EvidenceError(f"{record.record_id}: interval endpoints differ from the committed row")
+    expected_unit = _expected_unit(record)
+    if record.unit != expected_unit:
+        raise EvidenceError(f"{record.record_id}: unit {record.unit!r} but the source column is {expected_unit!r}")
+    expected_aggregation = _expected_aggregation(record)
+    if expected_aggregation is not None and record.aggregation != expected_aggregation:
+        raise EvidenceError(
+            f"{record.record_id}: aggregation {record.aggregation!r} but the source row is {expected_aggregation!r}"
+        )
+    selector = record.selector_dict()
+    for key in ("policy", "candidate"):
+        if key in selector and record.policy_code is not None and selector[key] != record.policy_code:
+            raise EvidenceError(f"{record.record_id}: policy {record.policy_code!r} but the row is {selector[key]!r}")
+
+
+def validate_all(candidates=None) -> list[str]:
+    """Every record that fails to re-derive, as one message each. Empty means all hold."""
+    fresh = FreshRead()
+    problems = []
+    for record in (candidates if candidates is not None else records().values()):
+        try:
+            validate(record, fresh)
+        except EvidenceError as exc:
+            problems.append(str(exc))
+    return problems
+
+
+# --------------------------------------------------------------------------- display
+
+
+def exact(raw: str) -> str:
+    """The full decimal expansion of a committed value, never in exponent form.
+
+    `3.857628092332211e-06` -> `0.000003857628092332211`: the H−P endpoint is printed in full.
+    """
+    return format(Decimal(raw), "f")
+
+
+def format_number(raw: str, precision: int, *, signed: bool = False, thousands: bool = False) -> str:
+    value = Decimal(raw)
+    quantized = round(value, precision)
+    text = f"{abs(quantized):,.{precision}f}" if thousands else f"{abs(quantized):.{precision}f}"
+    negative = quantized < 0
+    if negative:
+        return MINUS + text
+    if signed and quantized > 0:
+        return "+" + text
+    return text
+
+
+#: Differences are shown with an explicit sign: "+0.037" is a finding, "0.037" is ambiguous.
+SIGNED_UNITS = {UNIT_NORM_DIFF, UNIT_EUR_DIFF}
+THOUSANDS_UNITS = {UNIT_COUNT, UNIT_HOURS, UNIT_DAYS, UNIT_RUNS, UNIT_MESSAGES, UNIT_REPLICATES}
+
+
+def display(record: EvidenceRecord, which: str = "value", *, precision: int | None = None,
+            style: str | None = None) -> str:
+    """The one display string for a record's value or interval endpoint.
+
+    `style`: None (the record's own precision), "exact" (full expansion), "percent" (a fraction
+    shown as a percentage), "int".
+    """
+    raw = {"value": record.raw, "ci_low": record.ci_low_raw, "ci_high": record.ci_high_raw}[which]
+    if raw is None:
+        raise EvidenceError(f"{record.record_id} has no {which}")
+    if record.unit == UNIT_LABEL:
+        return raw
+    signed = record.unit in SIGNED_UNITS
+    if style == "exact":
+        text = exact(raw)
+        if text.startswith("-"):
+            return MINUS + text[1:]
+        return ("+" + text) if signed and Decimal(raw) > 0 else text
+    if style == "percent":
+        if record.unit != UNIT_FRACTION:
+            raise EvidenceError(f"{record.record_id}: percent style needs a fraction, not {record.unit}")
+        return format_number(str(Decimal(raw) * 100), 2 if precision is None else precision) + "%"
+    places = record.display_precision if precision is None else precision
+    if style == "int":
+        places = 0
+    elif signed and precision is None:
+        places = max(places, _places_for_two_significant(raw))
+    return format_number(raw, places, signed=signed, thousands=record.unit in THOUSANDS_UNITS)
+
+
+def _places_for_two_significant(raw: str) -> int:
+    """Decimal places that keep two significant digits of a small difference, so an interval
+    endpoint just above zero is never displayed as zero (+0.037, not +0.04 or 0.0000)."""
+    value = abs(Decimal(raw))
+    if value == 0:
+        return 0
+    return max(0, -value.adjusted() + 1)
+
+
+__all__ = [
+    "DAILY_SOURCES",
+    "EVIDENCE_BOUNDARY",
+    "EvidenceError",
+    "EvidenceRecord",
+    "FreshRead",
+    "FIELD_SPECS",
+    "GENERATION_OF",
+    "Interval",
+    "MINUS",
+    "POPULATIONS",
+    "SOURCES",
+    "Source",
+    "blob_sha",
+    "check_source",
+    "daily_series",
+    "display",
+    "exact",
+    "format_number",
+    "get",
+    "records",
+    "rederive",
+    "validate",
+    "validate_all",
+]

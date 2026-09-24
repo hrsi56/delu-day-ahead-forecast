@@ -76,8 +76,8 @@ single id is canonical — the name is what to search for:
 
 **Archived v1 release note.** {C["mlflow_next_note"]}
 
-That note predates the current plan. [Current development](#current-development--2026-09-16)
-records the landed CP-10/CP-15 experiments and the unmet product criteria; v1 remains the released model.
+That note predates the current plan. [Research since v1](#research-since-v1-development-evidence-post-selection)
+records the experiments that followed; v1 remains the released model.
 
 **Run it yourself, offline:**
 
