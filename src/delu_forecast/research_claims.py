@@ -115,8 +115,10 @@ _PB_WIS = "cp16.uncertainty.V2-P-B2.equal_fold.WIS"
 BLOCKS: tuple[Block, ...] = (
     # ---- opening -------------------------------------------------------------
     _block("opening.summary", "P04",
-           """Latest research result: {s:version:v3} against {s:version:v2}, normalized point error
-           {r:%s} {r:%s|ci}, development after selection.""" % (_HG_MAE, _HG_MAE)),
+           """Latest research result: {s:version:v3} minus {s:version:v2} in point error, each measured as a
+           ratio to a simple similar-day forecast on the same historical hours: {r:%s} {r:%s|ci}; negative
+           favours {s:version:v3}. Development evidence on known historical periods, not yet a test on new
+           data.""" % (_HG_MAE, _HG_MAE)),
     # ---- overview ------------------------------------------------------------
     _block("overview.finding", "P07",
            """{s:version:v3}'s equal-fold point error is {r:cp20.metrics.HG.equal_fold.S_MAE} and its
@@ -181,8 +183,8 @@ BLOCKS: tuple[Block, ...] = (
            inside the {s:level:95%} interval from {r:cp20.diagnostics.H0.peak.hit_count95} to
            {r:cp20.diagnostics.HG.peak.hit_count95} of {r:cp20.diagnostics.HG.peak.n_hours}.
            Descriptive only: {r:cp20.diagnostics.HG.peak.n_days} days."""),
-    _block("v3.hurts", "C80", """**Where it does not help:** {s:version:v3}'s intervals are narrower in
-           every fold, and its pooled {s:level:95%} coverage is slightly lower than {s:version:v2}'s,
+    _block("v3.hurts", "C80", """**What it gives up:** {s:version:v3}'s intervals are narrower in every
+           fold, and in exchange its pooled {s:level:95%} coverage is slightly lower than {s:version:v2}'s,
            {r:cp20.metrics.HG.pooled.coverage95} against {r:cp20.metrics.H0.pooled.coverage95}."""),
     _block("v3.caveat.bundle", "C83", """**The gain belongs to the bundle.** The three features were
            added together, and no arm isolates wind at {s:height:10 m}, wind at {s:height:100 m} or

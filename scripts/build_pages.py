@@ -225,8 +225,7 @@ def evidence_row(*, compare: str | None, review: tuple[str, str], source: tuple[
         else:
             items.append(
                 f'<span class="ev is-unavailable" data-unpublished="mlflow:{attr(compare)}">'
-                "Compare these runs in MLflow <span class=\"why\">(available after the tracking"
-                " upload)</span></span>"
+                "MLflow comparison <span class=\"why\">(link added when the runs are published)</span></span>"
             )
     items.append(f'<a class="ev external" href="{attr(review[1])}">{esc(review[0])}</a>')
     items.append(f'<a class="ev external" href="{attr(source[1])}">{esc(source[0])}</a>')
@@ -437,7 +436,8 @@ def _row_value_text(scale: Scale, x_mark: float, y: float, row: Row, claim_id: s
         low = RC.svg_value(row.record_id, "ci_low")
         high = RC.svg_value(row.record_id, "ci_high")
         text = f"{RC.svg_value(row.record_id)} [{low}, {high}]"
-        return svg_text(x_right, y + 4.5, text, size=size, anchor="end",
+        drop = 19 if len(text) > 30 else 0  # the exact endpoint is too long for the value column
+        return svg_text(x_right, y + 4.5 + drop, text, size=size, anchor="end",
                         extra=RC.svg_binding(claim_id, row.record_id) + HALO, weight=weight)
     near_right = x_mark > x_right - 58
     return value_label(x_mark + (-10 if near_right else 10), y + 4.5, claim_id, row.record_id,
@@ -819,8 +819,8 @@ def preview_chart(payload: dict) -> str:
 def lineage() -> str:
     main = [
         ("v1", "released LightGBM", "Released product · the demo runs it", "#v1", "v1"),
-        ("v2", "blended LEAR, hour-aware intervals", "Adopted research model", "#v2", "v2"),
-        ("v3", "weather features", "Adopted · current research model", "#v3", "v3"),
+        ("v2", "blended LEAR, hour-aware intervals", "Adopted in research", "#v2", "v2"),
+        ("v3", "weather features", "Adopted in research · not in the demo", "#v3", "v3"),
     ]
     nodes = "".join(
         f'<li class="node node-{role}"><a href="{href}"><span class="dot" aria-hidden="true"></span>'
@@ -885,6 +885,7 @@ def _structural_versions(text: str) -> str:
     """Declare version labels, dates and plain counts in fixed copy as structural numerals."""
     escaped = esc(text)
     escaped = _ISO_DATE.sub(lambda m: S("date", m.group(1)), escaped)
+    escaped = re.sub(r"(?<![\d>-])((?:19|20)\d{2})(?![\d-])", lambda m: S("date", m.group(1)), escaped)
     escaped = _VERSION_WORD.sub(lambda m: ver(m.group(1)), escaped)
     escaped = re.sub(r"(?<![\w.])(\d{2})%", lambda m: S("level", m.group(1) + "%"), escaped)
     return re.sub(r"(?<![\w>\"-])(\d+)(?= live days)", lambda m: S("count", m.group(1)), escaped)
@@ -1182,7 +1183,9 @@ def opening(C, payload) -> str:
    <a class="quiet" href="#results">Compare research results</a>
    <a class="quiet" href="#evidence">View code and evidence</a>
   </div>
-  <p class="startup">Runs in your browser, no server. The first visit downloads about
+  <p class="startup">The demo replays {ver("v1")} over its holdout days: you pick a day's interval level and a
+   load scenario, and the forecast is computed in your browser from a static Hugging Face page, with no server
+   behind it. The first visit downloads about
    {v1("wasm_cold_load_mb", "P13")} MB; a forecast appeared after {measured} s in Chrome
    {S("version", demo["browser"].split(".")[0])} on a Mac with an empty cache, measured {S("date", demo["date"])}.
    Times vary with the device and the connection.</p>
@@ -1193,7 +1196,7 @@ def opening(C, payload) -> str:
   {preview_chart(payload)}
   <p class="preview-key"><span class="key-median">median forecast</span> <span class="key-band">80% interval</span>
    <span class="key-actual">price that cleared</span></p>
-  <p class="preview-links"><a class="quiet" href="#forecast">Open the interactive replay</a>
+  <p class="preview-links"><a class="quiet" href="#forecast">Open the interactive replay (in the original {ver("v1")} report)</a>
    <a class="quiet" href="#system">How it works</a></p>
  </figure>
  <div class="opening-summary" data-research="opening">{block("opening.summary")}</div>
@@ -1274,7 +1277,7 @@ def v3_chapter(*, open_folds: bool = False) -> str:
              + "</p>" + c3_chart())
     return f"""
 <article class="chapter" id="v3" aria-labelledby="v3-h" data-research="v3">
- {chapter_header("v3", "weather features", "Latest research · evaluated 2026-09-24", RC.ADOPTED + " · current research model",
+ {chapter_header("v3", "weather features", "Latest research · evaluated 2026-09-24", RC.ADOPTED + " in research · the current research model, not in the demo",
                  RC.BADGE_DEVELOPMENT, "development", "v3")}
  {story([("Problem", block("v3.problem")), ("Hypothesis", block("v3.hypothesis")),
          ("Change", block("v3.change"))])}
@@ -1302,7 +1305,7 @@ def v3_chapter(*, open_folds: bool = False) -> str:
  <div class="disclosures">
   {disclosure("v3-features", "How the weather features are built", block("v3.recipe") + block("v3.missing") + block("v3.availability"))}
   {disclosure("v3-folds", "Consistency across folds", folds, open_=open_folds)}
-  {disclosure("v3-crisis", "Crisis window", c4_chart() + '<p class="chart-note">' + RC.render("v3.helps") + "</p>")}
+  {disclosure("v3-crisis", "Crisis window", '<p class="chart-note">' + _structural_versions("The crisis window, delivery 2022-08-15 to 2022-08-31, is the 17 days of the 2022 price peak inside fold 3; its figures are for those days only, not the whole fold.").replace("17 days", S("count", "17") + " days").replace("fold 3", "fold " + S("fold", "3")) + "</p>" + c4_chart() + '<p class="chart-note">' + RC.render("v3.helps") + "</p>")}
   {disclosure("v3-hours", "Hours of the day", hour_panels("v3-c5", "C82", (("v2", "H0"), ("v3", "HG")),
               title="MAE by local hour, v2 against v3, per fold",
               desc="Five panels, one per fold, each on its own scale: v2 dashed with squares, v3 solid with circles. Descriptive only.")
@@ -1318,7 +1321,7 @@ def v2_chapter() -> str:
     return f"""
 <article class="chapter" id="v2" aria-labelledby="v2-h" data-research="v2">
  {chapter_header("v2", "blended LEAR, hour-aware intervals", "Evaluated 2026-09-23 · the road from v1",
-                 RC.ADOPTED + " · the research model v3 builds on", RC.BADGE_DEVELOPMENT, "development", "v2")}
+                 RC.ADOPTED + " in research · the model v3 builds on", RC.BADGE_DEVELOPMENT, "development", "v2")}
  <div class="road" id="road-to-v2">
   {story([("Problem", block("v2.problem")),
           ("Branch · " + RC.NOT_ADOPTED.lower(), block("v2.branch.cp10")),
@@ -1393,7 +1396,7 @@ def rail(generations: tuple[str, ...] = ("v3", "v2", "v1")) -> str:
                     f'<span class="dot" aria-hidden="true"></span>{ver(g)}</a></li>' for g in generations)
     return ('<nav class="rail" aria-label="Generations"><p class="rail-head">Generations</p><ol>' + links + "</ol>"
             '<p class="rail-head">Page</p><ol class="rail-page"><li><a href="#results">Results</a></li>'
-            '<li><a href="#journey">Lineage</a></li><li><a href="#evidence">Evidence</a></li></ol></nav>')
+            '<li><a href="#journey">Journey</a></li><li><a href="#evidence">Evidence</a></li></ol></nav>')
 
 
 def evidence_section(C) -> str:
@@ -1524,11 +1527,11 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .status dd{{margin:0;font-size:16px;font-weight:600}}
 .status .badge{{margin-left:6px;vertical-align:1px}}
 .actions{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin:8px 0 12px}}
-.btn-primary{{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:10px;
+.btn-primary{{display:inline-block;line-height:48px;min-height:48px;padding:0 22px;border-radius:10px;
  background:var(--primary);color:#fff;font-weight:650;text-decoration:none;font-size:16px}}
 .btn-primary:hover{{background:var(--primary-hover);color:#fff}}
 .btn-primary:active{{background:var(--primary-pressed)}}
-.quiet{{display:inline-flex;align-items:center;min-height:44px;font-weight:550}}
+.quiet{{display:inline-block;padding:9px 0;line-height:26px;font-weight:550}}
 .external::after{{content:" \\2197";font-size:.85em}}
 .startup{{font-size:14px;line-height:22px;color:var(--text-2);max-width:52ch}}
 .preview{{margin:0}}
@@ -1559,8 +1562,8 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
  padding-top:12px;margin:16px 0 0;max-width:none}}
 .ev-label{{font-size:13px;font-weight:650;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em}}
 .ev{{min-height:32px;display:inline-flex;align-items:center}}
-.ev.is-unavailable{{display:inline;color:var(--text-2);text-decoration:line-through dotted;text-decoration-thickness:1px}}
-.ev.is-unavailable .why{{text-decoration:none;display:inline-block;margin-left:4px}}
+.ev.is-unavailable{{display:inline;color:var(--text-2)}}
+.ev.is-unavailable .why{{display:inline;margin-left:4px;font-style:italic}}
 details.disclosure{{border-top:1px solid var(--border);margin:0}}
 details.disclosure:last-child{{border-bottom:1px solid var(--border)}}
 details.disclosure>summary{{list-style:none;cursor:pointer;min-height:48px;display:flex;align-items:center;gap:10px;

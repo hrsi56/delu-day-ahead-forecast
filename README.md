@@ -20,7 +20,7 @@ Active plan: **[capstone v21](capstone_v21.md)**. Historical v1 plan: **[v6.8](c
 
 **v1 is the released product and the model the demo runs. v3 is the current research model.** Every result below is development evidence after selection, on the same historical hours for every policy. Nothing here promotes a model, starts a live policy or makes an economic claim. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#journey) tells the whole story with charts, and every number is bound to a committed file.
 
-Latest research result: v3 against v2, normalized point error −0.0783 [−0.1006, −0.0570], development after selection.
+Latest research result: v3 minus v2 in point error, each measured as a ratio to a simple similar-day forecast on the same historical hours: −0.0783 [−0.1006, −0.0570]; negative favours v3. Development evidence on known historical periods, not yet a test on new data.
 
 ### v3 · weather features (CP-20)
 
