@@ -11,6 +11,9 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
+          # Pin the interpreter the suite was verified on, so a runner-image change
+          # (ubuntu-latest moves to Ubuntu 26 from 2026-10-19) cannot swap it silently.
+          python-version: "3.12"
       - run: uv sync --locked --dev
       # The browser payload is derived from the committed champion rather than
       # committed; the WASM equivalence gate needs it present.

@@ -990,6 +990,9 @@ This file no longer narrates it. It is preserved and addressable:
     passed, 7 skipped with stated reasons). The local Python 3.13 run matches, the opt-in path
     still fails without a ledger as designed, and CP-20 `check_protocol` passes. CP-16
     reproduction stays at `evidence/cp-16`.
+  - **Public CI:** green at `566335d`, the first green run since 2026-09-16. The workflow now
+    pins Python 3.12, so the 2026-10-19 move of `ubuntu-latest` to Ubuntu 26 cannot change the
+    interpreter silently.
 
 - **DagsHub token exposure and rotation, 2026-09-24.** A value-based scan found that the CP-20
   landing push published the DagsHub user token inside a Critic pytest log (an environment
