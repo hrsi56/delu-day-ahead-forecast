@@ -14,7 +14,7 @@ IMPLEMENTATION = ['src/cp20/__init__.py', 'src/cp20/budget.py', 'src/cp20/net.py
                   'src/cp20/extract.py', 'src/cp20/plan.py', 'src/cp20/weather.py', 'src/cp20/assemble.py',
                   'src/cp20/inputs.py', 'src/cp20/components.py', 'src/cp20/execution.py', 'src/cp20/scoring.py',
                   'src/cp20/controls.py', 'src/cp20/protocol.py', 'src/cp20/report.py', 'src/cp20/feasibility.py',
-                  'src/cp20/probe.py', 'scripts/cp20_weather.py',
+                  'src/cp20/probe.py', 'src/cp20/chain.py', 'scripts/cp20_weather.py',
                   'src/cp15/data.py', 'src/cp15/models.py', 'src/cp15/scoring.py', 'src/cp16/residuals.py',
                   'src/cp16/inputs.py', 'src/cp16/scoring.py', 'src/delu_forecast/features.py']
 FROZEN = ['reports/weather-ablation/run-manifest.json', 'reports/weather-ablation/extraction-protocol.json',
@@ -24,7 +24,8 @@ FROZEN = ['reports/weather-ablation/run-manifest.json', 'reports/weather-ablatio
           'reports/weather-ablation/sample-hash-comparison.csv', 'reports/weather-ablation/radiation-clipping.csv',
           'reports/weather-ablation/extraction-summary.json', 'reports/weather-ablation/feasibility.json',
           'reports/weather-ablation/prerun-attempts.csv', 'reports/weather-ablation/throughput-probe.json',
-          'reports/weather-ablation/h0-dryrun.json']
+          'reports/weather-ablation/h0-dryrun.json', 'reports/weather-ablation/chain-code-versions.json',
+          'reports/weather-ablation/locator-fix-verification.json']
 
 
 def sha(path) -> str:

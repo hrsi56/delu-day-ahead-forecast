@@ -35,14 +35,22 @@ admission inventory. Extraction, resumable and idempotent (completed runs are re
 sha256 and reused; partial runs are redone and their attempts stay counted):
 
 ```sh
-$A/extract-command.sh all 2
+PYTHONPATH=src $PY -u src/cp20/chain.py
 ```
 
-which runs
+The chain controller (r11 plan) runs one endpoint per job, sequentially (r8): `aws-all` (4 workers,
+the four deferred failed days excluded), `retry-aws` (4 workers), then `retry-ncar` (4 workers;
+the r10 locator fix is first verified on five previously failing days and the job exits 8 if
+that fails). Each phase runs
 
 ```sh
-$PY scripts/cp20_weather.py --monitor --detach --name gfs-extract --workers 2 --stop-machine-hours 85 --log $A/logs/gfs-extract.log -- $WX -u -m cp20.extract --manifest reports/weather-ablation/run-manifest.json --out $A/weather --admission reports/weather-admission --select all --workers 2 --stop-transfer-gib 150 --inventory-added
+$PY scripts/cp20_weather.py --monitor --detach --name gfs-extract --workers 4 --stop-machine-hours 100 --log $A/logs/gfs-extract.log -- $WX -u -m cp20.extract --manifest reports/weather-ablation/run-manifest.json --out $A/weather --admission reports/weather-admission --select all --endpoint <aws|ncar> --workers 4 --stop-transfer-gib 150 --inventory-added [--exclude <days>]
 ```
+
+and every job appends its git HEAD, dirty paths and implementation sha256 to
+`$A/weather/job-code-versions.jsonl` (summarised in `chain-code-versions.json`). Repairs r1–r12
+and the Owner decisions (O1, O2 with amendment A1, S1, O3, O4) are recorded in
+`extraction-repairs.json`.
 
 Outputs (ignored, local): `$A/weather/runs/<run>.npz` (decoded 5 × 10 × 34 × 41 float64 boxes)
 and `<run>.json` (per-message URL, byte range, sha256, endpoint, retrieval time, validated
