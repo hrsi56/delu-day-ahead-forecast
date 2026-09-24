@@ -166,8 +166,9 @@ BLOCKS: tuple[Block, ...] = (
            to {s:version:v2}'s two component models, each with a missing indicator. The blend, the
            interval layer, the histories, the folds and the seed stayed exactly as in
            {s:version:v2}."""),
-    _block("v3.outcome.mae", "C69", """Normalized point error {r:%s} {r:%s|ci}""" % (_HG_MAE, _HG_MAE)),
-    _block("v3.outcome.wis", "C70", """Normalized interval score {r:%s} {r:%s|ci}""" % (_HG_WIS, _HG_WIS)),
+    # README-only: the page draws the same two values as outcome tiles.
+    _block("v3.outcome.mae", "C69", """Normalized point error {r:%s} {r:%s|ci}""" % (_HG_MAE, _HG_MAE), "readme"),
+    _block("v3.outcome.wis", "C70", """Normalized interval score {r:%s} {r:%s|ci}""" % (_HG_WIS, _HG_WIS), "readme"),
     _block("v3.result", "C71", """Both {s:level:95%} intervals lie wholly below zero, so the plan's joint
            improvement rule is met: an observed joint improvement over {s:version:v2}, development
            evidence after selection. All five folds favour {s:version:v3}."""),
@@ -296,6 +297,10 @@ CHART_CLAIMS: dict[str, str] = {
     "v2.chart2": "C37",
     "preview": "P05",
 }
+
+#: Claims bound outside a block: single chart rows where a chart mixes claims (v2's three
+#: contrasts), and the demo's startup figure beside the primary action (P13).
+ROW_CLAIMS: tuple[str, ...] = ("C33", "C34", "C38", "C70", "P13")
 
 #: README research block, in order (plan §9.4).
 README_BLOCKS: tuple[str, ...] = (
@@ -444,7 +449,7 @@ def svg_value(record_id: str, which: str = "value", option: str | None = None) -
 
 
 def all_claim_ids() -> set[str]:
-    return {block.claim_id for block in BLOCKS} | set(CHART_CLAIMS.values())
+    return {block.claim_id for block in BLOCKS} | set(CHART_CLAIMS.values()) | set(ROW_CLAIMS)
 
 
 _MAP_ID = re.compile(r"^\|\s*((?:C|P|W)\d+)\s*\|", re.MULTILINE)

@@ -74,10 +74,8 @@ single id is canonical — the name is what to search for:
 
 {RUN_TABLE}
 
-**Archived v1 release note.** {C["mlflow_next_note"]}
-
-That note predates the current plan. [Research since v1](#research-since-v1-development-evidence-post-selection)
-records the experiments that followed; v1 remains the released model.
+**Tracking after v1.** {C["mlflow_next_note"]} [Research since v1](#research-since-v1-development-evidence-post-selection)
+summarizes it; v1 remains the released model.
 
 **Run it yourself, offline:**
 

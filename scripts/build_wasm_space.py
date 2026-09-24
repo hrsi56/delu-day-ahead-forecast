@@ -144,6 +144,103 @@ makes no call to ENTSO-E, SMARD or any model registry: the rows it forecasts fro
 {card_body(C, static_deployed_section(C), limitations, reproduction)}"""
 
 
+# -- demo states (presentation plan §7.11, invariant 25) ----------------------
+#
+# The exported page shows nothing until marimo's JavaScript has loaded, so a slow or failed start
+# looked like a blank page (Phase 0 finding P0-1). These states are static HTML placed before the
+# runtime: visible at once, and still visible if initialization fails. The script shows only real
+# events -- the forecast panel appearing, a script or stylesheet failing to load, or a generous
+# deadline passing with neither -- and never an invented percentage or a timer as progress.
+
+#: Text the notebook renders only after the champion has run in the browser.
+READY_MARKER = "Maximum absolute deviation"
+DEADLINE_SECONDS = 240
+
+
+def startup_css() -> str:
+    return """
+.delu-status{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#18181B;margin:16px auto;max-width:760px;padding:0 16px}
+.delu-card{background:#FFFFFF;border:1px solid #E4E4E7;border-left:4px solid #475569;border-radius:10px;padding:14px 18px}
+.delu-title{font-weight:650;margin:0 0 6px}
+.delu-body{margin:0 0 10px}
+.delu-actions{margin:0;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.delu-actions a{color:#1D4ED8;min-height:44px;display:inline-flex;align-items:center}
+.delu-actions button{min-height:44px;padding:0 18px;border-radius:10px;border:0;background:#18181B;color:#fff;font:inherit;font-weight:650;cursor:pointer}
+.delu-actions button:focus-visible,.delu-actions a:focus-visible{outline:2px solid #1D4ED8;outline-offset:2px}
+.delu-status [data-show]{display:none}
+.delu-status[data-state=loading] [data-show~=loading],.delu-status[data-state=failure] [data-show~=failure],
+.delu-status[data-state=retrying] [data-show~=retrying],.delu-status[data-state=ready] [data-show~=ready]{display:block}
+.delu-status[data-state=failure] .delu-card{border-left-color:#18181B}
+.delu-status[data-state=ready] .delu-card{padding:8px 14px}
+"""
+
+
+def startup_markup(C, state: str = "loading") -> str:
+    report = C["pages_url"]
+    return f"""<div id="delu-status" class="delu-status" data-state="{state}" role="status" aria-live="polite">
+ <div class="delu-card">
+  <p class="delu-title" data-show="loading">Starting the v1 demo</p>
+  <p class="delu-body" data-show="loading">It runs entirely in your browser. The first visit downloads about
+   {C['wasm_cold_load_mb']} MB, a Python runtime and the model, so it can take a minute or more. Nothing is sent to a
+   server.</p>
+  <p class="delu-title" data-show="failure">The demo did not start</p>
+  <p class="delu-body" data-show="failure">A file it needs did not load, or it has not finished starting after
+   several minutes. A slow or filtered connection, or a browser that blocks the runtime, can cause this. The report
+   has the same results and needs no download.</p>
+  <p class="delu-title" data-show="retrying">Retrying</p>
+  <p class="delu-body" data-show="retrying">Reloading the demo.</p>
+  <p class="delu-body" data-show="ready">The v1 demo is running in your browser.</p>
+  <p class="delu-actions"><button type="button" id="delu-retry" data-show="failure">Retry</button>
+   <a href="{report}">Read the instant report instead</a></p>
+ </div>
+</div>"""
+
+
+def startup_js() -> str:
+    return """
+(function(){
+ var box=document.getElementById('delu-status');if(!box){return;}
+ var started=Date.now(),done=false;
+ function set(state){box.setAttribute('data-state',state);}
+ function ready(){return (document.body.innerText||'').indexOf('%s')>=0;}
+ var timer=setInterval(function(){
+  if(ready()){set('ready');done=true;clearInterval(timer);}
+  else if(Date.now()-started>%d*1000){set('failure');clearInterval(timer);}
+ },1000);
+ window.addEventListener('error',function(e){
+  var t=e.target;if(!done&&t&&(t.tagName==='SCRIPT'||t.tagName==='LINK')){set('failure');}
+ },true);
+ document.getElementById('delu-retry').addEventListener('click',function(){set('retrying');location.reload();});
+})();
+""" % (READY_MARKER, DEADLINE_SECONDS)
+
+
+def demo_states_specimen() -> str:
+    """The four states side by side, for the D1 review. The same markup the Space build injects."""
+    C = build_claims()
+    sections = []
+    for state, label in (("loading", "Loading (static HTML, before any script runs)"),
+                         ("failure", "Failure, with retry"), ("retrying", "Retrying"),
+                         ("ready", "Ready (a slim bar above the running demo)")):
+        markup = startup_markup(C, state).replace('id="delu-status" ', "").replace('id="delu-retry" ', "")
+        sections.append(
+            '<section><h2 style="font:600 14px system-ui;color:#52525B;text-transform:uppercase;'
+            f'letter-spacing:.05em;margin:24px 16px 0">{label}</h2>{markup}</section>'
+        )
+    intro = (
+        "Specimen of the Space's startup states (plan §7.11). The loading state is static HTML, so it is visible "
+        "before the runtime starts and stays visible if initialization fails. No percentage and no timer are "
+        "shown as progress."
+    )
+    return (
+        '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" '
+        'content="width=device-width,initial-scale=1"><title>PRES-1 D1 demo states</title>'
+        f"<style>body{{margin:0;background:#FAFAFA}}{startup_css()}</style></head><body>"
+        f'<p style="font:15px system-ui;max-width:760px;margin:24px auto;padding:0 16px">{intro}</p>'
+        + "".join(sections) + "</body></html>"
+    )
+
+
 def run_export() -> None:
     if BUNDLE.exists():
         shutil.rmtree(BUNDLE)

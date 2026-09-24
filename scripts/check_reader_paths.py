@@ -119,6 +119,56 @@ def probe_demo(playwright, engine: str, width: int, height: int, url: str, timeo
     return record
 
 
+MEASURE_JS = """
+() => {
+  const doc = document.documentElement;
+  const texts = [...document.querySelectorAll('.chart svg text')].filter(t => {
+    const svg = t.closest('svg'); const box = t.getBoundingClientRect();
+    return svg && getComputedStyle(svg).display !== 'none' && box.width > 0 && box.height > 0;
+  });
+  let smallest = null, where = null;
+  for (const t of texts) {
+    const svg = t.closest('svg');
+    const scale = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
+    const size = parseFloat(t.getAttribute('font-size') || '13') * scale;
+    if (smallest === null || size < smallest) { smallest = size; where = svg.dataset.chart + ':' + svg.dataset.variant; }
+  }
+  const overflow = [...document.querySelectorAll('body *')].filter(e => {
+    const r = e.getBoundingClientRect(); return r.right > doc.clientWidth + 1 && !e.closest('.scroll, pre');
+  }).slice(0, 5).map(e => e.tagName + (e.className && e.className.baseVal === undefined ? '.' + e.className : ''));
+  return {scrollWidth: doc.scrollWidth, clientWidth: doc.clientWidth,
+          horizontal_overflow: doc.scrollWidth > doc.clientWidth,
+          chart_texts_measured: texts.length, smallest_chart_text_px: smallest && Math.round(smallest * 100) / 100,
+          smallest_at: where, overflowing_elements: overflow};
+}
+"""
+
+
+def screens(playwright, pages: list[str], widths: list[int], out: Path, open_all: bool) -> list[dict]:
+    """Full-page screenshots at each width, with layout measurements (plan §11.3)."""
+    browser = _launch(playwright, "chrome")
+    results = []
+    for target in pages:
+        url = target if "://" in target else Path(target).resolve().as_uri()
+        stem = Path(target).stem
+        for width in widths:
+            context = browser.new_context(viewport={"width": width, "height": 900})
+            page = context.new_page()
+            page.goto(url, wait_until="load")
+            if open_all:
+                page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
+            page.wait_for_timeout(300)
+            measure = page.evaluate(MEASURE_JS)
+            shot = out / f"{stem}-{width}.png"
+            page.screenshot(path=str(shot), full_page=True)
+            results.append({"page": target, "width": width, "screenshot": str(shot), **measure})
+            print(f"{stem} @ {width}: overflow={measure['horizontal_overflow']} "
+                  f"smallest chart text={measure['smallest_chart_text_px']} px ({measure['smallest_at']})")
+            context.close()
+    browser.close()
+    return results
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -128,6 +178,12 @@ def main() -> int:
     demo.add_argument("--url", default=APP_URL)
     demo.add_argument("--timeout", type=float, default=180.0)
     demo.add_argument("--out", type=Path, required=True)
+    shots = sub.add_parser("screens", help="full-page screenshots and layout measurements of local pages")
+    shots.add_argument("pages", nargs="+")
+    shots.add_argument("--width", action="append", type=int, default=None)
+    shots.add_argument("--open-all", action="store_true", help="open every disclosure first")
+    shots.add_argument("--out", type=Path, required=True)
+    shots.add_argument("--record", type=Path, default=None)
     args = parser.parse_args()
 
     try:
@@ -137,6 +193,15 @@ def main() -> int:
             "Playwright is not installed here. It lives in a tool environment under "
             ".local/tools/, never in the project; see this script's docstring."
         )
+
+    if args.command == "screens":
+        args.out.mkdir(parents=True, exist_ok=True)
+        with sync_playwright() as playwright:
+            results = screens(playwright, args.pages, args.width or [1440, 768, 390, 360], args.out, args.open_all)
+        if args.record:
+            args.record.parent.mkdir(parents=True, exist_ok=True)
+            args.record.write_text(json.dumps({"checked_at_utc": _utc(), "results": results}, indent=2) + "\n")
+        return 0
 
     viewports = [tuple(int(v) for v in spec.split("x")) for spec in (args.viewport or ["1440x900"])]
     runs = []

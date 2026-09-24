@@ -243,10 +243,8 @@ single id is canonical — the name is what to search for:
 | `champion::final-fit-and-holdout` | the frozen champion and the one-shot holdout |
 | `diagnostics::champion` | SHAP, permutation importance, regimes, reliability |
 
-**Archived v1 release note.** No v2 run exists yet. When M4 is ratified its runs land in a separate `delu-m4` experiment on the same tracking server, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment.
-
-That note predates the current plan. [Research since v1](#research-since-v1-development-evidence-post-selection)
-records the experiments that followed; v1 remains the released model.
+**Tracking after v1.** Research after v1 is tracked in a separate `delu-generations` experiment on the same tracking server: every policy evaluated since v1 appears there once, mirrored from the committed evidence, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment. [Research since v1](#research-since-v1-development-evidence-post-selection)
+summarizes it; v1 remains the released model.
 
 **Run it yourself, offline:**
 
@@ -321,7 +319,7 @@ written separately per surface is how a limitation ends up on one page and nowhe
 - **Disclosed assumption — the generation archive.** A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.
 - **The measured cost of the strict gate.** The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.
 - **A two-sided bounded target, live at the floor.** The target is two-sided and bounded: the price is routinely negative and has hit the −500 EUR/MWh floor, which truncates the lower conformity residuals, so the lowest intervals under-cover conditionally near the floor.
-- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window. On the crisis stratum it does not merely diverge, it collapses: over the August-2022 peak weeks the 95 % interval covered 0.194 of outcomes. The mechanism is measured — that fold's CQR thresholds were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; it is the defect the planned v2 targets, and it is not fixed in this release.
+- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window. On the crisis stratum it does not merely diverge, it collapses: over the August-2022 peak weeks the 95 % interval covered 0.194 of outcomes. The mechanism is measured — that fold's CQR thresholds were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; it is the defect later generations address (see the v2 and v3 chapters), and it is not fixed in the released v1.
 - **Model staleness, with all four cutoffs.** The deployed demo applies a frozen model whose raw-model fit cutoff (2026-04-07) precedes the snapshot cutoff (2026-09-06) by 152 delivery days, with the final calibration window 2026-04-09..2026-06-07 and the holdout window 2026-06-09..2026-09-06 — all four cutoffs published separately because they are four different dates.
 - **The 15-minute MTU averaging choice.** From 2025-10-01 an hourly price is the mean of four quarter-hour prices, so every hour-level statistic here — the negative-hour tally included — depends on that averaging choice, and a quarter-hour tally differs.
 - **Scope.** This is a portfolio artifact, not an operations system: no retraining schedule, no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.
@@ -340,7 +338,7 @@ surface:
 - **Canonical entry point.** The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it.
 - **DuckDB SQL.** The hand-authored DuckDB queries in `sql/feature_queries.sql` express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with `make sql`.
 - **The four cutoffs.** All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.
-- **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0. Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the trained champion is a derived work of it. See LICENSE and DATA-LICENSE.md.
+- **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0. Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the trained champion is a derived work of it. Research only: Weather: derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR GDEX d084001 (doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS. Modified and aggregated by this project; not an official NOAA product. See LICENSE and DATA-LICENSE.md.
 
 ### Link discipline
 

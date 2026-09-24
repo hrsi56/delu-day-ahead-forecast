@@ -64,15 +64,15 @@ MLFLOW_RUN_NAMES = (
     ("diagnostics::champion", "SHAP, permutation importance, regimes, reliability"),
 )
 
-#: v2 has not run. Named here so the surfaces have a place for it rather than
-#: acquiring one ad hoc later, and so a reader can see that the slot is empty
-#: on purpose. `capstone_M4_v2-plan.md` is a draft awaiting ratification.
-MLFLOW_NEXT_EXPERIMENT = "delu-m4"
+#: Research after v1 is mirrored in its own experiment (presentation plan §8.7, §10; Owner decision
+#: 6 of 2026-09-24), so v1's record stays exactly as the one-shot holdout left it. The experiment is
+#: created by the authorized public upload; the surfaces carrying this note go live after it.
+MLFLOW_NEXT_EXPERIMENT = "delu-generations"
 MLFLOW_NEXT_NOTE = (
-    "No v2 run exists yet. When M4 is ratified its runs land in a separate "
-    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server, so v1's "
-    "record stays exactly as the one-shot holdout left it and the two are never "
-    "mixed in one experiment."
+    "Research after v1 is tracked in a separate "
+    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server: every policy evaluated "
+    "since v1 appears there once, mirrored from the committed evidence, so v1's record stays "
+    "exactly as the one-shot holdout left it and the two are never mixed in one experiment."
 )
 
 #: §7.1, verbatim. "It carries this label, exactly, wherever it appears."
@@ -145,9 +145,18 @@ ATTRIBUTION = (
 #: administrative: §0 item 3 omitted a gas-price feature precisely because no free,
 #: daily, legally redistributable series existed, and a reproducible open repository
 #: that cannot ship its own inputs is not reproducible.
+#: The research weather inputs' attribution, as the Owner added it to DATA-LICENSE.md on
+#: 2026-09-24 (plan §6 invariant 8). v1 uses no weather input.
+GFS_ATTRIBUTION = (
+    "Weather: derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR GDEX d084001 "
+    "(doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS. Modified and aggregated by "
+    "this project; not an official NOAA product."
+)
+
 LICENSING = (
     "Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the "
-    "trained champion is a derived work of it. See LICENSE and DATA-LICENSE.md."
+    f"trained champion is a derived work of it. Research only: {GFS_ATTRIBUTION} "
+    "See LICENSE and DATA-LICENSE.md."
 )
 
 #: §9.3: "A second one-liner notes the floor change to -600 EUR/MWh from 2026-05-28".
@@ -212,7 +221,8 @@ LIMITATION_COVERAGE_DIVERGENCE = (
     "were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to "
     "an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not "
     "multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; "
-    "it is the defect the planned v2 targets, and it is not fixed in this release."
+    "it is the defect later generations address (see the v2 and v3 chapters), and it is not fixed "
+    "in the released v1."
 )
 
 LIMITATION_STALENESS = (
@@ -675,6 +685,7 @@ __all__ = [
     "EXCHANGEABILITY",
     "FLOOR_CHANGE",
     "FORBIDDEN_DAGSHUB_PATHS",
+    "GFS_ATTRIBUTION",
     "GITHUB_URL",
     "HOLDOUT_DM_LABEL",
     "HOLDOUT_LIMITATION",

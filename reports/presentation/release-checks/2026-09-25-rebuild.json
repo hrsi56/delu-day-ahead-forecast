@@ -1,0 +1,15 @@
+{
+  "check": "rebuild every presentation surface from committed evidence",
+  "command": "uv run python scripts/rebuild_presentation.py",
+  "date": "2026-09-25",
+  "machine": "Darwin arm64, Python 3.13.15",
+  "seconds": 9.6,
+  "steps_seconds": {
+    "MLflow export": 0.7,
+    "README CP-3 section": 0.3,
+    "README research block": 0.4,
+    "Space cards": 0.3,
+    "cross-surface agreement and zero-fetch checks": 0.3,
+    "static page": 7.7
+  }
+}
