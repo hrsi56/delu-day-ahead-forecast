@@ -55,7 +55,7 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 |---|---|---|
 | 1 | NWP archive-depth gate (4.1) | ✅ Done: GFS admitted |
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
-| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) approved 2026-09-24; phases A–E not started |
+| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) revision 2, after an external review, awaits approval; no phase started |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ⬜ Not started |
 | 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
@@ -158,8 +158,9 @@ No optional learning block is active.
     and prefer SMARD for unattended jobs.
   - **CI:** GitHub Actions is free for this public repository. `invariant-tests` runs on every
     push, pinned to Python 3.12.
-  - **Checks:** `make verify` binds the cross-surface claim set. URLs are checked by the test
-    suite and `scripts/check_links.py`.
+  - **Checks:** `make verify` binds the cross-surface claim set. `scripts/check_links.py` records
+    link status but always exits 0, so it is not a gate yet (review finding F05, verified
+    2026-09-24). Plan revision 2 makes it fail on a broken required link.
   - **Secret guard:** `.githooks/` together with `scripts/secret_guard.py`. It is enabled locally
     with `git config core.hooksPath /Users/djourno/Downloads/PJM/.githooks`, and a fresh clone
     must enable it again.
@@ -284,6 +285,26 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **External presentation review and plan revision 2, 2026-09-24.** An external reviewer wrote
+  [a review](docs/track-b/presentation-review-and-corrections-2026-09-24.md) of the approved plan.
+  - **Checked independently:**
+    - reproduced mobile overflow (F02);
+    - confirmed the README generator boundary (F04), the link checker's constant exit 0 (F05),
+      the mixed units in chart C2 (F06), the difference in the v1 comparison baseline (F07) and
+      v1's verbatim "confirmatory-style, not power-qualified" label (F11);
+    - read the MLflow server version, 3.5.1;
+    - could not reproduce the demo failure (F01).
+  - **Revision 1 was wrong in two places.** It mixed units in chart C2, and it placed the public
+    MLflow upload before the Owner's review.
+  - **Revision 2 fixes both** and adds: release gates, a typed evidence and claim layer, an exact
+    23-run MLflow manifest with repeatable uploads and full-history verification, an authorized
+    publication sequence (Phase F), and reader-first design.
+  - **Other corrections:**
+    - the claim that DagsHub refused registry tags was wrong: `tags_refused` is empty;
+    - the published `delu-m4` promise needs reconciling.
+  - **Status:** revision 2 awaits approval. No site, README, MLflow or engineering change was
+    made.
+
 - **Presentation and tracking plan, 2026-09-24.** The Owner decided on one scrolling history page
   (newest first, live at the top at the end), showing v1–v3 on the site now, and MLflow as the
   visible cross-version tool, with v2/v3 backfilled and future work tracked.
@@ -345,14 +366,21 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Presentation and tracking plan approved 2026-09-24; three §13 questions remain open.** They
-  are in the [plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md):
-  1. public names for future generations;
-  2. the executor, and whether an independent claim check is required before the push;
-  3. whether the MLflow landing step goes into the templates now (this needs a suspension) or is
-     carried in briefs.
+- **Presentation and tracking plan, revision 2, awaits approval (asked 2026-09-24).** Revision 2
+  of the [plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) takes in the
+  [external review](docs/track-b/presentation-review-and-corrections-2026-09-24.md). R1–R6 stand.
+  Its §16 lists eight questions:
+  1. approve the revision;
+  2. public names for future generations;
+  3. the executor, and whether the independent claim and render check is required;
+  4. whether the MLflow landing step goes into the templates now (this needs a suspension) or is
+     carried in briefs;
+  5. the capability probe: local only, or an authorized write probe on DagsHub as well;
+  6. whether to rename the published `delu-m4` slot to `delu-generations`;
+  7. whether to include a contribution statement;
+  8. the Owner's own device test of the demo, for Phase 0.
 
-  Phase C (MLflow) must run from a process that holds the rotated token.
+  Only Phase F's public MLflow upload needs the rotated token. The earlier phases are local.
 - **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
   The recommended order:
   1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
@@ -375,6 +403,17 @@ Session Log.
 - **CP-3B item 6 was never completed.** No verdict binds `55a70e7`
   ([record](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md)). This is not a precedent:
   every brief must require a binding verdict.
+- **Public-surface defects from the 2026-09-24 review.** Plan revision 2 fixes them in its
+  rebuild, not in a separate patch:
+  - **The report overflows horizontally on phones.** At 390 px the document is 1,750 px wide,
+    because the two `.surfaces-table` tables sit outside `.scroll` (F02; reproduced).
+  - **The demo failed to start in the reviewer's browser** (F01). We could not reproduce this:
+    Claude's built-in browser reached a computed forecast in about 40 s from the direct app and
+    about 70 s through the Hugging Face page. Cold start shows only a spinner. Phase 0 diagnoses
+    it on the Owner's devices.
+  - **Every surface, and the deployed Space, still promise a future `delu-m4` experiment and
+    call v2 "planned"** (F03).
+  - **No generator owns the README research section, which is stale** (F04).
 - **Known issues, no action scheduled:**
   - a cold first visit to the Space can hit a Hugging Face `429`;
   - `reports/cp3/pages_build.json` stamps its build date;
@@ -400,8 +439,14 @@ Session Log.
   - no data after 2026-04-07;
   - a TabPFN run needs 4.6L's licence-use table first;
   - positive controls must survive the model's own transforms (see Lessons).
-- **[Next]** Run the approved presentation and tracking plan's phases A–E. Phase C runs after the
-  Owner restarts the apps, so it uses the rotated token.
+- **[Next]** Once plan revision 2 is approved, run its phases in order:
+  - phase 0 (demo diagnosis) and phases A–C (content, evidence layer, local MLflow preparation)
+    can run in parallel;
+  - then D1 (prototype review), D2 and E (the review packet);
+  - then F, the authorized publication sequence.
+
+  Before Phase F's public MLflow upload, the Owner restarts the apps, so the upload uses the
+  rotated token.
 - **[End of programme, after the holidays]**
   1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
      2026-09-07 separately.
