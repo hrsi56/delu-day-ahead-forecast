@@ -1,0 +1,212 @@
+{
+  "check": "Phase 0 demo diagnosis (plan \u00a712 Phase 0; finding F01)",
+  "date": "2026-09-24",
+  "deployed_space": {
+    "last_modified": "2026-09-15T16:51:04.000Z",
+    "read_via": "anonymous GET https://huggingface.co/api/spaces/Yarden-Viktor/delu-day-ahead-forecast, 2026-09-24T19:06Z",
+    "revision_sha": "fa8bd38cbf050af086130d03c1dd97f9ba4f67a0",
+    "runtime_stage": "RUNNING",
+    "sdk": "static",
+    "space": "Yarden-Viktor/delu-day-ahead-forecast",
+    "visibility": "public"
+  },
+  "diagnosis": {
+    "findings": [
+      {
+        "action": "Add the plan \u00a77.11 states to the Space build (scripts/build_wasm_space.py): a loading message in the static HTML, a failure state with retry, and a route back to the report. Required in every case (invariant 25).",
+        "finding": "The static HTML shows nothing before the runtime starts: the first body text in every fresh-context run was empty, and the only feedback is marimo's own spinner once its JavaScript has loaded. A slow or failed start therefore looks like a blank page.",
+        "id": "P0-1"
+      },
+      {
+        "action": "Cosmetic and inside marimo's frontend; recorded, not changed. Chrome reported no failed request.",
+        "finding": "WebKit only: four marimo UI fonts are also requested at the site root (for example /PTSans-Regular-Bam3NpBI.woff2), return 404 and are cancelled; text falls back to other fonts. The real files are under /assets/ and answer with a redirect to the Hugging Face CDN.",
+        "id": "P0-2"
+      },
+      {
+        "action": "No code change without a reproduction (plan \u00a712 Phase 0). The failure state in P0-1 covers it if it recurs.",
+        "finding": "The reviewer's 'Unable to preload CSS' error did not recur. Its cause stays unknown: browser policy, an extension, network conditions or a transient CDN failure all remain possible.",
+        "id": "P0-3"
+      }
+    ],
+    "not_covered": [
+      "real iPhone Safari (the Owner's device test covers a real device; details requested at Stop 1)",
+      "desktop Safari itself: WebKit via Playwright is the Safari engine, not Safari; automating Safari needs a system setting this task does not change"
+    ],
+    "reproduced": false,
+    "summary": "Not reproduced. Seven runs across Chrome 153 (system install, fresh context), Playwright WebKit 26.6 (fresh context) and the built-in Chromium reached a visible forecast in 18.9-40.8 s; the level and scenario controls changed the view in every fresh-context run; no run overflowed horizontally at 390 px."
+  },
+  "fix_plan": [
+    "D2: build_wasm_space.py injects a static loading panel into the exported index.html: visible before any script runs, naming the first-visit download and linking back to the report.",
+    "D2: the panel turns into a failure state with a retry button when the notebook has not produced its first output after a generous deadline, or when a script or resource error is reported; retry reloads the page. No percentage and no timer shown as progress.",
+    "D2: the panel hides itself once the notebook's first output appears (ready state). Extended test_23 asserts the static markup, the failure and retry markup and the link back to the report.",
+    "F7-F8: after an authorized redeploy, rerun scripts/check_reader_paths.py demo on Chrome and WebKit at 1440 and 390 px, and record the result beside this one."
+  ],
+  "owner_device_test": {
+    "browser": null,
+    "completed": "2026-09-24",
+    "device": null,
+    "outcome": null,
+    "recorded_by": "plan \u00a716 decision 8 and PRES-1 brief \u00a73 item 7",
+    "status": "device, browser and outcome are not recorded in the repository; requested from the Owner at Stop 1"
+  },
+  "playwright_host": "arm64 / Darwin 25.5.0",
+  "reported_failure": {
+    "observed_by_reviewer": "the Hugging Face wrapper showed 'Unable to preload CSS for .../assets/layout-D-WxHzKd.css' and the app never reached a forecast; the same error after retry",
+    "source": "docs/track-b/presentation-review-and-corrections-2026-09-24.md, F01"
+  },
+  "runs": [
+    {
+      "cache": "persistent browser profile shared with earlier sessions; may be warm, so this is not a cold-start figure",
+      "console_errors": [],
+      "engine": "Chromium (Claude desktop app built-in browser)",
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "notes": "identity panel read 'Maximum absolute deviation 0.0'; the deployed page still carries the stale delu-m4 sentence (\u00a78.7)",
+      "ready": true,
+      "route": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 27.1,
+      "started_utc": "2026-09-24T19:06:35Z",
+      "viewport": "pane default (desktop)"
+    },
+    {
+      "cache": "same persistent profile",
+      "engine": "Chromium (Claude desktop app built-in browser)",
+      "notes": "the app rendered inside the Hugging Face iframe; no 'Unable to preload CSS' message appeared",
+      "ready": true,
+      "route": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast (the wrapper page)",
+      "viewport": "pane default (desktop)"
+    },
+    {
+      "cache": "same persistent profile",
+      "engine": "Chromium (Claude desktop app built-in browser)",
+      "horizontal_overflow": false,
+      "ready": true,
+      "route": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/index.html",
+      "seconds_to_visible_forecast": 40.8,
+      "viewport": "390x844 (emulated)"
+    },
+    {
+      "browser_version": "153.0.8010.53",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 345,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 20.4,
+      "started_utc": "2026-09-24T19:10:48+00:00",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "153.0.8010.53",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 345,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 18.9,
+      "started_utc": "2026-09-24T19:11:16+00:00",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "390x844"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "engine": "webkit",
+      "failed_requests": [
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/PTSans-Regular-Bam3NpBI.woff2 cancelled",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/PTSans-Bold-C_DwAp7Z.woff2 cancelled",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/Lora-VariableFont_wght-CZceb_kH.woff2 cancelled",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/FiraMono-Medium-D5MAsWEG.woff2 cancelled"
+      ],
+      "first_static_text": "",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 358,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 21.1,
+      "started_utc": "2026-09-24T19:11:48+00:00",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "engine": "webkit",
+      "failed_requests": [
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/PTSans-Bold-C_DwAp7Z.woff2 cancelled",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/PTSans-Regular-Bam3NpBI.woff2 cancelled",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/Lora-VariableFont_wght-CZceb_kH.woff2 cancelled",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/FiraMono-Medium-D5MAsWEG.woff2 cancelled"
+      ],
+      "first_static_text": "",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 358,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 22.0,
+      "started_utc": "2026-09-24T19:12:17+00:00",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "390x844"
+    }
+  ]
+}
