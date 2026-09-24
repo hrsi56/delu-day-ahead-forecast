@@ -669,8 +669,9 @@ memo in its existing isolated worktree.
   v21-r4 after one Integration FAIL and one fresh PASS; `evidence/cp-20` retains the reviewed chain.
   - Analysis and reference passes are exhausted, so any further CP-20 scoring needs a cap decision.
   - Weather admission remains conditional on its documented assumptions.
-  - The CP-20 return reports that the full `tests/cp16` directory has 3 failures and 3 errors on
-    main, as it did before CP-20. The listed guards pass. This inherited test debt is unresolved.
+  - The CP-20 return reported 3 failures and 3 errors in the full `tests/cp16` directory on main.
+    That debt, and the red public CI, were resolved on 2026-09-24 by a harness-only repair (see
+    the session log).
   - Content effort/round accounting was not reported. Acceptance is local-draft content, not
     certified resource usage.
 
@@ -973,6 +974,22 @@ This file no longer narrates it. It is preserved and addressable:
   packaging authority ended at its landing; no governance authoring.
 
 ## 9. Session Log — newest first
+
+- **CI restored on a clean checkout, 2026-09-24 (Owner-authorized maintenance).**
+  - **Cause:** the public `invariant-tests` workflow had failed on every push since the CP-16
+    landing. `tests/cp15/test_scoring.py` and `tests/cp16/test_scoring.py` share a basename,
+    so pytest stopped at collection and no test ran at all.
+  - **`pytest.ini` (new):** importlib import mode, with `src` and `tests` on the path. It
+    supersedes the pyproject test settings, which stay byte-identical because frozen CP-2,
+    CP-3, CP-15 and CP-16 records hash `pyproject.toml`.
+  - **`tests/cp16/conftest.py` (new):** skips the five ledger-charging production-verification
+    tests unless `CP16_LEDGER` or `CP16_REQUIRE_SAVED_EVIDENCE=1` is set, and skips the v21-r3
+    identity test only while the anchor is a later ratified revision.
+  - **Untouched:** no hash-bound test, source, report or evidence file changed.
+  - **Verification:** a clean Python 3.12 checkout, run like CI, passes every step (511
+    passed, 7 skipped with stated reasons). The local Python 3.13 run matches, the opt-in path
+    still fails without a ledger as designed, and CP-20 `check_protocol` passes. CP-16
+    reproduction stays at `evidence/cp-16`.
 
 - **DagsHub token exposure and rotation, 2026-09-24.** A value-based scan found that the CP-20
   landing push published the DagsHub user token inside a Critic pytest log (an environment
