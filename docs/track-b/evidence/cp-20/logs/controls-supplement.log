@@ -1,0 +1,12 @@
+# CP-20 job controls-supplement index 50 start 2026-09-24T05:45:26Z
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from pathlib import Path; from cp20.controls_supplement import run; run(Path('.'))
+                                                                        ~~~^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.claude/worktrees/cp-20-weather-augmentation-7c081b/src/cp20/controls_supplement.py", line 61, in run
+    values[pool] = values[np.random.default_rng(SEED).permutation(pool)]
+    ~~~~~~^^^^^^
+ValueError: assignment destination is read-only
+# CP-20 job controls-supplement index 51 start 2026-09-24T05:46:05Z
+{"fold": "fold_1", "day": "2020-07-01", "target_rows_shifted": 24, "target_day_weather_shift": {"A1": 370.10749609660024, "B2": 899.6620841374897}, "training_rows_permuted": 13102, "training_weather_permutation": {"A1": 3.53860507168525, "B2": 5.733107169452282}, "base_refit_vs_cached_hg": {"A1": 0.0, "B2": 0.0}, "uniform_scaling_x3_invariance": {"A1": 6.039613253960852e-14, "B2": 7.815970093361102e-14}, "target_day_weather_shift_passed": true, "training_weather_permutation_passed": true}
+{"fold": "fold_4", "day": "2025-05-01", "target_rows_shifted": 24, "target_day_weather_shift": {"A1": 19141.061707921494, "B2": 7461.879954872928}, "training_rows_permuted": 51209, "training_weather_permutation": {"A1": 33.526282757148664, "B2": 23.133850440792344}, "base_refit_vs_cached_hg": {"A1": 0.0, "B2": 0.0}, "uniform_scaling_x3_invariance": {"A1": 1.0658141036401503e-13, "B2": 4.405364961712621e-13}, "target_day_weather_shift_passed": true, "training_weather_permutation_passed": true}

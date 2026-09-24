@@ -1,0 +1,66 @@
+{
+ "phases": [
+  {
+   "phase": "aws-all",
+   "endpoint": "aws",
+   "workers": 4,
+   "start_epoch": 1790205314.227555,
+   "end_epoch": 1790205588.4548962,
+   "monitor_exit": 2,
+   "marker": {
+    "abort_reason": "monitor_signal_15",
+    "active_seconds_upper_bound": 8635.902987003326,
+    "cumulative_counts": {
+     "active_seconds": 0,
+     "analysis_passes": 0,
+     "component_attempts": 0,
+     "final_fits": 0,
+     "inner_fits": 0,
+     "machine_seconds": 52712.121128082246,
+     "main_component_attempts": 0,
+     "message_attempts": 6685,
+     "policy_days": 638,
+     "primitive_fits": 0,
+     "reference_passes": 0,
+     "transfer_bytes": 26289509056
+    },
+    "elapsed_seconds": 274.19027887500124,
+    "exit_code": 2,
+    "job": "gfs-extract",
+    "job_index": 37,
+    "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/gfs-extract.log",
+    "peak_rss_bytes": 172785664,
+    "status": "failed_or_partial",
+    "supervisor_error": null,
+    "timebox_exceeded": false,
+    "written_utc": "2026-09-23T23:19:48Z"
+   },
+   "code_version": {
+    "dirty_paths": [],
+    "git_head": "47607dfe7bc918fac9e62a280ba5cb5f9e6de3a9",
+    "locator_fix_r10": true,
+    "o2_amendment_a1": true,
+    "sha256": {
+     "scripts/cp20_weather.py": "ec26073aa3bddc36e014b545bc7cf2839ff5ba84b1dc0c1281592f278ac5e5bc",
+     "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
+     "src/cp20/chain.py": "320f817972d445737234ba2c2c71328e4a28bd8f2f504738270eaad17f5b2ae8",
+     "src/cp20/extract.py": "c6604ce10e4bbe6171bccccc5ec8d01aed3dce76cb31187abdd54255c9715e1b",
+     "src/cp20/gfs.py": "153a4210b5f7d5c3a4ea6e5e0bae4d20d796bcfed9f2b1f2f6da018f4affb498",
+     "src/cp20/net.py": "4a9726e29dadbc8eef482793416d222902b8eb214133c3e1016e8853c8a34549"
+    }
+   }
+  }
+ ],
+ "started_epoch": 1790205314.2271712,
+ "pid": 37191,
+ "deferred_failed_days": "2021-01-08,2021-01-09,2021-01-11,2021-01-12",
+ "result": "stopped",
+ "plan": "r11",
+ "current": "aws-all",
+ "stopped_in": "aws-all",
+ "reason": [
+  "monitor_signal_15",
+  2
+ ],
+ "end_epoch": 1790205588.455133
+}

@@ -1,0 +1,28 @@
+{
+ "abort_reason": null,
+ "active_seconds_upper_bound": 2827.4351670742035,
+ "cumulative_counts": {
+  "active_seconds": 0,
+  "analysis_passes": 0,
+  "component_attempts": 0,
+  "final_fits": 0,
+  "inner_fits": 0,
+  "machine_seconds": 4460.876611582062,
+  "main_component_attempts": 0,
+  "message_attempts": 905,
+  "policy_days": 638,
+  "primitive_fits": 0,
+  "reference_passes": 0,
+  "transfer_bytes": 1815392579
+ },
+ "elapsed_seconds": 125.630110625003,
+ "exit_code": 0,
+ "job": "h0-dryrun",
+ "job_index": 18,
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/h0-dryrun.log",
+ "peak_rss_bytes": 1061912576,
+ "status": "success",
+ "supervisor_error": null,
+ "timebox_exceeded": false,
+ "written_utc": "2026-09-23T17:31:08Z"
+}

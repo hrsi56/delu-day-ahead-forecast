@@ -1,0 +1,28 @@
+{
+ "abort_reason": "monitor_signal_15",
+ "active_seconds_upper_bound": 21369.716886997223,
+ "cumulative_counts": {
+  "active_seconds": 0,
+  "analysis_passes": 0,
+  "component_attempts": 0,
+  "final_fits": 0,
+  "inner_fits": 0,
+  "machine_seconds": 51555.58818858207,
+  "main_component_attempts": 0,
+  "message_attempts": 6685,
+  "policy_days": 638,
+  "primitive_fits": 0,
+  "reference_passes": 0,
+  "transfer_bytes": 25348539396
+ },
+ "elapsed_seconds": 2228.34425991599,
+ "exit_code": 2,
+ "job": "gfs-extract",
+ "job_index": 36,
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/gfs-extract.log",
+ "peak_rss_bytes": 129187840,
+ "status": "failed_or_partial",
+ "supervisor_error": null,
+ "timebox_exceeded": false,
+ "written_utc": "2026-09-23T23:15:02Z"
+}

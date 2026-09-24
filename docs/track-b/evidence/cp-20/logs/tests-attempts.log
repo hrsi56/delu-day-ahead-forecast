@@ -1,0 +1,97 @@
+# CP-20 job tests-attempts index 19 start 2026-09-23T17:35:07Z
+..........F............................................................. [100%]
+=================================== FAILURES ===================================
+_______ test_production_allowance_with_owner_prerun_replacements[1-1-2] ________
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/tmp/cp-20/pytest/test_production_allowance_with4')
+ledger = <cp20.budget.Budget object at 0x117e789d0>, prerun = 1, post = 1
+allowed = 2
+
+    @pytest.mark.parametrize('prerun,post,allowed', [(0, 0, 2), (1, 0, 2), (2, 0, 2), (0, 1, 1), (1, 1, 2), (2, 0, 2)])
+    def test_production_allowance_with_owner_prerun_replacements(tmp_path, ledger, prerun, post, allowed):
+        path = tmp_path / 'attempts.jsonl'
+        seed(path, '2021-01-04', 21, prerun, extract.PRERUN_CUTOFF_EPOCH - 100)
+        seed(path, '2021-01-04', 21, post, extract.PRERUN_CUTOFF_EPOCH + 100)
+        a = extract.Attempts(path, ledger)
+        for _ in range(allowed):
+>           a.begin('2021-01-04', 21, 'aws', 'production')
+
+tests/cp20/test_attempts.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cp20.extract.Attempts object at 0x117e790f0>, run = '2021-01-04'
+lead = 21, endpoint = 'aws', purpose = 'production'
+
+    def begin(self, run, lead, endpoint, purpose):
+        with self.lock:
+            used, extra = self.used(run, lead), self.extra(run, lead)
+            if used >= PRODUCTION_ATTEMPTS + extra:
+>               raise IntegrityError(f'{run} f{lead:03d}: production attempt allowance exhausted')
+E               cp20.gfs.IntegrityError: 2021-01-04 f021: production attempt allowance exhausted
+
+src/cp20/extract.py:82: IntegrityError
+=========================== short test summary info ============================
+FAILED tests/cp20/test_attempts.py::test_production_allowance_with_owner_prerun_replacements[1-1-2]
+1 failed, 71 passed, 1 skipped in 5.34s
+# CP-20 job tests-attempts index 21 start 2026-09-23T17:35:25Z
+............FF.......................................................... [ 97%]
+..                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_production_allowance_with_owner_prerun_replacements[2-2-0] ________
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/tmp/cp-20/pytest/test_production_allowance_with6')
+ledger = <cp20.budget.Budget object at 0x11c2aa140>, prerun = 2, post = 2
+allowed = 0
+
+    @pytest.mark.parametrize('prerun,post,allowed', [(0, 0, 2), (1, 0, 2), (2, 0, 2), (0, 1, 1), (1, 1, 1), (2, 1, 1), (2, 2, 0), (0, 2, 0)])
+    def test_production_allowance_with_owner_prerun_replacements(tmp_path, ledger, prerun, post, allowed):
+        path = tmp_path / 'attempts.jsonl'
+        seed(path, '2021-01-04', 21, prerun, extract.PRERUN_CUTOFF_EPOCH - 100)
+        seed(path, '2021-01-04', 21, post, extract.PRERUN_CUTOFF_EPOCH + 100)
+        a = extract.Attempts(path, ledger)
+        for _ in range(allowed):
+            a.begin('2021-01-04', 21, 'aws', 'production')
+        with pytest.raises(IntegrityError, match='allowance exhausted'):
+            a.begin('2021-01-04', 21, 'aws', 'production')
+        total = prerun + post + allowed
+        assert total == extract.PRODUCTION_ATTEMPTS + min(2, prerun)
+        replacements = max(0, total - extract.PRODUCTION_ATTEMPTS) - max(0, prerun + post - extract.PRODUCTION_ATTEMPTS)
+        counts = ledger.read()['counts']
+>       assert counts['message_attempts'] == 5 * allowed
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'message_attempts'
+
+tests/cp20/test_attempts.py:41: KeyError
+_______ test_production_allowance_with_owner_prerun_replacements[0-2-0] ________
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/tmp/cp-20/pytest/test_production_allowance_with7')
+ledger = <cp20.budget.Budget object at 0x11c2aabe0>, prerun = 0, post = 2
+allowed = 0
+
+    @pytest.mark.parametrize('prerun,post,allowed', [(0, 0, 2), (1, 0, 2), (2, 0, 2), (0, 1, 1), (1, 1, 1), (2, 1, 1), (2, 2, 0), (0, 2, 0)])
+    def test_production_allowance_with_owner_prerun_replacements(tmp_path, ledger, prerun, post, allowed):
+        path = tmp_path / 'attempts.jsonl'
+        seed(path, '2021-01-04', 21, prerun, extract.PRERUN_CUTOFF_EPOCH - 100)
+        seed(path, '2021-01-04', 21, post, extract.PRERUN_CUTOFF_EPOCH + 100)
+        a = extract.Attempts(path, ledger)
+        for _ in range(allowed):
+            a.begin('2021-01-04', 21, 'aws', 'production')
+        with pytest.raises(IntegrityError, match='allowance exhausted'):
+            a.begin('2021-01-04', 21, 'aws', 'production')
+        total = prerun + post + allowed
+        assert total == extract.PRODUCTION_ATTEMPTS + min(2, prerun)
+        replacements = max(0, total - extract.PRODUCTION_ATTEMPTS) - max(0, prerun + post - extract.PRODUCTION_ATTEMPTS)
+        counts = ledger.read()['counts']
+>       assert counts['message_attempts'] == 5 * allowed
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'message_attempts'
+
+tests/cp20/test_attempts.py:41: KeyError
+=========================== short test summary info ============================
+FAILED tests/cp20/test_attempts.py::test_production_allowance_with_owner_prerun_replacements[2-2-0]
+FAILED tests/cp20/test_attempts.py::test_production_allowance_with_owner_prerun_replacements[0-2-0]
+2 failed, 72 passed, 1 skipped in 5.13s
+# CP-20 job tests-attempts index 22 start 2026-09-23T17:35:39Z
+........................................................................ [ 97%]
+..                                                                       [100%]
+74 passed, 1 skipped in 4.97s

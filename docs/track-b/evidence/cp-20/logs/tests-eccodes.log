@@ -1,0 +1,110 @@
+# CP-20 job tests-eccodes index 4 start 2026-09-23T17:11:39Z
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,subprocess; sys.exit(__import__('pytest').main(['tests/cp20/test_gfs_eccodes.py','-q','-p','no:cacheprovider','-x']))
+                                    ~~~~~~~~~~^^^^^^^^^^
+ModuleNotFoundError: No module named 'pytest'
+# CP-20 job tests-eccodes index 6 start 2026-09-23T17:11:53Z
+ImportError while loading conftest '/Users/djourno/Downloads/PJM/.claude/worktrees/cp-20-weather-augmentation-7c081b/tests/conftest.py'.
+tests/conftest.py:6: in <module>
+    import pandas as pd
+E   ModuleNotFoundError: No module named 'pandas'
+# CP-20 job tests-eccodes index 7 start 2026-09-23T17:11:59Z
+FFFF............................................                         [100%]
+=================================== FAILURES ===================================
+________ test_decode_reads_code_keys_as_integers_and_validates[u10-21] _________
+
+field = 'u10', lead = 21
+
+    @pytest.mark.parametrize('field,lead', [('u10', 21), ('v100', 46 - 1), ('dswrf', 24), ('dswrf', 27)])
+    def test_decode_reads_code_keys_as_integers_and_validates(field, lead):
+        run = dt.date(2019, 1, 1)
+        msg, grid = synthetic(run, lead, field)
+        gfs.check_frame(msg, len(msg))
+        meta, box, q = gfs.decode(msg, run, lead, field)
+        assert meta['typeOfFirstFixedSurface'] == (1 if field == 'dswrf' else 103)
+        assert meta['typeOfFirstFixedSurface_native'] in ('sfc',) or field == 'dswrf'
+        assert meta['typeOfProcessedData'] == 1 and meta['typeOfProcessedData_native'] == 'fc'
+>       assert np.allclose(box, grid[gfs.ROW0:gfs.ROW1, gfs.COL0:gfs.COL1], atol=q) and np.isclose(q, 0.1)
+E       assert (True and np.False_)
+E        +  where True = <function allclose at 0x107635bf0>(array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), atol=0.0009765625)
+E        +    where <function allclose at 0x107635bf0> = np.allclose
+E        +  and   np.False_ = <function isclose at 0x107635d30>(0.0009765625, 0.1)
+E        +    where <function isclose at 0x107635d30> = np.isclose
+
+tests/cp20/test_gfs_eccodes.py:58: AssertionError
+________ test_decode_reads_code_keys_as_integers_and_validates[v100-45] ________
+
+field = 'v100', lead = 45
+
+    @pytest.mark.parametrize('field,lead', [('u10', 21), ('v100', 46 - 1), ('dswrf', 24), ('dswrf', 27)])
+    def test_decode_reads_code_keys_as_integers_and_validates(field, lead):
+        run = dt.date(2019, 1, 1)
+        msg, grid = synthetic(run, lead, field)
+        gfs.check_frame(msg, len(msg))
+        meta, box, q = gfs.decode(msg, run, lead, field)
+        assert meta['typeOfFirstFixedSurface'] == (1 if field == 'dswrf' else 103)
+        assert meta['typeOfFirstFixedSurface_native'] in ('sfc',) or field == 'dswrf'
+        assert meta['typeOfProcessedData'] == 1 and meta['typeOfProcessedData_native'] == 'fc'
+>       assert np.allclose(box, grid[gfs.ROW0:gfs.ROW1, gfs.COL0:gfs.COL1], atol=q) and np.isclose(q, 0.1)
+E       assert (True and np.False_)
+E        +  where True = <function allclose at 0x107635bf0>(array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), atol=0.0009765625)
+E        +    where <function allclose at 0x107635bf0> = np.allclose
+E        +  and   np.False_ = <function isclose at 0x107635d30>(0.0009765625, 0.1)
+E        +    where <function isclose at 0x107635d30> = np.isclose
+
+tests/cp20/test_gfs_eccodes.py:58: AssertionError
+_______ test_decode_reads_code_keys_as_integers_and_validates[dswrf-24] ________
+
+field = 'dswrf', lead = 24
+
+    @pytest.mark.parametrize('field,lead', [('u10', 21), ('v100', 46 - 1), ('dswrf', 24), ('dswrf', 27)])
+    def test_decode_reads_code_keys_as_integers_and_validates(field, lead):
+        run = dt.date(2019, 1, 1)
+        msg, grid = synthetic(run, lead, field)
+        gfs.check_frame(msg, len(msg))
+        meta, box, q = gfs.decode(msg, run, lead, field)
+        assert meta['typeOfFirstFixedSurface'] == (1 if field == 'dswrf' else 103)
+        assert meta['typeOfFirstFixedSurface_native'] in ('sfc',) or field == 'dswrf'
+        assert meta['typeOfProcessedData'] == 1 and meta['typeOfProcessedData_native'] == 'fc'
+>       assert np.allclose(box, grid[gfs.ROW0:gfs.ROW1, gfs.COL0:gfs.COL1], atol=q) and np.isclose(q, 0.1)
+E       assert (True and np.False_)
+E        +  where True = <function allclose at 0x107635bf0>(array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), atol=0.0009765625)
+E        +    where <function allclose at 0x107635bf0> = np.allclose
+E        +  and   np.False_ = <function isclose at 0x107635d30>(0.0009765625, 0.1)
+E        +    where <function isclose at 0x107635d30> = np.isclose
+
+tests/cp20/test_gfs_eccodes.py:58: AssertionError
+_______ test_decode_reads_code_keys_as_integers_and_validates[dswrf-27] ________
+
+field = 'dswrf', lead = 27
+
+    @pytest.mark.parametrize('field,lead', [('u10', 21), ('v100', 46 - 1), ('dswrf', 24), ('dswrf', 27)])
+    def test_decode_reads_code_keys_as_integers_and_validates(field, lead):
+        run = dt.date(2019, 1, 1)
+        msg, grid = synthetic(run, lead, field)
+        gfs.check_frame(msg, len(msg))
+        meta, box, q = gfs.decode(msg, run, lead, field)
+        assert meta['typeOfFirstFixedSurface'] == (1 if field == 'dswrf' else 103)
+        assert meta['typeOfFirstFixedSurface_native'] in ('sfc',) or field == 'dswrf'
+        assert meta['typeOfProcessedData'] == 1 and meta['typeOfProcessedData_native'] == 'fc'
+>       assert np.allclose(box, grid[gfs.ROW0:gfs.ROW1, gfs.COL0:gfs.COL1], atol=q) and np.isclose(q, 0.1)
+E       assert (True and np.False_)
+E        +  where True = <function allclose at 0x107635bf0>(array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), array([[35.5, 36. , 36.5, ...,  6. ,  6.5,  7. ],\n       [28. , 28.5, 29. , ..., 47. , 47.5, 48. ],\n       [20.5, 21. ...],\n       [38. , 38.5, 39. , ...,  8.5,  9. ,  9.5],\n       [30.5, 31. , 31.5, ...,  1. ,  1.5,  2. ]], shape=(34, 41)), atol=0.0009765625)
+E        +    where <function allclose at 0x107635bf0> = np.allclose
+E        +  and   np.False_ = <function isclose at 0x107635d30>(0.0009765625, 0.1)
+E        +    where <function isclose at 0x107635d30> = np.isclose
+
+tests/cp20/test_gfs_eccodes.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED tests/cp20/test_gfs_eccodes.py::test_decode_reads_code_keys_as_integers_and_validates[u10-21]
+FAILED tests/cp20/test_gfs_eccodes.py::test_decode_reads_code_keys_as_integers_and_validates[v100-45]
+FAILED tests/cp20/test_gfs_eccodes.py::test_decode_reads_code_keys_as_integers_and_validates[dswrf-24]
+FAILED tests/cp20/test_gfs_eccodes.py::test_decode_reads_code_keys_as_integers_and_validates[dswrf-27]
+4 failed, 44 passed in 0.54s
+# CP-20 job tests-eccodes index 8 start 2026-09-23T17:12:11Z
+................................................                         [100%]
+48 passed in 0.46s
+# CP-20 job tests-eccodes index 20 start 2026-09-23T17:35:14Z
+......................................................                   [100%]
+54 passed in 0.59s

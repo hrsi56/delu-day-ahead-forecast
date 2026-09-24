@@ -1,0 +1,28 @@
+{
+ "abort_reason": null,
+ "active_seconds_upper_bound": 1703.0257730484009,
+ "cumulative_counts": {
+  "active_seconds": 0,
+  "analysis_passes": 0,
+  "component_attempts": 0,
+  "final_fits": 0,
+  "inner_fits": 0,
+  "machine_seconds": 1204.964013081044,
+  "main_component_attempts": 0,
+  "message_attempts": 20,
+  "policy_days": 0,
+  "primitive_fits": 0,
+  "reference_passes": 0,
+  "transfer_bytes": 745743935
+ },
+ "elapsed_seconds": 2.1578987920074724,
+ "exit_code": 0,
+ "job": "tests-weather",
+ "job_index": 10,
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/logs/tests-weather.log",
+ "peak_rss_bytes": 233996288,
+ "status": "success",
+ "supervisor_error": null,
+ "timebox_exceeded": false,
+ "written_utc": "2026-09-23T17:12:24Z"
+}
