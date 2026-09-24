@@ -69,6 +69,43 @@ location. Commit durable decisions and required evidence in their normal project
 artifacts when finished and account for retained recovery material. This containment rule does
 not relax role isolation, evidence preservation, worktree lifecycle or publication authority.
 
+## Credentials
+
+**The Owner's credentials live outside the repository**, as exports in `~/.zshrc` mirrored in
+the launchd session (`launchctl`):
+
+- `DAGSHUB_USER_TOKEN`, which is also supplied as `MLFLOW_TRACKING_USERNAME` and
+  `MLFLOW_TRACKING_PASSWORD`;
+- `ENTSOE_API_TOKEN`;
+- `HF_TOKEN`.
+
+Storing them there is the Owner's decision for a single-user, biometric-locked machine. Do not
+propose moving them or changing file permissions.
+
+- **Never see a value.** Do not open, print, grep, diff or copy `~/.zshrc`, its backups, shell
+  history or shell snapshots. Do not run `env`, `printenv`, `set`, `export -p` or
+  `launchctl getenv` where the output reaches a terminal, log or transcript. Check a variable
+  inside the consuming process and report only *set* or *unset*.
+- **Never type a value.** Do not paste or hand-type a credential into a command, file, config,
+  prompt, URL or form. Always reference the stored variable, for example `$ENTSOE_API_TOKEN` or
+  `os.environ["HF_TOKEN"]`.
+- **Changing a stored credential is the Owner's action.** An agent changes one only on explicit
+  instruction, inside a script that never prints the value.
+- **Never emit a value.** Code, tests and logs must not print a credential or dump the
+  environment. Read a required variable with `os.environ.get`, then fail or skip with a
+  message that names the variable.
+  - Under pytest, a bare `os.environ["X"]` KeyError prints the whole environment. That is how the
+    DagsHub token reached a public commit on 2026-09-24.
+  - Redact request URLs and exception text that embed a token. `entsoe-py` puts
+    `ENTSOE_API_TOKEN` in both.
+- **The secret guard is mandatory.** `core.hooksPath` points at `.githooks/`, whose pre-commit,
+  commit-msg and pre-push hooks run `scripts/secret_guard.py`. It blocks any staged or outgoing
+  content, or commit message, that contains the actual value of a local credential. Never bypass
+  it with `--no-verify` or by changing `core.hooksPath`. A block means removing the value, not
+  the guard.
+- **On exposure, stop.** Tell the Owner at once, without quoting the value. Rotation and any
+  history rewrite are Owner decisions. See `docs/track-b/credential-exposure-2026-09-24.md`.
+
 # Project role router
 
 This repository is shared by program orchestration and Track B engineering, but those execution contexts are isolated. Establish the role before mutating anything.
