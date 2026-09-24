@@ -1,6 +1,7 @@
 # CP-15 / CP-16 research update: development evidence, post-selection
 
-**2026-09-23 · Local content draft for the Owner. Not published and not staged.**
+**2026-09-23 · Publication pass 2026-09-24 (PRES-1): prepared for public release; the Owner reviews
+the page before anything is published.**
 This serves programme [4.3R/4.3C](../v3-plan-handoff-2026-09-22.md#work-4-3r) and
 [§6 local handoff](../v3-plan-handoff-2026-09-22.md#section-6). Every number here is copied from a saved
 file and rounded for display. Nothing was recalculated. Each claim is traced in the
@@ -9,6 +10,12 @@ file and rounded for display. Nothing was recalculated. Each claim is traced in 
 > **Evidence class.** Every CP-15 and CP-16 result reused here is **`development_post_selection`**.
 > All comparisons and intervals are exploratory. There are no confirmatory, family-wise or
 > product claims.
+
+**Public names (plan §7.7, §16 decision 2).** V2-H is **v2 · blended LEAR, hour-aware intervals**,
+the adopted research model that v3 builds on; CP-20's H0 is the same policy. B1 is **v1 · released
+LightGBM**, shown as its development replay. CP-10 is a calibration branch that was not adopted,
+and CP-15 is the model-comparison study that informed v2. The CP-20 result is in the
+[CP-20 update](cp20-update.md).
 
 ## Status at a glance
 
@@ -206,7 +213,8 @@ a claim of statistical significance at the level of individual hours.
     here.
   - This update introduces no threshold.
 - **Out of scope.** Nothing here promotes a product, selects a live policy, freezes CP-17,
-  starts a prospective clock, gives new confirmation, or publishes anything.
+  starts a prospective clock or gives new confirmation. Adopting v2 as the research model that
+  v3 builds on is an adoption within the research programme, not a deployment.
 - **Data notice.** ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de. Licensed CC BY 4.0.
   [`DATA-LICENSE.md`](../../../DATA-LICENSE.md) controls.
 
@@ -218,7 +226,7 @@ CP-16 commands charge a cumulative resource ledger. Review normally uses the sav
 and independent checks rather than new fits. Exact historical bytes can be retrieved with
 `git show evidence/cp-15:<path>` or `git show evidence/cp-16:<path>`.
 
-## Chart specifications (the Owner renders them)
+## Chart specifications (rendered by the page generator; the Owner approves them visually)
 
 ### Chart 1: primary equal-fold scores against the §8 improvement limits
 
