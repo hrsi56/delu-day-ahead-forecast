@@ -1,0 +1,26 @@
+{
+ "note": "Changes made after the pre-fit protocol freeze (255ecfb). None alters the frozen implementation, frozen inputs, fitted components, predictions or scores; extraction-repairs.json (r1-r12) is itself frozen and is not edited.",
+ "repairs": [
+  {
+   "defect": "the frozen available-weather positive control (all available weather x3.0) is invariant under the inherited training-only StandardScaler; its observed movement (<=4.4e-13 EUR/MWh) is floating-point round-off, so it passed on noise and cannot show that HG uses weather",
+   "file": "src/cp20/controls_supplement.py",
+   "first_run": "job 50 exited 1 before writing any output (pandas copy-on-write returned a read-only array); its base refit was charged and stays charged",
+   "fix": "explicit copy (to_numpy(copy=True)); job 51 exit 0, all four mutations passed",
+   "found_by": "CP-20 Engineering Lead reading the controls output before scoring",
+   "id": "r13",
+   "job": "controls-supplement",
+   "repair": "kept the frozen control and its output unchanged, relabelled as a units/scaling-invariance check; added two non-affine positive controls on the same two days (target-day D-1 weather shift; seeded permutation of training-history weather) with a 1e-6 EUR/MWh pass threshold; base refit must reproduce the cached HG component"
+  },
+  {
+   "file": "scripts/cp20_finalise.py",
+   "id": "finaliser",
+   "purpose": "formatting only: resources.json from the cumulative ledger, failures.csv, report.md via the frozen cp20.report.render plus an appended post-freeze section, artifact-manifest.json"
+  },
+  {
+   "file": "reports/weather-ablation/rights-notice.md",
+   "id": "rights-notice",
+   "purpose": "section 15.6 item 8 rights notice for the committed weather-derived artifacts; DATA-LICENSE.md is unchanged (Owner decision per the admission record)"
+  }
+ ],
+ "schema": "cp20-post-freeze-repairs-v1"
+}

@@ -79,8 +79,13 @@ $PY scripts/cp20_weather.py --monitor --name admission --workers 1 --log $A/logs
 $PY scripts/cp20_weather.py --monitor --name hg-evaluation --workers 4 --log $A/logs/hg-evaluation.log -- $PY -u -c "from pathlib import Path; from cp20.execution import components; components(Path('.'), 'evaluation', 4)"
 $PY scripts/cp20_weather.py --monitor --name comparison --workers 1 --log $A/logs/comparison.log -- $PY -u -c "from pathlib import Path; from cp20.execution import comparison; comparison(Path('.'))"
 $PY scripts/cp20_weather.py --monitor --name controls --workers 1 --log $A/logs/controls.log -- $PY -u -c "from pathlib import Path; from cp20.controls import run; run(Path('.'))"
+$PY scripts/cp20_weather.py --monitor --name controls-supplement --workers 1 --log $A/logs/controls-supplement.log -- $PY -u -c "from pathlib import Path; from cp20.controls_supplement import run; run(Path('.'))"
 $PY scripts/cp20_weather.py --monitor --name score --workers 1 --log $A/logs/score.log -- $PY -u -c "from pathlib import Path; from cp20.execution import score; score(Path('.'))"
+$PY scripts/cp20_weather.py --monitor --name finalise --workers 1 --log $A/logs/finalise.log -- $PY -u scripts/cp20_finalise.py
 ```
+
+`controls-supplement` (repair r13) and `scripts/cp20_finalise.py` (formatting only) were added
+after the pre-fit freeze; see `post-freeze-repairs.json`.
 
 HG component caches live in `$A/hg-components/<fold>/<day>.json`, each content-hashed and bound
 to the input fingerprint, weather-design hash and protocol hash; a stale or wrong entry is

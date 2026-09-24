@@ -1,0 +1,605 @@
+{
+ "active_hours": 3.299,
+ "active_hours_basis": "from the conservative session start 2026-09-23T15:50Z minus recorded pauses (usage-limit idle gap; Owner decision O3: unattended waits)",
+ "active_hours_hard_stop": 80.0,
+ "active_hours_timebox": 64.0,
+ "added_disk_cap_gib": 40.0,
+ "blas_threads": 1,
+ "caps_vs_use": {
+  "active_seconds": {
+   "cap": 288000,
+   "used": 11877.1
+  },
+  "analysis_passes": {
+   "cap": 3,
+   "used": 1
+  },
+  "component_attempts": {
+   "cap": 4000,
+   "used": 1312
+  },
+  "final_fits": {
+   "cap": 96000,
+   "used": 31464
+  },
+  "inner_fits": {
+   "cap": 384000,
+   "used": 125856
+  },
+  "machine_seconds": {
+   "cap": 432000,
+   "used": 143255.69889028926
+  },
+  "main_component_attempts": {
+   "cap": 3000,
+   "used": 1272
+  },
+  "message_attempts": {
+   "cap": 371400,
+   "used": 6685
+  },
+  "policy_days": {
+   "cap": 9000,
+   "used": 1937
+  },
+  "primitive_fits": {
+   "cap": 480000,
+   "used": 157320
+  },
+  "reference_passes": {
+   "cap": 3,
+   "used": 1
+  },
+  "transfer_bytes": {
+   "cap": 171798691840,
+   "used": 146033509110
+  }
+ },
+ "cloud": 0,
+ "events": [
+  {
+   "description": "Pre-ledger read-only orientation: document reads, hash checks, admission checksum verification, metadata inspection, env probes; no network, fits, replay or decoding. Conservative upper bound.",
+   "epoch": 1790179413.088684,
+   "event": "orientation_compute_upper_bound",
+   "fits": 0,
+   "policy_days": 0,
+   "seconds": 600,
+   "transfer_bytes": 0
+  },
+  {
+   "basis": "en0 rx+tx delta upper bound incl. concurrent traffic; reservation retained as the charge",
+   "epoch": 1790179443.239498,
+   "event": "wx_venv_dependency_transfer",
+   "measured_interface_delta_bytes": 42519675,
+   "pins": "reports/weather-admission/scripts/requirements.freeze.txt",
+   "reserved_bytes": 536870912,
+   "uv_cache_removed": true
+  },
+  {
+   "basis": "Usage-limit interruption: no agent activity; last file write src/cp20/net.py mtime 1790179546 (+120 s margin) to resumption; no jobs running during the gap.",
+   "end": 1790182907.1120288,
+   "epoch": 1790182907.1120288,
+   "event": "agent_idle_pause",
+   "seconds": 3241.112028837204,
+   "start": 1790179666
+  },
+  {
+   "epoch": 1790183513.9695601,
+   "event": "wx_venv_pytest_install",
+   "measured_interface_delta_bytes": 720039,
+   "package": "pytest==9.1.1 (matches modelling env) for synthetic extraction-env tests",
+   "reserved_bytes": 107374182
+  },
+  {
+   "cause": "ecCodes codes_get returns code-table keys as abbreviations; the validator compared them with integer codes. Confirmed on a locally built ecCodes GRIB2 sample: sfc<->103 and fc<->1. The decoded messages matched admission; this was a validator defect, not a data contradiction.",
+   "epoch": 1790183562.216244,
+   "event": "extraction_defect_r1",
+   "id": "r1-validator-code-key-type",
+   "repair": "read_meta() reads code-table keys with ktype=int and keeps the native abbreviations as *_native evidence; synthetic ecCodes round-trip tests added (tests/cp20/test_gfs_eccodes.py). The halt mechanism itself worked as designed."
+  },
+  {
+   "detail": "two Lead interruptions consumed production attempts; third production attempt allowed for non-review runs only",
+   "epoch": 1790184723.252033,
+   "event": "extraction_repair_r5",
+   "lead": 21,
+   "run": "2021-01-04"
+  },
+  {
+   "epoch": 1790184723.2525718,
+   "event": "h0_dryrun",
+   "policy_days": 638,
+   "result": {
+    "admission_vectors": 35,
+    "bitwise_equal": true,
+    "keys_equal": true,
+    "max_abs_difference": 0.0,
+    "policy_days_charged": 638,
+    "rows": 10747,
+    "sources": {
+     "original_no_eligible_hours": 2,
+     "verified_cp15_cache": 598,
+     "verified_cp16_cache": 38
+    }
+   }
+  },
+  {
+   "affected": {
+    "exhausted_before_O1": [
+     "2021-01-04 f021"
+    ],
+    "incomplete_runs": [
+     "2021-01-04",
+     "2022-08-25",
+     "2023-03-24"
+    ],
+    "messages": 470,
+    "runs": 11
+   },
+   "epoch": 1790184965.5914052,
+   "event": "owner_decision_O1",
+   "implementation": "extra = min(2, attempts logged before the full-extraction start epoch 1790184500.409214, i.e. subset jobs 3, 11, 12); production limit = 2 + extra; attempts beyond 2 are tagged owner_approved_prerun_replacement, appended to prerun_replacement_attempts.jsonl and counted in ledger counter prerun_replacement_attempts (still inside message_attempts). All section 15.5 caps unchanged.",
+   "source": "Owner instruction in the CP-20 session, 2026-09-23 (after 2021-01-04 failed with production attempt allowance exhausted)",
+   "text": "Approve up to two additional production attempts per target message whose allowance was consumed by pre-run testing; log them separately. No other cap changes."
+  },
+  {
+   "conclusion": "the AWS flow collapses only while an NCAR bulk flow shares the local link; the collapse mechanism is in the network path (outside the repository), the trigger was the two-lane concurrent scheduling (r4); r7 code is not the cause (slowdown began in job 23 before r7)",
+   "epoch": 1790186863.25084,
+   "event": "extraction_repair_r8"
+  },
+  {
+   "epoch": 1790187523.277045,
+   "event": "waiting_for_owner",
+   "reason": "AWS path degraded outside the repository (O2 instruction: report and wait); O2 pasted without surrounding instruction - confirmation requested before applying the counting-rule change",
+   "running_jobs": []
+  },
+  {
+   "backfill": {
+    "interrupted_or_discarded": 63,
+    "network_failure": 10,
+    "success": 300,
+    "validation_failure": 4
+   },
+   "epoch": 1790189614.711509,
+   "event": "owner_decisions_O2_S1_applied",
+   "resumed_after_owner_wait_seconds": 2091.4344639778137
+  },
+  {
+   "detail": "r10 dev-copy test runs (62 wx + 82 modelling tests, ~15 s wall) executed outside the monitor; conservatively charged 60 s; synthetic only, no network or research data",
+   "epoch": 1790202483.830543,
+   "event": "unmonitored_dev_tests_charge",
+   "seconds": 60
+  },
+  {
+   "commit": "097a2e9",
+   "epoch": 1790202542.236829,
+   "event": "owner_decision_O2_A1_and_r10",
+   "ncar_phase_code": "d4b6977"
+  },
+  {
+   "epoch": 1790203074.186121,
+   "event": "o2_a1_restored",
+   "job_index": "36",
+   "records": 4800
+  },
+  {
+   "detail": "r11 dev-copy syntax/test runs outside the monitor; synthetic only",
+   "epoch": 1790205222.896173,
+   "event": "unmonitored_dev_tests_charge",
+   "seconds": 60
+  },
+  {
+   "epoch": 1790205314.4727192,
+   "event": "o2_a1_restored",
+   "job_index": "37",
+   "records": 4800
+  },
+  {
+   "epoch": 1790205357.0798998,
+   "event": "owner_decision_O3_retroactive_pauses",
+   "pauses": [
+    {
+     "basis": "chain run 1 unattended after phase-1 health check (last command 18:59:56Z) until the Owner message (first command 22:26:00Z)",
+     "from": "2026-09-23T19:02:00Z",
+     "to": "2026-09-23T22:25:30Z"
+    },
+    {
+     "basis": "AWS phase unattended after the health check (last command 22:48:34Z) until the waiter notification (22:58:00Z)",
+     "from": "2026-09-23T22:50:30Z",
+     "to": "2026-09-23T22:57:30Z"
+    },
+    {
+     "basis": "AWS phase unattended after the pace report until the Owner message (first command 23:13:06Z)",
+     "from": "2026-09-23T23:06:00Z",
+     "to": "2026-09-23T23:12:30Z"
+    }
+   ]
+  },
+  {
+   "detail": "r12 dev-copy test runs outside the monitor; synthetic only",
+   "epoch": 1790205449.594243,
+   "event": "unmonitored_dev_tests_charge",
+   "seconds": 60
+  },
+  {
+   "epoch": 1790205593.953282,
+   "event": "o2_a1_restored",
+   "job_index": "38",
+   "records": 4800
+  },
+  {
+   "detail": "RUNNING handback: chain run 3 unattended; pause starts 60 s after the last command",
+   "epoch": 1790205718.956627,
+   "event": "o3_wait_opened"
+  },
+  {
+   "epoch": 1790213992.20546,
+   "event": "o2_a1_restored",
+   "job_index": "39",
+   "records": 4800
+  },
+  {
+   "epoch": 1790214101.592254,
+   "event": "o2_a1_restored",
+   "job_index": "40",
+   "records": 4800
+  },
+  {
+   "detail": "chain run 3 unattended wait closed at the chain end (earliest resume point; the completion notification woke the session at 04:59:01Z)",
+   "epoch": 1790225964.4990149,
+   "event": "o3_wait_closed",
+   "from": 1790205778.956626,
+   "to": 1790225937.052619
+  },
+  {
+   "epoch": 1790226122.616089,
+   "event": "hg_components_start",
+   "stage": "warmup",
+   "tasks": 188,
+   "workers": 4
+  },
+  {
+   "epoch": 1790226763.154356,
+   "event": "hg_components_complete",
+   "stage": "warmup",
+   "tasks": 188
+  },
+  {
+   "epoch": 1790226834.638721,
+   "event": "hg_components_start",
+   "stage": "evaluation",
+   "tasks": 450,
+   "workers": 4
+  },
+  {
+   "epoch": 1790228357.173167,
+   "event": "hg_components_complete",
+   "stage": "evaluation",
+   "tasks": 450
+  }
+ ],
+ "external_cost_usd": 0,
+ "extraction": {
+  "attempt_outcomes": {
+   "discarded_with_run": 1855,
+   "integrity_failure": 4800,
+   "interrupted_or_discarded": 315,
+   "network_failure": 50,
+   "success": 125655,
+   "validation_failure": 20
+  },
+  "classified_failure_records": 482,
+  "effective_counted_attempts_after_o2_a1": 20,
+  "failure_records_resolved_by_later_completion": true,
+  "job_code_versions": [
+   {
+    "endpoint": "aws",
+    "git_head": "69b268acef8a",
+    "job_index": "36",
+    "start_utc": "2026-09-23T22:37:54Z",
+    "workers": 1
+   },
+   {
+    "endpoint": "aws",
+    "git_head": "47607dfe7bc9",
+    "job_index": "37",
+    "start_utc": "2026-09-23T23:15:14Z",
+    "workers": 4
+   },
+   {
+    "endpoint": "aws",
+    "git_head": "1b5997dc984f",
+    "job_index": "38",
+    "start_utc": "2026-09-23T23:19:53Z",
+    "workers": 4
+   },
+   {
+    "endpoint": "aws",
+    "git_head": "fe18fc9ae5c0",
+    "job_index": "39",
+    "start_utc": "2026-09-24T01:39:51Z",
+    "workers": 4
+   },
+   {
+    "endpoint": "ncar",
+    "git_head": "fe18fc9ae5c0",
+    "job_index": "40",
+    "start_utc": "2026-09-24T01:41:41Z",
+    "workers": 4
+   }
+  ],
+  "max_effective_counted_attempts_per_target_message": 1,
+  "max_tries_any_outcome_per_target_message": 4,
+  "o1_prerun_replacement_attempts": 5,
+  "o2_a1_restored_lead_tries": 960,
+  "o2_a1_restored_locator_defect_message_attempts": 4800,
+  "request_log": {
+   "failed_network": 937,
+   "requests": 216614,
+   "requests_aws": 70871,
+   "requests_ncar": 145743
+  },
+  "required_runs_complete": 2476,
+  "target_messages_seen": 123800,
+  "target_messages_tried_more_than_once": 4595,
+  "target_messages_with_effective_counted_attempts": 20
+ },
+ "extraction_machine_hour_stop_line": 100,
+ "gpu": 0,
+ "jobs_by_name": {
+  "admission": {
+   "charged_machine_hours": 0.01,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "assemble": {
+   "charged_machine_hours": 0.004,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "build-wx-venv": {
+   "charged_machine_hours": 0.003,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "comparison": {
+   "charged_machine_hours": 0.008,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "controls": {
+   "charged_machine_hours": 0.07,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "controls-supplement": {
+   "charged_machine_hours": 0.041,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "diag-concurrent": {
+   "charged_machine_hours": 0.04,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "diag-probe": {
+   "charged_machine_hours": 0.004,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "finalise": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 2,
+    "None": 1
+   },
+   "jobs": 3
+  },
+  "gfs-extract": {
+   "charged_machine_hours": 36.89,
+   "exit_codes": {
+    "-9": 3,
+    "0": 3,
+    "2": 5,
+    "4": 1,
+    "5": 1
+   },
+   "jobs": 13
+  },
+  "guards": {
+   "charged_machine_hours": 0.002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "h0-dryrun": {
+   "charged_machine_hours": 0.035,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "hg-evaluation": {
+   "charged_machine_hours": 1.694,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "hg-warmup": {
+   "charged_machine_hours": 0.713,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "protocol": {
+   "charged_machine_hours": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "run-manifest": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "score": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "subset-sanity": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "tests": {
+   "charged_machine_hours": 0.011,
+   "exit_codes": {
+    "0": 4
+   },
+   "jobs": 4
+  },
+  "tests-arms": {
+   "charged_machine_hours": 0.002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "tests-attempts": {
+   "charged_machine_hours": 0.005,
+   "exit_codes": {
+    "0": 1,
+    "1": 2
+   },
+   "jobs": 3
+  },
+  "tests-eccodes": {
+   "charged_machine_hours": 0.002,
+   "exit_codes": {
+    "0": 2,
+    "1": 2,
+    "4": 1
+   },
+   "jobs": 5
+  },
+  "tests-locator": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "tests-retry": {
+   "charged_machine_hours": 0.002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "tests-weather": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "tests-wx": {
+   "charged_machine_hours": 0.003,
+   "exit_codes": {
+    "0": 3
+   },
+   "jobs": 3
+  },
+  "throughput-probe": {
+   "charged_machine_hours": 0.031,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "wx-venv-pytest": {
+   "charged_machine_hours": 0.001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  }
+ },
+ "jobs_total": 56,
+ "ledger": ".local/artifacts/cp-20/ledger/budget.json (cumulative, never reset)",
+ "machine_hours": 39.793,
+ "machine_hours_cap": 120.0,
+ "message_attempts_note": "ledger message_attempts is the cumulative charge: 1,885 pre-O2 charges plus the 4,800 locator-defect failures later restored under O2-A1 (not refunded in the ledger); message_tries counts every try of any outcome",
+ "pauses": [
+  [
+   1790179666,
+   1790182907.1120288
+  ],
+  [
+   1790187523.277045,
+   1790189614.711508
+  ],
+  [
+   1790190120.0,
+   1790202330.0
+  ],
+  [
+   1790203830.0,
+   1790204250.0
+  ],
+  [
+   1790204760.0,
+   1790205150.0
+  ],
+  [
+   1790205778.956626,
+   1790225937.052619
+  ]
+ ],
+ "peak_added_disk_gib": 1.989,
+ "peak_aggregate_rss_gib": 3.725,
+ "rss_cap_gib": 10.0,
+ "schema": "cp20-resources-v1",
+ "tracked": {
+  "decoded_messages": 125950,
+  "failed_requests": 938,
+  "message_tries": 128955,
+  "network_retries": 927,
+  "prerun_replacement_attempts": 5,
+  "requests": 216635,
+  "runs_completed": 0,
+  "uncounted_message_tries": 1855
+ },
+ "transfer_gib": 136.004,
+ "transfer_gib_cap": 160.0,
+ "transfer_stop_line_gib": 150,
+ "workers_max": 4
+}
