@@ -146,7 +146,7 @@ These claims carry the page's own wording. Numbers in them come from the records
 | P12 | CP-10: recalibrating v1 without refitting raised crisis-window 95% coverage from 19.36% to 32.11% (79/408 → 131/408); not adopted. | PW10 L2, L4; SEL10 `same_window_diagnostic` | S |
 | P13 | Demo startup: a short visible note (runs in the browser; about 57 MB on a first visit; startup time varies) and a closed disclosure with what the demo does and the recorded cold-start measurement — seconds, browser, machine and date read from the release record, never typed into the generator. | V1 (`wasm_cold_load_mb`); DEMO `runs`, `playwright_host`, `date`; REV §4A | S |
 | P14 | Adoption labels and evidence badges are separate signals; "Adopted" never implies deployment or outside validation. | PLAN §7.8 | Def |
-| P15 | Contribution statement: the Owner's own wording, displayed as written. Not a research claim. | PLAN §8.9 | O |
+| P15 | Contribution statement: the Owner's wording as approved at Stop 1 on 2026-09-25 (the D1 review's proposed replacement for the plan §8.9 rendering), displayed as written and signed with the Owner's approved public name, which also appears once as a byline near the opening ("Led by …", linked to the statement). Not a research claim. | PLAN §8.9; REV §5.2, §5.4; the Owner's Stop 1 answers, 2026-09-25 | O |
 
 ## Gaps: documented, not resolved
 

@@ -1308,6 +1308,7 @@ def opening(C, payload) -> str:
   <h1 id="title">Day-ahead electricity forecasts, with uncertainty.</h1>
   <p class="lede">Explore hourly price forecasts and prediction intervals on historical days. See how successive
    research models improved, what failed, and how each result was checked.</p>
+  <p class="byline">Led by {esc(RC.OWNER_PUBLIC_NAME)} · <a href="#contribution">Contribution</a></p>
   <dl class="status-pair">
    <div class="status status-released"><dt>Demo</dt><dd><span class="gen gen-v1">{ver("v1")}</span> · Released model</dd></div>
    <div class="status status-research"><dt>Research</dt><dd><span class="gen gen-v3">{ver("v3")}</span> · Weather features
@@ -1578,7 +1579,8 @@ def contribution() -> str:
     return f"""
 <section class="section contribution" id="contribution" aria-labelledby="contribution-h">
  <h2 id="contribution-h">Contribution</h2>
- <blockquote class="statement"><p>{esc(RC.CONTRIBUTION_STATEMENT)}</p></blockquote>
+ <blockquote class="statement"><p>{esc(RC.CONTRIBUTION_STATEMENT)}</p>
+ <footer>{esc(RC.OWNER_PUBLIC_NAME)}</footer></blockquote>
 </section>"""
 
 
@@ -1648,6 +1650,8 @@ h3{{font-size:19px;line-height:1.35;margin:0 0 8px}}
 p{{margin:0 0 16px;max-width:var(--prose)}}
 .eyebrow{{color:var(--text-2);font-size:14px;font-weight:600;letter-spacing:.02em;margin:0 0 8px}}
 .lede{{font-size:19px;line-height:30px;color:var(--text-2);max-width:48ch}}
+.byline{{font-size:14px;line-height:22px;color:var(--text-2);margin:-4px 0 20px}}
+.statement footer{{margin-top:10px;font-size:15px;font-weight:600;color:var(--text)}}
 .section{{padding:64px 0 16px;border-top:1px solid var(--border)}}
 /* opening */
 .opening{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:start;padding:48px 0 48px}}

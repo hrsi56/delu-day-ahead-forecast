@@ -74,13 +74,19 @@ PLANNED = "Planned, not evaluated"
 
 #: The Owner's contribution statement (plan §8.9), displayed exactly as written. It is not a
 #: research claim, and only the Owner changes it.
+#: The Owner's contribution statement. Plan §8.9 carried the first English rendering; at Stop 1
+#: (2026-09-25) the Owner approved the wording proposed in the D1 editorial review, shown as written.
 CONTRIBUTION_STATEMENT = (
-    "I led this project, from defining the problem and the success criteria to the decisions on "
-    "the research direction and on how the product is presented. The work was carried out with "
-    "the help of AI agents for writing code, analysis and documentation, in a process that "
-    "included automated tests and reviews kept separate from the execution. Responsibility for "
-    "adoption decisions, for approving the deliverables and for publication was mine."
+    "I led the project's problem definition, evaluation criteria and research direction, and made "
+    "the decisions on model adoption and product presentation. AI agents assisted with "
+    "implementation, analysis and documentation. Automated tests and reviews separate from "
+    "implementation supported verification. I retained responsibility for approving deliverables "
+    "and publication."
 )
+
+#: The Owner's approved public name (Stop 1, 2026-09-25), used once as a byline near the opening
+#: and to sign the contribution statement.
+OWNER_PUBLIC_NAME = "Yarden Viktor Dejorno"
 
 # --------------------------------------------------------------------------- blocks
 
@@ -176,7 +182,7 @@ BLOCKS: tuple[Block, ...] = (
            against the original criteria to meet all six; {s:version:v2} misses criteria
            {s:criterion:1} and {s:criterion:2}. This is a development diagnostic, not a product
            qualification."""),
-    _block("v3.helps", "C79", """**Where it helps most:** in the {s:date:2022} price peak, a short window inside the crisis fold, MAE goes from
+    _block("v3.helps", "C79", """**Performance during the {s:date:2022} price peak:** in this short window inside the crisis fold, MAE goes from
            {r:cp20.criteria.H0.c4.peak.MAE} to {r:cp20.criteria.HG.c4.peak.MAE} EUR/MWh, and the hours
            inside the {s:level:95%} interval from {r:cp20.diagnostics.H0.peak.hit_count95} to
            {r:cp20.diagnostics.HG.peak.hit_count95} of {r:cp20.diagnostics.HG.peak.n_hours}.
@@ -538,6 +544,7 @@ __all__ = [
     "CLAIM_MAPS",
     "CONTRIBUTION_STATEMENT",
     "ClaimError",
+    "OWNER_PUBLIC_NAME",
     "EXACT_FIELDS",
     "NOT_ADOPTED",
     "PLANNED",

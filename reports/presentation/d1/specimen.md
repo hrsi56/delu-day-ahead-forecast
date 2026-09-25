@@ -117,14 +117,20 @@ vs the canvas):
   `--accent`, all above 3:1. Dashed outlines now mean "planned" only; the finished experiments in
   the lineage have solid outlines.
 
-## Waiting on the Owner
+## The Owner's Stop 1 decisions (2026-09-25, in the PRES-1 session)
 
-- **Contribution wording.** The review proposes a replacement (§5.2), subject to the Owner's
-  explicit approval. The page still shows the plan §8.9 wording, unchanged.
-- **A public name for a byline.** The review recommends a compact byline near the opening, linked to
-  the full statement (§5.2, §5.4). It needs the Owner's approved public name, so no byline is shown.
-- **The 2026-09-24 device test.** The device, browser and outcome are still unrecorded; emulated
-  widths do not stand in for them (§5.3).
+- **One more content correction.** The v3 block's heading "Where it helps most" claimed a ranking
+  that the cited crisis-window evidence does not establish. It now reads "Performance during the
+  2022 price peak".
+- **Contribution wording: approved.** The page shows the review's proposed wording (§5.2) as
+  written, signed with the Owner's name.
+- **Public name: Yarden Viktor Dejorno.** It appears once as a compact byline under the opening
+  description, "Led by Yarden Viktor Dejorno · Contribution", linked to the full statement (§5.2,
+  §5.4). "Led by" follows the statement and claims no sole implementation.
+- **Device test: the Owner reported that everything was in order**, and said to continue. The
+  outcome is recorded in `release-checks/2026-09-24-demo.json`; the device and browser were not
+  supplied.
+- **D1 approved** with the correction above; D2 proceeds.
 
 ## Not checked in D1
 

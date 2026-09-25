@@ -98,7 +98,7 @@ not in the demo" and "The demo continues to run v1" as clear, and noted two weak
 | Finding | Change |
 |---|---|
 | Phone lineage: the two experiment cards follow v3, so they read as later than v3 | A label, "Experiments between v1 and v2", heads the branch cards; they have solid outlines, because dashed outlines mean "planned" on this page |
-| "less certain in the 2022 crisis fold" next to "Where it helps: in the 2022 crisis window" reads as a mixed message; fold, window and period seem interchangeable | "Where it helps most: in the 2022 price peak, a short window inside the crisis fold, …"; the fair-comparison note now introduces the five historical test periods as "folds" and says the third covers the 2022 crisis |
+| "less certain in the 2022 crisis fold" next to "Where it helps: in the 2022 crisis window" reads as a mixed message; fold, window and period seem interchangeable | The block names the window inside the crisis fold, and the fair-comparison note introduces the five historical test periods as "folds" and says the third covers the 2022 crisis. The first replacement heading, "Where it helps most", implied a ranking the evidence does not establish; at the Owner's correction (2026-09-25) it reads "Performance during the 2022 price peak" |
 | "the three-feature bundle" beside a list of four items | The missing-data indicator is a note under the three features, not a fourth item |
 | "How it improved, newest first" could suggest the product improved | "How the research improved, newest first" |
 | "Space cards" is internal vocabulary | "the demo's description cards" |
