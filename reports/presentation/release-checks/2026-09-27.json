@@ -1,16 +1,16 @@
 {
   "app_revision": {
-    "note": "the page, cards and Space build as generated at this commit; this record is committed on top of it",
-    "page_generator_commit": "03aea8df06c27d13d7ed1b255950efabd33db8a8"
+    "page_generator_commit": "67570c83bde2e754509dac2141b0e82e910c5c54",
+    "space_build": "unchanged since 5386a0f (reports/cp3b/space_wasm_bundle.json)"
   },
   "browsers": [
     "Google Chrome 153.0.8010.54 (Playwright, channel chrome, headless)",
     "WebKit 26.6 (Playwright's build of the Safari engine; not Safari)"
   ],
-  "check": "browser and accessibility checklist (plan \u00a711.3), PRES-1 D2",
+  "check": "browser and accessibility checklist (plan \u00a711.3), PRES-1 E, after the independent check's round 1",
   "date": "2026-09-27",
   "demo": {
-    "build": "dist/space-wasm built at this revision (startup states injected), served from 127.0.0.1:8765",
+    "build": "dist/space-wasm with the startup states, served from 127.0.0.1",
     "cold_start": [
       {
         "engine": "chrome",
@@ -82,10 +82,6 @@
       }
     ],
     "outcome": "pass on the local build; the deployed Space gets the states only at F7",
-    "records": [
-      "release-checks/2026-09-25-demo-local.json",
-      "release-checks/2026-09-25-space-states-local.json"
-    ],
     "states": [
       {
         "asset_failure": {
@@ -164,7 +160,7 @@
         }
       }
     ],
-    "webkit_console_errors": "four font files 404 in WebKit only; the same four appear on the deployed Space in the Phase 0 record (marimo's font paths); they do not affect the states"
+    "webkit_console_errors": "four font files 404 in WebKit only, as on the deployed Space in the Phase 0 record (marimo's font paths); they do not affect the states"
   },
   "device": "this Mac (arm64, Darwin 25.5.0); phone widths are emulated viewports",
   "full_a11y_runs": [
@@ -174,12 +170,22 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 2171
+          "checked": 2171,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 549
+          }
         },
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 2162
+          "checked": 2164,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 527
+          }
         }
       },
       "engine": "chrome",
@@ -187,7 +193,7 @@
         "anchor_into_closed_disclosure_opens_it": true,
         "first_stop": "Skip to the content",
         "in_document_order": true,
-        "stops_checked": 40,
+        "stops_checked": 54,
         "summary_toggles_on_enter": true,
         "tab_key": "Tab",
         "without_visible_focus": []
@@ -224,12 +230,22 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 2171
+          "checked": 2171,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 549
+          }
         },
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 2162
+          "checked": 2164,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 527
+          }
         }
       },
       "engine": "webkit",
@@ -237,7 +253,7 @@
         "anchor_into_closed_disclosure_opens_it": true,
         "first_stop": "Skip to the content",
         "in_document_order": true,
-        "stops_checked": 40,
+        "stops_checked": 54,
         "summary_toggles_on_enter": true,
         "tab_key": "Alt+Tab",
         "without_visible_focus": []
@@ -273,17 +289,15 @@
     "local_rehearsal": "passed 2026-09-27 (mlflow-capabilities.json)",
     "outcome": "not yet applicable: routes are advertised only after the public upload (F1) and checked at F3"
   },
-  "not_checked_here": [
-    "Desktop Safari and iPhone Safari themselves (WebKit through Playwright is the engine, not the browsers)",
-    "screen-reader announcements (disclosures are native details/summary; not heard with a screen reader)",
-    "the deployed Space with the states (after F7)"
-  ],
-  "records_used": [
-    "charts: check_reader_paths.py charts docs/index.html",
-    "route: check_reader_paths.py route docs/index.html",
-    "screens: check_reader_paths.py screens docs/index.html [--open-all]",
-    "a11y: check_reader_paths.py a11y docs/index.html --engine chrome --engine webkit"
-  ],
+  "owner_hand_checks": {
+    "checklist": "docs/track-b/evidence/pres-1/owner-hand-checks.md",
+    "rows": [
+      "Desktop Safari: layout and 200% zoom, charts, the replay route, keyboard and focus, VoiceOver on disclosures and charts, the figure viewer",
+      "iPhone Safari: layout, charts, the replay route, touch targets, VoiceOver, the figure viewer"
+    ],
+    "status": "pending: needs a person, a real Safari, a real iPhone and VoiceOver",
+    "why_not_automated": "no iOS simulator runtime is installed here (iOS 18.2 unavailable), and driving Safari needs safaridriver or Apple Events JavaScript enabled, which changes system settings"
+  },
   "report": {
     "content": {
       "archive_results_link_stays_in_v1": {
@@ -341,22 +355,30 @@
     "contrast": {
       "chrome": {
         "1440": {
-          "below_threshold": 0,
+          "chart_shapes": 549,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
           "text_elements": 2171
         },
         "390": {
-          "below_threshold": 0,
-          "text_elements": 2162
+          "chart_shapes": 527,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
+          "text_elements": 2164
         }
       },
       "webkit": {
         "1440": {
-          "below_threshold": 0,
+          "chart_shapes": 549,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
           "text_elements": 2171
         },
         "390": {
-          "below_threshold": 0,
-          "text_elements": 2162
+          "chart_shapes": 527,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
+          "text_elements": 2164
         }
       }
     },
@@ -365,7 +387,7 @@
         "anchor_into_closed_disclosure_opens_it": true,
         "first_stop": "Skip to the content",
         "in_document_order": true,
-        "stops_checked": 40,
+        "stops_checked": 54,
         "summary_toggles_on_enter": true,
         "tab_key": "Tab",
         "without_visible_focus": []
@@ -374,7 +396,7 @@
         "anchor_into_closed_disclosure_opens_it": true,
         "first_stop": "Skip to the content",
         "in_document_order": true,
-        "stops_checked": 40,
+        "stops_checked": 54,
         "summary_toggles_on_enter": true,
         "tab_key": "Alt+Tab",
         "without_visible_focus": []
@@ -454,7 +476,6 @@
           "768": false
         }
       },
-      "outcome": "pass",
       "smallest_chart_text_px": 12,
       "widths": [
         1440,
@@ -464,7 +485,7 @@
         320
       ]
     },
-    "outcome": "pass",
+    "outcome": "pass in Chrome and in the WebKit engine",
     "touch_targets_390": {
       "chrome": {
         "checked": 85,
@@ -514,5 +535,5 @@
       }
     }
   },
-  "screenshots": ".local/artifacts/presentation/d2/ (not committed)"
+  "screenshots": ".local/artifacts/presentation/e2/ (not committed)"
 }
