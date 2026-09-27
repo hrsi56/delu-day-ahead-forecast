@@ -34,6 +34,8 @@ from delu_forecast import research as R  # noqa: E402
 from delu_forecast.claims import GITHUB_URL, PAGES_URL  # noqa: E402
 from delu_forecast.research_claims import POLICY_NAMES  # noqa: E402
 
+import build_pages  # noqa: E402  (the page's own chart builders, for the chart artifacts)
+
 EXPORT_DIR = ROOT / "reports" / "presentation" / "mlflow-export"
 EXPERIMENT = "delu-generations"
 
@@ -550,10 +552,16 @@ def child_run(checkpoint: str, code: str, role: str, adopted: str, label: str, g
         "inputs": inputs,
     }
     summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
+    charts = [(f"charts/{chart_id}.svg", build_pages.standalone_svg(build()))
+              for chart_id, build in build_pages.CHARTS_BY_RUN.get(run_key, ())]
+    readme = _readme(checkpoint, run_key, run_name, blobs)
+    if charts:
+        readme += ("\nCharts, drawn by the page build from the same records as the report:\n\n"
+                   + "".join(f"- `{path}`\n" for path, _ in charts))
     run["artifacts"] = [
         _artifact("summary.json", summary + "\n"),
-        _artifact("README.md", _readme(checkpoint, run_key, run_name, blobs)),
-    ]
+        _artifact("README.md", readme),
+    ] + [_artifact(path, content) for path, content in charts]
     return run
 
 

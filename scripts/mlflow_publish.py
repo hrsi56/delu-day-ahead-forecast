@@ -124,6 +124,17 @@ def _find(client, experiment_id: str, run_key: str):
     return runs[0] if runs else None
 
 
+def _artifact_paths(client, run_id: str, folder: str | None = None) -> set[str]:
+    """Every artifact path already on a run, folders included (the chart artifacts sit in charts/)."""
+    paths = set()
+    for item in client.list_artifacts(run_id, folder):
+        if item.is_dir:
+            paths |= _artifact_paths(client, run_id, item.path)
+        else:
+            paths.add(item.path)
+    return paths
+
+
 def _log_run(client, reader: V.Reader, experiment_id: str, run: dict, parent_id: str | None,
              tool_sha: str, writes: Writes, log: list) -> str:
     from mlflow.entities import Dataset, DatasetInput, InputTag, Metric, Param, RunTag
@@ -182,14 +193,16 @@ def _log_run(client, reader: V.Reader, experiment_id: str, run: dict, parent_id:
             dataset_status = "logged"
         except Exception as exc:  # recorded as a capability gap; digests remain in the tags
             dataset_status = f"unsupported: {type(exc).__name__}"
-    present_artifacts = {item.path for item in client.list_artifacts(run_id)} if action == "resumed" else set()
+    present_artifacts = _artifact_paths(client, run_id) if action == "resumed" else set()
     with tempfile.TemporaryDirectory() as scratch:
         for artifact in run["artifacts"]:
             if artifact["path"] in present_artifacts:
                 continue
             local = Path(scratch) / artifact["path"]
+            local.parent.mkdir(parents=True, exist_ok=True)
             local.write_text(artifact["content"])
-            client.log_artifact(run_id, str(local))
+            folder = str(Path(artifact["path"]).parent)
+            client.log_artifact(run_id, str(local), artifact_path=None if folder == "." else folder)
             writes.tick()
     # Read back before marking complete.
     for key, points in run["metrics"].items():

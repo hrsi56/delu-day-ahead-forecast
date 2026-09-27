@@ -109,8 +109,11 @@ metric names never make two runs comparable; a matching ID does.
   digests and committed paths only; no data is uploaded.
 - **Artifacts, inline in the export with their SHA-256:** `summary.json` (the run's exact export
   entry) and `README.md` (links to the report, the Integration review, the landing record and the
-  source rows at the evidence tag). The page's SVG charts are added to the candidate runs when the
-  page is built (D2), before the Owner reviews the packet.
+  source rows at the evidence tag). The page's own SVG charts go to the candidate runs they show,
+  as `charts/<chart-id>.svg`, each the chart's desktop drawing made standalone and byte-identical
+  to the page: `cp20/HG` (v3) carries the overview comparison and C2a–C6, and `cp16/V2-H` (v2) its
+  two charts. The CP-10 and CP-15 candidates have no chart of their own on the site, so they carry
+  none. The README lists the charts. The publisher logs nested paths and resumes them.
 
 ## 7. Publishing, in order
 

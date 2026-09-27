@@ -133,6 +133,23 @@ def test_artifact_digests_match_their_content(runs):
             assert hashlib.sha256(artifact["content"].encode()).hexdigest() == artifact["sha256"]
 
 
+def test_candidate_runs_carry_the_pages_own_charts(runs):
+    """Plan §10.6: the site's SVG charts on the candidate runs they show, identical to the page."""
+    import build_pages as B
+
+    with_charts = {key for key, run in runs.items() if any(a["path"].startswith("charts/") for a in run["artifacts"])}
+    assert with_charts == {"cp20/HG", "cp16/V2-H"}
+    page = (REPO_ROOT / "docs" / "index.html").read_text()
+    for run_key, charts in B.CHARTS_BY_RUN.items():
+        artifacts = {a["path"]: a["content"] for a in runs[run_key]["artifacts"]}
+        for chart_id, _ in charts:
+            svg = artifacts[f"charts/{chart_id}.svg"]
+            assert svg.startswith('<?xml version="1.0"') and 'xmlns="http://www.w3.org/2000/svg"' in svg
+            drawing = re.sub(r'^<svg width="[\d.]+" height="[\d.]+" ', "<svg ", svg.split("\n", 1)[1].rstrip("\n"))
+            assert drawing in page, f"{chart_id}: the artifact is not the page's drawing"
+            assert f"charts/{chart_id}.svg" in artifacts["README.md"]
+
+
 # -- the outbound scan ----------------------------------------------------------------
 
 
@@ -148,6 +165,10 @@ def test_negative_control_a_fake_credential_is_caught_and_never_printed(built):
     findings = E.outbound_findings(E.outbound_strings(doctored), [("FAKE_TOKEN", token.encode())])
     assert findings and all(token not in finding for finding in findings)
     assert any("cp20/HG tag delu.evidence_ref" in finding for finding in findings)
+    # the chart files are scanned byte for byte too
+    doctored["cp20"]["runs"][1]["artifacts"][-1]["content"] += f"<!-- {token} -->"
+    findings = E.outbound_findings(E.outbound_strings(doctored), [("FAKE_TOKEN", token.encode())])
+    assert any("artifact charts/" in finding for finding in findings)
 
 
 def test_negative_control_the_export_command_refuses_and_hides_the_value(built):

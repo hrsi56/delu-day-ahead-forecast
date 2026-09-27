@@ -1116,6 +1116,24 @@ def c4_chart() -> str:
     )
 
 
+def c5_chart() -> str:
+    return hour_panels("v3-c5", "C82", (("v2", "H0"), ("v3", "HG")),
+                       title="MAE by local hour, v2 against v3, per fold",
+                       desc="Five panels, one per fold, each on its own scale: v2 dashed with squares, v3 solid "
+                            "with circles. Descriptive only.")
+
+
+def standalone_svg(chart_html: str) -> str:
+    """A chart's desktop drawing as a standalone SVG file: the page's drawing, plus the width and
+    height a viewer needs when the file is shown on its own (they equal the viewBox)."""
+    match = re.search(r'<svg class="d".*?</svg>', chart_html, re.DOTALL)
+    if match is None:
+        raise ValueError("no desktop drawing in this chart")
+    width, height = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', match.group(0)).groups()
+    drawing = match.group(0).replace("<svg ", f'<svg width="{width}" height="{height}" ', 1)
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + drawing + "\n"
+
+
 def c6_panels():
     def rows(kind: str) -> tuple[MultiRow, ...]:
         out = []
@@ -1187,6 +1205,14 @@ def v2_chart1() -> str:
         desc="Six policies from the v2 study; both v2 arms have the lowest ratios but stay above the diagnostic limits.",
         label_width=236,
     )
+
+
+#: The charts the MLflow export attaches to the candidate runs they show (plan §10.6).
+CHARTS_BY_RUN = {
+    "cp20/HG": (("overview", overview_chart), ("v3-c2a", c2a_chart), ("v3-c2b", c2b_chart), ("v3-c3", c3_chart),
+                ("v3-c4", c4_chart), ("v3-c5", c5_chart), ("v3-c6", c6_chart)),
+    "cp16/V2-H": (("v2-chart1", v2_chart1), ("v2-chart2", v2_chart2)),
+}
 
 
 # --------------------------------------------------------------------------- value tables (§7.5, review R07)
@@ -1432,9 +1458,7 @@ def v3_chapter(*, open_folds: bool = False) -> str:
   {disclosure("v3-features", "How the weather features are built", block("v3.recipe") + block("v3.missing") + block("v3.availability"))}
   {disclosure("v3-folds", "Consistency across the five periods", folds, open_=open_folds)}
   {disclosure("v3-crisis", "Crisis window", crisis_note + c4_chart() + values_table("v3-c4-values", "C79", c4_panels()))}
-  {disclosure("v3-hours", "Hours of the day", hour_panels("v3-c5", "C82", (("v2", "H0"), ("v3", "HG")),
-              title="MAE by local hour, v2 against v3, per fold",
-              desc="Five panels, one per fold, each on its own scale: v2 dashed with squares, v3 solid with circles. Descriptive only.")
+  {disclosure("v3-hours", "Hours of the day", c5_chart()
               + '<p class="chart-note">Descriptive only: no hour or block effect is claimed.</p>'
               + hour_values_table("v3-c5-values", "C82", (("v2", "H0"), ("v3", "HG"))))}
   {disclosure("v3-coverage", "Coverage and interval width", c6_chart() + multi_values_table("v3-c6-values", "C80", c6_panels()))}
