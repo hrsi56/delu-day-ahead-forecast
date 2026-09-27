@@ -513,7 +513,11 @@ def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str
     else:
         gap = 40
         panel_w = (DESKTOP_W - label_width - gap * (len(panels) - 1)) / len(panels)
-        body_top = 66
+        # a subtitle wraps inside its panel (about 7 px per character of 13 px text)
+        sub_chars = max(24, int((panel_w + gap - 8) / 7.0))
+        sub_lines = [_wrap(panel.subtitle, sub_chars) for panel in panels]
+        extra = 17 * (max(len(lines) for lines in sub_lines) - 1)
+        body_top = 66 + extra
         n = len(panels[0].rows)
         body_bottom = body_top + n * row_h
         height = body_bottom + 34
@@ -525,8 +529,9 @@ def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str
             x1 = x0 + panel_w - 16
             scale = Scale(panel.scale_id, panel.domain[0], panel.domain[1], x0, x1, _check_panel_units(panel))
             parts.append(svg_text(x0 - 8, 16, panel.title, weight="600"))
-            parts.append(svg_text(x0 - 8, 34, panel.subtitle, fill=TOKENS["text-2"]))
-            refs_and_ticks(panel, scale, body_top, body_bottom, 54, False)
+            for line_index, line in enumerate(sub_lines[p_index]):
+                parts.append(svg_text(x0 - 8, 34 + 17 * line_index, line, fill=TOKENS["text-2"]))
+            refs_and_ticks(panel, scale, body_top, body_bottom, 54 + extra, False)
             for index, row in enumerate(panel.rows):
                 cy = body_top + index * row_h + row_h / 2
                 record = R.get(row.record_id)
@@ -736,14 +741,14 @@ def hour_panels(chart_id: str, claim_id: str, series: tuple[tuple[str, str], ...
     for fold in folds:
         body, cursor = draw(DESKTOP_W, 48, DESKTOP_W - 40, cursor, fold, 90)
         parts.append(body)
-    parts.append(svg_text(0, cursor + 14, "x: local delivery hour (Europe/Berlin) · y: MAE, EUR/MWh · each fold on its own scale",
+    parts.append(svg_text(0, cursor + 14, "x: local delivery hour (Europe/Berlin) · y: MAE, EUR/MWh, lower is better · each fold on its own scale",
                           fill=TOKENS["text-2"]))
     desktop = svg_wrap(DESKTOP_W, cursor + 24, "".join(parts), title=title, desc=desc, variant="d", chart_id=chart_id)
     parts, cursor = [], 0.0
     for fold in folds:
         body, cursor = draw(MOBILE_W, 44, MOBILE_W - 34, cursor, fold, 96)
         parts.append(body)
-    for index, line in enumerate(_wrap("x: local delivery hour · y: MAE, EUR/MWh · each fold on its own scale", MOBILE_LINE_CHARS)):
+    for index, line in enumerate(_wrap("x: local delivery hour · y: MAE, EUR/MWh, lower is better · each fold on its own scale", MOBILE_LINE_CHARS)):
         parts.append(svg_text(0, cursor + 14 + index * 17, line, fill=TOKENS["text-2"]))
     mobile = svg_wrap(MOBILE_W, cursor + 54, "".join(parts), title=title, desc=desc, variant="m", chart_id=chart_id)
     return f'<div class="chart" data-chart-id="{chart_id}">{desktop}{mobile}</div>'
@@ -813,7 +818,9 @@ def preview_chart(payload: dict) -> str:
                                 extra=' data-scale="preview-hour"'))
         band = [f"{x(i):.1f},{y(rows[i][hi]):.1f}" for i in range(n)] + \
                [f"{x(i):.1f},{y(rows[i][li]):.1f}" for i in reversed(range(n))]
-        out.append(f'<polygon points="{" ".join(band)}" fill="{TOKENS["v1"]}" fill-opacity="0.18"/>')
+        # The tint alone is about 1.3:1 against the panel; the outline carries the band's extent at 3:1 or more.
+        out.append(f'<polygon points="{" ".join(band)}" fill="{TOKENS["v1"]}" fill-opacity="0.18" '
+                   f'stroke="{TOKENS["ref"]}" stroke-width="1"/>')
         median = " ".join(f"{x(i):.1f},{y(rows[i][mi]):.1f}" for i in range(n))
         out.append(f'<polyline points="{median}" fill="none" stroke="{TOKENS["v1"]}" stroke-width="2.4"/>')
         actual = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, v in enumerate(payload["actual"]))
@@ -1104,7 +1111,7 @@ def c4_panels() -> list[Panel]:
                  Row("v2", "cp20.diagnostics.H0.peak.hit_count95", "v2", bold=True),
                  Row("v3", "cp20.diagnostics.HG.peak.hit_count95", "v3", bold=True))
     return [Panel("MAE, EUR/MWh", "lower is better", rows_mae, domain=(0.0, 300.0), step=50.0),
-            Panel("Hours inside the 95% interval", "count of hours in the window", rows_hits, domain=(0.0, 420.0), step=100.0)]
+            Panel("Hours inside the 95% interval", "count of hours in the window · closer to nominal is better", rows_hits, domain=(0.0, 420.0), step=100.0)]
 
 
 def c4_chart() -> str:
@@ -1703,7 +1710,8 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .preview-label{{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:14px;color:var(--text-2);margin-bottom:8px}}
 .preview-key{{font-size:13px;color:var(--text-2);display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 4px}}
 .key-median::before{{content:"";display:inline-block;width:18px;height:3px;background:var(--v1);vertical-align:middle;margin-right:6px}}
-.key-band::before{{content:"";display:inline-block;width:14px;height:12px;background:rgba(71,85,105,.22);vertical-align:middle;margin-right:6px}}
+.key-band::before{{content:"";display:inline-block;width:14px;height:12px;background:rgba(71,85,105,.22);vertical-align:middle;margin-right:6px;
+ border-top:1px solid var(--ref);border-bottom:1px solid var(--ref);box-sizing:border-box}}
 .key-actual::before{{content:"";display:inline-block;width:18px;border-top:2px dashed var(--text);vertical-align:middle;margin-right:6px}}
 .preview-links{{display:flex;gap:4px 20px;flex-wrap:wrap;margin:0}}
 /* components */
@@ -1979,7 +1987,7 @@ CHART_JS = """
   var up=[],down=[];
   for(var j=0;j<n;j++){up.push(X(j)+','+Y(rows[j][hi]));}
   for(var k=n-1;k>=0;k--){down.push(X(k)+','+Y(rows[k][li]));}
-  svg.appendChild(el('polygon',{points:up.concat(down).join(' '),fill:'#3a6ea5','fill-opacity':.22}));
+  svg.appendChild(el('polygon',{points:up.concat(down).join(' '),fill:'#3a6ea5','fill-opacity':.22,stroke:'#3a6ea5','stroke-width':1}));
   var med=[];
   for(var m=0;m<n;m++){med.push(X(m)+','+Y(rows[m][mi]));}
   svg.appendChild(el('polyline',{points:med.join(' '),fill:'none',stroke:'#1b3a5c','stroke-width':2.2}));
@@ -2606,7 +2614,7 @@ marks and focus indicators need 3:1.</p>
 <p style="font-size:30px;font-weight:700;margin:8px 0">Section 30 px · chapter 32 px (26 px on phones)</p>
 <p>Body 16 px on 26 px, prose up to 66 characters. Labels 14 px; tables 14 px; chart text 13 px, never below 12 px
 as rendered.</p>
-<p class="outcome-value">−0.0783 headline value (30 px, tabular numerals)</p>
+<p class="outcome-value">{RC.svg_value("cp20.uncertainty.HG-H0.equal_fold.MAE")} headline value (30 px, tabular numerals)</p>
 <h2>Components and states</h2>
 <div class="state-grid">
  <div class="state"><h4>Primary action</h4><p><a class="btn-primary" href="#">Default</a></p>

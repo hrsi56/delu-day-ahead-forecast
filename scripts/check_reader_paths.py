@@ -308,6 +308,45 @@ CONTRAST_JS = r"""
 }
 """
 
+#: Non-text contrast (§7.12, §11.3): every visible chart shape, blended over the white panel with its
+#: opacity, needs 3:1 on its fill or its stroke. Exempt: the decorative grid and border colours (the
+#: D1 token record calls them decorative) and hidden rings under the marks (aria-hidden).
+NONTEXT_JS = r"""
+() => {
+  const rgb = c => (c.match(/[\d.]+/g) || []).map(Number);
+  const lum = v => { const s = v.slice(0, 3).map(x => x / 255)
+      .map(x => x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4));
+    return 0.2126 * s[0] + 0.7152 * s[1] + 0.0722 * s[2]; };
+  const over = (v, a) => v.slice(0, 3).map(x => a * x + (1 - a) * 255);
+  const ratio = v => { const a = lum(v), b = 1; return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); };
+  const decorative = new Set(['228,228,231', '255,255,255']);
+  const out = {checked: 0, below: []};
+  for (const el of document.querySelectorAll('.chart svg *, svg#chart *')) {
+    if (!['rect', 'circle', 'polygon', 'polyline', 'line', 'path'].includes(el.tagName)) continue;
+    if (el.closest('[aria-hidden="true"]')) continue;
+    const r = el.getBoundingClientRect(); if (!r.width && !r.height) continue;
+    const s = getComputedStyle(el); if (s.display === 'none' || s.visibility === 'hidden') continue;
+    if (el.closest('svg') && getComputedStyle(el.closest('svg')).display === 'none') continue;
+    const opacity = Number(s.opacity);
+    const best = [];
+    for (const [paint, alpha] of [[s.fill, Number(s.fillOpacity)], [s.stroke, Number(s.strokeOpacity)]]) {
+      if (!paint || paint === 'none') continue;
+      const v = rgb(paint); if (v.length < 3) continue;
+      const a = (v.length > 3 ? v[3] : 1) * alpha * opacity;
+      if (paint === s.stroke && parseFloat(s.strokeWidth) <= 0) continue;
+      best.push([v.slice(0, 3).map(Math.round).join(','), ratio(over(v, a))]);
+    }
+    if (!best.length || best.every(([key]) => decorative.has(key))) continue;
+    const top = Math.max(...best.filter(([key]) => !decorative.has(key)).map(([, q]) => q));
+    out.checked++;
+    if (top + 1e-9 < 3) out.below.push([el.tagName, (el.closest('[data-chart]') || el.closest('svg')).getAttribute('data-chart') || 'chart',
+                                        Math.round(top * 100) / 100]);
+  }
+  out.below_count = out.below.length; out.below = out.below.slice(0, 25);
+  return out;
+}
+"""
+
 #: Touch targets on a phone: interactive elements outside running text should be about 44 px (plan
 #: §11.3); a link inside a sentence is exempt (WCAG 2.5.8's inline exception); 24 px is the floor.
 TARGETS_JS = r"""
@@ -370,6 +409,7 @@ def a11y(playwright, engine: str, target: str) -> dict:
         page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
         page.wait_for_timeout(300)
         contrast[str(width)] = page.evaluate(CONTRAST_JS)
+        contrast[str(width)]["non_text"] = page.evaluate(NONTEXT_JS)
         if width == 390:
             record["touch_targets_390"] = page.evaluate(TARGETS_JS)
         page.close()
@@ -380,9 +420,12 @@ def a11y(playwright, engine: str, target: str) -> dict:
     # WebKit, like Safari's default, moves Tab between form controls only; Option+Tab reaches links.
     key = "Alt+Tab" if engine == "webkit" else "Tab"
     stops = []
-    for _ in range(40):
+    for _ in range(1000):  # every stop, until focus leaves the page or comes back to the first one
         page.keyboard.press(key)
-        stops.append(page.evaluate(FOCUS_JS))
+        stop = page.evaluate(FOCUS_JS)
+        if stop is None or (stops and stop["index"] == stops[0]["index"]):
+            break
+        stops.append(stop)
     indices = [stop["index"] for stop in stops if stop]
     ident = page.locator("details:not([open]) > summary").first.evaluate("s => s.parentElement.id")
     page.locator(f"#{ident} > summary").focus()

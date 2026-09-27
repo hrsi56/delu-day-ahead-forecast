@@ -243,7 +243,7 @@ single id is canonical — the name is what to search for:
 | `champion::final-fit-and-holdout` | the frozen champion and the one-shot holdout |
 | `diagnostics::champion` | SHAP, permutation importance, regimes, reliability |
 
-**Tracking after v1.** Research after v1 is tracked in a separate `delu-generations` experiment on the same tracking server: every policy evaluated since v1 appears there once, mirrored from the committed evidence, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment. [Research since v1](#research-since-v1-development-evidence-post-selection)
+**Tracking after v1.** Research after v1 will be tracked in a separate `delu-generations` experiment on the same tracking server: every policy evaluated since v1 will appear there once, mirrored from the committed evidence, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment. [Research since v1](#research-since-v1-development-evidence-post-selection)
 summarizes it; v1 remains the released model.
 
 **Run it yourself, offline:**

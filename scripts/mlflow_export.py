@@ -36,6 +36,15 @@ from delu_forecast.research_claims import POLICY_NAMES  # noqa: E402
 
 import build_pages  # noqa: E402  (the page's own chart builders, for the chart artifacts)
 
+
+def _n(record_id: str) -> str:
+    """A count in a run description, read from its evidence record (plan §9.1, invariant 17)."""
+    return R.display(R.get(record_id), "value")
+
+
+def _ratio(hits: str, total: str) -> str:
+    return f"{_n(hits)}/{_n(total)}"
+
 EXPORT_DIR = ROOT / "reports" / "presentation" / "mlflow-export"
 EXPERIMENT = "delu-generations"
 
@@ -72,7 +81,10 @@ CHECKPOINTS: dict[str, dict] = {
         "note": (
             "CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four "
             "adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: "
-            "crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's "
+            "crisis-window 95% coverage rose from "
+            f"{_ratio('cp10.peak_windows.v1_reference.covered_95', 'cp10.peak_windows.v1_reference.n_obs')} to "
+            f"{_ratio('cp10.peak_windows.c1_price_volatility.covered_95', 'cp10.peak_windows.c1_price_volatility.n_obs')}"
+            ", not enough. Scores are v1's "
             "native nine-quantile pinball and coverage; there are no S_ scores here. "
             "development_calibration_comparison."
         ),
@@ -89,7 +101,7 @@ CHECKPOINTS: dict[str, dict] = {
         "verdict": "docs/track-b/evidence/cp-15/integration.md",
         "landing": "docs/track-b/cp-15-landing.md",
         "note": (
-            "CP-15 compared nine policies on the same 10,747 development hours: four references "
+            f"CP-15 compared nine policies on the same {_n('cp15.pooled.B0.n_hours')} development hours: four references "
             "(B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and "
             "five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary "
             "scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. "
@@ -220,7 +232,8 @@ def metric_unit(key: str) -> str:
 STEP_NOTE = {
     "fold": "step = fold index (1-5); timestamp = the fold's last delivery date. Folds are discrete "
             "periods, not a time series.",
-    "day": "step = day index within the 448 represented development days; timestamp = the delivery date.",
+    "day": f"step = day index within the {_n('cp15.pooled.B0.n_days')} represented development days; "
+           "timestamp = the delivery date.",
     "single": "step 0; timestamp = the last delivery date of the evaluated window.",
 }
 

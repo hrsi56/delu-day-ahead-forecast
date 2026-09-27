@@ -74,6 +74,19 @@ MLFLOW_NEXT_NOTE = (
     "since v1 appears there once, mirrored from the committed evidence, so v1's record stays "
     "exactly as the one-shot holdout left it and the two are never mixed in one experiment."
 )
+#: Before the upload the experiment does not exist yet, so the surfaces say what will be there.
+MLFLOW_NEXT_NOTE_BEFORE_UPLOAD = (
+    "Research after v1 will be tracked in a separate "
+    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server: every policy evaluated "
+    "since v1 will appear there once, mirrored from the committed evidence, so v1's record stays "
+    "exactly as the one-shot holdout left it and the two are never mixed in one experiment."
+)
+
+
+def mlflow_next_note() -> str:
+    """The present tense only once the public mirror is verified and indexed (Phase F, F2)."""
+    index = REPO_ROOT / "reports" / "presentation" / "mlflow_index.json"
+    return MLFLOW_NEXT_NOTE if index.is_file() else MLFLOW_NEXT_NOTE_BEFORE_UPLOAD
 
 #: §7.1, verbatim. "It carries this label, exactly, wherever it appears."
 HOLDOUT_DM_LABEL = (
@@ -533,7 +546,7 @@ def build_claims() -> Claims:
         "mlflow_experiment_url": MLFLOW_EXPERIMENT_URL,
         "mlflow_models_url": MLFLOW_MODELS_URL,
         "mlflow_next_experiment": MLFLOW_NEXT_EXPERIMENT,
-        "mlflow_next_note": MLFLOW_NEXT_NOTE,
+        "mlflow_next_note": mlflow_next_note(),
         "pages_url": PAGES_URL,
         "space_url": SPACE_URL,
         "github_url": GITHUB_URL,

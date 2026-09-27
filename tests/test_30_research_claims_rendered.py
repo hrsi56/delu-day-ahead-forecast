@@ -336,3 +336,98 @@ def test_negative_control_a_mixed_unit_chart_raises():
                                   B.Row("b", "cp20.metrics.HG.pooled.MAE", "v3")), (0, 1), 0.1)
     with pytest.raises(B.UnitMixError):
         B.single_rows("mixed", "P07", [panel], title="t", desc="d")
+
+
+# -- invariant 17: no generator types a research number (plan §9.1) ---------------------------------
+
+import ast  # noqa: E402
+
+GENERATORS = (REPO_ROOT / "scripts" / "build_pages.py", REPO_ROOT / "scripts" / "mlflow_export.py")
+#: v1's archived report is preserved as published (invariant 24); its figures come from v1's claims.
+PRESERVED_FUNCTIONS = {"build_pages.py": {"v1_archive"}}
+_NUMERAL = re.compile(r"[−-]?\d[\d,]*(?:\.\d+)?(?:/\d[\d,]*)?")
+_COUNT_NOUN = re.compile(r"^\s*(?:\w+\s+){0,2}?(days|hours|policies|runs|replicates|hits|folds|windows)\b")
+
+
+def _research_tokens():
+    recs = R.records()
+    records = recs.values() if isinstance(recs, dict) else [R.get(record_id) for record_id in recs]
+    decimals, counts = set(), set()
+    for record in records:
+        for which in ("value", "ci_low", "ci_high"):
+            try:
+                shown = R.display(record, which).replace("−", "-").lstrip("+-")
+            except Exception:
+                continue
+            if "." in shown and len(shown.split(".")[1]) >= 2 and sum(c.isdigit() for c in shown) >= 4:
+                decimals.add(shown)
+        try:
+            number = float(record.value)
+        except (TypeError, ValueError):
+            continue
+        if number.is_integer() and number >= 100:
+            counts.add(int(number))
+    return decimals, counts
+
+
+def typed_research_numbers(source: str, name: str, tokens) -> list[str]:
+    """Numerals in a generator's string literals that reproduce a research value by hand."""
+    decimals, counts = tokens
+    tree = ast.parse(source)
+    skip = [(node.lineno, node.end_lineno) for node in ast.walk(tree)
+            if isinstance(node, ast.FunctionDef) and node.name in PRESERVED_FUNCTIONS.get(name, set())]
+    found = []
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Constant) and isinstance(node.value, str)):
+            continue
+        if any(start <= node.lineno <= end for start, end in skip):
+            continue
+        text = node.value
+        for match in _NUMERAL.finditer(text):
+            token = match.group(0).replace("−", "-").lstrip("-").rstrip(",")
+            if "/" in token:  # a hit ratio such as 79/408
+                parts = [part.replace(",", "") for part in token.split("/")]
+                if all(part.isdigit() for part in parts) and int(parts[1]) in counts and int(parts[1]) >= 100:
+                    found.append(f"{name}:{node.lineno} ratio {match.group(0)}")
+                continue
+            if "." in token:
+                if token in decimals:
+                    found.append(f"{name}:{node.lineno} value {match.group(0)}")
+                continue
+            digits = token.replace(",", "")
+            if not digits.isdigit():
+                continue
+            number = int(digits)
+            if "," in token and number in counts:
+                found.append(f"{name}:{node.lineno} count {match.group(0)}")
+            elif (number in counts and not 1900 <= number <= 2099
+                  and _COUNT_NOUN.match(text[match.end():])):
+                found.append(f"{name}:{node.lineno} count {match.group(0)}")
+    return found
+
+
+@pytest.fixture(scope="module")
+def research_tokens():
+    return _research_tokens()
+
+
+def test_no_generator_types_a_research_number(research_tokens):
+    for path in GENERATORS:
+        found = typed_research_numbers(path.read_text(), path.name, research_tokens)
+        assert not found, found
+
+
+def test_negative_control_typed_research_numbers_are_caught(research_tokens):
+    source = (
+        'NOTE = "compared nine policies on the same 10,747 development hours"\n'
+        'CP10 = "crisis-window coverage rose from 79/408 to 131/408"\n'
+        'STEP = "step = day index within the 448 represented development days"\n'
+        'SHEET = "<p>−0.0783 headline value</p>"\n'
+        'FINE = f"{n} hours, 2026-09-24, line-height 1.08, fill-opacity 0.18"\n'
+    )
+    found = typed_research_numbers(source, "fixture.py", research_tokens)
+    assert any("10,747" in item for item in found)
+    assert any("79/408" in item for item in found) and any("131/408" in item for item in found)
+    assert any("448" in item for item in found)
+    assert any("0.0783" in item for item in found)
+    assert not any(":5 " in item for item in found), found
