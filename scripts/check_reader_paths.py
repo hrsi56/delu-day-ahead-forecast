@@ -277,6 +277,133 @@ CHART_JS = """
 
 PHONES = ((390, 844), (360, 780), (320, 640))
 
+#: Text contrast from computed styles: each visible element with its own text, against the first
+#: opaque background up its ancestors (WCAG relative luminance). SVG text is read against white.
+CONTRAST_JS = r"""
+() => {
+  const rgb = c => c.match(/[\d.]+/g).slice(0, 4).map(Number);
+  const lum = c => { const v = rgb(c).slice(0, 3).map(x => x / 255)
+      .map(x => x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4));
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+  const opaque = c => { const v = rgb(c); return v.length < 4 || v[3] > 0.5; };
+  const background = el => { for (let e = el; e; e = e.parentElement) {
+      const c = getComputedStyle(e).backgroundColor; if (c && opaque(c)) return c; } return 'rgb(255, 255, 255)'; };
+  const hex = h => 'rgb(' + [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)).join(', ') + ')';
+  const out = {checked: 0, below: []};
+  for (const el of document.querySelectorAll('body *')) {
+    if (![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) continue;
+    const r = el.getBoundingClientRect(); if (!r.width || !r.height) continue;
+    const s = getComputedStyle(el); if (s.visibility === 'hidden' || Number(s.opacity) === 0) continue;
+    const inSvg = !!el.closest('svg'), fill = el.getAttribute('fill');
+    const fg = inSvg && fill && fill.startsWith('#') ? hex(fill) : s.color;
+    const back = inSvg ? 'rgb(255, 255, 255)' : background(el);
+    const a = lum(fg), b = lum(back), ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    const size = parseFloat(s.fontSize), large = size >= 24 || (Number(s.fontWeight) >= 700 && size >= 18.66);
+    const need = large ? 3 : 4.5;
+    out.checked++;
+    if (ratio + 1e-9 < need) out.below.push([el.tagName, el.textContent.trim().slice(0, 40), Math.round(ratio * 100) / 100, need]);
+  }
+  out.below_count = out.below.length; out.below = out.below.slice(0, 25);
+  return out;
+}
+"""
+
+#: Touch targets on a phone: interactive elements outside running text should be about 44 px (plan
+#: §11.3); a link inside a sentence is exempt (WCAG 2.5.8's inline exception); 24 px is the floor.
+TARGETS_JS = r"""
+() => {
+  const out = {checked: 0, under_44: [], under_24: []};
+  const inSentence = el => el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.parentElement
+      && el.parentElement.textContent.trim().length > el.textContent.trim().length + 3;
+  for (const el of document.querySelectorAll('a[href], button, summary, input, [tabindex="0"]')) {
+    const r = el.getBoundingClientRect(); if (!r.width || !r.height) continue;
+    if (getComputedStyle(el).visibility === 'hidden' || inSentence(el)) continue;
+    let w = r.width, h = r.height;
+    const label = el.tagName === 'INPUT' && el.closest('label');
+    if (label) { const l = label.getBoundingClientRect(); w = Math.max(w, l.width); h = Math.max(h, l.height); }
+    out.checked++;
+    const item = [el.tagName, (el.textContent || el.getAttribute('aria-label') || el.type || '').trim().replace(/\s+/g, ' ').slice(0, 32),
+                  Math.round(w), Math.round(h)];
+    if (w < 24 || h < 24) out.under_24.push(item); else if (w < 44 || h < 44) out.under_44.push(item);
+  }
+  out.under_44_count = out.under_44.length; out.under_24_count = out.under_24.length;
+  out.under_44 = out.under_44.slice(0, 30); out.under_24 = out.under_24.slice(0, 30);
+  return out;
+}
+"""
+
+FOCUS_JS = r"""
+() => { const el = document.activeElement; if (!el || el === document.body) return null;
+  const s = getComputedStyle(el), r = el.getBoundingClientRect();
+  const ring = (s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0) || (s.boxShadow && s.boxShadow !== 'none');
+  const all = [...document.querySelectorAll('a[href], button, summary, input, [tabindex]')];
+  return {tag: el.tagName, text: (el.textContent || el.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 40),
+          visible_focus: ring, index: all.indexOf(el)}; }
+"""
+
+
+def a11y(playwright, engine: str, target: str) -> dict:
+    """The plan §11.3 report checklist, measured: zoom and reflow, contrast, keyboard and touch."""
+    browser = _launch(playwright, engine)
+    url = Path(target).resolve().as_uri()
+    record: dict = {"engine": engine, "browser_version": browser.version, "page": target}
+
+    def overflow(page) -> int:
+        return page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+
+    zoom = {}
+    for label, width, height in (("1440 at 200%", 720, 450), ("1280 at 200%", 640, 400), ("320 reflow", 320, 640)):
+        page = browser.new_page(viewport={"width": width, "height": height}, device_scale_factor=2)
+        page.goto(url, wait_until="load")
+        closed = overflow(page)
+        page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
+        page.wait_for_timeout(300)
+        zoom[label] = {"css_viewport": f"{width}x{height}", "overflow_px_closed": closed,
+                       "overflow_px_open": overflow(page)}
+        page.close()
+    record["zoom_and_reflow"] = zoom
+
+    contrast = {}
+    for width, height in ((1440, 900), (390, 844)):
+        page = browser.new_page(viewport={"width": width, "height": height})
+        page.goto(url, wait_until="load")
+        page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
+        page.wait_for_timeout(300)
+        contrast[str(width)] = page.evaluate(CONTRAST_JS)
+        if width == 390:
+            record["touch_targets_390"] = page.evaluate(TARGETS_JS)
+        page.close()
+    record["contrast"] = contrast
+
+    page = browser.new_page(viewport={"width": 1440, "height": 900})
+    page.goto(url, wait_until="load")
+    # WebKit, like Safari's default, moves Tab between form controls only; Option+Tab reaches links.
+    key = "Alt+Tab" if engine == "webkit" else "Tab"
+    stops = []
+    for _ in range(40):
+        page.keyboard.press(key)
+        stops.append(page.evaluate(FOCUS_JS))
+    indices = [stop["index"] for stop in stops if stop]
+    ident = page.locator("details:not([open]) > summary").first.evaluate("s => s.parentElement.id")
+    page.locator(f"#{ident} > summary").focus()
+    page.keyboard.press("Enter")
+    page.wait_for_timeout(150)
+    toggled = page.evaluate(f"document.getElementById('{ident}').open")
+    page.goto(url + "#forecast", wait_until="load")
+    page.wait_for_timeout(400)
+    record["keyboard"] = {
+        "tab_key": key,
+        "first_stop": stops[0]["text"] if stops[0] else None,
+        "stops_checked": len(indices),
+        "in_document_order": indices == sorted(indices),
+        "without_visible_focus": [stop["text"] for stop in stops if stop and not stop["visible_focus"]],
+        "summary_toggles_on_enter": toggled,
+        "anchor_into_closed_disclosure_opens_it": page.evaluate("document.getElementById('v1-archive').open"),
+    }
+    page.close()
+    browser.close()
+    return record
+
 
 def charts(playwright, target: str, out: Path) -> dict:
     """Every chart at 1,440/390/360/320 px, closed and with every disclosure open (the Owner's D1 review)."""
@@ -389,6 +516,10 @@ def main() -> int:
     shots.add_argument("--open-all", action="store_true", help="open every disclosure first")
     shots.add_argument("--out", type=Path, required=True)
     shots.add_argument("--record", type=Path, default=None)
+    checklist = sub.add_parser("a11y", help="the plan §11.3 report checklist: zoom, contrast, keyboard, touch")
+    checklist.add_argument("page")
+    checklist.add_argument("--engine", action="append", choices=["chrome", "webkit"], required=True)
+    checklist.add_argument("--record", type=Path, required=True)
     states = sub.add_parser("states", help="force the Space's failure paths and the retry")
     states.add_argument("--engine", action="append", choices=["chrome", "webkit"], required=True)
     states.add_argument("--url", default=APP_URL)
@@ -409,6 +540,16 @@ def main() -> int:
             "Playwright is not installed here. It lives in a tool environment under "
             ".local/tools/, never in the project; see this script's docstring."
         )
+
+    if args.command == "a11y":
+        with sync_playwright() as playwright:
+            runs = [a11y(playwright, engine, args.page) for engine in args.engine]
+        args.record.parent.mkdir(parents=True, exist_ok=True)
+        args.record.write_text(json.dumps({"check": "report checklist (plan §11.3)", "checked_at_utc": _utc(),
+                                           "host": f"{platform.machine()} / {platform.system()} {platform.release()}",
+                                           "runs": runs}, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(runs, indent=1)[:6000])
+        return 0
 
     if args.command == "states":
         with sync_playwright() as playwright:

@@ -951,7 +951,7 @@ def system_view() -> str:
         '<p class="flow-note"><strong>The information cutoff.</strong> Inputs are restricted to what was available '
         "before the forecast's cutoff, and the price-derived features are tested with controls that fail when the "
         "boundary is crossed. Source-availability assumptions, such as when the archived load forecast was "
-        f'first published, are documented rather than measured: <a class="quiet external" href="{attr(audit)}">the '
+        f'first published, are documented rather than measured: <a class="quiet external in-text" href="{attr(audit)}">the '
         "availability assumptions</a>. Dashed outlines mark planned parts.</p>"
     )
 
@@ -1559,7 +1559,7 @@ def evidence_section(C) -> str:
     tracking = mlflow_index().get("routes", {})
     if tracking.get("experiment"):
         track = (f'<p>Experiment runs, metrics and artifacts can be inspected in '
-                 f'<a class="quiet external" href="{attr(tracking["experiment"])}">MLflow</a>. The published page is '
+                 f'<a class="quiet external in-text" href="{attr(tracking["experiment"])}">MLflow</a>. The published page is '
                  "built from saved repository evidence and works independently of the tracking service.</p>")
     else:
         track = ('<p>Experiment runs, metrics and artifacts will be inspectable in MLflow once they are published '
@@ -1577,15 +1577,15 @@ def evidence_section(C) -> str:
    committed evidence alone, with no model fit and no data download:</p>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   <p>{runtime} Each generation's full experiment has its own reproduction instructions:
-   <a class="quiet external" href="{attr(github("reports/weather-ablation/reproduce.md", "evidence/cp-20"))}">{ver("v3")}</a>,
-   <a class="quiet external" href="{attr(github("reports/v2-causal/reproduce.md", "evidence/cp-16"))}">{ver("v2")}</a>,
-   <a class="quiet external" href="{attr(github("reports/cp15/reproduction.md", "evidence/cp-15"))}">the model comparison</a>,
+   <a class="quiet external in-text" href="{attr(github("reports/weather-ablation/reproduce.md", "evidence/cp-20"))}">{ver("v3")}</a>,
+   <a class="quiet external in-text" href="{attr(github("reports/v2-causal/reproduce.md", "evidence/cp-16"))}">{ver("v2")}</a>,
+   <a class="quiet external in-text" href="{attr(github("reports/cp15/reproduction.md", "evidence/cp-15"))}">the model comparison</a>,
    and <a href="#repro">{ver("v1")}</a>.</p>
  </div>
  <div class="tracking"><h3>Tracking</h3>
   {track}
-  <p><a class="quiet external" href="{attr(C['mlflow_experiment_url'])}">Experiment <code>{esc(C['mlflow_experiment_name'])}</code></a>
-   keeps {ver("v1")}'s own runs. <a class="quiet external" href="{attr(C['github_url'])}">Code and evidence on GitHub</a></p>
+  <p><a class="quiet external in-text" href="{attr(C['mlflow_experiment_url'])}">Experiment <code>{esc(C['mlflow_experiment_name'])}</code></a>
+   keeps {ver("v1")}'s own runs. <a class="quiet external in-text" href="{attr(C['github_url'])}">Code and evidence on GitHub</a></p>
  </div>
 </section>"""
 
@@ -1634,14 +1634,16 @@ a:hover{{text-decoration-thickness:2px}}
 [id]{{scroll-margin-top:calc(var(--header) + 16px)}}
 code,pre,.code{{font-family:var(--mono);font-size:.9em}}
 data{{font-variant-numeric:tabular-nums}}
-.skip{{position:absolute;left:-999px;top:8px;background:var(--surface);padding:8px 12px;z-index:30}}
+.skip{{position:absolute;left:-999px;top:8px;background:var(--surface);padding:0 12px;min-height:44px;display:inline-flex;
+ align-items:center;z-index:30}}
 .skip:focus{{left:8px}}
 /* header and navigation */
 .site-header{{position:sticky;top:0;z-index:20;height:var(--header);background:rgba(250,250,250,.97);
  border-bottom:1px solid var(--border)}}
 .header-inner{{max-width:var(--content);margin:0 auto;height:100%;display:flex;align-items:center;
  justify-content:space-between;gap:16px;padding:0 24px}}
-.brand{{font-weight:650;color:var(--text);text-decoration:none;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.brand{{font-weight:650;color:var(--text);text-decoration:none;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ min-height:44px;display:inline-flex;align-items:center}}
 .brand-short,.brand-tiny{{display:none}}
 .main-nav{{display:flex;gap:4px}}
 .main-nav a{{color:var(--text);text-decoration:none;font-size:15px;padding:0 12px;min-height:44px;display:inline-flex;
@@ -1692,7 +1694,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .btn-primary:hover{{background:var(--primary-hover);color:#fff}}
 .btn-primary:active{{background:var(--primary-pressed)}}
 .quiet{{display:inline-block;padding:9px 0;line-height:26px;font-weight:550}}
-p .quiet,li .quiet{{display:inline;padding:0;line-height:inherit}}
+.quiet.in-text{{display:inline;padding:0;line-height:inherit}}
 .branches-head{{font-size:13px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:24px 0 0}}
 .fc-note{{font-size:14px;color:var(--text-2);margin:6px 0 0}}
 .external::after{{content:" \\2197";font-size:.85em}}
@@ -1724,7 +1726,7 @@ p .quiet,li .quiet{{display:inline;padding:0;line-height:inherit}}
 .evidence-row{{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;font-size:14px;border-top:1px solid var(--border);
  padding-top:12px;margin:16px 0 0;max-width:none}}
 .ev-label{{font-size:13px;font-weight:650;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em}}
-.ev{{min-height:32px;display:inline-flex;align-items:center}}
+.ev{{min-height:44px;display:inline-flex;align-items:center}}
 .ev.is-unavailable{{display:inline;color:var(--text-2)}}
 .ev.is-unavailable .why{{display:inline;margin-left:4px;font-style:italic}}
 details.disclosure{{border-top:1px solid var(--border);margin:0}}
@@ -1905,6 +1907,7 @@ dialog.figure-view::backdrop{{background:rgba(24,24,27,.6)}}
 .v1-archive .controls fieldset{{border:1px solid var(--rule);border-radius:8px;padding:8px 14px;margin:0}}
 .v1-archive .controls legend{{font-size:.78rem;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}}
 .v1-archive .controls label{{margin-right:12px;font-size:.92rem;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}}
+.v1-archive input[type=range]{{min-height:44px}}
 .v1-archive #chart{{width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:8px}}
 .v1-archive .surfaces{{border:1px solid #d7dee6;border-radius:8px;padding:14px 16px;margin:18px 0;background:#fbfcfd}}
 .v1-archive .surfaces-lead{{margin:0 0 10px}}
@@ -1918,7 +1921,7 @@ dialog.figure-view::backdrop{{background:rgba(24,24,27,.6)}}
 .v1-archive .kv dd{{margin:0;overflow-wrap:anywhere}}
 .v1-archive .v1-footer{{margin-top:32px;padding-top:14px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--mute)}}
 .v1-archive .toc{{font-size:.92rem;columns:2;column-gap:32px}}
-.v1-archive .toc a{{display:block;padding:2px 0}}
+.v1-archive .toc a{{display:flex;align-items:center;min-height:44px;padding:0}}
 @media (max-width:620px){{.v1-archive .toc{{columns:1}}.v1-archive .kv{{grid-template-columns:1fr}}.v1-archive .kv dd{{margin-bottom:8px}}}}
 """
 
