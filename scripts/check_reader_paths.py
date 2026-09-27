@@ -150,7 +150,8 @@ def probe_demo(playwright, engine: str, width: int, height: int, url: str, timeo
         record["first_static_text"] = page.inner_text("body")[:160]
         record["startup_state_at_first_paint"] = page.evaluate(STATE_JS)
         page.get_by_text(READY_TEXT).first.wait_for(timeout=timeout_s * 1000)
-        page.get_by_text(CHART_TEXT).first.wait_for(timeout=timeout_s * 1000)
+        # the demo draws a desktop and a phone chart and shows one; wait for the visible one
+        page.get_by_text(CHART_TEXT).filter(visible=True).first.wait_for(timeout=timeout_s * 1000)
         record["seconds_to_visible_forecast"] = round(time.monotonic() - start, 1)
         record["ready"] = True
         if record["startup_state_at_first_paint"] is not None:

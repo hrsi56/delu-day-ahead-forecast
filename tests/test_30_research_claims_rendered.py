@@ -308,6 +308,25 @@ def test_no_surface_carries_stale_status_text(surface):
     assert not RC.stale_findings((REPO_ROOT / surface).read_text()), surface
 
 
+@pytest.mark.parametrize("surface", ["README.md", "space/README.md", "space-wasm/README.md", "app/wasm_showcase.py",
+                                     "scripts/build_wasm_space.py"])
+def test_no_active_surface_makes_an_absolute_network_claim(surface):
+    """Final audit F07: no "fetches nothing", "no server" or "instant report" outside v1's archive."""
+    assert not RC.network_absolute_findings((REPO_ROOT / surface).read_text()), surface
+
+
+def test_the_page_makes_no_absolute_network_claim_outside_the_archive(page):
+    before, archive = page.split('<details class="disclosure archive"', 1)
+    after = archive.split("</details>", 1)[1] if "</details>" in archive else ""
+    assert not RC.network_absolute_findings(TAG.sub(" ", before + after))
+
+
+def test_negative_control_absolute_network_claims_are_caught():
+    assert RC.network_absolute_findings("The static report fetches nothing at all.")
+    assert RC.network_absolute_findings("runs in your browser, no server; the first visit")
+    assert RC.network_absolute_findings("Read the instant report instead")
+
+
 def test_the_browser_claim_file_is_current_when_present():
     path = REPO_ROOT / "app" / "public" / "claims.json"
     if not path.exists():
@@ -431,3 +450,13 @@ def test_negative_control_typed_research_numbers_are_caught(research_tokens):
     assert any("448" in item for item in found)
     assert any("0.0783" in item for item in found)
     assert not any(":5 " in item for item in found), found
+
+
+def test_the_readme_labels_differences_as_differences():
+    """Final audit F01: −0.0783 is v3 − v2, not a negative score, and the README has no chart to point at."""
+    block = README.read_text().split("<!-- research:start -->", 1)[1].split("<!-- research:end -->", 1)[0]
+    assert "(v3 − v2)" in block and "Negative values favour v3" in block
+    assert "Point-error difference:" in block and "Interval-score difference:" in block
+    assert "Normalized point error −" not in block and "Normalized interval score −" not in block
+    assert "shown in the chart" not in block
+    assert "scores 1.0518 here" not in block

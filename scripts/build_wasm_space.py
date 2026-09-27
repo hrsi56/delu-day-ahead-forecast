@@ -99,8 +99,7 @@ bottom.
 
 {C['wasm_wrapper_disclosure']}
 
-If you want the report without any download, the [static report]({C['pages_url']}) fetches nothing
-at all.
+The [report]({C['pages_url']}) is a self-contained page with no additional runtime requests.
 """
 
 
@@ -133,7 +132,7 @@ electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a Li
 nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
 
 **The static report is the primary entry point: [{C['pages_url']}]({C['pages_url']}).**
-It is CDN-served and performs zero runtime calls. This Space is the interactive deep dive it
+It is a self-contained page with no additional runtime requests. This Space is the interactive deep dive it
 fronts: {C['space_link_label']}.
 
 > **{C['replay_label']}**
@@ -200,7 +199,7 @@ def startup_markup(C, state: str = "loading") -> str:
   <p class="delu-body" data-show="retrying">Reloading the demo.</p>
   <p class="delu-body" data-show="ready">The v1 demo is running in your browser.</p>
   <p class="delu-actions"><button type="button" id="delu-retry" data-show="failure">Retry</button>
-   <a href="{report}">Read the instant report instead</a></p>
+   <a href="{report}">View the report</a></p>
  </div>
 </div>"""
 

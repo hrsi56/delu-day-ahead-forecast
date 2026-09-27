@@ -18,7 +18,7 @@ Active plan: **[capstone v21](capstone_v21.md)**. Historical v1 plan: **[v6.8](c
 
 ## Research since v1: development evidence, post-selection
 
-**v1 is the released product and the model the demo runs. v3 is the current research model.** Every result below is development evidence after selection, on the same historical hours for every policy. Nothing here promotes a model, starts a live policy or makes an economic claim. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#journey) tells the whole story with charts, and every number is bound to a committed file.
+**v1 is the released product and the model the demo runs. v3 is the current research model.** Every result below is development evidence after selection, on the same historical hours for every policy. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#journey) has the charts.
 
 Adding weather inputs improved both point-error and interval scores compared with v2 in development tests. Performance on future data is still to be evaluated.
 
@@ -26,27 +26,29 @@ Adding weather inputs improved both point-error and interval scores compared wit
 
 v2 used price history, the load forecast and calendar inputs. v3 added forecast wind speed and solar radiation available before the auction, while retaining the same underlying modeling setup for the comparison.
 
-- Normalized point error −0.0783 [−0.1006, −0.0570].
-- Normalized interval score −0.0838 [−0.1044, −0.0655].
+Difference versus v2 in normalized score (v3 − v2), with 95% confidence intervals. Negative values favour v3.
 
-Both estimated score differences favour v3, and their aggregate 95% confidence intervals remain below zero: an observed joint improvement over v2, as development evidence after selection. The exact values and intervals are shown in the chart.
+- Point-error difference: −0.0783 [−0.1006, −0.0570].
+- Interval-score difference: −0.0838 [−0.1044, −0.0655].
 
-- The gain belongs to the three-feature bundle; this comparison does not isolate an individual feature's contribution.
+Both score differences favour v3; their 95% confidence intervals remain below zero. These are post-selection development results.
+
+- The feature bundle was evaluated as a whole, so individual feature contributions are not isolated.
 - The point-error result is less certain in the 2022 crisis fold: its confidence interval crosses zero, −3.18 [−6.09, +0.037] EUR/MWh.
 
 ### v2 · blended LEAR, hour-aware intervals (CP-16), and the road to it
 
 **Calibration experiment, not adopted (CP-10).** Recalibrating v1 without refitting it raised crisis-window 95% coverage from 19.36% to 32.11%. Not enough: the model itself had to adapt.
 
-Against the daily LEAR reference, v2 meets the joint improvement rule as exploratory evidence: point error −0.0137 [−0.0236, −0.0053], interval score −0.0230 [−0.0337, −0.0118].
+Against the daily LEAR reference (v2 − daily LEAR), v2 meets the joint improvement rule as exploratory evidence: point-error difference −0.0137 [−0.0236, −0.0053], interval-score difference −0.0230 [−0.0337, −0.0118].
 
-Against its pooled control, there is **no demonstrated joint preference**: the interval score improves, −0.0127 [−0.0156, −0.0109], but the point-error interval ends just above zero, −0.0017 [−0.0036, +0.000003857628092332211]. This is not equivalence.
+Against its pooled control (v2 − pooled control), there is **no demonstrated joint preference**: the interval-score difference is −0.0127 [−0.0156, −0.0109], but the point-error difference's interval ends just above zero, −0.0017 [−0.0036, +0.000003857628092332211]. This is not equivalence.
 
 ### Reading the comparison
 
-Every policy was evaluated on the same 10,747 hours across five historical test periods, called folds below; the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not evidence from a new future-data test.
+Every policy was evaluated on the same 10,747 historical hours across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not evidence from a new future-data test.
 
-**Why v1 scores 1.0518 here but 28.58% worse in its own report.** Both figures describe the same 448 development days. v1's report compared its daily absolute error with the raw similar-day naive (MAE 32.45 EUR/MWh) and pooled all days, so the 2022 crisis dominates. This comparison gives each of the five folds equal weight, and its naive reference is the forecast's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own error is 41.74 EUR/MWh in both. v1's original nine-quantile pinball is a different score from the seven-quantile WIS used here.
+**Why v1 scores 1.0518 in the shared development comparison but 28.58% worse in its own report.** Both figures describe the same 448 development days. v1's report compared its daily absolute error with the raw similar-day naive (MAE 32.45 EUR/MWh) and pooled all days, so the 2022 crisis dominates. This comparison gives each of the five folds equal weight, and its naive reference is the forecast's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own error is 41.74 EUR/MWh in both. v1's original nine-quantile pinball is a different score from the seven-quantile WIS used here.
 
 ### Evidence
 

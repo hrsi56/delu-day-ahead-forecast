@@ -165,10 +165,11 @@ def ver(label: str) -> str:
     return S("version", label)
 
 
-def block(key: str, tag: str = "p", cls: str | None = None) -> str:
+def block(key: str, tag: str = "p", cls: str | None = None, ident: str | None = None) -> str:
     """A claim block rendered from its template, wrapped so tests can find it."""
     klass = f' class="{cls}"' if cls else ""
-    return f'<{tag}{klass} data-block="{key}">{RC.render(key)}</{tag}>'
+    id_attr = f' id="{ident}"' if ident else ""
+    return f'<{tag}{id_attr}{klass} data-block="{key}">{RC.render(key)}</{tag}>'
 
 
 def value(record_id: str, claim_id: str, which: str = "value", option: str | None = None) -> str:
@@ -871,9 +872,8 @@ def lineage() -> str:
         f'<span class="branch-status">Informed {ver("v2")} · {S("checkpoint", "CP-15")}</span></a></li></ul>'
     )
     return (
-        f'<div class="lineage"><p class="lineage-caption">{ver("v1")} is the released demo. {ver("v2")} changed the '
-        f'forecasting approach; {ver("v3")} added weather inputs. The branches show experiments that informed those '
-        "decisions.</p>"
+        '<div class="lineage"><p class="lineage-caption">Adopted generations, oldest first; the branches show the '
+        "experiments that informed them.</p>"
         f'<ol class="mainline" aria-label="Adopted generations, oldest first">{nodes}</ol>{branches}</div>'
     )
 
@@ -882,17 +882,17 @@ def lineage() -> str:
 PLANNED_WORK = (
     ("Alternative model families", "4.6", "DDNN / TabPFN",
      "Does a distributional network, or a tabular foundation model, beat v3?",
-     "A licence and resource entry, then one predefined comparison"),
+     "One predefined comparison on identical hours"),
     ("Wind and solar generation forecasts", "4.4V", "VRE",
      "Does an in-house wind and solar generation forecast add information beyond direct weather?",
      "A held-forward generation model, then an ablation"),
     ("Models for different parts of the day", "4.5", "Three-block LightGBM",
-     "Does capacity per block help?", "A per-block comparison"),
+     "Do separate models for different hours improve forecasts?", "A per-block comparison on identical hours"),
     ("Combining models", "4.8", "Recombination", "Does combining adopted models help?",
      "A predefined combination test"),
-    ("Fresh-data evaluation, then live operation", "4.7T and live", "Final evaluation",
-     "How does the final model perform on data that was never used?",
-     "The final fresh-data test, then at least 90 live days"),
+    ("Frozen-protocol evaluation, then prospective monitoring", "4.7T and live", "Final evaluation",
+     "How does the selected model perform under a frozen evaluation protocol, and then prospectively?",
+     "The evaluation window and evidence classification remain to be finalized"),
 )
 
 
@@ -904,11 +904,13 @@ def planned_work() -> str:
         f'<dt>Work item</dt><dd>{S("work-item", item)} · {esc(code)}</dd></dl></li>'
         for name, item, code, question, evidence in PLANNED_WORK
     )
-    teaser = ("Next, we will test alternative models, renewable-generation forecasts and model combinations, "
-              "followed by evaluation on fresh data. These steps are planned, not evaluated.")
+    teaser = ("Next: alternative models, renewable-generation forecasts and model combinations, then an "
+              "evaluation of the selected model under a frozen protocol and prospective monitoring.")
+    plan = github("docs/track-b/presentation-and-tracking-plan-2026-09-24.md")
     body = (
-        "<p>Each item is subject to the active plan and would be compared with the current research model on "
-        "identical hours and information. None has a score, a version number or a date.</p>"
+        "<p>Each item is subject to the active plan, where its conditions are set out, and would be compared "
+        "with the current research model on identical hours and information "
+        f'(<a class="quiet external in-text" href="{attr(plan)}">the plan</a>).</p>"'
         f'<ol class="planned-list">{items}</ol>'
     )
     return (
@@ -940,17 +942,15 @@ def _structural_versions(text: str) -> str:
 
 def system_view() -> str:
     steps = [
-        ("Source data and vintages", "ENTSO-E and SMARD prices and load forecasts; for v3, the GFS weather run of the "
-         "day before", "implemented"),
-        ("Information cutoff", "Only information available before the day-ahead auction; delivery-day prices never "
-         "enter", "implemented"),
+        ("Source data and vintages", "ENTSO-E and SMARD prices and load forecasts; for v3, the GFS run of the day "
+         "before", "implemented"),
+        ("Information cutoff", "Forecast-cutoff checks; source-availability assumptions documented", "implemented"),
         ("Features", "Calendar, price lags, load forecast; weather for v3", "implemented"),
-        ("Model and interval policy", "v1: LightGBM quantiles with conformal calibration; v2 and v3: blended LEAR "
-         "with hour-aware residual intervals", "implemented"),
-        ("Evaluation and artifacts", "Five historical test periods, the same hours for every policy; committed "
-         "predictions, metrics and reviews", "implemented"),
-        ("Report, demo and tracking", "This page, the in-browser v1 demo, and the MLflow mirror of the committed "
-         "evidence", "implemented"),
+        ("Model and interval policy", "v1: LightGBM quantiles, conformal calibration; v2 and v3: blended LEAR, "
+         "hour-aware intervals", "implemented"),
+        ("Evaluation and artifacts", "Five historical periods, identical hours; committed predictions, metrics and "
+         "reviews", "implemented"),
+        ("Report, demo and tracking", "This page, the in-browser v1 demo and the MLflow mirror", "implemented"),
         ("Live operation", "Daily forecasts scored after the fact", "planned"),
     ]
     items = "".join(
@@ -961,11 +961,9 @@ def system_view() -> str:
     audit = github("docs/data-leakage-audit.md")
     return (
         '<ol class="flow" aria-label="Data flow, from source data to report">' + items + "</ol>"
-        '<p class="flow-note"><strong>The information cutoff.</strong> Inputs are restricted to what was available '
-        "before the forecast's cutoff, and the price-derived features are tested with controls that fail when the "
-        "boundary is crossed. Source-availability assumptions, such as when the archived load forecast was "
-        f'first published, are documented rather than measured: <a class="quiet external in-text" href="{attr(audit)}">the '
-        "availability assumptions</a>. Dashed outlines mark planned parts.</p>"
+        '<p class="flow-note">Checked in code: controls that fail when a feature crosses the forecast cutoff. '
+        f'Assumed and documented: each source\'s historical availability (<a class="quiet external in-text" '
+        f'href="{attr(audit)}">the availability assumptions</a>). Dashed outlines mark planned parts.</p>'
     )
 
 
@@ -1116,8 +1114,11 @@ def c4_panels() -> list[Panel]:
                  Row("Normalized LEAR (study)", "cp15.peak.A1.hit_count95", "study"),
                  Row("v2", "cp20.diagnostics.H0.peak.hit_count95", "v2", bold=True),
                  Row("v3", "cp20.diagnostics.HG.peak.hit_count95", "v3", bold=True))
+    window_hours = R.get("cp20.diagnostics.HG.peak.n_hours").value
+    nominal = Ref("nominal 95%", at=0.95 * window_hours)  # the target 95% of the window's hours, not an observation
     return [Panel("MAE, EUR/MWh", "lower is better", rows_mae, domain=(0.0, 300.0), step=50.0),
-            Panel("Hours inside the 95% interval", "count of hours in the window · closer to nominal is better", rows_hits, domain=(0.0, 420.0), step=100.0)]
+            Panel("Hours inside the 95% interval", "count of hours in the window · closer to the nominal line is better",
+                  rows_hits, domain=(0.0, 420.0), step=100.0, refs=(nominal,))]
 
 
 def c4_chart() -> str:
@@ -1369,7 +1370,7 @@ def opening(C, payload) -> str:
   <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
    <span class="key-actual">Observed price</span></p>
   <p class="preview-links"><a class="quiet" href="#forecast">Explore this forecast</a>
-   <span class="preview-note">Opens the replay in the original {ver("v1")} report.</span></p>
+   <span class="preview-note">Opens the replay in the archived {ver("v1")} report.</span></p>
  </figure>
  <div class="opening-summary" data-research="opening"><p class="summary-label">Latest research</p>{block("opening.summary")}</div>
 </section>"""
@@ -1381,12 +1382,12 @@ def results() -> str:
 <section class="section" id="research-results" aria-labelledby="results-h" data-research="results">
  <h2 id="results-h">How the models compare</h2>
  <figure class="panel analytical" aria-labelledby="overview-title">
-  {block("overview.finding", tag="h3", cls="panel-title")}
-  <p class="panel-sub">Point-error and interval scores relative to a simple similar-day forecast · the same {hours}
-   hours for every policy · development results after selection</p>
+  {block("overview.finding", tag="h3", cls="panel-title", ident="overview-title")}
+  <p class="panel-sub">Seven policies · the same {hours} historical hours · equal-weight averages across five
+   periods. Lower scores are better.</p>
   {legend(("v3", "v2", "v1", "reference", "study"))}
   {overview_chart()}
-  {block("overview.howto", cls="finding")}
+  {block("overview.howto")}
   {block("overview.qualification", cls="qualification")}
   {block("overview.v1pointer", cls="qualification")}
   {evidence_row(compare="overview", review=("Read the review", github("docs/track-b/evidence/cp-20/integration.md")),
@@ -1442,14 +1443,15 @@ def v3_chapter(*, open_folds: bool = False) -> str:
              + "</p>" + c3_chart() + multi_values_table("v3-c3-values", "C74", c3_panels()))
     crisis_note = ('<p class="chart-note">' + _structural_versions(
         "The crisis window, delivery 2022-08-15 to 2022-08-31, is the 17 days of the 2022 price peak inside fold 3; "
-        "its figures are for those days only, not the whole fold.").replace("17 days", S("count", "17") + " days")
+        "its figures are for those days only, not the whole fold. The dashed line marks 95% of the window's hours, "
+        "the nominal target: a computed reference, not an observed count; there is no coverage guarantee.")
+        .replace("17 days", S("count", "17") + " days")
         .replace("fold 3", "fold " + S("fold", "3")) + "</p>")
     return f"""
 <article class="chapter" id="v3" aria-labelledby="v3-h" data-research="v3">
  {chapter_header("v3", "weather features", "Latest research · evaluated 2026-09-24",
                  RC.ADOPTED + " in research · not in the demo", RC.BADGE_DEVELOPMENT, "development", "v3")}
- {block("v3.subtitle", cls="chapter-sub")}
- <div class="change"><h3 class="story-label">What changed</h3>{block("v3.change")}{feature_change()}</div>
+ <div class="change"><h3 class="story-label">What changed</h3>{block("v3.change.short")}{feature_change()}</div>
  <figure class="panel analytical" aria-labelledby="c2a-title">
   <h3 class="panel-title" id="c2a-title">{_structural_versions("Weather inputs improved both development scores against v2.")}</h3>
   <p class="panel-sub">{_structural_versions("Difference in normalized score, v3 − v2 · paired 95% confidence interval · identical hours · development, post-selection")}</p>
@@ -1494,7 +1496,7 @@ def v2_chapter() -> str:
           ("What changed", block("v2.change"))])}
  </div>
  <figure class="panel analytical" aria-labelledby="v2c2-title">
-  <h3 class="panel-title" id="v2c2-title">{_structural_versions("v2 improved on daily LEAR; the interval-method comparison was inconclusive on joint improvement.")}</h3>
+  <h3 class="panel-title" id="v2c2-title">{_structural_versions("v2 improved both development scores against daily LEAR.")}</h3>
   <p class="panel-sub">{_structural_versions("Difference in normalized score · paired 95% confidence intervals · identical hours · development, post-selection")}</p>
   {v2_chart2()}
   {block("v2.interpretation", cls="finding")}
@@ -1531,8 +1533,10 @@ def v1_chapter(C, archive: str) -> str:
   <summary><span class="marker" aria-hidden="true"></span><span>The original {ver("v1")} report (published
    {S("date", "2026-09-15")}), preserved</span></summary>
   <div class="disclosure-body">
-   <p class="archive-note">Preserved as published, including its interactive fan chart. Its own styles are kept
-    separate from the rest of this page. <a href="#research-results">Back to the model comparison</a></p>
+   <p class="archive-note">Archived {ver("v1")} report, preserved as published. Its container deployment
+    instructions are historical: the current demo runs in your browser, and this report needs no additional
+    requests after loading. <a href="#reproduce">Current instructions</a> ·
+    <a href="#research-results">Back to the model comparison</a></p>
    <div class="v1-archive">{archive}</div>
    <p class="archive-note"><a href="#research-results">Back to the model comparison</a> · <a href="#v1">Back to v1</a></p>
   </div>
@@ -1567,29 +1571,30 @@ def evidence_section(C) -> str:
     rebuild = rebuild_measurement()
     runtime = ""
     if rebuild:
-        runtime = (f'The rebuild took <span data-release-check="{attr(rebuild["path"])}#seconds">{esc(rebuild["seconds"])}</span> s '
-                   f'on the build machine ({esc(rebuild["machine"])}), measured {S("date", rebuild["date"])}.')
+        runtime = (f'Measured once on {S("date", rebuild["date"])}: '
+                   f'<span data-release-check="{attr(rebuild["path"])}#seconds">{esc(rebuild["seconds"])}</span> s on the '
+                   f'build machine ({esc(rebuild["machine"])}), from the release-check record '
+                   f'<code>{esc(rebuild["path"])}</code>. It is one measurement, not a benchmark of every revision.')
     tracking = mlflow_index().get("routes", {})
     if tracking.get("experiment"):
         track = (f'<p>Experiment runs, metrics and artifacts can be inspected in '
                  f'<a class="quiet external in-text" href="{attr(tracking["experiment"])}">MLflow</a>. The published page is '
                  "built from saved repository evidence and works independently of the tracking service.</p>")
     else:
-        track = ('<p>Experiment runs, metrics and artifacts will be inspectable in MLflow once they are published '
+        track = ('<p>Experiment runs, metrics and artifacts will be inspectable in MLflow '
                  '<span class="ev is-unavailable" data-unpublished="mlflow:experiment">(link added when the runs '
-                 "are published)</span>. This page is built from saved repository evidence and works independently "
-                 "of the tracking service.</p>")
+                 "are published)</span>. This page works independently of the tracking service.</p>")
     return f"""
 <section class="section" id="evidence" aria-labelledby="evidence-h">
  <h2 id="evidence-h">How the system works, and how to check it</h2>
  <div id="system" class="system"><h3>How the system works</h3>{system_view()}</div>
  <div id="reproduce" class="reproduce"><h3>Rebuild the report from saved evidence</h3>
-  <p>First install the pinned dependencies; this downloads packages once:</p>
+  <p>Rebuild the presentation from committed evidence, without fitting models or downloading source data.
+   Install the pinned dependencies once (this downloads packages), then rebuild:</p>
   <pre><code>uv sync</code></pre>
-  <p>Then rebuild this page, the README research block, the demo's description cards and the tracking export from the
-   committed evidence alone, with no model fit and no data download:</p>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
-  <p>{runtime} Each generation's full experiment has its own reproduction instructions:
+  {disclosure("rebuild-measurement", "One measured rebuild", f"<p>{runtime}</p>") if runtime else ""}
+  <p>Each generation's full experiment has its own reproduction instructions:
    <a class="quiet external in-text" href="{attr(github("reports/weather-ablation/reproduce.md", "evidence/cp-20"))}">{ver("v3")}</a>,
    <a class="quiet external in-text" href="{attr(github("reports/v2-causal/reproduce.md", "evidence/cp-16"))}">{ver("v2")}</a>,
    <a class="quiet external in-text" href="{attr(github("reports/cp15/reproduction.md", "evidence/cp-15"))}">the model comparison</a>,
@@ -1735,13 +1740,14 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .panel-sub{{font-size:14px;line-height:22px;color:var(--text-2);margin:0 0 16px;max-width:none}}
 .legend{{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;padding:0;margin:0 0 12px;font-size:14px}}
 .legend li{{display:flex;align-items:center;gap:6px}}
-.finding{{font-weight:550;margin-top:16px}}
+.finding{{margin-top:16px}}
 .qualification{{color:var(--text-2)}}
 .evidence-row{{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;font-size:14px;border-top:1px solid var(--border);
  padding-top:12px;margin:16px 0 0;max-width:none}}
 .ev-label{{font-size:13px;font-weight:650;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em}}
 .ev{{min-height:44px;display:inline-flex;align-items:center}}
 .ev.is-unavailable{{display:inline;color:var(--text-2)}}
+.evidence-row .ev.is-unavailable{{display:inline-flex;align-items:center;min-height:44px}}
 .ev.is-unavailable .why{{display:inline;margin-left:4px;font-style:italic}}
 details.disclosure{{border-top:1px solid var(--border);margin:0}}
 details.disclosure:last-child{{border-bottom:1px solid var(--border)}}
@@ -1821,6 +1827,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .holdout-label{{font-style:italic;color:var(--text-2)}}
 .chapter-links{{display:flex;gap:4px 20px;flex-wrap:wrap}}
 .archive-note{{font-size:14px;color:var(--text-2)}}
+.v1-archive .archive-context{{font-size:14px;color:var(--mute);margin:0 0 8px}}
 .attribution-line{{font-size:14px;color:var(--text-2)}}
 /* system view */
 .flow{{list-style:none;padding:0;margin:16px 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:flow}}
@@ -1830,7 +1837,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .flow-body{{display:block;font-size:14px;line-height:21px;color:var(--text-2)}}
 .flow-note{{font-size:15px}}
 pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;overflow-x:auto;max-width:100%}}
-.statement{{margin:0;padding:0 0 0 20px;border-left:3px solid var(--text);font-size:18px;line-height:30px;max-width:64ch}}
+.statement{{margin:0;padding:0 0 0 20px;border-left:3px solid var(--border);font-size:16px;line-height:26px;max-width:66ch}}
 .site-footer{{max-width:var(--content);margin:0 auto;padding:24px;border-top:1px solid var(--border);font-size:14px;color:var(--text-2)}}
 /* phones and narrow windows (§7.10) */
 @media (max-width:980px){{
@@ -1858,7 +1865,7 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
  .feature-change{{flex-direction:column}}.fc-arrow{{align-self:flex-start}}
  .outcomes{{flex-direction:column}}
  .outcome{{min-width:0}}
- .statement{{font-size:17px}}
+ .statement{{font-size:16px}}
 }}
 @media (max-width:440px){{
  .brand-short{{display:none}}.brand-tiny{{display:inline}}
@@ -2093,8 +2100,10 @@ def v1_archive(payload: dict) -> str:
     Spliced from the CP-3 generator with only these changes: heading levels shift under the chapter,
     the stale development-update card is removed (its anchor survives as an alias), both surfaces
     tables sit in a labelled scroll wrapper, and the superseded release note is relabelled "Tracking
-    after v1" around the claim set's current note (plan §8.7).
-    Its text, figures, tables and interactive fan chart are otherwise unchanged (invariant 24)."""
+    after v1" around the claim set's current note (plan §8.7). One context note sits under the replay's
+    heading, so a reader who lands there from the preview learns that its hosting notes are historical
+    (final audit F08). Its text, figures, tables and interactive fan chart are otherwise unchanged
+    (invariant 24)."""
     C = build_claims()
     regime = pd.read_csv(ROOT / "reports/cp2/regime_table.csv")
     shap_top = pd.read_csv(ROOT / "reports/cp2/shap_ranking.csv").head(10)
@@ -2364,6 +2373,8 @@ alone leaves thousands of crossings is exactly why isotonic is unconditionally l
 <blockquote><p>{esc(C['exchangeability'])}</p></blockquote>
 
 <h4 id="forecast">10 · Next-day forecast</h4>
+<p class="archive-context">Archived v1 report. The replay below runs in this page; the current interactive demo
+runs in your browser, and the container instructions later in this report are historical.</p>
 <div class="label">
 <p><strong>{esc(C['replay_label'])}</strong> The delivery day below, {payload['delivery_day']},
 falls inside the pinned holdout window {C['holdout_window']}. The dashed line is the price that
@@ -2539,8 +2550,6 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
 {results()}
 <section class="section chapters" id="chapters" aria-labelledby="chapters-h">
  <h2 id="chapters-h">How the research improved, newest first</h2>
- <p>Each chapter follows one decision: the problem, the change, what was measured, what it does not show, and
-  what was decided. Scrolling down goes back in time.</p>
  {jump}
  {chapters}
 </section>
@@ -2549,8 +2558,8 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
 {attribution(C)}
 </main>
 </div></div>
-<footer class="site-footer"><p>{esc(C['attribution'])} This page is static and self-contained: every chart and
-figure is embedded, and it makes no runtime call. <a href="#top">Back to the top</a></p></footer>
+<footer class="site-footer"><p>This report is a self-contained page with no additional runtime requests.
+<a href="#attribution">Terms and attribution</a> · <a href="#top">Back to the top</a></p></footer>
 <script>
 window.__FAN__={json.dumps(payload, separators=(",", ":"))};
 window.__COV__={json.dumps(coverage, separators=(",", ":"))};

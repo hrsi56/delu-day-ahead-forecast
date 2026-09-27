@@ -212,3 +212,19 @@ def test_axis_end_labels_state_their_domain_exactly():
 
 def test_negative_control_the_step_formatter_would_round_an_end():
     assert B.tick_text(7.5, 1) == "8" and B.end_label(7.5) == "7.5"
+
+
+def unresolved_idrefs(document: str) -> list[str]:
+    """Accessibility references (aria-labelledby, aria-describedby, aria-controls, label for=) with no target."""
+    ids = set(re.findall(r'\bid="([^"]+)"', document))
+    refs = re.findall(r'\b(?:aria-labelledby|aria-describedby|aria-controls|for)="([^"]+)"', document)
+    return sorted({ref for group in refs for ref in group.split() if ref not in ids})
+
+
+def test_every_accessibility_reference_resolves(document):
+    """Final audit F02: a figure once named itself after an id that did not exist."""
+    assert not unresolved_idrefs(document), unresolved_idrefs(document)
+
+
+def test_negative_control_a_dangling_label_reference_is_caught(document):
+    assert unresolved_idrefs(document.replace('aria-labelledby="overview-title"', 'aria-labelledby="no-such-id"', 1))

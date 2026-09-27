@@ -146,7 +146,7 @@ SENSITIVITY_PROBE_LABEL = (
 #: rather than the one that no longer exists. The figure is filled in from
 #: reports/cp3b/network.json by build_claims(); this template is not a number.
 SPACE_LINK_LABEL_TEMPLATE = (
-    "interactive demo — runs in your browser, no server; the first visit downloads about {mb} MB"
+    "interactive demo — runs in your browser; the first visit downloads about {mb} MB"
 )
 
 #: §9.3 attribution statement.
@@ -470,7 +470,7 @@ def build_claims() -> Claims:
             f"The interactive demo runs entirely in your browser, so the first visit downloads "
             f"about {cold_mb} MB — a Python runtime, the nine gradient-boosted models and the "
             f"notebook interface — in {network['totals']['requests']} requests from "
-            f"{len(network['hosts'])} hosts. There is no server to wake. A repeat visit "
+            f"{len(network['hosts'])} hosts. A Static Space has no server-side process to wake. A repeat visit "
             f"transferred about {network['repeat_visit']['bytes'] / 1_000_000:.1f} MB: the page's "
             f"text revalidated, and the fonts and images Hugging Face serves through expiring "
             f"signed links were fetched again."

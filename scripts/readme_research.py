@@ -53,15 +53,15 @@ def build_block() -> str:
             "",
             "**v1 is the released product and the model the demo runs. v3 is the current research"
             " model.** Every result below is development evidence after selection, on the same"
-            " historical hours for every policy. Nothing here promotes a model, starts a live"
-            f" policy or makes an economic claim. The [report]({PAGES_URL}#journey) tells the"
-            " whole story with charts, and every number is bound to a committed file.",
+            f" historical hours for every policy. The [report]({PAGES_URL}#journey) has the charts.",
             "",
             by_key["opening.summary"],
             "",
             "### v3 · weather features (CP-20)",
             "",
             by_key["v3.change"],
+            "",
+            by_key["v3.outcome.head"],
             "",
             f"- {by_key['v3.outcome.mae']}.",
             f"- {by_key['v3.outcome.wis']}.",
@@ -81,7 +81,7 @@ def build_block() -> str:
             "",
             "### Reading the comparison",
             "",
-            by_key["overview.fairness"],
+            by_key["overview.fairness.readme"],
             "",
             by_key["overview.f07"],
             "",
