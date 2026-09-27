@@ -193,3 +193,22 @@ def test_v1s_archived_figures_open_full_size_without_fetching(document):
     assert 'id="figure-view"' in document and 'id="figure-full"' in document
     assert "full.src=img.src" in document, "the enlarged view must reuse the embedded image"
     assert "overflow-wrap:break-word" in B.css(), "long URLs in the archive must wrap on a phone"
+
+
+def test_axis_end_labels_state_their_domain_exactly():
+    """A per-row scale's end label is its domain, not a rounding of it (C3: 7.5 once printed as 8)."""
+    for build, panels in ((B.c3_chart, B.c3_panels()), (B.c6_chart, B.c6_panels())):
+        html = build()
+        for _title, _subtitle, rows, domain, _step in panels:
+            for row in rows:
+                if domain is not None:
+                    continue
+                low, high = row.domain
+                for end in (low, high):
+                    label = B.end_label(end)
+                    assert float(label.replace("−", "-")) == end, (row.label, end, label)
+                    assert f">{label}</text>" in html, (row.label, label)
+
+
+def test_negative_control_the_step_formatter_would_round_an_end():
+    assert B.tick_text(7.5, 1) == "8" and B.end_label(7.5) == "7.5"

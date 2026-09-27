@@ -305,6 +305,12 @@ def axis_unit(record_ids: list[str]) -> str:
     return units.pop()
 
 
+def end_label(value: float) -> str:
+    """An axis end or tick label that states its value exactly: 7.5, never a rounded 8."""
+    text = f"{value:.3f}".rstrip("0").rstrip(".")
+    return text.replace("-", R.MINUS) if value < 0 else text
+
+
 def tick_text(value: float, step: float) -> str:
     places = max(0, -int(math.floor(math.log10(step)))) if step < 1 else 0
     text = f"{value:.{places}f}"
@@ -621,9 +627,9 @@ def multi_rows(chart_id: str, claim_id: str, panels: list[tuple[str, str, tuple[
             out.append(svg_text(x_label, y_label + (0 if label_above else 4.5), row.label, weight="600"))
             out.append(f'<line x1="{x0:.1f}" x2="{x1:.1f}" y1="{y_mark:.1f}" y2="{y_mark:.1f}" stroke="{TOKENS["grid"]}" stroke-width="1"/>')
             if domain is None:
-                out.append(svg_text(x0, y_mark + 17, tick_text(lo, 1), size=CHART_FONT, fill=TOKENS["text-2"],
+                out.append(svg_text(x0, y_mark + 17, end_label(lo), size=CHART_FONT, fill=TOKENS["text-2"],
                                     extra=f' data-scale="{scale.ident}"'))
-                out.append(svg_text(x1, y_mark + 17, tick_text(hi, 1), size=CHART_FONT, anchor="end",
+                out.append(svg_text(x1, y_mark + 17, end_label(hi), size=CHART_FONT, anchor="end",
                                     fill=TOKENS["text-2"], extra=f' data-scale="{scale.ident}"'))
             if row.ref is not None:
                 out.append(ref_line(scale, row.ref.position(), y_mark - 9, y_mark + 9, dash=None,
@@ -715,7 +721,7 @@ def hour_panels(chart_id: str, claim_id: str, series: tuple[tuple[str, str], ...
         for tick in y_scale.ticks(y_scale.hi / 2 if y_scale.hi / step > 4 else step):
             y = y_scale(tick)
             out.append(f'<line x1="{x0:.1f}" x2="{x1:.1f}" y1="{y:.1f}" y2="{y:.1f}" stroke="{TOKENS["grid"]}"/>')
-            out.append(svg_text(x0 - 6, y + 4.5, tick_text(tick, 1), anchor="end", fill=TOKENS["text-2"],
+            out.append(svg_text(x0 - 6, y + 4.5, end_label(tick), anchor="end", fill=TOKENS["text-2"],
                                 extra=f' data-scale="{y_scale.ident}"'))
         for hour in (0, 6, 12, 18, 23):
             out.append(svg_text(x_scale(hour), top + 30 + plot_h + 17, str(hour), anchor="middle",
