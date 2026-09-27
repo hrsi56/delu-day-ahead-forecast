@@ -193,7 +193,7 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp20.diagnostics.HG.peak.n_days}-day window inside the crisis fold, MAE goes from
            {r:cp20.criteria.H0.c4.peak.MAE} to {r:cp20.criteria.HG.c4.peak.MAE} EUR/MWh. Descriptive only;
            the hours inside the interval are in the crisis-window chart."""),
-    _block("v3.hurts", "C80", """**What else changes:** the intervals are narrower in every period, while
+    _block("v3.hurts", "C80", """**What else changes:** the prediction intervals are narrower in every period, while
            pooled {s:level:95%} coverage is slightly lower, {r:cp20.metrics.HG.pooled.coverage95} against
            {r:cp20.metrics.H0.pooled.coverage95} for {s:version:v2}."""),
     _block("v3.caveat.fold3", "C73", """The point-error result is less certain in the {s:date:2022} crisis

@@ -161,14 +161,14 @@ ATTRIBUTION = (
 #: The research weather inputs' attribution, as the Owner added it to DATA-LICENSE.md on
 #: 2026-09-24 (plan §6 invariant 8). v1 uses no weather input.
 GFS_ATTRIBUTION = (
-    "Weather: derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR GDEX d084001 "
-    "(doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS. Modified and aggregated by "
-    "this project; not an official NOAA product."
+    "The v3 research model's weather data is derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR "
+    "GDEX d084001 (doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS, modified and "
+    "aggregated by this project; it is not an official NOAA product."
 )
 
 LICENSING = (
     "Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the "
-    f"trained champion is a derived work of it. Research only: {GFS_ATTRIBUTION} "
+    f"trained champion is a derived work of it. {GFS_ATTRIBUTION} "
     "See LICENSE and DATA-LICENSE.md."
 )
 

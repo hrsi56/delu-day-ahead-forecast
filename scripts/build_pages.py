@@ -511,7 +511,7 @@ def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str
                 parts.append(_row_value_text(scale, 0, cy, row, claim_id, DESKTOP_W))
             y = bottom + 30
             for record_id in panel.exact_hi:
-                parts.append(svg_text(0, y + 8, "v2 − pooled control, point-error interval, upper end in full: "
+                parts.append(svg_text(0, y + 8, "v2 − pooled control, point-error confidence interval, upper end in full: "
                                       + RC.svg_value(record_id, "ci_high", "exact"), weight="600",
                                       extra=RC.svg_binding("C34", record_id, "ci_high")))
                 y += 26
@@ -587,7 +587,7 @@ def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str
         y_cursor = bottom + 34
         for record_id in panel.exact_hi:
             parts.append(svg_text(0, y_cursor + 4, "v2 − pooled control, point error,", fill=TOKENS["text-2"]))
-            parts.append(svg_text(0, y_cursor + 21, "upper end in full:", fill=TOKENS["text-2"]))
+            parts.append(svg_text(0, y_cursor + 21, "confidence interval, upper end:", fill=TOKENS["text-2"]))
             parts.append(svg_text(0, y_cursor + 38, RC.svg_value(record_id, "ci_high", "exact"), weight="600",
                                   extra=RC.svg_binding("C34", record_id, "ci_high")))
             y_cursor += 54
@@ -866,10 +866,9 @@ def lineage() -> str:
         f'<p class="branches-head">Experiments between {ver("v1")} and {ver("v2")}</p>'
         '<ul class="branches" aria-label="Experiments that informed the decisions">'
         f'<li class="branch"><a href="#road-to-v2"><span class="branch-name">Calibration experiment</span>'
-        f'<span class="branch-status">{esc(RC.NOT_ADOPTED)} · recalibrating {ver("v1")} was not enough · '
-        f'{S("checkpoint", "CP-10")}</span></a></li>'
+        f'<span class="branch-status">{esc(RC.NOT_ADOPTED)} · recalibrating {ver("v1")} was not enough</span></a></li>'
         f'<li class="branch"><a href="#road-to-v2"><span class="branch-name">Model comparison study</span>'
-        f'<span class="branch-status">Informed {ver("v2")} · {S("checkpoint", "CP-15")}</span></a></li></ul>'
+        f'<span class="branch-status">Informed {ver("v2")}</span></a></li></ul>'
     )
     return (
         '<div class="lineage"><p class="lineage-caption">Adopted generations, oldest first; the branches show the '
