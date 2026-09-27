@@ -57,6 +57,74 @@ def _launch(playwright, engine: str):
     raise SystemExit(f"unknown engine {engine!r}")
 
 
+#: The Space's startup state (plan §7.11), or null on a build without the states.
+STATE_JS = "() => { const box = document.getElementById('delu-status'); return box ? box.dataset.state : null; }"
+
+
+def probe_states(playwright, engine: str, url: str, timeout_s: float) -> dict:
+    """Force the Space's failure paths and the retry, on a phone viewport (plan §11.3, Demo row)."""
+    browser = _launch(playwright, engine)
+    record: dict = {"engine": engine, "browser_version": browser.version, "url": url, "viewport": "390x844",
+                    "started_utc": _utc()}
+    visible = ("() => [...document.querySelectorAll('#delu-status [data-show]')]"
+               ".filter(e => e.offsetParent !== null).map(e => e.textContent.trim().slice(0, 60))")
+
+    # 1. A file the app needs fails to load: the failure state appears at once.
+    context = browser.new_context(viewport={"width": 390, "height": 844})
+    page = context.new_page()
+    page.route("**/assets/index-*.js", lambda route: route.abort())
+    page.goto(url, wait_until="domcontentloaded")
+    page.wait_for_function(f"({STATE_JS})() === 'failure'", timeout=30_000)
+    record["asset_failure"] = {
+        "state": page.evaluate(STATE_JS), "visible": page.evaluate(visible),
+        "report_link": page.get_attribute("#delu-status a", "href"),
+    }
+    # 2. Retry, with the file available again: the page reloads and the demo starts.
+    page.unroute("**/assets/index-*.js")
+    page.click("#delu-retry")
+    page.wait_for_load_state("domcontentloaded")
+    record["retry"] = {"state_after_reload": page.evaluate(STATE_JS)}
+    try:
+        page.get_by_text(READY_TEXT).first.wait_for(timeout=timeout_s * 1000)
+        page.wait_for_function(f"({STATE_JS})() === 'ready'", timeout=5000)
+        record["retry"]["reached_ready"] = True
+        record["retry"]["visible"] = page.evaluate(visible)
+    except Exception as exc:  # the failure is the finding
+        record["retry"]["reached_ready"] = False
+        record["retry"]["error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
+    context.close()
+
+    # 3. The runtime cannot load and marimo reports it: the failure state follows the report at once.
+    context = browser.new_context(viewport={"width": 390, "height": 844})
+    page = context.new_page()
+    page.route("https://cdn.jsdelivr.net/**", lambda route: route.abort())
+    start = time.monotonic()
+    page.goto(url, wait_until="domcontentloaded")
+    page.wait_for_function(f"({STATE_JS})() === 'failure'", timeout=60_000)
+    record["runtime_reports_failure"] = {"state": page.evaluate(STATE_JS),
+                                         "seconds_to_failure_state": round(time.monotonic() - start, 1),
+                                         "visible": page.evaluate(visible)}
+    context.close()
+
+    # 4. The runtime hangs with no error (its CDN never answers): only the deadline, not a timer
+    #    shown as progress, moves the page to the failure state.
+    context = browser.new_context(viewport={"width": 390, "height": 844})
+    page = context.new_page()
+    page.clock.install()
+    page.route("https://cdn.jsdelivr.net/**", lambda route: None)  # never answered
+    page.goto(url, wait_until="domcontentloaded")
+    before = page.evaluate(STATE_JS)
+    page.clock.run_for(60_000)
+    at_one_minute = page.evaluate(STATE_JS)
+    page.clock.run_for(185_000)
+    record["runtime_hangs"] = {"state_at_start": before, "state_at_1_min": at_one_minute,
+                               "state_after_deadline": page.evaluate(STATE_JS),
+                               "visible": page.evaluate(visible)}
+    context.close()
+    browser.close()
+    return record
+
+
 def probe_demo(playwright, engine: str, width: int, height: int, url: str, timeout_s: float) -> dict:
     browser = _launch(playwright, engine)
     context = browser.new_context(viewport={"width": width, "height": height})
@@ -80,10 +148,14 @@ def probe_demo(playwright, engine: str, width: int, height: int, url: str, timeo
     try:
         page.goto(url, wait_until="domcontentloaded", timeout=timeout_s * 1000)
         record["first_static_text"] = page.inner_text("body")[:160]
+        record["startup_state_at_first_paint"] = page.evaluate(STATE_JS)
         page.get_by_text(READY_TEXT).first.wait_for(timeout=timeout_s * 1000)
         page.get_by_text(CHART_TEXT).first.wait_for(timeout=timeout_s * 1000)
         record["seconds_to_visible_forecast"] = round(time.monotonic() - start, 1)
         record["ready"] = True
+        if record["startup_state_at_first_paint"] is not None:
+            page.wait_for_function(f"({STATE_JS})() === 'ready'", timeout=5000)
+            record["startup_state_when_ready"] = "ready"
     except Exception as exc:  # the failure is the finding, so keep it
         record["ready"] = False
         record["seconds_waited"] = round(time.monotonic() - start, 1)
@@ -317,6 +389,11 @@ def main() -> int:
     shots.add_argument("--open-all", action="store_true", help="open every disclosure first")
     shots.add_argument("--out", type=Path, required=True)
     shots.add_argument("--record", type=Path, default=None)
+    states = sub.add_parser("states", help="force the Space's failure paths and the retry")
+    states.add_argument("--engine", action="append", choices=["chrome", "webkit"], required=True)
+    states.add_argument("--url", default=APP_URL)
+    states.add_argument("--timeout", type=float, default=180.0)
+    states.add_argument("--out", type=Path, required=True)
     for name, text in (("charts", "photograph and measure every chart at four widths"),
                        ("route", "follow the preview into v1's replay on phones; record landmarks")):
         sub_parser = sub.add_parser(name, help=text)
@@ -332,6 +409,20 @@ def main() -> int:
             "Playwright is not installed here. It lives in a tool environment under "
             ".local/tools/, never in the project; see this script's docstring."
         )
+
+    if args.command == "states":
+        with sync_playwright() as playwright:
+            runs = [probe_states(playwright, engine, args.url, args.timeout) for engine in args.engine]
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps({"check": "Space startup states (plan §7.11, §11.3)", "checked_at_utc": _utc(),
+                                        "host": f"{platform.machine()} / {platform.system()} {platform.release()}",
+                                        "runs": runs}, indent=2, sort_keys=True) + "\n")
+        ok = all(run["asset_failure"]["state"] == "failure" and run["retry"].get("reached_ready")
+                 and run["runtime_reports_failure"]["state"] == "failure"
+                 and run["runtime_hangs"]["state_at_1_min"] == "loading"
+                 and run["runtime_hangs"]["state_after_deadline"] == "failure" for run in runs)
+        print(json.dumps(runs, indent=1)[:3000])
+        return 0 if ok else 1
 
     if args.command in ("charts", "route"):
         args.out.mkdir(parents=True, exist_ok=True)

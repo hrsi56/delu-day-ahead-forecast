@@ -1,6 +1,8 @@
 {
-  "checked_at_utc": "2026-09-15T14:54:17+00:00",
+  "checked_at_utc": "2026-09-25T06:15:24+00:00",
   "client": "unauthenticated urllib -- no cookies, no token, no logged-in browser",
+  "exit": 0,
+  "failed_destinations": {},
   "forbidden_paths": [
     "dagshub.com/hrsi56/delu-day-ahead-forecast/experiments",
     "dagshub.com/hrsi56/delu-day-ahead-forecast/models",
@@ -27,15 +29,20 @@
   },
   "links": {
     "http://127.0.0.1:8820": {
-      "error": "URLError: <urlopen error [Errno 61] Connection refused>",
+      "kind": "local",
       "on_surfaces": [
         "README"
-      ],
-      "resolves": false,
-      "status": null
+      ]
+    },
+    "http://www.w3.org/2000/svg": {
+      "kind": "namespace",
+      "on_surfaces": [
+        "Pages export"
+      ]
     },
     "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow": {
       "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "README",
@@ -47,6 +54,7 @@
     },
     "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/0": {
       "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/0",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "README"
@@ -56,6 +64,7 @@
     },
     "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/models": {
       "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/models",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "README"
@@ -65,6 +74,7 @@
     },
     "https://github.com/hrsi56/delu-day-ahead-forecast": {
       "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "Space card",
@@ -73,8 +83,99 @@
       "resolves": true,
       "status": 200
     },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp15/reproduction.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp15/reproduction.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-16/reports/v2-causal/reproduce.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-16/reports/v2-causal/reproduce.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-16/reports/v2-causal/uncertainty.csv#L32": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-16/reports/v2-causal/uncertainty.csv#L32",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/metrics.csv#L44": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/metrics.csv#L44",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/report.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/report.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/reproduce.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/reproduce.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/uncertainty.csv#L12": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/uncertainty.csv#L12",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/data-leakage-audit.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/data-leakage-audit.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/evidence/cp-16/integration.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/evidence/cp-16/integration.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/evidence/cp-20/integration.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/evidence/cp-20/integration.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
     "https://hrsi56.github.io/delu-day-ahead-forecast/": {
       "final_url": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "README",
@@ -84,8 +185,18 @@
       "resolves": true,
       "status": 200
     },
+    "https://hrsi56.github.io/delu-day-ahead-forecast/#journey": {
+      "final_url": "https://hrsi56.github.io/delu-day-ahead-forecast/#journey",
+      "kind": "destination",
+      "on_surfaces": [
+        "README"
+      ],
+      "resolves": true,
+      "status": 200
+    },
     "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast": {
       "final_url": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "README",
@@ -97,6 +208,7 @@
     },
     "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/": {
       "final_url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/index.html",
+      "kind": "destination",
       "on_surfaces": [
         "Pages export",
         "README",
@@ -106,9 +218,10 @@
       "status": 200
     }
   },
-  "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow",
-  "unresolved": [
-    "http://127.0.0.1:8820"
-  ],
-  "unresolved_reason": "Both are the URLs publication creates. Deployment is owner-only and was not performed by this checkpoint: GitHub Pages is not enabled and the Space is not created. See docs/deploy.md."
+  "not_destinations": {
+    "http://127.0.0.1:8820": "local",
+    "http://www.w3.org/2000/svg": "namespace"
+  },
+  "rule": "every destination on a public surface must answer 200; local servers, command examples and XML namespaces are classified and not fetched",
+  "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
 }

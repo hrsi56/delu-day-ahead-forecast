@@ -20,6 +20,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -154,13 +155,18 @@ makes no call to ENTSO-E, SMARD or any model registry: the rows it forecasts fro
 
 #: Text the notebook renders only after the champion has run in the browser.
 READY_MARKER = "Maximum absolute deviation"
+#: Text marimo's error boundary renders when its runtime fails (for example, Pyodide cannot load):
+#: the runtime has reported the failure, so the page says so at once instead of at the deadline.
+FAILURE_MARKER = "Something went wrong"
 DEADLINE_SECONDS = 240
 
 
 def startup_css() -> str:
     return """
-.delu-status{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#18181B;margin:16px auto;max-width:760px;padding:0 16px}
-.delu-card{background:#FFFFFF;border:1px solid #E4E4E7;border-left:4px solid #475569;border-radius:10px;padding:14px 18px}
+.delu-status{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#18181B;position:fixed;top:0;left:0;right:0;
+ z-index:2147483000;margin:0 auto;max-width:760px;padding:12px 16px;box-sizing:border-box}
+.delu-card{background:#FFFFFF;border:1px solid #E4E4E7;border-left:4px solid #475569;border-radius:10px;padding:14px 18px;
+ box-shadow:0 4px 18px rgba(24,24,27,.12)}
 .delu-title{font-weight:650;margin:0 0 6px}
 .delu-body{margin:0 0 10px}
 .delu-actions{margin:0;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
@@ -171,7 +177,11 @@ def startup_css() -> str:
 .delu-status[data-state=loading] [data-show~=loading],.delu-status[data-state=failure] [data-show~=failure],
 .delu-status[data-state=retrying] [data-show~=retrying],.delu-status[data-state=ready] [data-show~=ready]{display:block}
 .delu-status[data-state=failure] .delu-card{border-left-color:#18181B}
-.delu-status[data-state=ready] .delu-card{padding:8px 14px}
+/* Ready: the notebook covers the viewport and opens with its own link to the report, so the card
+   closes; its text stays in the live region, so a screen reader still hears that the demo is ready. */
+.delu-status[data-state=ready]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+ clip-path:inset(50%);white-space:nowrap}
+.delu-status[data-state=ready] .delu-actions{display:none}
 """
 
 
@@ -201,26 +211,73 @@ def startup_js() -> str:
  var box=document.getElementById('delu-status');if(!box){return;}
  var started=Date.now(),done=false;
  function set(state){box.setAttribute('data-state',state);}
- function ready(){return (document.body.innerText||'').indexOf('%s')>=0;}
+ function has(text){return (document.body.innerText||'').indexOf(text)>=0;}
  var timer=setInterval(function(){
-  if(ready()){set('ready');done=true;clearInterval(timer);}
-  else if(Date.now()-started>%d*1000){set('failure');clearInterval(timer);}
+  if(has('%s')){set('ready');done=true;clearInterval(timer);}
+  else if(has('%s')||Date.now()-started>%d*1000){set('failure');clearInterval(timer);}
  },1000);
  window.addEventListener('error',function(e){
   var t=e.target;if(!done&&t&&(t.tagName==='SCRIPT'||t.tagName==='LINK')){set('failure');}
  },true);
  document.getElementById('delu-retry').addEventListener('click',function(){set('retrying');location.reload();});
 })();
-""" % (READY_MARKER, DEADLINE_SECONDS)
+""" % (READY_MARKER, FAILURE_MARKER, DEADLINE_SECONDS)
+
+
+STARTUP_BEGIN = "<!-- delu-startup:start -->"
+STARTUP_END = "<!-- delu-startup:end -->"
+
+
+def inject_startup(html: str, C) -> str:
+    """Put the demo states into the exported page as static HTML (plan §7.11, invariant 25).
+
+    The block opens the body, so the loading message paints before marimo's module scripts run,
+    and it stays in place if they never do. The model, its payload and the equivalence gate are
+    untouched: this adds markup, a stylesheet and one small inline script."""
+    if STARTUP_BEGIN in html:
+        raise ValueError("the startup states are already in this page")
+    head_close = html.find("</head>")
+    if head_close < 0 or not re.search(r"<body[^>]*>", html):
+        raise ValueError("the export has no <head>/<body> to inject into")
+    html = html[:head_close] + f"<style>{startup_css()}</style>" + html[head_close:]
+    body = re.search(r"<body[^>]*>", html)
+    block = f"{STARTUP_BEGIN}{startup_markup(C)}<script>{startup_js()}</script>{STARTUP_END}"
+    return html[:body.end()] + block + html[body.end():]
+
+
+def startup_findings(html: str, C) -> list[str]:
+    """What the built page must carry; empty when it does. Used by the build and by test_23."""
+    problems = []
+    if html.count(STARTUP_BEGIN) != 1 or html.count(STARTUP_END) != 1:
+        return ["the startup states are missing or injected twice"]
+    block = html[html.index(STARTUP_BEGIN):html.index(STARTUP_END)]
+    body = re.search(r"<body[^>]*>", html)
+    if not body or html.index(STARTUP_BEGIN) != body.end():
+        problems.append("the startup states do not open the body")
+    if 'data-state="loading"' not in block:
+        problems.append("the static state is not the loading state")
+    for state in ("loading", "failure", "retrying", "ready"):
+        if f'data-show="{state}"' not in block:
+            problems.append(f"no {state} state")
+    if 'id="delu-retry"' not in block:
+        problems.append("no retry control")
+    if f'href="{C["pages_url"]}"' not in block:
+        problems.append("no route back to the report")
+    if READY_MARKER not in block:
+        problems.append("the ready check does not look for the forecast panel")
+    if FAILURE_MARKER not in block:
+        problems.append("the failure check does not listen for the runtime's own error")
+    if re.search(r"\d\s?%", re.sub(r"<script>.*?</script>", "", block, flags=re.S)):
+        problems.append("a percentage appears in the states (no invented progress)")
+    return problems
 
 
 def demo_states_specimen() -> str:
     """The four states side by side, for the D1 review. The same markup the Space build injects."""
     C = build_claims()
     sections = []
-    for state, label in (("loading", "Loading (static HTML, before any script runs)"),
-                         ("failure", "Failure, with retry"), ("retrying", "Retrying"),
-                         ("ready", "Ready (a slim bar above the running demo)")):
+    for state, label in (("loading", "Loading (static HTML, before any script runs; pinned to the top of the window)"),
+                         ("failure", "Failure, with retry"), ("retrying", "Retrying")):
         markup = startup_markup(C, state).replace('id="delu-status" ', "").replace('id="delu-retry" ', "")
         sections.append(
             '<section><h2 style="font:600 14px system-ui;color:#52525B;text-transform:uppercase;'
@@ -229,12 +286,14 @@ def demo_states_specimen() -> str:
     intro = (
         "Specimen of the Space's startup states (plan §7.11). The loading state is static HTML, so it is visible "
         "before the runtime starts and stays visible if initialization fails. No percentage and no timer are "
-        "shown as progress."
+        "shown as progress. Ready: the card closes, and the notebook opens with its own link to the report; "
+        "screen readers hear \u201cThe v1 demo is running in your browser.\u201d"
     )
     return (
         '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" '
         'content="width=device-width,initial-scale=1"><title>PRES-1 D1 demo states</title>'
-        f"<style>body{{margin:0;background:#FAFAFA}}{startup_css()}</style></head><body>"
+        f"<style>body{{margin:0;background:#FAFAFA}}{startup_css()}"
+        ".delu-status{position:static;margin:16px auto}</style></head><body>"
         f'<p style="font:15px system-ui;max-width:760px;margin:24px auto;padding:0 16px">{intro}</p>'
         + "".join(sections) + "</body></html>"
     )
@@ -281,6 +340,10 @@ def main() -> int:
         compiled.unlink()
     shutil.copy2(CARD, BUNDLE / "README.md")
     (BUNDLE / ".gitattributes").write_text(GITATTRIBUTES)
+    C = build_claims()
+    index = BUNDLE / "index.html"
+    if index.is_file():
+        index.write_text(inject_startup(index.read_text(), C))
 
     # -- structural checks: fail the build, not the visitor ---------------
     problems = []
@@ -314,6 +377,8 @@ def main() -> int:
     for leak in ("CLAUDE.md", "AGENTS.md", ".env"):
         if any(p.name == leak for p in BUNDLE.rglob("*")):
             problems.append(f"{leak} present in the bundle")
+    startup = startup_findings(index.read_text(), C) if index.is_file() else ["index.html missing"]
+    problems.extend(f"startup states: {finding}" for finding in startup)
     front = (BUNDLE / "README.md").read_text().split("---", 2)[1]
     if "sdk: static" not in front:
         problems.append("the card does not declare sdk: static")
@@ -332,6 +397,14 @@ def main() -> int:
                 "total_bytes_uncompressed": total,
                 "boosters": [p.name for p in boosters],
                 "browser_champion_sha256": module_sha,
+                "index_html_sha256": hashlib.sha256(index.read_bytes()).hexdigest() if index.is_file() else None,
+                "startup_states": {
+                    "injected": index.is_file() and not startup,
+                    "states": ["loading", "failure", "retrying", "ready"],
+                    "ready_marker": READY_MARKER,
+                    "deadline_seconds": DEADLINE_SECONDS,
+                    "report_url": C["pages_url"],
+                },
                 "removed_from_export_root": removed,
                 "problems": problems,
                 "deployment": "owner-only; this script assembles and pushes nothing",
