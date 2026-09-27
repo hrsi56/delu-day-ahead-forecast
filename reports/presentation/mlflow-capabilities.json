@@ -22,31 +22,31 @@
       "fallback": "delu.children on each parent and delu.run_key on each child keep the structure searchable",
       "feature": "nested runs (mlflow.parentRunId)",
       "local": "yes; the UI nests 19 children under 4 parents",
-      "public": "not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3)"
+      "public": "not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3)"
     },
     {
       "fallback": "none needed for the page; if histories are truncated, F3 fails and nothing is advertised",
       "feature": "metric timestamps and full history lengths",
       "local": "yes; 6,928 points read back exactly by (key, step, timestamp, value)",
-      "public": "not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3)"
+      "public": "not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3)"
     },
     {
       "fallback": "digests are also in the delu.datasets tag; the page does not advertise dataset views unless F3 confirms them",
       "feature": "datasets via log_input",
       "local": "yes; names, digests and context tags read back",
-      "public": "not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3); runs/search returns an 'inputs' field"
+      "public": "not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3); runs/search returns an 'inputs' field"
     },
     {
       "fallback": "summary.json and README.md artifacts carry the same description",
       "feature": "run notes (mlflow.note.content)",
       "local": "yes",
-      "public": "not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3)"
+      "public": "not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3)"
     },
     {
       "fallback": "the committed index maps run keys to run IDs, so the page never depends on search",
       "feature": "search by tag",
       "local": "yes (tags.`delu.generation` = 'v3' returns 1 run)",
-      "public": "search by attribute works anonymously; tag filters not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3)"
+      "public": "search by attribute works anonymously; tag filters not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3)"
     },
     {
       "fallback": null,
@@ -70,25 +70,33 @@
       "fallback": "the run pages and the page's own charts",
       "feature": "comparison view in the UI",
       "local": "yes; compare-runs renders anonymously in Chrome",
-      "public": "not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3); the route is advertised only after its REST and browser checks pass (plan §10.10)"
+      "public": "not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3); the route is advertised only after its REST and browser checks pass (plan \u00a710.10)"
     },
     {
       "fallback": null,
       "feature": "experiment-type prompt in the 3.5 UI",
       "local": "shown until mlflow.experimentKind is set; the export sets custom_model_development",
-      "public": "not verified on DagsHub: no public write probe (plan §16 decision 5); verified after the authorized upload (Phase F3)"
+      "public": "not verified on DagsHub: no public write probe (plan \u00a716 decision 5); verified after the authorized upload (Phase F3)"
     },
     {
       "fallback": null,
       "feature": "public write probe",
       "local": "n/a",
-      "public": "not performed, by decision (plan §16 decision 5)"
+      "public": "not performed, by decision (plan \u00a716 decision 5)"
     }
   ],
   "client": {
     "mlflow": "3.16.0",
     "source": "the project's locked environment"
   },
+  "earlier_rehearsals": [
+    {
+      "export": "the Phase C export, before the chart artifacts",
+      "finished_utc": "2026-09-24T22:29:08+00:00",
+      "passed": true,
+      "started_utc": "2026-09-24T22:28:57+00:00"
+    }
+  ],
   "public_server": {
     "checks": {
       "UI root anonymous": {
@@ -172,10 +180,12 @@
   "recorded_utc": "2026-09-24",
   "rehearsal": {
     "command": "scripts/verify_mlflow_mirror.py rehearse --store <rehearsal store> --out <record>",
-    "finished_utc": "2026-09-24T22:29:08+00:00",
+    "export": "the D2 export: 23 runs, 55 artifacts including the page's charts under charts/ on cp20/HG and cp16/V2-H",
+    "finished_utc": "2026-09-27T20:01:11+00:00",
     "passed": true,
-    "server": "local MLflow 3.5.1 (.local/tools/mlflow-3.5.1, SQLite store, served artifacts), 127.0.0.1:5051",
-    "started_utc": "2026-09-24T22:28:57+00:00",
+    "server": "local MLflow 3.5.1 (.local/tools/mlflow-3.5.1, SQLite store, served artifacts), 127.0.0.1:5051; a fresh store",
+    "server_version": "3.5.1",
+    "started_utc": "2026-09-27T20:00:55+00:00",
     "steps": [
       {
         "exit_code": 3,
@@ -193,9 +203,9 @@
         "exit_code": 0,
         "step": "resumed upload",
         "tail": [
-          "🏃 View run CP-20 · v3 weather at: http://127.0.0.1:5051/#/experiments/1/runs/5e644b67c78d49698dc44e79ccf7cfad",
-          "🧪 View experiment at: http://127.0.0.1:5051/#/experiments/1",
-          "published 23 runs to http://127.0.0.1:5051: 13 created, 2 resumed, 8 already complete; 586 write operations"
+          "\ud83c\udfc3 View run CP-20 \u00b7 v3 weather at: http://127.0.0.1:5051/#/experiments/1/runs/f028541454044eda929852bbe1829ee3",
+          "\ud83e\uddea View experiment at: http://127.0.0.1:5051/#/experiments/1",
+          "published 23 runs to http://127.0.0.1:5051: 13 created, 2 resumed, 8 already complete; 595 write operations"
         ]
       },
       {
@@ -215,7 +225,7 @@
         "step": "idempotent re-run"
       },
       {
-        "altered_artifact": "1/83404e53bbad4b208dfd650e322e4090/artifacts/summary.json",
+        "altered_artifact": "1/eeec863b8ee54ec0ba0ff0f3684384f3/artifacts/summary.json",
         "caught_altered_digest": true,
         "caught_deleted_point": true,
         "deleted_points": 1,
@@ -226,14 +236,7 @@
         "step": "deliberate faults",
         "verification_passed": false
       }
-    ],
-    "ui_render_checks": {
-      "browser": "Google Chrome 153 via Playwright, headless, 1440x900",
-      "compare-runs, CP-15 references and A1": "renders metrics",
-      "compare-runs, CP-20 HG with CP-16 V2-H": "renders run names and metrics",
-      "experiment page": "4 parent runs with nested children; '23 matching runs'; no experiment-type prompt once mlflow.experimentKind is set",
-      "screenshots": ".local/artifacts/presentation/mlflow-rehearsal/ (not committed)"
-    }
+    ]
   },
   "schema": "pres-1-mlflow-capabilities-v1"
 }
