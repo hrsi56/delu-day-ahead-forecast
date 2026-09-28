@@ -29,7 +29,7 @@ It is CDN-served and performs zero runtime calls. **This card describes the cont
 bundle, which is not what Hugging Face hosts.** On 2026-07-08 Hugging Face moved the Docker
 SDK behind a paid plan, and a free Docker Space sleeps after inactivity. The hosted
 interactive demo is therefore a Static Space built from `app/wasm_showcase.py`, which
-cannot sleep; this bundle remains runnable locally and is verified under
+cannot sleep; this bundle runs locally and is verified under
 `docker run --network none` by `make container-verify`.
 
 > **Historical out-of-sample replay — the frozen champion forecasting a 90-day period it never trained on. This is not a live forecast.**

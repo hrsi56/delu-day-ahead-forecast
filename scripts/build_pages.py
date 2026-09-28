@@ -2052,7 +2052,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .statement footer{{margin-top:10px;font-size:15px;font-weight:600;color:var(--text)}}
 .section{{padding:48px 0 16px;border-top:1px solid var(--border)}}
 /* opening */
-.opening{{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:start;padding:40px 0 40px}}
+.opening{{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:start;padding:40px 0 40px}}
 .opening-aside .actions{{margin-top:0}}
 .opening-aside .preview{{margin-top:16px}}
 .status-pair{{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}}
@@ -2295,7 +2295,7 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
 }}
 @media (max-width:340px){{
  .header-inner,.page{{padding-left:12px;padding-right:12px}}
- .panel{{padding:12px 8px}}
+ .panel,.preview.panel{{padding:12px 8px}}
  .main-nav a{{padding:0 6px;font-size:14px}}
 }}
 .opening-copy details.disclosure{{margin-top:4px;border-bottom:1px solid var(--border)}}

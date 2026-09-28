@@ -545,6 +545,318 @@ def route(playwright, target: str, out: Path) -> dict:
     return results
 
 
+# --------------------------------------------------------------------------- the standard's §10 release checks
+
+#: The widths the standard's §10 names; heights are the phone's for the phone widths.
+RELEASE_SIZES = ((1440, 900), (768, 1024), (390, 844), (360, 780), (320, 640))
+#: Where the cold reader's screens come from (standard §11): one desktop engine, one phone engine.
+COLD_READER_VIEWS = (("chrome", 1440, 900), ("webkit", 390, 844))
+IPHONE = "iPhone 15"
+
+#: The standard's §1 placements, measured with every disclosure closed.
+PLACEMENT_JS = r"""() => {
+  const box = e => { if (!e) return null; const r = e.getBoundingClientRect();
+    return {top: Math.round((r.top + scrollY) * 10) / 10, bottom: Math.round((r.bottom + scrollY) * 10) / 10}; };
+  const q = s => document.querySelector(s);
+  const release = q('[data-block="release-rule"]'), actions = q('.actions'), byline = q('.byline a[href="#contribution"]');
+  const finding = q('#comparison-finding'), panel = finding && finding.closest('.panel');
+  const chart = panel && [...panel.querySelectorAll('svg[role="img"]')].find(s => s.getBoundingClientRect().width > 0);
+  return {headline: box(q('#headline')), terms: box(q('ul.terms')), finding: box(finding), finding_chart: box(chart),
+          release_rule: box(release), demo_action: box(actions), byline: box(byline),
+          release_rule_in_disclosure: !!(release && release.closest('details')),
+          byline_in_disclosure: !!(byline && byline.closest('details')),
+          scroll_width: document.documentElement.scrollWidth, client_width: document.documentElement.clientWidth,
+          page_height: document.documentElement.scrollHeight};
+}"""
+
+#: The groups the accessibility-tree check reads, by selector, in document order.
+AX_GROUPS = {
+    "details": "details",
+    "summary": "summary",
+    "chart": 'svg[role="img"]',
+    "control": 'a[href], button, input, select, textarea, summary, [role="button"], [tabindex="0"]',
+}
+#: A closed disclosure's content stays laid out under `content-visibility: hidden` (the
+#: `::details-content` of current Chrome and WebKit), so a bounding box says nothing about whether
+#: it is shown; `checkVisibility` does.
+VISIBLE_JS = r"""(selector) => [...document.querySelectorAll(selector)].map(e => {
+  const r = e.getBoundingClientRect();
+  return {visible: e.checkVisibility({visibilityProperty: true, opacityProperty: true}) && (r.width > 0 || r.height > 0),
+          text: (e.getAttribute('aria-label') || e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 50)}; })"""
+
+#: WebKit's own accessibility properties, read through WebKit's inspector protocol
+#: (`DOM.getAccessibilityPropertiesForNode`, the data Web Inspector's accessibility panel shows).
+#: Playwright 1.63's public API exposes no accessibility tree, so this runs in the Playwright driver's
+#: Node, in process, and reaches the page's inspector session through playwright-core's in-process
+#: connection (`toImpl`), a private API: if an upgrade removes it, the check fails, never passes.
+WEBKIT_AX_JS = r"""
+const pw = require(process.env.PW_CORE);
+const spec = JSON.parse(process.argv[process.argv.length - 1]);
+(async () => {
+  const browser = await pw.webkit.launch();
+  const page = await browser.newPage({viewport: {width: spec.width, height: spec.height}});
+  await page.goto(spec.url);
+  await page.waitForTimeout(300);
+  const session = page._connection.toImpl(page).delegate._session;
+  const read = async () => {
+    const out = {};
+    for (const [group, selector] of Object.entries(spec.groups)) {
+      const {root} = await session.send('DOM.getDocument');
+      const {nodeIds} = await session.send('DOM.querySelectorAll', {nodeId: root.nodeId, selector});
+      const shown = await page.evaluate(new Function('return ' + spec.visible_js)(), selector);
+      out[group] = [];
+      for (let i = 0; i < nodeIds.length; i++) {
+        const {properties: p} = await session.send('DOM.getAccessibilityPropertiesForNode', {nodeId: nodeIds[i]});
+        out[group].push({visible: shown[i].visible, text: shown[i].text, exists: p.exists, ignored: !!p.ignored,
+                         role: p.role || '', name: p.label || '', expanded: p.expanded === undefined ? null : p.expanded});
+      }
+    }
+    return out;
+  };
+  const closed = await read();
+  for (let round = 0; round < 8; round++) {
+    const summaries = await page.$$('details:not([open]) > summary');
+    let acted = 0;
+    for (const summary of summaries) {
+      if (await summary.isVisible()) { await summary.focus(); await page.keyboard.press('Enter'); acted++; }
+    }
+    if (!acted) break;
+    await page.waitForTimeout(150);
+  }
+  await page.waitForTimeout(600);
+  const opened = await read();
+  console.log(JSON.stringify({browser: 'WebKit ' + browser.version(), closed, opened}));
+  await browser.close();
+})().catch(error => { console.error(String(error && error.stack || error)); process.exit(1); });
+"""
+
+
+def _webkit_ax(url: str, width: int, height: int) -> dict:
+    import os
+    import subprocess
+
+    import playwright
+
+    driver = Path(playwright.__file__).parent / "driver"
+    spec = {"url": url, "width": width, "height": height, "groups": AX_GROUPS, "visible_js": VISIBLE_JS}
+    result = subprocess.run([str(driver / "node"), "-e", WEBKIT_AX_JS, "--", json.dumps(spec)],
+                            capture_output=True, text=True, timeout=600,
+                            env={**os.environ, "PW_CORE": str(driver / "package")})
+    if result.returncode != 0:
+        raise SystemExit(f"the WebKit accessibility read failed: {result.stderr[-800:]}")
+    return json.loads(result.stdout.strip().splitlines()[-1])
+
+
+def _chrome_ax(playwright, url: str, width: int, height: int) -> dict:
+    """Chrome's own accessibility tree, per node, through the DevTools protocol."""
+    browser = _launch(playwright, "chrome")
+    page = browser.new_page(viewport={"width": width, "height": height})
+    page.goto(url, wait_until="load")
+    page.wait_for_timeout(300)
+    cdp = page.context.new_cdp_session(page)
+    cdp.send("Accessibility.enable")
+
+    def read() -> dict:
+        page.wait_for_timeout(600)  # Chrome updates its accessibility tree asynchronously after a toggle
+        cdp.send("Accessibility.getFullAXTree")  # and serializes it on demand: bring it up to date first
+        out = {}
+        for group, selector in AX_GROUPS.items():
+            root = cdp.send("DOM.getDocument", {"depth": 0})["root"]["nodeId"]
+            ids = cdp.send("DOM.querySelectorAll", {"nodeId": root, "selector": selector})["nodeIds"]
+            shown = page.evaluate(VISIBLE_JS, selector)
+            out[group] = []
+            for node_id, dom in zip(ids, shown):
+                nodes = cdp.send("Accessibility.getPartialAXTree", {"nodeId": node_id, "fetchRelatives": False})["nodes"]
+                node = nodes[0] if nodes else {}
+                props = {prop["name"]: prop["value"].get("value") for prop in node.get("properties", [])}
+                out[group].append({"visible": dom["visible"], "text": dom["text"], "exists": bool(node),
+                                   "ignored": bool(node.get("ignored")), "role": node.get("role", {}).get("value", ""),
+                                   "name": node.get("name", {}).get("value", ""), "expanded": props.get("expanded")})
+        return out
+
+    closed = read()
+    for _ in range(8):
+        acted = 0
+        for summary in page.query_selector_all("details:not([open]) > summary"):
+            if summary.is_visible():
+                summary.focus()
+                page.keyboard.press("Enter")
+                acted += 1
+        if not acted:
+            break
+        page.wait_for_timeout(150)
+    record = {"browser": f"Chrome {browser.version}", "closed": closed, "opened": read()}
+    browser.close()
+    return record
+
+
+def ax_findings(engine: str, tree: dict) -> dict:
+    """The standard's §10 tree rules: disclosures expose an expanded state, charts are named, and no
+    control is unnamed. Chrome states a disclosure's state on its summary (DisclosureTriangle);
+    WebKit on the details element, which it exposes as the disclosure's group."""
+    carrier = "summary" if engine == "chrome" else "details"
+    out: dict = {"state_on": carrier}
+    for phase, want in (("closed", False), ("opened", True)):
+        rows = [row for row in tree[phase][carrier] if row["visible"]]
+        wrong = [row["text"] for row in rows if row["expanded"] is not want]
+        out[f"disclosures_{phase}"] = {"checked": len(rows), "expanded_state_wrong": wrong}
+    for phase in ("closed", "opened"):
+        charts = [row for row in tree[phase]["chart"] if row["visible"]]
+        controls = [row for row in tree[phase]["control"] if row["visible"]]
+        out[f"charts_{phase}"] = {"checked": len(charts),
+                                  "unnamed_or_unexposed": [row["text"] for row in charts
+                                                           if not row["exists"] or row["ignored"] or not row["name"].strip()
+                                                           or row["role"] not in ("image", "img")]}
+        out[f"controls_{phase}"] = {"checked": len(controls),
+                                    "unnamed_or_unexposed": [f"{row['role']}: {row['text']}" for row in controls
+                                                             if not row["exists"] or row["ignored"] or not row["name"].strip()]}
+    out["passed"] = (all(out[f"disclosures_{p}"]["checked"] and not out[f"disclosures_{p}"]["expanded_state_wrong"]
+                         for p in ("closed", "opened"))
+                     and all(out[f"{g}_{p}"]["checked"] and not out[f"{g}_{p}"]["unnamed_or_unexposed"]
+                             for g in ("charts", "controls") for p in ("closed", "opened")))
+    return out
+
+
+def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = None, height: int | None = None,
+          device: str | None = None) -> dict:
+    """One page load with every disclosure closed: placements, overflow, every visible chart's text,
+    failed requests and console errors, and a full-page screenshot."""
+    browser = _launch(playwright, engine)
+    options = dict(playwright.devices[device]) if device else {"viewport": {"width": width, "height": height}}
+    options.pop("default_browser_type", None)
+    context = browser.new_context(**options)
+    page = context.new_page()
+    failed: list[str] = []
+    errors: list[str] = []
+    page.on("requestfailed", lambda r: failed.append(f"{r.url[:160]} {r.failure}"))
+    page.on("console", lambda m: errors.append(m.text[:300]) if m.type == "error" else None)
+    page.goto(url, wait_until="load")
+    page.wait_for_timeout(400)
+    size = page.viewport_size
+    label = device.replace(" ", "-").lower() if device else f"{size['width']}x{size['height']}"
+    record: dict = {"engine": engine, "browser": f"{browser.browser_type.name} {browser.version}", "view": label,
+                    "viewport": f"{size['width']}x{size['height']}", "placements": page.evaluate(PLACEMENT_JS)}
+    charts = {}
+    for holder in page.locator("div.chart[data-chart-id]").all():
+        if holder.is_visible():
+            charts[holder.get_attribute("data-chart-id")] = holder.evaluate(CHART_JS)
+    record["charts"] = {"checked": len(charts),
+                        "overlaps": {k: v["overlaps"] for k, v in charts.items() if v["overlaps"]},
+                        "clipped": {k: v["clipped"] for k, v in charts.items() if v["clipped"]},
+                        "smallest_text_px": min((v["smallest_text_px"] for v in charts.values()
+                                                 if v["smallest_text_px"] is not None), default=None)}
+    shot = out / engine / f"{label}.png"
+    shot.parent.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(shot), full_page=True)
+    record["screenshot"] = str(shot)
+    if (engine, size["width"], size["height"]) in COLD_READER_VIEWS and not device:
+        record["cold_reader_screens"] = _screens(page, out / "cold-reader" / f"{engine}-{label}")
+    record["failed_requests"] = failed[:20]
+    record["console_errors"] = errors[:20]
+    context.close()
+    browser.close()
+    return record
+
+
+def _screens(page, folder: Path) -> dict:
+    """The page as a reader scrolls it, one viewport at a time, the sticky header on every screen.
+    Each step is the viewport less the header, so no line hides under it."""
+    folder.mkdir(parents=True, exist_ok=True)
+    height = page.viewport_size["height"]
+    header = page.evaluate("Math.ceil(document.querySelector('.site-header').getBoundingClientRect().height)")
+    total = page.evaluate("document.documentElement.scrollHeight")
+    step, offsets = height - header, []
+    for index in range(200):
+        offset = min(index * step, max(total - height, 0))
+        page.evaluate(f"window.scrollTo(0, {offset})")
+        page.wait_for_timeout(120)
+        page.screenshot(path=str(folder / f"screen-{index + 1:02d}.png"))
+        offsets.append(offset)
+        if offset + height >= total:
+            break
+    page.evaluate("window.scrollTo(0, 0)")
+    return {"folder": str(folder), "screens": len(offsets), "step_px": step, "header_px": header, "offsets": offsets}
+
+
+def placement_findings(view: dict) -> list[str]:
+    """The standard's §1 placements, as numbers."""
+    p, problems = view["placements"], []
+    width, height = (int(v) for v in view["viewport"].split("x"))
+    if (width, height) in ((1440, 900), (390, 844)) and not view["view"].startswith("iphone"):
+        if p["headline"]["top"] < 0 or p["headline"]["bottom"] > height:
+            problems.append(f"the headline block ends at {p['headline']['bottom']} px, below the first screen ({height})")
+        limit = 1800 if width == 1440 else 2532
+        if p["finding"]["bottom"] > limit:
+            problems.append(f"the finding sentence ends at {p['finding']['bottom']} px, beyond {limit}")
+    if not p["terms"] or p["terms"]["top"] < p["headline"]["bottom"] or p["terms"]["top"] - p["headline"]["bottom"] > 40:
+        problems.append("the terms are not directly below the headline block")
+    if p["finding_chart"] and p["finding"]["bottom"] > p["finding_chart"]["top"]:
+        problems.append("the finding sentence is not above the comparison's chart")
+    if p["release_rule_in_disclosure"] or not p["release_rule"] or not p["demo_action"]:
+        problems.append("the release rule is missing or inside a disclosure")
+    elif abs(p["release_rule"]["top"] - p["demo_action"]["bottom"]) > 40:
+        problems.append("the release rule is not beside the demo action")
+    if not p["byline"] or p["byline_in_disclosure"]:
+        problems.append("the byline link to the contribution statement is missing")
+    if p["scroll_width"] > p["client_width"]:
+        problems.append(f"horizontal overflow: {p['scroll_width']} > {p['client_width']}")
+    return problems
+
+
+def release(playwright, target: str, out: Path) -> dict:
+    """Every check the standard's §10 requires, on the local page, recorded in one place."""
+    url = Path(target).resolve().as_uri()
+    views = []
+    for engine in ("chrome", "webkit"):
+        for width, height in RELEASE_SIZES:
+            views.append(_view(playwright, engine, url, out, width=width, height=height))
+            print(f"{engine} {width}x{height}: done")
+    views.append(_view(playwright, "webkit", url, out, device=IPHONE))
+    for view in views:
+        view["problems"] = placement_findings(view)
+        if view["charts"]["overlaps"] or view["charts"]["clipped"]:
+            view["problems"].append("chart text overlaps or is clipped")
+        if (view["charts"]["smallest_text_px"] or 99) < 12:
+            view["problems"].append(f"chart text of {view['charts']['smallest_text_px']} px")
+        if view["failed_requests"] or view["console_errors"]:
+            view["problems"].append("failed requests or console errors")
+    trees = {}
+    for engine in ("chrome", "webkit"):
+        for width, height in ((1440, 900), (390, 844)):
+            tree = _chrome_ax(playwright, url, width, height) if engine == "chrome" else _webkit_ax(url, width, height)
+            trees[f"{engine} {width}x{height}"] = {"browser": tree["browser"], **ax_findings(engine, tree)}
+            print(f"accessibility tree, {engine} {width}x{height}: passed={trees[f'{engine} {width}x{height}']['passed']}")
+    checklist = [a11y(playwright, engine, target) for engine in ("chrome", "webkit")]
+    for run in checklist:
+        keyboard, touch = run["keyboard"], run["touch_targets_390"]
+        run["passed"] = (keyboard["in_document_order"] and not keyboard["without_visible_focus"]
+                         and keyboard["summary_toggles_on_enter"] and keyboard["anchor_into_closed_disclosure_opens_it"]
+                         and not touch["under_44_count"] and not touch["under_24_count"]
+                         and all(not c["below_count"] and not c["non_text"]["below_count"] for c in run["contrast"].values())
+                         and all(not z["overflow_px_closed"] and not z["overflow_px_open"] for z in run["zoom_and_reflow"].values()))
+    return {
+        "check": "Publication Standard v1 §10 release checks (and the §1 placements), PRES-1 conformance",
+        "checked_at_utc": _utc(), "page": target,
+        "host": f"{platform.machine()} / {platform.system()} {platform.release()}",
+        "not_used": "No real Safari, no real iPhone and no screen reader were used (standard §10); the phone "
+                    "widths are emulated viewports, and the iPhone is Playwright's emulated device in WebKit.",
+        "engines": {"chrome": "Google Chrome through Playwright's channel='chrome'",
+                    "webkit": "Playwright's WebKit build, the Safari engine but not Safari"},
+        "views": views,
+        "accessibility_trees": trees,
+        "accessibility_tree_method": {
+            "chrome": "Chrome's own accessibility tree, per node, through the DevTools protocol "
+                      "(Accessibility.getPartialAXTree)",
+            "webkit": "WebKit's own accessibility properties, per node, through WebKit's inspector protocol "
+                      "(DOM.getAccessibilityPropertiesForNode), reached through playwright-core's in-process "
+                      "connection, a private API of Playwright 1.63",
+        },
+        "keyboard_touch_contrast_zoom": checklist,
+        "passed": (all(not view["problems"] for view in views) and all(tree["passed"] for tree in trees.values())
+                   and all(run["passed"] for run in checklist)),
+    }
+
+
 #: The engines the MLflow index names (brief W11): Chromium is driven as the installed Google Chrome.
 MLFLOW_ENGINES = {"chromium": "chrome", "webkit": "webkit"}
 
@@ -662,6 +974,10 @@ def main() -> int:
         sub_parser.add_argument("page")
         sub_parser.add_argument("--out", type=Path, required=True)
         sub_parser.add_argument("--record", type=Path, required=True)
+    checks = sub.add_parser("release", help="every check of the standard's §10, and the §1 placements")
+    checks.add_argument("page")
+    checks.add_argument("--shots", type=Path, required=True, help="screenshot folder, under .local/artifacts/")
+    checks.add_argument("--out", type=Path, required=True)
     routes = sub.add_parser("mlflow-routes", help="open every REST-verified MLflow route in both engines")
     routes.add_argument("--mirror-record", type=Path, required=True, help="the verifier's record (verify --out)")
     routes.add_argument("--timeout", type=float, default=90.0)
@@ -676,6 +992,17 @@ def main() -> int:
             "Playwright is not installed here. It lives in a tool environment under "
             ".local/tools/, never in the project; see this script's docstring."
         )
+
+    if args.command == "release":
+        with sync_playwright() as playwright:
+            record = release(playwright, args.page, args.shots)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+        for view in record["views"]:
+            if view["problems"]:
+                print(f"{view['engine']} {view['view']}: {view['problems']}")
+        print(f"wrote {args.out}; passed={record['passed']}")
+        return 0 if record["passed"] else 1
 
     if args.command == "mlflow-routes":
         mirror = json.loads(args.mirror_record.read_text())

@@ -79,8 +79,11 @@ glance and generation list (`scripts/readme_research.py::build_glance`,
 **Limits to watch.**
 
 - **The §1 placements.** On 2026-09-28 the comparison's finding sentence ends at about 2,490 px of
-  the 2,532 px a phone allows (390 × 844), and at about 1,664 px of 1,800 on desktop. A longer
-  opening or lineage can push it out; measure in Chrome and WebKit before the independent check.
+  the 2,532 px a phone allows (390 × 844), and at about 1,767 px of 1,800 on desktop; the headline
+  block ends at about 775 px of 900. A longer opening or lineage can push them out; measure in
+  Chrome and WebKit before the independent check (`scripts/check_reader_paths.py::release`).
+- **Chart text of at least 12 px at every width.** The opening's preview sits in the right-hand
+  column; narrowing that column below about 460 px on desktop shrinks its text under 12 px.
 - **The size budget, 2.0 MB** (standard §6). The page was 1.56 MB on 2026-09-28. If a chapter would
   breach it, or at v5, the Orchestrator proposes a compaction rule to the Owner.
 
