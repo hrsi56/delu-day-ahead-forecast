@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from build_space import missing_card_lines  # noqa: E402
 from delu_forecast import publication_lint as L  # noqa: E402
 from delu_forecast import research_claims as RC  # noqa: E402
 from delu_forecast.claims import build_claims  # noqa: E402
@@ -45,7 +46,13 @@ def parity_problems() -> list[str]:
     headline = headline[:headline.index("</dd>")]
     readme_headline = next(line for line in glance.splitlines() if RC.headline("md") in line)
     readme_headline = readme_headline[readme_headline.index(RC.headline("md")):]
-    return L.parity_problems(L.surface_texts(ROOT), page_headline=headline, readme_headline=readme_headline)
+    problems = L.parity_problems(L.surface_texts(ROOT), page_headline=headline, readme_headline=readme_headline)
+    pages_url = build_claims()["pages_url"]
+    for name, card in (("Space card", ROOT / "space" / "README.md"),
+                       ("Static Space card", ROOT / "space-wasm" / "README.md")):
+        problems += [f"{name}: lacks the registry's line {line!r}"
+                     for line in missing_card_lines(card.read_text(), pages_url)]
+    return problems
 
 
 def main() -> int:

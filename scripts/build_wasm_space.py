@@ -30,8 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from build_space import card_body  # noqa: E402
-from delu_forecast import registry as G  # noqa: E402
+from build_space import card_body, missing_card_lines, model_line  # noqa: E402
 
 from delu_forecast.claims import (  # noqa: E402
     build_claims,
@@ -104,22 +103,6 @@ The [report]({C['pages_url']}) is a self-contained page with no additional runti
 """
 
 
-def model_line() -> str:
-    """The card's model line and links, from the registry (standard §8): the released model the demo
-    runs, its dated status and the release rule, the report, and -- once verified -- MLflow."""
-    import json
-
-    released = G.released()
-    lines = [f"**Model: {released.name}.** {G.status_sentence(released)} {G.release_sentence()}"]
-    links = [f"[the report]({build_claims()['pages_url']}) (every generation, its result and its evidence)"]
-    index = ROOT / "reports" / "presentation" / "mlflow_index.json"
-    route = json.loads(index.read_text()).get("routes", {}).get("experiment", {}).get("url") if index.is_file() else None
-    if route:
-        links.append(f"[the `delu-generations` MLflow experiment]({route})")
-    lines.append("Research since " + released.version + ": " + " and ".join(links) + ".")
-    return "\n".join(lines)
-
-
 def build_card() -> str:
     C = build_claims()
     limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
@@ -144,7 +127,7 @@ tags:
 
 # DE-LU day-ahead price forecasting — running in your browser
 
-{model_line()}
+{model_line(C['pages_url'])}
 
 Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
 electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
@@ -338,8 +321,12 @@ def main() -> int:
         json.dumps(dict(build_claims().values), indent=1, sort_keys=True) + "\n"
     )
 
+    card = build_card()
+    missing = missing_card_lines(card, build_claims()["pages_url"])
+    if missing:
+        raise SystemExit(f"the card lacks the registry's required lines: {missing}")
     CARD.parent.mkdir(parents=True, exist_ok=True)
-    CARD.write_text(build_card())
+    CARD.write_text(card)
     print(f"wrote {CARD}")
 
     run_export()

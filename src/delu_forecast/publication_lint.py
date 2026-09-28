@@ -374,7 +374,8 @@ TEMPLATE_SOURCES = {
     "scripts/build_pages.py": None,
     "scripts/readme_research.py": ("V1_READ", "build_glance", "generation_section", "branch_section", "build_block",
                                    "audit_links", "not_established"),
-    "scripts/build_wasm_space.py": ("build_card", "model_line", "static_deployed_section", "startup_markup"),
+    "scripts/build_space.py": ("model_lines", "card_body", "build_card", "docker_deployed_section"),
+    "scripts/build_wasm_space.py": ("build_card", "static_deployed_section", "startup_markup"),
     "scripts/cp3_readme.py": ("build_section",),
     "scripts/mlflow_export.py": ("EXPERIMENT_TAGS", "CHECKPOINTS", "_description", "_readme"),
 }

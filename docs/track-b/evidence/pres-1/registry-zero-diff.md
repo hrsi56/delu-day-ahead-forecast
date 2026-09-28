@@ -40,11 +40,15 @@ conformance work then replaces those labels with the canonical names.
 ## The MLflow export: names, descriptions and tags only
 
 ```text
-uv run python scripts/mlflow_export.py --diff-against af0abb0 \
+uv run python scripts/mlflow_export.py --diff-against af0abb0 --to 0f93205 \
     --out reports/presentation/release-checks/2026-09-28-registry-export-diff.json
-# runs 23 -> 23; checked {'params': 155, 'metric_points': 6928, 'datasets': 39, 'artifacts': 55};
+# runs 23 -> 23; checked {'params': 155, 'metric_points': 6928, 'datasets': 39, 'artifacts': 55,
+#   'artifacts_digest_unchanged': 9, 'artifacts_old_digest_on_restoring_identity': 46};
 # identity changes on 23 runs; substantive changes: none; only_identity=True   (exit 0)
 ```
+
+`--to 0f93205` compares the export committed at the registry's introduction, so the record stays
+reproducible after later commits change the export.
 
 The diff (`scripts/mlflow_export.py`, `diff_exports`) compares the two exports run by run:
 
@@ -56,8 +60,27 @@ The diff (`scripts/mlflow_export.py`, `diff_exports`) compares the two exports r
 | Metric histories | all 6,928 points unchanged by key, step, timestamp and value; units unchanged |
 | Datasets | all 39 unchanged |
 | Chart artifacts (9 SVG files) | SHA-256 unchanged |
-| `summary.json` and `README.md` (46 files) | changed only in identity: with the run name and tags removed from `summary.json`, and the title line from `README.md`, each is byte-equal to its predecessor |
+| `summary.json` and `README.md` (46 files) | SHA-256 changed, because each carries the run's identity; with `af0abb0`'s run name and tags put back, each reproduces `af0abb0`'s SHA-256 exactly (46 of 46) |
 | Changed | every run name; the tags `delu.public_name`, `delu.generation`, `delu.adopted` and `mlflow.note.content`; the new tags `delu.registry_id`, `delu.kind`, `delu.status` and `delu.comparator`; the experiment's description |
+
+### Byte identity and content preservation
+
+The acceptance asks for an unchanged digest on every artifact, and for changed names, descriptions
+and tags. Two kinds of artifact meet it in two different ways, and the record keeps them apart:
+
+- **Byte identity.** Every parameter, metric history point and dataset, and every artifact that
+  carries no identity (the 9 chart SVG files): the SHA-256 is unchanged.
+- **Content preservation, proven at the digest.** `summary.json` holds the run's name and tags, and
+  `README.md` its name as the title line. A renamed run cannot keep their bytes, so their digests
+  change by construction. The diff therefore restores the old identity fields into each new
+  artifact (`_restored_artifact`) and requires the old SHA-256 back, byte for byte. That shows the
+  only bytes that changed are the identity fields' values; removing fields and comparing the rest,
+  as the first version of this record did, could not show that. Any other change in either file
+  fails, and `tests/test_41_export_zero_diff.py` proves it with negative controls: a number inside
+  `summary.json`, the body of `README.md`, a metric point, a parameter and a chart.
+
+The page, the README, both Space cards and `pages_build.json` needed no such distinction: they are
+byte-identical (above).
 
 Two identity changes are corrections the registry makes, not accidents of the refactor:
 `cp10/v1_reference` is now tagged as v1 (`delu.generation=v1`, `delu.adopted=true`), because the
@@ -74,7 +97,10 @@ source of truth (standard §8).
 - `tests/test_35_registry.py`: every entry carries every §5 field; one identity across codes;
   derived status; and the consistency checks, with negative controls (a generation without its
   chapter or rail entry, an unregistered generation on the page, a missing or unregistered README
-  heading, an unregistered or missing run). The README's v1 heading arrives with W9; until then its
-  positive check is a strict expected failure.
+  heading, an unregistered or missing run). The README's v1 heading arrived with W9; its positive
+  check, a strict expected failure until then, now passes.
 - `tests/test_34_mlflow_export.py`: the export matches the registry, with negative controls; it
   replaced the fixed count of 23 runs (W14).
+- `tests/test_41_export_zero_diff.py`: a rename is identity-only and restoring it reproduces the old
+  digests; negative controls for a changed number inside `summary.json`, a changed `README.md` body,
+  a metric point, a parameter and a chart; and the committed record above proves the introduction.

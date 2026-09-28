@@ -740,24 +740,33 @@ def _runs_by_key(files: dict[str, dict]) -> dict[str, dict]:
             for run in content["runs"]}
 
 
-def _normalized_artifact(path: str, content: str) -> str:
-    """An artifact with its identity fields removed: `summary.json` without its name and tags,
-    `README.md` without its title line. What remains must not change when only names do."""
+#: The artifacts that carry a run's identity: `summary.json` holds its name and tags, and
+#: `README.md` its name as the title line. A name change changes their bytes by construction.
+IDENTITY_ARTIFACTS = ("summary.json", "README.md")
+
+
+def _restored_artifact(path: str, content: str, old_run: dict) -> str:
+    """The new artifact with the old run's identity fields put back. Its SHA-256 equals the old
+    artifact's exactly when nothing but identity changed: byte identity for everything else, and
+    content preservation, proven at the digest, for the identity-bearing artifacts."""
     if path == "summary.json":
         body = json.loads(content)
-        return _canonical({k: v for k, v in body.items() if k not in IDENTITY_FIELDS})
+        body.update({field: old_run[field] for field in IDENTITY_FIELDS})
+        return _canonical(body) + "\n"
     if path == "README.md":
-        return content.split("\n", 1)[1]
+        return f"# {old_run['run_name']}\n" + content.split("\n", 1)[1]
     return content
 
 
 def diff_exports(old: dict[str, dict], new: dict[str, dict]) -> dict:
     """Compare two exports record by record: every run, parameter, metric history point, dataset
     and artifact. Returns what changed; `only_identity` is true when nothing but names,
-    descriptions and tags did (an identity-only artifact is compared after `_normalized_artifact`)."""
+    descriptions and tags did. An artifact passes when its digest is unchanged, or -- only for the
+    identity-bearing artifacts -- when restoring the old names and tags reproduces the old digest."""
     old_runs, new_runs = _runs_by_key(old), _runs_by_key(new)
     report: dict = {"runs_old": len(old_runs), "runs_new": len(new_runs), "run_keys_equal": sorted(old_runs) == sorted(new_runs),
-                    "checked": {"params": 0, "metric_points": 0, "datasets": 0, "artifacts": 0},
+                    "checked": {"params": 0, "metric_points": 0, "datasets": 0, "artifacts": 0,
+                                "artifacts_digest_unchanged": 0, "artifacts_old_digest_on_restoring_identity": 0},
                     "identity_changes": {}, "substantive_changes": []}
     for key in sorted(set(old_runs) | set(new_runs)):
         if key not in old_runs or key not in new_runs:
@@ -792,9 +801,11 @@ def diff_exports(old: dict[str, dict], new: dict[str, dict]) -> dict:
         for path in sorted(old_art):
             report["checked"]["artifacts"] += 1
             if old_art[path]["sha256"] == new_art[path]["sha256"]:
+                report["checked"]["artifacts_digest_unchanged"] += 1
                 continue
-            if (path in ("summary.json", "README.md")
-                    and _normalized_artifact(path, old_art[path]["content"]) == _normalized_artifact(path, new_art[path]["content"])):
+            if (path in IDENTITY_ARTIFACTS
+                    and sha256_text(_restored_artifact(path, new_art[path]["content"], a)) == old_art[path]["sha256"]):
+                report["checked"]["artifacts_old_digest_on_restoring_identity"] += 1
                 report["identity_changes"].setdefault(key, {}).setdefault("artifacts_identity_only", []).append(path)
                 continue
             report["substantive_changes"].append(f"{key}: artifact {path}")
@@ -825,12 +836,15 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="exit 1 if the committed export is stale")
     parser.add_argument("--diff-against", metavar="REF", default=None,
                         help="compare the fresh export with the one committed at REF, record by record")
+    parser.add_argument("--to", metavar="REF", default=None,
+                        help="with --diff-against: compare with the export committed at REF instead of a fresh one")
     parser.add_argument("--out", type=Path, default=None, help="with --diff-against: write the report here")
     args = parser.parse_args()
     files = build_export()
     if args.diff_against:
-        report = diff_exports(export_at(args.diff_against), files)
+        report = diff_exports(export_at(args.diff_against), export_at(args.to) if args.to else files)
         report["against"] = args.diff_against
+        report["to"] = args.to or "the fresh export"
         text = json.dumps(report, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
         if args.out:
             args.out.parent.mkdir(parents=True, exist_ok=True)

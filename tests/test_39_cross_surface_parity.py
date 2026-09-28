@@ -3,11 +3,13 @@
 `scripts/verify_release.py` extends the CP-3 agreement check with this parity check; here it runs
 on the committed surfaces -- the page, the README, both Space cards and the MLflow export -- and on
 deliberately broken copies: a changed headline, a name that is not the registry's, an unregistered
-generation and a status the registry does not hold.
+generation and a status the registry does not hold. Both Space cards carry the registry's model
+line and links (`build_space.model_lines`); a card without a required line fails.
 """
 
 from __future__ import annotations
 
+import json
 import sys
 
 import pytest
@@ -15,11 +17,14 @@ import pytest
 from delu_forecast import publication_lint as L
 from delu_forecast import registry as G
 from delu_forecast import research_claims as RC
-from delu_forecast.claims import REPO_ROOT
+from delu_forecast.claims import REPO_ROOT, build_claims
 
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
+import build_space  # noqa: E402
 import verify_release  # noqa: E402
+
+CARDS = {"Space card": REPO_ROOT / "space" / "README.md", "Static Space card": REPO_ROOT / "space-wasm" / "README.md"}
 
 
 @pytest.fixture(scope="module")
@@ -40,6 +45,42 @@ def test_the_space_card_takes_its_model_line_from_the_registry(surfaces):
     card = surfaces["Static Space card"]
     released = G.released()
     assert f"**Model: {released.name}.** {G.status_sentence(released)} {G.release_sentence()}" in card
+
+
+def test_both_space_cards_carry_every_required_line():
+    pages_url = build_claims()["pages_url"]
+    lines = build_space.model_lines(pages_url)
+    assert lines[0].startswith(f"**Model: {G.released().name}.**") and pages_url in lines[1]
+    for name, card in CARDS.items():
+        assert build_space.missing_card_lines(card.read_text(), pages_url) == [], name
+
+
+@pytest.mark.parametrize("name", sorted(CARDS))
+def test_negative_control_a_card_without_a_required_line_fails(name):
+    pages_url = build_claims()["pages_url"]
+    card = CARDS[name].read_text()
+    for line in build_space.model_lines(pages_url):
+        assert build_space.missing_card_lines(card.replace(line + "\n", "", 1), pages_url) == [line]
+
+
+def test_negative_control_verify_release_reports_a_card_that_lacks_a_line(monkeypatch):
+    monkeypatch.setattr(verify_release, "missing_card_lines", lambda card, url: ["**Model: v1 · released LightGBM.**"])
+    problems = verify_release.parity_problems()
+    assert any(problem.startswith("Space card: lacks") for problem in problems)
+    assert any(problem.startswith("Static Space card: lacks") for problem in problems)
+
+
+def test_the_mlflow_link_is_required_once_the_verifier_indexed_it(tmp_path):
+    """No placeholder: before the index, a card has no MLflow link; after it, a card without one fails."""
+    pages_url = build_claims()["pages_url"]
+    index = tmp_path / "mlflow_index.json"
+    assert "MLflow" not in " ".join(build_space.model_lines(pages_url, index))
+    url = "https://dagshub.com/owner/repo.mlflow/#/experiments/1"
+    index.write_text(json.dumps({"routes": {"experiment": {"url": url}}}))
+    lines = build_space.model_lines(pages_url, index)
+    assert f"[the `delu-generations` MLflow experiment]({url})" in lines[1]
+    unlinked = build_space.model_lines(pages_url, tmp_path / "absent.json")
+    assert build_space.missing_card_lines("\n".join(unlinked), pages_url, index) == [lines[1]]
 
 
 def test_negative_control_a_changed_headline_is_caught(surfaces):

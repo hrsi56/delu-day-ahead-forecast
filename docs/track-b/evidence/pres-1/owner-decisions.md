@@ -57,3 +57,15 @@ byte-identical to the ratified files in the main checkout:
 §5 gate holds: one independent PASS on a candidate containing W1–W15, a current export with a
 clean dry run, and the §9 credential checks. Nothing else public is authorized to the Lead: no
 push, tag, Space redeploy, registry change or write to `delu-cp2`.
+
+## 2026-09-28: the Owner's instructions to the conformance Lead, mid-execution
+
+Given in the Lead session on 2026-09-28, after W1–W11's first commits, in the Owner's words
+(translated from Hebrew): continue under the existing standard and brief; the rest as below.
+
+| Instruction | What the Lead does |
+|---|---|
+| "I approve a focused extension to `scripts/build_space.py` for producing the model line and links from the registry, with a test that fails when a required line is missing" | `scripts/build_space.py` joins the brief's §6 write allowlist for that purpose only. It now holds the one model-line source both Space cards use (`model_lines`), and the container card (`space/README.md`) carries it. Its card templates join the status lint, which required one word of the container card to change ("remains runnable" became "runs"); nothing else in the file changed. The required-line check runs in the card builders and in `verify_release.py`, with negative controls in `tests/test_39_cross_surface_parity.py` |
+| Close the WebKit accessibility-tree gap with real evidence, or hand the Orchestrator an explicit alternative check | Recorded with the §10 release checks |
+| Resolve W2's distinction between byte identity and content preservation after identity fields change | `registry-zero-diff.md`, "Byte identity and content preservation" |
+| Then complete the remaining deliverables, checks and the independent check, through the return the brief defines; do not widen the design or the research | As the brief orders |
