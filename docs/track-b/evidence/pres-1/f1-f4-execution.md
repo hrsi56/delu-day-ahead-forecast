@@ -53,3 +53,21 @@ The F3 helper used only `Reader` anonymous GETs and POST searches (reads), no au
 - `.local/tmp/pres-1/f2-route-seed.json` — SHA-256 `c5652ff4afafc0ec1fa555ecf10c122e2537f9b2e1a4e4f0d4e1d0dbf82bdb53`.
 - `.local/tmp/pres-1/f2-mirror.log` — SHA-256 `23dd7a1840b421e645617684b9728626a208f2d7a16893af72eb1170637680c8`.
 - `.local/tmp/pres-1/f2-browser.log` — SHA-256 `abeb2688294567140234f8ae533dbd15705d92891a93525285de7fe4653ab137`.
+
+## F4 — complete; terminal review still required
+
+`build_pages.py --final` exited 0 with all six verified routes and no omissions. `rebuild_presentation.py` then rebuilt README, cards, export and page; all five steps and cross-surface checks passed. `publication_guard.py tree` exits 0: final record, no placeholder. The final page is **1,560,646 bytes** (the first --final pass was 1,559,769; rebuilding the README/export/surfaces normalized the complete output before release measurements). A second post-bundle rebuild kept the normalized page size; clean-tree determinism is recorded separately with final suite/CI evidence.
+
+The three `make wasm` steps were executed in order using the existing read-only Python 3.13.15 environment and this checkout's source (`PYTHONPATH=src`), with credential-like variables removed and temporary files inside `.local/`: `build_wasm_payload.py`, `verify_wasm_equivalence.py`, `build_wasm_space.py`. All exited 0. This keeps the Python version that produced the reviewed bundle; the normal Lead environment is 3.12.14 and its separate CI-equivalent checks remain required. No dependency, model or inference code changed.
+
+Final Space bundle: **b046c69b899bb9d5a2b2f9aeb3e5b3eebfdda820a419137ef5cdf8b8ac8f7c3d**, **805 files**, **44,162,180 bytes**; 315 referenced assets, none missing. Browser champion source identity remains `9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b`.
+
+Fresh final measurements: `2026-09-29-final-s10.json` passed every standard §10 view/accessibility/keyboard/touch/contrast/zoom check; `check_links.py` found no failed destination. `2026-09-29-final-demo.json` has four fresh-context cold starts on the local final bundle: Chrome and WebKit, 1440×900 and 390×844, ready with zero failed requests and console errors; control responses recorded. `2026-09-29-final-states.json` exercises forced asset failure, runtime failure/hang and successful retry in both engines. These are local final-bundle checks, not a redeploy or a claim about already published Space bytes.
+
+The generated change includes link additions and a tracking sentence changing from future to present tense. Therefore the next independent check is **full**, including the final F1–F4 checks, rather than interpreting it as only a link-target delta. No source, test or research artifact changed after the pre-F1 PASS. The export remains byte-identical to what F1 uploaded. A checkpoint PASS is not inferred from these Lead measurements.
+
+- `.local/tmp/pres-1/run-f4-wasm.py` — SHA-256 `ef559221460c20efd76b918bb8f0f4fa5a9192eb061b68b506b890741a573e0f`.
+- `.local/tmp/pres-1/f4-wasm/2.log` — SHA-256 `310d4447d8a35b7e13906aad076f83b2ea994e39c00de6e84a0c82187fb80752`.
+- `.local/tmp/pres-1/f4-wasm/3.log` — SHA-256 `654348140e406389a53d3cf796a4ceb18f25c2a907fa2771e3ac061569a591fc`.
+- `.local/tmp/pres-1/f4-wasm/1.log` — SHA-256 `9097d6267893098be666de7111c67110b5c863ed15fb2f7de9d88881163a21cf`.
+- `.local/tmp/pres-1/f4-wasm/results.json` — SHA-256 `5d22086ec498bc1b0e684105be10674ae42ffac7df5469ffe99747d6469ada17`.

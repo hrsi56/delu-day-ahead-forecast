@@ -21,6 +21,8 @@
 
 **Evidence:** each generation below links its engineering report, its review verdict and its source rows, frozen at its evidence tag.
 
+**MLflow:** [the `delu-generations` experiment](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1), mirrored from the committed evidence; the repository is the source of truth.
+
 <!-- glance:end -->
 
 <!-- research:start -->
@@ -344,7 +346,7 @@ single id is canonical — the name is what to search for:
 | `champion::final-fit-and-holdout` | the frozen champion and the one-shot holdout |
 | `diagnostics::champion` | SHAP, permutation importance, regimes, reliability |
 
-**Tracking after v1.** Research after v1 will be tracked in a separate `delu-generations` experiment on the same tracking server: every policy evaluated since v1 will appear there once, mirrored from the committed evidence, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment. [Generations, newest first](#generations-newest-first)
+**Tracking after v1.** Research after v1 is tracked in a separate `delu-generations` experiment on the same tracking server: every policy evaluated since v1 appears there once, mirrored from the committed evidence, so v1's record stays exactly as the one-shot holdout left it and the two are never mixed in one experiment. [Generations, newest first](#generations-newest-first)
 summarizes it.
 
 **Run it yourself, offline:**
