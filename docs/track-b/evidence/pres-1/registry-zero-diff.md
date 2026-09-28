@@ -89,7 +89,7 @@ carries a version number in its name, because a number is given only on adoption
 decision 2).
 
 **Final names.** The run names above are the names the public upload (F1) will carry; they are
-fixed here, before F1 (brief §5.1). The experiment's description now says the repository is the
+fixed here, before F1 (brief §5.1), with the one later change recorded at the end of this file. The experiment's description now says the repository is the
 source of truth (standard §8).
 
 ## The checks that keep it true
@@ -104,3 +104,32 @@ source of truth (standard §8).
 - `tests/test_41_export_zero_diff.py`: a rename is identity-only and restoring it reproduces the old
   digests; negative controls for a changed number inside `summary.json`, a changed `README.md` body,
   a metric point, a parameter and a chart; and the committed record above proves the introduction.
+
+## After W2: the export the public upload (F1) carries
+
+The conformance work after the registry's introduction changed what the page draws (W4–W9), and
+the export's chart artifacts are the page's own drawings. Against `af0abb0`, the export at the F1
+candidate (`reports/presentation/release-checks/2026-09-28-export-diff-f1-candidate.json`):
+
+| Compared | Result |
+|---|---|
+| Run keys, parents | the same 23 runs, the same parents |
+| Parameters, metric history points, datasets | all 155, 6,928 and 39 unchanged, byte for byte |
+| `summary.json` and `README.md` (46 files) | each reproduces `af0abb0`'s SHA-256 when `af0abb0`'s name and tags are put back |
+| Chart artifacts | 1 unchanged (`v3-c5`); 8 redrawn by W5 and W6, listed below |
+| Experiment tags | the description (`mlflow.note.content`), which now says the repository is the source of truth |
+
+The eight redrawn charts, compared element by element (every shape's attributes, then every text):
+
+| Artifact | Shapes | What changed |
+|---|---|---|
+| `v3-c2a`, `v3-c2b`, `v3-c3`, `v3-c4`, `v3-c6` | identical | text only: plain score names ("Point-error score" for "Point error (ΔS_MAE)"), explicit direction ("below zero favours v3"), one precision per chart (EUR/MWh to one decimal), v1's canonical short name |
+| `overview`, `v2-chart1` | same count, moved | the targets line in words and a met / not-met column narrowed the plot area, so every mark moved with it |
+| `v2-chart2` | same count, moved | the longer "pooled-interval control" label widened the label column; the near-zero endpoint is now printed as +0.0000039 on the chart |
+
+No number behind any chart changed: the metric points they draw are the unchanged 6,928 above.
+
+**The names the upload carries** are the names fixed at the registry's introduction, with one later
+change, made before F1 as brief §5.1 requires: `cp15/B0` became "Similar-day naive (B0,
+normalizer)" at `8ff5a44` (W6: the naive is the normalizer of both scores, not a benchmark). No tag
+changed after `0f93205`.
