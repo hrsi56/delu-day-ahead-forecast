@@ -1,0 +1,107 @@
+{
+  "check": "Anonymous comparison charts after Plotly renders and loading skeletons disappear; fresh contexts",
+  "checked_at_utc": "2026-09-28T21:01:55+00:00",
+  "passed": true,
+  "results": [
+    {
+      "engine": "chromium",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:calibration",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-calibration-chromium-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%222a78da98d6984c55b2c2c31e4e1f498a%22,%2231a984a28dce4ff69abed0172ac71165%22,%22b95809838bb74972b5fd72d3a5d63c61%22,%22bf30d3dee57141cebe3d4ef41b39c907%22,%228e7e60963cad465ab436035d324d3760%22,%22250f44b8704e4c52bf5d9bd9de66f36c%22,%22754fcaa4bcc0482badb084a7cd56117e%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "chromium",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:model-comparison",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-model-comparison-chromium-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22733341b233284f758702cde99044f4a9%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%22d61166d3413747d2b07d6350df704f2d%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22c5b522f86dd54415b085c1f69ff42948%22,%221c31337399104ba881aa0caeefa24a6c%22,%229182613a781b455daf70704f30ee99db%22,%22c3da9c3d87714550aa4ef68fc0ec8913%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "chromium",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:overview",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-overview-chromium-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "chromium",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:v2",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-v2-chromium-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22c8e1cc9025b041d9adff72a8e244099f%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "chromium",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:v3",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-v3-chromium-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "webkit",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:calibration",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-calibration-webkit-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%222a78da98d6984c55b2c2c31e4e1f498a%22,%2231a984a28dce4ff69abed0172ac71165%22,%22b95809838bb74972b5fd72d3a5d63c61%22,%22bf30d3dee57141cebe3d4ef41b39c907%22,%228e7e60963cad465ab436035d324d3760%22,%22250f44b8704e4c52bf5d9bd9de66f36c%22,%22754fcaa4bcc0482badb084a7cd56117e%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "webkit",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:model-comparison",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-model-comparison-webkit-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22733341b233284f758702cde99044f4a9%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%22d61166d3413747d2b07d6350df704f2d%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22c5b522f86dd54415b085c1f69ff42948%22,%221c31337399104ba881aa0caeefa24a6c%22,%229182613a781b455daf70704f30ee99db%22,%22c3da9c3d87714550aa4ef68fc0ec8913%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "webkit",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:overview",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-overview-webkit-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "webkit",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:v2",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-v2-webkit-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22c8e1cc9025b041d9adff72a8e244099f%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22%5D&experiments=%5B%221%22%5D"
+    },
+    {
+      "engine": "webkit",
+      "errors": [],
+      "passed": true,
+      "plot_svgs": 3,
+      "route_id": "compare:v3",
+      "screenshot": ".local/artifacts/presentation/mlflow-public/compare-v3-webkit-chart-ready.png",
+      "skeletons": 0,
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22%5D&experiments=%5B%221%22%5D"
+    }
+  ]
+}

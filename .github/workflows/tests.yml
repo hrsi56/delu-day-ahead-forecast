@@ -33,3 +33,9 @@ jobs:
       # The hard gate: the browser model is the frozen champion, bitwise.
       - name: WASM model-identity equivalence (CP-3B item 2)
         run: uv run pytest tests/test_22_wasm_equivalence.py -q
+      # Publication Standard v1 §9: Pages serves main as soon as it is pushed, so a placeholder or a
+      # non-final build record must never be on main. The pre-push hook enforces it after the secret
+      # guard; this step is the backstop.
+      - name: No placeholder or non-final build record on main (Publication Standard v1 §9)
+        if: github.ref == 'refs/heads/main'
+        run: python3 scripts/publication_guard.py tree

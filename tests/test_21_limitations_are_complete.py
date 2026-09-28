@@ -8,12 +8,19 @@ surface from `delu_forecast.claims`, and this asserts it.
 
 The reproduction half is checked too: a reader must be able to get from any
 surface to a command that runs.
+
+**Per model** (Publication Standard v1 §8, re-scoping plan invariant 5, approved at ratification as
+D2): a model's limitations appear on every surface that presents that model -- the demo, the Space
+card, its chapter and its README section. v1's set is checked on v1's surfaces; each research
+generation's limitations on its chapter and its README section.
 """
 
 from __future__ import annotations
 
 import pytest
 
+from delu_forecast import registry as G
+from delu_forecast import research_claims as RC
 from delu_forecast.claims import (
     LIMITATION_KEYS,
     LIMITATION_LABELS,
@@ -35,19 +42,75 @@ from delu_forecast.surfaces import (
     normalise,
 )
 
-#: The MLflow record carries tags, not prose, so the limitations set is asserted
-#: on the three human surfaces. §10 item (11) is a reading-order requirement.
+#: The MLflow record carries tags, not prose, so the limitations set is asserted on the human
+#: surfaces that present v1: its README section, both Space cards and its chapter on the page.
 HUMAN_SURFACES = ("README", "Space card", "Static Space card", "Pages export")
+
+
+def readme_section(text: str, entry: G.Entry) -> str:
+    """A generation's README section: from its registry heading to the next heading of that level."""
+    start = text.index(f"\n### {entry.name}\n")
+    end = text.find("\n### ", start + 1)
+    return text[start:end if end >= 0 else len(text)]
+
+
+def page_chapter(document: str, entry: G.Entry) -> str:
+    start = document.index(f'<article class="chapter" id="{entry.id}"')
+    return document[start:document.index("</article>", start)]
 
 
 @pytest.fixture(scope="module")
 def human_surfaces() -> list[Surface]:
+    v1 = G.released()
+    return [
+        Surface("README", README_PATH, normalise(readme_section(README_PATH.read_text(), v1))),
+        Surface("Space card", SPACE_CARD_PATH, normalise(SPACE_CARD_PATH.read_text())),
+        Surface("Static Space card", STATIC_SPACE_CARD_PATH, normalise(STATIC_SPACE_CARD_PATH.read_text())),
+        Surface("Pages export", PAGES_PATH, html_to_text(page_chapter(PAGES_PATH.read_text(), v1))),
+    ]
+
+
+@pytest.fixture(scope="module")
+def whole_surfaces() -> list[Surface]:
+    """Every human surface in full: reproduction and attribution are not per model."""
     return [
         Surface("README", README_PATH, normalise(README_PATH.read_text())),
         Surface("Space card", SPACE_CARD_PATH, normalise(SPACE_CARD_PATH.read_text())),
         Surface("Static Space card", STATIC_SPACE_CARD_PATH, normalise(STATIC_SPACE_CARD_PATH.read_text())),
         Surface("Pages export", PAGES_PATH, html_to_text(PAGES_PATH.read_text())),
     ]
+
+
+def test_the_demo_renders_every_one_of_v1s_limitations():
+    """The demo presents v1, so it carries v1's whole set: it renders every `limitation_` claim."""
+    from delu_forecast.claims import REPO_ROOT
+
+    notebook = (REPO_ROOT / "app" / "wasm_showcase.py").read_text()
+    assert 'k.startswith("limitation_")' in notebook and "CLAIMS['holdout_limitation']" in notebook
+    assert all(key.startswith("limitation_") for key in LIMITATION_KEYS)
+
+
+RESEARCH_LIMITATIONS = {
+    "v3": ("v3.caveat.bundle", "v3.caveat.fold3", "v3.caveat.class"),
+    "v2": ("v2.caveat.attribution", "v2.caveat.split", "v2.caveat.class"),
+}
+
+
+@pytest.mark.parametrize("version", sorted(RESEARCH_LIMITATIONS))
+def test_each_research_generations_limitations_are_on_its_chapter_and_its_readme_section(version):
+    entry = G.get(version)
+    chapter = page_chapter(PAGES_PATH.read_text(), entry)
+    section = readme_section(README_PATH.read_text(), entry)
+    for key in RESEARCH_LIMITATIONS[version]:
+        assert RC.render(key) in chapter, (version, key, "chapter")
+        assert RC.render(key, "md", surface=RC.README) in section, (version, key, "README section")
+
+
+def test_negative_control_a_research_limitation_dropped_from_its_readme_section_is_caught():
+    entry = G.get("v3")
+    section = readme_section(README_PATH.read_text(), entry)
+    dropped = section.replace(RC.render("v3.caveat.bundle", "md", surface=RC.README), "")
+    assert RC.render("v3.caveat.bundle", "md", surface=RC.README) not in dropped
 
 
 def test_the_set_covers_every_topic_section_10_item_11_names():
@@ -96,9 +159,9 @@ def test_positive_control_a_limitation_dropped_from_one_surface_is_caught(human_
     )
 
 
-def test_reproduction_instructions_are_runnable_on_every_human_surface(human_surfaces):
+def test_reproduction_instructions_are_runnable_on_every_human_surface(whole_surfaces):
     """A reader must reach a command, not a description of one."""
-    for surface in human_surfaces:
+    for surface in whole_surfaces:
         text = surface.text
         assert "uv sync" in text, f"{surface.name} does not say how to install"
         assert "predict_next_day.py" in text, f"{surface.name} does not say how to run the model"
@@ -137,9 +200,9 @@ def test_the_set_covers_every_element_section_10_item_12_names():
 
 
 @pytest.mark.parametrize("key", REPRODUCIBILITY_KEYS)
-def test_every_reproducibility_element_appears_on_every_human_surface(human_surfaces, key):
+def test_every_reproducibility_element_appears_on_every_human_surface(whole_surfaces, key):
     claims = build_claims()
-    missing = [surface.name for surface in human_surfaces if not surface.carries(key, claims[key])]
+    missing = [surface.name for surface in whole_surfaces if not surface.carries(key, claims[key])]
     assert not missing, f"{key} missing from: {', '.join(missing)}"
 
 
@@ -159,14 +222,14 @@ def test_the_registered_champion_element_names_the_model_and_the_alias():
     assert "never queries the registry" in text
 
 
-def test_positive_control_a_reproducibility_element_dropped_is_caught(human_surfaces):
+def test_positive_control_a_reproducibility_element_dropped_is_caught(whole_surfaces):
     claims = build_claims()
     key = "repro_registered_champion"
-    card = next(surface for surface in human_surfaces if surface.name == "Space card")
+    card = next(surface for surface in whole_surfaces if surface.name == "Space card")
     stripped = Surface(card.name, card.path, card.text.replace(normalise(claims[key]), ""))
     assert stripped.text != card.text, "the control did not modify anything"
     assert not stripped.carries(key, claims[key])
-    others = [surface for surface in human_surfaces if surface.name != "Space card"]
+    others = [surface for surface in whole_surfaces if surface.name != "Space card"]
     assert all(surface.carries(key, claims[key]) for surface in others)
 
 

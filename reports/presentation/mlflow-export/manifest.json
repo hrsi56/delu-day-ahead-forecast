@@ -1,0 +1,1215 @@
+{
+ "counts": {
+  "children": 19,
+  "parents": 4,
+  "total": 23
+ },
+ "experiment": "delu-generations",
+ "experiment_tags": {
+  "mlflow.experimentKind": "custom_model_development",
+  "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
+ },
+ "metric_units": {
+  "daily_mae_eur": "EUR/MWh",
+  "delta_fold_mae_eur_vs_b0": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b0_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b0_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b1": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b1_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b1_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b2": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b2_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b2_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b3": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b3_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_b3_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_v2_h": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_v2_h_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_v2_h_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_v2_p": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_v2_p_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_mae_eur_vs_v2_p_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b0": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b0_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b0_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b1": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b1_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b1_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b2": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b2_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b2_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b3": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b3_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_b3_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_v2_h": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_v2_h_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_v2_h_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_v2_p": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_v2_p_ci_high": "EUR/MWh, paired mean daily loss difference",
+  "delta_fold_wis_eur_vs_v2_p_ci_low": "EUR/MWh, paired mean daily loss difference",
+  "delta_s_mae_vs_b0": "normalized score difference",
+  "delta_s_mae_vs_b0_ci_high": "normalized score difference",
+  "delta_s_mae_vs_b0_ci_low": "normalized score difference",
+  "delta_s_mae_vs_b1": "normalized score difference",
+  "delta_s_mae_vs_b1_ci_high": "normalized score difference",
+  "delta_s_mae_vs_b1_ci_low": "normalized score difference",
+  "delta_s_mae_vs_b2": "normalized score difference",
+  "delta_s_mae_vs_b2_ci_high": "normalized score difference",
+  "delta_s_mae_vs_b2_ci_low": "normalized score difference",
+  "delta_s_mae_vs_b3": "normalized score difference",
+  "delta_s_mae_vs_b3_ci_high": "normalized score difference",
+  "delta_s_mae_vs_b3_ci_low": "normalized score difference",
+  "delta_s_mae_vs_v2_h": "normalized score difference",
+  "delta_s_mae_vs_v2_h_ci_high": "normalized score difference",
+  "delta_s_mae_vs_v2_h_ci_low": "normalized score difference",
+  "delta_s_mae_vs_v2_p": "normalized score difference",
+  "delta_s_mae_vs_v2_p_ci_high": "normalized score difference",
+  "delta_s_mae_vs_v2_p_ci_low": "normalized score difference",
+  "delta_s_wis_vs_b0": "normalized score difference",
+  "delta_s_wis_vs_b0_ci_high": "normalized score difference",
+  "delta_s_wis_vs_b0_ci_low": "normalized score difference",
+  "delta_s_wis_vs_b1": "normalized score difference",
+  "delta_s_wis_vs_b1_ci_high": "normalized score difference",
+  "delta_s_wis_vs_b1_ci_low": "normalized score difference",
+  "delta_s_wis_vs_b2": "normalized score difference",
+  "delta_s_wis_vs_b2_ci_high": "normalized score difference",
+  "delta_s_wis_vs_b2_ci_low": "normalized score difference",
+  "delta_s_wis_vs_b3": "normalized score difference",
+  "delta_s_wis_vs_b3_ci_high": "normalized score difference",
+  "delta_s_wis_vs_b3_ci_low": "normalized score difference",
+  "delta_s_wis_vs_v2_h": "normalized score difference",
+  "delta_s_wis_vs_v2_h_ci_high": "normalized score difference",
+  "delta_s_wis_vs_v2_h_ci_low": "normalized score difference",
+  "delta_s_wis_vs_v2_p": "normalized score difference",
+  "delta_s_wis_vs_v2_p_ci_high": "normalized score difference",
+  "delta_s_wis_vs_v2_p_ci_low": "normalized score difference",
+  "fold_coverage50": "fraction",
+  "fold_coverage80": "fraction",
+  "fold_coverage95": "fraction",
+  "fold_mae_eur": "EUR/MWh",
+  "fold_mean_width95_eur": "EUR/MWh",
+  "fold_pinball9_eur": "EUR/MWh",
+  "fold_wis_eur": "EUR/MWh",
+  "peak_coverage95": "fraction",
+  "peak_hits95": "count",
+  "peak_mae_eur": "EUR/MWh",
+  "peak_wis_eur": "EUR/MWh",
+  "pooled_bias_eur": "EUR/MWh",
+  "pooled_coverage95": "fraction",
+  "pooled_mae_eur": "EUR/MWh",
+  "pooled_rmse_eur": "EUR/MWh",
+  "pooled_wis_eur": "EUR/MWh",
+  "s_mae": "ratio to B0, equal-fold",
+  "s_wis": "ratio to B0, equal-fold"
+ },
+ "runs": [
+  {
+   "artifacts": {
+    "README.md": "cabcbfb1a6624f9815fc1754f6946c4b4d20aed0a9e52d7717c7f40d57d68009",
+    "summary.json": "89000da014d657836e1b1aa406f8bb2589e52c68fcaa338e6c4139f688a309f4"
+   },
+   "file": "cp10.json",
+   "inputs": [],
+   "metrics": {},
+   "params": 2,
+   "parent": null,
+   "run_key": "cp10",
+   "run_name": "Calibration experiment (CP-10)",
+   "tags": 16
+  },
+  {
+   "artifacts": {
+    "README.md": "8f5999ee632dd135701040be67000a6009c51e3a9fbea5954e279ab06778e83e",
+    "summary.json": "857946d71dec5834cdf0ec9a5e4210872fce88b6924862f13d181834774e6196"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 6,
+   "parent": "cp10",
+   "run_key": "cp10/v1_reference",
+   "run_name": "v1 · released LightGBM (v1_reference, unscaled CQR reference)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "06fe5774747dbd4d046ea679b9a791fb11aef21ee1729c8603500cc8b0707837",
+    "summary.json": "a2368e0506c7f640154a29c0164fcb462b8454f3998934803a12674974416172"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 6,
+   "parent": "cp10",
+   "run_key": "cp10/c1_head_spread",
+   "run_name": "Scaled conformal, head spread (c1_head_spread)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "213b64ee4df152442642fecad7d077f4782cb8bb93d2c5eab478685f96cc178a",
+    "summary.json": "fc8009d1fca621a04714cc91822feda7171c1446b4bfdf7e441f8cb2734440e6"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 6,
+   "parent": "cp10",
+   "run_key": "cp10/c1_price_volatility",
+   "run_name": "Scaled conformal, price volatility (c1_price_volatility, selected scale)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "bfb114e41bcf0fb9cbcf98ab86651c5068cfdb60f35a6dd957f65e66785e69c8",
+    "summary.json": "297342445eac73d05b421fef5038e2201fa4dacd4489fb2580ce341287081d62"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 7,
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.000001",
+   "run_name": "Adaptive conformal, gamma 0.000001 (c2_aci_gamma_0.000001)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "782e0fe6846e81d1d55c96554b3d3dd3b412fa92277d409a3725ddf2f976fd9d",
+    "summary.json": "c9d262f7deb87ef5f426beaccd81f3daab98cdadcac77ce06958e67ffcfad41b"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 7,
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.000005",
+   "run_name": "Adaptive conformal, gamma 0.000005 (c2_aci_gamma_0.000005)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "f466f59666e89f8fcb8d845d3855d3bad89bbce8e05378e5568a283213698245",
+    "summary.json": "0c1c80d1647b1efe0cb5fa206058af2f03e01435a62b216e162a1d925d3ff690"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 7,
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.00001",
+   "run_name": "Adaptive conformal, gamma 0.00001 (c2_aci_gamma_0.00001)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "3884c36336a7ce80f6a3cfefcb39f64aaf88d78c118e892ee8b68c5ceb4e575b",
+    "summary.json": "2e8c58030131207b0ecd322464775a3d320de5f61c38ccaf5aa79d2ed0f17b69"
+   },
+   "file": "cp10.json",
+   "inputs": [
+    "cp10-fold-block",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_pinball9_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1
+   },
+   "params": 7,
+   "parent": "cp10",
+   "run_key": "cp10/c2_aci_gamma_0.00002",
+   "run_name": "Adaptive conformal, gamma 0.00002 (c2_aci_gamma_0.00002, selected step)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "846f7bbd745efbfe38d742d48f94be21b41d86048d8310fd241340d7a118ada1",
+    "summary.json": "072f61910451ad57f80baa07e045c43ab2014b17904b2d89f4957fd0baa22455"
+   },
+   "file": "cp15.json",
+   "inputs": [],
+   "metrics": {},
+   "params": 2,
+   "parent": null,
+   "run_key": "cp15",
+   "run_name": "Model comparison study (CP-15)",
+   "tags": 16
+  },
+  {
+   "artifacts": {
+    "README.md": "204bd087c357826d5ddebc66081ac290638cc5d4a93bb0b81f95bd91133ea82d",
+    "summary.json": "30cad42ed7ef9f224f05a2a120df3870c0cd8b008ba3ef262f496d370891e994"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 6,
+   "parent": "cp15",
+   "run_key": "cp15/B0",
+   "run_name": "Similar-day naive (B0, normalizer)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "6385aa0324196e2dc98e7676b6a2ff6b8f227a45dbd4418d20b140683f2efc16",
+    "summary.json": "f8e963b35ede8e4261538dc70a332c5b1e42a3e4db8729732c33c2fbb25e769e"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 6,
+   "parent": "cp15",
+   "run_key": "cp15/B1",
+   "run_name": "v1 · released LightGBM (B1, development replay)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "3c08bcbbbb19c8ddf4970a49a86ce365add188f9aeef7a17fece3a3de33a50cb",
+    "summary.json": "251350094081f14c243e7035b77b49b389f8029de6419bcf5f307181d7600375"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 8,
+   "parent": "cp15",
+   "run_key": "cp15/B2",
+   "run_name": "Daily LEAR (B2)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "7de9b31ae4a09a2cffedc1cd0cc3547c7f4ca08badbfd85b27eed2986280bdb3",
+    "summary.json": "08a3c1e72cc25c3adf4228dfa643949f670cb859fc43951fe1c1fc8acc2d25c7"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 8,
+   "parent": "cp15",
+   "run_key": "cp15/B3",
+   "run_name": "Daily LightGBM (B3)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "49aeae92ba2ba58d09ea288cef404dc963a810258fed5f7df1fa20538a7f26fa",
+    "summary.json": "7ccbaef7cb372ef7e15b57b5d7f88bda31c8754775fa38c54d51e5c0426ec646"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b0": 5,
+    "delta_fold_mae_eur_vs_b0_ci_high": 5,
+    "delta_fold_mae_eur_vs_b0_ci_low": 5,
+    "delta_fold_mae_eur_vs_b1": 5,
+    "delta_fold_mae_eur_vs_b1_ci_high": 5,
+    "delta_fold_mae_eur_vs_b1_ci_low": 5,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_mae_eur_vs_b3": 5,
+    "delta_fold_mae_eur_vs_b3_ci_high": 5,
+    "delta_fold_mae_eur_vs_b3_ci_low": 5,
+    "delta_fold_wis_eur_vs_b0": 5,
+    "delta_fold_wis_eur_vs_b0_ci_high": 5,
+    "delta_fold_wis_eur_vs_b0_ci_low": 5,
+    "delta_fold_wis_eur_vs_b1": 5,
+    "delta_fold_wis_eur_vs_b1_ci_high": 5,
+    "delta_fold_wis_eur_vs_b1_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_b3": 5,
+    "delta_fold_wis_eur_vs_b3_ci_high": 5,
+    "delta_fold_wis_eur_vs_b3_ci_low": 5,
+    "delta_s_mae_vs_b0": 1,
+    "delta_s_mae_vs_b0_ci_high": 1,
+    "delta_s_mae_vs_b0_ci_low": 1,
+    "delta_s_mae_vs_b1": 1,
+    "delta_s_mae_vs_b1_ci_high": 1,
+    "delta_s_mae_vs_b1_ci_low": 1,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_mae_vs_b3": 1,
+    "delta_s_mae_vs_b3_ci_high": 1,
+    "delta_s_mae_vs_b3_ci_low": 1,
+    "delta_s_wis_vs_b0": 1,
+    "delta_s_wis_vs_b0_ci_high": 1,
+    "delta_s_wis_vs_b0_ci_low": 1,
+    "delta_s_wis_vs_b1": 1,
+    "delta_s_wis_vs_b1_ci_high": 1,
+    "delta_s_wis_vs_b1_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_b3": 1,
+    "delta_s_wis_vs_b3_ci_high": 1,
+    "delta_s_wis_vs_b3_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp15",
+   "run_key": "cp15/A1",
+   "run_name": "Normalized LEAR (A1)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "b64600a8fa0da94a9645d0942999749ca83cf82dec507fe20a97c4d9bed2e167",
+    "summary.json": "ccc23ed327b235402f932fe26d2c2159a3436647bd101d171c13e87a608d1ce4"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b0": 5,
+    "delta_fold_mae_eur_vs_b0_ci_high": 5,
+    "delta_fold_mae_eur_vs_b0_ci_low": 5,
+    "delta_fold_mae_eur_vs_b1": 5,
+    "delta_fold_mae_eur_vs_b1_ci_high": 5,
+    "delta_fold_mae_eur_vs_b1_ci_low": 5,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_mae_eur_vs_b3": 5,
+    "delta_fold_mae_eur_vs_b3_ci_high": 5,
+    "delta_fold_mae_eur_vs_b3_ci_low": 5,
+    "delta_fold_wis_eur_vs_b0": 5,
+    "delta_fold_wis_eur_vs_b0_ci_high": 5,
+    "delta_fold_wis_eur_vs_b0_ci_low": 5,
+    "delta_fold_wis_eur_vs_b1": 5,
+    "delta_fold_wis_eur_vs_b1_ci_high": 5,
+    "delta_fold_wis_eur_vs_b1_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_b3": 5,
+    "delta_fold_wis_eur_vs_b3_ci_high": 5,
+    "delta_fold_wis_eur_vs_b3_ci_low": 5,
+    "delta_s_mae_vs_b0": 1,
+    "delta_s_mae_vs_b0_ci_high": 1,
+    "delta_s_mae_vs_b0_ci_low": 1,
+    "delta_s_mae_vs_b1": 1,
+    "delta_s_mae_vs_b1_ci_high": 1,
+    "delta_s_mae_vs_b1_ci_low": 1,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_mae_vs_b3": 1,
+    "delta_s_mae_vs_b3_ci_high": 1,
+    "delta_s_mae_vs_b3_ci_low": 1,
+    "delta_s_wis_vs_b0": 1,
+    "delta_s_wis_vs_b0_ci_high": 1,
+    "delta_s_wis_vs_b0_ci_low": 1,
+    "delta_s_wis_vs_b1": 1,
+    "delta_s_wis_vs_b1_ci_high": 1,
+    "delta_s_wis_vs_b1_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_b3": 1,
+    "delta_s_wis_vs_b3_ci_high": 1,
+    "delta_s_wis_vs_b3_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp15",
+   "run_key": "cp15/A2",
+   "run_name": "Normalized LightGBM (A2)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "51390d7a4cbbf8b8df0d1aed0474c5b4faaf284e3dc63c4fca7c7e482a0fe305",
+    "summary.json": "126b9aa0e2ed2cb703dae787040b79cd93120127bec267061d7b5260c509684c"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b0": 5,
+    "delta_fold_mae_eur_vs_b0_ci_high": 5,
+    "delta_fold_mae_eur_vs_b0_ci_low": 5,
+    "delta_fold_mae_eur_vs_b1": 5,
+    "delta_fold_mae_eur_vs_b1_ci_high": 5,
+    "delta_fold_mae_eur_vs_b1_ci_low": 5,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_mae_eur_vs_b3": 5,
+    "delta_fold_mae_eur_vs_b3_ci_high": 5,
+    "delta_fold_mae_eur_vs_b3_ci_low": 5,
+    "delta_fold_wis_eur_vs_b0": 5,
+    "delta_fold_wis_eur_vs_b0_ci_high": 5,
+    "delta_fold_wis_eur_vs_b0_ci_low": 5,
+    "delta_fold_wis_eur_vs_b1": 5,
+    "delta_fold_wis_eur_vs_b1_ci_high": 5,
+    "delta_fold_wis_eur_vs_b1_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_b3": 5,
+    "delta_fold_wis_eur_vs_b3_ci_high": 5,
+    "delta_fold_wis_eur_vs_b3_ci_low": 5,
+    "delta_s_mae_vs_b0": 1,
+    "delta_s_mae_vs_b0_ci_high": 1,
+    "delta_s_mae_vs_b0_ci_low": 1,
+    "delta_s_mae_vs_b1": 1,
+    "delta_s_mae_vs_b1_ci_high": 1,
+    "delta_s_mae_vs_b1_ci_low": 1,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_mae_vs_b3": 1,
+    "delta_s_mae_vs_b3_ci_high": 1,
+    "delta_s_mae_vs_b3_ci_low": 1,
+    "delta_s_wis_vs_b0": 1,
+    "delta_s_wis_vs_b0_ci_high": 1,
+    "delta_s_wis_vs_b0_ci_low": 1,
+    "delta_s_wis_vs_b1": 1,
+    "delta_s_wis_vs_b1_ci_high": 1,
+    "delta_s_wis_vs_b1_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_b3": 1,
+    "delta_s_wis_vs_b3_ci_high": 1,
+    "delta_s_wis_vs_b3_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp15",
+   "run_key": "cp15/A3",
+   "run_name": "Normalized component mean (A3)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "af52ef9a3de3a03efd115fb0111e07281db716d8bd55647b87a079bfba86b7d1",
+    "summary.json": "664b4f8be83796b905a7abf1b570a0371e9451c275e4dc0752719387f2035ec7"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b0": 5,
+    "delta_fold_mae_eur_vs_b0_ci_high": 5,
+    "delta_fold_mae_eur_vs_b0_ci_low": 5,
+    "delta_fold_mae_eur_vs_b1": 5,
+    "delta_fold_mae_eur_vs_b1_ci_high": 5,
+    "delta_fold_mae_eur_vs_b1_ci_low": 5,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_mae_eur_vs_b3": 5,
+    "delta_fold_mae_eur_vs_b3_ci_high": 5,
+    "delta_fold_mae_eur_vs_b3_ci_low": 5,
+    "delta_fold_wis_eur_vs_b0": 5,
+    "delta_fold_wis_eur_vs_b0_ci_high": 5,
+    "delta_fold_wis_eur_vs_b0_ci_low": 5,
+    "delta_fold_wis_eur_vs_b1": 5,
+    "delta_fold_wis_eur_vs_b1_ci_high": 5,
+    "delta_fold_wis_eur_vs_b1_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_b3": 5,
+    "delta_fold_wis_eur_vs_b3_ci_high": 5,
+    "delta_fold_wis_eur_vs_b3_ci_low": 5,
+    "delta_s_mae_vs_b0": 1,
+    "delta_s_mae_vs_b0_ci_high": 1,
+    "delta_s_mae_vs_b0_ci_low": 1,
+    "delta_s_mae_vs_b1": 1,
+    "delta_s_mae_vs_b1_ci_high": 1,
+    "delta_s_mae_vs_b1_ci_low": 1,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_mae_vs_b3": 1,
+    "delta_s_mae_vs_b3_ci_high": 1,
+    "delta_s_mae_vs_b3_ci_low": 1,
+    "delta_s_wis_vs_b0": 1,
+    "delta_s_wis_vs_b0_ci_high": 1,
+    "delta_s_wis_vs_b0_ci_low": 1,
+    "delta_s_wis_vs_b1": 1,
+    "delta_s_wis_vs_b1_ci_high": 1,
+    "delta_s_wis_vs_b1_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_b3": 1,
+    "delta_s_wis_vs_b3_ci_high": 1,
+    "delta_s_wis_vs_b3_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp15",
+   "run_key": "cp15/A4",
+   "run_name": "84-day normalized LEAR (A4)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "23e4813045189c17feaf1f062b481fe4edcb77edd1301025f432d3abe8e94e33",
+    "summary.json": "2879a37f87cbf0f53a4678b3ebbfbe1aa03034420a810d8281ec9c068ece06fa"
+   },
+   "file": "cp15.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b0": 5,
+    "delta_fold_mae_eur_vs_b0_ci_high": 5,
+    "delta_fold_mae_eur_vs_b0_ci_low": 5,
+    "delta_fold_mae_eur_vs_b1": 5,
+    "delta_fold_mae_eur_vs_b1_ci_high": 5,
+    "delta_fold_mae_eur_vs_b1_ci_low": 5,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_mae_eur_vs_b3": 5,
+    "delta_fold_mae_eur_vs_b3_ci_high": 5,
+    "delta_fold_mae_eur_vs_b3_ci_low": 5,
+    "delta_fold_wis_eur_vs_b0": 5,
+    "delta_fold_wis_eur_vs_b0_ci_high": 5,
+    "delta_fold_wis_eur_vs_b0_ci_low": 5,
+    "delta_fold_wis_eur_vs_b1": 5,
+    "delta_fold_wis_eur_vs_b1_ci_high": 5,
+    "delta_fold_wis_eur_vs_b1_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_b3": 5,
+    "delta_fold_wis_eur_vs_b3_ci_high": 5,
+    "delta_fold_wis_eur_vs_b3_ci_low": 5,
+    "delta_s_mae_vs_b0": 1,
+    "delta_s_mae_vs_b0_ci_high": 1,
+    "delta_s_mae_vs_b0_ci_low": 1,
+    "delta_s_mae_vs_b1": 1,
+    "delta_s_mae_vs_b1_ci_high": 1,
+    "delta_s_mae_vs_b1_ci_low": 1,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_mae_vs_b3": 1,
+    "delta_s_mae_vs_b3_ci_high": 1,
+    "delta_s_mae_vs_b3_ci_low": 1,
+    "delta_s_wis_vs_b0": 1,
+    "delta_s_wis_vs_b0_ci_high": 1,
+    "delta_s_wis_vs_b0_ci_low": 1,
+    "delta_s_wis_vs_b1": 1,
+    "delta_s_wis_vs_b1_ci_high": 1,
+    "delta_s_wis_vs_b1_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_b3": 1,
+    "delta_s_wis_vs_b3_ci_high": 1,
+    "delta_s_wis_vs_b3_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp15",
+   "run_key": "cp15/A5",
+   "run_name": "Normalized component mean, variant (A5)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "9223ef813dfded99025ba17f3d39fe5d19fcb9cb9429be2034c1e9210b52a91a",
+    "summary.json": "cd037817f93047be328e77baf4012c5395b393a85d63648fdb946a7c64ed6389"
+   },
+   "file": "cp16.json",
+   "inputs": [],
+   "metrics": {},
+   "params": 2,
+   "parent": null,
+   "run_key": "cp16",
+   "run_name": "v2 · blended LEAR, hour-aware intervals (CP-16)",
+   "tags": 16
+  },
+  {
+   "artifacts": {
+    "README.md": "2d8dea0a11fdcbecb382894078ef509a25b4c0bac2196c71104fd408173456ec",
+    "summary.json": "d73e8ee05dded214119153b91fb1b02bb5f615c10b025e21d411e0900d61bbcb"
+   },
+   "file": "cp16.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp16",
+   "run_key": "cp16/V2-P",
+   "run_name": "Pooled-interval control (V2-P)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "4c0b34226948bca82b10ed0d22ef99bdcd7c160891430ea969fa2c46a50f3061",
+    "charts/v2-chart1.svg": "c2f558cc30c0d80a7cce39f229a153aa5ec3322138b752b554af40be6b9a9dee",
+    "charts/v2-chart2.svg": "25688381625d379b00f526771207b31fbfc1ea79e017bb87837f17599a24414a",
+    "summary.json": "ebcbf8be9de2f50d6f82de34d9688df137cbc11e11a245ea539ddb80839162fc"
+   },
+   "file": "cp16.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_b2": 5,
+    "delta_fold_mae_eur_vs_b2_ci_high": 5,
+    "delta_fold_mae_eur_vs_b2_ci_low": 5,
+    "delta_fold_mae_eur_vs_v2_p": 5,
+    "delta_fold_mae_eur_vs_v2_p_ci_high": 5,
+    "delta_fold_mae_eur_vs_v2_p_ci_low": 5,
+    "delta_fold_wis_eur_vs_b2": 5,
+    "delta_fold_wis_eur_vs_b2_ci_high": 5,
+    "delta_fold_wis_eur_vs_b2_ci_low": 5,
+    "delta_fold_wis_eur_vs_v2_p": 5,
+    "delta_fold_wis_eur_vs_v2_p_ci_high": 5,
+    "delta_fold_wis_eur_vs_v2_p_ci_low": 5,
+    "delta_s_mae_vs_b2": 1,
+    "delta_s_mae_vs_b2_ci_high": 1,
+    "delta_s_mae_vs_b2_ci_low": 1,
+    "delta_s_mae_vs_v2_p": 1,
+    "delta_s_mae_vs_v2_p_ci_high": 1,
+    "delta_s_mae_vs_v2_p_ci_low": 1,
+    "delta_s_wis_vs_b2": 1,
+    "delta_s_wis_vs_b2_ci_high": 1,
+    "delta_s_wis_vs_b2_ci_low": 1,
+    "delta_s_wis_vs_v2_p": 1,
+    "delta_s_wis_vs_v2_p_ci_high": 1,
+    "delta_s_wis_vs_v2_p_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 9,
+   "parent": "cp16",
+   "run_key": "cp16/V2-H",
+   "run_name": "v2 · blended LEAR, hour-aware intervals (V2-H)",
+   "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "c793e0312ceaf99dec4896923d48309407f8c6966be393562784ef4cff761889",
+    "summary.json": "529ecc3cd47ae9a6f31853be8a0ff674c37d84df70021b0deb02e5ff36e6a2e7"
+   },
+   "file": "cp20.json",
+   "inputs": [],
+   "metrics": {},
+   "params": 2,
+   "parent": null,
+   "run_key": "cp20",
+   "run_name": "v3 · weather features (CP-20)",
+   "tags": 16
+  },
+  {
+   "artifacts": {
+    "README.md": "13ac544ca67dac11213510c1e68e6a6d9c3eed957f0adbd613a7a583255a9c6c",
+    "charts/overview.svg": "dfaef6de0de2fecaad3c6218d3d762bb2ef30dc36dbfd7fad47a532caaa4ba0f",
+    "charts/v3-c2a.svg": "f71342ec84bba94b9487d69af71bb78e7f357983358b97dc51fa3baf824e31ea",
+    "charts/v3-c2b.svg": "8ba892c17c59af97d478d80fe1832c157b7b7b0820aef1933f1ea1073796ae07",
+    "charts/v3-c3.svg": "b9d9b4c34c07a7caec23cbe6c1751df1af0e1f022c91eef2b037a94d03e177a8",
+    "charts/v3-c4.svg": "5968551e5db1e932330f3a2ef622ec120fc0a22956d8f4348366482edef2ffba",
+    "charts/v3-c5.svg": "c1aea175be3f64772bbb38d36921897464636f906bf5e159ad951d9333eceacd",
+    "charts/v3-c6.svg": "235c6b255b6795387bec5fb80e9c88836e9b87a432ac86835ed1e1ade9261c74",
+    "summary.json": "44a89cf2563563ef2d1fa252795cc90fe14192f63f0b701bfe3c20cc3dbae993"
+   },
+   "file": "cp20.json",
+   "inputs": [
+    "common-10747h",
+    "market-snapshot",
+    "gfs-weather-features"
+   ],
+   "metrics": {
+    "daily_mae_eur": 448,
+    "delta_fold_mae_eur_vs_v2_h": 5,
+    "delta_fold_mae_eur_vs_v2_h_ci_high": 5,
+    "delta_fold_mae_eur_vs_v2_h_ci_low": 5,
+    "delta_fold_wis_eur_vs_v2_h": 5,
+    "delta_fold_wis_eur_vs_v2_h_ci_high": 5,
+    "delta_fold_wis_eur_vs_v2_h_ci_low": 5,
+    "delta_s_mae_vs_v2_h": 1,
+    "delta_s_mae_vs_v2_h_ci_high": 1,
+    "delta_s_mae_vs_v2_h_ci_low": 1,
+    "delta_s_wis_vs_v2_h": 1,
+    "delta_s_wis_vs_v2_h_ci_high": 1,
+    "delta_s_wis_vs_v2_h_ci_low": 1,
+    "fold_coverage50": 5,
+    "fold_coverage80": 5,
+    "fold_coverage95": 5,
+    "fold_mae_eur": 5,
+    "fold_mean_width95_eur": 5,
+    "fold_wis_eur": 5,
+    "peak_coverage95": 1,
+    "peak_hits95": 1,
+    "peak_mae_eur": 1,
+    "peak_wis_eur": 1,
+    "pooled_bias_eur": 1,
+    "pooled_coverage95": 1,
+    "pooled_mae_eur": 1,
+    "pooled_rmse_eur": 1,
+    "pooled_wis_eur": 1,
+    "s_mae": 1,
+    "s_wis": 1
+   },
+   "params": 10,
+   "parent": "cp20",
+   "run_key": "cp20/HG",
+   "run_name": "v3 · weather features (HG)",
+   "tags": 21
+  }
+ ],
+ "sources": {
+  "docs/track-b/evidence/cp-20/resource-final.json": {
+   "blob": "f50cf0e8e5c0ee94495ee4982dc5e4d704de6f72",
+   "tag": "evidence/cp-20"
+  },
+  "reports/cp10/metrics.csv": {
+   "blob": "058b0f538df6091a17305c414e4b114d1c940b62",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp10/peak_windows.csv": {
+   "blob": "4a33ec625812496a8973606dcb02e44856657468",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp10/protocol.json": {
+   "blob": "8da7b10e78499a4a89b61e771793da0fef622ce7",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp10/selection.json": {
+   "blob": "f27eee818bea83314df32da55db2e56ee20fb8af",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/bootstrap.csv": {
+   "blob": "8a0fa9d96458ad870c2bd91954df80d594ecdfe8",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/bootstrap_metadata.json": {
+   "blob": "096047ae36cb6708b5ac739e3bab7af72a621b1d",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/criteria.csv": {
+   "blob": "79aed270c3ef26f76e14134be6e6e4782a0c9ad8",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/daily.csv": {
+   "blob": "941b833627d66da19f6ae9955f4406d12cfae46c",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/peak.csv": {
+   "blob": "6e36a4fc724753f6a6eef277465f0f5b26446892",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/per_fold.csv": {
+   "blob": "56779e3646426f2c7791536cdc509134d85afa51",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/pooled.csv": {
+   "blob": "3e5cb75c3db7e82064a64c0f31971330095858ab",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/protocol.json": {
+   "blob": "b3a926e93f59a4e4d736e194a56c7ac678d810a9",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/ranking.csv": {
+   "blob": "68d549bcdf68cb7acb369f471bdb3d73a02744b5",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp15/relative_scores.csv": {
+   "blob": "854f1b3e865887d39e87a3380ff7f427b927d793",
+   "tag": "evidence/cp-15"
+  },
+  "reports/cp2/development_pooled_metrics.csv": {
+   "blob": "5ee7d18e3636256a24e72707a9ec1300c825b48d",
+   "tag": "evidence/cp-2"
+  },
+  "reports/cp2/dm_development.json": {
+   "blob": "05b225ef472fc2368526c95381ae773fdaf92aec",
+   "tag": "evidence/cp-2"
+  },
+  "reports/v2-causal/criteria.csv": {
+   "blob": "29c0b5bf5c3b251e1cde32f0c28310f924edfa3c",
+   "tag": "evidence/cp-16"
+  },
+  "reports/v2-causal/diagnostics.csv": {
+   "blob": "bd5aed0726dac95e83423ccf4f498edae230eefb",
+   "tag": "evidence/cp-16"
+  },
+  "reports/v2-causal/metrics.csv": {
+   "blob": "a194e3c3e46b963eaa2dd3c65c8e79627062b5e5",
+   "tag": "evidence/cp-16"
+  },
+  "reports/v2-causal/protocol.json": {
+   "blob": "53f096ad464a1c27fec8013fffb20c49696f6f74",
+   "tag": "evidence/cp-16"
+  },
+  "reports/v2-causal/uncertainty.csv": {
+   "blob": "59cef0552f86cf939d507b30c4f46fe83cef5248",
+   "tag": "evidence/cp-16"
+  },
+  "reports/weather-ablation/causal-controls-supplement.json": {
+   "blob": "05ea6d8f0b3d7f3538f50e0941a1c88e68414bf9",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/causal-controls.json": {
+   "blob": "adbd9973300b2aaec3175ad46c05c84282e7ccd3",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/criteria.csv": {
+   "blob": "ec377d647ff5eee68346fd5fcddaa6a2dbd2aa16",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/diagnostics.csv": {
+   "blob": "e1c8e11b9fccd3e61f7fb9f0ab904c410f89bc72",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/extraction-summary.json": {
+   "blob": "22349d9cfd7eba20f4ab5ef93deb1c884a49e01d",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/metrics.csv": {
+   "blob": "91be7505842cdec6062fd0bcbc7f88f2f3ec031c",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/missingness.csv": {
+   "blob": "4c1603696964f51819d094c5227a1fe2f946b043",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/protocol.json": {
+   "blob": "13095656266eaf9de92e0e0da038fd1a324eee23",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/uncertainty.csv": {
+   "blob": "aa3028f17bbe7f6c0dcc65f91266fc00b29b0207",
+   "tag": "evidence/cp-20"
+  },
+  "reports/weather-ablation/weather-features.parquet": {
+   "blob": "8704810f2778b8432ebb7289f808abec96730256",
+   "tag": "evidence/cp-20"
+  }
+ },
+ "step_notes": {
+  "day": "step = day index within the 448 represented development days; timestamp = the delivery date.",
+  "fold": "step = fold index (1-5); timestamp = the fold's last delivery date. Folds are discrete periods, not a time series.",
+  "single": "step 0; timestamp = the last delivery date of the evaluated window."
+ },
+ "upload_time_tags": [
+  "delu.backfill_tool_sha",
+  "delu.upload_state",
+  "delu.package_complete"
+ ]
+}

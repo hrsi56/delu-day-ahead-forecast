@@ -1,0 +1,539 @@
+{
+  "app_revision": {
+    "page_generator_commit": "67570c83bde2e754509dac2141b0e82e910c5c54",
+    "space_build": "unchanged since 5386a0f (reports/cp3b/space_wasm_bundle.json)"
+  },
+  "browsers": [
+    "Google Chrome 153.0.8010.54 (Playwright, channel chrome, headless)",
+    "WebKit 26.6 (Playwright's build of the Safari engine; not Safari)"
+  ],
+  "check": "browser and accessibility checklist (plan \u00a711.3), PRES-1 E, after the independent check's round 1",
+  "date": "2026-09-27",
+  "demo": {
+    "build": "dist/space-wasm with the startup states, served from 127.0.0.1",
+    "cold_start": [
+      {
+        "engine": "chrome",
+        "horizontal_overflow": false,
+        "level_change_to_95": {
+          "aria_checked": "true",
+          "view_changed": true
+        },
+        "scenario_change": {
+          "from": "1",
+          "to": "1.01",
+          "view_changed": true
+        },
+        "seconds_to_visible_forecast": 11.2,
+        "startup_state_at_first_paint": "loading",
+        "startup_state_when_ready": "ready",
+        "viewport": "1440x900"
+      },
+      {
+        "engine": "chrome",
+        "horizontal_overflow": false,
+        "level_change_to_95": {
+          "aria_checked": "true",
+          "view_changed": true
+        },
+        "scenario_change": {
+          "from": "1",
+          "to": "1.01",
+          "view_changed": true
+        },
+        "seconds_to_visible_forecast": 10.6,
+        "startup_state_at_first_paint": "loading",
+        "startup_state_when_ready": "ready",
+        "viewport": "390x844"
+      },
+      {
+        "engine": "webkit",
+        "horizontal_overflow": false,
+        "level_change_to_95": {
+          "aria_checked": "true",
+          "view_changed": true
+        },
+        "scenario_change": {
+          "from": "1",
+          "to": "1.01",
+          "view_changed": true
+        },
+        "seconds_to_visible_forecast": 11.7,
+        "startup_state_at_first_paint": "loading",
+        "startup_state_when_ready": "ready",
+        "viewport": "1440x900"
+      },
+      {
+        "engine": "webkit",
+        "horizontal_overflow": false,
+        "level_change_to_95": {
+          "aria_checked": "true",
+          "view_changed": true
+        },
+        "scenario_change": {
+          "from": "1",
+          "to": "1.01",
+          "view_changed": true
+        },
+        "seconds_to_visible_forecast": 11.7,
+        "startup_state_at_first_paint": "loading",
+        "startup_state_when_ready": "ready",
+        "viewport": "390x844"
+      }
+    ],
+    "outcome": "pass on the local build; the deployed Space gets the states only at F7",
+    "states": [
+      {
+        "asset_failure": {
+          "report_link": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+          "state": "failure",
+          "visible": [
+            "The demo did not start",
+            "A file it needs did not load, or it has not finished startin",
+            "Retry"
+          ]
+        },
+        "engine": "chrome",
+        "retry": {
+          "reached_ready": true,
+          "state_after_reload": "loading",
+          "visible": [
+            "The v1 demo is running in your browser."
+          ]
+        },
+        "runtime_hangs": {
+          "state_after_deadline": "failure",
+          "state_at_1_min": "loading",
+          "state_at_start": "loading",
+          "visible": [
+            "The demo did not start",
+            "A file it needs did not load, or it has not finished startin",
+            "Retry"
+          ]
+        },
+        "runtime_reports_failure": {
+          "seconds_to_failure_state": 1.1,
+          "state": "failure",
+          "visible": [
+            "The demo did not start",
+            "A file it needs did not load, or it has not finished startin",
+            "Retry"
+          ]
+        }
+      },
+      {
+        "asset_failure": {
+          "report_link": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+          "state": "failure",
+          "visible": [
+            "The demo did not start",
+            "A file it needs did not load, or it has not finished startin",
+            "Retry"
+          ]
+        },
+        "engine": "webkit",
+        "retry": {
+          "reached_ready": true,
+          "state_after_reload": "loading",
+          "visible": [
+            "The v1 demo is running in your browser."
+          ]
+        },
+        "runtime_hangs": {
+          "state_after_deadline": "failure",
+          "state_at_1_min": "loading",
+          "state_at_start": "loading",
+          "visible": [
+            "The demo did not start",
+            "A file it needs did not load, or it has not finished startin",
+            "Retry"
+          ]
+        },
+        "runtime_reports_failure": {
+          "seconds_to_failure_state": 1.2,
+          "state": "failure",
+          "visible": [
+            "The demo did not start",
+            "A file it needs did not load, or it has not finished startin",
+            "Retry"
+          ]
+        }
+      }
+    ],
+    "webkit_console_errors": "four font files 404 in WebKit only, as on the deployed Space in the Phase 0 record (marimo's font paths); they do not affect the states"
+  },
+  "device": "this Mac (arm64, Darwin 25.5.0); phone widths are emulated viewports",
+  "full_a11y_runs": [
+    {
+      "browser_version": "153.0.8010.54",
+      "contrast": {
+        "1440": {
+          "below": [],
+          "below_count": 0,
+          "checked": 2171,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 549
+          }
+        },
+        "390": {
+          "below": [],
+          "below_count": 0,
+          "checked": 2164,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 527
+          }
+        }
+      },
+      "engine": "chrome",
+      "keyboard": {
+        "anchor_into_closed_disclosure_opens_it": true,
+        "first_stop": "Skip to the content",
+        "in_document_order": true,
+        "stops_checked": 54,
+        "summary_toggles_on_enter": true,
+        "tab_key": "Tab",
+        "without_visible_focus": []
+      },
+      "page": "docs/index.html",
+      "touch_targets_390": {
+        "checked": 85,
+        "under_24": [],
+        "under_24_count": 0,
+        "under_44": [],
+        "under_44_count": 0
+      },
+      "zoom_and_reflow": {
+        "1280 at 200%": {
+          "css_viewport": "640x400",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "1440 at 200%": {
+          "css_viewport": "720x450",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "320 reflow": {
+          "css_viewport": "320x640",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        }
+      }
+    },
+    {
+      "browser_version": "26.6",
+      "contrast": {
+        "1440": {
+          "below": [],
+          "below_count": 0,
+          "checked": 2171,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 549
+          }
+        },
+        "390": {
+          "below": [],
+          "below_count": 0,
+          "checked": 2164,
+          "non_text": {
+            "below": [],
+            "below_count": 0,
+            "checked": 527
+          }
+        }
+      },
+      "engine": "webkit",
+      "keyboard": {
+        "anchor_into_closed_disclosure_opens_it": true,
+        "first_stop": "Skip to the content",
+        "in_document_order": true,
+        "stops_checked": 54,
+        "summary_toggles_on_enter": true,
+        "tab_key": "Alt+Tab",
+        "without_visible_focus": []
+      },
+      "page": "docs/index.html",
+      "touch_targets_390": {
+        "checked": 85,
+        "under_24": [],
+        "under_24_count": 0,
+        "under_44": [],
+        "under_44_count": 0
+      },
+      "zoom_and_reflow": {
+        "1280 at 200%": {
+          "css_viewport": "640x400",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "1440 at 200%": {
+          "css_viewport": "720x450",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "320 reflow": {
+          "css_viewport": "320x640",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        }
+      }
+    }
+  ],
+  "mlflow": {
+    "local_rehearsal": "passed 2026-09-27 (mlflow-capabilities.json)",
+    "outcome": "not yet applicable: routes are advertised only after the public upload (F1) and checked at F3"
+  },
+  "owner_hand_checks": {
+    "checklist": "docs/track-b/evidence/pres-1/owner-hand-checks.md",
+    "rows": [
+      "Desktop Safari: layout and 200% zoom, charts, the replay route, keyboard and focus, VoiceOver on disclosures and charts, the figure viewer",
+      "iPhone Safari: layout, charts, the replay route, touch targets, VoiceOver, the figure viewer"
+    ],
+    "status": "pending: needs a person, a real Safari, a real iPhone and VoiceOver",
+    "why_not_automated": "no iOS simulator runtime is installed here (iOS 18.2 unavailable), and driving Safari needs safaridriver or Apple Events JavaScript enabled, which changes system settings"
+  },
+  "report": {
+    "content": {
+      "archive_results_link_stays_in_v1": {
+        "320x640": true,
+        "360x780": true,
+        "390x844": true
+      },
+      "fan_chart_after_route": {
+        "320x640": {
+          "archive_open": true,
+          "chart_width_px": 296,
+          "coverage_at_95": "0.9398",
+          "hash": "#forecast",
+          "scenario_caveat_shown": true,
+          "smallest_text_px": 12,
+          "viewbox_width": 296
+        },
+        "360x780": {
+          "archive_open": true,
+          "chart_width_px": 328,
+          "coverage_at_95": "0.9398",
+          "hash": "#forecast",
+          "scenario_caveat_shown": true,
+          "smallest_text_px": 12,
+          "viewbox_width": 328
+        },
+        "390x844": {
+          "archive_open": true,
+          "chart_width_px": 358,
+          "coverage_at_95": "0.9398",
+          "hash": "#forecast",
+          "scenario_caveat_shown": true,
+          "smallest_text_px": 12,
+          "viewbox_width": 358
+        }
+      },
+      "figure_viewer": {
+        "1440/figure_view": {
+          "closed_by_escape": true,
+          "focus": "figure-close",
+          "focus_after": "IMG",
+          "image_width_px": 1378,
+          "open": true
+        },
+        "390/figure_view": {
+          "closed_by_escape": true,
+          "focus": "figure-close",
+          "focus_after": "IMG",
+          "image_width_px": 740,
+          "open": true
+        }
+      },
+      "meaning_without_colour": "every mark has a direct label or value and each generation its own marker (test_31)"
+    },
+    "contrast": {
+      "chrome": {
+        "1440": {
+          "chart_shapes": 549,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
+          "text_elements": 2171
+        },
+        "390": {
+          "chart_shapes": 527,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
+          "text_elements": 2164
+        }
+      },
+      "webkit": {
+        "1440": {
+          "chart_shapes": 549,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
+          "text_elements": 2171
+        },
+        "390": {
+          "chart_shapes": 527,
+          "chart_shapes_below_3_to_1": 0,
+          "text_below_threshold": 0,
+          "text_elements": 2164
+        }
+      }
+    },
+    "keyboard": {
+      "chrome": {
+        "anchor_into_closed_disclosure_opens_it": true,
+        "first_stop": "Skip to the content",
+        "in_document_order": true,
+        "stops_checked": 54,
+        "summary_toggles_on_enter": true,
+        "tab_key": "Tab",
+        "without_visible_focus": []
+      },
+      "webkit": {
+        "anchor_into_closed_disclosure_opens_it": true,
+        "first_stop": "Skip to the content",
+        "in_document_order": true,
+        "stops_checked": 54,
+        "summary_toggles_on_enter": true,
+        "tab_key": "Alt+Tab",
+        "without_visible_focus": []
+      }
+    },
+    "landmarks": {
+      "1440x900": {
+        "comparison": 1847,
+        "evidence": 8129,
+        "journey": 1181,
+        "page_height": 10228,
+        "preview": 104,
+        "research_takeaway": 1016,
+        "screens_to_comparison": 2.05,
+        "screens_to_preview": 0.12,
+        "v1": 7231,
+        "v2": 5304,
+        "v3": 3376
+      },
+      "320x640": {
+        "comparison": 2826,
+        "evidence": 13091,
+        "journey": 1844,
+        "page_height": 16620,
+        "preview": 1008,
+        "research_takeaway": 1598,
+        "screens_to_comparison": 4.42,
+        "screens_to_preview": 1.57,
+        "v1": 11656,
+        "v2": 8717,
+        "v3": 5713
+      },
+      "360x780": {
+        "comparison": 2731,
+        "evidence": 12803,
+        "journey": 1748,
+        "page_height": 16182,
+        "preview": 954,
+        "research_takeaway": 1529,
+        "screens_to_comparison": 3.5,
+        "screens_to_preview": 1.22,
+        "v1": 11464,
+        "v2": 8578,
+        "v3": 5639
+      },
+      "390x844": {
+        "comparison": 2624,
+        "evidence": 12528,
+        "journey": 1667,
+        "page_height": 15655,
+        "preview": 875,
+        "research_takeaway": 1448,
+        "screens_to_comparison": 3.11,
+        "screens_to_preview": 1.04,
+        "v1": 11267,
+        "v2": 8434,
+        "v3": 5573
+      }
+    },
+    "layout": {
+      "chart_captures": 64,
+      "chart_text_clipped": 0,
+      "chart_text_overlaps": 0,
+      "horizontal_overflow": {
+        "closed": {
+          "1440": false,
+          "320": false,
+          "360": false,
+          "390": false,
+          "768": false
+        },
+        "open": {
+          "1440": false,
+          "320": false,
+          "360": false,
+          "390": false,
+          "768": false
+        }
+      },
+      "smallest_chart_text_px": 12,
+      "widths": [
+        1440,
+        768,
+        390,
+        360,
+        320
+      ]
+    },
+    "outcome": "pass in Chrome and in the WebKit engine",
+    "touch_targets_390": {
+      "chrome": {
+        "checked": 85,
+        "under_24_count": 0,
+        "under_44_count": 0
+      },
+      "webkit": {
+        "checked": 85,
+        "under_24_count": 0,
+        "under_44_count": 0
+      }
+    },
+    "zoom_200_and_reflow_320": {
+      "chrome": {
+        "1280 at 200%": {
+          "css_viewport": "640x400",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "1440 at 200%": {
+          "css_viewport": "720x450",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "320 reflow": {
+          "css_viewport": "320x640",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        }
+      },
+      "webkit": {
+        "1280 at 200%": {
+          "css_viewport": "640x400",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "1440 at 200%": {
+          "css_viewport": "720x450",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        },
+        "320 reflow": {
+          "css_viewport": "320x640",
+          "overflow_px_closed": 0,
+          "overflow_px_open": 0
+        }
+      }
+    }
+  },
+  "screenshots": ".local/artifacts/presentation/e2/ (not committed)"
+}

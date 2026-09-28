@@ -1,6 +1,8 @@
 # CP-15 / CP-16 research update: claim-to-evidence map
 
-**2026-09-23 · Companion to [cp15-cp16-update.md](cp15-cp16-update.md). Local draft for the Owner.**
+**2026-09-23 · Companion to [cp15-cp16-update.md](cp15-cp16-update.md). Publication pass 2026-09-24
+(PRES-1): the rendered page and README bind to these claim IDs; the CP-20 and page-wide claims,
+and W17–W21, are in the [CP-20 claim map](cp20-claims.md).**
 Each claim in the update is mapped here to a saved file and to a table or row. This file also
 lists the gaps, the claims that are withheld, and the exact items left open for the Owner.
 Nothing was recalculated, refitted, replayed or downloaded. The update only rounds saved
@@ -164,8 +166,8 @@ re-scored match CP-15 at the displayed precision. For example, the B2 S_MAE is
 | G6 | The v1 p=0.948 statistic and the CP-10 counts are historical, reported evidence. | This task did not re-verify them. B1's 79/408 peak count is saved in PK15 L8. |
 | G7 | Historical availability of the A65 vintages is not proven for every issue vintage. | It is an inherited assumption (R15 L229). |
 | G8 | Per-hour and block diagnostics (24 hours; night, solar and shoulder blocks) are not summarized. | The handoff asked for a concise scope. No claim is made about hour or block effects (see W9). |
-| G9 | Local research scope is approved; public release remains outside this task. | No README/site edit or publication is authorized; public-release decisions can wait without blocking this local draft. |
-| G10 | Charts are specified but not rendered, and the layout is not reviewed. | Presentation belongs to the Owner. |
+| G9 | **Resolved 2026-09-24.** Public release of v2 and v3 was decided by the Owner (presentation plan §3, decision 2), and PRES-1 renders this content on the page and README. | Every public action still needs its own Owner instruction (plan §13). |
+| G10 | Charts 1–2 are rendered by `scripts/build_pages.py` in the plan §7.5 grammar. | The Owner approves the visual result (plan §12, D1 and F5). |
 
 ## Withheld claims: do not use
 
@@ -186,16 +188,20 @@ re-scored match CP-15 at the displayed precision. For example, the B2 S_MAE is
 | W13 | Presenting the earlier A1+B2 review scores (.64466 / .64070 / .64280) as CP-16 results | Different policies (PLAN L111–113). |
 | W14 | Performance claims for weather, VRE, Chronos-2, TabPFN or DDNN | Not tested. The Chronos-2 probe was unscored (R15 L219–221). |
 | W15 | A coverage guarantee | Intervals are empirical, with no conformal guarantee (C54). |
-| W16 | A statement that this content, CP-16 or a README/site update has been published | CP-16 landing was local only (LD16 L77–78). This content is unpublished. |
+| W16 | A statement that this content, CP-16 or a README/site update has been published | CP-16 landing was local only (LD16 L77–78). Until the Owner pushes, this content is unpublished. |
+
+W17–W21 (single-feature weather attribution, "peer review", v3 in the demo, a v3/v1 headline
+ratio without definition, and "confirmatory" without "-style, not power-qualified") are in the
+[CP-20 claim map](cp20-claims.md#withheld-claims-do-not-use).
 
 ## Exact unresolved items returned to the Owner
 
 1. **G1:** the criterion-5 change stays attributed only as "the blend and residual
    construction are plausible contributors; not isolated". No stronger wording is supported.
 2. **G3 resolved at intake:** retain the existing accepted D16 hit count 377; no further decision.
-3. **G9:** local research scope is approved. Public use remains separately unapproved; nothing
-   goes to README or site sources in this task.
-4. **G10:** chart rendering/layout remain optional Owner presentation work, not an intake
-   prerequisite or executor instruction. Specifications and captions are in the update.
+3. **G9:** resolved by the Owner's 2026-09-24 decision to show v2 and v3 publicly (presentation
+   plan §3, decision 2). Each public action still needs its own instruction.
+4. **G10:** charts are rendered by the page generator; the Owner approves the visual result at D1
+   and F5.
 5. **G4 and G6:** native v1 pinball numbers are omitted. The v1 and CP-10 history is quoted as
    reported, not re-verified.

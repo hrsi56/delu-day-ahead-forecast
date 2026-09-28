@@ -20,6 +20,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -29,7 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from build_space import card_body  # noqa: E402
+from build_space import card_body, missing_card_lines, model_line  # noqa: E402
 
 from delu_forecast.claims import (  # noqa: E402
     build_claims,
@@ -54,6 +55,83 @@ ALLOWED_ROOT = {
     "manifest.json", "site.webmanifest",
 }
 
+#: marimo copies every stylesheet the page links into each widget's shadow root, as a constructed
+#: stylesheet built from the rules' text (`copyStyles` in its frontend). A constructed stylesheet
+#: resolves relative URLs against the page, not against `assets/`, so WebKit -- which honours
+#: `@font-face` inside a shadow root, unlike Chrome -- asked the bundle's root for three fonts that
+#: exist only under `assets/`, and got 404 (the Phase 0 and 2026-09-28 demo records). Every target
+#: a linked stylesheet names is therefore also shipped at the root (brief W12). Nothing is edited.
+_LINK = re.compile(r"<link\b[^>]*>")
+_ATTR = re.compile(r'\b(rel|href)="([^"]*)"')
+_LOCAL_REF = re.compile(r'\b(?:href|src)="(?!https?:|data:|blob:|mailto:|#|//)([^"]+)"')
+_CSS_URL = re.compile(r"""url\(\s*['"]?(?!data:|https?:|blob:|#|/)([^'")]+?)['"]?\s*\)""")
+
+
+def _local(ref: str) -> str:
+    return ref.split("#", 1)[0].split("?", 1)[0]
+
+
+def linked_stylesheets(page: str) -> list[str]:
+    """The stylesheets the page links, in order."""
+    sheets = []
+    for tag in _LINK.findall(page):
+        attrs = dict(_ATTR.findall(tag))
+        if "stylesheet" in attrs.get("rel", "").split() and attrs.get("href"):
+            sheets.append(_local(attrs["href"]))
+    return list(dict.fromkeys(sheets))
+
+
+def stylesheet_references(bundle: Path) -> list[tuple[str, str]]:
+    """(stylesheet, relative URL) for every `url()` in a stylesheet the page links."""
+    page = (bundle / "index.html").read_text()
+    out = []
+    for sheet in linked_stylesheets(page):
+        path = bundle / sheet
+        if path.is_file():
+            out += [(sheet, _local(ref)) for ref in dict.fromkeys(_CSS_URL.findall(path.read_text()))]
+    return out
+
+
+def ship_shadow_root_targets(bundle: Path) -> list[str]:
+    """Copy each target a linked stylesheet names to where a shadow-root copy of it resolves."""
+    shipped = []
+    for sheet, ref in stylesheet_references(bundle):
+        source = ((bundle / sheet).parent / ref).resolve()
+        target = (bundle / ref).resolve()
+        if source.is_file() and target.is_relative_to(bundle.resolve()) and not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, target)
+            shipped.append(str(target.relative_to(bundle.resolve())))
+    return sorted(shipped)
+
+
+def referenced_asset_problems(bundle: Path) -> tuple[int, list[str]]:
+    """Every asset the page's HTML and its linked stylesheets reference exists in the bundle; a
+    stylesheet's `url()` is resolved against the stylesheet and against the page (its shadow-root
+    copies). Returns how many references were checked, and what is missing."""
+    page = (bundle / "index.html").read_text()
+    root = bundle.resolve()
+    checked, problems = 0, []
+    for ref in dict.fromkeys(_local(ref) for ref in _LOCAL_REF.findall(page)):
+        checked += 1
+        if not (root / ref).resolve().is_file():
+            problems.append(f"index.html references {ref}, which the bundle lacks")
+    for sheet, ref in stylesheet_references(bundle):
+        for base, where in (((root / sheet).parent, "beside the stylesheet"), (root, "at the root, for its shadow-root copies")):
+            checked += 1
+            if not (base / ref).resolve().is_file():
+                problems.append(f"{sheet} references {ref}, which the bundle lacks {where}")
+    return checked, problems
+
+
+def bundle_sha256(bundle: Path) -> str:
+    """One hash for the whole bundle: SHA-256 over `<file sha256>  <path>` lines, sorted by path --
+    the form `shasum -a 256` prints, so anyone can recompute it from a checkout of the Space."""
+    paths = sorted((p.relative_to(bundle).as_posix() for p in bundle.rglob("*") if p.is_file()), key=str.encode)
+    lines = [f"{hashlib.sha256((bundle / path).read_bytes()).hexdigest()}  {path}" for path in paths]
+    return hashlib.sha256(("\n".join(lines) + "\n").encode()).hexdigest()
+
+
 #: The Hub stores binary files through LFS/Xet. Text -- the boosters, the JSON,
 #: the JavaScript -- does not need it.
 GITATTRIBUTES = """*.png filter=lfs diff=lfs merge=lfs -text
@@ -66,7 +144,7 @@ GITATTRIBUTES = """*.png filter=lfs diff=lfs merge=lfs -text
 
 
 def static_deployed_section(C) -> str:
-    return f"""## What is deployed — and why it is still the evaluated model
+    return f"""## What is deployed — and why it is the evaluated model
 
 **This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
 no process to put to sleep. {C['wasm_what_runs_live']} The champion's nine LightGBM boosters run in
@@ -98,8 +176,7 @@ bottom.
 
 {C['wasm_wrapper_disclosure']}
 
-If you want the report without any download, the [static report]({C['pages_url']}) fetches nothing
-at all.
+The [report]({C['pages_url']}) is a self-contained page with no additional runtime requests.
 """
 
 
@@ -127,12 +204,14 @@ tags:
 
 # DE-LU day-ahead price forecasting — running in your browser
 
+{model_line(C['pages_url'])}
+
 Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
 electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
 nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
 
 **The static report is the primary entry point: [{C['pages_url']}]({C['pages_url']}).**
-It is CDN-served and performs zero runtime calls. This Space is the interactive deep dive it
+It is a self-contained page with no additional runtime requests. This Space is the interactive deep dive it
 fronts: {C['space_link_label']}.
 
 > **{C['replay_label']}**
@@ -142,6 +221,160 @@ model against a period it never trained on. It is never presented as a live fore
 makes no call to ENTSO-E, SMARD or any model registry: the rows it forecasts from ship with it.
 
 {card_body(C, static_deployed_section(C), limitations, reproduction)}"""
+
+
+# -- demo states (presentation plan §7.11, invariant 25) ----------------------
+#
+# The exported page shows nothing until marimo's JavaScript has loaded, so a slow or failed start
+# looked like a blank page (Phase 0 finding P0-1). These states are static HTML placed before the
+# runtime: visible at once, and still visible if initialization fails. The script shows only real
+# events -- the forecast panel appearing, a script or stylesheet failing to load, or a generous
+# deadline passing with neither -- and never an invented percentage or a timer as progress.
+
+#: Text the notebook renders only after the champion has run in the browser.
+READY_MARKER = "Maximum absolute deviation"
+#: Text marimo's error boundary renders when its runtime fails (for example, Pyodide cannot load):
+#: the runtime has reported the failure, so the page says so at once instead of at the deadline.
+FAILURE_MARKER = "Something went wrong"
+DEADLINE_SECONDS = 240
+
+
+def startup_css() -> str:
+    return """
+.delu-status{font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#18181B;position:fixed;top:0;left:0;right:0;
+ z-index:2147483000;margin:0 auto;max-width:760px;padding:12px 16px;box-sizing:border-box}
+.delu-card{background:#FFFFFF;border:1px solid #E4E4E7;border-left:4px solid #475569;border-radius:10px;padding:14px 18px;
+ box-shadow:0 4px 18px rgba(24,24,27,.12)}
+.delu-title{font-weight:650;margin:0 0 6px}
+.delu-body{margin:0 0 10px}
+.delu-actions{margin:0;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.delu-actions a{color:#1D4ED8;min-height:44px;display:inline-flex;align-items:center}
+.delu-actions button{min-height:44px;padding:0 18px;border-radius:10px;border:0;background:#18181B;color:#fff;font:inherit;font-weight:650;cursor:pointer}
+.delu-actions button:focus-visible,.delu-actions a:focus-visible{outline:2px solid #1D4ED8;outline-offset:2px}
+.delu-status [data-show]{display:none}
+.delu-status[data-state=loading] [data-show~=loading],.delu-status[data-state=failure] [data-show~=failure],
+.delu-status[data-state=retrying] [data-show~=retrying],.delu-status[data-state=ready] [data-show~=ready]{display:block}
+.delu-status[data-state=failure] .delu-card{border-left-color:#18181B}
+/* Ready: the notebook covers the viewport and opens with its own link to the report, so the card
+   closes; its text stays in the live region, so a screen reader still hears that the demo is ready. */
+.delu-status[data-state=ready]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+ clip-path:inset(50%);white-space:nowrap}
+.delu-status[data-state=ready] .delu-actions{display:none}
+"""
+
+
+def startup_markup(C, state: str = "loading") -> str:
+    report = C["pages_url"]
+    return f"""<div id="delu-status" class="delu-status" data-state="{state}" role="status" aria-live="polite">
+ <div class="delu-card">
+  <p class="delu-title" data-show="loading">Starting the v1 demo</p>
+  <p class="delu-body" data-show="loading">Forecast calculations run locally in your browser. The first visit
+   downloads about {C['wasm_cold_load_mb']} MB, a Python runtime and the model, so it can take a minute or more.</p>
+  <p class="delu-title" data-show="failure">The demo did not start</p>
+  <p class="delu-body" data-show="failure">A file it needs did not load, or it has not finished starting after
+   several minutes. A slow or filtered connection, or a browser that blocks the runtime, can cause this. You can view
+   the saved forecast and research results in the report without loading the model.</p>
+  <p class="delu-title" data-show="retrying">Retrying</p>
+  <p class="delu-body" data-show="retrying">Reloading the demo.</p>
+  <p class="delu-body" data-show="ready">The v1 demo is running in your browser.</p>
+  <p class="delu-actions"><button type="button" id="delu-retry" data-show="failure">Retry</button>
+   <a href="{report}">View the report</a></p>
+ </div>
+</div>"""
+
+
+def startup_js() -> str:
+    return """
+(function(){
+ var box=document.getElementById('delu-status');if(!box){return;}
+ var started=Date.now(),done=false;
+ function set(state){box.setAttribute('data-state',state);}
+ function has(text){return (document.body.innerText||'').indexOf(text)>=0;}
+ var timer=setInterval(function(){
+  if(has('%s')){set('ready');done=true;clearInterval(timer);}
+  else if(has('%s')||Date.now()-started>%d*1000){set('failure');clearInterval(timer);}
+ },1000);
+ window.addEventListener('error',function(e){
+  var t=e.target;if(!done&&t&&(t.tagName==='SCRIPT'||t.tagName==='LINK')){set('failure');}
+ },true);
+ document.getElementById('delu-retry').addEventListener('click',function(){set('retrying');location.reload();});
+})();
+""" % (READY_MARKER, FAILURE_MARKER, DEADLINE_SECONDS)
+
+
+STARTUP_BEGIN = "<!-- delu-startup:start -->"
+STARTUP_END = "<!-- delu-startup:end -->"
+
+
+def inject_startup(html: str, C) -> str:
+    """Put the demo states into the exported page as static HTML (plan §7.11, invariant 25).
+
+    The block opens the body, so the loading message paints before marimo's module scripts run,
+    and it stays in place if they never do. The model, its payload and the equivalence gate are
+    untouched: this adds markup, a stylesheet and one small inline script."""
+    if STARTUP_BEGIN in html:
+        raise ValueError("the startup states are already in this page")
+    head_close = html.find("</head>")
+    if head_close < 0 or not re.search(r"<body[^>]*>", html):
+        raise ValueError("the export has no <head>/<body> to inject into")
+    html = html[:head_close] + f"<style>{startup_css()}</style>" + html[head_close:]
+    body = re.search(r"<body[^>]*>", html)
+    block = f"{STARTUP_BEGIN}{startup_markup(C)}<script>{startup_js()}</script>{STARTUP_END}"
+    return html[:body.end()] + block + html[body.end():]
+
+
+def startup_findings(html: str, C) -> list[str]:
+    """What the built page must carry; empty when it does. Used by the build and by test_23."""
+    problems = []
+    if html.count(STARTUP_BEGIN) != 1 or html.count(STARTUP_END) != 1:
+        return ["the startup states are missing or injected twice"]
+    block = html[html.index(STARTUP_BEGIN):html.index(STARTUP_END)]
+    body = re.search(r"<body[^>]*>", html)
+    if not body or html.index(STARTUP_BEGIN) != body.end():
+        problems.append("the startup states do not open the body")
+    if 'data-state="loading"' not in block:
+        problems.append("the static state is not the loading state")
+    for state in ("loading", "failure", "retrying", "ready"):
+        if f'data-show="{state}"' not in block:
+            problems.append(f"no {state} state")
+    if 'id="delu-retry"' not in block:
+        problems.append("no retry control")
+    if f'href="{C["pages_url"]}"' not in block:
+        problems.append("no route back to the report")
+    if READY_MARKER not in block:
+        problems.append("the ready check does not look for the forecast panel")
+    if FAILURE_MARKER not in block:
+        problems.append("the failure check does not listen for the runtime's own error")
+    if re.search(r"\d\s?%", re.sub(r"<script>.*?</script>", "", block, flags=re.S)):
+        problems.append("a percentage appears in the states (no invented progress)")
+    return problems
+
+
+def demo_states_specimen() -> str:
+    """The four states side by side, for the D1 review. The same markup the Space build injects."""
+    C = build_claims()
+    sections = []
+    for state, label in (("loading", "Loading (static HTML, before any script runs; pinned to the top of the window)"),
+                         ("failure", "Failure, with retry"), ("retrying", "Retrying")):
+        markup = startup_markup(C, state).replace('id="delu-status" ', "").replace('id="delu-retry" ', "")
+        sections.append(
+            '<section><h2 style="font:600 14px system-ui;color:#52525B;text-transform:uppercase;'
+            f'letter-spacing:.05em;margin:24px 16px 0">{label}</h2>{markup}</section>'
+        )
+    intro = (
+        "Specimen of the Space's startup states (plan §7.11). The loading state is static HTML, so it is visible "
+        "before the runtime starts and stays visible if initialization fails. No percentage and no timer are "
+        "shown as progress. Ready: the card closes, and the notebook opens with its own link to the report; "
+        "screen readers hear \u201cThe v1 demo is running in your browser.\u201d"
+    )
+    return (
+        '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" '
+        'content="width=device-width,initial-scale=1"><title>PRES-1 D1 demo states</title>'
+        f"<style>body{{margin:0;background:#FAFAFA}}{startup_css()}"
+        ".delu-status{position:static;margin:16px auto}</style></head><body>"
+        f'<p style="font:15px system-ui;max-width:760px;margin:24px auto;padding:0 16px">{intro}</p>'
+        + "".join(sections) + "</body></html>"
+    )
 
 
 def run_export() -> None:
@@ -165,8 +398,12 @@ def main() -> int:
         json.dumps(dict(build_claims().values), indent=1, sort_keys=True) + "\n"
     )
 
+    card = build_card()
+    missing = missing_card_lines(card, build_claims()["pages_url"])
+    if missing:
+        raise SystemExit(f"the card lacks the registry's required lines: {missing}")
     CARD.parent.mkdir(parents=True, exist_ok=True)
-    CARD.write_text(build_card())
+    CARD.write_text(card)
     print(f"wrote {CARD}")
 
     run_export()
@@ -185,6 +422,11 @@ def main() -> int:
         compiled.unlink()
     shutil.copy2(CARD, BUNDLE / "README.md")
     (BUNDLE / ".gitattributes").write_text(GITATTRIBUTES)
+    shipped_at_root = ship_shadow_root_targets(BUNDLE) if (BUNDLE / "index.html").is_file() else []
+    C = build_claims()
+    index = BUNDLE / "index.html"
+    if index.is_file():
+        index.write_text(inject_startup(index.read_text(), C))
 
     # -- structural checks: fail the build, not the visitor ---------------
     problems = []
@@ -218,6 +460,10 @@ def main() -> int:
     for leak in ("CLAUDE.md", "AGENTS.md", ".env"):
         if any(p.name == leak for p in BUNDLE.rglob("*")):
             problems.append(f"{leak} present in the bundle")
+    startup = startup_findings(index.read_text(), C) if index.is_file() else ["index.html missing"]
+    problems.extend(f"startup states: {finding}" for finding in startup)
+    references_checked, missing = referenced_asset_problems(BUNDLE) if index.is_file() else (0, [])
+    problems.extend(f"referenced assets: {problem}" for problem in missing)
     front = (BUNDLE / "README.md").read_text().split("---", 2)[1]
     if "sdk: static" not in front:
         problems.append("the card does not declare sdk: static")
@@ -236,7 +482,19 @@ def main() -> int:
                 "total_bytes_uncompressed": total,
                 "boosters": [p.name for p in boosters],
                 "browser_champion_sha256": module_sha,
+                "index_html_sha256": hashlib.sha256(index.read_bytes()).hexdigest() if index.is_file() else None,
+                "bundle_sha256": bundle_sha256(BUNDLE),
+                "bundle_sha256_method": "SHA-256 of the sorted `<sha256>  <path>` lines of every file in the bundle",
+                "startup_states": {
+                    "injected": index.is_file() and not startup,
+                    "states": ["loading", "failure", "retrying", "ready"],
+                    "ready_marker": READY_MARKER,
+                    "deadline_seconds": DEADLINE_SECONDS,
+                    "report_url": C["pages_url"],
+                },
                 "removed_from_export_root": removed,
+                "referenced_assets": {"checked": references_checked, "missing": missing,
+                                      "shipped_at_root_for_shadow_roots": shipped_at_root},
                 "problems": problems,
                 "deployment": "owner-only; this script assembles and pushes nothing",
             },

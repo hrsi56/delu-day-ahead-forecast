@@ -299,3 +299,108 @@ def test_the_card_states_the_availability_control_exactly():
 def test_every_host_is_sized_by_the_same_instrument():
     record = json.loads(NETWORK.read_text())
     assert all("DevTools" in host["source"] for host in record["hosts"].values())
+
+
+# -- the demo states (presentation plan §7.11, invariant 25; PRES-1 D2) ------
+
+#: The shape of marimo's html-wasm export: a module script in the head, a mount point in the body.
+_EXPORT_FIXTURE = (
+    '<!DOCTYPE html><html><head><title>t</title>'
+    '<script type="module" crossorigin src="./assets/index.js"></script></head>'
+    '<body><div id="root"></div><script data-marimo="true">window.__MARIMO_MOUNT_CONFIG__={}</script></body></html>'
+)
+
+
+def _space_builder():
+    import sys
+
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    import build_wasm_space
+
+    return build_wasm_space
+
+
+def test_the_space_page_carries_the_static_startup_states():
+    """The loading message is static HTML ahead of the runtime, with failure, retry and a route back."""
+    W = _space_builder()
+    claims = build_claims()
+    page = W.inject_startup(_EXPORT_FIXTURE, claims)
+    assert W.startup_findings(page, claims) == []
+    block = page[page.index(W.STARTUP_BEGIN):page.index(W.STARTUP_END)]
+    assert page.index(W.STARTUP_END) < page.index('<div id="root">'), "the states must paint before the app mounts"
+    assert "Starting the v1 demo" in block and "The demo did not start" in block
+    assert f'href="{claims["pages_url"]}"' in block and "Retry" in block
+    assert W.READY_MARKER in block, "ready means the forecast panel rendered, not a timer"
+    assert W.FAILURE_MARKER in block, "a failure the runtime reports shows at once"
+
+
+def test_the_ready_marker_is_text_the_notebook_renders():
+    """If the notebook stopped rendering the marker, a working demo would end in the failure state."""
+    W = _space_builder()
+    assert W.READY_MARKER in NOTEBOOK.read_text()
+
+
+def test_negative_control_a_page_without_the_states_is_caught():
+    W = _space_builder()
+    claims = build_claims()
+    page = W.inject_startup(_EXPORT_FIXTURE, claims)
+    stripped = page[:page.index(W.STARTUP_BEGIN)] + page[page.index(W.STARTUP_END) + len(W.STARTUP_END):]
+    assert W.startup_findings(stripped, claims)
+    no_retry = page.replace('id="delu-retry"', 'id="x"')
+    assert "no retry control" in W.startup_findings(no_retry, claims)
+    no_route = page.replace(f'href="{claims["pages_url"]}"', 'href="#"')
+    assert "no route back to the report" in W.startup_findings(no_route, claims)
+
+
+def test_the_recorded_space_build_carries_the_states():
+    manifest = json.loads(BUNDLE_MANIFEST.read_text())
+    assert manifest["startup_states"]["injected"] is True
+    assert manifest["startup_states"]["report_url"] == build_claims()["pages_url"]
+    built = REPO_ROOT / "dist" / "space-wasm" / "index.html"
+    if built.is_file():  # a local build is present (never in CI): check the bytes themselves
+        import hashlib
+
+        W = _space_builder()
+        assert W.startup_findings(built.read_text(), build_claims()) == []
+        assert hashlib.sha256(built.read_bytes()).hexdigest() == manifest["index_html_sha256"]
+
+
+# -- every asset the bundle's HTML and CSS reference (conformance brief W12) --------------------
+#
+# marimo copies each stylesheet the page links into its widgets' shadow roots, where a relative
+# `url()` resolves against the page. WebKit then asked the bundle's root for PT Sans and Lora, which
+# existed only under `assets/` (three 404s in the 2026-09-27 demo record). The build ships every
+# target a linked stylesheet names at the root too, and checks every reference both ways.
+
+
+def test_every_asset_the_bundle_references_is_shipped():
+    manifest = json.loads(BUNDLE_MANIFEST.read_text())
+    record = manifest["referenced_assets"]
+    assert record["checked"] > 100 and record["missing"] == [], record["missing"]
+    assert record["shipped_at_root_for_shadow_roots"], "the linked stylesheets name fonts under assets/"
+    assert manifest["bundle_sha256"] and "sorted" in manifest["bundle_sha256_method"]
+    built = REPO_ROOT / "dist" / "space-wasm"
+    if (built / "index.html").is_file():  # a local build is present (never in CI): check the files themselves
+        W = _space_builder()
+        assert W.referenced_asset_problems(built) == (record["checked"], [])
+        assert W.bundle_sha256(built) == manifest["bundle_sha256"]
+
+
+def test_negative_control_a_missing_reference_is_caught(tmp_path):
+    W = _space_builder()
+    bundle = tmp_path / "bundle"
+    (bundle / "assets").mkdir(parents=True)
+    (bundle / "index.html").write_text('<link rel="stylesheet" crossorigin href="./assets/app.css">'
+                                       '<script type="module" src="./assets/app.js"></script>')
+    (bundle / "assets" / "app.css").write_text("@font-face{src:url(./Font-x.woff2)format('woff2')}"
+                                               ".a{background:url(./gone.png)}.b{background:url(data:image/png;base64,AA)}")
+    (bundle / "assets" / "Font-x.woff2").write_bytes(b"wOF2")
+    checked, problems = W.referenced_asset_problems(bundle)
+    assert checked == 6, "two HTML references, and two stylesheet references each resolved two ways"
+    assert "index.html references ./assets/app.js, which the bundle lacks" in problems
+    assert any("./Font-x.woff2" in p and "at the root" in p for p in problems), "the shadow-root copy's font"
+    assert any("./gone.png" in p and "beside the stylesheet" in p for p in problems)
+    (bundle / "assets" / "app.js").write_text("")
+    (bundle / "assets" / "gone.png").write_bytes(b"\x89PNG")
+    assert W.ship_shadow_root_targets(bundle) == ["Font-x.woff2", "gone.png"]
+    assert W.referenced_asset_problems(bundle) == (checked, [])

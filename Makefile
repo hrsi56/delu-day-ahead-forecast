@@ -1,6 +1,7 @@
 .PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2 \
         pages space register showcase cli container container-verify readme-cp3 verify cp3 \
-        wasm-payload wasm wasm-serve cp3b
+        wasm-payload wasm wasm-serve cp3b readme-research \
+        mlflow-export mlflow-dry-run mlflow-verify-local presentation lint-publication publication-guard
 
 test:
 	uv run pytest -q
@@ -50,6 +51,11 @@ space:
 readme-cp3:
 	uv run python scripts/cp3_readme.py
 
+# PRES-1 (presentation plan §9.4): the README's research block, generated between its markers
+# from the same claim templates the page renders.
+readme-research:
+	uv run python scripts/readme_research.py
+
 # §9.1 registration is NON-GATING: a registry or metadata failure is disclosed
 # in reports/cp3/mlflow_registration.json and the release proceeds.
 register:
@@ -95,3 +101,31 @@ wasm-serve:
 	cd dist/space-wasm && uv run python -m http.server 8820 --bind 127.0.0.1
 
 cp3b: wasm verify
+
+# --- PRES-1: the delu-generations MLflow mirror (presentation plan §10) -----
+# The export is committed and is the only payload. Nothing here publishes: a
+# public upload is `scripts/mlflow_publish.py --target public`, run only on the
+# Owner's instruction for that action (plan §13).
+mlflow-export:
+	uv run python scripts/mlflow_export.py
+
+mlflow-dry-run:
+	uv run python scripts/mlflow_publish.py --dry-run
+
+mlflow-verify-local:
+	uv run python scripts/verify_mlflow_mirror.py verify --target local
+
+# Every presentation surface from committed evidence: the page, the README blocks,
+# both Space cards and the export check (no fit, no download, no network).
+presentation:
+	uv run python scripts/rebuild_presentation.py
+
+# Publication Standard v1 §4-§5: the lint over the reading path and the template sources (it also
+# runs in CI, as tests/test_37_publication_lint.py).
+lint-publication:
+	uv run python scripts/lint_publication.py
+
+# Publication Standard v1 §9: refuse a placeholder or a non-final build record (the pre-push hook
+# runs it for every push to main, after the secret guard; CI runs it on main as the backstop).
+publication-guard:
+	python3 scripts/publication_guard.py tree

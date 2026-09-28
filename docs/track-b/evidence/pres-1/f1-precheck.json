@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-09-28T20:27:27+00:00",
+  "credential_state": {
+    "MLFLOW_TRACKING_PASSWORD": "set",
+    "MLFLOW_TRACKING_USERNAME": "set"
+  },
+  "expected_experiment_matched": true,
+  "http_status": 200,
+  "network_writes": 0,
+  "passed": true,
+  "request": {
+    "authentication": "Basic from existing MLflow variables",
+    "method": "GET",
+    "redirects_allowed": false,
+    "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/api/2.0/mlflow/experiments/get?experiment_id=0"
+  }
+}

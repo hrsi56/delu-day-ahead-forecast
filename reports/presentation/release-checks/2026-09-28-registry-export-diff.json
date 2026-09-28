@@ -1,0 +1,798 @@
+{
+ "against": "af0abb0",
+ "checked": {
+  "artifacts": 55,
+  "artifacts_digest_unchanged": 9,
+  "artifacts_old_digest_on_restoring_identity": 46,
+  "datasets": 39,
+  "metric_points": 6928,
+  "params": 155
+ },
+ "experiment_tag_changes": [
+  "mlflow.note.content"
+ ],
+ "identity_changes": {
+  "cp10": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · calibration only (branch)",
+    "Calibration experiment (CP-10)"
+   ],
+   "tags": {
+    "delu.kind": [
+     null,
+     "branch"
+    ],
+    "delu.public_name": [
+     null,
+     "Calibration experiment"
+    ],
+    "delu.registry_id": [
+     null,
+     "calibration"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Calibration experiment: Recalibrating v1 without refitting it. In September 2026, the calibration experiment was not adopted. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/c1_head_spread": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · c1_head_spread · scaled conformal, head spread",
+    "Scaled conformal, head spread (c1_head_spread)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v1 · released LightGBM"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.public_name": [
+     "scaled conformal, head spread",
+     "Scaled conformal, head spread"
+    ],
+    "delu.registry_id": [
+     null,
+     "cp10-head-spread"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "scaled conformal, head spread. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Scaled conformal, head spread: Conformal scores scaled by the heads' spread. In September 2026, the scaled conformal, head spread was not adopted. Code c1_head_spread; role candidate. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/c1_price_volatility": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · c1_price_volatility · scaled conformal, price volatility (selected)",
+    "Scaled conformal, price volatility (c1_price_volatility, selected scale)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v1 · released LightGBM"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.public_name": [
+     "scaled conformal, price volatility (selected)",
+     "Scaled conformal, price volatility"
+    ],
+    "delu.registry_id": [
+     null,
+     "cp10-price-volatility"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "scaled conformal, price volatility (selected). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Scaled conformal, price volatility: Conformal scores scaled by recent price volatility. In September 2026, the scaled conformal, price volatility was not adopted. Code c1_price_volatility; role candidate. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/c2_aci_gamma_0.000001": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · c2_aci_gamma_0.000001 · adaptive conformal, gamma 0.000001",
+    "Adaptive conformal, gamma 0.000001 (c2_aci_gamma_0.000001)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v1 · released LightGBM"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.public_name": [
+     "adaptive conformal, gamma 0.000001",
+     "Adaptive conformal, gamma 0.000001"
+    ],
+    "delu.registry_id": [
+     null,
+     "cp10-aci-0.000001"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "adaptive conformal, gamma 0.000001. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Adaptive conformal, gamma 0.000001: Adaptive conformal intervals, smallest step. In September 2026, the adaptive conformal, gamma 0.000001 was not adopted. Code c2_aci_gamma_0.000001; role candidate. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/c2_aci_gamma_0.000005": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · c2_aci_gamma_0.000005 · adaptive conformal, gamma 0.000005",
+    "Adaptive conformal, gamma 0.000005 (c2_aci_gamma_0.000005)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v1 · released LightGBM"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.public_name": [
+     "adaptive conformal, gamma 0.000005",
+     "Adaptive conformal, gamma 0.000005"
+    ],
+    "delu.registry_id": [
+     null,
+     "cp10-aci-0.000005"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "adaptive conformal, gamma 0.000005. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Adaptive conformal, gamma 0.000005: Adaptive conformal intervals, second step. In September 2026, the adaptive conformal, gamma 0.000005 was not adopted. Code c2_aci_gamma_0.000005; role candidate. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/c2_aci_gamma_0.00001": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · c2_aci_gamma_0.00001 · adaptive conformal, gamma 0.00001",
+    "Adaptive conformal, gamma 0.00001 (c2_aci_gamma_0.00001)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v1 · released LightGBM"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.public_name": [
+     "adaptive conformal, gamma 0.00001",
+     "Adaptive conformal, gamma 0.00001"
+    ],
+    "delu.registry_id": [
+     null,
+     "cp10-aci-0.00001"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "adaptive conformal, gamma 0.00001. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Adaptive conformal, gamma 0.00001: Adaptive conformal intervals, third step. In September 2026, the adaptive conformal, gamma 0.00001 was not adopted. Code c2_aci_gamma_0.00001; role candidate. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/c2_aci_gamma_0.00002": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · c2_aci_gamma_0.00002 · adaptive conformal, gamma 0.00002 (selected gamma)",
+    "Adaptive conformal, gamma 0.00002 (c2_aci_gamma_0.00002, selected step)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v1 · released LightGBM"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.public_name": [
+     "adaptive conformal, gamma 0.00002 (selected gamma)",
+     "Adaptive conformal, gamma 0.00002"
+    ],
+    "delu.registry_id": [
+     null,
+     "cp10-aci-0.00002"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "adaptive conformal, gamma 0.00002 (selected gamma). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "Adaptive conformal, gamma 0.00002: Adaptive conformal intervals, largest step. In September 2026, the adaptive conformal, gamma 0.00002 was not adopted. Code c2_aci_gamma_0.00002; role candidate. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp10/v1_reference": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-10 · v1_reference · v1 unscaled CQR (reference)",
+    "v1 · released LightGBM (v1_reference, unscaled CQR reference)"
+   ],
+   "tags": {
+    "delu.adopted": [
+     "n/a",
+     "true"
+    ],
+    "delu.comparator": [
+     null,
+     "Similar-day naive"
+    ],
+    "delu.generation": [
+     "none",
+     "v1"
+    ],
+    "delu.kind": [
+     null,
+     "generation"
+    ],
+    "delu.public_name": [
+     "v1 unscaled CQR (reference)",
+     "v1 · released LightGBM"
+    ],
+    "delu.registry_id": [
+     null,
+     "v1"
+    ],
+    "delu.status": [
+     null,
+     "released 2026-09-15"
+    ],
+    "mlflow.note.content": [
+     "v1 unscaled CQR (reference). CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: crisis-window 95% coverage rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison.",
+     "v1 · released LightGBM: Nine-quantile LightGBM with calibrated intervals. In September 2026, v1 was released. Code v1_reference; role reference. CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside the 95% interval rose from 79/408 to 131/408, not enough. Scores are v1's native nine-quantile pinball and coverage; there are no S_ scores here. development_calibration_comparison."
+    ]
+   }
+  },
+  "cp15": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · model-comparison study (informed v2)",
+    "Model comparison study (CP-15)"
+   ],
+   "tags": {
+    "delu.kind": [
+     null,
+     "branch"
+    ],
+    "delu.public_name": [
+     null,
+     "Model comparison study"
+    ],
+    "delu.registry_id": [
+     null,
+     "model-comparison"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Model comparison study: Nine forecasting policies on identical hours. In September 2026, the model comparison study was not adopted. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/A1": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · A1 · normalized LEAR (study)",
+    "Normalized LEAR (A1)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.registry_id": [
+     null,
+     "normalized-lear"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "Normalized LEAR. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Normalized LEAR: LEAR on a normalized price target. In September 2026, the normalized LEAR was not adopted. Code A1; role candidate. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/A2": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · A2 · normalized LightGBM (study)",
+    "Normalized LightGBM (A2)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.registry_id": [
+     null,
+     "normalized-lightgbm"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "Normalized LightGBM. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Normalized LightGBM: LightGBM on a normalized price target. In September 2026, the normalized LightGBM was not adopted. Code A2; role candidate. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/A3": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · A3 · normalized component mean (study)",
+    "Normalized component mean (A3)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.registry_id": [
+     null,
+     "component-mean"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "Normalized component mean. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Normalized component mean: Mean of the normalized components. In September 2026, the normalized component mean was not adopted. Code A3; role candidate. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/A4": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · A4 · 84-day normalized LEAR (study)",
+    "84-day normalized LEAR (A4)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.registry_id": [
+     null,
+     "normalized-lear-84d"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "84-day normalized LEAR. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "84-day normalized LEAR: Normalized LEAR with a shorter history. In September 2026, the 84-day normalized LEAR was not adopted. Code A4; role candidate. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/A5": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · A5 · normalized component mean, variant (study)",
+    "Normalized component mean, variant (A5)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "study arm"
+    ],
+    "delu.registry_id": [
+     null,
+     "component-mean-variant"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-16"
+    ],
+    "mlflow.note.content": [
+     "Normalized component mean, variant. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Normalized component mean, variant: A variant of the normalized component mean. In September 2026, the normalized component mean, variant was not adopted. Code A5; role candidate. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/B0": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · B0 · similar-day naive (reference)",
+    "Similar-day naive (B0)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "none"
+    ],
+    "delu.kind": [
+     null,
+     "reference"
+    ],
+    "delu.registry_id": [
+     null,
+     "naive"
+    ],
+    "delu.status": [
+     null,
+     "none"
+    ],
+    "mlflow.note.content": [
+     "Similar-day naive. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Similar-day naive: The forecast every error score divides by. Code B0; role reference. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/B1": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · B1 · v1 development replay",
+    "v1 · released LightGBM (B1, development replay)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Similar-day naive"
+    ],
+    "delu.kind": [
+     null,
+     "generation"
+    ],
+    "delu.registry_id": [
+     null,
+     "v1"
+    ],
+    "delu.status": [
+     null,
+     "released 2026-09-15"
+    ],
+    "mlflow.note.content": [
+     "v1 · released LightGBM. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "v1 · released LightGBM: Nine-quantile LightGBM with calibrated intervals. In September 2026, v1 was released. Code B1; role reference. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/B2": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · B2 · daily LEAR (reference)",
+    "Daily LEAR (B2)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Similar-day naive"
+    ],
+    "delu.kind": [
+     null,
+     "reference"
+    ],
+    "delu.registry_id": [
+     null,
+     "daily-lear"
+    ],
+    "delu.status": [
+     null,
+     "none"
+    ],
+    "mlflow.note.content": [
+     "Daily LEAR. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Daily LEAR: The strongest benchmark: a daily linear model. Code B2; role reference. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp15/B3": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-15 · B3 · daily LightGBM (reference)",
+    "Daily LightGBM (B3)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Similar-day naive"
+    ],
+    "delu.kind": [
+     null,
+     "reference"
+    ],
+    "delu.registry_id": [
+     null,
+     "daily-lightgbm"
+    ],
+    "delu.status": [
+     null,
+     "none"
+    ],
+    "mlflow.note.content": [
+     "Daily LightGBM. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection.",
+     "Daily LightGBM: Gradient-boosted trees refitted every day. Code B3; role reference. CP-15 compared nine policies on the same 10,747 development hours: four references (B0 similar-day naive, B1 v1's development replay, B2 daily LEAR, B3 daily LightGBM) and five adaptive challengers (A1-A5). A1 was the best challenger, B2 had better primary scores, and no policy met the product criteria (NOT_DEMONSTRATED). It informed v2. development_post_selection."
+    ]
+   }
+  },
+  "cp16": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-16 · v2",
+    "v2 · blended LEAR, hour-aware intervals (CP-16)"
+   ],
+   "tags": {
+    "delu.kind": [
+     null,
+     "generation"
+    ],
+    "delu.public_name": [
+     null,
+     "v2 · blended LEAR, hour-aware intervals"
+    ],
+    "delu.registry_id": [
+     null,
+     "v2"
+    ],
+    "delu.status": [
+     null,
+     "adopted in research 2026-09-23"
+    ],
+    "mlflow.note.content": [
+     "CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals (V2-H, adopted as v2) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint preference. development_post_selection.",
+     "v2 · blended LEAR, hour-aware intervals: Two LEAR forecasts blended, hour-aware intervals. In September 2026, v2 was adopted in research. CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals (V2-H) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint preference. development_post_selection."
+    ]
+   }
+  },
+  "cp16/V2-H": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-16 · V2-H · v2",
+    "v2 · blended LEAR, hour-aware intervals (V2-H)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "generation"
+    ],
+    "delu.registry_id": [
+     null,
+     "v2"
+    ],
+    "delu.status": [
+     null,
+     "adopted in research 2026-09-23"
+    ],
+    "mlflow.note.content": [
+     "v2 · blended LEAR, hour-aware intervals. CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals (V2-H, adopted as v2) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint preference. development_post_selection.",
+     "v2 · blended LEAR, hour-aware intervals: Two LEAR forecasts blended, hour-aware intervals. In September 2026, v2 was adopted in research. Code V2-H; role candidate. CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals (V2-H) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint preference. development_post_selection."
+    ]
+   }
+  },
+  "cp16/V2-P": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-16 · V2-P · v2 control",
+    "Pooled-interval control (V2-P)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "Daily LEAR"
+    ],
+    "delu.kind": [
+     null,
+     "control"
+    ],
+    "delu.public_name": [
+     "v2 control · pooled intervals",
+     "Pooled-interval control"
+    ],
+    "delu.registry_id": [
+     null,
+     "pooled-control"
+    ],
+    "delu.status": [
+     null,
+     "not adopted 2026-09-23"
+    ],
+    "mlflow.note.content": [
+     "v2 control · pooled intervals. CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals (V2-H, adopted as v2) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint preference. development_post_selection.",
+     "Pooled-interval control: v2's blend with pooled residual intervals. In September 2026, the pooled-interval control was not adopted. Code V2-P; role control. CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals (V2-H) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint preference. development_post_selection."
+    ]
+   }
+  },
+  "cp20": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-20 · v3 weather",
+    "v3 · weather features (CP-20)"
+   ],
+   "tags": {
+    "delu.kind": [
+     null,
+     "generation"
+    ],
+    "delu.public_name": [
+     null,
+     "v3 · weather features"
+    ],
+    "delu.registry_id": [
+     null,
+     "v3"
+    ],
+    "delu.status": [
+     null,
+     "adopted in research 2026-09-24"
+    ],
+    "mlflow.note.content": [
+     "CP-20 appended three GFS weather features (mean wind speed at 10 m and 100 m, mean solar radiation over a fixed regional box) to v2's recipes. HG against H0 (= v2) meets the joint improvement rule; the gain belongs to the three features together. Adopted as v3. development_post_selection.",
+     "v3 · weather features: v2 plus three weather forecast inputs. In September 2026, v3 was adopted in research. CP-20 appended three GFS weather features (mean wind speed at 10 m and 100 m, mean solar radiation over a fixed regional box) to v2's recipes. HG against H0 (= v2) meets the joint improvement rule; the gain belongs to the three features together. development_post_selection."
+    ]
+   }
+  },
+  "cp20/HG": {
+   "artifacts_identity_only": [
+    "README.md",
+    "summary.json"
+   ],
+   "run_name": [
+    "CP-20 · HG · v3",
+    "v3 · weather features (HG)"
+   ],
+   "tags": {
+    "delu.comparator": [
+     null,
+     "v2 · blended LEAR, hour-aware intervals"
+    ],
+    "delu.kind": [
+     null,
+     "generation"
+    ],
+    "delu.registry_id": [
+     null,
+     "v3"
+    ],
+    "delu.status": [
+     null,
+     "adopted in research 2026-09-24"
+    ],
+    "mlflow.note.content": [
+     "v3 · weather features. CP-20 appended three GFS weather features (mean wind speed at 10 m and 100 m, mean solar radiation over a fixed regional box) to v2's recipes. HG against H0 (= v2) meets the joint improvement rule; the gain belongs to the three features together. Adopted as v3. development_post_selection.",
+     "v3 · weather features: v2 plus three weather forecast inputs. In September 2026, v3 was adopted in research. Code HG; role candidate. CP-20 appended three GFS weather features (mean wind speed at 10 m and 100 m, mean solar radiation over a fixed regional box) to v2's recipes. HG against H0 (= v2) meets the joint improvement rule; the gain belongs to the three features together. development_post_selection."
+    ]
+   }
+  }
+ },
+ "only_identity": true,
+ "run_keys_equal": true,
+ "runs_new": 23,
+ "runs_old": 23,
+ "substantive_changes": [],
+ "to": "0f93205"
+}

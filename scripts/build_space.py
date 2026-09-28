@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from delu_forecast import registry as G  # noqa: E402
 from delu_forecast.claims import (  # noqa: E402
     build_claims,
     limitation_bullets,
@@ -29,6 +30,8 @@ from delu_forecast.claims import (  # noqa: E402
 )
 
 CARD = ROOT / "space" / "README.md"
+#: The mirror verifier's index (standard §8): a route is linked only once it is verified there.
+MLFLOW_INDEX = ROOT / "reports" / "presentation" / "mlflow_index.json"
 BUNDLE = ROOT / "dist" / "space"
 MANIFEST = ROOT / "reports" / "cp3" / "space_bundle.json"
 
@@ -55,6 +58,36 @@ BUNDLE_PATHS: tuple[str, ...] = (
 GITATTRIBUTES = """*.pkl filter=lfs diff=lfs merge=lfs -text
 *.parquet filter=lfs diff=lfs merge=lfs -text
 """
+
+
+def experiment_route(index: Path = MLFLOW_INDEX) -> str | None:
+    """The verified URL of the `delu-generations` experiment, or None until the verifier indexed it."""
+    if not index.is_file():
+        return None
+    return json.loads(index.read_text()).get("routes", {}).get("experiment", {}).get("url")
+
+
+def model_lines(pages_url: str, index: Path = MLFLOW_INDEX) -> list[str]:
+    """The lines every Space card carries, from the registry (standard §8): the model line -- the
+    released model the demo runs, its dated status and the release rule -- and the links line: the
+    report, and the MLflow experiment once the mirror verifier has indexed it (never a placeholder)."""
+    released = G.released()
+    links = [f"[the report]({pages_url}) (every generation, its result and its evidence)"]
+    route = experiment_route(index)
+    if route:
+        links.append(f"[the `delu-generations` MLflow experiment]({route})")
+    return [f"**Model: {released.name}.** {G.status_sentence(released)} {G.release_sentence()}",
+            f"Research since {released.version}: " + " and ".join(links) + "."]
+
+
+def model_line(pages_url: str, index: Path = MLFLOW_INDEX) -> str:
+    return "\n".join(model_lines(pages_url, index))
+
+
+def missing_card_lines(card: str, pages_url: str, index: Path = MLFLOW_INDEX) -> list[str]:
+    """The required lines a card lacks, each as it should read; empty when the card carries all."""
+    present = set(card.splitlines())
+    return [line for line in model_lines(pages_url, index) if line not in present]
 
 
 def card_body(C, deployed: str, limitations: str, reproduction: str) -> str:
@@ -190,6 +223,8 @@ tags:
 
 # DE-LU day-ahead price forecasting — interactive deep dive
 
+{model_line(C['pages_url'])}
+
 Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
 electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
 nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
@@ -199,7 +234,7 @@ It is CDN-served and performs zero runtime calls. **This card describes the cont
 bundle, which is not what Hugging Face hosts.** On 2026-07-08 Hugging Face moved the Docker
 SDK behind a paid plan, and a free Docker Space sleeps after inactivity. The hosted
 interactive demo is therefore a Static Space built from `app/wasm_showcase.py`, which
-cannot sleep; this bundle remains runnable locally and is verified under
+cannot sleep; this bundle runs locally and is verified under
 `docker run --network none` by `make container-verify`.
 
 > **{C['replay_label']}**
@@ -252,8 +287,12 @@ def _ignore(directory: str, names: list[str]) -> set[str]:
 
 
 def main() -> int:
+    card = build_card()
+    missing = missing_card_lines(card, build_claims()["pages_url"])
+    if missing:
+        raise SystemExit(f"the card lacks the registry's required lines: {missing}")
     CARD.parent.mkdir(parents=True, exist_ok=True)
-    CARD.write_text(build_card())
+    CARD.write_text(card)
     print(f"wrote {CARD}")
 
     if BUNDLE.exists():

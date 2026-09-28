@@ -1,0 +1,281 @@
+{
+  "capabilities": [
+    {
+      "fallback": null,
+      "feature": "server version",
+      "local": "3.5.1",
+      "public": "3.5.1 (fresh anonymous read)"
+    },
+    {
+      "fallback": null,
+      "feature": "anonymous reads: experiments, runs/get, runs/search, artifacts, registered model, UI root",
+      "local": "yes",
+      "public": "yes; F3 mirror reads delu-generations and all six reader routes render anonymously in Chromium and WebKit; protected registry metadata also read"
+    },
+    {
+      "fallback": "the verifier and publisher always pass max_results and follow page tokens",
+      "feature": "metric history reads",
+      "local": "yes",
+      "public": "yes, full histories match with explicit max_results and pagination; the earlier missing-max_results quirk remains documented"
+    },
+    {
+      "fallback": "delu.children on each parent and delu.run_key on each child keep the structure searchable",
+      "feature": "nested runs (mlflow.parentRunId)",
+      "local": "yes; the UI nests 19 children under 4 parents",
+      "public": "yes via REST: 19 child-to-parent links match; experiment and comparison browser routes pass. No separate claim about the UI tree expansion affordance."
+    },
+    {
+      "fallback": "none needed for the page; if histories are truncated, F3 fails and nothing is advertised",
+      "feature": "metric timestamps and full history lengths",
+      "local": "yes; 6,928 points read back exactly by (key, step, timestamp, value)",
+      "public": "yes; 6,928 points match exactly by key, step, timestamp and value"
+    },
+    {
+      "fallback": "digests are also in the delu.datasets tag; the page does not advertise dataset views unless F3 confirms them",
+      "feature": "datasets via log_input",
+      "local": "yes; names, digests and context tags read back",
+      "public": "39/39 inputs match name, digest and context via anonymous runs/get; no dataset UI route is advertised"
+    },
+    {
+      "fallback": "summary.json and README.md artifacts carry the same description",
+      "feature": "run notes (mlflow.note.content)",
+      "local": "yes",
+      "public": "yes; all 23 exported note tags read back exactly; separate note-UI interactions were not a route requirement"
+    },
+    {
+      "fallback": "the committed index maps run keys to run IDs, so the page never depends on search",
+      "feature": "search by tag",
+      "local": "yes (tags.`delu.generation` = 'v3' returns 1 run)",
+      "public": "yes; anonymous v3 generation filter returns exactly the expected run keys: cp20/HG"
+    },
+    {
+      "fallback": null,
+      "feature": "artifact sizes",
+      "local": "yes; largest artifact 49,450 bytes (cp15/A1 summary.json); 46 artifacts",
+      "public": "yes; all 55 artifacts read back with matching SHA-256; largest 80,848 bytes"
+    },
+    {
+      "fallback": null,
+      "feature": "interrupted upload resumes without duplicates",
+      "local": "yes; interrupted after 115 writes, resumed (13 created, 2 resumed, 8 already complete), re-run idempotent, 23 runs",
+      "public": "Local interruption/resume/idempotence proof retained; the public invocation actions are in its F1 log. No destructive public interruption probe or redundant write run was performed."
+    },
+    {
+      "fallback": null,
+      "feature": "mirror verifier catches a deleted history point and an altered digest",
+      "local": "yes, both caught",
+      "public": "Local deliberate-fault proof retained; the same verifier passed the actual public mirror. No public corruption probe."
+    },
+    {
+      "fallback": "the run pages and the page's own charts",
+      "feature": "comparison view in the UI",
+      "local": "yes; compare-runs renders anonymously in Chrome",
+      "public": "yes; every registry-required comparison and experiment route passed REST and anonymous Chromium/WebKit checks; exact intended run names/IDs appear; all five comparison charts rendered in both engines with no loading skeletons or HTTP errors"
+    },
+    {
+      "fallback": null,
+      "feature": "experiment-type prompt in the 3.5 UI",
+      "local": "shown until mlflow.experimentKind is set; the export sets custom_model_development",
+      "public": "The experimentKind tag round-trips as custom_model_development and the experiment route renders in both engines; no separate modal-absence claim"
+    },
+    {
+      "fallback": null,
+      "feature": "public write probe",
+      "local": "n/a",
+      "public": "not performed; only the authorized F1 upload after independent PASS"
+    }
+  ],
+  "client": {
+    "mlflow": "3.16.0",
+    "source": "the project's locked environment"
+  },
+  "earlier_public_probes": [
+    {
+      "checks": {
+        "UI root anonymous": {
+          "ok": true,
+          "result": {
+            "content_type": "text/html; charset=utf-8",
+            "status": 200
+          }
+        },
+        "artifact download anonymous": {
+          "ok": true,
+          "result": 1878
+        },
+        "experiment delu-cp2 (anonymous)": {
+          "ok": true,
+          "result": {
+            "experiment_id": "0",
+            "name": "delu-cp2"
+          }
+        },
+        "experiment delu-generations exists": {
+          "ok": true,
+          "result": false
+        },
+        "metric history (get-history)": {
+          "ok": true,
+          "result": {
+            "with_max_results_points": 1,
+            "without_max_results_points": 0
+          }
+        },
+        "metric history bulk interval (UI charts)": {
+          "ok": true,
+          "result": 1
+        },
+        "registered model anonymous": {
+          "ok": true,
+          "result": "delu-day-ahead-champion"
+        },
+        "runs/get anonymous": {
+          "ok": true,
+          "result": "champion::final-fit-and-holdout"
+        },
+        "runs/search fields (delu-cp2)": {
+          "ok": true,
+          "result": {
+            "data": [
+              "metrics",
+              "params",
+              "tags"
+            ],
+            "info": [
+              "artifact_uri",
+              "end_time",
+              "experiment_id",
+              "lifecycle_stage",
+              "run_id",
+              "run_name",
+              "run_uuid",
+              "start_time",
+              "status",
+              "user_id"
+            ],
+            "inputs_field_present": true,
+            "run": [
+              "data",
+              "info",
+              "inputs"
+            ]
+          }
+        },
+        "version": {
+          "ok": true,
+          "result": "3.5.1"
+        }
+      },
+      "method": "anonymous read-only REST (scripts/verify_mlflow_mirror.py probe); no credential, no write",
+      "probed_at_utc": "2026-09-24T22:26:08+00:00",
+      "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
+    }
+  ],
+  "earlier_rehearsals": [
+    {
+      "export": "the Phase C export, before the chart artifacts",
+      "finished_utc": "2026-09-24T22:29:08+00:00",
+      "passed": true,
+      "started_utc": "2026-09-24T22:28:57+00:00"
+    }
+  ],
+  "public_server": {
+    "experiment": "delu-generations",
+    "experiment_id": "1",
+    "method": "anonymous read-only REST; no authenticated request or network write",
+    "probed_at_utc": "2026-09-28T21:02:37+00:00",
+    "record": "reports/presentation/release-checks/2026-09-28-mlflow-capability-checks.json",
+    "server_version": "3.5.1",
+    "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
+  },
+  "public_verification": {
+    "artifacts_checked": 55,
+    "browser_engines": [
+      "chromium",
+      "webkit"
+    ],
+    "browser_record": "reports/presentation/release-checks/2026-09-28-mlflow-routes.json",
+    "counter_note": "Publisher logical counter excludes its set_terminated calls (one per newly completed run); it is not a complete HTTP-request count.",
+    "counts": {
+      "expected": 23,
+      "found": 23,
+      "metric_points": 6928
+    },
+    "datasets_exact": 39,
+    "datasets_expected": 39,
+    "mirror_record": "reports/presentation/release-checks/2026-09-28-mlflow-index-prereq-mirror.json",
+    "passed": true,
+    "protected_public_state": {
+      "champion_registry_metadata_unchanged": true,
+      "delu_cp2_experiment_metadata_unchanged": true
+    },
+    "publisher_counted_write_operations": 710,
+    "rendered_chart_record": "reports/presentation/release-checks/2026-09-28-mlflow-charts.json",
+    "rendered_comparison_charts": 10,
+    "routes": 6,
+    "upload_record": "reports/presentation/release-checks/2026-09-28-mlflow-upload.json",
+    "write_scope": "Only the authorized F1 publisher invocation to delu-generations. No registry/delu-cp2 mutation or write probe."
+  },
+  "recorded_utc": "2026-09-28T21:02:37+00:00",
+  "rehearsal": {
+    "command": "scripts/verify_mlflow_mirror.py rehearse --store <rehearsal store> --out <record>",
+    "export": "the D2 export: 23 runs, 55 artifacts including the page's charts under charts/ on cp20/HG and cp16/V2-H",
+    "finished_utc": "2026-09-27T20:01:11+00:00",
+    "passed": true,
+    "server": "local MLflow 3.5.1 (.local/tools/mlflow-3.5.1, SQLite store, served artifacts), 127.0.0.1:5051; a fresh store",
+    "server_version": "3.5.1",
+    "started_utc": "2026-09-27T20:00:55+00:00",
+    "steps": [
+      {
+        "exit_code": 3,
+        "step": "interrupted upload",
+        "tail": [
+          "mlflow-publish: deliberate interruption after 115 write operations"
+        ]
+      },
+      {
+        "passed": false,
+        "problems": 34,
+        "step": "verification after the interruption (expected to fail)"
+      },
+      {
+        "exit_code": 0,
+        "step": "resumed upload",
+        "tail": [
+          "\ud83c\udfc3 View run CP-20 \u00b7 v3 weather at: http://127.0.0.1:5051/#/experiments/1/runs/f028541454044eda929852bbe1829ee3",
+          "\ud83e\uddea View experiment at: http://127.0.0.1:5051/#/experiments/1",
+          "published 23 runs to http://127.0.0.1:5051: 13 created, 2 resumed, 8 already complete; 595 write operations"
+        ]
+      },
+      {
+        "counts": {
+          "expected": 23,
+          "found": 23,
+          "metric_points": 6928
+        },
+        "passed": true,
+        "problems": [],
+        "step": "verification after resume"
+      },
+      {
+        "exit_code": 0,
+        "passed": true,
+        "runs_found": 23,
+        "step": "idempotent re-run"
+      },
+      {
+        "altered_artifact": "1/eeec863b8ee54ec0ba0ff0f3684384f3/artifacts/summary.json",
+        "caught_altered_digest": true,
+        "caught_deleted_point": true,
+        "deleted_points": 1,
+        "problems": [
+          "cp20/HG: metric fold_mae_eur history differs (1 missing, 0 extra points)",
+          "cp20/HG: artifact summary.json digest differs"
+        ],
+        "step": "deliberate faults",
+        "verification_passed": false
+      }
+    ]
+  },
+  "schema": "pres-1-mlflow-capabilities-v1"
+}

@@ -1,0 +1,39 @@
+# Publication advisory log
+
+**Publication Standard v1 §11.** Only a violation of a clause in force, or of a brief's acceptance
+criteria, blocks a publication. Every other finding is recorded here. After each publication the
+Orchestrator reviews the log and may propose amendments to the Owner (§13); the Owner ratifies each
+new version. Entries are appended, never edited; a later entry may close an earlier one.
+
+| Field | Meaning |
+|---|---|
+| ID | `A-<publication>-<n>` |
+| Source | Who found it: the Lead, an independent checker, a cold reader, the Orchestrator |
+| Finding | What was observed, with where |
+| Why advisory | Why it does not violate a clause in force or the brief's acceptance |
+| Proposal | What might change, and who decides |
+
+---
+
+## PRES-1 (the conformance task, 2026-09-28)
+
+| ID | Source | Finding | Why advisory | Proposal |
+|---|---|---|---|---|
+| A-PRES1-1 | Lead | W2's acceptance asks for an unchanged digest on every export artifact and for changed names, descriptions and tags. `summary.json` and `README.md` carry the run's name (and tags), so their bytes must change when the name does. | Met as the Owner resolved on 2026-09-28: byte identity for every artifact without identity; for the 46 identity-bearing artifacts, restoring the old name and tags reproduces the old SHA-256 exactly (`registry-zero-diff.md`) | Word the next registry-change acceptance as "every artifact digest unchanged, or reproduced exactly by restoring the old identity fields". Orchestrator |
+| A-PRES1-2 | Lead | Playwright 1.63's public API exposes no WebKit accessibility tree. The §10 check reads WebKit's own accessibility properties through its inspector protocol (`DOM.getAccessibilityPropertiesForNode`), reached through a private playwright-core API. | The evidence is WebKit's; only the access path is private. A Playwright upgrade may break it, and the check then fails loudly rather than passing | Pin the Playwright tool version in the runbook, or adopt a supported API if one appears. Orchestrator (tooling) |
+| A-PRES1-3 | Lead | marimo copies each linked stylesheet into its widgets' shadow roots, where relative font URLs resolve against the page; WebKit asked the Space's root for three fonts. The build now ships all 67 stylesheet targets at the root too (2.0 MB, 67 files). | W12 is met: zero failed requests in both engines. The extra files are copies, not a calculation | Re-check after a marimo upgrade; drop the copies if marimo fixes the resolution. Orchestrator (tooling) |
+| A-PRES1-4 | Lead | The comparison's finding sentence ends at about 2,490 px on a 390 × 844 phone, 42 px inside the 2,532 px floor (§1), and at about 1,767 px on desktop, 33 px inside 1,800. The desktop margin is thin because the opening's right-hand column must stay about 460 px wide for the preview's chart text to reach 12 px. | Within the placement | Any copy added to the opening or above the comparison needs a measurement in both engines first (runbook §2, "Limits to watch"); a compaction of the opening is the Owner's design decision. Orchestrator |
+| A-PRES1-5 | Lead | The status lint's synonym family flagged "this bundle remains runnable locally" on the container Space card, a statement about the bundle, not a model's status. The word was changed to "runs" under the Owner's focused extension of `build_space.py`. | Satisfied by the change | Keep the lint subject-blind (cheap, and the checker's rubric catches intent); note the pattern in the checker's rubric. Orchestrator |
+| A-PRES1-6 | Lead | The container Space card (`space/README.md`) was outside the brief's write allowlist, although the standard's §8 "Space card" rule reaches it. The Owner extended the allowlist on 2026-09-28. | Resolved by the Owner's extension | Future publication briefs name `scripts/build_space.py` with the other surface generators. Orchestrator |
+| A-PRES1-7 | Lead | MLflow run names carry the experiment code in parentheses, for example "v3 · weather features (HG)". MLflow views are reader-grade links (§7), and a reader following one meets the codes. | The reading path (§1) is the page and the README's top block; MLflow pages are the deep layer, where codes may appear (§4) | Consider code-free run names with the code as a tag only, before the next upload, since run names become public at upload. Owner (names are fixed before upload) |
+| A-PRES1-8 | Lead | Both Space cards' shared body still uses CP-3's word "champion" for v1 (for example the holdout table's "Champion" column). | The standard's §8 card rule covers the model line and links, which come from the registry; "champion" is v1's frozen CP-3 vocabulary and names no status | Align the body with the registry's name in a later card pass. Orchestrator |
+| A-PRES1-9 | Cold readers (both) | The headline's "14% and 17%" is not matched to the point-error and interval scores on the first screen; readers matched them only at the comparison. | The headline reads exactly as the standard's §3.4, which the locked core (§13) fixes | "(v3: 14% on the point-error score and 17% on the interval score; …)" in a later version of §3.4. Owner |
+| A-PRES1-10 | Cold readers (both) | The comparison chart shows seven policies while the headline counts 8 tested against the targets; five of the eight are never named on the reading path. | N is the §3.3 derived record; the chart shows the comparison population, not the policies tested against the rule | Name the eight in the targets' definition, or add a one-line note under the chart. Orchestrator (copy) |
+| A-PRES1-11 | Cold readers (both) | v1's 1.052 score ratio, "28.58% worse than the naive's" and its holdout win read as a clash; the reconciliation is in a closed disclosure. | Invariant 4 protects v1's statements; the reading path is correct | A one-line reconciliation beside v1's score in its chapter. Orchestrator (copy) |
+| A-PRES1-12 | Cold readers | v1 is "one LightGBM quantile model" in v2's change and "A LightGBM ensemble" in v1's chapter; daily LEAR is "refitted daily" in the terms and "fitted for each hour" in v2's chapter. | Both pairs are true descriptions (nine quantile heads in one model; one linear model per hour, refitted daily) | Use one phrase for each across the page. Orchestrator (copy) |
+| A-PRES1-13 | Cold readers (both) | v2's pooled-interval control is "the same blend with pooled intervals", yet its point-error score differs from v2's (−0.0017). | Research content, reported as committed | One sentence on why the interval method moves the point forecast (the median of the predictive distribution). Orchestrator, from the CP-16 record |
+| A-PRES1-14 | Cold readers (both) | "+0.0000039", "+0.037" and "28.58%" read as over-precise. | Required: §4 keeps a near-zero value's sign and two significant figures; invariant 4 protects "28.58%" | None; noted for the amendment review. Orchestrator |
+| A-PRES1-15 | Cold reader (desktop) | "Trained champion" is never defined. | v1's frozen archive vocabulary (invariant 24) | Consider a glossary line in v1's chapter, outside the archive. Orchestrator |
+| A-PRES1-16 | Cold reader (desktop) | The preview beside v3's headline shows v1, which is easy to misread on a skim. | By design: the preview is the demo's model and carries a "Historical forecast · v1" badge | Watch in the next human read. Orchestrator |
+| A-PRES1-17 | Cold reader (desktop) | The footer's "no additional runtime requests" sits beside a demo that downloads 57 MB. | The statement is about the report page, and is true | Say "this page makes no additional runtime requests". Orchestrator (copy) |
+| A-PRES1-18 | Cold reader (phone) | Which interval level the interval score uses is not shown on the reading path; "released" reads as "the model in the demo". | Definitions in the terms follow §3.1; "released" is the registry's status | Add the level to the interval score's definition; define "released" beside the release rule. Orchestrator (copy) |

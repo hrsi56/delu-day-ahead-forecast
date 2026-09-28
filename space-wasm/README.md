@@ -18,13 +18,16 @@ tags:
 
 # DE-LU day-ahead price forecasting — running in your browser
 
+**Model: v1 · released LightGBM.** In September 2026, v1 was released. The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
+Research since v1: [the report](https://hrsi56.github.io/delu-day-ahead-forecast/) (every generation, its result and its evidence) and [the `delu-generations` MLflow experiment](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1).
+
 Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
 electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM
 nine-quantile ensemble, CQR-calibrated with isotonic monotonicity last.
 
 **The static report is the primary entry point: [https://hrsi56.github.io/delu-day-ahead-forecast/](https://hrsi56.github.io/delu-day-ahead-forecast/).**
-It is CDN-served and performs zero runtime calls. This Space is the interactive deep dive it
-fronts: interactive demo — runs in your browser, no server; the first visit downloads about 57 MB.
+It is a self-contained page with no additional runtime requests. This Space is the interactive deep dive it
+fronts: interactive demo — runs in your browser; the first visit downloads about 57 MB.
 
 > **Historical out-of-sample replay — the frozen champion forecasting a 90-day period it never trained on. This is not a live forecast.**
 
@@ -45,7 +48,7 @@ The shipped model is exactly the model the holdout evaluated: there is no retrai
 152 delivery days; that is what shipping the evaluated model costs, and
 it is stated rather than hidden. The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.
 
-## What is deployed — and why it is still the evaluated model
+## What is deployed — and why it is the evaluated model
 
 **This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
 no process to put to sleep. The forecast and the model-identity check are computed in your browser by the champion itself; the evaluation figures — coverage, cutoffs, holdout metrics, limitations — are the committed results of the one-shot evaluation, which is spent and is not re-run. The champion's nine LightGBM boosters run in
@@ -67,7 +70,7 @@ because it was the one result that could have made this page impossible.
 
 ### What a first visit costs
 
-The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 352 requests from 5 hosts. There is no server to wake. A repeat visit transferred about 1.0 MB: the page's text revalidated, and the fonts and images Hugging Face serves through expiring signed links were fetched again. Measured on a cold cache against the way Hugging Face actually serves a
+The interactive demo runs entirely in your browser, so the first visit downloads about 57 MB — a Python runtime, the nine gradient-boosted models and the notebook interface — in 352 requests from 5 hosts. A Static Space has no server-side process to wake. A repeat visit transferred about 1.0 MB: the page's text revalidated, and the fonts and images Hugging Face serves through expiring signed links were fetched again. Measured on a cold cache against the way Hugging Face actually serves a
 Static Space — files uncompressed, binary files through a redirect to `us.aws.cdn.hf.co`:
 57.25 million bytes. Most of it is the Python runtime and its scientific wheels from
 `cdn.jsdelivr.net`. The nine boosters come from this Space itself as base64-encoded gzip: the
@@ -77,8 +80,7 @@ bottom.
 
 Opened through huggingface.co, Hugging Face's own page adds its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and runs the app in an iframe. The app alone is at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/.
 
-If you want the report without any download, the [static report](https://hrsi56.github.io/delu-day-ahead-forecast/) fetches nothing
-at all.
+The [report](https://hrsi56.github.io/delu-day-ahead-forecast/) is a self-contained page with no additional runtime requests.
 
 
 ## Selected catalog
@@ -131,7 +133,7 @@ forecast and its named derivatives moves pooled mean pinball loss from
 - **Disclosed assumption — the generation archive.** A75 aggregate actual generation is used at its current archived values, which may differ from the values visible in real time despite the D-2 boundary.
 - **The measured cost of the strict gate.** The strict-gate design has a measured cost rather than an assumed one: the post-gate A69 forecast is worth 19.4926% of pooled raw-head pinball loss, and the project declines to use it.
 - **A two-sided bounded target, live at the floor.** The target is two-sided and bounded: the price is routinely negative and has hit the −500 EUR/MWh floor, which truncates the lower conformity residuals, so the lowest intervals under-cover conditionally near the floor.
-- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window. On the crisis stratum it does not merely diverge, it collapses: over the August-2022 peak weeks the 95 % interval covered 0.194 of outcomes. The mechanism is measured — that fold's CQR thresholds were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; it is the defect the planned v2 targets, and it is not fixed in this release.
+- **Coverage divergence.** Empirical coverage diverges from nominal: 0.4407 / 0.7593 / 0.9398 against 50 / 80 / 95 %, so the 50 % interval under-covers by roughly six points on the holdout window. On the crisis stratum it does not merely diverge, it collapses: over the August-2022 peak weeks the 95 % interval covered 0.194 of outcomes. The mechanism is measured — that fold's CQR thresholds were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; it is the defect later generations address (see the v2 and v3 chapters), and it is not fixed in the released v1.
 - **Model staleness, with all four cutoffs.** The deployed demo applies a frozen model whose raw-model fit cutoff (2026-04-07) precedes the snapshot cutoff (2026-09-06) by 152 delivery days, with the final calibration window 2026-04-09..2026-06-07 and the holdout window 2026-06-09..2026-09-06 — all four cutoffs published separately because they are four different dates.
 - **The 15-minute MTU averaging choice.** From 2025-10-01 an hourly price is the mean of four quarter-hour prices, so every hour-level statistic here — the negative-hour tally included — depends on that averaging choice, and a quarter-hour tally differs.
 - **Scope.** This is a portfolio artifact, not an operations system: no retraining schedule, no drift gate, no rollback machinery, no monitoring surface, and no multi-day-ahead forecast.
@@ -158,7 +160,7 @@ docker build -t delu-showcase . && docker run -p 7860:7860 delu-showcase
 - **Canonical entry point.** The static GitHub Pages report at https://hrsi56.github.io/delu-day-ahead-forecast/ is the canonical entry point, and the interactive Space at https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast is linked from it.
 - **DuckDB SQL.** The hand-authored DuckDB queries in `sql/feature_queries.sql` express the same calendar-day lag and D-1-frozen rolling semantics as the canonical Python pipeline, and run against the committed Parquet with `make sql`.
 - **The four cutoffs.** All four cutoffs are published separately: snapshot 2026-09-06, raw-model fit 2026-04-07, final calibration 2026-04-09..2026-06-07, holdout 2026-06-09..2026-09-06.
-- **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0. Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the trained champion is a derived work of it. See LICENSE and DATA-LICENSE.md.
+- **Attribution.** Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de — CC BY 4.0. Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the trained champion is a derived work of it. The v3 research model's weather data is derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR GDEX d084001 (doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS, modified and aggregated by this project; it is not an official NOAA product. See LICENSE and DATA-LICENSE.md.
 
 The DagsHub repository UI is deliberately not linked anywhere: it redirects an anonymous
 visitor to a sign-in page, while the `.mlflow` tracking URI above is anonymously readable.

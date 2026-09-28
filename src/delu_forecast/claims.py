@@ -64,16 +64,29 @@ MLFLOW_RUN_NAMES = (
     ("diagnostics::champion", "SHAP, permutation importance, regimes, reliability"),
 )
 
-#: v2 has not run. Named here so the surfaces have a place for it rather than
-#: acquiring one ad hoc later, and so a reader can see that the slot is empty
-#: on purpose. `capstone_M4_v2-plan.md` is a draft awaiting ratification.
-MLFLOW_NEXT_EXPERIMENT = "delu-m4"
+#: Research after v1 is mirrored in its own experiment (presentation plan §8.7, §10; Owner decision
+#: 6 of 2026-09-24), so v1's record stays exactly as the one-shot holdout left it. The experiment is
+#: created by the authorized public upload; the surfaces carrying this note go live after it.
+MLFLOW_NEXT_EXPERIMENT = "delu-generations"
 MLFLOW_NEXT_NOTE = (
-    "No v2 run exists yet. When M4 is ratified its runs land in a separate "
-    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server, so v1's "
-    "record stays exactly as the one-shot holdout left it and the two are never "
-    "mixed in one experiment."
+    "Research after v1 is tracked in a separate "
+    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server: every policy evaluated "
+    "since v1 appears there once, mirrored from the committed evidence, so v1's record stays "
+    "exactly as the one-shot holdout left it and the two are never mixed in one experiment."
 )
+#: Before the upload the experiment does not exist yet, so the surfaces say what will be there.
+MLFLOW_NEXT_NOTE_BEFORE_UPLOAD = (
+    "Research after v1 will be tracked in a separate "
+    f"`{MLFLOW_NEXT_EXPERIMENT}` experiment on the same tracking server: every policy evaluated "
+    "since v1 will appear there once, mirrored from the committed evidence, so v1's record stays "
+    "exactly as the one-shot holdout left it and the two are never mixed in one experiment."
+)
+
+
+def mlflow_next_note() -> str:
+    """The present tense only once the public mirror is verified and indexed (Phase F, F2)."""
+    index = REPO_ROOT / "reports" / "presentation" / "mlflow_index.json"
+    return MLFLOW_NEXT_NOTE if index.is_file() else MLFLOW_NEXT_NOTE_BEFORE_UPLOAD
 
 #: §7.1, verbatim. "It carries this label, exactly, wherever it appears."
 HOLDOUT_DM_LABEL = (
@@ -133,7 +146,7 @@ SENSITIVITY_PROBE_LABEL = (
 #: rather than the one that no longer exists. The figure is filled in from
 #: reports/cp3b/network.json by build_claims(); this template is not a number.
 SPACE_LINK_LABEL_TEMPLATE = (
-    "interactive demo — runs in your browser, no server; the first visit downloads about {mb} MB"
+    "interactive demo — runs in your browser; the first visit downloads about {mb} MB"
 )
 
 #: §9.3 attribution statement.
@@ -145,9 +158,18 @@ ATTRIBUTION = (
 #: administrative: §0 item 3 omitted a gas-price feature precisely because no free,
 #: daily, legally redistributable series existed, and a reproducible open repository
 #: that cannot ship its own inputs is not reproducible.
+#: The research weather inputs' attribution, as the Owner added it to DATA-LICENSE.md on
+#: 2026-09-24 (plan §6 invariant 8). v1 uses no weather input.
+GFS_ATTRIBUTION = (
+    "The v3 research model's weather data is derived from NCEP GFS 0.25° (NOAA/NWS/NCEP) via NCAR "
+    "GDEX d084001 (doi:10.5065/D65D8PWK) and NOAA Open Data Dissemination on AWS, modified and "
+    "aggregated by this project; it is not an official NOAA product."
+)
+
 LICENSING = (
     "Code MIT; the redistributed data stays CC BY 4.0 with attribution, and the "
-    "trained champion is a derived work of it. See LICENSE and DATA-LICENSE.md."
+    f"trained champion is a derived work of it. {GFS_ATTRIBUTION} "
+    "See LICENSE and DATA-LICENSE.md."
 )
 
 #: §9.3: "A second one-liner notes the floor change to -600 EUR/MWh from 2026-05-28".
@@ -212,7 +234,8 @@ LIMITATION_COVERAGE_DIVERGENCE = (
     "were estimated on a May-June 2022 calibration window at a ~198 EUR/MWh level and applied to "
     "an evaluation block averaging 376 EUR/MWh, and the conformal correction is additive, not "
     "multiplicative. This is what a split-conformal guarantee does when exchangeability breaks; "
-    "it is the defect the planned v2 targets, and it is not fixed in this release."
+    "it is the defect later generations address (see the v2 and v3 chapters), and it is not fixed "
+    "in the released v1."
 )
 
 LIMITATION_STALENESS = (
@@ -447,7 +470,7 @@ def build_claims() -> Claims:
             f"The interactive demo runs entirely in your browser, so the first visit downloads "
             f"about {cold_mb} MB — a Python runtime, the nine gradient-boosted models and the "
             f"notebook interface — in {network['totals']['requests']} requests from "
-            f"{len(network['hosts'])} hosts. There is no server to wake. A repeat visit "
+            f"{len(network['hosts'])} hosts. A Static Space has no server-side process to wake. A repeat visit "
             f"transferred about {network['repeat_visit']['bytes'] / 1_000_000:.1f} MB: the page's "
             f"text revalidated, and the fonts and images Hugging Face serves through expiring "
             f"signed links were fetched again."
@@ -523,7 +546,7 @@ def build_claims() -> Claims:
         "mlflow_experiment_url": MLFLOW_EXPERIMENT_URL,
         "mlflow_models_url": MLFLOW_MODELS_URL,
         "mlflow_next_experiment": MLFLOW_NEXT_EXPERIMENT,
-        "mlflow_next_note": MLFLOW_NEXT_NOTE,
+        "mlflow_next_note": mlflow_next_note(),
         "pages_url": PAGES_URL,
         "space_url": SPACE_URL,
         "github_url": GITHUB_URL,
@@ -675,6 +698,7 @@ __all__ = [
     "EXCHANGEABILITY",
     "FLOOR_CHANGE",
     "FORBIDDEN_DAGSHUB_PATHS",
+    "GFS_ATTRIBUTION",
     "GITHUB_URL",
     "HOLDOUT_DM_LABEL",
     "HOLDOUT_LIMITATION",

@@ -1,0 +1,128 @@
+{
+  "check": "demo cold start and controls (plan \u00a711.3, Phase 0)",
+  "checked_at_utc": "2026-09-27T22:59:25+00:00",
+  "client": "Playwright, fresh browser context per run; unauthenticated",
+  "host": "arm64 / Darwin 25.5.0",
+  "runs": [
+    {
+      "browser_version": "153.0.8010.54",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 336,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 10.2,
+      "started_utc": "2026-09-27T22:58:09+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8765/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "153.0.8010.54",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 336,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 10.1,
+      "started_utc": "2026-09-27T22:58:28+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8765/",
+      "viewport": "390x844"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 404 (File not found)",
+        "Failed to load resource: the server responded with a status of 404 (File not found)",
+        "Failed to load resource: the server responded with a status of 404 (File not found)"
+      ],
+      "engine": "webkit",
+      "failed_requests": [
+        "http://127.0.0.1:8765/PTSans-Regular-Bam3NpBI.woff2 cancelled",
+        "http://127.0.0.1:8765/PTSans-Bold-C_DwAp7Z.woff2 cancelled",
+        "http://127.0.0.1:8765/Lora-VariableFont_wght-CZceb_kH.woff2 cancelled"
+      ],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 340,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 11.2,
+      "started_utc": "2026-09-27T22:58:47+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8765/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 404 (File not found)",
+        "Failed to load resource: the server responded with a status of 404 (File not found)",
+        "Failed to load resource: the server responded with a status of 404 (File not found)"
+      ],
+      "engine": "webkit",
+      "failed_requests": [
+        "http://127.0.0.1:8765/PTSans-Regular-Bam3NpBI.woff2 cancelled",
+        "http://127.0.0.1:8765/PTSans-Bold-C_DwAp7Z.woff2 cancelled",
+        "http://127.0.0.1:8765/Lora-VariableFont_wght-CZceb_kH.woff2 cancelled"
+      ],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 340,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 12.2,
+      "started_utc": "2026-09-27T22:59:05+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8765/",
+      "viewport": "390x844"
+    }
+  ]
+}
