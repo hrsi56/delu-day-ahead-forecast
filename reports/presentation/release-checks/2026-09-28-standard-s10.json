@@ -122,7 +122,7 @@
     }
   },
   "check": "Publication Standard v1 \u00a710 release checks (and the \u00a71 placements), PRES-1 conformance",
-  "checked_at_utc": "2026-09-28T18:15:30+00:00",
+  "checked_at_utc": "2026-09-28T18:33:30+00:00",
   "engines": {
     "chrome": "Google Chrome through Playwright's channel='chrome'",
     "webkit": "Playwright's WebKit build, the Safari engine but not Safari"
@@ -271,7 +271,7 @@
         "smallest_text_px": 12.38
       },
       "cold_reader_screens": {
-        "folder": ".local/artifacts/presentation/release/cold-reader/chrome-1440x900",
+        "folder": ".local/artifacts/presentation/release-precheck/cold-reader/chrome-1440x900",
         "header_px": 56,
         "offsets": [
           0,
@@ -330,7 +330,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/chrome/1440x900.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/chrome/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -388,7 +388,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/chrome/768x1024.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/chrome/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -446,7 +446,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/chrome/390x844.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/chrome/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -504,7 +504,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/chrome/360x780.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/chrome/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -562,7 +562,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/chrome/320x640.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/chrome/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -620,7 +620,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/webkit/1440x900.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/webkit/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -678,7 +678,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/webkit/768x1024.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/webkit/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -697,7 +697,7 @@
         "smallest_text_px": 14.58
       },
       "cold_reader_screens": {
-        "folder": ".local/artifacts/presentation/release/cold-reader/webkit-390x844",
+        "folder": ".local/artifacts/presentation/release-precheck/cold-reader/webkit-390x844",
         "header_px": 56,
         "offsets": [
           0,
@@ -764,7 +764,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/webkit/390x844.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/webkit/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -822,7 +822,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/webkit/360x780.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/webkit/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -880,7 +880,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/webkit/320x640.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/webkit/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -938,7 +938,7 @@
         }
       },
       "problems": [],
-      "screenshot": ".local/artifacts/presentation/release/webkit/iphone-15.png",
+      "screenshot": ".local/artifacts/presentation/release-precheck/webkit/iphone-15.png",
       "view": "iphone-15",
       "viewport": "393x659"
     }
