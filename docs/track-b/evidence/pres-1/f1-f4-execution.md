@@ -54,7 +54,7 @@ The F3 helper used only `Reader` anonymous GETs and POST searches (reads), no au
 - `.local/tmp/pres-1/f2-mirror.log` — SHA-256 `23dd7a1840b421e645617684b9728626a208f2d7a16893af72eb1170637680c8`.
 - `.local/tmp/pres-1/f2-browser.log` — SHA-256 `abeb2688294567140234f8ae533dbd15705d92891a93525285de7fe4653ab137`.
 
-## F4 — complete; terminal review still required
+## F4 — complete; final independent review PASS
 
 `build_pages.py --final` exited 0 with all six verified routes and no omissions. `rebuild_presentation.py` then rebuilt README, cards, export and page; all five steps and cross-surface checks passed. `publication_guard.py tree` exits 0: final record, no placeholder. The final page is **1,560,646 bytes** (the first --final pass was 1,559,769; rebuilding the README/export/surfaces normalized the complete output before release measurements). A second post-bundle rebuild kept the normalized page size; clean-tree determinism is recorded separately with final suite/CI evidence.
 
@@ -71,3 +71,7 @@ The generated change includes link additions and a tracking sentence changing fr
 - `.local/tmp/pres-1/f4-wasm/3.log` — SHA-256 `654348140e406389a53d3cf796a4ceb18f25c2a907fa2771e3ac061569a591fc`.
 - `.local/tmp/pres-1/f4-wasm/1.log` — SHA-256 `9097d6267893098be666de7111c67110b5c863ed15fb2f7de9d88881163a21cf`.
 - `.local/tmp/pres-1/f4-wasm/results.json` — SHA-256 `5d22086ec498bc1b0e684105be10674ae42ffac7df5469ffe99747d6469ada17`.
+
+## Final independent acceptance
+
+The fresh full Integration Critic returned **PASS** at `a0302dd6c5ff6714709b4f3a3b742f71a4b596a7`: `independent-check-5.md`, imported byte-for-byte (SHA-256 `3343ecf10222531cc4ecdf9085d52b06abad7dae68164532db43f603867e37a8`). It independently reran the complete 3.12 suite (944 passed / 7 documented skips), arithmetic and display audits, complete anonymous mirror, both-engine routes and settled charts, release/accessibility checks, exact 3.13 bundle reproduction, four cold starts and both-engine forced failure/retry checks. No active-clause violation was found. Ordinary cold starts have zero errors; deliberate route teardown cancellation warnings are advisory. The detached checkout remained clean at the assigned SHA and was removed after verdict preservation. F5–F8 remain the stated Orchestrator/Owner handoff; this record does not claim deployment.
