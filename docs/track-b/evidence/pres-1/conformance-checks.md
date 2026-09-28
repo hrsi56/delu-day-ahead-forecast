@@ -1,18 +1,25 @@
 # PRES-1 conformance: the checks before the independent check (brief §5.4)
 
-**All green at `4dbdfbbfb8e5c019790f1bcfd9f70fde3899233d`** (the code the independent check reviews;
+**All green at `5d8ce9b64cd8541c65afa4ce6363463e2040582f`** (the code the independent check reviews;
 the commit that adds this record changes evidence and records only). Run on 2026-09-28 on this Mac
 (arm64, Darwin 25.5.0). Every command ran with credential-like variables removed from its
 environment by a wrapper that prints nothing about the environment.
 
+`5d8ce9b` changes one thing after `4dbdfbb`: a build record is now final exactly when nothing is
+omitted, so that a plain rebuild reproduces the final build. The page, the README and both Space
+cards are byte-identical between the two (`git diff --stat 4dbdfbb 5d8ce9b` names none of them), so
+the §10 record, the cold-reader record and the Space bundle measured at `4dbdfbb` describe
+`5d8ce9b`'s surfaces too. The suite, the CI-equivalent run, the rebuild and the link check were run
+again at `5d8ce9b`.
+
 | Check (brief §5.4) | Where | Result |
 |---|---|---|
-| Full suite, local Python 3.13.15 | the lead worktree at `4dbdfbb`, clean | `uv run pytest -q`: **927 passed, 7 skipped** in 118.9 s |
-| Clean Python 3.12 CI-equivalent run, every step of `.github/workflows/tests.yml` | a new clean detached worktree at `4dbdfbb` (`.local/worktrees/pres-1/ci-5`, removed afterwards) | every step exit 0 (below) |
-| `make verify` | `ci-5` | "PASS — every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces" |
-| Determinism: a rebuild, then `git status` | `ci-5` | `uv run python scripts/rebuild_presentation.py`, then `git status --porcelain` empty |
-| `check_links.py` | the lead at `4dbdfbb` | "failed destinations: none" (`reports/cp3/link_check.json`) |
-| The standard's §10 release checks | the lead at `4dbdfbb` | **passed** (`reports/presentation/release-checks/2026-09-28-standard-s10.json`; below) |
+| Full suite, local Python 3.13.15 | the lead worktree at `5d8ce9b`, clean | `uv run pytest -q`: **927 passed, 7 skipped** in 153.1 s (at `4dbdfbb`: the same, 118.9 s) |
+| Clean Python 3.12 CI-equivalent run, every step of `.github/workflows/tests.yml` | a new clean detached worktree at `5d8ce9b` (`.local/worktrees/pres-1/ci-6`, removed afterwards) | every step exit 0 (below) |
+| `make verify` | `ci-6` | "PASS — every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces" |
+| Determinism: a rebuild, then `git status` | `ci-6` | `uv run python scripts/rebuild_presentation.py`, then `git status --porcelain` empty |
+| `check_links.py` | the lead at `5d8ce9b` | "failed destinations: none" (`reports/cp3/link_check.json`) |
+| The standard's §10 release checks | the lead at `4dbdfbb`; the page is byte-identical at `5d8ce9b` | **passed** (`reports/presentation/release-checks/2026-09-28-standard-s10.json`; below) |
 | The standard's §11 cold-reader check | two fresh readers | **PASS** (`cold-reader-check.md`) |
 
 ## The Python 3.12 CI-equivalent run
@@ -29,20 +36,24 @@ environment by a wrapper that prints nothing about the environment.
 | `uv sync --locked --dev` | 0 | the lock resolved as committed |
 | `uv run python --version` | 0 | Python 3.12.14 |
 | `uv run python scripts/build_wasm_payload.py` | 0 | payload built |
-| `uv run pytest -q` | 0 | 927 passed, 7 skipped in 126.1 s |
+| `uv run pytest -q` | 0 | 927 passed, 7 skipped in 125.4 s |
 | `uv run pytest tests/test_10_cqr_order_statistic.py -q` | 0 | 8 passed |
 | `uv run python scripts/verify_release.py` | 0 | PASS, including the cross-surface parity section |
 | `uv run pytest tests/test_22_wasm_equivalence.py -q` | 0 | 15 passed |
 | `python3 scripts/publication_guard.py tree` (runs only on `main`) | 1 | **Blocked, as designed:** this tree carries a non-final build record and omits the six MLflow links until the verified index exists. It passes only after the final build (F4) |
 
-Also in `ci-5`: `make lint-publication` exit 0 (page, README and template sources: no finding) and
+Also in `ci-6`: `make lint-publication` exit 0 (page, README and template sources: no finding) and
 `uv run python scripts/mlflow_export.py --check` exit 0 ("the committed export is current").
-Earlier runs of the same steps, at `7403f94` (`ci-3`) and at `c6dda1f` (`ci-4`), were green too; both
-worktrees were removed.
+Earlier runs of the same steps, at `7403f94` (`ci-3`), `c6dda1f` (`ci-4`) and `4dbdfbb` (`ci-5`), were
+green too; each worktree was removed.
+
+The publisher's dry run at the candidate (`uv run python scripts/mlflow_publish.py --dry-run`, no
+network): "23 runs, 6928 metric points, 55 artifacts; outbound scan clean; export current".
 
 ## The Space bundle
 
-`make wasm` in the project environment (Python 3.13.15) at `4dbdfbb` reproduces the committed
+`make wasm` in the project environment (Python 3.13.15) at `4dbdfbb` (whose Space inputs `5d8ce9b`
+leaves unchanged) reproduces the committed
 record exactly: `reports/cp3b/space_wasm_bundle.json` unchanged, **bundle SHA-256
 `eb122883896d755fd3314b6b5d361c1f6d23e0251412edfeeeef5c6201b8aacb`**, 805 files,
 44,162,066 bytes, 315 references checked, none missing. The hash is recomputable from the built
