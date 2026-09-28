@@ -1,0 +1,24 @@
+{
+  "candidate_sha": "49cc9ac3e97b090a65a711f0b853b06e11aa1cc9",
+  "starting_main": "a8bee0ce5b3d1f25d0b477c88c53c21f50bd163f",
+  "credential_state": {
+    "MLFLOW_TRACKING_USERNAME": "set",
+    "MLFLOW_TRACKING_PASSWORD": "set"
+  },
+  "request": {
+    "method": "GET",
+    "url": "https://dagshub.com/api/v1/user",
+    "authenticated": true,
+    "redirects_allowed": false,
+    "response_body_read": false,
+    "http_status": 403
+  },
+  "command": "python3 /Users/djourno/Downloads/PJM/.local/tmp/pres-1/f1_precheck.py",
+  "exit_code": 1,
+  "result": "BLOCKED",
+  "network_writes": 0,
+  "f1_attempted": false,
+  "note": "Only presence and HTTP status were observed; this does not distinguish credential rejection from service/network access policy. No token value or response body was displayed.",
+  "recorded_at_utc": "2026-09-28T19:45:57.189064+00:00",
+  "request_time": "2026-09-28, during this resumption, before the record timestamp"
+}
