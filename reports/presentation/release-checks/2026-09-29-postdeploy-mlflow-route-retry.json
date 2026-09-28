@@ -1,0 +1,37 @@
+{
+  "route": "compare:overview",
+  "engine": "webkit",
+  "reason": "Targeted fresh retry after transient HTTP 429 in initial route check; initial record retained.",
+  "result": {
+    "engine": "webkit",
+    "browser": "webkit 26.6",
+    "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D",
+    "expected": [
+      "Comparing 7 Runs",
+      "v3 \u00b7 weather features (HG)",
+      "v2 \u00b7 blended LEAR, hour-aware intervals (V2-H)",
+      "Daily LEAR (B2)",
+      "Normalized LEAR (A1)",
+      "Daily LightGBM (B3)",
+      "v1 \u00b7 released LightGBM (B1, development replay)",
+      "Similar-day naive (B0, normalizer)",
+      "66e1e5f516da4be38db3d5b96bde4397",
+      "de8fde118e71406ab440246ec2072b84",
+      "79c27a8d702f42a59db2bea0aeb71186",
+      "26d695d8a1de465a9a1a156ad6226430",
+      "d61166d3413747d2b07d6350df704f2d",
+      "656fd6dc4ebd48ec878b06fb3e042b54",
+      "733341b233284f758702cde99044f4a9"
+    ],
+    "started_utc": "2026-09-28T22:03:04+00:00",
+    "seconds": 3.5,
+    "final_url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D",
+    "missing": [],
+    "screenshot": ".local/artifacts/pres1-publication-20260929/mlflow-retry/compare-overview-webkit.png",
+    "failed_requests": [],
+    "console_errors": [],
+    "api_errors": [],
+    "sign_in_redirect": false,
+    "passed": true
+  }
+}

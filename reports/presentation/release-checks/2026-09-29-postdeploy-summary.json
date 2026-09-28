@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "candidate": "a0302dd6c5ff6714709b4f3a3b742f71a4b596a7",
+  "evidence_tip": "0df6dda203ea31ab35b34e7ad69d2a2e3e871ebf",
+  "landing": "265661da4d8ae2565003c8ab6e8525f9ffec45d3",
+  "pages_exact_bytes": true,
+  "space_all_805_files_verified": true,
+  "space_served_index_matches_except_HF_metadata": true,
+  "demo_effective_checks": {
+    "chrome 1440x900": {
+      "ready": true,
+      "seconds": 20.3,
+      "no_errors": true,
+      "both_controls_work": true
+    },
+    "chrome 390x844": {
+      "ready": true,
+      "seconds": 20.8,
+      "no_errors": true,
+      "both_controls_work": true
+    },
+    "webkit 1440x900": {
+      "ready": true,
+      "seconds": 21.0,
+      "no_errors": true,
+      "both_controls_work": true
+    },
+    "webkit 390x844": {
+      "ready": true,
+      "seconds": 20.4,
+      "no_errors": true,
+      "both_controls_work": true
+    }
+  },
+  "mlflow_mirror": {
+    "expected": 23,
+    "found": 23,
+    "metric_points": 6928
+  },
+  "mlflow_routes": "6 routes in both engines; one targeted retry",
+  "settled_charts": 10,
+  "initial_failures_retained": [
+    "Chrome 1440x900 HF HTTP 429; fresh retry passed",
+    "WebKit overview DagsHub artifact-list HTTP 429; fresh retry passed"
+  ],
+  "f1_repeated": false,
+  "governance_edited": false,
+  "guards_bypassed": false
+}

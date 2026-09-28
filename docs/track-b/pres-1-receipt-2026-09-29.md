@@ -7,8 +7,8 @@ F8 or checkpoint reclamation. No later checkpoint is opened.
 
 ## Receipt and identity
 
-- [Canonical Lead return](../../.local/worktrees/pres-1/lead/docs/track-b/evidence/pres-1/return.md)
-  and [fresh independent final verdict](../../.local/worktrees/pres-1/lead/docs/track-b/evidence/pres-1/independent-check-5.md)
+- [Canonical Lead return](evidence/pres-1/return.md)
+  and [fresh independent final verdict](evidence/pres-1/independent-check-5.md)
   read. They map all W1–W16, standard §§1–15, 26 invariants and ordered phases. The full final
   review supersedes the obsolete blocked return; historical FAILs remain intact.
 - Standard and conformance brief match their ratified hashes in main and the evidence copies.
@@ -63,7 +63,7 @@ Own screenshots and raw measurement log are retained under
 The measured headline/finding margins are narrow on desktop/phone, as already disclosed;
 this is not an invented new acceptance bar.
 
-## Limits and next action
+## Limits and receipt-time next action
 
 **Subsequent authority resolution, 2026-09-29:** Owner explicitly reaffirmed D5 as a
 PRES-1-only exception to the replacement AGENTS.md, authorizing squash/commit to main, push,
@@ -87,9 +87,11 @@ that PRES-1 D5 is an explicit task-specific exception to those replacement instr
 an authority conflict, not a failed scientific or presentation criterion; no new review is needed.
 F8 follows the actual authorized publication. Do not rerun F1.
 
-Proposed disposition remains **LAND**, awaiting that authority resolution/Owner action. Keep
-`gauntlet/pres-1` and the Lead worktree intact. No disposition tag or reclamation was performed;
-all evidence remains reachable. W16 template edits are a separately authorized task after landing;
+At receipt, proposed disposition was **LAND**, pending the authority resolution above; branch
+and Lead worktree were retained. Subsequent landing/publication and reclamation are recorded in
+[pres-1-landing-2026-09-29.md](pres-1-landing-2026-09-29.md). Historical branch/worktree citations
+in the immutable briefs/returns now resolve through `evidence/pres-1` and the committed evidence
+paths; they are not instructions to reopen the retired execution workspace. W16 template edits are a separately authorized task after landing;
 v4 colour/marker choice remains the Owner's. CP-21 is not opened.
 
 Q&A entry 35 captures the date-based policy-census lesson via `scripts/qa_append.py`; prior entries
@@ -99,6 +101,6 @@ are preserved. No document rendering or layout review of Q&A was performed.
 
 [Repository checks](../../.local/artifacts/pres1-receipt-20260929/repository-checks.json),
 [whole-checkpoint diff](../../.local/tmp/pres-1/final-full.diff),
-[114 file reasons](../../.local/worktrees/pres-1/lead/docs/track-b/evidence/pres-1/changed-files.md).
+[114 file reasons](evidence/pres-1/changed-files.md).
 Receipt-only review, status/stat/full diff and proposed commit message are in
 [review.md](../../.local/artifacts/pres1-receipt-20260929/review.md). Nothing staged or committed.

@@ -1,0 +1,34 @@
+{
+  "check": "demo cold start and controls (plan \u00a711.3, Phase 0)",
+  "checked_at_utc": "2026-09-28T22:01:55+00:00",
+  "client": "Playwright, fresh browser context per run; unauthenticated",
+  "host": "arm64 / Darwin 25.5.0",
+  "runs": [
+    {
+      "browser_version": "153.0.8010.54",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 345,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 20.3,
+      "started_utc": "2026-09-28T22:01:27+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "1440x900"
+    }
+  ]
+}

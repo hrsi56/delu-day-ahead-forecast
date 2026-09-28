@@ -55,7 +55,7 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 |---|---|---|
 | 1 | NWP archive-depth gate (4.1) | ✅ Done: GFS admitted |
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
-| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) revision 3, executed as PRES-1 ([brief](docs/track-b/pres-1-brief-2026-09-24.md)) on `gauntlet/pres-1` through phase E; then brought to the ratified [Publication Standard v1](docs/track-b/publication-standard-v1.md) (2026-09-28) by a new Lead under the [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md) |
+| 3 | Presentation around v2 (4.3R), with CP-20 alongside | ✅ PRES-1 published and closed; [landing and F8](docs/track-b/pres-1-landing-2026-09-29.md), evidence preserved at `evidence/pres-1` |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ⬜ Not started |
 | 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
@@ -63,23 +63,23 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Current Track B task: PRES-1, presentation release 1.** Engineering PASS through F1–F4
-accepted on 2026-09-29; delegated **F5 visual approval APPROVED** from the Orchestrator's own
-Chrome/WebKit screenshots. [Receipt](docs/track-b/pres-1-receipt-2026-09-29.md).
+**PRES-1 CLOSED — LAND and F6–F8 complete, 2026-09-29.**
+[Landing/publication record](docs/track-b/pres-1-landing-2026-09-29.md); [receipt/F5](docs/track-b/pres-1-receipt-2026-09-29.md).
+The Owner expressly reaffirmed D5 as a checkpoint-only exception. Reviewed candidate
+`a0302dd6c5ff6714709b4f3a3b742f71a4b596a7` and evidence tip
+`0df6dda203ea31ab35b34e7ad69d2a2e3e871ebf` are preserved by `evidence/pres-1`.
+Squash landing `265661da4d8ae2565003c8ab6e8525f9ffec45d3` is tagged `land/pres-1`;
+both tags and main were pushed. The Lead branch/worktree are reclaimed; only main remains.
 
-- Final candidate `a0302dd6c5ff6714709b4f3a3b742f71a4b596a7`; evidence tip
-  `0df6dda203ea31ab35b34e7ad69d2a2e3e871ebf`, clean `gauntlet/pres-1`, 59 ahead / 3 behind main.
-- Fresh full independent PASS maps all W1–W16, standard clauses and 26 invariants. Accepted
-  944 tests / 7 skips, both Python versions, complete public mirror/routes and local demo checks;
-  historical FAILs and accounting limitations remain disclosed.
-- F1 completed once: 23 public MLflow runs. F2–F4 verified index/capabilities/final bundle complete.
-  F1 was not repeated at receipt. F5 measurements and supplied bundle identity independently checked.
-- **F6–F8 authorized and in progress, 2026-09-29.** Owner explicitly reaffirmed D5 as a
-  PRES-1-only exception to the current AGENTS.md: squash/commit to main, push, exact Space
-  redeploy, post-deploy checks and closure. Preserve both tags before reclamation; no F1 repeat,
-  governance edit or guard bypass. The Lead is stopped; Owner need not perform visual checks.
-- Publication Standard v1 and the conformance brief remain unchanged; the earlier release review
-  and retired Lead session remain superseded. CP-21 remains unauthorized.
+- Engineering full independent PASS and delegated F5 were accepted. F1 was **not repeated**.
+- Report/README published; exact 805-file Space bundle deployed at Hub commit
+  `59d941825755bf73eabb7ff20e31124fee305755`. Demo remains v1, research presentation covers v1–v3.
+- F8 passed: Pages exact bytes, bundle identity, four fresh engine/viewport demo checks with
+  controls, complete 23-run mirror, six routes in both engines, ten settled charts and link gate.
+  Initial HF/DagsHub 429 failures are retained; targeted fresh retries passed. No uninterrupted
+  availability guarantee. Public landing/tag CI and Pages deployment passed.
+- Historical FAILs, effort/disk accounting limitations and cold-reader/device limits remain.
+  No governance edit, guard bypass, new research or later-checkpoint authority.
 
 **Next pending Track B checkpoint: CP-21, the first v3 extension.** It is not authorized yet:
 the Owner has not chosen the extension (see Blockers). Opening it needs a v21-r5 amendment and a
@@ -88,13 +88,12 @@ model's freeze, live operation and prospective evaluation.
 
 **Repository:**
 
-- `main` and `gauntlet/pres-1` are the two branches, with primary and Lead checkouts; the latter
-  is retained pending disposition. Main HEAD remains `a8bee0ce5b3d1f25d0b477c88c53c21f50bd163f`.
-- Public CI (`invariant-tests`) has been green since `566335d`.
+- Only `main` and the primary checkout remain. PRES-1 landing/evidence refs are the two tags above.
+- Public PRES-1 landing/tag CI (`invariant-tests`) and Pages deployment passed; exact runs in the landing record.
 - Decoded GFS grids and CP-20 working material are retained under `.local/`
   ([artifact map](docs/track-b/local-artifacts.md)).
 
-**Public surfaces (v1):**
+**Public surfaces (PRES-1; demo v1 / research v1–v3):**
 
 | Surface | What it is |
 |---|---|
@@ -102,435 +101,19 @@ model's freeze, live operation and prospective evaluation.
 | [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([app direct](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | The champion's boosters in the browser, bitwise equal to the frozen artifact |
 | [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Every decision-bearing run, anonymously readable |
 
-Deployed README/site/Space remain the earlier release. The public `delu-generations` MLflow
-mirror now contains the authorized v1–v3 research export; the final README/site/Space bundle
-is accepted locally, with F6–F8 still pending.
-
-### Track C — marketing
-
-Cancelled 2026-09-15; no outreach or CV surfaces live in this repository. The public site shows
-v1–v3 now and grows with each generation. CV use comes at the end, after the holidays (Owner,
-2026-09-24).
-
-### Track A
-
-No optional learning block is active.
-
----
-
-## 2. Setup State
-
-- **ACTION-REQUIRED (Owner), pending since 2026-09-24:** restart the Claude desktop app, PyCharm
-  and any terminal opened before the DagsHub token rotation. Until then those processes hold the
-  revoked value. This item stays pending until the Owner confirms it. It matters most before the
-  any old application is reused. PRES-1 F1 succeeded using the existing variables; that is
-  evidence for the Lead process, not confirmation that every old application was restarted.
-
----
-
-## 3. Strategic Anchors
-
-- **Ratified authority:** `capstone_v21.md` **v21-r4** (§15, CP-20), ratified 2026-09-23, SHA256
-  `150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167`. CP-20 closed under it, and
-  its §15.7 packaging authority ended at landing.
-- **Historical authorities:**
-
-  | Authority | Governed | Where the exact bytes are |
-  |---|---|---|
-  | v21-r3 | CP-16 | `evidence/cp-16:capstone_v21.md` (`67d21768…`) |
-  | v21-r1 | CP-15 | `evidence/cp-15:capstone_v21.md` (`44ea4e54…`) |
-  | Original `capstone_v20.md` | CP-10 | `docs/track-b/anchors/cp-10-capstone_v20.md` |
-  | `capstone_V6_8.md` | v1 | the file itself |
-
-  Once the live anchor advances, closed checkpoints are reproduced from their `evidence/` tags.
-- **Programme plan:** the [v3 plan handoff](docs/track-b/v3-plan-handoff-2026-09-22.md), with
-  work items 4.0–4.10 and the decision register D1–D6. Navigation identity: `7fdd8205…`.
-- **Target:** hourly day-ahead prices in the DE-LU (Germany–Luxembourg) bidding zone, under the
-  inherited forecast-origin and eligibility contract. The aim is better point forecasts and
-  honest, useful uncertainty.
-- **Budget:**
-  - $0 external run rate: no paid licence, purchase or paid tier. A free API registration is
-    acceptable when needed.
-  - The inherited $65/month ceiling is not spending authorization.
-  - Use is non-commercial: CV and open source.
-- **Hardware:** Apple M3 with 16 GB, CPU only. v21 permits a bounded local MPS probe. No GPU or
-  cloud.
-- **Language:** English for documents and briefs. The Owner may write in Hebrew.
-- **Governance:**
-  - `AGENTS.md` is canonical: lockdown, credentials, Git and publication authority, branch
-    lifecycle.
-  - `orchestrator-role.md` and `engineering-role.md` govern their roles.
-  - `docs/track-b/gauntlet-templates.md` holds the four forms.
-  - `orchestrator-role.md` and `program-stage-sequence.md` carry scope-narrowed headers: their
-    Track A and Track C content is historical.
-  - Publication and mainline history belong to the Owner. Task-scoped delegations are recorded in
-    the Session Log.
-- **Platforms, access and tooling:**
-  - **Credentials:** `DAGSHUB_USER_TOKEN` (also supplied as `MLFLOW_TRACKING_USERNAME` and
-    `MLFLOW_TRACKING_PASSWORD`), `ENTSOE_API_TOKEN` and `HF_TOKEN`, stored in `~/.zshrc` and
-    `launchctl`. The rules are in `AGENTS.md` § Credentials. Verify `.zshrc` variables with
-    `zsh -ic`, not `zsh -lc`.
-  - **DagsHub MLflow:**
-    - It uses HTTP basic auth; Bearer returns 401.
-    - Public links use the `.mlflow` host, and `scripts/check_links.py` keeps the gated URLs as a
-      control.
-    - DagsHub provides tracking, registry and storage, but no compute.
-  - **Hugging Face (`Yarden-Viktor`):** only Static Spaces have been free since 2026-07-08.
-    Upload with `HfApi.upload_folder`, because `hf upload` returns 402.
-  - **ENTSO-E:** `entsoe-py` 0.8.0 puts the token in request URLs and exception text. Redact both,
-    and prefer SMARD for unattended jobs.
-  - **CI:** GitHub Actions is free for this public repository. `invariant-tests` runs on every
-    push, pinned to Python 3.12.
-  - **Checks:** `make verify` binds the cross-surface claim set. `scripts/check_links.py` records
-    link status but always exits 0, so it is not a gate yet (review finding F05, verified
-    2026-09-24). Plan revision 2 makes it fail on a broken required link.
-  - **Secret guard:** `.githooks/` together with `scripts/secret_guard.py`. It is enabled locally
-    with `git config core.hooksPath /Users/djourno/Downloads/PJM/.githooks`, and a fresh clone
-    must enable it again.
-
----
-
-## 4. Standing Scope Decisions
-
-These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
-Session Log.
-
-**Added 2026-09-24 (Owner):**
-
-- **Same information, same opponent.** Every new model receives exactly the information HG
-  receives, including the three frozen GFS weather features and their missing indicators. It is
-  evaluated against HG on identical rows. Beating a weaker reference means beating the wrong
-  model.
-- **No data after the development window until the final test.** Nothing dated after
-  2026-04-07, the last fold-5 delivery day, may be read, scored, plotted or used for any choice
-  before the single final fresh-data test (4.7T). This covers prices, weather and every other
-  input or outcome. Each additional model selected on the same development periods makes that
-  test more important.
-- **Final sequence.** The fresh-data test (4.7T) is reserved for the end. Only the final model
-  built goes live (CP-17 freeze, then at least 90 consecutive days, then CP-19); the current HG
-  is not frozen. CV use comes last, after the holidays. *Amended 2026-09-24:* the public site is
-  updated as each generation lands, starting with v1–v3 now.
-- **One scrolling history page.** The public report is a single page that stays single however
-  many generations exist. Chapters run newest first, with the live model eventually at the top.
-  Each generation is shown with its results, statistics, and pros and cons, including
-  generations that were not adopted.
-- **MLflow is the visible cross-version tool.** v2/v3 runs are backfilled, and future checkpoints
-  are tracked in MLflow. `delu-cp2` (v1's record) stays untouched. The design is in the
-  [presentation and tracking plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md).
-- **Publication standard (ratified 2026-09-28).** Every publication follows
-  [Publication Standard v1](docs/track-b/publication-standard-v1.md).
-  - The headline is defined before results, and every percentage is a derived record.
-  - One registry supplies names and statuses.
-  - Publication is complete or not at all.
-  - A blocking rule sits beside an advisory log.
-  - Its core changes only by the Owner. Every brief cites its SHA-256.
-  - From CP-21 on, each checkpoint's return carries a publication packet.
-- **Presentation and tracking rules (plan R1–R6, approved 2026-09-24):**
-  - v1's holdout moves into the v1 chapter and is not deleted;
-  - agents build the page and charts from data, and the Owner reviews visually before any push;
-  - version numbers go only to adopted models;
-  - the repository is the source of truth: MLflow mirrors it, and the page never reads MLflow;
-  - checkpoints track locally and publish to MLflow at landing;
-  - the Model Registry holds only runnable, frozen policies.
-- **Presentation decisions (plan §16, 2026-09-24):**
-  - **Generation naming:** `vN · <adopted change>`.
-    - A number is given only after adoption, and none is reserved in advance (for example, for
-      DDNN or VRE).
-    - A rejected experiment stays a branch with a descriptive name.
-    - "Final candidate" and "Live" are statuses of a version, not names.
-  - **Independent check:** mandatory for presentation releases. It is done by a checker that did
-    not write the changes, and it covers the data, the claims, the charts, the links and the
-    reading experience. The Owner's visual approvals at D1 and at the end come in addition to it.
-  - **The MLflow step** is carried in briefs until its route has completed and been verified
-    once. Then it goes into the landing templates. The Owner granted the Lockdown suspension for
-    that edit, and it is applied in a separate task.
-  - **The capability probe** is local plus read-only against DagsHub, with no public write probe.
-    Capabilities are verified against the service after the authorized upload.
-  - **The experiment is `delu-generations`,** on every surface; `delu-cp2` stays untouched.
-  - **The contribution statement is required,** in the Owner's wording (plan §8.9).
-  - **The visual tokens in plan §7.3** are the D1 starting point.
-- **Credentials.** They are stored as `~/.zshrc` exports mirrored in `launchctl`, on a
-  single-user, biometric-locked machine. Agents never view or hand-type a value and use
-  credentials only as stored variables. The secret guard is mandatory (`AGENTS.md` §
-  Credentials).
-- **CP-20 local weather material is retained.** `.local/artifacts/cp-20/weather/` holds the only
-  copy of the decoded GFS box grids ([artifact map](docs/track-b/local-artifacts.md)).
-
-**Data and target:**
-
-- **Data begins 2019-01-01 by design.** DE-LU split from DE-AT-LU on 2018-10-01, so earlier
-  prices belong to a different product. The start covers the pre-crisis, crisis and
-  normalization regimes; it is neither an outage nor a truncation. Sources: `4ec9fab`,
-  `2517e55:progress.md:106`, Q&A entry 2.
-- **Two inherited data-vintage assumptions stay disclosed.**
-  - Pre-gate availability of the A65/A01 load forecast was assumed, not proven.
-  - The historical 42-day, D−2-bounded A75 generation proxy uses current archive values, and
-    their revision status is unproven.
-
-  Both accompany any historical availability claim and neither relaxes v21's causal-input
-  rules.
-- **SMARD is the planned fallback-primary source.** CP-1 used it during the ENTSO-E outage under
-  the existing clause. This is not blanket authority for new sources or targets.
-- **The target stays hourly means over canonical delivery hours** across the 2025-10-01
-  quarter-hour transition.
-  - Quarter-hour inputs aggregate to hours, with complete-bin and chunk-boundary handling.
-  - 23-, 24- and 25-hour days keep their identity.
-  - The snapshot's 576 negative hourly means and the regulator's 573 are different quantities.
-- **The delivery-day availability invariant (v21 §2) holds.** Masking delivery-day prices changes
-  the output by exactly `0.0`, and a D−1 mutation must move it (currently `220.9433` EUR/MWh).
-- **Weather source.** Direct weather comes from the admitted GFS 0.25° D−1 00 UTC archive: NCAR
-  d084001 through 2020 and NOAA AWS from 2021. It covers all five folds (v21-r4 §15).
-  Open-Meteo's archive is not gate-legal, because it stitches short-lead runs. ICON-EU is not
-  admitted. *Amended 2026-09-24:* this replaces the decision that gate-legal weather began in
-  2024 and folds 1–3 were unreachable, which the ratified GFS admission superseded.
-- **No fuel-price layer.** No free, daily and redistributable TTF/THE series exists. A read-only
-  structural feasibility sheet is the most v21 permits. See [`DATA-LICENSE.md`](DATA-LICENSE.md).
-
-**Claims and evidence:**
-
-- **v1's only confirmatory claim is the one-shot holdout.** The champion beats the similar-day
-  naive on both metrics:
-  - MAE 25.9078 vs 27.7578 (−6.66%);
-  - mean pinball 6.7083 vs 13.8789 (−51.67%);
-  - DM p = 1.98e−18.
-
-  Everything else is `development_post_selection`.
-- **Two unflattering v1 results stay on every public surface:**
-  - the development point-MAE DM has p = 0.948 and statistic +1.6228. The median is 28.58% worse
-    than the naive, driven by August 2022 (fold 3);
-  - interval coverage over the August-2022 peak weeks is 0.194.
-- **Recovered v1 facts are preserved:**
-  - fold 3 trained through 2022-04-29, including 5,784 crisis hours. The diagnosis was shrinkage
-    toward the training level;
-  - the residual-load proxy lost (13.0158 vs 13.0642 mean pinball);
-  - the measured 19.49% post-gate A69 information cost did not authorize using A69;
-  - the four cutoffs (snapshot, raw fit, final calibration, holdout), the no-retrain identity and
-    the semantic fingerprint are kept.
-- **Research status labels persist:**
-  - CP-15 product feasibility stays `NOT_DEMONSTRATED`;
-  - CP-16 and CP-20 results are `development_post_selection`;
-  - economics stay descriptive, and no product threshold is invented.
-
-**Process:**
-
-- **Owner observance: no scheduled work on Friday or Shabbat.** Any operational schedule must
-  resolve this explicitly.
-- **Reasoning capture is active** (`AGENTS.md` § Interview-answer capture).
-  - Only the Orchestrator files entries, through `scripts/qa_append.py`; the Lead names triggers
-    in its return.
-  - `שאלות תשובות.docx` has 33 entries.
-  - Presentation is the Owner's.
-- **Retired controls stay retired.** These are AMD-G5's waived negative control, the old
-  point-in-time capture ledger, publication-metadata substitution and the four-catalog selection
-  machinery.
-- **Amendments granted and spent:** WASM for CP-3B only, and sequential conformal for C-2 only.
-  v21 opens its stated comparisons, not an unlimited method set.
-- **Track A is out, and Track C was cancelled on 2026-09-15.** `TRIG-C` and `C-1` are struck.
-- **Optional and unscheduled:** `Binary Classification Mini-Capstone.md` and
-  `aws-extension-spec_v1_1.md` (stale).
-
----
-
-## 5. Session Log — newest first
-
-- **PRES-1 D5 exception reaffirmed, 2026-09-29.** Owner explicitly authorizes squash/commit,
-  push, exact Space redeploy, post-deploy checks and closure for candidate `a0302dd6` / evidence
-  tip `0df6dda2`. Exception applies only to PRES-1; no governance edits, guard bypass or F1 repeat.
-
-- **PRES-1 receipt and delegated F5, 2026-09-29.** Accepted final independent PASS through F1–F4;
-  verified exact SHAs, evidence-only delta, clean Lead and bundle identity. Own Chrome/WebKit
-  release screenshots/placements pass; F5 approved. No repeated F1 or engineering audit.
-  Updated current routing and retained historical accounting limitations. Current supplied
-  owner-only mainline/publication rules conflict with recorded D5; F6–F8 remain pending that
-  authority resolution/Owner action. No stage, commit, ref mutation, redeploy or later checkpoint.
-  Filed Q&A entry 35 through the prescribed appender; prior 34 preserved.
-
-- **Publication Standard v1 ratified; conformance brief issued, 2026-09-28.**
-  - **The Owner's decisions:**
-    - approved D1–D3, D5 and D6;
-    - D7 stays an option;
-    - D4 was withdrawn as a personal decision;
-    - "including everything", for a new agent.
-  - **Closed:** the standard, with §16 and §17 recording in-force scope and the outcomes.
-  - **Issued:** the
-    [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md), with deliverables
-    W1–W16.
-  - **Committed and pushed at the Owner's instruction:**
-    - the standard and its derivation record;
-    - the brief;
-    - the review record: the Owner's D1 editorial review, the final editorial audit and the
-      superseded release review;
-    - this file;
-    - interview answer 34.
-
-- **Publication standard, 2026-09-28** (Owner: are the release review's fixes structural or
-  patches? This is the one chance to set the standard).
-  - **Answer:** mostly patches. The root causes sit in plan revision 3:
-    - it sets ceilings on what may be said, and no floors for what must be said;
-    - the story's state has no single source;
-    - the reviews work as a ratchet.
-  - **Method:** an independent advisor (a read-only subagent) in three rounds:
-    - a cold read of the page and code;
-    - a challenge of the plan, the review history, the release review and the Orchestrator's
-      position, which was written before round 1 was read;
-    - a red-team of the draft.
-  - **Verification:** the Orchestrator verified every factual claim, among them:
-    - "first of 8 candidates" to clear criteria 1–2;
-    - the stale status line in the CP-20 report;
-    - 1.52 of the 2.0 MB budget used;
-    - no writer for `mlflow_index.json`;
-    - the device requirement as the FAIL item common to both independent checks.
-  - **Output:** the draft [Publication Standard v1](docs/track-b/publication-standard-v1.md) and its
-    [derivation record](docs/track-b/publication-standard-derivation-2026-09-28.md). The release
-    review is marked superseded and was never handed over.
-  - **Verified provenance:** the §8 targets were pre-registered at `bb5e678`, 2026-09-16 00:17, on
-    `evidence/cp-15`, before CP-15's results at 03:15, identical to the attempt-1 anchor.
-  - No commit, merge, push or public action.
-
-- **PRES-1 release review, 2026-09-28** (Owner: "everything is in your hands").
-  - **Reviewed:** `gauntlet/pres-1` at `af0abb0`, in a clean worktree.
-  - **Results:**
-    - 751 passed, 7 skipped;
-    - `make verify` PASS;
-    - the export is current and the dry run is clean;
-    - the build is deterministic;
-    - the link gate passes;
-    - there has been no public MLflow write;
-    - Chrome renders at 1,440 and 390 px without overflow;
-    - accuracy spot checks hold, and no factual error was found.
-  - **Verdict: not ready to land.**
-    - **P1:** the opening has no result, and the pre-specified targets that only v3 clears are
-      buried.
-    - **P2:** the README leads with v1, there is no absolute anchor in EUR/MWh, and there is no
-      generation registry or runbook for v4.
-    - **P3:** wording and precision; demo font 404s in WebKit; no stack line.
-    - **Process:** no independent PASS on the candidate; four unpublished links; F11; no return.
-  - **Issued:** a [review with a fix round](docs/track-b/presentation-release-review-2026-09-28.md).
-  - No merge, push or public action.
-
-- **Plan revision 3 approved and PRES-1 issued, 2026-09-24.**
-  - **The Owner answered all nine §16 questions:**
-    - approval;
-    - the naming rule, `vN · <adopted change>`;
-    - a Lead executor with a mandatory independent check;
-    - the MLflow step carried in briefs, then fixed in the templates under a granted suspension;
-    - a local plus read-only probe;
-    - the experiment name `delu-generations`;
-    - a required contribution statement, whose wording the Owner supplied;
-    - the demo device test, completed;
-    - the tokens accepted.
-  - **Recorded:** the decisions in the plan's §16, the naming rule in §7.7 and the contribution
-    statement in §8.9.
-  - **Issued:** the [PRES-1 Engineering Lead brief](docs/track-b/pres-1-brief-2026-09-24.md). It
-    covers a local branch, three stops, per-action authority for public steps, an explicit MLflow
-    section, ceilings (a target of 40 active hours, a hard stop at 56, $0, no research budget)
-    and a template-based return.
-  - No site, README, MLflow, template or engineering change was made. There was no commit (per
-    plan §13).
-
-- **Design review and plan revision 3, 2026-09-24.** A second external reviewer wrote a
-  [design review](docs/track-b/presentation-design-review-v2-2026-09-24.md) of revision 2, as
-  committed by the Owner in `7d9959b`.
-  - **Checked:**
-    - the review covers exactly that revision (plan hash `d9d30a9b…`);
-    - revision 2 contradicted itself on the demo states (its §7.7 against the Phase 0 row);
-    - `<data>` is invalid inside SVG;
-    - the proposed palette passes 4.5:1 for all text, but its three generation colours share
-      almost the same luminance.
-  - **Revision 3:**
-    - §7 becomes a design specification: composition, tokens, components and states, chart
-      grammar, the chapter as a decision story, lineage with branches, navigation, demo states
-      and accessibility;
-    - D1 becomes a desktop and mobile visual specimen with reader tasks;
-    - the markup contracts for HTML and SVG are split;
-    - each public action needs its own instruction.
-  - No site, README, MLflow or engineering change was made.
-
-- **External presentation review and plan revision 2, 2026-09-24.** An external reviewer wrote
-  [a review](docs/track-b/presentation-review-and-corrections-2026-09-24.md) of the approved plan.
-  - **Checked independently:**
-    - reproduced mobile overflow (F02);
-    - confirmed the README generator boundary (F04), the link checker's constant exit 0 (F05),
-      the mixed units in chart C2 (F06), the difference in the v1 comparison baseline (F07) and
-      v1's verbatim "confirmatory-style, not power-qualified" label (F11);
-    - read the MLflow server version, 3.5.1;
-    - could not reproduce the demo failure (F01).
-  - **Revision 1 was wrong in two places.** It mixed units in chart C2, and it placed the public
-    MLflow upload before the Owner's review.
-  - **Revision 2 fixes both** and adds: release gates, a typed evidence and claim layer, an exact
-    23-run MLflow manifest with repeatable uploads and full-history verification, an authorized
-    publication sequence (Phase F), and reader-first design.
-  - **Other corrections:**
-    - the claim that DagsHub refused registry tags was wrong: `tags_refused` is empty;
-    - the published `delu-m4` promise needs reconciling.
-  - **Status:** revision 2 awaits approval. No site, README, MLflow or engineering change was
-    made.
-
-- **Presentation and tracking plan, 2026-09-24.** The Owner decided on one scrolling history page
-  (newest first, live at the top at the end), showing v1–v3 on the site now, and MLflow as the
-  visible cross-version tool, with v2/v3 backfilled and future work tracked.
-  - Reviewed the live page, its generator, the site-shaping commits (155b0f8, 8341fba, 7f16f4e,
-    99c9250, 5b94b8f) and the public MLflow state: only `delu-cp2`, with 55 runs, and the
-    `champion` registry entry.
-  - Drafted the [plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md): phases A–E,
-    14 invariants and the MLflow tracking specification.
-  - **Standing-decision amendment:** the public site is now updated as generations land; only CV
-    use stays at the end.
-  - The Owner approved the plan with R1–R6 as written, and they were recorded as standing rules.
-    The plan and this state were committed and pushed at the Owner's instruction.
-  - No site, README, MLflow or engineering change was made.
-
-- **Progress regeneration, credentials rule and secret guard, 2026-09-24.** Done at the Owner's
-  explicit request.
-  - **This file:** regenerated under the contract. The Owner ratified four standing decisions:
-    same information and opponent, no data after 2026-04-07, the final sequence and the
-    credentials rule. The weather-source decision was amended to match the ratified GFS
-    admission.
-  - **`AGENTS.md`:** added § Credentials, under a task-scoped Lockdown suspension granted by the
-    Owner's instruction.
-  - **Secret guard:** added the value-based guard (`scripts/secret_guard.py`, `.githooks/`,
-    `tests/test_28_secret_guard.py`) and enabled it locally.
-  - **Tokens:** mirrored `ENTSOE_API_TOKEN` and `HF_TOKEN` from `launchctl` into `~/.zshrc`.
-    No value was displayed.
-  - **Omission review, pruned as closed history:** the CP-10, CP-15 and CP-16 receipts,
-    handoffs and usage totals; the v21-r1, v21-r2 and v21-r3 issuance identity tables; the
-    2026-09-15/16 consolidation, correction, validation and research narratives, including the
-    live-namespace guard re-run and the v20-r1 draft; weather-intake and CP-20 issuance
-    details; and superseded routing. The landings resolved all of these. They are preserved at
-    `f704ac4:progress.md`, in the tags and in the landing records.
-  - **Omission review, resolved:** the CP-16 test debt and CI, the ACI implementation concern,
-    the CP-10 disposition and the token rotation.
-  - **Carried:** every active item — anchors, standing decisions, open questions, the next
-    checkpoint and the pending action.
-- **CI restored, 2026-09-24.** `pytest.ini` (importlib mode) and `tests/cp16/conftest.py` fixed
-  collection and test preconditions without touching any hash-bound file. CI is pinned to Python
-  3.12, and public CI has been green since `566335d` (511 passed, 7 skipped).
-- **DagsHub token exposure and rotation, 2026-09-24.** A Critic pytest log in the CP-20 evidence
-  published the token. The Owner rotated it and local configuration was synchronized. No other
-  secret appears in any ref. By Owner decision there is no history rewrite
-  ([record](docs/track-b/credential-exposure-2026-09-24.md)).
-- **CP-20 receipt, LAND, reclamation and push, 2026-09-24** (delegated by the Owner).
-  `land/cp-20` = `f450bc1` and `evidence/cp-20` = `a7a9b2e`. The pasted Owner decisions O1–O4,
-  A1 and S1 were confirmed, and the weather attribution was added to `DATA-LICENSE.md`.
-- **2026-09-23:**
-  - CP-20 ratified as v21-r4, revised (per-cell wind speed; 120 machine-hours) and issued.
-  - Weather admission and the CP-15/16 content accepted.
-  - CP-16 PASS receipt, then an Owner-delegated LAND with repository consolidation.
-- **2026-09-15/16:**
-  - v21 adopted.
-  - CP-15 blocked, resumed, passed and landed with CP-10.
-  - The repository consolidated to one checkout, with project-local containment.
-  - Governance reconciled and the 2019 boundary recovered.
+README/report/Space research cards now present v1–v3. The released browser model remains v1;
+the 23-run `delu-generations` mirror is public and verified. No research generation is promoted
+to the demo by this presentation release.
 - **Earlier:** v1 complete and closed (CP-0 … CP-3B, REL-1).
 
 ---
 
 ## 6. Blockers / Open Questions
 
-- **PRES-1 F6–F8 authorized; final deployed checks pending.** The Owner resolved the authority
-  conflict on 2026-09-29, expressly authorizing the exact reviewed candidate/evidence chain.
-  Engineering/F5 passed. Complete publication and closure without repeating F1.
-  Historical active-hour total and added-disk baseline remain unavailable, not certified compliant.
+- **PRES-1 closed; no remaining release blocker.** F6–F8 passed under the explicit Owner
+  exception. Initial HF/DagsHub rate-limit failures and successful retries are recorded.
+  Historical active-hour total and added-disk baseline remain unavailable, not retroactively
+  certified compliant. Required tags preserve all evidence; no implementation or review reopens.
 - **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
   The recommended order:
   1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
@@ -553,17 +136,9 @@ Session Log.
 - **CP-3B item 6 was never completed.** No verdict binds `55a70e7`
   ([record](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md)). This is not a precedent:
   every brief must require a binding verdict.
-- **Public-surface defects from the 2026-09-24 review.** Plan revision 2 fixes them in its
-  rebuild, not in a separate patch:
-  - **The report overflows horizontally on phones.** At 390 px the document is 1,750 px wide,
-    because the two `.surfaces-table` tables sit outside `.scroll` (F02; reproduced).
-  - **The demo failed to start in the reviewer's browser** (F01). We could not reproduce this:
-    Claude's built-in browser reached a computed forecast in about 40 s from the direct app and
-    about 70 s through the Hugging Face page. Cold start shows only a spinner. Phase 0 diagnoses
-    it on the Owner's devices.
-  - **Every surface, and the deployed Space, still promise a future `delu-m4` experiment and
-    call v2 "planned"** (F03).
-  - **No generator owns the README research section, which is stale** (F04).
+- **Public-surface defects F01–F04 resolved by PRES-1.** Responsive report, explicit demo startup
+  states, current verified tracking links and generated README shipped; post-deploy checks pass.
+  Transient hosting 429s remain an availability limitation, with initial failures retained.
 - **Known issues, no action scheduled:**
   - a cold first visit to the Space can hit a Hugging Face `429`;
   - `reports/cp3/pages_build.json` stamps its build date;
@@ -589,11 +164,9 @@ Session Log.
   - no data after 2026-04-07;
   - a TabPFN run needs 4.6L's licence-use table first;
   - positive controls must survive the model's own transforms (see Lessons).
-- **[Next]** Complete explicitly authorized PRES-1 F6–F8.
-  F5 and receipt passed; the authority conflict is resolved. After authorized landing,
-  preserve both `land/pres-1` and `evidence/pres-1`, complete publication and F8, then lifecycle
-  accounting. Do not repeat F1 or discard the retained candidate chain.
-  The decision-4/D6 template edit remains a separate task after landing; then CP-21 extension choice.
+- **[Next]** PRES-1 is closed. W16/template/publication-packet proposals remain in the preserved
+  return for a separate appropriately authorized governance task; none was applied at closure.
+  Then the unresolved CP-21 extension choice. Do not repeat F1 or reopen PRES-1.
 - **[End of programme, after the holidays]**
   1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
      2026-09-07 separately.
