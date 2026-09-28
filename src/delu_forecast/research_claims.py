@@ -28,12 +28,14 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from . import derived as D
 from . import research as R
 
 REPO_ROOT = R.REPO_ROOT
 CLAIM_MAPS = (
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp15-cp16-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp20-claims.md",
+    REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md",
 )
 
 # --------------------------------------------------------------------------- names and labels
@@ -352,10 +354,35 @@ def _value_text(record: R.EvidenceRecord, which: str, option: str | None) -> str
     return R.display(record, which)
 
 
+def _render_derived(claim_id: str, record_id: str, option: str | None, target: str) -> str:
+    """A typed derived record (standard §3.3) in HTML or Markdown: whole percent, one decimal for
+    EUR/MWh, the word itself for a label or a date. It carries `data-derived` beside its claim."""
+    record = D.get(record_id)
+
+    def one(which: str, style: str | None) -> str:
+        text = D.display(record, which, style=style)
+        raw = {"value": record.value, "ci_low": record.ci_low, "ci_high": record.ci_high}[which]
+        if target == "md":
+            return text
+        field = "" if which == "value" else f' data-field="{which}"'
+        return (f'<data value="{html.escape(raw)}" data-claim="{claim_id}" data-record="{record_id}" '
+                f'data-derived="{record.kind}"{field}>{html.escape(text)}</data>')
+
+    if option == "ci":
+        if not record.interval:
+            raise ClaimError(f"{record_id} has no interval")
+        return f"[{one('ci_low', None)}, {one('ci_high', None)}]"
+    if option in ("lo", "hi"):
+        return one("ci_low" if option == "lo" else "ci_high", None)
+    return one("value", "abs" if option == "abs" else None)
+
+
 def _render_record(claim_id: str, spec: str, target: str) -> str:
     record_id, _, option = spec.partition("|")
-    record = R.get(record_id)
     option = option or None
+    if D.is_derived(record_id):
+        return _render_derived(claim_id, record_id, option, target)
+    record = R.get(record_id)
 
     def one(which: str, opt: str | None) -> str:
         text = _value_text(record, which, opt)
@@ -430,12 +457,18 @@ def svg_binding(claim_id: str, record_id: str, which: str = "value") -> str:
     """The attributes an SVG `<text>` or mark carries for a research value (no `<data>` in SVG)."""
     if claim_id not in all_claim_ids():
         raise ClaimError(f"unknown claim {claim_id!r}")
+    if D.is_derived(record_id):
+        record = D.get(record_id)
+        field = "" if which == "value" else f' data-field="{which}"'
+        return f' data-claim="{claim_id}" data-record="{record_id}" data-derived="{record.kind}"{field}'
     R.get(record_id)
     field = "" if which == "value" else f' data-field="{which}"'
     return f' data-claim="{claim_id}" data-record="{record_id}"{field}'
 
 
 def svg_value(record_id: str, which: str = "value", option: str | None = None) -> str:
+    if D.is_derived(record_id):
+        return D.display(D.get(record_id), which, style="abs" if option == "abs" else None)
     return _value_text(R.get(record_id), which, option)
 
 
