@@ -299,8 +299,7 @@ _ENTRIES: tuple[Entry, ...] = (
     Entry(
         id="v1", name="v1 · released LightGBM", subtitle="Nine-quantile LightGBM with calibrated intervals",
         kind="generation",
-        codes=(Code("CP-2", "champion", "v1-holdout-90d"),
-               Code("CP-15", "B1", "common-10747h", "development replay"),
+        codes=(Code("CP-15", "B1", "common-10747h", "development replay"),
                Code("CP-16", "B1", "common-10747h", "development replay"),
                Code("CP-20", "B1", "common-10747h", "development replay"),
                Code("CP-10", "v1_reference", "cp10-fold-block", "unscaled CQR reference")),
@@ -403,67 +402,8 @@ _ENTRIES: tuple[Entry, ...] = (
 #: benchmarks and the study's best challenger by score, v1's development replay, and the naive.
 COMPARISON_ORDER = ("v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
-#: Context labels: where a surface shows an identity by something other than its canonical name.
-#: Each is keyed by (entry, context) and read through `label()`; a surface never types its own.
-CONTEXT_LABELS: dict[tuple[str, str], str] = {
-    # the opening's status pair
-    ("v1", "status"): "Released model",
-    ("v3", "status"): "Weather features",
-    # the lineage, in plain words
-    ("v1", "lineage"): "released model",
-    ("v2", "lineage"): "a new forecasting approach",
-    ("v3", "lineage"): "adds weather inputs",
-    ("v1", "lineage-status"): "The released demo",
-    ("v2", "lineage-status"): "Blended LEAR, hour-aware intervals · adopted in research",
-    ("v3", "lineage-status"): "Adopted in research · not in the demo",
-    ("calibration", "lineage-status"): "Not adopted · recalibrating v1 was not enough",
-    ("model-comparison", "lineage-status"): "Informed v2",
-    ("calibration", "lineage-href"): "#road-to-v2",
-    ("model-comparison", "lineage-href"): "#road-to-v2",
-    # the shared comparison
-    ("v3", "overview"): "v3 · weather features",
-    ("v2", "overview"): "v2 · blended LEAR, hour-aware intervals",
-    ("daily-lear", "overview"): "Daily LEAR (reference)",
-    ("normalized-lear", "overview"): "Normalized LEAR (study challenger)",
-    ("daily-lightgbm", "overview"): "Daily LightGBM (reference)",
-    ("v1", "overview"): "v1 · released LightGBM (development replay)",
-    ("naive", "overview"): "Similar-day naive (normalizer)",
-    # the scores at the time of v2
-    ("v2", "v2-scores"): "v2 · hour-aware intervals",
-    ("pooled-control", "v2-scores"): "v2 control · pooled intervals",
-    ("daily-lear", "v2-scores"): "Daily LEAR (reference)",
-    ("normalized-lear", "v2-scores"): "Normalized LEAR (study)",
-    ("daily-lightgbm", "v2-scores"): "Daily LightGBM (reference)",
-    ("v1", "v2-scores"): "v1 (development replay)",
-    # the crisis window
-    ("v1", "crisis"): "v1 · released LightGBM",
-    ("normalized-lear", "crisis"): "Normalized LEAR (study)",
-    ("v2", "crisis"): "v2",
-    ("v3", "crisis"): "v3",
-    # chapter headers
-    ("v3", "chapter-eyebrow"): "Latest research · evaluated 2026-09-24",
-    ("v2", "chapter-eyebrow"): "Evaluated 2026-09-23 · the road from v1",
-    ("v1", "chapter-eyebrow"): "Released 2026-09-15 · the product the demo runs",
-    ("v3", "chapter-adoption"): "Adopted in research · not in the demo",
-    ("v2", "chapter-adoption"): "Adopted in research · the model v3 builds on",
-    ("v1", "chapter-adoption"): "Released model",
-    # the marker key
-    ("v1", "legend"): "v1 · released",
-    ("v2", "legend"): "v2",
-    ("v3", "legend"): "v3",
-    # README headings
-    ("v3", "readme"): "v3 · weather features (CP-20)",
-    ("v2", "readme"): "v2 · blended LEAR, hour-aware intervals (CP-16), and the road to it",
-}
-
 #: The marker-key words for the non-generation styles.
 STYLE_LABELS = {"reference": "reference", "study": "study arm", "control": "control arm"}
-
-
-def label(entry: "Entry | str", context: str) -> str:
-    """How a surface shows an identity in one context: its context label, or its canonical name."""
-    entry = get(entry) if isinstance(entry, str) else entry
-    return CONTEXT_LABELS.get((entry.id, context), entry.name)
 
 
 #: The order of the scores chart at the time of v2 (the v2 chapter's protocol detail).
@@ -663,6 +603,64 @@ def expected_run_keys() -> tuple[str, ...]:
     return tuple(out)
 
 
+def inline_name(entry: Entry) -> str:
+    """The name inside a sentence: 'daily LEAR', 'the similar-day naive'; a version keeps its case."""
+    if entry.version or entry.name[:2].isupper():
+        return entry.name
+    return entry.name[0].lower() + entry.name[1:]
+
+
+ADOPTION_LABELS = {ADOPTED_IN_RESEARCH: "Adopted in research", NOT_ADOPTED: "Not adopted", RELEASED: "Released",
+                   FINAL_CANDIDATE: "Final candidate", LIVE: "Live", RETIRED: "Retired"}
+
+
+def adoption_label(entry: Entry) -> str:
+    """The adoption label (plan §7.8): text, separate from the badge, from the dated status."""
+    if entry.status is None:
+        raise RegistryError(f"{entry.id} has no status")
+    return ADOPTION_LABELS[entry.status.status]
+
+
+def release_sentence() -> str:
+    """The release rule, stated once (standard §5), with the released model named from the history."""
+    return f"The demo runs the released model, {released().version}. {RELEASE_RULE}"
+
+
+def resolve(ident: str) -> Entry:
+    """A registry id, or one of the derived aliases `current` and `released`."""
+    if ident == "current":
+        return current_generation()
+    if ident == "released":
+        return released()
+    return get(ident)
+
+
+def common_run_key(entry: Entry) -> str:
+    """An identity's run on the shared population (CP-15/16/20): v2's is CP-16's V2-H, never H0."""
+    for key in entry.run_keys:
+        if "/" in key and not key.startswith("cp10/"):
+            return key
+    raise RegistryError(f"{entry.id} has no run on the shared population")
+
+
+def expected_routes() -> dict[str, tuple[str, tuple[str, ...]]]:
+    """Every MLflow reader route the surfaces advertise once it is verified (standard §9), as
+    `{route id: (kind, run keys)}`: the experiment, the shared comparison, each research
+    generation against its comparator, and each branch's own runs. Nothing else is advertised."""
+    routes: dict[str, tuple[str, tuple[str, ...]]] = {"experiment": ("experiment", ())}
+    routes["compare:overview"] = ("compare", tuple(common_run_key(entry) for entry in comparison_rows()))
+    for entry in generations():
+        checkpoint = CHECKPOINTS.get(entry.checkpoint)
+        if checkpoint is None:
+            continue  # v1's runs are its own experiment's, delu-cp2
+        runs = tuple(f"{checkpoint.run_key}/{code}" for code in checkpoint.children)
+        routes[f"compare:{entry.id}"] = ("compare", runs + (common_run_key(get(entry.comparator)),))
+    for entry in branches():
+        checkpoint = CHECKPOINTS[entry.checkpoint]
+        routes[f"compare:{entry.id}"] = ("compare", tuple(f"{checkpoint.run_key}/{code}" for code in checkpoint.children))
+    return routes
+
+
 def mlflow_run_name(run_key: str) -> str:
     """A run's public name in `delu-generations`: its registry name, then its code in that experiment."""
     if "/" not in run_key:
@@ -678,10 +676,10 @@ def mlflow_run_name(run_key: str) -> str:
 
 
 __all__ = [
-    "ADOPTED_IN_RESEARCH", "BADGES", "CHECKPOINTS", "CLASS_CAVEATS", "CONTEXT_LABELS", "COMPARISON_ORDER", "CRISIS_ORDER", "Checkpoint", "Code",
+    "ADOPTED_IN_RESEARCH", "BADGES", "CHECKPOINTS", "CLASS_CAVEATS", "COMPARISON_ORDER", "CRISIS_ORDER", "Checkpoint", "Code",
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
     "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "V2_SCORES_ORDER", "branches", "by_code", "codes",
-    "adopted_flag", "comparison_rows", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
-    "get", "hero", "label", "mlflow_run_name", "month", "of_kind", "parent_run_keys", "population_in", "released", "status_sentence", "with_status",
+    "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
+    "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",
 ]

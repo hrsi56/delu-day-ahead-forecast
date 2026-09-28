@@ -1,7 +1,7 @@
 .PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2 \
         pages space register showcase cli container container-verify readme-cp3 verify cp3 \
         wasm-payload wasm wasm-serve cp3b readme-research \
-        mlflow-export mlflow-dry-run mlflow-verify-local presentation
+        mlflow-export mlflow-dry-run mlflow-verify-local presentation lint-publication publication-guard
 
 test:
 	uv run pytest -q
@@ -119,3 +119,8 @@ mlflow-verify-local:
 # both Space cards and the export check (no fit, no download, no network).
 presentation:
 	uv run python scripts/rebuild_presentation.py
+
+# Publication Standard v1 §4-§5: the lint over the reading path and the template sources (it also
+# runs in CI, as tests/test_37_publication_lint.py).
+lint-publication:
+	uv run python scripts/lint_publication.py

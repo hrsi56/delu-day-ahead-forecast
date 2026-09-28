@@ -161,9 +161,18 @@ def test_badges_are_exact_and_long_values_can_wrap(document):
 
 
 def test_generation_colour_is_never_the_only_cue():
-    """The three generation colours are near-equal in luminance, so each has its own marker."""
-    shapes = {B.ROLE_STYLE[role]["marker"] for role in ("v1", "v2", "v3")}
-    assert len(shapes) == 3
+    """A contract, not a count (standard §11, brief W14): every registered generation has a marker
+    shape of its own, and every marker style is distinct, so removing colour removes no meaning."""
+    assert B.marker_problems() == []
+
+
+def test_negative_control_a_generation_without_its_own_marker_is_caught(monkeypatch):
+    monkeypatch.setitem(B.ROLE_STYLE, "v2", dict(B.ROLE_STYLE["v3"]))
+    assert any("v2" in problem for problem in B.marker_problems())
+    monkeypatch.undo()
+    styles = {**B.ROLE_STYLE}
+    styles.pop("v1")
+    assert any("v1 has no marker style" in problem for problem in B.marker_problems(styles))
 
 
 def test_v1s_fan_chart_keeps_its_caveat_and_behaviour(document):
@@ -199,7 +208,7 @@ def test_axis_end_labels_state_their_domain_exactly():
     """A per-row scale's end label is its domain, not a rounding of it (C3: 7.5 once printed as 8)."""
     for build, panels in ((B.c3_chart, B.c3_panels()), (B.c6_chart, B.c6_panels())):
         html = build()
-        for _title, _subtitle, rows, domain, _step in panels:
+        for _title, _subtitle, rows, domain, _step, _option in panels:
             for row in rows:
                 if domain is not None:
                     continue
@@ -227,4 +236,4 @@ def test_every_accessibility_reference_resolves(document):
 
 
 def test_negative_control_a_dangling_label_reference_is_caught(document):
-    assert unresolved_idrefs(document.replace('aria-labelledby="overview-title"', 'aria-labelledby="no-such-id"', 1))
+    assert unresolved_idrefs(document.replace('aria-labelledby="comparison-finding"', 'aria-labelledby="no-such-id"', 1))

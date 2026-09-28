@@ -75,7 +75,7 @@ def readme_consistency_problems(readme: str) -> list[str]:
     problems: list[str] = []
     headings = re.findall(r"^#{2,4} (.+)$", readme, re.MULTILINE)
     for entry in G.generations():
-        if not any(heading.startswith(entry.name) or heading == G.label(entry, "readme") for heading in headings):
+        if not any(heading == entry.name for heading in headings):
             problems.append(f"README: registered generation {entry.version} has no heading")
     registered = {entry.version for entry in G.generations()}
     for heading in headings:
@@ -107,3 +107,342 @@ __all__ = [
     "page_consistency_problems",
     "readme_consistency_problems",
 ]
+
+
+# =========================================================================== the §4 lint
+
+import ast  # noqa: E402
+import html as _html  # noqa: E402
+from dataclasses import dataclass, field  # noqa: E402
+from decimal import Decimal, InvalidOperation  # noqa: E402
+from html.parser import HTMLParser  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+from . import derived as D  # noqa: E402
+from . import research as R  # noqa: E402
+
+#: The attributes that bind a numeral: to an evidence or derived record, a v1 claim, a declared
+#: structural kind, an axis scale, a release-check record or a registry status.
+BINDINGS = ("data-record", "data-v1", "data-structural", "data-scale", "data-release-check", "data-status")
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+
+
+@dataclass
+class Node:
+    """One run of reading-path text, with the binding attributes of every element around it."""
+
+    text: str
+    bindings: dict[str, str] = field(default_factory=dict)
+    chart: str | None = None
+
+
+class ReadingPath(HTMLParser):
+    """The reading path, mechanically (standard §1): the rendered page minus the bodies of closed
+    disclosures and the value tables, counting only the desktop variant of each chart. Scripts,
+    styles, the document head and an SVG's title and description are not read either."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.stack: list[tuple[str, dict[str, str], bool]] = []
+        self.nodes: list[Node] = []
+
+    def _hidden(self) -> bool:
+        return any(hidden for _, _, hidden in self.stack)
+
+    def handle_starttag(self, tag, attrs):
+        attributes = {key: (value or "") for key, value in attrs}
+        parent_hidden = self._hidden()
+        hidden = False
+        if tag in ("script", "style", "head", "title", "desc", "template"):
+            hidden = True
+        if tag == "svg" and "m" in attributes.get("class", "").split():
+            hidden = True
+        if tag == "table" and "data" in attributes.get("class", "").split():
+            hidden = True
+        if "hidden" in attributes:
+            hidden = True
+        # inside a closed <details>, only its <summary> is on the reading path
+        if self.stack and self.stack[-1][0] == "details" and "open" not in self.stack[-1][1] and tag != "summary":
+            hidden = True
+        if tag in VOID:
+            return
+        self.stack.append((tag, attributes, hidden or parent_hidden))
+
+    def handle_startendtag(self, tag, attrs):
+        pass  # self-closing SVG shapes carry no text
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                return
+
+    def handle_data(self, data):
+        if self._hidden() or not data.strip():
+            return
+        bindings: dict[str, str] = {}
+        chart = None
+        for tag, attributes, _ in self.stack:
+            for key in (*BINDINGS, "data-derived", "data-claim", "data-registry", "data-field", "data-display"):
+                if key in attributes:
+                    bindings[key] = attributes[key]
+            if tag == "svg" and "data-chart" in attributes:
+                chart = attributes["data-chart"]
+        self.nodes.append(Node(data, bindings, chart))
+
+
+def reading_path(document: str) -> list[Node]:
+    parser = ReadingPath()
+    parser.feed(document)
+    parser.close()
+    return parser.nodes
+
+
+def reading_text(document: str) -> str:
+    return " ".join(" ".join(node.text.split()) for node in reading_path(document))
+
+
+# --------------------------------------------------------------------------- family: codes
+
+
+CODE_PATTERNS = (
+    ("checkpoint code", re.compile(r"\bCP-\d+\b")),
+    ("claim ID", re.compile(r"\b[CPW]\d{1,3}\b")),
+    ("section reference", re.compile(r"§\s?\d")),
+    ("underscore identifier", re.compile(r"\b[A-Z]+_[A-Z_]+\b")),
+)
+
+
+def code_denylist() -> tuple[str, ...]:
+    """Generated from the registry's code fields (standard §4): no hand-kept list."""
+    return tuple(code for code in G.codes() if not re.fullmatch(r"CP-\d+", code))
+
+
+def code_findings(nodes: list[Node]) -> list[str]:
+    findings = []
+    denylist = [re.compile(rf"(?<![\w-]){re.escape(code)}(?![\w-])") for code in code_denylist()]
+    for node in nodes:
+        text = " ".join(node.text.split())
+        for name, pattern in CODE_PATTERNS:
+            for match in pattern.finditer(text):
+                findings.append(f"codes: {name} {match.group(0)!r} in {text[:80]!r}")
+        for pattern in denylist:
+            for match in pattern.finditer(text):
+                findings.append(f"codes: registry code {match.group(0)!r} in {text[:80]!r}")
+    return findings
+
+
+# --------------------------------------------------------------------------- family: precision
+
+_NUMERAL = re.compile(r"\d")
+_NUMBER = re.compile(r"[−+-]?\d[\d,]*(?:\.\d+)?")
+
+#: How each v1 claim may show on the reading path (standard §4). Invariant 4's statements keep
+#: their exact form and are exempt; everything else follows the unit's rule.
+V1_RULES = {
+    "holdout_mae_champion": "eur", "holdout_mae_naive": "eur",
+    "holdout_pinball_champion": "eur", "holdout_pinball_naive": "eur",
+    "holdout_dm_p_value": "p_value", "holdout_days": "count", "wasm_cold_load_mb": "count",
+    "development_dm_point_relative": "invariant_4", "development_dm_point_p_value": "invariant_4",
+    "holdout_dm_label": "label", "attribution": "label", "licensing": "label",
+}
+
+
+def _significant(text: str) -> int:
+    digits = text.replace(",", "").lstrip("−+-").replace(".", "").lstrip("0")
+    return len(digits)
+
+
+def _decimals(text: str) -> int:
+    return len(text.split(".")[1]) if "." in text else 0
+
+
+def _near_zero_ok(text: str, raw: str) -> bool:
+    """A value near zero keeps its sign and at least two significant figures (standard §4)."""
+    try:
+        value = Decimal(raw)
+    except InvalidOperation:
+        return False
+    sign_ok = (value > 0) == text.startswith("+") or (value < 0) == text.startswith(("−", "-"))
+    return value != 0 and sign_ok and _significant(text) >= 2 and not re.fullmatch(r"[−+-]?0(\.0+)?", text)
+
+
+def _unit_rule(node: Node) -> tuple[str, str | None]:
+    """(rule, raw value) for a bound element: 'sig4', 'eur', 'count', 'percent', 'p_value', 'exempt'."""
+    b = node.bindings
+    record_id = b.get("data-record")
+    if record_id:
+        if D.is_derived(record_id):
+            record = D.get(record_id)
+            which = b.get("data-field", "value")
+            raw = {"value": record.value, "ci_low": record.ci_low, "ci_high": record.ci_high}.get(which)
+            return {D.UNIT_RELATIVE: "percent", D.UNIT_EUR: "eur", D.UNIT_COUNT: "count"}.get(record.unit, "exempt"), raw
+        record = R.get(record_id)
+        which = b.get("data-field", "value")
+        raw = {"value": record.raw, "ci_low": record.ci_low_raw, "ci_high": record.ci_high_raw}.get(which)
+        if record.unit in (R.UNIT_EUR, R.UNIT_EUR_DIFF):
+            return "eur", raw
+        if record.unit in (R.UNIT_RATIO, R.UNIT_NORM_DIFF, R.UNIT_FRACTION):
+            return "sig4", raw
+        if record.unit in R.THOUSANDS_UNITS or record.unit in (R.UNIT_SEED, R.UNIT_USD):
+            return "count", raw
+        return "exempt", raw
+    if "data-v1" in b:
+        rule = V1_RULES.get(b["data-v1"], "unknown")
+        return ("exempt" if rule in ("invariant_4", "label") else rule), None
+    return "structural", None
+
+
+def precision_findings(nodes: list[Node]) -> list[str]:
+    findings = []
+    charts: dict[str, set[int]] = {}
+    for node in nodes:
+        text = " ".join(node.text.split())
+        if not _NUMERAL.search(text):
+            continue
+        if not any(key in node.bindings for key in BINDINGS):
+            findings.append(f"precision: an unbound numeral in {text[:80]!r}")
+            continue
+        rule, raw = _unit_rule(node)
+        if rule in ("structural", "exempt"):
+            continue
+        shown = _NUMBER.search(text.replace(" ", ""))
+        value = shown.group(0) if shown else text
+        if rule == "p_value":
+            if not (text.startswith("p < 10") or text.startswith("p = ")):
+                findings.append(f"precision: a p-value shown as {text!r}")
+            continue
+        if raw is not None and rule in ("sig4", "eur"):
+            try:
+                shown_zero = Decimal(value.replace("−", "-").replace(",", "")) == 0
+            except InvalidOperation:
+                shown_zero = False
+            if shown_zero and Decimal(raw) != 0:
+                findings.append(f"precision: {value!r} rounds a nonzero value to zero across its sign "
+                                f"({node.bindings.get('data-record')})")
+                continue
+        # "near zero": the value would round to zero at the unit's precision (standard §4)
+        threshold = Decimal("0.05") if rule == "eur" else Decimal("0.00005")
+        near_zero = raw is not None and _near_zero_ok(value, raw) and Decimal(raw).copy_abs() < threshold
+        if rule == "sig4" and _significant(value) > 4 and not near_zero:
+            findings.append(f"precision: {value!r} has more than four significant figures ({node.bindings.get('data-record')})")
+        elif rule == "eur" and _decimals(value) != 1 and not near_zero:
+            findings.append(f"precision: {value!r} in EUR/MWh is not shown to one decimal ({node.bindings.get('data-record') or node.bindings.get('data-v1')})")
+        elif rule == "count" and "." in value.replace(",", ""):
+            findings.append(f"precision: a count shown as {value!r}")
+        elif rule == "percent" and not re.fullmatch(r"[−+-]?\d+%?", value.rstrip("%") + ("%" if text.endswith("%") else "")):
+            findings.append(f"precision: a relative change shown as {text!r}, not a whole percent")
+        if node.chart and rule in ("sig4", "eur") and not near_zero:
+            charts.setdefault(node.chart, set()).add(_decimals(value))
+    for chart, places in charts.items():
+        if len(places) > 1:
+            findings.append(f"precision: chart {chart} uses {len(places)} precisions {sorted(places)} (one per chart)")
+    return findings
+
+
+# --------------------------------------------------------------------------- family: percentages
+
+
+def percent_findings(nodes: list[Node]) -> list[str]:
+    """A `%` passes only as a derived relative change, a structural level or an exempt v1 statement."""
+    findings = []
+    for node in nodes:
+        if "%" not in node.text:
+            continue
+        b = node.bindings
+        derived = b.get("data-derived") in ("share_change", "distance", "rule_margin")
+        level = b.get("data-structural") == "level"
+        exempt = V1_RULES.get(b.get("data-v1", ""), "") == "invariant_4"
+        if not (derived or level or exempt):
+            findings.append(f"percentages: {' '.join(node.text.split())[:80]!r} is not a derived relative change, "
+                            "a structural level or an exempt v1 statement")
+    return findings
+
+
+# --------------------------------------------------------------------------- family: status words (template sources)
+
+#: The status words the standard names, and common synonyms. They reach a surface only through a
+#: registry token; a template source that types one is a finding (standard §5).
+STATUS_WORDS = re.compile(
+    r"\b(current(ly)?|latest|newest(?![ -]first)|still|now|today|remains?|yet|no longer|at present|so far|"
+    r"is being|the demo runs|currently running)\b", re.IGNORECASE)
+
+#: The template sources: every piece of copy a generator can put on a public surface. The registry
+#: is the token source, and v1's archive is a frozen record (standard §7), so neither is linted.
+TEMPLATE_SOURCES = {
+    "src/delu_forecast/research_claims.py": ("BLOCKS", "headline_template", "target_sentence"),
+    "scripts/build_pages.py": None,
+    "scripts/readme_research.py": ("V1_READ", "build_glance", "generation_section", "branch_section", "build_block",
+                                   "audit_links", "not_established"),
+    "scripts/build_wasm_space.py": ("build_card", "static_deployed_section", "startup_markup"),
+    "scripts/cp3_readme.py": ("build_section",),
+    "scripts/mlflow_export.py": ("EXPERIMENT_TAGS", "CHECKPOINTS", "_description", "_readme"),
+}
+#: Functions and constants in the page generator that are not copy: v1's frozen archive, the
+#: local-only specimens, the stylesheet and the scripts.
+NOT_COPY = {"v1_archive", "v1_archive_disclosure", "css", "token_sheet", "stress_chapters", "CHART_JS", "NAV_JS",
+            "FIGURE_JS", "main"}
+
+
+def _strings(tree: ast.AST) -> list[tuple[int, str]]:
+    out = []
+    docstrings = {id(node.body[0].value) for node in ast.walk(tree)
+                  if isinstance(node, (ast.Module, ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef))
+                  and node.body and isinstance(node.body[0], ast.Expr)
+                  and isinstance(node.body[0].value, ast.Constant) and isinstance(node.body[0].value.value, str)}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docstrings:
+            out.append((node.lineno, node.value))
+    return out
+
+
+def template_strings(repo_root: Path) -> list[tuple[str, int, str]]:
+    """(file, line, text) of every string literal in the template sources, minus docstrings and the
+    parts that are not copy. Registry tokens (`{g:…}`) are removed before a string is read."""
+    out = []
+    for relative, scope in TEMPLATE_SOURCES.items():
+        tree = ast.parse((repo_root / relative).read_text())
+        roots = []
+        for node in tree.body:
+            if isinstance(node, (ast.Expr, ast.Import, ast.ImportFrom)):
+                continue  # the module docstring and imports are not copy
+            name = getattr(node, "name", None)
+            if name is None and isinstance(node, (ast.Assign, ast.AnnAssign)):
+                target = node.targets[0] if isinstance(node, ast.Assign) else node.target
+                name = getattr(target, "id", None)
+            if name in NOT_COPY:
+                continue
+            if scope is None or name in scope:
+                roots.append(node)
+        for root in roots:
+            for line, text in _strings(root):
+                out.append((relative, line, re.sub(r"\{g:[^{}]+\}", "", text)))
+    return out
+
+
+def status_findings(strings: list[tuple[str, int, str]]) -> list[str]:
+    findings = []
+    for relative, line, text in strings:
+        stripped = re.sub(r"<[^>]+>", " ", text)          # markup and attribute names are not copy
+        stripped = re.sub(r"\b(aria|data)-[\w-]+", " ", stripped)
+        for match in STATUS_WORDS.finditer(stripped):
+            findings.append(f"status: {relative}:{line} types {match.group(0)!r} (status comes from the registry)")
+    return findings
+
+
+# --------------------------------------------------------------------------- the whole lint
+
+
+def lint_document(document: str) -> list[str]:
+    nodes = reading_path(document)
+    return code_findings(nodes) + precision_findings(nodes) + percent_findings(nodes)
+
+
+def lint(repo_root: Path, page: str, readme_glance_html: str) -> dict[str, list[str]]:
+    """Every family on the page's reading path, the README's generated top block and the template
+    sources. Empty lists mean the publication passes."""
+    return {
+        "page": lint_document(page),
+        "readme": lint_document(readme_glance_html),
+        "templates": status_findings(template_strings(repo_root)),
+    }

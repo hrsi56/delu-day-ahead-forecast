@@ -67,7 +67,7 @@ GITATTRIBUTES = """*.png filter=lfs diff=lfs merge=lfs -text
 
 
 def static_deployed_section(C) -> str:
-    return f"""## What is deployed — and why it is still the evaluated model
+    return f"""## What is deployed — and why it is the evaluated model
 
 **This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
 no process to put to sleep. {C['wasm_what_runs_live']} The champion's nine LightGBM boosters run in

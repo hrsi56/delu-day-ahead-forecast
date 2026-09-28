@@ -131,7 +131,6 @@ def test_the_page_derives_from_the_registry(page):
     assert L.page_consistency_problems(page) == []
 
 
-@pytest.mark.xfail(strict=True, reason="v1's README section gets its registry heading with W9 (the README restructure)")
 def test_the_readme_derives_from_the_registry(readme):
     assert L.readme_consistency_problems(readme) == []
 

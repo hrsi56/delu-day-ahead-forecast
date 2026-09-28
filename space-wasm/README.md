@@ -45,7 +45,7 @@ The shipped model is exactly the model the holdout evaluated: there is no retrai
 152 delivery days; that is what shipping the evaluated model costs, and
 it is stated rather than hidden. The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.
 
-## What is deployed — and why it is still the evaluated model
+## What is deployed — and why it is the evaluated model
 
 **This is a Static Space. It executes nothing on Hugging Face's side**, so it cannot sleep: there is
 no process to put to sleep. The forecast and the model-identity check are computed in your browser by the champion itself; the evaluation figures — coverage, cutoffs, holdout metrics, limitations — are the committed results of the one-shot evaluation, which is spent and is not re-run. The champion's nine LightGBM boosters run in

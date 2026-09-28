@@ -1,15 +1,19 @@
-"""Presentation plan §9.4 (finding F04): a generator owns the README's research section.
+"""Presentation plan §9.4 (finding F04) and Publication Standard v1 §8: generators own the README's top.
 
-The markers appear exactly once, the generator is idempotent, a change in the claim layer reaches
-the block, and bytes outside the block never change.
+The README opens with the generated "At a glance" block, then the generated list of generations,
+then stable hand-written sections only. Each block's markers appear exactly once, the generator is
+idempotent, a change in the claim layer reaches the block, bytes outside the blocks never change,
+the headline block is the page's, and no hand-written section states current status.
 """
 
 from __future__ import annotations
 
+import re
 import sys
 
 import pytest
 
+from delu_forecast import registry as REG
 from delu_forecast import research_claims as RC
 from delu_forecast.claims import REPO_ROOT
 
@@ -18,6 +22,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 import readme_research as G  # noqa: E402
 
 README = REPO_ROOT / "README.md"
+BLOCKS = ((lambda: G.GLANCE_START, lambda: G.GLANCE_END), (lambda: G.START, lambda: G.END))
 
 
 @pytest.fixture(scope="module")
@@ -25,14 +30,27 @@ def text() -> str:
     return README.read_text()
 
 
-def test_the_markers_appear_exactly_once(text):
-    assert text.count(G.START) == 1
-    assert text.count(G.END) == 1
-    assert text.index(G.START) < text.index(G.END)
+def test_the_structure_is_title_glance_generations_then_hand_written(text):
+    """Standard §8: the generated "At a glance" block directly under the title, then the generated
+    list of generations, then the stable hand-written sections."""
+    assert text.startswith(G.TITLE + "\n\n" + G.GLANCE_START)
+    assert text.index(G.GLANCE_END) < text.index(G.START)
+    between = text[text.index(G.GLANCE_END) + len(G.GLANCE_END):text.index(G.START)]
+    assert between.strip() == "", "nothing hand-written sits between the two generated blocks"
+    assert "30-second read" not in text[:text.index(G.START)], "v1's 30-second read moves under v1's heading"
+    v1 = text.index(f"### {REG.get('v1').name}")
+    assert v1 < text.index("30-second read") < text.index(G.END)
 
 
-def test_the_committed_block_is_current(text):
-    assert G.apply(text) == text, "README research block is stale; run scripts/readme_research.py"
+@pytest.mark.parametrize("markers", BLOCKS, ids=("glance", "generations"))
+def test_the_markers_appear_exactly_once(text, markers):
+    start, end = markers[0](), markers[1]()
+    assert text.count(start) == 1 and text.count(end) == 1
+    assert text.index(start) < text.index(end)
+
+
+def test_the_committed_blocks_are_current(text):
+    assert G.apply(text) == text, "README generated blocks are stale; run scripts/readme_research.py"
 
 
 def test_running_twice_gives_identical_output(text):
@@ -40,9 +58,11 @@ def test_running_twice_gives_identical_output(text):
     assert G.apply(once) == once
 
 
-def test_bytes_outside_the_block_are_unchanged(text):
-    begin, finish = text.index(G.START), text.index(G.END) + len(G.END)
-    doctored = text[:begin] + G.START + "\nstale\n" + G.END + text[finish:]
+@pytest.mark.parametrize("markers", BLOCKS, ids=("glance", "generations"))
+def test_bytes_outside_the_blocks_are_unchanged(text, markers):
+    start, end = markers[0](), markers[1]()
+    begin, finish = text.index(start), text.index(end) + len(end)
+    doctored = text[:begin] + start + "\nstale\n" + end + text[finish:]
     rebuilt = G.apply(doctored)
     assert rebuilt[:begin] == text[:begin]
     assert rebuilt[-(len(text) - finish):] == text[finish:]
@@ -60,22 +80,44 @@ def test_a_claim_change_reaches_the_block(text, monkeypatch):
     assert "FIXTURE-SENTINEL" not in text
 
 
-def test_the_block_renders_only_readme_blocks_from_the_claim_layer(text):
-    begin, finish = text.index(G.START), text.index(G.END)
-    block = text[begin:finish]
+def test_the_blocks_render_every_readme_block_from_the_claim_layer(text):
+    generated = text[text.index(G.GLANCE_START):text.index(G.END)]
     for key in RC.README_BLOCKS:
-        assert RC.render(key, "md", surface=RC.README) in block, key
-    assert "+0.000003857628092332211" in block, "the H−P endpoint must be printed in full"
+        assert RC.render(key, "md", surface=RC.README) in generated, key
+
+
+def test_the_glance_carries_the_page_s_headline_block(text):
+    glance = text[text.index(G.GLANCE_START):text.index(G.GLANCE_END)]
+    assert RC.headline("md") in glance
+    assert G.build_glance("md") == glance + G.GLANCE_END
+
+
+def test_the_endpoint_is_exact_nowhere_on_the_readme_reading_path(text):
+    glance = text[text.index(G.GLANCE_START):text.index(G.GLANCE_END)]
+    assert "0.000003857628092332211" not in glance
+
+
+def test_no_hand_written_section_states_current_status(text):
+    """Standard §8: no hand-written "current" state remains; statuses come from the registry."""
+    hand_written = text[text.index(G.END):]
+    cp3 = hand_written.find("## CP-3 showcase and release")
+    setup = hand_written.find("## Setup")
+    hand_written = hand_written[:cp3] + hand_written[setup:]  # the CP-3 section is generated by cp3_readme.py
+    for phrase in ("Active plan", "all live", "Deployment status: complete", "current research model",
+                   "currently", "still live", "is the latest"):
+        assert phrase not in hand_written, phrase
 
 
 # -- negative controls ---------------------------------------------------------
 
 
-def test_a_missing_marker_fails_clearly(text):
+@pytest.mark.parametrize("markers", BLOCKS, ids=("glance", "generations"))
+def test_a_missing_marker_fails_clearly(text, markers):
+    start, end = markers[0](), markers[1]()
     with pytest.raises(G.MarkerError, match="exactly once"):
-        G.apply(text.replace(G.END, ""))
+        G.apply(text.replace(end, ""))
     with pytest.raises(G.MarkerError, match="exactly once"):
-        G.apply(text.replace(G.START, ""))
+        G.apply(text.replace(start, ""))
 
 
 def test_a_duplicated_marker_fails_clearly(text):
@@ -87,3 +129,26 @@ def test_reversed_markers_fail(text):
     swapped = text.replace(G.START, "@@S@@").replace(G.END, G.START).replace("@@S@@", G.END)
     with pytest.raises(G.MarkerError):
         G.apply(swapped)
+
+
+def test_the_generations_block_cannot_precede_the_glance(text):
+    glance = text[text.index(G.GLANCE_START):text.index(G.GLANCE_END) + len(G.GLANCE_END)]
+    research = text[text.index(G.START):text.index(G.END) + len(G.END)]
+    swapped = text.replace(glance, "@@G@@").replace(research, glance).replace("@@G@@", research)
+    with pytest.raises(G.MarkerError):
+        G.apply(swapped)
+
+
+def test_negative_control_a_hand_written_current_status_is_caught(text):
+    doctored = text.replace("## Setup\n", "## Setup\n\nActive plan: the current one.\n", 1)
+    with pytest.raises(AssertionError):
+        test_no_hand_written_section_states_current_status(doctored)
+
+
+def test_the_migration_moves_the_hand_written_top_once():
+    legacy = f"{G.TITLE}\n\n**What it is (30-second read).** old text\n\n{G.START}\n{G.END}\n\n## Setup\n"
+    migrated = G.migrate(legacy)
+    assert migrated.startswith(f"{G.TITLE}\n\n{G.GLANCE_START}\n{G.GLANCE_END}\n\n{G.START}")
+    assert "old text" not in migrated
+    assert G.migrate(migrated) == migrated
+    assert re.search(r"30-second read", G.apply(migrated))

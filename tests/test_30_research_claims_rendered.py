@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pytest
 
+from delu_forecast import derived as D
+from delu_forecast import registry as G
 from delu_forecast import research as R
 from delu_forecast import research_claims as RC
 from delu_forecast.claims import REPO_ROOT
@@ -61,7 +63,7 @@ def test_no_block_carries_withheld_or_stale_phrasing(block):
 def test_every_block_record_is_a_real_record():
     for block in RC.BLOCKS:
         for record_id in block.records():
-            R.get(record_id)
+            D.get(record_id) if D.is_derived(record_id) else R.get(record_id)
 
 
 # -- guards on the typed fields -------------------------------------------------
@@ -70,6 +72,8 @@ def test_every_block_record_is_a_real_record():
 def test_date_guard_v2_and_later_records_stay_inside_development():
     for block in RC.BLOCKS:
         for record_id in block.records():
+            if D.is_derived(record_id):
+                continue  # a derived record's inputs are guarded in tests/test_36_derived_records.py
             record = R.get(record_id)
             if record.checkpoint in ("CP-15", "CP-16", "CP-20") and record.window:
                 assert record.window[1] <= R.EVIDENCE_BOUNDARY, (block.key, record_id, record.window)
@@ -83,14 +87,23 @@ def test_date_guard_negative_control():
     assert late.window[1] > R.EVIDENCE_BOUNDARY
 
 
-def test_the_exact_endpoint_is_forced_wherever_it_is_rendered():
-    for key, surface in (("v2.interpretation", RC.PAGE), ("v2.result.hp", RC.README)):
+def test_the_endpoint_keeps_its_sign_on_the_reading_path_and_is_exact_in_the_table(page):
+    """Standard §4, amending invariant 9: +0.0000039 on the reading path, never rounded across the
+    sign; the full value, +0.000003857628092332211, in the value table."""
+    for key, surface in (("v2.reading", RC.PAGE), ("v2.result.hp", RC.README)):
         html = RC.render(key, surface=surface)
-        assert "+0.000003857628092332211" in html, key
+        assert ">+0.0000039<" in html or "+0.0000039]" in RC.render(key, "md", surface=surface), key
         assert "0.0000]" not in html and "0.0000<" not in html, key
-    # Even a template that asks for the rounded endpoint gets the full value.
-    forced = RC.render_template("C34", "{r:cp16.uncertainty.V2-H-V2-P.equal_fold.MAE|hi}")
-    assert "+0.000003857628092332211" in forced
+    table = page[page.index('id="v2-chart2-values"'):]
+    table = table[:table.index("</details>")]
+    assert "+0.000003857628092332211" in table
+    assert "+0.0000039" in page[page.index('id="v2"'):page.index('id="v2-chart2-values"')]
+
+
+def test_negative_control_rounding_a_near_zero_endpoint_is_refused():
+    record = R.get("cp16.uncertainty.V2-H-V2-P.equal_fold.MAE")
+    assert R.display(record, "ci_high", precision=4) == "+0.0000039"
+    assert R.format_number(record.ci_high_raw, 4, signed=True) == "0.0000", "the raw formatter would round it away"
 
 
 def test_the_readme_block_carries_no_withheld_or_stale_phrasing():
@@ -277,7 +290,7 @@ def test_every_page_claim_is_in_the_layer_and_a_map(page):
 
 def test_every_page_record_and_v1_key_resolves(page):
     for record_id in set(re.findall(r'data-record="([^"]+)"', page)):
-        R.get(record_id)
+        D.get(record_id) if D.is_derived(record_id) else R.get(record_id)
     claims = build_claims()
     for key in set(re.findall(r'data-v1="([^"]+)"', page)):
         assert key in claims.values, key
@@ -334,14 +347,22 @@ def test_the_browser_claim_file_is_current_when_present():
     assert json.loads(path.read_text()) == dict(build_claims().values)
 
 
-def test_placeholder_guard_on_the_final_build(page):
-    """Invariant 16: the final build fails while a marker for an unpublished link remains."""
+def test_no_placeholder_mechanism_remains_and_the_final_build_needs_every_route(page):
+    """Standard §9, brief W10 (invariant 16): a route that is not verified has its link omitted;
+    the final build refuses unless the verified index covers every route the registry expects."""
+    assert "data-unpublished" not in page and "is-unavailable" not in page
     record = json.loads((REPO_ROOT / "reports/cp3/pages_build.json").read_text())
-    if record.get("final"):
-        assert not B.unpublished_markers(page)
-    with pytest.raises(B.PlaceholderError):
-        B.refuse_unpublished('<span data-unpublished="mlflow:cp20">x</span>')
-    B.refuse_unpublished("<p>no placeholder</p>")
+    assert sorted(record["routes_expected"]) == sorted(G.expected_routes())
+    assert sorted(record["routes_published"] + record["links_omitted_until_verified"]) == sorted(G.expected_routes())
+    for route in record["links_omitted_until_verified"]:
+        assert f'data-route="{route}"' not in page, route
+    for route in record["routes_published"]:
+        assert f'data-route="{route}"' in page, route
+    if record["final"]:
+        assert not record["links_omitted_until_verified"]
+    with pytest.raises(B.RouteCoverageError):
+        B.refuse_incomplete(["compare:v3"])
+    B.refuse_incomplete([])
 
 
 def test_unit_guard_refuses_two_units_on_one_axis():
@@ -452,11 +473,33 @@ def test_negative_control_typed_research_numbers_are_caught(research_tokens):
     assert not any(":5 " in item for item in found), found
 
 
+def difference_label_problems(block: str) -> list[str]:
+    """Final audit F01, as a rule (brief W14): a difference names both policies, from the registry,
+    and says which direction favours whom; it is never shown as a score or pointed at a chart."""
+    current = G.current_generation()
+    comparator = G.get(current.comparator)
+    problems = []
+    if f"({current.version} − {comparator.version})" not in block:
+        problems.append(f"no ({current.version} − {comparator.version}) label")
+    if f"Below zero favours {current.version}" not in block:
+        problems.append(f"no direction naming {current.version}")
+    if "Point-error score: " not in block or "Interval score: " not in block:
+        problems.append("the differences are not named by score")
+    for stale in ("Normalized point error −", "Normalized interval score −", "shown in the chart",
+                  "negative favours the first policy"):
+        if stale in block:
+            problems.append(f"stale label {stale!r}")
+    return problems
+
+
 def test_the_readme_labels_differences_as_differences():
-    """Final audit F01: −0.0783 is v3 − v2, not a negative score, and the README has no chart to point at."""
     block = README.read_text().split("<!-- research:start -->", 1)[1].split("<!-- research:end -->", 1)[0]
-    assert "(v3 − v2)" in block and "Negative values favour v3" in block
-    assert "Point-error difference:" in block and "Interval-score difference:" in block
-    assert "Normalized point error −" not in block and "Normalized interval score −" not in block
-    assert "shown in the chart" not in block
-    assert "scores 1.0518 here" not in block
+    assert difference_label_problems(block) == []
+
+
+def test_negative_control_an_unlabelled_difference_is_caught():
+    block = README.read_text().split("<!-- research:start -->", 1)[1].split("<!-- research:end -->", 1)[0]
+    current = G.current_generation()
+    comparator = G.get(current.comparator)
+    broken = block.replace(f"({current.version} − {comparator.version})", "").replace("Below zero favours", "Negative favours")
+    assert len(difference_label_problems(broken)) == 2

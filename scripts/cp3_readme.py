@@ -18,10 +18,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from delu_forecast import registry as G  # noqa: E402
 from delu_forecast.claims import (  # noqa: E402
     MLFLOW_RUN_NAMES,
     build_claims,
-    limitation_bullets,
     reproducibility_bullets,
 )
 
@@ -35,23 +35,23 @@ def build_section() -> str:
     RUN_TABLE = "| Run name | What it decided |\n|---|---|\n" + "\n".join(
         f"| `{name}` | {what} |" for name, what in MLFLOW_RUN_NAMES
     )
-    limitations = "\n".join(f"- {bullet}" for bullet in limitation_bullets(C))
     reproduction = "\n".join(f"- {bullet}" for bullet in reproducibility_bullets(C))
+    released = G.released()
     return f"""{HEADING}
 
-### Three public surfaces — all live
+### Three public surfaces
 
 Each one answers a different question, and each stands on its own. The static report is the primary link.
 
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
-| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* The full §10 reading order — data, regimes, catalog, validation design, results, SHAP, regimes, reliability, forecast, limitations, reproduction | **zero network calls.** One self-contained file. Cannot sleep, cannot break when a CDN does, renders offline |
-| **2** | **[⚡ Interactive Space]({C["space_url"]})**<br>[direct app]({C["space_app_url"]}) | *Does the thing actually run?* The champion's own boosters executing in your browser under Pyodide — no server | about {C["wasm_cold_load_mb"]} MB first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts; ~1 MB after. **A Static Space executes nothing, so it never sleeps** |
-| **3** | **[🔬 MLflow on DagsHub]({C["mlflow_url"]})** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run, anonymously readable — no sign-in | — |
+| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* The research history, newest first, with v1's original report — data, regimes, catalog, validation design, results, SHAP, reliability, forecast, limitations, reproduction — preserved inside it | One self-contained file with no additional runtime requests after it loads |
+| **2** | **[⚡ Interactive Space]({C["space_url"]})**<br>[direct app]({C["space_app_url"]}) | *Does the thing actually run?* The champion's own boosters, running in your browser under Pyodide | about {C["wasm_cold_load_mb"]} MB first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts; ~1 MB after. A Static Space has no server-side process to sleep |
+| **3** | **[🔬 MLflow on DagsHub]({C["mlflow_url"]})** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run of v1, anonymously readable — no sign-in | — |
 
 {C["wasm_identity"]} {C["wasm_wrapper_disclosure"]}
 
-**Deployment status: complete.** Pages live; the Static Space live and serving. On 2026-07-08 Hugging
+**Deployment.** {released.version} was released to GitHub Pages and the Static Space in {G.month(released.status.date)}. On 2026-07-08 Hugging
 Face moved the Docker and Gradio SDKs behind a paid PRO plan and only Static Spaces stayed free, so
 the containerised path could not be hosted at this project's ratified $0 rate. **The container is not
 abandoned and not hypothetical** — it builds, and `make container-verify` runs it under
@@ -74,8 +74,8 @@ single id is canonical — the name is what to search for:
 
 {RUN_TABLE}
 
-**Tracking after v1.** {C["mlflow_next_note"]} [Research since v1](#research-since-v1-development-evidence-post-selection)
-summarizes it; v1 remains the released model.
+**Tracking after v1.** {C["mlflow_next_note"]} [Generations, newest first](#generations-newest-first)
+summarizes it.
 
 **Run it yourself, offline:**
 
@@ -130,24 +130,12 @@ replay. It is never presented as a live forecast. The one scenario control is li
 
 > {C["sensitivity_probe_label"]}
 
-### Honest limitations, stated here as well as on the page
+### Honest limitations
 
-§7.1 requires this paragraph verbatim in the report, and item 5 requires the surfaces to agree, so
-it lives here too rather than in one document only:
-
-> {C["holdout_limitation"]}
-
-§6.2 requires this one verbatim, for the same reason:
-
-> {C["exchangeability"]}
-
-§10 item (11) fixes the complete set, and it is rendered from one place onto every surface — prose
-written separately per surface is how a limitation ends up on one page and nowhere else:
-
-{limitations}
-
-And one on the environment: {C["floor_change"]} None of this is engineered around; a floor-aware
-tail would reopen scope this project deliberately closed.
+v1's limitations -- the two verbatim paragraphs and the complete set -- are in its section under
+[Generations, newest first](#v1s-limitations), where every surface that presents v1 carries them
+(Publication Standard v1 §8). None of this is engineered around; a floor-aware tail would reopen
+scope this project deliberately closed.
 
 ### Reproducibility statement
 

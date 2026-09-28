@@ -369,10 +369,11 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
         raise DerivedError(f"{record.record_id} has no {which}")
     if record.unit in (UNIT_LABEL, UNIT_DATE):
         return raw
-    quantized = Decimal(raw).quantize(Decimal(1).scaleb(-record.display_precision), rounding=ROUND_HALF_EVEN)
+    places = record.display_precision + (2 if style == "exact" else 0)  # value tables carry two more places
+    quantized = Decimal(raw).quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_EVEN)
     if quantized == 0:
         quantized = abs(quantized)
-    text = f"{abs(quantized):,.{record.display_precision}f}" if record.unit == UNIT_COUNT else f"{abs(quantized):.{record.display_precision}f}"
+    text = f"{abs(quantized):,.{places}f}" if record.unit == UNIT_COUNT else f"{abs(quantized):.{places}f}"
     if style == "abs":
         sign = ""
     else:
