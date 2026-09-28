@@ -1,18 +1,24 @@
 # MLflow tracking specification: `delu-generations`
 
-**PRES-1, 2026-09-24. Implements presentation plan revision 3, §10, and brief §6.** The repository
-is the source of truth. MLflow mirrors the committed evidence, and a check proves that the mirror
-and the repository agree. The page never reads MLflow; it reads the committed index
-(`reports/presentation/mlflow_index.json`), which exists only after an authorized upload.
+**PRES-1, 2026-09-24. Implements presentation plan revision 3, §10, and brief §6. Revised
+2026-09-28 for Publication Standard v1 (§5, §8, §9, §11) under the conformance brief's W11:** run
+names, descriptions and tags come from the registry (`src/delu_forecast/registry.py`); a contract
+test replaces the run count; the mirror verifier writes the index; every route is checked by REST
+and in a browser before it is advertised. The repository is the source of truth. MLflow mirrors the
+committed evidence, and a check proves that the mirror and the repository agree. The page never
+reads MLflow; it reads the committed index (`reports/presentation/mlflow_index.json`), which only
+the verifier writes, and only after an authorized upload.
 
 | Piece | Where |
 |---|---|
 | Export (the only payload) | `reports/presentation/mlflow-export/{cp10,cp15,cp16,cp20}.json`, `manifest.json` |
 | Export builder | `scripts/mlflow_export.py` (reads `src/delu_forecast/research.py` only) |
 | Publisher | `scripts/mlflow_publish.py --dry-run \| --target local \| --target public` |
-| Verifier, probe, rehearsal | `scripts/verify_mlflow_mirror.py verify \| probe \| rehearse` |
+| Identity: names, statuses, descriptions, tags, expected runs and routes | `src/delu_forecast/registry.py` |
+| Verifier, probe, rehearsal, index | `scripts/verify_mlflow_mirror.py verify \| probe \| rehearse \| index` |
+| Browser route check | `scripts/check_reader_paths.py mlflow-routes` (Playwright tool environment under `.local/tools/`, never CI) |
 | Capability record | `reports/presentation/mlflow-capabilities.json` |
-| Tests | `tests/test_34_mlflow_export.py` (offline, in CI) |
+| Tests | `tests/test_34_mlflow_export.py` (the export matches the registry), `tests/test_41_export_zero_diff.py` (the record-level diff), `tests/test_35_registry.py` (offline, in CI) |
 
 ## 1. Experiments
 
@@ -22,21 +28,29 @@ and the repository agree. The page never reads MLflow; it reads the committed in
 | `delu-generations` | Every evaluated policy since v1, once, as a nested run under its checkpoint | New. Created by the first authorized upload (Phase F1). |
 | `delu-live` | Live metrics, later | Not created by PRES-1; keeps the `live_` namespace wall. |
 
-## 2. The run manifest: exactly 23 runs
+## 2. The run manifest: what the registry expects
 
 Each policy is logged once, under the checkpoint that produced it first. The references come
 from CP-15, v2 is CP-16's V2-H (CP-20's H0 is the same policy and is not logged twice), and v3
-is CP-20's HG.
+is CP-20's HG. **The registry decides the set:** `registry.expected_run_keys()` lists every run and
+`registry.parent_run_keys()` the parents, and `tests/test_34_mlflow_export.py` checks that the
+export matches it, with negative controls (standard §11: a contract, never a count). On
+2026-09-28 the registry expects four parents and 19 children:
 
-| Parent `run_key` and name | Children (`run_key`) | Count |
-|---|---|---|
-| `cp10` "CP-10 · calibration only (branch)" | `cp10/v1_reference`, `cp10/c1_head_spread`, `cp10/c1_price_volatility` (selected), `cp10/c2_aci_gamma_0.000001`, `cp10/c2_aci_gamma_0.000005`, `cp10/c2_aci_gamma_0.00001`, `cp10/c2_aci_gamma_0.00002` (selected γ) | 7 |
-| `cp15` "CP-15 · model-comparison study (informed v2)" | `cp15/B0`, `cp15/B1` (v1 development replay), `cp15/B2`, `cp15/B3`, `cp15/A1` … `cp15/A5` | 9 |
-| `cp16` "CP-16 · v2" | `cp16/V2-P` (control), `cp16/V2-H` (v2) | 2 |
-| `cp20` "CP-20 · v3 weather" | `cp20/HG` (v3) | 1 |
+| Parent `run_key` and name | Children, with their names |
+|---|---|
+| `cp10` "Calibration experiment (CP-10)" | `v1_reference` "v1 · released LightGBM (v1_reference, unscaled CQR reference)"; `c1_head_spread`, `c1_price_volatility` (the selected scale), and `c2_aci_gamma_0.000001` … `c2_aci_gamma_0.00002` (the last is the selected step), named "Scaled conformal, …" and "Adaptive conformal, gamma …" |
+| `cp15` "Model comparison study (CP-15)" | `B0` "Similar-day naive (B0, normalizer)", `B1` "v1 · released LightGBM (B1, development replay)", `B2` "Daily LEAR (B2)", `B3` "Daily LightGBM (B3)", `A1` … `A5` (the study arms, by their descriptive names) |
+| `cp16` "v2 · blended LEAR, hour-aware intervals (CP-16)" | `V2-P` "Pooled-interval control (V2-P)", `V2-H` "v2 · blended LEAR, hour-aware intervals (V2-H)" |
+| `cp20` "v3 · weather features (CP-20)" | `HG` "v3 · weather features (HG)" |
 
-Four parents and 19 children. Child run names follow `<checkpoint> · <code> · <label>`, for
-example "CP-20 · HG · v3", "CP-16 · V2-H · v2" and "CP-15 · B1 · v1 development replay".
+**Names.** A run is named by its registry entry's canonical name, then its experiment code and,
+where the registry holds one, its note in parentheses (`registry.mlflow_run_name`). A version
+number appears only on an adopted generation (plan §16 decision 2); a branch or study arm has a
+descriptive name. The names were fixed before the first public upload (brief §5.1), and the
+record-level diff (`mlflow_export.py --diff-against`) proves that the registry's introduction
+changed nothing but names, descriptions and tags
+(`docs/track-b/evidence/pres-1/registry-zero-diff.md`).
 
 ## 3. Metrics
 
@@ -81,8 +95,11 @@ or the ACI step size and update rule.
 
 | Tag | Content |
 |---|---|
-| `delu.run_key`, `delu.checkpoint`, `delu.generation`, `delu.policy_code`, `delu.public_name` | Identity. `delu.generation` is `v1` (B1), `v2` (V2-H), `v3` (HG) or `none`. |
-| `delu.role`, `delu.adopted` | `candidate`, `reference` or `control`; `true`, `false` or `n/a`. Adopted means adopted within the research programme. |
+| `delu.run_key`, `delu.checkpoint`, `delu.policy_code` | The run's key, its checkpoint and its experiment code |
+| `delu.registry_id`, `delu.kind`, `delu.public_name` | Its registry entry: the id, the kind (generation, branch, reference, study arm or control) and the canonical name |
+| `delu.generation`, `delu.adopted` | From the registry: `v1` (B1 and CP-10's `v1_reference`), `v2` (V2-H), `v3` (HG) or `none`; `true`, `false` or `n/a`. Adopted means adopted within the research programme. |
+| `delu.status`, `delu.comparator` | The registry's latest dated status (for example `adopted in research 2026-09-24`) and the entry's comparator |
+| `delu.role` | `checkpoint` on a parent; `candidate`, `reference` or `control` on a child |
 | `delu.evidence_class` | `development_post_selection`; CP-10 `development_calibration_comparison` |
 | `delu.population_id`, `delu.comparability_id` | See below |
 | `delu.model_code_sha` | The checkpoint's final reviewed candidate: CP-10 `ad3e1a5`, CP-15 `fc4aee0`, CP-16 `bf3ca60`, CP-20 `3e9ff8b` (full SHAs in the export) |
@@ -128,8 +145,33 @@ metric names never make two runs comparable; a matching ID does.
 5. **A public upload happens only on the Owner's explicit instruction for that action** (plan §13),
    passed as `--owner-instruction` and recorded in the upload log. The credentials are read from
    the environment by the MLflow client; the publisher reports only *set* or *unset*.
-6. After the upload, `verify_mlflow_mirror.py verify --target public` must pass, then the route
-   checks; only then is `mlflow_index.json` committed and are routes advertised (plan §10.10).
+6. After the upload, `verify_mlflow_mirror.py verify --target public --out <record>` must pass,
+   then the route checks (below). Only then does `verify_mlflow_mirror.py index` write
+   `mlflow_index.json` (standard §8: the verifier, never a person), which is committed, and only
+   then are routes advertised (plan §10.10).
+7. `scripts/build_pages.py --final` refuses to build unless the index covers every route the
+   registry expects. A build without `--final` omits every link whose route is not in the index,
+   never showing a placeholder, and records `final: false`; the publication guard keeps such a
+   build off `main` (standard §9).
+
+**The routes.** `registry.expected_routes()` names them, and the verifier builds each URL from the
+experiment ID and the run IDs it read back:
+
+| Route | Shows | URL form |
+|---|---|---|
+| `experiment` | `delu-generations`, its description and the four parents | `<base>/#/experiments/<id>` |
+| `compare:overview` | the seven policies of the page's comparison | `<base>/#/compare-runs?runs=<JSON list of run IDs>&experiments=<JSON list>` |
+| `compare:v2` | v2, its pooled-interval control and daily LEAR | as above |
+| `compare:v3` | v3 and v2 | as above |
+| `compare:calibration`, `compare:model-comparison` | each branch's children | as above |
+
+Each route passes two checks before it is indexed. **REST:** `experiments/get` returns
+`delu-generations`, and `runs/get` returns every run in the route with its `delu.run_key`.
+**Browser:** `check_reader_paths.py mlflow-routes` opens the URL in a fresh, signed-out context in
+Chromium (the installed Google Chrome) and in Playwright's WebKit, at 1,440 × 900, and waits for
+the experiment's name and its parents' names, or for "Comparing N Runs" with every run's name and
+ID; it records failed requests, console errors, API errors and any sign-in redirect. A route that
+fails either check is recorded under `not_advertised` in the index and is not linked.
 
 ## 8. Capabilities (read-only probe and local rehearsal)
 
