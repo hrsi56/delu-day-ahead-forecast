@@ -374,7 +374,7 @@ TEMPLATE_SOURCES = {
     "scripts/build_pages.py": None,
     "scripts/readme_research.py": ("V1_READ", "build_glance", "generation_section", "branch_section", "build_block",
                                    "audit_links", "not_established"),
-    "scripts/build_wasm_space.py": ("build_card", "static_deployed_section", "startup_markup"),
+    "scripts/build_wasm_space.py": ("build_card", "model_line", "static_deployed_section", "startup_markup"),
     "scripts/cp3_readme.py": ("build_section",),
     "scripts/mlflow_export.py": ("EXPERIMENT_TAGS", "CHECKPOINTS", "_description", "_readme"),
 }
@@ -445,4 +445,70 @@ def lint(repo_root: Path, page: str, readme_glance_html: str) -> dict[str, list[
         "page": lint_document(page),
         "readme": lint_document(readme_glance_html),
         "templates": status_findings(template_strings(repo_root)),
+    }
+
+
+# =========================================================================== cross-surface parity (§8)
+
+_STATUS_SENTENCE = re.compile(
+    r"In (?P<month>[A-Z][a-z]+ \d{4}), (?P<subject>v\d+|the [a-z][\w -]*?) "
+    r"(?P<verb>was adopted in research|was released|was not adopted|became the final candidate|went live|was retired)")
+#: A version followed by its name; a difference such as "v3 − v2 · paired interval" is not a name.
+_VERSION_NAME = re.compile(r"(?<!− )(?<!- )\b(v\d+) · ([^<>\n|()*\[\]`]+)")
+
+
+def _plain(text: str) -> str:
+    text = re.sub(r"<(script|style)\b.*?</\1>", " ", text, flags=re.DOTALL)
+    text = _html.unescape(re.sub(r"<[^>]+>", "", text))
+    return " ".join(text.replace("`", "").replace("**", "").split())
+
+
+def parity_problems(surfaces: dict[str, str], *, page_headline: str, readme_headline: str) -> list[str]:
+    """The headline block, the names and the statuses agree on every surface (standard §8).
+
+    `surfaces` maps a surface name to its text (HTML or Markdown). Outside v1's frozen archive, a
+    version-prefixed name must be its generation's canonical name, a version must be registered,
+    and a dated status sentence must be the registry's."""
+    problems = []
+    if _plain(page_headline) != _plain(readme_headline):
+        problems.append("headline: the page's and the README's headline blocks differ")
+    canonical = {entry.version: entry.name for entry in G.generations()}
+    statuses = {G.status_sentence(entry)[:-1] for entry in G.entries() if entry.status is not None}
+    for name, text in surfaces.items():
+        plain = _plain(text)
+        for version, rest in _VERSION_NAME.findall(plain):
+            if version not in canonical:
+                problems.append(f"{name}: {version} is not a registered generation")
+                continue
+            wanted = canonical[version].split(" · ", 1)[1]
+            if not (rest.strip().startswith(wanted) or wanted.startswith(rest.strip().rstrip(".,;:"))):
+                problems.append(f"{name}: '{version} · {rest.strip()[:40]}' is not the canonical name {canonical[version]!r}")
+        for match in _STATUS_SENTENCE.finditer(plain):
+            if match.group(0) not in statuses:
+                problems.append(f"{name}: the status {match.group(0)!r} is not the registry's")
+    return problems
+
+
+def surface_texts(repo_root: Path) -> dict[str, str]:
+    """Every public surface, v1's frozen archive and the historical CP-3 record set aside."""
+    page = (repo_root / "docs" / "index.html").read_text()
+    start = page.find('<details class="disclosure archive" id="v1-archive">')
+    if start >= 0:
+        end = page.find("</article>", start)
+        page = page[:start] + page[end:]
+    readme = (repo_root / "README.md").read_text()
+    readme = readme[:readme.find("## CP-1 data and fixed features")] if "## CP-1 data" in readme else readme
+    import json as _json
+
+    export = []
+    for name in G.parent_run_keys():
+        for run in _json.loads((repo_root / "reports/presentation/mlflow-export" / f"{name}.json").read_text())["runs"]:
+            export.append(run["run_name"] + " " + run["tags"].get("mlflow.note.content", "")
+                          + " " + run["tags"].get("delu.public_name", ""))
+    return {
+        "page": page,
+        "README": readme,
+        "Static Space card": (repo_root / "space-wasm" / "README.md").read_text(),
+        "Space card": (repo_root / "space" / "README.md").read_text(),
+        "MLflow export": " ".join(export),
     }
