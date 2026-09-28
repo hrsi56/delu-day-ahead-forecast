@@ -358,8 +358,7 @@ def test_no_placeholder_mechanism_remains_and_the_final_build_needs_every_route(
         assert f'data-route="{route}"' not in page, route
     for route in record["routes_published"]:
         assert f'data-route="{route}"' in page, route
-    if record["final"]:
-        assert not record["links_omitted_until_verified"]
+    assert record["final"] is (not record["links_omitted_until_verified"]), "final means nothing is omitted"
     with pytest.raises(B.RouteCoverageError):
         B.refuse_incomplete(["compare:v3"])
     B.refuse_incomplete([])

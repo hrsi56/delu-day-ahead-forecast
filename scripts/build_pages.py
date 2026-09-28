@@ -3082,7 +3082,8 @@ def main() -> int:
     parser.add_argument("--specimen", type=Path, default=None,
                         help="write the D1 specimen (page, token sheet, demo states, stress case) to this directory")
     parser.add_argument("--final", action="store_true",
-                        help="refuse unless the verified MLflow index covers every route the registry expects")
+                        help="refuse unless the verified MLflow index covers every route the registry expects "
+                             "(any build records final: true exactly when it does)")
     args = parser.parse_args()
     if args.specimen:
         out = args.specimen
@@ -3122,7 +3123,9 @@ def main() -> int:
                 ),
                 "marimo_export_external_reference_count": 181,
                 "marimo_export_external_hosts": ["cdn.jsdelivr.net"],
-                "final": bool(args.final),
+                # Final exactly when nothing is omitted, so a plain rebuild reproduces a final build
+                # and an incomplete one can never be recorded as final (standard §9).
+                "final": not missing,
                 "routes_expected": sorted(G.expected_routes()),
                 "routes_published": sorted(published),
                 "links_omitted_until_verified": sorted(missing),

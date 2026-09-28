@@ -150,9 +150,10 @@ metric names never make two runs comparable; a matching ID does.
    `mlflow_index.json` (standard §8: the verifier, never a person), which is committed, and only
    then are routes advertised (plan §10.10).
 7. `scripts/build_pages.py --final` refuses to build unless the index covers every route the
-   registry expects. A build without `--final` omits every link whose route is not in the index,
-   never showing a placeholder, and records `final: false`; the publication guard keeps such a
-   build off `main` (standard §9).
+   registry expects. Any build omits every link whose route is not in the index, never showing a
+   placeholder, and records `final: true` exactly when nothing is omitted, so a plain rebuild of a
+   final build reproduces it; the publication guard keeps a build with `final: false` off `main`
+   (standard §9).
 
 **The routes.** `registry.expected_routes()` names them, and the verifier builds each URL from the
 experiment ID and the run IDs it read back:
