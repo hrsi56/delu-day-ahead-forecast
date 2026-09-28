@@ -63,29 +63,23 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Current Track B task: PRES-1, presentation release 1.** The Lead worked on `gauntlet/pres-1`
-(`af0abb0`, 26 commits) through phase E:
+**Current Track B task: PRES-1, presentation release 1.** Engineering PASS through F1–F4
+accepted on 2026-09-29; delegated **F5 visual approval APPROVED** from the Orchestrator's own
+Chrome/WebKit screenshots. [Receipt](docs/track-b/pres-1-receipt-2026-09-29.md).
 
-- the Owner approved D1 on 2026-09-25;
-- two independent-check rounds FAILED;
-- the Owner's final audit was applied.
-
-The Orchestrator's [release review](docs/track-b/presentation-release-review-2026-09-28.md) found
-the work accurate but not ready to land. The Owner then asked whether its fixes were structural or
-patches, and called this the one chance to set a publication standard before the next versions.
-- **The answer:** mostly patches.
-- **The review was superseded before handover.** An independent advisor challenged it over two
-  rounds, and a third round red-teamed the draft.
-- **[Publication Standard v1](docs/track-b/publication-standard-v1.md) was ratified on
-  2026-09-28.**
-  - Approved: D1–D3, D5 and D6.
-  - D7 stays an option.
-  - D4 was withdrawn: the repository root is the Owner's personal decision.
-- **The Owner widened the scope to "including everything", for a new Lead session.** The
-  [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md) brings the candidate
-  to every clause in force, through F1–F4 and an independent PASS.
-  - After the return, the Orchestrator verifies, lands, pushes, redeploys the Space and runs F8.
-  - The earlier PRES-1 Lead session is retired.
+- Final candidate `a0302dd6c5ff6714709b4f3a3b742f71a4b596a7`; evidence tip
+  `0df6dda203ea31ab35b34e7ad69d2a2e3e871ebf`, clean `gauntlet/pres-1`, 59 ahead / 3 behind main.
+- Fresh full independent PASS maps all W1–W16, standard clauses and 26 invariants. Accepted
+  944 tests / 7 skips, both Python versions, complete public mirror/routes and local demo checks;
+  historical FAILs and accounting limitations remain disclosed.
+- F1 completed once: 23 public MLflow runs. F2–F4 verified index/capabilities/final bundle complete.
+  F1 was not repeated at receipt. F5 measurements and supplied bundle identity independently checked.
+- **F6–F8 authorized and in progress, 2026-09-29.** Owner explicitly reaffirmed D5 as a
+  PRES-1-only exception to the current AGENTS.md: squash/commit to main, push, exact Space
+  redeploy, post-deploy checks and closure. Preserve both tags before reclamation; no F1 repeat,
+  governance edit or guard bypass. The Lead is stopped; Owner need not perform visual checks.
+- Publication Standard v1 and the conformance brief remain unchanged; the earlier release review
+  and retired Lead session remain superseded. CP-21 remains unauthorized.
 
 **Next pending Track B checkpoint: CP-21, the first v3 extension.** It is not authorized yet:
 the Owner has not chosen the extension (see Blockers). Opening it needs a v21-r5 amendment and a
@@ -94,7 +88,8 @@ model's freeze, live operation and prospective evaluation.
 
 **Repository:**
 
-- `main` is the only branch and checkout.
+- `main` and `gauntlet/pres-1` are the two branches, with primary and Lead checkouts; the latter
+  is retained pending disposition. Main HEAD remains `a8bee0ce5b3d1f25d0b477c88c53c21f50bd163f`.
 - Public CI (`invariant-tests`) has been green since `566335d`.
 - Decoded GFS grids and CP-20 working material are retained under `.local/`
   ([artifact map](docs/track-b/local-artifacts.md)).
@@ -107,7 +102,9 @@ model's freeze, live operation and prospective evaluation.
 | [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([app direct](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | The champion's boosters in the browser, bitwise equal to the frozen artifact |
 | [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Every decision-bearing run, anonymously readable |
 
-README and site describe v1 and CP-15. CP-16 and CP-20 are not yet on any public surface.
+Deployed README/site/Space remain the earlier release. The public `delu-generations` MLflow
+mirror now contains the authorized v1–v3 research export; the final README/site/Space bundle
+is accepted locally, with F6–F8 still pending.
 
 ### Track C — marketing
 
@@ -126,8 +123,8 @@ No optional learning block is active.
 - **ACTION-REQUIRED (Owner), pending since 2026-09-24:** restart the Claude desktop app, PyCharm
   and any terminal opened before the DagsHub token rotation. Until then those processes hold the
   revoked value. This item stays pending until the Owner confirms it. It matters most before the
-  PRES-1 Lead session opens, because its Phase F upload reads the token from the session's
-  environment.
+  any old application is reused. PRES-1 F1 succeeded using the existing variables; that is
+  evidence for the Lead process, not confirmation that every old application was restarted.
 
 ---
 
@@ -336,6 +333,18 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **PRES-1 D5 exception reaffirmed, 2026-09-29.** Owner explicitly authorizes squash/commit,
+  push, exact Space redeploy, post-deploy checks and closure for candidate `a0302dd6` / evidence
+  tip `0df6dda2`. Exception applies only to PRES-1; no governance edits, guard bypass or F1 repeat.
+
+- **PRES-1 receipt and delegated F5, 2026-09-29.** Accepted final independent PASS through F1–F4;
+  verified exact SHAs, evidence-only delta, clean Lead and bundle identity. Own Chrome/WebKit
+  release screenshots/placements pass; F5 approved. No repeated F1 or engineering audit.
+  Updated current routing and retained historical accounting limitations. Current supplied
+  owner-only mainline/publication rules conflict with recorded D5; F6–F8 remain pending that
+  authority resolution/Owner action. No stage, commit, ref mutation, redeploy or later checkpoint.
+  Filed Q&A entry 35 through the prescribed appender; prior 34 preserved.
+
 - **Publication Standard v1 ratified; conformance brief issued, 2026-09-28.**
   - **The Owner's decisions:**
     - approved D1–D3, D5 and D6;
@@ -518,15 +527,10 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **PRES-1 awaits the conformance round.** A new Lead session executes the
-  [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md).
-  - **Scope:** every clause of the ratified standard in force; F1, the public MLflow upload, after
-    an independent PASS; F2–F4; a focused recheck; the return.
-  - **Timebox:** about 60 active hours, with a hard stop at 80.
-  - **Owner instructions of 2026-09-28:**
-    - he runs no tests and no visual checks himself;
-    - the Orchestrator gives the final visual approval, lands, pushes and redeploys the Space after
-      verification.
+- **PRES-1 F6–F8 authorized; final deployed checks pending.** The Owner resolved the authority
+  conflict on 2026-09-29, expressly authorizing the exact reviewed candidate/evidence chain.
+  Engineering/F5 passed. Complete publication and closure without repeating F1.
+  Historical active-hour total and added-disk baseline remain unavailable, not certified compliant.
 - **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
   The recommended order:
   1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
@@ -585,20 +589,11 @@ Session Log.
   - no data after 2026-04-07;
   - a TabPFN run needs 4.6L's licence-use table first;
   - positive controls must survive the model's own transforms (see Lessons).
-- **[Next]** The Owner opens a new Lead session with the
-  [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md).
-  1. On its return, the Orchestrator:
-     - verifies it under brief §8;
-     - lands it, with the tags `land/pres-1` and `evidence/pres-1`;
-     - pushes;
-     - redeploys the Space (F7) and runs the post-deploy checks (F8);
-     - updates this file.
-  2. The Orchestrator then applies the decision-4 template edit, extended to the publication packet
-     (D6), in a separate task.
-  3. Then the CP-21 extension choice.
-
-  If the Lead's pre-F1 authentication check fails, the Owner restarts the app, so the session
-  inherits the rotated token.
+- **[Next]** Complete explicitly authorized PRES-1 F6–F8.
+  F5 and receipt passed; the authority conflict is resolved. After authorized landing,
+  preserve both `land/pres-1` and `evidence/pres-1`, complete publication and F8, then lifecycle
+  accounting. Do not repeat F1 or discard the retained candidate chain.
+  The decision-4/D6 template edit remains a separate task after landing; then CP-21 extension choice.
 - **[End of programme, after the holidays]**
   1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
      2026-09-07 separately.
