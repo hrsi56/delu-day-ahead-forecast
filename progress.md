@@ -55,7 +55,7 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 |---|---|---|
 | 1 | NWP archive-depth gate (4.1) | ✅ Done: GFS admitted |
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
-| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) revision 3 approved 2026-09-24; executed as task PRES-1 ([Lead brief](docs/track-b/pres-1-brief-2026-09-24.md)); no phase started |
+| 3 | Presentation around v2 (4.3R), with CP-20 alongside | 🟡 [Local draft](docs/track-b/research-content/cp15-cp16-update.md). [Plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md) revision 3, executed as PRES-1 ([brief](docs/track-b/pres-1-brief-2026-09-24.md)) on `gauntlet/pres-1` through phase E; then brought to the ratified [Publication Standard v1](docs/track-b/publication-standard-v1.md) (2026-09-28) by a new Lead under the [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md) |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ⬜ Not started |
 | 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
@@ -63,10 +63,29 @@ speed and mean DSWRF over 47–55.25°N, 5.5–15.5°E, each with a missing indi
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Next Track B task: PRES-1, presentation release 1.** The
-[brief](docs/track-b/pres-1-brief-2026-09-24.md) for an Engineering Lead was issued on 2026-09-24.
-It carries out the approved plan: a v1–v3 history page, and MLflow backfill and tracking. The
-first stop is the D1 visual specimen, which needs the Owner's approval.
+**Current Track B task: PRES-1, presentation release 1.** The Lead worked on `gauntlet/pres-1`
+(`af0abb0`, 26 commits) through phase E:
+
+- the Owner approved D1 on 2026-09-25;
+- two independent-check rounds FAILED;
+- the Owner's final audit was applied.
+
+The Orchestrator's [release review](docs/track-b/presentation-release-review-2026-09-28.md) found
+the work accurate but not ready to land. The Owner then asked whether its fixes were structural or
+patches, and called this the one chance to set a publication standard before the next versions.
+- **The answer:** mostly patches.
+- **The review was superseded before handover.** An independent advisor challenged it over two
+  rounds, and a third round red-teamed the draft.
+- **[Publication Standard v1](docs/track-b/publication-standard-v1.md) was ratified on
+  2026-09-28.**
+  - Approved: D1–D3, D5 and D6.
+  - D7 stays an option.
+  - D4 was withdrawn: the repository root is the Owner's personal decision.
+- **The Owner widened the scope to "including everything", for a new Lead session.** The
+  [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md) brings the candidate
+  to every clause in force, through F1–F4 and an independent PASS.
+  - After the return, the Orchestrator verifies, lands, pushes, redeploys the Space and runs F8.
+  - The earlier PRES-1 Lead session is retired.
 
 **Next pending Track B checkpoint: CP-21, the first v3 extension.** It is not authorized yet:
 the Owner has not chosen the extension (see Blockers). Opening it needs a v21-r5 amendment and a
@@ -201,6 +220,14 @@ Session Log.
 - **MLflow is the visible cross-version tool.** v2/v3 runs are backfilled, and future checkpoints
   are tracked in MLflow. `delu-cp2` (v1's record) stays untouched. The design is in the
   [presentation and tracking plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md).
+- **Publication standard (ratified 2026-09-28).** Every publication follows
+  [Publication Standard v1](docs/track-b/publication-standard-v1.md).
+  - The headline is defined before results, and every percentage is a derived record.
+  - One registry supplies names and statuses.
+  - Publication is complete or not at all.
+  - A blocking rule sits beside an advisory log.
+  - Its core changes only by the Owner. Every brief cites its SHA-256.
+  - From CP-21 on, each checkpoint's return carries a publication packet.
 - **Presentation and tracking rules (plan R1–R6, approved 2026-09-24):**
   - v1's holdout moves into the v1 chapter and is not deleted;
   - agents build the page and charts from data, and the Owner reviews visually before any push;
@@ -308,6 +335,69 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Publication Standard v1 ratified; conformance brief issued, 2026-09-28.**
+  - **The Owner's decisions:**
+    - approved D1–D3, D5 and D6;
+    - D7 stays an option;
+    - D4 was withdrawn as a personal decision;
+    - "including everything", for a new agent.
+  - **Closed:** the standard, with §16 and §17 recording in-force scope and the outcomes.
+  - **Issued:** the
+    [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md), with deliverables
+    W1–W16.
+  - **Committed and pushed at the Owner's instruction:**
+    - the standard and its derivation record;
+    - the brief;
+    - the review record: the Owner's D1 editorial review, the final editorial audit and the
+      superseded release review;
+    - this file;
+    - interview answer 34.
+
+- **Publication standard, 2026-09-28** (Owner: are the release review's fixes structural or
+  patches? This is the one chance to set the standard).
+  - **Answer:** mostly patches. The root causes sit in plan revision 3:
+    - it sets ceilings on what may be said, and no floors for what must be said;
+    - the story's state has no single source;
+    - the reviews work as a ratchet.
+  - **Method:** an independent advisor (a read-only subagent) in three rounds:
+    - a cold read of the page and code;
+    - a challenge of the plan, the review history, the release review and the Orchestrator's
+      position, which was written before round 1 was read;
+    - a red-team of the draft.
+  - **Verification:** the Orchestrator verified every factual claim, among them:
+    - "first of 8 candidates" to clear criteria 1–2;
+    - the stale status line in the CP-20 report;
+    - 1.52 of the 2.0 MB budget used;
+    - no writer for `mlflow_index.json`;
+    - the device requirement as the FAIL item common to both independent checks.
+  - **Output:** the draft [Publication Standard v1](docs/track-b/publication-standard-v1.md) and its
+    [derivation record](docs/track-b/publication-standard-derivation-2026-09-28.md). The release
+    review is marked superseded and was never handed over.
+  - **Verified provenance:** the §8 targets were pre-registered at `bb5e678`, 2026-09-16 00:17, on
+    `evidence/cp-15`, before CP-15's results at 03:15, identical to the attempt-1 anchor.
+  - No commit, merge, push or public action.
+
+- **PRES-1 release review, 2026-09-28** (Owner: "everything is in your hands").
+  - **Reviewed:** `gauntlet/pres-1` at `af0abb0`, in a clean worktree.
+  - **Results:**
+    - 751 passed, 7 skipped;
+    - `make verify` PASS;
+    - the export is current and the dry run is clean;
+    - the build is deterministic;
+    - the link gate passes;
+    - there has been no public MLflow write;
+    - Chrome renders at 1,440 and 390 px without overflow;
+    - accuracy spot checks hold, and no factual error was found.
+  - **Verdict: not ready to land.**
+    - **P1:** the opening has no result, and the pre-specified targets that only v3 clears are
+      buried.
+    - **P2:** the README leads with v1, there is no absolute anchor in EUR/MWh, and there is no
+      generation registry or runbook for v4.
+    - **P3:** wording and precision; demo font 404s in WebKit; no stack line.
+    - **Process:** no independent PASS on the candidate; four unpublished links; F11; no return.
+  - **Issued:** a [review with a fix round](docs/track-b/presentation-release-review-2026-09-28.md).
+  - No merge, push or public action.
 
 - **Plan revision 3 approved and PRES-1 issued, 2026-09-24.**
   - **The Owner answered all nine §16 questions:**
@@ -428,15 +518,15 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **PRES-1 issued; awaiting the Lead's Stop 1, the D1 specimen (2026-09-24).**
-  - **Commit first:** the approved plan and the [brief](docs/track-b/pres-1-brief-2026-09-24.md)
-    must be committed to `main` before the Lead starts, because the brief's identity checks read
-    them there.
-  - **Where to start the session:** in the project folder, not in an app-managed worktree.
-  - **Owner decision 8** says the demo device test was completed. Its device, browser and outcome
-    are not yet recorded; the Lead asks for them at Stop 1 if they are still missing.
-  - **Template follow-up:** after the first verified MLflow route, apply the template text the
-    Lead proposes, under the Owner's 2026-09-24 grant.
+- **PRES-1 awaits the conformance round.** A new Lead session executes the
+  [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md).
+  - **Scope:** every clause of the ratified standard in force; F1, the public MLflow upload, after
+    an independent PASS; F2–F4; a focused recheck; the return.
+  - **Timebox:** about 60 active hours, with a hard stop at 80.
+  - **Owner instructions of 2026-09-28:**
+    - he runs no tests and no visual checks himself;
+    - the Orchestrator gives the final visual approval, lands, pushes and redeploys the Space after
+      verification.
 - **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
   The recommended order:
   1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
@@ -495,16 +585,20 @@ Session Log.
   - no data after 2026-04-07;
   - a TabPFN run needs 4.6L's licence-use table first;
   - positive controls must survive the model's own transforms (see Lessons).
-- **[Next]** The Owner takes three steps:
-  1. commits the approved plan and the PRES-1 brief;
-  2. restarts the Claude app;
-  3. opens a new Engineering Lead session in the project folder with the PRES-1 prompt.
+- **[Next]** The Owner opens a new Lead session with the
+  [conformance brief](docs/track-b/pres-1-conformance-brief-2026-09-28.md).
+  1. On its return, the Orchestrator:
+     - verifies it under brief §8;
+     - lands it, with the tags `land/pres-1` and `evidence/pres-1`;
+     - pushes;
+     - redeploys the Space (F7) and runs the post-deploy checks (F8);
+     - updates this file.
+  2. The Orchestrator then applies the decision-4 template edit, extended to the publication packet
+     (D6), in a separate task.
+  3. Then the CP-21 extension choice.
 
-  The Lead then runs phases 0 and A–C, stops at D1 (Stop 1) and at E (Stop 2), and performs each
-  public step in Phase F only on the Owner's explicit instruction.
-
-  Before Phase F's public MLflow upload, the Owner restarts the apps, so the upload uses the
-  rotated token.
+  If the Lead's pre-F1 authentication check fails, the Owner restarts the app, so the session
+  inherits the rotated token.
 - **[End of programme, after the holidays]**
   1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
      2026-09-07 separately.
