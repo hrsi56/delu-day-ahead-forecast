@@ -171,8 +171,8 @@
   },
   {
    "artifacts": {
-    "README.md": "0f50de20994e54edc8e19b00d5bee29cb72b7dec0b3070c293558de637cacfff",
-    "summary.json": "dae2a2279c29eb7d25c1f868a7c2cda4ac5ca1f24f091da03b1df1357b19ec0d"
+    "README.md": "213b64ee4df152442642fecad7d077f4782cb8bb93d2c5eab478685f96cc178a",
+    "summary.json": "fc8009d1fca621a04714cc91822feda7171c1446b4bfdf7e441f8cb2734440e6"
    },
    "file": "cp10.json",
    "inputs": [
@@ -192,7 +192,7 @@
    "params": 6,
    "parent": "cp10",
    "run_key": "cp10/c1_price_volatility",
-   "run_name": "Scaled conformal, price volatility (c1_price_volatility)",
+   "run_name": "Scaled conformal, price volatility (c1_price_volatility, selected scale)",
    "tags": 21
   },
   {
@@ -275,8 +275,8 @@
   },
   {
    "artifacts": {
-    "README.md": "0e30778572672d2f1fa5ea997869787f332771f0f09d06df923009da155ba8fa",
-    "summary.json": "4172071fd684a8abecb4481cc816724281c944ee54224bba4c08ba96f7301189"
+    "README.md": "3884c36336a7ce80f6a3cfefcb39f64aaf88d78c118e892ee8b68c5ceb4e575b",
+    "summary.json": "2e8c58030131207b0ecd322464775a3d320de5f61c38ccaf5aa79d2ed0f17b69"
    },
    "file": "cp10.json",
    "inputs": [
@@ -296,7 +296,7 @@
    "params": 7,
    "parent": "cp10",
    "run_key": "cp10/c2_aci_gamma_0.00002",
-   "run_name": "Adaptive conformal, gamma 0.00002 (c2_aci_gamma_0.00002)",
+   "run_name": "Adaptive conformal, gamma 0.00002 (c2_aci_gamma_0.00002, selected step)",
    "tags": 21
   },
   {

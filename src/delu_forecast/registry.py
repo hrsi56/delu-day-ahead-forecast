@@ -279,10 +279,10 @@ def _reference(ident: str, code: str, name: str, subtitle: str, *, comparator: s
     )
 
 
-def _cp10(ident: str, code: str, name: str, subtitle: str) -> Entry:
+def _cp10(ident: str, code: str, name: str, subtitle: str, note: str = "") -> Entry:
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="study arm",
-        codes=(Code("CP-10", code, "cp10-fold-block"),),
+        codes=(Code("CP-10", code, "cp10-fold-block", note),),
         statuses=(StatusEvent(NOT_ADOPTED, "2026-09-16", "docs/track-b/cp-15-landing.md",
                               "recalibrating v1 without refitting it was not enough"),),
         comparator="v1", population="cp10-fold-block", evidence_class=EVIDENCE_CALIBRATION,
@@ -388,7 +388,7 @@ _ENTRIES: tuple[Entry, ...] = (
     _cp10("cp10-head-spread", "c1_head_spread", "Scaled conformal, head spread",
           "Conformal scores scaled by the heads' spread"),
     _cp10("cp10-price-volatility", "c1_price_volatility", "Scaled conformal, price volatility",
-          "Conformal scores scaled by recent price volatility"),
+          "Conformal scores scaled by recent price volatility", "selected scale"),
     _cp10("cp10-aci-0.000001", "c2_aci_gamma_0.000001", "Adaptive conformal, gamma 0.000001",
           "Adaptive conformal intervals, smallest step"),
     _cp10("cp10-aci-0.000005", "c2_aci_gamma_0.000005", "Adaptive conformal, gamma 0.000005",
@@ -396,7 +396,7 @@ _ENTRIES: tuple[Entry, ...] = (
     _cp10("cp10-aci-0.00001", "c2_aci_gamma_0.00001", "Adaptive conformal, gamma 0.00001",
           "Adaptive conformal intervals, third step"),
     _cp10("cp10-aci-0.00002", "c2_aci_gamma_0.00002", "Adaptive conformal, gamma 0.00002",
-          "Adaptive conformal intervals, largest step"),
+          "Adaptive conformal intervals, largest step", "selected step"),
 )
 
 #: The order of the shared comparison's rows (plan §8.2): generations newest first, then the
