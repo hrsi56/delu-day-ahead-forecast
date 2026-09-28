@@ -268,11 +268,11 @@ def _study(ident: str, code: str, name: str, subtitle: str, short: str = "") -> 
     )
 
 
-def _reference(ident: str, code: str, name: str, subtitle: str, *, comparator: str | None) -> Entry:
+def _reference(ident: str, code: str, name: str, subtitle: str, *, comparator: str | None, note: str = "") -> Entry:
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="reference",
-        codes=(Code("CP-15", code, "common-10747h"), Code("CP-16", code, "common-10747h"),
-               Code("CP-20", code, "common-10747h")),
+        codes=(Code("CP-15", code, "common-10747h", note), Code("CP-16", code, "common-10747h", note),
+               Code("CP-20", code, "common-10747h", note)),
         statuses=(), comparator=comparator, population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §5 (v21-r1)", rules=(), sources=("reports/cp15/relative_scores.csv",),
         claim_map=_CP15, run_keys=(f"cp15/{code}",), style="reference", checkpoint="CP-15", short=name,
@@ -359,7 +359,7 @@ _ENTRIES: tuple[Entry, ...] = (
     ),
     # ---- references ----------------------------------------------------------------------
     _reference("naive", "B0", "Similar-day naive", "The forecast every error score divides by",
-               comparator=None),
+               comparator=None, note="normalizer"),
     _reference("daily-lear", "B2", "Daily LEAR", "The strongest benchmark: a daily linear model",
                comparator="naive"),
     _reference("daily-lightgbm", "B3", "Daily LightGBM", "Gradient-boosted trees refitted every day",

@@ -505,14 +505,16 @@ def _row_value_text(scale: Scale, x_mark: float, y: float, row: Row, claim_id: s
     record = R.get(row.record_id)
     weight = "600" if row.bold else None
     if record.interval is not None:
-        low = RC.svg_value(row.record_id, "ci_low", option)
-        high = RC.svg_value(row.record_id, "ci_high", option)
-        text = f"{RC.svg_value(row.record_id, 'value', option)} [{low}, {high}]"
-        if x_left is not None:
-            return svg_text(x_left, y + 4.5, text, size=size, anchor="start",
-                            extra=RC.svg_binding(claim_id, row.record_id) + HALO, weight=weight)
-        return svg_text(x_right, y + 4.5, text, size=size, anchor="end",
-                        extra=RC.svg_binding(claim_id, row.record_id) + HALO, weight=weight)
+        # "estimate [low, high]", each figure a tspan bound to its own field of the record
+        def part(which: str) -> str:
+            return (f'<tspan{RC.svg_binding(claim_id, row.record_id, which)}>'
+                    f'{esc(RC.svg_value(row.record_id, which, option))}</tspan>')
+
+        body = f'{part("value")} [{part("ci_low")}, {part("ci_high")}]'
+        style = f' font-weight="{weight}"' if weight else ""
+        x, anchor = (x_left, "start") if x_left is not None else (x_right, "end")
+        return (f'<text x="{x:.1f}" y="{y + 4.5:.1f}" font-size="{size}" text-anchor="{anchor}" '
+                f'fill="{TOKENS["text"]}"{style}{HALO}>{body}</text>')
     near_right = x_mark > x_right - 58
     return value_label(x_mark + (-10 if near_right else 10), y + 4.5, claim_id, row.record_id,
                        anchor="end" if near_right else "start", size=size, weight=weight, option=option)

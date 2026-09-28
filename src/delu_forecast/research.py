@@ -984,8 +984,6 @@ def display(record: EvidenceRecord, which: str = "value", *, precision: int | No
     places = record.display_precision if precision is None else precision
     if style == "int":
         places = 0
-    elif signed and precision is None:
-        places = max(places, _places_for_two_significant(raw))
     # Never round toward zero across a sign (standard §4): a value near zero keeps its sign and at
     # least two significant figures, whatever precision was asked for (+0.0000039, not +0.0000).
     if Decimal(raw) != 0 and round(Decimal(raw), places) == 0:

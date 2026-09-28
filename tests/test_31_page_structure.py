@@ -129,7 +129,7 @@ def test_phone_chart_variants_render_text_at_12px_or_more(document, column):
 def unlabelled_marks(svg: str) -> list[str]:
     """Record-bound marks whose record no text in the same SVG names."""
     marks = set(re.findall(r'<(?:circle|rect|polygon)[^>]*data-record="([^"]+)"', svg))
-    labelled = set(re.findall(r'<text[^>]*data-record="([^"]+)"', svg))
+    labelled = set(re.findall(r'<(?:text|tspan)[^>]*data-record="([^"]+)"', svg))
     return sorted(marks - labelled)
 
 

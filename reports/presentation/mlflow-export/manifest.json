@@ -315,8 +315,8 @@
   },
   {
    "artifacts": {
-    "README.md": "81d0644fa612f091bca90c49858d8d73b4e47d6ac356bae417e642749930b545",
-    "summary.json": "9de3f91e17b34583823b4c6b45e79f3a0f45d354d3f06bb70683f1a983400de2"
+    "README.md": "204bd087c357826d5ddebc66081ac290638cc5d4a93bb0b81f95bd91133ea82d",
+    "summary.json": "30cad42ed7ef9f224f05a2a120df3870c0cd8b008ba3ef262f496d370891e994"
    },
    "file": "cp15.json",
    "inputs": [
@@ -346,7 +346,7 @@
    "params": 6,
    "parent": "cp15",
    "run_key": "cp15/B0",
-   "run_name": "Similar-day naive (B0)",
+   "run_name": "Similar-day naive (B0, normalizer)",
    "tags": 21
   },
   {
@@ -943,7 +943,7 @@
    "artifacts": {
     "README.md": "4c0b34226948bca82b10ed0d22ef99bdcd7c160891430ea969fa2c46a50f3061",
     "charts/v2-chart1.svg": "c2f558cc30c0d80a7cce39f229a153aa5ec3322138b752b554af40be6b9a9dee",
-    "charts/v2-chart2.svg": "9ebade8332830c17f3b6939508ecd0051f05ff2a188798f6d0c41ae22736a677",
+    "charts/v2-chart2.svg": "25688381625d379b00f526771207b31fbfc1ea79e017bb87837f17599a24414a",
     "summary.json": "ebcbf8be9de2f50d6f82de34d9688df137cbc11e11a245ea539ddb80839162fc"
    },
    "file": "cp16.json",
@@ -1018,9 +1018,9 @@
   {
    "artifacts": {
     "README.md": "13ac544ca67dac11213510c1e68e6a6d9c3eed957f0adbd613a7a583255a9c6c",
-    "charts/overview.svg": "65473ae992580ae3c3c9a7921170bdea83bfe67bb16c95a32fef0143bb34f668",
-    "charts/v3-c2a.svg": "8d4933f7426d01c03c2f0c08cfa6c71e431b8ee97a35c753433b8c8e4bf53ccd",
-    "charts/v3-c2b.svg": "11204fc8bc73a533ad33a809701d6b1868a6bfdc4b53458e3b3457cfe5389995",
+    "charts/overview.svg": "dfaef6de0de2fecaad3c6218d3d762bb2ef30dc36dbfd7fad47a532caaa4ba0f",
+    "charts/v3-c2a.svg": "f71342ec84bba94b9487d69af71bb78e7f357983358b97dc51fa3baf824e31ea",
+    "charts/v3-c2b.svg": "8ba892c17c59af97d478d80fe1832c157b7b7b0820aef1933f1ea1073796ae07",
     "charts/v3-c3.svg": "b9d9b4c34c07a7caec23cbe6c1751df1af0e1f022c91eef2b037a94d03e177a8",
     "charts/v3-c4.svg": "5968551e5db1e932330f3a2ef622ec120fc0a22956d8f4348366482edef2ffba",
     "charts/v3-c5.svg": "c1aea175be3f64772bbb38d36921897464636f906bf5e159ad951d9333eceacd",

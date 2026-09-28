@@ -126,8 +126,13 @@ def test_every_record_declares_its_unit_population_and_class(registry):
 
 
 def test_the_display_rule_never_shows_a_small_endpoint_as_zero():
+    """Standard §4 (amending invariant 9): a value is never rounded toward zero across its sign; one
+    that would round to zero keeps its sign and two significant figures."""
     fold3 = R.get("cp20.uncertainty.HG-H0.fold_3.MAE")
-    assert R.display(fold3, "ci_high") == "+0.037"
+    assert R.display(fold3, "ci_high", precision=1) == "+0.037"
+    assert R.display(fold3, "ci_high") == "+0.04"
+    endpoint = R.get("cp16.uncertainty.V2-H-V2-P.equal_fold.MAE")
+    assert R.display(endpoint, "ci_high") == "+0.0000039"
     assert R.display(R.get("cp20.metrics.HG.pooled.n_hours")) == "10,747"
     assert R.display(R.get("cp20.uncertainty.HG-H0.equal_fold.MAE")).startswith(R.MINUS)
 
