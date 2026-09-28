@@ -266,6 +266,13 @@ class Audit:
         return f"{self.kind}, frozen {self.date}"
 
 
+def audit_link(item: Audit) -> str:
+    """An audit-grade link, "<type>, frozen <date>". The label is one span: an `.ev` link is a flex
+    box, and a flex item drops the space before the date that follows it ("frozen2026-09-16")."""
+    return (f'<a class="ev external audit" href="{attr(item.url)}" data-evidence-tag="{attr(item.tag)}">'
+            f'<span>{esc(item.kind)}, frozen {S("date", item.date)}</span></a>')
+
+
 def evidence_row(*, compare: str | None = None, audit: tuple[Audit, ...] = ()) -> str:
     """"Compare the runs in MLflow" (reader grade, only once verified) and the audit-grade records
     behind the result, each "<type>, frozen <date>" (standard §7, plan §7.9)."""
@@ -275,9 +282,7 @@ def evidence_row(*, compare: str | None = None, audit: tuple[Audit, ...] = ()) -
         items.append(f'<a class="ev external reader" href="{attr(url)}" data-route="{attr(compare)}">'
                      "Compare the runs in MLflow</a>")
     for item in audit:
-        label = esc(item.kind) + ", frozen " + S("date", item.date)
-        items.append(f'<a class="ev external audit" href="{attr(item.url)}" data-evidence-tag="{attr(item.tag)}">'
-                     f"{label}</a>")
+        items.append(audit_link(item))
     return '<p class="evidence-row"><span class="ev-label">Evidence</span>' + "".join(items) + "</p>"
 
 
@@ -1909,10 +1914,8 @@ def evidence_section(C) -> str:
     reproduce = (Audit("Reproduction instructions", "reports/weather-ablation/reproduce.md", "evidence/cp-20"),
                  Audit("Reproduction instructions", "reports/v2-causal/reproduce.md", "evidence/cp-16"),
                  Audit("Reproduction instructions", "reports/cp15/reproduction.md", "evidence/cp-15"))
-    labelled = "".join(
-        f'<li>{label}: <a class="ev external audit" href="{attr(item.url)}" data-evidence-tag="{attr(item.tag)}">'
-        f'{esc(item.kind)}, frozen {S("date", item.date)}</a></li>'
-        for label, item in zip((ver("v3"), ver("v2"), "the model comparison study"), reproduce))
+    labelled = "".join(f"<li><span>{label}:</span> {audit_link(item)}</li>"
+                       for label, item in zip((ver("v3"), ver("v2"), "the model comparison study"), reproduce))
     return f"""
 <section class="section" id="evidence" aria-labelledby="evidence-h">
  <h2 id="evidence-h">How the system works, and how to check it</h2>
@@ -1923,7 +1926,7 @@ def evidence_section(C) -> str:
   <pre><code>uv sync</code></pre>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   {disclosure("rebuild-measurement", "One measured rebuild", f"<p>{runtime}</p>") if runtime else ""}
-  <p>Each experiment has its own full reproduction, and {ver("v1")} has <a href="#repro">its own</a>:</p>
+  <p>Each experiment below has its own full reproduction; {ver("v1")}'s is in <a href="#repro">its archive</a>.</p>
   <div class="evidence-row evidence-list"><span class="ev-label">Evidence</span><ul class="repro-list">{labelled}</ul></div>
  </div>
  <div class="tracking"><h3>Tracking</h3>
