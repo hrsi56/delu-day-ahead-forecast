@@ -7,7 +7,7 @@
  "experiment": "delu-generations",
  "experiment_tags": {
   "mlflow.experimentKind": "custom_model_development",
-  "mlflow.note.content": "Every policy evaluated since v1, once each, nested under the checkpoint that produced it: CP-10 (calibration branch, not adopted), CP-15 (model-comparison study), CP-16 (v2) and CP-20 (v3). Backfilled from the committed evidence of https://github.com/hrsi56/delu-day-ahead-forecast; development evidence after selection. v1's own runs stay in delu-cp2."
+  "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
  },
  "metric_units": {
   "daily_mae_eur": "EUR/MWh",
@@ -105,8 +105,8 @@
  "runs": [
   {
    "artifacts": {
-    "README.md": "e1adc07a9e03e04bb035496c5e18bee301a33161f408be552b97ec7b19bb7052",
-    "summary.json": "63d0f8a40f337a1983d0703b5825f9c7c23a6d436ebaff94787a925c8027c9c8"
+    "README.md": "cabcbfb1a6624f9815fc1754f6946c4b4d20aed0a9e52d7717c7f40d57d68009",
+    "summary.json": "89000da014d657836e1b1aa406f8bb2589e52c68fcaa338e6c4139f688a309f4"
    },
    "file": "cp10.json",
    "inputs": [],
@@ -114,13 +114,13 @@
    "params": 2,
    "parent": null,
    "run_key": "cp10",
-   "run_name": "CP-10 · calibration only (branch)",
-   "tags": 12
+   "run_name": "Calibration experiment (CP-10)",
+   "tags": 16
   },
   {
    "artifacts": {
-    "README.md": "6f537fdbe30c96d7ffc54110103e2ad16859760df06fc5c87e1803f43da3bd29",
-    "summary.json": "33852bd4c9774ce558ffd944960cd8d2ebeebdbc1f4b27c74eef9476b85cea1e"
+    "README.md": "8f5999ee632dd135701040be67000a6009c51e3a9fbea5954e279ab06778e83e",
+    "summary.json": "857946d71dec5834cdf0ec9a5e4210872fce88b6924862f13d181834774e6196"
    },
    "file": "cp10.json",
    "inputs": [
@@ -140,13 +140,13 @@
    "params": 6,
    "parent": "cp10",
    "run_key": "cp10/v1_reference",
-   "run_name": "CP-10 · v1_reference · v1 unscaled CQR (reference)",
-   "tags": 17
+   "run_name": "v1 · released LightGBM (v1_reference, unscaled CQR reference)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "61156bcfcc9baf26a9e2414798f499ab9ec98d50f9dd2cf3d17e8860201b8787",
-    "summary.json": "7f52e243014445b7f8bdb031ad8a9a6e55729d0d69c5394f93231bf234cb1db5"
+    "README.md": "06fe5774747dbd4d046ea679b9a791fb11aef21ee1729c8603500cc8b0707837",
+    "summary.json": "a2368e0506c7f640154a29c0164fcb462b8454f3998934803a12674974416172"
    },
    "file": "cp10.json",
    "inputs": [
@@ -166,13 +166,13 @@
    "params": 6,
    "parent": "cp10",
    "run_key": "cp10/c1_head_spread",
-   "run_name": "CP-10 · c1_head_spread · scaled conformal, head spread",
-   "tags": 17
+   "run_name": "Scaled conformal, head spread (c1_head_spread)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "35b2eb16ad4925967540bccb6fe0aa8ad175b9ad6e8376dee58a70f6bc78c791",
-    "summary.json": "287a4740bce5307a944f87e72a41a6e3eb17eb98f783d65c293fa41b76ecb185"
+    "README.md": "0f50de20994e54edc8e19b00d5bee29cb72b7dec0b3070c293558de637cacfff",
+    "summary.json": "dae2a2279c29eb7d25c1f868a7c2cda4ac5ca1f24f091da03b1df1357b19ec0d"
    },
    "file": "cp10.json",
    "inputs": [
@@ -192,13 +192,13 @@
    "params": 6,
    "parent": "cp10",
    "run_key": "cp10/c1_price_volatility",
-   "run_name": "CP-10 · c1_price_volatility · scaled conformal, price volatility (selected)",
-   "tags": 17
+   "run_name": "Scaled conformal, price volatility (c1_price_volatility)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "a18c4dc9330053a4456c44733d22b196485fca6d76e531e87a9439b9e182de14",
-    "summary.json": "4504e5fad12591129bda89820ea82de23ea351522bf9a3f0a2d04ca53f4e8a30"
+    "README.md": "bfb114e41bcf0fb9cbcf98ab86651c5068cfdb60f35a6dd957f65e66785e69c8",
+    "summary.json": "297342445eac73d05b421fef5038e2201fa4dacd4489fb2580ce341287081d62"
    },
    "file": "cp10.json",
    "inputs": [
@@ -218,13 +218,13 @@
    "params": 7,
    "parent": "cp10",
    "run_key": "cp10/c2_aci_gamma_0.000001",
-   "run_name": "CP-10 · c2_aci_gamma_0.000001 · adaptive conformal, gamma 0.000001",
-   "tags": 17
+   "run_name": "Adaptive conformal, gamma 0.000001 (c2_aci_gamma_0.000001)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "f400d9b9aa0bee0c16c7736d3c8dd7ba51477e0964fd04814239c35efb2df91c",
-    "summary.json": "521ffbfee5ffb5c3bdbeaf10e204b736cd60f1d2dc40417c84de74a1f483cc45"
+    "README.md": "782e0fe6846e81d1d55c96554b3d3dd3b412fa92277d409a3725ddf2f976fd9d",
+    "summary.json": "c9d262f7deb87ef5f426beaccd81f3daab98cdadcac77ce06958e67ffcfad41b"
    },
    "file": "cp10.json",
    "inputs": [
@@ -244,13 +244,13 @@
    "params": 7,
    "parent": "cp10",
    "run_key": "cp10/c2_aci_gamma_0.000005",
-   "run_name": "CP-10 · c2_aci_gamma_0.000005 · adaptive conformal, gamma 0.000005",
-   "tags": 17
+   "run_name": "Adaptive conformal, gamma 0.000005 (c2_aci_gamma_0.000005)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "3c1e327f13da3ee959ebc19e00ba0672f68ec3992892c76eed1a285de3c14053",
-    "summary.json": "929b903f5553f49a5a59c8536ce8c389384028e4a1de3c7622196961b0b66659"
+    "README.md": "f466f59666e89f8fcb8d845d3855d3bad89bbce8e05378e5568a283213698245",
+    "summary.json": "0c1c80d1647b1efe0cb5fa206058af2f03e01435a62b216e162a1d925d3ff690"
    },
    "file": "cp10.json",
    "inputs": [
@@ -270,13 +270,13 @@
    "params": 7,
    "parent": "cp10",
    "run_key": "cp10/c2_aci_gamma_0.00001",
-   "run_name": "CP-10 · c2_aci_gamma_0.00001 · adaptive conformal, gamma 0.00001",
-   "tags": 17
+   "run_name": "Adaptive conformal, gamma 0.00001 (c2_aci_gamma_0.00001)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "b377550eebcdabe16357e2b327b76a622c24d3ff22e6288f2872791f72c94515",
-    "summary.json": "cc8b6d9440342c1e8bb4968078d09e8f4ba3564ded7074f91f184f7e4e00beac"
+    "README.md": "0e30778572672d2f1fa5ea997869787f332771f0f09d06df923009da155ba8fa",
+    "summary.json": "4172071fd684a8abecb4481cc816724281c944ee54224bba4c08ba96f7301189"
    },
    "file": "cp10.json",
    "inputs": [
@@ -296,13 +296,13 @@
    "params": 7,
    "parent": "cp10",
    "run_key": "cp10/c2_aci_gamma_0.00002",
-   "run_name": "CP-10 · c2_aci_gamma_0.00002 · adaptive conformal, gamma 0.00002 (selected gamma)",
-   "tags": 17
+   "run_name": "Adaptive conformal, gamma 0.00002 (c2_aci_gamma_0.00002)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "2dc72089c851a1ea8d19314ce5823bd62af6b2f52f60e18b8ba42f5cf64872b1",
-    "summary.json": "0d1f7bece8819dd8f1b0f37edc5ebb2d11b09c16518b80c89de8e5d1582b8c53"
+    "README.md": "846f7bbd745efbfe38d742d48f94be21b41d86048d8310fd241340d7a118ada1",
+    "summary.json": "072f61910451ad57f80baa07e045c43ab2014b17904b2d89f4957fd0baa22455"
    },
    "file": "cp15.json",
    "inputs": [],
@@ -310,13 +310,13 @@
    "params": 2,
    "parent": null,
    "run_key": "cp15",
-   "run_name": "CP-15 · model-comparison study (informed v2)",
-   "tags": 12
+   "run_name": "Model comparison study (CP-15)",
+   "tags": 16
   },
   {
    "artifacts": {
-    "README.md": "ff05f29e8b00f6e662fcd48bead1b8e4288cf24b73122019f53381ae694f3c97",
-    "summary.json": "9e87b9e9a6a7494b13eb8b083dbad627f87bbd58951d658c7e5f6ded51c359ee"
+    "README.md": "81d0644fa612f091bca90c49858d8d73b4e47d6ac356bae417e642749930b545",
+    "summary.json": "9de3f91e17b34583823b4c6b45e79f3a0f45d354d3f06bb70683f1a983400de2"
    },
    "file": "cp15.json",
    "inputs": [
@@ -346,13 +346,13 @@
    "params": 6,
    "parent": "cp15",
    "run_key": "cp15/B0",
-   "run_name": "CP-15 · B0 · similar-day naive (reference)",
-   "tags": 17
+   "run_name": "Similar-day naive (B0)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "7ba285d43ca54974a4897cca55a00db5f629a73ae9f0afc78ba2547f1bc4639b",
-    "summary.json": "ed3f4ddd10bc71904638182fc77fd434c60c5ef379de8aa3e5bccc63def6133b"
+    "README.md": "6385aa0324196e2dc98e7676b6a2ff6b8f227a45dbd4418d20b140683f2efc16",
+    "summary.json": "f8e963b35ede8e4261538dc70a332c5b1e42a3e4db8729732c33c2fbb25e769e"
    },
    "file": "cp15.json",
    "inputs": [
@@ -382,13 +382,13 @@
    "params": 6,
    "parent": "cp15",
    "run_key": "cp15/B1",
-   "run_name": "CP-15 · B1 · v1 development replay",
-   "tags": 18
+   "run_name": "v1 · released LightGBM (B1, development replay)",
+   "tags": 22
   },
   {
    "artifacts": {
-    "README.md": "8a6eceeb8a9ef134ddb73b8185c414032f730107ebaa00417d9b614204973cf1",
-    "summary.json": "ab0bdfbb202a64b8241a54c721587ce6ceb8744dd3184f1750987ac9accbcb64"
+    "README.md": "3c08bcbbbb19c8ddf4970a49a86ce365add188f9aeef7a17fece3a3de33a50cb",
+    "summary.json": "251350094081f14c243e7035b77b49b389f8029de6419bcf5f307181d7600375"
    },
    "file": "cp15.json",
    "inputs": [
@@ -418,13 +418,13 @@
    "params": 8,
    "parent": "cp15",
    "run_key": "cp15/B2",
-   "run_name": "CP-15 · B2 · daily LEAR (reference)",
-   "tags": 17
+   "run_name": "Daily LEAR (B2)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "e2c766cecde535b5da00fc53c08b9a9e7e3179f78bdf9e033941200a203e3049",
-    "summary.json": "190a8687f06503bb63a0eed2da5a227467a8003777038425e77a1cccdd0856e2"
+    "README.md": "7de9b31ae4a09a2cffedc1cd0cc3547c7f4ca08badbfd85b27eed2986280bdb3",
+    "summary.json": "08a3c1e72cc25c3adf4228dfa643949f670cb859fc43951fe1c1fc8acc2d25c7"
    },
    "file": "cp15.json",
    "inputs": [
@@ -454,13 +454,13 @@
    "params": 8,
    "parent": "cp15",
    "run_key": "cp15/B3",
-   "run_name": "CP-15 · B3 · daily LightGBM (reference)",
-   "tags": 17
+   "run_name": "Daily LightGBM (B3)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "29d3b6688b74c4f7d0a5f6666ca094e003bf6edd4ddf2c0b45dc47c79715879a",
-    "summary.json": "1994833eb22e948b604e0ac9dceab5eca996d7993ea466456a64405a77cbc7d7"
+    "README.md": "49aeae92ba2ba58d09ea288cef404dc963a810258fed5f7df1fa20538a7f26fa",
+    "summary.json": "7ccbaef7cb372ef7e15b57b5d7f88bda31c8754775fa38c54d51e5c0426ec646"
    },
    "file": "cp15.json",
    "inputs": [
@@ -538,13 +538,13 @@
    "params": 9,
    "parent": "cp15",
    "run_key": "cp15/A1",
-   "run_name": "CP-15 · A1 · normalized LEAR (study)",
-   "tags": 17
+   "run_name": "Normalized LEAR (A1)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "09c25edbc30302d651e9e31b389cffd4c7aef1e5b38f2f9be652849d66465550",
-    "summary.json": "f6ad0da30a79f8fb641b3773e384836fbb13f5520d5e20cf481fc0ce72a5aa95"
+    "README.md": "b64600a8fa0da94a9645d0942999749ca83cf82dec507fe20a97c4d9bed2e167",
+    "summary.json": "ccc23ed327b235402f932fe26d2c2159a3436647bd101d171c13e87a608d1ce4"
    },
    "file": "cp15.json",
    "inputs": [
@@ -622,13 +622,13 @@
    "params": 9,
    "parent": "cp15",
    "run_key": "cp15/A2",
-   "run_name": "CP-15 · A2 · normalized LightGBM (study)",
-   "tags": 17
+   "run_name": "Normalized LightGBM (A2)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "4f98d60f23143e503bf8616bc5bb7dd26f89812d00916c7df242754176fd7cd5",
-    "summary.json": "9664315e8844c454c9d5dd5bfeb3548ba59a57e250e146de92cd2fec8f09c07b"
+    "README.md": "51390d7a4cbbf8b8df0d1aed0474c5b4faaf284e3dc63c4fca7c7e482a0fe305",
+    "summary.json": "126b9aa0e2ed2cb703dae787040b79cd93120127bec267061d7b5260c509684c"
    },
    "file": "cp15.json",
    "inputs": [
@@ -706,13 +706,13 @@
    "params": 9,
    "parent": "cp15",
    "run_key": "cp15/A3",
-   "run_name": "CP-15 · A3 · normalized component mean (study)",
-   "tags": 17
+   "run_name": "Normalized component mean (A3)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "460fcb2cf8b4b31799e411ad172599d8f8b11814e4ebc47d2b23fa04a0f069bf",
-    "summary.json": "f8e66e011cd98cd6c4c88fa57aedc0f8a4d3a8698916a6b6cf2eaf9c4ea3905d"
+    "README.md": "af52ef9a3de3a03efd115fb0111e07281db716d8bd55647b87a079bfba86b7d1",
+    "summary.json": "664b4f8be83796b905a7abf1b570a0371e9451c275e4dc0752719387f2035ec7"
    },
    "file": "cp15.json",
    "inputs": [
@@ -790,13 +790,13 @@
    "params": 9,
    "parent": "cp15",
    "run_key": "cp15/A4",
-   "run_name": "CP-15 · A4 · 84-day normalized LEAR (study)",
-   "tags": 17
+   "run_name": "84-day normalized LEAR (A4)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "48de15f12b8b6a6bee6bce4655ed710748991d64e66b671f05f1ff0bc88e7600",
-    "summary.json": "c2f5d7657f1085eca786fde65a5770071753dcd0f54edff13e9b74d696e09626"
+    "README.md": "23e4813045189c17feaf1f062b481fe4edcb77edd1301025f432d3abe8e94e33",
+    "summary.json": "2879a37f87cbf0f53a4678b3ebbfbe1aa03034420a810d8281ec9c068ece06fa"
    },
    "file": "cp15.json",
    "inputs": [
@@ -874,13 +874,13 @@
    "params": 9,
    "parent": "cp15",
    "run_key": "cp15/A5",
-   "run_name": "CP-15 · A5 · normalized component mean, variant (study)",
-   "tags": 17
+   "run_name": "Normalized component mean, variant (A5)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "f1496d351d088656846535822e8f9de5365fd646c06552700e3dfe4aeaa5b384",
-    "summary.json": "52289c54a3c986fc32ee63aae7a87cbc4b1696f2151c115497577a5374a93af7"
+    "README.md": "9223ef813dfded99025ba17f3d39fe5d19fcb9cb9429be2034c1e9210b52a91a",
+    "summary.json": "cd037817f93047be328e77baf4012c5395b393a85d63648fdb946a7c64ed6389"
    },
    "file": "cp16.json",
    "inputs": [],
@@ -888,13 +888,13 @@
    "params": 2,
    "parent": null,
    "run_key": "cp16",
-   "run_name": "CP-16 · v2",
-   "tags": 12
+   "run_name": "v2 · blended LEAR, hour-aware intervals (CP-16)",
+   "tags": 16
   },
   {
    "artifacts": {
-    "README.md": "a68e6f3d66e78ebb3a08bb009712f34125aecf7fedfe13aa50f20221f17d1dd2",
-    "summary.json": "d16d1b2889748635e316d936dc16282d7728f16fcd8cc357f36107377780d3e0"
+    "README.md": "2d8dea0a11fdcbecb382894078ef509a25b4c0bac2196c71104fd408173456ec",
+    "summary.json": "d73e8ee05dded214119153b91fb1b02bb5f615c10b025e21d411e0900d61bbcb"
    },
    "file": "cp16.json",
    "inputs": [
@@ -936,15 +936,15 @@
    "params": 9,
    "parent": "cp16",
    "run_key": "cp16/V2-P",
-   "run_name": "CP-16 · V2-P · v2 control",
-   "tags": 17
+   "run_name": "Pooled-interval control (V2-P)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "6d794cd30fb500e791dd61f8a055ae30f2cada3d5c1db40fb891a7635c01765f",
+    "README.md": "4c0b34226948bca82b10ed0d22ef99bdcd7c160891430ea969fa2c46a50f3061",
     "charts/v2-chart1.svg": "e487f11ba8215feaa1e9a6ff7cfd04ae23d8cec3abafe5bd6a175cd0bb298aff",
     "charts/v2-chart2.svg": "eb176704f73277f350e5857d9a0f18cfde1fdd1d823a90fe1a621f0a4012e6f2",
-    "summary.json": "3e9b2ff06b0418a32018aeda784a716b94452c7516f253eb4ae2a01f1d6accdd"
+    "summary.json": "ebcbf8be9de2f50d6f82de34d9688df137cbc11e11a245ea539ddb80839162fc"
    },
    "file": "cp16.json",
    "inputs": [
@@ -998,13 +998,13 @@
    "params": 9,
    "parent": "cp16",
    "run_key": "cp16/V2-H",
-   "run_name": "CP-16 · V2-H · v2",
-   "tags": 17
+   "run_name": "v2 · blended LEAR, hour-aware intervals (V2-H)",
+   "tags": 21
   },
   {
    "artifacts": {
-    "README.md": "cf77bec2dae755b53d3af4959c8c90324618353f433283f92ca08a5ec929a3a7",
-    "summary.json": "c6a6ae4aa7fcf4e75621829fae89a09d1b35a423187d1d42357bf553d64ec42f"
+    "README.md": "c793e0312ceaf99dec4896923d48309407f8c6966be393562784ef4cff761889",
+    "summary.json": "529ecc3cd47ae9a6f31853be8a0ff674c37d84df70021b0deb02e5ff36e6a2e7"
    },
    "file": "cp20.json",
    "inputs": [],
@@ -1012,12 +1012,12 @@
    "params": 2,
    "parent": null,
    "run_key": "cp20",
-   "run_name": "CP-20 · v3 weather",
-   "tags": 12
+   "run_name": "v3 · weather features (CP-20)",
+   "tags": 16
   },
   {
    "artifacts": {
-    "README.md": "7605c571f841c1afdbbc295d51d436dd9d7dbe45205780ba118ab6f98f1503ee",
+    "README.md": "13ac544ca67dac11213510c1e68e6a6d9c3eed957f0adbd613a7a583255a9c6c",
     "charts/overview.svg": "808f344e5f2388820d917a5a0425d4989af66f64eefd29fdba0887b0436d26bf",
     "charts/v3-c2a.svg": "89681f680d6bcd6348d2bf1b8138ac2197077aab14e7432f72aaf5bafc9309e2",
     "charts/v3-c2b.svg": "0a414d249f3be1233b26a90202dd136b3cf41e2e8e2bacee2e807bf1495badc5",
@@ -1025,7 +1025,7 @@
     "charts/v3-c4.svg": "9e3fdc7d2dd49aff60b1d8cc5c892d4d1566d3b099de696833971512c390ab50",
     "charts/v3-c5.svg": "c1aea175be3f64772bbb38d36921897464636f906bf5e159ad951d9333eceacd",
     "charts/v3-c6.svg": "ada4dba7bd1bdc7cdeb38ca8ecf196e7fabb8e72583584e71c1906541a918952",
-    "summary.json": "953d15d7948938ec159526b9c460c725ae7c09e330d90471e5f98e5285c37db1"
+    "summary.json": "44a89cf2563563ef2d1fa252795cc90fe14192f63f0b701bfe3c20cc3dbae993"
    },
    "file": "cp20.json",
    "inputs": [
@@ -1068,8 +1068,8 @@
    "params": 10,
    "parent": "cp20",
    "run_key": "cp20/HG",
-   "run_name": "CP-20 · HG · v3",
-   "tags": 17
+   "run_name": "v3 · weather features (HG)",
+   "tags": 21
   }
  ],
  "sources": {

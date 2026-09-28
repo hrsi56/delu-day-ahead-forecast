@@ -23,6 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from delu_forecast import registry as G  # noqa: E402
 from delu_forecast.claims import PAGES_URL  # noqa: E402
 from delu_forecast.research_claims import README, README_BLOCKS, render  # noqa: E402
 
@@ -43,6 +44,7 @@ class MarkerError(RuntimeError):
 def build_block() -> str:
     paragraphs = [render(key, "md", surface=README) for key in README_BLOCKS]
     by_key = dict(zip(README_BLOCKS, paragraphs))
+    released, research = G.released(), G.current_generation()
     return "\n".join(
         [
             START,
@@ -51,13 +53,13 @@ def build_block() -> str:
             "",
             "## Research since v1: development evidence, post-selection",
             "",
-            "**v1 is the released product and the model the demo runs. v3 is the current research"
-            " model.** Every result below is development evidence after selection, on the same"
+            f"**{released.version} is the released product and the model the demo runs. {research.version} is the"
+            " current research model.** Every result below is development evidence after selection, on the same"
             f" historical hours for every policy. The [report]({PAGES_URL}#journey) has the charts.",
             "",
             by_key["opening.summary"],
             "",
-            "### v3 · weather features (CP-20)",
+            f"### {G.label('v3', 'readme')}",
             "",
             by_key["v3.change"],
             "",
@@ -71,7 +73,7 @@ def build_block() -> str:
             f"- {by_key['v3.caveat.bundle']}",
             f"- {by_key['v3.caveat.fold3']}",
             "",
-            "### v2 · blended LEAR, hour-aware intervals (CP-16), and the road to it",
+            f"### {G.label('v2', 'readme')}",
             "",
             by_key["v2.branch.cp10"],
             "",

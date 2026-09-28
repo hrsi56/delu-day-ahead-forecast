@@ -30,9 +30,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from delu_forecast import registry as G  # noqa: E402
 from delu_forecast import research as R  # noqa: E402
 from delu_forecast.claims import GITHUB_URL, PAGES_URL  # noqa: E402
-from delu_forecast.research_claims import POLICY_NAMES  # noqa: E402
 
 import build_pages  # noqa: E402  (the page's own chart builders, for the chart artifacts)
 
@@ -49,27 +49,29 @@ EXPORT_DIR = ROOT / "reports" / "presentation" / "mlflow-export"
 EXPERIMENT = "delu-generations"
 
 #: Experiment-level tags. The kind tag stops MLflow 3.5's UI from asking an anonymous reader to
-#: confirm an inferred experiment type (observed in the 2026-09-24 rehearsal).
+#: confirm an inferred experiment type (observed in the 2026-09-24 rehearsal). The description says
+#: the repository is the source of truth (standard §8), and names the parents from the registry.
 EXPERIMENT_TAGS = {
     "mlflow.experimentKind": "custom_model_development",
     "mlflow.note.content": (
-        "Every policy evaluated since v1, once each, nested under the checkpoint that produced it: "
-        "CP-10 (calibration branch, not adopted), CP-15 (model-comparison study), CP-16 (v2) and "
-        "CP-20 (v3). Backfilled from the committed evidence of "
-        "https://github.com/hrsi56/delu-day-ahead-forecast; development evidence after selection. "
-        "v1's own runs stay in delu-cp2."
+        f"The repository {GITHUB_URL} is the source of truth: every run here mirrors its committed "
+        "evidence, and every name, status and description comes from its registry. Each policy evaluated "
+        "since v1 appears once, nested under the checkpoint that produced it: "
+        + "; ".join(G.mlflow_run_name(checkpoint.run_key) for checkpoint in G.CHECKPOINTS.values())
+        + ". Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
     ),
 }
 FOLDS = ("fold_1", "fold_2", "fold_3", "fold_4", "fold_5")
 
 # --------------------------------------------------------------------------- the manifest (§10.3)
 
-#: Checkpoint identities, from the landing records and verdicts. `evidence_ref` names the tag
-#: that keeps the reviewed chain reachable, at its evidence tip.
+#: Checkpoint provenance, from the landing records and verdicts: what the registry does not hold.
+#: Names, statuses, children and roles come from `delu_forecast.registry` (standard §5).
+#: `evidence_ref` names the tag that keeps the reviewed chain reachable, at its evidence tip. The
+#: notes carry no status: a run's dated status is the registry's, prepended in `_description()`.
 CHECKPOINTS: dict[str, dict] = {
     "cp10": {
         "checkpoint": "CP-10",
-        "run_name": "CP-10 · calibration only (branch)",
         "model_code_sha": "ad3e1a5d5e42d70ea95bbffd01b4563eb2d6d803",
         "evidence_ref": "evidence/cp-15@4039ce2",
         "evidence_tag": "evidence/cp-15",
@@ -80,8 +82,8 @@ CHECKPOINTS: dict[str, dict] = {
         "landing": "docs/track-b/cp-15-landing.md",
         "note": (
             "CP-10 recalibrated v1 without refitting it: two scaled-conformal variants and four "
-            "adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. A branch, not adopted: "
-            "crisis-window 95% coverage rose from "
+            "adaptive-conformal step sizes, selected on folds 1, 2, 4 and 5. Crisis-window hours inside "
+            "the 95% interval rose from "
             f"{_ratio('cp10.peak_windows.v1_reference.covered_95', 'cp10.peak_windows.v1_reference.n_obs')} to "
             f"{_ratio('cp10.peak_windows.c1_price_volatility.covered_95', 'cp10.peak_windows.c1_price_volatility.n_obs')}"
             ", not enough. Scores are v1's "
@@ -91,7 +93,6 @@ CHECKPOINTS: dict[str, dict] = {
     },
     "cp15": {
         "checkpoint": "CP-15",
-        "run_name": "CP-15 · model-comparison study (informed v2)",
         "model_code_sha": "fc4aee038cf898998a292506df62ddb0dcfaf22a",
         "evidence_ref": "evidence/cp-15@1bdc75b",
         "evidence_tag": "evidence/cp-15",
@@ -110,7 +111,6 @@ CHECKPOINTS: dict[str, dict] = {
     },
     "cp16": {
         "checkpoint": "CP-16",
-        "run_name": "CP-16 · v2",
         "model_code_sha": "bf3ca602e32e99e45c7835e3f95148f62b608099",
         "evidence_ref": "evidence/cp-16@5ec8a92",
         "evidence_tag": "evidence/cp-16",
@@ -121,14 +121,13 @@ CHECKPOINTS: dict[str, dict] = {
         "landing": "docs/track-b/cp-16-landing-2026-09-23.md",
         "note": (
             "CP-16 blends the A1 and B2 central forecasts 50/50 with hour-aware residual intervals "
-            "(V2-H, adopted as v2) and a pooled-interval control (V2-P). V2-H against B2 meets the "
-            "exploratory joint improvement rule; V2-H against V2-P shows no demonstrated joint "
-            "preference. development_post_selection."
+            "(V2-H) and a pooled-interval control (V2-P). V2-H against B2 meets the exploratory joint "
+            "improvement rule; V2-H against V2-P shows no demonstrated joint preference. "
+            "development_post_selection."
         ),
     },
     "cp20": {
         "checkpoint": "CP-20",
-        "run_name": "CP-20 · v3 weather",
         "model_code_sha": "3e9ff8b500c2c655fea810ae11886503927f176c",
         "evidence_ref": "evidence/cp-20@a7a9b2e",
         "evidence_tag": "evidence/cp-20",
@@ -140,45 +139,32 @@ CHECKPOINTS: dict[str, dict] = {
         "note": (
             "CP-20 appended three GFS weather features (mean wind speed at 10 m and 100 m, mean "
             "solar radiation over a fixed regional box) to v2's recipes. HG against H0 (= v2) meets "
-            "the joint improvement rule; the gain belongs to the three features together. Adopted "
-            "as v3. development_post_selection."
+            "the joint improvement rule; the gain belongs to the three features together. "
+            "development_post_selection."
         ),
     },
 }
 
-#: (run key suffix, role, adopted, public label). Each policy appears once, under the checkpoint
-#: that produced it first: the references come from CP-15, v2 from CP-16, v3 from CP-20.
-CHILDREN: dict[str, tuple[tuple[str, str, str, str], ...]] = {
-    "cp10": (
-        ("v1_reference", "reference", "n/a", "v1 unscaled CQR (reference)"),
-        ("c1_head_spread", "candidate", "false", "scaled conformal, head spread"),
-        ("c1_price_volatility", "candidate", "false", "scaled conformal, price volatility (selected)"),
-        ("c2_aci_gamma_0.000001", "candidate", "false", "adaptive conformal, gamma 0.000001"),
-        ("c2_aci_gamma_0.000005", "candidate", "false", "adaptive conformal, gamma 0.000005"),
-        ("c2_aci_gamma_0.00001", "candidate", "false", "adaptive conformal, gamma 0.00001"),
-        ("c2_aci_gamma_0.00002", "candidate", "false", "adaptive conformal, gamma 0.00002 (selected gamma)"),
-    ),
-    "cp15": (
-        ("B0", "reference", "n/a", "similar-day naive (reference)"),
-        ("B1", "reference", "true", "v1 development replay"),
-        ("B2", "reference", "n/a", "daily LEAR (reference)"),
-        ("B3", "reference", "n/a", "daily LightGBM (reference)"),
-        ("A1", "candidate", "false", "normalized LEAR (study)"),
-        ("A2", "candidate", "false", "normalized LightGBM (study)"),
-        ("A3", "candidate", "false", "normalized component mean (study)"),
-        ("A4", "candidate", "false", "84-day normalized LEAR (study)"),
-        ("A5", "candidate", "false", "normalized component mean, variant (study)"),
-    ),
-    "cp16": (
-        ("V2-P", "control", "false", "v2 control"),
-        ("V2-H", "candidate", "true", "v2"),
-    ),
-    "cp20": (
-        ("HG", "candidate", "true", "v3"),
-    ),
-}
+def children(checkpoint: str) -> tuple[str, ...]:
+    """A checkpoint's children, in the registry's order. Each policy appears once per population,
+    under the checkpoint that produced it first: the references come from CP-15, v2 from CP-16,
+    v3 from CP-20."""
+    return G.CHECKPOINTS[CHECKPOINTS[checkpoint]["checkpoint"]].children
 
-GENERATION = {"B1": "v1", "V2-H": "v2", "HG": "v3"}
+
+def _status_text(entry: G.Entry) -> str:
+    return f"{entry.status.status} {entry.status.date}" if entry.status is not None else "none"
+
+
+def _description(entry: G.Entry, note: str, *, code: str | None = None, role: str | None = None) -> str:
+    """A run's description: its registry identity and dated status, then the checkpoint's summary."""
+    parts = [f"{entry.name}: {entry.subtitle}."]
+    if entry.status is not None:
+        parts.append(G.status_sentence(entry))
+    if code is not None:
+        parts.append(f"Code {code}; role {role}.")
+    parts.append(note)
+    return " ".join(parts)
 
 #: The base each candidate's paired contrasts are logged against, by run and base code.
 CONTRASTS: dict[str, tuple[tuple[str, str, str], ...]] = {
@@ -519,24 +505,29 @@ def _artifact(path: str, content: str) -> dict:
     return {"path": path, "sha256": sha256_text(content), "bytes": len(content.encode("utf-8")), "content": content}
 
 
-def child_run(checkpoint: str, code: str, role: str, adopted: str, label: str, groups: dict) -> dict:
+def child_run(checkpoint: str, code: str, groups: dict) -> dict:
     spec = CHECKPOINTS[checkpoint]
     run_key = f"{checkpoint}/{code}"
+    entry = G.entry_for_run_key(run_key)
+    role = G.run_role(run_key)
     group = groups["cp10" if checkpoint == "cp10" else "common"]
     builder = Builder()
     _scores(builder, run_key, code)
     blobs = _source_blobs(builder.provenance)
-    run_name = f"{spec['checkpoint']} · {code} · {label}"
-    public = POLICY_NAMES.get(code, label)
-    note = f"{public}. {spec['note']}"
+    run_name = G.mlflow_run_name(run_key)
+    note = _description(entry, spec["note"], code=code, role=role)
     tags = {
         "delu.run_key": run_key,
         "delu.checkpoint": spec["checkpoint"],
-        "delu.generation": GENERATION.get(code, "none") if checkpoint != "cp10" else "none",
+        "delu.registry_id": entry.id,
+        "delu.kind": entry.kind,
+        "delu.generation": entry.version or "none",
         "delu.policy_code": code,
-        "delu.public_name": public,
+        "delu.public_name": entry.name,
+        "delu.status": _status_text(entry),
+        "delu.comparator": G.get(entry.comparator).name if entry.comparator else "none",
         "delu.role": role,
-        "delu.adopted": adopted,
+        "delu.adopted": G.adopted_flag(entry),
         "delu.evidence_class": ("development_calibration_comparison" if checkpoint == "cp10"
                                 else "development_post_selection"),
         "delu.population_id": group["population_id"],
@@ -580,10 +571,16 @@ def child_run(checkpoint: str, code: str, role: str, adopted: str, label: str, g
 
 def parent_run(checkpoint: str, groups: dict) -> dict:
     spec = CHECKPOINTS[checkpoint]
+    owner = G.entry_for_run_key(checkpoint)
+    run_name = G.mlflow_run_name(checkpoint)
     group = groups["cp10" if checkpoint == "cp10" else "common"]
     tags = {
         "delu.run_key": checkpoint,
         "delu.checkpoint": spec["checkpoint"],
+        "delu.registry_id": owner.id,
+        "delu.kind": owner.kind,
+        "delu.public_name": owner.name,
+        "delu.status": _status_text(owner),
         "delu.role": "checkpoint",
         "delu.evidence_class": ("development_calibration_comparison" if checkpoint == "cp10"
                                 else "development_post_selection"),
@@ -593,13 +590,13 @@ def parent_run(checkpoint: str, groups: dict) -> dict:
         "delu.evidence_ref": spec["evidence_ref"],
         "delu.backfilled": "true",
         "delu.original_completed_utc": "unknown",
-        "delu.children": ",".join(f"{checkpoint}/{child[0]}" for child in CHILDREN[checkpoint]),
-        "mlflow.note.content": spec["note"],
+        "delu.children": ",".join(f"{checkpoint}/{code}" for code in children(checkpoint)),
+        "mlflow.note.content": _description(owner, spec["note"]),
     }
     run = {
         "run_key": checkpoint,
         "parent": None,
-        "run_name": spec["run_name"],
+        "run_name": run_name,
         "params": {"anchor_version": spec["anchor_version"], "protocol_sha256": _file_sha256(spec["protocol"])},
         "tags": tags,
         "metrics": {},
@@ -611,7 +608,7 @@ def parent_run(checkpoint: str, groups: dict) -> dict:
     blobs = {spec["protocol"]: R.SOURCES[spec["protocol"]].blob} if spec["protocol"] in R.SOURCES else {}
     run["artifacts"] = [
         _artifact("summary.json", _canonical({k: v for k, v in run.items() if k != "metric_provenance"}) + "\n"),
-        _artifact("README.md", _readme(checkpoint, checkpoint, spec["run_name"], blobs)),
+        _artifact("README.md", _readme(checkpoint, checkpoint, run_name, blobs)),
     ]
     return run
 
@@ -619,9 +616,9 @@ def parent_run(checkpoint: str, groups: dict) -> dict:
 def build_export() -> dict[str, dict]:
     groups = comparability()
     files: dict[str, dict] = {}
-    for checkpoint in ("cp10", "cp15", "cp16", "cp20"):
+    for checkpoint in G.parent_run_keys():
         runs = [parent_run(checkpoint, groups)]
-        runs += [child_run(checkpoint, *child, groups=groups) for child in CHILDREN[checkpoint]]
+        runs += [child_run(checkpoint, code, groups=groups) for code in children(checkpoint)]
         files[checkpoint] = {"experiment": EXPERIMENT, "checkpoint": CHECKPOINTS[checkpoint]["checkpoint"],
                              "runs": runs}
     files["manifest"] = manifest(files)
@@ -630,7 +627,7 @@ def build_export() -> dict[str, dict]:
 
 def manifest(files: dict[str, dict]) -> dict:
     runs = []
-    for checkpoint in ("cp10", "cp15", "cp16", "cp20"):
+    for checkpoint in G.parent_run_keys():
         for run in files[checkpoint]["runs"]:
             runs.append({
                 "run_key": run["run_key"],
@@ -654,6 +651,35 @@ def manifest(files: dict[str, dict]) -> dict:
         "sources": {path: {"tag": source.tag, "blob": source.blob} for path, source in sorted(R.SOURCES.items())},
         "upload_time_tags": ["delu.backfill_tool_sha", "delu.upload_state", "delu.package_complete"],
     }
+
+
+def contract_problems(files: dict[str, dict]) -> list[str]:
+    """The export matches the registry (standard §11): exactly the run keys it expects, each once,
+    each parent the checkpoint that owns it, each name the registry's. Never a count."""
+    problems = []
+    runs = [run for name, content in files.items() if name != "manifest" for run in content["runs"]]
+    keys = [run["run_key"] for run in runs]
+    expected = G.expected_run_keys()
+    if sorted(keys) != sorted(expected) or len(keys) != len(set(keys)):
+        missing = sorted(set(expected) - set(keys))
+        extra = sorted(set(keys) - set(expected))
+        problems.append(f"run keys differ from the registry (missing {missing}, unregistered {extra})")
+    for run in runs:
+        key = run["run_key"]
+        if key not in expected:
+            continue
+        if run["run_name"] != G.mlflow_run_name(key):
+            problems.append(f"{key}: run name is not the registry's")
+        want_parent = None if "/" not in key else key.split("/")[0]
+        if run["parent"] != want_parent:
+            problems.append(f"{key}: parent {run['parent']!r} is not {want_parent!r}")
+        entry = G.entry_for_run_key(key)
+        if run["tags"].get("delu.public_name") != entry.name:
+            problems.append(f"{key}: public name tag is not the registry's")
+    manifest = [run["run_key"] for run in files.get("manifest", {}).get("runs", [])]
+    if files.get("manifest") is not None and sorted(manifest) != sorted(keys):
+        problems.append("the manifest does not list exactly the exported runs")
+    return problems
 
 
 def render(files: dict[str, dict]) -> dict[str, str]:
@@ -702,17 +728,121 @@ def local_secrets() -> list[tuple[str, bytes]]:
     return credentials()
 
 
+# --------------------------------------------------------------------------- record-level diff (brief W2)
+
+#: The fields a registry change may alter: names, descriptions and tags. Everything else --
+#: parameters, every metric history point, datasets, parents and artifact digests -- must match.
+IDENTITY_FIELDS = ("run_name", "tags")
+
+
+def _runs_by_key(files: dict[str, dict]) -> dict[str, dict]:
+    return {run["run_key"]: run for name, content in files.items() if name != "manifest"
+            for run in content["runs"]}
+
+
+def _normalized_artifact(path: str, content: str) -> str:
+    """An artifact with its identity fields removed: `summary.json` without its name and tags,
+    `README.md` without its title line. What remains must not change when only names do."""
+    if path == "summary.json":
+        body = json.loads(content)
+        return _canonical({k: v for k, v in body.items() if k not in IDENTITY_FIELDS})
+    if path == "README.md":
+        return content.split("\n", 1)[1]
+    return content
+
+
+def diff_exports(old: dict[str, dict], new: dict[str, dict]) -> dict:
+    """Compare two exports record by record: every run, parameter, metric history point, dataset
+    and artifact. Returns what changed; `only_identity` is true when nothing but names,
+    descriptions and tags did (an identity-only artifact is compared after `_normalized_artifact`)."""
+    old_runs, new_runs = _runs_by_key(old), _runs_by_key(new)
+    report: dict = {"runs_old": len(old_runs), "runs_new": len(new_runs), "run_keys_equal": sorted(old_runs) == sorted(new_runs),
+                    "checked": {"params": 0, "metric_points": 0, "datasets": 0, "artifacts": 0},
+                    "identity_changes": {}, "substantive_changes": []}
+    for key in sorted(set(old_runs) | set(new_runs)):
+        if key not in old_runs or key not in new_runs:
+            report["substantive_changes"].append(f"{key}: present in only one export")
+            continue
+        a, b = old_runs[key], new_runs[key]
+        changed = {}
+        if a["run_name"] != b["run_name"]:
+            changed["run_name"] = [a["run_name"], b["run_name"]]
+        tag_changes = {k: [a["tags"].get(k), b["tags"].get(k)] for k in sorted(set(a["tags"]) | set(b["tags"]))
+                       if a["tags"].get(k) != b["tags"].get(k)}
+        if tag_changes:
+            changed["tags"] = tag_changes
+        if changed:
+            report["identity_changes"][key] = changed
+        if a["parent"] != b["parent"]:
+            report["substantive_changes"].append(f"{key}: parent")
+        if a["params"] != b["params"]:
+            report["substantive_changes"].append(f"{key}: params")
+        report["checked"]["params"] += len(a["params"])
+        if a["metrics"] != b["metrics"] or a["metric_units"] != b["metric_units"]:
+            report["substantive_changes"].append(f"{key}: metrics")
+        report["checked"]["metric_points"] += sum(len(points) for points in a["metrics"].values())
+        if a["inputs"] != b["inputs"]:
+            report["substantive_changes"].append(f"{key}: datasets")
+        report["checked"]["datasets"] += len(a["inputs"])
+        old_art = {art["path"]: art for art in a["artifacts"]}
+        new_art = {art["path"]: art for art in b["artifacts"]}
+        if sorted(old_art) != sorted(new_art):
+            report["substantive_changes"].append(f"{key}: artifact paths")
+            continue
+        for path in sorted(old_art):
+            report["checked"]["artifacts"] += 1
+            if old_art[path]["sha256"] == new_art[path]["sha256"]:
+                continue
+            if (path in ("summary.json", "README.md")
+                    and _normalized_artifact(path, old_art[path]["content"]) == _normalized_artifact(path, new_art[path]["content"])):
+                report["identity_changes"].setdefault(key, {}).setdefault("artifacts_identity_only", []).append(path)
+                continue
+            report["substantive_changes"].append(f"{key}: artifact {path}")
+    old_tags = old.get("manifest", {}).get("experiment_tags", {})
+    new_tags = new.get("manifest", {}).get("experiment_tags", {})
+    report["experiment_tag_changes"] = sorted(k for k in set(old_tags) | set(new_tags) if old_tags.get(k) != new_tags.get(k))
+    report["only_identity"] = report["run_keys_equal"] and not report["substantive_changes"]
+    return report
+
+
+def export_at(ref: str) -> dict[str, dict]:
+    """The committed export at a Git revision, as parsed JSON."""
+    import subprocess
+
+    files = {}
+    for name in ("manifest", *G.parent_run_keys()):
+        text = subprocess.run(["git", "show", f"{ref}:reports/presentation/mlflow-export/{name}.json"],
+                              cwd=ROOT, capture_output=True, text=True, check=True).stdout
+        files[name] = json.loads(text)
+    return files
+
+
 # --------------------------------------------------------------------------- main
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--check", action="store_true", help="exit 1 if the committed export is stale")
+    parser.add_argument("--diff-against", metavar="REF", default=None,
+                        help="compare the fresh export with the one committed at REF, record by record")
+    parser.add_argument("--out", type=Path, default=None, help="with --diff-against: write the report here")
     args = parser.parse_args()
     files = build_export()
+    if args.diff_against:
+        report = diff_exports(export_at(args.diff_against), files)
+        report["against"] = args.diff_against
+        text = json.dumps(report, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
+        if args.out:
+            args.out.parent.mkdir(parents=True, exist_ok=True)
+            args.out.write_text(text)
+        print(f"runs {report['runs_old']} -> {report['runs_new']}; checked {report['checked']}; "
+              f"identity changes on {len(report['identity_changes'])} runs; "
+              f"substantive changes: {report['substantive_changes'] or 'none'}; only_identity={report['only_identity']}")
+        return 0 if report["only_identity"] else 1
     counts = files["manifest"]["counts"]
-    if counts != {"parents": 4, "children": 19, "total": 23}:
-        raise SystemExit(f"the manifest must hold exactly 23 runs (4 parents, 19 children); got {counts}")
+    problems = contract_problems(files)
+    if problems:
+        raise SystemExit("the export does not match the registry: " + "; ".join(problems))
     findings = outbound_findings(outbound_strings(files), local_secrets())
     if findings:
         for finding in dict.fromkeys(findings):

@@ -38,29 +38,8 @@ CLAIM_MAPS = (
 
 # --------------------------------------------------------------------------- names and labels
 
-#: Plain names first; codes are secondary metadata (plan §7.1, Appendix A).
-POLICY_NAMES: dict[str, str] = {
-    "HG": "v3 · weather features",
-    "H0": "v2 · blended LEAR, hour-aware intervals",
-    "V2-H": "v2 · blended LEAR, hour-aware intervals",
-    "V2-P": "v2 control · pooled intervals",
-    "B0": "Similar-day naive",
-    "B1": "v1 · released LightGBM",
-    "B2": "Daily LEAR",
-    "B3": "Daily LightGBM",
-    "A1": "Normalized LEAR",
-    "A2": "Normalized LightGBM",
-    "A3": "Normalized component mean",
-    "A4": "84-day normalized LEAR",
-    "A5": "Normalized component mean, variant",
-}
-
-#: The role each policy plays in a comparison: a generation, a reference or a study arm.
-POLICY_ROLES: dict[str, str] = {
-    "HG": "generation", "H0": "generation", "V2-H": "generation", "B1": "generation",
-    "B0": "reference", "B2": "reference", "B3": "reference",
-    "A1": "study", "A2": "study", "A3": "study", "A4": "study", "A5": "study", "V2-P": "control",
-}
+# Names, kinds and statuses are not typed here: they come from `delu_forecast.registry`
+# (standard §5), which replaced the hand-written POLICY_NAMES and POLICY_ROLES maps.
 
 #: Evidence badges (plan §7.8). The v1 text is verbatim and may wrap; it is never shortened.
 BADGE_DEVELOPMENT = "Development · post-selection"
@@ -567,8 +546,6 @@ __all__ = [
     "EXACT_FIELDS",
     "NOT_ADOPTED",
     "PLANNED",
-    "POLICY_NAMES",
-    "POLICY_ROLES",
     "README_BLOCKS",
     "STALE_PHRASES",
     "WITHHELD_PATTERNS",

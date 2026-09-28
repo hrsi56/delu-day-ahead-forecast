@@ -46,6 +46,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from delu_forecast import registry as G  # noqa: E402
 from delu_forecast import research as R  # noqa: E402
 from delu_forecast import research_claims as RC  # noqa: E402
 from delu_forecast.claims import (  # noqa: E402
@@ -850,25 +851,24 @@ def preview_chart(payload: dict) -> str:
 
 
 def lineage() -> str:
-    """The main line of adopted generations, in plain words; canonical names stay in the chapters."""
-    main = [
-        ("v1", "released model", "The released demo", "#v1", "v1"),
-        ("v2", "a new forecasting approach", "Blended LEAR, hour-aware intervals · adopted in research", "#v2", "v2"),
-        ("v3", "adds weather inputs", "Adopted in research · not in the demo", "#v3", "v3"),
-    ]
+    """The main line of adopted generations, in plain words; canonical names stay in the chapters.
+    Nodes, branches, their order and their statuses come from the registry (standard §5)."""
     nodes = "".join(
-        f'<li class="node node-{role}"><a href="{href}"><span class="dot" aria-hidden="true"></span>'
-        f'<span class="node-name">{ver(label)} · {esc(name)}</span>'
-        f'<span class="node-status">{esc(status)}</span></a></li>'
-        for label, name, status, href, role in main
+        f'<li class="node node-{entry.style}"><a href="{entry.anchor}"><span class="dot" aria-hidden="true"></span>'
+        f'<span class="node-name">{ver(entry.version)} · {esc(G.label(entry, "lineage"))}</span>'
+        f'<span class="node-status">{esc(G.label(entry, "lineage-status"))}</span></a></li>'
+        for entry in G.generations()
     )
+    branch_entries = G.branches()
+    first, informed = G.get(branch_entries[0].after), G.get(branch_entries[-1].informed)
     branches = (
-        f'<p class="branches-head">Experiments between {ver("v1")} and {ver("v2")}</p>'
+        f'<p class="branches-head">Experiments between {ver(first.version)} and {ver(informed.version)}</p>'
         '<ul class="branches" aria-label="Experiments that informed the decisions">'
-        f'<li class="branch"><a href="#road-to-v2"><span class="branch-name">Calibration experiment</span>'
-        f'<span class="branch-status">{esc(RC.NOT_ADOPTED)} · recalibrating {ver("v1")} was not enough</span></a></li>'
-        f'<li class="branch"><a href="#road-to-v2"><span class="branch-name">Model comparison study</span>'
-        f'<span class="branch-status">Informed {ver("v2")}</span></a></li></ul>'
+        + "".join(
+            f'<li class="branch"><a href="{G.label(entry, "lineage-href")}"><span class="branch-name">{esc(entry.name)}</span>'
+            f'<span class="branch-status">{_structural_versions(G.label(entry, "lineage-status"))}</span></a></li>'
+            for entry in branch_entries)
+        + "</ul>"
     )
     return (
         '<div class="lineage"><p class="lineage-caption">Adopted generations, oldest first; the branches show the '
@@ -972,15 +972,16 @@ _HG_MAE = "cp20.uncertainty.HG-H0.equal_fold.MAE"
 _HG_WIS = "cp20.uncertainty.HG-H0.equal_fold.WIS"
 FOLDS = ("fold_1", "fold_2", "fold_3", "fold_4", "fold_5")
 
-OVERVIEW_ROWS = (
-    ("HG", "v3", "v3 · weather features", True),
-    ("H0", "v2", "v2 · blended LEAR, hour-aware intervals", True),
-    ("B2", "reference", "Daily LEAR (reference)", False),
-    ("A1", "study", "Normalized LEAR (study challenger)", False),
-    ("B3", "reference", "Daily LightGBM (reference)", False),
-    ("B1", "v1", "v1 · released LightGBM (development replay)", True),
-    ("B0", "reference", "Similar-day naive (normalizer)", False),
-)
+def _rows_of(order, experiment: str, context: str) -> tuple[tuple[str, str, str, bool], ...]:
+    """(code, style, label, bold) for registry entries in a chart's order: the code each carries in
+    the experiment whose rows the chart draws, and the label the registry gives that context."""
+    out = []
+    for entry in (G.get(ident) if isinstance(ident, str) else ident for ident in order):
+        out.append((entry.code_in(experiment), entry.style, G.label(entry, context), entry.kind == "generation"))
+    return tuple(out)
+
+
+OVERVIEW_ROWS = _rows_of(G.comparison_rows(), G.COMPARISON_EXPERIMENT, "overview")
 
 
 def overview_chart() -> str:
@@ -1042,6 +1043,18 @@ def fold_table() -> str:
     )
 
 
+def _generation_codes() -> tuple[tuple[str, str], ...]:
+    """(style, code in the shared comparison) for every generation, oldest first."""
+    return tuple((entry.style, entry.code_in(G.COMPARISON_EXPERIMENT)) for entry in G.generations())
+
+
+def _hour_series() -> tuple[tuple[str, str], ...]:
+    """The hour-of-day chart's two series: the current generation's comparator, then the generation."""
+    current = G.current_generation()
+    comparator = G.get(current.comparator)
+    return tuple((entry.style, entry.code_in(G.COMPARISON_EXPERIMENT)) for entry in (comparator, current))
+
+
 def c2a_panels() -> list[Panel]:
     return [Panel("Difference, v3 − v2", "normalized score · negative favours v3",
                   (Row("Point error (ΔS_MAE)", _HG_MAE, "v3", bold=True, claim="C69"),
@@ -1084,7 +1097,7 @@ def c3_panels():
     def rows(metric: str) -> tuple[MultiRow, ...]:
         out = []
         for fold in FOLDS:
-            ids = {role: f"cp20.metrics.{code}.{fold}.{metric}" for role, code in (("v1", "B1"), ("v2", "H0"), ("v3", "HG"))}
+            ids = {role: f"cp20.metrics.{code}.{fold}.{metric}" for role, code in _generation_codes()}
             top = max(R.get(rid).value for rid in ids.values())
             magnitude = 10 ** math.floor(math.log10(top))
             hi = math.ceil(top * 1.08 / magnitude * 2) * magnitude / 2
@@ -1105,14 +1118,18 @@ def c3_chart() -> str:
 
 
 def c4_panels() -> list[Panel]:
-    rows_mae = (Row("v1 · released LightGBM", "cp15.peak.B1.MAE", "v1", bold=True),
-                Row("Normalized LEAR (study)", "cp15.peak.A1.MAE", "study"),
-                Row("v2", "cp20.criteria.H0.c4.peak.MAE", "v2", bold=True),
-                Row("v3", "cp20.criteria.HG.c4.peak.MAE", "v3", bold=True))
-    rows_hits = (Row("v1 · released LightGBM", "cp15.peak.B1.hit_count95", "v1", bold=True),
-                 Row("Normalized LEAR (study)", "cp15.peak.A1.hit_count95", "study"),
-                 Row("v2", "cp20.diagnostics.H0.peak.hit_count95", "v2", bold=True),
-                 Row("v3", "cp20.diagnostics.HG.peak.hit_count95", "v3", bold=True))
+    def crisis_rows(saved: str, evaluated: str) -> tuple[Row, ...]:
+        # v1 and the study arm carry CP-15's saved crisis rows; later generations their own checkpoint's.
+        rows = []
+        for entry in (G.get(ident) for ident in G.CRISIS_ORDER):
+            code = entry.code_in(G.COMPARISON_EXPERIMENT)
+            record = (saved.format(code=entry.code_in("CP-15")) if entry.code_in("CP-15")
+                      else evaluated.format(code=code))
+            rows.append(Row(G.label(entry, "crisis"), record, entry.style, bold=entry.kind == "generation"))
+        return tuple(rows)
+
+    rows_mae = crisis_rows("cp15.peak.{code}.MAE", "cp20.criteria.{code}.c4.peak.MAE")
+    rows_hits = crisis_rows("cp15.peak.{code}.hit_count95", "cp20.diagnostics.{code}.peak.hit_count95")
     window_hours = R.get("cp20.diagnostics.HG.peak.n_hours").value
     nominal = Ref("nominal 95%", at=0.95 * window_hours)  # the target 95% of the window's hours, not an observation
     return [Panel("MAE, EUR/MWh", "lower is better", rows_mae, domain=(0.0, 300.0), step=50.0),
@@ -1130,7 +1147,7 @@ def c4_chart() -> str:
 
 
 def c5_chart() -> str:
-    return hour_panels("v3-c5", "C82", (("v2", "H0"), ("v3", "HG")),
+    return hour_panels("v3-c5", "C82", _hour_series(),
                        title="MAE by local hour, v2 against v3, per fold",
                        desc="Five panels, one per fold, each on its own scale: v2 dashed with squares, v3 solid "
                             "with circles. Descriptive only.")
@@ -1152,7 +1169,7 @@ def c6_panels():
         out = []
         for level in ("50", "80", "95"):
             field = f"coverage{level}" if kind == "coverage" else f"mean_width{level}"
-            marks = tuple((role, f"cp20.metrics.{code}.pooled.{field}") for role, code in (("v1", "B1"), ("v2", "H0"), ("v3", "HG")))
+            marks = tuple((role, f"cp20.metrics.{code}.pooled.{field}") for role, code in _generation_codes())
             ref = Ref(f"nominal {level}%", at=int(level) / 100) if kind == "coverage" else None
             out.append(MultiRow(f"{level}% interval", marks, ref=ref))
         return tuple(out)
@@ -1196,9 +1213,7 @@ def v2_chart2() -> str:
 
 
 def v2_chart1_panels() -> list[Panel]:
-    rows = (("V2-H", "v2", "v2 · hour-aware intervals", True), ("V2-P", "control", "v2 control · pooled intervals", False),
-            ("B2", "reference", "Daily LEAR (reference)", False), ("A1", "study", "Normalized LEAR (study)", False),
-            ("B3", "reference", "Daily LightGBM (reference)", False), ("B1", "v1", "v1 (development replay)", True))
+    rows = _rows_of(G.V2_SCORES_ORDER, "CP-16", "v2-scores")
 
     def panel(field: str, title: str, limit: str) -> Panel:
         return Panel(title, "ratio to the naive · lower is better",
@@ -1296,8 +1311,7 @@ def hour_values_table(ident: str, claim_id: str, series: tuple[tuple[str, str], 
 
 
 def legend(roles: tuple[str, ...]) -> str:
-    names = {"v1": "v1 · released", "v2": "v2", "v3": "v3", "reference": "reference", "study": "study arm",
-             "control": "control arm"}
+    names = {**{entry.style: G.label(entry, "legend") for entry in G.generations()}, **G.STYLE_LABELS}
     items = []
     for role in roles:
         svg = (f'<svg class="legend-mark" viewBox="-8 -8 16 16" width="16" height="16" aria-hidden="true">'
@@ -1332,6 +1346,7 @@ def header() -> str:
 
 def opening(C, payload) -> str:
     demo = demo_measurement()
+    released, research = G.released(), G.current_generation()
     measured = (f'<span data-release-check="{attr(demo["path"])}#seconds_to_visible_forecast">'
                 f'{esc(demo["seconds"])}</span>')
     details = (
@@ -1349,12 +1364,12 @@ def opening(C, payload) -> str:
    research models improved, what failed, and how each result was checked.</p>
   <p class="byline">Led by {esc(RC.OWNER_PUBLIC_NAME)} · <a href="#contribution">Contribution</a></p>
   <dl class="status-pair">
-   <div class="status status-released"><dt>Demo</dt><dd><span class="gen gen-v1">{ver("v1")}</span> · Released model</dd></div>
-   <div class="status status-research"><dt>Research</dt><dd><span class="gen gen-v3">{ver("v3")}</span> · Weather features
-    {badge(RC.BADGE_DEVELOPMENT)}</dd></div>
+   <div class="status status-released"><dt>Demo</dt><dd><span class="gen gen-{released.style}">{ver(released.version)}</span> · {esc(G.label(released, "status"))}</dd></div>
+   <div class="status status-research"><dt>Research</dt><dd><span class="gen gen-{research.style}">{ver(research.version)}</span> · {esc(G.label(research, "status"))}
+    {badge(research.badge)}</dd></div>
   </dl>
   <div class="actions">
-   <a class="btn-primary external" href="{attr(C['space_url'])}"><span>Try the {ver("v1")} demo</span></a>
+   <a class="btn-primary external" href="{attr(C['space_url'])}"><span>Try the {ver(released.version)} demo</span></a>
    <a class="quiet" href="#research-results">Compare model results</a>
    <a class="quiet" href="#evidence">Code and evidence</a>
   </div>
@@ -1363,13 +1378,13 @@ def opening(C, payload) -> str:
   {disclosure("demo-details", "What the demo does and startup details", details)}
  </div>
  <figure class="preview panel">
-  <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver("v1")}</span>
+  <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver(released.version)}</span>
    <span>Forecast and observed price for a held-out day. This is a historical replay, not a live forecast.</span></figcaption>
   {preview_chart(payload)}
   <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
    <span class="key-actual">Observed price</span></p>
   <p class="preview-links"><a class="quiet" href="#forecast">Explore this forecast</a>
-   <span class="preview-note">Opens the replay in the archived {ver("v1")} report.</span></p>
+   <span class="preview-note">Opens the replay in the archived {ver(released.version)} report.</span></p>
  </figure>
  <div class="opening-summary" data-research="opening"><p class="summary-label">Latest research</p>{block("opening.summary")}</div>
 </section>"""
@@ -1404,13 +1419,14 @@ def results() -> str:
 </section>"""
 
 
-def chapter_header(gen: str, name: str, when: str, adoption_text: str, badge_text: str | None, badge_kind: str,
-                   ident: str) -> str:
-    badge_html = badge(badge_text, badge_kind) if badge_text else ""
+def chapter_header(entry: G.Entry, *, with_badge: bool = True) -> str:
+    """A chapter's header: version, name, dated status and badge, all from the registry (standard §5)."""
+    badge_html = badge(entry.badge, "development") if with_badge else ""
+    name = entry.name.split(" · ", 1)[1]
     return (
-        f'<header class="chapter-head"><p class="eyebrow">{_structural_versions(when)}</p>'
-        f'<h2 id="{ident}-h"><span class="gen gen-{gen}">{ver(gen)}</span> · {esc(name)}</h2>'
-        f'<p class="chapter-meta">{adoption(adoption_text)}{badge_html}</p></header>'
+        f'<header class="chapter-head"><p class="eyebrow">{_structural_versions(G.label(entry, "chapter-eyebrow"))}</p>'
+        f'<h2 id="{entry.id}-h"><span class="gen gen-{entry.style}">{ver(entry.version)}</span> · {esc(name)}</h2>'
+        f'<p class="chapter-meta">{adoption(G.label(entry, "chapter-adoption"))}{badge_html}</p></header>'
     )
 
 
@@ -1448,8 +1464,7 @@ def v3_chapter(*, open_folds: bool = False) -> str:
         .replace("fold 3", "fold " + S("fold", "3")) + "</p>")
     return f"""
 <article class="chapter" id="v3" aria-labelledby="v3-h" data-research="v3">
- {chapter_header("v3", "weather features", "Latest research · evaluated 2026-09-24",
-                 RC.ADOPTED + " in research · not in the demo", RC.BADGE_DEVELOPMENT, "development", "v3")}
+ {chapter_header(G.get("v3"))}
  <div class="change"><h3 class="story-label">What changed</h3>{block("v3.change.short")}{feature_change()}</div>
  <figure class="panel analytical" aria-labelledby="c2a-title">
   <h3 class="panel-title" id="c2a-title">{_structural_versions("Weather inputs improved both development scores against v2.")}</h3>
@@ -1474,7 +1489,7 @@ def v3_chapter(*, open_folds: bool = False) -> str:
   {disclosure("v3-crisis", "Crisis window", crisis_note + c4_chart() + values_table("v3-c4-values", "C79", c4_panels()))}
   {disclosure("v3-hours", "Hours of the day", c5_chart()
               + '<p class="chart-note">Descriptive only: no hour or block effect is claimed.</p>'
-              + hour_values_table("v3-c5-values", "C82", (("v2", "H0"), ("v3", "HG"))))}
+              + hour_values_table("v3-c5-values", "C82", _hour_series()))}
   {disclosure("v3-coverage", "Coverage and interval width", c6_chart() + multi_values_table("v3-c6-values", "C80", c6_panels()))}
   {disclosure("v3-protocol", "Criteria, controls and review", protocol)}
  </div>
@@ -1487,8 +1502,7 @@ def v2_chapter() -> str:
     scores = v2_chart1() + block("v2.result.pb2") + block("v2.result.criteria")
     return f"""
 <article class="chapter" id="v2" aria-labelledby="v2-h" data-research="v2">
- {chapter_header("v2", "blended LEAR, hour-aware intervals", "Evaluated 2026-09-23 · the road from v1",
-                 RC.ADOPTED + " in research · the model v3 builds on", RC.BADGE_DEVELOPMENT, "development", "v2")}
+ {chapter_header(G.get("v2"))}
  {block("v2.subtitle", cls="chapter-sub")}
  <div class="road" id="road-to-v2">
   {story([("Problem", block("v2.problem")), ("What informed the change", block("v2.informed")),
@@ -1516,8 +1530,7 @@ def v2_chapter() -> str:
 def v1_chapter(C, archive: str) -> str:
     return f"""
 <article class="chapter" id="v1" aria-labelledby="v1-h" data-research="v1">
- {chapter_header("v1", "released LightGBM", "Released 2026-09-15 · the product the demo runs",
-                 "Released model", None, "holdout", "v1")}
+ {chapter_header(G.get("v1"), with_badge=False)}
  {block("v1.what")}
  <div class="panel holdout">
   <p class="holdout-head">The one-shot holdout {badge(RC.BADGE_V1_HOLDOUT, "holdout")}</p>
@@ -1543,6 +1556,16 @@ def v1_chapter(C, archive: str) -> str:
 </article>"""
 
 
+def chapter_sequence(C, archive: str, *, specimen: bool = False) -> str:
+    """Every generation's chapter, newest first, in the registry's order. A registered generation
+    without a chapter builder is a build error, never a silent omission."""
+    builders = {"v3": lambda: v3_chapter(open_folds=specimen), "v2": v2_chapter, "v1": lambda: v1_chapter(C, archive)}
+    missing = [version for version in chapter_versions() if version not in builders]
+    if missing:
+        raise G.RegistryError(f"registered generations without a chapter: {missing}")
+    return "".join(builders[version]() for version in chapter_versions())
+
+
 def journey() -> str:
     return f"""
 <section class="section" id="journey" aria-labelledby="journey-h">
@@ -1553,15 +1576,21 @@ def journey() -> str:
 </section>"""
 
 
-def jump_row() -> str:
-    return ('<nav class="jump" aria-label="Chapters"><a href="#v3">' + ver("v3") + '</a><a href="#v2">' + ver("v2")
-            + '</a><a href="#v1">' + ver("v1") + "</a></nav>")
+def chapter_versions() -> tuple[str, ...]:
+    """The chapters' order, newest first, from the registry (standard §5, §6)."""
+    return tuple(entry.version for entry in G.generations(newest_first=True))
 
 
-def rail(generations: tuple[str, ...] = ("v3", "v2", "v1")) -> str:
+def jump_row(generations: tuple[str, ...] | None = None) -> str:
+    return ('<nav class="jump" aria-label="Chapters">'
+            + "".join(f'<a href="#{g}">{ver(g)}</a>' for g in generations or chapter_versions()) + "</nav>")
+
+
+def rail(generations: tuple[str, ...] | None = None) -> str:
     """The generation rail. The page's own routes live in the header only (review §5.1)."""
-    links = "".join(f'<li><a href="#{g}" class="rail-{g if g in ("v1", "v2", "v3") else "x"}">'
-                    f'<span class="dot" aria-hidden="true"></span>{ver(g)}</a></li>' for g in generations)
+    known = {entry.version: entry.style for entry in G.generations()}
+    links = "".join(f'<li><a href="#{g}" class="rail-{known.get(g, "x")}">'
+                    f'<span class="dot" aria-hidden="true"></span>{ver(g)}</a></li>' for g in generations or chapter_versions())
     return ('<nav class="rail" aria-label="Generations"><p class="rail-head">Generations</p><ol>' + links
             + "</ol></nav>")
 
@@ -2525,10 +2554,9 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
     payload = build_chart_payload()
     coverage = {str(level): C[f"holdout_coverage_{level}"] for level in INTERVAL_LEVELS}
     archive = v1_archive(payload)
-    generations = ("v7", "v6", "v5", "v4", "v3", "v2", "v1") if stress else ("v3", "v2", "v1")
-    jump = ('<nav class="jump" aria-label="Chapters">' + "".join(f'<a href="#{g}">{ver(g)}</a>' for g in generations)
-            + "</nav>")
-    chapters = (stress_chapters() if stress else "") + v3_chapter(open_folds=specimen) + v2_chapter() + v1_chapter(C, archive)
+    generations = (("v7", "v6", "v5", "v4") if stress else ()) + chapter_versions()
+    jump = jump_row(generations)
+    chapters = (stress_chapters() if stress else "") + chapter_sequence(C, archive, specimen=specimen)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>

@@ -26,6 +26,8 @@ from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
 
+from . import registry as _registry
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 #: The last development delivery date. No v2+ record may describe anything after it, and no
@@ -278,8 +280,9 @@ PEAK_FIELDS = (
     "hit_count95", "mean_width95", "n_hours", "n_days",
 )
 
-#: Which adopted generation a policy is, if any. References and study arms have none.
-GENERATION_OF = {"B1": "v1", "V2-H": "v2", "H0": "v2", "HG": "v3"}
+#: Which adopted generation a policy code is, if any, from the registry: references, study arms
+#: and controls have none, and one identity keeps one generation across codes (V2-H = H0).
+GENERATION_OF = {code: _registry.generation_of(code) for code in _registry.codes() if _registry.generation_of(code)}
 
 EVIDENCE_CLASS_DEVELOPMENT = "development_post_selection"
 EVIDENCE_CLASS_CALIBRATION = "development_calibration_comparison"

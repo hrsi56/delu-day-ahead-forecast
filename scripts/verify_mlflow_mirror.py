@@ -39,6 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from delu_forecast import registry as G  # noqa: E402
 from delu_forecast.claims import MLFLOW_URL  # noqa: E402
 
 EXPORT_DIR = ROOT / "reports" / "presentation" / "mlflow-export"
@@ -128,7 +129,7 @@ class Reader:
 def load_export() -> tuple[dict, dict[str, dict]]:
     manifest = json.loads((EXPORT_DIR / "manifest.json").read_text())
     runs = {}
-    for name in ("cp10", "cp15", "cp16", "cp20"):
+    for name in G.parent_run_keys():
         for run in json.loads((EXPORT_DIR / f"{name}.json").read_text())["runs"]:
             runs[run["run_key"]] = run
     return manifest, runs

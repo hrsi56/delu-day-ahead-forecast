@@ -1,8 +1,10 @@
-"""Presentation plan §9.5 and §10: the committed MLflow export is deterministic and exact.
+"""Presentation plan §9.5 and §10, standard §5 and §11: the committed MLflow export is deterministic and exact.
 
-It lists exactly 23 runs (4 parents, 19 children), every metric name carries its unit, the
-comparability IDs group the runs the plan says are comparable, every value is a committed record,
-and the outbound scan blocks a credential value without printing it.
+The export matches the registry -- a contract, never a run count (standard §11, brief W14): exactly
+the run keys the registry expects, each policy once per population, each name, parent and public
+name the registry's. Every metric name carries its unit, the comparability IDs group the runs the
+plan says are comparable, every value is a committed record, and the outbound scan blocks a
+credential value without printing it.
 """
 
 from __future__ import annotations
@@ -16,6 +18,7 @@ import sys
 
 import pytest
 
+from delu_forecast import registry as G
 from delu_forecast import research as R
 from delu_forecast.claims import REPO_ROOT
 
@@ -25,16 +28,6 @@ import mlflow_export as E  # noqa: E402
 
 EXPORT = REPO_ROOT / "reports" / "presentation" / "mlflow-export"
 
-EXPECTED_RUN_KEYS = {
-    "cp10", "cp10/v1_reference", "cp10/c1_head_spread", "cp10/c1_price_volatility",
-    "cp10/c2_aci_gamma_0.000001", "cp10/c2_aci_gamma_0.000005", "cp10/c2_aci_gamma_0.00001",
-    "cp10/c2_aci_gamma_0.00002",
-    "cp15", "cp15/B0", "cp15/B1", "cp15/B2", "cp15/B3", "cp15/A1", "cp15/A2", "cp15/A3", "cp15/A4", "cp15/A5",
-    "cp16", "cp16/V2-P", "cp16/V2-H",
-    "cp20", "cp20/HG",
-}
-
-
 @pytest.fixture(scope="module")
 def built():
     return E.build_export()
@@ -42,7 +35,7 @@ def built():
 
 @pytest.fixture(scope="module")
 def runs(built):
-    return {run["run_key"]: run for name in ("cp10", "cp15", "cp16", "cp20") for run in built[name]["runs"]}
+    return {run["run_key"]: run for name in G.parent_run_keys() for run in built[name]["runs"]}
 
 
 def test_the_export_is_deterministic_and_committed(built):
@@ -52,24 +45,45 @@ def test_the_export_is_deterministic_and_committed(built):
         assert (EXPORT / name).read_text() == text, f"{name} is stale; run scripts/mlflow_export.py"
 
 
-def test_the_manifest_lists_exactly_23_runs(built):
+def test_the_export_matches_the_registry(built):
+    """The contract that replaced "exactly 23 runs" (standard §11, brief W14)."""
+    assert E.contract_problems(built) == []
     manifest = built["manifest"]
-    assert manifest["counts"] == {"parents": 4, "children": 19, "total": 23}
-    assert {run["run_key"] for run in manifest["runs"]} == EXPECTED_RUN_KEYS
+    assert sorted(run["run_key"] for run in manifest["runs"]) == sorted(G.expected_run_keys())
     for run in manifest["runs"]:
         if "/" in run["run_key"]:
             assert run["parent"] == run["run_key"].split("/")[0]
         else:
             assert run["parent"] is None
+        assert run["run_name"] == G.mlflow_run_name(run["run_key"])
 
 
-def test_each_policy_appears_once(runs):
-    codes = [run["tags"]["delu.policy_code"] for run in runs.values() if run["parent"]]
-    assert len(codes) == len(set(codes)) == 19
+def test_negative_control_an_unregistered_or_missing_run_breaks_the_contract(built):
+    extra = json.loads(json.dumps(built))
+    stray = json.loads(json.dumps(extra["cp20"]["runs"][-1]))
+    stray["run_key"] = "cp20/HX"
+    extra["cp20"]["runs"].append(stray)
+    assert any("unregistered ['cp20/HX']" in problem for problem in E.contract_problems(extra))
+    missing = json.loads(json.dumps(built))
+    missing["cp16"]["runs"] = missing["cp16"]["runs"][:-1]
+    assert any("missing ['cp16/V2-H']" in problem for problem in E.contract_problems(missing))
+    renamed = json.loads(json.dumps(built))
+    renamed["cp20"]["runs"][-1]["run_name"] = "CP-20 · HG · v3"
+    assert any("run name is not the registry's" in problem for problem in E.contract_problems(renamed))
+
+
+def test_each_policy_appears_once_per_population(runs):
+    """One identity, one run per comparability group: v2 is logged once although CP-20 calls it H0."""
+    seen: dict[tuple[str, str], str] = {}
+    for key, run in runs.items():
+        if run["parent"] is None:
+            continue
+        identity = (run["tags"]["delu.registry_id"], run["tags"]["delu.population_id"])
+        assert identity not in seen, f"{key} repeats {seen.get(identity)}"
+        seen[identity] = key
+        assert run["tags"]["delu.public_name"] == G.entry_for_run_key(key).name
     assert runs["cp15/B1"]["tags"]["delu.v1_record_run"] == "83e475627b6646c885c70f9010c8cf2e"
-    assert runs["cp20/HG"]["run_name"] == "CP-20 · HG · v3"
-    assert runs["cp16/V2-H"]["run_name"] == "CP-16 · V2-H · v2"
-    assert runs["cp15/B1"]["run_name"] == "CP-15 · B1 · v1 development replay"
+    assert G.by_code("H0") is G.by_code("V2-H")
 
 
 UNIT_SUFFIX = re.compile(r"(_eur(_vs_\w+)?|coverage(50|80|95)|hits95|^s_(mae|wis)|^delta_s_(mae|wis)_vs_\w+)")

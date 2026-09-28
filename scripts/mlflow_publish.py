@@ -43,6 +43,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import mlflow_export as E  # noqa: E402
+from delu_forecast import registry as G  # noqa: E402
 import verify_mlflow_mirror as V  # noqa: E402
 
 os.environ.setdefault("MLFLOW_DISABLE_AGENT_HINT", "1")
@@ -86,15 +87,19 @@ def preconditions(*, strict: bool) -> tuple[dict, dict[str, dict], str]:
     tracked = _git("ls-files", "--", "reports/presentation/mlflow-export").split()
     if strict and dirty:
         raise Refused("the working tree differs from HEAD; commit or discard first")
-    if len(tracked) != 5:
-        raise Refused(f"the export must be committed (5 files); git tracks {len(tracked)}")
-    fresh = E.render(E.build_export())
+    files = E.build_export()
+    fresh = E.render(files)
+    untracked = sorted(set(f"reports/presentation/mlflow-export/{name}" for name in fresh) - set(tracked))
+    if untracked:
+        raise Refused(f"the export must be committed; git does not track {untracked}")
     stale = [name for name, text in fresh.items() if (E.EXPORT_DIR / name).read_text() != text]
     if stale:
         raise Refused(f"the committed export is stale: {stale}")
+    # A contract, never a count (standard §11): the export holds exactly the runs the registry expects.
+    problems = E.contract_problems(files)
+    if problems:
+        raise Refused("the export does not match the registry: " + "; ".join(problems))
     manifest, runs = V.load_export()
-    if manifest["counts"] != {"parents": 4, "children": 19, "total": 23}:
-        raise Refused(f"the manifest must list 23 runs; it lists {manifest['counts']}")
     return manifest, runs, _git("rev-parse", "HEAD").strip()
 
 
@@ -233,7 +238,7 @@ def publish(uri: str, runs: dict[str, dict], tool_sha: str, writes: Writes) -> l
             client.set_experiment_tag(experiment_id, key, value)
             writes.tick()
     log: list[dict] = []
-    for checkpoint in ("cp10", "cp15", "cp16", "cp20"):
+    for checkpoint in G.parent_run_keys():
         parent = runs[checkpoint]
         parent_id = _log_run(client, reader, experiment_id, parent, None, tool_sha, writes, log)
         children = [run for run in runs.values() if run["parent"] == checkpoint]
