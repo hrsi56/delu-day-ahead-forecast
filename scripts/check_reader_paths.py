@@ -545,6 +545,93 @@ def route(playwright, target: str, out: Path) -> dict:
     return results
 
 
+#: The engines the MLflow index names (brief W11): Chromium is driven as the installed Google Chrome.
+MLFLOW_ENGINES = {"chromium": "chrome", "webkit": "webkit"}
+
+
+def mlflow_expected(route: dict, mirror: dict) -> list[str]:
+    """What a route must show once the MLflow UI has rendered it: the experiment's name and every
+    parent run's name, or, for a comparison, its header and every run's name and ID. The names are
+    the committed export's, which the contract test binds to the registry; this tool environment
+    does not import the project."""
+    names, parents = {}, []
+    for path in sorted((ROOT / "reports" / "presentation" / "mlflow-export").glob("*.json")):
+        if path.name != "manifest.json":
+            for run in json.loads(path.read_text())["runs"]:
+                names[run["run_key"]] = run["run_name"]
+                if run["parent"] is None:
+                    parents.append(run["run_key"])
+    if route["kind"] == "experiment":
+        return [mirror.get("experiment", "delu-generations")] + [names[key] for key in parents]
+    return ([f"Comparing {len(route['run_keys'])} Runs"] + [names[key] for key in route["run_keys"]]
+            + [mirror["runs"][key]["run_id"] for key in route["run_keys"]])
+
+
+def mlflow_route(playwright, engine: str, route_id: str, route: dict, mirror: dict, out: Path,
+                 timeout_s: float) -> dict:
+    """Open one advertised route anonymously, in a fresh context, and wait for what it must show."""
+    browser = _launch(playwright, MLFLOW_ENGINES[engine])
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    base = mirror["target"].rstrip("/")
+    failed: list[str] = []
+    errors: list[str] = []
+    api_errors: list[str] = []
+    page.on("requestfailed", lambda r: failed.append(f"{r.url[:160]} {r.failure}"))
+    page.on("console", lambda m: errors.append(m.text[:300]) if m.type == "error" else None)
+    page.on("response", lambda r: api_errors.append(f"{r.status} {r.url[:160]}")
+            if r.status >= 400 and r.url.startswith(base) and "api/" in r.url else None)
+    expected = mlflow_expected(route, mirror)
+    record: dict = {"engine": engine, "browser": f"{browser.browser_type.name} {browser.version}",
+                    "url": route["url"], "expected": expected, "started_utc": _utc()}
+    missing = expected
+    start = time.monotonic()
+    try:
+        page.goto(route["url"], wait_until="domcontentloaded", timeout=timeout_s * 1000)
+        while time.monotonic() - start < timeout_s:
+            text = page.inner_text("body")
+            missing = [item for item in expected if item not in text]
+            if not missing:
+                break
+            page.wait_for_timeout(500)
+    except Exception as exc:  # the failure is the finding
+        record["error"] = f"{type(exc).__name__}: {str(exc)[:300]}"
+    record["seconds"] = round(time.monotonic() - start, 1)
+    record["final_url"] = page.url
+    record["missing"] = missing
+    shot = out / f"{route_id.replace(':', '-')}-{engine}.png"
+    shot.parent.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(shot))
+    record["screenshot"] = str(shot.relative_to(ROOT)) if shot.is_relative_to(ROOT) else str(shot)
+    record["failed_requests"] = failed[:20]
+    record["console_errors"] = errors[:20]
+    record["api_errors"] = api_errors[:20]
+    record["sign_in_redirect"] = "login" in page.url.lower() or "sign" in page.url.lower()
+    record["passed"] = (not missing and "error" not in record and not api_errors and not record["sign_in_redirect"])
+    context.close()
+    browser.close()
+    return record
+
+
+def mlflow_routes(playwright, mirror: dict, out: Path, timeout_s: float) -> dict:
+    """Every route that passed its REST check, in both engines (brief W11); the verifier's `index`
+    command reads this record and advertises only the routes that passed everywhere."""
+    routes: dict = {}
+    for route_id, route in sorted(mirror.get("routes", {}).items()):
+        if route.get("rest") != "passed":
+            continue
+        routes[route_id] = {engine: mlflow_route(playwright, engine, route_id, route, mirror, out, timeout_s)
+                            for engine in MLFLOW_ENGINES}
+        print(f"{route_id}: " + ", ".join(f"{engine} {'passed' if result['passed'] else 'FAILED ' + str(result['missing'][:3])}"
+                                          for engine, result in routes[route_id].items()))
+    return {"check": "MLflow routes in a browser, anonymously (brief W11; plan §10.7)",
+            "checked_at_utc": _utc(), "target": mirror["target"], "experiment_id": mirror["experiment_id"],
+            "host": f"{platform.machine()} / {platform.system()} {platform.release()}",
+            "client": "Playwright, a fresh browser context per route and engine; no cookies, no sign-in",
+            "viewport": "1440x900", "routes": routes,
+            "passed": bool(routes) and all(result["passed"] for per in routes.values() for result in per.values())}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -575,6 +662,11 @@ def main() -> int:
         sub_parser.add_argument("page")
         sub_parser.add_argument("--out", type=Path, required=True)
         sub_parser.add_argument("--record", type=Path, required=True)
+    routes = sub.add_parser("mlflow-routes", help="open every REST-verified MLflow route in both engines")
+    routes.add_argument("--mirror-record", type=Path, required=True, help="the verifier's record (verify --out)")
+    routes.add_argument("--timeout", type=float, default=90.0)
+    routes.add_argument("--shots", type=Path, required=True, help="screenshot folder, under .local/artifacts/")
+    routes.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
 
     try:
@@ -584,6 +676,15 @@ def main() -> int:
             "Playwright is not installed here. It lives in a tool environment under "
             ".local/tools/, never in the project; see this script's docstring."
         )
+
+    if args.command == "mlflow-routes":
+        mirror = json.loads(args.mirror_record.read_text())
+        with sync_playwright() as playwright:
+            record = mlflow_routes(playwright, mirror, args.shots, args.timeout)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+        print(f"wrote {args.out}; passed={record['passed']}")
+        return 0 if record["passed"] else 1
 
     if args.command == "a11y":
         with sync_playwright() as playwright:
