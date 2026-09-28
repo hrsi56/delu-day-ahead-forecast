@@ -12,7 +12,11 @@ from ever sending a token.
 
 `verify` checks that every `run_key` exists exactly once, the parent links, every parameter and
 tag, every metric history point by (key, step, timestamp, value), every artifact's SHA-256 and the
-upload-completion tags. `probe` is the read-only capability check against DagsHub (§10.9 item 1).
+upload-completion tags; then it builds every reader route the registry expects and checks each over
+REST (the run and experiment IDs parsed from the route's fragment, and `runs/get` returning the
+right `run_key`). `index` writes `reports/presentation/mlflow_index.json` -- the verifier, never a
+person (Publication Standard v1 §8) -- holding only the routes that passed both that REST check and
+the browser check recorded by `scripts/check_reader_paths.py mlflow-routes` in Chromium and WebKit. `probe` is the read-only capability check against DagsHub (§10.9 item 1).
 `rehearse` drives the local 3.5.1 rehearsal (§10.9 item 2): an interrupted upload that resumes
 without duplicates, a clean verification, then two deliberate faults -- a deleted history point
 and an altered artifact -- which the verifier must catch. It refuses any non-loopback server.
@@ -43,6 +47,7 @@ from delu_forecast import registry as G  # noqa: E402
 from delu_forecast.claims import MLFLOW_URL  # noqa: E402
 
 EXPORT_DIR = ROOT / "reports" / "presentation" / "mlflow-export"
+INDEX = ROOT / "reports" / "presentation" / "mlflow_index.json"
 EXPERIMENT = "delu-generations"
 LOCAL_URI = "http://127.0.0.1:5051"
 TARGETS = {"local": LOCAL_URI, "public": MLFLOW_URL}
@@ -235,8 +240,98 @@ def verify(base: str, *, check_upload_tags: bool = True) -> dict:
         report["runs"][run_key] = entry
     report["counts"] = {"expected": len(expected), "found": len(run_ids),
                         "metric_points": sum(e["points_checked"] for e in report["runs"].values())}
+    report["routes"] = route_checks(reader, base, experiment["experiment_id"], run_ids)
     report["passed"] = not problems
     return report
+
+
+# --------------------------------------------------------------------------- reader routes (§10.10)
+
+
+def route_url(base: str, experiment_id: str, kind: str, run_ids: list[str]) -> str:
+    """A reader route in the MLflow 3.5 UI, whose fragment carries the IDs it shows."""
+    base = base.rstrip("/")
+    if kind == "experiment":
+        return f"{base}/#/experiments/{experiment_id}"
+    if kind == "compare":
+        runs = urllib.parse.quote(json.dumps(run_ids, separators=(",", ":")), safe=",")
+        experiments = urllib.parse.quote(json.dumps([experiment_id], separators=(",", ":")), safe=",")
+        return f"{base}/#/compare-runs?runs={runs}&experiments={experiments}"
+    raise ValueError(f"unknown route kind {kind!r}")
+
+
+def parse_route(url: str) -> tuple[str, list[str], list[str]]:
+    """(kind, experiment IDs, run IDs), read back from a route's fragment."""
+    fragment = urllib.parse.urlsplit(url).fragment
+    path, _, query = fragment.partition("?")
+    if path.startswith("/experiments/"):
+        return "experiment", [path.split("/")[2]], []
+    if path == "/compare-runs":
+        params = urllib.parse.parse_qs(query)
+        return "compare", json.loads(params["experiments"][0]), json.loads(params["runs"][0])
+    raise ValueError(f"not a reader route: {url}")
+
+
+def route_checks(reader: Reader, base: str, experiment_id: str, run_ids: dict[str, str]) -> dict[str, dict]:
+    """Every route the registry expects, built from the verified run IDs and checked over REST."""
+    out: dict[str, dict] = {}
+    for route_id, (kind, run_keys) in G.expected_routes().items():
+        entry: dict = {"kind": kind, "run_keys": list(run_keys), "problems": []}
+        missing = [key for key in run_keys if key not in run_ids]
+        if missing:
+            entry["problems"].append(f"runs not on the server: {missing}")
+            out[route_id] = entry
+            continue
+        url = route_url(base, experiment_id, kind, [run_ids[key] for key in run_keys])
+        entry["url"] = url
+        try:
+            parsed_kind, experiments, runs = parse_route(url)
+            if parsed_kind != kind or experiments != [experiment_id]:
+                entry["problems"].append("the fragment does not name the experiment")
+            got = reader.get("api/2.0/mlflow/experiments/get", experiment_id=experiment_id)["experiment"]["name"]
+            if got != EXPERIMENT:
+                entry["problems"].append(f"the experiment is {got!r}")
+            for key, run_id in zip(run_keys, runs):
+                run = reader.get_run(run_id)
+                if _tags(run).get("delu.run_key") != key or run["info"]["experiment_id"] != experiment_id:
+                    entry["problems"].append(f"{run_id} is not {key}")
+        except Exception as exc:  # recorded: a route that cannot be checked is not advertised
+            entry["problems"].append(f"{type(exc).__name__}: {str(exc)[:160]}")
+        entry["rest"] = "passed" if not entry["problems"] else "failed"
+        out[route_id] = entry
+    return out
+
+
+def write_index(mirror: dict, browser: dict, out: Path = INDEX) -> dict:
+    """The committed index (plan §10.7): only routes that passed their REST check and their browser
+    check in both engines. It refuses a mirror that did not verify."""
+    if not mirror.get("passed"):
+        raise SystemExit("the mirror verification did not pass; no index is written")
+    engines = ("chromium", "webkit")
+    routes, withheld = {}, {}
+    for route_id, entry in mirror.get("routes", {}).items():
+        results = {engine: browser.get("routes", {}).get(route_id, {}).get(engine, {}).get("passed") for engine in engines}
+        if entry.get("rest") == "passed" and all(results.values()):
+            routes[route_id] = {"url": entry["url"], "kind": entry["kind"], "run_keys": entry["run_keys"],
+                                "rest": "passed", "browser": {engine: "passed" for engine in engines}}
+        else:
+            withheld[route_id] = {"rest": entry.get("rest", "not run"), "browser": results,
+                                  "problems": entry.get("problems", [])}
+    index = {
+        "experiment": EXPERIMENT,
+        "experiment_id": mirror["experiment_id"],
+        "tracking_uri": mirror["target"],
+        "verified_at_utc": mirror["checked_at_utc"],
+        "browser_checked_at_utc": browser.get("checked_at_utc"),
+        "written_by": "scripts/verify_mlflow_mirror.py index",
+        "runs": {key: {"run_id": entry["run_id"], "url": f"{mirror['target'].rstrip('/')}/#/experiments/"
+                       f"{mirror['experiment_id']}/runs/{entry['run_id']}"} for key, entry in sorted(mirror["runs"].items())},
+        "routes": routes,
+        "not_advertised": withheld,
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n")
+    return index
 
 
 # --------------------------------------------------------------------------- probe (§10.9 item 1)
@@ -373,6 +468,10 @@ def main() -> int:
     p = sub.add_parser("probe")
     p.add_argument("--tracking-uri", default=MLFLOW_URL)
     p.add_argument("--out", type=Path, required=True)
+    i = sub.add_parser("index", help="write mlflow_index.json from a passed mirror record and a browser record")
+    i.add_argument("--mirror-record", type=Path, required=True)
+    i.add_argument("--browser-record", type=Path, required=True)
+    i.add_argument("--out", type=Path, default=INDEX)
     r = sub.add_parser("rehearse")
     r.add_argument("--store", type=Path, required=True, help="the rehearsal server's SQLite store")
     r.add_argument("--artifacts", type=Path, default=None)
@@ -386,8 +485,15 @@ def main() -> int:
             args.out.write_text(text)
         for problem in report["problems"][:40]:
             print(f"MISMATCH {problem}")
+        routes = report.get("routes", {})
+        print(f"routes: {sum(1 for r in routes.values() if r.get('rest') == 'passed')}/{len(routes)} pass their REST check")
         print(f"passed={report['passed']} counts={report.get('counts')}")
         return 0 if report["passed"] else 1
+    if args.command == "index":
+        index = write_index(json.loads(args.mirror_record.read_text()), json.loads(args.browser_record.read_text()),
+                            args.out)
+        print(f"wrote {args.out}: {len(index['routes'])} routes advertised, {len(index['not_advertised'])} withheld")
+        return 0
     if args.command == "probe":
         record = probe(args.tracking_uri)
         args.out.parent.mkdir(parents=True, exist_ok=True)
