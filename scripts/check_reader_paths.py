@@ -45,6 +45,12 @@ READY_TEXT = "Maximum absolute deviation"
 CHART_TEXT = "EUR/MWh"
 
 
+def _shown(path: Path) -> str:
+    """A path for a committed record: from `.local/` on, never the machine's home directory."""
+    parts = Path(path).resolve().parts
+    return str(Path(*parts[parts.index(".local"):])) if ".local" in parts else str(path)
+
+
 def _utc() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -736,21 +742,29 @@ def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = N
     label = device.replace(" ", "-").lower() if device else f"{size['width']}x{size['height']}"
     record: dict = {"engine": engine, "browser": f"{browser.browser_type.name} {browser.version}", "view": label,
                     "viewport": f"{size['width']}x{size['height']}", "placements": page.evaluate(PLACEMENT_JS)}
-    charts = {}
-    for holder in page.locator("div.chart[data-chart-id]").all():
-        if holder.is_visible():
-            charts[holder.get_attribute("data-chart-id")] = holder.evaluate(CHART_JS)
-    record["charts"] = {"checked": len(charts),
-                        "overlaps": {k: v["overlaps"] for k, v in charts.items() if v["overlaps"]},
-                        "clipped": {k: v["clipped"] for k, v in charts.items() if v["clipped"]},
-                        "smallest_text_px": min((v["smallest_text_px"] for v in charts.values()
-                                                 if v["smallest_text_px"] is not None), default=None)}
+    def measure_charts() -> dict:
+        charts = {}
+        for holder in page.locator("div.chart[data-chart-id]").all():
+            if holder.is_visible():
+                charts[holder.get_attribute("data-chart-id")] = holder.evaluate(CHART_JS)
+        return {"checked": len(charts),
+                "overlaps": {k: v["overlaps"] for k, v in charts.items() if v["overlaps"]},
+                "clipped": {k: v["clipped"] for k, v in charts.items() if v["clipped"]},
+                "smallest_text_px": min((v["smallest_text_px"] for v in charts.values()
+                                         if v["smallest_text_px"] is not None), default=None)}
+
+    record["charts"] = measure_charts()
     shot = out / engine / f"{label}.png"
     shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot), full_page=True)
-    record["screenshot"] = str(shot)
+    record["screenshot"] = _shown(shot)
     if (engine, size["width"], size["height"]) in COLD_READER_VIEWS and not device:
         record["cold_reader_screens"] = _screens(page, out / "cold-reader" / f"{engine}-{label}")
+    page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
+    page.wait_for_timeout(500)
+    record["charts_with_disclosures_open"] = measure_charts()
+    record["overflow_with_disclosures_open"] = page.evaluate(
+        "document.documentElement.scrollWidth - document.documentElement.clientWidth")
     record["failed_requests"] = failed[:20]
     record["console_errors"] = errors[:20]
     context.close()
@@ -775,7 +789,7 @@ def _screens(page, folder: Path) -> dict:
         if offset + height >= total:
             break
     page.evaluate("window.scrollTo(0, 0)")
-    return {"folder": str(folder), "screens": len(offsets), "step_px": step, "header_px": header, "offsets": offsets}
+    return {"folder": _shown(folder), "screens": len(offsets), "step_px": step, "header_px": header, "offsets": offsets}
 
 
 def placement_findings(view: dict) -> list[str]:
@@ -814,10 +828,13 @@ def release(playwright, target: str, out: Path) -> dict:
     views.append(_view(playwright, "webkit", url, out, device=IPHONE))
     for view in views:
         view["problems"] = placement_findings(view)
-        if view["charts"]["overlaps"] or view["charts"]["clipped"]:
-            view["problems"].append("chart text overlaps or is clipped")
-        if (view["charts"]["smallest_text_px"] or 99) < 12:
-            view["problems"].append(f"chart text of {view['charts']['smallest_text_px']} px")
+        for key in ("charts", "charts_with_disclosures_open"):
+            if view[key]["overlaps"] or view[key]["clipped"]:
+                view["problems"].append(f"{key}: chart text overlaps or is clipped")
+            if (view[key]["smallest_text_px"] or 99) < 12:
+                view["problems"].append(f"{key}: chart text of {view[key]['smallest_text_px']} px")
+        if view["overflow_with_disclosures_open"] > 0:
+            view["problems"].append(f"horizontal overflow of {view['overflow_with_disclosures_open']} px with disclosures open")
         if view["failed_requests"] or view["console_errors"]:
             view["problems"].append("failed requests or console errors")
     trees = {}
@@ -914,7 +931,7 @@ def mlflow_route(playwright, engine: str, route_id: str, route: dict, mirror: di
     shot = out / f"{route_id.replace(':', '-')}-{engine}.png"
     shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot))
-    record["screenshot"] = str(shot.relative_to(ROOT)) if shot.is_relative_to(ROOT) else str(shot)
+    record["screenshot"] = _shown(shot)
     record["failed_requests"] = failed[:20]
     record["console_errors"] = errors[:20]
     record["api_errors"] = api_errors[:20]
