@@ -30,12 +30,15 @@ Rules it enforces, in order:
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
 import subprocess
 import sys
 import tempfile
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -110,6 +113,51 @@ def scan(runs: dict[str, dict], secrets) -> None:
     findings = E.outbound_findings(items, secrets)
     if findings:
         raise Refused("; ".join(dict.fromkeys(findings)))
+
+
+# --------------------------------------------------------------------------- authenticated read-only gate
+
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None  # Never forward the Authorization header to another URL.
+
+
+def public_precheck() -> dict:
+    """Read the actual MLflow service with its configured Basic credentials (brief §9).
+
+    DagsHub MLflow permits a token as username. The general /api/v1/user API does not
+    accept that same Basic pair; using it here rejected valid MLflow credentials.
+    A read success establishes service access, not untested write permissions.
+    Neither account response data nor exception text is returned or logged.
+    """
+    names = ("MLFLOW_TRACKING_USERNAME", "MLFLOW_TRACKING_PASSWORD")
+    state = {name: ("set" if os.environ.get(name) else "unset") for name in names}
+    url = V.TARGETS["public"] + "/api/2.0/mlflow/experiments/get?experiment_id=0"
+    record = {"checked_at_utc": V.utc_now(), "credential_state": state,
+              "request": {"method": "GET", "url": url, "authentication": "Basic from existing MLflow variables",
+                          "redirects_allowed": False}, "passed": False, "network_writes": 0}
+    if "unset" in state.values():
+        record["error"] = "required MLflow variable unset"
+        return record
+    pair = f"{os.environ.get(names[0])}:{os.environ.get(names[1])}".encode()
+    authorization = "Basic " + base64.b64encode(pair).decode()
+    request = urllib.request.Request(url, method="GET", headers={
+        "Authorization": authorization, "User-Agent": "delu-mlflow-precheck/1.0 (read-only)"})
+    del pair, authorization
+    try:
+        with urllib.request.build_opener(NoRedirect).open(request, timeout=30) as response:
+            record["http_status"] = response.status
+            body = json.loads(response.read())
+        experiment = body.get("experiment", {})
+        record["expected_experiment_matched"] = (experiment.get("experiment_id") == "0"
+                                                 and experiment.get("name") == "delu-cp2")
+        record["passed"] = record["http_status"] == 200 and record["expected_experiment_matched"]
+    except urllib.error.HTTPError as exc:
+        record["http_status"] = exc.code
+    except Exception as exc:
+        record["error"] = type(exc).__name__  # No exception message or response body can leak.
+    return record
 
 
 # --------------------------------------------------------------------------- the upload
@@ -265,6 +313,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--dry-run", action="store_true")
+    mode.add_argument("--precheck", action="store_true", help="authenticated read-only MLflow gate; no upload")
     mode.add_argument("--target", choices=("local", "public"))
     parser.add_argument("--tracking-uri", default=None)
     parser.add_argument("--fail-after", type=int, default=None)
@@ -274,6 +323,13 @@ def main() -> int:
     args = parser.parse_args()
     secrets = E.local_secrets()
     try:
+        if args.precheck:
+            record = public_precheck()
+            if args.log:
+                args.log.parent.mkdir(parents=True, exist_ok=True)
+                args.log.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+            print(json.dumps(record, sort_keys=True))
+            return 0 if record["passed"] else 2
         manifest, runs, head = preconditions(strict=not args.dry_run)
         scan(runs, secrets)
         if args.dry_run:
@@ -286,11 +342,12 @@ def main() -> int:
         if args.target == "public":
             if not args.owner_instruction:
                 raise Refused("a public upload needs --owner-instruction with the Owner's words for this action")
-            state = {name: ("set" if os.environ.get(name) else "unset")
-                     for name in ("MLFLOW_TRACKING_USERNAME", "MLFLOW_TRACKING_PASSWORD")}
-            print(f"credentials: {state}")
-            if "unset" in state.values():
-                raise Refused("MLFLOW_TRACKING_USERNAME and MLFLOW_TRACKING_PASSWORD must be set")
+            if uri != V.TARGETS["public"]:
+                raise Refused("public target must be the configured DagsHub MLflow service")
+            precheck = public_precheck()
+            print(json.dumps(precheck, sort_keys=True))
+            if not precheck["passed"]:
+                raise Refused("authenticated read-only MLflow precheck failed; no upload attempted")
         elif not uri.startswith(("http://127.0.0.1", "http://localhost")):
             raise Refused("--target local must point at a loopback server")
         started = V.utc_now()

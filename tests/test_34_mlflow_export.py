@@ -197,3 +197,59 @@ def test_negative_control_the_export_command_refuses_and_hides_the_value(built):
     assert result.returncode == 1
     assert "PRES1_FIXTURE_TOKEN" in output
     assert value not in output
+
+
+# Auth gate must exercise MLflow's endpoint, not the unrelated account API.
+def test_public_precheck_uses_existing_basic_pair_without_exposing_it(monkeypatch):
+    import base64
+    import io
+    import mlflow_publish as P
+
+    username, password = "test-mlflow-user", "test-mlflow-password"
+    monkeypatch.setenv("MLFLOW_TRACKING_USERNAME", username)
+    monkeypatch.setenv("MLFLOW_TRACKING_PASSWORD", password)
+
+    class Response(io.BytesIO):
+        status = 200
+
+    class Opener:
+        def open(self, request, timeout):
+            assert request.full_url == P.V.TARGETS["public"] + "/api/2.0/mlflow/experiments/get?experiment_id=0"
+            assert request.get_method() == "GET"
+            assert request.get_header("Authorization") == "Basic " + base64.b64encode(f"{username}:{password}".encode()).decode()
+            return Response(b'{"experiment":{"experiment_id":"0","name":"delu-cp2"},"private":"not logged"}')
+
+    monkeypatch.setattr(P.urllib.request, "build_opener", lambda handler: Opener())
+    result = P.public_precheck()
+    assert result["passed"] and result["http_status"] == 200 and result["network_writes"] == 0
+    assert all(value not in json.dumps(result) for value in (username, password, "not logged"))
+    assert P.NoRedirect().redirect_request(None, None, None, None, None, None) is None
+
+
+@pytest.mark.parametrize("mode", ["unset", "http403", "exception", "wrong-experiment"])
+def test_precheck_failures_are_closed_and_never_emit_exception_or_body(monkeypatch, mode):
+    import io
+    import urllib.error
+    import mlflow_publish as P
+
+    monkeypatch.setenv("MLFLOW_TRACKING_USERNAME", "synthetic-user")
+    monkeypatch.setenv("MLFLOW_TRACKING_PASSWORD", "synthetic-secret")
+    if mode == "unset":
+        monkeypatch.delenv("MLFLOW_TRACKING_PASSWORD")
+
+    class Response(io.BytesIO):
+        status = 200
+
+    class Opener:
+        def open(self, request, timeout):
+            assert mode != "unset", "unset credentials must never cause a request"
+            if mode == "http403":
+                raise urllib.error.HTTPError(request.full_url, 403, "synthetic-secret", {}, None)
+            if mode == "exception":
+                raise RuntimeError("synthetic-secret")
+            return Response(b'{"experiment":{"experiment_id":"0","name":"unexpected"}}')
+
+    monkeypatch.setattr(P.urllib.request, "build_opener", lambda handler: Opener())
+    result = P.public_precheck()
+    assert not result["passed"]
+    assert "synthetic-secret" not in json.dumps(result)

@@ -163,6 +163,57 @@ def stress_period() -> str:
 # --------------------------------------------------------------------------- building the records
 
 
+def _decision(entry: G.Entry) -> G.StatusEvent:
+    """The first evaluated-policy decision, with its dated committed landing provenance."""
+    landing = G.CHECKPOINTS[entry.checkpoint].landing
+    events = [event for event in entry.statuses if event.source == landing]
+    if not events:
+        raise DerivedError(f"{entry.id}: no decision tied to {landing}")
+    event = min(events, key=lambda item: item.date)
+    if event.date not in (REPO_ROOT / landing).read_text().splitlines()[0]:
+        raise DerivedError(f"{entry.id}: decision date differs from {landing}")
+    return event
+
+
+def _decision_counts(census: dict[str, tuple[str, bool]]) -> dict[str, tuple[str, str]]:
+    """Same-date policies share a boundary; no CSV order breaks a simultaneous result tie."""
+    return {
+        subject: (
+            str(sum(other_date <= date for other_date, _ in census.values())),
+            "yes" if met and not any(other != subject and other_met and other_date <= date
+                                    for other, (other_date, other_met) in census.items()) else "no",
+        ) for subject, (date, met) in census.items()
+    }
+
+
+def _fresh_decision_counts(fresh: R.FreshRead) -> dict[str, tuple[str, str]]:
+    """Independent census from hash-checked CSV rows, not cached derived verdicts/counts."""
+    census = {}
+    for experiment in sorted(CRITERIA_FILES, key=lambda exp: G.CHECKPOINTS[exp].frozen_on):
+        _, path = CRITERIA_FILES[experiment]
+        rows = fresh.matches(path, {"scope": "equal_fold"})
+        for code in sorted({row["policy"] for row in rows}):
+            entry = G.by_code(code)
+            if entry.id in census:
+                continue  # H0 is the already evaluated V2-H, never a ninth policy.
+            verdict = []
+            for criterion, metric in (("1", "S_MAE"), ("2", "S_WIS")):
+                matches = [row for row in rows if row["policy"] == code
+                           and row["criterion"] == criterion and row["metric"] == metric]
+                if len(matches) != 1:
+                    raise DerivedError(f"{experiment}/{code}: expected one row for criterion {criterion}")
+                row = matches[0]
+                verdict.append(Decimal(row["actual"]) <= Decimal(row["upper_limit"]))
+            census[entry.id] = (_decision(entry).date, all(verdict))
+    # Recompute directly, without calling the builder's count routine.
+    passed_dates = [date for date, passed in census.values() if passed]
+    first_date = min(passed_dates) if passed_dates else None
+    first_subjects = {subject for subject, (date, passed) in census.items() if passed and date == first_date}
+    return {subject: (str(len({other for other, (other_date, _) in census.items() if other_date <= date})),
+                      "yes" if first_subjects == {subject} else "no")
+            for subject, (date, _) in census.items()}
+
+
 def _criteria_records() -> list[DerivedRecord]:
     """Per evaluated policy: the verdict on criteria 1–2, its distance from the rule's comparator in
     the rule's unit, N tested up to its decision, and whether it was the first to meet the rule."""
@@ -179,14 +230,13 @@ def _criteria_records() -> list[DerivedRecord]:
             f"derived.rule.margin.{score}", "rule_margin", G.by_code(code).id, UNIT_RELATIVE, _text(margin),
             (limit, reference), "(1 − limit / lowest reference score) × 100", 0, "P17",
             label=f"below {G.by_code(code).name}'s score"))
-    tested: list[str] = []
-    met_before = False
+    census: dict[str, tuple[str, bool]] = {}
+    count_inputs: list[str] = []
+    decision_sources: set[str] = set()
     for experiment in ("CP-15", "CP-16", "CP-20"):
         prefix, _ = CRITERIA_FILES[experiment]
         for code in _criteria_policies(experiment):
             entry = G.by_code(code)
-            if entry.id not in tested:
-                tested.append(entry.id)
             passed, inputs, distances = [], [], {}
             for score, criterion in (("S_MAE", "c1"), ("S_WIS", "c2")):
                 actual = f"{prefix}.criteria.{code}.{criterion}.equal_fold.{score}"
@@ -210,14 +260,22 @@ def _criteria_records() -> list[DerivedRecord]:
                     f"{base}.distance.{score}", "distance", entry.id, UNIT_RELATIVE, _text(value), pair,
                     "(policy score / lowest reference score − 1) × 100", 0, "P16",
                     label=f"point comparison with {G.by_code(ref_code).name}"))
-            out.append(DerivedRecord(f"{base}.tested", "tested", entry.id, UNIT_COUNT, str(len(tested)),
-                                     tuple(inputs), "distinct identities with criteria 1–2 rows, in checkpoint "
-                                     "order, up to this decision", 0, "P16"))
-            first = verdict == "met" and not met_before
-            out.append(DerivedRecord(f"{base}.first_to_meet", "first_to_meet", entry.id, UNIT_LABEL,
-                                     "yes" if first else "no", tuple(inputs),
-                                     "met, and no identity tested earlier met", 0, "P16"))
-            met_before = met_before or verdict == "met"
+            event = _decision(entry)
+            census[entry.id] = (event.date, verdict == "met")
+            count_inputs.extend(inputs)
+            decision_sources.add(event.source)
+    counts = _decision_counts(census)
+    for subject in sorted(census):
+        tested, first = counts[subject]
+        base = f"derived.criteria.{subject}"
+        for kind, value, formula in (
+            ("tested", tested, "distinct evaluated identities with decision date ≤ this policy's decision date"),
+            ("first_to_meet", first, "sole policy meeting the rule at the earliest passing decision date"),
+        ):
+            out.append(DerivedRecord(f"{base}.{kind}", kind, subject,
+                                     UNIT_COUNT if kind == "tested" else UNIT_LABEL, value,
+                                     tuple(count_inputs), formula, 0, "P16",
+                                     sources=tuple(sorted(decision_sources))))
     return out
 
 
@@ -313,6 +371,7 @@ def validate_all() -> list[str]:
             cache[key] = Decimal(derived["value" if which == "value" else which])
         return cache[key]
 
+    counts = None
     for record in records().values():
         try:
             if record.kind == "rule_date":
@@ -332,7 +391,9 @@ def validate_all() -> list[str]:
                         problems.append(f"{record.record_id}: {actual} no longer equals the committed score {scored}")
                 expected = "met" if all(value(a) <= value(lim) for a, lim, _, _ in groups) else "not met"
             elif record.kind in ("tested", "first_to_meet"):
-                continue  # counted from the verdict records, which are validated themselves
+                if counts is None:
+                    counts = _fresh_decision_counts(fresh)
+                expected = counts[record.subject][0 if record.kind == "tested" else 1]
             elif record.kind == "share_change":
                 diff_id, denom_id = record.inputs
                 denom = value(denom_id)

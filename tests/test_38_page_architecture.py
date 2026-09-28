@@ -146,7 +146,7 @@ def test_the_page_renders_its_research_chapters_through_the_grammar(page):
         body = page[page.index(f'<article class="chapter" id="{chapter}"'):]
         body = body[:body.index("</article>")]
         slots = [slot for slot in re.findall(r'data-slot="([^"]+)"', body)]
-        assert slots == ["question", "main-chart", "not-established", "decision", "details"], (chapter, slots)
+        assert slots == ["question", "main-chart", "not-established", "decision", "evidence", "details"], (chapter, slots)
 
 
 @pytest.mark.parametrize("empty", ["question", "headline", "reading", "decision", "evidence"])
@@ -316,3 +316,42 @@ def test_the_stack_line_is_rendered_from_the_system_view(page):
         assert tool in line
     assert tools == tuple(dict.fromkeys(t for _, _, state, ts in B.SYSTEM_VIEW if state == "implemented" for t in ts))
     assert page.index('id="system"') < page.index('data-stack="system-view"') < page.index('id="reproduce"')
+
+
+# Regression for independent-check-3 F2: inspect the actual evidence row, not just slot labels.
+def chapter_evidence_order_problems(document):
+    class Order(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.markers = []
+
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            if attrs.get("data-slot") in ("not-established", "decision", "details"):
+                self.markers.append(attrs["data-slot"])
+            if "ev" in attrs.get("class", "").split():
+                self.markers.append("evidence-row")
+
+    parsed = Order()
+    parsed.feed(document)
+    needed = ["not-established", "decision", "evidence-row", "details"]
+    try:
+        positions = [parsed.markers.index(marker) for marker in needed]
+    except ValueError:
+        return ["missing chapter boundary"]
+    return [] if positions == sorted(positions) else ["chapter evidence out of order"]
+
+
+@pytest.mark.parametrize("factory", [B.v3_slots, B.v2_slots])
+def test_evidence_follows_limitations_and_decision_before_details(factory):
+    assert chapter_evidence_order_problems(B.render_chapter(factory())) == []
+
+
+@pytest.mark.parametrize("before", ['<aside class="caveats"', '<div class="decision"'])
+@pytest.mark.parametrize("factory", [B.v3_slots, B.v2_slots])
+def test_negative_control_moving_evidence_before_limitation_or_decision_fails(factory, before):
+    slots = factory()
+    html = B.render_chapter(slots)
+    assert html.count(slots.evidence) == 1
+    moved = html.replace(slots.evidence, "").replace(before, slots.evidence + before, 1)
+    assert chapter_evidence_order_problems(moved)

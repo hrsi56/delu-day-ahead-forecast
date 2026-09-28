@@ -8,6 +8,7 @@ caught by the file's recorded blob or, with the blob rewritten, by the recomputa
 from __future__ import annotations
 
 import re
+from dataclasses import replace
 import subprocess
 
 import pytest
@@ -178,3 +179,50 @@ def test_negative_control_a_moved_rule_date_fails(monkeypatch):
 
 def test_display_never_rounds_a_whole_percent_across_the_sign():
     assert re.fullmatch(r"−\d+%", show("derived.change.v3.S_MAE", "ci_high"))
+
+
+# Regression for independent-check-3 F1: decision counts cannot depend on CSV order.
+def test_counts_include_all_policies_at_each_recorded_decision_date():
+    expected = {G.by_code(code).id: "5" for code in ("A1", "A2", "A3", "A4", "A5")}
+    expected.update({"v2": "7", "pooled-control": "7", "v3": "8"})
+    assert {r.subject: r.value for r in D.records().values() if r.kind == "tested"} == expected
+    for subject in expected:
+        record = D.get(f"derived.criteria.{subject}.tested")
+        assert G.get(subject).statuses[0].source in record.sources
+
+
+def test_reordering_policy_rows_preserves_all_decision_counts_and_first_flags(monkeypatch):
+    before = {r.record_id: r.value for r in D._criteria_records()
+              if r.kind in ("tested", "first_to_meet")}
+    original = D._criteria_policies
+    monkeypatch.setattr(D, "_criteria_policies", lambda exp: tuple(reversed(original(exp))))
+    after = {r.record_id: r.value for r in D._criteria_records()
+             if r.kind in ("tested", "first_to_meet")}
+    assert after == before
+
+
+@pytest.mark.parametrize("kind,bad", [("tested", "999"), ("first_to_meet", "no")])
+def test_negative_control_corrupted_count_or_first_flag_fails_rederivation(monkeypatch, kind, bad):
+    records = dict(D.records())
+    ident = f"derived.criteria.v3.{kind}"
+    records[ident] = replace(records[ident], value=bad)
+    monkeypatch.setattr(D, "records", lambda: records)
+    assert any(problem.startswith(ident + ":") for problem in D.validate_all())
+
+
+def test_negative_control_earlier_passing_source_invalidates_first_flag(monkeypatch):
+    D.records()
+    original = R.FreshRead.matches
+
+    def matches(self, path, selector):
+        rows = original(self, path, selector)
+        return [{**row, "actual": "0.5"} if path == "reports/cp15/criteria.csv"
+                and row["policy"] == "A1" and row["criterion"] in ("1", "2") else row for row in rows]
+
+    monkeypatch.setattr(R.FreshRead, "matches", matches)
+    assert any(problem.startswith("derived.criteria.v3.first_to_meet:") for problem in D.validate_all())
+
+
+def test_same_date_successes_do_not_invent_a_first_policy_from_row_order():
+    tied = {"a": ("2026-09-16", True), "b": ("2026-09-16", True)}
+    assert D._decision_counts(tied) == {"a": ("2", "no"), "b": ("2", "no")}

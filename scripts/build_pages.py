@@ -1643,13 +1643,13 @@ def render_chapter(slots: ChapterSlots, *, open_details: tuple[str, ...] = ()) -
   {single_rows(chart.chart_id, chart.claim_id, list(chart.panels), title=chart.title, desc=chart.desc,
                label_width=chart.label_width, row_h=chart.row_h)}
   {block(slots.reading, cls="finding reading")}
-  {slots.evidence}
   {values_table(f"{chart.chart_id}-values", chart.claim_id, list(chart.panels))}
  </figure>
  <aside class="caveats" aria-label="What this result does not establish" data-slot="not-established">
   <h3>What this result does not establish</h3><ul class="not-established">{not_established}</ul>
  </aside>
  <div class="decision" data-slot="decision"><h3 class="story-label">Decision</h3>{block(slots.decision)}</div>
+ <div data-slot="evidence">{slots.evidence}</div>
  <div class="disclosures" data-slot="details">{details}</div>
 </article>"""
 

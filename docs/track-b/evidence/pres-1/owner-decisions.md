@@ -69,3 +69,11 @@ Given in the Lead session on 2026-09-28, after W1–W11's first commits, in the 
 | Close the WebKit accessibility-tree gap with real evidence, or hand the Orchestrator an explicit alternative check | Recorded with the §10 release checks |
 | Resolve W2's distinction between byte identity and content preservation after identity fields change | `registry-zero-diff.md`, "Byte identity and content preservation" |
 | Then complete the remaining deliverables, checks and the independent check, through the return the brief defines; do not widen the design or the research | As the brief orders |
+
+## 2026-09-28: resume after correcting the authentication diagnostic
+
+The Owner reported that the stored token was verified and an MLflow experiment read using the
+existing variables returned HTTP 200; HTTP 403 reproduced only for `/api/v1/user` with that Basic
+pair. He instructed the Lead to correct the precheck to the appropriate authentication without
+changing stored credentials, record a fresh check, repair W3/W5 and obtain an independent repeat
+review before upload. The prior F1 authority and its independent-PASS gate remain unchanged.
