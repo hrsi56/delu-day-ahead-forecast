@@ -22,7 +22,7 @@ The log was committed at `db60469` before the index. A successful F1 is not yet 
 
 The index writer requires a passed full mirror record and passed browser checks; runbook §1.5 explicitly orders verification → browser routes → index. The full mirror and route checks therefore supply F2's prerequisites and F3's acceptance evidence. The six route identities are also checked independently over REST so browser work can proceed concurrently; the route seed is explicitly **not** a full mirror verdict. Before writing the index, its route/ID map must equal the completed full mirror's map exactly. After the generated index is committed, F3 records the public capabilities and acceptance against those checks. No measurement timestamp is relabelled as a later rerun.
 
-F2, F3 and F4 are pending at this record's initial write; the completion entries below will record the actual outcomes before terminal review.
+The completion entries below distinguish the committed index, the acceptance/capability record and the final build.
 
 ## Retained F1 artifacts
 
@@ -30,3 +30,26 @@ F2, F3 and F4 are pending at this record's initial write; the completion entries
 - `.local/tmp/pres-1/pre-f1-export-digests.json`: SHA-256 `71f35277fe79bdba41872d4470a779627f94322d4d44320cf312dab692c64105`.
 - `.local/tmp/pres-1/pre-f1-protected-public-state.json`: SHA-256 `c2a402c73bad57a2019fbf14eae039c532176b2d082ff9c0e557480d10f80407`.
 - `.local/tmp/pres-1/pre-f1-dry-run.log`: SHA-256 `9a718eefa28c519afef046d73243ddec45a3cd51fb47115f27042b231b7d0d16`.
+
+## F2 — complete
+
+`verify_mlflow_mirror.py verify --target public --out reports/presentation/release-checks/2026-09-28-mlflow-index-prereq-mirror.json` exited 0: 23 expected/found runs, 6,928 metric points, 55 artifact hashes, all params/tags/parents matched, six of six routes passed REST. The parallel browser seed was produced only by `route_checks` from real run IDs, marked route-only, and compared equal to the full mirror's entire route map and every run ID before index creation.
+
+`check_reader_paths.py mlflow-routes --mirror-record <root>/.local/tmp/pres-1/f2-route-seed.json --shots <root>/.local/artifacts/presentation/mlflow-public --out reports/presentation/release-checks/2026-09-28-mlflow-routes.json` exited 0: all six routes passed anonymously in Chromium and WebKit. An additional fresh-context check waited for a Plotly SVG and zero Skeleton elements on all five comparison routes in both engines: 10/10 rendered, no HTTP errors (`2026-09-28-mlflow-charts.json`). This addresses the initial screenshot taken before delayed chart rendering finished; it does not claim that the earlier skeleton screenshot was a completed chart.
+
+`verify_mlflow_mirror.py index --mirror-record reports/presentation/release-checks/2026-09-28-mlflow-index-prereq-mirror.json --browser-record reports/presentation/release-checks/2026-09-28-mlflow-routes.json` exited 0. The verifier generated six advertised routes, zero withheld, and all 23 run IDs. It was committed at **2665381** before F3's capability record and before F4. No index field was hand-edited.
+
+## F3 — complete
+
+The full mirror/REST/browser records above are the F3 verification evidence required to produce F2's verified index (runbook §1.5). After that index commit, fresh anonymous calls additionally checked **39/39 dataset names, digests and context tags**, **23/23 run notes**, **19/19 parent links**, the v3 tag filter (exactly `cp20/HG`), experiment kind and server version. `2026-09-28-mlflow-capability-checks.json` records the results. `delu-cp2` experiment metadata and `delu-day-ahead-champion` registry metadata are byte-for-byte equal as JSON objects to the pre-F1 read-only baseline. This checks metadata; it is not a fabricated full historical artifact census of those protected namespaces.
+
+`reports/presentation/mlflow-capabilities.json` now separates the historical local/probe results from measured public support. All five comparison charts load in both engines. Dataset UI pages and a separate nested-tree interaction are not advertised or claimed as tested. Interruption/resume and deliberate corruption remain local tests; no destructive public probe or redundant upload was made.
+
+The F3 helper used only `Reader` anonymous GETs and POST searches (reads), no authenticated calls or network writes. The retained scripts are `.local/tmp/pres-1/f3-capabilities.py` and `update-capabilities.py`; the mirror verifier and browser driver are committed scripts. The JSON results and capabilities are durable records, not only scratch logs.
+
+- `.local/tmp/pres-1/f3-capabilities.py` — SHA-256 `711791a0e2f25adc527f76bdbf3e45d70448da755955beafcb2f6b24cef2ab10`.
+- `.local/tmp/pres-1/update-capabilities.py` — SHA-256 `353b7da67baead592f77ee4a4aad5144d4d0c4fc02af9797eb81764847c7099a`.
+- `.local/tmp/pres-1/f3-capabilities.log` — SHA-256 `2753d789439941b84439cbdfc6116af92e4b25cba5bd5cd455d798e84706e470`.
+- `.local/tmp/pres-1/f2-route-seed.json` — SHA-256 `c5652ff4afafc0ec1fa555ecf10c122e2537f9b2e1a4e4f0d4e1d0dbf82bdb53`.
+- `.local/tmp/pres-1/f2-mirror.log` — SHA-256 `23dd7a1840b421e645617684b9728626a208f2d7a16893af72eb1170637680c8`.
+- `.local/tmp/pres-1/f2-browser.log` — SHA-256 `abeb2688294567140234f8ae533dbd15705d92891a93525285de7fe4653ab137`.
