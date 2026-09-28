@@ -55,6 +55,83 @@ ALLOWED_ROOT = {
     "manifest.json", "site.webmanifest",
 }
 
+#: marimo copies every stylesheet the page links into each widget's shadow root, as a constructed
+#: stylesheet built from the rules' text (`copyStyles` in its frontend). A constructed stylesheet
+#: resolves relative URLs against the page, not against `assets/`, so WebKit -- which honours
+#: `@font-face` inside a shadow root, unlike Chrome -- asked the bundle's root for three fonts that
+#: exist only under `assets/`, and got 404 (the Phase 0 and 2026-09-28 demo records). Every target
+#: a linked stylesheet names is therefore also shipped at the root (brief W12). Nothing is edited.
+_LINK = re.compile(r"<link\b[^>]*>")
+_ATTR = re.compile(r'\b(rel|href)="([^"]*)"')
+_LOCAL_REF = re.compile(r'\b(?:href|src)="(?!https?:|data:|blob:|mailto:|#|//)([^"]+)"')
+_CSS_URL = re.compile(r"""url\(\s*['"]?(?!data:|https?:|blob:|#|/)([^'")]+?)['"]?\s*\)""")
+
+
+def _local(ref: str) -> str:
+    return ref.split("#", 1)[0].split("?", 1)[0]
+
+
+def linked_stylesheets(page: str) -> list[str]:
+    """The stylesheets the page links, in order."""
+    sheets = []
+    for tag in _LINK.findall(page):
+        attrs = dict(_ATTR.findall(tag))
+        if "stylesheet" in attrs.get("rel", "").split() and attrs.get("href"):
+            sheets.append(_local(attrs["href"]))
+    return list(dict.fromkeys(sheets))
+
+
+def stylesheet_references(bundle: Path) -> list[tuple[str, str]]:
+    """(stylesheet, relative URL) for every `url()` in a stylesheet the page links."""
+    page = (bundle / "index.html").read_text()
+    out = []
+    for sheet in linked_stylesheets(page):
+        path = bundle / sheet
+        if path.is_file():
+            out += [(sheet, _local(ref)) for ref in dict.fromkeys(_CSS_URL.findall(path.read_text()))]
+    return out
+
+
+def ship_shadow_root_targets(bundle: Path) -> list[str]:
+    """Copy each target a linked stylesheet names to where a shadow-root copy of it resolves."""
+    shipped = []
+    for sheet, ref in stylesheet_references(bundle):
+        source = ((bundle / sheet).parent / ref).resolve()
+        target = (bundle / ref).resolve()
+        if source.is_file() and target.is_relative_to(bundle.resolve()) and not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, target)
+            shipped.append(str(target.relative_to(bundle.resolve())))
+    return sorted(shipped)
+
+
+def referenced_asset_problems(bundle: Path) -> tuple[int, list[str]]:
+    """Every asset the page's HTML and its linked stylesheets reference exists in the bundle; a
+    stylesheet's `url()` is resolved against the stylesheet and against the page (its shadow-root
+    copies). Returns how many references were checked, and what is missing."""
+    page = (bundle / "index.html").read_text()
+    root = bundle.resolve()
+    checked, problems = 0, []
+    for ref in dict.fromkeys(_local(ref) for ref in _LOCAL_REF.findall(page)):
+        checked += 1
+        if not (root / ref).resolve().is_file():
+            problems.append(f"index.html references {ref}, which the bundle lacks")
+    for sheet, ref in stylesheet_references(bundle):
+        for base, where in (((root / sheet).parent, "beside the stylesheet"), (root, "at the root, for its shadow-root copies")):
+            checked += 1
+            if not (base / ref).resolve().is_file():
+                problems.append(f"{sheet} references {ref}, which the bundle lacks {where}")
+    return checked, problems
+
+
+def bundle_sha256(bundle: Path) -> str:
+    """One hash for the whole bundle: SHA-256 over `<file sha256>  <path>` lines, sorted by path --
+    the form `shasum -a 256` prints, so anyone can recompute it from a checkout of the Space."""
+    paths = sorted((p.relative_to(bundle).as_posix() for p in bundle.rglob("*") if p.is_file()), key=str.encode)
+    lines = [f"{hashlib.sha256((bundle / path).read_bytes()).hexdigest()}  {path}" for path in paths]
+    return hashlib.sha256(("\n".join(lines) + "\n").encode()).hexdigest()
+
+
 #: The Hub stores binary files through LFS/Xet. Text -- the boosters, the JSON,
 #: the JavaScript -- does not need it.
 GITATTRIBUTES = """*.png filter=lfs diff=lfs merge=lfs -text
@@ -345,6 +422,7 @@ def main() -> int:
         compiled.unlink()
     shutil.copy2(CARD, BUNDLE / "README.md")
     (BUNDLE / ".gitattributes").write_text(GITATTRIBUTES)
+    shipped_at_root = ship_shadow_root_targets(BUNDLE) if (BUNDLE / "index.html").is_file() else []
     C = build_claims()
     index = BUNDLE / "index.html"
     if index.is_file():
@@ -384,6 +462,8 @@ def main() -> int:
             problems.append(f"{leak} present in the bundle")
     startup = startup_findings(index.read_text(), C) if index.is_file() else ["index.html missing"]
     problems.extend(f"startup states: {finding}" for finding in startup)
+    references_checked, missing = referenced_asset_problems(BUNDLE) if index.is_file() else (0, [])
+    problems.extend(f"referenced assets: {problem}" for problem in missing)
     front = (BUNDLE / "README.md").read_text().split("---", 2)[1]
     if "sdk: static" not in front:
         problems.append("the card does not declare sdk: static")
@@ -403,6 +483,8 @@ def main() -> int:
                 "boosters": [p.name for p in boosters],
                 "browser_champion_sha256": module_sha,
                 "index_html_sha256": hashlib.sha256(index.read_bytes()).hexdigest() if index.is_file() else None,
+                "bundle_sha256": bundle_sha256(BUNDLE),
+                "bundle_sha256_method": "SHA-256 of the sorted `<sha256>  <path>` lines of every file in the bundle",
                 "startup_states": {
                     "injected": index.is_file() and not startup,
                     "states": ["loading", "failure", "retrying", "ready"],
@@ -411,6 +493,8 @@ def main() -> int:
                     "report_url": C["pages_url"],
                 },
                 "removed_from_export_root": removed,
+                "referenced_assets": {"checked": references_checked, "missing": missing,
+                                      "shipped_at_root_for_shadow_roots": shipped_at_root},
                 "problems": problems,
                 "deployment": "owner-only; this script assembles and pushes nothing",
             },

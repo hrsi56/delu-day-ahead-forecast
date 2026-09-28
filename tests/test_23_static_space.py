@@ -363,3 +363,44 @@ def test_the_recorded_space_build_carries_the_states():
         W = _space_builder()
         assert W.startup_findings(built.read_text(), build_claims()) == []
         assert hashlib.sha256(built.read_bytes()).hexdigest() == manifest["index_html_sha256"]
+
+
+# -- every asset the bundle's HTML and CSS reference (conformance brief W12) --------------------
+#
+# marimo copies each stylesheet the page links into its widgets' shadow roots, where a relative
+# `url()` resolves against the page. WebKit then asked the bundle's root for PT Sans and Lora, which
+# existed only under `assets/` (three 404s in the 2026-09-27 demo record). The build ships every
+# target a linked stylesheet names at the root too, and checks every reference both ways.
+
+
+def test_every_asset_the_bundle_references_is_shipped():
+    manifest = json.loads(BUNDLE_MANIFEST.read_text())
+    record = manifest["referenced_assets"]
+    assert record["checked"] > 100 and record["missing"] == [], record["missing"]
+    assert record["shipped_at_root_for_shadow_roots"], "the linked stylesheets name fonts under assets/"
+    assert manifest["bundle_sha256"] and "sorted" in manifest["bundle_sha256_method"]
+    built = REPO_ROOT / "dist" / "space-wasm"
+    if (built / "index.html").is_file():  # a local build is present (never in CI): check the files themselves
+        W = _space_builder()
+        assert W.referenced_asset_problems(built) == (record["checked"], [])
+        assert W.bundle_sha256(built) == manifest["bundle_sha256"]
+
+
+def test_negative_control_a_missing_reference_is_caught(tmp_path):
+    W = _space_builder()
+    bundle = tmp_path / "bundle"
+    (bundle / "assets").mkdir(parents=True)
+    (bundle / "index.html").write_text('<link rel="stylesheet" crossorigin href="./assets/app.css">'
+                                       '<script type="module" src="./assets/app.js"></script>')
+    (bundle / "assets" / "app.css").write_text("@font-face{src:url(./Font-x.woff2)format('woff2')}"
+                                               ".a{background:url(./gone.png)}.b{background:url(data:image/png;base64,AA)}")
+    (bundle / "assets" / "Font-x.woff2").write_bytes(b"wOF2")
+    checked, problems = W.referenced_asset_problems(bundle)
+    assert checked == 6, "two HTML references, and two stylesheet references each resolved two ways"
+    assert "index.html references ./assets/app.js, which the bundle lacks" in problems
+    assert any("./Font-x.woff2" in p and "at the root" in p for p in problems), "the shadow-root copy's font"
+    assert any("./gone.png" in p and "beside the stylesheet" in p for p in problems)
+    (bundle / "assets" / "app.js").write_text("")
+    (bundle / "assets" / "gone.png").write_bytes(b"\x89PNG")
+    assert W.ship_shadow_root_targets(bundle) == ["Font-x.woff2", "gone.png"]
+    assert W.referenced_asset_problems(bundle) == (checked, [])
