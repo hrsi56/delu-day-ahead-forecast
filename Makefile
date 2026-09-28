@@ -124,3 +124,8 @@ presentation:
 # runs in CI, as tests/test_37_publication_lint.py).
 lint-publication:
 	uv run python scripts/lint_publication.py
+
+# Publication Standard v1 §9: refuse a placeholder or a non-final build record (the pre-push hook
+# runs it for every push to main, after the secret guard; CI runs it on main as the backstop).
+publication-guard:
+	python3 scripts/publication_guard.py tree
