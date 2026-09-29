@@ -2,6 +2,9 @@
 
 **Publication Standard v1 §12; written by the PRES-1 conformance task (brief W15), 2026-09-28;
 brought to PUBLISH_RULES 1.0 (A1–A6) by PRES-2, 2026-09-29.**
+**Prospective update, 2026-09-29:** PUBLISH_RULES 1.1 A7/A8 and research v21-r5 §16 govern
+the future final-product transition (§7b). Existing code touchpoints below describe PRES-2;
+they do not claim that daily training or a live product panel is implemented.
 This lists every place a publication touches: the files and symbols to change, in order, for an
 adopted generation, a branch card, a changed population and each status transition the registry
 defines. It does not add requirements; the standard, the checkpoint's brief and plan revision 3
@@ -47,6 +50,50 @@ Space cards and the MLflow export), and the Space bundle by `make wasm`.
    revision and bytes, the behaviour observed and every first failure and retry, from
    `scripts/check_reader_paths.py::release` on the public URL, `scripts/check_reader_paths.py::demo_controls`
    and the mirror verifier. Local results never stand in for them.
+
+### 1a. Publication completion receipt — every surface, every release
+
+This operational checklist implements PUBLISH_RULES §§8, 10.3 and 11 and baseline v1's
+complete-publication requirement; it grants no new authority or retrospective acceptance rule.
+Every publication packet fills §8 of the packet template. A Git push, green CI, local PASS
+or Hub upload response alone cannot close a publication.
+
+| Surface | Evidence required before completion |
+|---|---|
+| GitHub / Pages | Landed source identity, actual deployed/served identity and applicable public browser checks |
+| MLflow | Evidence identity, public experiment/run/model-version references, export diff and dated anonymous verification of the actual required records and routes |
+| Hugging Face card and direct demo | Exact intended Space revision/bundle and model/policy identity; actual Hub revision, served artifacts and applicable public demo checks |
+
+**MLflow is accounted for in every release.** For changed research/model evidence, upload the
+authorized matching export and verify it before the final page build. For a presentation-only
+release with an identical export, record its unchanged identity, existing public run references
+and fresh verification; do not create fictitious experiments or duplicate metrics merely to give
+the publication a new run. The release receipt binds the publication SHA to those MLflow records.
+For final-product/live work, the future protocol must connect the registered initialization and
+daily fit/issuance lineage to the prescribed `delu-live` records. Repository/local logging alone
+does not prove public tracking. Credentials, raw restricted data and secrets are never published.
+
+**Hugging Face is a required product destination.** The final-product rollout is incomplete
+until the Space and its direct app serve the designated product/demo policy, not the prior
+product or only an updated card. The future daily pipeline must publish or otherwise deliver
+each admitted daily artifact/forecast to that hosted demo under its authorized deployment design,
+and verify which dated artifact and forecast it actually serves. Training can run outside the
+Space; calling training daily does not prove that the Space updated. Record successful fit,
+publication and served identities separately. An unchanged bundle may be retained only when
+it already serves the intended identity and is verified as such; a changed expected bundle
+requires deployment, not an unchanged disposition.
+
+Partial rollout remains **publication incomplete** until required surface checks pass. A known
+mismatch is a product failure; unavailable checks are evidence gaps, using the standard's verdict
+rules. Daily failures/staleness remain visible and invoke the frozen recovery policy; no silent
+reuse of an old success record or assertion of uninterrupted hosting. This is an acceptance
+condition, not a guarantee that an external service never fails. Retain first failures and
+retries; name the unfinished surface and next action in the return and progress record.
+
+**PRES-2 continuation:** the existing packet already requires a Space upload. Its unchanged
+MLflow export does not excuse leaving the changed Space bundle at PRES-1. Complete that packet's
+authorized upload and P8 checks before closing it; do not repeat its research or relabel its
+historical verdict. An external action still requires its applicable Owner authorization.
 
 ---
 
@@ -198,7 +245,8 @@ covered twice. The released v1's topics are `scripts/build_pages.py::v1_product_
 evidence is typed in `src/delu_forecast/research.py::_cp2_product_records`, from the files in
 `src/delu_forecast/research.py::PRODUCT_SOURCES`, kept apart from the MLflow mirror's sources.
 
-**A new released model** (after its one-shot test and live run, under the research plan):
+**A new released model** (after the protected fresh-data test, final selection and policy freeze,
+at authorized rollout under research v21-r5 §16; live evaluation may still be in progress):
 
 | # | Touchpoint | What changes |
 |---|---|---|
@@ -210,6 +258,42 @@ evidence is typed in `src/delu_forecast/research.py::_cp2_product_records`, from
 
 The outgoing model's documentation stays reachable in the repository's history and its chapter; the
 page documents one product.
+
+## 7b. Final-product rollout and daily publication (PUBLISH_RULES 1.1 A7/A8)
+
+This is a future implementation checklist, not a statement that the present generator,
+registry or Space already supports these operations. The full research/operational brief is
+required; no command here schedules training or grants publication permission.
+
+1. Record the Owner's exact final-version designation and incoming/outgoing product. Distinguish
+   selected, frozen, deployed, live and prospectively evaluated states; do not relabel an old demo.
+2. Bind one product version/policy across registry, report, README, Space/demo and tracking.
+   Freeze reproducible initialization and the daily-training, input, scoring and failure contracts.
+   Daily fits retain dated artifact/input/state lineage without becoming new research generations.
+3. Populate all twelve product subjects from incoming evidence; arrange the opening → How the
+   product works → Product results → Business insights → How the models compare. Preserve the
+   remaining section order, comparisons and historical archive. Apply A8's product-oriented
+   headline/placement rule and A5's routes; avoid duplicate charts across product sections.
+4. Implement authorized daily data acquisition, training, issuance, publication and later outcome
+   reconciliation. Separate successful training time from data refresh/issuance; record missed
+   fits and stale/fallback forecasts. Cover DST and Friday/Shabbat without scheduled manual work.
+   If the model only refreshes context, obtain the explicit exception required by research §16.
+5. Render today's genuinely issued predictions against available published prices, the frozen
+   percentage metric and MAE, tomorrow's issued forecasts/intervals, and past interval coverage
+   with width. Include pending, partial, failed and unavailable states; never rescore a day using
+   a newer fit or treat nominal interval level as point-forecast correctness probability.
+6. Populate scientific results by evidence class. Business graphics use the evaluated decision
+   policy, full cumulative net-value series, costs/constraints, benchmark and risk context;
+   absent evaluation remains explicitly absent. No profit is inferred from prediction accuracy.
+7. Use packet §5d and independent public acceptance for identity, daily records, scoring,
+   stale/failure handling and the existing browser/accessibility matrix. A first successful run
+   is not 90-day validation. Publish live records as evaluation in progress until CP-19.
+
+Authorized daily publication may regenerate a self-contained static report; it does not remove
+the no-runtime-network rule. Implementations may change the deployment form if admitted and
+reviewed; do not assume a browser-only WASM demo can retrain or refresh itself automatically.
+Policy changes require a new freeze/review; ordinary prescribed daily fits use their approved
+operational checks, not a new generation narrative or full release review every day.
 
 ## 8. MLflow routes
 

@@ -1,6 +1,12 @@
 # PUBLISH_RULES — publication anchor
 
-**Revision:** 1.0 · **Prepared:** 2026-09-29 · **Owner:** Yarden Viktor Dejorno
+**Revision:** 1.1 · **Updated:** 2026-09-29 · **Owner:** Yarden Viktor Dejorno
+
+**Revision 1.1 authority:** the Owner explicitly approved the task-scoped Governance Lockdown
+suspension after specifying one final product/demo/daily model and its page order (§16.1).
+Revision 1.0 remains preserved at `evidence/pres-2:docs/PUBLISH_RULES.md` and governs PRES-2.
+This revision adds A8 and strengthens conditional A7 for the future final-product transition;
+it does not regrade PRES-1/PRES-2, designate a model now, or start training/deployment.
 
 **Status: active publication anchor, established under the Owner's explicit task-wide
 authorization on 2026-09-29.** The Owner requested this anchor, then expressly authorized all
@@ -72,6 +78,10 @@ by reachable Git references. No historical review is regraded under a newly prop
 - **Inherited:** already required by v1 or surviving plan clauses. Applies now under those sources.
 - **Amendment A1–A7:** precisely listed in §15 and authorized in §16. A1–A6 apply from the next
   publication; A7 is conditional on Live. They cannot fail PRES-1 retrospectively.
+- **Revision 1.1 / A8:** final-product identity, page order and daily-operation obligations apply
+  when the Owner designates the final model and its transition is executed. A7's operational
+  display applies as live operation starts; unavailable states apply before then. Existing
+  research releases keep their effective contract. Research authority is `capstone_v21.md` §16.
 - **Future trigger:** one-shot test, final candidate, daily updates or live operation. Applies when
   its prerequisite and governing protocol exist. Not a reason to invent data, retrain or start a service.
 - **Historical example:** illustrates an observed case; never a permanent test constant or live status feed.
@@ -101,6 +111,13 @@ The inherited placements are measured with all disclosures closed, in Chrome and
 **A1 requires** naming each metric beside its headline number. **A2 requires** measuring the
 comparison's screen allowance after subtracting persistent header space (§15). The raw pixel
 limits above are retained as the historical v1 baseline; A2 governs future publication acceptance.
+
+For the final-product page only, A8 changes which content occupies these early slots: the
+product/forecast summary is the headline and its performance/uncertainty finding is the
+orientation. A2's measured-header formula and two/three-screen limits still apply to that
+product finding. The later **How the models compare** section is no longer required within
+those screens; its comparison/fairness finding remains immediately above its chart. This is
+an explicit conditional placement amendment, not a relaxation for current research releases.
 
 Write plainly. Define a term at first use; do not add a glossary as a substitute. Put a caveat
 where it qualifies a claim, once. Avoid internal codes, repair history and repeated assurances
@@ -238,6 +255,22 @@ model line remains registry-derived and separate from this historical decision.
    relocate essential data, method, forecast, limitations or reproduction explanations here.
 8. Reproduction, contribution, terms and attribution.
 
+**A8 overrides this order at the final-product transition:** compact navigation → one product
+and daily-forecast opening → **How the product works** → **Product results** (scientific
+results and graphics) → **Business insights** → **How the models compare** → the remaining
+lineage, chapters, planned work, depth, reproduction, contribution, terms and attribution in
+their existing relative order. No change is made to the comparison content or later sections.
+The three product sections complement each other: method explanations link to the canonical
+result graphics; business conclusions cite those results and their own evaluated use case,
+without duplicating full charts or manuals. Descriptive routes remain visible by default.
+
+At that transition, the latest Owner-designated final version, selected product, primary demo
+and daily training/forecasting policy must share one version and policy identity. The opening
+must not pair a newer research model with an older primary demo. Later experiments remain
+research history until a separately authorized product replacement. Designation is recorded
+immediately as selected; if rollout is incomplete, show that state and the currently runnable
+identity honestly. Never relabel an old demo as the incoming model or claim the transition done.
+
 The product documentation must fit the headline/orientation placement contract. Its concise
 orientation and descriptive topic routes are visible immediately after the product panel; long
 bodies may use named disclosures within that section. Moving the entire old report into the
@@ -296,6 +329,26 @@ the preserved v1 archive. Retain its protected text/behaviour and an explicitly 
 but do not make it the only route to understanding the current product. The active-product section
 is maintained outside that archive. Its facts and graphs are selected and rewritten for the actual
 product; merely renaming the archived report does not meet this requirement.
+
+### 5.1a Final-product results and business interpretation (A8)
+
+**Product results**, directly after How the product works, presents the selected product's
+forecast-versus-observed charts, error over time and by material regimes, explanation/sensitivity
+results, and interval coverage together with width. Each graphic names the policy/artifact,
+population, dates, units and evidence class. Historical development, unused-data evaluation and
+prospective issued forecasts are visibly separate. Use the §5.1 coverage map across these
+adjacent sections; do not transplant another model's evidence or duplicate every topic.
+
+**Business insights**, directly after Product results, explains the intended use, measured
+benefit, losses and limits. Where a decision-policy evaluation exists, show cumulative net
+profit/value over the full named period, against the declared benchmark, with units, costs,
+constraints, initial conditions and risk/loss context. Label simulated/backtested results versus
+realized operation; preserve failed and missing days and disclose capital/denominators for
+returns. Forecast error reduction and interval coverage are not profit or trade-success rates.
+Business success percentages name the decision, formula, denominator and evaluation window.
+If this evaluation is not yet authorized or available, retain the section with the specific
+gap and measured forecasting implications; do not manufacture a profit curve or imply gains.
+Economic modelling stays governed by the research/use-case protocol (programme §4.E).
 
 ### 5.2 Chapter grammar
 
@@ -366,6 +419,14 @@ The Owner's requested direction is a leading panel for today's forecast versus a
 and tomorrow's forecast with uncertainty, followed by the product documentation. It requires the
 research/live protocol and the triggers in v1 §16 before implementation as a live product.
 
+Revision 1.1 makes this a required outcome for the Owner-designated final product, not an
+optional dashboard. The lifecycle and daily-training contract are in research anchor §16.
+Freeze the policy and reproducible initialization, not all future weights. Daily retraining,
+eligible input refresh and forecast issuance are mandatory for that selected product, subject
+to its declared failure policy. Input/context refresh alone is not training; a model that
+cannot meet daily training needs a documented Owner-approved exception before live admission.
+No such exception is granted here to TabPFN, immutable v1 or any other model.
+
 Distinguish:
 
 - **Frozen fitted artifact:** weights and calibration are unchanged.
@@ -387,6 +448,21 @@ Distinguish:
 | Reliability | Observed interval coverage together with width over the named past window; no promise that a nominal level is verified future confidence |
 | Freshness | Last successful update and stale/missing/failed state; never silently present old forecasts as newly issued |
 
+The panel also shows the last successful **training** time separately from data refresh and
+forecast issuance, and identifies the daily artifact that produced each forecast. Today's
+score uses the predictions actually issued for today's delivery hours, not predictions
+recomputed by today's newer fit. Tomorrow's forecast is issued before its outcomes are known;
+before the issuance cutoff or on failure, show a dated pending/unavailable state.
+
+Show a **defined percentage performance measure alongside MAE in EUR/MWh**. Its formula,
+denominator, eligible hours, scoring window, partial-day completeness and handling of zero and
+negative prices must be fixed before evaluation. A possible contract is the percentage of
+scored hours within a predeclared absolute-error tolerance; the numeric tolerance must be
+justified and frozen by the protocol, not chosen after seeing results. A relative improvement
+against a benchmark must be labelled as improvement, not percentage correct. No clipping or
+silent exclusion may make a negative/undefined score look like high accuracy. If there are no
+eligible outcomes, show not yet scored, not 0% or 100%.
+
 Do not label performance merely “X% correct”. Hourly prices can be zero or negative, making common
 percentage errors misleading. Use the protocol's MAE in EUR/MWh and, if authorized and properly
 defined, its benchmark comparison. Do not equate a 95% forecast interval with a 95% probability that
@@ -399,6 +475,14 @@ namespace boundary, final test protections and prospective publication timestamp
 Before Live, resolve update/publication authority, Friday and Shabbat scheduling, `delu-live`,
 the runnable frozen-policy registry model, extended namespace tests, live claim builder and the
 demo approach for daily weather inputs. No unattended publishing authority is granted by this anchor.
+
+Daily means every delivery day, including 23/25-hour days. The future operating brief must
+reconcile this with the Owner's no-manual-work Friday/Shabbat constraint through an explicitly
+authorized unattended schedule and failure coverage; skipping those days silently is not daily
+operation. This document creates no scheduler or standing unattended-publication permission.
+The static report may be regenerated by that future authorized process; its no-runtime-network
+rule remains in force. Demo and panel use the same policy and identify any different dated
+artifacts; an older historical replay is labelled as such and is not the primary live demo.
 
 ## 8. Public surfaces and evidence links
 
@@ -541,6 +625,13 @@ Each research checkpoint supplies its packet from inside the checkpoint, includi
 Under A4/A5, include the twelve-subject active-product coverage/applicability map, any
 product-replacement documentation migration, and chart-route mapping in the same packet. Do not create a second hand-maintained catalogue if registry/slot data can generate it.
 
+When A8 applies, include the Owner's exact final-version designation, outgoing/incoming demo
+mapping, policy freeze and daily-artifact lineage, training/issuance schedule and exceptions,
+percentage-score protocol, uncertainty records, business evidence/gaps and final-product page
+order. The packet must distinguish selected, frozen, deployed, live and prospectively evaluated
+states. Do not wait for the 90-day evaluation to display honestly labelled live observations;
+do not award prospective qualification before that evaluation.
+
 Follow v1 §12's order: build from packet → editorial review → fresh reader → independent check →
 authorized MLflow upload and verification → final build → final-SHA focused recheck → authorized
 landing/push/Space redeploy → public post-deployment checks. Roles and actual authority come from
@@ -637,6 +728,9 @@ One review record can carry this matrix; duplicate certificates are unnecessary:
 | Release | Final build, guard/test results, exact-candidate independent check, authorized action record |
 | Public check | Per-surface identity/behaviour, first failures/retries, limitations and verdict |
 | Follow-up | Violations versus recommendations versus rule proposals; comparison with earlier findings |
+| Final product (A8, conditional) | Owner designation; one product/demo/daily-policy identity; frozen update contract; daily fit/issuance lineage; ordered method/results/business/comparison sections; actual rollout status |
+| Daily panel (A7/A8, conditional) | Today issued-versus-published prices; percentage and MAE derivations including zero/negative/missing outcomes; tomorrow intervals; coverage/width; separate training/issuance timestamps and stale/failure states |
+| Business (A8, conditional) | Reproducible cumulative net value and benchmark when evaluated; explicit unevaluated state otherwise; costs, denominators, risk and simulation/realization labels |
 
 Preserve screenshots and necessary machine-readable evidence with the review's declared scope.
 Release evidence uses the normal committed evidence locations; task scratch stays in `.local/`.
@@ -672,6 +766,9 @@ Pending triggers inherited from v1:
 **A1–A7 are incorporated under the authority in §16.** A1–A6 apply from the next publication.
 A7 is a conditional Live requirement. The justification and maintenance cost remain here so that
 future reviews can distinguish an intentional amendment from an accidental paraphrase.
+
+Revision 1.1 strengthens A7 as specified in §7.2 and adds A8 below; the original A1–A7
+authority and PRES-2's revision-1.0 acceptance remain historical and unchanged.
 
 ### A1 — Name each headline metric
 
@@ -782,7 +879,40 @@ to the research protocol; public acceptance waits for actual live implementation
 **Maintenance:** populate fields from existing issuance/scoring metadata when that system exists.
 No new live service, automation, retraining schedule or model promotion is approved by this amendment.
 
+**Revision 1.1 clarification:** the default daily-training requirement is now ratified in
+research anchor §16; operational numeric schedules and execution authority remain future work.
+The paragraph above records original A7's implementation boundary, not an option to omit the
+new final-product requirement.
+
+### A8 — One final product, daily operation and product-first results
+
+**Observed need:** the current split between research v3 and demo v1 does not express the
+Owner's intended final product. A4 did not place dedicated scientific results and business
+interpretation before model comparisons; original A7 did not require daily retraining.
+
+**Amendment:** at the Owner-designated final-product transition, §§5, 5.1a and 7.2 govern one
+product/demo/daily-policy identity, the specified product-first page order, daily training,
+defined percentage scores, and honest uncertainty/business claims. For this triggered layout,
+§2 applies A2's early-placement bound to the product finding, not the later model comparison.
+Only this explicit order/placement change supersedes A4 and v1's early research-comparison
+position; comparison content, later sections and all other applicable acceptance remain.
+
+**Check:** trace designation → registry/policy → daily artifacts → issued predictions → demo,
+panel and documentation. Reproduce scores and any business series from source records;
+check timing/no outcome leakage, missing/zero/negative prices, failed fit/issuance, stale data,
+partial days and DST. Verify the default section order, product-first placement, descriptive
+routes and served identity in the existing browser matrix. A future independent verdict binds
+the implementation; writing this rule is not a PASS. Unperformed economics are disclosed, not
+fabricated; unsupported daily training remains a blocker unless the Owner grants an exception.
+
+**Maintenance:** one product identity and issuance/scoring record feed all surfaces; reuse
+the existing subject and chart maps. Daily records and monitored operation have real storage,
+runtime and operator costs, to be bounded in the future operational brief. This amendment adds
+no model search, paid service, new economic experiment or current implementation.
+
 ## 16. Owner authority and integration record
+
+### 16.0 Historical establishment of revision 1.0
 
 The Owner first instructed: “תבנה עוגן ״PUBLISH_RULES״ בdocs ותעגן אותו יחד עם שאר העוגנים.
 תבנה מסמך מקיף ומדויק שישמש אותנו לעתיד”. After the agent explained that registering a binding
@@ -816,6 +946,22 @@ requirement explicitly rather than treating the old template as a waiver.
 All edits remain uncommitted for Owner review on main. This governance update does not close
 any public-product findings and does not confer a compliance verdict on the unchanged website.
 
+### 16.1 Revision 1.1 — final-product decision, 2026-09-29
+
+The Owner specified that the final version, product, demo and daily-updated model must be the
+same model; the page must show the product, How the product works, scientific product results,
+business insights, then How the models compare and the remaining planned sections unchanged.
+After the agent named the affected anchors and directly necessary consistency documents and
+requested the task-scoped Lockdown suspension, the Owner replied: **“מאשר באופן מלא”**.
+
+This authorizes this documentation amendment and its necessary consistency edits to
+`capstone_v21.md`, the programme handoff, publication runbook/packet and `progress.md`, including
+the research amendment record. It authorizes no model selection now, training run, external
+action, commit, push, deployment or permanent governance exception. The suspension is spent at
+this task's terminal return. AGENTS.md and historical baseline/brief/review/evidence bytes stay
+unchanged. Research v21-r5 §16 supplies the operational policy obligation; this revision supplies
+presentation and acceptance. Programme state records the new hashes without rewriting old briefs.
+
 ## 17. Source identities and change record
 
 Prepared on `main` at `01e394d475202bb44a226f2ac5403aa084dc5b4c`. The existing untracked independent
@@ -842,3 +988,9 @@ amendments; separate generation comparisons from rejected experiments; define th
 chart discovery; specify future-live semantics without activating live operation. The root governance
 router and programme-state pointers register this anchor under the quoted authorization. The
 baseline standard, historical evidence, implementation and public services remain unchanged.
+
+**1.1, 2026-09-29:** Owner-approved final-product identity, daily-training default and display
+contract, product results and business sections, and explicit conditional placement amendment.
+Revision 1.0 is preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`, SHA-256
+`03f106060d9a646ce0c0c986d2f5fb6549929f2ed7270f0c8678fbfd2293b3a3`.
+Only future final-product execution triggers A8; PRES-2 and its migration plan stay pinned to 1.0.

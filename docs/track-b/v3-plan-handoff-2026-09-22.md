@@ -1,5 +1,11 @@
 # v2 / v3 programme plan — owner handoff
 
+**2026-09-29 final-product update:** the programme proposal below remains subordinate to the
+research anchor. Owner-ratified `capstone_v21.md` v21-r5 §16 now governs the final-product
+lifecycle and daily-training requirement; PUBLISH_RULES 1.1 governs its page order and display.
+The corresponding changes to §§4.9O–4.9 below are planning consistency edits, not authorization
+to run a checkpoint. Historical research results and other work-item scope remain unchanged.
+
 **2026-09-22 · Proposed plan, not a ratified anchor or execution brief.**
 CP-15 has Engineering PASS and `product_feasibility = NOT_DEMONSTRATED`.
 No successor model is promoted or frozen. `capstone_v21.md` remains controlling;
@@ -693,14 +699,17 @@ timestamps for scoring and permitted future updates; never overwrite the issued 
 The inherited research origin is 11:00 UTC and delivery calendar Europe/Berlin; any different
 operational schedule/horizon needs explicit resolution before [4.7T](#work-4-7t) and final freeze.
 
-Daily issuance does not imply daily weight training. The brief must complete the following
-per-model manifest before candidate freeze; these are proposed operating recipes, not new
-facts about existing artifacts or already approved compute allowances:
+For the **Owner-designated final product**, v21-r5 §16 requires daily retraining as well as daily
+issuance. Input/context refresh alone must not be called retraining; an incompatible candidate
+requires an explicit Owner-approved exception before live admission. The following per-model
+manifest still documents mechanisms honestly; it cannot silently waive that final-product
+requirement. Complete numeric cadence, windows, delays and resource/failure rules before the
+fresh-data replay and final freeze. These are not facts about existing immutable artifacts:
 
 | Model/policy, if admitted | Refit versus daily state/context action | Training/history and labels to freeze |
 |---|---|---|
 | B0/B1 and immutable v1 references | Daily forecast/input refresh; retain the pinned reference's refit and residual-state rules. Do not retrain immutable v1 weights. | Record the exact pinned numeric history/calibration windows and label-release delays; distinguish stored weight provenance from currently available inputs. Missing specifications block that reference's replay. |
-| B2/A1; admitted block LightGBM or supervised V3 price model | Proposed daily scheduled refit on eligible history; daily input refresh and only prescribed residual-state updates. A different fixed cadence must be specified and tested before freeze if daily refits exceed allowance. | Proposed inherited rolling `max(2019-01-01,D−728 days)` history, filtered by availability; record target-release cutoff, warm-up and each calibration window. Direct model contrasts use the common history contract. |
+| B2/A1; admitted block LightGBM or supervised V3 price model | Daily scheduled refit for the selected final product; daily input refresh and prescribed residual-state updates. A different cadence needs an explicit Owner-approved exception and replay before freeze. | Proposed inherited rolling `max(2019-01-01,D−728 days)` history, filtered by availability; record target-release cutoff, warm-up and each calibration window. Direct model contrasts use the common history contract. |
 | v2 combination and uncertainty layer | Components follow their fixed schedules; recompute blend daily, without relearning weights. Update residual state once per eligible released complete day. | [4.2](#work-4-2)'s 28-day residual window and errors from complete delivery days ≤D−2, also subject to actual availability; component histories as above. No fit to the current day's unrevealed error. |
 | DDNN | Fix a numeric refit cadence and cold-start/warm-start recipe in the brief; daily inputs and prescribed residual-state refresh between fits. No unspecified online gradient steps. | Common admitted training history, label-release cutoff, warm-up and calibration windows; exact ensembles/seeds and fit cost included. Cadence is unresolved until the training-only resource check supports it. |
 | TabPFN | Refresh the permitted labelled context and query inputs daily; context replacement is not weight retraining. Record whether the exact admitted implementation performs any adaptation/fit and, if so, its fixed cadence and cost. | Common admitted history and deterministic context construction/cap, available labels only; resource checks must support the intended scope. A context reduction must be disclosed in the comparison, never passed off as matched information. |
@@ -721,6 +730,16 @@ escalation. Log late outputs as late; never backfill them as timely forecasts or
 day. Replay these same rules in [4.7T](#work-4-7t). No daily refit, state update or context refresh promises
 daily improvement; performance and stability are measured outcomes.
 
+At final-product rollout, the latest Owner-selected final version, product, primary demo and
+daily forecasting policy share one identity. Show the daily product panel → How the product
+works → Product results → Business insights → How the models compare, then the remaining
+planned sections unchanged. The panel includes today's issued-versus-published prices, defined
+percentage performance plus MAE, tomorrow's forecasts/intervals, measured past coverage/width
+and distinct training/issuance/freshness states. Use PUBLISH_RULES 1.1 §§5/7.2; economic claims
+require §4.E evidence. A selected but not yet operational model is shown as pending, not live.
+Calendar coverage includes every delivery day; preserve the Owner's no-manual-work
+Friday/Shabbat boundary through a separately authorized unattended operational plan.
+
 <a id="work-4-9"></a>
 
 ### 4.9 Final freeze, daily operation and prospective evaluation chain
@@ -730,7 +749,7 @@ Navigation: [index](#work-item-index) · [budget prerequisites](#section-4-b) ·
 Finish admitted development, **including [4.8](#work-4-8) if admitted**, then candidate/protocol freeze
 and **[4.7T](#work-4-7t) → final [4.7](#work-4-7) → CP-17 final freeze → CP-18 daily operation → CP-19 validation**.
 Deferred development is recorded; no subsequent recombination inherits the chosen identity.
-A qualified route follows the unchanged [anchor §§9–10](../../capstone_v21.md):
+A qualified route follows [anchor §§9–10, as prospectively amended by §16](../../capstone_v21.md):
 
 1. Ratified feasibility and final disposition identify one exact policy/evidence set. If none
    qualifies, close with the negative record and the authorized research/local handoff route.
@@ -738,7 +757,8 @@ A qualified route follows the unchanged [anchor §§9–10](../../capstone_v21.m
    delayed-error handling, initial state and failure policy. Register exact names, **numeric
    versions, run IDs, initialization and complete-artifact fingerprints**; verify cold-start replay.
    Freeze the policy/algorithm and [4.9O](#work-4-9o) update rules, not an eternally unchanged fitted state:
-   prescribed refits, state transitions and input-context refreshes continue with saved lineage.
+   required daily retraining and prescribed state/context updates continue with saved lineage,
+   unless the Owner explicitly approved the documented model-specific exception.
 3. **Run start:** CP-18 requires **separate operational and publication authorization** to
    issue and record the frozen policy's forecasts and live scorecard. Before issuance, establish
    supported live access, timely availability, continuity and historical-to-live equivalence
@@ -746,6 +766,9 @@ A qualified route follows the unchanged [anchor §§9–10](../../capstone_v21.m
    run, not [4.4](#work-4-4) historical research. Timestamp before target revelation; retain vintages,
    state hashes and lineage. Name the operator, monitoring metrics, allowed observations/
    updates, incident budget and staleness rules in advance. Starting is not validation.
+   Publish the same product/demo policy and the required daily panel under PUBLISH_RULES 1.1;
+   show “prospective evaluation in progress” until CP-19. Selection alone does not certify
+   deployment, and the 90-day evaluation need not finish before honest live display begins.
 4. Accumulate **≥90 consecutive delivery days after the final freeze**, from forecasts actually
    issued before outcomes were revealed, reporting failures, delays, outages and staleness.
    Neither [4.7T](#work-4-7t) replay nor its elapsed days substitutes for this record. Never drop difficult days. Prescribed

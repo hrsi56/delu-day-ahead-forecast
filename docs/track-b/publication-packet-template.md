@@ -2,6 +2,8 @@
 
 **Publication Standard v1 §12; written by the PRES-1 conformance task (brief W15), 2026-09-28;
 PUBLISH_RULES 1.0 §11's A3–A5 fields added by PRES-2, 2026-09-29.**
+Prospective final-product fields in §5d follow PUBLISH_RULES 1.1 A7/A8 and research v21-r5
+§16 (Owner-approved 2026-09-29). They do not alter historical PRES-2 packets or activate Live.
 Each research checkpoint's return includes one packet, filled in from inside the checkpoint, before
 its results are published. The publication is built from it (`docs/track-b/publication-runbook.md`
 gives every place each item lands). Until the landing templates carry the packet (standard §12,
@@ -118,6 +120,30 @@ where the outgoing model's documentation is preserved.
 |---|---|---|---|
 | `<chart id>` | `<heading anchor>` | `<descriptive label>` | the chapter's "Explore these results", a transition summary or a product topic |
 
+## 5d. Final-product transition / daily operation (1.1 A7/A8, conditional)
+
+Complete this section when the Owner-designated final product is selected or rolled out;
+otherwise state the unmet trigger. A completed form is not operational evidence or permission.
+
+| Field | Required value / evidence |
+|---|---|
+| Owner designation and lifecycle | Exact selected final version, dated decision; selected/frozen/deployed/live/evaluated states and outstanding prerequisites |
+| One product identity | Incoming/outgoing product; registry/policy identity across opening, primary demo, README, Space and tracking; dated daily artifacts and historical replay labels |
+| Frozen policy | Code/dependency, feature/input, hyperparameter, history/label-delay, initialization, seed, uncertainty/scoring and failure contracts; exact registry versions/fingerprints |
+| Daily training and issuance | Numeric schedule, cutoffs, windows, resources, successful-fit records, artifact/input lineage; separate fit/refresh/issue times; explicit Owner-approved exception if retraining is impossible |
+| Operational coverage | Every delivery day including DST; authorized unattended Friday/Shabbat coverage without manual Owner work; operator, monitoring, retry/fallback/staleness and failed-issuance records |
+| Today | Saved pre-outcome hourly forecasts versus available published prices; source/revision timestamps, eligible hours, partial-day completeness and original issuing artifact |
+| Percentage performance and MAE | Frozen formula, denominator, success tolerance if any, window/sample count, zero/negative/missing-price handling; distinguish benchmark improvement from correctness |
+| Tomorrow and reliability | Issued hourly point/interval forecasts or pending/unavailable state; nominal interval level; measured past coverage and width with named window; no unqualified confidence percentage |
+| Page order | Product/forecast opening → How the product works → Product results → Business insights → How the models compare; remaining sections unchanged; A8/A2 product finding placements |
+| Product coverage and science | §5b's twelve-subject map, one canonical route per graphic, actual model/output/population; development, unused-data and prospective results separated |
+| Business evidence | Intended decision policy, constraints/costs/capital, benchmark, complete cumulative net-value series and risk/loss context; simulation/realization labels and business-rate denominator; explicit gap if not evaluated |
+| Acceptance | Daily record/replay and negative-control evidence; independent exact-candidate review; public service identities and existing browser/accessibility checks; unperformed checks labelled |
+| Prospective state | Run start and days actually covered; failures/outages preserved; evaluation in progress until authorized CP-19 after at least 90 consecutive delivery days |
+
+Do not invent metrics, tolerances, profit results or numeric operational budgets to fill the form.
+Use the future ratified execution protocol and record unresolved prerequisites before launch.
+
 ## 6. The MLflow export
 
 - The committed export (`scripts/mlflow_export.py`), built from the checkpoint's committed rows, with
@@ -134,3 +160,31 @@ where the outgoing model's documentation is preserved.
 - The §4 lint on the draft slot texts.
 - The transition's and, when it changed, the product documentation's contract tests
   (`tests/test_43_publish_rules_migration.py`).
+
+## 8. Publication completion receipt — no surface omitted
+
+Required for every publication under PUBLISH_RULES §§8, 10.3 and 11. The executor populates
+intended identities before publication; the authorized publisher completes actual identities
+and public verification afterwards. Do not retrofit these fields into a historical packet;
+use its existing requirements and a new continuation/receipt where necessary.
+
+| Surface | Intended identity | Action / unchanged rationale | Observed public identity and UTC time | Verification record and result | Outstanding action |
+|---|---|---|---|---|---|
+| GitHub source / README | `<landing SHA / content hash>` | `<push or verified unchanged>` | `<actual revision>` | `<public evidence>` | `<none or exact gap>` |
+| GitHub Pages | `<report hash / release identity>` | `<deploy or verified unchanged>` | `<served identity>` | `<applicable public browser checks>` | `<none or exact gap>` |
+| Public MLflow | `<export identity; experiment, run IDs and applicable registry versions>` | `<changed: authorized upload; unchanged: identity/diff and existing run references>` | `<actual verified record identities>` | `<fresh anonymous record/history/route verification>` | `<none or exact gap>` |
+| Hugging Face Space card | `<Space revision / card identity>` | `<deploy or verified unchanged>` | `<Hub revision / public visibility>` | `<served card verification>` | `<none or exact gap>` |
+| Hugging Face direct demo | `<bundle; model/policy and dated artifact/forecast identities>` | `<deploy or verified unchanged>` | `<served identities and freshness>` | `<artifact and applicable public demo checks>` | `<none or exact gap>` |
+
+- **Publication-to-MLflow mapping:** `<publication SHA → export identity → public evidence/run/model references>`.
+  An unchanged research export needs current verification, not duplicate research runs. Changed
+  model/evaluation evidence must appear in its authorized public tracking destination.
+- **Final product and daily updates, when applicable:** `<Owner-designated product → registered
+  policy/initialization → dated daily fit/issuance records → actual served Hugging Face artifact
+  and forecast>`. Include separate last successful training/publication times, failures, stale
+  state and the frozen recovery disposition. Local success cannot substitute for hosted identity.
+- **Completion disposition:** `<complete / incomplete>` with `<unresolved surfaces/actions>` and
+  the standard's independent PASS/FAIL/INCOMPLETE verdict. A mismatch or missing required check
+  prevents completion even when main was pushed. Preserve first failures and retries.
+- **Authority:** `<Owner instruction for each external action or authorized operational scope>`.
+  The form grants no upload, recurring publication or credential authority.

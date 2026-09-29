@@ -1,3 +1,22 @@
+# Capstone v21-r5 — final-product lifecycle amendment (ratified)
+
+**Owner-authorized documentation amendment · 2026-09-29.** New §16 makes the
+Owner-designated final version the product/demo/daily-policy identity and requires daily
+retraining and issuance under a frozen policy. It governs future final-product work only.
+It does not choose a model, authorize CP-21 or CP-17–19 execution, spend a budget, open
+fresh data or grant publication authority. All historical §§1–15 below remain byte-for-byte
+unchanged; §16 explicitly refines future §§9–10 and wins only within that stated scope.
+
+Previous v21-r4 is preserved at `evidence/pres-2:capstone_v21.md`, SHA-256
+`150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167`.
+The Owner approved the named task-scoped Lockdown suspension with “מאשר באופן מלא” after
+specifying the final-product identity and page order. See
+[amendment record](docs/track-b/capstone_v21-r4-to-v21-r5-amendments.md).
+The suspension covers this amendment and necessary document consistency only and expires at
+terminal return. Historical CP-20 acceptance remains v21-r4; later research needs its own brief.
+
+---
+
 # Capstone v21-r4 — direct-GFS research amendment (ratified)
 
 **CP-20 ratified and separately authorized to execute · 2026-09-23.** Owner ratifies the
@@ -954,3 +973,106 @@ Ratification and CP-20 execution authority are **GRANTED, 2026-09-23**. The Lead
 existing pre-run checks, including feasibility and the eight added GFS runs; no further Owner
 approval is needed unless a concrete blocker exceeds this scope. No scientific/budget change,
 later checkpoint, governance edit, mainline operation or publication is authorized.
+
+
+## 16. Final-product lifecycle — Owner amendment, v21-r5
+
+### 16.1 Selection, freeze, rollout and evaluation are distinct
+
+When the Owner designates an exact version as final, record that version as the selected
+product and the mandatory target of the product panel, primary demo and daily operation.
+One policy/version must serve all four roles at completed rollout. A research leader or
+new experiment does not replace it automatically. An incoming selection with unfinished
+prerequisites remains explicitly selected/pending; do not claim it runnable or relabel the
+old demo. The previous product remains identified honestly until the replacement works.
+
+Complete the admitted development and protected unused-data comparison, record the final
+selection and qualification disposition, then execute authorized CP-17 freeze and CP-18
+operation. Owner designation is a product decision, not statistical proof or permission to
+skip those gates. No model, including current HG or immutable v1, is designated by this text.
+The §8 historical failed criteria and research evidence classes are unchanged.
+
+### 16.2 What freezes and what updates every day
+
+Freeze code and dependencies, algorithm/architecture, feature and source-availability
+contracts, hyperparameters, training-window and label-delay rules, initial artifact/state,
+randomness, refit schedule, uncertainty/calibration updates, scoring/decision rules and failure
+policy. Store numeric registry versions and initialization fingerprints as §9 requires.
+
+For the selected final product, **daily retraining, eligible input refresh and forecast
+issuance are required on every delivery day**. Each successful fit produces a versioned
+artifact with its training window, available labels, seed, timestamps and parent/input/state
+hashes. Use only information available at the fixed origin. Daily fitting changes weights/state
+within the frozen policy, not the adopted generation; discretionary tuning or changing that
+policy requires a new freeze and evaluation. Never overwrite an issued forecast after outcomes.
+
+The future brief fixes numeric origin/deadlines, windows, resource ceilings and the exact
+meaning of a successful daily fit before the fresh-data replay/final freeze. Input refresh,
+residual-state maintenance or TabPFN context replacement alone is not weight training. A
+candidate unable to meet daily retraining within admitted licensing/resources needs an explicit
+Owner-approved exception specifying its real update mechanism and public wording before live
+admission; no alternative cadence or exemption is silently inferred from model family.
+Immutable historical v1/reference artifacts remain untouched; this requirement does not
+retroactively retrain them or force every research comparator to train daily.
+
+Daily operation covers all delivery days, including DST and Friday/Shabbat. No manual Owner
+work is scheduled on Friday/Shabbat; the operational brief must reconcile coverage through an
+explicitly authorized unattended schedule and incident/fallback policy. Publication authority,
+operator ownership, monitoring, permissions and resources must be settled before launch. This
+amendment creates no automation or standing authority to publish externally.
+
+For missing inputs/labels, failed training, resource exhaustion or source outage, apply the
+frozen fallback/staleness limits or record failed issuance. Display a failed/skipped fit as
+such, even if a valid fallback produces a forecast. Do not count retained weights as a new
+successful training run or backfill a late forecast as timely. Failures remain in the record.
+
+### 16.3 What the product and demo expose
+
+The product panel comes first, followed by How the product works, scientific Product results,
+Business insights, How the models compare and all remaining sections in their existing order.
+[PUBLISH_RULES 1.1](docs/PUBLISH_RULES.md) §§5, 5.1a, 7.2 and A8 define presentation acceptance.
+The twelve-subject product coverage follows the actual final policy and its dated artifacts;
+the outgoing product's evidence stays historical. The primary demo uses the same product policy,
+and identifies the artifact/issue date and whether an interaction is a counterfactual scenario.
+An old replay may remain as labelled history, not as a different primary product.
+
+Show today's issued hourly forecasts versus available published outcomes, a defined percentage
+performance measure alongside MAE in EUR/MWh, and tomorrow's issued hourly forecasts and prediction
+intervals. Freeze the percentage formula, denominator, eligible population, scoring window,
+zero/negative-price treatment and any success tolerance before evaluation. A benchmark-relative
+percentage is labelled improvement, not correctness. Missing/pending outcomes are unscored;
+partial-day scores show completeness. Scoring uses the artifact that issued the prediction,
+not a newer fit. Record the price source, publication/revision times and outcome eligibility.
+
+Distinguish nominal prediction-interval level from measured coverage and width on an explicitly
+named past window. Neither means a point price has that percentage probability of being correct.
+Display separate last-training, data-refresh and issuance times, delivery date/timezone,
+freshness and failure state. No data or no evidence means a labelled unavailable state.
+
+Scientific graphics separate development, unused-data and prospective results. Business
+interpretation must separate forecast performance from an evaluated economic decision policy.
+Cumulative net profit/value, returns or business success rates require a frozen use case,
+constraints, costs, benchmark, denominator, complete time series and loss/risk disclosure;
+label simulated versus realized results. Without authorized evaluation, show the specific gap
+and measured forecasting implications. This is no authorization for trading, a new economic
+experiment or a fabricated profitable result; programme §4.E governs such evaluation.
+
+### 16.4 Delivery and acceptance obligations for future briefs
+
+| Stage | Required addition to the full future checkpoint bar |
+|---|---|
+| Before fresh-data test | Replay the intended daily refit/update and issuance contract; freeze scoring and any evaluated economic policy before outcome access; retain the protected test boundary |
+| CP-17 | Owner's final-version designation, prerequisites/disposition, policy/initialization and registry identities, daily fit and failure rules, metric formulas, resource and calendar plan |
+| CP-18 | Actual scheduled training/issuance and outcome reconciliation, one product/demo identity, complete documentation/results/business sections, daily public panel and independent public acceptance |
+| CP-19 | At least 90 consecutive delivery days after final freeze under §9; count real timely forecasts and failures, verify registry lineage, evaluate without tuning or excluding bad days |
+
+Live observations and the matching demo may be published at authorized CP-18 with the label
+“prospective evaluation in progress”; do not wait for CP-19 to show operation, and do not claim
+completed validation before it. Public acceptance checks actual hosted output and daily records;
+local fixtures do not establish daily operation. Include positive controls for altered identities,
+future-label leakage, stale/failed fits, missing/zero/negative prices and partial/DST days, plus
+reproducible percentage, interval and authorized business-series derivations. The full existing
+independent, browser, accessibility and publication contract still applies.
+
+No checkpoint starts here. The numeric future briefs and approved budgets remain necessary;
+this amendment resolves the required product outcome, not experimental results or implementation.
