@@ -119,8 +119,13 @@ def build(root: Path) -> dict:
 
 
 def main() -> int:
+    import sys
     root = Path.cwd()
     registry = build(root)
+    if '--check' in sys.argv[1:]:
+        same = json.loads((root / OUT / 'draft-registry.json').read_text()) == registry
+        print(json.dumps({'draft_registry_identical_to_committed': same}), flush=True)
+        return 0 if same else 11
     atomic(root / OUT / 'draft-registry.json', registry)
     print(json.dumps({'outcome': registry['outcome'], 'owner': registry['checkpoint']['owner'],
                       'entries': [e['id'] for e in registry['entries']]}), flush=True)

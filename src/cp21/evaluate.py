@@ -22,6 +22,19 @@ from .inputs import identities
 from . import scoring as S
 
 
+def clean(obj):
+    """JSON-safe copy: NaN/inf -> None (an undefined value, never a number), numpy scalars -> Python."""
+    if isinstance(obj, dict):
+        return {str(k): clean(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [clean(v) for v in obj]
+    if isinstance(obj, np.generic):
+        obj = obj.item()
+    if isinstance(obj, float) and not np.isfinite(obj):
+        return None
+    return obj
+
+
 def load_predictions(root: Path):
     saved = pd.read_parquet(root / 'reports/weather-ablation/predictions.parquet')
     new = pd.read_parquet(root / OUT / 'predictions.parquet')
@@ -73,8 +86,8 @@ def job_score(root: Path, rest) -> int:
     tables['replicates'].to_parquet(out / 'replicates.parquet', index=False)
     tables['replicate_scores'].to_parquet(out / 'replicate-scores.parquet', index=False)
     check = consistency(root, S._tables(_hourly(predictions, expected))[2], tables['criteria'])
-    summary = tables['summary']
-    summary['consistency_with_cp20'] = check
+    summary = clean(tables['summary'])
+    summary['consistency_with_cp20'] = clean(check)
     atomic(out / 'adoption.json', {**summary['adoption'], 'block_split': summary['block_split'],
                                    'inputs_sha256': {'reports/block-challenger/predictions.parquet': sha(out / 'predictions.parquet'),
                                                      'reports/weather-ablation/predictions.parquet': sha(root / 'reports/weather-ablation/predictions.parquet')}})

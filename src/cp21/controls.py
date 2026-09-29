@@ -308,8 +308,11 @@ def population_controls(root: Path) -> dict:
     key = ['fold', 'timestamp_utc']
     piv = {p: g.sort_values(key).reset_index(drop=True) for p, g in new.groupby('policy')}
     hg = saved.sort_values(key).reset_index(drop=True)
-    same_keys = all(np.array_equal(piv[p].timestamp_utc.astype('int64').to_numpy() // 10**6,
-                                   hg.timestamp_utc.astype('int64').to_numpy() // 10**6) for p in piv)
+    def instants(series):  # compare instants, not storage units (CP-20 stored milliseconds)
+        return pd.DatetimeIndex(pd.to_datetime(series, utc=True)).as_unit('ns').asi8
+
+    same_keys = all(np.array_equal(instants(piv[p].timestamp_utc), instants(hg.timestamp_utc))
+                    and np.array_equal(piv[p].fold.to_numpy(), hg.fold.to_numpy()) for p in piv)
     gap = piv['HGL'].central - (2 / 3) * hg.central - (1 / 3) * (piv['L-N'].central + piv['L-R'].central) / 2
     q = new[['p025', 'p10', 'p25', 'p50', 'p75', 'p90', 'p975']].to_numpy(float)
     counts = new.groupby(['policy', 'delivery_date']).size()

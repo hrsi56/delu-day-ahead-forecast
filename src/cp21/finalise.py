@@ -18,7 +18,7 @@ from .budget import CAPS, GAUGES, TIMEBOX_ACTIVE_SECONDS, Budget, atomic, ledger
 from .execution import OUT
 from .jobs import art, stamp
 
-MANIFESTED = ('reports/block-challenger', 'src/cp21', 'tests/cp21', 'scripts/cp21_blocks.py',
+MANIFESTED = ('reports/block-challenger', 'src/cp21', 'tests/cp21', 'scripts/cp21_blocks.py', 'scripts/mlflow_export.py',
               'docs/track-b/research-content/cp21-claims.md', 'docs/track-b/evidence/cp-21/issued-brief.md',
               'docs/track-b/evidence/cp-21/publication-packet.md', 'docs/track-b/evidence/cp-21/.gitattributes')
 
@@ -73,7 +73,13 @@ def manifest(root: Path) -> dict:
 
 
 def job_finalise(root: Path, rest) -> int:
+    """Failures and the resource snapshot, then the manifest; `--manifest-only` rebinds the
+    manifest after the report (which quotes the snapshot) without moving the snapshot."""
     root = Path(root)
+    if '--manifest-only' in rest:
+        atomic(root / OUT / 'artifact-manifest.json', manifest(root))
+        print(json.dumps({'manifest_files': len(manifest(root)['artifact_sha256'])}), flush=True)
+        return 0
     failures = failures_table(root)
     atomic(root / OUT / 'resources.json', resources(ledger().read()))
     atomic(root / OUT / 'artifact-manifest.json', manifest(root))

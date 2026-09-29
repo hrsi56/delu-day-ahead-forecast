@@ -82,13 +82,12 @@ def one_cycle(root: Path, fold: str, day: date, fit_ident, hg_ident, budget) -> 
     tasks = [('component', p, str(root), str(day), fold, ledger_path) for p in ('A1', 'B2')]
     tasks += [('block', f'{arm}:{block}', str(root), str(day), fold, ledger_path) for arm in ('L-R', 'L-N') for block in BLOCKS]
     began = time.perf_counter()
+    # The parent loads its own copy first, so no more than four processes ever compute at once.
+    data = load(root, before=day + timedelta(days=1))
+    parent_load = time.perf_counter() - began
     ctx = mp.get_context('spawn')
     with ctx.Pool(WORKERS) as pool:
-        pending = pool.map_async(_component_or_block, tasks, chunksize=1)
-        parent_start = time.perf_counter()
-        data = load(root, before=day + timedelta(days=1))
-        parent_load = time.perf_counter() - parent_start
-        results = pending.get()
+        results = pool.map(_component_or_block, tasks, chunksize=1)
     fitted = time.perf_counter() - began
     by = {r['name']: r for r in results}
     rows = data.rows(day)
