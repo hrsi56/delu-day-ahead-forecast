@@ -1402,7 +1402,7 @@ def opening(C, payload) -> str:
   <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
    <span class="key-actual">Observed price</span></p>
   <p class="preview-links"><a class="quiet" href="#product-forecast">Explore this forecast</a>
-   <span class="preview-note">Opens the interactive replay in how the product works.</span></p>
+   <span class="preview-note">Opens the interactive replay in the product documentation.</span></p>
  </figure>
  </div>
 </section>"""
@@ -2412,7 +2412,9 @@ def evidence_section(C) -> str:
   <pre><code>uv sync</code></pre>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   {disclosure("rebuild-measurement", "One measured rebuild", f"<p>{runtime}</p>") if runtime else ""}
-  <p>Each experiment below has its own full reproduction; {ver("v1")}'s is in <a href="#repro">its archive</a>.</p>
+  <p>Each experiment below has its own full reproduction. To run the released model, see
+   <a href="#product-run">Run this product</a>; {ver("v1")}'s original instructions, with the historical container,
+   are in <a href="#repro">its archive</a>.</p>
   <div class="evidence-row evidence-list"><span class="ev-label">Evidence</span><ul class="repro-list">{labelled}</ul></div>
  </div>
  <div class="tracking"><h3>Tracking</h3>

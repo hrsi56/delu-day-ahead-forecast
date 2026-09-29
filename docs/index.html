@@ -462,7 +462,7 @@ dialog.figure-view::backdrop{background:rgba(24,24,27,.6)}
   <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band"><span data-structural="level">80%</span> prediction interval</span>
    <span class="key-actual">Observed price</span></p>
   <p class="preview-links"><a class="quiet" href="#product-forecast">Explore this forecast</a>
-   <span class="preview-note">Opens the interactive replay in how the product works.</span></p>
+   <span class="preview-note">Opens the interactive replay in the product documentation.</span></p>
  </figure>
  </div>
 </section>
@@ -968,7 +968,9 @@ calls.</p>
   <pre><code>uv sync</code></pre>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   <details class="disclosure" id="rebuild-measurement"><summary><span class="marker" aria-hidden="true"></span><span>One measured rebuild</span></summary><div class="disclosure-body"><p>Measured once on <span data-structural="date">2026-09-25</span>: <span data-release-check="reports/presentation/release-checks/2026-09-25-rebuild.json#seconds">9.6</span> s on the build machine (Darwin arm64, Python 3.13.15), from the release-check record <code>reports/presentation/release-checks/2026-09-25-rebuild.json</code>. It is one measurement, not a benchmark of every revision.</p></div></details>
-  <p>Each experiment below has its own full reproduction; <span data-structural="version">v1</span>'s is in <a href="#repro">its archive</a>.</p>
+  <p>Each experiment below has its own full reproduction. To run the released model, see
+   <a href="#product-run">Run this product</a>; <span data-structural="version">v1</span>'s original instructions, with the historical container,
+   are in <a href="#repro">its archive</a>.</p>
   <div class="evidence-row evidence-list"><span class="ev-label">Evidence</span><ul class="repro-list"><li><span><span data-structural="version">v3</span>:</span> <a class="ev external audit" href="https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/reproduce.md" data-evidence-tag="evidence/cp-20"><span>Reproduction instructions, frozen <span data-structural="date">2026-09-24</span></span></a></li><li><span><span data-structural="version">v2</span>:</span> <a class="ev external audit" href="https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-16/reports/v2-causal/reproduce.md" data-evidence-tag="evidence/cp-16"><span>Reproduction instructions, frozen <span data-structural="date">2026-09-23</span></span></a></li><li><span>the model comparison study:</span> <a class="ev external audit" href="https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp15/reproduction.md" data-evidence-tag="evidence/cp-15"><span>Reproduction instructions, frozen <span data-structural="date">2026-09-16</span></span></a></li></ul></div>
  </div>
  <div class="tracking"><h3>Tracking</h3>

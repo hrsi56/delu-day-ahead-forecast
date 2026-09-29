@@ -1261,6 +1261,17 @@ def mlflow_route(playwright, engine: str, route_id: str, route: dict, mirror: di
             page.wait_for_timeout(500)
     except Exception as exc:  # the failure is the finding
         record["error"] = f"{type(exc).__name__}: {str(exc)[:300]}"
+    # A comparison route is settled only when its chart has drawn: a Plotly plot and no loading skeleton. An
+    # application shell or an HTTP 200 without the intended chart is not a pass (PUBLISH_RULES 1.0 §8).
+    if route["kind"] == "compare" and "error" not in record:
+        try:
+            page.wait_for_function("document.querySelectorAll('.js-plotly-plot svg.main-svg').length > 0 && "
+                                   "document.querySelectorAll('[class*=Skeleton]').length === 0",
+                                   timeout=timeout_s * 1000)
+        except Exception as exc:  # the unsettled chart is the finding
+            record["settle_error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
+        record["plots"] = page.locator(".js-plotly-plot svg.main-svg").count()
+        record["skeletons"] = page.locator("[class*=Skeleton]").count()
     record["seconds"] = round(time.monotonic() - start, 1)
     record["final_url"] = page.url
     record["missing"] = missing
@@ -1272,7 +1283,10 @@ def mlflow_route(playwright, engine: str, route_id: str, route: dict, mirror: di
     record["console_errors"] = errors[:20]
     record["api_errors"] = api_errors[:20]
     record["sign_in_redirect"] = "login" in page.url.lower() or "sign" in page.url.lower()
-    record["passed"] = (not missing and "error" not in record and not api_errors and not record["sign_in_redirect"])
+    settled = route["kind"] != "compare" or (record.get("plots", 0) > 0 and not record.get("skeletons")
+                                             and "settle_error" not in record)
+    record["passed"] = (not missing and "error" not in record and not api_errors and not record["sign_in_redirect"]
+                        and settled)
     context.close()
     browser.close()
     return record
