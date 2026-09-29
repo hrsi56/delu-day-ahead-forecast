@@ -1881,7 +1881,8 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
     """The released v1's documentation: the twelve subjects, each from evidence about this model, labelled with
     the model, output and rows it describes (PUBLISH_RULES 1.0 §5.1)."""
     released = G.released()
-    archive = lambda anchor, html_text: f'<a class="quiet in-text archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
+    # A link standing alone in its paragraph is a target of its own: a full-height `.quiet` link (about 44 px).
+    archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
     limitations = "".join(
         f'<li><strong>{S("name", C_LABELS[key])}.</strong> <span data-claim="P48" data-v1="{key}">{esc(C[key])}</span></li>'
         for key in C_LIMITATION_KEYS)
@@ -1908,7 +1909,7 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
               f'<p class="holdout-head">The one-shot holdout {badge(RC.BADGE_V1_HOLDOUT, "holdout")}</p>'
               + block("v1.holdout") + block("product.results.coverage") + block("v1.unflattering")
               + block("product.results.shared")
-              + '<p><a class="quiet in-text" href="#definitions">Why these scores differ from its own report</a></p>'),
+              + '<p><a class="quiet" href="#definitions">Why these scores differ from its own report</a></p>'),
         Topic("product-attribution", "What drives its forecasts: SHAP chart", "What drives its forecasts", ("6",),
               '<figure class="panel analytical" aria-labelledby="product-attribution-title">'
               + block("product.attribution.headline", tag="h4", cls="panel-title", ident="product-attribution-title")
@@ -1939,7 +1940,7 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-forecast", "Read a forecast: interactive replay", "Read a forecast", ("10",),
               product_replay(payload) + "".join(block(k) for k in ("product.forecast.read", "product.forecast.controls",
                                                                    "product.forecast.demo"))
-              + f'<p><a class="quiet external in-text" href="{attr(C["space_url"])}">Try the {ver(released.version)} demo</a></p>'),
+              + f'<p><a class="quiet external" href="{attr(C["space_url"])}">Try the {ver(released.version)} demo</a></p>'),
         Topic("product-limitations", "Limitations", "Limitations", ("11",),
               block("product.limits.summary") + f'<ul class="limitations">{limitations}</ul>'
               + f'<p><span data-claim="P48" data-v1="floor_change">{esc(C["floor_change"])}</span></p>'),
