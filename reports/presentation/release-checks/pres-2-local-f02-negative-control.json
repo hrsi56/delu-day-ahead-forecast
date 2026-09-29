@@ -1,0 +1,61 @@
+{
+ "candidate_clean": true,
+ "caught_on_published_page": true,
+ "check": "F02 negative control: the release check's request capture on the published page and on the candidate",
+ "checked_at_utc": "2026-09-29T05:24:25+00:00",
+ "observed_by": "Chrome's automatic favicon request appears in the page's Resource Timing entries, which the release check fails as a resource after the document; the server log shows it was answered 404. Playwright reports no page response event for a browser-made favicon request, so http_errors stays empty; WebKit made no favicon request. The candidate page, with its inline icon, made no request in either engine.",
+ "pages": {
+  "candidate page": {
+   "sha256": "47c74c458b20568c4dec3a21fb7d12d3cead35e5c55a5651d9ef712113361f8d",
+   "url": "http://127.0.0.1:8830/",
+   "views": {
+    "chrome": {
+     "browser": "chromium 154.0.8037.58",
+     "console_errors": [],
+     "failed_requests": [],
+     "http_errors": [],
+     "resources_after_document": []
+    },
+    "webkit": {
+     "browser": "webkit 26.6",
+     "console_errors": [],
+     "failed_requests": [],
+     "http_errors": [],
+     "resources_after_document": []
+    }
+   }
+  },
+  "published PRES-1 page (01e394d)": {
+   "sha256": "d1227c0f64c6a478f6f076e713e2bed2755edf51d0b8f19522c9b978d42fab3d",
+   "url": "http://127.0.0.1:8831/",
+   "views": {
+    "chrome": {
+     "browser": "chromium 154.0.8037.58",
+     "console_errors": [
+      "Failed to load resource: the server responded with a status of 404 (File not found)"
+     ],
+     "failed_requests": [],
+     "http_errors": [],
+     "resources_after_document": [
+      "http://127.0.0.1:8831/favicon.ico"
+     ]
+    },
+    "webkit": {
+     "browser": "webkit 26.6",
+     "console_errors": [],
+     "failed_requests": [],
+     "http_errors": [],
+     "resources_after_document": []
+    }
+   }
+  }
+ },
+ "passed": true,
+ "server": "python -m http.server on 127.0.0.1, which answers /favicon.ico with 404 as GitHub Pages did",
+ "server_log_during_run": [
+  "127.0.0.1 - - [29/Sep/2026 08:24:25] \"GET / HTTP/1.1\" 200 -",
+  "127.0.0.1 - - [29/Sep/2026 08:24:25] code 404, message File not found",
+  "127.0.0.1 - - [29/Sep/2026 08:24:25] \"GET /favicon.ico HTTP/1.1\" 404 -",
+  "127.0.0.1 - - [29/Sep/2026 08:24:31] \"GET / HTTP/1.1\" 200 -"
+ ]
+}

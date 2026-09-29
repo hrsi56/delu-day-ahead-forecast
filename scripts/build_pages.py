@@ -2093,7 +2093,9 @@ def explore_routes(slots: ChapterSlots) -> str:
     routes = [(ident, text) for _, body in slots.details for ident, text in _DETAIL_HEAD.findall(body)]
     if not routes:
         return ""
-    items = "".join(f'<li><a class="quiet" href="#{ident}">{text}</a></li>' for ident, text in routes)
+    # The label is one span: the link is an inline-flex target, which would make each text run and each element
+    # of the label an item of its own and drop the spaces between them ("forv1").
+    items = "".join(f'<li><a class="quiet" href="#{ident}"><span>{text}</span></a></li>' for ident, text in routes)
     anchor = slots.entry.anchor[1:]
     return (f'<nav class="explore" aria-labelledby="{anchor}-explore-h"><h3 class="story-label" '
             f'id="{anchor}-explore-h">Explore these results</h3><ul>{items}</ul></nav>')

@@ -1014,6 +1014,31 @@ def ax_findings(engine: str, tree: dict) -> dict:
     return out
 
 
+#: Words that run together on screen although the text has a space between them. A flex or grid container makes
+#: each text run and each child element an item of its own, and the space at an item's edge is not rendered:
+#: "for <span>v1</span>" shows as "forv1" unless the container sets a gap. Found by the fresh reader, not by a
+#: text comparison, which sees the space.
+COLLAPSED_SPACE_JS = r"""() => {
+  const PHRASING = new Set(['A', 'ABBR', 'B', 'CODE', 'DATA', 'EM', 'I', 'MARK', 'SMALL', 'SPAN', 'STRONG', 'SUB', 'SUP', 'TIME']);
+  const words = n => n && n.nodeType === 1 && n.textContent.trim() !== '';
+  const out = [];
+  for (const el of document.querySelectorAll('body *')) {
+    const style = getComputedStyle(el);
+    if (!/flex|grid/.test(style.display) || !['normal', '0px'].includes(style.columnGap) || !el.checkVisibility()) continue;
+    const kids = [...el.childNodes];
+    kids.forEach((node, i) => {
+      if (node.nodeType !== 3) return;
+      const text = node.textContent, before = kids[i - 1], after = kids[i + 1];
+      const merges = text.trim()
+        ? (/^\s/.test(text) && words(before)) || (/\s$/.test(text) && words(after))
+        : text.length > 0 && words(before) && words(after) && PHRASING.has(before.tagName) && PHRASING.has(after.tagName);
+      if (merges) out.push(el.textContent.replace(/\s+/g, ' ').trim().slice(0, 100));
+    });
+  }
+  return [...new Set(out)];
+}"""
+
+
 def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = None, height: int | None = None,
           device: str | None = None) -> dict:
     """One page load with every disclosure closed: placements, overflow, every visible chart's text,
@@ -1047,6 +1072,7 @@ def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = N
                                          if v["smallest_text_px"] is not None), default=None)}
 
     record["charts"] = measure_charts()
+    record["collapsed_spaces"] = page.evaluate(COLLAPSED_SPACE_JS)
     shot = out / engine / f"{label}.png"
     shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot), full_page=True)
@@ -1063,6 +1089,7 @@ def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = N
     page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
     page.wait_for_timeout(500)
     record["charts_with_disclosures_open"] = measure_charts()
+    record["collapsed_spaces_with_disclosures_open"] = page.evaluate(COLLAPSED_SPACE_JS)
     record["overflow_with_disclosures_open"] = page.evaluate(
         "document.documentElement.scrollWidth - document.documentElement.clientWidth")
     record["failed_requests"] = failed[:20]
@@ -1163,6 +1190,9 @@ def release(playwright, target: str, out: Path) -> dict:
                 view["problems"].append(f"{key}: chart text overlaps or is clipped")
             if (view[key]["smallest_text_px"] or 99) < 12:
                 view["problems"].append(f"{key}: chart text of {view[key]['smallest_text_px']} px")
+        for key in ("collapsed_spaces", "collapsed_spaces_with_disclosures_open"):
+            if view[key]:
+                view["problems"].append(f"{key}: words run together in {view[key]}")
         if view["overflow_with_disclosures_open"] > 0:
             view["problems"].append(f"horizontal overflow of {view['overflow_with_disclosures_open']} px with disclosures open")
         if view["failed_requests"] or view["console_errors"] or view["http_errors"]:

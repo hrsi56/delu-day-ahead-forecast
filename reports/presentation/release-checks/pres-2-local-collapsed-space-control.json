@@ -1,0 +1,93 @@
+{
+ "caught_before": true,
+ "check": "Negative control for the collapsed-space finding of scripts/check_reader_paths.py (release)",
+ "checked_at_utc": "2026-09-29T05:40:37+00:00",
+ "clean_after": true,
+ "pages": {
+  "page the fresh reader saw": {
+   "sha256": "47c74c458b20568c4dec3a21fb7d12d3cead35e5c55a5651d9ef712113361f8d",
+   "url": "http://127.0.0.1:8832/",
+   "views": {
+    "chrome 1440x900": {
+     "browser": "chromium 154.0.8037.58",
+     "collapsed_spaces": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ],
+     "collapsed_spaces_with_disclosures_open": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ]
+    },
+    "chrome 390x844": {
+     "browser": "chromium 154.0.8037.58",
+     "collapsed_spaces": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ],
+     "collapsed_spaces_with_disclosures_open": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ]
+    },
+    "webkit 1440x900": {
+     "browser": "webkit 26.6",
+     "collapsed_spaces": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ],
+     "collapsed_spaces_with_disclosures_open": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ]
+    },
+    "webkit 390x844": {
+     "browser": "webkit 26.6",
+     "collapsed_spaces": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ],
+     "collapsed_spaces_with_disclosures_open": [
+      "Absolute errors per test period, for v1, v2 and v3",
+      "Errors by hour of the day, v2 against v3",
+      "What happened in the 2022 crisis window"
+     ]
+    }
+   }
+  },
+  "repaired page": {
+   "sha256": "f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d",
+   "url": "http://127.0.0.1:8830/",
+   "views": {
+    "chrome 1440x900": {
+     "browser": "chromium 154.0.8037.58",
+     "collapsed_spaces": [],
+     "collapsed_spaces_with_disclosures_open": []
+    },
+    "chrome 390x844": {
+     "browser": "chromium 154.0.8037.58",
+     "collapsed_spaces": [],
+     "collapsed_spaces_with_disclosures_open": []
+    },
+    "webkit 1440x900": {
+     "browser": "webkit 26.6",
+     "collapsed_spaces": [],
+     "collapsed_spaces_with_disclosures_open": []
+    },
+    "webkit 390x844": {
+     "browser": "webkit 26.6",
+     "collapsed_spaces": [],
+     "collapsed_spaces_with_disclosures_open": []
+    }
+   }
+  }
+ },
+ "passed": true
+}
