@@ -99,6 +99,23 @@ SOURCES: dict[str, Source] = dict(
     ]
 )
 
+#: The released product's own evaluation and diagnostics (CP-2), for its documentation on the page
+#: (PUBLISH_RULES 1.0 §5.1). Checked exactly like `SOURCES`, and kept apart from it because the MLflow
+#: export's manifest lists the research mirror's sources, and these files are not part of that mirror.
+PRODUCT_SOURCES: dict[str, Source] = dict(
+    [
+        _source("reports/cp2/holdout_report.json", "evidence/cp-2", "43676b8f3135bbd916a335b8cf8f422d57834def"),
+        _source("reports/cp2/regime_table.csv", "evidence/cp-2", "417d2ccc45280ca305118221e775884dc4c5ac47"),
+        _source("reports/cp2/reliability_three_stage.csv", "evidence/cp-2", "3994e819870bdb8ce6429ad782f17c51f997246c"),
+        _source("reports/cp2/diagnostics.json", "evidence/cp-2", "0b53a8be8af2f8458aca513298fd2048e5c2f6d8"),
+    ]
+)
+
+
+def registered_source(path: str) -> Source | None:
+    """The registered source of `path`, research or product, or None."""
+    return SOURCES.get(path) or PRODUCT_SOURCES.get(path)
+
 
 def blob_sha(data: bytes) -> str:
     """The Git blob SHA-1 of `data`, computed without Git."""
@@ -111,7 +128,7 @@ def source_bytes(path: str) -> bytes:
 
 def check_source(path: str) -> None:
     """Raise unless `path` is a registered source whose bytes still hash to its recorded blob."""
-    source = SOURCES.get(path)
+    source = registered_source(path)
     if source is None:
         raise EvidenceError(f"{path} is not a registered evidence source")
     actual = blob_sha(source_bytes(path))
@@ -203,7 +220,7 @@ class EvidenceRecord:
 
     @property
     def source(self) -> Source:
-        return SOURCES[self.source_path]
+        return registered_source(self.source_path)
 
     @property
     def source_revision(self) -> str:
@@ -266,6 +283,10 @@ FIELD_SPECS: dict[str, tuple[str, str, int]] = {
     "n_obs": ("hours", UNIT_HOURS, 0),
     "mae_p50": ("MAE", UNIT_EUR, 2),
     "rank": ("rank", UNIT_COUNT, 0),
+    # CP-2's regime table and three-stage reliability (the released product's development record)
+    "mae_ci95_low": ("MAE, lower end of the day-block bootstrap 95% confidence interval", UNIT_EUR, 2),
+    "mae_ci95_high": ("MAE, upper end of the day-block bootstrap 95% confidence interval", UNIT_EUR, 2),
+    "empirical": ("empirical coverage", UNIT_FRACTION, 4),
 }
 
 #: Metric-row fields published as records, per aggregation.
@@ -303,6 +324,8 @@ POPULATIONS = {
     "cp10-fold-block": "CP-10's full fold blocks (its own calibration comparison)",
     "cp10-crisis-window-408h": "CP-10's matched crisis window, delivery 2022-08-15..31",
     "v1-development": "v1's own development evaluation (CP-2)",
+    "v1-holdout-90d": "v1's pre-specified 90-day holdout, delivery 2026-06-09..2026-09-06, the frozen artifact",
+    "v1-fold5-eval": "fold 5's evaluation block, delivery 2026-01-08..2026-04-07, as v1's diagnostics read it (CP-2)",
     "cp20-extraction": "the CP-20 GFS extraction",
     "cp20-resources": "the CP-20 cumulative resource ledger",
     "protocol": "a frozen protocol setting",
@@ -665,10 +688,10 @@ def _cp10_records() -> list[EvidenceRecord]:
 
 
 def _json_record(record_id, checkpoint, path, dotted, *, unit, precision, population, window=None,
-                 evidence_class=EVIDENCE_CLASS_DEVELOPMENT, metric=None) -> EvidenceRecord:
+                 evidence_class=EVIDENCE_CLASS_DEVELOPMENT, metric=None, generation=None) -> EvidenceRecord:
     value = _json_get(_json(path), dotted)
     return EvidenceRecord(
-        record_id=record_id, checkpoint=checkpoint, generation=None, policy_code=None,
+        record_id=record_id, checkpoint=checkpoint, generation=generation, policy_code=None,
         source_path=path, selector=(("json", dotted),), field=dotted.split(".")[-1],
         metric=metric or dotted.split(".")[-1], unit=unit, aggregation="record",
         population_id=population, comparator=None, evidence_class=evidence_class,
@@ -740,6 +763,116 @@ def _json_records() -> list[EvidenceRecord]:
     return records
 
 
+#: The evidence class of an explanation computed on rows the explained model was fitted on: a diagnostic of
+#: the frozen artifact, not an out-of-sample result (PUBLISH_RULES 1.0 §5.1, subject 6).
+EVIDENCE_CLASS_IN_SAMPLE = "in_sample_diagnostic"
+#: v1's one-shot holdout, verbatim in its badge (plan §7.8); the class the frozen artifact's own test carries.
+EVIDENCE_CLASS_V1_HOLDOUT = "confirmatory_style_not_power_qualified"
+UNIT_CORRELATION = "Spearman rank correlation"
+
+#: CP-2's regime-table strata that describe the released recipe's development folds, by a stable key; the
+#: committed label is the row selector. The December-2024 backtest row (a stale fold-3 model's raw heads,
+#: outside every evaluation block) is not a product result and has no record here.
+CP2_STRATA = (
+    ("all", "all validation folds", None),
+    ("pre_crisis", "pre-crisis (< 2021-09-01)", None),
+    ("crisis", "crisis (2021-09-01 .. 2022-12-31)", None),
+    ("post_crisis", "post-crisis (>= 2023-01-01)", None),
+    ("negative_price", "negative-price hours", None),
+    ("dunkelflaute", "Dunkelflaute days (A69 stratum)", None),
+    ("non_flag", "non-flag days", None),
+    ("weekday", "weekday", None),
+    ("weekend", "weekend", None),
+    ("august_2022_peak", "August-2022 peak weeks", ("2022-08-15", "2022-08-31")),
+)
+CP2_REGIME_FIELDS = ("n_obs", "n_days", "mae", "mean_pinball", "coverage_50", "coverage_80", "coverage_95",
+                     "mae_ci95_low", "mae_ci95_high", "read")
+#: The three calibration stages, as CP-2's reliability table and holdout report name them.
+CP2_STAGES = (("raw", "raw LightGBM", "raw_coverage"), ("post_cqr", "post-CQR / pre-isotonic", "post_cqr_coverage"),
+              ("final", "final post-isotonic", "final_coverage"))
+CP2_LEVELS = (("50", "0.5"), ("80", "0.8"), ("95", "0.95"))
+V1_HOLDOUT_WINDOW = ("2026-06-09", "2026-09-06")
+V1_FOLD5_WINDOW = ("2026-01-08", "2026-04-07")
+
+
+def _cp2_product_records() -> list[EvidenceRecord]:
+    """The released product's own evaluation and diagnostics, each with the model, output and rows it
+    describes: the frozen artifact on its one-shot holdout; the released recipe's development folds (fold
+    models, calibrated per fold); fold 5's development model on its own evaluation block (out of sample); and
+    the frozen artifact explained on those same rows, which it was fitted on (in sample)."""
+    development = next((row["first_delivery_date"], row["last_delivery_date"])
+                       for _, row in _rows("reports/cp15/pooled.csv") if row["policy"] == "B1")
+    out: list[EvidenceRecord] = []
+    holdout = "reports/cp2/holdout_report.json"
+    for stage, _, key in CP2_STAGES:
+        for level, _ in CP2_LEVELS:
+            out.append(_json_record(f"cp2.holdout.coverage.{stage}.{level}", "CP-2", holdout, f"{key}.{level}",
+                                    unit=UNIT_FRACTION, precision=4, population="v1-holdout-90d",
+                                    window=V1_HOLDOUT_WINDOW, evidence_class=EVIDENCE_CLASS_V1_HOLDOUT,
+                                    metric=f"{level}% coverage, {stage}", generation="v1"))
+    for record_id, dotted, unit in (("cp2.holdout.n_days", "n_holdout_days", UNIT_DAYS),
+                                    ("cp2.holdout.n_hours", "n_holdout_rows", UNIT_HOURS)):
+        out.append(_json_record(record_id, "CP-2", holdout, dotted, unit=unit, precision=0,
+                                population="v1-holdout-90d", window=V1_HOLDOUT_WINDOW,
+                                evidence_class=EVIDENCE_CLASS_V1_HOLDOUT, generation="v1"))
+    regime = "reports/cp2/regime_table.csv"
+    by_label = {row["stratum"]: (line, row) for line, row in _rows(regime)}
+    for key, label, window in CP2_STRATA:
+        if label not in by_label:
+            raise EvidenceError(f"{regime} has no stratum {label!r}")
+        line, row = by_label[label]
+        for column in CP2_REGIME_FIELDS:
+            if row.get(column, "") == "":
+                continue
+            metric, unit, precision = FIELD_SPECS[column] if column != "read" else ("reading", UNIT_LABEL, 0)
+            out.append(EvidenceRecord(
+                record_id=f"cp2.regime.{key}.{column}", checkpoint="CP-2", generation="v1", policy_code="base",
+                source_path=regime, selector=(("stratum", label),), field=column, metric=metric, unit=unit,
+                aggregation="stratum", population_id=f"v1-development/{key}", comparator=None,
+                evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=window or development,
+                display_precision=precision, raw=row[column], source_line=line))
+    reliability = "reports/cp2/reliability_three_stage.csv"
+    cells = {(row["stage"], row["nominal"]): (line, row) for line, row in _rows(reliability)}
+    for stage, label, _ in CP2_STAGES:
+        for level, nominal in CP2_LEVELS:
+            line, row = cells[(label, nominal)]
+            out.append(EvidenceRecord(
+                record_id=f"cp2.reliability.{stage}.{level}", checkpoint="CP-2", generation="v1", policy_code="base",
+                source_path=reliability, selector=(("stage", label), ("nominal", nominal)), field="empirical",
+                metric=f"{level}% empirical coverage, {stage}", unit=UNIT_FRACTION, aggregation="pooled",
+                population_id="v1-development", comparator=None, evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+                window=development, display_precision=4, raw=row["empirical"], source_line=line))
+    diagnostics = "reports/cp2/diagnostics.json"
+    document = _json(diagnostics)
+    for family, key, evidence_class, fields in (
+        ("frozen_shap", "frozen_champion_shap_top10_in_sample", EVIDENCE_CLASS_IN_SAMPLE, ("feature", "mean_abs_shap")),
+        ("fold5_shap", "shap_top10", EVIDENCE_CLASS_DEVELOPMENT, ("feature", "mean_abs_shap")),
+        ("permutation", "permutation_top10", EVIDENCE_CLASS_DEVELOPMENT,
+         ("feature", "importance_mean_mae_increase", "importance_std")),
+    ):
+        for index, item in enumerate(document[key]):
+            if int(item["rank"]) != index + 1:
+                raise EvidenceError(f"{diagnostics}: {key}[{index}] is rank {item['rank']}, not {index + 1}")
+            for field_name in fields:
+                unit, precision = (UNIT_LABEL, 0) if field_name == "feature" else (UNIT_EUR, 2)
+                out.append(_json_record(f"cp2.diagnostics.{family}.{index + 1}.{field_name}", "CP-2", diagnostics,
+                                        f"{key}.{index}.{field_name}", unit=unit, precision=precision,
+                                        population="v1-fold5-eval", window=V1_FOLD5_WINDOW,
+                                        evidence_class=evidence_class, generation="v1"))
+    for record_id, dotted, unit, precision, evidence_class in (
+        ("cp2.diagnostics.frozen_vs_fold5.rank_spearman", "frozen_vs_fold5_shap_agreement.rank_spearman",
+         UNIT_CORRELATION, 2, EVIDENCE_CLASS_IN_SAMPLE),
+        ("cp2.diagnostics.frozen_vs_fold5.top10_overlap", "frozen_vs_fold5_shap_agreement.top10_overlap",
+         UNIT_COUNT, 0, EVIDENCE_CLASS_IN_SAMPLE),
+        ("cp2.diagnostics.shap_vs_permutation.rank_spearman", "shap_vs_permutation_rank_spearman",
+         UNIT_CORRELATION, 2, EVIDENCE_CLASS_DEVELOPMENT),
+    ):
+        out.append(_json_record(record_id, "CP-2", diagnostics, dotted, unit=unit, precision=precision,
+                                population="v1-fold5-eval", window=V1_FOLD5_WINDOW,
+                                evidence_class=evidence_class, generation="v1"))
+    return out
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, EvidenceRecord]:
     """Every published evidence record, keyed by `record_id`."""
@@ -761,6 +894,7 @@ def records() -> dict[str, EvidenceRecord]:
     built += _criteria_records("cp15", "CP-15", "reports/cp15/criteria.csv", cp15_windows)
     built += _cp10_records()
     built += _json_records()
+    built += _cp2_product_records()
     out: dict[str, EvidenceRecord] = {}
     for record in built:
         if record.record_id in out:
@@ -1011,8 +1145,10 @@ __all__ = [
     "Interval",
     "MINUS",
     "POPULATIONS",
+    "PRODUCT_SOURCES",
     "SOURCES",
     "Source",
+    "registered_source",
     "blob_sha",
     "check_source",
     "daily_series",

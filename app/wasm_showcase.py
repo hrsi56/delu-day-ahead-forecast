@@ -123,7 +123,7 @@ def _(mo):
     )
     load_scale = mo.ui.slider(
         start=0.90, stop=1.10, step=0.01, value=1.00,
-        label="Load-forecast scenario (× the delivery day's A65 vector)",
+        label="Load-forecast scenario: × the day's load forecast, every other input fixed",
         show_value=True,
     )
     # §9.2: "The page states once that scenario perturbations are ceteris-paribus

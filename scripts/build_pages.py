@@ -57,6 +57,8 @@ from delu_forecast.claims import (  # noqa: E402
     limitation_bullets,
     reproducibility_bullets,
 )
+from delu_forecast.claims import LIMITATION_KEYS as C_LIMITATION_KEYS  # noqa: E402
+from delu_forecast.claims import LIMITATION_LABELS as C_LABELS  # noqa: E402
 from delu_forecast.postprocess import QUANTILE_LABELS  # noqa: E402
 from delu_forecast.showcase import (  # noqa: E402
     INTERVAL_LEVELS,
@@ -70,7 +72,11 @@ from delu_forecast.showcase import (  # noqa: E402
 OUTPUT = ROOT / "docs" / "index.html"
 BUILD_RECORD = ROOT / "reports" / "cp3" / "pages_build.json"
 MLFLOW_INDEX = ROOT / "reports" / "presentation" / "mlflow_index.json"
-DEMO_CHECK = ROOT / "reports" / "presentation" / "release-checks" / "2026-09-24-demo.json"
+#: The demo's measured start (plan §7.11, PUBLISH_RULES 1.0 §7.1): fresh anonymous cold starts of the public demo,
+#: recorded by `scripts/check_reader_paths.py demo`. The page states the record's own browser, machine and dates.
+DEMO_CHECK = ROOT / "reports" / "presentation" / "release-checks" / "pres-2-public-demo-baseline.json"
+#: The released model's inputs, from its committed card: identity, not a result.
+CHAMPION_CARD = ROOT / "models" / "champion" / "champion_card.json"
 
 #: One dimension, eleven points. The level selector is not a second dimension: it reads two of
 #: the nine quantiles already stored at each point.
@@ -391,8 +397,8 @@ def svg_text(x: float, y: float, text: str, *, size: int = CHART_FONT, anchor: s
             f"{style}{extra}>{esc(text)}</text>")
 
 
-def marker(x: float, y: float, role: str, *, size: float = 6.0, extra: str = "") -> str:
-    style = ROLE_STYLE[role]
+def marker(x: float, y: float, role: str, *, size: float = 6.0, extra: str = "", style: dict | None = None) -> str:
+    style = style or ROLE_STYLE[role]
     colour = style["color"]
     fill = colour if style["filled"] else TOKENS["surface"]
     if style["marker"] == "circle":
@@ -1311,13 +1317,22 @@ def legend(roles: tuple[str, ...]) -> str:
 # --------------------------------------------------------------------------- sections
 
 
-def demo_measurement() -> dict:
-    record = json.loads(DEMO_CHECK.read_text())
-    run = next(r for r in record["runs"] if r.get("engine") == "chrome" and r.get("viewport") == "1440x900")
-    host = record["playwright_host"]
+def demo_measurement(path: Path = DEMO_CHECK) -> dict:
+    """The measured start beside the demo action (plan §7.11; PUBLISH_RULES 1.0 §7.1, review F03): the desktop
+    Chrome cold start of the public demo, with its browser, machine and date, and the last date on which every
+    run in the record reached a forecast. Every value is read from the record; none is typed."""
+    record = json.loads(path.read_text())
+    runs = record["runs"]
+    run = next(r for r in runs if r.get("engine") == "chrome" and r.get("viewport") == "1440x900" and r.get("ready"))
+    if not run.get("url", "").startswith("https://"):
+        raise ValueError(f"{path.name}: the measured start must come from the public demo, not {run.get('url')!r}")
+    verified = [r["started_utc"][:10] for r in runs if r.get("ready")]
+    if len(verified) != len(runs):
+        raise ValueError(f"{path.name}: a run did not reach a forecast; the page cannot call the demo verified")
     return {"seconds": run["seconds_to_visible_forecast"], "browser": run["browser_version"],
-            "machine": "a Mac" if "Darwin" in host else host,
-            "date": record["date"], "path": str(DEMO_CHECK.relative_to(ROOT))}
+            "machine": "a Mac" if "Darwin" in record["host"] else record["host"],
+            "date": run["started_utc"][:10], "verified": max(verified),
+            "path": str(path.relative_to(ROOT))}
 
 
 def header() -> str:
@@ -1349,11 +1364,12 @@ def opening(C, payload) -> str:
     released, research = G.released(), G.current_generation()
     measured = (f'<span data-release-check="{attr(demo["path"])}#seconds_to_visible_forecast">'
                 f'{esc(demo["seconds"])}</span>')
-    details = (
-        f"<p>The demo forecasts historical delivery days with the released model. Change the interval level or load "
-        f"scenario to explore its forecasts. Calculations run locally in your browser. In the recorded cold-start "
-        f"test, a forecast appeared after {measured} seconds in Chrome {S('version', demo['browser'].split('.')[0])} "
-        f"on {esc(demo['machine'])}, measured {S('date', demo['date'])}. Other devices and connections may take longer.</p>"
+    # Beside the action, outside any disclosure (review F03): size, measured start, browser, machine and dates.
+    startup = (
+        f'<p class="startup" data-startup="measured">Runs in your browser: about {v1("wasm_cold_load_mb", "P13")} MB '
+        f'on a first visit. A forecast appeared after {measured} s in Chrome '
+        f'{S("version", demo["browser"].split(".")[0])} on {esc(demo["machine"])}, public demo, '
+        f'{S("date", demo["date"])}; last verified {S("date", demo["verified"])}.</p>'
     )
     terms = "".join(f'<li data-block="{key}">{RC.render(key)}</li>' for key in HEADLINE_TERMS)
     return f"""
@@ -1378,17 +1394,15 @@ def opening(C, payload) -> str:
    <a class="quiet" href="#evidence">Code and evidence</a>
   </div>
   <p class="release-rule" data-block="release-rule">{RC.render_template("P22", "{g:release_rule}")}</p>
-  <p class="startup">Runs in your browser. First visit downloads about {v1("wasm_cold_load_mb", "P13")} MB; startup
-   time varies.</p>
-  {disclosure("demo-details", "What the demo does and startup details", details)}
+  {startup}
  <figure class="preview panel">
   <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver(released.version)}</span>
    <span>Forecast and observed price for a held-out day. This is a historical replay, not a live forecast.</span></figcaption>
   {preview_chart(payload)}
   <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
    <span class="key-actual">Observed price</span></p>
-  <p class="preview-links"><a class="quiet" href="#forecast">Explore this forecast</a>
-   <span class="preview-note">Opens the replay in the archived {ver(released.version)} report.</span></p>
+  <p class="preview-links"><a class="quiet" href="#product-forecast">Explore this forecast</a>
+   <span class="preview-note">Opens the interactive replay in the product documentation.</span></p>
  </figure>
  </div>
 </section>"""
@@ -1447,19 +1461,63 @@ def lineage() -> str:
         entries = groups.get(generation.id, [])
         if not entries:
             continue
-        later = [g for g in G.generations() if int(g.version[1:]) > int(generation.version[1:])]
-        span = (f"between {ver(generation.version)} and {ver(later[0].version)}" if later
+        # The next adopted generation comes from the validated predecessor chain, never from version arithmetic.
+        later = next((item.successor for item in G.transitions() if item.predecessor.id == generation.id), None)
+        span = (f"between {ver(generation.version)} and {ver(later.version)}" if later
                 else f"after {ver(generation.version)}")
-        plain = (f"between {generation.version} and {later[0].version}" if later else f"after {generation.version}")
+        plain = (f"between {generation.version} and {later.version}" if later else f"after {generation.version}")
+        # A3: a group of rejected branches is never headed as if it were the adopted transition.
         branch_html += (
-            f'<p class="branches-head">Experiments {span}</p>'
-            f'<ul class="branches" aria-label="Experiments {plain}, not adopted">'
+            f'<h3 class="branches-head" id="branches-{generation.id}">Experiments not adopted {span}</h3>'
+            f'<ul class="branches" aria-label="Experiments not adopted {plain}">'
             + "".join(branch_card(entry) for entry in entries) + "</ul>"
         )
     return (
         f'<div class="lineage"><ol class="mainline" aria-label="Adopted generations, oldest first">{nodes}</ol>'
-        f"{branch_html}</div>"
+        f"{transitions_html()}{branch_html}</div>"
     )
+
+
+#: The claim blocks each adopted transition's summary is built from (A3). A transition without them stops the
+#: build: a new generation gets its summary written, never an empty card.
+TRANSITION_FIELDS = (("change", "What changed"), ("comparator", "Comparator"), ("result", "Result"),
+                     ("predecessor", "Against the predecessor"), ("limits", "Not established"))
+
+
+def transition_card(item: G.Transition) -> str:
+    """One adopted transition (PUBLISH_RULES 1.0 A3): predecessor and dates, change, comparator, result with its
+    uncertainty and class, what it does not establish, the dated decision, and a route to the comparison."""
+    key = f"transition.{item.id}"
+    if f"{key}.title" not in RC.BLOCKS_BY_KEY:
+        raise ChapterError(f"the adopted transition {item.id} has no summary blocks")
+    pred, succ = item.predecessor, item.successor
+    fields = [("Predecessor", RC.render_template(
+        "P23", "{g:%s.name}. {g:%s.status}" % (pred.id, pred.id)))]
+    for name, label in TRANSITION_FIELDS:
+        if f"{key}.{name}" in RC.BLOCKS_BY_KEY:
+            fields.append((label, f'<span data-block="{key}.{name}">{RC.render(f"{key}.{name}")}</span>'))
+        elif name == "predecessor" and item.comparator_is_predecessor:
+            continue  # the protocol's comparator is the predecessor: the result row is the predecessor comparison
+        elif name in ("change", "comparator", "result", "limits"):
+            raise ChapterError(f"{key}.{name} is missing")
+    fields.append(("Decision", block(f"{succ.id}.decision", tag="span")))
+    rows = "".join(f"<div><dt>{esc(label)}</dt><dd>{body}</dd></div>" for label, body in fields)
+    anchor = succ.anchor[1:]
+    return (
+        f'<article class="transition" id="transition-{item.id}" data-transition="{item.id}" '
+        f'aria-labelledby="transition-{item.id}-h">'
+        f'<h4 id="transition-{item.id}-h" data-block="{key}.title">{RC.render(f"{key}.title")}</h4>'
+        f'<p class="transition-meta">{badge(succ.badge)}</p>'
+        f'<dl class="transition-fields">{rows}</dl>'
+        f'<p class="transition-route"><a class="quiet in-text" href="#{anchor}-chart-title">The comparison chart and its '
+        f'evidence, in the {ver(succ.version)} chapter</a></p></article>'
+    )
+
+
+def transitions_html() -> str:
+    cards = "".join(transition_card(item) for item in G.transitions(newest_first=True))
+    return (f'<div class="transitions"><h3 class="transitions-head" id="adopted-changes">Adopted changes, newest '
+            f"first</h3>{cards}</div>")
 
 
 def overview_panels() -> list[Panel]:
@@ -1513,7 +1571,7 @@ def results() -> str:
   <p class="panel-sub" data-block="comparison.sub">{RC.render("comparison.sub")}</p>
   {legend(tuple(dict.fromkeys(entry.style for entry in G.comparison_rows())))}
   {overview_chart()}
-  <p data-block="comparison.target">{RC.target_sentence()}</p>
+  <p data-block="comparison.target">{RC.target_sentence()} <span data-block="comparison.census">{RC.census_sentence()}</span></p>
   {block("comparison.howto")}
   {block("comparison.scale")}
   {block("overview.v1pointer", cls="qualification")}
@@ -1527,8 +1585,410 @@ def results() -> str:
   {disclosure("fairness-detail", "Bootstrap settings and the five historical test periods",
               block("overview.fairness.detail") + fold_table())}
  </div>
- {disclosure("definitions", "Definitions, and why v1 scores differently in its own report",
-             block("overview.definitions") + block("overview.f07"))}
+ {disclosure("definitions", "Definitions, the policies tested, and why v1 scores differently in its own report",
+             block("overview.definitions") + f'<p data-block="comparison.census.detail">{RC.census_detail()}</p>'
+             + block("overview.f07"))}
+</section>"""
+
+
+# --------------------------------------------------------------------------- the released product, documented (A4)
+#
+# PUBLISH_RULES 1.0 §5 and amendment A4: directly after the opening, the maintained documentation of the model the
+# registry names as released -- a short orientation, descriptive routes to every subject of §5.1, and the full
+# topics in one named disclosure that each route opens. The documentation belongs to the product, not to a
+# generation: its heading carries no version, and its content is chosen by the released entry's id. A released
+# model without documentation here stops the build, so a replacement can never inherit another model's evidence.
+
+#: "fold 5" in running text, its index declared structural.
+FOLD5 = "fold " + RC.structural("fold", "5")
+
+#: The subjects of PUBLISH_RULES 1.0 §5.1 (the original report's 1–12, with its spectral 3b).
+PRODUCT_SUBJECTS = ("1", "2", "3", "3b", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+
+
+class ProductDocsError(RuntimeError):
+    """The released model's documentation is missing or incomplete; the page refuses to build."""
+
+
+@dataclass(frozen=True)
+class Topic:
+    """One route of the product documentation: its anchor, the route's descriptive label, its heading, the
+    §5.1 subjects it covers with their disposition, and its body."""
+
+    anchor: str
+    label: str
+    heading: str
+    subjects: tuple[str, ...]
+    body: str
+    #: "supported", or "not evaluated" / "inapplicable" with the reason in the body (§5.1).
+    disposition: str = "supported"
+
+
+def _feature_groups() -> tuple[tuple[str, tuple[str, ...]], ...]:
+    """The released model's inputs from its committed card, grouped for reading. The grouping is presentation;
+    every name comes from the card, and a name the grouping does not place stops the build."""
+    features = json.loads(CHAMPION_CARD.read_text())["feature_list"]
+    groups = (
+        ("Calendar, holidays and season", lambda f: f in ("local_hour", "day_of_week", "month", "day_type",
+                                                          "dst_transition_day", "summer_peak", "winter_peak")
+         or f.startswith("is_")),
+        ("Day-ahead load forecast", lambda f: f.startswith("load_forecast")),
+        ("Price of the same hour on earlier days", lambda f: f.startswith("price_lag_")),
+        ("Rolling price statistics, frozen at the day before", lambda f: f.startswith("price_roll_")),
+        ("Negative prices and regime flags", lambda f: f in ("negative_price_count_168h", "crisis_period", "post_crisis")),
+    )
+    out, placed = [], set()
+    for title, member in groups:
+        names = tuple(f for f in features if member(f))
+        placed |= set(names)
+        out.append((title, names))
+    if placed != set(features):
+        raise ProductDocsError(f"inputs without a group: {sorted(set(features) - placed)}")
+    return tuple(out)
+
+
+def feature_table() -> str:
+    rows = "".join(
+        f'<tr><th scope="row">{esc(title)}</th><td>'
+        + ", ".join(f'<code>{S("identifier", name)}</code>' for name in names) + "</td></tr>"
+        for title, names in _feature_groups())
+    return ('<div class="scroll" role="region" aria-label="The released model\'s inputs" tabindex="0"><table class="data">'
+            f'<caption>The inputs, by group, as the model card names them</caption><thead><tr><th scope="col">Group</th>'
+            f'<th scope="col">Inputs</th></tr></thead><tbody>{rows}</tbody></table></div>')
+
+
+def _bars(chart_id: str, claim_id: str, rows: tuple[tuple[str, str], ...], *, title: str, desc: str,
+          axis: str, domain: tuple[float, float], step: float, role: str) -> str:
+    """Horizontal bars from a zero reference, one per (label record, value record), with each value printed.
+    A dedicated phone drawing puts the label above its bar (invariant 23)."""
+    axis_unit([value for _, value in rows])
+    parts = []
+    label_w, value_w, row_h = 250, 64, 30
+    x0, x1 = label_w, DESKTOP_W - value_w
+    scale = Scale(f"{chart_id}-x", domain[0], domain[1], x0, x1, R.get(rows[0][1]).unit)
+    top = 8
+    for index, (label_record, value_record) in enumerate(rows):
+        y = top + index * row_h
+        value = R.get(value_record).value
+        parts.append(svg_text(0, y + 19, RC.svg_value(label_record), extra=RC.svg_binding(claim_id, label_record)))
+        parts.append(f'<rect x="{x0:.1f}" y="{y + 7:.1f}" width="{scale(value) - x0:.1f}" height="16" '
+                     f'fill="{ROLE_STYLE[role]["color"]}"{RC.svg_binding(claim_id, value_record)}/>')
+        parts.append(value_label(scale(value) + 6, y + 19, claim_id, value_record, option="p=1"))
+    bottom = top + len(rows) * row_h
+    parts.append(ref_line(scale, 0.0, top, bottom + 4, dash=None, colour=TOKENS["text"], width=1.4))
+    parts.append(scale_ticks(scale, step, top, bottom, labels_at=bottom + 20, grid=False))
+    parts.append(svg_text(x0, bottom + 40, axis, fill=TOKENS["text-2"]))
+    desktop = svg_wrap(DESKTOP_W, bottom + 48, "".join(parts), title=title, desc=desc, variant="d", chart_id=chart_id)
+    parts, y = [], 4.0
+    m0, m1 = 12.0, MOBILE_W - 52
+    mscale = Scale(f"{chart_id}-x", domain[0], domain[1], m0, m1, scale.unit)
+    for label_record, value_record in rows:
+        value = R.get(value_record).value
+        parts.append(svg_text(0, y + 13, RC.svg_value(label_record), extra=RC.svg_binding(claim_id, label_record)))
+        parts.append(f'<rect x="{m0:.1f}" y="{y + 20:.1f}" width="{mscale(value) - m0:.1f}" height="12" '
+                     f'fill="{ROLE_STYLE[role]["color"]}"{RC.svg_binding(claim_id, value_record)}/>')
+        parts.append(value_label(mscale(value) + 6, y + 31, claim_id, value_record, option="p=1"))
+        y += 42
+    parts.append(scale_ticks(mscale, step * 2, 4, y, labels_at=y + 16, grid=False))
+    for index, line in enumerate(_wrap(axis, MOBILE_LINE_CHARS)):
+        parts.append(svg_text(0, y + 36 + 17 * index, line, fill=TOKENS["text-2"]))
+    height = y + 44 + 17 * len(_wrap(axis, MOBILE_LINE_CHARS))
+    mobile = svg_wrap(MOBILE_W, height, "".join(parts), title=title, desc=desc, variant="m", chart_id=chart_id)
+    return f'<div class="chart" data-chart-id="{chart_id}">{desktop}{mobile}</div>'
+
+
+def product_attribution_chart() -> str:
+    rows = tuple((f"cp2.diagnostics.frozen_shap.{rank}.feature", f"cp2.diagnostics.frozen_shap.{rank}.mean_abs_shap")
+                 for rank in range(1, 11))
+    return _bars("product-shap", "P43", rows,
+                 title="The ten inputs with the largest mean absolute SHAP value for the released model's median forecast",
+                 desc="Horizontal bars from zero, one per input, in EUR/MWh; the same-hour price one day earlier is by "
+                      "far the largest. The released artifact explained on fold five's test block, rows it was "
+                      "fitted on: an in-sample diagnostic.",
+                 axis="mean absolute SHAP value, EUR/MWh · median head · in sample",
+                 domain=(0.0, 16.0), step=2.0, role="v1")
+
+
+#: The calibration stages' marks (a shape each, so no meaning rests on colour).
+STAGE_STYLE = {
+    "raw": {"color": TOKENS["text-2"], "marker": "circle", "filled": False},
+    "post_cqr": {"color": TOKENS["text-2"], "marker": "diamond", "filled": False},
+    "final": {"color": TOKENS["v1"], "marker": "triangle", "filled": True},
+}
+STAGE_NAMES = {"raw": "raw heads", "post_cqr": "after CQR", "final": "final"}
+#: The short names on a row's values line, which must fit one panel.
+STAGE_SHORT = {"raw": "raw", "post_cqr": "CQR", "final": "final"}
+
+
+def product_reliability_chart() -> str:
+    """Coverage at each nominal level, by calibration stage, for the frozen artifact on its one-shot holdout and
+    for the development folds; the nominal level is the reference each row is read against."""
+    panels = (("One-shot holdout, the frozen artifact", "cp2.holdout.coverage.{stage}.{level}"),
+              ("Development folds, one model per fold", "cp2.reliability.{stage}.{level}"))
+    levels = ("50", "80", "95")
+    lo, hi = 0.2, 1.0
+
+    def panel(x0: float, x1: float, top: float, name: str, pattern: str) -> tuple[str, float]:
+        scale = Scale("product-coverage-x", lo, hi, x0 + 16, x1 - 14, R.UNIT_FRACTION)
+        out = [svg_text(x0, top + 16, name, weight="600")]
+        y = top + 28
+        for level in levels:
+            ids = [pattern.format(stage=stage, level=level) for stage in STAGE_STYLE]
+            axis_unit(ids)
+            out.append(svg_text(x0, y + 16, f"{level}% interval"))
+            # one short line per stage, so marks with nearly equal values never hide one another
+            first = y + 30
+            for index, (stage, record_id) in enumerate(zip(STAGE_STYLE, ids)):
+                line_y = first + 14 * index
+                out.append(f'<line x1="{x0 + 16:.1f}" x2="{x1 - 14:.1f}" y1="{line_y:.1f}" y2="{line_y:.1f}" '
+                           f'stroke="{TOKENS["grid"]}"/>')
+                out.append(marker(scale(R.get(record_id).value), line_y, stage, size=5.2, style=STAGE_STYLE[stage],
+                                  extra=RC.svg_binding("P46", record_id)))
+            out.append(ref_line(scale, int(level) / 100, first - 8, first + 36, dash=None, colour=TOKENS["text"], width=2))
+            cursor, values_y = x0, first + 52
+            for stage, record_id in zip(STAGE_STYLE, ids):
+                out.append(svg_text(cursor, values_y, STAGE_SHORT[stage], fill=TOKENS["text-2"]))
+                cursor += 8.6 * len(STAGE_SHORT[stage]) + 6
+                text = RC.svg_value(record_id)
+                out.append(svg_text(cursor, values_y, text, weight="600", extra=RC.svg_binding("P46", record_id)))
+                cursor += 8.0 * len(text) + 12
+            y = values_y + 16
+        out.append(scale_ticks(scale, 0.2, top + 36, y, labels_at=y + 10, grid=False))
+        return "".join(out), y + 22
+
+    desktop_parts, bottoms = [], []
+    for index, (name, pattern) in enumerate(panels):
+        body, bottom = panel(index * 390, index * 390 + 370, 0, name, pattern)
+        desktop_parts.append(body)
+        bottoms.append(bottom)
+    note = "x: share of hours inside the interval · the black line is the nominal level, a reference, not a target"
+    desktop_parts.append(svg_text(0, max(bottoms) + 14, note, fill=TOKENS["text-2"]))
+    title = "How often the released model's intervals contained the price, by calibration stage"
+    desc = ("Two panels, the frozen artifact on its one-shot holdout and the development folds. For each nominal "
+            "level, three short lines: the coverage of the raw heads (open circle), after CQR (open diamond) and "
+            "final (filled triangle), with the nominal level as a black vertical line across them.")
+    desktop = svg_wrap(DESKTOP_W, max(bottoms) + 24, "".join(desktop_parts), title=title, desc=desc, variant="d",
+                       chart_id="product-coverage")
+    mobile_parts, cursor = [], 0.0
+    for name, pattern in panels:
+        body, cursor = panel(0, MOBILE_W, cursor, name, pattern)
+        mobile_parts.append(body)
+        cursor += 12
+    for index, line in enumerate(_wrap(note, MOBILE_LINE_CHARS)):
+        mobile_parts.append(svg_text(0, cursor + 14 + 17 * index, line, fill=TOKENS["text-2"]))
+    mobile = svg_wrap(MOBILE_W, cursor + 20 + 17 * len(_wrap(note, MOBILE_LINE_CHARS)), "".join(mobile_parts),
+                      title=title, desc=desc, variant="m", chart_id="product-coverage")
+    return f'<div class="chart" data-chart-id="product-coverage">{desktop}{mobile}</div>'
+
+
+def stage_legend() -> str:
+    items = "".join(
+        f'<li><svg class="legend-mark" viewBox="-8 -8 16 16" width="16" height="16" aria-hidden="true">'
+        f'{marker(0, 0, stage, size=5, style=style)}</svg><span>{esc(STAGE_NAMES[stage])}</span></li>'
+        for stage, style in STAGE_STYLE.items())
+    tick = ('<li><svg class="legend-mark" viewBox="-8 -8 16 16" width="16" height="16" aria-hidden="true">'
+            f'<line x1="0" x2="0" y1="-7" y2="7" stroke="{TOKENS["text"]}" stroke-width="2"/></svg>'
+            "<span>nominal level</span></li>")
+    return '<ul class="legend" aria-label="Marker key">' + items + tick + "</ul>"
+
+
+def regime_table() -> str:
+    """CP-2's regime-stratified error for the released recipe's development folds, exact (standard §4)."""
+    names = {"all": "All development hours", "pre_crisis": "Before the crisis", "crisis": "The crisis",
+             "post_crisis": "After the crisis", "negative_price": "Negative-price hours",
+             "dunkelflaute": "Low wind and solar days", "non_flag": "Other days", "weekday": "Weekdays",
+             "weekend": "Weekends", "august_2022_peak": "August 2022 peak weeks"}
+    body = []
+    for key, _, _ in R.CP2_STRATA:
+        base = f"cp2.regime.{key}"
+        mae = value(f"{base}.mae", "P45", option="exact")
+        if f"{base}.mae_ci95_low" in R.records():
+            mae += (f' <span class="ci">[{value(f"{base}.mae_ci95_low", "P45", option="exact")}, '
+                    f'{value(f"{base}.mae_ci95_high", "P45", option="exact")}]</span>')
+        cells = [f'<th scope="row">{_structural_versions(names[key])}</th>',
+                 f'<td class="n">{value(f"{base}.n_obs", "P45")}</td>', f'<td class="n">{value(f"{base}.n_days", "P45")}</td>',
+                 f'<td class="n exact">{mae}</td>']
+        cells += [f'<td class="n exact">{value(f"{base}.coverage_{level}", "P45", option="exact")}</td>' for level in ("50", "80", "95")]
+        cells.append(f'<td>{value(f"{base}.read", "P45")}</td>')
+        body.append("<tr>" + "".join(cells) + "</tr>")
+    caption = _label("The released recipe on its five development folds, by stratum: MAE in EUR/MWh with a day-block "
+                     "bootstrap 95% confidence interval for thin subsets, and interval coverage as a fraction of hours")
+    heads = "".join(f'<th scope="col">{_label(text)}</th>' for text in (
+        "Stratum", "Hours", "Days", "MAE, EUR/MWh", "50% coverage", "80% coverage", "95% coverage", "Reading"))
+    return ('<div class="scroll" role="region" aria-label="Errors by regime, the development folds" tabindex="0">'
+            f'<table class="data"><caption>{caption}</caption><thead><tr>{heads}</tr></thead>'
+            f"<tbody>{''.join(body)}</tbody></table></div>")
+
+
+def attribution_table() -> str:
+    """The released artifact's in-sample ranking beside fold 5's out-of-sample one: two identities, side by side."""
+    body = "".join(
+        f'<tr><th scope="row">{S("rank", str(rank))}</th>'
+        f'<td>{value(f"cp2.diagnostics.frozen_shap.{rank}.feature", "P43")}</td>'
+        f'<td class="n exact">{value(f"cp2.diagnostics.frozen_shap.{rank}.mean_abs_shap", "P43", option="exact")}</td>'
+        f'<td>{value(f"cp2.diagnostics.fold5_shap.{rank}.feature", "P43")}</td>'
+        f'<td class="n exact">{value(f"cp2.diagnostics.fold5_shap.{rank}.mean_abs_shap", "P43", option="exact")}</td></tr>'
+        for rank in range(1, 11))
+    return ('<div class="scroll" role="region" aria-label="SHAP rankings, released artifact and development model" '
+            'tabindex="0"><table class="data"><caption>Mean absolute SHAP value of the median head, EUR/MWh, on '
+            f'{FOLD5}\'s test block</caption><thead><tr><th scope="col">Rank</th>'
+            '<th scope="col">Released artifact, in sample</th><th scope="col">Value</th>'
+            f'<th scope="col">{_label("Fold 5 development model, out of sample")}</th>'
+            f'<th scope="col">Value</th></tr></thead><tbody>{body}</tbody></table></div>')
+
+
+def permutation_table() -> str:
+    body = "".join(
+        f'<tr><th scope="row">{S("rank", str(rank))}</th>'
+        f'<td>{value(f"cp2.diagnostics.permutation.{rank}.feature", "P44")}</td>'
+        f'<td class="n exact">{value(f"cp2.diagnostics.permutation.{rank}.importance_mean_mae_increase", "P44", option="exact")}</td>'
+        f'<td class="n exact">{value(f"cp2.diagnostics.permutation.{rank}.importance_std", "P44", option="exact")}</td></tr>'
+        for rank in range(1, 11))
+    return ('<div class="scroll" role="region" aria-label="Permutation importance, the development model" tabindex="0">'
+            '<table class="data"><caption>Permutation importance: rise in the median forecast\'s MAE when one input is '
+            f'shuffled, EUR/MWh, {FOLD5}\'s development model on its own test block</caption><thead><tr>'
+            '<th scope="col">Rank</th><th scope="col">Input</th><th scope="col">MAE increase</th>'
+            f'<th scope="col">Standard deviation</th></tr></thead><tbody>{body}</tbody></table></div>')
+
+
+def product_replay(payload: dict) -> str:
+    """Subject 10: the released model's forecast for a held-out day, with its two real controls. It reads the
+    same precomputed replay as the preview and the archive (window.__FAN__); nothing is fetched or recomputed."""
+    levels = "".join(
+        f'<label><input type="radio" name="p-lvl" value="{level}"{" checked" if level == 80 else ""}> '
+        f'{S("level", f"{level}%")}</label>' for level in sorted(INTERVAL_LEVELS))
+    title = "The released model's forecast for one held-out delivery day"
+    desc = ("Median forecast as a line, the chosen prediction interval as a band, and the price that cleared as a "
+            "dashed line, for each local hour. A historical replay, not a live forecast.")
+    return f"""<figure class="panel analytical product-replay" aria-labelledby="p-replay-title">
+ <h4 class="panel-title" id="p-replay-title">Forecast for {S("date", payload["delivery_day"])}, a day of the one-shot holdout</h4>
+ <p class="panel-sub">Historical replay · EUR/MWh by local hour (Europe/Berlin) · the frozen released model</p>
+ <div class="replay-controls">
+  <fieldset><legend>Prediction-interval level</legend>{levels}</fieldset>
+  <div class="replay-range"><label for="p-scale">Load-forecast scenario: × <output id="p-scaleval" for="p-scale">{S("control", "1.00")}</output></label>
+   <input id="p-scale" type="range" min="0" max="{len(LOAD_SCALES) - 1}" step="1" value="{LOAD_SCALES.index(1.00)}"></div>
+ </div>
+ <svg id="p-chart" class="replay-chart" viewBox="0 0 760 320" role="img" aria-labelledby="p-chart-t p-chart-d"><title id="p-chart-t">{esc(title)}</title><desc id="p-chart-d">{esc(desc)}</desc><g class="plot"></g></svg>
+ <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">Prediction interval</span>
+  <span class="key-actual" id="p-legend-actual">Observed price</span></p>
+ <p>At the selected level, the frozen model's empirical coverage over the holdout was
+  <strong><span id="p-cov" data-claim="P47" data-v1="holdout_coverage_80">{esc(build_claims()["holdout_coverage_80"])}</span></strong>.</p>
+ <p class="qualification" id="p-scenario" hidden>A scenario is active: the observed price is hidden, because it belongs to the unperturbed day.</p>
+</figure>"""
+
+
+def v1_product_topics(C, payload) -> tuple[Topic, ...]:
+    """The released v1's documentation: the twelve subjects, each from evidence about this model, labelled with
+    the model, output and rows it describes (PUBLISH_RULES 1.0 §5.1)."""
+    released = G.released()
+    # A link standing alone in its paragraph is a target of its own: a full-height `.quiet` link (about 44 px).
+    archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
+    limitations = "".join(
+        f'<li><strong>{S("name", C_LABELS[key])}.</strong> <span data-claim="P48" data-v1="{key}">{esc(C[key])}</span></li>'
+        for key in C_LIMITATION_KEYS)
+    run_links = (
+        f'<p><a class="quiet external in-text" href="{attr(C["mlflow_experiment_url"])}">'
+        f'{ver(released.version)}\'s runs in MLflow</a>: training, the holdout and the diagnostics, readable without '
+        f'signing in. <a class="quiet in-text" href="#reproduce">Rebuild this report</a> from saved evidence. '
+        f'<a class="quiet external in-text" href="{attr(github("docs/deploy.md"))}">Deployment notes</a>.</p>')
+    return (
+        Topic("product-data", "Data and the information cutoff", "Data and the information cutoff", ("1",),
+              "".join(block(k) for k in ("product.data.target", "product.data.sources", "product.data.cutoff",
+                                        "product.data.windows", "product.data.preprocessing"))),
+        Topic("product-regimes", "Price regimes and negative prices", "Price regimes and negative prices", ("2",),
+              block("product.regimes.periods") + block("product.regimes.why")
+              + f'<p>{archive("regimes", "Yearly price levels and negative-hour counts, in the archived report")}</p>'),
+        Topic("product-inputs", "The inputs it uses, and why", "The inputs it uses, and why", ("3", "3b"),
+              block("product.inputs.catalog") + feature_table() + block("product.inputs.excluded")
+              + block("product.inputs.seasonal")
+              + f'<p>{archive("spectral", "The spectral figures behind the calendar inputs, in the archived report")}</p>'),
+        Topic("product-validation", "How it was tested before release", "How it was tested before release", ("4",),
+              "".join(block(k) for k in ("product.validation.design", "product.validation.holdout",
+                                        "product.validation.classes", "product.validation.leakage"))),
+        Topic("product-results", "Measured results: the one-shot test", "Measured results", ("5",),
+              f'<p class="holdout-head">The one-shot holdout {badge(RC.BADGE_V1_HOLDOUT, "holdout")}</p>'
+              + block("v1.holdout") + block("product.results.coverage") + block("v1.unflattering")
+              + block("product.results.shared")
+              + '<p><a class="quiet" href="#definitions">Why these scores differ from its own report</a></p>'),
+        Topic("product-attribution", "What drives its forecasts: SHAP chart", "What drives its forecasts", ("6",),
+              '<figure class="panel analytical" aria-labelledby="product-attribution-title">'
+              + block("product.attribution.headline", tag="h4", cls="panel-title", ident="product-attribution-title")
+              + '<p class="panel-sub">Mean absolute SHAP value, EUR/MWh · median head · the released artifact on '
+              + FOLD5 + "'s test block · in-sample diagnostic</p>"
+              + product_attribution_chart() + block("product.attribution.reading", cls="finding")
+              + block("product.attribution.identity", cls="qualification")
+              + disclosure("product-attribution-values", "View values, beside the development model's ranking",
+                           attribution_table())
+              + "</figure>" + block("product.attribution.scope")
+              + "<p>" + archive("shap", "The out-of-sample SHAP figures of " + FOLD5
+                                + "’s development model, in the archived report") + "</p>"),
+        Topic("product-importance", "Input importance and its limits",
+              "Which inputs matter, and what that does not show", ("7",),
+              block("product.importance.permutation") + permutation_table() + block("product.importance.limits")
+              + block("product.importance.sensitivity")),
+        Topic("product-failures", "Where it fails: errors by regime", "Where it fails: errors by regime", ("8",),
+              block("product.failures.reading") + regime_table() + block("product.failures.identity")),
+        Topic("product-reliability", "Interval reliability: coverage chart", "How reliable its intervals are",
+              ("9",),
+              '<figure class="panel analytical" aria-labelledby="product-reliability-title">'
+              + block("product.reliability.headline", tag="h4", cls="panel-title", ident="product-reliability-title")
+              + '<p class="panel-sub">Share of hours inside the interval · nominal level as reference · the frozen '
+              "artifact on its one-shot holdout, and the development folds</p>"
+              + stage_legend() + product_reliability_chart() + block("product.reliability.stages", cls="finding")
+              + block("product.reliability.width", cls="qualification") + "</figure>"
+              + block("product.reliability.crossings") + block("product.reliability.guarantee")),
+        Topic("product-forecast", "Read a forecast: interactive replay", "Read a forecast", ("10",),
+              product_replay(payload) + "".join(block(k) for k in ("product.forecast.read", "product.forecast.controls",
+                                                                   "product.forecast.demo"))
+              + f'<p><a class="quiet external" href="{attr(C["space_url"])}">Try the {ver(released.version)} demo</a></p>'),
+        Topic("product-limitations", "Limitations", "Limitations", ("11",),
+              block("product.limits.summary") + f'<ul class="limitations">{limitations}</ul>'
+              + f'<p><span data-claim="P48" data-v1="floor_change">{esc(C["floor_change"])}</span></p>'),
+        Topic("product-run", "Run this product", "Run this product", ("12",),
+              "".join(block(k, cls="run") for k in ("product.run.local", "product.run.identity", "product.run.demo"))
+              + run_links + block("product.run.historical")),
+    )
+
+
+#: The documentation of each model the registry may name as released. Only v1 has been released.
+PRODUCT_DOCS = {"v1": v1_product_topics}
+
+
+def product_topics(C, payload) -> tuple[Topic, ...]:
+    released = G.released()
+    builder = PRODUCT_DOCS.get(released.id)
+    if builder is None:
+        raise ProductDocsError(f"the registry names {released.id} as released, and this page has no documentation "
+                               "for it; write its topics before publishing (PUBLISH_RULES 1.0 §5.1)")
+    topics = builder(C, payload)
+    covered = [subject for topic in topics for subject in topic.subjects]
+    missing = [subject for subject in PRODUCT_SUBJECTS if subject not in covered]
+    extra = [subject for subject in covered if subject not in PRODUCT_SUBJECTS]
+    if missing or extra or len(covered) != len(set(covered)):
+        raise ProductDocsError(f"subjects missing {missing}, unknown {extra}, or covered twice: {covered}")
+    for topic in topics:
+        if topic.disposition not in ("supported", "not evaluated", "inapplicable"):
+            raise ProductDocsError(f"{topic.anchor}: disposition {topic.disposition!r}")
+    return topics
+
+
+def product_section(C, payload) -> str:
+    """How the product works (A4): the released model's orientation, a route to every topic, and the topics."""
+    released = G.released()
+    topics = product_topics(C, payload)
+    routes = "".join(f'<li><a href="#{topic.anchor}">{esc(topic.label)}</a></li>' for topic in topics)
+    bodies = "".join(
+        f'<section class="topic" data-topic="{topic.anchor}" data-subjects="{" ".join(topic.subjects)}" '
+        f'aria-labelledby="{topic.anchor}"><h3 id="{topic.anchor}">{esc(topic.heading)}</h3>{topic.body}</section>'
+        for topic in topics)
+    return f"""
+<section class="section product" id="product" aria-labelledby="product-h" data-research="product" data-product="{released.id}">
+ <h2 id="product-h">How the product works</h2>
+ {block("product.lede", cls="product-lede")}
+ <nav class="product-routes" aria-label="Topics of how the product works"><ol>{routes}</ol></nav>
+ <details class="disclosure product-manual" id="product-manual"><summary><span class="marker" aria-hidden="true"></span><span>All topics in full</span></summary>
+  <div class="disclosure-body">{bodies}</div>
+ </details>
 </section>"""
 
 
@@ -1619,6 +2079,28 @@ def slot_problems(slots: ChapterSlots) -> list[str]:
     return problems
 
 
+_DETAIL_HEAD = re.compile(r'<h4 class="detail-head" id="([^"]+)">(.*?)</h4>', re.DOTALL)
+
+
+def detail_head(ident: str, text: str) -> str:
+    """A heading inside a chapter's detail: the landing target of its chart's route (PUBLISH_RULES 1.0 A5)."""
+    return f'<h4 class="detail-head" id="{ident}">{_structural_versions(text)}</h4>'
+
+
+def explore_routes(slots: ChapterSlots) -> str:
+    """"Explore these results" (A5): one descriptive route per detail heading, generated from the details
+    themselves so a chart cannot be added without its route. Each opens its disclosure (NAV_JS)."""
+    routes = [(ident, text) for _, body in slots.details for ident, text in _DETAIL_HEAD.findall(body)]
+    if not routes:
+        return ""
+    # The label is one span: the link is an inline-flex target, which would make each text run and each element
+    # of the label an item of its own and drop the spaces between them ("forv1").
+    items = "".join(f'<li><a class="quiet" href="#{ident}"><span>{text}</span></a></li>' for ident, text in routes)
+    anchor = slots.entry.anchor[1:]
+    return (f'<nav class="explore" aria-labelledby="{anchor}-explore-h"><h3 class="story-label" '
+            f'id="{anchor}-explore-h">Explore these results</h3><ul>{items}</ul></nav>')
+
+
 def render_chapter(slots: ChapterSlots, *, open_details: tuple[str, ...] = ()) -> str:
     """The one generic chapter renderer. Every slot is filled, in order, or the build fails."""
     problems = slot_problems(slots)
@@ -1650,6 +2132,7 @@ def render_chapter(slots: ChapterSlots, *, open_details: tuple[str, ...] = ()) -
  </aside>
  <div class="decision" data-slot="decision"><h3 class="story-label">Decision</h3>{block(slots.decision)}</div>
  <div data-slot="evidence">{slots.evidence}</div>
+ {explore_routes(slots)}
  <div class="disclosures" data-slot="details">{details}</div>
 </article>"""
 
@@ -1700,12 +2183,13 @@ def v3_slots(*, open_folds: bool = False) -> ChapterSlots:
     protocol = "".join(block(key) for key in ("v3.criteria", "v3.controls", "v3.controls.supplement", "v3.review",
                                               "v3.cost", "v3.dependency"))
     protocol += f'<p class="attribution-line"><span data-structural="attribution">{esc(GFS_ATTRIBUTION)}</span></p>'
-    folds = (c2b_chart() + values_table("v3-c2b-values", "C72", c2b_panels())
-             + '<p class="chart-note">' + _structural_versions("The same periods in absolute terms, for v1, v2 and v3:")
-             + "</p>" + c3_chart() + multi_values_table("v3-c3-values", "C74", c3_panels())
-             + '<p class="chart-note">' + _structural_versions("By hour of the day, v2 against v3; descriptive only: "
-                                                               "no hour or block effect is claimed.") + "</p>"
-             + c5_chart() + hour_values_table("v3-c5-values", "C82", _hour_series()))
+    folds = (detail_head("v3-per-period-differences", "Did weather help in every test period?")
+             + c2b_chart() + values_table("v3-c2b-values", "C72", c2b_panels())
+             + detail_head("v3-absolute-errors", "Absolute errors per test period, for v1, v2 and v3")
+             + c3_chart() + multi_values_table("v3-c3-values", "C74", c3_panels())
+             + detail_head("v3-hours", "Errors by hour of the day, v2 against v3")
+             + '<p class="chart-note">' + _structural_versions("Descriptive only: no hour or block effect is claimed.")
+             + "</p>" + c5_chart() + hour_values_table("v3-c5-values", "C82", _hour_series()))
     crisis_note = ('<p class="chart-note">' + _structural_versions(
         "The protocol's stress period is fold 3, the 2022 crisis. Its peak, delivery 2022-08-15 to 2022-08-31, is the "
         "17 days charted here; their figures are for those days only, not the whole period. The dashed line marks 95% "
@@ -1713,8 +2197,10 @@ def v3_slots(*, open_folds: bool = False) -> ChapterSlots:
         "guarantee.")
         .replace("17 days", S("count", "17") + " days")
         .replace("fold 3", "fold " + S("fold", "3")) + "</p>")
-    stress = crisis_note + block("v3.helps") + c4_chart() + values_table("v3-c4-values", "C79", c4_panels())
-    coverage = block("v3.hurts") + c6_chart() + multi_values_table("v3-c6-values", "C80", c6_panels())
+    stress = (detail_head("v3-crisis", "What happened in the 2022 crisis window") + crisis_note + block("v3.helps")
+              + c4_chart() + values_table("v3-c4-values", "C79", c4_panels()))
+    coverage = (detail_head("v3-coverage", "Did the intervals get more reliable, or only wider?") + block("v3.hurts")
+                + c6_chart() + multi_values_table("v3-c6-values", "C80", c6_panels()))
     method = block("v3.recipe") + block("v3.missing") + block("v3.availability")
     return ChapterSlots(
         entry=entry,
@@ -1740,7 +2226,8 @@ def v3_slots(*, open_folds: bool = False) -> ChapterSlots:
 
 def v2_slots() -> ChapterSlots:
     entry = G.get("v2")
-    scores = (v2_chart1() + block("v2.result.pb2") + block("v2.result.criteria")
+    scores = (detail_head("v2-control", "What the pooled-interval control established, and the scores against the targets")
+              + v2_chart1() + block("v2.result.pb2") + block("v2.result.criteria")
               + values_table("v2-chart1-values", "C31", v2_chart1_panels()))
     return ChapterSlots(
         entry=entry,
@@ -1805,7 +2292,8 @@ def v1_chapter(C, archive: str) -> str:
  </div>
  {block("v1.unflattering")}
  {block("v1.lesson")}
- <p class="chapter-links"><a class="quiet" href="#forecast">Explore the interactive replay</a>
+ <p class="chapter-links"><a class="quiet" href="#product">How the released model works, topic by topic</a>
+  <a class="quiet" href="#forecast">The replay in the archived report</a>
   <a class="quiet external" href="{attr(C['space_url'])}">Try the {ver(entry.version)} demo</a></p>
 {v1_archive_disclosure(archive)}
 </article>"""
@@ -1926,7 +2414,9 @@ def evidence_section(C) -> str:
   <pre><code>uv sync</code></pre>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   {disclosure("rebuild-measurement", "One measured rebuild", f"<p>{runtime}</p>") if runtime else ""}
-  <p>Each experiment below has its own full reproduction; {ver("v1")}'s is in <a href="#repro">its archive</a>.</p>
+  <p>Each experiment below has its own full reproduction. To run the released model, see
+   <a href="#product-run">Run this product</a>; {ver("v1")}'s original instructions, with the historical container,
+   are in <a href="#repro">its archive</a>.</p>
   <div class="evidence-row evidence-list"><span class="ev-label">Evidence</span><ul class="repro-list">{labelled}</ul></div>
  </div>
  <div class="tracking"><h3>Tracking</h3>
@@ -2310,6 +2800,54 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
 .preview-note{{font-size:13px;color:var(--text-2)}}
 td .ci,td .unit,th .unit{{color:var(--text-2);font-weight:400}}
 th .unit{{font-size:12px}}
+/* how the product works (PUBLISH_RULES 1.0 A4): orientation and routes on the reading path, topics in one disclosure */
+.section.product{{padding-top:32px}}
+.product-lede{{margin:0 0 12px}}
+.product-routes ol{{list-style:none;padding:0;margin:12px 0 16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px}}
+.product-routes a{{display:flex;align-items:center;min-height:44px;height:100%;padding:6px 12px;border:1px solid var(--border);
+ border-radius:10px;background:var(--surface);color:var(--text);text-decoration:none;font-size:14px;line-height:19px;font-weight:550}}
+.product-routes a:hover{{border-color:var(--text-2)}}
+.topic{{padding:24px 0 8px;border-top:1px solid var(--border)}}
+.topic:first-child{{border-top:0;padding-top:4px}}
+.topic h3{{font-size:21px;line-height:1.3;margin:0 0 12px}}
+.topic .panel{{margin:8px 0 16px}}
+.limitations li{{margin:0 0 8px;max-width:var(--prose)}}
+[data-structural="command"]{{font-family:var(--mono);font-size:.9em;overflow-wrap:anywhere;background:#F4F4F5;padding:1px 4px;border-radius:4px}}
+.run [data-v1="champion_fingerprint"],.run [data-v1="snapshot_sha256"]{{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}}
+.replay-controls{{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;margin:8px 0 12px}}
+.replay-controls fieldset{{border:1px solid var(--border);border-radius:8px;padding:0 12px 2px;margin:0}}
+.replay-controls legend{{font-size:13px;color:var(--text-2);padding:0 4px}}
+.replay-controls fieldset label{{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-right:14px}}
+.replay-range{{display:flex;flex-direction:column}}
+.replay-range label{{font-size:14px;color:var(--text-2)}}
+.replay-range input{{min-height:44px;width:240px;max-width:100%}}
+.replay-chart{{display:block;width:100%;height:auto;border:1px solid var(--border);border-radius:8px;background:var(--surface)}}
+/* adopted transitions (A3) and the rejected branches, headed apart */
+.transitions-head{{font-size:13px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:28px 0 10px}}
+.transition{{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:0 0 16px}}
+.transition h4{{font-size:19px;line-height:1.3;margin:0 0 4px}}
+.transition-meta{{margin:0 0 8px}}
+.transition-fields{{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 18px;margin:0;font-size:15px;line-height:24px}}
+.transition-fields div{{display:contents}}
+.transition-fields dt{{font-weight:650;color:var(--text-2)}}
+.transition-fields dd{{margin:0;max-width:var(--prose)}}
+.transition-route{{margin:10px 0 0}}
+/* discovery routes (A5): descriptive links from a chapter's summary to the charts inside its details */
+.explore{{margin:12px 0 16px}}
+.explore ul{{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:0 22px}}
+.explore a{{display:inline-flex;align-items:center;min-height:44px}}
+.detail-head{{font-size:17px;line-height:1.35;margin:28px 0 8px}}
+.disclosure-body>.detail-head:first-child{{margin-top:8px}}
+@media (max-width:980px){{.product-routes ol{{grid-template-columns:repeat(3,minmax(0,1fr))}}}}
+@media (max-width:620px){{
+ .section.product{{padding-top:20px}}
+ .product-routes ol{{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 8px;margin:8px 0 12px}}
+ .product-routes a{{padding:4px 10px;font-size:14px;line-height:18px}}
+ .transition{{padding:12px 14px}}
+ .transition-fields{{grid-template-columns:minmax(0,1fr);gap:0}}
+ .transition-fields dt{{margin-top:8px}}
+ .topic h3{{font-size:19px}}
+}}
 /* v1's archived report: its own scoped styles, deliberately (invariant 24) */
 .v1-archive{{--ink:#16202b;--mute:#5a6a7a;--rule:#d7dee6;--band:#3a6ea5;--warn:#8a4b2a;color:var(--ink)}}
 .v1-archive .v1-title{{font-size:26px;line-height:1.2;margin:.4em 0 .3em}}
@@ -2376,77 +2914,102 @@ dialog.figure-view::backdrop{{background:rgba(24,24,27,.6)}}
 
 CHART_JS = """
 (function(){
- var D=window.__FAN__,W=960,H=380,ML=58,MR=16,MT=18,MB=34,FS=11,STEP=2;
- var n=D.hours.length,dom=D.domain;
- var svg=document.getElementById('chart');
- // Draw at the chart's rendered width, so a phone gets a phone geometry and 12 px text instead of a
- // shrunk desktop drawing. The data, controls and their behaviour are unchanged.
- function geometry(){
-  var w=Math.round(svg.getBoundingClientRect().width)||960;
-  W=Math.max(280,Math.min(960,w));
-  var narrow=W<600;
-  H=narrow?300:380;ML=narrow?44:58;MR=narrow?10:16;MT=narrow?22:18;FS=12;STEP=narrow?4:2;
-  svg.setAttribute('viewBox','0 0 '+W+' '+H);
- }
- function X(i){return ML+(W-ML-MR)*(n<2?0.5:i/(n-1));}
- function Y(v){return MT+(H-MT-MB)*(1-(v-dom[0])/(dom[1]-dom[0]));}
- function state(){
-  var lv=document.querySelector('input[name=lvl]:checked').value;
-  var sc=D.scales[parseInt(document.getElementById('scale').value,10)];
-  return {lv:lv,sc:sc};
- }
- function ticks(){
-  var span=dom[1]-dom[0],raw=span/6,mag=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10));
-  var step=[1,2,2.5,5,10].map(function(m){return m*mag;}).filter(function(s){return s>=raw;})[0]||mag*10;
-  var out=[],v=Math.ceil(dom[0]/step)*step;
-  for(;v<=dom[1];v+=step){out.push(Math.round(v*100)/100);}
-  return out;
- }
- function el(tag,attrs,text){
-  var e=document.createElementNS('http://www.w3.org/2000/svg',tag);
-  for(var k in attrs){e.setAttribute(k,attrs[k]);}
-  if(text!==undefined){e.textContent=text;}
-  return e;
- }
- function draw(){
-  geometry();
-  var s=state(),pair=D.levels[s.lv],rows=D.series[s.sc];
-  if(!pair||!rows){throw new Error('fan chart lookup miss: level '+s.lv+', scale '+s.sc);}
-  var li=D.labels.indexOf(pair[0]),hi=D.labels.indexOf(pair[1]),mi=D.labels.indexOf('p50');
-  while(svg.firstChild){svg.removeChild(svg.firstChild);}
-  ticks().forEach(function(t){
-   svg.appendChild(el('line',{x1:ML,x2:W-MR,y1:Y(t),y2:Y(t),stroke:t===0?'#9aa7b4':'#eceff3','stroke-width':t===0?1.2:1}));
-   svg.appendChild(el('text',{x:ML-8,y:Y(t)+4,'text-anchor':'end',fill:'#5a6a7a','font-size':FS},t));
-  });
-  for(var i=0;i<n;i+=STEP){
-   svg.appendChild(el('text',{x:X(i),y:H-12,'text-anchor':'middle',fill:'#5a6a7a','font-size':FS},D.hours[i]));
+ var D=window.__FAN__;
+ // One fan-chart renderer, two instances over the same precomputed replay (nothing is fetched or recomputed):
+ // v1's archived report, whose ids, colours and behaviour are unchanged, and the product documentation's replay.
+ function fan(o){
+  var W=o.maxW,H=380,ML=58,MR=16,MT=18,MB=34,FS=11,STEP=2;
+  var n=D.hours.length,dom=D.domain,svg=o.svg,c=o.colors;
+  // Draw at the chart's rendered width inside its border (clientWidth), so a phone gets a phone geometry and one
+  // drawing unit is one CSS pixel: FS is the size a reader sees, not a shrunk desktop drawing. The data, controls
+  // and their behaviour are unchanged.
+  function geometry(){
+   var w=svg.clientWidth||Math.round(svg.getBoundingClientRect().width)||o.maxW;
+   W=Math.max(240,Math.min(o.maxW,w));
+   var narrow=W<600;
+   H=narrow?300:o.maxH;ML=narrow?44:58;MR=narrow?10:16;MT=narrow?22:18;FS=12;STEP=narrow?4:2;
+   svg.setAttribute('viewBox','0 0 '+W+' '+H);
   }
-  var up=[],down=[];
-  for(var j=0;j<n;j++){up.push(X(j)+','+Y(rows[j][hi]));}
-  for(var k=n-1;k>=0;k--){down.push(X(k)+','+Y(rows[k][li]));}
-  svg.appendChild(el('polygon',{points:up.concat(down).join(' '),fill:'#3a6ea5','fill-opacity':.22,stroke:'#3a6ea5','stroke-width':1}));
-  var med=[];
-  for(var m=0;m<n;m++){med.push(X(m)+','+Y(rows[m][mi]));}
-  svg.appendChild(el('polyline',{points:med.join(' '),fill:'none',stroke:'#1b3a5c','stroke-width':2.2}));
-  if(s.sc==='1.00'){
-   var act=[];
-   for(var a=0;a<n;a++){act.push(X(a)+','+Y(D.actual[a]));}
-   svg.appendChild(el('polyline',{points:act.join(' '),fill:'none',stroke:'#b03a2e','stroke-width':1.6,'stroke-dasharray':'6 4'}));
+  function X(i){return ML+(W-ML-MR)*(n<2?0.5:i/(n-1));}
+  function Y(v){return MT+(H-MT-MB)*(1-(v-dom[0])/(dom[1]-dom[0]));}
+  function state(){
+   var lv=document.querySelector('input[name='+o.level+']:checked').value;
+   var sc=D.scales[parseInt(o.scale.value,10)];
+   return {lv:lv,sc:sc};
   }
-  svg.appendChild(el('text',{x:ML,y:MT-6,fill:'#5a6a7a','font-size':FS},
-   W<600?('EUR/MWh · local hour · '+D.delivery_day):('EUR/MWh  ·  local hour (Europe/Berlin)  ·  delivery day '+D.delivery_day)));
-  document.getElementById('scaleval').textContent='\\u00d7 '+s.sc;
-  document.getElementById('cov').textContent=window.__COV__[s.lv];
-  document.getElementById('scenario').style.display=(s.sc==='1.00')?'none':'block';
-  document.getElementById('legend-actual').style.display=(s.sc==='1.00')?'inline':'none';
+  function ticks(){
+   var span=dom[1]-dom[0],raw=span/6,mag=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10));
+   var step=[1,2,2.5,5,10].map(function(m){return m*mag;}).filter(function(s){return s>=raw;})[0]||mag*10;
+   var out=[],v=Math.ceil(dom[0]/step)*step;
+   for(;v<=dom[1];v+=step){out.push(Math.round(v*100)/100);}
+   return out;
+  }
+  function el(tag,attrs,text){
+   var e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+   for(var k in attrs){e.setAttribute(k,attrs[k]);}
+   if(text!==undefined){e.textContent=text;}
+   return e;
+  }
+  function draw(){
+   geometry();
+   var s=state(),pair=D.levels[s.lv],rows=D.series[s.sc];
+   if(!pair||!rows){throw new Error('fan chart lookup miss: level '+s.lv+', scale '+s.sc);}
+   var li=D.labels.indexOf(pair[0]),hi=D.labels.indexOf(pair[1]),mi=D.labels.indexOf('p50');
+   var root=o.group?svg.querySelector('g.plot'):svg;
+   while(root.firstChild){root.removeChild(root.firstChild);}
+   ticks().forEach(function(t){
+    root.appendChild(el('line',{x1:ML,x2:W-MR,y1:Y(t),y2:Y(t),stroke:t===0?c.zero:c.grid,'stroke-width':t===0?1.2:1}));
+    root.appendChild(el('text',{x:ML-8,y:Y(t)+4,'text-anchor':'end',fill:c.text,'font-size':FS},t));
+   });
+   for(var i=0;i<n;i+=STEP){
+    root.appendChild(el('text',{x:X(i),y:H-12,'text-anchor':'middle',fill:c.text,'font-size':FS},D.hours[i]));
+   }
+   var up=[],down=[];
+   for(var j=0;j<n;j++){up.push(X(j)+','+Y(rows[j][hi]));}
+   for(var k=n-1;k>=0;k--){down.push(X(k)+','+Y(rows[k][li]));}
+   root.appendChild(el('polygon',{points:up.concat(down).join(' '),fill:c.band,'fill-opacity':c.bandOpacity,stroke:c.bandEdge,'stroke-width':1}));
+   var med=[];
+   for(var m=0;m<n;m++){med.push(X(m)+','+Y(rows[m][mi]));}
+   root.appendChild(el('polyline',{points:med.join(' '),fill:'none',stroke:c.median,'stroke-width':c.medianWidth}));
+   if(s.sc==='1.00'){
+    var act=[];
+    for(var a=0;a<n;a++){act.push(X(a)+','+Y(D.actual[a]));}
+    root.appendChild(el('polyline',{points:act.join(' '),fill:'none',stroke:c.actual,'stroke-width':1.6,'stroke-dasharray':'6 4'}));
+   }
+   root.appendChild(el('text',{x:ML,y:MT-6,fill:c.text,'font-size':FS},
+    W<600?('EUR/MWh · local hour · '+D.delivery_day):('EUR/MWh  ·  local hour (Europe/Berlin)  ·  delivery day '+D.delivery_day)));
+   o.show(s);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name='+o.level+']'),function(r){r.addEventListener('change',draw);});
+  o.scale.addEventListener('input',draw);
+  if(o.holder){o.holder.addEventListener('toggle',function(){if(o.holder.open){draw();}});}
+  var pending=null;
+  window.addEventListener('resize',function(){clearTimeout(pending);pending=setTimeout(draw,150);});
+  draw();
  }
- Array.prototype.forEach.call(document.querySelectorAll('input[name=lvl]'),function(r){r.addEventListener('change',draw);});
- document.getElementById('scale').addEventListener('input',draw);
- var archive=document.getElementById('v1-archive');
- if(archive){archive.addEventListener('toggle',function(){if(archive.open){draw();}});}
- var pending=null;
- window.addEventListener('resize',function(){clearTimeout(pending);pending=setTimeout(draw,150);});
- draw();
+ fan({svg:document.getElementById('chart'),level:'lvl',scale:document.getElementById('scale'),
+  holder:document.getElementById('v1-archive'),maxW:960,maxH:380,group:false,
+  colors:{grid:'#eceff3',zero:'#9aa7b4',text:'#5a6a7a',band:'#3a6ea5',bandOpacity:.22,bandEdge:'#3a6ea5',
+   median:'#1b3a5c',medianWidth:2.2,actual:'#b03a2e'},
+  show:function(s){
+   document.getElementById('scaleval').textContent='\\u00d7 '+s.sc;
+   document.getElementById('cov').textContent=window.__COV__[s.lv];
+   document.getElementById('scenario').style.display=(s.sc==='1.00')?'none':'block';
+   document.getElementById('legend-actual').style.display=(s.sc==='1.00')?'inline':'none';
+  }});
+ var p=document.getElementById('p-chart');
+ if(p){fan({svg:p,level:'p-lvl',scale:document.getElementById('p-scale'),holder:document.getElementById('product-manual'),
+  maxW:760,maxH:320,group:true,
+  colors:{grid:'#E4E4E7',zero:'#71717A',text:'#52525B',band:'#475569',bandOpacity:.18,bandEdge:'#71717A',
+   median:'#475569',medianWidth:2.4,actual:'#18181B'},
+  show:function(s){
+   document.getElementById('p-scaleval').textContent=s.sc;
+   document.getElementById('p-scale').setAttribute('aria-valuetext','\\u00d7 '+s.sc);
+   var cov=document.getElementById('p-cov');
+   cov.textContent=window.__COV__[s.lv];cov.setAttribute('data-v1','holdout_coverage_'+s.lv);
+   document.getElementById('p-scenario').hidden=(s.sc==='1.00');
+   document.getElementById('p-legend-actual').style.display=(s.sc==='1.00')?'inline':'none';
+  }});}
 })();
 """
 
@@ -2922,6 +3485,14 @@ calls.</p>
 # --------------------------------------------------------------------------- assembly
 
 
+#: The page's own icon, inline (review F02): without one, a browser asks the host for /favicon.ico, a request the
+#: offline page must not make and that Pages answered with 404. A `data:` URI is part of the document; base64, so
+#: the SVG namespace inside it is not read as an address by the link gate (`scripts/check_links.py`).
+FAVICON_SVG = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' "
+               "fill='#475569'/><path d='M3 11l3-4 3 2 4-5' fill='none' stroke='#fff' stroke-width='1.8' "
+               "stroke-linecap='round' stroke-linejoin='round'/></svg>")
+FAVICON = "data:image/svg+xml;base64," + base64.b64encode(FAVICON_SVG.encode()).decode()
+
 TITLE = "Forecasting tomorrow's electricity prices · DE-LU day-ahead research"
 DESCRIPTION = (
     "The released day-ahead electricity price forecast for Germany and Luxembourg, and how successive "
@@ -2960,6 +3531,7 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(TITLE)}</title>
 <meta name="description" content="{attr(DESCRIPTION)}">
+<link rel="icon" href="{attr(FAVICON)}">
 <style>{css()}</style>
 </head>
 <body>
@@ -2969,8 +3541,9 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
 {rail(generations)}
 <main id="main">
 {opening(C, payload)}
-{journey()}
+{product_section(C, payload)}
 {results()}
+{journey()}
 <section class="section chapters" id="chapters" aria-labelledby="chapters-h">
  <h2 id="chapters-h">How the research improved, newest first</h2>
  {jump}

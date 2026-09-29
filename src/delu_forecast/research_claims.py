@@ -119,12 +119,15 @@ BLOCKS: tuple[Block, ...] = (
     # ---- the comparison: the change against the comparator, and the main caveat (§1 i) ---------------
     _block("comparison.finding", "P24", f"""{{g:{_CUR.id}.version}} against {{g:{_CMP.id}.version}}, as a share of
            {{g:{_CMP.id}.version}}'s error scores: {{r:derived.change.{_CUR.id}.S_MAE}}
-           {{r:derived.change.{_CUR.id}.S_MAE|ci}} (point) and {{r:derived.change.{_CUR.id}.S_WIS}}
-           {{r:derived.change.{_CUR.id}.S_WIS|ci}} (interval), with {{s:level:95%}} confidence intervals.""",
-           PAGE, README),
+           {{r:derived.change.{_CUR.id}.S_MAE|ci}} on the point-error score and {{r:derived.change.{_CUR.id}.S_WIS}}
+           {{r:derived.change.{_CUR.id}.S_WIS|ci}} on the interval score, with {{s:level:95%}} confidence
+           intervals.""", PAGE, README),
     _block("comparison.caveat", "P24", """Development evidence, not a test on new data. Meeting the targets is a
            development diagnostic, not a product qualification.""", PAGE, README),
-    _block("comparison.sub", "P07", """Seven policies · the same {r:cp20.metrics.B0.pooled.n_hours} historical hours ·
+    # The visible fairness population (plan §7.9, review F04): hours and the days they fall on, together, from the
+    # same committed row; the row count comes from the registry's comparison, never typed.
+    _block("comparison.sub", "P07", f"""{{s:count:{len(G.comparison_rows())}}} policies · the same
+           {{r:cp20.metrics.B0.pooled.n_hours}} historical hours over {{r:cp20.metrics.B0.pooled.n_days}} days ·
            error scores averaged with equal weight over five test periods · lower is better"""),
     _block("comparison.howto", "C68", """Each score divides a model's error by that of a simple similar-day forecast in the
            same period, which therefore scores {r:cp20.metrics.B0.equal_fold.S_MAE|p=3}. The interval score accounts
@@ -141,7 +144,8 @@ BLOCKS: tuple[Block, ...] = (
            price crisis. These are development results, not a test on new data."""),
     # README-only: the page states the shared hours in the comparison's subtitle.
     _block("overview.fairness.readme", "P08", """Every policy was evaluated on the same {r:cp20.metrics.B0.pooled.n_hours}
-           historical hours across five test periods (folds); the third covers the {s:date:2022} price crisis. Scores are
+           historical hours over {r:cp20.metrics.B0.pooled.n_days} days, across five test periods (folds); the third
+           covers the {s:date:2022} price crisis. Scores are
            normalized within each period, then averaged with equal weight. These are development results, not a test on
            new data.""", README),
     _block("overview.fairness.detail", "P08", """Paired intervals come from a moving-block bootstrap with seed
@@ -164,10 +168,6 @@ BLOCKS: tuple[Block, ...] = (
            missed outcomes. MAE uses the emitted median."""),
     # ---- the v3 chapter (the chapter grammar, standard §6) ------------------------------------------
     _block("v3.question", "P29", """Do weather forecasts available before the auction improve {g:v2.version}?"""),
-    # README-only: the page shows the inputs in its feature diagram, beside a one-line summary.
-    _block("v3.change", "C65", """{g:v2.version} used price history, the load forecast and calendar inputs.
-           {g:v3.version} added forecast wind speed and solar radiation available before the auction, while keeping the
-           same underlying modeling setup for the comparison.""", README),
     _block("v3.change.short", "C65", """{g:v3.version} adds weather forecasts available before the auction to
            {g:v2.version}'s inputs; the modelling setup is otherwise unchanged."""),
     _block("v3.chart_headline", "C71", """Weather inputs lowered both error scores against {g:v2.version}."""),
@@ -237,7 +237,7 @@ BLOCKS: tuple[Block, ...] = (
            insufficient."""),
     _block("v2.change", "C10", """{g:v2.version} combines two LEAR forecasts (LEAR: a regularized linear model fitted for
            each hour) with intervals that account for the hour of the day. A control uses the same blend with pooled
-           intervals, so the interval methods can be compared.""", PAGE, README),
+           intervals, so the interval methods can be compared."""),
     _block("v2.chart_headline", "C37", """{g:v2.version} lowered both error scores against {g:daily-lear.inline}."""),
     _block("v2.reading", "C34", """Against {g:daily-lear.inline} both confidence intervals lie below zero; against its
            pooled-interval control only the interval score improved, and the point-error interval ends just above
@@ -297,6 +297,204 @@ BLOCKS: tuple[Block, ...] = (
            crisis window the bias was {r:cp15.peak.B1.bias|p=1} EUR/MWh, and the daily mean-level error was
            {r:cp15.peak.B1.daily_mean_level_MAE|p=1} EUR/MWh against a within-day shape error of
            {r:cp15.peak.B1.within_day_shape_MAE|p=1} EUR/MWh.""", PAGE, README),
+    # ---- adopted transitions (PUBLISH_RULES 1.0 A3): one summary per adopted generation after the first ---------
+    _block("transition.v2-v3.title", "P35", """From {g:v2.version} to {g:v3.version}: adding weather forecasts""",
+           PAGE, README),
+    _block("transition.v2-v3.change", "P35", """{g:v3.version} kept {g:v2.version}'s blend of two LEAR forecasts and
+           its hour-aware intervals, and added three weather forecasts available before the auction: wind speed at
+           {s:height:10 m} and {s:height:100 m} and solar radiation, each with a missing-data indicator.""",
+           PAGE, README),
+    _block("transition.v2-v3.comparator", "P35", """Set in advance: {g:v2.version} itself, on identical hours, so the
+           protocol's comparator is also the predecessor and the comparison is direct.""", PAGE, README),
+    _block("transition.v2-v3.result", "P35", """Point-error score {r:derived.change.v3.S_MAE}
+           {r:derived.change.v3.S_MAE|ci} and interval score {r:derived.change.v3.S_WIS}
+           {r:derived.change.v3.S_WIS|ci}, as a share of {g:v2.version}'s score, with {s:level:95%} confidence
+           intervals; development evidence, not a test on new data.""", PAGE, README),
+    _block("transition.v2-v3.limits", "P35", """The three weather inputs were tested together, so no single input's
+           contribution is isolated; within the {s:date:2022} crisis period the point-error gain is not demonstrated
+           on its own.""", PAGE),
+    _block("transition.v1-v2.title", "P36", """From {g:v1.version} to {g:v2.version}: a blended linear model with
+           hour-aware intervals""", PAGE, README),
+    _block("transition.v1-v2.change", "P36", """After {g:v1.version} failed in the {s:date:2022} crisis,
+           {g:v2.version} replaced its LightGBM quantile model and fixed-window calibration with an equal blend of
+           two LEAR forecasts refitted every day, and intervals built from recent errors by hour of the day.""",
+           PAGE, README),
+    _block("transition.v1-v2.comparator", "P36", """Set in advance: {g:daily-lear.inline}, the strongest benchmark,
+           not the predecessor {g:v1.version}; a pooled-interval control isolated the interval method.""",
+           PAGE, README),
+    _block("transition.v1-v2.result", "P36", """Against {g:daily-lear.inline}: point-error score
+           {r:derived.change.v2.S_MAE} {r:derived.change.v2.S_MAE|ci} and interval score {r:derived.change.v2.S_WIS}
+           {r:derived.change.v2.S_WIS|ci}, as a share of {g:daily-lear.inline}'s score, with {s:level:95%}
+           confidence intervals; development evidence, not a test on new data.""", PAGE, README),
+    _block("transition.v1-v2.predecessor", "P36", """No paired interval for {g:v2.version} against {g:v1.version}
+           exists: the protocol did not test that pair. As descriptive context on the same development hours,
+           without an interval, the point-error scores are {r:cp20.metrics.B1.equal_fold.S_MAE|p=3} for
+           {g:v1.version} and {r:cp20.metrics.H0.equal_fold.S_MAE|p=3} for {g:v2.version}, and the interval scores
+           {r:cp20.metrics.B1.equal_fold.S_WIS|p=3} and {r:cp20.metrics.H0.equal_fold.S_WIS|p=3}.
+           {g:v1.version}'s one-shot holdout covers a different window and evidence class and is not compared.""",
+           PAGE, README),
+    _block("transition.v1-v2.limits", "P36", """The gain over {g:daily-lear.inline} is not attributed to hour-aware
+           intervals alone, the blend and the interval layer are not separated, and against its pooled-interval
+           control there is no demonstrated joint preference.""", PAGE),
+    # ---- the released product, documented (PUBLISH_RULES 1.0 §5 and A4): the twelve subjects, for the model the
+    # registry names as released. Each block states which model, output and rows its evidence describes.
+    _block("product.lede", "P37", """The released model, {g:released.name}, topic by topic: the artifact its one-shot
+           test evaluated and the demo computes.""", PAGE, README),
+    _block("product.data.target", "P38", """**What it forecasts.** The German–Luxembourg day-ahead price of each
+           hour of the next delivery day, in EUR/MWh: {s:hours:24} values on most days and {s:hours:23} or
+           {s:hours:25} on daylight-saving transition days, issued together as one curve before the
+           {s:time:12:00 CET} auction gate."""),
+    _block("product.data.sources", "P38", """**Where the data comes from.** One committed hourly snapshot, from
+           {s:date:2019-01-01} to {v1:snapshot_cutoff}, of the day-ahead price and the day-ahead load forecast,
+           pinned by its {s:name:SHA-256} hash. It was pulled from SMARD.de, which republishes the ENTSO-E series, and a sample
+           spanning every regime agreed with the ENTSO-E Transparency Platform to the cent. {v1:attribution}"""),
+    _block("product.data.cutoff", "P38", """**The information cutoff.** Every price-derived input uses only prices
+           of delivery days before the forecast day, and rolling price statistics are frozen at the day before. The
+           day-ahead wind and solar forecast is published after the gate, so the model never uses it. That the load
+           forecast exists before the gate is an assumption, not a measurement."""),
+    _block("product.data.windows", "P38", """**Fitting, calibration and test data.** The model was fitted on data up
+           to {v1:raw_model_fit_cutoff}, calibrated once on {v1:final_calibration_window} and tested once on
+           {v1:holdout_window}. The demo and this page replay the committed snapshot; no live data feed is read."""),
+    _block("product.data.preprocessing", "P38", """**Preprocessing.** A quarter-hour series becomes an hour only from
+           four complete quarter-hours; from {s:date:2025-10-01} the hourly price is the mean of four quarter-hour
+           prices. The price is not log-transformed, because it is often negative."""),
+    _block("product.regimes.periods", "P39", """Three regimes shape the development period: before
+           {s:date:2021-09-01}, the energy crisis from {s:date:2021-09-01} to {s:date:2022-12-31}, and from
+           {s:date:2023-01-01} a market with frequent negative prices. The development hours split into
+           {r:cp2.regime.pre_crisis.n_obs}, {r:cp2.regime.crisis.n_obs} and {r:cp2.regime.post_crisis.n_obs} hours
+           across them; {r:cp2.regime.negative_price.n_obs} hours, on {r:cp2.regime.negative_price.n_days} days, had a
+           negative price."""),
+    _block("product.regimes.why", "P39", """Why it matters: the model learns from calm, crisis and negative-price
+           periods together, so its errors and interval coverage are reported per regime, and the calibration's
+           assumption that recent errors resemble future ones breaks when the regime shifts. {v1:floor_change}"""),
+    _block("product.inputs.catalog", "P40", """{g:released.version} uses {v1:champion_features} inputs, a catalog
+           frozen before fitting: calendar, holiday and seasonal features; two date-based regime flags; the
+           day-ahead load forecast for the hour and for the day; the price of the same hour one, two and seven days
+           earlier; rolling price statistics over the previous week and month; and a weekly count of negative-price
+           hours."""),
+    _block("product.inputs.excluded", "P40", """**What was left out, and why.** The one candidate domain input, a
+           residual-load proxy built from actual wind and solar generation, had to lower the pooled pinball loss in a
+           comparison fixed before fitting; it did not ({v1:catalog_pct}). The day-ahead wind and solar forecast is
+           excluded because it is published after the gate; a separate benchmark measured what it would have been
+           worth ({v1:benchmark_pct})."""),
+    _block("product.inputs.seasonal", "P40", """**Why hour-of-day and day-of-week inputs.** The price spectrum shows
+           pronounced cycles at {s:period:24} and {s:period:168} hours, with a {s:period:12}-hour harmonic, and their
+           amplitude changed in the crisis; the calendar inputs follow that structure rather than assuming it."""),
+    _block("product.validation.design", "P41", """**Before release.** Five development folds of
+           {s:days:90} days each, spanning all three regimes, were scored walk-forward: each fold's model was fitted
+           on earlier data only, with a gap of one delivery day before its test block. The similar-day naive, a
+           {s:hours:168}-hour seasonal naive and ridge regression were scored on the same rows. The folds hold
+           {r:cp2.regime.all.n_obs} hours on {r:cp2.regime.all.n_days} days, the same hours the research comparison
+           uses."""),
+    _block("product.validation.holdout", "P41", """**The one-shot test.** After every choice was frozen, the model
+           was fitted once, calibrated once on {v1:final_calibration_window} and frozen; only then was the
+           {v1:holdout_days}-day holdout, {v1:holdout_window}, opened and scored, once. {v1:holdout_dm_label}"""),
+    _block("product.validation.classes", "P41", """**Evidence classes.** The development folds also chose the input
+           catalog, so their results are post-selection evidence; the holdout is the only test specified in advance;
+           prospective live evidence is a third class, reserved for a future final model."""),
+    _block("product.validation.leakage", "P41", """**Leakage checks, on the browser path.**
+           {v1:wasm_availability_statement} The model's input schema also refuses the post-gate forecast."""),
+    _block("product.results.coverage", "P42", """Its prediction intervals covered {v1:holdout_coverage_50},
+           {v1:holdout_coverage_80} and {v1:holdout_coverage_95} of the holdout's hours at the
+           {s:level:50, 80 and 95%} levels."""),
+    _block("product.results.shared", "P42", """In the shared development comparison, whose error scores divide by the
+           naive's error in each period, {g:v1.version}'s development replay scores
+           {r:cp20.metrics.B1.equal_fold.S_MAE|p=3} on the point-error score and
+           {r:cp20.metrics.B1.equal_fold.S_WIS|p=3} on the interval score, where the naive scores
+           {r:cp20.metrics.B0.equal_fold.S_MAE|p=3}; lower is better."""),
+    _block("product.attribution.headline", "P43", """The price of the same hour one day earlier dominates the median
+           forecast."""),
+    _block("product.attribution.reading", "P43", """The weekly lag, the rolling weekly price quantiles, the two-day lag
+           and the day of the week follow, close to one another."""),
+    _block("product.reliability.headline", "P46", """Calibration raised coverage, which stayed below nominal at every
+           level, on the holdout and on the development folds."""),
+    _block("product.attribution.identity", "P43", """**Which model and rows.** These are the released artifact's own
+           SHAP values for its median head on fold {s:fold:5}'s test block, {s:date:2026-01-08} to
+           {s:date:2026-04-07}: rows it was fitted on, so an in-sample diagnostic. Fold {s:fold:5}'s development
+           model, explained out of sample on the same rows, ranks the inputs almost identically (Spearman rank
+           correlation {r:cp2.diagnostics.frozen_vs_fold5.rank_spearman};
+           {r:cp2.diagnostics.frozen_vs_fold5.top10_overlap} of the top {s:count:10} shared), but agreement does not
+           make them the same evidence."""),
+    _block("product.attribution.scope", "P43", """SHAP on the median explains its central tendency, not the interval
+           width, and it is not a test of incremental value: that was the comparison fixed before fitting, in the
+           inputs topic."""),
+    _block("product.importance.permutation", "P44", """**Permutation importance** shuffles one input at a time and
+           measures how much the median forecast's MAE rises: here for fold {s:fold:5}'s development model on its
+           own test block, out of sample. {r:cp2.diagnostics.permutation.1.feature} adds
+           {r:cp2.diagnostics.permutation.1.importance_mean_mae_increase|p=1} EUR/MWh,
+           {r:cp2.diagnostics.permutation.2.feature} {r:cp2.diagnostics.permutation.2.importance_mean_mae_increase|p=1}
+           and {r:cp2.diagnostics.permutation.3.feature}
+           {r:cp2.diagnostics.permutation.3.importance_mean_mae_increase|p=1}. Its ranking agrees with SHAP's at the
+           top and differs in the middle (Spearman rank correlation
+           {r:cp2.diagnostics.shap_vs_permutation.rank_spearman})."""),
+    _block("product.importance.limits", "P44", """Neither ranking measures incremental value or causation; the only
+           incremental-value test was the comparison fixed before fitting."""),
+    _block("product.importance.sensitivity", "P44", """**Scenario sensitivity.** The load-forecast control in the
+           replay and the demo multiplies the day's load forecast and holds every other input fixed.
+           {v1:sensitivity_probe_label}"""),
+    _block("product.failures.reading", "P45", """Errors and coverage are worst in the crisis: MAE
+           {r:cp2.regime.crisis.mae|p=1} EUR/MWh [{r:cp2.regime.crisis.mae_ci95_low|p=1},
+           {r:cp2.regime.crisis.mae_ci95_high|p=1}], with the {s:level:95%} interval covering
+           {r:cp2.regime.crisis.coverage_95|p=3} of {r:cp2.regime.crisis.n_obs} hours, against
+           {r:cp2.regime.pre_crisis.mae|p=1} EUR/MWh and {r:cp2.regime.pre_crisis.coverage_95|p=3} before it and
+           {r:cp2.regime.post_crisis.mae|p=1} EUR/MWh and {r:cp2.regime.post_crisis.coverage_95|p=3} after. Over the
+           August {s:date:2022} peak weeks the {s:level:95%} interval covered
+           {r:cp2.regime.august_2022_peak.coverage_95|p=3} of {r:cp2.regime.august_2022_peak.n_obs} hours; on
+           negative-price hours, {r:cp2.regime.negative_price.coverage_95|p=3}."""),
+    _block("product.failures.identity", "P45", """**Which model.** These strata come from the five development folds,
+           each scored by the model fitted for that fold and calibrated on its own window, not by the frozen
+           artifact, whose holdout covers only the most recent regime. Thin subsets carry day-block bootstrap
+           {s:level:95%} confidence intervals and are read qualitatively. The crisis failure's mechanism is in the
+           limitations: shrinkage toward the training price level, with calibration thresholds estimated at a lower
+           level."""),
+    _block("product.reliability.stages", "P46", """The intervals come from nine quantile heads, then conformalized
+           quantile regression (CQR), which shifts them by thresholds calibrated on a recent window, then an
+           isotonic step that keeps the quantiles in order. On the one-shot holdout the {s:level:95%} interval
+           covered {r:cp2.holdout.coverage.raw.95} of hours from the raw heads, {r:cp2.holdout.coverage.post_cqr.95}
+           after CQR and {r:cp2.holdout.coverage.final.95} after the isotonic step; on the development folds,
+           {r:cp2.reliability.raw.95}, {r:cp2.reliability.post_cqr.95} and {r:cp2.reliability.final.95}."""),
+    _block("product.reliability.width", "P46", """Coverage is read with width: over the development hours the final
+           intervals averaged {r:cp20.metrics.B1.pooled.mean_width50|p=1},
+           {r:cp20.metrics.B1.pooled.mean_width80|p=1} and {r:cp20.metrics.B1.pooled.mean_width95|p=1} EUR/MWh at
+           the {s:level:50, 80 and 95%} levels. The holdout report records coverage but not width."""),
+    _block("product.reliability.crossings", "P46", """The one hard gate was correctness, not a favourable number:
+           adjacent quantiles crossed {v1:crossings_development_raw} times from the raw heads and
+           {v1:crossings_development_post_cqr} times after CQR on the development folds, and
+           {v1:crossings_development_final} times after the isotonic step; {v1:crossings_holdout_final} on the
+           holdout."""),
+    _block("product.reliability.guarantee", "P46", """CQR's finite-sample marginal guarantee applies to its output
+           before the isotonic step, and only when past and future errors are exchangeable; regime shifts break that,
+           so every coverage figure here is empirical."""),
+    _block("product.forecast.read", "P47", """**How to read it.** The line is the median forecast for each local
+           hour; the band is the prediction interval at the level you choose; the dashed line is the price that
+           cleared, an outcome that was never an input. {v1:replay_label}"""),
+    _block("product.forecast.controls", "P47", """**The controls.** The level selector reads other quantiles of the
+           same forecast, and the frozen model's empirical coverage at that level over the holdout is shown beside
+           the chart. The load-forecast scenario multiplies the day's load forecast with every other input held
+           fixed, and hides the cleared price, which belongs to the unperturbed day."""),
+    _block("product.forecast.demo", "P47", """**Computed in your browser.** The demo forecasts historical delivery days
+           with the released model's own boosters, so a Python runtime and the model download first, about
+           {v1:wasm_cold_load_mb} MB on a first visit; on a committed fixture of {v1:wasm_fixture_days} delivery days
+           its output equals the frozen artifact's bitwise. Change the interval level or the load scenario there as
+           here."""),
+    _block("product.limits.summary", "P48", """The main limits, each in full below: the development results are
+           post-selection evidence; the intervals under-cover when the regime shifts, severely in the
+           {s:date:2022} crisis; the model is frozen, fitted {v1:staleness_days} delivery days before its snapshot
+           ends; the load forecast's availability before the gate is an assumption, not a measurement; and it is a
+           portfolio artifact, not an operations system."""),
+    _block("product.run.local", "P49", """**Run the released model on your machine.** Install the pinned
+           dependencies with {s:command:uv sync}, then
+           {s:command:uv run python predict_next_day.py --level 80 --self-check} forecasts a delivery day offline
+           from the bundled snapshot and re-proves the gate boundary."""),
+    _block("product.run.identity", "P49", """**Check its identity.** The artifact fingerprint is
+           {v1:champion_fingerprint}, the same value in the model card, the one-shot holdout report and the
+           registered model's alias; the snapshot's {s:name:SHA-256} hash is {v1:snapshot_sha256}."""),
+    _block("product.run.demo", "P49", """**Check the browser computation.** {s:command:make wasm} rebuilds the browser
+           payload from the committed model, proves its output equal to the frozen artifact's on the fixture and
+           exports the demo; {s:command:uv run pytest tests/test_22_wasm_equivalence.py -q} reruns that proof
+           alone."""),
+    _block("product.run.historical", "P49", """The archived report's container instructions are historical: the demo
+           is a static Hugging Face Space that computes in the browser, and publishing it is the Owner's action."""),
 )
 
 BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
@@ -314,11 +512,15 @@ CHART_CLAIMS: dict[str, str] = {
     "v2.chart2": "C37",
     "preview": "P05",
     "targets": "P25",
+    "product.shap": "P43",
+    "product.coverage": "P46",
+    "product.forecast": "P47",
 }
 
 #: Claims bound outside a block: single chart rows where a chart mixes claims (v2's three
 #: contrasts), the target verdicts in the comparison, and the demo's startup figure (P13).
-ROW_CLAIMS: tuple[str, ...] = ("C33", "C34", "C38", "C70", "P13", "P16", "P20", "P22", "P23", "P28")
+ROW_CLAIMS: tuple[str, ...] = ("C33", "C34", "C38", "C70", "P13", "P16", "P20", "P22", "P23", "P28",
+                               "P33", "P34", "P45", "P48", "P50")
 
 #: README research blocks (plan §9.4), each rendered from the same template as the page.
 README_BLOCKS: tuple[str, ...] = tuple(block.key for block in BLOCKS if README in block.surfaces)
@@ -342,6 +544,8 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
             raise ClaimError(f"the two targets' margins differ: {sorted(margins)}")
         benchmark = D.get("derived.rule.margin.S_MAE").subject
         base = f"derived.criteria.{entry.id}"
+        # PUBLISH_RULES 1.0 A1: every headline value names its metric beside it, so no later sentence, chart
+        # or disclosure is needed to tell which number is which.
         if D.get(f"{base}.verdict").value == "met":
             first = D.get(f"{base}.first_to_meet").value == "yes"
             tail = ("the first of {r:%s.tested} policies tested to meet them" % base if first
@@ -349,20 +553,21 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
             template = (
                 "Met both accuracy targets set before the experiments: error scores at least "
                 "{r:derived.rule.margin.S_MAE} below the strongest benchmark, {g:%s.inline} "
-                "({g:%s.version}: {r:%s.distance.S_MAE|abs} and {r:%s.distance.S_WIS|abs} below; %s)."
+                "({g:%s.version}: {r:%s.distance.S_MAE|abs} below on the point-error score and "
+                "{r:%s.distance.S_WIS|abs} below on the interval score; %s)."
                 % (benchmark, entry.id, base, base, tail))
         else:
             template = (
                 "Did not meet the accuracy targets set before the experiments: error scores at least "
                 "{r:derived.rule.margin.S_MAE} below the strongest benchmark, {g:%s.inline} "
-                "({g:%s.version}: {r:%s.distance.S_MAE} and {r:%s.distance.S_WIS} against it; "
-                "{r:%s.tested} policies tested)." % (benchmark, entry.id, base, base, base))
+                "({g:%s.version}: {r:%s.distance.S_MAE} on the point-error score and {r:%s.distance.S_WIS} on "
+                "the interval score, against it; {r:%s.tested} policies tested)." % (benchmark, entry.id, base, base, base))
         return "P20", template
     change = f"derived.change.{entry.id}"
     comparator = G.get(entry.comparator)
     return "P20", (
-        "Against {g:%s.version}, the error scores changed by {r:%s.S_MAE} {r:%s.S_MAE|ci} and "
-        "{r:%s.S_WIS} {r:%s.S_WIS|ci}, as a share of {g:%s.version}'s score."
+        "Against {g:%s.version}, the point-error score changed by {r:%s.S_MAE} {r:%s.S_MAE|ci} and the "
+        "interval score by {r:%s.S_WIS} {r:%s.S_WIS|ci}, as a share of {g:%s.version}'s score."
         % (comparator.id, change, change, change, change, comparator.id))
 
 
@@ -383,6 +588,46 @@ def target_sentence(target: str = "html") -> str:
     else:
         template += "{g:%s.version} did not meet them." % entry.id
     return render_template("P25", template, target)
+
+
+def _tested(entry: G.Entry) -> bool:
+    return f"derived.criteria.{entry.id}.verdict" in D.records()
+
+
+def census_sentence(target: str = "html") -> str:
+    """The headline's N and the comparison's rows are different counts (PUBLISH_RULES 1.0 §3.3; plan §5.2): said
+    where they meet, with both derived -- N from the decision records, the rows from the registry's comparison."""
+    rows = G.comparison_rows()
+    tested = [entry for entry in rows if _tested(entry)]
+    references = []
+    for entry in rows:
+        if entry in tested:
+            continue
+        if entry.version:
+            references.append("{g:%s.version}'s development replay" % entry.id)
+        else:  # the normalizer reads "the similar-day naive"; a named benchmark keeps its bare name
+            references.append(("the " if entry.comparator is None else "") + "{g:%s.inline}" % entry.id)
+    names = ", ".join(references[:-1]) + " and " + references[-1] if len(references) > 1 else "".join(references)
+    template = ("The chart's {s:count:%d} rows are not that census: {s:count:%d} of them were tested against the "
+                "targets, and the others are references that never were: %s." % (len(rows), len(tested), names))
+    return render_template("P33", template, target)
+
+
+def census_detail(target: str = "html") -> str:
+    """The exact census behind N, by decision date (plan §5.2): every identity tested against the targets, once."""
+    subjects = sorted({record.subject for record in D.records().values() if record.kind == "verdict"},
+                      key=lambda ident: (G.first_status(G.get(ident)).date, G.entries().index(G.get(ident))))
+    groups: dict[str, list[str]] = {}
+    for ident in subjects:
+        entry = G.get(ident)
+        name = "{g:%s.name}" % ident if entry.version else "{s:name:%s}" % entry.name
+        groups.setdefault(G.first_status(entry).date, []).append(name)
+    # Names can carry commas ("Normalized component mean, variant"), so a semicolon separates them.
+    parts = ["Decided {s:date:%s}: %s." % (day, "; ".join(names)) for day, names in groups.items()]
+    current = G.current_generation()
+    template = ("**The {r:derived.criteria.%s.tested} policies tested against the targets**, each identity counted "
+                "once, by decision date. %s" % (current.id, " ".join(parts)))
+    return render_template("P33", template, target)
 
 
 def headline(target: str = "html") -> str:
@@ -742,6 +987,8 @@ __all__ = [
     "stale_findings",
     "structural",
     "target_sentence",
+    "census_sentence",
+    "census_detail",
     "headline",
     "headline_template",
     "svg_binding",

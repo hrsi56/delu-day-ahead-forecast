@@ -77,7 +77,8 @@ def model_lines(pages_url: str, index: Path = MLFLOW_INDEX) -> list[str]:
     if route:
         links.append(f"[the `delu-generations` MLflow experiment]({route})")
     return [f"**Model: {released.name}.** {G.status_sentence(released)} {G.release_sentence()}",
-            f"Research since {released.version}: " + " and ".join(links) + "."]
+            f"Research since {released.version}: " + " and ".join(links) + ".",
+            f"How the released model works, topic by topic: [the report's product documentation]({pages_url}#product)."]
 
 
 def model_line(pages_url: str, index: Path = MLFLOW_INDEX) -> str:

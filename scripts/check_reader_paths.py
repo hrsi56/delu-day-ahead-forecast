@@ -55,6 +55,13 @@ def _utc() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def _url(target: str) -> str:
+    """A local file becomes a file: URI; an http(s) address is used as given, so the same checks run against a
+    local server or the public site (PUBLISH_RULES 1.0 A6). Browser-made requests such as a favicon happen over
+    HTTP only, so a release record states which of the two it saw."""
+    return target if "://" in target else Path(target).resolve().as_uri()
+
+
 def _launch(playwright, engine: str):
     if engine == "chrome":
         return playwright.chromium.launch(channel="chrome", headless=True)
@@ -206,17 +213,18 @@ def probe_demo(playwright, engine: str, width: int, height: int, url: str, timeo
 MEASURE_JS = """
 () => {
   const doc = document.documentElement;
-  const texts = [...document.querySelectorAll('.chart svg text, svg#chart text')].filter(t => {
+  const texts = [...document.querySelectorAll('.chart svg text, svg#chart text, svg#p-chart text')].filter(t => {
     const svg = t.closest('svg'); const box = t.getBoundingClientRect();
     return svg && getComputedStyle(svg).display !== 'none' && box.width > 0 && box.height > 0;
   });
   let smallest = null, where = null;
   for (const t of texts) {
     const svg = t.closest('svg');
-    const scale = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
+    const m = t.getScreenCTM();  // the size a reader sees, border and viewBox scale included
+    const scale = m ? Math.hypot(m.a, m.b) : svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
     const size = parseFloat(t.getAttribute('font-size') || '13') * scale;
     if (smallest === null || size < smallest) {
-      smallest = size; where = svg.id === 'chart' ? 'v1-replay' : svg.dataset.chart + ':' + svg.dataset.variant; }
+      smallest = size; where = svg.id === 'chart' ? 'v1-replay' : svg.id === 'p-chart' ? 'product-replay' : svg.dataset.chart + ':' + svg.dataset.variant; }
   }
   const overflow = [...document.querySelectorAll('body *')].filter(e => {
     const r = e.getBoundingClientRect(); return r.right > doc.clientWidth + 1 && !e.closest('.scroll, pre');
@@ -262,9 +270,11 @@ CHART_JS = """
     const sb = svg.getBoundingClientRect();
     const vb = svg.viewBox.baseVal && svg.viewBox.baseVal.width ? svg.viewBox.baseVal.width : sb.width;
     const boxes = [...svg.querySelectorAll('text')].filter(t => t.textContent.trim()).map(t => {
-      const b = t.getBoundingClientRect();
+      const b = t.getBoundingClientRect(), m = t.getScreenCTM();
+      // the size a reader sees: the text's own screen transform includes the viewBox scale and the chart's border
+      const scale = m ? Math.hypot(m.a, m.b) : sb.width / vb;
       return {t: t.textContent.trim().slice(0, 40), x0: b.left, x1: b.right, y0: b.top, y1: b.bottom,
-              px: parseFloat(t.getAttribute('font-size') || '13') * sb.width / vb};
+              px: parseFloat(t.getAttribute('font-size') || '13') * scale};
     });
     out.texts += boxes.length;
     for (const b of boxes) {
@@ -328,7 +338,7 @@ NONTEXT_JS = r"""
   const ratio = v => { const a = lum(v), b = 1; return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); };
   const decorative = new Set(['228,228,231', '255,255,255']);
   const out = {checked: 0, below: []};
-  for (const el of document.querySelectorAll('.chart svg *, svg#chart *')) {
+  for (const el of document.querySelectorAll('.chart svg *, svg#chart *, svg#p-chart *')) {
     if (!['rect', 'circle', 'polygon', 'polyline', 'line', 'path'].includes(el.tagName)) continue;
     if (el.closest('[aria-hidden="true"]')) continue;
     const r = el.getBoundingClientRect(); if (!r.width && !r.height) continue;
@@ -391,7 +401,7 @@ FOCUS_JS = r"""
 def a11y(playwright, engine: str, target: str) -> dict:
     """The plan §11.3 report checklist, measured: zoom and reflow, contrast, keyboard and touch."""
     browser = _launch(playwright, engine)
-    url = Path(target).resolve().as_uri()
+    url = _url(target)
     record: dict = {"engine": engine, "browser_version": browser.version, "page": target}
 
     def overflow(page) -> int:
@@ -458,7 +468,7 @@ def a11y(playwright, engine: str, target: str) -> dict:
 def charts(playwright, target: str, out: Path) -> dict:
     """Every chart at 1,440/390/360/320 px, closed and with every disclosure open (the Owner's D1 review)."""
     browser = _launch(playwright, "chrome")
-    url = Path(target).resolve().as_uri()
+    url = _url(target)
     results: dict = {}
     for width, height, scale in ((1440, 900, 1), (390, 844, 2), (360, 780, 2), (320, 640, 2)):
         context = browser.new_context(viewport={"width": width, "height": height}, device_scale_factor=scale)
@@ -471,7 +481,8 @@ def charts(playwright, target: str, out: Path) -> dict:
                 page.wait_for_timeout(500)
             targets = [("preview", page.locator(".preview.panel").first)]
             targets += [(h.get_attribute("data-chart-id"), h) for h in page.locator("div.chart[data-chart-id]").all()]
-            targets += [("v1-replay", page.locator("svg#chart")), ("v1-replay-controls", page.locator("#v1-archive .controls"))]
+            targets += [("v1-replay", page.locator("svg#chart")), ("v1-replay-controls", page.locator("#v1-archive .controls")),
+                        ("product-replay", page.locator("svg#p-chart")), ("product-replay-controls", page.locator(".replay-controls"))]
             for name, locator in targets:
                 if not locator.is_visible():
                     continue
@@ -511,16 +522,25 @@ LANDMARKS_JS = """() => { const y = s => { const e = document.querySelector(s);
           page_height: document.documentElement.scrollHeight}; }"""
 
 REPLAY_JS = """() => { const svg = document.getElementById('chart'), box = svg.getBoundingClientRect();
-  const sizes = [...svg.querySelectorAll('text')].map(t => parseFloat(t.getAttribute('font-size')) * box.width / svg.viewBox.baseVal.width);
+  const sizes = [...svg.querySelectorAll('text')].map(t => { const m = t.getScreenCTM();
+    return parseFloat(t.getAttribute('font-size')) * (m ? Math.hypot(m.a, m.b) : box.width / svg.viewBox.baseVal.width); });
   return {archive_open: document.getElementById('v1-archive').open, hash: location.hash,
           chart_width_px: Math.round(box.width), viewbox_width: svg.viewBox.baseVal.width,
           smallest_text_px: Math.round(Math.min(...sizes) * 100) / 100}; }"""
 
 
+PRODUCT_REPLAY_JS = """() => { const svg = document.getElementById('p-chart'), box = svg.getBoundingClientRect();
+  const sizes = [...svg.querySelectorAll('g.plot text')].map(t => { const m = t.getScreenCTM();
+    return parseFloat(t.getAttribute('font-size')) * (m ? Math.hypot(m.a, m.b) : box.width / svg.viewBox.baseVal.width); });
+  return {manual_open: document.getElementById('product-manual').open, hash: location.hash,
+          chart_width_px: Math.round(box.width), viewbox_width: svg.viewBox.baseVal.width, marks: svg.querySelectorAll('g.plot *').length,
+          smallest_text_px: sizes.length ? Math.round(Math.min(...sizes) * 100) / 100 : null}; }"""
+
+
 def route(playwright, target: str, out: Path) -> dict:
     """The preview-to-replay route on phones, the archive's own Results link, and landmark positions."""
     browser = _launch(playwright, "chrome")
-    url = Path(target).resolve().as_uri()
+    url = _url(target)
     results: dict = {}
     for width, height in PHONES + ((1440, 900),):
         page = browser.new_page(viewport={"width": width, "height": height})
@@ -532,6 +552,17 @@ def route(playwright, target: str, out: Path) -> dict:
         entry = {"viewport": f"{width}x{height}", "landmarks": marks}
         if (width, height) in PHONES:
             page.get_by_role("link", name="Explore this forecast").click()
+            page.wait_for_timeout(600)
+            entry["product_replay"] = page.evaluate(PRODUCT_REPLAY_JS)
+            page.screenshot(path=str(out / f"route-product-{width}.png"))
+            page.locator("input[name='p-lvl'][value='95']").check()
+            page.locator("#p-scale").fill("6")
+            page.wait_for_timeout(200)
+            entry["product_replay"]["coverage_at_95"] = page.evaluate("document.getElementById('p-cov').textContent.trim()")
+            entry["product_replay"]["scenario_caveat_shown"] = page.evaluate("!document.getElementById('p-scenario').hidden")
+            entry["product_replay"]["observed_line_hidden"] = page.evaluate(
+                "getComputedStyle(document.getElementById('p-legend-actual')).display === 'none'")
+            page.get_by_role("link", name="The replay in the archived report").click()
             page.wait_for_timeout(600)
             entry["replay"] = page.evaluate(REPLAY_JS)
             page.screenshot(path=str(out / f"route-{width}.png"))
@@ -551,6 +582,264 @@ def route(playwright, target: str, out: Path) -> dict:
     return results
 
 
+# --------------------------------------------------------------------------- discovery routes (PUBLISH_RULES 1.0 A5)
+
+#: Every descriptive route the page advertises from its default view: the product topics, each chapter's
+#: "Explore these results", the transition summaries, the preview, the v1 chapter's links and the archive routes.
+ROUTES_JS = r"""() => { const routes = [];
+  // A link inside a product topic is a second step: it is reached through the topic's own route first.
+  const add = (group, a) => { const topic = a.closest('section.topic'); const heading = topic && topic.querySelector('h3[id]');
+    routes.push({group, label: a.textContent.trim().replace(/\s+/g, ' '), href: a.getAttribute('href'),
+                 visible_by_default: a.checkVisibility(), via: !a.checkVisibility() && heading ? '#' + heading.id : null}); };
+  document.querySelectorAll('nav.product-routes a').forEach(a => add('product', a));
+  document.querySelectorAll('nav.explore a').forEach(a => add('explore', a));
+  document.querySelectorAll('.transition-route a').forEach(a => add('transition', a));
+  document.querySelectorAll('.preview-links a[href^="#"]').forEach(a => add('preview', a));
+  document.querySelectorAll('.chapter-links a[href^="#"]').forEach(a => add('chapter', a));
+  document.querySelectorAll('a.archive-route').forEach(a => add('archive', a));
+  return routes; }"""
+
+#: Where a route landed: its target, below the sticky header and in view, with no closed disclosure above it, and
+#: the first chart, replay or value table that follows the target inside its section.
+LANDING_JS = r"""(href) => { const t = document.getElementById(decodeURIComponent(href.slice(1)));
+  if (!t) return {exists: false};
+  const header = document.querySelector('.site-header').getBoundingClientRect().bottom, r = t.getBoundingClientRect();
+  const closed = []; for (let d = t.closest('details'); d; d = d.parentElement && d.parentElement.closest('details'))
+    { if (!d.open) closed.push(d.id || 'details'); }
+  // A route to a heading reveals what follows it up to the next heading of the same or a higher level; a route
+  // to a whole section reveals the section itself, and is not asked for a chart.
+  const level = /^H([1-6])$/.exec(t.tagName), FOLLOWS = Node.DOCUMENT_POSITION_FOLLOWING;
+  const next = level ? [...document.querySelectorAll('h1, h2, h3, h4, h5, h6')].find(h => h !== t && !t.contains(h)
+      && (t.compareDocumentPosition(h) & FOLLOWS) && Number(h.tagName[1]) <= Number(level[1])) : null;
+  const after = !level ? [] : [...document.querySelectorAll('div.chart[data-chart-id], svg#p-chart, svg#chart, table.data')]
+    .filter(c => (t.compareDocumentPosition(c) & FOLLOWS) && (!next || (c.compareDocumentPosition(next) & FOLLOWS)));
+  let shown = null;
+  if (after.length) { const c = after[0], b = c.getBoundingClientRect();
+    const drawn = c.matches('div.chart') ? [...c.querySelectorAll('svg')].some(v => v.checkVisibility() && v.getBoundingClientRect().width > 0)
+                                         : c.checkVisibility() && b.width > 0;
+    shown = {what: c.getAttribute('data-chart-id') || c.id || 'table', visible: drawn, width: Math.round(b.width)}; }
+  return {exists: true, heading: t.textContent.trim().replace(/\s+/g, ' ').slice(0, 90), top: Math.round(r.top * 10) / 10,
+          header_bottom: Math.round(header * 10) / 10, visible: t.checkVisibility(), below_header: r.top >= header - 1,
+          in_view: r.top < innerHeight && r.bottom > 0, closed_ancestors: closed, first_result: shown, hash: location.hash}; }"""
+
+
+def _landed(result: dict) -> bool:
+    return bool(result.get("exists") and result.get("visible") and result.get("below_header") and result.get("in_view")
+                and not result.get("closed_ancestors")
+                and (result.get("first_result") is None or result["first_result"]["visible"]))
+
+
+def discovery(playwright, engine: str, target: str, width: int, height: int) -> dict:
+    """Follow every advertised route from a fresh, closed default page -- by mouse, by keyboard and as a deep
+    link -- and record the label, where it landed and what it revealed (PUBLISH_RULES 1.0 §6, A5)."""
+    url = _url(target)
+    browser = _launch(playwright, engine)
+    context = browser.new_context(viewport={"width": width, "height": height})
+    page = context.new_page()
+    page.goto(url, wait_until="load")
+    routes = page.evaluate(ROUTES_JS)
+    results = []
+    for item in routes:
+        entry = dict(item)
+        for method in ("mouse", "keyboard", "deep link"):
+            try:
+                if method == "deep link":
+                    page.goto("about:blank")
+                    page.goto(url + item["href"], wait_until="load")
+                else:
+                    page.goto(url, wait_until="load")
+                    if item["via"]:  # a second-step route: open its topic by its own route first
+                        page.locator(f'nav.product-routes a[href="{item["via"]}"]').first.click()
+                        page.wait_for_timeout(400)
+                    link = page.locator(f'a[href="{item["href"]}"]').filter(has_text=item["label"][:40]).first
+                    link.scroll_into_view_if_needed(timeout=5000)
+                    if method == "mouse":
+                        link.click(timeout=5000)
+                    else:
+                        link.focus()
+                        page.keyboard.press("Enter")
+                page.wait_for_timeout(500)
+                landed = page.evaluate(LANDING_JS, item["href"])
+                entry[method] = {**landed, "passed": _landed(landed)}
+            except Exception as exc:  # a route that cannot be followed is the finding; keep it and go on
+                entry[method] = {"passed": False, "error": f"{type(exc).__name__}: {str(exc)[:200]}"}
+        results.append(entry)
+    context.close()
+    browser.close()
+    return {"engine": engine, "viewport": f"{width}x{height}", "routes": results,
+            "passed": bool(results) and all(r[m]["passed"] for r in results for m in ("mouse", "keyboard", "deep link"))}
+
+
+# --------------------------------------------------------------------------- the demo's own controls (review F01)
+
+#: Every interactive element of the demo, through open shadow roots, with its effective target: a radio's label is
+#: part of its target, and a slider's hit area is its track, not its thumb (PUBLISH_RULES 1.0 §9, Touch).
+DEMO_CONTROLS_JS = r"""() => { const out = []; window.__controls = [];
+  const inSentence = el => el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.parentElement
+      && el.parentElement.textContent.trim().length > el.textContent.trim().length + 3;
+  const visit = root => root.querySelectorAll('*').forEach(el => {
+    const role = el.getAttribute('role') || '', tag = el.tagName.toLowerCase();
+    const control = ['slider', 'radio', 'radiogroup', 'button', 'link', 'checkbox', 'switch', 'combobox', 'menuitem', 'tab'].includes(role)
+      || tag === 'button' || (tag === 'a' && el.hasAttribute('href')) || ['input', 'select', 'textarea', 'summary'].includes(tag);
+    if (control && el.checkVisibility()) {
+      let box = el.getBoundingClientRect(); const rootNode = el.getRootNode();
+      if (role === 'radio' && el.id) { const l = rootNode.querySelector('label[for="' + el.id + '"]');
+        if (l) { const b = l.getBoundingClientRect(); box = {width: b.right - Math.min(box.left, b.left), height: Math.max(box.height, b.height)}; } }
+      if (role === 'slider') { const track = el.closest('[data-orientation][id]'); if (track) box = track.getBoundingClientRect(); }
+      window.__controls.push(el);
+      out.push({index: window.__controls.length - 1, tag, role, text: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40),
+                in_shadow: rootNode !== document, inline_text_link: inSentence(el),
+                width: Math.round(box.width), height: Math.round(box.height)}); }
+    if (el.shadowRoot) visit(el.shadowRoot); });
+  visit(document); return out; }"""
+
+#: WebKit's own accessibility properties for those elements: an object reference is resolved to an inspector node,
+#: which crosses open shadow roots where a selector cannot (the gap the 2026-09-29 review recorded).
+WEBKIT_DEMO_AX_JS = r"""
+const pw = require(process.env.PW_CORE);
+const spec = JSON.parse(process.argv[process.argv.length - 1]);
+(async () => {
+  const browser = await pw.webkit.launch();
+  const page = await browser.newPage({viewport: {width: spec.width, height: spec.height}});
+  await page.goto(spec.url);
+  await page.getByText(spec.ready).first().waitFor({timeout: spec.timeout * 1000});
+  await page.waitForTimeout(1500);
+  const controls = await page.evaluate(new Function('return ' + spec.collect)());
+  const session = page._connection.toImpl(page).delegate._session;
+  await session.send('DOM.getDocument');
+  for (const c of controls) {
+    const {result} = await session.send('Runtime.evaluate', {expression: 'window.__controls[' + c.index + ']'});
+    const {nodeId} = await session.send('DOM.requestNode', {objectId: result.objectId});
+    const {properties: p} = await session.send('DOM.getAccessibilityPropertiesForNode', {nodeId});
+    Object.assign(c, {ax_role: p.role || '', name: p.label || '', exists: p.exists, ignored: !!p.ignored});
+  }
+  console.log(JSON.stringify({browser: 'WebKit ' + browser.version(), controls}));
+  await browser.close();
+})().catch(error => { console.error(String(error && error.stack || error)); process.exit(1); });
+"""
+
+
+def _demo_findings(controls: list[dict]) -> dict:
+    unnamed = [f"{c.get('ax_role') or c['role'] or c['tag']}: {c['text']!r}" for c in controls
+               if c.get("exists", True) and not c.get("ignored") and not (c.get("name") or "").strip()]
+    small = [(c["tag"], c["role"], c["text"], c["width"], c["height"]) for c in controls
+             if not c["inline_text_link"] and (c["width"] < 44 or c["height"] < 44)]
+    under_24 = [item for item in small if item[3] < 24 or item[4] < 24]
+    return {"checked": len(controls), "unnamed": unnamed, "targets_under_44": small, "targets_under_24": under_24,
+            "passed": bool(controls) and not unnamed and not small}
+
+
+#: The focused element, through open shadow roots, and whether it shows a focus indicator (outline or ring).
+DEEP_FOCUS_JS = r"""() => { let e = document.activeElement;
+  while (e && e.shadowRoot && e.shadowRoot.activeElement) e = e.shadowRoot.activeElement;
+  if (!e || e === document.body) return null;
+  const s = getComputedStyle(e), ring = (s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0)
+    || (s.boxShadow && s.boxShadow !== 'none');
+  return {role: e.getAttribute('role') || e.tagName.toLowerCase(), name: (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 30),
+          visible_focus: ring}; }"""
+
+
+def _demo_keyboard(page) -> dict:
+    """Keyboard operation, the way a keyboard user arrives: the slider moves with an arrow key; the radio group,
+    entered at its own tab stop, changes level with an arrow key; Enter opens the notebook menu and Escape closes
+    it. marimo's radio group keeps focus on one item while the checked level follows a round trip to the notebook,
+    so the check asks whether either arrow key changes the level, and records both."""
+    slider = page.get_by_role("slider").first
+    slider_before = slider.get_attribute("aria-valuenow")
+    slider.focus()
+    page.keyboard.press("ArrowRight")
+    page.wait_for_timeout(1500)
+    slider_after = slider.get_attribute("aria-valuenow")
+    focus = {"slider": page.evaluate(DEEP_FOCUS_JS)}
+
+    def level() -> str:
+        return page.get_by_role("radio", checked=True).first.get_attribute("value")
+
+    radio_start = level()
+    page.get_by_role("radiogroup").first.focus()
+    seen = []
+    for key in ("ArrowRight", "ArrowLeft"):
+        page.keyboard.press(key)
+        page.wait_for_timeout(1500)
+        seen.append((key, level()))
+    focus["radio"] = page.evaluate(DEEP_FOCUS_JS)
+    menu = page.locator('[data-testid="notebook-actions-dropdown"] button').first
+    menu.focus()
+    page.keyboard.press("Enter")
+    page.wait_for_timeout(500)
+    opened = menu.get_attribute("aria-expanded")
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(300)
+    focus["menu, after Escape"] = page.evaluate(DEEP_FOCUS_JS)
+    return {"focus": focus, "visible_focus": all(item and item["visible_focus"] for item in focus.values()),
+            "slider": [slider_before, slider_after], "slider_moved": slider_after != slider_before,
+            "radio_start": radio_start, "radio_after_keys": seen,
+            "radio_moved": any(value != radio_start for _, value in seen),
+            "menu_opened_by_enter": opened == "true", "menu_closed_by_escape": menu.get_attribute("aria-expanded") == "false"}
+
+
+def demo_controls(playwright, engine: str, url: str, width: int, height: int, timeout_s: float) -> dict:
+    """The demo's controls in the engine's own accessibility tree, their target sizes, and keyboard operation of
+    the slider, the radio group and the notebook menu (review F01)."""
+    record: dict = {"engine": engine, "url": url, "viewport": f"{width}x{height}", "started_utc": _utc(),
+                    "cache": "fresh browser context: empty cache, no cookies"}
+    if engine == "webkit":
+        import os
+        import subprocess
+
+        import playwright as _pw
+
+        driver = Path(_pw.__file__).parent / "driver"
+        spec = {"url": url, "width": width, "height": height, "ready": READY_TEXT, "timeout": timeout_s,
+                "collect": DEMO_CONTROLS_JS}
+        result = subprocess.run([str(driver / "node"), "-e", WEBKIT_DEMO_AX_JS, "--", json.dumps(spec)],
+                                capture_output=True, text=True, timeout=timeout_s + 120,
+                                env={**os.environ, "PW_CORE": str(driver / "package")})
+        if result.returncode != 0:
+            record.update(error=result.stderr[-600:], passed=False)
+            return record
+        data = json.loads(result.stdout.strip().splitlines()[-1])
+        record.update(browser=data["browser"], method="WebKit's inspector (DOM.getAccessibilityPropertiesForNode), "
+                      "nodes resolved from object references through open shadow roots; a private Playwright API")
+        controls = data["controls"]
+        browser = _launch(playwright, engine)
+        page = browser.new_context(viewport={"width": width, "height": height}).new_page()
+        page.goto(url, wait_until="domcontentloaded")
+        page.get_by_text(READY_TEXT).first.wait_for(timeout=timeout_s * 1000)
+        page.wait_for_timeout(1500)
+        record["keyboard"] = _demo_keyboard(page)
+        browser.close()
+    else:
+        browser = _launch(playwright, engine)
+        page = browser.new_context(viewport={"width": width, "height": height}).new_page()
+        page.goto(url, wait_until="domcontentloaded")
+        page.get_by_text(READY_TEXT).first.wait_for(timeout=timeout_s * 1000)
+        page.wait_for_timeout(1500)
+        controls = page.evaluate(DEMO_CONTROLS_JS)
+        cdp = page.context.new_cdp_session(page)
+        cdp.send("DOM.getDocument", {"depth": 0})
+        cdp.send("Accessibility.enable")
+        for control in controls:
+            handle = cdp.send("Runtime.evaluate", {"expression": f"window.__controls[{control['index']}]"})
+            node = cdp.send("DOM.describeNode", {"objectId": handle["result"]["objectId"]})["node"]
+            ax = cdp.send("Accessibility.getPartialAXTree", {"backendNodeId": node["backendNodeId"],
+                                                              "fetchRelatives": False})["nodes"]
+            first = ax[0] if ax else {}
+            control.update(ax_role=first.get("role", {}).get("value", ""), name=first.get("name", {}).get("value", ""),
+                           exists=bool(first), ignored=bool(first.get("ignored")))
+        record.update(browser=f"Chrome {browser.version}",
+                      method="Chrome's accessibility tree through the DevTools protocol (Accessibility.getPartialAXTree)")
+        record["keyboard"] = _demo_keyboard(page)
+        browser.close()
+    record["controls"] = controls
+    record.update(_demo_findings(controls))
+    if "keyboard" in record:
+        keys = record["keyboard"]
+        record["passed"] = (record["passed"] and keys["slider_moved"] and keys["radio_moved"] and keys["visible_focus"]
+                            and keys["menu_opened_by_enter"] and keys["menu_closed_by_escape"])
+    return record
+
+
 # --------------------------------------------------------------------------- the standard's §10 release checks
 
 #: The widths the standard's §10 names; heights are the phone's for the phone widths.
@@ -567,7 +856,9 @@ PLACEMENT_JS = r"""() => {
   const release = q('[data-block="release-rule"]'), actions = q('.actions'), byline = q('.byline a[href="#contribution"]');
   const finding = q('#comparison-finding'), panel = finding && finding.closest('.panel');
   const chart = panel && [...panel.querySelectorAll('svg[role="img"]')].find(s => s.getBoundingClientRect().width > 0);
-  return {headline: box(q('#headline')), terms: box(q('ul.terms')), finding: box(finding), finding_chart: box(chart),
+  const header = q('.site-header');
+  return {header_px: header ? Math.round(header.getBoundingClientRect().height * 10) / 10 : null,
+          headline: box(q('#headline')), terms: box(q('ul.terms')), finding: box(finding), finding_chart: box(chart),
           release_rule: box(release), demo_action: box(actions), byline: box(byline),
           release_rule_in_disclosure: !!(release && release.closest('details')),
           byline_in_disclosure: !!(byline && byline.closest('details')),
@@ -723,6 +1014,31 @@ def ax_findings(engine: str, tree: dict) -> dict:
     return out
 
 
+#: Words that run together on screen although the text has a space between them. A flex or grid container makes
+#: each text run and each child element an item of its own, and the space at an item's edge is not rendered:
+#: "for <span>v1</span>" shows as "forv1" unless the container sets a gap. Found by the fresh reader, not by a
+#: text comparison, which sees the space.
+COLLAPSED_SPACE_JS = r"""() => {
+  const PHRASING = new Set(['A', 'ABBR', 'B', 'CODE', 'DATA', 'EM', 'I', 'MARK', 'SMALL', 'SPAN', 'STRONG', 'SUB', 'SUP', 'TIME']);
+  const words = n => n && n.nodeType === 1 && n.textContent.trim() !== '';
+  const out = [];
+  for (const el of document.querySelectorAll('body *')) {
+    const style = getComputedStyle(el);
+    if (!/flex|grid/.test(style.display) || !['normal', '0px'].includes(style.columnGap) || !el.checkVisibility()) continue;
+    const kids = [...el.childNodes];
+    kids.forEach((node, i) => {
+      if (node.nodeType !== 3) return;
+      const text = node.textContent, before = kids[i - 1], after = kids[i + 1];
+      const merges = text.trim()
+        ? (/^\s/.test(text) && words(before)) || (/\s$/.test(text) && words(after))
+        : text.length > 0 && words(before) && words(after) && PHRASING.has(before.tagName) && PHRASING.has(after.tagName);
+      if (merges) out.push(el.textContent.replace(/\s+/g, ' ').trim().slice(0, 100));
+    });
+  }
+  return [...new Set(out)];
+}"""
+
+
 def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = None, height: int | None = None,
           device: str | None = None) -> dict:
     """One page load with every disclosure closed: placements, overflow, every visible chart's text,
@@ -734,10 +1050,12 @@ def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = N
     page = context.new_page()
     failed: list[str] = []
     errors: list[str] = []
+    bad_responses: list[str] = []
     page.on("requestfailed", lambda r: failed.append(f"{r.url[:160]} {r.failure}"))
     page.on("console", lambda m: errors.append(m.text[:300]) if m.type == "error" else None)
+    page.on("response", lambda r: bad_responses.append(f"{r.status} {r.url[:160]}") if r.status >= 400 else None)
     page.goto(url, wait_until="load")
-    page.wait_for_timeout(400)
+    page.wait_for_timeout(1500)  # a browser-made request such as a favicon comes after load
     size = page.viewport_size
     label = device.replace(" ", "-").lower() if device else f"{size['width']}x{size['height']}"
     record: dict = {"engine": engine, "browser": f"{browser.browser_type.name} {browser.version}", "view": label,
@@ -754,19 +1072,31 @@ def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = N
                                          if v["smallest_text_px"] is not None), default=None)}
 
     record["charts"] = measure_charts()
+    record["collapsed_spaces"] = page.evaluate(COLLAPSED_SPACE_JS)
     shot = out / engine / f"{label}.png"
     shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot), full_page=True)
     record["screenshot"] = _shown(shot)
     if (engine, size["width"], size["height"]) in COLD_READER_VIEWS and not device:
         record["cold_reader_screens"] = _screens(page, out / "cold-reader" / f"{engine}-{label}")
+        record["placement_screens"] = record["cold_reader_screens"]
+    elif (size["width"], size["height"]) in A2_SCREENS and not device:
+        record["placement_screens"] = _screens(page, out / "placement" / f"{engine}-{label}")
+    if record.get("placement_screens"):
+        placements, screens = record["placements"], record["placement_screens"]
+        header = max([placements["header_px"] or 0] + screens["header_px_seen"])
+        record["finding_screen"] = screen_of(placements["finding"]["bottom"], size["height"], header)
     page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
     page.wait_for_timeout(500)
     record["charts_with_disclosures_open"] = measure_charts()
+    record["collapsed_spaces_with_disclosures_open"] = page.evaluate(COLLAPSED_SPACE_JS)
     record["overflow_with_disclosures_open"] = page.evaluate(
         "document.documentElement.scrollWidth - document.documentElement.clientWidth")
     record["failed_requests"] = failed[:20]
     record["console_errors"] = errors[:20]
+    record["http_errors"] = bad_responses[:20]
+    record["resources_after_document"] = page.evaluate(
+        "performance.getEntriesByType('resource').map(e => e.name.slice(0, 160))")[:20]
     context.close()
     browser.close()
     return record
@@ -779,29 +1109,56 @@ def _screens(page, folder: Path) -> dict:
     height = page.viewport_size["height"]
     header = page.evaluate("Math.ceil(document.querySelector('.site-header').getBoundingClientRect().height)")
     total = page.evaluate("document.documentElement.scrollHeight")
-    step, offsets = height - header, []
+    step, offsets, seen = height - header, [], []
     for index in range(200):
         offset = min(index * step, max(total - height, 0))
         page.evaluate(f"window.scrollTo(0, {offset})")
         page.wait_for_timeout(120)
         page.screenshot(path=str(folder / f"screen-{index + 1:02d}.png"))
         offsets.append(offset)
+        seen.append(page.evaluate("Math.round(document.querySelector('.site-header').getBoundingClientRect().height * 10) / 10"))
         if offset + height >= total:
             break
     page.evaluate("window.scrollTo(0, 0)")
-    return {"folder": _shown(folder), "screens": len(offsets), "step_px": step, "header_px": header, "offsets": offsets}
+    return {"folder": _shown(folder), "screens": len(offsets), "step_px": step, "header_px": header, "offsets": offsets,
+            "header_px_seen": seen}
+
+
+#: PUBLISH_RULES 1.0 A2: the comparison's finding is readable within N screens -- 2 at 1440 x 900, 3 at 390 x 844 --
+#: where every screen after the first loses the persistent header's height to it.
+A2_SCREENS = {(1440, 900): 2, (390, 844): 3}
+
+
+def a2_limit(height: float, screens: int, header: float) -> float:
+    """N x H - (N - 1) x h: the last document pixel a reader sees in N consecutive screens advanced by the usable
+    height H - h, with a persistent header of height h (PUBLISH_RULES 1.0 A2)."""
+    return screens * height - (screens - 1) * header
+
+
+def screen_of(bottom: float, height: float, header: float) -> int:
+    """The consecutive screen, advanced by the usable height, on which a document position becomes visible."""
+    screen = 1
+    while a2_limit(height, screen, header) < bottom:
+        screen += 1
+    return screen
 
 
 def placement_findings(view: dict) -> list[str]:
-    """The standard's §1 placements, as numbers."""
+    """The placements of Publication Standard v1 §1, with PUBLISH_RULES 1.0 A2's measured-header rule for the
+    comparison's finding (the largest header height observed on the route), as numbers."""
     p, problems = view["placements"], []
     width, height = (int(v) for v in view["viewport"].split("x"))
-    if (width, height) in ((1440, 900), (390, 844)) and not view["view"].startswith("iphone"):
+    if (width, height) in A2_SCREENS and not view["view"].startswith("iphone"):
         if p["headline"]["top"] < 0 or p["headline"]["bottom"] > height:
             problems.append(f"the headline block ends at {p['headline']['bottom']} px, below the first screen ({height})")
-        limit = 1800 if width == 1440 else 2532
+        header = max([p.get("header_px") or 0] + list((view.get("placement_screens") or {}).get("header_px_seen") or []))
+        screens = A2_SCREENS[(width, height)]
+        limit = a2_limit(height, screens, header)
         if p["finding"]["bottom"] > limit:
-            problems.append(f"the finding sentence ends at {p['finding']['bottom']} px, beyond {limit}")
+            problems.append(f"the finding sentence ends at {p['finding']['bottom']} px, beyond {limit} "
+                            f"({screens} screens of {height} px with a {header} px header, A2)")
+        if header <= 0:
+            problems.append("the persistent header was not measured")
     if not p["terms"] or p["terms"]["top"] < p["headline"]["bottom"] or p["terms"]["top"] - p["headline"]["bottom"] > 40:
         problems.append("the terms are not directly below the headline block")
     if p["finding_chart"] and p["finding"]["bottom"] > p["finding_chart"]["top"]:
@@ -819,7 +1176,7 @@ def placement_findings(view: dict) -> list[str]:
 
 def release(playwright, target: str, out: Path) -> dict:
     """Every check the standard's §10 requires, on the local page, recorded in one place."""
-    url = Path(target).resolve().as_uri()
+    url = _url(target)
     views = []
     for engine in ("chrome", "webkit"):
         for width, height in RELEASE_SIZES:
@@ -833,16 +1190,25 @@ def release(playwright, target: str, out: Path) -> dict:
                 view["problems"].append(f"{key}: chart text overlaps or is clipped")
             if (view[key]["smallest_text_px"] or 99) < 12:
                 view["problems"].append(f"{key}: chart text of {view[key]['smallest_text_px']} px")
+        for key in ("collapsed_spaces", "collapsed_spaces_with_disclosures_open"):
+            if view[key]:
+                view["problems"].append(f"{key}: words run together in {view[key]}")
         if view["overflow_with_disclosures_open"] > 0:
             view["problems"].append(f"horizontal overflow of {view['overflow_with_disclosures_open']} px with disclosures open")
-        if view["failed_requests"] or view["console_errors"]:
-            view["problems"].append("failed requests or console errors")
+        if view["failed_requests"] or view["console_errors"] or view["http_errors"]:
+            view["problems"].append("failed requests, HTTP errors or console errors")
+        if view["resources_after_document"]:
+            view["problems"].append(f"the page fetched {len(view['resources_after_document'])} resource(s) after the document")
     trees = {}
     for engine in ("chrome", "webkit"):
         for width, height in ((1440, 900), (390, 844)):
             tree = _chrome_ax(playwright, url, width, height) if engine == "chrome" else _webkit_ax(url, width, height)
             trees[f"{engine} {width}x{height}"] = {"browser": tree["browser"], **ax_findings(engine, tree)}
             print(f"accessibility tree, {engine} {width}x{height}: passed={trees[f'{engine} {width}x{height}']['passed']}")
+    routes = [discovery(playwright, engine, target, width, height)
+              for engine in ("chrome", "webkit") for width, height in A2_SCREENS]
+    for run in routes:
+        print(f"discovery, {run['engine']} {run['viewport']}: {len(run['routes'])} routes, passed={run['passed']}")
     checklist = [a11y(playwright, engine, target) for engine in ("chrome", "webkit")]
     for run in checklist:
         keyboard, touch = run["keyboard"], run["touch_targets_390"]
@@ -852,7 +1218,8 @@ def release(playwright, target: str, out: Path) -> dict:
                          and all(not c["below_count"] and not c["non_text"]["below_count"] for c in run["contrast"].values())
                          and all(not z["overflow_px_closed"] and not z["overflow_px_open"] for z in run["zoom_and_reflow"].values()))
     return {
-        "check": "Publication Standard v1 §10 release checks (and the §1 placements), PRES-1 conformance",
+        "check": "Release checks of PUBLISH_RULES 1.0 §9 (Publication Standard v1 §10), the §1 placements with A2's "
+                 "measured header, and A5's discovery routes",
         "checked_at_utc": _utc(), "page": target,
         "host": f"{platform.machine()} / {platform.system()} {platform.release()}",
         "not_used": "No real Safari, no real iPhone and no screen reader were used (standard §10); the phone "
@@ -869,8 +1236,12 @@ def release(playwright, target: str, out: Path) -> dict:
                       "connection, a private API of Playwright 1.63",
         },
         "keyboard_touch_contrast_zoom": checklist,
+        "discovery": routes,
+        "served_over": "http(s)" if "://" in target else "file (browser-made requests such as a favicon do not occur)",
+        "placement_rule": "PUBLISH_RULES 1.0 A2: finding bottom <= N x H - (N - 1) x h, N = 2 at 1440x900 and 3 at "
+                          "390x844, h the largest persistent-header height seen on the route",
         "passed": (all(not view["problems"] for view in views) and all(tree["passed"] for tree in trees.values())
-                   and all(run["passed"] for run in checklist)),
+                   and all(run["passed"] for run in checklist) and all(run["passed"] for run in routes)),
     }
 
 
@@ -925,6 +1296,17 @@ def mlflow_route(playwright, engine: str, route_id: str, route: dict, mirror: di
             page.wait_for_timeout(500)
     except Exception as exc:  # the failure is the finding
         record["error"] = f"{type(exc).__name__}: {str(exc)[:300]}"
+    # A comparison route is settled only when its chart has drawn: a Plotly plot and no loading skeleton. An
+    # application shell or an HTTP 200 without the intended chart is not a pass (PUBLISH_RULES 1.0 §8).
+    if route["kind"] == "compare" and "error" not in record:
+        try:
+            page.wait_for_function("document.querySelectorAll('.js-plotly-plot svg.main-svg').length > 0 && "
+                                   "document.querySelectorAll('[class*=Skeleton]').length === 0",
+                                   timeout=timeout_s * 1000)
+        except Exception as exc:  # the unsettled chart is the finding
+            record["settle_error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
+        record["plots"] = page.locator(".js-plotly-plot svg.main-svg").count()
+        record["skeletons"] = page.locator("[class*=Skeleton]").count()
     record["seconds"] = round(time.monotonic() - start, 1)
     record["final_url"] = page.url
     record["missing"] = missing
@@ -936,7 +1318,10 @@ def mlflow_route(playwright, engine: str, route_id: str, route: dict, mirror: di
     record["console_errors"] = errors[:20]
     record["api_errors"] = api_errors[:20]
     record["sign_in_redirect"] = "login" in page.url.lower() or "sign" in page.url.lower()
-    record["passed"] = (not missing and "error" not in record and not api_errors and not record["sign_in_redirect"])
+    settled = route["kind"] != "compare" or (record.get("plots", 0) > 0 and not record.get("skeletons")
+                                             and "settle_error" not in record)
+    record["passed"] = (not missing and "error" not in record and not api_errors and not record["sign_in_redirect"]
+                        and settled)
     context.close()
     browser.close()
     return record
@@ -995,6 +1380,12 @@ def main() -> int:
     checks.add_argument("page")
     checks.add_argument("--shots", type=Path, required=True, help="screenshot folder, under .local/artifacts/")
     checks.add_argument("--out", type=Path, required=True)
+    controls = sub.add_parser("demo-a11y", help="the demo's controls: native names, targets and keyboard (F01)")
+    controls.add_argument("--engine", action="append", choices=["chrome", "webkit"], required=True)
+    controls.add_argument("--viewport", action="append", default=None, help="WIDTHxHEIGHT; repeatable")
+    controls.add_argument("--url", default=APP_URL)
+    controls.add_argument("--timeout", type=float, default=240.0)
+    controls.add_argument("--out", type=Path, required=True)
     routes = sub.add_parser("mlflow-routes", help="open every REST-verified MLflow route in both engines")
     routes.add_argument("--mirror-record", type=Path, required=True, help="the verifier's record (verify --out)")
     routes.add_argument("--timeout", type=float, default=90.0)
@@ -1018,6 +1409,23 @@ def main() -> int:
         for view in record["views"]:
             if view["problems"]:
                 print(f"{view['engine']} {view['view']}: {view['problems']}")
+        print(f"wrote {args.out}; passed={record['passed']}")
+        return 0 if record["passed"] else 1
+
+    if args.command == "demo-a11y":
+        sizes = [tuple(int(v) for v in spec.split("x")) for spec in (args.viewport or ["390x844"])]
+        with sync_playwright() as playwright:
+            runs = [demo_controls(playwright, engine, args.url, width, height, args.timeout)
+                    for engine in args.engine for width, height in sizes]
+        for run in runs:
+            print(f"{run['engine']} {run['viewport']}: passed={run.get('passed')} unnamed={run.get('unnamed')} "
+                  f"under_44={run.get('targets_under_44')} keyboard={run.get('keyboard')}")
+        record = {"check": "the demo's controls: names in each engine's own accessibility tree, targets of about "
+                           "44 px and keyboard operation (review F01; PUBLISH_RULES 1.0 §7.1, §9)",
+                  "checked_at_utc": _utc(), "host": f"{platform.machine()} / {platform.system()} {platform.release()}",
+                  "runs": runs, "passed": bool(runs) and all(run.get("passed") for run in runs)}
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
         print(f"wrote {args.out}; passed={record['passed']}")
         return 0 if record["passed"] else 1
 

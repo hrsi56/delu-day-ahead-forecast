@@ -1,6 +1,8 @@
-"""Publication Standard v1 §1, §3.4, §6 and §7 (brief W4, W5, W8, W13): the page's architecture.
+"""Publication Standard v1 §1, §3.4, §6 and §7 (brief W4, W5, W8, W13), as amended by PUBLISH_RULES 1.0 (A1,
+A3, A4): the page's architecture.
 
-* The section order of §6, with planned work after the chapters.
+* The section order of PUBLISH_RULES 1.0 §5 (A4): the opening, the released product's documentation, the
+  comparison, then the lineage and the chapters, with planned work after them.
 * The headline block in the research status card, identical to the README's, with the terms it
   introduces directly below it; the release rule beside the demo action, outside any disclosure;
   the byline link; the comparison's finding and caveat above its chart. (The §1 pixel placements
@@ -57,8 +59,8 @@ def archive_element(document: str) -> str:
 # --------------------------------------------------------------------------- §6 order
 
 
-SECTION_ORDER = ('class="opening"', 'id="journey"', 'id="research-results"', 'id="chapters"', 'id="planned"',
-                 'id="system"', 'id="reproduce"', 'id="contribution"', 'id="attribution"')
+SECTION_ORDER = ('class="opening"', 'id="product"', 'id="research-results"', 'id="journey"', 'id="chapters"',
+                 'id="planned"', 'id="system"', 'id="reproduce"', 'id="contribution"', 'id="attribution"')
 
 
 def section_order_problems(document: str) -> list[str]:
@@ -72,11 +74,40 @@ def test_the_sections_follow_the_standard_s_order(page):
     assert section_order_problems(page) == []
 
 
+def _section_html(document: str, opening: str) -> str:
+    start = document.index(opening)
+    depth = 0
+    for match in re.finditer(r"<section\b|</section>", document[start:]):
+        depth += 1 if match.group(0).startswith("<section") else -1
+        if depth == 0:
+            return document[start:start + match.end()]
+    raise AssertionError(f"{opening} is not closed")
+
+
 def test_negative_control_planned_work_before_the_chapters_is_caught(page):
     planned = page[page.index('<section class="section planned"'):]
     planned = planned[:planned.index("</section>") + len("</section>")]
     moved = page.replace(planned, "").replace('<section class="section chapters"', planned + '<section class="section chapters"', 1)
     assert section_order_problems(moved)
+
+
+def test_negative_control_the_product_documentation_after_the_comparison_is_caught(page):
+    """A4: the released product's documentation sits directly after the opening, before the comparison."""
+    product = _section_html(page, '<section class="section product"')
+    moved = page.replace(product, "").replace('<section class="section" id="journey"', product + '<section class="section" id="journey"', 1)
+    assert section_order_problems(moved)
+
+
+def test_negative_control_the_comparison_after_the_lineage_is_caught(page):
+    """A4: the overview comparison comes before the lineage and the chapters."""
+    results = _section_html(page, '<section class="section" id="research-results"')
+    moved = page.replace(results, "").replace('<section class="section chapters"', results + '<section class="section chapters"', 1)
+    assert section_order_problems(moved)
+
+
+def test_the_product_documentation_opens_directly_after_the_opening(page):
+    opening_end = page.index("</section>", page.index('class="opening"')) + len("</section>")
+    assert page[opening_end:page.index('<section class="section product"')].strip() == ""
 
 
 # --------------------------------------------------------------------------- the opening (§1, §3.4)
@@ -90,9 +121,10 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     assert RC.headline("md") in readme[:readme.index(readme_research.GLANCE_END)]
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text == re.sub(r"`", "", RC.headline("md"))
+    # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it.
     assert text.startswith("Met both accuracy targets set before the experiments: error scores at least 10% below "
-                           "the strongest benchmark, daily LEAR (v3: 14% and 17% below; the first of 8 policies "
-                           "tested to meet them).")
+                           "the strongest benchmark, daily LEAR (v3: 14% below on the point-error score and 17% below "
+                           "on the interval score; the first of 8 policies tested to meet them).")
 
 
 def test_the_terms_are_defined_directly_below_the_headline(page):
@@ -180,7 +212,7 @@ def test_chart_headlines_are_claim_bound_blocks(page):
 
 
 def test_the_branch_cards_attach_to_the_lineage_with_their_content(page):
-    lineage = page[page.index('id="journey"'):page.index('id="research-results"')]
+    lineage = page[page.index('id="journey"'):page.index('id="chapters"')]
     for entry in G.branches():
         card = lineage[lineage.index(f'id="{entry.anchor[1:]}"'):]
         card = card[:card.index("</li>")]

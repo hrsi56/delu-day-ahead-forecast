@@ -45,7 +45,7 @@ Each one answers a different question, and each stands on its own. The static re
 
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
-| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* The research history, newest first, with v1's original report — data, regimes, catalog, validation design, results, SHAP, reliability, forecast, limitations, reproduction — preserved inside it | One self-contained file with no additional runtime requests after it loads |
+| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* How the released model works, topic by topic — data, regimes, inputs, validation, results, explanations, failures, interval reliability, a forecast replay, limitations and how to run it — then the research history, newest first, and v1's original report preserved as an archive | One self-contained file with no additional runtime requests after it loads |
 | **2** | **[⚡ Interactive Space]({C["space_url"]})**<br>[direct app]({C["space_app_url"]}) | *Does the thing actually run?* The champion's own boosters, running in your browser under Pyodide | about {C["wasm_cold_load_mb"]} MB first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts; ~1 MB after. A Static Space has no server-side process to sleep |
 | **3** | **[🔬 MLflow on DagsHub]({C["mlflow_url"]})** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run of v1, anonymously readable — no sign-in | — |
 

@@ -16,6 +16,8 @@
 >   versions, historical ratified `syllabus_v*.md` versions, the stage-gated companion plan, and
 >   `program-stage-sequence.md`. Historical syllabus anchors remain locked for completeness;
 >   their retention does not reactivate Track A. Supersession never removes a document from this lock.
+> - **The publication anchors:** `docs/PUBLISH_RULES.md` and the incorporated historical
+>   `docs/track-b/publication-standard-v1.md`. Their prior ratified revisions remain protected.
 > - **The governance record:** `docs/track-b/rule-inventory.md`, `docs/track-b/cp-0-defects.md`, and
 >   every capstone amendment sheet, including `capstone_[Vv]*-to-[Vv]*-amendments.md`
 > - **Agent configuration:** `.claude/**`, and any file that configures how agents run in this
@@ -119,6 +121,20 @@ This repository is shared by program orchestration and Track B engineering, but 
 `progress.md` is controlled only by the Orchestrator. *(The mandatory `workbench.md` was retired at capstone v6.7; the Lead keeps whatever working notes it likes, and none of them are program state or acceptance authority.)*
 
 `AGENTS.md` is the single canonical root-role router. `CLAUDE.md` must contain only a pointer to this file; do not duplicate policy there.
+
+## Publication anchor
+
+For publication planning, implementation or review, read
+[`docs/PUBLISH_RULES.md`](docs/PUBLISH_RULES.md) and the baseline clauses it incorporates.
+Revision 1.0 was established under the Owner's explicit task-scoped authorization on 2026-09-29;
+its authority record and effective scope are in §§1 and 16. Future publication briefs name its
+revision and SHA-256. An Engineering Lead receives that identity in the brief and does not read
+`progress.md` to obtain it; the existing role-isolation boundary remains intact.
+
+Research anchors still govern research. Publication rules govern presentation, evidence and
+verification only; they grant no Git, deployment, data-access or model-promotion authority.
+Review historical releases under the rules effective for those releases. A new rule never turns
+an older advisory into a retrospective violation.
 
 ## Interview-answer capture
 

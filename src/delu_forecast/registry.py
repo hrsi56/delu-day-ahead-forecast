@@ -125,6 +125,9 @@ class Entry:
     informed: str | None = None
     #: A short form of the name for tight chart labels ("v3", "Daily LEAR").
     short: str = ""
+    #: For a generation after the first: the adopted generation it replaced in research (A3). An
+    #: explicit, validated relationship; never inferred from the version number or the name.
+    predecessor: str | None = None
 
     @property
     def primary_code(self) -> str:
@@ -319,6 +322,7 @@ _ENTRIES: tuple[Entry, ...] = (
         plan=f"{_PLAN21} §14 (v21-r3)", rules=("criteria-1-2", "joint-improvement"),
         sources=("reports/v2-causal/metrics.csv", "reports/v2-causal/uncertainty.csv", "reports/v2-causal/criteria.csv"),
         claim_map=_CP15, run_keys=("cp16", "cp16/V2-H"), style="v2", anchor="#v2", checkpoint="CP-16", short="v2",
+        predecessor="v1",
     ),
     Entry(
         id="v3", name="v3 · weather features", subtitle="v2 plus three weather forecast inputs",
@@ -330,6 +334,7 @@ _ENTRIES: tuple[Entry, ...] = (
         sources=("reports/weather-ablation/metrics.csv", "reports/weather-ablation/uncertainty.csv",
                  "reports/weather-ablation/criteria.csv"),
         claim_map=_CP20, run_keys=("cp20", "cp20/HG"), style="v3", anchor="#v3", checkpoint="CP-20", short="v3",
+        predecessor="v2",
     ),
     # ---- branches ------------------------------------------------------------------------
     Entry(
@@ -603,6 +608,86 @@ def expected_run_keys() -> tuple[str, ...]:
     return tuple(out)
 
 
+@dataclass(frozen=True)
+class Transition:
+    """One adopted generation replacing its predecessor in research (PUBLISH_RULES 1.0, A3)."""
+
+    predecessor: Entry
+    successor: Entry
+
+    @property
+    def id(self) -> str:
+        return f"{self.predecessor.id}-{self.successor.id}"
+
+    @property
+    def comparator(self) -> Entry:
+        """The comparator the governing protocol named for the successor, which may differ from the
+        predecessor: v2 was judged against daily LEAR, v3 against v2."""
+        return get(self.successor.comparator)
+
+    @property
+    def comparator_is_predecessor(self) -> bool:
+        return self.successor.comparator == self.predecessor.id
+
+
+def first_status(entry: Entry) -> StatusEvent:
+    """The event that put an identity on the main line: its adoption or release, dated."""
+    if not entry.statuses:
+        raise RegistryError(f"{entry.id} has no status")
+    return entry.statuses[0]
+
+
+def transition_problems(entries_: tuple[Entry, ...] | None = None) -> list[str]:
+    """Why the predecessor relationships are not one dated chain of adopted generations."""
+    pool = entries_ if entries_ is not None else entries()
+    by_id = {entry.id: entry for entry in pool}
+    gens = [entry for entry in pool if entry.kind == "generation"]
+    problems = []
+    for entry in pool:
+        if entry.predecessor is not None and entry.kind != "generation":
+            problems.append(f"{entry.id}: only a generation has a predecessor")
+    firsts = [entry.id for entry in gens if entry.predecessor is None]
+    if len(firsts) != 1:
+        problems.append(f"exactly one generation starts the main line; found {firsts}")
+    successors: dict[str, str] = {}
+    for entry in gens:
+        if entry.predecessor is None:
+            continue
+        before = by_id.get(entry.predecessor)
+        if before is None or before.kind != "generation":
+            problems.append(f"{entry.id}: predecessor {entry.predecessor!r} is not a registered generation")
+            continue
+        if entry.predecessor in successors:
+            problems.append(f"{entry.predecessor} precedes both {successors[entry.predecessor]} and {entry.id}")
+        successors[entry.predecessor] = entry.id
+        if not (entry.statuses and before.statuses) or first_status(before).date > first_status(entry).date:
+            problems.append(f"{entry.id}: adopted before its predecessor {before.id}")
+    # one chain: following predecessors from every generation reaches the first without a cycle
+    for entry in gens:
+        seen, node = set(), entry
+        while node is not None and node.predecessor is not None:
+            if node.id in seen:
+                problems.append(f"{entry.id}: the predecessor chain loops")
+                break
+            seen.add(node.id)
+            node = by_id.get(node.predecessor)
+    return problems
+
+
+def transitions(*, newest_first: bool = True) -> tuple[Transition, ...]:
+    """Every adopted transition, from the validated predecessor relationships (A3)."""
+    problems = transition_problems()
+    if problems:
+        raise RegistryError("; ".join(problems))
+    out = [Transition(get(entry.predecessor), entry) for entry in generations() if entry.predecessor]
+    out.sort(key=lambda item: first_status(item.successor).date, reverse=newest_first)
+    return tuple(out)
+
+
+def transition_into(entry: Entry) -> Transition | None:
+    return next((item for item in transitions() if item.successor.id == entry.id), None)
+
+
 def inline_name(entry: Entry) -> str:
     """The name inside a sentence: 'daily LEAR', 'the similar-day naive'; a version keeps its case."""
     if entry.version or entry.name[:2].isupper():
@@ -679,7 +764,9 @@ __all__ = [
     "ADOPTED_IN_RESEARCH", "BADGES", "CHECKPOINTS", "CLASS_CAVEATS", "COMPARISON_ORDER", "CRISIS_ORDER", "Checkpoint", "Code",
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
-    "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "V2_SCORES_ORDER", "branches", "by_code", "codes",
+    "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "Transition",
+    "V2_SCORES_ORDER", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
+    "transitions",
     "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
     "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",
 ]
