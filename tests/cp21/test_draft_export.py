@@ -63,8 +63,8 @@ def test_the_draft_matches_its_draft_entries_and_the_mechanical_verdict(draft):
 
 def test_every_value_rederives_from_a_committed_row(draft):
     runs = _runs(draft)
-    metrics = pd.read_csv(ROOT / 'reports/block-challenger/metrics.csv')
-    uncertainty = pd.read_csv(ROOT / 'reports/block-challenger/uncertainty.csv')
+    metrics = pd.read_csv(ROOT / 'reports/block-challenger/metrics.csv', float_precision='round_trip')
+    uncertainty = pd.read_csv(ROOT / 'reports/block-challenger/uncertainty.csv', float_precision='round_trip')
     equal = metrics.loc[metrics.scope.eq('equal_fold')].set_index('policy')
     per_fold = metrics.loc[metrics.scope.eq('per_fold')].set_index(['policy', 'fold'])
     unc = uncertainty.set_index(['scope', 'candidate', 'baseline', 'metric'])

@@ -30,12 +30,12 @@ def new():
 
 @pytest.fixture(scope='module')
 def metrics():
-    return pd.read_csv(OUT / 'metrics.csv')
+    return pd.read_csv(OUT / 'metrics.csv', float_precision='round_trip')
 
 
 @pytest.fixture(scope='module')
 def uncertainty():
-    return pd.read_csv(OUT / 'uncertainty.csv')
+    return pd.read_csv(OUT / 'uncertainty.csv', float_precision='round_trip')
 
 
 def test_every_new_arm_issues_all_10747_keys_finite_and_ordered(new):
@@ -77,7 +77,7 @@ def test_new_arm_metrics_recompute_from_committed_predictions(new, metrics):
 
 def test_saved_reference_rows_equal_cp20s_committed_metrics(metrics):
     """The seven saved references were scored once, metric-only, and equal CP-20's rows."""
-    cp20 = pd.read_csv(ROOT / 'reports/weather-ablation/metrics.csv')
+    cp20 = pd.read_csv(ROOT / 'reports/weather-ablation/metrics.csv', float_precision='round_trip')
     for scope in ('per_fold', 'pooled'):
         ours = metrics.loc[metrics.scope.eq(scope) & metrics.policy.isin(S.SAVED)].set_index(['policy', 'fold']).sort_index()
         theirs = cp20.loc[cp20.scope.eq(scope)].set_index(['policy', 'fold']).sort_index()
@@ -93,10 +93,10 @@ def test_every_interval_rederives_from_its_stored_replicates(uncertainty):
                       & draws.metric.eq(row.metric)]
         assert len(d) == S.BOOTSTRAP_REPLICATES
         lo, hi = np.quantile(d.difference, [.025, .975], method='linear')
-        assert (lo, hi) == (row.ci_lower, row.ci_upper) or np.allclose([lo, hi], [row.ci_lower, row.ci_upper], rtol=0, atol=1e-15)
+        assert (lo, hi) == (row.ci_lower, row.ci_upper)  # exact: the CSV holds the shortest round-trip repr
         if row.scope == 'equal_fold':
             rlo, rhi = np.quantile(d.ratio, [.025, .975], method='linear')
-            assert np.allclose([rlo, rhi], [row.ratio_ci_lower, row.ratio_ci_upper], rtol=0, atol=1e-15)
+            assert (rlo, rhi) == (row.ratio_ci_lower, row.ratio_ci_upper)
     scores = pd.read_parquet(OUT / 'replicate-scores.parquet')
     for c, b in S.CONTRASTS:
         for metric in ('MAE', 'WIS'):
@@ -108,7 +108,7 @@ def test_every_interval_rederives_from_its_stored_replicates(uncertainty):
 
 
 def test_the_adoption_verdict_reapplies_mechanically_to_the_committed_rows(uncertainty):
-    criteria = pd.read_csv(OUT / 'criteria.csv')
+    criteria = pd.read_csv(OUT / 'criteria.csv', float_precision='round_trip')
     committed = json.loads((OUT / 'adoption.json').read_text())
     again = S.adoption(uncertainty, criteria, keys_complete=True)
     assert again['verdict'] == committed['verdict']

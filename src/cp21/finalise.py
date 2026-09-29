@@ -49,6 +49,7 @@ def resources(state: dict) -> dict:
         caps[key] = {'cap': cap, 'used': used}
     caps['workers']['used'] = max((j['workers'] for j in state['jobs']), default=0)
     active = Budget.active_seconds(state)
+    caps['active_seconds']['used'] = active  # computed from the session start minus pauses, never a charged counter
     return {'schema': 'cp21-resources-v1', 'written_utc': stamp(),
             'caps_vs_use': caps, 'tracked': {k: v for k, v in counts.items() if k not in CAPS},
             'machine_hours': counts.get('machine_seconds', 0) / 3600, 'machine_hours_cap': CAPS['machine_seconds'] / 3600,

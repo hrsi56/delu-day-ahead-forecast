@@ -1,0 +1,374 @@
+{
+ "all_passed": true,
+ "checks": 49,
+ "dst_block_membership": {
+  "autumn_2021_10_31_canonical_hours": 25,
+  "autumn_local_hour_2_rows_in_night_window": 2,
+  "autumn_local_hour_2_rows_in_pooled_window": 2,
+  "every_row_in_exactly_one_block": true,
+  "origin": "2022-07-01",
+  "passed": true,
+  "spring_2022_03_27_canonical_hours": 23,
+  "spring_local_hour_2_rows_anywhere": 0
+ },
+ "origins": [
+  {
+   "available_d1_nonuniform_price_mutation": {
+    "HGL": 26.11119284967891,
+    "L-N": 35.40339042108272,
+    "L-N/night": 31.066510512690694,
+    "L-N/shoulder": 35.40339042108272,
+    "L-N/solar": 19.23284603510152,
+    "L-P": 11.135963506590674,
+    "L-R": 8.892465798426315,
+    "L-R/night": 4.7761894173377115,
+    "L-R/shoulder": 8.892465798426315,
+    "L-R/solar": 4.3192948472246435
+   },
+   "d1_mutation_rows": 5,
+   "day": "2020-07-01",
+   "delivery_day_and_future_mask": {
+    "HGL": 0.0,
+    "L-N": 0.0,
+    "L-N/night": 0.0,
+    "L-N/shoulder": 0.0,
+    "L-N/solar": 0.0,
+    "L-P": 0.0,
+    "L-R": 0.0,
+    "L-R/night": 0.0,
+    "L-R/shoulder": 0.0,
+    "L-R/solar": 0.0
+   },
+   "fold": "fold_1",
+   "future_weather_mutation": {
+    "L-N": 0.0,
+    "L-N/night": 0.0,
+    "L-N/shoulder": 0.0,
+    "L-N/solar": 0.0,
+    "L-P": 0.0,
+    "L-R": 0.0,
+    "L-R/night": 0.0,
+    "L-R/shoulder": 0.0,
+    "L-R/solar": 0.0
+   },
+   "hg_components_refit_bitwise_vs_cp20_cache": {
+    "A1": true,
+    "B2": true
+   },
+   "hgl_central_bitwise_vs_committed": true,
+   "mask_selection_and_trees_unchanged": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "n_hours": 24,
+   "n_jobs_4_vs_main_run": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "pooled_block_rows_equal": {
+    "forecast": true,
+    "inner": true,
+    "validation": true,
+    "window": true
+   },
+   "reproduction_trees_equal": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "reproduction_vs_main_run": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "target_day_weather_rearranged": {
+    "L-N": 8.054202240871195,
+    "L-N/night": 3.2729980955131346,
+    "L-N/shoulder": 3.4862515330587236,
+    "L-N/solar": 8.054202240871195,
+    "L-P": 7.0768617770582445,
+    "L-R": 5.574012415290078,
+    "L-R/night": 5.021821396927191,
+    "L-R/shoulder": 5.360563677388669,
+    "L-R/solar": 5.574012415290078
+   },
+   "training_weather_cross_date_permutation": {
+    "L-N": 5.645195651321224,
+    "L-N/night": 1.3866837042274511,
+    "L-N/shoulder": 5.645195651321224,
+    "L-N/solar": 1.9382289040950944,
+    "L-P": 6.434547173431362,
+    "L-R": 5.798327674874528,
+    "L-R/night": 5.798327674874528,
+    "L-R/shoulder": 3.505960181946911,
+    "L-R/solar": 2.8881528811946
+   },
+   "training_weather_rows_permuted": 13102,
+   "uniform_weather_scaling_x3_invariance": {
+    "L-N": 0.0,
+    "L-N/night": 0.0,
+    "L-N/shoulder": 0.0,
+    "L-N/solar": 0.0,
+    "L-P": 0.0,
+    "L-R": 0.0,
+    "L-R/night": 0.0,
+    "L-R/shoulder": 0.0,
+    "L-R/solar": 0.0
+   },
+   "validation_outcome_mutation": {
+    "forecast_max_abs_change": {
+     "L-N": 3.880534811686559,
+     "L-N/night": 0.9433215741509962,
+     "L-N/shoulder": 3.783887180357084,
+     "L-N/solar": 3.880534811686559,
+     "L-P": 3.3362694362484184,
+     "L-R": 4.875199383189248,
+     "L-R/night": 3.5584424210586363,
+     "L-R/shoulder": 2.6189033445369674,
+     "L-R/solar": 4.875199383189248
+    },
+    "selection_after": {
+     "L-N": {
+      "night": "G1",
+      "shoulder": "G1",
+      "solar": "G1"
+     },
+     "L-P": {
+      "pooled": "G1"
+     },
+     "L-R": {
+      "night": "G1",
+      "shoulder": "G2",
+      "solar": "G1"
+     }
+    },
+    "selection_before": {
+     "L-N": {
+      "night": "G1",
+      "shoulder": "G2",
+      "solar": "G1"
+     },
+     "L-P": {
+      "pooled": "G1"
+     },
+     "L-R": {
+      "night": "G2",
+      "shoulder": "G1",
+      "solar": "G1"
+     }
+    },
+    "selection_changed": {
+     "L-N": true,
+     "L-P": false,
+     "L-R": true
+    },
+    "validation_mae_changed": {
+     "L-N": true,
+     "L-P": true,
+     "L-R": true
+    }
+   }
+  },
+  {
+   "available_d1_nonuniform_price_mutation": {
+    "HGL": 109.7183383927751,
+    "L-N": 91.58877981057765,
+    "L-N/night": 18.87736954049049,
+    "L-N/shoulder": 91.58877981057765,
+    "L-N/solar": 14.816169925303896,
+    "L-P": 63.92668171121048,
+    "L-R": 66.84404159207742,
+    "L-R/night": 4.130418986558709,
+    "L-R/shoulder": 66.84404159207742,
+    "L-R/solar": 8.638109568576915
+   },
+   "d1_mutation_rows": 5,
+   "day": "2025-05-01",
+   "delivery_day_and_future_mask": {
+    "HGL": 0.0,
+    "L-N": 0.0,
+    "L-N/night": 0.0,
+    "L-N/shoulder": 0.0,
+    "L-N/solar": 0.0,
+    "L-P": 0.0,
+    "L-R": 0.0,
+    "L-R/night": 0.0,
+    "L-R/shoulder": 0.0,
+    "L-R/solar": 0.0
+   },
+   "fold": "fold_4",
+   "future_weather_mutation": {
+    "L-N": 0.0,
+    "L-N/night": 0.0,
+    "L-N/shoulder": 0.0,
+    "L-N/solar": 0.0,
+    "L-P": 0.0,
+    "L-R": 0.0,
+    "L-R/night": 0.0,
+    "L-R/shoulder": 0.0,
+    "L-R/solar": 0.0
+   },
+   "hg_components_refit_bitwise_vs_cp20_cache": {
+    "A1": true,
+    "B2": true
+   },
+   "hgl_central_bitwise_vs_committed": true,
+   "mask_selection_and_trees_unchanged": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "n_hours": 24,
+   "n_jobs_4_vs_main_run": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "pooled_block_rows_equal": {
+    "forecast": true,
+    "inner": true,
+    "validation": true,
+    "window": true
+   },
+   "reproduction_trees_equal": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "reproduction_vs_main_run": {
+    "L-N": true,
+    "L-P": true,
+    "L-R": true
+   },
+   "target_day_weather_rearranged": {
+    "L-N": 53.28701784467091,
+    "L-N/night": 1.2997295445001384,
+    "L-N/shoulder": 20.06964948367873,
+    "L-N/solar": 53.28701784467091,
+    "L-P": 42.478825499633245,
+    "L-R": 24.706242677053517,
+    "L-R/night": 1.9927412504286224,
+    "L-R/shoulder": 17.963559527429396,
+    "L-R/solar": 24.706242677053517
+   },
+   "training_weather_cross_date_permutation": {
+    "L-N": 29.08767046633011,
+    "L-N/night": 7.915057709512425,
+    "L-N/shoulder": 29.08767046633011,
+    "L-N/solar": 8.948636046607845,
+    "L-P": 22.33685505032132,
+    "L-R": 18.80099310409162,
+    "L-R/night": 8.927406113980851,
+    "L-R/shoulder": 16.106445975648114,
+    "L-R/solar": 18.80099310409162
+   },
+   "training_weather_rows_permuted": 51209,
+   "uniform_weather_scaling_x3_invariance": {
+    "L-N": 0.0,
+    "L-N/night": 0.0,
+    "L-N/shoulder": 0.0,
+    "L-N/solar": 0.0,
+    "L-P": 0.0,
+    "L-R": 0.0,
+    "L-R/night": 0.0,
+    "L-R/shoulder": 0.0,
+    "L-R/solar": 0.0
+   },
+   "validation_outcome_mutation": {
+    "forecast_max_abs_change": {
+     "L-N": 16.49681694774361,
+     "L-N/night": 8.39437704187685,
+     "L-N/shoulder": 16.037532810985,
+     "L-N/solar": 16.49681694774361,
+     "L-P": 14.86575677910936,
+     "L-R": 9.155392436469446,
+     "L-R/night": 1.643049019429995,
+     "L-R/shoulder": 9.099171536804334,
+     "L-R/solar": 9.155392436469446
+    },
+    "selection_after": {
+     "L-N": {
+      "night": "G1",
+      "shoulder": "G1",
+      "solar": "G2"
+     },
+     "L-P": {
+      "pooled": "G1"
+     },
+     "L-R": {
+      "night": "G1",
+      "shoulder": "G4",
+      "solar": "G2"
+     }
+    },
+    "selection_before": {
+     "L-N": {
+      "night": "G1",
+      "shoulder": "G1",
+      "solar": "G2"
+     },
+     "L-P": {
+      "pooled": "G4"
+     },
+     "L-R": {
+      "night": "G1",
+      "shoulder": "G1",
+      "solar": "G4"
+     }
+    },
+    "selection_changed": {
+     "L-N": false,
+     "L-P": true,
+     "L-R": true
+    },
+    "validation_mae_changed": {
+     "L-N": true,
+     "L-P": true,
+     "L-R": true
+    }
+   }
+  }
+ ],
+ "population": {
+  "boundary_guard_accepts_2026_04_07": true,
+  "boundary_guard_refuses_2026_04_08": true,
+  "hgl_blend_parity_max_abs_eur_mwh": 1.9895196601282805e-13,
+  "hgl_blend_parity_passed": true,
+  "keys_aligned_with_hg": true,
+  "loader_max_date": "2026-04-07",
+  "max_delivery_date": "2026-04-07",
+  "quantiles_finite": true,
+  "quantiles_ordered": true,
+  "rows_per_arm": {
+   "HGL": 10747,
+   "L-N": 10747,
+   "L-P": 10747,
+   "L-R": 10747
+  },
+  "spring_day_2026_03_29_rows_per_arm": {
+   "2026-03-29": 23
+  }
+ },
+ "schema": "cp21-controls-v1",
+ "seed": 15042,
+ "state": {
+  "admission_freeze_commit": "bcf33dd46d44080e24523713ae1ca6966c9511eb",
+  "consume_once": true,
+  "d_minus_1_error_refused": true,
+  "d_minus_2_error_accepted": true,
+  "duplicate_issue_refused": true,
+  "intact_fit_cache_loads": true,
+  "intact_hg_cache_loads": true,
+  "partial_day_not_buffered": true,
+  "replay_equals_committed_vectors": true,
+  "restart_replay_identical": true,
+  "tampered_fit_cache_refused": true,
+  "unavailable_truth_stays_pending": true,
+  "wrong_identity_fit_cache_refused": true,
+  "wrong_identity_hg_cache_refused": true
+ },
+ "threshold_eur_mwh": 1e-06,
+ "written_utc": "2026-09-29T20:22:42Z"
+}

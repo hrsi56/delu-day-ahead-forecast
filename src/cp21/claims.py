@@ -63,6 +63,18 @@ def _source_row(key: str, path: str) -> str:
     return f'| {key} | [{path}](../../../{path}) |'
 
 
+def resolved_note(r_mae: dict, r_wis: dict) -> str:
+    """Single-metric intervals that exclude zero, stated so a mixed result is never hidden."""
+    notes = []
+    for name, r in (('point-error score (S_MAE)', r_mae), ('interval score (S_WIS)', r_wis)):
+        lo, hi = float(r['ci_lower']), float(r['ci_upper'])
+        if lo > 0:
+            notes.append(f'the {name} difference\'s 95% interval lies wholly above zero (worse)')
+        elif hi < 0:
+            notes.append(f'the {name} difference\'s 95% interval lies wholly below zero (better)')
+    return ('; ' + ' and '.join(notes)) if notes else '; both single-metric intervals span zero'
+
+
 def lint_slot(text: str) -> list[str]:
     """The publication lint's code and status-word rules on one draft, tokens removed."""
     plain = re.sub(r'\{[gr]:[^{}]+\}', '', text)
@@ -144,7 +156,9 @@ def build(root: Path) -> tuple[str, str, dict]:
     worse = adoption['conditions']['4']['values']['folds_decisively_worse']
     claim('C110', 'Per fold (EUR/MWh, paired mean daily loss difference, HGL − v3): ' + '; '.join(
         f'{fo} MAE {num(fold(fo, "HGL", "HG", "MAE")[1]["difference"], 2)} [{num(fold(fo, "HGL", "HG", "MAE")[1]["ci_lower"], 2)}, '
-        f'{num(fold(fo, "HGL", "HG", "MAE")[1]["ci_upper"], 2)}]' for fo in FOLDS)
+        f'{num(fold(fo, "HGL", "HG", "MAE")[1]["ci_upper"], 2)}], WIS {num(fold(fo, "HGL", "HG", "WIS")[1]["difference"], 2)} '
+        f'[{num(fold(fo, "HGL", "HG", "WIS")[1]["ci_lower"], 2)}, {num(fold(fo, "HGL", "HG", "WIS")[1]["ci_upper"], 2)}]'
+        for fo in FOLDS)
         + f'. Folds decisively worse (lower endpoint above zero): {len(worse)}.', f'U21 {fold_lines}', 'S-d')
     # ---- block split
     claim('C111', f'Block split (three-block minus pooled LightGBM): ΔS_MAE {num(rsm["difference"])} [{num(rsm["ci_lower"])}, '
@@ -158,7 +172,8 @@ def build(root: Path) -> tuple[str, str, dict]:
         (l1, r1), (l2_, r2) = eq(c, b, 'MAE'), eq(c, b, 'WIS')
         claim(ident, f'{what}: ΔS_MAE {num(r1["difference"])} [{num(r1["ci_lower"])}, {num(r1["ci_upper"])}], ΔS_WIS '
                      f'{num(r2["difference"])} [{num(r2["ci_lower"])}, {num(r2["ci_upper"])}]: '
-                     f'{summary["contrasts"][f"{c}-{b}"]["reading"]} (descriptive).', f'U21 L{l1}, L{l2_}', 'S-d')
+                     f'{summary["contrasts"][f"{c}-{b}"]["reading"]}{resolved_note(r1, r2)} (descriptive).',
+              f'U21 L{l1}, L{l2_}', 'S-d')
     # ---- scores and diagnostics
     parts = ', '.join(f'{p} {sig(score(p)[1]["S_MAE"])}/{sig(score(p)[1]["S_WIS"])}' for p in ('HGL', 'HG', 'L-P', 'L-R', 'L-N', 'B3'))
     claim('C117', f'Equal-fold S_MAE/S_WIS: {parts}; all eleven policies in M21.',
@@ -171,8 +186,13 @@ def build(root: Path) -> tuple[str, str, dict]:
     claim('C119', 'Original §8 screen (diagnostic): ' + ', '.join(f'{p} {s}' for p, s in summary['original_section8_status'].items())
           + '.', 'C21; A21 `conditions.2`', 'S')
     peak_line, peak = D.find(policy='HGL', scope='peak')
-    claim('C120', f'Peak (descriptive, 17 days): HGL MAE {num(peak["MAE"], 1)} EUR/MWh, 95% coverage {num(peak["coverage95"], 3)} '
-                  f'({int(float(peak["hit_count95"]))}/{int(float(peak["n_hours"]))} hours).', f'D21 L{peak_line}', 'S-d')
+    hg_line, hg_peak = D.find(policy='HG', scope='peak')
+    claim('C120', f'Peak (descriptive, 17 days, small effective sample): HGL MAE {num(peak["MAE"], 1)} and WIS '
+                  f'{num(peak["WIS"], 1)} EUR/MWh, 95% coverage {num(peak["coverage95"], 3)} '
+                  f'({int(float(peak["hit_count95"]))}/{int(float(peak["n_hours"]))} hours); v3 MAE {num(hg_peak["MAE"], 1)} and WIS '
+                  f'{num(hg_peak["WIS"], 1)}, coverage {num(hg_peak["coverage95"], 3)}. On the peak, HGL\'s point error is '
+                  + ('higher' if float(peak['MAE']) > float(hg_peak['MAE']) else 'lower') + ' than v3\'s; no inference is drawn.',
+          f'D21 L{peak_line}, L{hg_line}', 'S-d')
     claim('C121', 'Coverage is reported with mean, median and 95th-percentile width and tail misses, per fold, hour and block, '
                   'with the 56-date support rule for block and hour statements; no hour or block effect is claimed.',
           'M21 per-fold rows; D21 `hour`, `block` rows', 'S-d')
@@ -282,19 +302,26 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
     hgl_id = 'v4' if adopted else 'blend-with-block-lightgbm'
     reason = '' if adopted else f'condition {first} of rule cp21-adoption was not met'
     # draft slot texts: tokens for names/statuses ({g:}) and numbers ({r:}); no typed number or code
+    split_words = adoption['block_split']['reading']
     if adopted:
         slots = {
             'v4.question': 'Does adding a nonlinear, block-structured forecaster to {g:v3.name} improve both of its error scores?',
             'v4.change': '{g:v4.name} adds a three-block LightGBM forecaster, with the same inputs as {g:v3.name}, to its blend '
                          'of two linear forecasts, and re-estimates the hour-aware intervals on the new forecast\'s own errors.',
             'v4.main_chart.headline': 'Against {g:v3.name}, the point-error score changed by {r:cp21.ratio.HGL-HG.MAE} and the '
-                                      'interval score by {r:cp21.ratio.HGL-HG.WIS}, each as a share of its score.',
-            'v4.reading': 'Both paired differences lie below zero, so the pre-specified rule adopted the change in research.',
-            'v4.not_established': 'Development evidence after selection, not a test on new data; the block split is '
-                                  'reported separately; no weather feature is isolated.',
+                                      'interval score by {r:cp21.ratio.HGL-HG.WIS}, each as a share of the comparator\'s score, '
+                                      'with 95% intervals.',
+            'v4.reading': 'Both paired differences lie below zero, no test period is decisively worse, and the six screening '
+                          'diagnostics hold, so the rule set in advance adopted the change in research.',
+            'v4.not_established': 'Development evidence after selection, not a test on new data. It does not show that separate '
+                                  f'hour-block models help: block against pooled models showed {split_words}. No single weather '
+                                  'feature is isolated.',
             'v4.decision': 'Adopted in research on {g:v4.status.date}; the released model is unchanged.',
             'v4.evidence': 'the report, the review verdict, the claim map, the MLflow comparison',
             'transition.v3-v4.title': 'From v3 to v4: adding a three-block LightGBM',
+            'transition.v3-v4.result': 'Against {g:v3.name}, both of its predecessor and its comparator, the point-error score '
+                                       'changed by {r:cp21.ratio.HGL-HG.MAE} and the interval score by {r:cp21.ratio.HGL-HG.WIS}, '
+                                       'in development tests.',
         }
     else:
         slots = {
@@ -384,9 +411,9 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
         f'[{pct(rw["ratio_ci_lower"])}, {pct(rw["ratio_ci_upper"])}] — from CP-21\'s own bootstrap draws: seed 15042, '
         '2,000 replicates, 7-calendar-day blocks, percentiles of `S_HGL,b / S_v3,b − 1` | `uncertainty.csv` '
         f'L{lm}, L{lw} (`ratio_ci_lower`, `ratio_ci_upper`); every draw in `replicates.parquet` |')
-    add(f'| (c) Mean absolute error per period, EUR/MWh (HGL) | ordinary periods {num(lo[1][1]["MAE"], 1)}–{num(hi[1][1]["MAE"], 1)} '
-        f'({lo[0]}–{hi[0]}); stress period, fold 3 (2022-07-01..09-28): {num(stress[1]["MAE"], 1)} | `metrics.csv` '
-        f'L{lo[1][0]}, L{hi[1][0]}, L{stress[0]} |')
+    add(f'| (c) Mean absolute error per period, EUR/MWh (HGL) | ordinary periods (folds 1, 2, 4, 5): {num(lo[1][1]["MAE"], 1)} '
+        f'({lo[0].replace("_", " ")}) to {num(hi[1][1]["MAE"], 1)} ({hi[0].replace("_", " ")}); stress period, fold 3 '
+        f'(2022-07-01..09-28): {num(stress[1]["MAE"], 1)} | `metrics.csv` per-fold rows L{pf("HGL", "fold_1")[0]}–L{pf("HGL", "fold_5")[0]} |')
     add('')
     add('## 5. Draft slot texts (standard §6)\n')
     add('Only the outcome the rule yields is drafted: ' + ('the v4 chapter and its A3 transition.' if adopted else
@@ -407,7 +434,8 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
         add(f'| The result, with its uncertainty and evidence class | S_MAE {pct(rm["ratio"])} [{pct(rm["ratio_ci_lower"])}, '
             f'{pct(rm["ratio_ci_upper"])}], S_WIS {pct(rw["ratio"])} [{pct(rw["ratio_ci_lower"])}, {pct(rw["ratio_ci_upper"])}]; development |')
         add('| Against the predecessor | the comparator is the predecessor |')
-        add('| What it does not establish | a test on new data; a single weather feature; the block split\'s mechanism |')
+        add('| What it does not establish | performance on new data; that separate hour-block models help (block against '
+            f'pooled: {adoption["block_split"]["reading"]}); the contribution of any single weather feature |')
         add('| The decision, dated, and the route | adopted in research, **pending-at-landing**; `#v4` and `compare:v4` |')
         add('')
     else:
@@ -419,6 +447,7 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
     if adopted:
         add('| Chart | Its heading | The route\'s label | Where the route starts |\n|---|---|---|---|')
         add('| v4 paired differences (both scores, 95% intervals) | `#v4` | v4 against v3 | the v4 chapter\'s "Explore these results" and the transition summary |')
+        add('')
     else:
         add('None drafted: a branch card carries its deciding difference and interval in text; its reader route is the MLflow '
             'comparison `compare:block-lightgbm-on-v3`, advertised only after the authorized upload and both route checks.\n')
@@ -432,8 +461,12 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
         + ', '.join(f'`{k}`' for k in registry['pending_fields']) + '.')
     add('- **Local tracking:** the same runs, names and tags in `.local/mlruns/cp21` (read-back equal; '
         '`reports/block-challenger/mlflow-local.json`). No upload, no network call; MLflow telemetry disabled.')
+    diff = json.loads((root / OUT / 'published-export-diff.json').read_text())
     add('- **Record-level diff against the last published export:** the published set is unchanged — '
-        '`scripts/mlflow_export.py --check` passes and `--diff-against HEAD` reports no change. The publication block '
+        f'`scripts/mlflow_export.py --diff-against {diff["against"]}` over {diff["runs_old"]} runs: only_identity '
+        f'{diff["only_identity"]}, identity changes on {len(diff["identity_changes"])} runs, substantive changes '
+        f'{diff["substantive_changes"] or "none"} (`reports/block-challenger/published-export-diff.json`); '
+        '`--check` passes. The publication block '
         'registers the entries, regenerates the final export and must show it equals this draft apart from the pending '
         'fields, with no previously published record changed.')
     add(f'- **Expected routes:** `experiment`; `compare:{"v4" if adopted else owner}` — verified by REST and in Chromium and '

@@ -105,7 +105,11 @@ def build(root: Path) -> str:
     cond_rows = []
     for k in ('1', '2', '3', '4'):
         c = adoption['conditions'][k]
-        cond_rows.append([k, adoption['rule']['conditions'][k], '**met**' if c['met'] else '**not met**'])
+        result = '**met**' if c['met'] else '**not met**'
+        if k == '3':
+            result += (' — every key issued with finite, ordered quantiles; its Engineering-PASS half is the fresh '
+                       'Integration verdict on this exact candidate')
+        cond_rows.append([k, adoption['rule']['conditions'][k], result])
     add(table(['#', 'Condition (verbatim rule text in protocol.json)', 'Result'], cond_rows))
     add('')
     add('Per-fold paired daily-loss differences, HGL − HG (condition 4: a fold is decisively worse only if its lower '
@@ -123,9 +127,15 @@ def build(root: Path) -> str:
         cand, base = {'L-R-L-P': ('L-R', 'L-P'), 'L-P-B3': ('L-P', 'B3'), 'L-N-L-R': ('L-N', 'L-R'), 'L-P-HG': ('L-P', 'HG'),
                       'L-R-HG': ('L-R', 'HG'), 'L-N-HG': ('L-N', 'HG')}[key]
         mae, wis = eq.loc[(cand, base, 'MAE')], eq.loc[(cand, base, 'WIS')]
+        single = [f'{m} interval above zero (worse)' if r.ci_lower > 0 else f'{m} interval below zero (better)'
+                  for m, r in (('S_MAE', mae), ('S_WIS', wis)) if r.ci_lower > 0 or r.ci_upper < 0]
         rows.append([f'{cand} − {base}', role, f'{f(mae.difference)} {ci(mae)}', f'{f(wis.difference)} {ci(wis)}',
-                     f'{pct(mae.ratio)} / {pct(wis.ratio)}', summary['contrasts'][f'{cand}-{base}']['reading']])
-    add(table(['Contrast', 'Shows', 'ΔS_MAE [95%]', 'ΔS_WIS [95%]', 'Share of comparator (MAE / WIS)', 'Reading'], rows))
+                     f'{pct(mae.ratio)} / {pct(wis.ratio)}', summary['contrasts'][f'{cand}-{base}']['reading'],
+                     '; '.join(single) or 'both span zero'])
+    add(table(['Contrast', 'Shows', 'ΔS_MAE [95%]', 'ΔS_WIS [95%]', 'Share of comparator (MAE / WIS)', 'Joint reading',
+               'Single-metric intervals'], rows))
+    add('\nA mixed result is reported as no demonstrated joint preference, never as equivalence; where one metric\'s '
+        'interval excludes zero it is stated in the last column.\n')
     add('')
     add('## Scores, all eleven policies\n')
     add(table(['Policy', 'S_MAE', 'S_WIS', 'Pooled MAE (EUR/MWh)', 'Pooled WIS (EUR/MWh)', 'Pooled 95% coverage'],
@@ -138,6 +148,9 @@ def build(root: Path) -> str:
     add('')
     peak = diag.loc[diag.scope.eq('peak')].set_index('policy')
     add('### The 17-day peak, 2022-08-15..31 (408 hours) — descriptive only, small effective sample\n')
+    add(f'On the peak, HGL\'s MAE is {f(peak.loc["HGL", "MAE"], 2)} EUR/MWh against v3\'s {f(peak.loc["HG", "MAE"], 2)} '
+        '— ' + ('higher' if peak.loc['HGL', 'MAE'] > peak.loc['HG', 'MAE'] else 'lower') + '; with 17 days no inference '
+        'is drawn (the fold-3 paired interval, which contains the peak, is in the primary section).\n')
     add(table(['Policy', 'MAE', 'WIS', '95% coverage', 'Hits / hours'],
               [[p, f(peak.loc[p, 'MAE'], 2), f(peak.loc[p, 'WIS'], 2), f(peak.loc[p, 'coverage95'], 4),
                 f'{int(peak.loc[p, "hit_count95"])} / {int(peak.loc[p, "n_hours"])}'] for p in ORDER]))
@@ -179,11 +192,11 @@ def build(root: Path) -> str:
     add('## Identity, parity and controls (§17.7)\n')
     add(table(['Check', 'Result'], [
         ['HG through CP-21\'s H-layer path vs accepted CP-20 vectors (10,747 keys)',
-         f'bitwise equal: {parity["bitwise_equal"]}, max |Δ| {parity["max_abs_difference"]}'],
+         f'bitwise equal: {parity["bitwise_equal"]}, largest absolute difference {parity["max_abs_difference"]}'],
         ['HG component cache (638 entries) vs CP-20 fingerprints; evaluation centrals vs accepted HG',
          'verified (preflight/input-verification.json)'],
         ['Frozen weather regenerated from the 2,476 retained grids', 'bitwise equal (preflight/weather-regeneration.json)'],
-        ['HGL blend parity on every key (max |c_HGL − ⅔c_HG − ⅓·mean(L-N,L-R)|)', f'{controls["population"]["hgl_blend_parity_max_abs_eur_mwh"]:.2e} EUR/MWh'],
+        ['HGL blend parity on every key (largest absolute value of c_HGL − ⅔·c_HG − ⅓·mean(L-N, L-R))', f'{controls["population"]["hgl_blend_parity_max_abs_eur_mwh"]:.2e} EUR/MWh'],
         ['Controls (delivery-day mask, non-uniform D−1 mutation, future/permuted/rearranged weather, training-only '
          'selection, pooled–block parity, DST blocks, state/cache refusals, boundary guard, thread count)',
          f'all passed: {controls["all_passed"]} ({controls["checks"]} checks; controls.json)'],
@@ -204,7 +217,7 @@ def build(root: Path) -> str:
         'selections and fits, the H layer and issuance. v21-r5 §16 still requires any final-product candidate to retrain '
         'daily; this measurement is a diagnostic, not a selection criterion.\n')
     add('## Resources at this candidate (§17.8 caps; final totals including review are in the evidence directory)\n')
-    rows = [[k, v['used'] if not isinstance(v['used'], float) else f'{v["used"]:,.0f}', v['cap']]
+    rows = [[k, f'{v["used"]:,.0f}' if isinstance(v['used'], (int, float)) else v['used'], f'{v["cap"]:,}']
             for k, v in resources['caps_vs_use'].items()]
     add(table(['Counter', 'Used', 'Cap'], rows))
     add(f'\nMachine-hours {resources["machine_hours"]:.2f} of {resources["machine_hours_cap"]:.0f}; active hours (upper bound) '
@@ -216,12 +229,16 @@ def build(root: Path) -> str:
         '- The B3 → L-P step bundles weather with capacity selection; no contrast isolates individual weather features.\n'
         '- The block split is tested on the raw target only (no normalized pooled arm), with one seed.\n'
         '- No economic, product, promotion or Live claim follows; v1 remains the released product.\n')
+    add('## Defects and repairs\n')
+    add('Every defect found during the checkpoint, its effect and its repair are in `defects-and-repairs.md`; no committed '
+        'research output was invalidated and no frozen forecast-path file changed after the pre-run freeze.\n')
     add('## Files\n')
     add('`protocol.json` (frozen pre-run protocol) · `lineage.json` · `predictions.parquet` (four new arms) · '
         '`metrics.csv` · `diagnostics.csv` · `uncertainty.csv` · `replicates.parquet` · `replicate-scores.parquet` · '
         '`criteria.csv` · `adoption.json` · `fallback.csv` · `failures.csv` · `controls.json` · `hg-parity.json` · '
         '`daily-cycle.json` · `fit-cost.*` · `fits.parquet` · `resources.json` · `draft-registry.json` · '
-        '`mlflow-export-draft/cp21.json` · `mlflow-local.json` · `artifact-manifest.json` · `reproduce.md` · `preflight/`.\n')
+        '`mlflow-export-draft/cp21.json` · `mlflow-local.json` · `artifact-manifest.json` · `defects-and-repairs.md` · '
+        '`fit-cost.md` · `reproduce.md` · `preflight/`.\n')
     return '\n'.join(lines)
 
 

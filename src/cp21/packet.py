@@ -71,8 +71,8 @@ def build(root: Path) -> dict:
         entries.append(_entry(ident, name, subtitle, 'study arm', code, 'not adopted',
                               'a study arm for attribution; never eligible for adoption' if code != 'HGL' else reason,
                               run_key=f'cp21/{code}', style='study', short=short))
-    verdict_words = ('HGL met all four conditions of rule cp21-adoption and was adopted in research as v4'
-                     if adopted else f'HGL was not adopted: {reason}')
+    verdict_words = ('HGL met the four conditions of rule cp21-adoption, the third being this checkpoint\'s independent '
+                     'Integration PASS, and was adopted in research as v4' if adopted else f'HGL was not adopted: {reason}')
     return {
         'schema': 'cp21-draft-registry-v1',
         'status': 'draft registry entries for the publication packet; CP-21 registers nothing; the publication block '

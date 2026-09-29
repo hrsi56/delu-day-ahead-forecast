@@ -13,6 +13,7 @@ research output was invalidated**, no frozen forecast-path file changed after th
 | D4 | Before the first scoring pass, by the Lead's code review | The frozen `cp21.scoring.adoption` returns criteria records that can hold undefined limits (NaN); the strict JSON writer refuses NaN, so the scoring job would have failed after charging its reference and bootstrap passes | None: found before any scoring | The unfrozen writer `cp21/evaluate.py` maps undefined values to null (`clean`); a synthetic end-to-end test covers the path | None |
 | D5 | Before the first controls run, by review | The key-alignment control compared int64 timestamps across storage units (CP-20's Parquet stores milliseconds) | None: found before the run | Compare instants | None |
 | D6 | Before the first daily-cycle run, by review | The parent's data load overlapped the four-process pool, briefly five computing processes against the four-worker limit | None: found before the run | The parent loads first, then the pool starts | None |
+| D7 | Job `fit-cost` (first run) | `dict.setdefault(fold, load(...))` evaluated the training-only data load for every warm-up origin instead of once per fold | The job ran 627 s without finishing; stopped through its monitor (`monitor_signal_15`); nothing was written to the evidence | One load per fold; the rerun wrote the fit-cost tables | Both runs |
 
 **Operational note.** The Lead session was stopped by a usage limit from 2026-09-29 19:26 to
 22:11 IDT with no job running; the gap is recorded as an effort pause in the ledger and excluded

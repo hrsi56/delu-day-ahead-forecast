@@ -205,7 +205,8 @@ def job_fit_cost(root: Path, rest) -> int:
         fold, day = o['fold'], date.fromisoformat(o['day'])
         first = date.fromisoformat(m[fold]['evaluation_start'])
         if day < first:
-            early.setdefault(fold, load(root, before=first))
+            if fold not in early:  # one training-only load per fold (setdefault would load every time)
+                early[fold] = load(root, before=first)
             data = early[fold]
         else:
             data = full
