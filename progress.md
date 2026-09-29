@@ -31,19 +31,23 @@ intervals and fold qualifications; CP-15's product result remains `NOT_DEMONSTRA
 |---|---|---|
 | 1 | NWP archive-depth gate (4.1) | ✅ Done: GFS admitted |
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
-| 3 | Presentation around v2 (4.3R), with CP-20 alongside | PRES-1 closed; PRES-2 landed and pushed, Space deployment and public acceptance pending |
+| 3 | Presentation around v2 (4.3R), with CP-20 alongside | ✅ PRES-1 and PRES-2 closed (PRES-2 by the Owner's decision after his manual public check, 2026-09-29) |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
-| 5 | Three-block LightGBM (4.5) | ⬜ Not started |
+| 5 | Three-block LightGBM (4.5) | ⬜ Chosen by the Owner on 2026-09-29 as CP-21, on top of v3; not yet authorized |
 | 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
 | 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Active publication checkpoint: PRES-2 — LANDED / PUBLIC ACCEPTANCE INCOMPLETE.**
-The [Integration verdict](docs/track-b/evidence/pres-2/integration.md) is PASS for the
-local-ready milestone only. The Lead returned BLOCKED at the Owner publication gate;
-the Owner subsequently explicitly instructed merge, commit and push, with no repeated tests.
-That instruction was executed; it does not constitute a post-deployment PASS.
+**PRES-2 — CLOSED, 2026-09-29, by the Owner's decision after his own manual public check.**
+The [closure record](docs/track-b/pres-2-closure-2026-09-29.md) states the acceptance as it
+happened:
+- the [Integration verdict](docs/track-b/evidence/pres-2/integration.md) PASS covers the
+  local-ready milestone;
+- the targeted public checks passed;
+- the Owner's manual check covered the rest of P8;
+- the Owner waived the new independent postdeploy review for PRES-2 only. That is a one-time
+  exception, not a PASS, and the standing rule is unchanged.
 
 | Identity / step | Recorded state |
 |---|---|
@@ -54,45 +58,48 @@ That instruction was executed; it does not constitute a post-deployment PASS.
 | Implemented | Twelve product subjects below the opening; v1→v2 and v2→v3 transitions; chart routes; F01–F04 repairs; companion documentation |
 | Independent acceptance | Full local checklist mapped in the verdict and [acceptance matrix](docs/track-b/evidence/pres-2/acceptance.md); fresh-reader/editorial records present |
 | Hugging Face | PRES-2 deployed at `0c550e863711e19abbb35219cf64d45dfb39c888`; 805 files verified; public card/normalized HTML match; targeted demo checks pass after retained 429 retry |
-| Public acceptance P8 | **Partially verified, not complete:** Pages byte identity plus Space deployment/identity and four public demo configurations; remaining matrix and independent postdeploy verdict pending |
-| Reclamation | `gauntlet/pres-2` and its Lead worktree remain; checkpoint not closed |
+| Public acceptance P8 | Targeted: Pages byte identity, Space identity and four public demo configurations, after one retained 429/retry. The remaining matrix is covered by the Owner's manual public check, recorded as his check, not automated evidence |
+| Independent postdeploy review | Waived by the Owner for PRES-2 only, 2026-09-29. A one-time exception, not a PASS |
+| Reclamation | Done 2026-09-29: `gauntlet/pres-2` deleted and `.local/worktrees/pres-2` removed. `evidence/pres-2` and `land/pres-2` preserve every cited SHA; both are on `origin` |
+| Closure | [Closure record](docs/track-b/pres-2-closure-2026-09-29.md) |
 
-**Next pending Track B checkpoint: finish PRES-2's publication/acceptance and reclamation.**
-The [publication packet](docs/track-b/evidence/pres-2/publication-packet.md) is the continuation
-source. No implementation restart or duplicate local test campaign is needed. The Owner's
-no-repeat-tests instruction explains the unperformed P8 work; it is not a waiver of the
-acceptance bar and does not turn an unobserved service into PASS.
-
-**Next research checkpoint: CP-21, the first v3 extension — not authorized.** The extension
-choice is still unanswered (see Blockers). Opening it requires a separately authorized
-research amendment and complete brief. v21-r5 below defines the final product, not CP-21. CP-17–CP-19 remain reserved for the final model's freeze,
-live operation and prospective evaluation. PRES-2 neither reopens PRES-1 nor promotes HG.
+**Next pending Track B checkpoint: CP-21 — work item 4.5, three-block LightGBM on top of v3.**
+The Owner chose it on 2026-09-29. That answers the 2026-09-24 open question and supersedes the
+earlier recommendation (4.6 first; 4.5 only as an extra arm of 4.8).
+- **Not yet authorized.** It needs the research amendment v21-r6 (§17), ratified by the Owner,
+  and a complete brief.
+- **Outcome rule.** If CP-21 meets its pre-registered adoption rule, it becomes
+  `v4 · <adopted change>`. Otherwise it is a descriptive branch marked "Not adopted". The
+  result is published in either case.
+- **Scope of v21-r5.** v21-r5 defines the final product, not CP-21.
+- **CP-17–CP-19** remain reserved for the final model's freeze, live operation and prospective
+  evaluation.
 
 **Repository:**
 
-- Main and remote main verified at `81ab3be430a73c0938a579e117c51e99ec96f72f` before Space deployment; the Owner committed/pushed the preceding documentation updates.
-- Retained Lead branch: `gauntlet/pres-2` at evidence tip `871c0e2`; worktree
-  `.local/worktrees/pres-2`. Purpose: preserve the PRES-2 execution workspace pending closure.
-  The squash leaves its 12 candidate/evidence commits outside main's ancestry; the evidence tag
-  preserves them. No branch/worktree/ref was created or removed in this regeneration.
-- Tree was clean on entry to the Space deployment task. New deployment/browser evidence and a receipt, plus this state update, remain uncommitted; nothing is staged.
+- Main equals `origin/main` at the PRES-2 closure commit, 2026-09-29. The deployment records
+  were committed and pushed at `5a6b585`.
+- **No Lead branch or worktree remains.** `gauntlet/pres-2` was reclaimed on 2026-09-29.
+  `evidence/pres-2` (`871c0e2`) preserves its 12 candidate and evidence commits.
+- **No stash remains.** A stale GitHub Desktop stash (2026-08-06, holding only an empty
+  `Icon\r`) was dropped on the Owner's instruction.
 - Decoded GFS grids and CP-20 material stay under `.local/`
-  ([artifact map](docs/track-b/local-artifacts.md)). Retain the reviewed PRES-2 bundle,
-  screenshots and local records until public acceptance and disposition accounting finish.
+  ([artifact map](docs/track-b/local-artifacts.md)). The reviewed PRES-2 bundle,
+  screenshots and local records stay in `.local/artifacts/pres-2/` as retained recovery material.
 
 **Public surfaces — distinguish a Git push from a verified deployment:**
 
 | Surface | Last evidenced state / pending action |
 |---|---|
 | [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | PRES-2 main and both preservation tags were pushed successfully |
-| [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | Anonymous HTML read during the subsequent Live-status discussion, 2026-09-29: HTTP 200 and SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, matching PRES-2. Byte identity only; public browser behaviour and full P8 still pending |
-| [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | PRES-2 revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING; repository bundle, public card and normalized HTML verified; four demo configurations succeeded after one retained 429/retry. [Receipt](docs/track-b/pres-2-space-deployment-2026-09-29.md) |
+| [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | Anonymous HTML read during the subsequent Live-status discussion, 2026-09-29: HTTP 200 and SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, matching PRES-2. Public behaviour was accepted by the Owner's manual check at closure |
+| [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | PRES-2 revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING; repository bundle, public card and normalized HTML verified; four demo configurations succeeded after one retained 429/retry. Accepted at closure. The Space also holds an unused pre-existing `style.css`, making 806 files; the Owner accepted it, and the next upload removes it. [Receipt](docs/track-b/pres-2-space-deployment-2026-09-29.md) |
 | [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Unchanged 23-run, six-route export verified during PRES-2; no upload needed; no post-push recheck claimed |
 
 Deployed PRES-2 Space bundle: `8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e`
 (805 files, 44,164,910 bytes), preserved at `.local/artifacts/pres-2/space-wasm-8007f0d2/`
 per the packet. Public closure of the later [independent review](docs/track-b/publication-postdeploy-independent-review-2026-09-29.md)'s
-F01–F04 remains pending; local fixes are already reviewed and landed. Historical PRES-1
+F01–F04 were closed publicly on the Owner's manual check at PRES-2's closure. Historical PRES-1
 acceptance remains intact under its own effective rules.
 
 **Scope outside Track B:** Track C was cancelled and moved out of this repository; no marketing
@@ -361,6 +368,23 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **PRES-2 closed, 2026-09-29** (Owner: "בדקתי ידנית בעצמי. אפשר לסגור הכל", then "בצע בעצמך
+  מה שצריך").
+  - **How it closed:** by the Owner's decision after his manual public check.
+    - The Owner waived the independent postdeploy review for PRES-2 only; that is not a PASS.
+    - F01–F04 were closed publicly on his check.
+    - `style.css` was accepted as an unused leftover.
+  - **Reclamation (templates §4):**
+    - verified that the 12 commits outside main are reachable from `evidence/pres-2`;
+    - deleted `gauntlet/pres-2`;
+    - removed its clean worktree and the empty `.local/worktrees/pres-1` folder.
+  - **Housekeeping:** dropped the stale GitHub Desktop stash on the Owner's instruction.
+  - **CP-21:** recorded the Owner's choice (4.5 on top of v3), which answers the open question.
+  - **Record:** the [closure record](docs/track-b/pres-2-closure-2026-09-29.md); the
+    deployment receipt now points to it.
+  - **Omission review:** removed the resolved "PRES-2 remains open" blocker, the answered CP-21
+    question and the PRES-2 continuation note. Everything else was retained.
+
 - **PRES-2 Space deployed, 2026-09-29.** Owner explicitly authorized the upload after committing/pushing main. Verified clean local/remote `81ab3be`, then uploaded the exact reviewed `8007f0d2…` bundle with the credential guard. New Hub revision `0c550e8`; all 805 files verified, public card matches, live HTML matches after one precisely disclosed HF metadata injection. Four public Chrome/WebKit desktop/phone demo/control checks ultimately passed: the first Chrome desktop attempt hit sixteen host 429s and displayed the failure fallback; a fresh targeted retry passed. Retained first failure and raw HTML mismatch alongside their resolution. [Deployment receipt](docs/track-b/pres-2-space-deployment-2026-09-29.md). No research, model promotion, retraining, MLflow upload, implementation change or Git mutation. Full P8/independent closure remains pending.
   - **Omission review:** replaced only stale upload/current-main/public-demo state and next actions; preserved anchors, standing decisions, setup items, historical failures, open research questions and previous logs. Original progress retained in `.local/artifacts/pres-2/space-postdeploy/`.
 
@@ -407,35 +431,23 @@ Session Log.
   evaluation (if any), deployment/daily-demo design and Friday/Shabbat failure coverage. These
   implementation fields do not reopen the now-ratified product identity/order/daily-fit decision.
 
-- **PRES-2 remains open:** exact Space bundle is now deployed and targeted public demo checks
-  passed after a retained 429/retry. The rest of P8 and a new independent public verdict remain
-  outstanding; Lead branch/worktree not reclaimed. The old Owner gate no longer blocks
-  the Git steps already executed. Do not report the migration complete from local PASS or push.
 - **PRES-2 advisories:** R1–R7 in the [Integration verdict](docs/track-b/evidence/pres-2/integration.md)
   remain recommendations, not release failures. They include transition question wording, startup
   timing for the new public bundle, product evidence links, data wording, carried editorial points,
-  byte-count logging and clean-checkout reproduction order. P8 must measure the new cold start;
-  no fresh public measurement is claimed here.
+  byte-count logging and clean-checkout reproduction order. The targeted public runs recorded
+  19.2–21.4 s to a visible forecast; these are observations, not a benchmark.
 
 - **PRES-1 remains closed under its landing record.** F6–F8 passed under the explicit Owner
   exception. Initial HF/DagsHub rate-limit failures and successful retries are recorded.
   Historical active-hour total and added-disk baseline remain unavailable, not retroactively
   certified compliant. Required tags preserve all evidence.
-- **Later independent public review: four open v1 conformance findings.** See the
+- **Later independent public review: four v1 conformance findings, now closed.** See the
   [2026-09-29 report](docs/track-b/publication-postdeploy-independent-review-2026-09-29.md):
   F01 unnamed demo controls; F02 favicon 404; F03 startup measurement metadata hidden; F04 visible
   fairness note omits the day count. These IDs belong to this new review, not the earlier F01–F04
   below. All four fixes are implemented, independently accepted locally and landed in PRES-2;
-  public closure still requires the Space deployment and P8 evidence. New rules are not applied
+  closed publicly on the Owner's manual check at PRES-2's closure, 2026-09-29. New rules are not applied
   retrospectively to turn PRES-1 advisories into violations.
-- **Open question, asked 2026-09-24: which extension opens CP-21?** It persists until answered.
-  The recommended order:
-  1. 4.6, starting with licence and resource entry for TabPFN, with DDNN as its direct
-     comparator;
-  2. then 4.4V, VRE modelling from the retained grids;
-  3. then 4.8, recombination.
-
-  4.5 is recommended only as an extra arm for 4.8.
 - **CP-20's analysis and reference passes are exhausted.** Any further CP-20 scoring needs a cap
   decision.
 - **The weather admission is conditional** on inferred NCAR field presence and reconstructed
@@ -473,16 +485,12 @@ Session Log.
 
 ## 7. Notes for Future Sessions
 
-- **[2026-09 / next publication continuation]** Resume PRES-2 from the
-  [publication packet](docs/track-b/evidence/pres-2/publication-packet.md), not its initial launch
-  instructions. Git landing/push and exact Space deployment are done. Carry the new Space
-  receipt and targeted browser records into the remaining P8 checks and independent postdeploy
-  review, then documented closure/reclamation. Preserve historical review files, failed attempts, both tags and reviewed
-  bundle. Use runbook §1a and packet §8 to account for every surface; PRES-2's existing packet
-  already required the now-completed HF deployment despite its unchanged MLflow export. No
-  full release-complete claim follows from Git push or this targeted deployment receipt.
+- **[Next Space deployment]** Delete remote files that are not in the reviewed bundle; the
+  unused `style.css` has survived PRES-1 and PRES-2. Then verify that the served file set equals
+  the bundle. Account for every surface: Pages, the Space, MLflow and the README (runbook §1a,
+  packet §8). A Git push is not a verified deployment.
 - **[Every new publication brief]** Pin PUBLISH_RULES 1.1 and incorporated source hashes;
-  retain A1–A6 and apply A7/A8 at their final-product/live triggers. PRES-2 continuation keeps
+  retain A1–A6 and apply A7/A8 at their final-product/live triggers. PRES-2 was closed under
   its original 1.0 contract. Predecessor comparisons and descriptive chart routes remain;
   v2→v3 reuses existing weather evidence, and v1's archive stays historical.
 - **[Final-product designation / CP-17–19]** Carry research v21-r5 §16, publication 1.1 §§5/7.2,
@@ -499,7 +507,7 @@ Session Log.
 - **[After publication / governance follow-up]** PRES-1 W16/template proposals remain in its
   preserved return for a separate appropriately authorized governance task; no locked-template
   amendment is certified here. PRES-2's runbook/packet updates do not establish that every W16
-  proposal was adopted. Retain the unresolved CP-21 choice. Do not repeat F1 or reopen PRES-1.
+  proposal was adopted. Do not repeat F1 or reopen PRES-1.
 - **[End of programme, after the holidays]**
   1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
      2026-09-07 separately.

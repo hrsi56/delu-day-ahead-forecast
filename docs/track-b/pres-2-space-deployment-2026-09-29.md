@@ -72,3 +72,10 @@ emulated. Do not close all F01–F04 or PRES-2 from these targeted checks. Prese
 branch/worktree and evidence until the remaining acceptance/disposition work is completed.
 The MLflow export is unchanged and was not reuploaded. Deployment records and progress changes
 remain uncommitted for Owner review.
+
+**Status update, 2026-09-29 (after this receipt).**
+
+- These records were committed and pushed at `5a6b585`.
+- The Owner then closed PRES-2 after his own manual public check. The remaining scope above was
+  settled by that decision; see the [closure record](pres-2-closure-2026-09-29.md).
+- The Lead branch and its worktree have been reclaimed. The tags preserve the evidence.
