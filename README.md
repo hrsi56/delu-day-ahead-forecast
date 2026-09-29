@@ -7,7 +7,7 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Research, v3 · weather features.** Met both accuracy targets set before the experiments: error scores at least 10% below the strongest benchmark, daily LEAR (v3: 14% and 17% below; the first of 8 policies tested to meet them). `Development · post-selection`
+**Research, v3 · weather features.** Met both accuracy targets set before the experiments: error scores at least 10% below the strongest benchmark, daily LEAR (v3: 14% below on the point-error score and 17% below on the interval score; the first of 8 policies tested to meet them). `Development · post-selection`
 
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
 - **Accuracy targets:** set on 2026-09-15; the distances are point comparisons.
@@ -16,6 +16,8 @@
 - **Development · post-selection:** development evidence, not a test on new data.
 
 **Demo, v1 · released LightGBM:** [try the v1 demo](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
+
+**How the product works:** The released model, v1 · released LightGBM, topic by topic: the artifact its one-shot test evaluated and the demo computes. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
 
 **Report:** [the one-page report](https://hrsi56.github.io/delu-day-ahead-forecast/), with every result, its limits and its evidence.
 
@@ -36,7 +38,11 @@ Names and statuses come from the registry. The research results are development 
 
 *v2 plus three weather forecast inputs.* In September 2026, v3 was adopted in research.
 
-v2 used price history, the load forecast and calendar inputs. v3 added forecast wind speed and solar radiation available before the auction, while keeping the same underlying modeling setup for the comparison.
+**From v2 to v3: adding weather forecasts.**
+
+- **What changed.** v3 kept v2's blend of two LEAR forecasts and its hour-aware intervals, and added three weather forecasts available before the auction: wind speed at 10 m and 100 m and solar radiation, each with a missing-data indicator.
+- **Comparator.** Set in advance: v2 itself, on identical hours, so the protocol's comparator is also the predecessor and the comparison is direct.
+- **Result.** Point-error score −12% [−16%, −9%] and interval score −14% [−17%, −11%], as a share of v2's score, with 95% confidence intervals; development evidence, not a test on new data.
 
 Difference in error score (v3 − v2), with 95% confidence intervals. Below zero favours v3.
 
@@ -59,7 +65,12 @@ Evidence: [Engineering report, frozen 2026-09-24](https://github.com/hrsi56/delu
 
 *Two LEAR forecasts blended, hour-aware intervals.* In September 2026, v2 was adopted in research.
 
-v2 combines two LEAR forecasts (LEAR: a regularized linear model fitted for each hour) with intervals that account for the hour of the day. A control uses the same blend with pooled intervals, so the interval methods can be compared.
+**From v1 to v2: a blended linear model with hour-aware intervals.**
+
+- **What changed.** After v1 failed in the 2022 crisis, v2 replaced its LightGBM quantile model and fixed-window calibration with an equal blend of two LEAR forecasts refitted every day, and intervals built from recent errors by hour of the day.
+- **Comparator.** Set in advance: daily LEAR, the strongest benchmark, not the predecessor v1; a pooled-interval control isolated the interval method.
+- **Result.** Against daily LEAR: point-error score −2% [−4%, −1%] and interval score −4% [−5%, −2%], as a share of daily LEAR's score, with 95% confidence intervals; development evidence, not a test on new data.
+- **Against the predecessor.** No paired interval for v2 against v1 exists: the protocol did not test that pair. As descriptive context on the same development hours, without an interval, the point-error scores are 1.052 for v1 and 0.644 for v2, and the interval scores 0.986 and 0.616. v1's one-shot holdout covers a different window and evidence class and is not compared.
 
 Against daily LEAR (v2 − daily LEAR), v2 meets the joint improvement rule as exploratory evidence: point-error score difference −0.0137 [−0.0236, −0.0053], interval-score difference −0.0230 [−0.0337, −0.0118].
 
@@ -124,7 +135,7 @@ The complete set, rendered from one place onto every surface that presents v1:
 
 And one on the environment: The day-ahead price floor moved to −600 EUR/MWh from 2026-05-28, an environment shift the frozen model predates.
 
-### Experiments that were not adopted
+### Experiments not adopted between v1 and v2
 
 #### Calibration experiment
 
@@ -144,9 +155,9 @@ Evidence: [Engineering report, frozen 2026-09-16](https://github.com/hrsi56/delu
 
 ### Reading the comparison
 
-Every policy was evaluated on the same 10,747 historical hours across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
+Every policy was evaluated on the same 10,747 historical hours over 448 days, across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
 
-v3 against v2, as a share of v2's error scores: −12% [−16%, −9%] (point) and −14% [−17%, −11%] (interval), with 95% confidence intervals. Development evidence, not a test on new data. Meeting the targets is a development diagnostic, not a product qualification.
+v3 against v2, as a share of v2's error scores: −12% [−16%, −9%] on the point-error score and −14% [−17%, −11%] on the interval score, with 95% confidence intervals. Development evidence, not a test on new data. Meeting the targets is a development diagnostic, not a product qualification.
 
 For scale, as mean absolute error per test period: v3 5.3–15.6 EUR/MWh in the four ordinary periods and 48.0 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
 

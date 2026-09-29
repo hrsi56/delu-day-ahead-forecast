@@ -146,6 +146,8 @@ Every entry carries all of them; `tests/test_35_registry.py` refuses one that do
 - Comparison: `comparator`, `population`
 - Evidence: `evidence_class`, `plan`, `rules`, `sources`, `claim_map`, `run_keys`
 - Presentation and place: `style`, `anchor`, `checkpoint`, `after`, `question`, `informed`
+- Lineage (PUBLISH_RULES 1.0 A3): `predecessor` (the adopted generation a generation replaced in research;
+  validated by `src/delu_forecast/registry.py::transition_problems`, never inferred from a version number)
 <!-- /runbook:registry-fields -->
 
 The kinds:

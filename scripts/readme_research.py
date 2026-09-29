@@ -165,6 +165,10 @@ def build_glance(target: str = "md") -> str:
         para(bold(f"Demo, {tok('{g:released.name}')}:") + " " + link(f"try the {tok('{g:released.version}')} demo", SPACE_URL)
              + ". " + tok("{g:release_rule}", "P22")),
         "",
+        para(bold("How the product works:") + " " + render("product.lede") + " "
+             + link("Read it in the report", PAGES_URL + "#product") + ": its data, validation, results, failures, "
+             "interval reliability and how to run it."),
+        "",
         para(bold("Report:") + " " + link("the one-page report", PAGES_URL) + ", with every result, its limits and its evidence."),
         "",
         para(bold("Evidence:") + " each generation below links its engineering report, its review verdict and its "
@@ -183,11 +187,27 @@ def not_established(keys: tuple[str, ...]) -> list[str]:
     return ["**What this result does not establish:**", "", *[f"- {md(key)}" for key in keys], ""]
 
 
+def transition_lines(entry: G.Entry) -> list[str]:
+    """The adopted transition into this generation (PUBLISH_RULES 1.0 A3), as on the page: what changed, the
+    comparator set in advance, the result and, where the comparator is not the predecessor, why no paired
+    predecessor comparison exists. Its limits are the section's own list below."""
+    item = G.transition_into(entry)
+    if item is None:
+        return []
+    key = f"transition.{item.id}"
+    lines = [f"**{md(f'{key}.title')}.**", ""]
+    for name, label in (("change", "What changed"), ("comparator", "Comparator"), ("result", "Result"),
+                        ("predecessor", "Against the predecessor")):
+        if f"{key}.{name}" in RC.BLOCKS_BY_KEY:
+            lines.append(f"- **{label}.** {md(f'{key}.{name}')}")
+    return lines + [""]
+
+
 def generation_section(entry: G.Entry) -> list[str]:
     head = [f"### {entry.name}", "", f"*{entry.subtitle}.* {G.status_sentence(entry)}", ""]
     if entry.id == "v3":
         return head + [
-            md("v3.change"), "",
+            *transition_lines(entry),
             md("v3.outcome.head"), "",
             f"- {md('v3.outcome.mae')}.",
             f"- {md('v3.outcome.wis')}.",
@@ -199,7 +219,7 @@ def generation_section(entry: G.Entry) -> list[str]:
         ]
     if entry.id == "v2":
         return head + [
-            md("v2.change"), "",
+            *transition_lines(entry),
             md("v2.result.hb2"), "",
             md("v2.result.hp"), "",
             *not_established(("v2.caveat.attribution", "v2.caveat.split", "v2.caveat.class")),
@@ -252,9 +272,21 @@ def build_block() -> str:
     ]
     for entry in G.generations(newest_first=True):
         lines += generation_section(entry)
-    lines += ["### Experiments that were not adopted", ""]
+    # Rejected branches, grouped where they sit in the lineage and headed apart from the adopted transitions (A3).
+    groups: dict[str, list[G.Entry]] = {}
     for entry in G.branches():
-        lines += branch_section(entry)
+        node = entry
+        while node.kind != "generation":
+            node = G.get(node.after)
+        groups.setdefault(node.id, []).append(entry)
+    for generation in G.generations():
+        if generation.id not in groups:
+            continue
+        later = next((item.successor for item in G.transitions() if item.predecessor.id == generation.id), None)
+        span = f"between {generation.version} and {later.version}" if later else f"after {generation.version}"
+        lines += [f"### Experiments not adopted {span}", ""]
+        for entry in groups[generation.id]:
+            lines += branch_section(entry)
     lines += [
         "### Reading the comparison", "",
         md("overview.fairness.readme"), "",
