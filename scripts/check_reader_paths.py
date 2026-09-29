@@ -220,7 +220,8 @@ MEASURE_JS = """
   let smallest = null, where = null;
   for (const t of texts) {
     const svg = t.closest('svg');
-    const scale = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
+    const m = t.getScreenCTM();  // the size a reader sees, border and viewBox scale included
+    const scale = m ? Math.hypot(m.a, m.b) : svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
     const size = parseFloat(t.getAttribute('font-size') || '13') * scale;
     if (smallest === null || size < smallest) {
       smallest = size; where = svg.id === 'chart' ? 'v1-replay' : svg.id === 'p-chart' ? 'product-replay' : svg.dataset.chart + ':' + svg.dataset.variant; }
@@ -269,9 +270,11 @@ CHART_JS = """
     const sb = svg.getBoundingClientRect();
     const vb = svg.viewBox.baseVal && svg.viewBox.baseVal.width ? svg.viewBox.baseVal.width : sb.width;
     const boxes = [...svg.querySelectorAll('text')].filter(t => t.textContent.trim()).map(t => {
-      const b = t.getBoundingClientRect();
+      const b = t.getBoundingClientRect(), m = t.getScreenCTM();
+      // the size a reader sees: the text's own screen transform includes the viewBox scale and the chart's border
+      const scale = m ? Math.hypot(m.a, m.b) : sb.width / vb;
       return {t: t.textContent.trim().slice(0, 40), x0: b.left, x1: b.right, y0: b.top, y1: b.bottom,
-              px: parseFloat(t.getAttribute('font-size') || '13') * sb.width / vb};
+              px: parseFloat(t.getAttribute('font-size') || '13') * scale};
     });
     out.texts += boxes.length;
     for (const b of boxes) {
@@ -519,14 +522,16 @@ LANDMARKS_JS = """() => { const y = s => { const e = document.querySelector(s);
           page_height: document.documentElement.scrollHeight}; }"""
 
 REPLAY_JS = """() => { const svg = document.getElementById('chart'), box = svg.getBoundingClientRect();
-  const sizes = [...svg.querySelectorAll('text')].map(t => parseFloat(t.getAttribute('font-size')) * box.width / svg.viewBox.baseVal.width);
+  const sizes = [...svg.querySelectorAll('text')].map(t => { const m = t.getScreenCTM();
+    return parseFloat(t.getAttribute('font-size')) * (m ? Math.hypot(m.a, m.b) : box.width / svg.viewBox.baseVal.width); });
   return {archive_open: document.getElementById('v1-archive').open, hash: location.hash,
           chart_width_px: Math.round(box.width), viewbox_width: svg.viewBox.baseVal.width,
           smallest_text_px: Math.round(Math.min(...sizes) * 100) / 100}; }"""
 
 
 PRODUCT_REPLAY_JS = """() => { const svg = document.getElementById('p-chart'), box = svg.getBoundingClientRect();
-  const sizes = [...svg.querySelectorAll('g.plot text')].map(t => parseFloat(t.getAttribute('font-size')) * box.width / svg.viewBox.baseVal.width);
+  const sizes = [...svg.querySelectorAll('g.plot text')].map(t => { const m = t.getScreenCTM();
+    return parseFloat(t.getAttribute('font-size')) * (m ? Math.hypot(m.a, m.b) : box.width / svg.viewBox.baseVal.width); });
   return {manual_open: document.getElementById('product-manual').open, hash: location.hash,
           chart_width_px: Math.round(box.width), viewbox_width: svg.viewBox.baseVal.width, marks: svg.querySelectorAll('g.plot *').length,
           smallest_text_px: sizes.length ? Math.round(Math.min(...sizes) * 100) / 100 : null}; }"""

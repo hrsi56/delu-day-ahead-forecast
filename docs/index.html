@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Forecasting tomorrow's electricity prices · DE-LU day-ahead research</title>
 <meta name="description" content="The released day-ahead electricity price forecast for Germany and Luxembourg, and how successive research models were compared and improved, with every number traced to committed evidence.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 16 16&#x27;%3E%3Crect width=&#x27;16&#x27; height=&#x27;16&#x27; rx=&#x27;3&#x27; fill=&#x27;%23475569&#x27;/%3E%3Cpath d=&#x27;M3 11l3-4 3 2 4-5&#x27; fill=&#x27;none&#x27; stroke=&#x27;%23fff&#x27; stroke-width=&#x27;1.8&#x27; stroke-linecap=&#x27;round&#x27; stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxNiAxNic+PHJlY3Qgd2lkdGg9JzE2JyBoZWlnaHQ9JzE2JyByeD0nMycgZmlsbD0nIzQ3NTU2OScvPjxwYXRoIGQ9J00zIDExbDMtNCAzIDIgNC01JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMS44JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnLz48L3N2Zz4=">
 <style>
 :root{--canvas:#FAFAFA;--surface:#FFFFFF;--border:#E4E4E7;--text:#18181B;--text-2:#52525B;--accent:#1D4ED8;--primary:#18181B;--primary-hover:#3F3F46;--primary-pressed:#52525B;--v1:#475569;--v2:#6D28D9;--v3:#0F766E;--ref:#71717A;--badge-bg:#F4F4F5;--badge-text:#3F3F46;--caveat-rule:#52525B;--grid:#E4E4E7;--font:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--header:56px;--radius:12px;--content:1200px;--prose:66ch}
 *{box-sizing:border-box}
@@ -1011,11 +1011,12 @@ window.__COV__={"50":"0.4407","80":"0.7593","95":"0.9398"};
  function fan(o){
   var W=o.maxW,H=380,ML=58,MR=16,MT=18,MB=34,FS=11,STEP=2;
   var n=D.hours.length,dom=D.domain,svg=o.svg,c=o.colors;
-  // Draw at the chart's rendered width, so a phone gets a phone geometry and 12 px text instead of a
-  // shrunk desktop drawing. The data, controls and their behaviour are unchanged.
+  // Draw at the chart's rendered width inside its border (clientWidth), so a phone gets a phone geometry and one
+  // drawing unit is one CSS pixel: FS is the size a reader sees, not a shrunk desktop drawing. The data, controls
+  // and their behaviour are unchanged.
   function geometry(){
-   var w=Math.round(svg.getBoundingClientRect().width)||o.maxW;
-   W=Math.max(280,Math.min(o.maxW,w));
+   var w=svg.clientWidth||Math.round(svg.getBoundingClientRect().width)||o.maxW;
+   W=Math.max(240,Math.min(o.maxW,w));
    var narrow=W<600;
    H=narrow?300:o.maxH;ML=narrow?44:58;MR=narrow?10:16;MT=narrow?22:18;FS=12;STEP=narrow?4:2;
    svg.setAttribute('viewBox','0 0 '+W+' '+H);

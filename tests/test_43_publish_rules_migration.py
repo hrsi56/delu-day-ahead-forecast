@@ -312,6 +312,20 @@ def test_f02_the_page_carries_its_own_icon_inline(page):
     assert icons and all(icon.startswith("data:") for icon in icons)
 
 
+def test_f02_the_icon_carries_no_address_for_the_link_gate(page):
+    import check_links
+    head = page[:page.index("</head>")]
+    icon = re.findall(r'<link rel="icon" href="([^"]+)"', head)[0]
+    assert icon.startswith("data:image/svg+xml;base64,") and not check_links._URL.findall(icon)
+
+
+def test_f02_negative_control_an_icon_with_its_namespace_in_clear_is_read_as_an_address():
+    import html
+    import check_links
+    clear = html.escape("data:image/svg+xml," + B.FAVICON_SVG, quote=True)
+    assert check_links._URL.findall(clear)
+
+
 def test_f02_negative_control_a_page_without_an_icon_is_caught(page):
     stripped = re.sub(r'<link rel="icon"[^>]*>', "", page)
     assert not re.findall(r'<link rel="icon" href="data:', stripped[:stripped.index("</head>")])

@@ -1,0 +1,112 @@
+{
+  "check": "demo cold start and controls (plan \u00a711.3, Phase 0)",
+  "checked_at_utc": "2026-09-29T02:11:10+00:00",
+  "client": "Playwright, fresh browser context per run; unauthenticated",
+  "host": "arm64 / Darwin 25.5.0",
+  "runs": [
+    {
+      "browser_version": "154.0.8037.58",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 336,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 9.7,
+      "started_utc": "2026-09-29T02:09:58+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8820/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "154.0.8037.58",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 336,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 9.6,
+      "started_utc": "2026-09-29T02:10:15+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8820/",
+      "viewport": "390x844"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "webkit",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 340,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 10.7,
+      "started_utc": "2026-09-29T02:10:33+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8820/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "webkit",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 340,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 11.2,
+      "started_utc": "2026-09-29T02:10:52+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "http://127.0.0.1:8820/",
+      "viewport": "390x844"
+    }
+  ]
+}

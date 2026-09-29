@@ -2918,11 +2918,12 @@ CHART_JS = """
  function fan(o){
   var W=o.maxW,H=380,ML=58,MR=16,MT=18,MB=34,FS=11,STEP=2;
   var n=D.hours.length,dom=D.domain,svg=o.svg,c=o.colors;
-  // Draw at the chart's rendered width, so a phone gets a phone geometry and 12 px text instead of a
-  // shrunk desktop drawing. The data, controls and their behaviour are unchanged.
+  // Draw at the chart's rendered width inside its border (clientWidth), so a phone gets a phone geometry and one
+  // drawing unit is one CSS pixel: FS is the size a reader sees, not a shrunk desktop drawing. The data, controls
+  // and their behaviour are unchanged.
   function geometry(){
-   var w=Math.round(svg.getBoundingClientRect().width)||o.maxW;
-   W=Math.max(280,Math.min(o.maxW,w));
+   var w=svg.clientWidth||Math.round(svg.getBoundingClientRect().width)||o.maxW;
+   W=Math.max(240,Math.min(o.maxW,w));
    var narrow=W<600;
    H=narrow?300:o.maxH;ML=narrow?44:58;MR=narrow?10:16;MT=narrow?22:18;FS=12;STEP=narrow?4:2;
    svg.setAttribute('viewBox','0 0 '+W+' '+H);
@@ -3483,10 +3484,12 @@ calls.</p>
 
 
 #: The page's own icon, inline (review F02): without one, a browser asks the host for /favicon.ico, a request the
-#: offline page must not make and that Pages answered with 404. A `data:` URI is part of the document.
-FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' "
-           "height='16' rx='3' fill='%23475569'/%3E%3Cpath d='M3 11l3-4 3 2 4-5' fill='none' stroke='%23fff' "
-           "stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+#: offline page must not make and that Pages answered with 404. A `data:` URI is part of the document; base64, so
+#: the SVG namespace inside it is not read as an address by the link gate (`scripts/check_links.py`).
+FAVICON_SVG = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' "
+               "fill='#475569'/><path d='M3 11l3-4 3 2 4-5' fill='none' stroke='#fff' stroke-width='1.8' "
+               "stroke-linecap='round' stroke-linejoin='round'/></svg>")
+FAVICON = "data:image/svg+xml;base64," + base64.b64encode(FAVICON_SVG.encode()).decode()
 
 TITLE = "Forecasting tomorrow's electricity prices · DE-LU day-ahead research"
 DESCRIPTION = (
