@@ -20,6 +20,7 @@ tags:
 
 **Model: v1 · released LightGBM.** In September 2026, v1 was released. The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
 Research since v1: [the report](https://hrsi56.github.io/delu-day-ahead-forecast/) (every generation, its result and its evidence) and [the `delu-generations` MLflow experiment](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1).
+How the released model works, topic by topic: [the report's product documentation](https://hrsi56.github.io/delu-day-ahead-forecast/#product).
 
 Probabilistic forecasts of the next delivery day's hourly German–Luxembourg day-ahead
 electricity price, with calibrated 50 / 80 / 95 % prediction intervals from a LightGBM

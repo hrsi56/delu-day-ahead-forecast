@@ -1729,7 +1729,7 @@ def product_reliability_chart() -> str:
     lo, hi = 0.2, 1.0
 
     def panel(x0: float, x1: float, top: float, name: str, pattern: str) -> tuple[str, float]:
-        scale = Scale("product-coverage-x", lo, hi, x0 + 8, x1 - 8, R.UNIT_FRACTION)
+        scale = Scale("product-coverage-x", lo, hi, x0 + 16, x1 - 14, R.UNIT_FRACTION)
         out = [svg_text(x0, top + 16, name, weight="600")]
         y = top + 28
         for level in levels:
@@ -1740,7 +1740,7 @@ def product_reliability_chart() -> str:
             first = y + 30
             for index, (stage, record_id) in enumerate(zip(STAGE_STYLE, ids)):
                 line_y = first + 14 * index
-                out.append(f'<line x1="{x0 + 8:.1f}" x2="{x1 - 8:.1f}" y1="{line_y:.1f}" y2="{line_y:.1f}" '
+                out.append(f'<line x1="{x0 + 16:.1f}" x2="{x1 - 14:.1f}" y1="{line_y:.1f}" y2="{line_y:.1f}" '
                            f'stroke="{TOKENS["grid"]}"/>')
                 out.append(marker(scale(R.get(record_id).value), line_y, stage, size=5.2, style=STAGE_STYLE[stage],
                                   extra=RC.svg_binding("P46", record_id)))

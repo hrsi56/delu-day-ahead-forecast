@@ -13,12 +13,18 @@
   ],
   "browser_champion_sha256": "9efb73f6bb29a60248ca6a4141b074c81a8ecc6e127396dfce52d4ff4b03df1b",
   "bundle": "dist/space-wasm",
-  "bundle_sha256": "b046c69b899bb9d5a2b2f9aeb3e5b3eebfdda820a419137ef5cdf8b8ac8f7c3d",
+  "bundle_sha256": "8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e",
   "bundle_sha256_method": "SHA-256 of the sorted `<sha256>  <path>` lines of every file in the bundle",
   "card": "space-wasm/README.md",
+  "control_repair": {
+    "injected": true,
+    "menu_name": "Notebook menu",
+    "page_css": "[data-testid=\"notebook-actions-dropdown\"]>button{min-width:44px;min-height:44px}a[href*=\"marimo-team/marimo\"]{display:inline-flex;align-items:center;min-height:44px}",
+    "shadow_css": "span[dir][data-orientation=\"horizontal\"][id]{min-height:44px}[role=\"slider\"]{width:22px;height:22px}[role=\"radiogroup\"] label{display:inline-flex;align-items:center;min-height:44px;padding:0 12px 0 6px;cursor:pointer}[role=\"radiogroup\"] [role=\"radio\"]{width:20px;height:20px}button[aria-controls][aria-expanded]{min-height:44px}"
+  },
   "deployment": "owner-only; this script assembles and pushes nothing",
   "files": 805,
-  "index_html_sha256": "1d701cbeb146ee5c77b45d3c9d705656671444b5062fe3adca3ba7ae1341fa95",
+  "index_html_sha256": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
   "problems": [],
   "referenced_assets": {
     "checked": 315,
@@ -109,5 +115,5 @@
       "ready"
     ]
   },
-  "total_bytes_uncompressed": 44162180
+  "total_bytes_uncompressed": 44164910
 }

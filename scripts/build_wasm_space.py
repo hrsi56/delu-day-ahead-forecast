@@ -305,6 +305,105 @@ def startup_js() -> str:
 STARTUP_BEGIN = "<!-- delu-startup:start -->"
 STARTUP_END = "<!-- delu-startup:end -->"
 
+# -- the framework's controls: names and target sizes (review F01; PUBLISH_RULES 1.0 §7.1, §9) -----------------
+#
+# marimo renders each widget in an open shadow root. Its slider's visible label points (`<label for>`) at the slider
+# root, not at the thumb that carries role="slider", so the thumb had no accessible name; its radio group is named
+# only "Radio Group"; and the notebook menu is an icon button with no name and a 31 x 25 px target. The repair names
+# each control from its own visible label, inside the same shadow root, names the menu for what it opens, and sizes
+# the hit areas to about 44 px. It changes no widget, value, payload or computation.
+
+A11Y_BEGIN = "<!-- delu-a11y:start -->"
+A11Y_END = "<!-- delu-a11y:end -->"
+#: The notebook menu's name: what the button opens.
+MENU_NAME = "Notebook menu"
+
+#: Inside every widget's shadow root: about 44 px targets for the slider track, the radio labels and the accordion
+#: triggers. Visual sizes of marks stay close to marimo's own.
+A11Y_SHADOW_CSS = (
+    'span[dir][data-orientation="horizontal"][id]{min-height:44px}'
+    '[role="slider"]{width:22px;height:22px}'
+    '[role="radiogroup"] label{display:inline-flex;align-items:center;min-height:44px;padding:0 12px 0 6px;cursor:pointer}'
+    '[role="radiogroup"] [role="radio"]{width:20px;height:20px}'
+    'button[aria-controls][aria-expanded]{min-height:44px}'
+)
+#: In the page itself: the notebook menu's and the framework credit link's hit areas.
+A11Y_PAGE_CSS = ('[data-testid="notebook-actions-dropdown"]>button{min-width:44px;min-height:44px}'
+                 'a[href*="marimo-team/marimo"]{display:inline-flex;align-items:center;min-height:44px}')
+
+
+def a11y_js() -> str:
+    return """
+(function(){
+ var css=%s,menuName=%s,sheet=null;
+ try{sheet=new CSSStyleSheet();sheet.replaceSync(css);}catch(e){sheet=null;}
+ function labelFor(root,node){
+  // The widget's own visible label: the one pointing at this control's root, or the widget's label part.
+  var owner=node.closest('[id]');
+  var lab=owner?root.querySelector('label[for="'+owner.id+'"]'):null;
+  if(!lab){var part=root.querySelector('[part="label"] label');lab=part||null;}
+  if(!lab||!(lab.textContent||'').trim()){return null;}
+  if(!lab.id){lab.id=(owner&&owner.id?owner.id:'delu')+'-name';}
+  return lab.id;
+ }
+ function fix(root){
+  Array.prototype.forEach.call(root.querySelectorAll('[role="slider"]:not([aria-labelledby])'),function(el){
+   var id=labelFor(root,el);if(id){el.setAttribute('aria-labelledby',id);}
+  });
+  Array.prototype.forEach.call(root.querySelectorAll('[role="radiogroup"]:not([aria-labelledby])'),function(el){
+   var id=labelFor(root,el);if(id){el.setAttribute('aria-labelledby',id);}
+  });
+  if(sheet&&root.adoptedStyleSheets&&root.adoptedStyleSheets.indexOf(sheet)<0){
+   root.adoptedStyleSheets=root.adoptedStyleSheets.concat([sheet]);
+  }
+ }
+ var watched=[];
+ function sweep(){
+  var menu=document.querySelector('[data-testid="notebook-actions-dropdown"] button[aria-haspopup="menu"]');
+  if(menu&&!menu.getAttribute('aria-label')){menu.setAttribute('aria-label',menuName);}
+  Array.prototype.forEach.call(document.querySelectorAll('*'),function(el){
+   if(!el.shadowRoot||el.tagName.indexOf('MARIMO-')!==0){return;}
+   fix(el.shadowRoot);
+   if(watched.indexOf(el.shadowRoot)<0){
+    watched.push(el.shadowRoot);
+    new MutationObserver(later).observe(el.shadowRoot,{childList:true,subtree:true});
+   }
+  });
+ }
+ var pending=null;
+ function later(){if(pending===null){pending=setTimeout(function(){pending=null;sweep();},120);}}
+ new MutationObserver(later).observe(document.documentElement,{childList:true,subtree:true});
+ later();
+})();
+""" % (json.dumps(A11Y_SHADOW_CSS), json.dumps(MENU_NAME))
+
+
+def inject_a11y(html: str) -> str:
+    """Put the control repair into the exported page: one stylesheet and one small script at the end of the body."""
+    if A11Y_BEGIN in html:
+        raise ValueError("the control repair is already in this page")
+    close = html.rfind("</body>")
+    if close < 0:
+        raise ValueError("the export has no </body> to inject into")
+    block = f"{A11Y_BEGIN}<style>{A11Y_PAGE_CSS}</style><script>{a11y_js()}</script>{A11Y_END}"
+    return html[:close] + block + html[close:]
+
+
+def a11y_findings(html: str) -> list[str]:
+    """What the built page must carry for the control repair; empty when it does (the build and test_23)."""
+    if html.count(A11Y_BEGIN) != 1 or html.count(A11Y_END) != 1:
+        return ["the control repair is missing or injected twice"]
+    block = html[html.index(A11Y_BEGIN):html.index(A11Y_END)]
+    problems = []
+    for needle, what in (('[role="slider"]', "no slider naming"), ('[role="radiogroup"]', "no radio-group naming"),
+                         ("aria-labelledby", "no label reference"), (json.dumps(MENU_NAME), "no menu name"),
+                         ("notebook-actions-dropdown", "no menu target sizing"), ("min-height:44px", "no 44 px targets")):
+        if needle not in block:
+            problems.append(what)
+    if re.search(r"\bfetch\(|XMLHttpRequest|import\(", block):
+        problems.append("the repair makes a request")
+    return problems
+
 
 def inject_startup(html: str, C) -> str:
     """Put the demo states into the exported page as static HTML (plan §7.11, invariant 25).
@@ -426,7 +525,7 @@ def main() -> int:
     C = build_claims()
     index = BUNDLE / "index.html"
     if index.is_file():
-        index.write_text(inject_startup(index.read_text(), C))
+        index.write_text(inject_a11y(inject_startup(index.read_text(), C)))
 
     # -- structural checks: fail the build, not the visitor ---------------
     problems = []
@@ -462,6 +561,8 @@ def main() -> int:
             problems.append(f"{leak} present in the bundle")
     startup = startup_findings(index.read_text(), C) if index.is_file() else ["index.html missing"]
     problems.extend(f"startup states: {finding}" for finding in startup)
+    repair = a11y_findings(index.read_text()) if index.is_file() else ["index.html missing"]
+    problems.extend(f"control names and targets: {finding}" for finding in repair)
     references_checked, missing = referenced_asset_problems(BUNDLE) if index.is_file() else (0, [])
     problems.extend(f"referenced assets: {problem}" for problem in missing)
     front = (BUNDLE / "README.md").read_text().split("---", 2)[1]
@@ -492,6 +593,8 @@ def main() -> int:
                     "deadline_seconds": DEADLINE_SECONDS,
                     "report_url": C["pages_url"],
                 },
+                "control_repair": {"injected": index.is_file() and not repair, "menu_name": MENU_NAME,
+                                   "shadow_css": A11Y_SHADOW_CSS, "page_css": A11Y_PAGE_CSS},
                 "removed_from_export_root": removed,
                 "referenced_assets": {"checked": references_checked, "missing": missing,
                                       "shipped_at_root_for_shadow_roots": shipped_at_root},
