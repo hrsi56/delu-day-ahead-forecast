@@ -1,0 +1,34 @@
+{
+  "checked_at_utc": "2026-09-29T11:06:41.761944+00:00",
+  "expected_revision": "0c550e863711e19abbb35219cf64d45dfb39c888",
+  "context": "anonymous public requests",
+  "surfaces": [
+    {
+      "url": "https://huggingface.co/api/spaces/Yarden-Viktor/delu-day-ahead-forecast",
+      "status": 200,
+      "bytes": 38724,
+      "revision": "0c550e863711e19abbb35219cf64d45dfb39c888",
+      "stage": "RUNNING",
+      "sdk": "static",
+      "private": false,
+      "matches": true
+    },
+    {
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "status": 200,
+      "bytes": 85506,
+      "sha256": "0122c63cbe668e323afde577782e6b6e056f8d2f476311ef717d9bcae77f50db",
+      "expected_sha256": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
+      "matches": false
+    },
+    {
+      "url": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast/raw/main/README.md",
+      "status": 200,
+      "bytes": 16353,
+      "sha256": "c92a2666d76255b24d8e0fb159f97bedcbee0a7a948fb6afeac4b02089bb9a67",
+      "expected_sha256": "c92a2666d76255b24d8e0fb159f97bedcbee0a7a948fb6afeac4b02089bb9a67",
+      "matches": true
+    }
+  ],
+  "passed": false
+}

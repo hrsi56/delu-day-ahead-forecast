@@ -1,0 +1,137 @@
+{
+  "check": "demo cold start and controls (plan \u00a711.3, Phase 0)",
+  "checked_at_utc": "2026-09-29T11:11:26+00:00",
+  "client": "Playwright, fresh browser context per run; unauthenticated",
+  "host": "arm64 / Darwin 25.5.0",
+  "runs": [
+    {
+      "body_text_at_failure": "The demo did not start\n\nA file it needs did not load, or it has not finished starting after several minutes. A slow or filtered connection, or a browser that blocks the runtime, can cause this. You can view the saved forecast and research results in the report without loading the model.\n\nRetry\nView the report",
+      "browser_version": "154.0.8037.58",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()",
+        "Failed to load resource: the server responded with a status of 429 ()"
+      ],
+      "engine": "chrome",
+      "error": "TimeoutError: Locator.wait_for: Timeout 180000ms exceeded.\nCall log:\n  - waiting for get_by_text(\"Maximum absolute deviation\").first to be visible\n",
+      "failed_requests": [
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/errors-DzO-nXy-.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/createReducer-B_XmHROl.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/RenderHTML-DwhMAd9l.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/toDate-hGYJX0Ha.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/refresh-cw-Bf-rx_aV.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/ellipsis-Dfik_tuW.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/share-CPtBiNgr.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/download-DMxOzI7b.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/blob-B2d_dHwI.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/write-secret-modal-D6zoZgLY.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/useInstallPackage-DsD08SLK.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/kbd-Cwh96ZBE.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/useRunCells-CX7oW5zy.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/useDebounce-DgpSQhrP.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/package-DPlscLzt.js net::ERR_ABORTED",
+        "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/assets/events-CbeVJ6OD.js net::ERR_ABORTED"
+      ],
+      "first_static_text": "The demo did not start\n\nA file it needs did not load, or it has not finished starting after several minutes. A slow or filtered connection, or a browser that bl",
+      "ready": false,
+      "requests": 188,
+      "seconds_waited": 181.2,
+      "started_utc": "2026-09-29T11:06:59+00:00",
+      "startup_state_at_first_paint": "failure",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "154.0.8037.58",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "chrome",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 345,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 19.2,
+      "started_utc": "2026-09-29T11:10:01+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "390x844"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "webkit",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 352,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 21.4,
+      "started_utc": "2026-09-29T11:10:29+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "1440x900"
+    },
+    {
+      "browser_version": "26.6",
+      "cache": "fresh browser context: empty cache, no cookies",
+      "console_errors": [],
+      "engine": "webkit",
+      "failed_requests": [],
+      "first_static_text": "Starting the v1 demo\n\nForecast calculations run locally in your browser. The first visit downloads about 57 MB, a Python runtime and the model, so it can take a",
+      "horizontal_overflow": false,
+      "level_change_to_95": {
+        "aria_checked": "true",
+        "view_changed": true
+      },
+      "ready": true,
+      "requests": 358,
+      "scenario_change": {
+        "from": "1",
+        "to": "1.01",
+        "view_changed": true
+      },
+      "seconds_to_visible_forecast": 20.8,
+      "started_utc": "2026-09-29T11:10:58+00:00",
+      "startup_state_at_first_paint": "loading",
+      "startup_state_when_ready": "ready",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "390x844"
+    }
+  ]
+}
