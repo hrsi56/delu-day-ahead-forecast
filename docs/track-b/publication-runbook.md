@@ -1,6 +1,7 @@
 # Publication runbook
 
-**Publication Standard v1 §12; written by the PRES-1 conformance task (brief W15), 2026-09-28.**
+**Publication Standard v1 §12; written by the PRES-1 conformance task (brief W15), 2026-09-28;
+brought to PUBLISH_RULES 1.0 (A1–A6) by PRES-2, 2026-09-29.**
 This lists every place a publication touches: the files and symbols to change, in order, for an
 adopted generation, a branch card, a changed population and each status transition the registry
 defines. It does not add requirements; the standard, the checkpoint's brief and plan revision 3
@@ -26,18 +27,26 @@ Space cards and the MLflow export), and the Space bundle by `make wasm`.
 3. **The cold-reader check** (standard §11): a fresh agent, the rendered screens only, disclosures
    closed, six questions.
 4. **The independent check**, in a clean detached worktree at the candidate SHA.
-5. **The MLflow upload and verification:** `scripts/mlflow_publish.py::main` (on the Owner's
-   instruction for that action), then `scripts/verify_mlflow_mirror.py::verify`, the browser route
-   check `scripts/check_reader_paths.py::mlflow_routes`, and the index,
-   `scripts/verify_mlflow_mirror.py::write_index`.
+5. **The MLflow upload and verification**, only when the committed export changed
+   (`scripts/mlflow_export.py::main` with `--check` says whether it did):
+   `scripts/mlflow_publish.py::main` (on the Owner's instruction for that action), then
+   `scripts/verify_mlflow_mirror.py::verify`, the browser route check
+   `scripts/check_reader_paths.py::mlflow_routes`, and the index,
+   `scripts/verify_mlflow_mirror.py::write_index`. An unchanged export is verified afresh, read-only,
+   rather than uploaded again (PUBLISH_RULES 1.0 §11).
 6. **The final build:** `scripts/build_pages.py::main` with `--final`, which refuses unless the
    index covers `src/delu_forecast/registry.py::expected_routes`
    (`scripts/build_pages.py::route_coverage`).
 7. **A focused recheck** on the final SHA.
-8. **Landing, push and the Space redeploy**, by the Owner or on his explicit instruction naming the
-   action (`AGENTS.md` § Git and publication authority). The pre-push hook runs the secret guard,
-   then `scripts/publication_guard.py::pre_push`.
-9. **The post-deploy checks.**
+8. **Landing, push and the Space upload**, by the Owner or on the Owner's explicit instruction naming
+   the action (`AGENTS.md` § Git and publication authority). The pre-push hook runs the secret guard,
+   then `scripts/publication_guard.py::pre_push`. The Space bundle goes up with
+   `scripts/deploy_space.py::main`, which refuses a bundle whose hash is not the reviewed one and runs
+   the credential-value guard over every outbound file first (`docs/deploy.md`).
+9. **The post-deploy checks** (PUBLISH_RULES 1.0 A6): per surface, the URL, the UTC time, the served
+   revision and bytes, the behaviour observed and every first failure and retry, from
+   `scripts/check_reader_paths.py::release` on the public URL, `scripts/check_reader_paths.py::demo_controls`
+   and the mirror verifier. Local results never stand in for them.
 
 ---
 
@@ -47,7 +56,7 @@ The checkpoint's packet supplies every value. Work in this order; each step is o
 
 | # | Touchpoint | What changes |
 |---|---|---|
-| 1 | `src/delu_forecast/registry.py::_ENTRIES` | The new entry, with every field of §5 below. Its first status is `adopted in research`, dated, with its landing record as the source. The version number is given only now, at adoption (plan §16 decision 2). |
+| 1 | `src/delu_forecast/registry.py::_ENTRIES` | The new entry, with every field of §5 below. Its first status is `adopted in research`, dated, with its landing record as the source. The version number is given only now, at adoption (plan §16 decision 2). Its `predecessor` is the adopted generation it replaced; `src/delu_forecast/registry.py::transition_problems` refuses a chain that is not one dated line. |
 | 2 | `src/delu_forecast/registry.py::CHECKPOINTS` | The checkpoint that produced it: its MLflow run key, owner, evidence tag and SHA, freeze date, report, verdict, landing record and children. |
 | 3 | `src/delu_forecast/registry.py::EVIDENCE_TAGS` | The checkpoint's evidence tag and the date it froze: every audit-grade label takes its date from here (standard §7). |
 | 4 | `src/delu_forecast/registry.py::RULES` | Only if the governing plan set a new pre-specified rule, with the date it was set. |
@@ -58,8 +67,9 @@ The checkpoint's packet supplies every value. Work in this order; each step is o
 | 9 | `src/delu_forecast/derived.py::CHANGES` | The change against its comparator, with the interval from the checkpoint's own bootstrap draws from CP-21 on (standard §3.3 b). |
 | 10 | `src/delu_forecast/derived.py::PERIOD_SUBJECTS` | The per-period MAE ranges, with the stress period the protocol names (standard §3.3 c). |
 | 11 | `docs/track-b/research-content/` | The checkpoint's claim map, registered in `src/delu_forecast/research_claims.py::CLAIM_MAPS`. |
-| 12 | `src/delu_forecast/research_claims.py::BLOCKS` | The chapter's claim blocks, named `v4.<slot>`: at least the question, the change, the chart headline, the reading, one to three things not established and the dated decision. Status words come only through registry tokens (`{g:…}`). The headline block needs no edit: `src/delu_forecast/research_claims.py::headline_template` takes the current generation from the registry. |
-| 13 | `scripts/build_pages.py::v3_slots` | The model for a `v4_slots` function returning `scripts/build_pages.py::ChapterSlots`, with its main chart as `scripts/build_pages.py::MainChart` panels. `scripts/build_pages.py::slot_problems` refuses a chapter that misses a slot. |
+| 12 | `src/delu_forecast/research_claims.py::BLOCKS` | The chapter's claim blocks, named `v4.<slot>`: at least the question, the change, the chart headline, the reading, one to three things not established and the dated decision. Status words come only through registry tokens (`{g:…}`). The headline block needs no edit: `src/delu_forecast/research_claims.py::headline_template` takes the current generation from the registry, and names each headline value's metric (A1). |
+| 12a | `src/delu_forecast/research_claims.py::BLOCKS` | The adopted transition's summary (A3), `transition.v3-v4.<field>`: `title` ("From v3 to v4: …"), `change`, `comparator`, `result` and `limits`, and `predecessor` whenever the protocol's comparator is not the predecessor — why no paired predecessor comparison exists, or where it is. `scripts/build_pages.py::transition_card` refuses a transition without them (`scripts/build_pages.py::TRANSITION_FIELDS`). |
+| 13 | `scripts/build_pages.py::v3_slots` | The model for a `v4_slots` function returning `scripts/build_pages.py::ChapterSlots`, with its main chart as `scripts/build_pages.py::MainChart` panels. `scripts/build_pages.py::slot_problems` refuses a chapter that misses a slot. Each chart inside a detail follows a descriptive heading from `scripts/build_pages.py::detail_head`; `scripts/build_pages.py::explore_routes` turns those headings into the chapter's "Explore these results" routes (A5). |
 | 14 | `scripts/build_pages.py::chapter_sequence` | Register the new chapter builder. A registered generation without one is a build error. |
 | 15 | `scripts/build_pages.py::CHARTS_BY_RUN` | The charts its MLflow run carries as artifacts. |
 | 16 | `scripts/build_pages.py::TOKENS` | **The Owner decides first:** plan §7.8 encodes a generation by colour, and the tokens are his (standard §16, "At v4"). Then its colour and the classes in `scripts/build_pages.py::css`. |
@@ -78,14 +88,18 @@ glance and generation list (`scripts/readme_research.py::build_glance`,
 
 **Limits to watch.**
 
-- **The §1 placements.** On 2026-09-28 the comparison's finding sentence ends at about 2,490 px of
-  the 2,532 px a phone allows (390 × 844), and at about 1,767 px of 1,800 on desktop; the headline
-  block ends at about 775 px of 900. A longer opening or lineage can push them out; measure in
-  Chrome and WebKit before the independent check (`scripts/check_reader_paths.py::release`).
+- **The placements, with A2's measured header.** The finding must end by N × H − (N − 1) × h: with
+  the 56 px header, 1,744 px at 1,440 × 900 (N = 2) and 2,420 px at 390 × 844 (N = 3)
+  (`scripts/check_reader_paths.py::a2_limit`, `scripts/check_reader_paths.py::placement_findings`).
+  On 2026-09-29 it ends at about 1,703 and 2,382 px, after the opening and the product
+  documentation's routes; the headline block ends at about 801 px of 900. A longer opening or a
+  larger product orientation can push it out; measure in Chrome and WebKit before the independent
+  check (`scripts/check_reader_paths.py::release`).
 - **Chart text of at least 12 px at every width.** The opening's preview sits in the right-hand
   column; narrowing that column below about 460 px on desktop shrinks its text under 12 px.
-- **The size budget, 2.0 MB** (standard §6). The page was 1.56 MB on 2026-09-28. If a chapter would
-  breach it, or at v5, the Orchestrator proposes a compaction rule to the Owner.
+- **The size budget, 2.0 MB** (standard §6). The page was 1.56 MB on 2026-09-28 and 1.68 MB after
+  PRES-2 added the product documentation on 2026-09-29. If a chapter would breach it, or at v5, the
+  Orchestrator proposes a compaction rule to the Owner.
 
 ## 3. A branch card (a checkpoint that yields only a rejected branch)
 
@@ -172,6 +186,31 @@ The details come only from this menu, in this order (`scripts/build_pages.py::DE
 
 v1's chapter follows §4 and its archive is never migrated (`scripts/build_pages.py::v1_chapter`).
 
+## 7a. The released model's documentation (PUBLISH_RULES 1.0 A4)
+
+"How the product works" sits directly after the opening and documents the model the registry names
+as released (`src/delu_forecast/registry.py::released`), topic by topic, never a research leader.
+`scripts/build_pages.py::product_section` renders a short orientation, a descriptive route to every
+topic and the topics in one named disclosure; `scripts/build_pages.py::product_topics` takes the
+topics from `scripts/build_pages.py::PRODUCT_DOCS` by the released entry's id and refuses a released
+model without them, a missing subject of `scripts/build_pages.py::PRODUCT_SUBJECTS`, or a subject
+covered twice. The released v1's topics are `scripts/build_pages.py::v1_product_topics`; its own
+evidence is typed in `src/delu_forecast/research.py::_cp2_product_records`, from the files in
+`src/delu_forecast/research.py::PRODUCT_SOURCES`, kept apart from the MLflow mirror's sources.
+
+**A new released model** (after its one-shot test and live run, under the research plan):
+
+| # | Touchpoint | What changes |
+|---|---|---|
+| 1 | `src/delu_forecast/registry.py::_ENTRIES` | Its `released` status, dated, and the outgoing model's `retired` status (§5 below). |
+| 2 | `src/delu_forecast/research.py::PRODUCT_SOURCES` | The incoming model's own evaluation and diagnostics, each pinned by its blob, with records stating the model, output and rows they describe. |
+| 3 | `scripts/build_pages.py::PRODUCT_DOCS` | A topics function for the incoming model: every subject rechecked against its evidence; shared explanations kept only after checking they apply; a subject without evidence shown as not evaluated, with its reason. |
+| 4 | `src/delu_forecast/research_claims.py::BLOCKS` | Its `product.*` blocks, mapped in a claim map; the outgoing model's stay in the claim map as history. |
+| 5 | `app/wasm_showcase.py` | Whatever the demo computes, with its bitwise-equivalence gate (`make wasm`). |
+
+The outgoing model's documentation stays reachable in the repository's history and its chapter; the
+page documents one product.
+
 ## 8. MLflow routes
 
 `src/delu_forecast/registry.py::expected_routes` derives the routes from the registry; each is
@@ -193,6 +232,15 @@ Recorded under `reports/presentation/release-checks/` and in the checkpoint's ev
 - Determinism: `uv run python scripts/rebuild_presentation.py`, then `git status` is empty.
 - `uv run python scripts/check_links.py`.
 - The standard's §10 release checks: `scripts/check_reader_paths.py::main` in Chrome and WebKit at
-  every width, with the accessibility trees, keyboard, touch, contrast and failed requests, and the
-  §1 placements. Every record states that no real Safari, iPhone or screen reader was used.
+  every width, with the accessibility trees, keyboard, touch, contrast, failed requests, HTTP
+  responses of 400 or more and every resource fetched after the document, and the §1 placements with
+  A2's measured header. Serve the page over HTTP (`scripts/check_reader_paths.py::_url`): a browser
+  asks for a favicon only there. Every record states that no real Safari, iPhone or screen reader
+  was used.
+- A5's discovery: `scripts/check_reader_paths.py::discovery` follows every advertised route from the
+  closed default page by mouse, by keyboard and as a deep link, in both engines, at both placement
+  sizes, and records the label, where it landed and the chart it revealed.
+- The demo's own controls: `scripts/check_reader_paths.py::demo_controls` reads each engine's own
+  accessibility tree through marimo's shadow roots, measures the targets and operates the controls
+  by keyboard.
 - The standard's §11 cold-reader check.

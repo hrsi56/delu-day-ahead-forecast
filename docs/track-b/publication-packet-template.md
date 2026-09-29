@@ -1,6 +1,7 @@
 # Publication packet: template
 
-**Publication Standard v1 §12; written by the PRES-1 conformance task (brief W15), 2026-09-28.**
+**Publication Standard v1 §12; written by the PRES-1 conformance task (brief W15), 2026-09-28;
+PUBLISH_RULES 1.0 §11's A3–A5 fields added by PRES-2, 2026-09-29.**
 Each research checkpoint's return includes one packet, filled in from inside the checkpoint, before
 its results are published. The publication is built from it (`docs/track-b/publication-runbook.md`
 gives every place each item lands). Until the landing templates carry the packet (standard §12,
@@ -46,6 +47,7 @@ arm or control. Every field is required.
 | `style`, `anchor` | `<marker and colour role>`; `<page anchor>`. **A new generation's colour is the Owner's decision** (standard §16, "At v4"). |
 | `checkpoint`, `after` | `<CP-nn>`; for a branch, the generation it follows |
 | `question`, `informed` | For a branch: its question, and what it informed |
+| `predecessor` | For a generation after the first: the adopted generation it replaced (A3); never inferred from the version number |
 
 ## 3. The claim map
 
@@ -84,6 +86,38 @@ One per slot of the chapter grammar, each as a claim block keyed `<id>.<slot>`:
 For a branch-only checkpoint: the branch card's question, comparator, difference with its interval
 (or the diagnostic that decided it), "Not adopted" with a one-line reason, and the evidence.
 
+## 5a. The adopted transition (PUBLISH_RULES 1.0 A3)
+
+For a generation adopted at this checkpoint, one summary, reusing the chapter's records:
+
+| Field | Value |
+|---|---|
+| Title | "From v<N−1> to v<N>: <the adopted change>" |
+| Predecessor and dates | `<registry id>`, its dated status; this generation's adoption date |
+| The change | `<data, features, model or interval policy>` |
+| The comparator set in advance | `<registry id>`; whether it is also the predecessor |
+| The result, with its uncertainty and evidence class | `<share of the comparator's score, 95% interval>`; `<class>` |
+| Against the predecessor | when the comparator is not the predecessor: the commensurate comparison and where it is, or why none exists (no invented interval) |
+| What it does not establish | `<limitations>` |
+| The decision, dated, and the route to the comparison | `<decision>`; `<chart heading anchor>` |
+
+Rejected branches of the checkpoint stay branch cards, headed apart from this summary.
+
+## 5b. The released model's documentation (PUBLISH_RULES 1.0 A4) — only when the released model changes
+
+| Subject (§5.1) | Disposition | Evidence (model, output, rows) | Route |
+|---|---|---|---|
+| 1 Data · 2 Regimes · 3 Inputs · 3b Seasonal rationale · 4 Validation · 5 Results · 6 Attribution · 7 Importance and sensitivity · 8 Where it fails · 9 Reliability · 10 Forecast · 11 Limitations · 12 Running it | supported / not evaluated / inapplicable, with the reason | `<record ids>`: the model, output and rows each describes | `#<topic anchor>` |
+
+Also: the incoming and outgoing product, what shared text was kept after checking it applies, and
+where the outgoing model's documentation is preserved.
+
+## 5c. The chart routes (PUBLISH_RULES 1.0 A5)
+
+| Chart | Its heading | The route's label | Where the route starts |
+|---|---|---|---|
+| `<chart id>` | `<heading anchor>` | `<descriptive label>` | the chapter's "Explore these results", a transition summary or a product topic |
+
 ## 6. The MLflow export
 
 - The committed export (`scripts/mlflow_export.py`), built from the checkpoint's committed rows, with
@@ -98,3 +132,5 @@ For a branch-only checkpoint: the branch card's question, comparator, difference
 - The re-derivation tests for every new record, with negative controls.
 - The export contract test (the export matches the registry).
 - The §4 lint on the draft slot texts.
+- The transition's and, when it changed, the product documentation's contract tests
+  (`tests/test_43_publish_rules_migration.py`).
