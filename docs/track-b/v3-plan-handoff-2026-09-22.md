@@ -6,6 +6,21 @@ lifecycle and daily-training requirement; PUBLISH_RULES 1.1 governs its page ord
 The corresponding changes to §§4.9O–4.9 below are planning consistency edits, not authorization
 to run a checkpoint. Historical research results and other work-item scope remain unchanged.
 
+**2026-09-29 CP-21 update.** The Owner chose work item [4.5](#work-4-5) for CP-21, on top of v3.
+This answers the 2026-09-24 question of which extension comes first, and it supersedes the
+recommendation that 4.5 serve only as an extra arm of [4.8](#work-4-8).
+[v21-r6 §17](../../capstone_v21.md), ratified 2026-09-29, specifies the item, and CP-21
+execution was authorized the same day.
+
+- **Design:** the three-block model enters HG's central blend as a fixed one-third member.
+  Standalone attribution arms are kept: raw block, normalized block, and a pooled 24-hour arm
+  that tests the block split itself.
+- **Outcome:** a pre-registered four-condition rule decides between adoption as v4 and a
+  not-adopted branch. The result is published in either outcome.
+
+Where §17 and the 4.5 text below differ, §17 governs. The fit counts, gains and effort below
+remain estimates, not budgets. The notes added below for 4.5 are consistency edits only.
+
 **2026-09-22 · Proposed plan, not a ratified anchor or execution brief.**
 CP-15 has Engineering PASS and `product_feasibility = NOT_DEMONSTRATED`.
 No successor model is promoted or frozen. `capstone_v21.md` remains controlling;
@@ -52,7 +67,7 @@ constraints; [4.7](#work-4-7) and [4.7T](#work-4-7t) are distinct work items, no
 | [4.4](#work-4-4) | Weather/VRE boundary group | [4.4D](#work-4-4d); [4.4V](#work-4-4v); [register](#record-4-4); [budget prerequisites](#section-4-b) |
 | [4.4D](#work-4-4d) | Direct-weather inline definition | [4.4](#work-4-4); [register](#record-4-4); [budget prerequisites](#section-4-b) |
 | [4.4V](#work-4-4v) | Optional VRE inline definition | [4.4](#work-4-4); [register](#record-4-4); [budget prerequisites](#section-4-b) |
-| [4.5](#work-4-5) | Per-block LightGBM constraints | [register](#record-4-5); [candidate constraints](#candidate-constraints); [budget prerequisites](#section-4-b) |
+| [4.5](#work-4-5) | Per-block LightGBM constraints | [register](#record-4-5); [candidate constraints](#candidate-constraints); [budget prerequisites](#section-4-b); CP-21: [anchor §17](../../capstone_v21.md) |
 | [4.6](#work-4-6) | Distribution-challenger group in register | [4.6L](#work-4-6l); [4.6R](#work-4-6r); [4.6C](#work-4-6c); [budget prerequisites](#section-4-b) |
 | [4.6L](#work-4-6l) | Licence admission | [register](#record-4-6l); [candidate constraints](#candidate-constraints); [budget prerequisites](#section-4-b) |
 | [4.6R](#work-4-6r) | Training-only resource admission | [register](#record-4-6r); [budget prerequisites](#section-4-b) |
@@ -275,7 +290,7 @@ none silently expands its search. External cost is zero throughout.
 | <a id="record-4-3r"></a><a id="work-4-3"></a><a id="work-4-3r"></a>[4.3R](#work-4-3r) / content executor named by brief | CP-15 narrative, tables/chart specifications, claim links → `docs/track-b/research-content/` · [budget prerequisites](#section-4-b) | [D1](#decision-d1) and bounded content authorization; existing evidence only. Finish evidence-linked local content with failures/limits and withheld claims explicit. No [4.2](#work-4-2)/[4.9](#work-4-9) dependency. → [4.10R](#work-4-10r) | 6–10 h |
 | <a id="record-4-3c"></a><a id="work-4-3c"></a>[4.3C](#work-4-3c) / [same role](#work-4-3r) | Candidate-specific content → `docs/track-b/candidate-content/` · [budget prerequisites](#section-4-b) | Validated results of admitted experiments, including negative/blocked. No invented v2 results. → corresponding [4.10](#work-4-10) route | 6–10 h; shared work not double-counted |
 | <a id="record-4-4"></a>[4.4D](#work-4-4d) / [4.4V](#work-4-4v) / Lead | Weather lineage and direct paired ablation; optional VRE comparison → `reports/weather-ablation/` | [4.1](#work-4-1) historical admission + [4.0b](#work-4-0b) weather brief/budgets; no live-source prerequisite. D first; V only if explicitly admitted under [4.4](#work-4-4). Negative gain completes a comparison. → [4.8](#work-4-8) if admitted, else [4.7](#work-4-7); failed admission → [D5](#decision-d5) | 64–120 h for original combined scope; direct-only estimate must be supplied by brief |
-| <a id="record-4-5"></a>[4.5](#work-4-5) / Lead | Three-block LightGBM raw/normalized comparison and fit-cost report → `reports/block-challenger/` | Explicit candidate brief/[D4](#decision-d4); fixed blocks, training-only selection and budgets. Report all applicable gates, even when failed. → [4.8](#work-4-8) if admitted, else [4.7](#work-4-7) | 12–24 h |
+| <a id="record-4-5"></a>[4.5](#work-4-5) / Lead | Three-block LightGBM raw/normalized comparison and fit-cost report → `reports/block-challenger/` | Explicit candidate brief/[D4](#decision-d4); fixed blocks, training-only selection and budgets. Report all applicable gates, even when failed. → [4.8](#work-4-8) if admitted, else [4.7](#work-4-7). **2026-09-29:** opened as CP-21 on top of v3 (v21-r6 §17, ratified; execution authorized). Adopted → v4, the base for later items; otherwise a not-adopted branch. Published either way; its disposition is recorded in [4.7](#work-4-7). | 12–24 h |
 | <a id="record-4-6l"></a><a id="work-4-6"></a>[4.6L](#work-4-6l) / Lead under bounded admission brief | Version-specific use-permission table and sources → `reports/distribution-challenger/licence-admission.md` | [D4](#decision-d4) route/resource allowance, exact intended user/uses and admission authority. Apply [4.6L](#work-4-6l); finish with a disposition for every use. Stop at the earlier of the brief cap or **4 active hours**, retaining unresolved entries; research not permitted/unresolved → no run, report to [4.7](#work-4-7). Research permitted → [4.6R](#work-4-6r), even if product use is not. | 2–4 h |
 | <a id="record-4-6r"></a>[4.6R](#work-4-6r) / Lead | Training-only resource/output feasibility record → `reports/distribution-challenger/resource-admission.md` | Research permission for each tested candidate, authorized hardware and numeric thresholds/sample scope fixed in the brief. Apply [4.6R](#work-4-6r); finish PASS/NOT_ADMITTED per candidate. Stop at first exhausted cap or failed threshold/output requirement; no evaluation-driven tuning. → [4.6C](#work-4-6c) if eligible, otherwise [4.7](#work-4-7) | 4–8 h |
 | <a id="record-4-6c"></a>[4.6C](#work-4-6c) / Lead | One preregistered TabPFN–DDNN/reference comparison, emitted predictions and uncertainty/cost report → `reports/distribution-challenger/comparison/` | Both candidates pass licence/resource entry checks; authorized [4.0b](#work-4-0b) brief, [§4.B](#section-4-b) budgets and [4.6C](#work-4-6c) protocol fixed before execution. Finish the specified comparison or an explicit partial/blocked report at its first stop condition. A candidate failing entry permits only the reference comparisons already authorized by the protocol; no claim of a completed direct comparison. → [4.8](#work-4-8) only if separately admitted, otherwise [4.7](#work-4-7) | 18–36 h for the combined comparison, not per family |
@@ -315,7 +330,8 @@ Item-specific unresolved fields before execution:
   no model work. Close with a documented gap if evidence cannot support a requested claim.
 - **[4.4D](#work-4-4d) / [4.4V](#work-4-4v):** separate direct-weather and VRE feature/configuration/label/admission/fit budgets,
   continuation criterion, cost estimate and generated-feature validation paths. VRE is optional.
-- **[4.5](#work-4-5):** raw/normalized arms and capacity-grid/seed/refit caps.
+- **[4.5](#work-4-5):** raw/normalized arms and capacity-grid/seed/refit caps. *2026-09-29:* set for
+  CP-21 in v21-r6 §17.8, ratified.
 - **[4.6L](#work-4-6l) / [4.6R](#work-4-6r) / [4.6C](#work-4-6c):** exact candidate versions/revisions and intended uses; bounded licence-source
   review; hardware, training-only sample manifest and representative size; peak-memory and
   load/preparation-or-fit/prediction-time thresholds; finite configurations/seeds/ensembles,
@@ -466,6 +482,13 @@ The old **~1,300 fits / 20–45 minutes**, versus **~10,700 fits / overnight** f
 exclude tuning, warm-up and multiple policies: estimates, not measured budgets. Likewise
 night MAE **21.88→~17.7** and S_MAE **0.784→0.73–0.75** assume half the gap closes;
 no result is promised.
+
+*2026-09-29, CP-21:* a standalone block model at those estimates would still trail HG, whose
+S_MAE is 0.5658. The ratified [v21-r6 §17](../../capstone_v21.md) therefore tests the block
+model as a fixed one-third member of HG's blend, with HG's interval layer re-estimated on the
+new errors. Raw and normalized block arms, and a pooled 24-hour arm, are kept for attribution.
+The pooled arm's contrast with the raw block arm tests the block split itself. Learned or
+estimated combination weights remain [4.8](#work-4-8)'s scope.
 
 | Candidate / arm | Proposed disposition, subject to the authorized experiment |
 |---|---|

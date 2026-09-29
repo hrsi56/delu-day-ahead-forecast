@@ -1,3 +1,33 @@
+# Capstone v21-r6 — CP-21: three-block LightGBM on top of v3 (ratified)
+
+**Owner-ratified 2026-09-29; CP-21 execution authorized the same day.** The Owner chose programme
+work item 4.5 for CP-21, on top of v3: add a LightGBM split into three hour blocks to v3,
+retrain, and publish the result for comparison in either outcome. If it improves on v3 under a
+rule fixed in advance, it is adopted as v4 and becomes the base for the next extensions.
+Otherwise it is documented and published as a not-adopted experiment.
+
+**What was ratified.** The Orchestrator's draft, with two changes by the Owner:
+
+- **D1:** a pooled attribution arm, L-P, tests whether the block split itself helps.
+- **D2:** a fourth adoption condition vetoes a resolved per-fold degradation.
+
+The Owner approved D3–D6 as recommended, with the ceilings recomputed for the added arm. New §17
+specifies the checkpoint, and one CP-21 row is inserted in §10's table. Apart from that row,
+every existing line is unchanged: the headers below and §§1–16 remain byte-for-byte, and §16
+remains the final-product authority.
+
+Previous v21-r5 is preserved at `81ab3be:capstone_v21.md`, SHA-256
+`a4e178c30c555cc91dfbe338bbcf3e8776d67709d6dc4a72bc4f5892971003c9`.
+
+**Authority.** The Owner granted a task-scoped Lockdown suspension of 2026-09-29. It covers this
+revision, [the amendment record](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md) and
+directly necessary consistency edits to the programme handoff, and it ends at that task's
+terminal return. The Owner separately authorized the task to commit and push these documents.
+That was a task-scoped instruction, not a standing exception. The CP-21 Engineering Lead
+receives only the execution authority in §17.11.
+
+---
+
 # Capstone v21-r5 — final-product lifecycle amendment (ratified)
 
 **Owner-authorized documentation amendment · 2026-09-29.** New §16 makes the
@@ -330,6 +360,7 @@ metrics must be ratified before that stage starts. **No clock starts in CP-15.**
 | CP-15 | Adaptive point forecasting and common residual uncertainty; model/data feasibility probes | Complete bar below; execute only on receipt of its brief |
 | CP-16 | One existing-input v2 central-blend/hour-aware-versus-pooled research experiment | Ratified v21-r3 §14 specification/checklist; CP-16 resumption authorized 2026-09-23 under §14.5; no promotion or later-stage authorization |
 | CP-20 | Direct-GFS paired ablation: weather-augmented minus no-weather V2-H | Ratified v21-r4 §15; CP-20 execution and §15.7 immutable packaging authorized 2026-09-23; research only |
+| CP-21 | Programme 4.5 on top of v3: HG plus a fixed three-block LightGBM member, compared with HG; adoption as v4 or a not-adopted branch under §17.6 | Ratified v21-r6 §17; CP-21 execution authorized 2026-09-29 under §17.11; research only |
 | CP-17 | Freeze the selected update policy and register verified initialization | Requires demonstrated feasibility and complete future bar |
 | CP-18 | Run the same policy and build the live scorecard from recorded issued predictions | Requires operational and publication authorization |
 | CP-19 | Evaluate the preregistered prospective policy | Requires CP-17 plus elapsed horizon and complete future bar |
@@ -1076,3 +1107,552 @@ independent, browser, accessibility and publication contract still applies.
 
 No checkpoint starts here. The numeric future briefs and approved budgets remain necessary;
 this amendment resolves the required product outcome, not experimental results or implementation.
+
+
+## 17. CP-21 — three-block LightGBM on top of v3 (v21-r6, ratified)
+
+**Ratified by the Owner on 2026-09-29; execution authorized under §17.11.** This is programme
+work item 4.5, reframed by the Owner's choice: the three-block LightGBM is tested as an
+addition to v3 (HG), not as a replacement for it. The result is published in either outcome
+(§17.9). It is adopted as
+`v4 · <adopted change>` under §17.6; otherwise it becomes a descriptive branch marked
+"Not adopted". CP-21 is research only. It releases no product and triggers no promotion,
+CP-17 freeze, prospective clock, economic run or publication by itself. CP-17–CP-19 stay
+reserved (§§9–10 and §16).
+
+### 17.1 Question, inheritance and evidence class
+
+**Question.** HG's central forecast is a blend of two linear LEAR components. Does adding a
+three-block LightGBM member, built with exactly HG's information, improve on HG jointly in
+point and interval accuracy, on CP-20's development population? HG's hour-aware interval
+layer is re-estimated on the new forecast's own issued errors.
+
+**Why on top of v3.** The saved daily LightGBM B3 scores S_MAE 0.7841 / S_WIS 0.7399; HG scores
+0.5658 / 0.5322. The programme's optimistic estimate for a standalone per-block LightGBM was
+S_MAE 0.73–0.75 (programme §§4.5–4.8). A standalone block model is therefore not a credible
+successor. The testable hypothesis is that a nonlinear, block-structured learner adds
+information to HG's linear components, particularly from the weather columns. The standalone
+arms remain, for attribution only.
+
+**The decomposition.** The Owner added the pooled arm L-P to test the block hypothesis itself.
+The arms form a ladder, each step adding one thing:
+
+| Step | What it adds |
+|---|---|
+| B3 → L-P | Weather |
+| L-P → L-R | The block split |
+| L-R → HGL | The blend into v3 |
+
+B3 is a saved CP-15 reference with fixed CP-2 hyperparameters. The B3 → L-P step therefore
+also includes training-only capacity selection and the §15.3 missing-input rule, and is not an
+isolated weather effect. The L-P → L-R step is controlled: L-P and L-R differ only in pooled
+versus per-block fitting.
+
+**Inherited unchanged:**
+
+- §§2–3: information boundary and evidence class.
+- §4: normalization.
+- §§14.1–14.4: population, chronology, the H residual recipe, metrics, bootstrap mechanics and
+  limits.
+- §§15.1–15.3: weather treatment, frozen features and the missing-input rule.
+- All six §8 diagnostics, reported as diagnostics; §9's restrictions; §16.
+
+Only the arms, contrasts, adoption rule, ceilings and deliverables below are new. Historical
+CP-15/16/20 results, FAILs, debits and limits are preserved. They are re-scored only as saved
+references.
+
+Every CP-21 result is `development_post_selection`. Nothing dated after 2026-04-07 is read,
+scored, plotted or used for any choice, and the fresh-data test 4.7T stays reserved.
+
+### 17.2 Arms, comparator and the single adoption candidate (Owner decision D1)
+
+| ID | Role | Construction |
+|---|---|---|
+| HG | Comparator (v3), saved | CP-20's HG exactly: the saved accepted vectors. Its components A1_w (normalized LEAR) and B2_w (raw LEAR), both with weather, are reused only with verified identity. |
+| L-P | Study arm, for attribution | One pooled LightGBM for all 24 hours, on the raw target, with exactly HG's information including weather (§17.3), and HG's H layer on its own issued errors. Never adoption-eligible. |
+| L-R | Study arm, for attribution | Three-block LightGBM central forecast on the raw target (§17.3), with HG's H layer (§14.2) on its own issued errors |
+| L-N | Study arm, for attribution | L-R with §4 target normalization; otherwise identical |
+| HGL | Sole adoption candidate | Central `c = (1/3)·A1_w + (1/3)·B2_w + (1/6)·L-N + (1/6)·L-R`, that is `(2/3)·c_HG + (1/3)·mean(L-N, L-R)`. HG's H layer is re-estimated on HGL's own issued errors. |
+
+**The blend.** The fixed weights give each model family one equal vote: normalized LEAR, raw
+LEAR and block LightGBM. They also keep HG's raw/normalized pairing inside the new member. The
+weights are set before any CP-21 result and are never tuned; learned or per-block weights
+belong to programme 4.8.
+
+**What differs from HG.** HGL differs from HG only by the added member. Its A1_w and B2_w are
+HG's own genuinely issued components, identical bit for bit.
+
+**The interval layer.** HGL, L-P, L-R and L-N each use HG's layer on their own issued errors:
+
+- the price-only A1 scale `s_t`;
+- the 28-complete-released-day buffer and `w_h = n_h/(n_h+56)`;
+- the seven quantiles and the §14.2 failure rule.
+
+Residuals are never shared across forecasts.
+
+**Retraining.** The Owner's "retrain" is met in two ways. The new member is trained at every
+origin, and the interval layer is re-estimated on the composite's own errors. HG's components
+are deterministic, so refitting them reproduces CP-20's forecasts. The design verifies this
+through the fully refitted origins of §17.5 and reuses the verified CP-20 components elsewhere.
+
+**Saved references, metric-only:** B0 (normalizer), B1, B2, B3, A1, H0 (v2) and HG. No
+reference is refitted, except for an identity-verified regeneration of HG components on a
+cache miss. Eleven policies are scored: 7 saved plus 4 new.
+
+**The block-split claim** is reported from L-R − L-P according to its result (§17.5), not
+withheld.
+
+**Out of scope, and why:**
+
+- **A per-block residual-correction model on HG's errors.** It would need genuinely held-forward
+  HG forecasts across every training window: a nested full-history HG replay, plus weather
+  retrieval for 2022-09-29..2023-03-23. In-sample residuals cannot replace those (§3).
+- **A normalized pooled arm.** The split is tested on the raw target only.
+- **Seed ensembles.**
+
+These exclusions bound attribution. L-R − L-P isolates the block split on the raw target. No
+contrast separates the individual weather features.
+
+### 17.3 Block models, information set and training-only capacity selection
+
+**Blocks.** The blocks are fixed and exhaustive, in Europe/Berlin local hours:
+
+- night: 22–05 (8 hours);
+- solar: 10–16 (7 hours);
+- shoulder/peak: 06–09 and 17–21 (9 hours).
+
+L-R and L-N fit one model per block, and a target hour belongs to exactly one block. L-P fits
+one pooled model over all 24 hours, on the same rows. On a 25-hour day, both canonical
+local-hour-2 observations enter the night block (and L-P's rows). On a 23-hour day the missing
+hour stays absent.
+
+**Information set: exactly HG's, for every LightGBM arm.** The features are:
+
+- the inherited CP-15 B3/A2 LightGBM recipe: `reports/cp15/protocol.json`, 23 features, and
+  for L-N its price-valued center/scale lists;
+- the three frozen §15.2 weather columns for the target local hour;
+- their three missing indicators, under the §15.3 training-only median-imputation rule.
+
+Nothing else enters: no other feature, lag, cross-hour weather expansion or source, and no
+feature search. LightGBM's native missing-value routing does not replace the §15.3 rule.
+
+**Fixed settings.** Objective: quantile, α = 0.5 (p50). Seed 42, with deterministic
+single-seed fits. The other inherited CP-15 parameters stay unchanged, except capacity.
+
+**Capacity grid.** At most four configurations per model: each block model, and L-P's pooled
+model. The largest is the inherited setting, 600 trees and 63 leaves; the others have lower
+capacity, with fewer leaves, trees or both. The grid is frozen in the pre-run protocol before
+any outer scoring and is identical for L-P, L-R and L-N.
+
+**Selection, at every origin and for every model (each block, and L-P's pooled model):**
+
+1. Fit each configuration on the origin's training window, minus its last 28 calendar delivery
+   days.
+2. Select the lowest validation MAE in EUR/MWh on those 28 days. L-N is inverted before scoring.
+   An exact tie goes to the smaller configuration.
+3. Refit the selected configuration on the whole window.
+
+This mirrors LEAR's inherited inner selection and uses training data only.
+
+**History.** `[max(2019-01-01, D−728 calendar days), D)`, subject to each origin's availability
+filter, as in §14.1.
+
+**Minimum training rows.** L-P keeps the inherited 8,760-row LightGBM minimum, which is
+365 × 24. The block equivalent is 365 × block hours: 2,920 (night), 2,555 (solar) and 3,285
+(shoulder/peak).
+
+**Cadence.** Every origin gets fresh daily fits, including selection, as §16's daily retraining
+would require of a product. An identical historical fit may be cached only with verified input,
+protocol and origin identity. A cache miss counts as a budgeted fit.
+
+### 17.4 Population, chronology and failure rule
+
+**Population: CP-20's frozen population.**
+
+- 10,747 original target keys, with fold counts 2,160 / 2,159 / 2,112 / 2,160 / 2,156, over
+  448 represented delivery days.
+- The CP-16/CP-20 input manifest's 638 fold/date origins, including 35 training-only admission
+  dates.
+- The same genuine warm-up starts: 2020-05-25 / 2021-02-23 / 2022-05-25 / 2025-03-22 / 2025-12-02.
+
+Each new arm covers every key: 42,988 new policy-target rows, or 118,217 scored rows with the
+seven saved references.
+
+**Chronology.** Forecast origin D−1 11:00 UTC; delivery calendar Europe/Berlin; released errors
+are ≤ D−2 and consumed once.
+
+**Weather.** Weather comes only from CP-20's retained decoded grids, through the frozen
+conversion, verified against CP-20's fingerprints. No weather is retrieved.
+
+**Failure rule.** §14.2's rule applies to every component, including every LightGBM fit. No
+stale, B0, HG or zero-error forecast is substituted, and losing an eligible key prevents a
+complete evaluation.
+
+**Admission slice.** §14.2's training-only admission slice checks that each new arm runs
+causally before any outer scoring. It is not a selection trial.
+
+### 17.5 Metrics, uncertainty and diagnostics
+
+**Scores,** as in §14.3 and §15.4: emitted-p50 MAE and seven-quantile WIS; S_MAE and S_WIS as
+equal-fold ratios to B0; pooled scores as secondary descriptions.
+
+**Bootstrap,** as in §14.4 and §15.4: seed 15042, with one shared 2,000-replicate noncircular
+index set of 7-calendar-day blocks per analysis pass. Blocks are drawn within each 90-date fold,
+identically across policies.
+
+**Contrasts.** The primary contrast is HGL − HG, the adoption contrast. The secondary contrasts
+are descriptive:
+
+| Contrast | What it shows |
+|---|---|
+| L-R − L-P | The block split: the Owner's hypothesis |
+| L-P − B3 | Weather, bundled with capacity selection (§17.1) |
+| L-N − L-R | Target representation |
+| L-P − HG, L-R − HG, L-N − HG | Each standalone arm against v3 |
+
+The block-split finding is stated from L-R − L-P, with §14.4's endpoint reading:
+
+- **observed joint improvement:** the upper endpoint of ΔS_WIS < 0 and of ΔS_MAE ≤ 0;
+- **observed joint worsening:** the lower endpoint of ΔS_WIS > 0 and of ΔS_MAE ≥ 0;
+- **otherwise, no demonstrated joint preference,** with both metrics' directions shown.
+
+It is a development finding, not an adoption criterion.
+
+**What is reported for each contrast and score:**
+
+- the paired difference, with its 95% percentile interval;
+- for publication, the change as a share of the comparator's score, with the interval of that
+  ratio taken from the same replicates. For each replicate b,
+  `R_b = S_policy,b / S_comparator,b − 1`. The interval is the 2.5/97.5 percentiles of `R_b`,
+  and the point value is the full-sample ratio minus one. Every replicate's paired differences
+  and ratios are stored (PUBLISH_RULES 1.1 §3.2).
+
+**Per-fold paired daily-loss intervals** are computed for every contrast. For HGL − HG they
+feed §17.6's fourth condition; everywhere else they are descriptive. They are built exactly as
+CP-20's per-fold intervals: the paired difference of each fold's mean loss, resampled with the
+same 7-calendar-day block index set within that fold.
+
+**Diagnostics, for all arms:**
+
+- per fold, per local hour and per block (night, solar, shoulder/peak), with counts and
+  represented dates. Block and hour statements follow §14.3's support rule: at least 56
+  represented dates per fold.
+- coverage at 50/80/95%, always shown with mean, median and 95th-percentile width, and with
+  tail misses;
+- central versus emitted MAE and the centering effect; bias; daily level and shape error;
+- failures, and the H layer's fallback incidence;
+- the stress period, fold 3: 2022-07-01..09-28, 2,112 hours over 88 days. The 17-day peak,
+  2022-08-15..31 (408 hours), is reported separately and descriptively.
+- all six original §8 diagnostics for every new arm, with the saved B0–B3 comparators.
+
+**Fit cost and daily retraining.** The report covers three things:
+
+- LightGBM fits by arm, model (block or pooled) and origin: training rows, selected capacity,
+  inner and final fit wall and CPU seconds, and peak memory. The comparison of block and
+  pooled costs is part of the report.
+- any HG component regeneration;
+- HGL's complete daily cycle, measured cold on the M3 with at most 4 workers, at 20 or more
+  origins stratified across the five folds, giving the median and the maximum. The cycle
+  covers the features, the A1_w/B2_w refits, the six block selections and fits, the H layer and
+  issuance. Those refitted components must match CP-20's bit for bit.
+
+**Owner decision D3:** this is a diagnostic only, not a selection criterion. v21-r5 §16 still
+requires any final-product candidate to retrain daily, or to obtain an Owner-approved exception
+before live admission. The report is written to `reports/block-challenger/`.
+
+### 17.6 Pre-registered adoption rule (Owner decision D2)
+
+Rule `cp21-adoption` was set on 2026-09-29, the date of the Owner's ratification. HGL becomes
+v4 if, and only if, all four conditions hold:
+
+1. **Joint improvement over HG.** On the paired HGL − HG differences, the upper 95% endpoint of
+   ΔS_WIS is < 0 and the upper 95% endpoint of ΔS_MAE is ≤ 0.
+2. **No regression on the original screen.** HGL meets all six original §8 diagnostics with the
+   saved B0–B3 comparators, as HG does.
+3. **A complete, valid evaluation.** Engineering PASS with a fresh binding Integration verdict,
+   and every one of the 10,747 keys issued with finite, ordered quantiles.
+4. **No resolved per-fold degradation.** In no fold may HGL − HG be decisively worse in MAE or
+   in WIS. A fold is decisively worse when the 95% interval of its paired daily-loss difference
+   (§17.5) lies entirely above zero, that is, when its lower endpoint is > 0. This applies to
+   each of the five folds and to both metrics.
+
+**Otherwise,** HGL is not adopted and CP-21 becomes a descriptive branch: "Not adopted", with
+the first unmet condition and its values as the reason.
+
+**How the rule is applied.** Mechanically. It is not re-weighted, re-thresholded or overridden
+after results. A mixed result is reported as no demonstrated joint preference, never as
+equivalence. L-P, L-R and L-N are never eligible for adoption, whatever they score. An
+INCOMPLETE or BLOCKED return yields no adoption decision and no result to publish.
+
+**What adoption means.** Adoption is a research status. v1 remains the released product and the
+demo. No final-product designation (§16), freeze or Live follows from it. An adopted v4 becomes
+the base for later extensions. At CP-21's landing, the Owner updates the standing decision
+"same information, same opponent", which names HG, so that later extensions face v4 on v4's
+information. Adoption is one more selection on the same five folds, so 4.7T's frozen manifest
+must carry both v3 and v4.
+
+**Naming** (plan revision 3 §16, decision 2; PUBLISH_RULES 1.1 §4). The version number is
+assigned only at adoption, dated at landing.
+
+- **Adopted:** `v4 · <adopted change>` (proposed: "v4 · three-block LightGBM added"), with
+  predecessor v3. The A3 transition title is "From v3 to v4: adding a three-block LightGBM".
+- **Not adopted:** the branch "Three-block LightGBM on v3", attached after v3.
+
+### 17.7 Causal and integrity controls
+
+Every negative assertion has a positive control that can fail, and that survives the model's
+own transforms. The following are required for all new arms.
+
+- **Inherited controls: §14.8 item 3 and §15.6 item 4.**
+  - A delivery-day price mutation changes forecasts by exactly 0.0.
+  - An available D−1 mutation moves a controlled forecast.
+  - Post-gate and target-actual inputs are refused.
+  - D−1 errors are refused; D−2 errors are accepted once released.
+  - Each error is consumed once, and no partial day enters the buffer.
+  - 23/24/25-hour days keep their identity.
+  - Transforms are fitted on training data only, and warm-up is genuine.
+  - State persists and replays after a restart; a stale or wrong cache is refused.
+  - Quantiles are finite and ordered.
+- **Transform-aware positive controls for LightGBM.** Trees are invariant to monotone feature
+  rescaling, and normalization cancels a uniform price scaling. Weather influence must
+  therefore be shown with a non-monotone perturbation, for example a cross-date permutation of
+  weather vectors. The D−1 price control on L-N must use a non-uniform mutation.
+- **Training-only selection,** for every LightGBM model, block or pooled. Altering outcomes
+  after an origin leaves that origin's selected capacity, fits and forecasts exactly unchanged;
+  altering inner-validation rows can change them.
+- **Pooled–block parity.** L-P and L-R differ only in pooled versus per-block fitting: the same
+  rows, target, features, grid, selection rule and H recipe.
+- **Block membership and DST.** Every canonical target hour maps to exactly one block; repeated
+  and missing local hours are handled as in §17.3.
+- **Boundary guard.** Materializing any input or outcome dated after 2026-04-07 fails, with a
+  positive control.
+- **Blend and layer parity.**
+  - HGL's A1_w and B2_w equal HG's bit for bit.
+  - `c_HGL − (2/3)·c_HG = (1/3)·mean(L-N, L-R)`, within floating-point tolerance.
+  - HGL, L-P, L-R, L-N and HG call the same H-layer code path.
+- **HG identity.**
+  - Cached components match their CP-20 fingerprints.
+  - Independent representative HG reproduction matches the accepted CP-20 vectors.
+- **Byte-exact storage** of every hash-bound file.
+
+### 17.8 Ceilings and calendar (Owner decision D4)
+
+**Nature of the caps.** These are Owner-approved maxima, not estimates or targets. They were
+approved as recommended on 2026-09-29, then recomputed for the added arm L-P.
+
+- **What counts:** warm-up, admission, inner selection, controls, failures, repairs and
+  independent review.
+- **At a cap:** stop before the first cap is exhausted and retain the partial evidence. No
+  outcome-driven retry, new arm, grid change or automatic increase follows.
+- **Debits:** previous debits stay historical. Nothing transfers from CP-16 or CP-20.
+
+| Dimension | Maximum |
+|---|---|
+| Policies | 4 new (L-P, L-R, L-N, HGL) and 7 saved references: 11 scored. 1 adoption candidate. 0 other arms: no normalized pooled arm, residual-correction model or blend-weight trial. |
+| Blend and interval layer | 1 fixed blend (§17.2) and 1 inherited H recipe. 0 alternative weights, residual configurations or outer-score selections. |
+| Capacity grid and seeds | At most 4 configurations per model, the same for L-P, L-R and L-N. Fitting seed 42; bootstrap seed 15042. 0 seed ensembles or seed searches. |
+| LightGBM fits | At most 24,000 main fit attempts. Nominal all-fresh: 638 origins × (2 block arms × 3 blocks + 1 pooled model) × 5 fits = 22,330. At most 35,000 in total, including controls, reproduction, failures and repairs. |
+| HG components | Reuse the verified CP-20 components. With the fully refitted origins of §17.5 or a cache miss: at most 1,600 component-day attempts (nominal 1,276) and 192,000 primitive Lasso attempts. |
+| Replay | At most 10,500 new policy-days: about 4 full-equivalent passes of 4 × 638 = 2,552, counted under §14.5's rule. |
+| References and uncertainty | At most 3 metric-only reference passes. At most 3 bootstrap analysis passes, including independent review, with 2,000 replicates each. |
+| Compute | At most 60 aggregate machine-hours, summed across concurrent jobs and including tests, failures and review. At most 4 concurrent worker threads in total (LightGBM threads × processes ≤ 4); BLAS 1; 0 GPU or cloud. |
+| Memory and disk | 10 GiB aggregate RSS. 20 GiB added peak disk, including worktrees, caches, the local MLflow store and outputs. |
+| Data, network and cost | 0 bytes of new data or model download. 0 weather retrieval. 0 remote writes (MLflow, Hub, Git remote). $0. |
+| Effort | Approximate timebox of 32 active hours. Hard ceiling of 40 active hours, including verification and the return. |
+
+**Basis for the recomputation.** CP-15's pooled daily B3 fits took about 3 seconds each, and a
+block model trains on about a third of those rows. Worst case, with single-thread parallel
+workers, the 22,330 main fits need about 28 aggregate machine-hours. Controls, reproduction,
+review, scoring and tests add about 12. The 60-hour cap leaves a 1.5× margin.
+
+**Calendar: no scheduled work on Friday or Shabbat,** Asia/Jerusalem, from Friday 00:00 to
+Sunday 00:00.
+
+- No compute job starts in that window or runs unattended into it. A job that cannot finish
+  before Friday 00:00 is not started. A running job is stopped at an atomic checkpoint and
+  resumed after Shabbat, on the Owner's message.
+- No long unattended run is required or authorized.
+- The pause is not a terminal return and is excluded from elapsed hours.
+- No Owner action is requested for those days.
+
+**Before dependent work,** the Lead completes §14.6 E1–E4 for CP-21:
+
+- actual origin and fit enumeration;
+- the grid, fixtures and cache identities;
+- feasibility against every cap and the independent-review allowance.
+
+An insufficient allowance returns a concrete blocker, not a smaller experiment.
+
+### 17.9 Publication packet and MLflow (Owner decision D5)
+
+From CP-21 on, the checkpoint supplies its publication packet (PUBLISH_RULES 1.1 §11;
+Publication Standard v1 §12). The landing templates do not carry it yet; that incorporation is
+decision D6 of 2026-09-28, a separate governance task. Until then, this section and the brief
+carry the step explicitly.
+
+- **Pinned rules:** PUBLISH_RULES 1.1, SHA-256
+  `91eea445434718a163f03bcfd82e1db275a9d98311e76eb6cd1365f3707584f3`. It incorporates
+  Publication Standard v1 (`01d721c2ba6316ca9a2f707e79da229bef732e91bad22f6ce457fb01e69478cc`) and
+  presentation plan revision 3 (`281193740a256a99a1676d53ef61c9babb5f744a7d0fb038927e305d1149812c`).
+- **The packet:** `docs/track-b/evidence/cp-21/publication-packet.md`, filling every section of
+  `docs/track-b/publication-packet-template.md`:
+  - identity;
+  - draft registry entries: HGL as a `v4 · …` generation or as the branch, per §17.6; L-P, L-R
+    and L-N as study arms; comparator HG; population `common-10747h`;
+  - the claim map `docs/track-b/research-content/cp21-claims.md`, with its withheld claims.
+    It includes the block-split finding stated from L-R − L-P (§17.5) and the
+    B3 → L-P → L-R → HGL ladder, with the bundling in the B3 → L-P step disclosed;
+  - the derived headline quantities: the verdict, the rule and its date, the distance from HG,
+    N, §17.5's ratio intervals with seed, replicates and block length, and per-fold MAE with
+    fold 3 as the stress period;
+  - draft slot texts for the outcome the rule yields: the v4 chapter plus the A3 transition, or
+    the branch card;
+  - §5b and §5d marked not applicable, with the reason: the released product and the
+    final-product designation do not change;
+  - §8's intended identities for GitHub/README, Pages, MLflow, the Space card and the direct
+    demo.
+- **The MLflow step:**
+  - The experiment is `delu-generations`.
+  - Runs are tracked locally only, in `.local/mlruns/cp21`: one parent, `cp21`, and one child
+    per new policy (`cp21/HGL`, `cp21/L-P`, `cp21/L-R`, `cp21/L-N`). Their names and tags follow
+    the draft entries.
+  - A draft export, `reports/block-challenger/mlflow-export-draft/cp21.json`, is built through
+    `scripts/mlflow_export.py`'s code path from committed CP-21 evidence and the packet's draft
+    entries.
+    - **Why a draft.** It stays outside the published set because registry statuses are dated
+      at landing, and registering a generation or branch requires its chapter or card.
+    - **Pending fields.** Identities that exist only at landing are explicit pending fields:
+      the adoption date and source, the evidence-tag commit and the landing record.
+  - The published export set is unchanged: `reports/presentation/mlflow-export/`, including its
+    `manifest.json`. `mlflow_export.py --check` still passes on it.
+  - The publication block registers the entries and regenerates the final export. That export
+    must equal the draft apart from the pending fields, and it must change no previously
+    published record.
+  - There is no public write, no upload and no network call to DagsHub.
+- **Public surfaces are unchanged in CP-21.** CP-21 does not regenerate or modify any of the
+  following; they belong to the separate publication block after landing:
+  - the page;
+  - the README's generated blocks;
+  - the Space cards and bundles;
+  - the public registry's rendered entries;
+  - the existing exports.
+
+  CI and `make verify` stay green at the final candidate.
+- **Acceptance:** the Integration Critic reviews the packet and the export as artifacts.
+  - Every number re-derives from committed rows.
+  - Names and statuses follow the draft entries and §17.6's mechanical verdict.
+  - The diff touches nothing already published.
+
+Publication itself follows the Owner's LAND in either outcome, as a separate block under
+PUBLISH_RULES 1.1: the registry, the chapter or branch card, the page, the README, the MLflow
+upload, the Space and the postdeploy checks. See
+[the publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md).
+
+**Owner decision D6:** if v4 is adopted, its chart encoding is amber `#B45309`, a filled
+diamond marker and the direct label "v4" (PRES-1 W16(b)).
+
+### 17.10 Complete CP-21 acceptance checklist
+
+All thirteen items are mandatory. Engineering PASS does not require adoption: a complete,
+valid "Not adopted" result can pass.
+
+1. Verify the repository and input state, and preserve prior evidence and other sessions'
+   work.
+   - The ratified anchor and the amendment record are on `main` at the ratification commit;
+     verify their SHA-256 against the brief.
+   - On `gauntlet/cp-21`, package the issued brief byte for byte as
+     `docs/track-b/evidence/cp-21/issued-brief.md`, from its canonical copy
+     `.local/artifacts/cp-21/issued-brief.md`, and record its SHA-256.
+   - Before any outer scoring, commit the frozen pre-run protocol:
+     - the arms, blend weights, block map, feature list and missing rule;
+     - the capacity grid, inner split and tie rule;
+     - fixtures, seeds, the key/origin manifest and cache identities;
+     - budget accounting and the §17.6 rule text.
+2. Verify the CP-20 population and manifest identities, and the frozen weather features from
+   the retained grids. Reuse HG components only with verified identity, and obtain an
+   independent representative HG reproduction that matches the accepted CP-20 vectors. No
+   retrieval, and no data after 2026-04-07.
+3. Implement exactly L-P, L-R, L-N and HGL, with training-only capacity selection for every
+   LightGBM model. Prove three things:
+   - HGL differs from HG only by the added member and uses HG's H recipe on its own errors;
+   - L-R and L-N differ only in target representation;
+   - L-P and L-R differ only in pooled versus per-block fitting.
+4. Prove every §17.7 control, pairing each negative assertion with a positive control that
+   survives the model's transforms. Rerun the applicable inherited regression and namespace
+   guards without a live mutation.
+5. Produce all 10,747 keys for each new arm, with finite, ordered quantiles and the emitted p50
+   kept separate from the central forecast. Account for failures, exclusions and fallback
+   incidence without changing denominators.
+6. Score all eleven policies. Independently verify:
+   - the emitted-vector scores and the equal-fold normalization;
+   - every per-fold, hour, block, stress and peak diagnostic, with its denominators and support
+     labels;
+   - coverage together with width;
+   - all six §8 diagnostics for each new arm.
+7. Apply §17.6's four conditions mechanically.
+   - Report the primary and secondary contrasts with paired intervals, per-fold intervals, and
+     the ratio intervals from the checkpoint's own stored draws.
+   - State the block-split finding from L-R − L-P, with §17.5's reading.
+   - State the verdict, v4 or not adopted, with the first unmet condition; state mixed and
+     negative findings.
+   - Keep the Engineering status, the research finding and the product status (v1 released)
+     distinct. No promotion, freeze or economic claim.
+8. Deliver §17.5's fit-cost and daily-retrain diagnostic in `reports/block-challenger/`.
+9. Enforce and report every §17.8 cap from the first job, including controls, failures and
+   independent review, and respect the Friday/Shabbat calendar. At an exhausted cap, retain the
+   partial evidence and return the applicable non-PASS status.
+10. Supply the durable evidence and executable reproduction commands: the protocol, lineage,
+    predictions, metrics, diagnostics, uncertainty with stored replicates, criteria, failures,
+    resources and the fit-cost report. Store hash-bound files byte for byte, and disclose
+    defects, repairs and invalidated outputs.
+11. Deliver §17.9's publication packet and draft MLflow export, with public surfaces and the
+    published export set unchanged, CI green and no public write.
+12. Obtain one fresh, independent Integration-Critic PASS on a clean detached checkout of the
+    exact final candidate. The review covers this entire checklist and:
+    - independently recomputes the saved-vector metrics, the paired, per-fold and ratio
+      intervals and the §17.6 verdict;
+    - representatively reproduces HG, a block and a pooled LightGBM selection and fit, and the
+      causal and state controls;
+    - re-derives the packet and the export.
+13. Return the canonical packet (templates §3), together with the publication packet:
+    - both terminal SHAs and a verdict-only delta;
+    - reachable evidence;
+    - all resource totals and elapsed hours;
+    - branch and worktree accounting.
+
+    Stop at CP-21's local result.
+
+### 17.11 Paths and entry authority
+
+**Write paths:**
+
+- `src/cp21/`, `tests/cp21/`, `scripts/cp21_blocks.py`;
+- `reports/block-challenger/`, `docs/track-b/evidence/cp-21/`;
+- `docs/track-b/research-content/cp21-claims.md`;
+- `scripts/mlflow_export.py` and its tests, only as needed for the draft export, without
+  changing the published export set or any published record;
+- `pyproject.toml` and `uv.lock`, only if a necessary pinned dependency is missing. None is
+  expected: LightGBM is already pinned.
+
+**Ignored material:** `.local/{worktrees,artifacts,tmp}/cp-21/` and `.local/mlruns/cp21`.
+
+**Read-only:** CP-15/16/20 code and reports; `.local/artifacts/cp-20/` (the weather grids and
+the HG component cache); `reports/weather-admission/`.
+
+**Preserve:** v1; the CP-15/16/20 evidence; the public surfaces; Q&A; `progress.md`; every
+locked document.
+
+**Roles.** The accountable executor is the CP-21 Engineering Lead. The reviewer is its fresh,
+independent Integration Critic under `engineering-role.md`.
+
+**Ratification and CP-21 execution authority: GRANTED by the Owner, 2026-09-29.** The grant
+covers:
+
+- CP-21 execution under this section and the issued brief;
+- local `gauntlet/cp-21` candidate and evidence commits;
+- exact immutable packaging of the issued brief (item 1). The ratified anchor and the
+  v21-r5 → v21-r6 amendment record are already on `main`.
+
+**Not authorized:** mainline operations, pushes, tags, publication, remote writes (MLflow,
+Hub), data retrieval, governance edits and later checkpoints. The Lead owns E1–E4 and the
+pre-run feasibility check, and escalates only a concrete blocker beyond this scope.
