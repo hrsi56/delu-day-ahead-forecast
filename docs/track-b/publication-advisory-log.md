@@ -37,3 +37,26 @@ new version. Entries are appended, never edited; a later entry may close an earl
 | A-PRES1-16 | Cold reader (desktop) | The preview beside v3's headline shows v1, which is easy to misread on a skim. | By design: the preview is the demo's model and carries a "Historical forecast · v1" badge | Watch in the next human read. Orchestrator |
 | A-PRES1-17 | Cold reader (desktop) | The footer's "no additional runtime requests" sits beside a demo that downloads 57 MB. | The statement is about the report page, and is true | Say "this page makes no additional runtime requests". Orchestrator (copy) |
 | A-PRES1-18 | Cold reader (phone) | Which interval level the interval score uses is not shown on the reading path; "released" reads as "the model in the demo". | Definitions in the terms follow §3.1; "released" is the registry's status | Add the level to the interval score's definition; define "released" beside the release rule. Orchestrator (copy) |
+
+## PRES-3 (the publication of v4, 2026-09-30)
+
+### PRES-2's recommendations R1–R7 (`docs/track-b/evidence/pres-2/integration.md`), one disposition each
+
+| Recommendation | Disposition |
+|---|---|
+| R1 — A3 cards could state the question | Deferred. A question row would change the two published transition cards, which PRES-3 keeps byte-identical; each chapter states its question directly below. The v3 → v4 card has the same form, so a later presentation block can add the row to all three at once. |
+| R2 — the startup line measures an earlier bundle | Carried to the Owner's post-deployment step. The page cites the public demo measured on 2026-09-29. The PRES-3 bundle differs from it only in nine gzip header bytes (A-PRES3-2), and the Owner's A6 checks re-measure the cold start after the Space commit (packet §8). A materially different start updates the record in the next build. |
+| R3 — no audit-grade evidence row for the product topics | Deferred. PRES-3 may not change the product documentation (brief; A4). |
+| R4 — data topic precision | Deferred, for the same reason as R3. |
+| R5 — carried advisories A04, A05 and A07 | Deferred. This block does not change the MLflow UI's default view (A04) or v1's reconciliation (A05). v4's chapter states its evidence-class caveat once, in "What this result does not establish" (A07). |
+| R6 — the build message prints a character count as "bytes" | Taken up. `scripts/build_pages.py` prints the UTF-8 byte count. |
+| R7 — the Critic's reproduction order | Taken up. PRES-3's Integration Critic assignment builds the browser payload (`make wasm`) before pytest, as CI does. |
+
+### New advisories
+
+| ID | Source | Finding | Why advisory | Proposal |
+|---|---|---|---|---|
+| A-PRES3-1 | Lead | The `delu-generations` experiment description names the four parents published on 2026-09-28. It does not name CP-21, whose runs the upload adds. | Rewriting it is an experiment-level write, and the brief authorizes writes to CP-21's five runs only. The export pins the published text (`scripts/mlflow_export.py::EXPERIMENT_NOTE_CHECKPOINTS`), and the publisher refuses any other write. | Authorize one `set_experiment_tag` write for `mlflow.note.content` naming all five parents, then extend the pin. Owner |
+| A-PRES3-2 | Lead | `make wasm` on 2026-09-30 produced bundle `9028a118…`, not PRES-2's `8007f0d2…`. The only difference is byte 9 (the OS field) of the gzip header of each of the nine booster files. This interpreter's `gzip.compress` writes 255 there; PRES-2's build wrote 19. The decoded boosters are bitwise identical, and the equivalence gate passes. | The model, card and every other file are unchanged; the served bytes differ only in a compression header. | Write the gzip header in `scripts/build_wasm_payload.py` explicitly, so the bundle is byte-identical across Python versions. Orchestrator (tooling) |
+| A-PRES3-3 | Lead | CP-21's artifact manifest binds `scripts/mlflow_export.py` and two CP-21 test files by hash. Publication must extend all three, so PRES-3 exempts exactly those files from CP-21's byte-for-byte test. A companion test checks their reviewed bytes at `evidence/cp-21`. | The manifest stays a true record of the reviewed candidate, and every other bound file is still checked byte for byte. | A research checkpoint's manifest could leave out shared presentation code that its publication block is required to extend. Orchestrator |
+| A-PRES3-4 | Lead | Playwright's WebKit build had been removed from its default cache after PRES-2. With the Owner's approval on 2026-09-30, PRES-3 reinstalled it inside the project, at `.local/tools/ms-playwright` (`PLAYWRIGHT_BROWSERS_PATH`). | Environment, not product. | Point the runbook's browser commands at the project-local browser path. Orchestrator (tooling) |

@@ -3997,7 +3997,8 @@ def main() -> int:
         )
         + "\n"
     )
-    print(f"wrote {OUTPUT} ({len(document):,} bytes) and {OUTPUT.parent / '.nojekyll'}")
+    # the byte count of the UTF-8 file, not the character count (PRES-2 recommendation R6)
+    print(f"wrote {OUTPUT} ({len(document.encode('utf-8')):,} bytes) and {OUTPUT.parent / '.nojekyll'}")
     print(f"wrote {BUILD_RECORD}")
     return 0
 
