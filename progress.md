@@ -6,7 +6,10 @@
 closure). The omission diff against it is summarized in the Session Log. The file was updated
 in place the same day for the Owner's ratification of v21-r6 and the CP-21 execution grant.
 The task performed no engineering test, fit, data retrieval, deployment or MLflow write. Its
-commit and push were made on the Owner's explicit, task-scoped instruction.*
+commit and push were made on the Owner's explicit, task-scoped instruction. It was updated in
+place again on 2026-09-30 for the Owner's v21-r7 amendment (TabPFN withdrawn; DDNN written in
+NumPy only), under the Owner's full task-scoped authority; that task ran no fit, data
+retrieval, deployment or MLflow write.*
 
 ---
 
@@ -33,8 +36,8 @@ intervals and fold qualifications; CP-15's product result remains `NOT_DEMONSTRA
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
 | 3 | Presentation around v2 (4.3R), with CP-20 alongside | ✅ PRES-1 and PRES-2 closed |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
-| 5 | Three-block LightGBM (4.5) | ▶ CP-21 on top of v3: v21-r6 §17 ratified and execution authorized 2026-09-29; brief issued; awaiting the Lead's return |
-| 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
+| 5 | Three-block LightGBM (4.5) | ▶ CP-21 on top of v3: v21-r6 §17 ratified and execution authorized 2026-09-29; brief issued. *2026-09-30: the CP-21 commit `4e37cf7` ("HGL adopted in research as v4") is on `main`; its receipt, tags and closure are not yet recorded here (see Open Questions).* |
+| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Not started |
 | 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
@@ -149,13 +152,19 @@ decision remains a boundary, not an active workstream.
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Ratified research authority:** `capstone_v21.md` **v21-r6**, Owner-ratified 2026-09-29,
-  SHA-256 `ee402c4703d176f8181ed82966c978ad84c3c73a0cdb1d3567871f58bc867344`.
+- **Ratified research authority:** `capstone_v21.md` **v21-r7**, Owner-authorized 2026-09-30,
+  SHA-256 `e6a4e301d5db080c6427f925f51e2cf69367c42225b292c78050117003aa7b0c`.
+  - §18 (r7) governs programme item 4.6: TabPFN is withdrawn, and DDNN is written from the
+    start in NumPy only, with PyTorch only as a correctness reference in tests on the
+    development machine. It opens no checkpoint.
   - §17 governs CP-21; it was ratified with two Owner changes, and its execution was authorized.
+    CP-21's evidence binds the v21-r6 bytes.
   - §16, unchanged from r5, remains the final-product authority.
-  - Historical §§1–16 are byte-for-byte intact; r6 adds only a header, a §10 row and §17.
+  - Historical §§1–17 are byte-for-byte intact; r7 adds only a header and §18.
   - CP-20 is closed under r4, and its §15.7 authority stays spent.
-  - [Amendment record](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md), SHA-256
+  - [Amendment record r6 → r7](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md), SHA-256
+    `86edc1d8f4e93d62abc513b5f14e5c11bd985643bb60a79d5538f4235c075112`.
+  - [Amendment record r5 → r6](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md), SHA-256
     `a9086fa1d70ea9cfd9c7fde3733f631bff7b8e372a8990e6cc7a52be3650bedd`.
 - **CP-21 issued brief:** canonical copy `.local/artifacts/cp-21/issued-brief.md` (ignored),
   SHA-256 `813fb8a476a7b6d10ecf0a5519e97ec8efc4ff36e0f13868676ad34534fc020f`. The Lead packages
@@ -165,6 +174,7 @@ decision remains a boundary, not an active workstream.
 
   | Authority | Governed | Where the exact bytes are |
   |---|---|---|
+  | v21-r6 | CP-21 | `270a0a0:capstone_v21.md` (`ee402c47…`) |
   | v21-r5 | Defined §16; governed no checkpoint | `81ab3be:capstone_v21.md` (`a4e178c3…`) |
   | v21-r4 | CP-20 | `evidence/pres-2:capstone_v21.md` (`150bd53f…`) |
   | v21-r3 | CP-16 | `evidence/cp-16:capstone_v21.md` (`67d21768…`) |
@@ -174,9 +184,10 @@ decision remains a boundary, not an active workstream.
 
   Once the live anchor advances, closed checkpoints are reproduced from their `evidence/` tags.
 - **Programme plan:** the [v3 plan handoff](docs/track-b/v3-plan-handoff-2026-09-22.md), with
-  work items 4.0–4.10 and the decision register D1–D6. Current identity after the CP-21
-  consistency notes: `ddc6bd3a…`. It was `0fe3a69e…` after v21-r5's consistency edit
-  (`81ab3be`); the `7fdd8205…` recorded here until 2026-09-29 predated `81ab3be`. The
+  work items 4.0–4.10 and the decision register D1–D6. Current identity after v21-r7's 4.6
+  consistency edits: `cf498c44…`. It was `ddc6bd3a…` after the CP-21 consistency notes and
+  `0fe3a69e…` after v21-r5's consistency edit (`81ab3be`); the `7fdd8205…` recorded here until
+  2026-09-29 predated `81ab3be`. The
   [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md) (`c0ac0d26…`)
   plans the publication block that follows CP-21.
 - **Target:** hourly day-ahead prices in the DE-LU (Germany–Luxembourg) bidding zone, under the
@@ -227,6 +238,19 @@ decision remains a boundary, not an active workstream.
 
 These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
 Session Log.
+
+**Added 2026-09-30 (Owner — v21-r7):**
+
+- **TabPFN is withdrawn**, in every version. It is no candidate, comparator, recombination
+  member or product. The planned TabPFN–DDNN comparison is withdrawn by decision, not reported
+  as failed. Bringing it back needs a new Owner amendment.
+- **DDNN is written from the start in NumPy only.** One implementation, NumPy and the Python
+  standard library, produces every DDNN result, daily fit and displayed forecast; no second
+  implementation is written for another runtime.
+- **PyTorch is only a correctness check on the development machine.** It serves in tests as a
+  reference for the forward pass, the Johnson SU likelihood, gradients and short training
+  trajectories. It never trains a scored model or emits anything that enters evidence, and it
+  is not a runtime dependency.
 
 **Added 2026-09-29 (Owner — CP-21 ratification):**
 
@@ -395,9 +419,11 @@ Session Log.
 - **Reasoning capture is active** (`AGENTS.md` § Interview-answer capture).
   - Only the Orchestrator files entries, through `scripts/qa_append.py`; the Lead names triggers
     in its return.
-  - `שאלות תשובות.docx` has 37 entries. Entry 37 covers why CP-21 adds the block LightGBM on
-    top of v3, with a pooled control and a pre-registered rule; it is uncommitted, pending the
-    Owner. Entry 36 covers frozen policy versus daily training and product presentation.
+  - `שאלות תשובות.docx` has 38 entries. Entry 38 (2026-09-30) covers why DDNN is written from
+    scratch in NumPy rather than PyTorch, and why TabPFN was dropped. Entry 37 covers why CP-21
+    adds the block LightGBM on top of v3, with a pooled control and a pre-registered rule; the
+    Owner committed it in `ffcf9f3`. Entry 36 covers frozen policy versus daily training and
+    product presentation.
   - Presentation is the Owner's.
 - **Retired controls stay retired.** These are AMD-G5's waived negative control, the old
   point-in-time capture ledger, publication-metadata substitution and the four-catalog selection
@@ -412,6 +438,34 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **v21-r7: TabPFN withdrawn, DDNN in NumPy only, 2026-09-30.** The Owner: "יש לך הרשאה מלאה.
+  תערוך בעוגנים את ההתייחסות ל DDNN ו TabPFN. אנחנו נוותר על TabPFN. קבע ש-DDNN נכתב מההתחלה
+  ב-numpy בלבד. PyTorch ישמש רק כבדיקת נכונות על המחשב."
+  - **How it came about:** a consultation on the Owner's request for a one-click option to
+    retrain the final product in the browser. The details are in the
+    [amendment record](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md).
+  - **Actions:**
+    - `capstone_v21.md` became v21-r7: a new header and §18, additions only.
+    - The amendment record was written.
+    - The programme handoff's 4.6 passages were edited for consistency, each marked
+      *2026-09-30*.
+    - This file was updated in place.
+    - Q&A entry 38 was filed with the prescribed appender.
+    - The documents were committed to the session branch
+      `claude/browser-model-retraining-options-r16r4p`, pushed, and opened as a draft pull
+      request, under the Owner's full task-scoped authority. `main` is untouched.
+    - The Lockdown suspension ended at this return.
+  - **Left unchanged:** PUBLISH_RULES 1.1, historical records, the public report and its
+    generator, and claim guard W14. The record gives the reasons.
+  - **Observed, not processed:** `main` is at `4e37cf7`, the CP-21 commit. This task did not
+    run the CP-21 receipt.
+  - **Omission review:** within this in-place update, the removed items are:
+    - the Notes line "a TabPFN run needs 4.6L's licence-use table first", superseded by v21-r7;
+    - "awaiting the Lead's return" in stage row 5, superseded by the observed CP-21 commit;
+    - the Notes line "Commit Q&A entry 37 whenever convenient", resolved: the Owner committed
+      it in `ffcf9f3`.
+
+    The pre-update file is `4e37cf7:progress.md`.
 - **CP-21 ratified, authorized and issued, 2026-09-29.** The Owner: "מאשר את v21-r6 עם שני
   שינויים, ומאשר ביצוע CP-21".
   - **D1:** HGL confirmed as the sole candidate. The pooled attribution arm L-P was added: one
@@ -548,6 +602,26 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
+- **CP-21's receipt is not recorded.** `main` carries `4e37cf7` ("CP-21: three-block LightGBM on
+  v3 — HGL adopted in research as v4"). The templates §4 receipt checks, the LAND tags, the
+  closure record, PRES-3 and the update of §1 and stage row 5 are still to do. The v21-r7 task
+  observed the commit and did not process it.
+- **In-browser retraining of the final product (asked 2026-09-30, open).** The Owner asked for a
+  one-click option to retrain the final product in the browser, so that anyone can check it.
+  v21-r7 §18.2 keeps DDNN compatible with that; the requirement itself belongs to the
+  final-product briefs under §16 (CP-17, CP-18). The consultation's recommendation, not yet
+  decided:
+  - the button retrains one delivery day's daily fit in the visitor's browser and compares it
+    with the artifact issued for that day, reporting whether the hyperparameter choices match;
+    it does not rerun the research;
+  - it is a delivery requirement for a LEAR/LightGBM or NumPy-DDNN final product, not a veto on
+    model choice;
+  - the public claim states a measured tolerance, and bitwise identity only where measured.
+    Running the official daily fit in the same WebAssembly runtime as the browser is an option
+    to measure;
+  - first step: a probe that trains one day of the candidate under Pyodide and measures time,
+    memory, download size and deviation.
+
 - **Final-product operating specification remains pending:** no final version designated and no
   daily system running. Future authorized work must fix numeric fit/issuance schedules, training
   windows, resources, percent-score formula/tolerance, source/outcome timing, business-use-case
@@ -606,11 +680,16 @@ Session Log.
 - **[CP-21 launch]** The Owner pastes the issued envelope into a new Code-tab session.
   - Launch on Sunday–Wednesday, so that the expected compute ends before Friday 00:00.
   - The Lead stops at a checkpoint for Friday–Saturday and resumes on the Owner's message.
-  - Commit Q&A entry 37 whenever convenient; it is outside CP-21.
 - **[After CP-21's return]** Run the templates §4 receipt checks. Propose LAND for any
   Engineering-PASS outcome, then issue the publication block (PRES-3) from the
   [publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md), pinned to
   PUBLISH_RULES 1.1. It covers every surface: Pages, the Space, MLflow and the README.
+- **[Next publication block]** Correct the public planned item "4.6 · DDNN / TabPFN" ("Does a
+  distributional network, or a tabular foundation model, beat v3?") in `scripts/build_pages.py`
+  and the page it builds: TabPFN was withdrawn on 2026-09-30 (v21-r7 §18).
+- **[First 4.6 brief]** Cite v21-r7 §18. Fix the NumPy-only implementation rule, the PyTorch
+  reference-test tolerances and how those tests are installed and run so that they cannot be
+  skipped silently, and re-estimate 4.6's effort for DDNN alone.
 - **[4.7T]** If v4 is adopted, its frozen manifest carries both v3 and v4.
 - **[If v4 is adopted, at CP-21's landing]** Ask the Owner to update the standing decision
   "same information, same opponent", which names HG, so that later extensions face v4 on v4's
@@ -632,7 +711,8 @@ Session Log.
 - **[Every research brief]** Apply the 2026-09-24 standing decisions:
   - HG's information set, with HG itself as a reference on identical rows;
   - no data after 2026-04-07;
-  - a TabPFN run needs 4.6L's licence-use table first;
+  - DDNN is written in NumPy only, with PyTorch only as a correctness reference in tests on the
+    development machine; TabPFN is withdrawn (v21-r7 §18);
   - positive controls must survive the model's own transforms (see Lessons).
 - **[After publication / governance follow-up]** PRES-1 W16/template proposals remain in its
   preserved return for a separate appropriately authorized governance task; no locked-template
