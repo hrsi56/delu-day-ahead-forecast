@@ -8,7 +8,9 @@ credentials or local branches. The incoming file is `4892d57:progress.md`, the h
 omission diff against it is summarized in the Session Log. The task ran CP-21's read-only receipt
 checks and filed Q&A entries 39–42. It ran no fit, data retrieval, deployment or MLflow write.
 Its commit, push and the squash merge of PR #1 follow the Owner's explicit, task-scoped
-instructions of 2026-09-30.*
+instructions of 2026-09-30. The file was updated in place the same day, through PR #2, for the
+Owner's amendment of "same information, same opponent" and the retirement of the session
+branch.*
 
 ---
 
@@ -74,21 +76,24 @@ limitations remain in the [landing and closure records and evidence tags](#where
 - **Pinned rules.** PUBLISH_RULES 1.1 and its incorporated sources, and the runbook and packet
   template at their hashes on the day of issue (unchanged since 2026-09-29). CP-21's content is
   governed by v21-r6 §17, whose bytes are at `evidence/cp-21`; the live research anchor is v21-r7.
-- **Then.** The 4.6 DDNN brief follows, after the Owner's decision on the standing rule "same
-  information, same opponent" (see Open Questions). CP-17–CP-19 stay reserved for the final
+- **Then.** The 4.6 DDNN brief follows. Under the standing rule, amended 2026-09-30, DDNN gets
+  v4's information and faces v4 on identical rows. CP-17–CP-19 stay reserved for the final
   model; §16 defines the final product.
 
 **Repository**, as verified from the cloud clone on 2026-09-30:
 
-- `main` = `origin/main` = `4e37cf7`, CP-21's squash landing, tagged `land/cp-21`.
+- `main` = `origin/main`: CP-21's squash landing `4e37cf7` (`land/cp-21`), then
+  [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1)'s
+  squash landing `c9dc364` (v21-r7, its records, Q&A 38–42 and this regeneration), then this
+  file's in-place update through PR #2. `invariant-tests` passed on `main` at `c9dc364` (run 74).
   `evidence/cp-21` = `1d13f99` is on origin, and so is every other `land/*` and `evidence/*` tag
   listed in [Where the history lives](#where-the-history-lives).
 - **Session branch** `claude/browser-model-retraining-options-r16r4p`, opened by the cloud session
-  for v21-r7.
-  - It carries v21-r7, its amendment record, the handoff edits, Q&A entries 38–42 and this
-    regeneration, in [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1).
-  - On the Owner's instruction, the agent squash-merges it once CI is green.
-  - The branch is left for the Owner's disposition.
+  for v21-r7, is being retired on the Owner's instruction.
+  - Its commits `f686c51`, `4892d57` and `e84d467`, cited in this file, are not on `main` after
+    the squash. `archive/v21-r7-session-20260930` = `e84d467` keeps them reachable.
+  - The cloud session could not push the tag (HTTP 403: its Git access is limited to its own
+    branch). The Owner pushes the tag and only then deletes the branch (see Setup State).
 - **Local state on the Owner's machine is not visible from a cloud session:**
   - the `gauntlet/cp-21` branch and its `lead` worktree;
   - `.local/artifacts/cp-21/`, 62 MB: the fit cache, HGL state snapshots, the ledger and the
@@ -100,7 +105,7 @@ limitations remain in the [landing and closure records and evidence tags](#where
 
 | Surface | Last evidenced state / pending action |
 |---|---|
-| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` at `4e37cf7` (`land/cp-21`); `land/cp-21` and `evidence/cp-21` on origin, read 2026-09-30. PR #1 pending, as above. |
+| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` after PR #1 (`c9dc364`, CI green) and PR #2; `land/cp-21` and `evidence/cp-21` on origin, read 2026-09-30. The session-branch tag and deletion are pending the Owner, as above. |
 | [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | PRES-2 page: HTTP 200, SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, re-read anonymously 2026-09-29. It still shows v3 as the research headline and TabPFN in the 4.6 planned item; PRES-3 updates both. |
 | [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | Revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING, re-read anonymously 2026-09-29. It runs v1. Bundle `8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e`: 805 files, 44,164,910 bytes, preserved at `.local/artifacts/pres-2/space-wasm-8007f0d2/`. Plus the unused `style.css`, making 806 files; the next upload removes it. |
 | [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Unchanged 23-run, six-route export verified during PRES-2; no post-push recheck claimed. CP-21's `cp21` runs are published only through PRES-3. |
@@ -117,9 +122,21 @@ decision remains a boundary, not an active workstream.
   machine, `gauntlet/cp-21` deleted after `evidence/cp-21` was pushed, and
   `.local/worktrees/cp-21/lead` removed. This is PRES-3's entry condition 2, and a cloud session
   cannot check it.
-- **ACTION-REQUIRED (Owner): pull `main` on the Owner's machine after PR #1 merges.** Until then
-  the local checkout is one commit behind `origin/main`. Any new clone must enable the secret
-  guard again.
+- **ACTION-REQUIRED (Owner): tag, then delete, the cloud session branch.** In this order, because
+  this file cites `f686c51` and `4892d57`, which live only on that branch (AGENTS.md § Branch and
+  ref lifecycle, tag before delete):
+
+  ```text
+  git fetch origin
+  git tag archive/v21-r7-session-20260930 e84d46720b255159a37d35b074f6736f24725aca
+  git push origin archive/v21-r7-session-20260930
+  git push origin --delete claude/browser-model-retraining-options-r16r4p
+  git fetch --prune
+  ```
+
+  The cloud session's tag push was refused (HTTP 403), so both steps are the Owner's.
+- **ACTION-REQUIRED (Owner): pull `main` on the Owner's machine.** The local checkout is behind
+  `origin/main` by PR #1 and PR #2. Any new clone must enable the secret guard again.
 
 ---
 
@@ -270,11 +287,13 @@ Session Log.
 
 **Added 2026-09-24 (Owner):**
 
-- **Same information, same opponent.** Every new model receives exactly the information HG
+- **Same information, same opponent.** Every new model receives exactly the information v4
   receives, including the three frozen GFS weather features and their missing indicators. It is
-  evaluated against HG on identical rows. Beating a weaker reference means beating the wrong
-  model. *Pending since 2026-09-30:* CP-21 made v4 the research base, and moving this rule from
-  HG to v4 awaits the Owner (see Open Questions).
+  evaluated against v4 on identical rows, with v3 (HG) kept as a reference. Beating a weaker
+  reference means beating the wrong model. *Amended 2026-09-30 by the Owner* ("מאשר להעביר את
+  הכלל "אותו מידע, אותו יריב" מ-HG ל-v4"), as v21-r6 §17.6 foresaw at CP-21's landing. v4 was
+  built with exactly HG's information, so the information set is unchanged; the opponent moves
+  from HG to v4.
 - **No data after the development window until the final test.** Nothing dated after
   2026-04-07, the last fold-5 delivery day, may be read, scored, plotted or used for any choice
   before the single final fresh-data test (4.7T). This covers prices, weather and every other
@@ -425,6 +444,24 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Standing rule moved to v4; session branch retired, 2026-09-30.** The Owner: "בצע. בנוסף,
+  מאשר להעביר את הכלל "אותו מידע, אותו יריב" מ-HG ל-v4."
+  - **Rule.** "Same information, same opponent" now names v4, as v21-r6 §17.6 foresaw at
+    CP-21's landing. The information set is unchanged, since v4 was built with exactly HG's.
+    The open question was resolved, and the notes for the 4.6 brief and every research brief
+    were updated.
+  - **Branch.** The Owner approved tagging and deleting the session branch.
+    - The cloud session created `archive/v21-r7-session-20260930` = `e84d467` locally, but its
+      push was refused (HTTP 403: Git access is limited to the session's own branch). The
+      session did not retry or route around the refusal.
+    - Tagging and deletion therefore move to Setup State as Owner actions, in that order.
+    - This file's citations now point at the tag. The v21-r7 amendment record also names the
+      branch; it is a hash-bound historical record and is not repointed.
+  - **Landing.** `main` was merged into the session branch rather than the branch being reset,
+    so the cited commits stay reachable until the tag exists. The update landed as PR #2, with
+    the same task-scoped delegation as PR #1.
+  - **Omission review:** removed are the answered open question and the pending note on the
+    rule, both resolved above; nothing else was dropped.
 - **Programme state regenerated; CP-21 receipt recorded, 2026-09-30.** A full regeneration at
   the Owner's request, in a Claude Code cloud session.
   - **CP-21 receipt.** The templates §4 read-only checks against `evidence/cp-21` matched the
@@ -558,11 +595,6 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Owner decision: move "same information, same opponent" from HG to v4 (asked 2026-09-30).**
-  CP-21's return and §17 make v4 the base for the next extensions. The standing rule still names
-  HG, so the 4.6 DDNN brief would otherwise face HG on HG's information. The recommendation is to
-  update it: later extensions receive v4's information and face v4 on identical rows, with v3
-  kept as a reference.
 - **Owner input for PRES-3 (open).** The explicit list of authorized external actions: MLflow
   upload, landing and push, Space upload and the `style.css` deletion (publication plan §8). The
   brief is issued once that list exists and CP-21's local reclamation is confirmed.
@@ -650,8 +682,9 @@ Session Log.
   - The independent check is mandatory; the PRES-2 waiver was one-time.
 - **[First 4.6 brief]** Cite v21-r7 §18. Fix the NumPy-only implementation rule, the PyTorch
   reference-test tolerances and how those tests are installed and run so that they cannot be
-  skipped silently, and re-estimate 4.6's effort for DDNN alone. Its comparator and information
-  follow the Owner's decision on "same information, same opponent".
+  skipped silently, and re-estimate 4.6's effort for DDNN alone. Under the standing rule,
+  amended 2026-09-30, DDNN gets v4's information and faces v4 on identical rows, with v3 as a
+  reference.
 - **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4.
 - **[Next Space deployment]** Delete remote files that are not in the reviewed bundle; the
   unused `style.css` has survived PRES-1 and PRES-2. Then verify that the served file set equals
@@ -668,8 +701,8 @@ Session Log.
 - **[2026-10, from the 19th]** `ubuntu-latest` moves to Ubuntu 26. CI is pinned to Python 3.12;
   check the first run after the move.
 - **[Every research brief]** Apply the 2026-09-24 standing decisions:
-  - HG's information set, with HG itself as a reference on identical rows, until the Owner
-    moves the rule to v4;
+  - v4's information set (HG's, including the GFS features), with v4 as the opponent on
+    identical rows and v3 as a reference (amended 2026-09-30);
   - no data after 2026-04-07;
   - DDNN is written in NumPy only, with PyTorch only as a correctness reference in tests on the
     development machine; TabPFN is withdrawn (v21-r7 §18);
@@ -742,7 +775,9 @@ Each was paid for once. None should be relearned.
   - `evidence/pres-1` / `land/pres-1` and `evidence/pres-2` / `land/pres-2` preserve the
     publication chains; both publications are closed and their branches reclaimed;
   - `archive/cp-0-attempt-1`, `archive/weather-admission-20260923` and
-    `archive/cp15-cp16-content-20260923`.
+    `archive/cp15-cp16-content-20260923`;
+  - `archive/v21-r7-session-20260930` = `e84d467`, the retired cloud session branch behind
+    PR #1, once the Owner pushes it (see Setup State).
 
   Squash landings do not contain the candidate SHAs; only the tags preserve them. Verdicts are in
   `docs/track-b/evidence/<cp>/`.
