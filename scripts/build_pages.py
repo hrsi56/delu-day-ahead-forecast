@@ -1311,7 +1311,7 @@ def v4_arms_panels() -> list[Panel]:
         rows += (Row("v4 − v3", _HGL_MAE if metric == "MAE" else _HGL_WIS, "v4", bold=True,
                      claim="C107" if metric == "MAE" else "C108"),)
         return Panel(title, "error-score difference · below zero favours the first named", rows,
-                     domain=(-0.05, 0.05), step=0.01,
+                     domain=(-0.05, 0.05), step=0.02,
                      refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))
     return [panel("MAE", "Point-error score"), panel("WIS", "Interval score")]
 
@@ -1421,7 +1421,7 @@ CHARTS_BY_RUN = {
     "cp21/HGL": (("overview", lambda: overview_chart()), ("v4-c2a", v4_main_chart), ("v4-ladder", v4_ladder_chart),
                  ("v4-arms", v4_arms_chart), ("v4-c2b", v4_folds_chart), ("v4-c3", v4_absolute_chart),
                  ("v4-c4", v4_peak_chart), ("v4-c6", v4_coverage_chart)),
-    "cp20/HG": (("overview", lambda: overview_chart(G.V3_COMPARISON_ORDER, V3_EXPERIMENT)), ("v3-c2a", c2a_chart),
+    "cp20/HG": (("overview", lambda: overview_chart(G.V3_COMPARISON_ORDER, V3_EXPERIMENT, pinned=True)), ("v3-c2a", c2a_chart),
                 ("v3-c2b", c2b_chart), ("v3-c3", c3_chart), ("v3-c4", c4_chart), ("v3-c5", c5_chart),
                 ("v3-c6", c6_chart)),
     "cp16/V2-H": (("v2-chart1", v2_chart1), ("v2-chart2", v2_chart2)),
@@ -1712,9 +1712,12 @@ def transitions_html() -> str:
             f"first</h3>{cards}</div>")
 
 
-def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None = None) -> list[Panel]:
+def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None = None, *,
+                    pinned: bool = False) -> list[Panel]:
     """The shared comparison's panels: the rows of `order`, drawn from `experiment`'s committed rows, with the
-    targets' dashed line from the newest generation's own criteria row there. Without arguments, the live one."""
+    targets' dashed line from the newest generation's own criteria row there. Without arguments, the live one: each
+    generation is labelled by its short name alone, and the met / not-met column is the value table's. `pinned` draws
+    the comparison as `cp20/HG`'s run carries it: canonical names, with the targets column in the chart."""
     order, experiment = order or G.COMPARISON_ORDER, experiment or G.COMPARISON_EXPERIMENT
     prefix = G.comparison_prefix(experiment)
     entries = G.comparison_rows(order, experiment)
@@ -1722,15 +1725,16 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
     for entry in entries:
         code = entry.code_in(experiment)
         verdict = f"derived.criteria.{entry.id}.verdict"
-        rows.append((entry, code, verdict if verdict in D.records() else None))
+        label = entry.short if entry.kind == "generation" and not pinned else comparison_label(entry, experiment)
+        rows.append((entry, code, label, verdict if pinned and verdict in D.records() else None))
     newest = entries[0].code_in(experiment)
 
     def panel(field: str, title: str, criterion: str) -> Panel:
         return Panel(
             title=title, subtitle="ratio to the naive · lower is better",
-            rows=tuple(Row(comparison_label(entry, experiment), f"{prefix}.metrics.{code}.equal_fold.{field}",
+            rows=tuple(Row(label, f"{prefix}.metrics.{code}.equal_fold.{field}",
                            entry.style, code, entry.kind == "generation", verdict=verdict)
-                       for entry, code, verdict in rows),
+                       for entry, code, label, verdict in rows),
             domain=(0.5, 1.1), step=0.1,
             refs=(Ref("naive", at=1.0, dash=None, colour=TOKENS["text"]),
                   Ref("target", f"{prefix}.criteria.{newest}.{criterion}.equal_fold.{field}.upper_limit")),
@@ -1743,6 +1747,10 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
 def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
     """A comparison row's label: the canonical name, qualified by its role in that comparison."""
     experiment = experiment or G.COMPARISON_EXPERIMENT
+    if entry.kind == "generation" and entry.status is not None and entry.status.status == G.ADOPTED_IN_RESEARCH:
+        # An adopted generation is its own name here. Its code's note in an experiment ("comparator, saved" in CP-21)
+        # records where that experiment took its rows from, not what the row is in the shared comparison.
+        return entry.name
     note = next((code.note for code in entry.codes if code.experiment == experiment and code.note), "")
     qualifier = note or {"reference": "benchmark", "study arm": "study"}.get(entry.kind, "")
     return f"{entry.name} ({qualifier})" if qualifier else entry.name
@@ -1752,16 +1760,18 @@ def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
 COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten"}
 
 
-def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None) -> str:
-    panels = overview_panels(order, experiment)
+def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None, *, pinned: bool = False) -> str:
+    panels = overview_panels(order, experiment, pinned=pinned)
+    verdicts = ("The right-hand column says whether a policy met both targets." if pinned else
+                "Whether a policy met both targets is in the value table below the chart.")
     return single_rows(
         "overview", "P07", panels,
         title=f"Error scores of the {COUNT_WORDS[len(panels[0].rows)]} policies, relative to the similar-day naive, "
               "against the targets",
         desc="Two dot plots with one row per policy in the same order; lower is better. The solid line marks the "
              "naive at one, a reference and not a target; the dashed line marks the target set before the "
-             "experiments. The right-hand column says whether a policy met both targets.",
-        label_width=262,
+             f"experiments. {verdicts}",
+        label_width=262 if pinned else 232,
     )
 
 
@@ -2427,7 +2437,7 @@ def v4_slots() -> ChapterSlots:
               + block("v4.peak") + v4_peak_chart() + values_table("v4-c4-values", "C120", v4_peak_panels()))
     coverage = (detail_head("v4-coverage", "Did the intervals get more reliable, or only wider?") + block("v4.coverage")
                 + v4_coverage_chart() + multi_values_table("v4-c6-values", "C121", v4_coverage_panels()))
-    protocol = "".join(block(key) for key in ("v4.criteria", "v4.parity", "v4.controls", "v4.cost"))
+    protocol = "".join(block(key) for key in ("v4.rule", "v4.criteria", "v4.parity", "v4.controls", "v4.cost"))
     return ChapterSlots(
         entry=entry,
         question="v4.question",

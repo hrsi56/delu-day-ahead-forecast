@@ -9,6 +9,8 @@
   from committed rows.
 * The headline leads with that verdict and names each metric beside its value (A1); the chapter carries the ladder
   with its bundled first step (C106), the block-split finding as C111 reads it and the peak finding (C120) visibly.
+* The comparison chart labels each generation v1-v4 and leaves the met / not-met column to its value table (the
+  Owner's direction of 2026-10-01); the comparison `cp20/HG` carries keeps its published names and column.
 * Every historical chapter, transition and the product documentation are byte-identical to the published page.
 * The planned-work list carries 4.6 as DDNN alone, against the registry's generation, and no TabPFN, on every
   generated surface (research anchor v21-r8 §18.5).
@@ -217,6 +219,46 @@ def test_the_terms_follow_the_headline(page):
     for key in RC.headline_terms():
         assert f'data-block="{key}"' in terms
     assert 'data-block="terms.benchmark"' not in terms
+
+
+# --------------------------------------------------------------------------- the comparison chart
+
+
+def _chart_texts(chart: str) -> list[list[str]]:
+    """The text of each variant (desktop, phone) of a chart's markup."""
+    return [[_text(text) for text in re.findall(r"<text[^>]*>(.*?)</text>", svg, re.S)] for svg in chart.split("</svg>")[:2]]
+
+
+def _has_verdict_column(texts: list[str]) -> bool:
+    return bool({"Targets", "both met?", "targets:", "met", "not met"} & set(texts))
+
+
+def test_the_comparison_labels_each_generation_by_its_short_name_and_leaves_the_verdicts_to_its_table(page):
+    """The Owner's direction of 2026-10-01: a generation's row reads v1-v4 and its values, without its adopted change
+    or a targets column. The met / not-met column (standard §15) is the value table's, beside the canonical names."""
+    chart = page[page.index('data-chart-id="overview"'):]
+    chart = chart[:chart.index("</div>")]
+    generations = [entry for entry in G.comparison_rows() if entry.kind == "generation"]
+    for texts in _chart_texts(chart):
+        assert {entry.short for entry in generations} <= set(texts)
+        assert not [text for text in texts if re.match(r"v\d+ ·", text)]
+        assert not _has_verdict_column(texts)
+    table = B.overview_table()
+    assert '<th scope="col">Both targets</th>' in table
+    tested = [entry for entry in G.comparison_rows() if f"derived.criteria.{entry.id}.verdict" in D.records()]
+    assert len(tested) == 4
+    for entry in tested:
+        assert f'data-record="derived.criteria.{entry.id}.verdict"' in table
+    for entry in generations:
+        assert entry.name in _text(table)
+
+
+def test_negative_control_the_pinned_comparison_keeps_its_published_names_and_column():
+    """`cp20/HG`'s run carries v3's comparison as published, so the live labels could not reach it silently -- and
+    the check above does catch a chart that still carries the column and the long names."""
+    texts = _chart_texts(B.overview_chart(G.V3_COMPARISON_ORDER, B.V3_EXPERIMENT, pinned=True))[0]
+    assert _has_verdict_column(texts)
+    assert "v3 · weather features" in texts
 
 
 # --------------------------------------------------------------------------- the chapter, the transition, the peak

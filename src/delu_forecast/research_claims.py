@@ -118,14 +118,11 @@ BLOCKS: tuple[Block, ...] = (
            daily.""", PAGE, README),
     _block("terms.policies", "P21", """**Policies:** the models and variants tested.""", PAGE, README),
     # The terms of a headline that leads with a generation's own adoption rule (standard §3.3 a; PUBLISH_RULES A1).
-    _block("terms.adoption_rule", "P51", """**Adoption rule:** set on {r:derived.adoption.v4.set_on}, before the
-           experiment: {g:v4.version} would be adopted only if, against {g:v3.version}, the interval score's paired
-           difference had its upper {s:level:95%} confidence limit below zero and the point-error score's at or below
-           zero, the six original screening diagnostics held, the evaluation was complete and no test period was
-           decisively worse.""", PAGE, README),
-    _block("terms.differences", "P51", """**Paired differences:** {g:v4.version}'s error score minus {g:v3.version}'s
-           on identical hours; below zero favours {g:v4.version}. Brackets hold {s:level:95%} confidence
-           intervals.""", PAGE, README),
+    _block("terms.adoption_rule", "P51", """**Adoption rule:** set on {r:derived.adoption.v4.set_on}; its four
+           conditions are in the {g:v4.version} chapter.""", PAGE, README),
+    _block("terms.differences", "P51", """**Paired difference:** {g:v4.version}'s error score minus {g:v3.version}'s on
+           identical hours, with its {s:level:95%} confidence interval; below zero favours {g:v4.version}.""",
+           PAGE, README),
     _block("terms.class", "P21", """**{g:current.badge}:** development evidence, not a test on new data.""",
            PAGE, README),
     # ---- the comparison: the change against the comparator, and the main caveat (§1 i) ---------------
@@ -249,6 +246,11 @@ BLOCKS: tuple[Block, ...] = (
     _block("v4.coverage", "C121", """{g:v4.version}'s pooled intervals are narrower than {g:v3.version}'s at every level,
            with pooled {s:level:95%} coverage {r:cp21.metrics.HGL.pooled.coverage95} against
            {r:cp21.metrics.HG.pooled.coverage95}. No hour or block effect is claimed."""),
+    _block("v4.rule", "C101", """**The rule**, set on {r:derived.adoption.v4.set_on} and frozen in the protocol before
+           any fit: {g:v4.version} would be adopted only if, against {g:v3.version}, the interval score's paired
+           difference had its upper {s:level:95%} confidence limit below zero and the point-error score's at or below
+           zero; it met the six original screening diagnostics; the evaluation was complete and valid; and no test
+           period was decisively worse, that is, none had a paired interval wholly above zero. All four held."""),
     _block("v4.criteria", "C119", """As a diagnostic, {g:v4.version} meets all six original screening criteria, as
            {g:v3.version} does. Among the study arms, the normalized three-block LightGBM meets them; the pooled
            LightGBM misses criterion {s:criterion:4}, and the three-block LightGBM misses criteria {s:criterion:4} and
@@ -663,10 +665,10 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
             raise ClaimError(f"{entry.id} is a generation whose adoption rule was not met")
         tested = D.get(f"{base}.tested").value
         return "P51", (
-            "Met the adoption rule set before the experiment, which required both error scores to improve on "
-            "{g:%s.version}'s and no test period to be decisively worse ({g:%s.version} − {g:%s.version}: "
-            "{r:%s.distance.S_MAE} {r:%s.distance.S_MAE|ci} on the point-error score and {r:%s.distance.S_WIS} "
-            "{r:%s.distance.S_WIS|ci} on the interval score; {r:%s.tested} %s tested against the rule)."
+            "Met the adoption rule set before the experiment: both error scores improved on {g:%s.version}'s "
+            "({g:%s.version} − {g:%s.version}: {r:%s.distance.S_MAE} "
+            "{r:%s.distance.S_MAE|ci} on the point-error score, {r:%s.distance.S_WIS} {r:%s.distance.S_WIS|ci} on "
+            "the interval score; {r:%s.tested} %s tested against the rule)."
             % (comparator.id, entry.id, comparator.id, base, base, base, base, base,
                "policy" if tested == "1" else "policies"))
     if "criteria-1-2" in entry.rules and verdict_id in D.records():

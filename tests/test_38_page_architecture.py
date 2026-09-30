@@ -122,10 +122,9 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text == re.sub(r"`", "", RC.headline("md"))
     # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it. v4 leads with its own rule (§3.3 a).
-    assert text.startswith("Met the adoption rule set before the experiment, which required both error scores to "
-                           "improve on v3's and no test period to be decisively worse (v4 − v3: −0.0301 "
-                           "[−0.0368, −0.0228] on the point-error score and −0.0266 [−0.0327, −0.0204] on the interval "
-                           "score; 1 policy tested against the rule).")
+    assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v3's "
+                           "(v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] "
+                           "on the interval score; 1 policy tested against the rule).")
     # The v3-era form, from the same generator, is unchanged for a generation led by the accuracy targets.
     claim, v3_form = RC.headline_template(G.get("v3"))
     assert re.sub(r"<[^>]+>", "", RC.render_template(claim, v3_form)).startswith(

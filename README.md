@@ -7,11 +7,11 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Research, v4 · three-block LightGBM added.** Met the adoption rule set before the experiment, which required both error scores to improve on v3's and no test period to be decisively worse (v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score and −0.0266 [−0.0327, −0.0204] on the interval score; 1 policy tested against the rule). `Development · post-selection`
+**Research, v4 · three-block LightGBM added.** Met the adoption rule set before the experiment: both error scores improved on v3's (v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] on the interval score; 1 policy tested against the rule). `Development · post-selection`
 
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
-- **Adoption rule:** set on 2026-09-29, before the experiment: v4 would be adopted only if, against v3, the interval score's paired difference had its upper 95% confidence limit below zero and the point-error score's at or below zero, the six original screening diagnostics held, the evaluation was complete and no test period was decisively worse.
-- **Paired differences:** v4's error score minus v3's on identical hours; below zero favours v4. Brackets hold 95% confidence intervals.
+- **Adoption rule:** set on 2026-09-29; its four conditions are in the v4 chapter.
+- **Paired difference:** v4's error score minus v3's on identical hours, with its 95% confidence interval; below zero favours v4.
 - **Development · post-selection:** development evidence, not a test on new data.
 
 **Demo, v1 · released LightGBM:** [try the v1 demo](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
