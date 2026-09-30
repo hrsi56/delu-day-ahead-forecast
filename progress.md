@@ -452,8 +452,13 @@ Session Log.
     - This file was updated in place.
     - Q&A entry 38 was filed with the prescribed appender.
     - The documents were committed to the session branch
-      `claude/browser-model-retraining-options-r16r4p`, pushed, and opened as a draft pull
-      request, under the Owner's full task-scoped authority. `main` is untouched.
+      `claude/browser-model-retraining-options-r16r4p`, pushed, and opened as the draft pull
+      request [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1),
+      under the Owner's full task-scoped authority.
+    - On the Owner's further instruction, "בצע. יש לך הרשאה", the agent landed that pull request
+      on `main` by a squash merge after CI passed. AGENTS.md otherwise reserves landing to the
+      Owner, by hand; this was a task-scoped delegation, not a standing one. The session branch
+      is left for the Owner's disposition.
     - The Lockdown suspension ended at this return.
   - **Left unchanged:** PUBLISH_RULES 1.1, historical records, the public report and its
     generator, and claim guard W14. The record gives the reasons.
