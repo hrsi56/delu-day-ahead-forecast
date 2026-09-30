@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-09-28T21:04:55+00:00",
+  "checked_at_utc": "2026-09-30T20:06:07+00:00",
   "client": "unauthenticated urllib -- no cookies, no token, no logged-in browser",
   "exit": 0,
   "failed_destinations": {},
@@ -238,15 +238,6 @@
       "resolves": true,
       "status": 200
     },
-    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/metrics.csv#L44": {
-      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/metrics.csv#L44",
-      "kind": "destination",
-      "on_surfaces": [
-        "Pages export"
-      ],
-      "resolves": true,
-      "status": 200
-    },
     "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/report.md": {
       "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-20/reports/weather-ablation/report.md",
       "kind": "destination",
@@ -276,8 +267,65 @@
       "resolves": true,
       "status": 200
     },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/docs/track-b/evidence/cp-21/integration.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/docs/track-b/evidence/cp-21/integration.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export",
+        "README"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/metrics.csv#L75": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/metrics.csv#L75",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/report.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/report.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export",
+        "README"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/reproduce.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/reproduce.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/uncertainty.csv#L72": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/uncertainty.csv#L72",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export",
+        "README"
+      ],
+      "resolves": true,
+      "status": 200
+    },
     "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/data-leakage-audit.md": {
       "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/data-leakage-audit.md",
+      "kind": "destination",
+      "on_surfaces": [
+        "Pages export"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/deploy.md": {
+      "final_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/deploy.md",
       "kind": "destination",
       "on_surfaces": [
         "Pages export"
@@ -311,6 +359,17 @@
       "kind": "destination",
       "on_surfaces": [
         "README"
+      ],
+      "resolves": true,
+      "status": 200
+    },
+    "https://hrsi56.github.io/delu-day-ahead-forecast/#product": {
+      "final_url": "https://hrsi56.github.io/delu-day-ahead-forecast/#product",
+      "kind": "destination",
+      "on_surfaces": [
+        "README",
+        "Space card",
+        "Static Space card"
       ],
       "resolves": true,
       "status": 200

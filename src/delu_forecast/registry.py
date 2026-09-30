@@ -189,6 +189,16 @@ RULES: dict[str, Rule] = {
         set_on="2026-09-23",
         provenance=("capstone_v21.md §14.4 (ratified O2 contract) and §15.4",),
     ),
+    "cp21-adoption": Rule(
+        id="cp21-adoption",
+        plan="capstone_v21.md §17.6 (v21-r6)",
+        words="HGL becomes v4 only if both paired differences against v3 improve (the interval score's upper 95% "
+              "endpoint below zero, the point error's at or below zero), it meets all six original screening "
+              "diagnostics, the evaluation is complete and valid, and no fold is decisively worse",
+        set_on="2026-09-29",
+        provenance=("capstone_v21.md v21-r6 §17.6 (ratified 2026-09-29)",
+                    "reports/block-challenger/protocol.json adoption_rule_verbatim (frozen before scoring)"),
+    ),
     "v1-holdout": Rule(
         id="v1-holdout",
         plan="capstone_V6_8.md §7.1",
@@ -232,6 +242,9 @@ CHECKPOINTS: dict[str, Checkpoint] = {
     "CP-20": Checkpoint("CP-20", "cp20", "v3", "evidence/cp-20", "a7a9b2e", "2026-09-24",
                         "reports/weather-ablation/report.md", "docs/track-b/evidence/cp-20/integration.md",
                         "docs/track-b/cp-20-landing-2026-09-24.md", ("HG",)),
+    "CP-21": Checkpoint("CP-21", "cp21", "v4", "evidence/cp-21", "1d13f99", "2026-09-30",
+                        "reports/block-challenger/report.md", "docs/track-b/evidence/cp-21/integration.md",
+                        "docs/track-b/cp-21-landing-2026-09-30.md", ("HGL", "L-P", "L-R", "L-N")),
 }
 
 #: Every evidence tag a public link may cite, with the date it froze (the date its commit was
@@ -243,22 +256,29 @@ EVIDENCE_TAGS: dict[str, tuple[str, str]] = {
     "evidence/cp-15": ("1bdc75b", "2026-09-16"),
     "evidence/cp-16": ("5ec8a92", "2026-09-23"),
     "evidence/cp-20": ("a7a9b2e", "2026-09-24"),
+    "evidence/cp-21": ("1d13f99", "2026-09-30"),
 }
 
 POPULATIONS = {
-    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16 and CP-20",
+    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16, CP-20 and CP-21",
     "cp10-fold-block": "CP-10's full fold blocks, v1's nine-quantile scores",
     "v1-holdout-90d": "v1's pre-specified 90-day holdout, delivery 2026-06-09..2026-09-06",
 }
 
 _CP15 = "docs/track-b/research-content/cp15-cp16-claims.md"
 _CP20 = "docs/track-b/research-content/cp20-claims.md"
+_CP21 = "docs/track-b/research-content/cp21-claims.md"
+_LANDING21 = "docs/track-b/cp-21-landing-2026-09-30.md"
+#: CP-21's committed rows, the sources of its entries (the publication packet's §2).
+_CP21_SOURCES = ("reports/block-challenger/metrics.csv", "reports/block-challenger/uncertainty.csv",
+                 "reports/block-challenger/criteria.csv", "reports/block-challenger/adoption.json")
 _PLAN21 = "capstone_v21.md"
 
 
 def _study(ident: str, code: str, name: str, subtitle: str, short: str = "") -> Entry:
     # A1 is the study's best challenger; CP-16 and CP-20 carry its saved rows as a comparator.
-    later = (Code("CP-16", code, "common-10747h"), Code("CP-20", code, "common-10747h")) if code == "A1" else ()
+    later = (Code("CP-16", code, "common-10747h"), Code("CP-20", code, "common-10747h"),
+             Code("CP-21", code, "common-10747h")) if code == "A1" else ()
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="study arm",
         codes=(Code("CP-15", code, "common-10747h"), *later),
@@ -275,7 +295,7 @@ def _reference(ident: str, code: str, name: str, subtitle: str, *, comparator: s
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="reference",
         codes=(Code("CP-15", code, "common-10747h", note), Code("CP-16", code, "common-10747h", note),
-               Code("CP-20", code, "common-10747h", note)),
+               Code("CP-20", code, "common-10747h", note), Code("CP-21", code, "common-10747h", note)),
         statuses=(), comparator=comparator, population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §5 (v21-r1)", rules=(), sources=("reports/cp15/relative_scores.csv",),
         claim_map=_CP15, run_keys=(f"cp15/{code}",), style="reference", checkpoint="CP-15", short=name,
@@ -294,6 +314,18 @@ def _cp10(ident: str, code: str, name: str, subtitle: str, note: str = "") -> En
     )
 
 
+def _cp21_arm(ident: str, code: str, name: str, subtitle: str, short: str) -> Entry:
+    return Entry(
+        id=ident, name=name, subtitle=subtitle, kind="study arm",
+        codes=(Code("CP-21", code, "common-10747h"),),
+        statuses=(StatusEvent(NOT_ADOPTED, "2026-09-30", _LANDING21,
+                              "a study arm for attribution; never eligible for adoption"),),
+        comparator="v3", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §17 (v21-r6)", rules=("cp21-adoption",), sources=_CP21_SOURCES, claim_map=_CP21,
+        run_keys=(f"cp21/{code}",), style="study", checkpoint="CP-21", short=short,
+    )
+
+
 #: Every published identity. The order within a kind is the order surfaces show it in:
 #: generations oldest first (the lineage reads left to right; chapters reverse it), branches in
 #: time order, references and study arms in the comparison's fixed order.
@@ -305,7 +337,8 @@ _ENTRIES: tuple[Entry, ...] = (
         codes=(Code("CP-15", "B1", "common-10747h", "development replay"),
                Code("CP-16", "B1", "common-10747h", "development replay"),
                Code("CP-20", "B1", "common-10747h", "development replay"),
-               Code("CP-10", "v1_reference", "cp10-fold-block", "unscaled CQR reference")),
+               Code("CP-10", "v1_reference", "cp10-fold-block", "unscaled CQR reference"),
+               Code("CP-21", "B1", "common-10747h", "development replay")),
         statuses=(StatusEvent(RELEASED, "2026-09-15", "land/cp-3 and land/cp-3b, 2026-09-15"),),
         comparator="naive", population="v1-holdout-90d", evidence_class=EVIDENCE_V1_HOLDOUT,
         plan="capstone_V6_8.md", rules=("v1-holdout",),
@@ -316,7 +349,8 @@ _ENTRIES: tuple[Entry, ...] = (
     Entry(
         id="v2", name="v2 · blended LEAR, hour-aware intervals",
         subtitle="Two LEAR forecasts blended, hour-aware intervals", kind="generation",
-        codes=(Code("CP-16", "V2-H", "common-10747h"), Code("CP-20", "H0", "common-10747h")),
+        codes=(Code("CP-16", "V2-H", "common-10747h"), Code("CP-20", "H0", "common-10747h"),
+               Code("CP-21", "H0", "common-10747h", "saved reference")),
         statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-09-23", "docs/track-b/cp-16-landing-2026-09-23.md"),),
         comparator="daily-lear", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §14 (v21-r3)", rules=("criteria-1-2", "joint-improvement"),
@@ -327,7 +361,7 @@ _ENTRIES: tuple[Entry, ...] = (
     Entry(
         id="v3", name="v3 · weather features", subtitle="v2 plus three weather forecast inputs",
         kind="generation",
-        codes=(Code("CP-20", "HG", "common-10747h"),),
+        codes=(Code("CP-20", "HG", "common-10747h"), Code("CP-21", "HG", "common-10747h", "comparator, saved")),
         statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-09-24", "docs/track-b/cp-20-landing-2026-09-24.md"),),
         comparator="v2", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §15 (v21-r4)", rules=("criteria-1-2", "joint-improvement"),
@@ -335,6 +369,16 @@ _ENTRIES: tuple[Entry, ...] = (
                  "reports/weather-ablation/criteria.csv"),
         claim_map=_CP20, run_keys=("cp20", "cp20/HG"), style="v3", anchor="#v3", checkpoint="CP-20", short="v3",
         predecessor="v2",
+    ),
+    Entry(
+        id="v4", name="v4 · three-block LightGBM added", subtitle="v3 plus a three-block LightGBM member",
+        kind="generation",
+        codes=(Code("CP-21", "HGL", "common-10747h"),),
+        statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-09-30", _LANDING21),),
+        comparator="v3", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §17 (v21-r6)", rules=("cp21-adoption",), sources=_CP21_SOURCES,
+        claim_map=_CP21, run_keys=("cp21", "cp21/HGL"), style="v4", anchor="#v4", checkpoint="CP-21", short="v4",
+        predecessor="v3",
     ),
     # ---- branches ------------------------------------------------------------------------
     Entry(
@@ -388,6 +432,13 @@ _ENTRIES: tuple[Entry, ...] = (
         claim_map=_CP15, run_keys=("cp16/V2-P",), style="control", checkpoint="CP-16",
         short="Pooled-interval control",
     ),
+    # ---- study arms (CP-21): the ladder that attributes v4's change; never eligible for adoption ----------
+    _cp21_arm("pooled-lightgbm-weather", "L-P", "Pooled LightGBM with weather", "One 24-hour LightGBM on v3 information",
+              "Pooled LightGBM"),
+    _cp21_arm("block-lightgbm", "L-R", "Three-block LightGBM", "Night, solar and peak models, raw price",
+              "Block LightGBM"),
+    _cp21_arm("normalized-block-lightgbm", "L-N", "Normalized three-block LightGBM",
+              "The block models on a normalized price", "Normalized block LightGBM"),
     # ---- the calibration experiment's arms (CP-10) ---------------------------------------
     _cp10("cp10-head-spread", "c1_head_spread", "Scaled conformal, head spread",
           "Conformal scores scaled by the heads' spread"),
@@ -405,7 +456,11 @@ _ENTRIES: tuple[Entry, ...] = (
 
 #: The order of the shared comparison's rows (plan §8.2): generations newest first, then the
 #: benchmarks and the study's best challenger by score, v1's development replay, and the naive.
-COMPARISON_ORDER = ("v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
+COMPARISON_ORDER = ("v4", "v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
+
+#: The shared comparison as v3's chapter published it, from CP-20's rows. It redraws the overview that the
+#: `cp20/HG` MLflow run carries as an artifact, byte for byte: a published record never changes (§17.9).
+V3_COMPARISON_ORDER = ("v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
 #: The marker-key words for the non-generation styles.
 STYLE_LABELS = {"reference": "reference", "study": "study arm", "control": "control arm"}
@@ -414,8 +469,13 @@ STYLE_LABELS = {"reference": "reference", "study": "study arm", "control": "cont
 #: The order of the scores chart at the time of v2 (the v2 chapter's protocol detail).
 V2_SCORES_ORDER = ("v2", "pooled-control", "daily-lear", "normalized-lear", "daily-lightgbm", "v1")
 
-#: The crisis window's rows: v1, the study's best challenger, then the generations after it.
-CRISIS_ORDER = ("v1", "normalized-lear", "v2", "v3")
+#: The crisis window's rows in v3's chapter: v1, the study's best challenger, then the generations after it.
+#: Pinned, as the chapter and the `cp20/HG` MLflow run published them.
+V3_CRISIS_ORDER = ("v1", "normalized-lear", "v2", "v3")
+
+#: The crisis window's rows in v4's chapter, which shows the window (runbook §2 step 6): the adopted
+#: generations CP-21 scored on it, oldest first, so v4's peak error sits beside v3's on one readable scale.
+CRISIS_ORDER = ("v2", "v3", "v4")
 
 #: The release rule, stated once (standard §5): the demo runs the released model.
 RELEASE_RULE = (
@@ -531,13 +591,23 @@ def population_in(entry: Entry, experiment: str) -> str:
 
 
 #: The experiment whose committed rows the shared comparison draws (plan §8.2).
-COMPARISON_EXPERIMENT = "CP-20"
+COMPARISON_EXPERIMENT = "CP-21"
+
+#: Each experiment's record prefix in `delu_forecast.research`.
+EXPERIMENT_PREFIX = {"CP-15": "cp15", "CP-16": "cp16", "CP-20": "cp20", "CP-21": "cp21"}
 
 
-def comparison_rows() -> tuple[Entry, ...]:
-    """The shared comparison's rows, refusing a mix of evaluated populations (standard §5)."""
-    rows = tuple(get(ident) for ident in COMPARISON_ORDER)
-    populations = {population_in(entry, COMPARISON_EXPERIMENT) for entry in rows}
+def comparison_prefix(experiment: str | None = None) -> str:
+    """The record prefix of the experiment whose rows a comparison draws: `cp21.metrics.…`."""
+    return EXPERIMENT_PREFIX[experiment or COMPARISON_EXPERIMENT]
+
+
+def comparison_rows(order: tuple[str, ...] | None = None, experiment: str | None = None) -> tuple[Entry, ...]:
+    """The shared comparison's rows, refusing a mix of evaluated populations (standard §5). Without arguments, the
+    live comparison; v3's pinned one is `comparison_rows(V3_COMPARISON_ORDER, "CP-20")`."""
+    order, experiment = order or COMPARISON_ORDER, experiment or COMPARISON_EXPERIMENT
+    rows = tuple(get(ident) for ident in order)
+    populations = {population_in(entry, experiment) for entry in rows}
     if len(populations) != 1:
         raise RegistryError(f"one comparison chart holds one comparability ID; got {sorted(populations)}")
     return rows
@@ -765,7 +835,7 @@ __all__ = [
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
     "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "Transition",
-    "V2_SCORES_ORDER", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
+    "V2_SCORES_ORDER", "V3_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "comparison_prefix", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
     "transitions",
     "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
     "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",

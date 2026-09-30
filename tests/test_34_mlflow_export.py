@@ -86,7 +86,8 @@ def test_each_policy_appears_once_per_population(runs):
     assert G.by_code("H0") is G.by_code("V2-H")
 
 
-UNIT_SUFFIX = re.compile(r"(_eur(_vs_\w+)?|coverage(50|80|95)|hits95|^s_(mae|wis)|^delta_s_(mae|wis)_vs_\w+)")
+UNIT_SUFFIX = re.compile(r"(_eur(_vs_\w+)?|coverage(50|80|95)|hits95|^s_(mae|wis)|^delta_s_(mae|wis)_vs_\w+|"
+                         r"^ratio_s_(mae|wis)_vs_\w+)")
 
 
 def test_every_metric_name_carries_its_unit(runs):
@@ -152,7 +153,7 @@ def test_candidate_runs_carry_the_pages_own_charts(runs):
     import build_pages as B
 
     with_charts = {key for key, run in runs.items() if any(a["path"].startswith("charts/") for a in run["artifacts"])}
-    assert with_charts == {"cp20/HG", "cp16/V2-H"}
+    assert with_charts == set(B.CHARTS_BY_RUN) == {"cp21/HGL", "cp20/HG", "cp16/V2-H"}
     page = (REPO_ROOT / "docs" / "index.html").read_text()
     for run_key, charts in B.CHARTS_BY_RUN.items():
         artifacts = {a["path"]: a["content"] for a in runs[run_key]["artifacts"]}
@@ -160,6 +161,10 @@ def test_candidate_runs_carry_the_pages_own_charts(runs):
             svg = artifacts[f"charts/{chart_id}.svg"]
             assert svg.startswith('<?xml version="1.0"') and 'xmlns="http://www.w3.org/2000/svg"' in svg
             drawing = re.sub(r'^<svg width="[\d.]+" height="[\d.]+" ', "<svg ", svg.split("\n", 1)[1].rstrip("\n"))
+            if (run_key, chart_id) in B.PINNED_CHARTS:
+                # drawn as its chapter published it: a later generation's row is not in it, so it is not the live page's
+                assert drawing not in page and svg == B.standalone_svg(dict(charts)[chart_id]())
+                continue
             assert drawing in page, f"{chart_id}: the artifact is not the page's drawing"
             assert f"charts/{chart_id}.svg" in artifacts["README.md"]
 

@@ -60,6 +60,16 @@ def _source(path: str, tag: str, blob: str) -> tuple[str, Source]:
 #: CP-10's files landed with CP-15, and CP-16's are also reachable from `evidence/cp-20`.
 SOURCES: dict[str, Source] = dict(
     [
+        # CP-21 (v4)
+        _source("reports/block-challenger/metrics.csv", "evidence/cp-21", "677ccf0ce4bf826508a1d195a1dfdf829d8568f6"),
+        _source("reports/block-challenger/uncertainty.csv", "evidence/cp-21", "390969f619cf163869f7b2b349bc561e87e05a9a"),
+        _source("reports/block-challenger/criteria.csv", "evidence/cp-21", "7e2af1e899f9cfaf393fc3258d3687910831db47"),
+        _source("reports/block-challenger/diagnostics.csv", "evidence/cp-21", "e8479ec670b03a813fab7e94c71a119b7b3e84b0"),
+        _source("reports/block-challenger/protocol.json", "evidence/cp-21", "3670a30d3d1eb92d498a343787ec8242926c7e06"),
+        _source("reports/block-challenger/adoption.json", "evidence/cp-21", "f554bbc76ce4896ded59ba8d77e140498312f4ca"),
+        _source("reports/block-challenger/controls.json", "evidence/cp-21", "36f3ac0c59d0728912a55bb4db27f591a13c45fa"),
+        _source("reports/block-challenger/hg-parity.json", "evidence/cp-21", "f6bbf3f32e956ebe012911c0416b5bd3ad729968"),
+        _source("reports/block-challenger/fit-cost.json", "evidence/cp-21", "33bf81e615b862e9efe0dad4e75a6b489fa9464a"),
         # CP-20 (v3)
         _source("reports/weather-ablation/metrics.csv", "evidence/cp-20", "91be7505842cdec6062fd0bcbc7f88f2f3ec031c"),
         _source("reports/weather-ablation/uncertainty.csv", "evidence/cp-20", "aa3028f17bbe7f6c0dcc65f91266fc00b29b0207"),
@@ -205,6 +215,8 @@ class EvidenceRecord:
     ci_low_raw: str | None = None
     ci_high_raw: str | None = None
     detail: tuple[tuple[str, str], ...] = field(default=())
+    #: The columns an interval's endpoints are read from: a difference's, or (from CP-21) a ratio's own.
+    ci_columns: tuple[str, str] = ("ci_lower", "ci_upper")
 
     @property
     def value(self) -> float:
@@ -249,6 +261,8 @@ UNIT_MESSAGES = "messages"
 UNIT_SEED = "seed"
 UNIT_REPLICATES = "replicates"
 UNIT_LABEL = "label"
+#: A relative change from a checkpoint's own bootstrap draws (CP-21 on): S_policy / S_comparator − 1.
+UNIT_RATIO_CHANGE = "change as a share of the comparator's score"
 
 #: CSV column -> (metric name, unit, display precision). One place, so a unit cannot drift
 #: between the record that carries it and the check that validates it.
@@ -396,7 +410,16 @@ def _metric_records(prefix: str, checkpoint: str, path: str) -> list[EvidenceRec
 
 def _interval(checkpoint: str) -> Interval:
     """The bootstrap settings, read from the checkpoint's own frozen record. CP-16 inherited
-    CP-15's recorded settings unchanged (capstone §14.4)."""
+    CP-15's recorded settings unchanged (capstone §14.4); CP-21 reused CP-20's index generator."""
+    if checkpoint == "CP-21":
+        settings = _json("reports/block-challenger/protocol.json")["uncertainty"]
+        return Interval(
+            method="paired noncircular moving-block percentile bootstrap",
+            level=0.95,
+            seed=int(settings["seed"]),
+            replicates=int(settings["replicates"]),
+            block_days=int(settings["block_days"]),
+        )
     if checkpoint == "CP-20":
         comparison = _json("reports/weather-ablation/protocol.json")["comparison"]
         return Interval(
@@ -451,6 +474,31 @@ def _uncertainty_records(prefix: str, checkpoint: str, path: str, windows) -> li
                 ),
             )
         )
+    return records
+
+
+def _ratio_records(prefix: str, checkpoint: str, path: str, windows) -> list[EvidenceRecord]:
+    """From CP-21 on, each equal-fold contrast's change as a share of the comparator's score, with the interval
+    of that ratio from the checkpoint's own bootstrap draws (PUBLISH_RULES §3.2): never a difference divided
+    by a fixed denominator."""
+    records = []
+    interval = _interval(checkpoint)
+    for line, row in _rows(path):
+        if row["scope"] != "equal_fold" or row.get("ratio", "") == "":
+            continue
+        candidate, baseline, metric = row["candidate"], row["baseline"], row["metric"]
+        records.append(EvidenceRecord(
+            record_id=f"{prefix}.ratio.{candidate}-{baseline}.{metric}", checkpoint=checkpoint,
+            generation=GENERATION_OF.get(candidate), policy_code=candidate, source_path=path,
+            selector=(("scope", "equal_fold"), ("candidate", candidate), ("baseline", baseline), ("metric", metric)),
+            field="ratio", metric=f"ratio_S_{metric}", unit=UNIT_RATIO_CHANGE, aggregation="equal_fold_ratio",
+            population_id="common-10747h", comparator=baseline, evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+            window=windows["all"], display_precision=4, raw=row["ratio"], source_line=line,
+            interval=Interval(interval.method, float(row.get("confidence") or interval.level), interval.seed,
+                              int(row.get("replicates") or interval.replicates), interval.block_days),
+            ci_low_raw=row["ratio_ci_lower"], ci_high_raw=row["ratio_ci_upper"],
+            ci_columns=("ratio_ci_lower", "ratio_ci_upper"),
+        ))
     return records
 
 
@@ -743,6 +791,35 @@ def _json_records() -> list[EvidenceRecord]:
                      population="cp10-crisis-window-408h", window=("2022-08-15", "2022-08-31"),
                      evidence_class=EVIDENCE_CLASS_CALIBRATION),
     ]
+    cp21 = "reports/block-challenger/protocol.json"
+    adoption = "reports/block-challenger/adoption.json"
+    for key, dotted, unit in (("bootstrap_seed", "uncertainty.seed", UNIT_SEED),
+                              ("replicates", "uncertainty.replicates", UNIT_REPLICATES),
+                              ("block_days", "uncertainty.block_days", UNIT_DAYS)):
+        records.append(_json_record(f"cp21.protocol.{key}", "CP-21", cp21, dotted, unit=unit, precision=0,
+                                    population="protocol"))
+    for key, dotted in (("verdict", "verdict"), ("candidate", "candidate"), ("comparator", "comparator"),
+                        ("rule_id", "rule.id"), ("rule_set_on", "rule.set_on"),
+                        ("first_unmet_condition", "first_unmet_condition"),
+                        ("block_split_reading", "block_split.reading")):
+        records.append(_json_record(f"cp21.adoption.{key}", "CP-21", adoption, dotted, unit=UNIT_LABEL, precision=0,
+                                    population="protocol"))
+    for condition in ("1", "2", "3", "4"):
+        records.append(_json_record(f"cp21.adoption.condition_{condition}_met", "CP-21", adoption,
+                                    f"conditions.{condition}.met", unit=UNIT_LABEL, precision=0,
+                                    population="protocol"))
+    records += [
+        _json_record("cp21.controls.checks", "CP-21", "reports/block-challenger/controls.json", "checks",
+                     unit=UNIT_COUNT, precision=0, population="protocol"),
+        _json_record("cp21.controls.all_passed", "CP-21", "reports/block-challenger/controls.json", "all_passed",
+                     unit=UNIT_LABEL, precision=0, population="protocol"),
+        _json_record("cp21.hg_parity.rows", "CP-21", "reports/block-challenger/hg-parity.json", "rows",
+                     unit=UNIT_HOURS, precision=0, population="common-10747h"),
+        _json_record("cp21.hg_parity.bitwise_equal", "CP-21", "reports/block-challenger/hg-parity.json",
+                     "bitwise_equal", unit=UNIT_LABEL, precision=0, population="common-10747h"),
+        _json_record("cp21.fit_cost.fits", "CP-21", "reports/block-challenger/fit-cost.json", "fits",
+                     unit=UNIT_RUNS, precision=0, population="protocol", metric="main-run LightGBM fits"),
+    ]
     point = next(i for i, t in enumerate(_json(dm2)["dm_tests"])
                  if t["analysis"] == "point_median_absolute_error" and t["comparator"] == "similar_day_naive")
     for key, unit, precision in (("relative_improvement_pct", UNIT_PERCENT, 2), ("n_days", UNIT_DAYS, 0),
@@ -878,7 +955,13 @@ def records() -> dict[str, EvidenceRecord]:
     """Every published evidence record, keyed by `record_id`."""
     cp20_windows = _fold_windows("reports/weather-ablation/metrics.csv")
     cp16_windows = _fold_windows("reports/v2-causal/metrics.csv")
+    cp21_windows = _fold_windows("reports/block-challenger/metrics.csv")
     built: list[EvidenceRecord] = []
+    built += _metric_records("cp21", "CP-21", "reports/block-challenger/metrics.csv")
+    built += _uncertainty_records("cp21", "CP-21", "reports/block-challenger/uncertainty.csv", cp21_windows)
+    built += _ratio_records("cp21", "CP-21", "reports/block-challenger/uncertainty.csv", cp21_windows)
+    built += _criteria_records("cp21", "CP-21", "reports/block-challenger/criteria.csv", cp21_windows)
+    built += _diagnostic_records("cp21", "CP-21", "reports/block-challenger/diagnostics.csv")
     built += _metric_records("cp20", "CP-20", "reports/weather-ablation/metrics.csv")
     built += _uncertainty_records("cp20", "CP-20", "reports/weather-ablation/uncertainty.csv", cp20_windows)
     built += _criteria_records("cp20", "CP-20", "reports/weather-ablation/criteria.csv", cp20_windows)
@@ -931,6 +1014,7 @@ DAILY_SOURCES = {
     "CP-15": ("reports/cp15/daily.csv", None),
     "CP-16": ("reports/v2-causal/diagnostics.csv", "daily"),
     "CP-20": ("reports/weather-ablation/diagnostics.csv", "daily"),
+    "CP-21": ("reports/block-challenger/diagnostics.csv", "daily"),
 }
 
 
@@ -959,6 +1043,8 @@ def _expected_unit(record: EvidenceRecord) -> str:
         return record.unit
     if record.field == "difference":
         return UNIT_NORM_DIFF if record.selector_dict()["scope"] == "equal_fold" else UNIT_EUR_DIFF
+    if record.field == "ratio":
+        return UNIT_RATIO_CHANGE
     column = record.field
     if record.field in ("actual", "upper_limit", "lower_limit"):
         column = record.selector_dict()["metric"]
@@ -970,6 +1056,8 @@ def _expected_aggregation(record: EvidenceRecord) -> str | None:
     selector = record.selector_dict()
     if record.field == "difference":
         return "equal_fold_contrast" if selector["scope"] == "equal_fold" else "per_fold_contrast"
+    if record.field == "ratio":
+        return "equal_fold_ratio"
     if "scope" in selector and record.field not in ("actual", "upper_limit", "lower_limit", "status", "passed"):
         return AGGREGATION_OF_SCOPE[selector["scope"]]
     return None
@@ -1027,7 +1115,8 @@ def rederive(record: EvidenceRecord, fresh: FreshRead | None = None) -> dict[str
         raise EvidenceError(f"{record.record_id}: no column {record.field!r}")
     out = {"value": row[record.field]}
     if record.interval is not None:
-        out["ci_low"], out["ci_high"] = row["ci_lower"], row["ci_upper"]
+        low, high = record.ci_columns
+        out["ci_low"], out["ci_high"] = row[low], row[high]
     return out
 
 

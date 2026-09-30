@@ -1,8 +1,10 @@
 {
   "build_path": "purpose-built static assembly (\u00a79.2 fallback)",
-  "bytes": 1684252,
-  "final": true,
-  "links_omitted_until_verified": [],
+  "bytes": 1914819,
+  "final": false,
+  "links_omitted_until_verified": [
+    "compare:v4"
+  ],
   "load_scale_points": 11,
   "marimo_export_external_hosts": [
     "cdn.jsdelivr.net"
@@ -17,6 +19,7 @@
     "compare:overview",
     "compare:v2",
     "compare:v3",
+    "compare:v4",
     "experiment"
   ],
   "routes_published": [

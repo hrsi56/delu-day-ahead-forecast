@@ -65,7 +65,7 @@ def page_consistency_problems(page: str) -> list[str]:
     overview = _section(page, 'data-chart-id="overview"', "</div>") or ""
     for entry in G.comparison_rows():
         code = entry.code_in(G.COMPARISON_EXPERIMENT)
-        if f'data-record="cp20.metrics.{code}.equal_fold.S_MAE"' not in overview:
+        if f'data-record="{G.comparison_prefix()}.metrics.{code}.equal_fold.S_MAE"' not in overview:
             problems.append(f"page: comparison row {entry.id} ({code}) is missing")
     return problems
 
@@ -350,7 +350,7 @@ def percent_findings(nodes: list[Node]) -> list[str]:
         if "%" not in node.text:
             continue
         b = node.bindings
-        derived = b.get("data-derived") in ("share_change", "distance", "rule_margin")
+        derived = b.get("data-derived") in ("share_change", "ratio_change", "distance", "rule_margin")
         level = b.get("data-structural") == "level"
         exempt = V1_RULES.get(b.get("data-v1", ""), "") == "invariant_4"
         if not (derived or level or exempt):

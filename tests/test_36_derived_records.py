@@ -52,10 +52,13 @@ def test_the_per_period_ranges_rederive_exactly():
 
 
 def test_n_is_eight_and_v3_is_the_only_and_first_policy_to_meet_the_targets():
+    """At v3's decision (2026-09-24) N was 8 and v3 the only policy to meet the targets; the count is frozen at that
+    date. CP-21 (2026-09-30) added four policies tested against them as diagnostics, three of them meeting both."""
     assert show("derived.criteria.v3.tested") == "8"
     verdicts = {record.subject: record.value for record in D.records().values() if record.kind == "verdict"}
-    assert len(verdicts) == 8, "one identity, one verdict: v2 is not counted twice (V2-H = H0)"
-    assert [subject for subject, verdict in verdicts.items() if verdict == "met"] == ["v3"]
+    assert len(verdicts) == 12, "one identity, one verdict: v2 (V2-H = H0) and v3 (HG in CP-20 and CP-21) once each"
+    decided = {subject: G.first_status(G.get(subject)).date for subject in verdicts}
+    assert [s for s, verdict in verdicts.items() if verdict == "met" and decided[s] <= "2026-09-24"] == ["v3"]
     assert show("derived.criteria.v3.first_to_meet") == "yes"
     assert [record.subject for record in D.records().values()
             if record.kind == "first_to_meet" and record.value == "yes"] == ["v3"]
@@ -185,6 +188,8 @@ def test_display_never_rounds_a_whole_percent_across_the_sign():
 def test_counts_include_all_policies_at_each_recorded_decision_date():
     expected = {G.by_code(code).id: "5" for code in ("A1", "A2", "A3", "A4", "A5")}
     expected.update({"v2": "7", "pooled-control": "7", "v3": "8"})
+    expected.update({ident: "12" for ident in ("v4", "pooled-lightgbm-weather", "block-lightgbm",
+                                                "normalized-block-lightgbm")})
     assert {r.subject: r.value for r in D.records().values() if r.kind == "tested"} == expected
     for subject in expected:
         record = D.get(f"derived.criteria.{subject}.tested")

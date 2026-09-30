@@ -102,6 +102,8 @@ TOKENS: dict[str, str] = {
     "v1": "#475569",
     "v2": "#6D28D9",
     "v3": "#0F766E",
+    # The Owner's encoding for v4 (decision D6, 2026-09-29): amber, a filled diamond, the direct label "v4".
+    "v4": "#B45309",
     "ref": "#71717A",
     "badge-bg": "#F4F4F5",
     "badge-text": "#3F3F46",
@@ -129,6 +131,7 @@ MOBILE_COLUMN_AT_320 = 320 - 2 * 12 - 2 * 8
 MOBILE_LINE_CHARS = 39
 
 ROLE_STYLE = {
+    "v4": {"color": TOKENS["v4"], "marker": "diamond", "filled": True},
     "v3": {"color": TOKENS["v3"], "marker": "circle", "filled": True},
     "v2": {"color": TOKENS["v2"], "marker": "square", "filled": True},
     "v1": {"color": TOKENS["v1"], "marker": "triangle", "filled": True},
@@ -691,7 +694,7 @@ def multi_rows(chart_id: str, claim_id: str, panels: list[tuple[str, str, tuple[
                *, title: str, desc: str, scale_note: str | None = None) -> str:
     """Rows with a mark per generation and a printed values line under each row. A panel with a
     domain shares one scale; a panel whose domain is None gives each row its own labelled scale."""
-    roles_short = {"v1": "v1", "v2": "v2", "v3": "v3", "study": "A1", "reference": "ref"}
+    roles_short = {"v1": "v1", "v2": "v2", "v3": "v3", "v4": "v4", "study": "A1", "reference": "ref"}
 
     def draw(width: float, x_label: float, x0: float, x1: float, panel, top: float, row_h: float,
              label_above: bool) -> tuple[str, float]:
@@ -782,13 +785,14 @@ def _wrap(text: str, width: int) -> list[str]:
     return lines + ([line] if line else [])
 
 
-def hour_panels(chart_id: str, claim_id: str, series: tuple[tuple[str, str], ...], *, title: str, desc: str) -> str:
+def hour_panels(chart_id: str, claim_id: str, series: tuple[tuple[str, str], ...], *, title: str, desc: str,
+                prefix: str = "cp20") -> str:
     """C5: MAE by local hour, one panel per fold, each fold on its own labelled scale."""
     folds = ("fold_1", "fold_2", "fold_3", "fold_4", "fold_5")
-    windows = {fold: R.get(f"cp20.metrics.B0.{fold}.MAE").window for fold in folds}
+    windows = {fold: R.get(f"{prefix}.metrics.B0.{fold}.MAE").window for fold in folds}
 
     def draw(width: float, x0: float, x1: float, top: float, fold: str, plot_h: float) -> tuple[str, float]:
-        ids = {role: [f"cp20.diagnostics.{code}.{fold}.hour_{h:02d}.MAE" for h in range(24)] for role, code in series}
+        ids = {role: [f"{prefix}.diagnostics.{code}.{fold}.hour_{h:02d}.MAE" for h in range(24)] for role, code in series}
         axis_unit([rid for values in ids.values() for rid in values])
         values = [R.get(rid).value for rids in ids.values() for rid in rids]
         hi = max(values) * 1.12
@@ -930,15 +934,17 @@ def preview_chart(payload: dict) -> str:
 # --------------------------------------------------------------------------- lineage (§7.7) and planned work (§8.6)
 
 
+#: Planned, not evaluated (plan §8.6, research anchor §18). `{comparator}` is the registry's current generation, the
+#: opponent the standing decision "same information, same opponent" names: never typed, so it cannot go stale.
+#: 4.6 is DDNN alone (TabPFN was withdrawn, §18.1); its question fixes no design, standalone or blend member, that no
+#: anchor has fixed. 4.5, the three-block LightGBM, left this list when CP-21 evaluated it: it is v4's chapter.
 PLANNED_WORK = (
-    ("Alternative model families", "4.6", "DDNN / TabPFN",
-     "Does a distributional network, or a tabular foundation model, beat v3?",
-     "One predefined comparison on identical hours"),
+    ("A distributional neural network", "4.6", "DDNN",
+     "Does a distributional neural network improve on {comparator}, with the same information and on identical hours?",
+     "A provenance and resource record, then one predefined comparison on identical hours"),
     ("Wind and solar generation forecasts", "4.4V", "VRE",
      "Does an in-house wind and solar generation forecast add information beyond direct weather?",
      "A held-forward generation model, then an ablation"),
-    ("Models for different parts of the day", "4.5", "Three-block LightGBM",
-     "Do separate models for different hours improve forecasts?", "A per-block comparison on identical hours"),
     ("Combining models", "4.8", "Recombination", "Does combining adopted models help?",
      "A predefined combination test"),
     ("Frozen-protocol evaluation, then prospective monitoring", "4.7T and live", "Final evaluation",
@@ -987,11 +993,12 @@ def _rows_of(order, experiment: str) -> tuple[tuple[str, str, str, bool, str | N
 def overview_table() -> str:
     """The comparison's values, exact (standard §4): scores, the target verdict and distance, pooled errors."""
     rows = []
+    prefix = G.comparison_prefix()
     for entry in G.comparison_rows():
         code = entry.code_in(G.COMPARISON_EXPERIMENT)
         cells = [f'<th scope="row">{_structural_versions(comparison_label(entry))} <span class="code">{S("code", code)}</span></th>']
         for field in ("S_MAE", "S_WIS"):
-            cells.append(f'<td class="n exact">{value(f"cp20.metrics.{code}.equal_fold.{field}", "P07", option="exact")}</td>')
+            cells.append(f'<td class="n exact">{value(f"{prefix}.metrics.{code}.equal_fold.{field}", "P07", option="exact")}</td>')
         base = f"derived.criteria.{entry.id}"
         if f"{base}.verdict" in D.records():
             cells.append(f'<td>{value(f"{base}.verdict", "P16")}</td>')
@@ -1000,10 +1007,11 @@ def overview_table() -> str:
         else:
             cells.append('<td>—</td><td class="n">—</td>')
         for field in ("MAE", "WIS"):
-            cells.append(f'<td class="n exact">{value(f"cp20.metrics.{code}.pooled.{field}", "C74", option="exact")}</td>')
+            cells.append(f'<td class="n exact">{value(f"{prefix}.metrics.{code}.pooled.{field}", "C74", option="exact")}</td>')
         rows.append("<tr>" + "".join(cells) + "</tr>")
     return (
-        '<div class="scroll" role="region" aria-label="The seven policies, table" tabindex="0"><table class="data">'
+        f'<div class="scroll" role="region" aria-label="The {COUNT_WORDS[len(rows)]} policies, table" tabindex="0">'
+        '<table class="data">'
         "<caption>Equal-fold error scores (ratio to the naive), the targets, and pooled errors (EUR/MWh), identical hours</caption>"
         '<thead><tr><th scope="col">Policy</th><th scope="col">Point-error score (S_MAE)</th>'
         '<th scope="col">Interval score (S_WIS)</th><th scope="col">Both targets</th>'
@@ -1015,15 +1023,16 @@ def overview_table() -> str:
 
 def fold_table() -> str:
     rows = []
+    prefix = G.comparison_prefix()
     for fold in FOLDS:
-        record = R.get(f"cp20.metrics.B0.{fold}.n_hours")
+        record = R.get(f"{prefix}.metrics.B0.{fold}.n_hours")
         first, last = record.window
         crisis = " (the 2022 crisis)" if fold == "fold_3" else ""
         rows.append(
             f'<tr><th scope="row">{S("fold", "Fold " + fold[-1])}{_structural_versions(crisis).replace("2022", S("date", "2022"))}</th>'
             f'<td>{S("date", first)} to {S("date", last)}</td>'
-            f'<td class="n">{value(f"cp20.metrics.B0.{fold}.n_days", "P08")}</td>'
-            f'<td class="n">{value(f"cp20.metrics.B0.{fold}.n_hours", "P08")}</td></tr>'
+            f'<td class="n">{value(f"{prefix}.metrics.B0.{fold}.n_days", "P08")}</td>'
+            f'<td class="n">{value(f"{prefix}.metrics.B0.{fold}.n_hours", "P08")}</td></tr>'
         )
     return (
         '<div class="scroll" role="region" aria-label="Development folds" tabindex="0"><table class="data">'
@@ -1032,16 +1041,22 @@ def fold_table() -> str:
     )
 
 
-def _generation_codes() -> tuple[tuple[str, str], ...]:
-    """(style, code in the shared comparison) for every generation, oldest first."""
-    return tuple((entry.style, entry.code_in(G.COMPARISON_EXPERIMENT)) for entry in G.generations())
+#: v3's chapter as it was published: its generations and the experiment whose rows it draws. Its charts are also
+#: the artifacts the `cp20/HG` MLflow run carries, so they are drawn from this pin, never from "the current
+#: generation": a published record never changes when a later generation is adopted (research anchor §17.9).
+V3_GENERATIONS, V3_EXPERIMENT = ("v1", "v2", "v3"), "CP-20"
+
+
+def _generation_codes(idents: tuple[str, ...] = V3_GENERATIONS,
+                      experiment: str = V3_EXPERIMENT) -> tuple[tuple[str, str], ...]:
+    """(style, code in the experiment) for the named generations, oldest first."""
+    return tuple((G.get(ident).style, G.get(ident).code_in(experiment)) for ident in idents)
 
 
 def _hour_series() -> tuple[tuple[str, str], ...]:
-    """The hour-of-day chart's two series: the current generation's comparator, then the generation."""
-    current = G.current_generation()
-    comparator = G.get(current.comparator)
-    return tuple((entry.style, entry.code_in(G.COMPARISON_EXPERIMENT)) for entry in (comparator, current))
+    """v3's hour-of-day chart's two series: its comparator, then v3."""
+    v3 = G.get("v3")
+    return _generation_codes((v3.comparator, v3.id))
 
 
 def c2a_panels() -> list[Panel]:
@@ -1110,8 +1125,8 @@ def c4_panels() -> list[Panel]:
     def crisis_rows(saved: str, evaluated: str) -> tuple[Row, ...]:
         # v1 and the study arm carry CP-15's saved crisis rows; later generations their own checkpoint's.
         rows = []
-        for entry in (G.get(ident) for ident in G.CRISIS_ORDER):
-            code = entry.code_in(G.COMPARISON_EXPERIMENT)
+        for entry in (G.get(ident) for ident in G.V3_CRISIS_ORDER):
+            code = entry.code_in(V3_EXPERIMENT)
             record = (saved.format(code=entry.code_in("CP-15")) if entry.code_in("CP-15")
                       else evaluated.format(code=code))
             label = entry.short if entry.kind == "generation" else comparison_label(entry, "CP-15")
@@ -1229,10 +1244,186 @@ def v2_chart1() -> str:
     )
 
 
-#: The charts the MLflow export attaches to the candidate runs they show (plan §10.6).
+# --------------------------------------------------------------------------- v4's charts (CP-21)
+
+_HGL_MAE = "cp21.uncertainty.HGL-HG.equal_fold.MAE"
+_HGL_WIS = "cp21.uncertainty.HGL-HG.equal_fold.WIS"
+#: v4's chapter: the generations its absolute-error and coverage charts compare, from CP-21's rows.
+V4_GENERATIONS, V4_EXPERIMENT = ("v3", "v4"), "CP-21"
+
+
+def v4_main_panels() -> list[Panel]:
+    return [Panel("Difference, v4 − v3", "error-score difference · below zero favours v4",
+                  (Row("Point-error score", _HGL_MAE, "v4", bold=True, claim="C107"),
+                   Row("Interval score", _HGL_WIS, "v4", bold=True, claim="C108")),
+                  domain=(-0.05, 0.01), step=0.01,
+                  refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))]
+
+
+def v4_main_chart() -> str:
+    return single_rows(
+        "v4-c2a", "C107", v4_main_panels(),
+        title="v4 minus v3: equal-fold error-score differences with 95 percent confidence intervals",
+        desc="Two rows, the point-error score and the interval score. Each shows the estimated difference as a "
+             "diamond and its 95 percent confidence interval as a line; both lie wholly left of zero, which favours v4.",
+        label_width=230, row_h=56,
+    )
+
+
+#: The ladder (research anchor §17.1, claim C106): each step's contrast, its label in plain words and its claim.
+LADDER = (
+    ("Pooled LightGBM − daily LightGBM: weather, bundled with size selection", "L-P-B3", "C112"),
+    ("Three-block − pooled LightGBM: the block split alone", "L-R-L-P", "C111"),
+    ("Normalized − raw three-block LightGBM: the target", "L-N-L-R", "C113"),
+)
+#: Each study arm, and v4, against v3 (claims C114–C116, C107–C108).
+ARMS_AGAINST_V3 = (
+    ("Pooled LightGBM − v3", "L-P-HG", "study", "C114"),
+    ("Three-block LightGBM − v3", "L-R-HG", "study", "C115"),
+    ("Normalized three-block LightGBM − v3", "L-N-HG", "study", "C116"),
+)
+
+
+def v4_ladder_panels() -> list[Panel]:
+    def panel(metric: str, title: str) -> Panel:
+        return Panel(title, "error-score difference · below zero favours the first named",
+                     tuple(Row(label, f"cp21.uncertainty.{pair}.equal_fold.{metric}", "study", claim=claim)
+                           for label, pair, claim in LADDER),
+                     domain=(-0.25, 0.05), step=0.05,
+                     refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))
+    return [panel("MAE", "Point-error score"), panel("WIS", "Interval score")]
+
+
+def v4_ladder_chart() -> str:
+    return single_rows(
+        "v4-ladder", "C106", v4_ladder_panels(),
+        title="The ladder: each step's equal-fold error-score difference, with 95 percent confidence intervals",
+        desc="Three steps in two panels. Adding weather together with size selection lowered both scores; the block "
+             "split and the normalized target show no demonstrated joint preference: their intervals span zero.",
+        label_width=300, row_h=56,
+    )
+
+
+def v4_arms_panels() -> list[Panel]:
+    def panel(metric: str, title: str) -> Panel:
+        rows = tuple(Row(label, f"cp21.uncertainty.{pair}.equal_fold.{metric}", role, claim=claim)
+                     for label, pair, role, claim in ARMS_AGAINST_V3)
+        rows += (Row("v4 − v3", _HGL_MAE if metric == "MAE" else _HGL_WIS, "v4", bold=True,
+                     claim="C107" if metric == "MAE" else "C108"),)
+        return Panel(title, "error-score difference · below zero favours the first named", rows,
+                     domain=(-0.05, 0.05), step=0.01,
+                     refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))
+    return [panel("MAE", "Point-error score"), panel("WIS", "Interval score")]
+
+
+def v4_arms_chart() -> str:
+    return single_rows(
+        "v4-arms", "C114", v4_arms_panels(),
+        title="Each study arm, and v4, against v3: equal-fold error-score differences with 95 percent intervals",
+        desc="Four rows in two panels. Each study arm's intervals span zero, except the three-block LightGBM's "
+             "interval score, which lies wholly above zero, worse than v3; v4's lie wholly below zero.",
+        label_width=300, row_h=56,
+    )
+
+
+def v4_folds_panels() -> list[Panel]:
+    def panel(metric: str, title: str) -> Panel:
+        return Panel(title, "EUR/MWh, paired mean daily loss · below zero favours v4",
+                     tuple(Row(f"Fold {fold[-1]}" + (" (crisis)" if fold == "fold_3" else ""),
+                               f"cp21.uncertainty.HGL-HG.{fold}.{metric}", "v4") for fold in FOLDS),
+                     domain=(-3.0, 1.0), step=0.5,
+                     refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),), option="p=1")
+    return [panel("MAE", "Point error, v4 − v3"), panel("WIS", "Interval score, v4 − v3")]
+
+
+def v4_folds_chart() -> str:
+    return single_rows(
+        "v4-c2b", "C110", v4_folds_panels(),
+        title="v4 minus v3 per fold, in EUR/MWh, with 95 percent confidence intervals",
+        desc="Five folds in two panels. Every point estimate is below zero. In fold 3, the 2022 crisis, both "
+             "intervals cross zero.",
+        label_width=128, row_h=54,
+    )
+
+
+def v4_absolute_panels():
+    def rows(metric: str) -> tuple[MultiRow, ...]:
+        out = []
+        for fold in FOLDS:
+            ids = {role: f"cp21.metrics.{code}.{fold}.{metric}"
+                   for role, code in _generation_codes(V4_GENERATIONS, V4_EXPERIMENT)}
+            top = max(R.get(rid).value for rid in ids.values())
+            magnitude = 10 ** math.floor(math.log10(top))
+            hi = math.ceil(top * 1.08 / magnitude * 2) * magnitude / 2
+            out.append(MultiRow(f"Fold {fold[-1]}", tuple((role, rid) for role, rid in ids.items()), domain=(0.0, hi)))
+        return tuple(out)
+    return [("MAE by fold, EUR/MWh", "lower is better", rows("MAE"), None, 1.0, "p=1"),
+            ("WIS by fold, EUR/MWh", "lower is better", rows("WIS"), None, 1.0, "p=1")]
+
+
+def v4_absolute_chart() -> str:
+    return multi_rows(
+        "v4-c3", "C118", v4_absolute_panels(),
+        title="MAE and WIS per fold for v3 and v4",
+        desc="For each fold, two markers on that fold's own scale: v3 circle, v4 diamond, with the values printed "
+             "underneath.",
+        scale_note="Each fold has its own scale, shared by the two generations inside it.",
+    )
+
+
+def v4_peak_panels() -> list[Panel]:
+    rows = lambda column: tuple(  # noqa: E731
+        Row(entry.short, f"cp21.diagnostics.{entry.code_in(V4_EXPERIMENT)}.peak.{column}", entry.style,
+            bold=entry.id == "v4") for entry in (G.get(ident) for ident in G.CRISIS_ORDER))
+    return [Panel("MAE, EUR/MWh", "lower is better", rows("MAE"), domain=(0.0, 60.0), step=10.0, option="p=1"),
+            Panel("WIS, EUR/MWh", "lower is better", rows("WIS"), domain=(0.0, 40.0), step=10.0, option="p=1")]
+
+
+def v4_peak_chart() -> str:
+    return single_rows(
+        "v4-c4", "C120", v4_peak_panels(),
+        title="The August 2022 peak: point error and interval score for v2, v3 and v4",
+        desc="Three generations on the 17-day peak window, delivery 15 to 31 August 2022. v4's point error and "
+             "interval score are higher than v3's there. Descriptive only.",
+        label_width=120,
+    )
+
+
+def v4_coverage_panels():
+    def rows(kind: str) -> tuple[MultiRow, ...]:
+        out = []
+        for level in ("50", "80", "95"):
+            field = f"coverage{level}" if kind == "coverage" else f"mean_width{level}"
+            marks = tuple((role, f"cp21.metrics.{code}.pooled.{field}")
+                          for role, code in _generation_codes(V4_GENERATIONS, V4_EXPERIMENT))
+            ref = Ref(f"nominal {level}%", at=int(level) / 100) if kind == "coverage" else None
+            out.append(MultiRow(f"{level}% interval", marks, ref=ref))
+        return tuple(out)
+    return [("Coverage (fraction)", "closer to nominal is better", rows("coverage"), (0.3, 1.0), 0.1, None),
+            ("Mean interval width, EUR/MWh", "narrower at equal coverage is better", rows("width"), (0.0, 140.0), 20.0,
+             "p=1")]
+
+
+def v4_coverage_chart() -> str:
+    return multi_rows(
+        "v4-c6", "C121", v4_coverage_panels(),
+        title="Coverage and mean interval width at 50, 80 and 95 percent, pooled, for v3 and v4",
+        desc="For each nominal level, coverage and mean width for v3 and v4. A black tick marks the nominal coverage. "
+             "Higher coverage is not better on its own if the intervals widen.",
+    )
+
+
+#: The charts the MLflow export attaches to the candidate runs they show (plan §10.6). Each run carries the charts as
+#: its chapter published them: `cp20/HG`'s overview is v3's, pinned, and `cp21/HGL` carries v4's.
+#: The run charts no longer drawn on the live page: the comparison as v3's chapter published it (seven rows).
+PINNED_CHARTS = frozenset({("cp20/HG", "overview")})
 CHARTS_BY_RUN = {
-    "cp20/HG": (("overview", lambda: overview_chart()), ("v3-c2a", c2a_chart), ("v3-c2b", c2b_chart),
-                ("v3-c3", c3_chart), ("v3-c4", c4_chart), ("v3-c5", c5_chart), ("v3-c6", c6_chart)),
+    "cp21/HGL": (("overview", lambda: overview_chart()), ("v4-c2a", v4_main_chart), ("v4-ladder", v4_ladder_chart),
+                 ("v4-arms", v4_arms_chart), ("v4-c2b", v4_folds_chart), ("v4-c3", v4_absolute_chart),
+                 ("v4-c4", v4_peak_chart), ("v4-c6", v4_coverage_chart)),
+    "cp20/HG": (("overview", lambda: overview_chart(G.V3_COMPARISON_ORDER, V3_EXPERIMENT)), ("v3-c2a", c2a_chart),
+                ("v3-c2b", c2b_chart), ("v3-c3", c3_chart), ("v3-c4", c4_chart), ("v3-c5", c5_chart),
+                ("v3-c6", c6_chart)),
     "cp16/V2-H": (("v2-chart1", v2_chart1), ("v2-chart2", v2_chart2)),
 }
 
@@ -1350,7 +1541,8 @@ def header() -> str:
 def chapter_sequence(C, archive: str, *, specimen: bool = False) -> str:
     """Every generation's chapter, newest first, in the registry's order. A registered generation
     without a chapter builder is a build error, never a silent omission."""
-    builders = {"v3": lambda: v3_chapter(open_folds=specimen), "v2": v2_chapter, "v1": lambda: v1_chapter(C, archive)}
+    builders = {"v4": v4_chapter, "v3": lambda: v3_chapter(open_folds=specimen), "v2": v2_chapter,
+                "v1": lambda: v1_chapter(C, archive)}
     missing = [version for version in chapter_versions() if version not in builders]
     if missing:
         raise G.RegistryError(f"registered generations without a chapter: {missing}")
@@ -1371,7 +1563,7 @@ def opening(C, payload) -> str:
         f'{S("version", demo["browser"].split(".")[0])} on {esc(demo["machine"])}, public demo, '
         f'{S("date", demo["date"])}; last verified {S("date", demo["verified"])}.</p>'
     )
-    terms = "".join(f'<li data-block="{key}">{RC.render(key)}</li>' for key in HEADLINE_TERMS)
+    terms = "".join(f'<li data-block="{key}">{RC.render(key)}</li>' for key in RC.headline_terms())
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">
@@ -1408,8 +1600,8 @@ def opening(C, payload) -> str:
 </section>"""
 
 
-#: The terms the headline introduces, defined directly below it (standard §1 ii).
-HEADLINE_TERMS = ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.class")
+#: The terms the headline introduces, defined directly below it (standard §1 ii): they follow the headline's form.
+HEADLINE_TERMS = RC.headline_terms()
 
 
 def _branch_group(entry: G.Entry) -> G.Entry:
@@ -1520,43 +1712,65 @@ def transitions_html() -> str:
             f"first</h3>{cards}</div>")
 
 
-def overview_panels() -> list[Panel]:
+def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None = None) -> list[Panel]:
+    """The shared comparison's panels: the rows of `order`, drawn from `experiment`'s committed rows, with the
+    targets' dashed line from the newest generation's own criteria row there. Without arguments, the live one."""
+    order, experiment = order or G.COMPARISON_ORDER, experiment or G.COMPARISON_EXPERIMENT
+    prefix = G.comparison_prefix(experiment)
+    entries = G.comparison_rows(order, experiment)
     rows = []
-    for entry in G.comparison_rows():
-        code = entry.code_in(G.COMPARISON_EXPERIMENT)
+    for entry in entries:
+        code = entry.code_in(experiment)
         verdict = f"derived.criteria.{entry.id}.verdict"
         rows.append((entry, code, verdict if verdict in D.records() else None))
+    newest = entries[0].code_in(experiment)
 
     def panel(field: str, title: str, criterion: str) -> Panel:
         return Panel(
             title=title, subtitle="ratio to the naive · lower is better",
-            rows=tuple(Row(comparison_label(entry), f"cp20.metrics.{code}.equal_fold.{field}", entry.style, code,
-                           entry.kind == "generation", verdict=verdict) for entry, code, verdict in rows),
+            rows=tuple(Row(comparison_label(entry, experiment), f"{prefix}.metrics.{code}.equal_fold.{field}",
+                           entry.style, code, entry.kind == "generation", verdict=verdict)
+                       for entry, code, verdict in rows),
             domain=(0.5, 1.1), step=0.1,
             refs=(Ref("naive", at=1.0, dash=None, colour=TOKENS["text"]),
-                  Ref("target", f"cp20.criteria.HG.{criterion}.equal_fold.{field}.upper_limit")),
+                  Ref("target", f"{prefix}.criteria.{newest}.{criterion}.equal_fold.{field}.upper_limit")),
             option="p=3",
         )
 
     return [panel("S_MAE", "Point-error score", "c1"), panel("S_WIS", "Interval score", "c2")]
 
 
-def comparison_label(entry: G.Entry, experiment: str = G.COMPARISON_EXPERIMENT) -> str:
+def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
     """A comparison row's label: the canonical name, qualified by its role in that comparison."""
+    experiment = experiment or G.COMPARISON_EXPERIMENT
     note = next((code.note for code in entry.codes if code.experiment == experiment and code.note), "")
     qualifier = note or {"reference": "benchmark", "study arm": "study"}.get(entry.kind, "")
     return f"{entry.name} ({qualifier})" if qualifier else entry.name
 
 
-def overview_chart() -> str:
+#: A count of policies as the chart's accessible title words it.
+COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten"}
+
+
+def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None) -> str:
+    panels = overview_panels(order, experiment)
     return single_rows(
-        "overview", "P07", overview_panels(),
-        title="Error scores of the seven policies, relative to the similar-day naive, against the targets",
+        "overview", "P07", panels,
+        title=f"Error scores of the {COUNT_WORDS[len(panels[0].rows)]} policies, relative to the similar-day naive, "
+              "against the targets",
         desc="Two dot plots with one row per policy in the same order; lower is better. The solid line marks the "
              "naive at one, a reference and not a target; the dashed line marks the target set before the "
              "experiments. The right-hand column says whether a policy met both targets.",
         label_width=262,
     )
+
+
+def comparison_audit() -> tuple[Audit, ...]:
+    """The comparison's audit-grade records: its experiment's verdict, report and the newest generation's committed
+    equal-fold row, whose line is read from the record, never typed."""
+    newest = G.comparison_rows()[0]
+    record = R.get(f"{G.comparison_prefix()}.metrics.{newest.code_in(G.COMPARISON_EXPERIMENT)}.equal_fold.S_MAE")
+    return checkpoint_audit(G.COMPARISON_EXPERIMENT, source=record.source_path, line=record.source_line)
 
 
 def results() -> str:
@@ -1575,8 +1789,7 @@ def results() -> str:
   {block("comparison.howto")}
   {block("comparison.scale")}
   {block("overview.v1pointer", cls="qualification")}
-  {evidence_row(compare="compare:overview",
-                audit=checkpoint_audit("CP-20", source="reports/weather-ablation/metrics.csv", line=44))}
+  {evidence_row(compare="compare:overview", audit=comparison_audit())}
   {disclosure("overview-table", "View values", overview_table())}
  </figure>
  <div class="fairness">
@@ -1586,7 +1799,8 @@ def results() -> str:
               block("overview.fairness.detail") + fold_table())}
  </div>
  {disclosure("definitions", "Definitions, the policies tested, and why v1 scores differently in its own report",
-             block("overview.definitions") + f'<p data-block="comparison.census.detail">{RC.census_detail()}</p>'
+             "".join(block(key) for key in RC.comparison_terms()) + block("overview.definitions")
+             + f'<p data-block="comparison.census.detail">{RC.census_detail()}</p>'
              + block("overview.f07"))}
 </section>"""
 
@@ -2152,7 +2366,8 @@ def chapter_header(entry: G.Entry, *, with_badge: bool = True) -> str:
 
 
 def feature_change() -> str:
-    current, comparator = G.current_generation(), G.get(G.current_generation().comparator)
+    current = G.get("v3")
+    comparator = G.get(current.comparator)
     return (
         f'<div class="feature-change" aria-label="What changed from {comparator.version} to {current.version}">'
         f'<div class="fc-col"><p class="fc-head">{ver(comparator.version)} inputs</p><ul><li>price history</li>'
@@ -2175,6 +2390,69 @@ def blend_change() -> str:
         f"<li>daily LEAR and normalized LEAR, blended equally</li><li>intervals from recent errors, "
         "by hour of the day</li></ul><p class=\"fc-note\">control: the same blend with pooled intervals</p></div></div>"
     )
+
+
+def block_change() -> str:
+    v3, v4 = G.get("v3"), G.get("v4")
+    return (
+        f'<div class="feature-change" aria-label="What changed from {v3.version} to {v4.version}">'
+        f'<div class="fc-col"><p class="fc-head">{ver(v3.version)}</p><ul><li>two LEAR forecasts, blended equally</li>'
+        "<li>hour-aware intervals from recent errors</li></ul></div>"
+        '<div class="fc-arrow" aria-hidden="true">+</div>'
+        f'<div class="fc-col fc-added fc-v4"><p class="fc-head">added in {ver(v4.version)}</p><ul>'
+        "<li>a three-block LightGBM forecaster: night, solar hours, shoulder and peak</li>"
+        "<li>one third of the blend's weight, the LEAR pair two thirds</li></ul>"
+        '<p class="fc-note">same inputs; intervals re-estimated on the new errors</p></div></div>'
+    )
+
+
+def v4_slots() -> ChapterSlots:
+    entry = G.get("v4")
+    method = (block("v4.method.blend") + block("v4.method.inputs") + block("v4.method.ladder")
+              + detail_head("v4-ladder-steps", "The ladder: what each step added")
+              + v4_ladder_chart() + values_table("v4-ladder-values", "C106", v4_ladder_panels())
+              + block("v4.method.split")
+              + detail_head("v4-arms-against-v3", "Each study arm against v3") + block("v4.method.arms")
+              + v4_arms_chart() + values_table("v4-arms-values", "C114", v4_arms_panels()))
+    folds = (detail_head("v4-per-period-differences", "Did v4 help in every test period?") + block("v4.folds")
+             + v4_folds_chart() + values_table("v4-c2b-values", "C110", v4_folds_panels())
+             + detail_head("v4-absolute-errors", "Absolute errors per test period, for v3 and v4") + block("v4.absolute")
+             + v4_absolute_chart() + multi_values_table("v4-c3-values", "C118", v4_absolute_panels()))
+    crisis_note = ('<p class="chart-note">' + _structural_versions(
+        "The protocol's stress period is fold 3, the 2022 crisis. Its peak, delivery 2022-08-15 to 2022-08-31, is the "
+        "17 days charted here; their figures are for those days only, not the whole period.")
+        .replace("17 days", S("count", "17") + " days")
+        .replace("fold 3", "fold " + S("fold", "3")) + "</p>")
+    stress = (detail_head("v4-peak", "The August 2022 peak: where v4's point error is higher") + crisis_note
+              + block("v4.peak") + v4_peak_chart() + values_table("v4-c4-values", "C120", v4_peak_panels()))
+    coverage = (detail_head("v4-coverage", "Did the intervals get more reliable, or only wider?") + block("v4.coverage")
+                + v4_coverage_chart() + multi_values_table("v4-c6-values", "C121", v4_coverage_panels()))
+    protocol = "".join(block(key) for key in ("v4.criteria", "v4.parity", "v4.controls", "v4.cost"))
+    return ChapterSlots(
+        entry=entry,
+        question="v4.question",
+        change=block("v4.change") + block_change(),
+        chart=MainChart("v4-c2a", "C107", tuple(v4_main_panels()),
+                        title="v4 minus v3: equal-fold error-score differences with 95 percent confidence intervals",
+                        desc="Two rows, the point-error score and the interval score. Each shows the estimated "
+                             "difference as a diamond and its 95 percent confidence interval as a line; both lie "
+                             "wholly left of zero, which favours v4.",
+                        subtitle="Difference in error score, v4 − v3 · paired 95% confidence interval · identical "
+                                 "hours · development, post-selection"),
+        headline="v4.chart_headline",
+        reading="v4.reading",
+        not_established=("v4.caveat.blocks", "v4.caveat.peak", "v4.caveat.class"),
+        decision="v4.decision",
+        evidence=evidence_row(compare="compare:v4",
+                              audit=checkpoint_audit("CP-21", source=R.get(_HGL_MAE).source_path,
+                                                     line=R.get(_HGL_MAE).source_line)),
+        details=(("method", method), ("per-period consistency", folds), ("stress period", stress),
+                 ("coverage and width", coverage), ("protocol and review", protocol)),
+    )
+
+
+def v4_chapter() -> str:
+    return render_chapter(v4_slots())
 
 
 def v3_slots(*, open_folds: bool = False) -> ChapterSlots:
@@ -2316,6 +2594,13 @@ def v1_archive_disclosure(archive: str) -> str:
  </details>"""
 
 
+def planned_items(comparator: G.Entry | None = None) -> tuple[tuple[str, str, str, str, str], ...]:
+    """The planned items with their comparator filled from the registry: (name, item, code, question, evidence)."""
+    version = (comparator or G.current_generation()).version
+    return tuple((name, item, code, question.format(comparator=version), evidence)
+                 for name, item, code, question, evidence in PLANNED_WORK)
+
+
 def planned_work() -> str:
     """Planned work, after the chapters (standard §6, amending plan §7.2): unscored, no version number."""
     current = G.current_generation()
@@ -2324,9 +2609,9 @@ def planned_work() -> str:
         f'<dl><dt>Question it will test</dt><dd>{_structural_versions(question)}</dd>'
         f'<dt>Evidence that would decide it</dt><dd>{_structural_versions(evidence)}</dd>'
         f'<dt>Work item</dt><dd>{S("work-item", item)} · {esc(code)}</dd></dl></li>'
-        for name, item, code, question, evidence in PLANNED_WORK
+        for name, item, code, question, evidence in planned_items(current)
     )
-    teaser = ("Next: alternative models, renewable-generation forecasts and model combinations, then an "
+    teaser = ("Next: a distributional neural network, renewable-generation forecasts and model combinations, then an "
               "evaluation of the selected model under a frozen protocol and prospective monitoring.")
     plan = github("docs/track-b/presentation-and-tracking-plan-2026-09-24.md")
     body = (
@@ -2345,13 +2630,13 @@ def planned_work() -> str:
 #: The system view's data (plan §7.9): each step, what it does, whether it is implemented, and the
 #: tools it runs on. The stack line is rendered from these tools, never typed (brief W13).
 SYSTEM_VIEW = (
-    ("Source data and vintages", "ENTSO-E and SMARD prices and load forecasts; for v3, the GFS run of the day before",
+    ("Source data and vintages", "ENTSO-E and SMARD prices and load forecasts; from v3, the GFS run of the day before",
      "implemented", ("Python", "entsoe-py")),
     ("Information cutoff", "Forecast-cutoff checks; source-availability assumptions documented", "implemented",
      ("pandas",)),
-    ("Features", "Calendar, price lags, load forecast; weather for v3", "implemented", ("pandas", "NumPy", "DuckDB")),
+    ("Features", "Calendar, price lags, load forecast; weather from v3", "implemented", ("pandas", "NumPy", "DuckDB")),
     ("Model and interval policy", "v1: LightGBM quantiles, conformal calibration; v2 and v3: blended LEAR, "
-     "hour-aware intervals", "implemented", ("LightGBM", "scikit-learn")),
+     "hour-aware intervals; v4: that blend plus a three-block LightGBM", "implemented", ("LightGBM", "scikit-learn")),
     ("Evaluation and artifacts", "Five historical periods, identical hours; committed predictions, metrics and "
      "reviews", "implemented", ("pandas", "Parquet", "GitHub Actions")),
     ("Report, demo and tracking", "This page, the in-browser v1 demo and the MLflow mirror", "implemented",
@@ -2399,11 +2684,12 @@ def evidence_section(C) -> str:
                  f'<a class="quiet external in-text" href="{attr(experiment)}" data-route="experiment">'
                  f"<code>{esc(C['mlflow_next_experiment'])}</code></a>, mirrored from the repository's committed "
                  "evidence; the repository is the source of truth, and this page works without the tracking service.</p>")
-    reproduce = (Audit("Reproduction instructions", "reports/weather-ablation/reproduce.md", "evidence/cp-20"),
+    reproduce = (Audit("Reproduction instructions", "reports/block-challenger/reproduce.md", "evidence/cp-21"),
+                 Audit("Reproduction instructions", "reports/weather-ablation/reproduce.md", "evidence/cp-20"),
                  Audit("Reproduction instructions", "reports/v2-causal/reproduce.md", "evidence/cp-16"),
                  Audit("Reproduction instructions", "reports/cp15/reproduction.md", "evidence/cp-15"))
     labelled = "".join(f"<li><span>{label}:</span> {audit_link(item)}</li>"
-                       for label, item in zip((ver("v3"), ver("v2"), "the model comparison study"), reproduce))
+                       for label, item in zip((ver("v4"), ver("v3"), ver("v2"), "the model comparison study"), reproduce))
     return f"""
 <section class="section" id="evidence" aria-labelledby="evidence-h">
  <h2 id="evidence-h">How the system works, and how to check it</h2>
@@ -2530,6 +2816,7 @@ data{{font-variant-numeric:tabular-nums}}
 .rail a[aria-current="true"]{{background:var(--surface);border-left-color:var(--text);font-weight:600}}
 .rail .dot{{width:9px;height:9px;border-radius:50%;background:var(--ref)}}
 .rail-v1 .dot{{background:var(--v1)}}.rail-v2 .dot{{background:var(--v2)}}.rail-v3 .dot{{background:var(--v3)}}
+.rail-v4 .dot{{background:var(--v4);border-radius:1px;transform:rotate(45deg) scale(.85)}}
 .jump{{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}}
 .jump a{{min-height:44px;min-width:56px;display:inline-flex;align-items:center;justify-content:center;
  border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);
@@ -2581,7 +2868,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .badge-replay{{background:var(--surface);border-color:var(--v1);color:var(--v1)}}
 .adoption{{font-weight:650;font-size:14px;color:var(--text);margin-right:10px}}
 .gen{{font-weight:750;padding:0 2px;border-bottom:3px solid currentColor}}
-.gen-v1{{color:var(--v1)}}.gen-v2{{color:var(--v2)}}.gen-v3{{color:var(--v3)}}
+.gen-v1{{color:var(--v1)}}.gen-v2{{color:var(--v2)}}.gen-v3{{color:var(--v3)}}.gen-v4{{color:var(--v4)}}
 .analytical{{margin:0 0 32px}}
 .panel-title{{font-size:20px;margin:0 0 4px}}
 .panel-sub{{font-size:14px;line-height:22px;color:var(--text-2);margin:0 0 16px;max-width:none}}
@@ -2622,12 +2909,13 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .chart-note{{font-size:14px;color:var(--text-2);margin-top:20px}}
 /* lineage and planned work */
 .lineage-caption{{color:var(--text-2)}}
-.mainline{{list-style:none;padding:0;margin:24px 0 8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+.mainline{{list-style:none;padding:0;margin:24px 0 8px;display:grid;grid-template-columns:repeat({len(G.generations())},minmax(0,1fr));
  gap:0;position:relative}}
 .mainline::before{{content:"";position:absolute;left:8px;right:8px;top:14px;height:3px;background:var(--text)}}
 .node a{{display:block;position:relative;padding:34px 16px 0 0;color:var(--text);text-decoration:none}}
 .node .dot{{position:absolute;top:6px;left:0;width:19px;height:19px;border-radius:50%;border:3px solid var(--canvas)}}
 .node-v1 .dot{{background:var(--v1)}}.node-v2 .dot{{background:var(--v2);border-radius:4px}}.node-v3 .dot{{background:var(--v3)}}
+.node-v4 .dot{{background:var(--v4);border-radius:2px;transform:rotate(45deg) scale(.86)}}
 .node-name{{display:block;font-weight:700;font-size:17px}}
 .node-status{{display:block;font-size:14px;color:var(--text-2)}}
 .branches{{list-style:none;padding:0;margin:8px 0 32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
@@ -2654,7 +2942,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .story-label{{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);margin:0 0 6px}}
 .feature-change{{display:flex;gap:12px;align-items:stretch;font-size:14px;line-height:22px;margin:0 0 24px}}
 .fc-col{{border:1px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--surface);flex:1}}
-.fc-added{{border:2px solid var(--v3)}}
+.fc-added{{border:2px solid var(--v3)}}.fc-added.fc-v4{{border-color:var(--v4)}}
 .fc-col ul{{margin:0;padding-left:18px}}.fc-head{{margin:0 0 4px;font-weight:650}}
 .fc-arrow{{align-self:center;font-weight:700;font-size:20px}}
 .outcomes{{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch;margin:0 0 24px}}

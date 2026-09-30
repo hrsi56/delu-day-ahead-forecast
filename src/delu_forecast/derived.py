@@ -35,12 +35,14 @@ UNIT_COUNT = "count"
 UNIT_LABEL = "label"
 UNIT_DATE = "date"
 UNIT_EUR = R.UNIT_EUR
+UNIT_NORM_DIFF = R.UNIT_NORM_DIFF
 
 #: Where the committed rows of each checkpoint's criteria and scores live.
 CRITERIA_FILES = {
     "CP-15": ("cp15", "reports/cp15/criteria.csv"),
     "CP-16": ("cp16", "reports/v2-causal/criteria.csv"),
     "CP-20": ("cp20", "reports/weather-ablation/criteria.csv"),
+    "CP-21": ("cp21", "reports/block-challenger/criteria.csv"),
 }
 REFERENCE_CODES = ("B0", "B1", "B2", "B3")
 FOLDS = ("fold_1", "fold_2", "fold_3", "fold_4", "fold_5")
@@ -84,7 +86,7 @@ def _score_record(experiment: str, code: str, score: str) -> str:
     """The equal-fold score record of a policy in one checkpoint's committed rows."""
     if experiment == "CP-15":
         return f"cp15.relative_scores.{code}.{score}"
-    prefix = {"CP-16": "cp16", "CP-20": "cp20"}[experiment]
+    prefix = G.EXPERIMENT_PREFIX[experiment]
     return f"{prefix}.metrics.{code}.equal_fold.{score}"
 
 
@@ -233,7 +235,7 @@ def _criteria_records() -> list[DerivedRecord]:
     census: dict[str, tuple[str, bool]] = {}
     count_inputs: list[str] = []
     decision_sources: set[str] = set()
-    for experiment in ("CP-15", "CP-16", "CP-20"):
+    for experiment in sorted(CRITERIA_FILES, key=lambda exp: G.CHECKPOINTS[exp].frozen_on):
         prefix, _ = CRITERIA_FILES[experiment]
         for code in _criteria_policies(experiment):
             entry = G.by_code(code)
@@ -251,7 +253,7 @@ def _criteria_records() -> list[DerivedRecord]:
             verdict = "met" if all(passed) else "not met"
             base = f"derived.criteria.{entry.id}"
             if f"{base}.verdict" in {record.record_id for record in out}:
-                continue  # one identity, one verdict: CP-20's H0 re-reports v2 (= V2-H) unchanged
+                continue  # one identity, one verdict: CP-20's H0 re-reports v2 (= V2-H), CP-21's HG v3, unchanged
             out.append(DerivedRecord(f"{base}.verdict", "verdict", entry.id, UNIT_LABEL, verdict, tuple(inputs),
                                      "actual ≤ upper limit for criterion 1 and criterion 2", 0, "P16",
                                      label="point comparison"))
@@ -287,8 +289,28 @@ CHANGES = {
 }
 
 
+#: From CP-21 on (standard §3.3 b): the change as a share of the comparator's score is the checkpoint's own
+#: ratio, S_policy / S_comparator − 1, with the interval of that ratio from its own bootstrap draws.
+RATIO_CHANGES = {
+    "v4": "cp21.ratio.HGL-HG.{metric}",
+}
+
+
 def _change_records() -> list[DerivedRecord]:
     out = []
+    for subject, ratio in RATIO_CHANGES.items():
+        comparator = G.get(G.get(subject).comparator)
+        for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
+            ratio_id = ratio.format(metric=metric)
+            hundred = Decimal(100)
+            out.append(DerivedRecord(
+                f"derived.change.{subject}.{score}", "ratio_change", subject, UNIT_RELATIVE,
+                _text(_d(ratio_id) * hundred), (ratio_id,),
+                "the checkpoint's ratio S_policy / S_comparator − 1 × 100; its interval the 2.5th and 97.5th "
+                "percentiles of the same ratio over the bootstrap draws, × 100",
+                0, "P18", ci_low=_text(_d(ratio_id, "ci_low") * hundred),
+                ci_high=_text(_d(ratio_id, "ci_high") * hundred),
+                label=f"as a share of {comparator.short}'s score"))
     for subject, (difference, denominator) in CHANGES.items():
         comparator = G.get(G.get(subject).comparator)
         for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
@@ -304,8 +326,8 @@ def _change_records() -> list[DerivedRecord]:
     return out
 
 
-#: Absolute context (§3.3 c): per-period MAE in EUR/MWh for these identities.
-PERIOD_SUBJECTS = ("v3", "v2", "daily-lear", "naive")
+#: Absolute context (§3.3 c): per-period MAE in EUR/MWh for these identities, from the shared comparison's rows.
+PERIOD_SUBJECTS = ("v4", "v3", "v2", "daily-lear", "naive")
 
 
 def _period_records() -> list[DerivedRecord]:
@@ -314,9 +336,10 @@ def _period_records() -> list[DerivedRecord]:
     out.append(DerivedRecord("derived.periods.stress_period", "stress_period", None, UNIT_LABEL, stress, (),
                              "the protocol's named stress period", 0, "P19",
                              sources=tuple(path for path, _ in STRESS_QUOTES) + ("reports/cp10/protocol.json",)))
+    prefix = G.comparison_prefix()
     for subject in PERIOD_SUBJECTS:
         code = G.get(subject).code_in(G.COMPARISON_EXPERIMENT)
-        ordinary = [f"cp20.metrics.{code}.{fold}.MAE" for fold in FOLDS if fold != stress]
+        ordinary = [f"{prefix}.metrics.{code}.{fold}.MAE" for fold in FOLDS if fold != stress]
         low = min(ordinary, key=_d)
         high = max(ordinary, key=_d)
         for which, record_id in (("low", low), ("high", high)):
@@ -324,15 +347,85 @@ def _period_records() -> list[DerivedRecord]:
                 f"derived.periods.{subject}.ordinary_{which}", "period_range", subject, UNIT_EUR,
                 R.get(record_id).raw, tuple(ordinary),
                 f"{'minimum' if which == 'low' else 'maximum'} MAE over the ordinary test periods", 1, "P19"))
-        stress_id = f"cp20.metrics.{code}.{stress}.MAE"
+        stress_id = f"{prefix}.metrics.{code}.{stress}.MAE"
         out.append(DerivedRecord(f"derived.periods.{subject}.stress", "period_stress", subject, UNIT_EUR,
                                  R.get(stress_id).raw, (stress_id,), "MAE in the stress period", 1, "P19"))
     return out
 
 
+# --------------------------------------------------------------------------- an adoption rule (§3.3 a)
+
+#: A generation adopted under its own pre-registered rule (CP-21 on): the rule, the committed record of its
+#: mechanical verdict, the paired differences it judged, the anchor text that dates it, and the eligible policies.
+ADOPTION_RULES = {
+    "v4": {
+        "rule": "cp21-adoption",
+        "prefix": "cp21",
+        "differences": "cp21.uncertainty.HGL-HG.equal_fold.{metric}",
+        "dated_by": (("capstone_v21.md", "Rule `cp21-adoption` was set on 2026-09-29"),
+                     ("reports/block-challenger/protocol.json", "Rule `cp21-adoption` was set on 2026-09-29")),
+    },
+}
+
+
+def _adoption_date(spec: dict, fresh: R.FreshRead | None = None) -> str:
+    """The rule's date, as its adoption record states it, and as the ratified anchor and the protocol frozen
+    before scoring both quote it."""
+    prefix = spec["prefix"]
+    record = R.get(f"{prefix}.adoption.rule_set_on")
+    date = R.rederive(record, fresh)["value"] if fresh else record.raw
+    for path, quote in spec["dated_by"]:
+        text = (R._json(path)["adoption_rule_verbatim"] if path.endswith(".json") else (REPO_ROOT / path).read_text())
+        if quote not in text or not quote.endswith(date):
+            raise DerivedError(f"{path} no longer dates rule {spec['rule']} {date}")
+    return date
+
+
+def _adoption_verdict(spec: dict, value) -> str:
+    """Met only when the committed mechanical verdict names the generation and every condition is met."""
+    prefix = spec["prefix"]
+    conditions = [value(f"{prefix}.adoption.condition_{n}_met") for n in ("1", "2", "3", "4")]
+    named = value(f"{prefix}.adoption.verdict")
+    return "met" if all(c == "True" for c in conditions) and named == G.get(next(
+        subject for subject, s in ADOPTION_RULES.items() if s is spec)).version else "not met"
+
+
+def _adoption_eligible(spec: dict, value) -> str:
+    """N (§3.3 a): the policies eligible under the rule up to its decision. The rule names one candidate; the
+    study arms are never eligible (§17.6), so N counts the committed candidate, never the arms."""
+    return str(len([value(f"{spec['prefix']}.adoption.candidate")]))
+
+
+def _adoption_records() -> list[DerivedRecord]:
+    out = []
+    for subject, spec in ADOPTION_RULES.items():
+        prefix, base = spec["prefix"], f"derived.adoption.{subject}"
+        raw = lambda record_id: R.get(record_id).raw  # noqa: E731
+        conditions = tuple(f"{prefix}.adoption.condition_{n}_met" for n in ("1", "2", "3", "4"))
+        out.append(DerivedRecord(f"{base}.verdict", "adoption_verdict", subject, UNIT_LABEL,
+                                 _adoption_verdict(spec, raw), (f"{prefix}.adoption.verdict",) + conditions,
+                                 "met when the committed mechanical verdict names this generation and all four "
+                                 "conditions are met", 0, "P51"))
+        out.append(DerivedRecord(f"{base}.set_on", "adoption_date", subject, UNIT_DATE, _adoption_date(spec),
+                                 (f"{prefix}.adoption.rule_set_on",), "the rule's date, quoted by the ratified anchor "
+                                 "and by the protocol frozen before scoring", 0, "P51",
+                                 sources=tuple(path for path, _ in spec["dated_by"])))
+        out.append(DerivedRecord(f"{base}.tested", "adoption_tested", subject, UNIT_COUNT,
+                                 _adoption_eligible(spec, raw), (f"{prefix}.adoption.candidate",),
+                                 "policies eligible under the rule up to its decision: its one candidate", 0, "P51"))
+        for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
+            difference = spec["differences"].format(metric=metric)
+            record = R.get(difference)
+            out.append(DerivedRecord(f"{base}.distance.{score}", "adoption_distance", subject, UNIT_NORM_DIFF,
+                                     record.raw, (difference,), "the rule's paired difference, in the rule's unit, "
+                                     "with its 95% confidence interval", 4, "P51",
+                                     ci_low=record.ci_low_raw, ci_high=record.ci_high_raw))
+    return out
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, DerivedRecord]:
-    built = _criteria_records() + _change_records() + _period_records()
+    built = _criteria_records() + _change_records() + _adoption_records() + _period_records()
     out: dict[str, DerivedRecord] = {}
     for record in built:
         if record.record_id in out:
@@ -401,6 +494,27 @@ def validate_all() -> list[str]:
                 low, high = _text(_share(value(diff_id, "ci_low"), denom)), _text(_share(value(diff_id, "ci_high"), denom))
                 if (low, high) != (record.ci_low, record.ci_high):
                     problems.append(f"{record.record_id}: interval no longer follows from its rows")
+            elif record.kind == "ratio_change":
+                (ratio_id,) = record.inputs
+                hundred = Decimal(100)
+                expected = _text(value(ratio_id) * hundred)
+                low, high = _text(value(ratio_id, "ci_low") * hundred), _text(value(ratio_id, "ci_high") * hundred)
+                if (low, high) != (record.ci_low, record.ci_high):
+                    problems.append(f"{record.record_id}: interval no longer follows from its rows")
+            elif record.kind == "adoption_verdict":
+                spec = ADOPTION_RULES[record.subject]
+                expected = _adoption_verdict(spec, lambda rid: R.rederive(R.get(rid), fresh)["value"])
+            elif record.kind == "adoption_date":
+                expected = _adoption_date(ADOPTION_RULES[record.subject], fresh)
+            elif record.kind == "adoption_tested":
+                expected = _adoption_eligible(ADOPTION_RULES[record.subject],
+                                              lambda rid: R.rederive(R.get(rid), fresh)["value"])
+            elif record.kind == "adoption_distance":
+                (difference,) = record.inputs
+                expected = _text(value(difference))
+                if (_text(value(difference, "ci_low")), _text(value(difference, "ci_high"))) != (
+                        _text(Decimal(record.ci_low)), _text(Decimal(record.ci_high))):
+                    problems.append(f"{record.record_id}: interval no longer follows from its rows")
             elif record.kind == "period_range":
                 values = [value(record_id) for record_id in record.inputs]
                 pick = min(values) if record.record_id.endswith("_low") else max(values)
@@ -444,7 +558,7 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
 
 
 __all__ = [
-    "CHANGES", "DerivedError", "DerivedRecord", "PERIOD_SUBJECTS", "RULE", "UNIT_COUNT", "UNIT_DATE", "UNIT_EUR",
+    "ADOPTION_RULES", "CHANGES", "RATIO_CHANGES", "DerivedError", "DerivedRecord", "PERIOD_SUBJECTS", "RULE", "UNIT_COUNT", "UNIT_DATE", "UNIT_EUR",
     "UNIT_LABEL", "UNIT_RELATIVE", "display", "get", "is_derived", "records", "section_8", "stress_period",
     "validate_all",
 ]

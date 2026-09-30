@@ -85,7 +85,7 @@ def test_the_mlflow_link_is_required_once_the_verifier_indexed_it(tmp_path):
 
 def test_negative_control_a_changed_headline_is_caught(surfaces):
     problems = L.parity_problems(surfaces, page_headline=RC.headline(),
-                                 readme_headline=RC.headline("md").replace("14%", "15%"))
+                                 readme_headline=RC.headline("md").replace("−0.0301", "−0.0302"))
     assert any(problem.startswith("headline:") for problem in problems)
 
 
@@ -96,9 +96,9 @@ def test_negative_control_a_non_canonical_name_is_caught(surfaces):
 
 
 def test_negative_control_an_unregistered_generation_is_caught(surfaces):
-    doctored = {**surfaces, "Static Space card": surfaces["Static Space card"] + "\nv4 · something new\n"}
+    doctored = {**surfaces, "Static Space card": surfaces["Static Space card"] + "\nv5 · something new\n"}
     problems = L.parity_problems(doctored, page_headline=RC.headline(), readme_headline=RC.headline("md"))
-    assert any("v4 is not a registered generation" in problem for problem in problems)
+    assert any("v5 is not a registered generation" in problem for problem in problems)
 
 
 def test_negative_control_a_status_the_registry_does_not_hold_is_caught(surfaces):
