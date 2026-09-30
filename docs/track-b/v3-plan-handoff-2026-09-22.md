@@ -21,6 +21,18 @@ execution was authorized the same day.
 Where §17 and the 4.5 text below differ, §17 governs. The fit counts, gains and effort below
 remain estimates, not budgets. The notes added below for 4.5 are consistency edits only.
 
+**2026-09-30 4.6 update.** The Owner withdrew TabPFN and fixed how DDNN is built.
+[v21-r7 §18](../../capstone_v21.md) records both decisions.
+
+- **TabPFN is withdrawn**, in every version: no licence entry, resource entry, comparison or
+  product role. The TabPFN–DDNN comparison is withdrawn by decision, not reported as failed.
+- **DDNN is the only [4.6](#work-4-6) candidate.** It is written from the start in NumPy only,
+  as one implementation for research and for any later server or browser run. PyTorch serves
+  only as a correctness reference in tests on the development machine.
+
+The 4.6 text below was edited for consistency on that date; each edited passage is marked
+*2026-09-30*. Where §18 and the text below differ, §18 governs. Nothing here opens 4.6.
+
 **2026-09-22 · Proposed plan, not a ratified anchor or execution brief.**
 CP-15 has Engineering PASS and `product_feasibility = NOT_DEMONSTRATED`.
 No successor model is promoted or frozen. `capstone_v21.md` remains controlling;
@@ -68,8 +80,8 @@ constraints; [4.7](#work-4-7) and [4.7T](#work-4-7t) are distinct work items, no
 | [4.4D](#work-4-4d) | Direct-weather inline definition | [4.4](#work-4-4); [register](#record-4-4); [budget prerequisites](#section-4-b) |
 | [4.4V](#work-4-4v) | Optional VRE inline definition | [4.4](#work-4-4); [register](#record-4-4); [budget prerequisites](#section-4-b) |
 | [4.5](#work-4-5) | Per-block LightGBM constraints | [register](#record-4-5); [candidate constraints](#candidate-constraints); [budget prerequisites](#section-4-b); CP-21: [anchor §17](../../capstone_v21.md) |
-| [4.6](#work-4-6) | Distribution-challenger group in register | [4.6L](#work-4-6l); [4.6R](#work-4-6r); [4.6C](#work-4-6c); [budget prerequisites](#section-4-b) |
-| [4.6L](#work-4-6l) | Licence admission | [register](#record-4-6l); [candidate constraints](#candidate-constraints); [budget prerequisites](#section-4-b) |
+| [4.6](#work-4-6) | Distribution-challenger group in register | [4.6L](#work-4-6l); [4.6R](#work-4-6r); [4.6C](#work-4-6c); [budget prerequisites](#section-4-b); *2026-09-30:* DDNN only, in NumPy: [anchor §18](../../capstone_v21.md) |
+| [4.6L](#work-4-6l) | Provenance and licence admission | [register](#record-4-6l); [candidate constraints](#candidate-constraints); [budget prerequisites](#section-4-b) |
 | [4.6R](#work-4-6r) | Training-only resource admission | [register](#record-4-6r); [budget prerequisites](#section-4-b) |
 | [4.6C](#work-4-6c) | Predefined development comparison | [register](#record-4-6c); [budget prerequisites](#section-4-b); [economic contract](#section-4-e) |
 | [4.7](#work-4-7) | Quality and delivery disposition | [register](#record-4-7); [budget prerequisites](#section-4-b); [economic contract](#section-4-e) |
@@ -242,7 +254,7 @@ file or routine verification. A future brief can settle its engineering fields i
 | <a id="decision-d1"></a>[D1](#decision-d1) | Intended user, decision/exposure and next delivery: research, point, interval or both. | Choice of delivery; [4.3R](#work-4-3r)/[4.10R](#work-4-10r) need their content/release scope. Does not prevent preparation of [4.0a](#work-4-0a). |
 | <a id="decision-d2"></a>[D2](#decision-d2) | Comparator; point/interval/coverage/support/uncertainty gates; external economic rationale and required net surplus, or descriptive economics. | [4.0b](#work-4-0b) ratification and new scored experiments [4.2](#work-4-2)/[4.4](#work-4-4)–[4.6](#work-4-6)/[4.8](#work-4-8) under their applicable bars; product qualification. Existing evidence needs no new bar. |
 | <a id="decision-d3"></a>[D3](#decision-d3) | Market/settlement resolution, live operation expectations and quality-versus-delivery tradeoff. | Product economics, delivery admission and [4.9](#work-4-9)/[4.10Q](#work-4-10q); not scoped hourly descriptive reporting. |
-| <a id="decision-d4"></a>[D4](#decision-d4) | Exact material resource/candidate allowances; admission of the TabPFN–DDNN route in [4.6](#work-4-6), other optional challengers, VRE extension or recombination. | Each affected experiment and prospective operating budget only. [4.6](#work-4-6) does not block v2; no default replacement version/family or optional extension. |
+| <a id="decision-d4"></a>[D4](#decision-d4) | Exact material resource/candidate allowances; admission of the DDNN route in [4.6](#work-4-6) (*2026-09-30:* TabPFN withdrawn, v21-r7 §18), other optional challengers, VRE extension or recombination. | Each affected experiment and prospective operating budget only. [4.6](#work-4-6) does not block v2; no default replacement version/family or optional extension. |
 | <a id="decision-d5"></a>[D5](#decision-d5) | Archive-failure fallback in §3.2. | Weather work on an unadmitted scope; never existing-input v2 or existing-evidence content. |
 | <a id="decision-d6"></a>[D6](#decision-d6) | Task-scoped Lockdown suspension, additive amendment, ratification, checkpoint/operational authorizations and research/product release route. | [4.0b](#work-4-0b) locked edits and subsequent stages requiring that authority. No amendment or operational authority is granted here. |
 | <a id="decision-d7"></a>[D7](#decision-d7) | Landing, commit and publication. | Owner's external/mainline actions only; completed local handoff need not wait. |
@@ -291,9 +303,9 @@ none silently expands its search. External cost is zero throughout.
 | <a id="record-4-3c"></a><a id="work-4-3c"></a>[4.3C](#work-4-3c) / [same role](#work-4-3r) | Candidate-specific content → `docs/track-b/candidate-content/` · [budget prerequisites](#section-4-b) | Validated results of admitted experiments, including negative/blocked. No invented v2 results. → corresponding [4.10](#work-4-10) route | 6–10 h; shared work not double-counted |
 | <a id="record-4-4"></a>[4.4D](#work-4-4d) / [4.4V](#work-4-4v) / Lead | Weather lineage and direct paired ablation; optional VRE comparison → `reports/weather-ablation/` | [4.1](#work-4-1) historical admission + [4.0b](#work-4-0b) weather brief/budgets; no live-source prerequisite. D first; V only if explicitly admitted under [4.4](#work-4-4). Negative gain completes a comparison. → [4.8](#work-4-8) if admitted, else [4.7](#work-4-7); failed admission → [D5](#decision-d5) | 64–120 h for original combined scope; direct-only estimate must be supplied by brief |
 | <a id="record-4-5"></a>[4.5](#work-4-5) / Lead | Three-block LightGBM raw/normalized comparison and fit-cost report → `reports/block-challenger/` | Explicit candidate brief/[D4](#decision-d4); fixed blocks, training-only selection and budgets. Report all applicable gates, even when failed. → [4.8](#work-4-8) if admitted, else [4.7](#work-4-7). **2026-09-29:** opened as CP-21 on top of v3 (v21-r6 §17, ratified; execution authorized). Adopted → v4, the base for later items; otherwise a not-adopted branch. Published either way; its disposition is recorded in [4.7](#work-4-7). | 12–24 h |
-| <a id="record-4-6l"></a><a id="work-4-6"></a>[4.6L](#work-4-6l) / Lead under bounded admission brief | Version-specific use-permission table and sources → `reports/distribution-challenger/licence-admission.md` | [D4](#decision-d4) route/resource allowance, exact intended user/uses and admission authority. Apply [4.6L](#work-4-6l); finish with a disposition for every use. Stop at the earlier of the brief cap or **4 active hours**, retaining unresolved entries; research not permitted/unresolved → no run, report to [4.7](#work-4-7). Research permitted → [4.6R](#work-4-6r), even if product use is not. | 2–4 h |
-| <a id="record-4-6r"></a>[4.6R](#work-4-6r) / Lead | Training-only resource/output feasibility record → `reports/distribution-challenger/resource-admission.md` | Research permission for each tested candidate, authorized hardware and numeric thresholds/sample scope fixed in the brief. Apply [4.6R](#work-4-6r); finish PASS/NOT_ADMITTED per candidate. Stop at first exhausted cap or failed threshold/output requirement; no evaluation-driven tuning. → [4.6C](#work-4-6c) if eligible, otherwise [4.7](#work-4-7) | 4–8 h |
-| <a id="record-4-6c"></a>[4.6C](#work-4-6c) / Lead | One preregistered TabPFN–DDNN/reference comparison, emitted predictions and uncertainty/cost report → `reports/distribution-challenger/comparison/` | Both candidates pass licence/resource entry checks; authorized [4.0b](#work-4-0b) brief, [§4.B](#section-4-b) budgets and [4.6C](#work-4-6c) protocol fixed before execution. Finish the specified comparison or an explicit partial/blocked report at its first stop condition. A candidate failing entry permits only the reference comparisons already authorized by the protocol; no claim of a completed direct comparison. → [4.8](#work-4-8) only if separately admitted, otherwise [4.7](#work-4-7) | 18–36 h for the combined comparison, not per family |
+| <a id="record-4-6l"></a><a id="work-4-6"></a>[4.6L](#work-4-6l) / Lead under bounded admission brief | *2026-09-30:* DDNN provenance record, test-dependency licences and use-permission table → `reports/distribution-challenger/licence-admission.md` | [D4](#decision-d4) route/resource allowance, exact intended user/uses and admission authority. Apply [4.6L](#work-4-6l); finish with a disposition for every use. Stop at the earlier of the brief cap or **4 active hours**, retaining unresolved entries; research not permitted/unresolved → no run, report to [4.7](#work-4-7). Research permitted → [4.6R](#work-4-6r), even if product use is not. | 2–4 h estimated for two families; *2026-09-30:* the brief re-estimates it for DDNN's own code |
+| <a id="record-4-6r"></a>[4.6R](#work-4-6r) / Lead | Training-only resource/output feasibility record → `reports/distribution-challenger/resource-admission.md` | Research permission for each tested candidate, authorized hardware and numeric thresholds/sample scope fixed in the brief. *2026-09-30:* DDNN's PyTorch correctness checks (v21-r7 §18.3) pass before its resource measurements count. Apply [4.6R](#work-4-6r); finish PASS/NOT_ADMITTED per candidate. Stop at first exhausted cap or failed threshold/output requirement; no evaluation-driven tuning. → [4.6C](#work-4-6c) if eligible, otherwise [4.7](#work-4-7) | 4–8 h |
+| <a id="record-4-6c"></a>[4.6C](#work-4-6c) / Lead | One preregistered DDNN/reference comparison (*2026-09-30:* TabPFN withdrawn), emitted predictions and uncertainty/cost report → `reports/distribution-challenger/comparison/` | DDNN passes its provenance/resource entry checks; authorized [4.0b](#work-4-0b) brief, [§4.B](#section-4-b) budgets and [4.6C](#work-4-6c) protocol fixed before execution. Finish the specified comparison or an explicit partial/blocked report at its first stop condition. If DDNN fails entry, no comparison runs and the failure is reported to [4.7](#work-4-7). → [4.8](#work-4-8) only if separately admitted, otherwise [4.7](#work-4-7) | 18–36 h estimated for two families; *2026-09-30:* the brief re-estimates it for DDNN alone |
 | <a id="record-4-8"></a><a id="work-4-8"></a>[4.8](#work-4-8) / Lead, optional | Frozen-family recombination/disagreement test → `reports/recombination/` · [budget prerequisites](#section-4-b) | New admitted arm from [4.4](#work-4-4)/[4.5](#work-4-5)/[4.6](#work-4-6), explicit opt-in protocol and budget. Score fixed/estimated combinations on identical rows; oracle separate; accept negative result. → [4.7](#work-4-7) | 8–16 h |
 | <a id="record-4-7t"></a>[4.7T](#work-4-7t) / Lead + named independent reviewer | Candidate/protocol manifest, unused-period audit, chronological comparison and failure/cost evidence → `reports/fresh-policy-comparison/` | Authorized brief/[D2](#decision-d2)–[D4](#decision-d4)/[D6](#decision-d6); admitted candidates after bounded development, including [4.8](#work-4-8) only if admitted; [4.7T](#work-4-7t) data and protocol gate. Finish one valid comparison or exact negative/blocked report. Stop at any exhausted cap, compromised independence or invalid replay; no tuning loop. → final [4.7](#work-4-7), or research closure | 16–32 h estimated preparation/replay/review; data accrual and compute separately budgeted |
 | <a id="record-4-7"></a>[4.7](#work-4-7) / Orchestrator | Separate measured-quality finding and delivery selection; final retained/reference/rejected/deferred record and evidence identity → `docs/track-b/candidate-disposition.md` | Enter with completed results or evidenced blockers; apply [4.7](#work-4-7). Record each delivery without waiting for later deliveries. Final live-policy selection requires [4.7T](#work-4-7t) after admitted development comparisons, **including [4.8](#work-4-8) if admitted**, otherwise its deferral. Finish with quality, permissions and disposition, even if inconclusive/no feasible policy. Stop at the documentation/review cap with gaps; no new experiments. → local research handoff independently, or [4.9](#work-4-9) if selected/feasible | 2–4 h, including [4.6](#work-4-6)/[4.7T](#work-4-7t) decision reporting |
@@ -332,15 +344,16 @@ Item-specific unresolved fields before execution:
   continuation criterion, cost estimate and generated-feature validation paths. VRE is optional.
 - **[4.5](#work-4-5):** raw/normalized arms and capacity-grid/seed/refit caps. *2026-09-29:* set for
   CP-21 in v21-r6 §17.8, ratified.
-- **[4.6L](#work-4-6l) / [4.6R](#work-4-6r) / [4.6C](#work-4-6c):** exact candidate versions/revisions and intended uses; bounded licence-source
-  review; hardware, training-only sample manifest and representative size; peak-memory and
-  load/preparation-or-fit/prediction-time thresholds; finite configurations/seeds/ensembles,
-  inner-selection/refit and total-compute caps, including both candidates, references and
-  failed checks. Fix the shared information/history/row contract, output/calibration recipes,
-  v2 inclusion rule, paired uncertainty method, quality preference/tradeoff rule and permitted
-  comparisons if a candidate fails entry. These are required pre-run fields, not approved
-  values supplied by this rewrite. [D4](#decision-d4) sets material allowances; Engineering fills the brief
-  within them without per-detail approval.
+- **[4.6L](#work-4-6l) / [4.6R](#work-4-6r) / [4.6C](#work-4-6c):** *2026-09-30:* DDNN only, in NumPy (v21-r7 §18). Exact implementation commit and
+  intended uses; provenance record and test-dependency licences; hardware, training-only sample
+  manifest and representative size; peak-memory and load/preparation-or-fit/prediction-time
+  thresholds; PyTorch reference-test tolerances, and how those tests are installed and run so
+  that they cannot be skipped silently; finite configurations/seeds/ensembles,
+  inner-selection/refit and total-compute caps, including DDNN, references and failed checks.
+  Fix the shared information/history/row contract, output/calibration recipes, v2 inclusion
+  rule, paired uncertainty method and quality preference/tradeoff rule. These are required
+  pre-run fields, not approved values supplied by this rewrite. [D4](#decision-d4) sets material allowances;
+  Engineering fills the brief within them without per-detail approval.
 - **[4.8](#work-4-8):** combiner family/grid, feature/disagreement recipes, chronological training, fit/seed
   caps and declared gain/uncertainty rule. Otherwise explicitly deferred in [4.7](#work-4-7).
 - **[4.7](#work-4-7)/[4.10](#work-4-10):** finite documentation/review-round effort and exact candidate/artifact identity;
@@ -497,28 +510,33 @@ estimated combination weights remain [4.8](#work-4-8)'s scope.
 | B3 / A2 | Retain as pooled controls and economic challengers; economic lead is decision-specific. |
 | A4 | No new short-window build proposed; **0.76466** S_MAE is uncompetitive in the recorded experiment. |
 | A3 / A5 | Preserve historical ensemble results; distinguish them from the proposed v2 policy. |
-| DDNN, Johnson SU head | Named direct comparator to TabPFN in [4.6C](#work-4-6c), subject to its own research-permission, resource and output checks in [4.6L](#work-4-6l) / [4.6R](#work-4-6r) and [D4](#decision-d4) allowance. Freeze version, refit/ensemble schedule and quantile construction. No superiority or delivery compatibility is assumed; failed entry is reported, not replaced by another family. |
-| TabPFN (2.5 is the currently named candidate; exact version/revision to be fixed) | Defined route [4.6L](#work-4-6l) → [4.6R](#work-4-6r) → [4.6C](#work-4-6c) → [4.7](#work-4-7). Research admission and delivery eligibility are separate. Identify the licence applying to the exact candidate, then test resources on training data only; if eligible, make one predefined comparison including DDNN and B2/A1. No family-wide licence inference, preferred winner or automatic version search. |
+| DDNN, Johnson SU head | *2026-09-30:* **the sole [4.6](#work-4-6) candidate** (v21-r7 §18). Written from scratch in NumPy only; PyTorch serves only as a correctness reference in tests on the development machine. Route [4.6L](#work-4-6l) → [4.6R](#work-4-6r) → [4.6C](#work-4-6c) → [4.7](#work-4-7), subject to its provenance, correctness, resource and output checks and [D4](#decision-d4) allowance. Freeze the implementation commit, refit/ensemble schedule and quantile construction. No superiority or delivery compatibility is assumed; failed entry is reported, not replaced by another family. |
+| TabPFN | **Withdrawn 2026-09-30** (v21-r7 §18.1), in every version. No licence entry, resource entry, comparison or product role; the TabPFN–DDNN comparison is withdrawn by decision, not failed. Bringing it back needs a new Owner amendment. |
 | Chronos-2 | Existing pinned probe (`29ec3766…`, full revision/hashes in CP-15 feasibility records) is not a benchmark. Pretraining overlap/cutoff is unverified; no assertion that 2022 is definitely included or later folds are clean. |
 | NBEATSx | Defer for search-budget reasons; existing load is usable exogenous information, so weather is not a mathematical prerequisite. |
 | QRA / controller / JEV | No build scheduled. Existing QRA/controller tests do not prove impossibility; reopen only through a bounded protocol. JEV's proposed categorical controller role adds no established value. |
 
 The current LightGBM browser demonstration has a reported **~57 MB** first-visit budget
-and bitwise artifact parity. DDNN/TabPFN do not inherit that implementation. Prove local
-inference and choose an allowable delivery form before promotion; the Owner decides any
-quality/browser tradeoff using a declared margin. A lookup does not waive model-output terms.
+and bitwise artifact parity. DDNN does not inherit that implementation. *2026-09-30:* its single
+NumPy implementation (v21-r7 §18.2) keeps one code path from research to any later server or
+browser run, but browser feasibility, runtime and any equality between runtimes are measured,
+not assumed. Prove local inference and choose an allowable delivery form before promotion; the
+Owner decides any quality/browser tradeoff using a declared margin.
 
 <a id="work-4-6l"></a>
 
-### 4.6L Licence entry — exact candidate and exact uses
+### 4.6L Provenance and licence entry — DDNN and exact uses
 
 Navigation: [index](#work-item-index) · [budget prerequisites](#section-4-b).
 
-This is a **future verification task**, not a licence determination. Identify the exact
-TabPFN package/model version, weight revision and applicable licence text(s), with source
-URL, licence version, retained text/fingerprint and check date. Do not transfer a conclusion
-from one TabPFN version to the family. Identify the actual user/entity and research setup;
-check DDNN's applicable implementation/weight terms separately for its entry disposition.
+*2026-09-30 (v21-r7 §18):* TabPFN is withdrawn, so no foundation-model version, weight revision
+or licence is assessed. DDNN is original NumPy code in this repository, under its MIT licence,
+with no third-party implementation or weights. This is a **future verification task**, not a
+licence determination. Record the implementation's provenance: the method sources it follows,
+cited, and confirmation that no third-party code or weights were copied. Record the licence of
+each test-only dependency, PyTorch included, with source URL, licence version and check date.
+Identify the actual user/entity and research setup. DDNN's outputs remain derived from the
+CC BY 4.0 data under `DATA-LICENSE.md`.
 
 The use table records **permitted under stated conditions / not permitted / unresolved**,
 with conditions and the source, licence version and check date for each row:
@@ -561,20 +579,23 @@ required point forecast p50; record the recipe and feasibility, not evaluation a
 Finish with measured values versus thresholds and PASS/NOT_ADMITTED plus the cause for each
 candidate. Exceeding a cap, failing a requirement or leaving feasibility unproved ends that
 entry attempt. No evaluation-guided tuning, automatic larger machine or new variant follows.
+*2026-09-30:* for DDNN, the correctness checks against the PyTorch reference (v21-r7 §18.3)
+pass before any resource measurement counts. A failed check ends the entry attempt until the
+NumPy code is fixed.
 
 <a id="work-4-6c"></a>
 
-### 4.6C One predefined TabPFN–DDNN comparison with existing references
+### 4.6C One predefined DDNN comparison with existing references
 
 Navigation: [index](#work-item-index) · [budget prerequisites](#section-4-b) · [economic contract](#section-4-e).
 
-After both candidates pass [4.6L](#work-4-6l) / [4.6R](#work-4-6r), execute **one bounded comparison** under the authorized
+After DDNN passes [4.6L](#work-4-6l) / [4.6R](#work-4-6r) (*2026-09-30:* TabPFN withdrawn, v21-r7 §18), execute **one bounded comparison** under the authorized
 brief. It uses existing admissible information: new weather is not an entry requirement,
 and neither this route nor a challenger result is required to complete v2. Before any
 comparison run, freeze:
 
 - Exact versions/revisions, configurations, seeds, ensembles, refit/output procedures and
-  final selection/computation budgets for both candidates and references under [§4.B](#section-4-b).
+  final selection/computation budgets for DDNN and the references under [§4.B](#section-4-b).
 - The same information available at each forecast origin, history windows and evaluation
   rows, retaining the 2019 floor and inherited causal/release rules. Selection, transformations
   and calibration use training/inner-validation data only. Document necessary representation
@@ -598,10 +619,10 @@ comparison run, freeze:
 in advance. It permits **no further improvement rounds after evaluation scores**. Evidence
 remains `development_post_selection`; all-fold completion does not make it confirmatory.
 Stop at the first exhausted budget or protocol failure and retain partial evidence. If DDNN
-fails entry, explicitly state that the direct TabPFN–DDNN comparison was **not completed**;
-list only the reference comparisons actually performed under the predeclared fallback scope.
-The same accounting applies if TabPFN fails entry. Neither an entry failure nor a negative
-score opens a search over other versions or model families. Any optional [4.8](#work-4-8) work has its
+fails entry, no comparison runs; report the failure to [4.7](#work-4-7). *2026-09-30:* the TabPFN–DDNN
+comparison is withdrawn by Owner decision; it is never reported as not completed or failed.
+Neither an entry failure nor a negative score opens a search over other versions or model
+families. Any optional [4.8](#work-4-8) work has its
 own preauthorized protocol/budget and cannot reopen or relabel this comparison.
 The separately bounded fresh-data test in [4.7T](#work-4-7t) reuses admitted fixed candidates for final
 selection; it is not another development/tuning round or a relabelling of [4.6C](#work-4-6c) evidence.
@@ -614,9 +635,9 @@ Navigation: [index](#work-item-index) · [budget prerequisites](#section-4-b) ·
 
 Before final policy selection or full daily-system setup, freeze a finite manifest of
 relevant existing models (B0/B1, B2/A1, available v2 and other justified retained controls)
-and admitted V3 candidates. Include a direct TabPFN–DDNN contrast only when both pass
-[4.6L](#work-4-6l) / [4.6R](#work-4-6r) for this exact use, scale and update policy; otherwise report the missing comparison
-and the permitted comparisons actually made. Research permission does not grant live use.
+and admitted V3 candidates. Include DDNN only when it passed [4.6L](#work-4-6l) / [4.6R](#work-4-6r) for this exact use,
+scale and update policy (*2026-09-30:* TabPFN withdrawn, v21-r7 §18). Research permission does
+not grant live use.
 Include matched information ablations needed to distinguish information from model effects
 in this same finite manifest/budget; do not add arms after results. No automatic replacement.
 
@@ -669,22 +690,19 @@ Use the admitted evidence and use table to report separately **(1) the best meas
 under the predefined rule, or an inconclusive/no-preference finding**, and **(2) the model
 selected for delivery under licensing, resource and operational requirements, or none**.
 Do not call an eligible substitute the quality winner when the comparison says otherwise,
-and do not call a model a failure because one delivery use is unavailable. Missing direct
-comparison evidence cannot support a TabPFN-versus-DDNN ranking. Label development findings
+and do not call a model a failure because one delivery use is unavailable. *2026-09-30:* no
+TabPFN-versus-DDNN claim is made; TabPFN was withdrawn before any run. Label development findings
 and fresh-test findings separately. For the live route, document the [4.7T](#work-4-7t) result, decision
 rule, selected exact policy/update contract, rejected/deferred candidates and licence/resource
 reasons **before** CP-17 final freeze; an inconclusive test need not yield a quality winner.
 This decision is not live certification. Standalone v2 and negative research dispositions
 can finish without [4.7T](#work-4-7t) or a final live-policy choice.
 
-Only if both the measured results and the version-specific licence finding support it,
-candidate content may say: “Under the predefined comparison, TabPFN showed [measured
-advantage] over DDNN. We selected [model] for delivery because the tested TabPFN version's
-licence does not permit [specific use] within this project. The selection reflects delivery
-requirements; TabPFN's measured advantage remains in the comparison report.” If differences
-are inconclusive, say so. If licence suitability is unresolved, say **“suitability has not
-been established”**, not that the use is certainly prohibited. Carry these two findings and
-their exact evidence/permission limits into [4.3C](#work-4-3c) and [4.10](#work-4-10); public release still requires both
+Candidate content states measured quality and delivery selection separately, each in the terms
+its evidence supports. *2026-09-30:* the TabPFN delivery-wording template that stood here is
+withdrawn with TabPFN (v21-r7 §18.1). If differences are inconclusive, say so. If licence
+suitability is unresolved, say **“suitability has not been established”**, not that the use is
+certainly prohibited. Carry these two findings and their exact evidence/permission limits into [4.3C](#work-4-3c) and [4.10](#work-4-10); public release still requires both
 the applicable permissions and Owner authorization. Complete the report even with a blocked
 candidate or unresolved delivery choice; return the precise missing Owner decision without
 new research or approval requests for routine details.
@@ -734,8 +752,8 @@ fresh-data replay and final freeze. These are not facts about existing immutable
 | B0/B1 and immutable v1 references | Daily forecast/input refresh; retain the pinned reference's refit and residual-state rules. Do not retrain immutable v1 weights. | Record the exact pinned numeric history/calibration windows and label-release delays; distinguish stored weight provenance from currently available inputs. Missing specifications block that reference's replay. |
 | B2/A1; admitted block LightGBM or supervised V3 price model | Daily scheduled refit for the selected final product; daily input refresh and prescribed residual-state updates. A different cadence needs an explicit Owner-approved exception and replay before freeze. | Proposed inherited rolling `max(2019-01-01,D−728 days)` history, filtered by availability; record target-release cutoff, warm-up and each calibration window. Direct model contrasts use the common history contract. |
 | v2 combination and uncertainty layer | Components follow their fixed schedules; recompute blend daily, without relearning weights. Update residual state once per eligible released complete day. | [4.2](#work-4-2)'s 28-day residual window and errors from complete delivery days ≤D−2, also subject to actual availability; component histories as above. No fit to the current day's unrevealed error. |
-| DDNN | Fix a numeric refit cadence and cold-start/warm-start recipe in the brief; daily inputs and prescribed residual-state refresh between fits. No unspecified online gradient steps. | Common admitted training history, label-release cutoff, warm-up and calibration windows; exact ensembles/seeds and fit cost included. Cadence is unresolved until the training-only resource check supports it. |
-| TabPFN | Refresh the permitted labelled context and query inputs daily; context replacement is not weight retraining. Record whether the exact admitted implementation performs any adaptation/fit and, if so, its fixed cadence and cost. | Common admitted history and deterministic context construction/cap, available labels only; resource checks must support the intended scope. A context reduction must be disclosed in the comparison, never passed off as matched information. |
+| DDNN | Fix a numeric refit cadence and cold-start/warm-start recipe in the brief; daily inputs and prescribed residual-state refresh between fits. No unspecified online gradient steps. *2026-09-30:* the NumPy-only implementation (v21-r7 §18.2) performs every fit; if DDNN is designated final, §16.2's daily retraining applies. | Common admitted training history, label-release cutoff, warm-up and calibration windows; exact ensembles/seeds and fit cost included. Cadence is unresolved until the training-only resource check supports it. |
+| TabPFN | **Withdrawn 2026-09-30** (v21-r7 §18.1); no manifest entry. | — |
 | Optional VRE model or recombination | Declare each upstream refit cadence separately from daily feature inference; frozen combiner weights stay fixed unless an update rule was explicitly admitted before the test. | Record generation/price label release and revision rules, upstream windows and causal generated-feature lineage; no assumed same-day labels. |
 
 For **every** admitted model, replace unresolved manifest fields with numeric cadence
@@ -1026,8 +1044,9 @@ positive, negative or blocked results, withheld product claims and every deferre
 ([4.1](#work-4-1)/[4.4](#work-4-4) weather, [4.5](#work-4-5)/[4.6](#work-4-6) challengers, [4.7T](#work-4-7t) fresh-data test, [4.8](#work-4-8) recombination or [4.9](#work-4-9) qualification as applicable),
 with its reason and reopening dependency. No losing model forces another search. No feasible
 candidate means no qualified product, but the authorized research handoff can still finish.
-For [4.6](#work-4-6), carry [4.7](#work-4-7)'s measured-quality finding separately from delivery selection, the exact
-version/use-permission table and any uncompleted direct comparison into that handoff. Retain
+For [4.6](#work-4-6), carry [4.7](#work-4-7)'s measured-quality finding separately from delivery selection, DDNN's
+provenance and use-permission table and the TabPFN withdrawal (*2026-09-30*, v21-r7 §18) into
+that handoff. Retain
 or release only artifacts/findings permitted by the applicable use rows; research admission
 alone grants neither prospective-operation nor public-release permission.
 

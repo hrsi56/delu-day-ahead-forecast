@@ -1,3 +1,27 @@
+# Capstone v21-r7 — distribution challenger: DDNN only, written in NumPy (Owner-authorized)
+
+**Owner-authorized amendment, 2026-09-30.** The Owner withdrew TabPFN from the programme and
+fixed how DDNN is built: from the start, in NumPy only, with PyTorch serving only as a
+correctness check on the development machine. New §18 records both decisions for programme work
+item 4.6. It opens no checkpoint, authorizes no DDNN execution, spends no budget and designates
+no final product. Every existing line is unchanged: the headers below and §§1–17 remain byte for
+byte. §18 refines §16.2's TabPFN example and the programme handoff's 4.6 route, and it governs
+only within that scope.
+
+Previous v21-r6 is preserved at `270a0a0:capstone_v21.md`, SHA-256
+`ee402c4703d176f8181ed82966c978ad84c3c73a0cdb1d3567871f58bc867344`. CP-21's evidence binds those
+bytes; v21-r7 neither reopens nor rescores it.
+
+**Authority.** On 2026-09-30 the Owner granted full authority to edit the anchors' treatment of
+DDNN and TabPFN, with the two decisions above; the exact words are quoted in
+[the amendment record](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md). The grant acts as a
+task-scoped Lockdown suspension. It covers this revision, that record and directly necessary
+consistency edits to the programme handoff and `progress.md`, and it ends at this task's
+terminal return. The agent drafted this text under that delegated authority; this is not a
+claim that the Owner reviewed every sentence.
+
+---
+
 # Capstone v21-r6 — CP-21: three-block LightGBM on top of v3 (ratified)
 
 **Owner-ratified 2026-09-29; CP-21 execution authorized the same day.** The Owner chose programme
@@ -1656,3 +1680,97 @@ covers:
 **Not authorized:** mainline operations, pushes, tags, publication, remote writes (MLflow,
 Hub), data retrieval, governance edits and later checkpoints. The Lead owns E1–E4 and the
 pre-run feasibility check, and escalates only a concrete blocker beyond this scope.
+
+
+## 18. Distribution challenger — DDNN only, written in NumPy (v21-r7)
+
+**Owner amendment, 2026-09-30.** This section governs programme work item 4.6 and every later
+use of DDNN in this programme. It is not a checkpoint bar and grants no execution authority. A
+future 4.6 brief supplies the bar, budgets and protocol, under the programme handoff, §16 and
+the standing decisions in force when it is written.
+
+### 18.1 TabPFN is withdrawn
+
+TabPFN leaves the programme, in every version. It is not a research candidate, a comparator, a
+recombination member or a final-product candidate. No TabPFN licence entry, resource entry,
+comparison, context construction or weight download will run.
+
+- Programme item 4.6 becomes a single-candidate DDNN route: 4.6L, then 4.6R, then 4.6C.
+- The planned TabPFN–DDNN comparison is **withdrawn by Owner decision**, before any run. It is
+  not reported as failed, blocked or "not completed", and no TabPFN-versus-DDNN claim is made.
+- §16.2's general rule stands: refreshing inputs, residual state or context is not weight
+  training. Its TabPFN example no longer names a candidate.
+- Bringing TabPFN back needs a new Owner amendment.
+
+**Context, recorded with the decision.** The Owner decided this while weighing an option to
+retrain the final product in the browser, so that anyone who wants to check it can. TabPFN is a
+pretrained transformer. Its daily update would be context replacement, which §16.2 does not
+count as training. It has no runtime under Pyodide, where the current demo executes, and its
+licence entry (handoff 4.6L) was unresolved.
+
+### 18.2 DDNN is written from the start in NumPy only
+
+1. **One implementation.** DDNN's model code is written from scratch in this repository and
+   depends on NumPy and the Python standard library alone. That covers the network, the
+   Johnson SU distributional head and its likelihood, the gradients, the optimizer,
+   regularization, the training loop, early stopping, seeding, ensembling and the emission of
+   quantiles and p50. No deep-learning framework (PyTorch, TensorFlow or Keras, JAX or the
+   like), no other numerical library, no third-party DDNN code and no pretrained weights enter
+   it.
+2. **Every DDNN number comes from it.** The same code produces every DDNN research result, every
+   daily fit and every forecast that any surface shows. No second implementation is written for
+   another runtime, and no other implementation's output stands in for its output.
+3. **Inputs.** The model code takes its design matrix from the common admitted feature pipeline,
+   under the same information, history and causal rules as every other candidate. That pipeline
+   is outside this rule.
+4. **Purpose and limit.** One code path runs from research to any later server or browser run,
+   so the model a visitor might retrain is the model that was evaluated. This section does not
+   decide in-browser retraining: whether a daily fit runs in the browser, and what equality with
+   the issued artifact it claims, is decided under §16 in the final-product briefs. Training is
+   sensitive to floating-point order, so equality between runtimes is measured, never assumed. A
+   claim states its measured tolerance, and bitwise identity is claimed only where it was
+   measured.
+
+### 18.3 PyTorch is a host-side correctness reference only
+
+PyTorch may be used only on the development machine, inside tests, as an independent reference
+that checks the NumPy implementation:
+
+- the forward pass, the Johnson SU log-likelihood and its gradients, and short optimizer
+  trajectories on fixed inputs and seeds, at tolerances the 4.6 brief fixes before any
+  comparison run;
+- alongside finite-difference gradient checks of the NumPy code itself.
+
+PyTorch never trains a model whose output is scored, published or issued, and it never emits a
+forecast, quantile, metric or artifact that enters evidence. It is not a runtime dependency of
+research, server or browser code; it enters the environment only as a test dependency. The 4.6
+brief fixes how those tests are installed and run, so that they cannot be skipped silently. A
+failed check blocks DDNN's results until the NumPy code is fixed. A tolerance changes only
+through a recorded protocol change, never silently after a failure.
+
+### 18.4 Consequences for the 4.6 route
+
+- **4.6L** becomes a provenance and licence record. The DDNN code is original, under the
+  repository's MIT licence, with its method sources cited and no third-party code or weights.
+  The record states the licence of each test-only dependency, and its use table still gives
+  every use of DDNN's outputs a disposition. Those outputs remain derived from the CC BY 4.0
+  data (`DATA-LICENSE.md`).
+- **4.6R** gains one entry condition: the §18.3 checks pass before DDNN's resource measurements
+  count.
+- **4.6C** becomes one predefined comparison between DDNN and the references its brief fixes,
+  under the standing information and comparator decisions then in force. If DDNN fails entry,
+  no comparison runs, and the failure is reported to 4.7.
+- **§16 applies unchanged** if DDNN is ever designated final: daily retraining, not input or
+  state refresh alone, or an explicit Owner-approved exception before live admission.
+- **Nothing is opened.** DDNN work needs its own brief, D4 allowances and budgets.
+
+### 18.5 What stays as it was
+
+- §§1–17, and every closed checkpoint's evidence, including CP-21's binding of the v21-r6
+  bytes.
+- PUBLISH_RULES 1.1, unedited. Its sentence "No such exception is granted here to TabPFN,
+  immutable v1 or any other model" remains accurate.
+- Historical records that name TabPFN: reviews, briefs, claim ledgers, research content and the
+  presentation plan. They describe what was planned when they were written.
+- The public report. Its planned item "4.6 · DDNN / TabPFN" is corrected by the next authorized
+  publication block, not by this amendment.

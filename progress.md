@@ -1,12 +1,14 @@
 # Programme state — DE-LU day-ahead forecasting
 
-*Orchestrator-owned. Regenerated in full on 2026-09-29 at the Owner's explicit request, under
-`orchestrator-role.md` § The regeneration contract. The incoming file is the committed
-`progress.md` at `05587acdcf0536196678b444a4806c7f05c47cb5` (`main` = `origin/main`, PRES-2
-closure). The omission diff against it is summarized in the Session Log. The file was updated
-in place the same day for the Owner's ratification of v21-r6 and the CP-21 execution grant.
-The task performed no engineering test, fit, data retrieval, deployment or MLflow write. Its
-commit and push were made on the Owner's explicit, task-scoped instruction.*
+*Orchestrator-owned. Regenerated in full on 2026-09-30 at the Owner's explicit request ("תוציא
+progress חדש ומעודכן"), under `orchestrator-role.md` § The regeneration contract. The work ran in
+a Claude Code cloud session: a fresh GitHub clone, without the Owner's `.local/` material,
+credentials or local branches. The incoming file is `4892d57:progress.md`, the head of
+[hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1). The
+omission diff against it is summarized in the Session Log. The task ran CP-21's read-only receipt
+checks and filed Q&A entries 39–42. It ran no fit, data retrieval, deployment or MLflow write.
+Its commit, push and the squash merge of PR #1 follow the Owner's explicit, task-scoped
+instructions of 2026-09-30.*
 
 ---
 
@@ -14,18 +16,30 @@ commit and push were made on the Owner's explicit, task-scoped instruction.*
 
 ### Track B — capstone (the critical path)
 
-**Foundation established.** The v1 product is released. CP-10, CP-15, CP-16 and CP-20 are
+**Foundation established.** The v1 product is released. CP-10, CP-15, CP-16, CP-20 and CP-21 are
 landed, GFS is admitted, and PRES-1 and PRES-2 are closed. Their detailed results and accepted
 limitations remain in the [landing and closure records and evidence tags](#where-the-history-lives).
 
-**Released product: frozen v1. Best research policy: HG (v3).** HG adds the admitted GFS
-wind/radiation features to CP-16's V2-H central-blend/hour-aware policy. CP-20 found joint
-point/interval improvement over H0 on the common development population. These are
-`development_post_selection` findings, not promotion, product qualification or Live eligibility.
-Use the [CP-20 landing record](docs/track-b/cp-20-landing-2026-09-24.md) for exact scores,
-intervals and fold qualifications; CP-15's product result remains `NOT_DEMONSTRATED`.
+**Released product: frozen v1. Research base: v4 (HGL), adopted in research on 2026-09-30.**
 
-**Programme stages** (Owner's sequence, current state 2026-09-29):
+- **What v4 is.** v3's two LEAR components plus a three-block LightGBM member at one-third
+  weight (the mean of raw and normalized block models), with v3's hour-aware interval layer
+  re-estimated on v4's own errors.
+- **Why it was adopted.** On CP-20's 10,747 development hours it met all four conditions of the
+  pre-registered rule `cp21-adoption`: S_MAE −5.3% [−6.4%, −4.0%] and S_WIS −5.0% [−6.0%, −3.8%]
+  against v3, all six §8 diagnostics, a complete valid evaluation, and no fold decisively worse.
+- **What it does not show.** The block split itself, three blocks against one pooled LightGBM,
+  showed no demonstrated joint preference: the gain came from the blend. HGL's MAE on the
+  17-day peak was 50.1 against v3's 47.5 EUR/MWh (descriptive).
+- **Evidence class.** `development_post_selection`: no promotion, product qualification or Live
+  eligibility. CP-15's product result remains `NOT_DEMONSTRATED`. Exact values: the CP-21
+  [return](docs/track-b/evidence/cp-21/checkpoint-return.md) and
+  [verdict](docs/track-b/evidence/cp-21/integration.md).
+- **v3 (HG) stays a retained reference.** It is CP-16's V2-H central-blend/hour-aware policy
+  plus the admitted GFS wind and radiation features; its scores and fold qualifications are in
+  the [CP-20 landing record](docs/track-b/cp-20-landing-2026-09-24.md).
+
+**Programme stages** (Owner's sequence, current state 2026-09-30):
 
 | # | Stage | Status |
 |---|---|---|
@@ -33,99 +47,63 @@ intervals and fold qualifications; CP-15's product result remains `NOT_DEMONSTRA
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
 | 3 | Presentation around v2 (4.3R), with CP-20 alongside | ✅ PRES-1 and PRES-2 closed |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
-| 5 | Three-block LightGBM (4.5) | ▶ CP-21 on top of v3: v21-r6 §17 ratified and execution authorized 2026-09-29; brief issued; awaiting the Lead's return |
-| 6 | DDNN / TabPFN (4.6L → 4.6R → 4.6C) | ⬜ Not started |
+| 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Its publication block, PRES-3, is next |
+| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Not started; needs its brief and D4 allowances |
 | 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Next pending Track B checkpoint: CP-21 — work item 4.5, three-block LightGBM on top of v3.
-Ratified, execution authorized and brief issued, all on 2026-09-29.**
+**Next pending Track B checkpoint: PRES-3 — publish CP-21's result, v4, on every surface.**
 
-- **The choice.** The Owner chose it on 2026-09-29. That answers the 2026-09-24 open question
-  and supersedes the earlier recommendation: 4.6 first, then 4.4V and 4.8, with 4.5 only as an
-  extra arm of 4.8.
-- **Ratified.** [v21-r6 §17](capstone_v21.md) and its
-  [amendment record](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md) were ratified with
-  two Owner changes: the pooled attribution arm L-P, and a fourth adoption condition (a per-fold
-  veto). Both documents are committed and pushed.
-- **Next:** a new Engineering Lead runs CP-21 from the issued brief, which the Owner pastes
-  inside the fixed launch envelope. The Orchestrator then runs the templates §4 receipt,
-  proposes LAND for any Engineering-PASS outcome, and issues the publication block.
-- **Design.**
-  - HGL is the sole adoption candidate: HG's blend plus a fixed one-third three-block LightGBM
-    member (the mean of raw and normalized blocks), with HG's interval layer re-estimated on
-    HGL's own errors. HG is the comparator on identical rows.
-  - Attribution arms: L-P (pooled 24-hour, raw), L-R (blocks, raw) and L-N (blocks,
-    normalized). The ladder is B3 → L-P → L-R → HGL. L-R − L-P tests the block split, and that
-    finding is reported whichever way it falls.
-  - The population is CP-20's: 10,747 hours over 448 days in five folds.
-- **The rule for v4.** All four conditions:
-  1. joint improvement over HG (upper S_WIS endpoint < 0, upper S_MAE endpoint ≤ 0);
-  2. all six §8 diagnostics met;
-  3. a complete, valid evaluation;
-  4. no fold with a resolved degradation in MAE or WIS.
-- **Ceilings:** about 32 active hours (hard 40), 60 machine-hours, 24,000 main and 35,000 total
-  LightGBM fits, 10,500 policy-days, 20 GiB of disk. No network, and no work from Friday 00:00
-  to Sunday 00:00.
-- **Outcome.**
-  - If the rule is met: `v4 · <adopted change>`, which becomes the base for the next
-    extensions.
-  - Otherwise: the branch "Three-block LightGBM on v3", marked "Not adopted".
-  - Published either way, through a separate publication block after LAND
-    ([plan](docs/track-b/cp-21-publication-plan-2026-09-29.md)).
-- **Reserved.** CP-17–CP-19 remain reserved for the final model's freeze, live operation and
-  prospective evaluation. §16 defines the final product, not CP-21.
+- **Route.** The [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md),
+  outcome A (runbook §2), ratified as D5 on 2026-09-29:
+  - a v4 chapter and the v3 → v4 transition;
+  - the research headline moving to v4 through the registry, with the D6 encoding;
+  - the README, MLflow's `cp21` runs, Pages and the Space.
 
-**PRES-2 — final state: CLOSED on 2026-09-29, by the Owner's decision after his own manual
-public check.** The source is the [closure record](docs/track-b/pres-2-closure-2026-09-29.md).
-Its contract remains PUBLISH_RULES 1.0.
+  It also corrects the public planned item "4.6 · DDNN / TabPFN", since TabPFN is withdrawn
+  (v21-r7 §18).
+- **Entry conditions.**
+  - Met: CP-21 PASS with its packet and draft export.
+  - Met: the squash landing and both tags, verified on origin.
+  - Unconfirmed: the reclamation of `gauntlet/cp-21` (see Setup State).
+- **Owner inputs before the brief** (plan §8): the explicit list of authorized external actions,
+  namely the MLflow upload, landing and push, the Space upload and the `style.css` deletion.
+  Visual choices stay the Owner's. The independent check is mandatory; the PRES-2 waiver was
+  one-time.
+- **Pinned rules.** PUBLISH_RULES 1.1 and its incorporated sources, and the runbook and packet
+  template at their hashes on the day of issue (unchanged since 2026-09-29). CP-21's content is
+  governed by v21-r6 §17, whose bytes are at `evidence/cp-21`; the live research anchor is v21-r7.
+- **Then.** The 4.6 DDNN brief follows, after the Owner's decision on the standing rule "same
+  information, same opponent" (see Open Questions). CP-17–CP-19 stay reserved for the final
+  model; §16 defines the final product.
 
-- **Shipped:** twelve product subjects below the opening, the v1→v2 and v2→v3 transitions,
-  chart routes, the F01–F04 repairs and companion documentation.
-- **Integration PASS** at `d7d57e3`, covering the local-ready milestone.
-- **Landed and pushed:** `land/pres-2` = `a543616`; `evidence/pres-2` = `871c0e2`.
-- **Space deployed:** revision `0c550e8`, bundle `8007f0d2…`.
-  ([Deployment receipt](docs/track-b/pres-2-space-deployment-2026-09-29.md).)
-- **Targeted public checks passed.** Four demo configurations, after one retained HTTP 429
-  failure and a successful retry.
-- **The rest of P8** was covered by the Owner's manual check, recorded as his check, not as
-  automated evidence.
-- **The new independent postdeploy review was waived for PRES-2 only.** This one-time exception
-  is not a PASS; the standing rule is unchanged.
-- **F01–F04** of the later independent review were closed publicly.
-- **`style.css`** was accepted as an unused leftover, to be removed at the next Space upload.
-- **Reclaimed:** the branch and worktree. The stale stash was dropped on the Owner's
-  instruction.
+**Repository**, as verified from the cloud clone on 2026-09-30:
 
-**Repository:**
-
-- `main` = `origin/main` at the CP-21 ratification commit, a direct child of `05587ac`. It adds
-  five documents:
-  - the ratified anchor;
-  - the amendment record;
-  - the publication plan;
-  - the programme handoff's consistency notes;
-  - this file.
-
-  No branch other than `main`, no worktree besides the primary checkout, and no stash.
-- **Left uncommitted:** `שאלות תשובות.docx`, carrying Q&A entry 37. It was not in the Owner's
-  commit list. It is not CP-21's; the Lead leaves it untouched.
-- **The issued brief's canonical copy** is `.local/artifacts/cp-21/issued-brief.md`, which is
-  ignored by Git. The Lead packages it byte for byte in CP-21's evidence.
-- **Local material.** Decoded GFS grids, the HG component cache and other CP-20 material stay
-  under `.local/` ([artifact map](docs/track-b/local-artifacts.md)); CP-21 reuses them
-  read-only. The PRES-2 bundle and records stay in `.local/artifacts/pres-2/` as recovery
-  material.
+- `main` = `origin/main` = `4e37cf7`, CP-21's squash landing, tagged `land/cp-21`.
+  `evidence/cp-21` = `1d13f99` is on origin, and so is every other `land/*` and `evidence/*` tag
+  listed in [Where the history lives](#where-the-history-lives).
+- **Session branch** `claude/browser-model-retraining-options-r16r4p`, opened by the cloud session
+  for v21-r7.
+  - It carries v21-r7, its amendment record, the handoff edits, Q&A entries 38–42 and this
+    regeneration, in [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1).
+  - On the Owner's instruction, the agent squash-merges it once CI is green.
+  - The branch is left for the Owner's disposition.
+- **Local state on the Owner's machine is not visible from a cloud session:**
+  - the `gauntlet/cp-21` branch and its `lead` worktree;
+  - `.local/artifacts/cp-21/`, 62 MB: the fit cache, HGL state snapshots, the ledger and the
+    review scratch;
+  - `.local/mlruns/cp21/`;
+  - the CP-20 material under `.local/` ([artifact map](docs/track-b/local-artifacts.md)).
 
 **Public surfaces — distinguish a Git push from a verified deployment:**
 
 | Surface | Last evidenced state / pending action |
 |---|---|
-| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` at `05587ac`, both PRES-2 tags pushed |
-| [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | PRES-2 page: HTTP 200, SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, re-read anonymously 2026-09-29. Behaviour accepted by the Owner's manual check at closure. |
-| [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | Revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING (re-read anonymously 2026-09-29). Bundle `8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e`: 805 files, 44,164,910 bytes, preserved at `.local/artifacts/pres-2/space-wasm-8007f0d2/`. Plus the unused `style.css`, making 806 files; the next upload removes it. |
-| [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Unchanged 23-run, six-route export verified during PRES-2; no post-push recheck claimed. CP-21 adds `cp21` runs only through the publication block. |
+| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` at `4e37cf7` (`land/cp-21`); `land/cp-21` and `evidence/cp-21` on origin, read 2026-09-30. PR #1 pending, as above. |
+| [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | PRES-2 page: HTTP 200, SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, re-read anonymously 2026-09-29. It still shows v3 as the research headline and TabPFN in the 4.6 planned item; PRES-3 updates both. |
+| [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | Revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING, re-read anonymously 2026-09-29. It runs v1. Bundle `8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e`: 805 files, 44,164,910 bytes, preserved at `.local/artifacts/pres-2/space-wasm-8007f0d2/`. Plus the unused `style.css`, making 806 files; the next upload removes it. |
+| [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Unchanged 23-run, six-route export verified during PRES-2; no post-push recheck claimed. CP-21's `cp21` runs are published only through PRES-3. |
 
 **Scope outside Track B:** Track C was cancelled and moved out of this repository; no marketing
 state is tracked here. Track A is inactive and has no position. The Owner's end-stage CV-use
@@ -135,8 +113,13 @@ decision remains a boundary, not an active workstream.
 
 ## 2. Setup State
 
-- **No pending one-time actions.** The DagsHub restart item, pending since 2026-09-24, was closed
-  on 2026-09-29 on the Owner's confirmation. See the Session Log.
+- **ACTION-REQUIRED (Owner; unconfirmed): confirm CP-21's local reclamation.** On the Owner's
+  machine, `gauntlet/cp-21` deleted after `evidence/cp-21` was pushed, and
+  `.local/worktrees/cp-21/lead` removed. This is PRES-3's entry condition 2, and a cloud session
+  cannot check it.
+- **ACTION-REQUIRED (Owner): pull `main` on the Owner's machine after PR #1 merges.** Until then
+  the local checkout is one commit behind `origin/main`. Any new clone must enable the secret
+  guard again.
 
 ---
 
@@ -149,22 +132,24 @@ decision remains a boundary, not an active workstream.
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Ratified research authority:** `capstone_v21.md` **v21-r6**, Owner-ratified 2026-09-29,
-  SHA-256 `ee402c4703d176f8181ed82966c978ad84c3c73a0cdb1d3567871f58bc867344`.
-  - §17 governs CP-21; it was ratified with two Owner changes, and its execution was authorized.
+- **Ratified research authority:** `capstone_v21.md` **v21-r7**, Owner-authorized 2026-09-30,
+  SHA-256 `e6a4e301d5db080c6427f925f51e2cf69367c42225b292c78050117003aa7b0c`.
+  - §18 (r7) governs programme item 4.6: TabPFN is withdrawn, and DDNN is written from the
+    start in NumPy only, with PyTorch only as a correctness reference in tests on the
+    development machine. It opens no checkpoint.
+  - §17 governed CP-21, which is landed; its evidence binds the v21-r6 bytes.
   - §16, unchanged from r5, remains the final-product authority.
-  - Historical §§1–16 are byte-for-byte intact; r6 adds only a header, a §10 row and §17.
+  - Historical §§1–17 are byte-for-byte intact; r7 adds only a header and §18.
   - CP-20 is closed under r4, and its §15.7 authority stays spent.
-  - [Amendment record](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md), SHA-256
+  - [Amendment record r6 → r7](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md), SHA-256
+    `86edc1d8f4e93d62abc513b5f14e5c11bd985643bb60a79d5538f4235c075112`.
+  - [Amendment record r5 → r6](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md), SHA-256
     `a9086fa1d70ea9cfd9c7fde3733f631bff7b8e372a8990e6cc7a52be3650bedd`.
-- **CP-21 issued brief:** canonical copy `.local/artifacts/cp-21/issued-brief.md` (ignored),
-  SHA-256 `813fb8a476a7b6d10ecf0a5519e97ec8efc4ff36e0f13868676ad34534fc020f`. The Lead packages
-  it as `docs/track-b/evidence/cp-21/issued-brief.md`. It pins PUBLISH_RULES 1.1 and the anchor
-  and amendment hashes above.
 - **Historical authorities:**
 
   | Authority | Governed | Where the exact bytes are |
   |---|---|---|
+  | v21-r6 | CP-21 | `evidence/cp-21:capstone_v21.md` (`ee402c47…`, verified 2026-09-30), also `270a0a0` |
   | v21-r5 | Defined §16; governed no checkpoint | `81ab3be:capstone_v21.md` (`a4e178c3…`) |
   | v21-r4 | CP-20 | `evidence/pres-2:capstone_v21.md` (`150bd53f…`) |
   | v21-r3 | CP-16 | `evidence/cp-16:capstone_v21.md` (`67d21768…`) |
@@ -174,11 +159,13 @@ decision remains a boundary, not an active workstream.
 
   Once the live anchor advances, closed checkpoints are reproduced from their `evidence/` tags.
 - **Programme plan:** the [v3 plan handoff](docs/track-b/v3-plan-handoff-2026-09-22.md), with
-  work items 4.0–4.10 and the decision register D1–D6. Current identity after the CP-21
-  consistency notes: `ddc6bd3a…`. It was `0fe3a69e…` after v21-r5's consistency edit
-  (`81ab3be`); the `7fdd8205…` recorded here until 2026-09-29 predated `81ab3be`. The
-  [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md) (`c0ac0d26…`)
-  plans the publication block that follows CP-21.
+  work items 4.0–4.10 and the decision register D1–D6.
+  - Current identity, after v21-r7's 4.6 consistency edits: `cf498c44…`.
+  - Earlier identities: `ddc6bd3a…` after the CP-21 consistency notes, and `0fe3a69e…` after
+    v21-r5's consistency edit (`81ab3be`). The `7fdd8205…` recorded here until 2026-09-29
+    predated `81ab3be`.
+  - The [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md)
+    (`c0ac0d26…`) plans PRES-3.
 - **Target:** hourly day-ahead prices in the DE-LU (Germany–Luxembourg) bidding zone, under the
   inherited forecast-origin and eligibility contract. The aim is better point forecasts and
   honest, useful uncertainty.
@@ -220,6 +207,14 @@ decision remains a boundary, not an active workstream.
   - **Secret guard:** `.githooks/` together with `scripts/secret_guard.py`. It is enabled locally
     with `git config core.hooksPath /Users/djourno/Downloads/PJM/.githooks`, and a fresh clone
     must enable it again.
+  - **Claude Code cloud sessions (first used 2026-09-30):**
+    - Each session is a fresh, shallow GitHub clone, without `.local/`, credentials or the
+      Owner's local branches. State on the Owner's machine is confirmed by the Owner, never
+      inferred.
+    - Enable the secret guard in each clone with `git config core.hooksPath <clone>/.githooks`.
+    - Seven `test_40_publication_guard.py` tests error there. The container sets
+      `GIT_CONFIG_COUNT`, and the fixture strips `GIT_CONFIG_KEY_*`. With the count unset they
+      pass, and GitHub CI is unaffected.
 
 ---
 
@@ -228,11 +223,24 @@ decision remains a boundary, not an active workstream.
 These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
 Session Log.
 
+**Added 2026-09-30 (Owner — v21-r7):**
+
+- **TabPFN is withdrawn**, in every version. It is no candidate, comparator, recombination
+  member or product. The planned TabPFN–DDNN comparison is withdrawn by decision, not reported
+  as failed. Bringing it back needs a new Owner amendment.
+- **DDNN is written from the start in NumPy only.** One implementation, NumPy and the Python
+  standard library, produces every DDNN result, daily fit and displayed forecast; no second
+  implementation is written for another runtime.
+- **PyTorch is only a correctness check on the development machine.** It serves in tests as a
+  reference for the forward pass, the Johnson SU likelihood, gradients and short training
+  trajectories. It never trains a scored model or emits anything that enters evidence, and it
+  is not a runtime dependency.
+
 **Added 2026-09-29 (Owner — CP-21 ratification):**
 
-- **v4's chart encoding, used only if a v4 is adopted:** amber `#B45309`, a filled diamond
-  marker and the direct label "v4" (PRES-1 W16(b)). This resolves the Publication Standard's
-  "At v4" trigger in advance.
+- **v4's chart encoding:** amber `#B45309`, a filled diamond marker and the direct label "v4"
+  (PRES-1 W16(b)). This resolves the Publication Standard's "At v4" trigger. v4 was adopted on
+  2026-09-30, so PRES-3 applies it.
 
 **Added 2026-09-29 (Owner — final-product lifecycle):**
 
@@ -265,7 +273,8 @@ Session Log.
 - **Same information, same opponent.** Every new model receives exactly the information HG
   receives, including the three frozen GFS weather features and their missing indicators. It is
   evaluated against HG on identical rows. Beating a weaker reference means beating the wrong
-  model.
+  model. *Pending since 2026-09-30:* CP-21 made v4 the research base, and moving this rule from
+  HG to v4 awaits the Owner (see Open Questions).
 - **No data after the development window until the final test.** Nothing dated after
   2026-04-07, the last fold-5 delivery day, may be read, scored, plotted or used for any choice
   before the single final fresh-data test (4.7T). This covers prices, weather and every other
@@ -384,7 +393,7 @@ Session Log.
     the semantic fingerprint are kept.
 - **Research status labels persist:**
   - CP-15 product feasibility stays `NOT_DEMONSTRATED`;
-  - CP-16 and CP-20 results are `development_post_selection`;
+  - CP-16, CP-20 and CP-21 results are `development_post_selection`;
   - economics stay descriptive, and no product threshold is invented.
 
 **Process:**
@@ -395,9 +404,13 @@ Session Log.
 - **Reasoning capture is active** (`AGENTS.md` § Interview-answer capture).
   - Only the Orchestrator files entries, through `scripts/qa_append.py`; the Lead names triggers
     in its return.
-  - `שאלות תשובות.docx` has 37 entries. Entry 37 covers why CP-21 adds the block LightGBM on
-    top of v3, with a pooled control and a pre-registered rule; it is uncommitted, pending the
-    Owner. Entry 36 covers frozen policy versus daily training and product presentation.
+  - `שאלות תשובות.docx` has 42 entries.
+    - Entries 39–42 (2026-09-30) file CP-21's four named triggers: thread determinism, the blend
+      rather than the block split, the single interval-layer path, and the interrupted review.
+    - Entry 38 covers why DDNN is written from scratch in NumPy rather than PyTorch, and why
+      TabPFN was dropped.
+    - Entry 37 covers why CP-21 adds the block LightGBM on top of v3.
+    - Entry 36 covers frozen policy versus daily training and product presentation.
   - Presentation is the Owner's.
 - **Retired controls stay retired.** These are AMD-G5's waived negative control, the old
   point-in-time capture ledger, publication-metadata substitution and the four-catalog selection
@@ -412,78 +425,75 @@ Session Log.
 
 ## 5. Session Log — newest first
 
-- **CP-21 ratified, authorized and issued, 2026-09-29.** The Owner: "מאשר את v21-r6 עם שני
-  שינויים, ומאשר ביצוע CP-21".
-  - **D1:** HGL confirmed as the sole candidate. The pooled attribution arm L-P was added: one
-    24-hour LightGBM, raw target, HG's exact information with weather, and the H layer on its
-    own errors. It is not adoption-eligible.
-    - It tests the block hypothesis through the ladder B3 → L-P → L-R → HGL.
-    - L-R − L-P is a descriptive secondary contrast, and the split claim is reported by result.
-  - **D2:** three conditions, plus a fourth: no fold with a resolved HGL − HG degradation in MAE
-    or WIS.
-  - **D3, D5 and D6 as recommended.** D6: amber `#B45309` with a filled diamond marker.
-  - **D4, recomputed for L-P:** 11 policies, 22,330 nominal fits (24,000 main, 35,000 total),
-    10,500 policy-days, 60 machine-hours, about 32 hours (hard 40).
-  - **Setup item closed on the Owner's confirmation.**
-    - The Claude app started 2026-09-24 at 22:56, after the rotation; the exposure/rotation
-      record was committed at 15:49 that day.
-    - PyCharm and Terminal were not running.
-    - Verified uploads have since succeeded: PRES-1 F1 and PRES-2's Space.
-  - **Actions:**
-    - §17 was finalized and v21-r6 marked ratified; the amendment record, handoff notes,
-      publication plan and this file were updated.
-    - Q&A entry 37 was filed with the prescribed appender, and left uncommitted because it was
-      outside the commit list.
-    - The five named documents were committed and pushed on the Owner's explicit, task-scoped
-      instruction, with the secret guard enabled.
-    - The brief was issued in the fixed envelope for a new Engineering Lead.
-    - The Lockdown suspension ended at this return.
-  - **Omission review:** within this in-place update, the removed items are:
-    - the draft status;
-    - the answered D1–D6 question (resolved above);
-    - the closed Setup item (resolved above);
-    - the done "[On CP-21 ratification]" notes.
+- **Programme state regenerated; CP-21 receipt recorded, 2026-09-30.** A full regeneration at
+  the Owner's request, in a Claude Code cloud session.
+  - **CP-21 receipt.** The templates §4 read-only checks against `evidence/cp-21` matched the
+    return:
+    - the six candidate commits are reachable only from the tag;
+    - `git diff --stat main...evidence/cp-21` shows 70 files;
+    - the delta from `260dcf9` to the evidence tip is the three verdict files;
+    - every cited SHA is reachable;
+    - the tag carries the v21-r6 anchor bytes, `ee402c47…`.
 
-    The pre-update copy is in `.local/artifacts/cp21-orchestration-2026-09-29/`.
-- **CP-21 drafted; programme state regenerated, 2026-09-29.**
-  - **The Owner's choice, in his words:** "לצורך שימוש בv3 והוספה עליו של פיצול LightGBM
-    לשלושה בלוקים ואימון מחדש, נוסיף את התוצאות לאתר להשוואה בכל מקרה …". In short: 4.5 on top
-    of v3, published in either outcome; v4 if it improves under a rule fixed in advance,
-    otherwise a not-adopted experiment.
-    - It answers the 2026-09-24 CP-21 question.
-    - It supersedes the recommendation to use 4.5 only as an arm of 4.8.
-  - **Authority:** a task-scoped Lockdown suspension for v21-r6 §17, its amendment record and
-    consistency edits to the programme handoff. It is spent at this task's return.
-  - **State checks.**
-    - The first check found PRES-2's closure incomplete: deployment committed at `5a6b585`,
-      review and reclamation open. The Orchestrator stopped and reported.
-    - The Owner then confirmed the closure finished. `05587ac` (closure and reclamation) was
-      verified on `main` and `origin`.
-    - Verified anonymously and read-only: the anchor, PUBLISH_RULES and tag identities, the Space
-      revision and the Pages hash.
-  - **Produced, uncommitted:**
-    - `capstone_v21.md` draft v21-r6: header, a CP-21 row in §10, §17; additions only.
-    - The [amendment record](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md), with six
-      decisions and recommendations.
-    - The [publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md) for both
-      outcomes, recommending a separate publication block after LAND.
-    - Dated 4.5 consistency notes in the programme handoff.
-    - This regeneration.
-  - **PRES-2's final state** was recorded from its closure record, without rerunning its checks.
-  - **A stale pointer was corrected:** the programme-plan identity had been left at `7fdd8205…`
-    since `81ab3be`.
-  - No fit, data retrieval, MLflow write, deployment, commit or push was performed.
-  - **Omission review** against `05587ac:progress.md`. Nothing was dropped silently; every other
-    item was retained.
-    - Now in "Where the history lives," as resolved items or history:
-      - PRES-2's identity/step table;
-      - the resolved "later independent public review" blocker;
-      - the stale "PRES-2 still awaits deployment acceptance" pointer.
-    - Compressed to one line each, with decisions, reasons and links kept: the older multi-line
-      Session Log entries.
-    - Renamed: "[After PRES-2 / next research brief]" is now "[Every research brief]"; its
-      content is unchanged.
-    - The incoming copy and the diff are in `.local/artifacts/cp21-orchestration-2026-09-29/`.
+    Local branch and worktree reclamation cannot be checked from the cloud; it is in Setup State.
+  - **Q&A.** Entries 39–42 were filed for the Lead's four named triggers.
+  - **CI on PR #1.** Run 71 on `f686c51` (v21-r7) passed in full on GitHub. Run 72 on
+    `4892d57` was running at regeneration.
+  - **Omission review** against `4892d57:progress.md`. Nothing was dropped silently.
+    - Resolved this session:
+      - the open question "CP-21's receipt is not recorded" (receipt above);
+      - the "[CP-21 launch]" and "[After CP-21's return]" notes (CP-21 ran, returned PASS and was
+        landed; PRES-3 carries on as the next checkpoint);
+      - the note "[If v4 is adopted, at CP-21's landing]", now an open question to the Owner;
+      - the "[Next publication block]" note, merged into the PRES-3 note.
+    - Pruned as closed history, with identities kept in Where the history lives:
+      - the CP-21 design block and the PRES-2 closure block in Current Position;
+      - the CP-21 issued-brief anchor line (the brief is packaged at
+        `docs/track-b/evidence/cp-21/issued-brief.md`, `813fb8a4…`);
+      - the stale repository lines (`main` at the ratification commit; uncommitted entry 37).
+    - Compressed to one line each: the multi-line 2026-09-29 Session Log entries.
+
+    The incoming copy is `4892d57:progress.md`, also at
+    `.local/artifacts/progress-regeneration-2026-09-30/` in the cloud container.
+- **Owner-delegated landing of PR #1, 2026-09-30.** The Owner: "בצע. יש לך הרשאה", after
+  "יש לך אישור ועקיפה מוחלטת לבצע גם push". The agent squash-merges
+  [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1)
+  once CI is green. AGENTS.md otherwise reserves landing to the Owner, by hand. This is a
+  task-scoped delegation, not a standing one, and the session branch is left for the Owner's
+  disposition.
+- **v21-r7: TabPFN withdrawn, DDNN in NumPy only, 2026-09-30.** The Owner: "יש לך הרשאה מלאה.
+  תערוך בעוגנים את ההתייחסות ל DDNN ו TabPFN. אנחנו נוותר על TabPFN. קבע ש-DDNN נכתב מההתחלה
+  ב-numpy בלבד. PyTorch ישמש רק כבדיקת נכונות על המחשב."
+  - It followed a consultation on the Owner's request for a one-click option to retrain the final
+    product in the browser. That requirement itself is still open (see Open Questions).
+  - `capstone_v21.md` became v21-r7, with a header and §18 added and nothing else changed. An
+    [amendment record](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md) was written, the
+    handoff's 4.6 passages were edited (each marked *2026-09-30*) and Q&A entry 38 was filed.
+  - Committed, pushed and opened as PR #1 under the Owner's full task-scoped authority, with the
+    secret guard enabled in the cloud clone.
+  - Left unchanged, with reasons in the record: PUBLISH_RULES 1.1, historical records, the public
+    report and its generator, and claim guard W14.
+  - The Lockdown suspension ended at that return.
+- **CP-21 returned PASS and was landed, 2026-09-30.**
+  - **Verdict and landing.** Integration PASS at `260dcf9`; evidence tip `1d13f99`. The Owner
+    squash-landed it as `4e37cf7` and pushed `land/cp-21` and `evidence/cp-21`.
+  - **Result.** The research verdict under `cp21-adoption` is v4. The block-split finding shows
+    no demonstrated joint preference.
+  - **Cost.** About 3.5 active hours and 6.1 machine-hours. 22,260 main LightGBM fits, with no
+    cap exceeded; the reference and bootstrap passes are exhausted at 3/3.
+  - **The Lead's open points** are now in Open Questions: the standing-rule update and PRES-3.
+- **CP-21 ratified, authorized and issued, 2026-09-29.** The Owner: "מאשר את v21-r6 עם שני
+  שינויים, ומאשר ביצוע CP-21". D1 added the pooled attribution arm L-P; D2 added the per-fold
+  veto; D3, D5 and D6 as recommended (D6: amber `#B45309`, filled diamond); D4 recomputed (11
+  policies, 24,000/35,000 fits, 10,500 policy-days, 60 machine-hours, about 32 hours, hard 40).
+  The DagsHub restart item was closed on the Owner's confirmation. Q&A entry 37 was filed; five
+  documents were committed and pushed on the Owner's instruction; the brief was issued.
+- **CP-21 drafted; programme state regenerated, 2026-09-29.** The Owner chose 4.5 on top of v3,
+  published in either outcome ("לצורך שימוש בv3 והוספה עליו של פיצול LightGBM לשלושה בלוקים …").
+  That answered the 2026-09-24 question and superseded the recommendation to run 4.6 first, then
+  4.4V and 4.8, with 4.5 only as an arm of 4.8. v21-r6 §17, its amendment record, the publication plan and the handoff notes were drafted under
+  a task-scoped suspension. PRES-2's closure was verified at `05587ac`; the programme-plan pointer
+  was corrected from `7fdd8205…`. Omission review against `05587ac:progress.md`.
 - **PRES-2 closed, 2026-09-29.** Closed by the Owner's decision after his manual public check
   ("בדקתי ידנית בעצמי. אפשר לסגור הכל"; "בצע בעצמך מה שצריך"). The independent postdeploy review
   was waived for PRES-2 only, not a PASS. F01–F04 were closed publicly and `style.css` accepted.
@@ -548,26 +558,49 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
+- **Owner decision: move "same information, same opponent" from HG to v4 (asked 2026-09-30).**
+  CP-21's return and §17 make v4 the base for the next extensions. The standing rule still names
+  HG, so the 4.6 DDNN brief would otherwise face HG on HG's information. The recommendation is to
+  update it: later extensions receive v4's information and face v4 on identical rows, with v3
+  kept as a reference.
+- **Owner input for PRES-3 (open).** The explicit list of authorized external actions: MLflow
+  upload, landing and push, Space upload and the `style.css` deletion (publication plan §8). The
+  brief is issued once that list exists and CP-21's local reclamation is confirmed.
+- **In-browser retraining of the final product (asked 2026-09-30, open).** The Owner asked for a
+  one-click option to retrain the final product in the browser, so that anyone can check it.
+  v21-r7 §18.2 keeps DDNN compatible with that; the requirement itself belongs to the
+  final-product briefs under §16 (CP-17, CP-18). The consultation's recommendation, not yet
+  decided:
+  - the button retrains one delivery day's daily fit in the visitor's browser and compares it
+    with the artifact issued for that day, reporting whether the hyperparameter choices match;
+    it does not rerun the research;
+  - it is a delivery requirement for a LEAR/LightGBM or NumPy-DDNN final product, not a veto on
+    model choice;
+  - the public claim states a measured tolerance, and bitwise identity only where measured.
+    Running the official daily fit in the same WebAssembly runtime as the browser is an option
+    to measure;
+  - first step: a probe that trains one day of the candidate under Pyodide and measures time,
+    memory, download size and deviation. CP-21 measured v4's cold daily cycle at a median of
+    24.7 s and a maximum of 69.4 s on the M3 with four processes; browser timings are unmeasured.
 - **Final-product operating specification remains pending:** no final version designated and no
   daily system running. Future authorized work must fix numeric fit/issuance schedules, training
   windows, resources, percent-score formula/tolerance, source/outcome timing, business-use-case
   evaluation (if any), deployment/daily-demo design and Friday/Shabbat failure coverage. These
   implementation fields do not reopen the now-ratified product identity/order/daily-fit decision.
-
 - **PRES-2 advisories:** R1–R7 in the [Integration verdict](docs/track-b/evidence/pres-2/integration.md)
   and the [advisory log](docs/track-b/publication-advisory-log.md) remain recommendations for the
   next publication, not release failures. They include transition question wording, startup
   timing for the new public bundle, product evidence links, data wording, carried editorial points,
   byte-count logging and clean-checkout reproduction order. The targeted public runs recorded
   19.2–21.4 s to a visible forecast; these are observations, not a benchmark.
-
 - **PRES-1 remains closed under its landing record.** F6–F8 passed under the explicit Owner
   exception. Initial HF/DagsHub rate-limit failures and successful retries are recorded.
   Historical active-hour total and added-disk baseline remain unavailable, not retroactively
   certified compliant. Required tags preserve all evidence. New rules do not retroactively turn
   PRES-1 advisories into violations.
-- **CP-20's analysis and reference passes are exhausted.** Further CP-20 scoring would need a cap
-  decision. CP-21 reuses CP-20's saved vectors metric-only, under its own ratified caps.
+- **Scoring passes are exhausted for CP-20 and CP-21.** Further CP-20 scoring would need a cap
+  decision; CP-21's reference and bootstrap passes stand at 3/3, so any rescoring of CP-21 needs
+  a new Owner-approved allowance.
 - **The weather admission is conditional** on inferred NCAR field presence and reconstructed
   availability. 2019-01-01 is structurally missing.
 - **Product feasibility remains `NOT_DEMONSTRATED`** (CP-15). No policy is qualified.
@@ -591,7 +624,9 @@ Session Log.
   - `actions/checkout@v4` and `setup-uv@v6` target the deprecated Node 20, though they run on
     Node 24;
   - `AGENTS.md` § Interview-answer capture has the typo "agents Never hand-edit". Fixing it
-    requires a suspension.
+    requires a suspension;
+  - `test_40_publication_guard.py` errors in Claude Code cloud containers (see Platforms). The
+    fixture could also strip `GIT_CONFIG_COUNT`.
 - **Closed and not to be reopened:**
   - the CP-0 defect ledger (20 defects, closed 2026-09-14);
   - the ENTSO-E outage;
@@ -603,18 +638,21 @@ Session Log.
 
 ## 7. Notes for Future Sessions
 
-- **[CP-21 launch]** The Owner pastes the issued envelope into a new Code-tab session.
-  - Launch on Sunday–Wednesday, so that the expected compute ends before Friday 00:00.
-  - The Lead stops at a checkpoint for Friday–Saturday and resumes on the Owner's message.
-  - Commit Q&A entry 37 whenever convenient; it is outside CP-21.
-- **[After CP-21's return]** Run the templates §4 receipt checks. Propose LAND for any
-  Engineering-PASS outcome, then issue the publication block (PRES-3) from the
-  [publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md), pinned to
-  PUBLISH_RULES 1.1. It covers every surface: Pages, the Space, MLflow and the README.
-- **[4.7T]** If v4 is adopted, its frozen manifest carries both v3 and v4.
-- **[If v4 is adopted, at CP-21's landing]** Ask the Owner to update the standing decision
-  "same information, same opponent", which names HG, so that later extensions face v4 on v4's
-  information.
+- **[Next: PRES-3]** Issue the brief from the
+  [publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md), outcome A, pinned to
+  PUBLISH_RULES 1.1, once the Owner confirms CP-21's local reclamation and names the authorized
+  external actions. It covers every surface: Pages, the Space, MLflow and the README.
+  - The registry gets `v4 · <adopted change>`, dated at landing (2026-09-30), with predecessor
+    v3. CP-21's draft name is "v4 · three-block LightGBM added".
+  - Correct the public planned item "4.6 · DDNN / TabPFN" ("Does a distributional network, or a
+    tabular foundation model, beat v3?") in `scripts/build_pages.py` and the page it builds.
+    TabPFN was withdrawn on 2026-09-30 (v21-r7 §18).
+  - The independent check is mandatory; the PRES-2 waiver was one-time.
+- **[First 4.6 brief]** Cite v21-r7 §18. Fix the NumPy-only implementation rule, the PyTorch
+  reference-test tolerances and how those tests are installed and run so that they cannot be
+  skipped silently, and re-estimate 4.6's effort for DDNN alone. Its comparator and information
+  follow the Owner's decision on "same information, same opponent".
+- **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4.
 - **[Next Space deployment]** Delete remote files that are not in the reviewed bundle; the
   unused `style.css` has survived PRES-1 and PRES-2. Then verify that the served file set equals
   the bundle. Account for every surface: Pages, the Space, MLflow and the README (runbook §1a,
@@ -630,9 +668,11 @@ Session Log.
 - **[2026-10, from the 19th]** `ubuntu-latest` moves to Ubuntu 26. CI is pinned to Python 3.12;
   check the first run after the move.
 - **[Every research brief]** Apply the 2026-09-24 standing decisions:
-  - HG's information set, with HG itself as a reference on identical rows;
+  - HG's information set, with HG itself as a reference on identical rows, until the Owner
+    moves the rule to v4;
   - no data after 2026-04-07;
-  - a TabPFN run needs 4.6L's licence-use table first;
+  - DDNN is written in NumPy only, with PyTorch only as a correctness reference in tests on the
+    development machine; TabPFN is withdrawn (v21-r7 §18);
   - positive controls must survive the model's own transforms (see Lessons).
 - **[After publication / governance follow-up]** PRES-1 W16/template proposals remain in its
   preserved return for a separate appropriately authorized governance task; no locked-template
@@ -697,8 +737,8 @@ Each was paid for once. None should be relearned.
 
 - **Reviewed chains:**
   - `evidence/cp-0`, `evidence/cp-1`, `evidence/cp-2`, `evidence/cp-3`, `evidence/cp-3b`,
-    `evidence/cp-15` (including CP-10), `evidence/cp-16` and `evidence/cp-20`, with landings at
-    the matching `land/` tags;
+    `evidence/cp-15` (including CP-10), `evidence/cp-16`, `evidence/cp-20` and `evidence/cp-21`,
+    with landings at the matching `land/` tags;
   - `evidence/pres-1` / `land/pres-1` and `evidence/pres-2` / `land/pres-2` preserve the
     publication chains; both publications are closed and their branches reclaimed;
   - `archive/cp-0-attempt-1`, `archive/weather-admission-20260923` and
@@ -706,6 +746,12 @@ Each was paid for once. None should be relearned.
 
   Squash landings do not contain the candidate SHAs; only the tags preserve them. Verdicts are in
   `docs/track-b/evidence/<cp>/`.
+- **CP-21 evidence:** the [return](docs/track-b/evidence/cp-21/checkpoint-return.md),
+  [Integration verdict](docs/track-b/evidence/cp-21/integration.md),
+  [publication packet](docs/track-b/evidence/cp-21/publication-packet.md) and
+  [issued brief](docs/track-b/evidence/cp-21/issued-brief.md) (`813fb8a4…`), with the results
+  under `reports/block-challenger/`. Its identities: candidate `260dcf9`, evidence tip `1d13f99`,
+  landing `4e37cf7`.
 - **Publication evidence:**
   - PRES-1: [landing](docs/track-b/pres-1-landing-2026-09-29.md);
   - the [later independent public review](docs/track-b/publication-postdeploy-independent-review-2026-09-29.md):
@@ -718,7 +764,8 @@ Each was paid for once. None should be relearned.
     [Space deployment receipt](docs/track-b/pres-2-space-deployment-2026-09-29.md) and
     [closure record](docs/track-b/pres-2-closure-2026-09-29.md). PRES-2's identities: candidate
     `d7d57e3`, evidence tip `871c0e2`, landing `a543616`, Space revision `0c550e8`, bundle
-    `8007f0d2…`.
+    `8007f0d2…`. Twelve product subjects, the v1→v2 and v2→v3 transitions and the F01–F04
+    repairs shipped; the new independent postdeploy review was waived for PRES-2 only.
 - **Landing and receipt records:**
   - [CP-15 landing](docs/track-b/cp-15-landing.md);
   - [CP-16 landing](docs/track-b/cp-16-landing-2026-09-23.md);
@@ -726,6 +773,7 @@ Each was paid for once. None should be relearned.
     [PASS](docs/track-b/cp-16-pass-receipt-2026-09-23.md) receipts;
   - the [weather/content intake](docs/track-b/weather-content-intake-2026-09-23.md);
   - [CP-20 landing](docs/track-b/cp-20-landing-2026-09-24.md);
+  - the CP-21 receipt, recorded in this file's Session Log on 2026-09-30;
   - the [credential exposure record](docs/track-b/credential-exposure-2026-09-24.md).
 - **Earlier state narrative:**
   - `f704ac4:progress.md`;
@@ -738,7 +786,8 @@ Each was paid for once. None should be relearned.
   - `capstone_V6_8.md` (v1);
   - `capstone_M4_v2-plan.md`;
   - `capstone_v20.md` and its archived CP-10 copy;
-  - `capstone_v21.md` with its amendment sheets;
+  - `capstone_v21.md` with its amendment sheets, the latest being
+    [r6 → r7](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md);
   - the programme plan and its reviews in `docs/track-b/`;
   - the [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md).
 - **Defect ledger:** `docs/track-b/cp-0-defects.md`, closed 2026-09-14.
