@@ -189,11 +189,12 @@ BLOCKS: tuple[Block, ...] = (
            {r:derived.change.v4.S_MAE} {r:derived.change.v4.S_MAE|ci} and the interval score by
            {r:derived.change.v4.S_WIS} {r:derived.change.v4.S_WIS|ci}, each as a share of the comparator's score,
            with {s:level:95%} confidence intervals."""),
-    _block("v4.reading", "C109", """Both paired differences' {s:level:95%} confidence intervals lie below zero, no
-           test period's paired interval lies wholly above zero, and {g:v4.version} passed the six screening criteria set
-           before the experiments (the two accuracy targets, interval coverage in each test period, the August
-           {s:date:2022} peak against the benchmarks, each test period against the daily benchmarks, and complete
-           forecasts), so it met all four conditions of the rule set in advance.""", PAGE, README),
+    _block("v4.reading", "C109", """All four conditions of the rule set in advance held: both paired differences'
+           {s:level:95%} confidence intervals lie below zero; {g:v4.version} passed the six screening criteria set before
+           the experiments (the two accuracy targets, interval coverage in each test period, the August {s:date:2022}
+           peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts); the
+           evaluation was complete and valid; and no test period's paired interval lies wholly above zero.""",
+           PAGE, README),
     # README-only: the page shows these differences once, in the main chart and its table.
     _block("v4.outcome.head", "C107", """Difference in error score ({s:version:v4} − {s:version:v3}), with {s:level:95%}
            confidence intervals. Below zero favours {s:version:v4}.""", README),
@@ -213,7 +214,8 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp21.diagnostics.HGL.peak.MAE|p=1} against {r:cp21.diagnostics.HG.peak.MAE|p=1} EUR/MWh. Descriptive, on a
            small sample; no inference is drawn.""", PAGE, README),
     _block("v4.decision", "C127", """{g:v4.status} It met the adoption rule set before the experiment against
-           {g:v3.version}; the released model, {g:released.version}, did not change.""", PAGE, README),
+           {g:v3.version}; the released model, {g:released.version}, did not change. The three study arms were built
+           only to separate the change into steps, and were never candidates for adoption.""", PAGE, README),
     _block("v4.method.blend", "C104", """**The blend.** {g:v4.version}'s central forecast gives {g:v3.version}'s two LEAR
            forecasts, bit for bit, two thirds of the weight, and the mean of the raw and normalized three-block
            LightGBM forecasts one third. The weights were fixed before any result and never tuned. The hour-aware
@@ -762,7 +764,7 @@ def headline_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     form, so a term is never defined for a headline that does not use it."""
     entry = entry or G.current_generation()
     if entry.id in D.ADOPTION_RULES:
-        return ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.class")
+        return ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies", "terms.class")
     return ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.class")
 
 

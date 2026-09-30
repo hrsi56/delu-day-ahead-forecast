@@ -1,0 +1,65 @@
+{
+ "chart_artifacts_added": {
+  "cp21/HGL": [
+   "charts/overview.svg",
+   "charts/v4-arms.svg",
+   "charts/v4-c2a.svg",
+   "charts/v4-c2b.svg",
+   "charts/v4-c3.svg",
+   "charts/v4-c4.svg",
+   "charts/v4-c6.svg",
+   "charts/v4-ladder.svg"
+  ]
+ },
+ "check": "the final cp21 export against CP-21 draft export (research anchor v21-r6 \u00a717.9; mlflow_export.final_vs_draft)",
+ "differences": [],
+ "equal_apart_from_pending": true,
+ "filled": {
+  "cp21": [
+   "delu.evidence_ref",
+   "delu.model_code_sha",
+   "delu.original_completed_utc",
+   "delu.status",
+   "mlflow.note.content"
+  ],
+  "cp21/HGL": [
+   "delu.evidence_ref",
+   "delu.model_code_sha",
+   "delu.original_completed_utc",
+   "delu.status",
+   "mlflow.note.content"
+  ],
+  "cp21/L-N": [
+   "delu.evidence_ref",
+   "delu.model_code_sha",
+   "delu.original_completed_utc",
+   "delu.status",
+   "mlflow.note.content"
+  ],
+  "cp21/L-P": [
+   "delu.evidence_ref",
+   "delu.model_code_sha",
+   "delu.original_completed_utc",
+   "delu.status",
+   "mlflow.note.content"
+  ],
+  "cp21/L-R": [
+   "delu.evidence_ref",
+   "delu.model_code_sha",
+   "delu.original_completed_utc",
+   "delu.status",
+   "mlflow.note.content"
+  ]
+ },
+ "pending_fields": [
+  "checkpoint.evidence_sha",
+  "checkpoint.frozen_on",
+  "checkpoint.landing",
+  "evidence_ref",
+  "model_code_sha",
+  "original_completed_utc",
+  "statuses[].date",
+  "statuses[].source"
+ ],
+ "run_keys_equal": true
+}

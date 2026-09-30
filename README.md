@@ -12,6 +12,7 @@
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
 - **Adoption rule:** set on 2026-09-29; its four conditions are in the v4 chapter.
 - **Paired difference:** v4's error score minus v3's on identical hours, with its 95% confidence interval; below zero favours v4.
+- **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
 
 **Demo, v1 · released LightGBM:** [try the v1 demo](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
@@ -50,7 +51,7 @@ Difference in error score (v4 − v3), with 95% confidence intervals. Below zero
 
 **The rule**, set on 2026-09-29 and frozen in the protocol before any fit: v4 would be adopted only if, against v3, the interval score's paired difference had its upper 95% confidence limit below zero and the point-error score's at or below zero; it met the six original screening criteria; the evaluation was complete and valid; and no test period was decisively worse, that is, none had a paired interval wholly above zero. All four held.
 
-Both paired differences' 95% confidence intervals lie below zero, no test period's paired interval lies wholly above zero, and v4 passed the six screening criteria set before the experiments (the two accuracy targets, interval coverage in each test period, the August 2022 peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts), so it met all four conditions of the rule set in advance.
+All four conditions of the rule set in advance held: both paired differences' 95% confidence intervals lie below zero; v4 passed the six screening criteria set before the experiments (the two accuracy targets, interval coverage in each test period, the August 2022 peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts); the evaluation was complete and valid; and no test period's paired interval lies wholly above zero.
 
 **What this result does not establish:**
 
@@ -58,7 +59,7 @@ Both paired differences' 95% confidence intervals lie below zero, no test period
 - **A gain in the August 2022 peak.** Over those 17 days its point error is higher than v3's: MAE 50.1 against 47.5 EUR/MWh. Descriptive, on a small sample; no inference is drawn.
 - **Performance on new data.** This is development evidence after selection, not a test on new data.
 
-In September 2026, v4 was adopted in research. It met the adoption rule set before the experiment against v3; the released model, v1, did not change.
+In September 2026, v4 was adopted in research. It met the adoption rule set before the experiment against v3; the released model, v1, did not change. The three study arms were built only to separate the change into steps, and were never candidates for adoption.
 
 Evidence: [Engineering report, frozen 2026-09-30](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/report.md) · [Review verdict, frozen 2026-09-30](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/docs/track-b/evidence/cp-21/integration.md) · [Raw CSV rows, frozen 2026-09-30](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/uncertainty.csv#L72)
 
@@ -185,7 +186,6 @@ Evidence: [Engineering report, frozen 2026-09-16](https://github.com/hrsi56/delu
 
 - **Accuracy targets:** each error score at least 10% below the strongest benchmark's, set on 2026-09-15; a policy's distance from them is a point comparison.
 - **Daily LEAR:** the strongest benchmark, a linear model refitted daily.
-- **Policies:** the models and variants tested.
 
 The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set 2026-09-15). 12 policies were tested against them; v3 was the first to meet both; v4, pooled LightGBM with weather, three-block LightGBM and normalized three-block LightGBM met them too.
 

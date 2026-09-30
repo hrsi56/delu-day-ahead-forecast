@@ -215,11 +215,32 @@ def test_the_opening_pairs_research_v4_with_released_v1(page):
 
 
 def test_the_terms_follow_the_headline(page):
-    assert RC.headline_terms() == ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.class")
+    # "policy" is in the headline ("1 policy tested against the rule"), so it is defined beneath it (the fresh reader)
+    assert RC.headline_terms() == ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies",
+                                   "terms.class")
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     for key in RC.headline_terms():
         assert f'data-block="{key}"' in terms
     assert 'data-block="terms.benchmark"' not in terms
+
+
+#: A word the headline may use, and the term that defines it (PUBLISH_RULES §2: directly beneath the headline).
+HEADLINE_WORDS = (("polic", "terms.policies"), ("adoption rule", "terms.adoption_rule"),
+                  ("error score", "terms.error_scores"), ("v4 − v3", "terms.differences"))
+
+
+def _undefined(headline: str, terms: tuple[str, ...]) -> list[str]:
+    return [key for word, key in HEADLINE_WORDS if word in headline and key not in terms]
+
+
+def test_every_term_the_headline_uses_is_defined_beneath_it():
+    assert _undefined(_text(RC.headline()), RC.headline_terms()) == []
+
+
+def test_negative_control_a_headline_term_left_undefined_is_caught():
+    """The fresh reader's finding: "1 policy tested against the rule", with "policy" defined only further down."""
+    without = tuple(key for key in RC.headline_terms() if key != "terms.policies")
+    assert _undefined(_text(RC.headline()), without) == ["terms.policies"]
 
 
 # --------------------------------------------------------------------------- the comparison chart
