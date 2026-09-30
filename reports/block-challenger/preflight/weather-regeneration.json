@@ -1,0 +1,23 @@
+{
+ "committed_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0",
+ "feature_hours": 59446,
+ "keys_equal": true,
+ "rebuilt_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0",
+ "retained_grids": ".local/artifacts/cp-20/weather",
+ "runs": 2476,
+ "schema": "cp21-weather-regeneration-v1",
+ "seconds": 9.39267110824585,
+ "status_equal": true,
+ "structural_missing_days": [
+  {
+   "class": "structural_missing_pre_2019_run",
+   "delivery_day": "2019-01-01",
+   "folds": [
+    "fold_1"
+   ],
+   "run_00z": "2018-12-31"
+  }
+ ],
+ "values_bitwise_equal": true,
+ "written_utc": "2026-09-29T16:07:44Z"
+}

@@ -1,0 +1,356 @@
+{
+ "active_hours_basis": "from the Lead's first command 2026-09-29T15:51:31Z minus recorded pauses (the usage-limit idle gap)",
+ "active_hours_hard_stop": 40.0,
+ "active_hours_timebox": 32.0,
+ "active_hours_upper_bound": 2.039690917531649,
+ "blas_threads": 1,
+ "caps_vs_use": {
+  "active_seconds": {
+   "cap": 144000,
+   "used": 7342.887303113937
+  },
+  "additional_disk_bytes": {
+   "cap": 21474836480,
+   "used": 277359308
+  },
+  "analysis_passes": {
+   "cap": 3,
+   "used": 1
+  },
+  "component_attempts": {
+   "cap": 1600,
+   "used": 62
+  },
+  "download_bytes": {
+   "cap": 0,
+   "used": 0
+  },
+  "lgbm_fits": {
+   "cap": 35000,
+   "used": 23792
+  },
+  "machine_seconds": {
+   "cap": 216000,
+   "used": 17796.585949371278
+  },
+  "main_lgbm_fits": {
+   "cap": 24000,
+   "used": 22260
+  },
+  "policy_days": {
+   "cap": 10500,
+   "used": 3299
+  },
+  "primitive_fits": {
+   "cap": 192000,
+   "used": 7440
+  },
+  "reference_passes": {
+   "cap": 3,
+   "used": 1
+  },
+  "remote_writes": {
+   "cap": 0,
+   "used": 0
+  },
+  "rss_bytes": {
+   "cap": 10737418240,
+   "used": 3952017408
+  },
+  "workers": {
+   "cap": 4,
+   "used": 4
+  }
+ },
+ "cloud": 0,
+ "cpu_hours_observed": 3.3700053809777777,
+ "download_bytes": 0,
+ "events": [
+  {
+   "description": "Pre-ledger read-only orientation 2026-09-29 18:51-19:30 IDT: document reads, hash checks, JSON/parquet metadata inspection (a few short python reads, no fit, replay, scoring or download). Conservatively charged 180 machine-seconds.",
+   "epoch": 1790697764.962465,
+   "event": "pre_ledger_orientation_upper_bound",
+   "fits": 0,
+   "machine_seconds_charged": 180.0,
+   "policy_days": 0
+  },
+  {
+   "epoch": 1790698960.0732448,
+   "event": "synthetic_fixture_fits_recorded",
+   "fits": 87,
+   "note": "tests/cp21 synthetic fixture fits per full run (no research data); tracked, not capped",
+   "run": "tests-cp21 job 8"
+  },
+  {
+   "end_epoch": 1790709118.2541802,
+   "epoch": 1790709118.2541802,
+   "event": "pause_recorded",
+   "reason": "usage-limit idle gap: the Lead session was stopped by the usage limit and resumed on the Owner's message; no work, no job running",
+   "seconds": 9943.337744951248,
+   "start_epoch": 1790699174.9164352
+  },
+  {
+   "epoch": 1790709235.675377,
+   "event": "fits_start",
+   "folds": null,
+   "stage": "warmup",
+   "tasks": 564,
+   "workers": 4
+  },
+  {
+   "epoch": 1790710019.848053,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "warmup",
+   "tasks": 564
+  },
+  {
+   "epoch": 1790710110.142174,
+   "event": "fits_start",
+   "folds": null,
+   "stage": "evaluation",
+   "tasks": 1344,
+   "workers": 4
+  },
+  {
+   "epoch": 1790711860.793758,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "evaluation",
+   "tasks": 1344
+  }
+ ],
+ "external_cost_usd": 0,
+ "gpu": 0,
+ "jobs_by_name": {
+  "admission": {
+   "charged_machine_hours": 0.010929098252494846,
+   "cpu_seconds_observed": 37.7909024,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "benchmark": {
+   "charged_machine_hours": 0.08331462439783435,
+   "cpu_seconds_observed": 74.46524352,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "claims": {
+   "charged_machine_hours": 0.000301155856383654,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "comparison": {
+   "charged_machine_hours": 0.010400638356384459,
+   "cpu_seconds_observed": 35.868428096,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "controls": {
+   "charged_machine_hours": 0.5453033703711117,
+   "cpu_seconds_observed": 513.05801728,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "daily-cycle": {
+   "charged_machine_hours": 1.0060320935177798,
+   "cpu_seconds_observed": 374.94606459999994,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "determinism": {
+   "charged_machine_hours": 0.11343688666555357,
+   "cpu_seconds_observed": 122.914348032,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "draft-export": {
+   "charged_machine_hours": 0.0011649846299971816,
+   "cpu_seconds_observed": 2.010271656,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "e1": {
+   "charged_machine_hours": 0.035883987581101895,
+   "cpu_seconds_observed": 127.28483071999999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "export-check": {
+   "charged_machine_hours": 0.0008550776850057042,
+   "cpu_seconds_observed": 1.73062512,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "export-diff": {
+   "charged_machine_hours": 0.0005814940394419763,
+   "cpu_seconds_observed": 0.877133952,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "finalise": {
+   "charged_machine_hours": 0.0005821686688998145,
+   "cpu_seconds_observed": 0.8505172320000001,
+   "exit_codes": {
+    "0": 1,
+    "None": 1
+   },
+   "jobs": 2
+  },
+  "fit-cost": {
+   "charged_machine_hours": 0.1883151090508262,
+   "cpu_seconds_observed": 672.3560363839999,
+   "exit_codes": {
+    "-15": 1,
+    "0": 1
+   },
+   "jobs": 2
+  },
+  "fits-evaluation": {
+   "charged_machine_hours": 1.947069985647815,
+   "cpu_seconds_observed": 6859.609743861,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "fits-warmup": {
+   "charged_machine_hours": 0.8729183329633411,
+   "cpu_seconds_observed": 3054.3382802449996,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "hg-parity": {
+   "charged_machine_hours": 0.03318607012750969,
+   "cpu_seconds_observed": 117.317383168,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "mlflow-local": {
+   "charged_machine_hours": 0.0014281525808392973,
+   "cpu_seconds_observed": 2.351581184,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "packet": {
+   "charged_machine_hours": 0.0006058658336082266,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "protocol": {
+   "charged_machine_hours": 0.0005889365972123212,
+   "cpu_seconds_observed": 0.8986222300000001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "report": {
+   "charged_machine_hours": 0.0003034791552797995,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "score": {
+   "charged_machine_hours": 0.002267745393328369,
+   "cpu_seconds_observed": 6.969700592000001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "tests-cp21": {
+   "charged_machine_hours": 0.02644608018528541,
+   "cpu_seconds_observed": 91.19504223999999,
+   "exit_codes": {
+    "0": 3
+   },
+   "jobs": 3
+  },
+  "verify-inputs": {
+   "charged_machine_hours": 0.005369701030010927,
+   "cpu_seconds_observed": 17.43526576,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-weather": {
+   "charged_machine_hours": 0.006211058460531704,
+   "cpu_seconds_observed": 17.751333248,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  }
+ },
+ "jobs_total": 33,
+ "ledger": ".local/artifacts/cp-21/ledger/budget.json (cumulative, never reset)",
+ "machine_hours": 4.943496097047577,
+ "machine_hours_cap": 60.0,
+ "pauses": [
+  [
+   1790699174.9164352,
+   1790709118.2541802
+  ]
+ ],
+ "peak_added_disk_gib": 0.2583109848201275,
+ "peak_aggregate_rss_gib": 3.68060302734375,
+ "remote_writes": 0,
+ "schema": "cp21-resources-v1",
+ "tracked": {
+  "component_attempts_control": 12,
+  "component_attempts_daily_cycle": 50,
+  "lasso_final_fits": 1488,
+  "lasso_inner_fits": 5952,
+  "lgbm_final_fits": 4824,
+  "lgbm_fits_benchmark": 152,
+  "lgbm_fits_control": 630,
+  "lgbm_fits_daily_cycle": 750,
+  "lgbm_fits_main": 22260,
+  "lgbm_inner_fits": 18968,
+  "policy_days_admission": 752,
+  "policy_days_control": 84,
+  "policy_days_daily_cycle": 25,
+  "policy_days_evaluation": 1800,
+  "policy_days_hg_parity": 638,
+  "synthetic_fixture_fits": 261
+ },
+ "written_utc": "2026-09-29T20:39:37Z"
+}

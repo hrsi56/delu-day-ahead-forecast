@@ -203,10 +203,15 @@ METRIC_UNITS: dict[str, str] = {
 }
 
 
+UNIT_RATIO_CHANGE = "change as a share of the comparator's score"
+
+
 def metric_unit(key: str) -> str:
     """The unit of any exported metric key, including the per-base contrast families."""
     if key in METRIC_UNITS:
         return METRIC_UNITS[key]
+    if key.startswith(("ratio_s_mae_vs_", "ratio_s_wis_vs_")):
+        return UNIT_RATIO_CHANGE
     if key.startswith(("delta_s_mae_vs_", "delta_s_wis_vs_")):
         return UNIT_NORM_DIFF
     if key.startswith(("delta_fold_mae_eur_vs_", "delta_fold_wis_eur_vs_")):
@@ -387,9 +392,10 @@ def comparability() -> dict[str, dict]:
     return groups
 
 
-def datasets(checkpoint: str, policy: str, group: dict) -> list[dict]:
-    """`log_input` payloads: digests of the population, the market snapshot and (HG only) the
-    weather features. Nothing but names, digests and committed source paths."""
+def datasets(checkpoint: str, policy: str, group: dict, *, weather: bool | None = None) -> list[dict]:
+    """`log_input` payloads: digests of the population, the market snapshot and (HG, and CP-21's
+    weather-using arms via `weather=True`) the weather features. Nothing but names, digests and
+    committed source paths."""
     snapshot = json.loads((ROOT / "reports/cp15/protocol.json").read_text())["input_sha256"]["data/snapshot.parquet"]
     out = [
         {"name": group["population_id"], "digest": group["keys_sha256"][:36], "context": "evaluation",
@@ -398,7 +404,7 @@ def datasets(checkpoint: str, policy: str, group: dict) -> list[dict]:
         {"name": "market-snapshot", "digest": snapshot[:36], "context": "training",
          "source": "data/snapshot.parquet", "sha256": snapshot, "profile": "committed SMARD/ENTSO-E snapshot"},
     ]
-    if policy == "HG":
+    if (policy == "HG") if weather is None else weather:
         recorded = json.loads((ROOT / "reports/weather-ablation/extraction-summary.json").read_text())
         weather = recorded["files_sha256"]["weather-features.parquet"]
         if _file_sha256("reports/weather-ablation/weather-features.parquet") != weather:
@@ -828,6 +834,299 @@ def export_at(ref: str) -> dict[str, dict]:
     return files
 
 
+# --------------------------------------------------------------------------- CP-21 draft (capstone v21-r6 §17.9)
+#
+# CP-21 registers nothing public: its registry statuses are dated at landing, and registering a
+# generation or branch requires its chapter or card. So its export is a *draft*, built by this
+# code path from CP-21's committed evidence and the publication packet's draft registry entries
+# (reports/block-challenger/draft-registry.json), and kept outside the published set. Identities
+# that exist only at landing are explicit pending fields. The publication block regenerates the
+# final export, which must equal this draft apart from those fields.
+
+DRAFT_DIR = ROOT / "reports" / "block-challenger" / "mlflow-export-draft"
+DRAFT_REGISTRY = "reports/block-challenger/draft-registry.json"
+CP21 = {
+    "metrics": "reports/block-challenger/metrics.csv",
+    "uncertainty": "reports/block-challenger/uncertainty.csv",
+    "criteria": "reports/block-challenger/criteria.csv",
+    "diagnostics": "reports/block-challenger/diagnostics.csv",
+    "protocol": "reports/block-challenger/protocol.json",
+}
+#: Each CP-21 run's contrasts: (candidate, base code, metric slug).
+DRAFT_CONTRASTS = {
+    "cp21/HGL": (("HGL", "HG", "v3"),),
+    "cp21/L-P": (("L-P", "HG", "v3"), ("L-P", "B3", "b3")),
+    "cp21/L-R": (("L-R", "L-P", "l_p"), ("L-R", "HG", "v3")),
+    "cp21/L-N": (("L-N", "L-R", "l_r"), ("L-N", "HG", "v3")),
+}
+
+
+def draft_registry() -> tuple[dict, dict[str, G.Entry], G.Checkpoint]:
+    """The packet's draft entries as registry `Entry` objects, and CP-21's draft checkpoint."""
+    spec = json.loads((ROOT / DRAFT_REGISTRY).read_text())
+
+    def entry(raw: dict) -> G.Entry:
+        fields = dict(raw)
+        fields["codes"] = tuple(G.Code(**code) for code in raw["codes"])
+        fields["statuses"] = tuple(G.StatusEvent(**event) for event in raw["statuses"])
+        for key in ("rules", "sources", "run_keys"):
+            fields[key] = tuple(raw[key])
+        return G.Entry(**fields)
+
+    entries = {raw["id"]: entry(raw) for raw in spec["entries"]}
+    checkpoint = G.Checkpoint(**{**spec["checkpoint"], "children": tuple(spec["checkpoint"]["children"])})
+    return spec, entries, checkpoint
+
+
+def _draft_entry_for(run_key: str, entries: dict[str, G.Entry]) -> G.Entry:
+    found = [entry for entry in entries.values() if run_key in entry.run_keys]
+    if len(found) != 1:
+        raise G.RegistryError(f"{run_key}: {len(found)} draft entries own it")
+    return found[0]
+
+
+def draft_run_name(run_key: str, entries: dict[str, G.Entry], checkpoint: G.Checkpoint) -> str:
+    """`registry.mlflow_run_name`'s rule, applied to the draft entries."""
+    if "/" not in run_key:
+        return f"{entries[checkpoint.owner].name} ({checkpoint.code})"
+    entry = _draft_entry_for(run_key, entries)
+    code = run_key.split("/", 1)[1]
+    note = next((c.note for c in entry.codes if c.code == code and c.experiment == checkpoint.code), "")
+    if entry.code_in(checkpoint.code) != code:
+        raise G.RegistryError(f"{run_key}: {entry.id} has no code {code} in {checkpoint.code}")
+    return f"{entry.name} ({code}{', ' + note if note else ''})"
+
+
+def _draft_records() -> dict[str, R.EvidenceRecord]:
+    """CP-21's typed records, built by the evidence layer's own builders from CP-21's committed
+    rows, plus one ratio record per equal-fold contrast (§17.5)."""
+    windows = R._fold_windows(CP21["metrics"])
+    built = (R._metric_records("cp21", "CP-21", CP21["metrics"])
+             + R._uncertainty_records("cp21", "CP-21", CP21["uncertainty"], windows)
+             + R._criteria_records("cp21", "CP-21", CP21["criteria"], windows)
+             + R._diagnostic_records("cp21", "CP-21", CP21["diagnostics"]))
+    for line, row in R._rows(CP21["uncertainty"]):
+        if row["scope"] != "equal_fold":
+            continue
+        built.append(R.EvidenceRecord(
+            record_id=f"cp21.ratio.{row['candidate']}-{row['baseline']}.{row['metric']}", checkpoint="CP-21",
+            generation=None, policy_code=row["candidate"], source_path=CP21["uncertainty"],
+            selector=(("scope", "equal_fold"), ("candidate", row["candidate"]), ("baseline", row["baseline"]),
+                      ("metric", row["metric"])),
+            field="ratio", metric=f"ratio_S_{row['metric']}", unit=UNIT_RATIO_CHANGE, aggregation="equal_fold_ratio",
+            population_id="common-10747h", comparator=row["baseline"], evidence_class="development_post_selection",
+            window=windows["all"], display_precision=4, raw=row["ratio"], source_line=line,
+            ci_low_raw=row["ratio_ci_lower"], ci_high_raw=row["ratio_ci_upper"]))
+    out: dict[str, R.EvidenceRecord] = {}
+    for record in built:
+        if record.record_id in out:
+            raise R.EvidenceError(f"duplicate draft record id {record.record_id}")
+        out[record.record_id] = record
+    return out
+
+
+class DraftBuilder(Builder):
+    """`Builder`, reading CP-21's draft records instead of the published evidence layer."""
+
+    def __init__(self, records: dict[str, R.EvidenceRecord]) -> None:
+        super().__init__()
+        self.records = records
+
+    def single(self, key: str, record_id: str, which: str = "value") -> None:
+        self._add(key, _point(self.records[record_id], 0, which), f"{record_id}#{which}")
+
+    def per_fold(self, key: str, pattern: str, which: str = "value") -> None:
+        for index, fold in enumerate(FOLDS, start=1):
+            record_id = pattern.format(fold=fold)
+            self._add(key, _point(self.records[record_id], index, which), f"{record_id}#{which}")
+
+    def daily(self, path: str, policy: str) -> None:
+        points = []
+        for _line, row in R._rows(path):
+            if row["policy"] != policy or row["scope"] != "daily" or int(float(row["n_hours"])) == 0 or row["MAE"] == "":
+                continue
+            points.append((row["delivery_date"], row["MAE"]))
+        points.sort()
+        for index, (day, raw) in enumerate(points):
+            self.metrics.setdefault("daily_mae_eur", []).append({"step": index, "timestamp": _ms(day), "value": float(raw)})
+        self.provenance["daily_mae_eur"] = [f"{path} (policy {policy}, {len(points)} daily rows)"]
+
+
+def _draft_scores(builder: DraftBuilder, run_key: str, policy: str) -> None:
+    equal, pooled = f"cp21.metrics.{policy}.equal_fold", f"cp21.metrics.{policy}.pooled"
+    fold, peak = f"cp21.metrics.{policy}.{{fold}}", f"cp21.diagnostics.{policy}.peak"
+    builder.single("s_mae", f"{equal}.S_MAE")
+    builder.single("s_wis", f"{equal}.S_WIS")
+    for key, column in (("pooled_mae_eur", "MAE"), ("pooled_wis_eur", "WIS"), ("pooled_rmse_eur", "RMSE"),
+                        ("pooled_bias_eur", "bias"), ("pooled_coverage95", "coverage95")):
+        builder.single(key, f"{pooled}.{column}")
+    for key, column in (("fold_mae_eur", "MAE"), ("fold_wis_eur", "WIS"), ("fold_coverage50", "coverage50"),
+                        ("fold_coverage80", "coverage80"), ("fold_coverage95", "coverage95"),
+                        ("fold_mean_width95_eur", "mean_width95")):
+        builder.per_fold(key, f"{fold}.{column}")
+    for key, column in (("peak_mae_eur", "MAE"), ("peak_wis_eur", "WIS"), ("peak_coverage95", "coverage95"),
+                        ("peak_hits95", "hit_count95")):
+        builder.single(key, f"{peak}.{column}")
+    builder.daily(CP21["diagnostics"], policy)
+    for candidate, base, slug in DRAFT_CONTRASTS[run_key]:
+        prefix = f"cp21.uncertainty.{candidate}-{base}"
+        for metric, score in (("MAE", "mae"), ("WIS", "wis")):
+            equal_record = f"{prefix}.equal_fold.{metric}"
+            builder.single(f"delta_s_{score}_vs_{slug}", equal_record)
+            builder.single(f"delta_s_{score}_vs_{slug}_ci_low", equal_record, "ci_low")
+            builder.single(f"delta_s_{score}_vs_{slug}_ci_high", equal_record, "ci_high")
+            ratio = f"cp21.ratio.{candidate}-{base}.{metric}"
+            builder.single(f"ratio_s_{score}_vs_{slug}", ratio)
+            builder.single(f"ratio_s_{score}_vs_{slug}_ci_low", ratio, "ci_low")
+            builder.single(f"ratio_s_{score}_vs_{slug}_ci_high", ratio, "ci_high")
+            fold_pattern = f"{prefix}.{{fold}}.{metric}"
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}", fold_pattern)
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}_ci_low", fold_pattern, "ci_low")
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}_ci_high", fold_pattern, "ci_high")
+
+
+def _draft_blobs(provenance: dict[str, list[str]], records: dict[str, R.EvidenceRecord]) -> dict[str, str]:
+    """Each source file's Git blob SHA, computed from its committed bytes (no tag exists yet)."""
+    paths = set()
+    for sources in provenance.values():
+        for source in sources:
+            paths.add(source.split(" (policy ")[0] if " (policy " in source else records[source.split("#")[0]].source_path)
+    return {path: R.blob_sha(R.source_bytes(path)) for path in sorted(paths)}
+
+
+def _draft_status_text(entry: G.Entry, pending: str) -> str:
+    return f"{entry.status.status} {entry.status.date}" if entry.status.date != pending else f"{entry.status.status} ({pending})"
+
+
+def _draft_description(entry: G.Entry, note: str, pending: str, *, code: str | None = None, role: str | None = None) -> str:
+    parts = [f"{entry.name}: {entry.subtitle}."]
+    parts.append(G.status_sentence(entry) if entry.status.date != pending
+                 else f"Its status, {entry.status.status}, is dated at landing ({pending}).")
+    if code is not None:
+        parts.append(f"Code {code}; role {role}.")
+    parts.append(note)
+    return " ".join(parts)
+
+
+def _draft_params(protocol: dict, policy: str | None) -> dict[str, str]:
+    cp15 = json.loads((ROOT / "reports/cp15/protocol.json").read_text())
+    out = {"anchor_version": "capstone_v21.md v21-r6 §17", "protocol_sha256": _file_sha256(CP21["protocol"])}
+    if policy is None:
+        return out
+    out["quantile_set"] = ",".join(str(level) for level in cp15["quantiles"]["levels"])
+    out["seed"] = str(protocol["lgbm"]["seed"])
+    out["weather_features"] = ",".join(protocol["features"]["weather"]) + " plus missing indicators"
+    out["history_window"] = protocol["history"]["window"]
+    out["interval_method"] = protocol["h_layer"]["recipe"]
+    out["policy_definition"] = protocol["arms"][policy]
+    if policy in ("L-P", "L-R", "L-N", "HGL"):
+        out["lightgbm"] = "CP-15 B3/A2 recipe, " + protocol["lgbm"]["changed"]
+        out["capacity_grid"] = json.dumps(protocol["capacity_grid"], separators=(",", ":"))
+        out["capacity_selection"] = protocol["selection"]["inner_split"] + "; " + protocol["selection"]["tie"]
+    if policy in ("L-R", "L-N", "HGL"):
+        out["blocks"] = json.dumps(protocol["blocks"], separators=(",", ":"))
+    if policy == "L-N":
+        out["target_transform"] = cp15["normalization"]["target"]
+    if policy == "HGL":
+        out["blend"] = protocol["blend"]["float_expression"]
+    return {key: value[:500] for key, value in out.items()}
+
+
+def build_draft(name: str = "cp21") -> dict:
+    """CP-21's draft export: one file, the checkpoint's parent and its four new policies."""
+    if name != "cp21":
+        raise SystemExit("the only draft export is cp21")
+    spec, entries, checkpoint = draft_registry()
+    pending = spec["pending"]
+    protocol = json.loads((ROOT / CP21["protocol"]).read_text())
+    records = _draft_records()
+    group = comparability()["common"]
+    note = spec["note"]
+    runs = []
+    owner = entries[checkpoint.owner]
+    parent_tags = {
+        "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
+        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _draft_status_text(owner, pending),
+        "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
+        "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+        "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+        "delu.backfilled": "false", "delu.original_completed_utc": pending,
+        "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
+        "mlflow.note.content": _draft_description(owner, note, pending),
+    }
+    parent = {"run_key": checkpoint.run_key, "parent": None,
+              "run_name": draft_run_name(checkpoint.run_key, entries, checkpoint),
+              "params": _draft_params(protocol, None), "tags": parent_tags, "metrics": {}, "metric_provenance": {},
+              "metric_units": {}, "inputs": [], "comparability": dict(group)}
+    parent["artifacts"] = [
+        _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
+        _artifact("README.md", _draft_readme(parent["run_name"], checkpoint, spec, {CP21["protocol"]: R.blob_sha(R.source_bytes(CP21["protocol"]))})),
+    ]
+    runs.append(parent)
+    for code in checkpoint.children:
+        run_key = f"{checkpoint.run_key}/{code}"
+        entry = _draft_entry_for(run_key, entries)
+        builder = DraftBuilder(records)
+        _draft_scores(builder, run_key, code)
+        blobs = _draft_blobs(builder.provenance, records)
+        run_name = draft_run_name(run_key, entries, checkpoint)
+        comparator = G.get(entry.comparator).name if entry.comparator in {e.id for e in G.entries()} else entries[entry.comparator].name
+        tags = {
+            "delu.run_key": run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": entry.id,
+            "delu.kind": entry.kind, "delu.generation": entry.version or "none", "delu.policy_code": code,
+            "delu.public_name": entry.name, "delu.status": _draft_status_text(entry, pending), "delu.comparator": comparator,
+            "delu.role": "candidate", "delu.adopted": G.adopted_flag(entry),
+            "delu.evidence_class": "development_post_selection",
+            "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+            "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false", "delu.original_completed_utc": pending,
+            "mlflow.note.content": _draft_description(entry, note, pending, code=code, role="candidate"),
+        }
+        inputs = datasets("cp21", code, group, weather=True)
+        tags["delu.datasets"] = _canonical({dataset["name"]: dataset["sha256"] for dataset in inputs})
+        run = {"run_key": run_key, "parent": checkpoint.run_key, "run_name": run_name,
+               "params": _draft_params(protocol, code), "tags": tags, "metrics": builder.metrics,
+               "metric_provenance": builder.provenance,
+               "metric_units": {key: metric_unit(key) for key in builder.metrics}, "inputs": inputs}
+        summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
+        run["artifacts"] = [_artifact("summary.json", summary + "\n"),
+                            _artifact("README.md", _draft_readme(run_name, checkpoint, spec, blobs))]
+        runs.append(run)
+    return {"experiment": EXPERIMENT, "checkpoint": checkpoint.code, "status": "draft",
+            "pending_fields": spec["pending_fields"], "draft_registry": DRAFT_REGISTRY, "runs": runs}
+
+
+def _draft_readme(run_name: str, checkpoint: G.Checkpoint, spec: dict, blobs: dict[str, str]) -> str:
+    tag = checkpoint.evidence_tag
+    lines = [f"# {run_name}", "",
+             f"Tracked by CP-21 from its committed evidence (draft export; evidence tag `{tag}` and its commit are "
+             f"{spec['pending']}). Development evidence; nothing here is a live or confirmatory result.", "",
+             f"- Report: {GITHUB_URL}/blob/{tag}/{checkpoint.report}",
+             f"- Independent Integration review: {GITHUB_URL}/blob/{tag}/{checkpoint.verdict}",
+             f"- Landing record: {checkpoint.landing}", f"- Presentation: {PAGES_URL}", "",
+             "Source rows at the evidence tag:", ""]
+    lines += [f"- {GITHUB_URL}/blob/{tag}/{path} (blob {blob})" for path, blob in blobs.items()]
+    return "\n".join(lines) + "\n"
+
+
+def draft_problems(draft: dict) -> list[str]:
+    """The draft matches its draft entries: the run keys the draft checkpoint expects, each once,
+    each parent CP-21's, each name the rule applied to its entry. Never a count."""
+    _, entries, checkpoint = draft_registry()
+    keys = [run["run_key"] for run in draft["runs"]]
+    expected = [checkpoint.run_key] + [f"{checkpoint.run_key}/{code}" for code in checkpoint.children]
+    problems = []
+    if sorted(keys) != sorted(expected) or len(keys) != len(set(keys)):
+        problems.append(f"run keys differ from the draft checkpoint: {keys}")
+    for run in draft["runs"]:
+        if run["run_name"] != draft_run_name(run["run_key"], entries, checkpoint):
+            problems.append(f"{run['run_key']}: run name is not the draft entry's")
+        want = None if "/" not in run["run_key"] else checkpoint.run_key
+        if run["parent"] != want:
+            problems.append(f"{run['run_key']}: parent {run['parent']!r}")
+    return problems
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -839,7 +1138,11 @@ def main() -> int:
     parser.add_argument("--to", metavar="REF", default=None,
                         help="with --diff-against: compare with the export committed at REF instead of a fresh one")
     parser.add_argument("--out", type=Path, default=None, help="with --diff-against: write the report here")
+    parser.add_argument("--draft", metavar="NAME", default=None,
+                        help="build a checkpoint's draft export (cp21) under reports/block-challenger/mlflow-export-draft/")
     args = parser.parse_args()
+    if args.draft:
+        return draft_main(args.draft, check=args.check)
     files = build_export()
     if args.diff_against:
         report = diff_exports(export_at(args.diff_against), export_at(args.to) if args.to else files)
@@ -875,6 +1178,31 @@ def main() -> int:
     for name, text in rendered.items():
         (EXPORT_DIR / name).write_text(text)
     print(f"wrote {len(rendered)} files to {EXPORT_DIR.relative_to(ROOT)}: {counts}")
+    return 0
+
+
+def draft_main(name: str, *, check: bool) -> int:
+    """Write (or, with --check, verify) the committed draft export. The published set is untouched."""
+    draft = build_draft(name)
+    problems = draft_problems(draft)
+    if problems:
+        raise SystemExit("the draft export does not match its draft entries: " + "; ".join(problems))
+    findings = outbound_findings(outbound_strings({name: draft}), local_secrets())
+    if findings:
+        for finding in dict.fromkeys(findings):
+            print(f"mlflow-export: BLOCKED - {finding}", file=sys.stderr)
+        return 1
+    text = json.dumps(draft, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
+    path = DRAFT_DIR / f"{name}.json"
+    if check:
+        if not path.exists() or path.read_text() != text:
+            print(f"the committed draft export is stale: {path.relative_to(ROOT)}")
+            return 1
+        print("the committed draft export is current")
+        return 0
+    DRAFT_DIR.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+    print(f"wrote {path.relative_to(ROOT)}: {len(draft['runs'])} runs (draft; pending fields {sorted(draft['pending_fields'])})")
     return 0
 
 

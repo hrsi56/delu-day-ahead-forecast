@@ -1,0 +1,56 @@
+{
+ "all_read_back_equal": true,
+ "draft_export_sha256": "0f23d52dec3c3d4a413cfe15d959f8dd134d706d240d24f4d5889e0847ef5603",
+ "experiment": "delu-generations",
+ "network": "none; telemetry disabled; no upload",
+ "runs": {
+  "cp21": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "2a745103d5d9475bb426d1d3031c4501",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp21/HGL": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "4efea7cf89134833a4da812b25e3d84a",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp21/L-N": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "194dec419b664bbda2b3c09050c89ba5",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp21/L-P": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "d864902440104876ac25d9966a083541",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp21/L-R": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "619a0532c81842c48e01646e2d147f3b",
+   "run_name_equal": true,
+   "tags_equal": true
+  }
+ },
+ "schema": "cp21-mlflow-local-v1",
+ "tracking": "local SQLite store .local/mlruns/cp21 (ignored)",
+ "written_utc": "2026-09-29T20:02:47Z"
+}
