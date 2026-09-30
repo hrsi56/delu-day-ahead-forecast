@@ -198,17 +198,17 @@ PUBLISH_RULES §1.3; v21-r8 §§16, 19 not triggered).
 ## 7. Checks run
 
 Records under `reports/presentation/release-checks/` unless a path says otherwise. First failures
-and superseded runs are kept beside their retries. A check run on `<pre_candidate_sha>` covered a
+and superseded runs are kept beside their retries. A check run on `4b64fd229ddf0dbd4cd524bbfe58f8540a27ca11` covered a
 tree that differs from the candidate only in the check records that commit adds.
 
 | Check (runbook §9; brief "Reviews and evidence") | Record | Result |
 |---|---|---|
-| pytest, Python 3.13 | `pres-3-pytest-3.13.txt` | `<pytest_result>` |
-| A clean Python 3.12 run of every step of `.github/workflows/tests.yml`, in a fresh detached worktree | `pres-3-ci312.txt` | `<ci312_result>` |
+| pytest, Python 3.13 | `pres-3-pytest-3.13.txt` | 1,280 passed, 7 skipped (Python 3.13.15, at `4b64fd2`) |
+| A clean Python 3.12 run of every step of `.github/workflows/tests.yml`, in a fresh detached worktree | `pres-3-ci312.txt` | every step passed on Python 3.12.14 at `4b64fd2`: `uv sync --locked`, the payload build, pytest (1,280 passed, 7 skipped), the CQR fixture, cross-surface agreement, the WASM equivalence (15 passed); the worktree clean before and after. The publication guard runs only on `main` in CI |
 | `make verify` | — | PASS: every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces |
 | `make lint-publication` | — | PASS: page, README and templates 0 findings |
 | `make publication-guard` | — | BLOCKED, by design: "reports/cp3/pages_build.json is a non-final build record (final: false)"; it passes only on the `--final` build |
-| Determinism: `rebuild_presentation.py`, then `git status` | `pres-3-determinism.txt` | `<determinism_result>` |
+| Determinism: `rebuild_presentation.py`, then `git status` | `pres-3-determinism.txt` | `git status` empty after the rebuild and after `make wasm`; the bundle reproduces `9028a118…` (at `4b64fd2`) |
 | Links (`check_links.py`) | `pres-3-links.json` | no failed destination; the gated DagsHub UI URLs redirect to login, as controls |
 | The §10 release checks and the placements, Chrome 154.0.8037.58 and WebKit 26.6, 1440 × 900, 768 × 1024, 390 × 844, 360 × 780, 320 × 640 and the emulated iPhone 393 × 659 | `pres-3-local-release.json` (attempt 4, the candidate's page) | passed: the headline block ends at 800.6 / 801.3 px (desktop) and 628.6 / 628.7 px (phone); the finding at 1,702.6 / 1,703.3 px (A2 limit 1,744) and 2,400.5 px (limit 2,420); chart text at least 12.21 px (320 px) and 14.58 px (390 px); no chart overlap or clipping; no console error, failed request, HTTP error or resource after the document; accessibility trees, keyboard, touch, contrast, 200% zoom and 320 px reflow in both engines |
 | — its earlier attempts | `pres-3-local-release-attempt-1.json` (failed: the finding at 1,808.6 / 2,541.5 px, beyond A2; chart text overlapping in the comparison and the v4 arms charts); `-attempt-2.json` (passed, `7dd234b`); `-attempt-3.json` (passed, `d9c4438`, the fresh reader's screens) | superseded by attempt 4; a run on the page between attempts 3 and 4 was stopped and left no record |
@@ -231,8 +231,8 @@ the iPhone is Playwright's emulated device in WebKit.
 
 | Surface | Reviewed output | Identity | Now public |
 |---|---|---|---|
-| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>` (the return and `integration.md`); at the candidate, before the index, 1,906,270 bytes, `b2b5b2b6…a84dc` | 1,684,252 bytes, `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d` (PRES-2), read 2026-09-30T22:25:17Z |
-| README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>`; at the candidate `15cd2afb…975bb` | at `main` `17f354e`: `3a16a70a…` |
+| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>` (the return and `integration.md`); at the candidate, before the index, 1,906,528 bytes, `90909512…a47bd` | 1,684,252 bytes, `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d` (PRES-2), read 2026-09-30T22:25:17Z |
+| README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>`; at the candidate `09e7dc66…c10c91` | at `main` `17f354e`: `3a16a70a…` |
 | Static Space bundle | `dist/space-wasm/`, from `make wasm` at the landed tree | `bundle_sha256` `9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585`, 805 files, 44,164,910 bytes; every file with its size, Git blob SHA-1 and SHA-256 in `reports/presentation/release-checks/pres-3-space-bundle.json`; an exact copy at `.local/artifacts/pres-3/space-wasm-9028a118/` | revision `0c550e863711e19abbb35219cf64d45dfb39c888`: PRES-2's bundle `8007f0d2…` plus `style.css` (`pres-3-space-check.json`) |
 | Space change | the one Hub commit of §8.4 | adds none; changes the nine `public/boosters/*.txt.gz.b64` (their gzip header's OS byte only, A-PRES3-2; the decoded boosters are identical and the equivalence gate passes); **deletes exactly `style.css`** | — |
 | Static Space card | `space-wasm/README.md` (the bundle's `README.md`) | `c92a2666d76255b24d8e0fb159f97bedcbee0a7a948fb6afeac4b02089bb9a67`, unchanged | the same |
@@ -501,7 +501,7 @@ history rewrite or MLflow change is part of a recovery; a rollback is its own Ow
 | §5 architecture; A4 | yes, unchanged order | The section order is PRES-2's; the product documentation is byte-identical (`test_45::test_every_historical_section_is_byte_identical_to_the_published_page`) |
 | §5.1 twelve product subjects | unchanged | The released model does not change (§5b) |
 | §5.1a, A8 | no | No final-product designation (brief) |
-| §5.2 chapter grammar; 2.0 MB budget | yes | `build_pages.py::slot_problems` refuses a chapter missing a slot; page 1,906,270 bytes at the candidate (1.91 MB), under 2.0 MB; compaction waits for v5 (§14) |
+| §5.2 chapter grammar; 2.0 MB budget | yes | `build_pages.py::slot_problems` refuses a chapter missing a slot; page 1,906,528 bytes at the candidate (1.91 MB), under 2.0 MB; compaction waits for v5 (§14) |
 | §6 charts, discovery; A5 | yes | Discovery: 33 routes in both engines at both placement sizes, by mouse, keyboard and deep link (`pres-3-local-release.json` `discovery`); smallest chart text 12.21 px at 320 px and 14.58 px at 390 px; no overlaps or clipping; shape and direct labels beside colour |
 | §7.1 product contract | yes, unchanged | The demo still runs v1: `pres-3-local-demo.json` (cold start 10.2–12.8 s, controls respond, 0 console errors, 0 failed requests), `pres-3-local-demo-a11y.json` (named controls, no target under 44 px, keyboard), `pres-3-local-states.json` (loading, failure, retry); the bitwise equivalence gate passes (`tests/test_22_wasm_equivalence.py`) |
 | §7.2 live, §7.3 final-product Space (A7, A9) | no | Not triggered (brief; §1.3) |

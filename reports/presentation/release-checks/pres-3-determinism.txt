@@ -1,0 +1,20 @@
+# Determinism (runbook §9): rebuild every presentation surface, then make wasm, at the pre-candidate
+HEAD 4b64fd229ddf0dbd4cd524bbfe58f8540a27ca11; status before: []; 2026-09-30T23:13:57Z
+README research block: ok (0.6 s)
+README CP-3 section: ok (0.4 s)
+MLflow export: ok (2.2 s)
+static page: ok (8.1 s)
+cross-surface agreement and zero-fetch checks: ok (0.7 s)
+rebuilt every presentation surface in 12.1 s
+status after rebuild: []
+page sha256 90909512c17d7c54fdff81f4531638b6db12c00b570cd58c5f34e906491a47bd
+
+HEAD 4b64fd229ddf0dbd4cd524bbfe58f8540a27ca11; 2026-09-30T23:14:19Z
+wrote reports/cp3b/equivalence.json
+uv run python scripts/build_wasm_space.py
+wrote space-wasm/README.md
+assembled dist/space-wasm: 805 files, 44,164,910 bytes uncompressed
+removed from the export root (not part of the app): ['CLAUDE.md']
+wrote reports/cp3b/space_wasm_bundle.json
+bundle_sha256 9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585
+status after make wasm: []
