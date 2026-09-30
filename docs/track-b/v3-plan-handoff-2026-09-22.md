@@ -33,6 +33,19 @@ remain estimates, not budgets. The notes added below for 4.5 are consistency edi
 The 4.6 text below was edited for consistency on that date; each edited passage is marked
 *2026-09-30*. Where §18 and the text below differ, §18 governs. Nothing here opens 4.6.
 
+**2026-09-30 final-product Space update.** The Owner asked for a plan that turns the Hugging Face
+Space into the final product's daily tool, including an in-browser "Train it yourself" action.
+
+- **Research side:** [v21-r8 §19](../../capstone_v21.md) anchors what the Space computes and
+  claims.
+- **Presentation side:** [PUBLISH_RULES 1.2 §7.3 (A9)](../PUBLISH_RULES.md) anchors how it
+  presents and is accepted.
+- **Implementation:** the [final-product Space plan](final-product-space-plan-2026-09-30.md)
+  splits the work by authority.
+
+These bind [4.9O](#work-4-9o) and [4.9](#work-4-9) at CP-17 and CP-18 (a note is added there). Nothing here opens
+either checkpoint.
+
 **2026-09-22 · Proposed plan, not a ratified anchor or execution brief.**
 CP-15 has Engineering PASS and `product_feasibility = NOT_DEMONSTRATED`.
 No successor model is promoted or frozen. `capstone_v21.md` remains controlling;
@@ -780,6 +793,15 @@ and distinct training/issuance/freshness states. Use PUBLISH_RULES 1.1 §§5/7.2
 require §4.E evidence. A selected but not yet operational model is shown as pending, not live.
 Calendar coverage includes every delivery day; preserve the Owner's no-manual-work
 Friday/Shabbat boundary through a separately authorized unattended operational plan.
+
+*2026-09-30:* the primary demo is the Hugging Face Space, under research v21-r8 §19 and
+PUBLISH_RULES 1.2 A9.
+
+- **CP-17** runs §19.3's browser feasibility probe, then freezes §19.5's definitions: the
+  percentage tolerance, the rolling windows, the reliability and PIT definitions, the
+  recomputation tolerance and τ_eq.
+- **CP-18** delivers the dated daily bundle to the Space and builds A9's views. Its checklist is
+  §7 of the [final-product Space plan](final-product-space-plan-2026-09-30.md).
 
 <a id="work-4-9"></a>
 

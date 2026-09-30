@@ -1,3 +1,28 @@
+# Capstone v21-r8 — final-product Space: what it computes and claims (Owner-authorized)
+
+**Owner-authorized amendment, 2026-09-30.** The Owner asked for a plan that makes the Hugging
+Face Space the final product's useful, informative tool: trained and updated daily, with a
+"Train it yourself" button, anchored by authority and implemented once a final model exists.
+New §19 anchors the research side: what the Space computes, what it may claim, and the
+in-browser retraining requirement. The presentation side is PUBLISH_RULES 1.2 §7.3 (A9); the
+implementation plan is `docs/track-b/final-product-space-plan-2026-09-30.md`. §19 opens no
+checkpoint, designates no model, and grants no publication or scheduling authority. Every
+existing line is unchanged: the headers below and §§1–18 remain byte for byte. §19 refines §16.3
+and §18.2's deferral of in-browser retraining, and it governs only within that scope.
+
+Previous v21-r7 is preserved at `c9dc364:capstone_v21.md`, SHA-256
+`e6a4e301d5db080c6427f925f51e2cf69367c42225b292c78050117003aa7b0c`.
+
+**Authority.** On 2026-09-30 the Owner granted task-wide authority for a plan anchored "split by
+authority"; the exact words are quoted in
+[the amendment record](docs/track-b/capstone_v21-r7-to-v21-r8-amendments.md). The grant acts as a
+task-scoped Lockdown suspension. It covers this revision, PUBLISH_RULES 1.2, their records and
+directly necessary consistency edits to the programme handoff and `progress.md`, and it ends at
+this task's terminal return. The agent drafted this text under that delegated authority; this
+is not a claim that the Owner reviewed every sentence.
+
+---
+
 # Capstone v21-r7 — distribution challenger: DDNN only, written in NumPy (Owner-authorized)
 
 **Owner-authorized amendment, 2026-09-30.** The Owner withdrew TabPFN from the programme and
@@ -1774,3 +1799,117 @@ through a recorded protocol change, never silently after a failure.
   presentation plan. They describe what was planned when they were written.
 - The public report. Its planned item "4.6 · DDNN / TabPFN" is corrected by the next authorized
   publication block, not by this amendment.
+
+
+## 19. Final-product Space — what it computes and claims (v21-r8)
+
+**Owner amendment, 2026-09-30.** This section governs what the final product's Hugging Face
+Space computes, what it may claim, and the in-browser retraining requirement. It binds the CP-17
+and CP-18 briefs at the final-product rollout of §16. It is not a checkpoint bar and executes
+nothing now. Presentation and acceptance are PUBLISH_RULES 1.2 §7.3 (A9). The implementation
+plan is `docs/track-b/final-product-space-plan-2026-09-30.md`.
+
+### 19.1 Scope
+
+The Space is the product's interactive tool, under §16.1's single identity for final version,
+product, primary demo and daily policy. It serves only the designated final product; v1's frozen
+demo remains a labelled history route. The Space computes only from the records the daily
+pipeline publishes to it (§19.4). At runtime it fetches nothing from data sources, registries or
+tracking services.
+
+### 19.2 One code path
+
+The code that performs the daily fit, issuance and scoring is the code the Space runs in the
+browser for §19.3 and §19.5. No second implementation stands in for the product. A component
+that cannot run in the browser runtime is reported at CP-17 under §19.3's exception route; it is
+never replaced silently.
+
+### 19.3 "Train it yourself" is required
+
+The Owner requires an in-browser retraining action for the final product.
+
+1. **What it does.** In the visitor's browser, it retrains the daily fit of one issued delivery
+   day from that fit's shipped training window, with the same code, seed and selection rules.
+   It then predicts that day's quantiles.
+2. **What it reports.**
+   - whether every data-driven selection matched the issued artifact;
+   - the largest absolute difference per emitted quantile, in EUR/MWh;
+   - one status that states only what was measured: identical bit for bit, within the frozen
+     tolerance τ_eq, or different.
+3. **What it never does.** It never replaces, rescores or relabels an issued forecast.
+4. **The probe.** Before the CP-17 freeze, a feasibility probe on development data measures, for
+   the designated policy:
+   - browser time and memory;
+   - payload sizes;
+   - the deviation from the native fit;
+   - selection agreement.
+
+   CP-17 freezes τ_eq and the reference runtime from that measurement.
+5. **If the policy cannot meet this requirement** within the measured limits, CP-17 returns a
+   blocker. Only an explicit Owner exception, with its public wording, lets the product ship
+   without the action. The requirement is never dropped silently, and never met by retraining a
+   different implementation.
+
+### 19.4 Daily delivery
+
+Each delivery day, the authorized pipeline publishes a dated bundle to the Space: the issued
+forecasts, the issuing artifact and its lineage, the reconciled outcomes and the evaluation
+records. The bundle's manifest lists every served file with its SHA-256. The Space shows the
+served identity and its freshness. A forecast recomputed by a newer fit is never shown or scored
+as issued. Delivery needs the separate operational and publication authority of §16.2 and
+programme 4.9; this section grants none.
+
+### 19.5 Definitions frozen at CP-17, before the fresh-data test
+
+CP-17's freeze fixes the following before 4.7T:
+
+- **The percentage measure beside MAE:** its formula; the tolerance, which the Owner sets; the
+  denominator; eligible and partial-day hours; and zero, negative and missing prices.
+  - The proposed form is the share of scored hours within ±τ EUR/MWh.
+  - A figure relative to a benchmark is improvement, not correctness.
+- **Coverage and width** per nominal band, and the rolling window over scored delivery days.
+- **The reliability diagram:** for each emitted quantile level, the observed share of outcomes
+  at or below it, with counts.
+- **The quantile-band PIT:** the share of outcomes between adjacent emitted quantiles, against
+  each band's nominal share.
+- **The recomputation check.** The Space recomputes its evaluation metrics from the shipped
+  issued forecasts and outcomes, and compares them with the committed records.
+  - Counts match exactly; real values match within a frozen tolerance.
+  - A mismatch is shown, and blocks that day's publication as a product failure.
+
+Nothing in this list is chosen after seeing evaluation outcomes.
+
+### 19.6 Evaluation windows
+
+Three windows stay separate and are never pooled:
+
+- development, static, from evidence;
+- the one-shot fresh-data test (4.7T);
+- the prospective record from the run start, "in progress" until CP-19.
+
+v1's holdout stays v1 history.
+
+### 19.7 Attribution and importance
+
+Methods are fixed by component class:
+
+- **a blend:** each component's weight times its forecast, an exact decomposition;
+- **linear components:** coefficient times the centered, standardized input;
+- **tree components:** per-prediction contributions (TreeSHAP), and gain read from the fitted
+  model;
+- **a neural component:** a method frozen at CP-17.
+
+All are presented as attribution within one fitted artifact, never as causality or incremental
+value.
+
+### 19.8 Data displays
+
+Data and feature views compute from the shipped series. Before the final test, no research
+display uses data after 2026-04-07 (standing decision of 2026-09-24). From CP-18, the views run
+through the latest published day, labelled with its last date.
+
+### 19.9 What this section does not do
+
+It designates no model, runs no fit, schedules nothing, and grants no publication, credential or
+`AGENTS.md` authority. Unattended daily publication needs the Owner's explicit authority before
+CP-18's launch. CP-17 and CP-18 still need their complete bars and briefs.

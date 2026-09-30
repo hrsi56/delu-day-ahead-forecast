@@ -10,7 +10,9 @@ checks and filed Q&A entries 39–42. It ran no fit, data retrieval, deployment 
 Its commit, push and the squash merge of PR #1 follow the Owner's explicit, task-scoped
 instructions of 2026-09-30. The file was updated in place the same day, through PR #2, for the
 Owner's amendment of "same information, same opponent" and the retirement of the session
-branch.*
+branch. It was updated in place again the same day, through a third pull request, for the
+final-product Space plan (v21-r8 §19, PUBLISH_RULES 1.2) and the Owner's completion of CP-21's
+reclamation and the session-branch retirement.*
 
 ---
 
@@ -68,44 +70,57 @@ limitations remain in the [landing and closure records and evidence tags](#where
 - **Entry conditions.**
   - Met: CP-21 PASS with its packet and draft export.
   - Met: the squash landing and both tags, verified on origin.
-  - Unconfirmed: the reclamation of `gauntlet/cp-21` (see Setup State).
+  - Met: the reclamation of `gauntlet/cp-21` and its `lead` worktree, recorded in the Owner's
+    [CP-21 landing record](docs/track-b/cp-21-landing-2026-09-30.md) (`6f4575b`).
 - **Owner inputs before the brief** (plan §8): the explicit list of authorized external actions,
   namely the MLflow upload, landing and push, the Space upload and the `style.css` deletion.
   Visual choices stay the Owner's. The independent check is mandatory; the PRES-2 waiver was
   one-time.
-- **Pinned rules.** PUBLISH_RULES 1.1 and its incorporated sources, and the runbook and packet
-  template at their hashes on the day of issue (unchanged since 2026-09-29). CP-21's content is
-  governed by v21-r6 §17, whose bytes are at `evidence/cp-21`; the live research anchor is v21-r7.
+- **Pinned rules.** PUBLISH_RULES 1.2 and its incorporated sources, and the runbook and packet
+  template at their hashes on the day of issue (unchanged since 2026-09-29). 1.2's A9 is not
+  triggered for this research publication, so PRES-3's obligations equal 1.1's. CP-21's content
+  is governed by v21-r6 §17, whose bytes are at `evidence/cp-21`; the live research anchor is
+  v21-r8.
 - **Then.** The 4.6 DDNN brief follows. Under the standing rule, amended 2026-09-30, DDNN gets
   v4's information and faces v4 on identical rows. CP-17–CP-19 stay reserved for the final
-  model; §16 defines the final product.
+  model. §16 defines the final product, and §19 with PUBLISH_RULES A9 defines its Space; the
+  [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md) carries their
+  checklist into the CP-17 and CP-18 briefs.
 
 **Repository**, as verified from the cloud clone on 2026-09-30:
 
-- `main` = `origin/main`: CP-21's squash landing `4e37cf7` (`land/cp-21`), then
-  [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1)'s
-  squash landing `c9dc364` (v21-r7, its records, Q&A 38–42 and this regeneration), then this
-  file's in-place update through PR #2. `invariant-tests` passed on `main` at `c9dc364` (run 74).
+- `main` = `origin/main`, in order:
+  - CP-21's squash landing `4e37cf7` (`land/cp-21`);
+  - [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1)'s
+    squash landing `c9dc364`: v21-r7, its records, Q&A 38–42 and the regeneration;
+    `invariant-tests` passed on it (run 74);
+  - PR #2's `632d0e6`, the standing-rule update;
+  - the Owner's CP-21 landing record `6f4575b`;
+  - then this update, landing the final-product Space plan with v21-r8 and PUBLISH_RULES 1.2.
+
   `evidence/cp-21` = `1d13f99` is on origin, and so is every other `land/*` and `evidence/*` tag
   listed in [Where the history lives](#where-the-history-lives).
-- **Session branch** `claude/browser-model-retraining-options-r16r4p`, opened by the cloud session
-  for v21-r7, is being retired on the Owner's instruction.
-  - Its commits `f686c51`, `4892d57` and `e84d467`, cited in this file, are not on `main` after
-    the squash. `archive/v21-r7-session-20260930` = `e84d467` keeps them reachable.
-  - The cloud session could not push the tag (HTTP 403: its Git access is limited to its own
-    branch). The Owner pushes the tag and only then deletes the branch (see Setup State).
-- **Local state on the Owner's machine is not visible from a cloud session:**
-  - the `gauntlet/cp-21` branch and its `lead` worktree;
-  - `.local/artifacts/cp-21/`, 62 MB: the fit cache, HGL state snapshots, the ledger and the
-    review scratch;
-  - `.local/mlruns/cp21/`;
-  - the CP-20 material under `.local/` ([artifact map](docs/track-b/local-artifacts.md)).
+- **The first cloud session branch is retired.**
+  - `archive/v21-r7-session-20260930` = `e84d467` is on origin, verified 2026-09-30. It keeps
+    reachable the commits `f686c51`, `4892d57` and `e84d467` that this file cites.
+  - The Owner then deleted the branch.
+  - The same branch name, `claude/browser-model-retraining-options-r16r4p`, was recreated from
+    `main` for the Space-plan task. It carries only that task's commit, and is left for the
+    Owner's disposition after its pull request merges.
+- **CP-21's local reclamation is done,** per the Owner's
+  [landing record](docs/track-b/cp-21-landing-2026-09-30.md):
+  - `gauntlet/cp-21` deleted and the `lead` worktree removed;
+  - `.local/artifacts/cp-21/` (62 MB) and `.local/mlruns/cp21/` retained as local recovery
+    material, with the CP-20 material under `.local/`
+    ([artifact map](docs/track-b/local-artifacts.md)).
+
+  A cloud session cannot see that local state.
 
 **Public surfaces — distinguish a Git push from a verified deployment:**
 
 | Surface | Last evidenced state / pending action |
 |---|---|
-| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` after PR #1 (`c9dc364`, CI green) and PR #2; `land/cp-21` and `evidence/cp-21` on origin, read 2026-09-30. The session-branch tag and deletion are pending the Owner, as above. |
+| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` after PR #1 (`c9dc364`, CI green), PR #2, the Owner's `6f4575b` and the Space-plan pull request; `land/cp-21`, `evidence/cp-21` and `archive/v21-r7-session-20260930` on origin, read 2026-09-30. |
 | [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | PRES-2 page: HTTP 200, SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, re-read anonymously 2026-09-29. It still shows v3 as the research headline and TabPFN in the 4.6 planned item; PRES-3 updates both. |
 | [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | Revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING, re-read anonymously 2026-09-29. It runs v1. Bundle `8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e`: 805 files, 44,164,910 bytes, preserved at `.local/artifacts/pres-2/space-wasm-8007f0d2/`. Plus the unused `style.css`, making 806 files; the next upload removes it. |
 | [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Unchanged 23-run, six-route export verified during PRES-2; no post-push recheck claimed. CP-21's `cp21` runs are published only through PRES-3. |
@@ -118,46 +133,38 @@ decision remains a boundary, not an active workstream.
 
 ## 2. Setup State
 
-- **ACTION-REQUIRED (Owner; unconfirmed): confirm CP-21's local reclamation.** On the Owner's
-  machine, `gauntlet/cp-21` deleted after `evidence/cp-21` was pushed, and
-  `.local/worktrees/cp-21/lead` removed. This is PRES-3's entry condition 2, and a cloud session
-  cannot check it.
-- **ACTION-REQUIRED (Owner): tag, then delete, the cloud session branch.** In this order, because
-  this file cites `f686c51` and `4892d57`, which live only on that branch (AGENTS.md § Branch and
-  ref lifecycle, tag before delete):
-
-  ```text
-  git fetch origin
-  git tag archive/v21-r7-session-20260930 e84d46720b255159a37d35b074f6736f24725aca
-  git push origin archive/v21-r7-session-20260930
-  git push origin --delete claude/browser-model-retraining-options-r16r4p
-  git fetch --prune
-  ```
-
-  The cloud session's tag push was refused (HTTP 403), so both steps are the Owner's.
-- **ACTION-REQUIRED (Owner): pull `main` on the Owner's machine.** The local checkout is behind
-  `origin/main` by PR #1 and PR #2. Any new clone must enable the secret guard again.
+- **ACTION-REQUIRED (Owner): pull `main` on the Owner's machine after the Space-plan pull request
+  merges.** Then its session branch can be deleted if no further work needs it. No live
+  document cites a commit that exists only on it, so no tag is needed first. Any new clone must
+  enable the secret guard again.
 
 ---
 
 ## 3. Strategic Anchors
 
-- **Publication anchor:** [PUBLISH_RULES](docs/PUBLISH_RULES.md) **1.1**, Owner-ratified
-  2026-09-29; SHA-256 `91eea445434718a163f03bcfd82e1db275a9d98311e76eb6cd1365f3707584f3`.
-  A1–A6 continue; strengthened A7 and A8 govern future final-product rollout/daily operation.
+- **Publication anchor:** [PUBLISH_RULES](docs/PUBLISH_RULES.md) **1.2**, Owner-authorized
+  2026-09-30; SHA-256 `a43ac02021b7de468e02db30b61ec73f86cdafa69df845cf084ab196528bb15b`.
+  A1–A6 continue; strengthened A7 and A8 govern future final-product rollout/daily operation,
+  and 1.2's conditional A9 (§7.3) governs the final product's Space. Revision 1.1
+  (`91eea445…`) is preserved at `6f4575b:docs/PUBLISH_RULES.md`; its obligations equal 1.2's
+  wherever A9 is not triggered.
   Historical PRES-2 remains governed by 1.0 (`03f106060d9a646ce0c0c986d2f5fb6549929f2ed7270f0c8678fbfd2293b3a3`),
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Ratified research authority:** `capstone_v21.md` **v21-r7**, Owner-authorized 2026-09-30,
-  SHA-256 `e6a4e301d5db080c6427f925f51e2cf69367c42225b292c78050117003aa7b0c`.
+- **Ratified research authority:** `capstone_v21.md` **v21-r8**, Owner-authorized 2026-09-30,
+  SHA-256 `81d6127197cabf344f56c2cf25ef5fc8f9fdb2860e249c294177471d3130c182`.
+  - §19 (r8) governs the final product's Space: what it computes and claims, and the required
+    in-browser "Train it yourself" action. It binds CP-17 and CP-18 and opens no checkpoint.
   - §18 (r7) governs programme item 4.6: TabPFN is withdrawn, and DDNN is written from the
     start in NumPy only, with PyTorch only as a correctness reference in tests on the
     development machine. It opens no checkpoint.
   - §17 governed CP-21, which is landed; its evidence binds the v21-r6 bytes.
   - §16, unchanged from r5, remains the final-product authority.
-  - Historical §§1–17 are byte-for-byte intact; r7 adds only a header and §18.
+  - Historical §§1–18 are byte-for-byte intact; r8 adds only a header and §19.
   - CP-20 is closed under r4, and its §15.7 authority stays spent.
+  - [Amendment record r7 → r8](docs/track-b/capstone_v21-r7-to-v21-r8-amendments.md), also
+    recording PUBLISH_RULES 1.1 → 1.2, SHA-256 `2a2d12d3a9845d63f1e41eefdb0fa86e6e9be05db18c1c2877be8212e20854e5`.
   - [Amendment record r6 → r7](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md), SHA-256
     `86edc1d8f4e93d62abc513b5f14e5c11bd985643bb60a79d5538f4235c075112`.
   - [Amendment record r5 → r6](docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md), SHA-256
@@ -166,6 +173,7 @@ decision remains a boundary, not an active workstream.
 
   | Authority | Governed | Where the exact bytes are |
   |---|---|---|
+  | v21-r7 | Defined §18; governed no checkpoint | `c9dc364:capstone_v21.md` (`e6a4e301…`) |
   | v21-r6 | CP-21 | `evidence/cp-21:capstone_v21.md` (`ee402c47…`, verified 2026-09-30), also `270a0a0` |
   | v21-r5 | Defined §16; governed no checkpoint | `81ab3be:capstone_v21.md` (`a4e178c3…`) |
   | v21-r4 | CP-20 | `evidence/pres-2:capstone_v21.md` (`150bd53f…`) |
@@ -177,12 +185,14 @@ decision remains a boundary, not an active workstream.
   Once the live anchor advances, closed checkpoints are reproduced from their `evidence/` tags.
 - **Programme plan:** the [v3 plan handoff](docs/track-b/v3-plan-handoff-2026-09-22.md), with
   work items 4.0–4.10 and the decision register D1–D6.
-  - Current identity, after v21-r7's 4.6 consistency edits: `cf498c44…`.
-  - Earlier identities: `ddc6bd3a…` after the CP-21 consistency notes, and `0fe3a69e…` after
-    v21-r5's consistency edit (`81ab3be`). The `7fdd8205…` recorded here until 2026-09-29
-    predated `81ab3be`.
+  - Current identity, after v21-r8's Space notes: `b250121b…`.
+  - Earlier identities: `cf498c44…` after v21-r7's 4.6 consistency edits, `ddc6bd3a…` after
+    the CP-21 consistency notes, and `0fe3a69e…` after v21-r5's consistency edit (`81ab3be`).
+    The `7fdd8205…` recorded here until 2026-09-29 predated `81ab3be`.
   - The [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md)
     (`c0ac0d26…`) plans PRES-3.
+  - The [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md)
+    (`e2160b82…`) plans the Space for CP-17 and CP-18, split by authority.
 - **Target:** hourly day-ahead prices in the DE-LU (Germany–Luxembourg) bidding zone, under the
   inherited forecast-origin and eligibility contract. The aim is better point forecasts and
   honest, useful uncertainty.
@@ -239,6 +249,23 @@ decision remains a boundary, not an active workstream.
 
 These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
 Session Log.
+
+**Added 2026-09-30 (Owner — final-product Space; v21-r8 §19, PUBLISH_RULES 1.2 A9):**
+
+- **The Space becomes the final product's daily tool.**
+  - It serves the designated final product only, from a dated daily bundle.
+  - It shows today's issued forecast against published prices, tomorrow's forecast with its
+    intervals, and measured coverage with width.
+  - It offers views for the forecast, validation, reliability, explainability, features, data
+    and limitations, and keeps v1 as a labelled history route.
+- **"Train it yourself" is required.** It retrains one issued day's fit in the browser and
+  reports only a measured equality with the issued artifact. If the designated model cannot
+  meet it, CP-17 returns a blocker, and only an explicit Owner exception with public wording
+  waives it.
+- **Honest confidence.** The nominal level is always shown against measured coverage and width.
+  The percentage measure is "within ±τ EUR/MWh", with τ set by the Owner at CP-17 before 4.7T.
+  No "X% correct" and no confidence percentage.
+- **Attribution, not causality,** in the feature and explainability views.
 
 **Added 2026-09-30 (Owner — v21-r7):**
 
@@ -310,9 +337,10 @@ Session Log.
 - **MLflow is the visible cross-version tool.** v2/v3 runs are backfilled, and future checkpoints
   are tracked in MLflow. `delu-cp2` (v1's record) stays untouched. The design is in the
   [presentation and tracking plan](docs/track-b/presentation-and-tracking-plan-2026-09-24.md).
-- **Publication anchor (updated by Owner authority, 2026-09-29).** New publication briefs follow
-  [PUBLISH_RULES 1.1](docs/PUBLISH_RULES.md), including its explicit amendments and triggers;
-  the already-issued PRES-2 task retains 1.0 and its original evidence contract.
+- **Publication anchor (updated by Owner authority, 2026-09-29 and 2026-09-30).** New publication
+  briefs follow [PUBLISH_RULES 1.2](docs/PUBLISH_RULES.md), including its explicit amendments and
+  triggers. 1.2 adds only the conditional A9 for the final-product Space. The already-issued
+  PRES-2 task retains 1.0 and its original evidence contract.
   [Publication Standard v1](docs/track-b/publication-standard-v1.md), ratified 2026-09-28, remains
   the incorporated baseline and the historical PRES-1 acceptance contract.
   - The headline is defined before results, and every percentage is a derived record.
@@ -423,7 +451,10 @@ Session Log.
 - **Reasoning capture is active** (`AGENTS.md` § Interview-answer capture).
   - Only the Orchestrator files entries, through `scripts/qa_append.py`; the Lead names triggers
     in its return.
-  - `שאלות תשובות.docx` has 42 entries.
+  - `שאלות תשובות.docx` has 43 entries.
+    - Entry 43 (2026-09-30) covers how the final product shows "how sure" honestly: nominal level
+      against measured coverage and width, a percentage measure defined in advance, in-browser
+      recomputation and "Train it yourself".
     - Entries 39–42 (2026-09-30) file CP-21's four named triggers: thread determinism, the blend
       rather than the block split, the single interval-layer path, and the interrupted review.
     - Entry 38 covers why DDNN is written from scratch in NumPy rather than PyTorch, and why
@@ -444,6 +475,36 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Final-product Space plan anchored, 2026-09-30.** The Owner asked for a plan, anchored "split
+  by authority", that makes the Space the final product's useful, informative tool. The Owner
+  granted task-wide authority ("לצורך המשימה הזו במלואה יש לך אישור לבצע כל מה שאתה צריך קומיט
+  מרג׳ פוש הוספת קבצים ועריכה") and instructed that only contracts, rules and anchors be used,
+  not the current Space or site.
+  - **Produced:**
+    - the [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md);
+    - research v21-r8 §19, on what the Space computes and claims;
+    - PUBLISH_RULES 1.2 §7.3 (A9), on presentation and acceptance;
+    - the [amendment record](docs/track-b/capstone_v21-r7-to-v21-r8-amendments.md);
+    - handoff notes in 4.9O;
+    - Q&A entry 43;
+    - this update.
+  - **Left to the Owner:**
+    - the percentage tolerance τ and the equality tolerance τ_eq, at CP-17;
+    - unattended daily publication, an `AGENTS.md` decision at CP-18;
+    - where the daily job runs;
+    - visual approval;
+    - the Headline Arena reply.
+  - **Headline Arena.** The Owner forwarded a message from Headline Arena inviting daily
+    forecast submissions. The plan recommends declining for now: no DE-LU power target, an
+    external automated publication, and no substitute for CP-19. A suggested reply is in plan
+    §9.
+  - **Also recorded:**
+    - the Owner's CP-21 landing record (`6f4575b`) closes the reclamation item;
+    - `archive/v21-r7-session-20260930` = `e84d467` was verified on origin, and the first
+      session branch was deleted by the Owner;
+    - the session branch name was recreated from `main` for this task.
+  - **Omission review:** removed are the two resolved Setup items (CP-21 reclamation; tag and
+    delete) and the in-browser retraining open question, now decided; nothing else was dropped.
 - **Standing rule moved to v4; session branch retired, 2026-09-30.** The Owner: "בצע. בנוסף,
   מאשר להעביר את הכלל "אותו מידע, אותו יריב" מ-HG ל-v4."
   - **Rule.** "Same information, same opponent" now names v4, as v21-r6 §17.6 foresaw at
@@ -598,22 +659,26 @@ Session Log.
 - **Owner input for PRES-3 (open).** The explicit list of authorized external actions: MLflow
   upload, landing and push, Space upload and the `style.css` deletion (publication plan §8). The
   brief is issued once that list exists and CP-21's local reclamation is confirmed.
-- **In-browser retraining of the final product (asked 2026-09-30, open).** The Owner asked for a
-  one-click option to retrain the final product in the browser, so that anyone can check it.
-  v21-r7 §18.2 keeps DDNN compatible with that; the requirement itself belongs to the
-  final-product briefs under §16 (CP-17, CP-18). The consultation's recommendation, not yet
-  decided:
-  - the button retrains one delivery day's daily fit in the visitor's browser and compares it
-    with the artifact issued for that day, reporting whether the hyperparameter choices match;
-    it does not rerun the research;
-  - it is a delivery requirement for a LEAR/LightGBM or NumPy-DDNN final product, not a veto on
-    model choice;
-  - the public claim states a measured tolerance, and bitwise identity only where measured.
-    Running the official daily fit in the same WebAssembly runtime as the browser is an option
-    to measure;
-  - first step: a probe that trains one day of the candidate under Pyodide and measures time,
-    memory, download size and deviation. CP-21 measured v4's cold daily cycle at a median of
-    24.7 s and a maximum of 69.4 s on the M3 with four processes; browser timings are unmeasured.
+- **Final-product Space: Owner decisions still open** (plan §5.1). The in-browser retraining
+  requirement was decided on 2026-09-30 and anchored in v21-r8 §19.3. It is a delivery
+  requirement with an exception route, not a veto on model choice. What remains:
+  - **At CP-17, before 4.7T:**
+    - the percentage tolerance τ, for the measure "within ±τ EUR/MWh";
+    - the equality tolerance τ_eq, after the browser feasibility probe measures time, memory,
+      payload sizes, deviation from the native fit and selection agreement. CP-21 measured v4's
+      cold daily cycle at a median of 24.7 s and a maximum of 69.4 s on the M3 with four
+      processes; browser timings are unmeasured.
+  - **At CP-18:**
+    - unattended daily publication authority, an `AGENTS.md` amendment only the Owner can make;
+    - where the daily job runs;
+    - visual approval of the new Space.
+  - **Optional, earlier:** a bounded probe brief, to de-risk the button before CP-17 (plan §7,
+    step 2).
+- **Headline Arena invitation (open; Owner's reply).** A message on the Space invited daily
+  forecast submissions. The recommendation is to decline for now and revisit only after CP-19,
+  and only if the arena adds a DE-LU day-ahead target. The suggested reply is in the
+  [plan](docs/track-b/final-product-space-plan-2026-09-30.md) §9. Posting it is the Owner's
+  external action.
 - **Final-product operating specification remains pending:** no final version designated and no
   daily system running. Future authorized work must fix numeric fit/issuance schedules, training
   windows, resources, percent-score formula/tolerance, source/outcome timing, business-use-case
@@ -672,8 +737,9 @@ Session Log.
 
 - **[Next: PRES-3]** Issue the brief from the
   [publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md), outcome A, pinned to
-  PUBLISH_RULES 1.1, once the Owner confirms CP-21's local reclamation and names the authorized
-  external actions. It covers every surface: Pages, the Space, MLflow and the README.
+  PUBLISH_RULES 1.2, once the Owner names the authorized external actions. CP-21's local
+  reclamation is confirmed. A9 is not triggered for this research publication. It covers every
+  surface: Pages, the Space, MLflow and the README.
   - The registry gets `v4 · <adopted change>`, dated at landing (2026-09-30), with predecessor
     v3. CP-21's draft name is "v4 · three-block LightGBM added".
   - Correct the public planned item "4.6 · DDNN / TabPFN" ("Does a distributional network, or a
@@ -690,14 +756,27 @@ Session Log.
   unused `style.css` has survived PRES-1 and PRES-2. Then verify that the served file set equals
   the bundle. Account for every surface: Pages, the Space, MLflow and the README (runbook §1a,
   packet §8). A Git push is not a verified deployment.
-- **[Every new publication brief]** Pin PUBLISH_RULES 1.1 and incorporated source hashes;
-  retain A1–A6 and apply A7/A8 at their final-product/live triggers. PRES-2 was closed under
+- **[Every new publication brief]** Pin PUBLISH_RULES 1.2 and incorporated source hashes;
+  retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under
   its original 1.0 contract. Predecessor comparisons and descriptive chart routes remain;
   v2→v3 reuses existing weather evidence, and v1's archive stays historical.
 - **[Final-product designation / CP-17–19]** Carry research v21-r5 §16, publication 1.1 §§5/7.2,
   runbook §7b and packet §5d. Complete the numeric operating/scoring manifest, publish one
   product/demo policy at authorized rollout, and distinguish daily live evidence from completed
   prospective evaluation. No current research generation is promoted by this documentation task.
+  *Added 2026-09-30:* also carry research v21-r8 §19 and PUBLISH_RULES 1.2 §7.3 (A9), with the
+  [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md) §7 as the
+  checklist.
+  - **The CP-17 brief** runs §19.3's browser feasibility probe for the designated policy, then
+    freezes:
+    - the percentage measure with the Owner's τ;
+    - the rolling windows, the reliability and PIT definitions, and the recomputation tolerance;
+    - τ_eq and the reference runtime;
+    - any neural attribution method;
+    - the Space payload schema.
+  - **The CP-18 brief** builds the daily bundle and the A9 views, with their tests and negative
+    controls, and obtains the Owner's `AGENTS.md` authority for unattended daily publication
+    before launch.
 - **[2026-10, from the 19th]** `ubuntu-latest` moves to Ubuntu 26. CI is pinned to Python 3.12;
   check the first run after the move.
 - **[Every research brief]** Apply the 2026-09-24 standing decisions:
@@ -777,7 +856,7 @@ Each was paid for once. None should be relearned.
   - `archive/cp-0-attempt-1`, `archive/weather-admission-20260923` and
     `archive/cp15-cp16-content-20260923`;
   - `archive/v21-r7-session-20260930` = `e84d467`, the retired cloud session branch behind
-    PR #1, once the Owner pushes it (see Setup State).
+    PR #1, pushed by the Owner on 2026-09-30.
 
   Squash landings do not contain the candidate SHAs; only the tags preserve them. Verdicts are in
   `docs/track-b/evidence/<cp>/`.
@@ -808,7 +887,8 @@ Each was paid for once. None should be relearned.
     [PASS](docs/track-b/cp-16-pass-receipt-2026-09-23.md) receipts;
   - the [weather/content intake](docs/track-b/weather-content-intake-2026-09-23.md);
   - [CP-20 landing](docs/track-b/cp-20-landing-2026-09-24.md);
-  - the CP-21 receipt, recorded in this file's Session Log on 2026-09-30;
+  - the CP-21 receipt, recorded in this file's Session Log on 2026-09-30, and the Owner's
+    [CP-21 landing and closure record](docs/track-b/cp-21-landing-2026-09-30.md);
   - the [credential exposure record](docs/track-b/credential-exposure-2026-09-24.md).
 - **Earlier state narrative:**
   - `f704ac4:progress.md`;
@@ -822,9 +902,10 @@ Each was paid for once. None should be relearned.
   - `capstone_M4_v2-plan.md`;
   - `capstone_v20.md` and its archived CP-10 copy;
   - `capstone_v21.md` with its amendment sheets, the latest being
-    [r6 → r7](docs/track-b/capstone_v21-r6-to-v21-r7-amendments.md);
+    [r7 → r8](docs/track-b/capstone_v21-r7-to-v21-r8-amendments.md);
   - the programme plan and its reviews in `docs/track-b/`;
-  - the [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md).
+  - the [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md);
+  - the [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md).
 - **Defect ledger:** `docs/track-b/cp-0-defects.md`, closed 2026-09-14.
 - **v1 results:** `docs/cp2-model-report.md` and `reports/cp2/`.
 - **Local recovery material:** `.local/`, per the [artifact map](docs/track-b/local-artifacts.md).
