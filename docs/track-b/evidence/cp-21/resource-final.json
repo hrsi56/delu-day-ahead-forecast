@@ -1,0 +1,807 @@
+{
+ "active_hours_basis": "from the Lead's first command 2026-09-29T15:51:31Z minus recorded pauses (the usage-limit idle gap)",
+ "active_hours_hard_stop": 40.0,
+ "active_hours_timebox": 32.0,
+ "active_hours_upper_bound": 3.5220926533142727,
+ "blas_threads": 1,
+ "calendar": "every job ran on 2026-09-29/30 (Tue/Wed, Asia/Jerusalem); none started in or ran into the Friday/Shabbat window",
+ "caps_vs_use": {
+  "active_seconds": {
+   "cap": 144000,
+   "used": 12679.533551931381
+  },
+  "additional_disk_bytes": {
+   "cap": 21474836480,
+   "used": 530694395
+  },
+  "analysis_passes": {
+   "cap": 3,
+   "used": 3
+  },
+  "component_attempts": {
+   "cap": 1600,
+   "used": 72
+  },
+  "download_bytes": {
+   "cap": 0,
+   "used": 0
+  },
+  "lgbm_fits": {
+   "cap": 35000,
+   "used": 24157
+  },
+  "machine_seconds": {
+   "cap": 216000,
+   "used": 22078.692039609246
+  },
+  "main_lgbm_fits": {
+   "cap": 24000,
+   "used": 22260
+  },
+  "policy_days": {
+   "cap": 10500,
+   "used": 4190
+  },
+  "primitive_fits": {
+   "cap": 192000,
+   "used": 8630
+  },
+  "reference_passes": {
+   "cap": 3,
+   "used": 3
+  },
+  "remote_writes": {
+   "cap": 0,
+   "used": 0
+  },
+  "rss_bytes": {
+   "cap": 10737418240,
+   "used": 3952017408
+  },
+  "workers": {
+   "cap": 4,
+   "used": 4
+  }
+ },
+ "cloud": 0,
+ "cpu_hours_observed": 3.943949785674444,
+ "download_bytes": 0,
+ "events": [
+  {
+   "description": "Pre-ledger read-only orientation 2026-09-29 18:51-19:30 IDT: document reads, hash checks, JSON/parquet metadata inspection (a few short python reads, no fit, replay, scoring or download). Conservatively charged 180 machine-seconds.",
+   "epoch": 1790697764.962465,
+   "event": "pre_ledger_orientation_upper_bound",
+   "fits": 0,
+   "machine_seconds_charged": 180.0,
+   "policy_days": 0
+  },
+  {
+   "epoch": 1790698960.0732448,
+   "event": "synthetic_fixture_fits_recorded",
+   "fits": 87,
+   "note": "tests/cp21 synthetic fixture fits per full run (no research data); tracked, not capped",
+   "run": "tests-cp21 job 8"
+  },
+  {
+   "end_epoch": 1790709118.2541802,
+   "epoch": 1790709118.2541802,
+   "event": "pause_recorded",
+   "reason": "usage-limit idle gap: the Lead session was stopped by the usage limit and resumed on the Owner's message; no work, no job running",
+   "seconds": 9943.337744951248,
+   "start_epoch": 1790699174.9164352
+  },
+  {
+   "epoch": 1790709235.675377,
+   "event": "fits_start",
+   "folds": null,
+   "stage": "warmup",
+   "tasks": 564,
+   "workers": 4
+  },
+  {
+   "epoch": 1790710019.848053,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "warmup",
+   "tasks": 564
+  },
+  {
+   "epoch": 1790710110.142174,
+   "event": "fits_start",
+   "folds": null,
+   "stage": "evaluation",
+   "tasks": 1344,
+   "workers": 4
+  },
+  {
+   "epoch": 1790711860.793758,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "evaluation",
+   "tasks": 1344
+  },
+  {
+   "end_epoch": 1790727148.855074,
+   "epoch": 1790727148.855074,
+   "event": "pause_recorded",
+   "reason": "usage-limit idle gap: the Lead session and the Integration Critic agent were stopped by the session limit; resumed on the Owner's message; no job running",
+   "seconds": 9998.05546092987,
+   "start_epoch": 1790717150.799613
+  }
+ ],
+ "external_cost_usd": 0,
+ "gpu": 0,
+ "jobs_by_name": {
+  "admission": {
+   "charged_machine_hours": 0.010929098252494846,
+   "cpu_seconds_observed": 37.7909024,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "benchmark": {
+   "charged_machine_hours": 0.08331462439783435,
+   "cpu_seconds_observed": 74.46524352,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "claims": {
+   "charged_machine_hours": 0.0012093291316705292,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 4
+   },
+   "jobs": 4
+  },
+  "claims-check": {
+   "charged_machine_hours": 0.0003023149188892502,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "comparison": {
+   "charged_machine_hours": 0.010400638356384459,
+   "cpu_seconds_observed": 35.868428096,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "controls": {
+   "charged_machine_hours": 0.5453033703711117,
+   "cpu_seconds_observed": 513.05801728,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-blend": {
+   "charged_machine_hours": 0.0003062971641581195,
+   "cpu_seconds_observed": 0.870150208,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-bootstrap-pass": {
+   "charged_machine_hours": 0.0003063411688910694,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-claims-check": {
+   "charged_machine_hours": 0.00031232949055265635,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-draft-check": {
+   "charged_machine_hours": 0.0008677974305464887,
+   "cpu_seconds_observed": 2.040470128,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-export-check": {
+   "charged_machine_hours": 0.0008680598033242859,
+   "cpu_seconds_observed": 2.034073696,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-fitcost": {
+   "charged_machine_hours": 0.0017113370022303167,
+   "cpu_seconds_observed": 5.073284048,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-hlayer": {
+   "charged_machine_hours": 0.0008650391088869785,
+   "cpu_seconds_observed": 2.037832704,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-inputs": {
+   "charged_machine_hours": 0.003390933460549503,
+   "cpu_seconds_observed": 9.920291712000001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-inspect": {
+   "charged_machine_hours": 0.00032778344917460344,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-inspect-fits": {
+   "charged_machine_hours": 0.0003073420022135704,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-lgbm-independent": {
+   "charged_machine_hours": 0.02178684137722788,
+   "cpu_seconds_observed": 70.926466816,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-packet-check": {
+   "charged_machine_hours": 0.00030909013887543956,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-reference-pass": {
+   "charged_machine_hours": 0.0008659322105490396,
+   "cpu_seconds_observed": 2.078788432,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-report-check": {
+   "charged_machine_hours": 0.0003113050924892175,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-review-1": {
+   "charged_machine_hours": 0.07893016129638353,
+   "cpu_seconds_observed": 277.179192064,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-review-2": {
+   "charged_machine_hours": 0.008722789039165946,
+   "cpu_seconds_observed": 29.550001024,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-suite": {
+   "charged_machine_hours": 0.2409952046755158,
+   "cpu_seconds_observed": 256.0702336,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-tests-cp21": {
+   "charged_machine_hours": 0.010113862048617901,
+   "cpu_seconds_observed": 34.792797952,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-verify": {
+   "charged_machine_hours": 0.00030988863417102643,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-warmup-buffer": {
+   "charged_machine_hours": 0.010614714166666898,
+   "cpu_seconds_observed": 33.000272832,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-wasm-payload": {
+   "charged_machine_hours": 0.01155417635415991,
+   "cpu_seconds_observed": 89.459855104,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-bootstrap-pass": {
+   "charged_machine_hours": 0.00030663592611543004,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-bootstrap-synthetic": {
+   "charged_machine_hours": 0.0003061057405526905,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-claims-check": {
+   "charged_machine_hours": 0.0003091349305597962,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-draft-check": {
+   "charged_machine_hours": 0.0005859361224995357,
+   "cpu_seconds_observed": 1.007645016,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-e1check": {
+   "charged_machine_hours": 0.004806285196941139,
+   "cpu_seconds_observed": 16.182454800000002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-export-check": {
+   "charged_machine_hours": 0.0005857053819474661,
+   "cpu_seconds_observed": 1.009894392,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-guard": {
+   "charged_machine_hours": 0.0003109771411173925,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-hlayer": {
+   "charged_machine_hours": 0.0003081647802739301,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-inspect": {
+   "charged_machine_hours": 0.00030499531250421165,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-lgbm-independent": {
+   "charged_machine_hours": 0.009020114317212977,
+   "cpu_seconds_observed": 31.10156,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-packet-check": {
+   "charged_machine_hours": 0.00030485376165921075,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-reference-pass": {
+   "charged_machine_hours": 0.0008653910647262819,
+   "cpu_seconds_observed": 2.082623028,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-reference-synthetic": {
+   "charged_machine_hours": 0.002057616504720904,
+   "cpu_seconds_observed": 4.166052048,
+   "exit_codes": {
+    "0": 1,
+    "1": 2
+   },
+   "jobs": 3
+  },
+  "critic2-report-check": {
+   "charged_machine_hours": 0.00030714145834079113,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-review": {
+   "charged_machine_hours": 0.05240769369193003,
+   "cpu_seconds_observed": 185.758676352,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-skip-reasons": {
+   "charged_machine_hours": 0.07553746185116729,
+   "cpu_seconds_observed": 67.857167808,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-state": {
+   "charged_machine_hours": 0.0005890923377915492,
+   "cpu_seconds_observed": 0.797718552,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-suite": {
+   "charged_machine_hours": 0.1858421738888784,
+   "cpu_seconds_observed": 204.27571737600002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-tests-cp21": {
+   "charged_machine_hours": 0.02365901218751484,
+   "cpu_seconds_observed": 63.450960384,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-verify": {
+   "charged_machine_hours": 0.00030873281250630197,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-wasm-payload": {
+   "charged_machine_hours": 0.009315598726663868,
+   "cpu_seconds_observed": 76.681526208,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-weather": {
+   "charged_machine_hours": 0.00311886285861773,
+   "cpu_seconds_observed": 8.940515968,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "daily-cycle": {
+   "charged_machine_hours": 1.0060320935177798,
+   "cpu_seconds_observed": 374.94606459999994,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "determinism": {
+   "charged_machine_hours": 0.11343688666555357,
+   "cpu_seconds_observed": 122.914348032,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "draft-check": {
+   "charged_machine_hours": 0.000579468518343573,
+   "cpu_seconds_observed": 0.9983570239999999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "draft-export": {
+   "charged_machine_hours": 0.0011649846299971816,
+   "cpu_seconds_observed": 2.010271656,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "e1": {
+   "charged_machine_hours": 0.035883987581101895,
+   "cpu_seconds_observed": 127.28483071999999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "export-check": {
+   "charged_machine_hours": 0.0014377073955579868,
+   "cpu_seconds_observed": 2.727395024,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "export-diff": {
+   "charged_machine_hours": 0.0005814940394419763,
+   "cpu_seconds_observed": 0.877133952,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "finalise": {
+   "charged_machine_hours": 0.0008807600230567106,
+   "cpu_seconds_observed": 0.8505172320000001,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "finalise-manifest": {
+   "charged_machine_hours": 0.0012028997800047768,
+   "cpu_seconds_observed": 3.953506288,
+   "exit_codes": {
+    "0": 4
+   },
+   "jobs": 4
+  },
+  "fit-cost": {
+   "charged_machine_hours": 0.1883151090508262,
+   "cpu_seconds_observed": 672.3560363839999,
+   "exit_codes": {
+    "-15": 1,
+    "0": 1
+   },
+   "jobs": 2
+  },
+  "fits-evaluation": {
+   "charged_machine_hours": 1.947069985647815,
+   "cpu_seconds_observed": 6859.609743861,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "fits-warmup": {
+   "charged_machine_hours": 0.8729183329633411,
+   "cpu_seconds_observed": 3054.3382802449996,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "guard": {
+   "charged_machine_hours": 0.0003017162847229176,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "hg-parity": {
+   "charged_machine_hours": 0.03318607012750969,
+   "cpu_seconds_observed": 117.317383168,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "mlflow-local": {
+   "charged_machine_hours": 0.0014281525808392973,
+   "cpu_seconds_observed": 2.351581184,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "packet": {
+   "charged_machine_hours": 0.0006058658336082266,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "packet-check": {
+   "charged_machine_hours": 0.00030786313666289467,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "protocol": {
+   "charged_machine_hours": 0.0005889365972123212,
+   "cpu_seconds_observed": 0.8986222300000001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "report": {
+   "charged_machine_hours": 0.0009088432989018556,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 3
+   },
+   "jobs": 3
+  },
+  "report-check": {
+   "charged_machine_hours": 0.00030185006943712423,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "resource-final": {
+   "charged_machine_hours": 0.0,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "None": 1
+   },
+   "jobs": 1
+  },
+  "score": {
+   "charged_machine_hours": 0.002267745393328369,
+   "cpu_seconds_observed": 6.969700592000001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "suite": {
+   "charged_machine_hours": 0.19424255703666454,
+   "cpu_seconds_observed": 215.685222144,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "suite-reasons": {
+   "charged_machine_hours": 0.19538064819443712,
+   "cpu_seconds_observed": 219.243684608,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "tests-cp21": {
+   "charged_machine_hours": 0.04638452545167335,
+   "cpu_seconds_observed": 160.27838736,
+   "exit_codes": {
+    "0": 4,
+    "1": 1
+   },
+   "jobs": 5
+  },
+  "verify": {
+   "charged_machine_hours": 0.0003084787383300459,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-inputs": {
+   "charged_machine_hours": 0.005369701030010927,
+   "cpu_seconds_observed": 17.43526576,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-weather": {
+   "charged_machine_hours": 0.006211058460531704,
+   "cpu_seconds_observed": 17.751333248,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "wasm-payload": {
+   "charged_machine_hours": 0.009278002418901046,
+   "cpu_seconds_observed": 77.892749568,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  }
+ },
+ "jobs_total": 100,
+ "ledger": ".local/artifacts/cp-21/ledger/budget.json (cumulative, never reset)",
+ "machine_hours": 6.132970011002569,
+ "machine_hours_cap": 60.0,
+ "passes_note": "metric-only reference passes and bootstrap analysis passes stand at 3 of 3: the checkpoint scoring pass, the interrupted first review and the binding second review; reached, not exceeded, so no further scoring or bootstrap pass is available under \u00a717.8",
+ "pauses": [
+  [
+   1790699174.9164352,
+   1790709118.2541802
+  ],
+  [
+   1790717150.799613,
+   1790727148.855074
+  ]
+ ],
+ "peak_added_disk_gib": 0.49424767028540373,
+ "peak_aggregate_rss_gib": 3.68060302734375,
+ "remote_writes": 0,
+ "schema": "cp21-resource-final-v1",
+ "scope": "final CP-21 totals from the first job through the independent Integration review (both Critic sessions: the first, stopped by an API session limit before any verdict, and the fresh second, whose PASS binds 260dcf9fb3f5706cb896991ba7b6edf4cd9494b6)",
+ "tracked": {
+  "component_attempts_control": 12,
+  "component_attempts_daily_cycle": 50,
+  "component_attempts_review": 10,
+  "lasso_final_fits": 1726,
+  "lasso_inner_fits": 6904,
+  "lgbm_final_fits": 4897,
+  "lgbm_fits_benchmark": 152,
+  "lgbm_fits_control": 630,
+  "lgbm_fits_daily_cycle": 750,
+  "lgbm_fits_main": 22260,
+  "lgbm_fits_review": 365,
+  "lgbm_inner_fits": 19260,
+  "policy_days_admission": 752,
+  "policy_days_control": 84,
+  "policy_days_daily_cycle": 25,
+  "policy_days_evaluation": 1800,
+  "policy_days_hg_parity": 638,
+  "policy_days_review": 891,
+  "synthetic_fixture_fits": 435
+ },
+ "written_utc": "2026-09-30T00:55:11Z"
+}
