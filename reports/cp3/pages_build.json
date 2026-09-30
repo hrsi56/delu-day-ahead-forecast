@@ -1,8 +1,9 @@
 {
   "build_path": "purpose-built static assembly (\u00a79.2 fallback)",
-  "bytes": 1906616,
+  "bytes": 1906270,
   "final": false,
   "links_omitted_until_verified": [
+    "compare:overview",
     "compare:v4"
   ],
   "load_scale_points": 11,
@@ -25,7 +26,6 @@
   "routes_published": [
     "compare:calibration",
     "compare:model-comparison",
-    "compare:overview",
     "compare:v2",
     "compare:v3",
     "experiment"

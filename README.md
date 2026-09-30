@@ -39,16 +39,18 @@ Names and statuses come from the registry. The research results are development 
 
 **From v3 to v4: adding a three-block LightGBM.**
 
-- **What changed.** v4 kept v3's inputs and its two LEAR forecasts, added a three-block LightGBM forecaster with one third of the blend's weight, and re-estimated the hour-aware intervals on the new forecast's own errors.
+- **What changed.** v4 kept v3's inputs and its two LEAR forecasts, added a three-block LightGBM forecaster (separate models for the night, the solar hours, and the shoulder and peak hours) with one third of the blend's weight, and re-estimated the hour-aware intervals on the new forecast's own errors.
 - **Comparator.** Set in advance: v3 itself, on identical hours, so the protocol's comparator is also the predecessor and the comparison is direct.
-- **Result.** Point-error score −5% [−6%, −4%] and interval score −5% [−6%, −4%], as a share of v3's score, with 95% confidence intervals from the experiment's own bootstrap draws; development evidence, not a test on new data.
+- **Result.** Point-error score −5% [−6%, −4%] and interval score −5% [−6%, −4%], as a share of v3's score, with 95% confidence intervals of that ratio from the experiment's own bootstrap draws; development evidence, not a test on new data.
 
 Difference in error score (v4 − v3), with 95% confidence intervals. Below zero favours v4.
 
 - Point-error score: −0.0301 [−0.0368, −0.0228].
 - Interval score: −0.0266 [−0.0327, −0.0204].
 
-Both paired differences lie below zero, no test period is decisively worse, and the six screening diagnostics hold, so the rule set in advance adopted the change in research.
+**The rule**, set on 2026-09-29 and frozen in the protocol before any fit: v4 would be adopted only if, against v3, the interval score's paired difference had its upper 95% confidence limit below zero and the point-error score's at or below zero; it met the six original screening criteria; the evaluation was complete and valid; and no test period was decisively worse, that is, none had a paired interval wholly above zero. All four held.
+
+Both paired differences' 95% confidence intervals lie below zero, no test period's paired interval lies wholly above zero, and v4 passed the six screening criteria set before the experiments (the two accuracy targets, interval coverage in each test period, the August 2022 peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts), so it met all four conditions of the rule set in advance.
 
 **What this result does not establish:**
 
@@ -181,9 +183,11 @@ Evidence: [Engineering report, frozen 2026-09-16](https://github.com/hrsi56/delu
 
 ### Reading the comparison
 
-- **Accuracy targets:** set on 2026-09-15; the distances are point comparisons.
+- **Accuracy targets:** each error score at least 10% below the strongest benchmark's, set on 2026-09-15; a policy's distance from them is a point comparison.
 - **Daily LEAR:** the strongest benchmark, a linear model refitted daily.
 - **Policies:** the models and variants tested.
+
+The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set 2026-09-15). 12 policies were tested against them; v3 was the first to meet both; v4, pooled LightGBM with weather, three-block LightGBM and normalized three-block LightGBM met them too.
 
 Every policy was evaluated on the same 10,747 historical hours over 448 days, across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
 

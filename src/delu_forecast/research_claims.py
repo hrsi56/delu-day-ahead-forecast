@@ -112,8 +112,9 @@ BLOCKS: tuple[Block, ...] = (
     # ---- the terms the headline introduces, directly below it (standard §1 ii, §3.1) ----------------
     _block("terms.error_scores", "P21", """**Error scores:** error relative to a simple naive forecast, averaged over the
            test periods; lower is better.""", PAGE, README),
-    _block("terms.targets", "P21", """**Accuracy targets:** set on {r:derived.rule.set_on}; the distances are point
-           comparisons.""", PAGE, README),
+    _block("terms.targets", "P21", """**Accuracy targets:** each error score at least {r:derived.rule.margin.S_MAE}
+           below the strongest benchmark's, set on {r:derived.rule.set_on}; a policy's distance from them is a point
+           comparison.""", PAGE, README),
     _block("terms.benchmark", "P21", """**{g:daily-lear.name}:** the strongest benchmark, a linear model refitted
            daily.""", PAGE, README),
     _block("terms.policies", "P21", """**Policies:** the models and variants tested.""", PAGE, README),
@@ -160,7 +161,10 @@ BLOCKS: tuple[Block, ...] = (
     _block("overview.fairness.detail", "P08", """Paired intervals come from a moving-block bootstrap with seed
            {r:cp20.protocol.bootstrap_seed}, {r:cp20.protocol.replicates} replicates and
            {r:cp20.protocol.block_days}-day blocks, resampled identically for every policy. They are confidence
-           intervals of an estimated difference, not forecast intervals."""),
+           intervals of an estimated difference, not forecast intervals. A change's interval as a share of the
+           comparator's score is, from {g:v4.version} on, the percentile interval of the ratio of the two scores over
+           the same draws; for {g:v2.version} and {g:v3.version}, it is the difference's interval divided by the
+           comparator's score."""),
     _block("overview.f07", "P09", """**Why {s:version:v1} scores {r:cp20.metrics.B1.equal_fold.S_MAE|p=3} in the shared
            development comparison but {r:cp2.dm_development.point_vs_naive.relative_improvement_pct|abs}% worse in its own
            report.** Both figures describe the same {r:cp2.dm_development.point_vs_naive.n_days} development days.
@@ -178,15 +182,18 @@ BLOCKS: tuple[Block, ...] = (
     # ---- the v4 chapter (the chapter grammar, standard §6; publication packet §5, CP-21 claim map) ----------
     _block("v4.question", "C104", """Does adding a nonlinear, block-structured forecaster to {g:v3.version} improve
            both of its error scores?"""),
-    _block("v4.change", "C104", """{g:v4.version} adds a three-block LightGBM forecaster, with the same inputs as
-           {g:v3.version}, to its blend of two linear forecasts, and re-estimates the hour-aware intervals on the new
+    _block("v4.change", "C104", """{g:v4.version} adds a three-block LightGBM forecaster, with the same information
+           as {g:v3.version}, to its blend of two linear forecasts, and re-estimates the hour-aware intervals on the new
            forecast's own errors."""),
     _block("v4.chart_headline", "C107", """Against {g:v3.version}, the point-error score changed by
            {r:derived.change.v4.S_MAE} {r:derived.change.v4.S_MAE|ci} and the interval score by
            {r:derived.change.v4.S_WIS} {r:derived.change.v4.S_WIS|ci}, each as a share of the comparator's score,
-           with {s:level:95%} intervals."""),
-    _block("v4.reading", "C109", """Both paired differences lie below zero, no test period is decisively worse, and the
-           six screening diagnostics hold, so the rule set in advance adopted the change in research.""", PAGE, README),
+           with {s:level:95%} confidence intervals."""),
+    _block("v4.reading", "C109", """Both paired differences' {s:level:95%} confidence intervals lie below zero, no
+           test period's paired interval lies wholly above zero, and {g:v4.version} passed the six screening criteria set
+           before the experiments (the two accuracy targets, interval coverage in each test period, the August
+           {s:date:2022} peak against the benchmarks, each test period against the daily benchmarks, and complete
+           forecasts), so it met all four conditions of the rule set in advance.""", PAGE, README),
     # README-only: the page shows these differences once, in the main chart and its table.
     _block("v4.outcome.head", "C107", """Difference in error score ({s:version:v4} − {s:version:v3}), with {s:level:95%}
            confidence intervals. Below zero favours {s:version:v4}.""", README),
@@ -216,7 +223,7 @@ BLOCKS: tuple[Block, ...] = (
            blocks are the night, the solar hours and the shoulder and peak hours, in local time. At every forecast
            origin each block picks one of {s:count:4} model sizes on the training window's last
            {s:days:28} days, by MAE, then refits."""),
-    _block("v4.method.ladder", "C106", """**The ladder.** Three study arms attribute the change one step at a time. Daily
+    _block("v4.method.ladder", "C106", """**The ladder.** Three study arms separate the change into steps, one at a time. Daily
            LightGBM to the pooled LightGBM adds weather, bundled with the training-only choice of model size and the
            missing-input rule, so that step is not a weather effect on its own. The pooled to the three-block
            LightGBM adds the block split alone: the same rows, target, inputs, size grid, selection rule and interval
@@ -225,12 +232,12 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp21.uncertainty.L-R-L-P.equal_fold.MAE} {r:cp21.uncertainty.L-R-L-P.equal_fold.MAE|ci}, interval score
            {r:cp21.uncertainty.L-R-L-P.equal_fold.WIS} {r:cp21.uncertainty.L-R-L-P.equal_fold.WIS|ci}: no demonstrated
            joint preference. It was tested on the raw price only, with one seed."""),
-    _block("v4.method.arms", "C115", """No study arm is better than {g:v3.version} on its own: each arm's intervals
-           against {g:v3.version} span zero, except the three-block LightGBM's interval score, whose interval lies
+    _block("v4.method.arms", "C115", """No study arm on its own shows a demonstrated joint preference over
+           {g:v3.version}: each arm's intervals against {g:v3.version} span zero, except the three-block LightGBM's interval score, whose interval lies
            wholly above zero, worse: {r:cp21.uncertainty.L-R-HG.equal_fold.WIS}
            {r:cp21.uncertainty.L-R-HG.equal_fold.WIS|ci}."""),
-    _block("v4.folds", "C110", """Every test period's point estimate favours {g:v4.version}, and none is decisively
-           worse. In fold {s:fold:3}, the {s:date:2022} crisis, both intervals cross zero: point error
+    _block("v4.folds", "C110", """Every test period's point estimate favours {g:v4.version}, and no period's paired
+           interval lies wholly above zero. In fold {s:fold:3}, the {s:date:2022} crisis, both intervals cross zero: point error
            {r:cp21.uncertainty.HGL-HG.fold_3.MAE|p=1} {r:cp21.uncertainty.HGL-HG.fold_3.MAE|ci1} EUR/MWh."""),
     _block("v4.absolute", "C118", """Mean absolute error per test period: {g:v4.version}
            {r:derived.periods.v4.ordinary_low}–{r:derived.periods.v4.ordinary_high} EUR/MWh in the four ordinary
@@ -243,18 +250,22 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp21.diagnostics.HGL.peak.hit_count95} against {r:cp21.diagnostics.HG.peak.hit_count95} of its
            {r:cp21.diagnostics.HGL.peak.n_hours} hours fell inside the {s:level:95%} interval. Descriptive, on a small
            sample: no inference is drawn."""),
-    _block("v4.coverage", "C121", """{g:v4.version}'s pooled intervals are narrower than {g:v3.version}'s at every level,
-           with pooled {s:level:95%} coverage {r:cp21.metrics.HGL.pooled.coverage95} against
+    _block("v4.coverage", "C121", """{g:v4.version}'s pooled intervals are narrower than {g:v3.version}'s at every level. Its
+           pooled coverage is {r:cp21.metrics.HGL.pooled.coverage50}, {r:cp21.metrics.HGL.pooled.coverage80} and
+           {r:cp21.metrics.HGL.pooled.coverage95} at the {s:level:50%}, {s:level:80%} and {s:level:95%} levels, against
+           {g:v3.version}'s {r:cp21.metrics.HG.pooled.coverage50}, {r:cp21.metrics.HG.pooled.coverage80} and
            {r:cp21.metrics.HG.pooled.coverage95}. No hour or block effect is claimed."""),
     _block("v4.rule", "C101", """**The rule**, set on {r:derived.adoption.v4.set_on} and frozen in the protocol before
            any fit: {g:v4.version} would be adopted only if, against {g:v3.version}, the interval score's paired
            difference had its upper {s:level:95%} confidence limit below zero and the point-error score's at or below
-           zero; it met the six original screening diagnostics; the evaluation was complete and valid; and no test
-           period was decisively worse, that is, none had a paired interval wholly above zero. All four held."""),
+           zero; it met the six original screening criteria; the evaluation was complete and valid; and no test
+           period was decisively worse, that is, none had a paired interval wholly above zero. All four held.""", PAGE,
+           README),
     _block("v4.criteria", "C119", """As a diagnostic, {g:v4.version} meets all six original screening criteria, as
            {g:v3.version} does. Among the study arms, the normalized three-block LightGBM meets them; the pooled
-           LightGBM misses criterion {s:criterion:4}, and the three-block LightGBM misses criteria {s:criterion:4} and
-           {s:criterion:5}. This is a development diagnostic, not a product qualification."""),
+           LightGBM misses criterion {s:criterion:4} (the August {s:date:2022} peak against the benchmarks), and the
+           three-block LightGBM misses criteria {s:criterion:4} and {s:criterion:5} (each test period against the daily
+           benchmarks). This is a development diagnostic, not a product qualification."""),
     _block("v4.parity", "C122", """Run through this experiment's code, {g:v3.version} reproduced its accepted forecasts
            bit for bit on all {r:cp21.hg_parity.rows} hours, so the comparison is with {g:v3.version} itself."""),
     _block("v4.controls", "C123", """All {r:cp21.controls.checks} frozen causal and integrity controls passed: masking the
@@ -397,18 +408,20 @@ BLOCKS: tuple[Block, ...] = (
     _block("transition.v3-v4.title", "P52", """From {g:v3.version} to {g:v4.version}: adding a three-block
            LightGBM""", PAGE, README),
     _block("transition.v3-v4.change", "P52", """{g:v4.version} kept {g:v3.version}'s inputs and its two LEAR forecasts,
-           added a three-block LightGBM forecaster with one third of the blend's weight, and re-estimated the
+           added a three-block LightGBM forecaster (separate models for the night, the solar hours, and the shoulder and
+           peak hours) with one third of the blend's weight, and re-estimated the
            hour-aware intervals on the new forecast's own errors.""", PAGE, README),
     _block("transition.v3-v4.comparator", "P52", """Set in advance: {g:v3.version} itself, on identical hours, so the
            protocol's comparator is also the predecessor and the comparison is direct.""", PAGE, README),
     _block("transition.v3-v4.result", "P52", """Point-error score {r:derived.change.v4.S_MAE}
            {r:derived.change.v4.S_MAE|ci} and interval score {r:derived.change.v4.S_WIS}
            {r:derived.change.v4.S_WIS|ci}, as a share of {g:v3.version}'s score, with {s:level:95%} confidence
-           intervals from the experiment's own bootstrap draws; development evidence, not a test on new data.""",
+           intervals of that ratio from the experiment's own bootstrap draws; development evidence, not a test on new data.""",
            PAGE, README),
     _block("transition.v3-v4.limits", "P52", """Separate hour-block models are not shown to help: the three-block
-           against the pooled LightGBM showed no demonstrated joint preference. Over the August {s:date:2022} peak,
-           {g:v4.version}'s point error is higher than {g:v3.version}'s.""", PAGE),
+           against the pooled LightGBM shows no demonstrated joint preference. A gain over the August {s:date:2022} peak
+           is not shown either: over those {r:cp21.diagnostics.HGL.peak.n_days} days, {g:v4.version}'s point error is
+           higher than {g:v3.version}'s.""", PAGE),
     _block("transition.v2-v3.title", "P35", """From {g:v2.version} to {g:v3.version}: adding weather forecasts""",
            PAGE, README),
     _block("transition.v2-v3.change", "P35", """{g:v3.version} kept {g:v2.version}'s blend of two LEAR forecasts and
@@ -704,15 +717,17 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
         % (comparator.id, change, change, change, change, comparator.id))
 
 
-def target_sentence(target: str = "html") -> str:
+def target_sentence(target: str = "html", *, surface: str = PAGE) -> str:
     """The target line in words, with its date, and N (standard §15 amending plan §8.2): what the
-    comparison's dashed lines mark, how many policies were tested against it and who met it."""
+    comparison's dashed lines mark, how many policies were tested against it and who met it. The README, which draws
+    no chart, states the same targets without the lines."""
     entry = G.current_generation()
     base = f"derived.criteria.{entry.id}"
     benchmark = D.get("derived.rule.margin.S_MAE").subject
-    template = ("The dashed lines mark the targets: each error score at least {r:derived.rule.margin.S_MAE} below "
-                "the strongest benchmark, {g:%s.inline} (set {r:derived.rule.set_on}). {r:%s.tested} policies were "
-                "tested against them; " % (benchmark, base))
+    lead = "The dashed lines mark the targets" if surface == PAGE else "The accuracy targets"
+    template = ("%s: each error score at least {r:derived.rule.margin.S_MAE} below the strongest benchmark, "
+                "{g:%s.inline} (set {r:derived.rule.set_on}). {r:%s.tested} policies were tested against them; "
+                % (lead, benchmark, base))
     met = [record.subject for record in D.records().values() if record.kind == "verdict" and record.value == "met"]
     first = [record.subject for record in D.records().values() if record.kind == "first_to_meet" and record.value == "yes"]
     if D.get(f"{base}.verdict").value == "met" and D.get(f"{base}.first_to_meet").value == "yes" and met == [entry.id]:

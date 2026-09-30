@@ -23,6 +23,7 @@ from __future__ import annotations
 import dataclasses
 import hashlib
 import json
+import math
 import re
 import sys
 from decimal import Decimal
@@ -259,6 +260,83 @@ def test_negative_control_the_pinned_comparison_keeps_its_published_names_and_co
     texts = _chart_texts(B.overview_chart(G.V3_COMPARISON_ORDER, B.V3_EXPERIMENT, pinned=True))[0]
     assert _has_verdict_column(texts)
     assert "v3 · weather features" in texts
+
+
+def _closed_reading_path(html: str) -> str:
+    """The reading path of a stretch of the page: closed disclosure bodies left out (PUBLISH_RULES §2)."""
+    return re.sub(r"<details\b.*?</details>", " ", html, flags=re.S)
+
+
+def test_the_comparison_defines_its_terms_on_the_reading_path(page):
+    """The editorial review's V1: the targets, the benchmark and the policies are defined directly below the
+    comparison's caveat, outside any disclosure, and the targets' threshold is stated in words with its date."""
+    section = page[page.index('id="research-results"'):]
+    section = _closed_reading_path(section[:section.index("</section>")])
+    terms = section[section.index('class="terms comparison-terms"'):section.index('data-block="comparison.sub"')]
+    for key in RC.comparison_terms():
+        assert f'data-block="{key}"' in terms
+    assert "at least 10% below the strongest benchmark's, set on 2026-09-15" in _text(terms)
+    assert section.index('data-block="comparison.caveat"') < section.index('class="terms comparison-terms"')
+
+
+def test_the_readme_states_the_targets_their_n_and_who_met_them():
+    """V2: the README, which draws no chart, states the threshold, its date, N and who met the targets."""
+    research = README.read_text()
+    reading = research[research.index("### Reading the comparison"):]
+    assert "The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set " \
+           "2026-09-15). 12 policies were tested against them; v3 was the first to meet both;" in reading
+    assert "dashed lines" not in reading
+    assert "the distances are point comparisons" not in research
+
+
+def test_the_reading_names_what_the_rule_tested_and_the_readme_carries_the_rule(page):
+    """V3: the chapter's reading names the six screening criteria; the rule's four conditions reach the README, and
+    the headline's adoption-rule term routes to them on the page."""
+    reading = _text(RC.render("v4.reading"))
+    assert "six screening criteria set before the experiments (the two accuracy targets" in reading
+    assert "decisively" not in reading and "rule set in advance adopted" not in reading
+    v4 = README.read_text()
+    v4 = v4[v4.index("### v4 · three-block LightGBM added"):v4.index("### v3 · weather features")]
+    assert _text(RC.render("v4.rule", "md")).replace("*", "") in v4.replace("*", "")
+    opening = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
+    assert 'href="#v4-rule"' in opening and 'id="v4-rule" data-block="v4.rule"' in page
+
+
+def test_the_arms_state_no_demonstrated_joint_preference_never_no_benefit(page):
+    """V4 (W25): an arm whose intervals span zero shows no demonstrated joint preference; nothing says it is not
+    better."""
+    arms = _text(RC.render("v4.method.arms"))
+    assert arms.startswith("No study arm on its own shows a demonstrated joint preference over v3")
+    assert not re.search(r"\bis (not )?better\b", arms)
+    assert re.search(r"\bis (not )?better\b", "No study arm is better than v3 on its own")  # the published draft
+
+
+def test_the_v4_chapter_labels_interval_kinds_apart(page):
+    """V5 (PUBLISH_RULES §3.2): every interval of an estimated difference or ratio in the v4 chapter is a confidence
+    interval; "95% interval" alone is a forecast interval's label."""
+    chapter = _chapter(page, "v4")
+    for title in re.findall(r"<title[^>]*>(.*?)</title>", chapter, re.S):
+        if "difference" in title:
+            assert "confidence interval" in title, title
+    assert "confidence intervals" in _text(RC.render("v4.chart_headline"))
+
+
+def test_no_chart_prints_a_signed_zero(page):
+    """A tick accumulated in floating point reaches -1e-17, which rounded to -0.0 printed "-0.00" on the ladder."""
+    assert not re.search(r">[-−]0(\.0+)?<", page)
+    assert all(math.copysign(1.0, tick) > 0 for tick in B.Scale("x", -0.25, 0.05, 0, 100, "").ticks(0.05) if tick == 0)
+
+
+def test_negative_control_a_route_verified_for_other_runs_is_not_advertised(monkeypatch):
+    """The comparison's verified route before CP-21's upload lists v3's seven runs; the page draws eight. A route is
+    linked only while its verified runs are the registry's, and the final build refuses until then."""
+    expected = G.expected_routes()["compare:overview"][1]
+    index = {"routes": {"compare:overview": {"url": "https://example.test/compare", "run_keys": list(expected)}}}
+    monkeypatch.setattr(B, "mlflow_index", lambda: index)
+    assert B.mlflow_route("compare:overview") == "https://example.test/compare"
+    index["routes"]["compare:overview"]["run_keys"] = [key for key in expected if not key.startswith("cp21/")]
+    assert B.mlflow_route("compare:overview") is None
+    assert "compare:overview" in B.route_coverage()[1]
 
 
 # --------------------------------------------------------------------------- the chapter, the transition, the peak

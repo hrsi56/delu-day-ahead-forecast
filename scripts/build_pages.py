@@ -248,9 +248,20 @@ def mlflow_index() -> dict:
     return {}
 
 
+def _indexed(route_id: str) -> dict:
+    """The index's entry for a route, only while its verified runs are the ones the registry expects for it: an entry
+    verified for an earlier run set (the comparison before a new generation's upload) is not this route."""
+    entry = mlflow_index().get("routes", {}).get(route_id, {})
+    expected = G.expected_routes().get(route_id)
+    if expected is None or list(entry.get("run_keys", [])) != list(expected[1]):
+        return {}
+    return entry
+
+
 def mlflow_route(route_id: str) -> str | None:
-    """A verified route's URL, or None: a route that is not verified has its link omitted (§9)."""
-    return mlflow_index().get("routes", {}).get(route_id, {}).get("url")
+    """A verified route's URL, or None: a route that is not verified, or verified for other runs, has its link
+    omitted (§9)."""
+    return _indexed(route_id).get("url")
 
 
 @dataclass(frozen=True)
@@ -364,7 +375,7 @@ class Scale:
         first = math.ceil(self.lo / step - 1e-9) * step
         out, tick = [], first
         while tick <= self.hi + 1e-9:
-            out.append(round(tick, 10))
+            out.append(round(tick, 10) + 0.0)  # + 0.0 turns a signed zero into zero
             tick += step
         return out
 
@@ -535,13 +546,14 @@ def _row_value_text(scale: Scale, x_mark: float, y: float, row: Row, claim_id: s
 
 
 def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str, desc: str,
-                label_width: int = 250, row_h: int = 38, values_inline: bool = True) -> str:
+                label_width: int = 250, row_h: int = 38, values_inline: bool = True, wrap_labels: bool = False) -> str:
     """Categorical rows with one mark each, optionally with its confidence interval.
 
     Dot plots (no intervals) put their panels side by side and label each mark. Interval charts
     give every row a value column -- "estimate [low, high]" -- and stack their panels, so an
     interval never collides with its own label. Phones get a dedicated stacked variant. A row may
-    carry its verdict against the targets, drawn in a column of its own (standard §15)."""
+    carry its verdict against the targets, drawn in a column of its own (standard §15). `wrap_labels` wraps a desktop
+    interval chart's labels inside their column (about 7 px per character of 13 px text)."""
     for panel in panels:
         _check_panel_units(panel)
     has_interval = any(R.get(row.record_id).interval for panel in panels for row in panel.rows)
@@ -587,7 +599,10 @@ def single_rows(chart_id: str, claim_id: str, panels: list[Panel], *, title: str
             for index, row in enumerate(panel.rows):
                 cy = top + index * row_h + row_h / 2
                 record = R.get(row.record_id)
-                parts.append(svg_text(0, cy + 4.5, row.label, weight="600" if row.bold else None))
+                lines = _wrap(row.label, int((label_width - 8) / 7.0)) if wrap_labels else [row.label]
+                for line_index, line in enumerate(lines):
+                    parts.append(svg_text(0, cy + 4.5 - 8.5 * (len(lines) - 1) + 17 * line_index, line,
+                                          weight="600" if row.bold else None))
                 parts.append(_interval_marks(scale, cy, record, row.role, row.claim or claim_id))
                 parts.append(marker(scale(record.value), cy, row.role,
                                     extra=RC.svg_binding(row.claim or claim_id, row.record_id)))
@@ -941,7 +956,8 @@ def preview_chart(payload: dict) -> str:
 PLANNED_WORK = (
     ("A distributional neural network", "4.6", "DDNN",
      "Does a distributional neural network improve on {comparator}, with the same information and on identical hours?",
-     "A provenance and resource record, then one predefined comparison on identical hours"),
+     "A provenance and licence record and resource measurements, then one predefined comparison on identical "
+     "hours"),
     ("Wind and solar generation forecasts", "4.4V", "VRE",
      "Does an in-house wind and solar generation forecast add information beyond direct weather?",
      "A held-forward generation model, then an ablation"),
@@ -1272,7 +1288,7 @@ def v4_main_chart() -> str:
 
 #: The ladder (research anchor §17.1, claim C106): each step's contrast, its label in plain words and its claim.
 LADDER = (
-    ("Pooled LightGBM − daily LightGBM: weather, bundled with size selection", "L-P-B3", "C112"),
+    ("Pooled − daily LightGBM: weather, bundled with size selection and the missing-input rule", "L-P-B3", "C112"),
     ("Three-block − pooled LightGBM: the block split alone", "L-R-L-P", "C111"),
     ("Normalized − raw three-block LightGBM: the target", "L-N-L-R", "C113"),
 )
@@ -1289,7 +1305,7 @@ def v4_ladder_panels() -> list[Panel]:
         return Panel(title, "error-score difference · below zero favours the first named",
                      tuple(Row(label, f"cp21.uncertainty.{pair}.equal_fold.{metric}", "study", claim=claim)
                            for label, pair, claim in LADDER),
-                     domain=(-0.25, 0.05), step=0.05,
+                     domain=(-0.25, 0.05), step=0.1,
                      refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))
     return [panel("MAE", "Point-error score"), panel("WIS", "Interval score")]
 
@@ -1298,9 +1314,10 @@ def v4_ladder_chart() -> str:
     return single_rows(
         "v4-ladder", "C106", v4_ladder_panels(),
         title="The ladder: each step's equal-fold error-score difference, with 95 percent confidence intervals",
-        desc="Three steps in two panels. Adding weather together with size selection lowered both scores; the block "
-             "split and the normalized target show no demonstrated joint preference: their intervals span zero.",
-        label_width=300, row_h=56,
+        desc="Three steps in two panels. Adding weather, bundled with size selection and the missing-input rule, "
+             "lowered both scores; the block split and the normalized target show no demonstrated joint preference: "
+             "their intervals span zero.",
+        label_width=330, row_h=56, wrap_labels=True,
     )
 
 
@@ -1319,7 +1336,8 @@ def v4_arms_panels() -> list[Panel]:
 def v4_arms_chart() -> str:
     return single_rows(
         "v4-arms", "C114", v4_arms_panels(),
-        title="Each study arm, and v4, against v3: equal-fold error-score differences with 95 percent intervals",
+        title="Each study arm, and v4, against v3: equal-fold error-score differences with 95 percent confidence "
+              "intervals",
         desc="Four rows in two panels. Each study arm's intervals span zero, except the three-block LightGBM's "
              "interval score, which lies wholly above zero, worse than v3; v4's lie wholly below zero.",
         label_width=300, row_h=56,
@@ -1563,7 +1581,8 @@ def opening(C, payload) -> str:
         f'{S("version", demo["browser"].split(".")[0])} on {esc(demo["machine"])}, public demo, '
         f'{S("date", demo["date"])}; last verified {S("date", demo["verified"])}.</p>'
     )
-    terms = "".join(f'<li data-block="{key}">{RC.render(key)}</li>' for key in RC.headline_terms())
+    terms = "".join(f'<li data-block="{key}">{RC.render(key)}{TERM_ROUTES.get(key, "")}</li>'
+                    for key in RC.headline_terms())
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">
@@ -1783,6 +1802,20 @@ def comparison_audit() -> tuple[Audit, ...]:
     return checkpoint_audit(G.COMPARISON_EXPERIMENT, source=record.source_path, line=record.source_line)
 
 
+#: A headline term whose full statement lives in a chapter's detail links there; the anchor opens its disclosure.
+TERM_ROUTES = {"terms.adoption_rule": ' <a class="quiet in-text" href="#v4-rule">Read them</a>'}
+
+
+def comparison_terms_list() -> str:
+    """The terms the comparison uses and the headline does not introduce, on the reading path directly below its
+    caveat (PUBLISH_RULES §2: a term is defined at first use, never only in a closed disclosure)."""
+    keys = RC.comparison_terms()
+    if not keys:
+        return ""
+    items = "".join(f'<li data-block="{key}">{RC.render(key)}</li>' for key in keys)
+    return f'<ul class="terms comparison-terms" aria-label="Terms used in the comparison">{items}</ul>'
+
+
 def results() -> str:
     """The comparison (standard §1 i, §6): the change against the comparator with its interval and the
     main caveat above the chart; the target in words, with its date, N and a met / not-met column."""
@@ -1792,6 +1825,7 @@ def results() -> str:
  <figure class="panel analytical" aria-labelledby="comparison-finding">
   {block("comparison.finding", tag="h3", cls="panel-title finding-title", ident="comparison-finding")}
   {block("comparison.caveat", cls="qualification caveat-line")}
+  {comparison_terms_list()}
   <p class="panel-sub" data-block="comparison.sub">{RC.render("comparison.sub")}</p>
   {legend(tuple(dict.fromkeys(entry.style for entry in G.comparison_rows())))}
   {overview_chart()}
@@ -1809,7 +1843,7 @@ def results() -> str:
               block("overview.fairness.detail") + fold_table())}
  </div>
  {disclosure("definitions", "Definitions, the policies tested, and why v1 scores differently in its own report",
-             "".join(block(key) for key in RC.comparison_terms()) + block("overview.definitions")
+             block("overview.definitions")
              + f'<p data-block="comparison.census.detail">{RC.census_detail()}</p>'
              + block("overview.f07"))}
 </section>"""
@@ -2412,7 +2446,7 @@ def block_change() -> str:
         f'<div class="fc-col fc-added fc-v4"><p class="fc-head">added in {ver(v4.version)}</p><ul>'
         "<li>a three-block LightGBM forecaster: night, solar hours, shoulder and peak</li>"
         "<li>one third of the blend's weight, the LEAR pair two thirds</li></ul>"
-        '<p class="fc-note">same inputs; intervals re-estimated on the new errors</p></div></div>'
+        '<p class="fc-note">same information; intervals re-estimated on the new errors</p></div></div>'
     )
 
 
@@ -2437,7 +2471,8 @@ def v4_slots() -> ChapterSlots:
               + block("v4.peak") + v4_peak_chart() + values_table("v4-c4-values", "C120", v4_peak_panels()))
     coverage = (detail_head("v4-coverage", "Did the intervals get more reliable, or only wider?") + block("v4.coverage")
                 + v4_coverage_chart() + multi_values_table("v4-c6-values", "C121", v4_coverage_panels()))
-    protocol = "".join(block(key) for key in ("v4.rule", "v4.criteria", "v4.parity", "v4.controls", "v4.cost"))
+    protocol = block("v4.rule", ident="v4-rule") + "".join(block(key) for key in ("v4.criteria", "v4.parity",
+                                                                                   "v4.controls", "v4.cost"))
     return ChapterSlots(
         entry=entry,
         question="v4.question",
@@ -2993,6 +3028,7 @@ pre{{background:var(--surface);border:1px solid var(--border);border-radius:10px
 .terms{{list-style:none;padding:10px 0 0;margin:0;border-top:1px solid var(--border);font-size:14px;line-height:21px;
  color:var(--text-2);display:grid;gap:4px}}
 .terms li{{max-width:72ch}}
+.comparison-terms{{border-top:0;padding:0;margin:0 0 12px}}
 .terms strong{{color:var(--text);font-weight:650}}
 .release-rule{{font-size:14px;line-height:22px;color:var(--text);max-width:56ch;border-left:3px solid var(--v1);
  padding-left:12px;margin:4px 0 12px}}
@@ -3878,9 +3914,8 @@ class RouteCoverageError(RuntimeError):
 def route_coverage() -> tuple[list[str], list[str]]:
     """(published, missing): the registry's expected routes that the verified index holds, and
     those it does not. A missing route's link is omitted, never shown as a placeholder (standard §9)."""
-    routes = mlflow_index().get("routes", {})
     expected = list(G.expected_routes())
-    published = [route for route in expected if routes.get(route, {}).get("url")]
+    published = [route for route in expected if _indexed(route).get("url")]
     return published, [route for route in expected if route not in published]
 
 
