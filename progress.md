@@ -213,6 +213,11 @@ decision remains a boundary, not an active workstream.
     Track A and Track C content is historical.
   - Publication and mainline history belong to the Owner. Task-scoped delegations are recorded in
     the Session Log.
+  - **One standing exception**, approved 2026-09-30 in `AGENTS.md` § Git and publication
+    authority: the final product's daily pipeline, once an authorized CP-18 brief launches it,
+    may publish each day's data-only update unattended. That covers the Space bundle, the
+    data-only records and regenerated report on `main`, and `delu-live` in MLflow. It is never a
+    code, policy, model, rule or anchor change, and every day is validated and fails closed.
 - **Platforms, access and tooling:**
   - **Credentials:** `DAGSHUB_USER_TOKEN` (also supplied as `MLFLOW_TRACKING_USERNAME` and
     `MLFLOW_TRACKING_PASSWORD`), `ENTSOE_API_TOKEN` and `HF_TOKEN`, stored in `~/.zshrc` and
@@ -249,6 +254,18 @@ decision remains a boundary, not an active workstream.
 
 These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
 Session Log.
+
+**Added 2026-09-30 (Owner — unattended daily publication; `AGENTS.md`):**
+
+- **Daily data-only publication of the final product needs no per-day instruction.** Once an
+  authorized CP-18 brief launches the pipeline, it covers every delivery day, including
+  Friday/Shabbat.
+- **Its limits** are in `AGENTS.md` § Git and publication authority, under the standing
+  publication exception.
+- **This supersedes plan §5.1's row that reads "Open".** The plan is hash-pinned by the r7→r8
+  amendment record, so it is kept byte-identical.
+- **The Owner's other final-product decisions** (τ, τ_eq, where the job runs, visual approval,
+  the Headline Arena reply) are surfaced only at the end of the programme.
 
 **Added 2026-09-30 (Owner — final-product Space; v21-r8 §19, PUBLISH_RULES 1.2 A9):**
 
@@ -475,6 +492,22 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Unattended daily publication approved; Space decisions deferred to the end, 2026-09-30.**
+  The Owner: "וההחלטות הללו אני רוצה שיצופו בעתיד. בסוף. אישור לפרסום יומי אוטומטי (תיקון
+  ב-AGENTS.md) אפשר לאשר כבר עכשיו. יש לך אישור מפורש לעריכה הזו. אל תריץ מחדש CI".
+  - **`AGENTS.md`.** A standing publication exception was added to § Git and publication
+    authority. It is scoped to the final product's daily, data-only updates, active once an
+    authorized CP-18 brief launches the pipeline, and validated and fail-closed every day, with
+    no code, policy, rule or anchor change. This is the Owner-only amendment that Standard v1 §16
+    and PUBLISH_RULES §7.2 required before Live.
+  - **Deferred.** τ, τ_eq, where the job runs, visual approval and the Headline Arena reply moved
+    from Open Questions to "[End of programme]".
+  - **Names.** The Owner asked whether CP-17 and CP-18 were already used. They are not: no tag,
+    commit or checkpoint has used CP-17–CP-19. They have been reserved in v21 §10 since
+    2026-09-15 for the final freeze, daily operation and prospective evaluation, which is why the
+    weather and block experiments were numbered CP-20 and CP-21.
+  - **CI.** At the Owner's instruction, CI was not rerun: the commit and the squash merge carry
+    `[skip ci]`. `AGENTS.md` and `progress.md` are documentation that no test pins.
 - **Final-product Space plan anchored, 2026-09-30.** The Owner asked for a plan, anchored "split
   by authority", that makes the Space the final product's useful, informative tool. The Owner
   granted task-wide authority ("לצורך המשימה הזו במלואה יש לך אישור לבצע כל מה שאתה צריך קומיט
@@ -659,26 +692,9 @@ Session Log.
 - **Owner input for PRES-3 (open).** The explicit list of authorized external actions: MLflow
   upload, landing and push, Space upload and the `style.css` deletion (publication plan §8). The
   brief is issued once that list exists and CP-21's local reclamation is confirmed.
-- **Final-product Space: Owner decisions still open** (plan §5.1). The in-browser retraining
-  requirement was decided on 2026-09-30 and anchored in v21-r8 §19.3. It is a delivery
-  requirement with an exception route, not a veto on model choice. What remains:
-  - **At CP-17, before 4.7T:**
-    - the percentage tolerance τ, for the measure "within ±τ EUR/MWh";
-    - the equality tolerance τ_eq, after the browser feasibility probe measures time, memory,
-      payload sizes, deviation from the native fit and selection agreement. CP-21 measured v4's
-      cold daily cycle at a median of 24.7 s and a maximum of 69.4 s on the M3 with four
-      processes; browser timings are unmeasured.
-  - **At CP-18:**
-    - unattended daily publication authority, an `AGENTS.md` amendment only the Owner can make;
-    - where the daily job runs;
-    - visual approval of the new Space.
-  - **Optional, earlier:** a bounded probe brief, to de-risk the button before CP-17 (plan §7,
-    step 2).
-- **Headline Arena invitation (open; Owner's reply).** A message on the Space invited daily
-  forecast submissions. The recommendation is to decline for now and revisit only after CP-19,
-  and only if the arena adds a DE-LU day-ahead target. The suggested reply is in the
-  [plan](docs/track-b/final-product-space-plan-2026-09-30.md) §9. Posting it is the Owner's
-  external action.
+- **Final-product Space decisions are deferred to the end, by the Owner's instruction (2026-09-30).**
+  They are listed under "[End of programme]" in the Notes, and are not raised before then.
+  Unattended daily publication was approved on 2026-09-30 and written into `AGENTS.md`.
 - **Final-product operating specification remains pending:** no final version designated and no
   daily system running. Future authorized work must fix numeric fit/issuance schedules, training
   windows, resources, percent-score formula/tolerance, source/outcome timing, business-use-case
@@ -775,8 +791,9 @@ Session Log.
     - any neural attribution method;
     - the Space payload schema.
   - **The CP-18 brief** builds the daily bundle and the A9 views, with their tests and negative
-    controls, and obtains the Owner's `AGENTS.md` authority for unattended daily publication
-    before launch.
+    controls. Unattended daily publication is already authorized by `AGENTS.md`'s standing
+    publication exception (2026-09-30). The brief names the pipeline's paths, credential use
+    and monitoring within that exception.
 - **[2026-10, from the 19th]** `ubuntu-latest` moves to Ubuntu 26. CI is pinned to Python 3.12;
   check the first run after the move.
 - **[Every research brief]** Apply the 2026-09-24 standing decisions:
@@ -798,6 +815,22 @@ Session Log.
   2. The CP-17 freeze and a live run of at least 90 days for the final model only. The live panel
      goes at the top of the page.
   3. CV use. Presentation is the Owner's.
+- **[End of programme — surface these Owner decisions then, not before]** (Owner instruction,
+  2026-09-30; [plan](docs/track-b/final-product-space-plan-2026-09-30.md) §5.1):
+  - **At CP-17, before 4.7T:**
+    - the percentage tolerance τ, for the measure "within ±τ EUR/MWh";
+    - the equality tolerance τ_eq of "Train it yourself", after the browser feasibility probe
+      measures time, memory, payload sizes, deviation from the native fit and selection
+      agreement. CP-21 measured v4's cold daily cycle at a median of 24.7 s and a maximum of
+      69.4 s on the M3 with four processes; browser timings are unmeasured.
+  - **At CP-18:**
+    - where the daily job runs;
+    - visual approval of the new Space.
+  - **Headline Arena:** the reply to the invitation received on the Space. The recommendation is
+    to decline, and revisit only after CP-19 and only if the arena adds a DE-LU day-ahead
+    target. The suggested reply is in plan §9. Posting it is the Owner's external action.
+  - **Optional, earlier if the Owner wants it:** a bounded probe brief to de-risk the button
+    (plan §7, step 2).
 - **[Any future adaptive-conformal method]** Define the alpha convention explicitly
   ([Gibbs–Candès miscoverage](https://arxiv.org/html/2106.00170v3#S2.E2)), with hit/miss
   direction fixtures.
