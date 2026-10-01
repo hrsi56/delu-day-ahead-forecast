@@ -1,0 +1,91 @@
+{
+  "check": "Space startup states (plan \u00a77.11, \u00a711.3)",
+  "checked_at_utc": "2026-10-01T11:00:46+00:00",
+  "host": "arm64 / Darwin 25.5.0",
+  "runs": [
+    {
+      "asset_failure": {
+        "report_link": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+        "state": "failure",
+        "visible": [
+          "The demo did not start",
+          "A file it needs did not load, or it has not finished startin",
+          "Retry"
+        ]
+      },
+      "browser_version": "154.0.8037.58",
+      "engine": "chrome",
+      "retry": {
+        "reached_ready": true,
+        "state_after_reload": "loading",
+        "visible": [
+          "The v1 demo is running in your browser."
+        ]
+      },
+      "runtime_hangs": {
+        "state_after_deadline": "failure",
+        "state_at_1_min": "loading",
+        "state_at_start": "loading",
+        "visible": [
+          "The demo did not start",
+          "A file it needs did not load, or it has not finished startin",
+          "Retry"
+        ]
+      },
+      "runtime_reports_failure": {
+        "seconds_to_failure_state": 2.2,
+        "state": "failure",
+        "visible": [
+          "The demo did not start",
+          "A file it needs did not load, or it has not finished startin",
+          "Retry"
+        ]
+      },
+      "started_utc": "2026-10-01T10:59:53+00:00",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "390x844"
+    },
+    {
+      "asset_failure": {
+        "report_link": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+        "state": "failure",
+        "visible": [
+          "The demo did not start",
+          "A file it needs did not load, or it has not finished startin",
+          "Retry"
+        ]
+      },
+      "browser_version": "26.6",
+      "engine": "webkit",
+      "retry": {
+        "reached_ready": true,
+        "state_after_reload": "loading",
+        "visible": [
+          "The v1 demo is running in your browser."
+        ]
+      },
+      "runtime_hangs": {
+        "state_after_deadline": "failure",
+        "state_at_1_min": "loading",
+        "state_at_start": "loading",
+        "visible": [
+          "The demo did not start",
+          "A file it needs did not load, or it has not finished startin",
+          "Retry"
+        ]
+      },
+      "runtime_reports_failure": {
+        "seconds_to_failure_state": 2.1,
+        "state": "failure",
+        "visible": [
+          "The demo did not start",
+          "A file it needs did not load, or it has not finished startin",
+          "Retry"
+        ]
+      },
+      "started_utc": "2026-10-01T11:00:19+00:00",
+      "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+      "viewport": "390x844"
+    }
+  ]
+}

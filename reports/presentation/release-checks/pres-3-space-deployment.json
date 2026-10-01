@@ -1,0 +1,46 @@
+{
+  "after_revision": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+  "before": {
+    "private": false,
+    "revision": "0c550e863711e19abbb35219cf64d45dfb39c888",
+    "sdk": "static",
+    "stage": "RUNNING"
+  },
+  "before_revision": "0c550e863711e19abbb35219cf64d45dfb39c888",
+  "bundle": ".local/artifacts/pres-3/space-wasm-9028a118",
+  "bundle_sha256": "9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585",
+  "bytes": 44164910,
+  "commit": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+  "commit_url": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast/commit/0331088725fedab2f5a1ec804ae03bf960cf126f",
+  "completed_utc": "2026-10-01T10:45:57+00:00",
+  "credential_guard": "passed",
+  "declared_deletes": [
+    "style.css"
+  ],
+  "declared_matches": true,
+  "extra": [],
+  "files": 805,
+  "mismatched": [],
+  "missing": [],
+  "mode": "upload",
+  "planned_adds": [],
+  "planned_changes": [
+    "public/boosters/p025.txt.gz.b64",
+    "public/boosters/p05.txt.gz.b64",
+    "public/boosters/p10.txt.gz.b64",
+    "public/boosters/p25.txt.gz.b64",
+    "public/boosters/p50.txt.gz.b64",
+    "public/boosters/p75.txt.gz.b64",
+    "public/boosters/p90.txt.gz.b64",
+    "public/boosters/p95.txt.gz.b64",
+    "public/boosters/p975.txt.gz.b64"
+  ],
+  "planned_deletes": [
+    "style.css"
+  ],
+  "repo": "Yarden-Viktor/delu-day-ahead-forecast",
+  "served_equals_bundle": false,
+  "started_utc": "2026-10-01T10:45:49+00:00",
+  "status": "deployed",
+  "verified": true
+}

@@ -12,7 +12,9 @@ instructions of 2026-09-30. The file was updated in place the same day, through 
 Owner's amendment of "same information, same opponent" and the retirement of the session
 branch. It was updated in place again the same day, through a third pull request, for the
 final-product Space plan (v21-r8 §19, PUBLISH_RULES 1.2) and the Owner's completion of CP-21's
-reclamation and the session-branch retirement.*
+reclamation and the session-branch retirement. It was updated in place once more that evening,
+in a local Orchestrator session on the Owner's machine, for the issue of the PRES-3 brief, and
+on 2026-10-01 for PRES-3's return, landing, deployment and closure.*
 
 ---
 
@@ -21,7 +23,8 @@ reclamation and the session-branch retirement.*
 ### Track B — capstone (the critical path)
 
 **Foundation established.** The v1 product is released. CP-10, CP-15, CP-16, CP-20 and CP-21 are
-landed, GFS is admitted, and PRES-1 and PRES-2 are closed. Their detailed results and accepted
+landed, GFS is admitted, and PRES-1, PRES-2 and PRES-3 are closed. PRES-3 published v4 on every
+surface on 2026-10-01. Their detailed results and accepted
 limitations remain in the [landing and closure records and evidence tags](#where-the-history-lives).
 
 **Released product: frozen v1. Research base: v4 (HGL), adopted in research on 2026-09-30.**
@@ -43,7 +46,7 @@ limitations remain in the [landing and closure records and evidence tags](#where
   plus the admitted GFS wind and radiation features; its scores and fold qualifications are in
   the [CP-20 landing record](docs/track-b/cp-20-landing-2026-09-24.md).
 
-**Programme stages** (Owner's sequence, current state 2026-09-30):
+**Programme stages** (Owner's sequence, current state 2026-10-01):
 
 | # | Stage | Status |
 |---|---|---|
@@ -51,79 +54,59 @@ limitations remain in the [landing and closure records and evidence tags](#where
 | 2 | v2 build and causal fix (CP-16, 4.2) | ✅ Done and landed |
 | 3 | Presentation around v2 (4.3R), with CP-20 alongside | ✅ PRES-1 and PRES-2 closed |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
-| 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Its publication block, PRES-3, is next |
-| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Not started; needs its brief and D4 allowances |
+| 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Published by PRES-3, closed 2026-10-01 |
+| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Not started; needs the Owner's candidate decision, a new anchor section, its brief and D4 allowances |
 | 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Next pending Track B checkpoint: PRES-3 — publish CP-21's result, v4, on every surface.**
+**Next pending Track B work: the 4.6 DDNN route. It needs the Owner's candidate decision first
+(Open Questions), then a new anchor section under a task-scoped Lockdown suspension, then its
+brief.** No checkpoint is open.
 
-- **Route.** The [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md),
-  outcome A (runbook §2), ratified as D5 on 2026-09-29:
-  - a v4 chapter and the v3 → v4 transition;
-  - the research headline moving to v4 through the registry, with the D6 encoding;
-  - the README, MLflow's `cp21` runs, Pages and the Space.
-
-  It also corrects the public planned item "4.6 · DDNN / TabPFN", since TabPFN is withdrawn
-  (v21-r7 §18).
-- **Entry conditions.**
-  - Met: CP-21 PASS with its packet and draft export.
-  - Met: the squash landing and both tags, verified on origin.
-  - Met: the reclamation of `gauntlet/cp-21` and its `lead` worktree, recorded in the Owner's
-    [CP-21 landing record](docs/track-b/cp-21-landing-2026-09-30.md) (`6f4575b`).
-- **Owner inputs before the brief** (plan §8): the explicit list of authorized external actions,
-  namely the MLflow upload, landing and push, the Space upload and the `style.css` deletion.
-  Visual choices stay the Owner's. The independent check is mandatory; the PRES-2 waiver was
-  one-time.
-- **Pinned rules.** PUBLISH_RULES 1.2 and its incorporated sources, and the runbook and packet
-  template at their hashes on the day of issue (unchanged since 2026-09-29). 1.2's A9 is not
-  triggered for this research publication, so PRES-3's obligations equal 1.1's. CP-21's content
-  is governed by v21-r6 §17, whose bytes are at `evidence/cp-21`; the live research anchor is
-  v21-r8.
-- **Then.** The 4.6 DDNN brief follows. Under the standing rule, amended 2026-09-30, DDNN gets
-  v4's information and faces v4 on identical rows. CP-17–CP-19 stay reserved for the final
-  model. §16 defines the final product, and §19 with PUBLISH_RULES A9 defines its Space; the
+- **PRES-3 is closed** ([closure record](docs/track-b/pres-3-closure-2026-10-01.md)).
+  - v4 is the research headline on the report and the README. Its chapter and the v3 → v4
+    transition are published, and the planned list carries 4.6 as DDNN alone, against v4.
+  - MLflow carries `cp21` and its four children. The Space serves the reviewed bundle at
+    revision `0331088`, still v1, without `style.css`.
+  - The independent post-deployment review was waived by the Owner for PRES-3 only. The
+    receipt rests on byte identity and the automated public records.
+- **Under the standing rule,** amended 2026-09-30, DDNN gets v4's information and faces v4 on
+  identical rows, with v3 as a reference.
+- **The final product.** CP-17–CP-19 stay reserved for the final model. §16 defines the final
+  product, and §19 with PUBLISH_RULES A9 defines its Space; the
   [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md) carries their
   checklist into the CP-17 and CP-18 briefs.
 
-**Repository**, as verified from the cloud clone on 2026-09-30:
+**Repository**, as verified on the Owner's machine on 2026-10-01:
 
-- `main` = `origin/main`, in order:
-  - CP-21's squash landing `4e37cf7` (`land/cp-21`);
-  - [hrsi56/delu-day-ahead-forecast#1](https://github.com/hrsi56/delu-day-ahead-forecast/pull/1)'s
-    squash landing `c9dc364`: v21-r7, its records, Q&A 38–42 and the regeneration;
-    `invariant-tests` passed on it (run 74);
-  - PR #2's `632d0e6`, the standing-rule update;
-  - the Owner's CP-21 landing record `6f4575b`;
-  - then this update, landing the final-product Space plan with v21-r8 and PUBLISH_RULES 1.2.
-
-  `evidence/cp-21` = `1d13f99` is on origin, and so is every other `land/*` and `evidence/*` tag
-  listed in [Where the history lives](#where-the-history-lives).
-- **The first cloud session branch is retired.**
-  - `archive/v21-r7-session-20260930` = `e84d467` is on origin, verified 2026-09-30. It keeps
-    reachable the commits `f686c51`, `4892d57` and `e84d467` that this file cites.
-  - The Owner then deleted the branch.
-  - The same branch name, `claude/browser-model-retraining-options-r16r4p`, was recreated from
-    `main` for the Space-plan task. It carries only that task's commit, and is left for the
-    Owner's disposition after its pull request merges.
-- **CP-21's local reclamation is done,** per the Owner's
-  [landing record](docs/track-b/cp-21-landing-2026-09-30.md):
-  - `gauntlet/cp-21` deleted and the `lead` worktree removed;
-  - `.local/artifacts/cp-21/` (62 MB) and `.local/mlruns/cp21/` retained as local recovery
-    material, with the CP-20 material under `.local/`
-    ([artifact map](docs/track-b/local-artifacts.md)).
-
-  A cloud session cannot see that local state.
+- `main` = `origin/main` = `land/pres-3` = `f6dabfa`, PRES-3's squash landing on `17f354e`.
+  - Before it came PRs #1–#4 (`c9dc364`, `632d0e6`, `c352436`, `17f354e`) and the Owner's CP-21
+    landing record `6f4575b`, on CP-21's landing `4e37cf7`.
+  - `evidence/pres-3` = `42a4bb4` and every earlier `land/*`, `evidence/*` and `archive/*` tag
+    listed in [Where the history lives](#where-the-history-lives) are on origin.
+- **No other branch or worktree exists.** Locally there is `main` only, with no stash and no
+  worktree besides the primary checkout. On origin there is the branch `main` only.
+  - `gauntlet/pres-3` and its `lead` worktree were reclaimed on 2026-10-01, after the tag
+    checks.
+  - A verified Git bundle of the branch is in `.local/artifacts/pres-3-landing-2026-10-01/`.
+- **The cloud session branches are retired.** `archive/v21-r7-session-20260930` = `e84d467`
+  keeps the commits this file cites reachable.
+- **Retained local recovery material:**
+  - `.local/artifacts/cp-21/` (62 MB) and `.local/mlruns/cp21/`;
+  - `.local/artifacts/pres-3/` (327 MB), which includes the reviewed Space bundle copy
+    `space-wasm-9028a118/`;
+  - the CP-20 material under `.local/`
+    ([artifact map](docs/track-b/local-artifacts.md); PRES-3's closure record lists its own).
 
 **Public surfaces — distinguish a Git push from a verified deployment:**
 
 | Surface | Last evidenced state / pending action |
 |---|---|
-| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` after PR #1 (`c9dc364`, CI green), PR #2, the Owner's `6f4575b` and the Space-plan pull request; `land/cp-21`, `evidence/cp-21` and `archive/v21-r7-session-20260930` on origin, read 2026-09-30. |
-| [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | PRES-2 page: HTTP 200, SHA-256 `f36314e28811ed4b7ec41bc73dfd481ddb112815effabfc4e7b3ae74d8edab1d`, re-read anonymously 2026-09-29. It still shows v3 as the research headline and TabPFN in the 4.6 planned item; PRES-3 updates both. |
-| [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | Revision `0c550e863711e19abbb35219cf64d45dfb39c888`, public/static/RUNNING, re-read anonymously 2026-09-29. It runs v1. Bundle `8007f0d2a9c09a8c2c3182745dac6b38956a9a0ad8f58541f32472b674d5bb4e`: 805 files, 44,164,910 bytes, preserved at `.local/artifacts/pres-2/space-wasm-8007f0d2/`. Plus the unused `style.css`, making 806 files; the next upload removes it. |
-| [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | Unchanged 23-run, six-route export verified during PRES-2; no post-push recheck claimed. CP-21's `cp21` runs are published only through PRES-3. |
+| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `main` = `land/pres-3` = `f6dabfa` (PRES-3's squash landing on `17f354e`), pushed by the Owner on 2026-10-01 with `evidence/pres-3` = `42a4bb4`. The served README equals `09e7dc66…`. The branch on origin is `main` only. |
+| [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | PRES-3 page, served after the push of `f6dabfa`: HTTP 200, 1,907,451 bytes, SHA-256 `97e1d86203a766534045a57a6616269982a7730756f6a0a96965497be92b9530`, equal to `docs/index.html`, read anonymously 2026-10-01. v4 is the research headline, and the planned list is corrected. It passed the public browser checks in Chrome and WebKit at every width, 2026-10-01. |
+| [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | PRES-3 deployment 2026-10-01 10:45 UTC: revision `0331088725fedab2f5a1ec804ae03bf960cf126f`, public/static/RUNNING, 805 files, verified file by file against the reviewed bundle `9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585` (44,164,910 bytes; copy at `.local/artifacts/pres-3/space-wasm-9028a118/`). `style.css` deleted. It runs v1. The card is unchanged. Public demo checks passed on 2026-10-01; the first cold run's HF 429 is retained beside its passing retry. |
+| [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | PRES-3's authorized upload, 2026-10-01 03:32–03:43 UTC: `cp21` and its four children created; the 23 published runs found complete and untouched; no experiment tag written. Public mirror 28/28 and 7/7 routes, including `compare:v4`, in Chromium and WebKit, before the final build. The experiment description still names only the four earlier parents (A-PRES3-1). Post-deploy recheck 2026-10-01: 28/28 runs, and the routes pass in Chromium and WebKit. |
 
 **Scope outside Track B:** Track C was cancelled and moved out of this repository; no marketing
 state is tracked here. Track A is inactive and has no position. The Owner's end-stage CV-use
@@ -133,10 +116,10 @@ decision remains a boundary, not an active workstream.
 
 ## 2. Setup State
 
-- **ACTION-REQUIRED (Owner): pull `main` on the Owner's machine after the Space-plan pull request
-  merges.** Then its session branch can be deleted if no further work needs it. No live
-  document cites a commit that exists only on it, so no tag is needed first. Any new clone must
-  enable the secret guard again.
+- **ACTION-REQUIRED (Owner): commit and push PRES-3's closure set to `main`.**
+  - It holds this file, `docs/track-b/pres-3-closure-2026-10-01.md`, the Q&A `.docx` (entries
+    44–46) and the nine new `reports/presentation/release-checks/pres-3-*` records.
+  - The commands are in the Orchestrator's hand-over of 2026-10-01: `git commit -F`, no editor.
 
 ---
 
@@ -468,7 +451,13 @@ Session Log.
 - **Reasoning capture is active** (`AGENTS.md` § Interview-answer capture).
   - Only the Orchestrator files entries, through `scripts/qa_append.py`; the Lead names triggers
     in its return.
-  - `שאלות תשובות.docx` has 43 entries.
+  - `שאלות תשובות.docx` has 46 entries.
+    - Entries 44–46 (2026-10-01) file three of PRES-3's six named triggers:
+      - the bundle hash, from the gzip OS byte to the hidden marimo sandbox prompt, and why the
+        reviewed bytes were deployed;
+      - the fresh reader catching an undefined headline term that the editorial review missed;
+      - the write-plan guard that left the MLflow description stale rather than make an
+        unauthorized write.
     - Entry 43 (2026-09-30) covers how the final product shows "how sure" honestly: nominal level
       against measured coverage and width, a percentage measure defined in advance, in-browser
       recomputation and "Train it yourself".
@@ -492,6 +481,34 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **PRES-3 issued, returned, landed, deployed and closed, 2026-09-30 to 2026-10-01.**
+  - **Issue.** The Owner decided that the brief authorizes only the MLflow upload, and confirmed
+    the name "v4 · three-block LightGBM added". The brief is `57a8c7fb…`. The superseded 16:11
+    draft (`ccbad5c5…`) was kept, not deleted.
+  - **Return.** BLOCKED at the external gate after about 9 of 24 hours. The Integration PASS
+    binds `4ad7d09`, with evidence tip `42a4bb4`. The receipt was accepted, and the upload's
+    write plan was confirmed to cover `cp21` and its four children only.
+  - **The Owner's steps:**
+    - LAND `f6dabfa`, with `land/pres-3` and `evidence/pres-3`;
+    - the push;
+    - the Space deployment of the reviewed bundle copy, revision `0331088`, with `style.css`
+      deleted and every file verified.
+  - **A hand rebuild did not reproduce the bundle.** `make wasm` in an interactive terminal
+    produced a different bundle, because marimo's invisible sandbox prompt pulled marimo 0.25.0.
+    The reviewed copy was deployed instead, and the fix is on the tooling list.
+  - **A6.** The Orchestrator ran the public checks, and all passed. One HF 429 first failure is
+    retained beside its passing retry.
+  - **The waiver.** The independent post-deployment review was waived by the Owner for PRES-3
+    only ("Confirmed, proceed with closing PRES-3"), on the basis of byte identity and the
+    automated public records.
+  - **Reclamation and Q&A.** The branch and worktree were reclaimed. Q&A entries 44–46 were
+    filed.
+  - **Details:** the [closure record](docs/track-b/pres-3-closure-2026-10-01.md).
+  - **Omission review** against `.local/artifacts/pres-3-landing-2026-10-01/progress-before-closure.md`:
+    - the PRES-3 Current-Position block and the three PRES-3 Session Log entries are compressed
+      into this line and the closure record;
+    - the Note "[PRES-3 closure]" is resolved;
+    - nothing else was dropped.
 - **Unattended daily publication approved; Space decisions deferred to the end, 2026-09-30.**
   The Owner: "וההחלטות הללו אני רוצה שיצופו בעתיד. בסוף. אישור לפרסום יומי אוטומטי (תיקון
   ב-AGENTS.md) אפשר לאשר כבר עכשיו. יש לך אישור מפורש לעריכה הזו. אל תריץ מחדש CI".
@@ -689,9 +706,44 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Owner input for PRES-3 (open).** The explicit list of authorized external actions: MLflow
-  upload, landing and push, Space upload and the `style.css` deletion (publication plan §8). The
-  brief is issued once that list exists and CP-21's local reclamation is confirmed.
+- **PRES-3's three advisories for the Owner (open; none blocks closure).** Details are in the
+  advisory log at the evidence tip. Recommended: defer all three, as below.
+  - **A-PRES3-7, GFS attribution.** Extend `DATA-LICENSE.md`'s line to "the research models'
+    weather data, from v3 on".
+    - The wording also feeds both Space cards and the v1 demo's `claims.json`, so changing it now
+      would invalidate the reviewed bundle.
+    - Recommended: approve the wording and apply it in the next publication that deploys the
+      Space.
+  - **A-PRES3-1, the MLflow experiment description.** It still names only the four earlier
+    parents.
+    - The fix is a code change, extending the pin in
+      `scripts/mlflow_export.py::EXPERIMENT_NOTE_CHECKPOINTS`, plus one authorized experiment-tag
+      write.
+    - Recommended: carry both in the next publication brief.
+  - **A-PRES3-5, a note on standard §15** on where the met / not-met column may sit.
+    - It edits a locked publication anchor, so it needs a task-scoped Lockdown suspension.
+    - Recommended: fold it into the pending governance follow-up (PRES-1 W16, D6 of 2026-09-28).
+- **The 4.6 candidate and v5 rule (open, Owner; needed before any 4.6 brief).** §18 (v21-r7)
+  fixes only DDNN, NumPy only, PyTorch as a test reference, the 4.6L → 4.6R → 4.6C route and
+  "Nothing is opened". There is no pre-registered adoption rule for a v5 yet.
+  - **Recommendation, following CP-21's pattern:**
+    - the candidate is v5 = v4 plus a DDNN component;
+    - DDNN alone is a study arm;
+    - the opponent is v4 on identical rows, with v3 as a reference.
+  - **Then a new anchor section.** It needs the Owner's task-scoped Lockdown suspension, and
+    would carry:
+    - the candidate;
+    - a v5 rule set in advance, like `cp21-adoption`: joint improvement, the six §8
+      diagnostics, a complete valid evaluation and a per-fold veto;
+    - 4.6L and the entry conditions for 4.6R (§18.3's checks);
+    - D4 ceilings and controls;
+    - a publication plan for both outcomes (PRES-4).
+  - **Then** the Owner's approval, the brief, the Lead, the receipt, the LAND and PRES-4.
+  - **Fixed whatever is decided:**
+    - v4's information;
+    - no data after 2026-04-07;
+    - positive controls that survive the model's own transforms;
+    - 4.7T's manifest carries v3 and v4, and v5 if adopted.
 - **Final-product Space decisions are deferred to the end, by the Owner's instruction (2026-09-30).**
   They are listed under "[End of programme]" in the Notes, and are not raised before then.
   Unattended daily publication was approved on 2026-09-30 and written into `AGENTS.md`.
@@ -700,12 +752,13 @@ Session Log.
   windows, resources, percent-score formula/tolerance, source/outcome timing, business-use-case
   evaluation (if any), deployment/daily-demo design and Friday/Shabbat failure coverage. These
   implementation fields do not reopen the now-ratified product identity/order/daily-fit decision.
-- **PRES-2 advisories:** R1–R7 in the [Integration verdict](docs/track-b/evidence/pres-2/integration.md)
-  and the [advisory log](docs/track-b/publication-advisory-log.md) remain recommendations for the
-  next publication, not release failures. They include transition question wording, startup
-  timing for the new public bundle, product evidence links, data wording, carried editorial points,
-  byte-count logging and clean-checkout reproduction order. The targeted public runs recorded
-  19.2–21.4 s to a visible forecast; these are observations, not a benchmark.
+- **PRES-2 advisories R1–R7 were dispositioned in PRES-3** (the
+  [advisory log](docs/track-b/publication-advisory-log.md)):
+  - R6 and R7 were taken up;
+  - R2's cold-start re-measurement was carried to PRES-3's public checks, where the four runs
+    recorded 18.9–21.5 s;
+  - R1, R3, R4 and R5 were deferred with reasons, for a later presentation block. R3 and R4
+    wait for a change to the product documentation.
 - **PRES-1 remains closed under its landing record.** F6–F8 passed under the explicit Owner
   exception. Initial HF/DagsHub rate-limit failures and successful retries are recorded.
   Historical active-hour total and added-disk baseline remain unavailable, not retroactively
@@ -751,27 +804,30 @@ Session Log.
 
 ## 7. Notes for Future Sessions
 
-- **[Next: PRES-3]** Issue the brief from the
-  [publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md), outcome A, pinned to
-  PUBLISH_RULES 1.2, once the Owner names the authorized external actions. CP-21's local
-  reclamation is confirmed. A9 is not triggered for this research publication. It covers every
-  surface: Pages, the Space, MLflow and the README.
-  - The registry gets `v4 · <adopted change>`, dated at landing (2026-09-30), with predecessor
-    v3. CP-21's draft name is "v4 · three-block LightGBM added".
-  - Correct the public planned item "4.6 · DDNN / TabPFN" ("Does a distributional network, or a
-    tabular foundation model, beat v3?") in `scripts/build_pages.py` and the page it builds.
-    TabPFN was withdrawn on 2026-09-30 (v21-r7 §18).
-  - The independent check is mandatory; the PRES-2 waiver was one-time.
-- **[First 4.6 brief]** Cite v21-r7 §18. Fix the NumPy-only implementation rule, the PyTorch
-  reference-test tolerances and how those tests are installed and run so that they cannot be
-  skipped silently, and re-estimate 4.6's effort for DDNN alone. Under the standing rule,
+- **[Tooling follow-up]** PRES-3's tooling advisories, for a later, separately authorized task:
+  - A-PRES3-2: write the gzip header explicitly, so the bundle is byte-identical across Python
+    versions;
+  - A-PRES3-3: keep shared presentation code out of research checkpoints' byte-bound manifests;
+  - A-PRES3-4: point the runbook's browser commands at `.local/tools/ms-playwright`;
+  - A-PRES3-6: extend the release check's overlap test to chart marks.
+  - **New, 2026-10-01:** make `scripts/build_wasm_space.py::run_export` pass `--no-sandbox` and
+    `stdin=DEVNULL`, or pin marimo in the notebook header. A rebuild must then reproduce the
+    reviewed bundle from any terminal. Until that lands, deploy reviewed bundle copies, never a
+    hand rebuild.
+  - **New, 2026-10-01:** rename `deploy_space.py`'s plan field `served_equals_bundle`, for example
+    to `before_served_equals_bundle`, so that a deploy record cannot read as a failed
+    verification.
+- **[First 4.6 brief]** Only after the Owner's candidate decision and the new anchor section (Open
+  Questions). Cite v21-r7 §18 and that section. Fix the NumPy-only implementation rule, the
+  PyTorch reference-test tolerances and how those tests are installed and run so that they
+  cannot be skipped silently, and re-estimate 4.6's effort for DDNN. Under the standing rule,
   amended 2026-09-30, DDNN gets v4's information and faces v4 on identical rows, with v3 as a
-  reference.
-- **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4.
-- **[Next Space deployment]** Delete remote files that are not in the reviewed bundle; the
-  unused `style.css` has survived PRES-1 and PRES-2. Then verify that the served file set equals
-  the bundle. Account for every surface: Pages, the Space, MLflow and the README (runbook §1a,
-  packet §8). A Git push is not a verified deployment.
+  reference. Carry the non-interactive Git rule into every Lead instruction.
+- **[Unscheduled hypothesis]** v3 plus a single pooled LightGBM member, the simpler variant
+  CP-21's block-split finding points to, is untested and not planned. Opening it needs an Owner
+  decision.
+- **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4, and v5 too if 4.6
+  adopts one.
 - **[Every new publication brief]** Pin PUBLISH_RULES 1.2 and incorporated source hashes;
   retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under
   its original 1.0 contract. Predecessor comparisons and descriptive chart routes remain;
@@ -809,6 +865,13 @@ Session Log.
   proposal was adopted. Until that task runs (D6 of 2026-09-28), every research brief carries
   the MLflow step and the packet explicitly, as CP-21's brief does. Do not repeat F1 or reopen
   PRES-1.
+  - *Added 2026-10-01*, for the same task:
+    - A-PRES3-5's note on standard §15;
+    - the proposal to require the independent post-deployment review only when the served
+      bytes differ from the independently reviewed bytes, or a public check fails. PRES-2 and
+      PRES-3 were both waived on byte identity.
+
+    Both edit locked publication anchors and need the Owner's task-scoped suspension.
 - **[End of programme, after the holidays]**
   1. The 4.7T fresh-data test on the unused period. Report the never-published sub-period from
      2026-09-07 separately.
@@ -873,6 +936,11 @@ Each was paid for once. None should be relearned.
 - **Read a return for protocol defects as well as for its verdict.** Verify the hard gate
   independently.
 - **Grep for conflict markers when opening a session.** `30b1b9f` published six.
+- **Deploy the bytes that were reviewed, not a rebuild.** A hand `make wasm` in an interactive
+  terminal pulled marimo 0.25.0 through a hidden sandbox prompt and produced a different bundle.
+  The hash binding refused it.
+- **Owner-run Git must be non-interactive.** The CP-21 LAND stalled in the pager and then in vim.
+  Every owner packet uses `git --no-pager` and `git commit -F <message file>`.
 - **The holdout is opened once.** v1's is spent, and the model that ships is the model that was
   evaluated.
 
@@ -884,8 +952,9 @@ Each was paid for once. None should be relearned.
   - `evidence/cp-0`, `evidence/cp-1`, `evidence/cp-2`, `evidence/cp-3`, `evidence/cp-3b`,
     `evidence/cp-15` (including CP-10), `evidence/cp-16`, `evidence/cp-20` and `evidence/cp-21`,
     with landings at the matching `land/` tags;
-  - `evidence/pres-1` / `land/pres-1` and `evidence/pres-2` / `land/pres-2` preserve the
-    publication chains; both publications are closed and their branches reclaimed;
+  - `evidence/pres-1` / `land/pres-1`, `evidence/pres-2` / `land/pres-2` and
+    `evidence/pres-3` / `land/pres-3` preserve the publication chains; all three publications
+    are closed and their branches reclaimed;
   - `archive/cp-0-attempt-1`, `archive/weather-admission-20260923` and
     `archive/cp15-cp16-content-20260923`;
   - `archive/v21-r7-session-20260930` = `e84d467`, the retired cloud session branch behind
@@ -913,6 +982,17 @@ Each was paid for once. None should be relearned.
     `d7d57e3`, evidence tip `871c0e2`, landing `a543616`, Space revision `0c550e8`, bundle
     `8007f0d2…`. Twelve product subjects, the v1→v2 and v2→v3 transitions and the F01–F04
     repairs shipped; the new independent postdeploy review was waived for PRES-2 only.
+  - PRES-3: [closure record](docs/track-b/pres-3-closure-2026-10-01.md), which carries the
+    packet §8.1 receipt;
+    [Integration](docs/track-b/evidence/pres-3/integration.md),
+    [publication packet](docs/track-b/evidence/pres-3/publication-packet.md),
+    [editorial review](docs/track-b/evidence/pres-3/editorial.md),
+    [fresh reader](docs/track-b/evidence/pres-3/fresh-reader.md) and
+    [issued brief](docs/track-b/evidence/pres-3/issued-brief.md) (`57a8c7fb…`).
+    - Identities: candidate `4ad7d09` (independently checked at `747d2bb`), evidence tip
+      `42a4bb4`, landing `f6dabfa`, Space revision `0331088`, bundle `9028a118…`, page
+      `97e1d862…`.
+    - The independent postdeploy review was waived for PRES-3 only.
 - **Landing and receipt records:**
   - [CP-15 landing](docs/track-b/cp-15-landing.md);
   - [CP-16 landing](docs/track-b/cp-16-landing-2026-09-23.md);

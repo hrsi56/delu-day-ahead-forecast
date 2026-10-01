@@ -1,0 +1,376 @@
+{
+  "checked_at_utc": "2026-10-01T11:00:46+00:00",
+  "counts": {
+    "expected": 28,
+    "found": 28,
+    "metric_points": 9178
+  },
+  "experiment": "delu-generations",
+  "experiment_id": "1",
+  "passed": true,
+  "problems": [],
+  "routes": {
+    "compare:calibration": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp10/v1_reference",
+        "cp10/c1_head_spread",
+        "cp10/c1_price_volatility",
+        "cp10/c2_aci_gamma_0.000001",
+        "cp10/c2_aci_gamma_0.000005",
+        "cp10/c2_aci_gamma_0.00001",
+        "cp10/c2_aci_gamma_0.00002"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%222a78da98d6984c55b2c2c31e4e1f498a%22,%2231a984a28dce4ff69abed0172ac71165%22,%22b95809838bb74972b5fd72d3a5d63c61%22,%22bf30d3dee57141cebe3d4ef41b39c907%22,%228e7e60963cad465ab436035d324d3760%22,%22250f44b8704e4c52bf5d9bd9de66f36c%22,%22754fcaa4bcc0482badb084a7cd56117e%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:model-comparison": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp15/B0",
+        "cp15/B1",
+        "cp15/B2",
+        "cp15/B3",
+        "cp15/A1",
+        "cp15/A2",
+        "cp15/A3",
+        "cp15/A4",
+        "cp15/A5"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22733341b233284f758702cde99044f4a9%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%22d61166d3413747d2b07d6350df704f2d%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22c5b522f86dd54415b085c1f69ff42948%22,%221c31337399104ba881aa0caeefa24a6c%22,%229182613a781b455daf70704f30ee99db%22,%22c3da9c3d87714550aa4ef68fc0ec8913%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:overview": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp21/HGL",
+        "cp20/HG",
+        "cp16/V2-H",
+        "cp15/B2",
+        "cp15/A1",
+        "cp15/B3",
+        "cp15/B1",
+        "cp15/B0"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22d7c53e9d7db94ed48d91da14be2d343b%22,%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v2": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp16/V2-P",
+        "cp16/V2-H",
+        "cp15/B2"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22c8e1cc9025b041d9adff72a8e244099f%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v3": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp20/HG",
+        "cp16/V2-H"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v4": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp21/HGL",
+        "cp21/L-P",
+        "cp21/L-R",
+        "cp21/L-N",
+        "cp20/HG"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22d7c53e9d7db94ed48d91da14be2d343b%22,%22c9b0216014dd48ed8d02939f9f88b458%22,%22cbdb4a2a7b8e47a78c7bc1feeb9aa8eb%22,%222990b1081ea943c584548dc4a5190ad7%22,%2266e1e5f516da4be38db3d5b96bde4397%22%5D&experiments=%5B%221%22%5D"
+    },
+    "experiment": {
+      "kind": "experiment",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1"
+    }
+  },
+  "runs": {
+    "cp10": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "2b7c648b7a3b47ac8e1115672096266b"
+    },
+    "cp10/c1_head_spread": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "31a984a28dce4ff69abed0172ac71165"
+    },
+    "cp10/c1_price_volatility": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "b95809838bb74972b5fd72d3a5d63c61"
+    },
+    "cp10/c2_aci_gamma_0.000001": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "bf30d3dee57141cebe3d4ef41b39c907"
+    },
+    "cp10/c2_aci_gamma_0.000005": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "8e7e60963cad465ab436035d324d3760"
+    },
+    "cp10/c2_aci_gamma_0.00001": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "250f44b8704e4c52bf5d9bd9de66f36c"
+    },
+    "cp10/c2_aci_gamma_0.00002": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "754fcaa4bcc0482badb084a7cd56117e"
+    },
+    "cp10/v1_reference": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "2a78da98d6984c55b2c2c31e4e1f498a"
+    },
+    "cp15": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "48867457b6554f59928493af90469555"
+    },
+    "cp15/A1": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "26d695d8a1de465a9a1a156ad6226430"
+    },
+    "cp15/A2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "c5b522f86dd54415b085c1f69ff42948"
+    },
+    "cp15/A3": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "1c31337399104ba881aa0caeefa24a6c"
+    },
+    "cp15/A4": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "9182613a781b455daf70704f30ee99db"
+    },
+    "cp15/A5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "c3da9c3d87714550aa4ef68fc0ec8913"
+    },
+    "cp15/B0": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "733341b233284f758702cde99044f4a9"
+    },
+    "cp15/B1": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "656fd6dc4ebd48ec878b06fb3e042b54"
+    },
+    "cp15/B2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "79c27a8d702f42a59db2bea0aeb71186"
+    },
+    "cp15/B3": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "d61166d3413747d2b07d6350df704f2d"
+    },
+    "cp16": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "a9f285e009844f8e8a9f671fd2fab86e"
+    },
+    "cp16/V2-H": {
+      "artifacts_checked": 4,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 42,
+      "points_checked": 561,
+      "run_id": "de8fde118e71406ab440246ec2072b84"
+    },
+    "cp16/V2-P": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 30,
+      "points_checked": 525,
+      "run_id": "c8e1cc9025b041d9adff72a8e244099f"
+    },
+    "cp20": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "ceaa8e1ac8f140f9abc233709fd17836"
+    },
+    "cp20/HG": {
+      "artifacts_checked": 9,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 30,
+      "points_checked": 525,
+      "run_id": "66e1e5f516da4be38db3d5b96bde4397"
+    },
+    "cp21": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "bc152519f4cc4c3abada756a67e9ad89"
+    },
+    "cp21/HGL": {
+      "artifacts_checked": 10,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 36,
+      "points_checked": 531,
+      "run_id": "d7c53e9d7db94ed48d91da14be2d343b"
+    },
+    "cp21/L-N": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "2990b1081ea943c584548dc4a5190ad7"
+    },
+    "cp21/L-P": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "c9b0216014dd48ed8d02939f9f88b458"
+    },
+    "cp21/L-R": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "cbdb4a2a7b8e47a78c7bc1feeb9aa8eb"
+    }
+  },
+  "target": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
+}
