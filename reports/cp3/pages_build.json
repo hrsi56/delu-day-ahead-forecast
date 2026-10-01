@@ -1,18 +1,15 @@
 {
   "build_path": "purpose-built static assembly (\u00a79.2 fallback)",
-  "bytes": 1906528,
-  "final": false,
-  "links_omitted_until_verified": [
-    "compare:overview",
-    "compare:v4"
-  ],
+  "bytes": 1907451,
+  "final": true,
+  "links_omitted_until_verified": [],
   "load_scale_points": 11,
   "marimo_export_external_hosts": [
     "cdn.jsdelivr.net"
   ],
   "marimo_export_external_reference_count": 181,
   "marimo_export_html_rejected_because": "measured 2026-09-14 with marimo 0.24.2: `marimo export html` emits 181 external references to cdn.jsdelivr.net (frontend JS bundle, CSS and five web fonts), so the page cannot render without network. CP-3 item 3 requires zero runtime calls.",
-  "mlflow_index_verified_at_utc": "2026-09-29T01:57:02+00:00",
+  "mlflow_index_verified_at_utc": "2026-10-01T03:43:47+00:00",
   "output": "docs/index.html",
   "routes_expected": [
     "compare:calibration",
@@ -26,8 +23,10 @@
   "routes_published": [
     "compare:calibration",
     "compare:model-comparison",
+    "compare:overview",
     "compare:v2",
     "compare:v3",
+    "compare:v4",
     "experiment"
   ]
 }
