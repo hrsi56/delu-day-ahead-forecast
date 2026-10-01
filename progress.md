@@ -14,7 +14,10 @@ branch. It was updated in place again the same day, through a third pull request
 final-product Space plan (v21-r8 §19, PUBLISH_RULES 1.2) and the Owner's completion of CP-21's
 reclamation and the session-branch retirement. It was updated in place once more that evening,
 in a local Orchestrator session on the Owner's machine, for the issue of the PRES-3 brief, and
-on 2026-10-01 for PRES-3's return, landing, deployment and closure.*
+on 2026-10-01 for PRES-3's return, landing, deployment and closure. It was updated in place again
+on 2026-10-01 for the Owner's CP-22 decisions, the ratification of v21-r9 and PUBLISH_RULES 1.3,
+and the issue of the CP-22 brief. Its commit and push follow the Owner's explicit, task-scoped
+instruction of 2026-10-01.*
 
 ---
 
@@ -55,14 +58,56 @@ limitations remain in the [landing and closure records and evidence tags](#where
 | 3 | Presentation around v2 (4.3R), with CP-20 alongside | ✅ PRES-1 and PRES-2 closed |
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Published by PRES-3, closed 2026-10-01 |
-| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Not started; needs the Owner's candidate decision, a new anchor section, its brief and D4 allowances |
+| 5a | v4 revised (CP-22; [v21-r9 §20](capstone_v21.md)) | ▶ Ratified and execution authorized 2026-10-01; brief issued. The split is removed in every outcome; R, then M, under non-inferiority against v4; a dynamic interval layer, and then a fast add-on, on the winner. Awaiting the Owner's launch of a local Engineering Lead |
+| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Not started; after CP-22, facing v4's current revision. It needs the Owner's candidate decision, a new anchor section, its brief and D4 allowances |
 | 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
 | 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Next pending Track B work: the 4.6 DDNN route. It needs the Owner's candidate decision first
-(Open Questions), then a new anchor section under a task-scoped Lockdown suspension, then its
-brief.** No checkpoint is open.
+**Next pending Track B checkpoint: CP-22 — v4 revised, before DDNN. Ratified on 2026-10-01 as
+[v21-r9 §20](capstone_v21.md), with PUBLISH_RULES 1.3 A10, and its execution authorized the same
+day.** The brief is issued and awaits the Owner's launch of a new local Engineering Lead. The
+whole checkpoint runs locally, because its inputs live only in `.local/` and the anchor binds
+the M3.
+
+- **The brief:** canonical copy `.local/artifacts/cp-22/issued-brief.md` (ignored), SHA-256
+  `563f64f3602848808ff11a7d74da8218b16d51846f34e90ad754c36ec2461fb3`. The launch envelope is
+  `.local/artifacts/cp-22/launch-envelope.md`. The Lead packages the brief as
+  `docs/track-b/evidence/cp-22/issued-brief.md`.
+
+- **The Owner's decisions, 2026-10-01:**
+  - the new version replaces v4 and keeps its number (A10);
+  - the block split is removed in every outcome;
+  - D1–D8 are approved as recommended;
+  - if both eligible policies fail, CP-22 stops and returns to the Owner;
+  - the interval layer must learn more dynamically than a rigid 28-day buffer.
+- **The design:**
+  - **R** is tried first: `(2/3)·c_HG + (1/3)·`one pooled normalized LightGBM, averaged over
+    G1–G4.
+  - **M** is tried next: v4's construction with the split removed only.
+  - Both are judged by non-inferiority against v4, on both scores and per fold, with all six §8
+    diagnostics.
+  - **The dynamic layer (DL)** is decided separately on the winner. It uses 7-day-half-life
+    recency weights inside the 28-day buffer, plus adaptive coverage (ACI, γ = 0.10 per day),
+    with its own rule. A fast component, with a one-day half-life carrying one third of the
+    weight, can then be added on top of the 7-day memory (W+DLF, `cp22-fast-component`). It is
+    an add-on, never a replacement, and comes with shock-day diagnostics.
+  - **The diagnostics:** the decomposition of v4 − v3, capacity-selection stability,
+    extrapolation, coverage by regime, and LEAR's penalty-selection stability.
+- **The motivating CP-21 evidence:**
+  - the gain comes from the member, not the split;
+  - the raw half drives the peak degradation (L-P 66.3 and L-R 70.1, against L-N 52.2 and v3
+    47.5);
+  - the capacity selection is mostly noise;
+  - v3 and v4 under-cover in folds 1–4.
+- **Ceilings:** 6,000 main and 9,000 total LightGBM fits, 30 machine-hours, about 24 active hours
+  (hard 32).
+- **Then the 4.6 DDNN route,** facing v4's current revision. It needs the Owner's candidate
+  decision first, then a new anchor section under a task-scoped Lockdown suspension, then its
+  brief.
+- **Records:**
+  - the [amendment record](docs/track-b/capstone_v21-r8-to-v21-r9-amendments.md);
+  - the [PRES-4 plan](docs/track-b/cp-22-publication-plan-2026-10-01.md).
 
 - **PRES-3 is closed** ([closure record](docs/track-b/pres-3-closure-2026-10-01.md)).
   - v4 is the research headline on the report and the README. Its chapter and the v3 → v4
@@ -135,8 +180,26 @@ decision remains a boundary, not an active workstream.
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Ratified research authority:** `capstone_v21.md` **v21-r8**, Owner-authorized 2026-09-30,
-  SHA-256 `81d6127197cabf344f56c2cf25ef5fc8f9fdb2860e249c294177471d3130c182`.
+- **Current anchors, ratified on 2026-10-01** under the Owner's task-scoped suspension ("ההשעיה
+  תכסה כל מה שצריך"):
+  - **Research:** `capstone_v21.md` **v21-r9**, SHA-256
+    `5fc9c6862aa9f623af29db295e79456ecd94c60e213f8f286cdca97153e09175`.
+    - §20 governs CP-22. It adds a header, a CP-22 row in §10 and §20; additions only.
+    - v21-r8 is preserved at `c352436:capstone_v21.md` (`81d61271…`).
+  - **Publication:** PUBLISH_RULES **1.3**, SHA-256
+    `5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4`.
+    - It adds A10, revising an adopted generation in place.
+    - 1.2 is preserved at `c352436:docs/PUBLISH_RULES.md` (`a43ac020…`).
+  - **The amendment record,**
+    [r8 → r9](docs/track-b/capstone_v21-r8-to-v21-r9-amendments.md), SHA-256
+    `912eb98ffceb1b7b31e0e14da6cffc8725c3af7b227cbbcef4cea62841f5d52a`.
+  - **The CP-22 issued brief,** `563f64f3…`, pins all three.
+
+  The two entries below describe the anchors as they stood before 2026-10-01. Where they
+  differ, these identities govern.
+- **Ratified research authority (until 2026-10-01):** `capstone_v21.md` **v21-r8**,
+  Owner-authorized 2026-09-30, SHA-256
+  `81d6127197cabf344f56c2cf25ef5fc8f9fdb2860e249c294177471d3130c182`.
   - §19 (r8) governs the final product's Space: what it computes and claims, and the required
     in-browser "Train it yourself" action. It binds CP-17 and CP-18 and opens no checkpoint.
   - §18 (r7) governs programme item 4.6: TabPFN is withdrawn, and DDNN is written from the
@@ -481,6 +544,45 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **CP-22 drafted under the Owner's decisions, 2026-10-01.**
+  - **The request.** The Owner asked to re-examine v4 before DDNN: "תפרק את ההבדלים בין V4 ו
+    V3 לגורמים … תרכיב מחדש בצורה מיטבית".
+  - **The Orchestrator's findings,** read-only from committed CP-21 evidence:
+    - the gain comes from the member, not the split, since the pooled model has `local_hour`;
+    - the raw half drives the peak degradation;
+    - the daily capacity selection is mostly noise: the median winner margin is 1.5%, and G1 was
+      chosen on 24–44% of origins;
+    - v3 and v4 under-cover in folds 1–4.
+  - **The method.** Tuning on the folds was advised against, in favour of pre-registered
+    policies.
+  - **The Owner's decisions:**
+    - "לא. בוא נגדיר שהגרסא החדשה שתצא תדרוס את V4. הפיצול יימחק בכל מקרה";
+    - D1–D8 "מאשר כפי שהמלצת";
+    - if both fail, "עוצרים וחוזרים אליך";
+    - "ההשעיה תכסה כל מה שצריך";
+    - "28 יום זה הרבה וזה רדג׳ידי … צריך איזשהי למידה דינאמית יותר";
+    - after the single-day weighting was explained: "תוסיף", then "אני לא רוצה שהזרוע תבחר
+      ותחליף את ה7 ימים. אני רוצה לבדוק האם נכון להוסיף משקל מהיר יותר בנוסף, לזיהוי שינויים
+      חדים". The 3-day arm became the add-on W+DLF.
+  - **Recomputed for W+DLF:** replay is now 16,000 policy-days.
+  - **Drafted, uncommitted:**
+    - v21-r9 §20 (CP-22), with a §10 row; additions only;
+    - PUBLISH_RULES 1.3 A10; only the revision line is replaced;
+    - the [amendment record](docs/track-b/capstone_v21-r8-to-v21-r9-amendments.md);
+    - the [PRES-4 plan](docs/track-b/cp-22-publication-plan-2026-10-01.md);
+    - a dated note in the programme handoff;
+    - this update.
+  - **Also delivered:** the Owner's planning prompt, `.local/artifacts/v4-investigation/orchestrator-prompt.md`.
+  - **Not done in drafting.** No fit, model run, data retrieval, MLflow write or deployment.
+  - **Ratified and authorized.** The Owner wrote: "נותן לך את: 1. אישור הטקסט. 2. אישור ביצוע
+    CP-22. 3. הוראה ואישור לעשות commit ו-push לכל המסמכים בעצמך. נעשה הכל מקומית".
+  - **Then:**
+    - the anchor, the record and 1.3 were marked ratified, and §20.11's grant was recorded;
+    - the brief was filled with the ratified hashes and issued, with its envelope;
+    - the six documents were committed and pushed on that explicit, task-scoped instruction,
+      with the secret guard enabled.
+  - **The suspension** ends at this task's terminal return.
+
 - **PRES-3 issued, returned, landed, deployed and closed, 2026-09-30 to 2026-10-01.**
   - **Issue.** The Owner decided that the brief authorizes only the MLflow upload, and confirmed
     the name "v4 · three-block LightGBM added". The brief is `57a8c7fb…`. The superseded 16:11
@@ -706,6 +808,11 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
+- **Next Owner action: launch CP-22 locally.**
+  - Open a new Claude Code session on this machine in `/Users/djourno/Downloads/PJM`, and paste
+    `.local/artifacts/cp-22/launch-envelope.md`.
+  - The return comes back to the Orchestrator for the templates §4 receipt.
+
 - **PRES-3's three advisories for the Owner (open; none blocks closure).** Details are in the
   advisory log at the evidence tip. Recommended: defer all three, as below.
   - **A-PRES3-7, GFS attribution.** Extend `DATA-LICENSE.md`'s line to "the research models'
@@ -823,12 +930,19 @@ Session Log.
   cannot be skipped silently, and re-estimate 4.6's effort for DDNN. Under the standing rule,
   amended 2026-09-30, DDNN gets v4's information and faces v4 on identical rows, with v3 as a
   reference. Carry the non-interactive Git rule into every Lead instruction.
-- **[Unscheduled hypothesis]** v3 plus a single pooled LightGBM member, the simpler variant
-  CP-21's block-split finding points to, is untested and not planned. Opening it needs an Owner
-  decision.
-- **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4, and v5 too if 4.6
-  adopts one.
-- **[Every new publication brief]** Pin PUBLISH_RULES 1.2 and incorporated source hashes;
+- **[CP-22's return]**
+  1. Run the templates §4 receipt, and record the three verdicts, each with its first unmet
+     condition: `cp22-replacement`, then `cp22-dynamic-layer`, then `cp22-fast-component`.
+  2. **If there is no replacement,** stop: the Owner decides. Publish nothing.
+  3. **Otherwise,** ask for the Owner's LAND, giving only non-interactive commands, then issue
+     PRES-4 from the [plan](docs/track-b/cp-22-publication-plan-2026-10-01.md) under PUBLISH_RULES
+     1.3 A10.
+- **[Formerly unscheduled hypothesis]** v3 plus a single pooled LightGBM member is now inside
+  CP-22's design (§20.2): A-LP and the pooled members.
+- **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4. After CP-22 it
+  carries v4's three-block revision and its current revision, and v5 too if 4.6 adopts one.
+- **[Every new publication brief]** Pin PUBLISH_RULES 1.3 (from 2026-10-01; 1.2 before) and
+  incorporated source hashes;
   retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under
   its original 1.0 contract. Predecessor comparisons and descriptive chart routes remain;
   v2→v3 reuses existing weather evidence, and v1's archive stays historical.

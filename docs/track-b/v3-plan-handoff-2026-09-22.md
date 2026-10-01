@@ -33,6 +33,19 @@ remain estimates, not budgets. The notes added below for 4.5 are consistency edi
 The 4.6 text below was edited for consistency on that date; each edited passage is marked
 *2026-09-30*. Where §18 and the text below differ, §18 governs. Nothing here opens 4.6.
 
+**2026-10-01 CP-22 update (ratified; execution authorized).** Before [4.6](#work-4-6), the Owner
+chose to revise v4 rather than extend it. [v21-r9 §20](../../capstone_v21.md) drafts CP-22:
+
+- **The block split is removed in every outcome.**
+- **The new version replaces v4 and keeps its number.** This uses PUBLISH_RULES 1.3 A10.
+- **Two pooled members are tried in a fixed sequence,** under a non-inferiority rule against v4:
+  R, one normalized pooled member averaged over the capacity grid, then M, the split removed
+  only.
+- **A dynamic interval layer** is decided separately on the winner.
+
+4.6's DDNN then faces v4's current revision. Learned blend weights stay in
+[4.8](#work-4-8). The Owner ratified §20 and authorized CP-22's execution on 2026-10-01.
+
 **2026-09-30 final-product Space update.** The Owner asked for a plan that turns the Hugging Face
 Space into the final product's daily tool, including an in-browser "Train it yourself" action.
 

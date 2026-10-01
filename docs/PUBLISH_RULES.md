@@ -1,6 +1,11 @@
 # PUBLISH_RULES — publication anchor
 
-**Revision:** 1.2 · **Updated:** 2026-09-30 · **Owner:** Yarden Viktor Dejorno
+**Revision:** 1.3 · **Updated:** 2026-10-01 · **Owner:** Yarden Viktor Dejorno
+
+**Revision 1.3 authority:** the Owner's task-scoped Lockdown suspension of 2026-10-01 for CP-22,
+and the Owner's ratification of the text the same day (§16.3). Revision 1.2 remains preserved at `c352436:docs/PUBLISH_RULES.md`. This revision adds A10
+(§4): revising an adopted generation in place. It designates no model, runs nothing and
+publishes nothing.
 
 **Revision 1.2 authority:** the Owner's task-wide authorization of 2026-09-30 to anchor a
 final-product Space plan split by authority (§16.2). Revision 1.1 remains preserved at
@@ -228,6 +233,29 @@ Rejected experiments remain descriptive branch cards: question, comparator, deci
 or difference with interval, “Not adopted”, reason, date and evidence. They attach to the correct
 place in time, including after the latest generation. Failed or rejected work must not be omitted
 merely because it weakens the story; planned work must not be invented to fill a branch group.
+
+**A10: revising an adopted generation in place.** A ratified research anchor can record the
+Owner's decision that a checkpoint's result revises an adopted generation. The generation then
+keeps its number and gains a dated revision, instead of a new version number. The rules for a
+revision:
+
+- **Its own record.** Each revision has its own codes, run keys, evidence and rule. The registry
+  records the revision history: date, source, reason and the rule's result.
+- **The current revision leads.** It supplies the generation's name, headline and comparisons.
+  The name keeps `vN · <adopted change>`, where the change is the current revision's change
+  against the predecessor.
+- **The superseded revision stays visible.** It appears in the generation's chapter as a dated,
+  labelled earlier construction, with its comparator, result, limitations and evidence routes. It
+  is never deleted, merged into the current numbers, or relabelled "Not adopted".
+- **Published records stay.** Its MLflow records, evidence tags and landing record are never
+  edited or removed. A revision adds runs.
+- **The A3 transition** into the generation describes the current revision and states the
+  revision. The revision step is reported as a dated note, with its measured difference and
+  interval.
+- **Obligations carry over.** Every frozen-manifest or final-test obligation of the superseded
+  revision still applies to it.
+
+Without such an Owner decision, a newly adopted policy is a new generation, as before.
 
 **Historical application, not new results:** the current “Experiments between v1 and v2” group
 contains non-adopted branches. The v2→v3 weather experiment was adopted as v3 and already has a
@@ -987,6 +1015,25 @@ panel's fields.
 claim source and no hand-typed numbers. The daily pipeline's cost is bounded by the CP-18 brief.
 This amendment adds no model, research, schedule or publication authority.
 
+### A10 — Revise an adopted generation in place
+
+**Observed need.** On 2026-10-01 the Owner decided that CP-22's replacement of v4's three-block
+member takes v4's place, rather than becoming a new generation. The block split has no mechanism,
+and the replacement repairs v4 rather than extending it. The rules allowed only a new version
+number or a rejected branch.
+
+**Addition:** §4's A10 paragraph.
+
+**Check:** the registry's revision history and the rendered chapter, on the candidate and on the
+public page.
+
+**Maintenance.**
+
+- The registry's status vocabulary and the runbook's lists gain the revision event.
+- The code and tests that parse `vN · ` names stay valid, because the number does not change.
+
+This amendment adds no model, research or publication authority.
+
 ## 16. Owner authority and integration record
 
 ### 16.0 Historical establishment of revision 1.0
@@ -1057,6 +1104,21 @@ split by authority. The Owner granted task-wide authority: "לצורך המשי�
 Research §19 supplies the computations and claims; this revision supplies presentation and
 acceptance.
 
+### 16.3 Revision 1.3 — revising v4 in place, 2026-10-01
+
+**The decisions.** The Owner decided that the new version replaces v4, and that the block split
+is removed in every outcome. The Owner then approved CP-22's decisions D1–D8 and wrote:
+"ההשעיה תכסה כל מה שצריך" (the suspension covers everything needed).
+
+- **What it covers.** This is recorded as the task-scoped Lockdown suspension for:
+  - revision 1.3: the header, §4's A10 paragraph, A10, this record and §17;
+  - research v21-r9 §20;
+  - their amendment record;
+  - directly necessary consistency edits.
+- **What it does not authorize:** execution, deployment, publication, or an `AGENTS.md` change.
+- **When it ends:** it is spent at this task's terminal return.
+- **Ratification.** The Owner ratified the text on 2026-10-01: "נותן לך את: 1. אישור הטקסט. 2. אישור ביצוע CP-22. 3. הוראה ואישור לעשות commit ו-push לכל המסמכים בעצמך. נעשה הכל מקומית".
+
 ## 17. Source identities and change record
 
 Prepared on `main` at `01e394d475202bb44a226f2ac5403aa084dc5b4c`. The existing untracked independent
@@ -1096,3 +1158,8 @@ network and acceptance, conditional on A8. Revision 1.1 is preserved at
 `91eea445434718a163f03bcfd82e1db275a9d98311e76eb6cd1365f3707584f3`. Later publication briefs pin
 1.2. For a research publication such as PRES-3, A9 is not triggered, and its obligations equal
 1.1's.
+
+**1.3, 2026-10-01:** revising an adopted generation in place (§4, A10), for CP-22's replacement of
+v4's construction. Revision 1.2 is preserved at `c352436:docs/PUBLISH_RULES.md`, SHA-256
+`a43ac02021b7de468e02db30b61ec73f86cdafa69df845cf084ab196528bb15b`. Later publication briefs pin
+1.3.

@@ -1,3 +1,36 @@
+# Capstone v21-r9 — CP-22: v4 revised, with one pooled member and a dynamic interval layer (ratified)
+
+**Ratified by the Owner on 2026-10-01, and CP-22's execution authorized the same day.** The Owner
+asked to re-examine v4 before DDNN, then made five decisions:
+
+- the new version replaces v4;
+- the block split is removed in every outcome;
+- decisions D1–D8 are approved as recommended;
+- if both eligible policies fail, CP-22 stops and returns to the Owner;
+- the interval layer must learn more dynamically than a rigid 28-day buffer.
+
+New §20 specifies CP-22, and one CP-22 row is added to §10's table. No other line changes: the
+headers below and §§1–19 remain byte for byte. **Status:** drafted under the Owner's task-scoped
+suspension, then ratified, with execution authorized: "נותן לך את: 1. אישור הטקסט. 2. אישור ביצוע CP-22. 3. הוראה ואישור לעשות commit ו-push לכל המסמכים בעצמך. נעשה הכל מקומית".
+
+Previous v21-r8 is preserved at `c352436:capstone_v21.md`, SHA-256
+`81d6127197cabf344f56c2cf25ef5fc8f9fdb2860e249c294177471d3130c182`.
+
+**Authority.** On 2026-10-01 the Owner approved decisions D1–D8 as recommended and wrote:
+"ההשעיה תכסה כל מה שצריך". The exact words are quoted in
+[the amendment record](docs/track-b/capstone_v21-r8-to-v21-r9-amendments.md).
+
+- **What the grant covers.** It acts as a task-scoped Lockdown suspension for:
+  - this revision;
+  - PUBLISH_RULES 1.3 (A10);
+  - their amendment record;
+  - directly necessary consistency edits to the programme handoff and `progress.md`.
+- **When it ends:** at this task's terminal return.
+- **Who wrote it.** The agent drafted this text under that authority. This is not a claim that
+  the Owner reviewed every sentence.
+
+---
+
 # Capstone v21-r8 — final-product Space: what it computes and claims (Owner-authorized)
 
 **Owner-authorized amendment, 2026-09-30.** The Owner asked for a plan that makes the Hugging
@@ -410,6 +443,7 @@ metrics must be ratified before that stage starts. **No clock starts in CP-15.**
 | CP-16 | One existing-input v2 central-blend/hour-aware-versus-pooled research experiment | Ratified v21-r3 §14 specification/checklist; CP-16 resumption authorized 2026-09-23 under §14.5; no promotion or later-stage authorization |
 | CP-20 | Direct-GFS paired ablation: weather-augmented minus no-weather V2-H | Ratified v21-r4 §15; CP-20 execution and §15.7 immutable packaging authorized 2026-09-23; research only |
 | CP-21 | Programme 4.5 on top of v3: HG plus a fixed three-block LightGBM member, compared with HG; adoption as v4 or a not-adopted branch under §17.6 | Ratified v21-r6 §17; CP-21 execution authorized 2026-09-29 under §17.11; research only |
+| CP-22 | v4 revised: the three-block member replaced by one pooled member (R, then M), and a dynamic interval layer on the winner, compared with v4 under §20.6 | Ratified v21-r9 §20; CP-22 execution authorized 2026-10-01 under §20.11; research only |
 | CP-17 | Freeze the selected update policy and register verified initialization | Requires demonstrated feasibility and complete future bar |
 | CP-18 | Run the same policy and build the live scorecard from recorded issued predictions | Requires operational and publication authorization |
 | CP-19 | Evaluate the preregistered prospective policy | Requires CP-17 plus elapsed horizon and complete future bar |
@@ -1913,3 +1947,494 @@ through the latest published day, labelled with its last date.
 It designates no model, runs no fit, schedules nothing, and grants no publication, credential or
 `AGENTS.md` authority. Unattended daily publication needs the Owner's explicit authority before
 CP-18's launch. CP-17 and CP-18 still need their complete bars and briefs.
+
+
+## 20. CP-22 — v4 revised: one pooled member and a dynamic interval layer (v21-r9)
+
+### 20.1 The question and the Owner's decisions
+
+**The request.** On 2026-10-01 the Owner asked to re-examine v4 before DDNN. The Owner proposed
+to decompose v4 − v3 into its factors, examine each one, and reassemble the best combination.
+
+**The Owner's decisions, the same day:**
+
+- **Replacement.** The new version replaces v4. It takes v4's place and keeps its number
+  (PUBLISH_RULES 1.3, A10).
+- **The split.** The block split is removed in every outcome; it has no mechanism behind it.
+- **D1–D8** are approved as recommended (§20.12).
+- **Both fail.** If both eligible policies fail §20.6, CP-22 stops at its return and the Owner
+  decides.
+- **Dynamics.** The 28-day buffer is too rigid for a crisis onset, so the interval layer must
+  learn more dynamically (§20.3).
+
+**What CP-22 decides.** It does not reopen the removal of the split. It decides two things:
+
+1. which pooled member replaces v4's three-block member: R first, then M;
+2. whether a dynamic interval layer (DL) replaces HG's equal-weight 28-day buffer on the winner.
+
+It also measures what each change costs or gains.
+
+**Committed CP-21 evidence that motivates the design** (`evidence/cp-21`; all
+`development_post_selection`):
+
+- **The gain comes from the member, not the split.**
+  - Alone, the tree arms score 0.5769–0.5835 S_MAE, against v3's 0.5658.
+  - Blended, v4 scores 0.5357.
+  - The block split, L-R − L-P, shows no demonstrated joint preference.
+  - The pooled features include `local_hour`.
+- **The raw half drives the peak degradation.** Over the 2022-08-15..31 peak:
+
+  | Policy | MAE (EUR/MWh) |
+  |---|---|
+  | v3 | 47.5 |
+  | L-N, normalized | 52.2 |
+  | v4 | 50.1 |
+  | L-P, raw | 66.3 |
+  | L-R, raw | 70.1 |
+
+  L-P and L-R fail §8 criterion 4, and L-R also fails criterion 5.
+- **The normalized pooled member was never tested.** It was excluded by §17.2. L-N is the best
+  tree arm overall.
+- **The daily capacity selection is mostly noise.**
+  - The smallest configuration G1 was chosen on 24–44% of origins, depending on the model, and
+    the largest, G4, on 20–33%.
+  - On the inner 28-day validation, the winner beat the runner-up by a median of 1.5% relative
+    MAE (`reports/block-challenger/fits.parquet`).
+- **The intervals under-cover.** 95% coverage in folds 1–4 is 0.932–0.936 for v3 and 0.933–0.940
+  for v4, against the nominal 0.95.
+
+**Disclosed:** the Owner and the agents know CP-15's, CP-20's and CP-21's results on these folds.
+CP-22 is one more decision on the same five folds. Its results stay
+`development_post_selection`, and 4.7T carries the protection.
+
+**The ladder,** one change per step:
+
+| Step | Change |
+|---|---|
+| v4 → M | The split removed: block models replaced by pooled models, with the same raw/normalized mix and daily selection |
+| M → A-PN-sel | The raw half dropped |
+| A-PN-sel → R | Averaging over capacities instead of daily selection |
+| W → W+ACI → W+DL → W+DLF | Adaptive coverage, then recency weights, then a fast component added on top, on the winner W |
+
+### 20.2 Arms, comparator and eligible policies (D1)
+
+**The new model, PN.** One pooled LightGBM for all 24 hours, on §4's normalized target.
+
+- **Information:** exactly HG's and v4's (§17.3), including `local_hour`, the three frozen GFS
+  columns and their missing indicators under §15.3's training-only imputation.
+- **Fixed settings, grid, history and minimum rows:** §17.3's, as for L-P: G1–G4; history
+  `[max(2019-01-01, D−728), D)`; at least 8,760 rows; fresh fits at every origin.
+
+**Its two forms:**
+
+- **PN-avg** is the equal mean of G1–G4's four full-window forecasts. Each is inverted to
+  EUR/MWh with the origin's common center and scale. Averaging before or after the inversion is
+  identical, because the inversion is affine; a fixture proves it.
+- **PN-sel** applies §17.3's selection rule:
+  - inner fits on the window minus its last 28 calendar delivery days;
+  - the lowest validation MAE in EUR/MWh after inversion, with an exact tie going to the smaller
+    configuration;
+  - a refit on the whole window.
+
+  Its final fit is the selected configuration's full-window fit, bit for bit.
+
+| ID | Role | Central forecast |
+|---|---|---|
+| v4 | Comparator: CP-21's saved HGL vectors | `(2/3)·c_HG + (1/3)·mean(L-N, L-R)` |
+| v3 | Reference: CP-20's saved HG vectors | `c_HG` |
+| R | Eligible, tried first | `(2/3)·c_HG + (1/3)·PN-avg` |
+| M | Eligible, tried second | `(2/3)·c_HG + (1/3)·mean(PN-sel, L-P)` |
+| A-PN-sel | Attribution | `(2/3)·c_HG + (1/3)·PN-sel` |
+| A-LP | Attribution: "v3 + pooled raw", never tested | `(2/3)·c_HG + (1/3)·L-P` |
+| A-LN | Attribution, descriptive | `(2/3)·c_HG + (1/3)·L-N` |
+| W+DL | Eligible for the layer decision only (§20.6) | W's central, with DL (§20.3) |
+| W+ACI | Attribution: adaptive coverage on the unweighted 28-day buffer | W's central |
+| W+DLF | Eligible only as an add-on to W+DL (§20.6): DL plus a fast component for sharp changes (Owner, 2026-10-01) | W's central |
+| v4+DL, v3+DL | Attribution, descriptive | v4's or v3's central, with DL |
+
+**Reused vectors.** L-P, L-N, HGL (v4) and HG are reused from `evidence/cp-21` and CP-20, each
+only with verified identity.
+
+**Interval layers.** Every composite except the DL variants uses HG's H layer on its own issued
+errors (§17.2).
+
+**Fixed:**
+
+- the 1/3 member weight;
+- HG's components, bit for bit (§17.2).
+
+**Excluded:**
+
+- learned or per-block weights, which stay in programme 4.8 (D6);
+- new features, blocks or block boundaries;
+- seed ensembles;
+- a residual-correction model;
+- any LEAR change (D8).
+
+### 20.3 The dynamic interval layer (D7; the Owner's decision on dynamics)
+
+**Why.** The equal-weight 28-day buffer reacts slowly at a crisis onset, and v3 and v4
+under-cover in four of five folds. The 168-hour scale `s_t` already adapts within a week; the
+buffer's shape, its bias correction and its coverage do not.
+
+**What DL keeps from HG's H layer (§14.2):**
+
+- the residuals `r_t = (y_t − c_t)/s_t`, with the same `s_t`;
+- the 28-complete-released-day buffer span, and therefore the same warm-up;
+- the hour shrinkage form `w_h = n_h/(n_h + 56)`, with `w_h = 0` below 14 days;
+- the seven quantiles;
+- the release, consume-once and failure rules.
+
+**What DL changes.** Two things, both fixed before any scoring and never tuned on outcomes:
+
+1. **Recency weights inside the buffer.**
+   - Each complete released day in the buffer has weight `2^(−a/7)`, where `a` is its age in
+     days and the newest day has age 0. This is a half-life of 7 days, matching `s_t`'s 168
+     hours.
+   - Weighted empirical quantiles replace the equal-weight `Q_P` and `Q_h`.
+   - `n_h` becomes hour h's effective count, `(Σw)²/Σw²`.
+   - The p50 bias correction becomes the weighted median.
+2. **Adaptive coverage (ACI; Gibbs–Candès convention).** α is a miscoverage.
+   - For each central interval with nominal α ∈ {0.05, 0.20, 0.50}, keep a working level `α_t`.
+     It starts at α at each fold's genuine warm-up start, and the warm-up updates it.
+   - After each released complete day, `α_{t+1} = α_t + γ·(α − m_t)`, where `m_t` is that day's
+     fraction of canonical hours outside the interval emitted at `α_t`.
+   - **Fixed parameters:**
+     - `γ = 0.10` per day;
+     - `α_t` clipped to `[α/5, min(2α, 0.9)]`;
+     - the interval at `α_t` uses the residual levels `α_t/2` and `1 − α_t/2`.
+   - A day with more misses than nominal lowers `α_t`, widening the interval. A day with fewer
+     raises it.
+   - If adjusted quantiles cross, a fixed monotone rearrangement (sorting) restores order.
+
+**DL is a separate decision,** applied to the winner after the replacement rule (§20.6). W+ACI
+isolates the recency weights.
+
+**W+DLF adds a fast component for sharp changes (Owner, 2026-10-01).** It keeps DL's 7-day
+memory and adds a second, fast kernel on top, so that a sudden jump or a large error weighs more
+at once.
+
+- **The weights:** `(2/3)·k7(a)/Σk7 + (1/3)·k1(a)/Σk1`, where `k7(a) = 2^(−a/7)` and
+  `k1(a) = 2^(−a)`. The fast kernel has a one-day half-life and carries one third of the weight.
+- **The effect:** the newest released day carries about 23% of the buffer's weight instead of
+  about 10%, and the buffer keeps about 10 effective days.
+- **Everything else is identical,** including ACI.
+- **It never replaces the 7-day memory.** It can only be added to it (§20.6).
+
+### 20.4 Population, chronology and failure rule
+
+§17.4 applies unchanged:
+
+- 10,747 keys, 638 origins and the same genuine warm-up starts;
+- forecast origin D−1 11:00 UTC; released errors ≤ D−2, consumed once;
+- weather only from CP-20's retained grids;
+- §14.2's failure rule;
+- the training-only admission slice.
+
+**Reused vectors.** Saved CP-21 and CP-20 vectors are reused only when they match their
+committed blobs.
+
+**Warm-up errors.** The warm-up errors that the H and DL buffers need for v4, L-P and L-N come
+from CP-21's retained state, or are regenerated within §20.8's caps. A regenerated vector must
+equal CP-21's issued vector bit for bit.
+
+### 20.5 Metrics, uncertainty and diagnostics
+
+§17.5 applies:
+
+- the scores;
+- the bootstrap: seed 15042, one shared 2,000-replicate index set of 7-calendar-day blocks within
+  each fold;
+- ratio intervals from the same replicates, with every replicate stored;
+- per-fold paired daily-loss intervals;
+- the diagnostics for every arm, including all six §8 diagnostics, coverage with width, and the
+  stress period and peak.
+
+**Contrasts:**
+
+| Contrast | Role |
+|---|---|
+| R − v4, M − v4 | The replacement decision (§20.6) |
+| (W+DL) − W | The layer decision (§20.6) |
+| R − M | The full refinement against the minimal one |
+| A-PN-sel − M | Dropping the raw half |
+| R − A-PN-sel | Averaging against daily selection |
+| A-PN-sel − A-LP | Normalized against raw, pooled |
+| A-LN − v4 | Descriptive: the blocks under normalization |
+| (W+ACI) − W, (W+DL) − (W+ACI) | DL's two parts |
+| (W+DLF) − (W+DL) | The fast component: overall, by fold and on shock days (below) |
+| (v4+DL) − v4, (v3+DL) − v3 | DL on the earlier generations, descriptive |
+| Each policy − v3 | Reference |
+
+Each secondary contrast gets §17.5's endpoint reading: observed joint improvement, observed joint
+worsening, or no demonstrated joint preference.
+
+**The Owner's investigation,** reported descriptively and choosing nothing:
+
+- the decomposition of v4 − v3 by factor, with the member-weight curve labelled "oracle, not
+  selectable";
+- PN's capacity-selection stability (flip rate and winner margin), next to CP-21's L-P, L-R and
+  L-N;
+- extrapolation: forecasts against each origin's training-window maximum on extreme days;
+- coverage by hour, block and regime, with each fold's `α_t` path and the days DL took to react
+  after the peak began;
+- **sharp changes.** A fixed shock-day set:
+  - in each fold, the 5% of delivery days with the largest absolute change in daily mean price
+    from the previous day;
+  - the peak's first ten days.
+
+  On those days, and on the three days after each, report MAE, WIS and coverage for W, W+DL and
+  W+DLF;
+- **LEAR's penalty-selection stability (D8).** It is measured from logged selections where they
+  exist, and otherwise reported as unavailable. No LEAR refit is made for this purpose.
+- **Fit cost and daily cycle:**
+  - PN's inner and final fits against L-P's;
+  - the replacement's complete daily cycle, cold on the M3 with at most 4 workers, at 20 or more
+    origins stratified across folds.
+
+  This is a diagnostic, not a criterion (§17.5's D3 applies). The report is written to
+  `reports/v4-revision/`.
+
+### 20.6 Pre-registered rules (D2, D7), set 2026-10-01
+
+**Rule `cp22-replacement`.** R replaces v4's three-block construction if all four of these hold,
+against v4 on identical rows:
+
+1. **Non-inferior on both scores.** Neither ΔS_MAE nor ΔS_WIS (R − v4) has a 95% interval lying
+   entirely above zero.
+2. **No regression.** R meets all six original §8 diagnostics.
+3. **A complete, valid evaluation.** Engineering PASS with a binding Integration verdict, and all
+   10,747 keys issued.
+4. **No resolved per-fold degradation.** No fold has a 95% paired daily-loss interval (R − v4)
+   lying entirely above zero, in MAE or in WIS.
+
+**Otherwise, M replaces v4** if M meets the same four conditions. **Otherwise, there is no
+replacement.** CP-22 stops at its return and the Owner decides (Owner decision, 2026-10-01); the
+three-block v4 stays the current revision until then. The winner, R or M, is W.
+
+**Rule `cp22-dynamic-layer`.** It applies only if W exists. W+DL becomes the replacement if all
+five of these hold, against W on identical rows:
+
+1. the upper 95% endpoint of ΔS_WIS is below zero;
+2. ΔS_MAE has no 95% interval lying entirely above zero;
+3. W+DL meets all six §8 diagnostics;
+4. W+DL's pooled 95% coverage is closer to 0.95 than W's;
+5. no fold has a 95% paired daily-loss interval (W+DL − W) lying entirely above zero, in MAE or
+   in WIS.
+
+Otherwise, the replacement is W with HG's H layer.
+
+**Rule `cp22-fast-component`.** It applies only if W+DL was adopted. W+DLF replaces W+DL if all
+four of these hold, against W+DL on identical rows:
+
+1. the upper 95% endpoint of ΔS_WIS is below zero;
+2. ΔS_MAE has no 95% interval lying entirely above zero;
+3. W+DLF meets all six §8 diagnostics;
+4. no fold has a 95% paired daily-loss interval (W+DLF − W+DL) lying entirely above zero, in MAE
+   or in WIS.
+
+Otherwise, W+DL stands. If W+DL was not adopted, (W+DLF) − (W+DL) is reported descriptively
+only.
+
+**How the rules are applied.**
+
+- Mechanically. They are never re-weighted, re-thresholded or overridden after results.
+- Attribution arms are never eligible.
+- A mixed result is reported as no demonstrated joint preference, never as equivalence.
+- An INCOMPLETE or BLOCKED return yields no decision and nothing to publish.
+
+**Always reported:**
+
+- whether the replacement shows a joint improvement over v4, under §17.5's reading;
+- R − M;
+- the DL contrasts.
+
+**What replacement means (Owner decision; PUBLISH_RULES 1.3, A10):**
+
+- **A research status only.** v1 remains the released product and the demo. No final-product
+  designation, freeze or Live follows (§16 is unchanged).
+- **v4 keeps its number.** Its registry entry gains a dated revision, with the replacement as its
+  current construction.
+- **The three-block construction (CP-21's HGL) becomes the superseded revision.** Its evidence,
+  MLflow records, comparator, result and limitations are kept unchanged and visible.
+- **Naming, proposed:** "v4 · LightGBM member added" for the current revision. The superseded
+  revision keeps "three-block LightGBM added" as its label.
+- **The A3 transition "From v3 to v4"** describes the current revision and states the revision.
+  CP-21's comparison remains the superseded revision's evidence.
+- **The opponent.** From CP-22's landing, the standing decision "same information, same opponent"
+  means v4's current revision. DDNN (§18) faces it.
+- **4.7T.** Its frozen manifest carries v3, v4's three-block revision and v4's current revision.
+
+### 20.7 Causal and integrity controls
+
+§17.7's controls apply to PN and to every composite. They include the non-uniform D−1 mutation
+for the normalized target and training-only selection for PN-sel. CP-22 adds:
+
+- **Capacity-averaging identity:**
+  - PN-avg equals the mean of its four full-window fits;
+  - PN-sel's final fit equals the selected configuration's full-window fit, bit for bit;
+  - averaging before and after the inversion agree within tolerance.
+- **Composite parity.** For every composite, `c − (2/3)·c_HG = (1/3)·member` within tolerance, and
+  every non-DL composite calls HG's H-layer code path.
+- **Saved-vector identity.** Reused HGL, L-P, L-N and HG vectors match their committed blobs.
+- **DL controls:**
+  - **direction fixtures:** an all-miss day lowers `α_t` and widens its interval, and an all-hit
+    day raises it;
+  - the clipping bounds hold;
+  - the recency weights sum to one;
+  - the two-kernel weights reduce to DL's when the fast share is zero, and differ when it is
+    not;
+  - with equal weights, the weighted quantile equals the equal-weight quantile, and it differs
+    when the weights differ;
+  - **release rule:** D−1 errors are refused, every error is consumed once, and no partial day
+    enters the buffer;
+  - **positive control:** an injected level shift widens the intervals within the speed that
+    `γ` and the half-life imply.
+- **The boundary guard** after 2026-04-07, and **byte-exact storage** of hash-bound files.
+
+### 20.8 Ceilings and calendar (D4)
+
+These are maxima, not targets, derived from CP-21's measured costs:
+
+- CP-21's 22,260 main fits came from 636 origins × 35 fits;
+- its pooled fits took 2,047 single-thread seconds for 3,180 fits.
+
+§17.8's rules on what counts and what happens at a cap apply.
+
+| Dimension | Maximum |
+|---|---|
+| New models | 1 (PN). 0 other models, features, blocks, weights or seeds |
+| Policies | 2 eligible (R, then M); 2 layer decisions in sequence (W+DL, then the add-on W+DLF); 6 attribution arms (A-PN-sel, A-LP, A-LN, W+ACI, v4+DL, v3+DL); saved references: v4, v3 and CP-21's seven |
+| LightGBM fits | 6,000 main (nominal 638 × 8 = 5,104); 9,000 in total, including controls, reproduction, failures and repairs |
+| HG components | Reuse the verified components. On a cache miss, or for the daily-cycle refits: at most 1,600 component-day attempts and 192,000 Lasso attempts |
+| Replay | 16,000 new policy-days (recomputed for the added W+DLF: about two full passes) |
+| References and uncertainty | 3 metric-only reference passes; 3 bootstrap passes of 2,000 replicates, including independent review |
+| Compute | 30 aggregate machine-hours; at most 4 concurrent threads; BLAS 1; 0 GPU or cloud |
+| Memory and disk | 10 GiB RSS; 10 GiB added peak disk |
+| Data, network and cost | 0 bytes downloaded; 0 remote writes; $0 |
+| Effort | About 24 active hours; hard ceiling of 32 |
+
+**Calendar.** §17.8's rule: no scheduled work from Friday 00:00 to Sunday 00:00, Asia/Jerusalem.
+
+**Before dependent work,** the Lead completes §14.6 E1–E4 for CP-22. An insufficient allowance
+returns a concrete blocker, not a smaller experiment.
+
+### 20.9 Publication packet and MLflow (D5)
+
+§17.9 applies, with these changes:
+
+- **Pinned rules:** PUBLISH_RULES 1.3, at the hash the issued brief records.
+- **The packet:** `docs/track-b/evidence/cp-22/publication-packet.md`, completing every section
+  of the packet template. It contains:
+  - draft registry entries: v4's current revision (W or W+DL) and its superseded revision under
+    A10; the study arms; comparator v4; population `common-10747h`;
+  - the claim map `docs/track-b/research-content/cp22-claims.md`, with the ladder, the replacement
+    and layer findings, and the withheld claims;
+  - the derived quantities: the verdicts, the three rules and their date, the distance from v4,
+    N (two eligible policies in a fixed sequence, plus two layer decisions in sequence), the
+    ratio intervals and the per-fold MAE;
+  - draft slot texts for the outcome the rules yield;
+  - §5b and §5d marked not applicable;
+  - §8's intended identities.
+- **MLflow:**
+  - the experiment is `delu-generations`;
+  - local tracking only, in `.local/mlruns/cp22`: parent `cp22` and one child per new policy;
+  - a draft export, `reports/v4-revision/mlflow-export-draft/cp22.json`;
+  - the published set is unchanged, and there is no public write.
+- **Public surfaces are unchanged in CP-22.**
+- **Publication** follows the Owner's LAND as PRES-4, under PUBLISH_RULES 1.3. If there is no
+  replacement, the Owner decides first.
+- **Encoding.** v4 keeps D6's encoding: amber `#B45309`, a filled diamond and "v4".
+
+### 20.10 Complete CP-22 acceptance checklist
+
+All thirteen items are mandatory. Engineering PASS does not require a replacement: a complete,
+valid "no replacement" result can pass.
+
+1. **Verify the starting state** and preserve prior evidence and other sessions' work.
+   - The ratified anchor, the amendment record and PUBLISH_RULES 1.3 are on `main`; verify their
+     SHA-256 against the brief.
+   - On `gauntlet/cp-22`, package the issued brief byte for byte as
+     `docs/track-b/evidence/cp-22/issued-brief.md`.
+   - Before any outer scoring, commit the frozen pre-run protocol:
+     - the arms and members;
+     - the grid, inner split and tie rule;
+     - DL's half-life, `γ`, clipping and rearrangement, and the fast component's half-life and
+       share, with their fixtures;
+     - seeds, the manifest and cache identities;
+     - budget accounting;
+     - both rules' text.
+2. **Verify the inputs.** Check the population and manifest identities and the frozen weather.
+   Reuse HG and CP-21 vectors only with verified identity, and independently reproduce a
+   representative HG and v4 slice. No retrieval, and nothing after 2026-04-07.
+3. **Implement exactly PN, its two forms, the composites and DL,** with training-only selection
+   for PN-sel. Prove the ladder's one-change-per-step property.
+4. **Prove every control** of §20.7 and §17.7, each negative assertion paired with a positive
+   control.
+5. **Produce all 10,747 keys** for every new policy, with finite, ordered quantiles and the
+   emitted p50 kept separate from the central forecast.
+6. **Score every policy,** and independently verify the scores, the diagnostics, coverage with
+   width, and all six §8 diagnostics for each new policy.
+7. **Apply the three rules mechanically.** State the replacement (R, M or none) and the two layer
+   decisions, each with its first unmet condition, and every §20.5 contrast with its reading. Keep
+   the Engineering, research and product statuses distinct.
+8. **Deliver §20.5's diagnostics,** including the Owner's investigation, to
+   `reports/v4-revision/`.
+9. **Enforce and report every §20.8 cap,** and respect the calendar.
+10. **Supply the durable evidence** and executable reproduction commands, with byte-exact storage.
+11. **Deliver §20.9's packet and draft export.** Public surfaces and the published export set
+    stay unchanged; CI is green, and there is no public write.
+12. **Obtain one fresh, independent Integration-Critic PASS** on a clean detached checkout of the
+    final candidate. The review independently recomputes the metrics, intervals and both
+    verdicts, representatively reproduces a PN selection, an average and a DL update, and
+    re-derives the packet.
+13. **Return the canonical packet** (templates §3) with the publication packet: both terminal
+    SHAs, a verdict-only delta, resource totals, and branch and worktree accounting. Stop at
+    CP-22's local result.
+
+### 20.11 Paths and entry authority
+
+**Write paths:**
+
+- `src/cp22/`, `tests/cp22/`, `scripts/cp22_*.py`;
+- `reports/v4-revision/`, `docs/track-b/evidence/cp-22/`;
+- `docs/track-b/research-content/cp22-claims.md`;
+- `scripts/mlflow_export.py` and its tests, only as the draft export needs;
+- `pyproject.toml` and `uv.lock`, only if a pinned dependency is missing. None is expected.
+
+**Ignored material:** `.local/{worktrees,artifacts,tmp}/cp-22/` and `.local/mlruns/cp22`.
+
+**Read-only:**
+
+- CP-15, CP-16, CP-20 and CP-21 code and reports;
+- `evidence/cp-21`;
+- `.local/artifacts/cp-20/` and `.local/artifacts/cp-21/`.
+
+**Preserve:** v1; all earlier evidence; the public surfaces; Q&A; `progress.md`; every locked
+document.
+
+**Roles.** The accountable executor is the CP-22 Engineering Lead. The reviewer is its fresh,
+independent Integration Critic.
+
+**Ratification and CP-22 execution authority: GRANTED by the Owner, 2026-10-01.** The grant
+covers three things:
+
+- CP-22's execution under this section and the issued brief;
+- local `gauntlet/cp-22` candidate and evidence commits;
+- exact packaging of the issued brief.
+
+**Not authorized:** mainline operations, pushes, tags, publication, remote writes, data
+retrieval, governance edits and later checkpoints.
+
+### 20.12 Decisions recorded (Owner, 2026-10-01: "מאשר כפי שהמלצת")
+
+| # | Decision | Ratified outcome |
+|---|---|---|
+| D1 | Shape | One checkpoint: two eligible policies in a fixed sequence (R, then M), plus attribution arms |
+| D2 | Replacement rule | Non-inferiority against v4 (§20.6); if both fail, stop and return to the Owner |
+| D3 | Representation | v4 keeps its number, with a dated revision; the three-block construction is kept as a superseded revision (PUBLISH_RULES 1.3, A10) |
+| D4 | Ceilings | §20.8, about a third of CP-21's fits |
+| D5 | Publication | PRES-4 after LAND, in every outcome with a replacement |
+| D6 | Learned weight | Excluded; it stays in 4.8 |
+| D7 | Interval calibration | In CP-22: DL on the winner, with its own rule. The Owner's dynamics decision sets its form (§20.3). The Owner then added a fast component, as an add-on decision that never replaces the 7-day memory (W+DLF, `cp22-fast-component`): "אני רוצה לבדוק האם נכון להוסיף משקל מהיר יותר בנוסף, לזיהוי שינויים חדים" |
+| D8 | LEAR's internals | Diagnostics only; any change goes to a later, separate checkpoint |
