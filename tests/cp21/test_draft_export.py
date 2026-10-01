@@ -1,7 +1,7 @@
 """CP-21's draft MLflow export (§17.9): built by the exporter's code path from committed CP-21 rows
 and the packet's draft entries; names and statuses follow the mechanical verdict; every value
 re-derives from a committed row; landing-time identities are explicit pending fields; the
-published export set is untouched. Each contract carries a negative control."""
+published export carries it, after PRES-3, with those fields filled. Each contract carries a negative control."""
 from __future__ import annotations
 
 import json
@@ -108,9 +108,15 @@ def test_landing_time_identities_are_explicit_pending_fields(draft):
         assert spec['pending'] in run['tags']['delu.evidence_ref'] and spec['pending'] in run['tags']['delu.status']
 
 
-def test_the_published_export_set_is_unchanged(draft):
+def test_the_published_export_set_carries_cp21_as_its_draft_with_the_pending_fields_filled(draft):
+    """Until PRES-3 the published set carried no CP-21 run. The publication registered the entries, so the published
+    set now carries the five CP-21 runs, built by the draft's own code path: equal to this draft apart from the pending
+    fields (research anchor §17.9), plus the chart artifacts of v4's chapter on its candidate run (plan §10.6)."""
     files = E.build_export()
     assert E.contract_problems(files) == []
     for name, text in E.render(files).items():
         assert (E.EXPORT_DIR / name).read_text() == text
-    assert 'cp21' not in files and not any(r['run_key'].startswith('cp21') for r in files['manifest']['runs'])
+    assert sorted(r['run_key'] for r in files['manifest']['runs'] if r['run_key'].startswith('cp21')) == sorted(_runs(draft))
+    report = E.final_vs_draft(draft, files['cp21']['runs'])
+    assert report['equal_apart_from_pending'], report['differences']
+    assert set(report['chart_artifacts_added']) == {'cp21/HGL'}

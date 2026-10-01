@@ -8,9 +8,9 @@ secret guard reads every byte of it before it can leave this machine.
     uv run python scripts/mlflow_export.py            # write reports/presentation/mlflow-export/
     uv run python scripts/mlflow_export.py --check    # exit 1 if the committed export is stale
 
-Output: one JSON file per checkpoint (`cp10`, `cp15`, `cp16`, `cp20`) with its parent run and
-children, and `manifest.json`, which lists the 23 run keys, their parents, every metric key with
-its unit and history length, every artifact with its SHA-256, and the source blobs behind them.
+Output: one JSON file per checkpoint (`cp10`, `cp15`, `cp16`, `cp20`, `cp21`) with its parent run and
+children, and `manifest.json`, which lists the run keys the registry expects, their parents, every metric key
+with its unit and history length, every artifact with its SHA-256, and the source blobs behind them.
 
 Determinism: sorted keys, fixed timestamps taken from the evaluation windows (never the clock),
 and values copied as the exact committed text of each cell. Tags written only at upload time --
@@ -51,13 +51,17 @@ EXPERIMENT = "delu-generations"
 #: Experiment-level tags. The kind tag stops MLflow 3.5's UI from asking an anonymous reader to
 #: confirm an inferred experiment type (observed in the 2026-09-24 rehearsal). The description says
 #: the repository is the source of truth (standard §8), and names the parents from the registry.
+#: The checkpoints the experiment's description names, as it was published on 2026-09-28. Rewriting that description
+#: is a write to the experiment itself, which a checkpoint's upload authority (its runs only) does not cover; the
+#: description is therefore pinned, and naming a later checkpoint in it waits for an instruction naming that write.
+EXPERIMENT_NOTE_CHECKPOINTS = ("CP-10", "CP-15", "CP-16", "CP-20")
 EXPERIMENT_TAGS = {
     "mlflow.experimentKind": "custom_model_development",
     "mlflow.note.content": (
         f"The repository {GITHUB_URL} is the source of truth: every run here mirrors its committed "
         "evidence, and every name, status and description comes from its registry. Each policy evaluated "
         "since v1 appears once, nested under the checkpoint that produced it: "
-        + "; ".join(G.mlflow_run_name(checkpoint.run_key) for checkpoint in G.CHECKPOINTS.values())
+        + "; ".join(G.mlflow_run_name(G.CHECKPOINTS[code].run_key) for code in EXPERIMENT_NOTE_CHECKPOINTS)
         + ". Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
     ),
 }
@@ -143,7 +147,34 @@ CHECKPOINTS: dict[str, dict] = {
             "development_post_selection."
         ),
     },
+    # CP-21 tracked its runs while it ran (capstone v21-r6 §17.9) and drafted this export; the publication fills the
+    # identities that exist only at landing (the draft's pending fields) and adds nothing else to its records.
+    "cp21": {
+        "checkpoint": "CP-21",
+        "tracked": True,
+        "model_code_sha": "260dcf9fb3f5706cb896991ba7b6edf4cd9494b6",
+        "evidence_ref": "evidence/cp-21@1d13f99",
+        "evidence_tag": "evidence/cp-21",
+        # The terminal return: the evidence tip's commit time, 2026-09-30 03:57:44 +03:00.
+        "original_completed_utc": "2026-09-30T00:57:44Z",
+        "protocol": "reports/block-challenger/protocol.json",
+        "anchor_version": "capstone_v21.md v21-r6 §17",
+        "report": "reports/block-challenger/report.md",
+        "verdict": "docs/track-b/evidence/cp-21/integration.md",
+        "landing": "docs/track-b/cp-21-landing-2026-09-30.md",
+        "note": (
+            "CP-21 added a three-block LightGBM member to v3's blend of two LEAR forecasts (HGL) and compared it with "
+            "v3 under the pre-registered rule cp21-adoption; pooled, block and normalized-block LightGBM study arms "
+            "attribute the change. HGL met the four conditions of rule cp21-adoption, the third being this "
+            "checkpoint's independent Integration PASS, and was adopted in research as v4. The block split (block "
+            "against pooled LightGBM) showed no demonstrated joint preference. development_post_selection."
+        ),
+    },
 }
+
+#: The checkpoints whose runs were tracked while they ran and whose export was drafted inside them (CP-21 on): they
+#: are built by the draft's own code path, with the registry's entries in place of the draft entries.
+TRACKED = tuple(key for key, spec in CHECKPOINTS.items() if spec.get("tracked"))
 
 def children(checkpoint: str) -> tuple[str, ...]:
     """A checkpoint's children, in the registry's order. Each policy appears once per population,
@@ -623,6 +654,10 @@ def build_export() -> dict[str, dict]:
     groups = comparability()
     files: dict[str, dict] = {}
     for checkpoint in G.parent_run_keys():
+        if checkpoint in TRACKED:
+            files[checkpoint] = {"experiment": EXPERIMENT, "checkpoint": CHECKPOINTS[checkpoint]["checkpoint"],
+                                 "runs": tracked_runs(checkpoint)}
+            continue
         runs = [parent_run(checkpoint, groups)]
         runs += [child_run(checkpoint, code, groups=groups) for code in children(checkpoint)]
         files[checkpoint] = {"experiment": EXPERIMENT, "checkpoint": CHECKPOINTS[checkpoint]["checkpoint"],
@@ -773,10 +808,14 @@ def diff_exports(old: dict[str, dict], new: dict[str, dict]) -> dict:
     report: dict = {"runs_old": len(old_runs), "runs_new": len(new_runs), "run_keys_equal": sorted(old_runs) == sorted(new_runs),
                     "checked": {"params": 0, "metric_points": 0, "datasets": 0, "artifacts": 0,
                                 "artifacts_digest_unchanged": 0, "artifacts_old_digest_on_restoring_identity": 0},
-                    "identity_changes": {}, "substantive_changes": []}
+                    "identity_changes": {}, "substantive_changes": [],
+                    # A run the new export adds is not a change to a published record; it is listed, never hidden.
+                    "runs_added": sorted(set(new_runs) - set(old_runs))}
     for key in sorted(set(old_runs) | set(new_runs)):
-        if key not in old_runs or key not in new_runs:
-            report["substantive_changes"].append(f"{key}: present in only one export")
+        if key not in new_runs:
+            report["substantive_changes"].append(f"{key}: a published run is missing from the new export")
+            continue
+        if key not in old_runs:
             continue
         a, b = old_runs[key], new_runs[key]
         changed = {}
@@ -818,7 +857,8 @@ def diff_exports(old: dict[str, dict], new: dict[str, dict]) -> dict:
     old_tags = old.get("manifest", {}).get("experiment_tags", {})
     new_tags = new.get("manifest", {}).get("experiment_tags", {})
     report["experiment_tag_changes"] = sorted(k for k in set(old_tags) | set(new_tags) if old_tags.get(k) != new_tags.get(k))
-    report["only_identity"] = report["run_keys_equal"] and not report["substantive_changes"]
+    # Every published run survives, and nothing but names, descriptions and tags changed on any of them.
+    report["only_identity"] = set(old_runs) <= set(new_runs) and not report["substantive_changes"]
     return report
 
 
@@ -828,9 +868,13 @@ def export_at(ref: str) -> dict[str, dict]:
 
     files = {}
     for name in ("manifest", *G.parent_run_keys()):
-        text = subprocess.run(["git", "show", f"{ref}:reports/presentation/mlflow-export/{name}.json"],
-                              cwd=ROOT, capture_output=True, text=True, check=True).stdout
-        files[name] = json.loads(text)
+        shown = subprocess.run(["git", "show", f"{ref}:reports/presentation/mlflow-export/{name}.json"],
+                               cwd=ROOT, capture_output=True, text=True)
+        if shown.returncode != 0:
+            if name == "manifest":
+                raise SystemExit(f"{ref} holds no committed export")
+            continue  # a checkpoint registered after that revision: its runs are additions, listed as such
+        files[name] = json.loads(shown.stdout)
     return files
 
 
@@ -1032,27 +1076,39 @@ def _draft_params(protocol: dict, policy: str | None) -> dict[str, str]:
     return {key: value[:500] for key, value in out.items()}
 
 
-def build_draft(name: str = "cp21") -> dict:
-    """CP-21's draft export: one file, the checkpoint's parent and its four new policies."""
-    if name != "cp21":
-        raise SystemExit("the only draft export is cp21")
-    spec, entries, checkpoint = draft_registry()
-    pending = spec["pending"]
+def _tracked_runs(entries: dict[str, G.Entry], checkpoint: G.Checkpoint, ident: dict, *,
+                  pending: str | None, charts: bool) -> list[dict]:
+    """A tracked checkpoint's parent and children, from its committed evidence. `ident` supplies the identities that
+    exist only at landing (model code SHA, evidence reference, completion time) and the note; with `pending` they are
+    the draft's explicit pending fields, and the published export fills them. Nothing else differs, except that the
+    published candidate run carries the page's charts of its chapter (plan §10.6), which no draft could hold."""
     protocol = json.loads((ROOT / CP21["protocol"]).read_text())
     records = _draft_records()
     group = comparability()["common"]
-    note = spec["note"]
+    note = ident["note"]
+
+    def status(entry: G.Entry) -> str:
+        return _draft_status_text(entry, pending) if pending else _status_text(entry)
+
+    def describe(entry: G.Entry, **kwargs) -> str:
+        return _draft_description(entry, note, pending, **kwargs) if pending else _description(entry, note, **kwargs)
+
+    def readme(run_name: str, blobs: dict[str, str]) -> str:
+        return (_draft_readme(run_name, checkpoint, ident, blobs) if pending
+                else _tracked_readme(run_name, checkpoint, blobs))
+
+    completed = pending or ident["original_completed_utc"]
     runs = []
     owner = entries[checkpoint.owner]
     parent_tags = {
         "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
-        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _draft_status_text(owner, pending),
+        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": status(owner),
         "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
         "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
-        "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
-        "delu.backfilled": "false", "delu.original_completed_utc": pending,
+        "delu.model_code_sha": ident["model_code_sha"], "delu.evidence_ref": ident["evidence_ref"],
+        "delu.backfilled": "false", "delu.original_completed_utc": completed,
         "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
-        "mlflow.note.content": _draft_description(owner, note, pending),
+        "mlflow.note.content": describe(owner),
     }
     parent = {"run_key": checkpoint.run_key, "parent": None,
               "run_name": draft_run_name(checkpoint.run_key, entries, checkpoint),
@@ -1060,7 +1116,7 @@ def build_draft(name: str = "cp21") -> dict:
               "metric_units": {}, "inputs": [], "comparability": dict(group)}
     parent["artifacts"] = [
         _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
-        _artifact("README.md", _draft_readme(parent["run_name"], checkpoint, spec, {CP21["protocol"]: R.blob_sha(R.source_bytes(CP21["protocol"]))})),
+        _artifact("README.md", readme(parent["run_name"], {CP21["protocol"]: R.blob_sha(R.source_bytes(CP21["protocol"]))})),
     ]
     runs.append(parent)
     for code in checkpoint.children:
@@ -1074,13 +1130,13 @@ def build_draft(name: str = "cp21") -> dict:
         tags = {
             "delu.run_key": run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": entry.id,
             "delu.kind": entry.kind, "delu.generation": entry.version or "none", "delu.policy_code": code,
-            "delu.public_name": entry.name, "delu.status": _draft_status_text(entry, pending), "delu.comparator": comparator,
+            "delu.public_name": entry.name, "delu.status": status(entry), "delu.comparator": comparator,
             "delu.role": "candidate", "delu.adopted": G.adopted_flag(entry),
             "delu.evidence_class": "development_post_selection",
             "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
-            "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
-            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false", "delu.original_completed_utc": pending,
-            "mlflow.note.content": _draft_description(entry, note, pending, code=code, role="candidate"),
+            "delu.model_code_sha": ident["model_code_sha"], "delu.evidence_ref": ident["evidence_ref"],
+            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false", "delu.original_completed_utc": completed,
+            "mlflow.note.content": describe(entry, code=code, role="candidate"),
         }
         inputs = datasets("cp21", code, group, weather=True)
         tags["delu.datasets"] = _canonical({dataset["name"]: dataset["sha256"] for dataset in inputs})
@@ -1089,11 +1145,106 @@ def build_draft(name: str = "cp21") -> dict:
                "metric_provenance": builder.provenance,
                "metric_units": {key: metric_unit(key) for key in builder.metrics}, "inputs": inputs}
         summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
-        run["artifacts"] = [_artifact("summary.json", summary + "\n"),
-                            _artifact("README.md", _draft_readme(run_name, checkpoint, spec, blobs))]
+        chart_files = ([(f"charts/{chart_id}.svg", build_pages.standalone_svg(build()))
+                        for chart_id, build in build_pages.CHARTS_BY_RUN.get(run_key, ())] if charts else [])
+        text = readme(run_name, blobs)
+        if chart_files:
+            text += ("\nCharts, drawn by the page build from the same records as the report:\n\n"
+                     + "".join(f"- `{path}`\n" for path, _ in chart_files))
+        run["artifacts"] = ([_artifact("summary.json", summary + "\n"), _artifact("README.md", text)]
+                            + [_artifact(path, content) for path, content in chart_files])
         runs.append(run)
+    return runs
+
+
+def _tracked_readme(run_name: str, checkpoint: G.Checkpoint, blobs: dict[str, str]) -> str:
+    """The draft's README with its pending identities filled: the evidence tag's commit and the landing record."""
+    tag = checkpoint.evidence_tag
+    lines = [f"# {run_name}", "",
+             f"Tracked by {checkpoint.code} from its committed evidence (evidence tag `{tag}` at commit "
+             f"`{checkpoint.evidence_sha}`). Development evidence; nothing here is a live or confirmatory result.", "",
+             f"- Report: {GITHUB_URL}/blob/{tag}/{checkpoint.report}",
+             f"- Independent Integration review: {GITHUB_URL}/blob/{tag}/{checkpoint.verdict}",
+             f"- Landing record: {GITHUB_URL}/blob/main/{checkpoint.landing}", f"- Presentation: {PAGES_URL}", "",
+             "Source rows at the evidence tag:", ""]
+    lines += [f"- {GITHUB_URL}/blob/{tag}/{path} (blob {blob})" for path, blob in blobs.items()]
+    return "\n".join(lines) + "\n"
+
+
+def tracked_runs(key: str) -> list[dict]:
+    """A tracked checkpoint's published runs: the draft's code path, with the registry's entries and identities."""
+    checkpoint = G.CHECKPOINTS[CHECKPOINTS[key]["checkpoint"]]
+    entries = {entry.id: entry for entry in G.entries() if any(run.split("/")[0] == key for run in entry.run_keys)}
+    return _tracked_runs(entries, checkpoint, CHECKPOINTS[key], pending=None, charts=True)
+
+
+def build_draft(name: str = "cp21") -> dict:
+    """CP-21's draft export: one file, the checkpoint's parent and its four new policies."""
+    if name != "cp21":
+        raise SystemExit("the only draft export is cp21")
+    spec, entries, checkpoint = draft_registry()
+    runs = _tracked_runs(entries, checkpoint, spec, pending=spec["pending"], charts=False)
     return {"experiment": EXPERIMENT, "checkpoint": checkpoint.code, "status": "draft",
             "pending_fields": spec["pending_fields"], "draft_registry": DRAFT_REGISTRY, "runs": runs}
+
+
+#: The run tags that carry the draft's pending identities (publication packet §6), and so may differ between the draft
+#: and the published export; every other field of every run must be equal.
+PENDING_TAGS = ("delu.status", "delu.evidence_ref", "delu.model_code_sha", "delu.original_completed_utc",
+                "mlflow.note.content")
+#: The README lines that name a pending identity: the evidence tag's commit and the landing record.
+PENDING_README_PREFIXES = ("Tracked by ", "- Landing record: ")
+
+
+def final_vs_draft(draft: dict, runs: list[dict]) -> dict:
+    """Compare the published runs of a tracked checkpoint with its draft, record by record (research anchor §17.9):
+    the final export must equal the draft apart from the pending fields. Reports every other difference; the only
+    addition allowed is a chart artifact the page build draws for the candidate run (plan §10.6)."""
+    old = {run["run_key"]: run for run in draft["runs"]}
+    new = {run["run_key"]: run for run in runs}
+    report: dict = {"run_keys_equal": sorted(old) == sorted(new), "pending_fields": sorted(draft.get("pending_fields", {})),
+                    "filled": {}, "chart_artifacts_added": {}, "differences": []}
+    for key in sorted(set(old) | set(new)):
+        if key not in old or key not in new:
+            report["differences"].append(f"{key}: present in only one export")
+            continue
+        a, b = old[key], new[key]
+        for field in ("parent", "run_name", "params", "metrics", "metric_provenance", "metric_units", "inputs",
+                      "comparability"):
+            if a.get(field) != b.get(field):
+                report["differences"].append(f"{key}: {field}")
+        for tag in sorted(set(a["tags"]) | set(b["tags"])):
+            if a["tags"].get(tag) == b["tags"].get(tag):
+                continue
+            if (tag in PENDING_TAGS and "pending-at-landing" in str(a["tags"].get(tag))
+                    and "pending-at-landing" not in str(b["tags"].get(tag))):
+                report["filled"].setdefault(key, []).append(tag)
+            else:
+                report["differences"].append(f"{key}: tag {tag}")
+        old_art = {art["path"]: art for art in a["artifacts"]}
+        new_art = {art["path"]: art for art in b["artifacts"]}
+        for path in sorted(set(old_art) - set(new_art)):
+            report["differences"].append(f"{key}: artifact {path} missing")
+        charted = {f"charts/{chart_id}.svg" for chart_id, _ in build_pages.CHARTS_BY_RUN.get(key, ())}
+        for path in sorted(set(new_art) - set(old_art)):
+            if path in charted:
+                report["chart_artifacts_added"].setdefault(key, []).append(path)
+            else:
+                report["differences"].append(f"{key}: artifact {path} added")
+        if "summary.json" in old_art and "summary.json" in new_art:
+            body = json.loads(new_art["summary.json"]["content"])
+            body["tags"] = {tag: (a["tags"].get(tag) if tag in PENDING_TAGS else value)
+                            for tag, value in body["tags"].items()}
+            if sha256_text(_canonical(body) + "\n") != old_art["summary.json"]["sha256"]:
+                report["differences"].append(f"{key}: summary.json beyond the pending tags")
+        if "README.md" in old_art and "README.md" in new_art:
+            def lines(text: str) -> list[str]:
+                kept = text.split("\nCharts, drawn by the page build")[0].splitlines()
+                return [line for line in kept if not line.startswith(PENDING_README_PREFIXES)]
+            if lines(old_art["README.md"]["content"]) != lines(new_art["README.md"]["content"]):
+                report["differences"].append(f"{key}: README.md beyond the pending identities")
+    report["equal_apart_from_pending"] = report["run_keys_equal"] and not report["differences"]
+    return report
 
 
 def _draft_readme(run_name: str, checkpoint: G.Checkpoint, spec: dict, blobs: dict[str, str]) -> str:
@@ -1152,8 +1303,8 @@ def main() -> int:
         if args.out:
             args.out.parent.mkdir(parents=True, exist_ok=True)
             args.out.write_text(text)
-        print(f"runs {report['runs_old']} -> {report['runs_new']}; checked {report['checked']}; "
-              f"identity changes on {len(report['identity_changes'])} runs; "
+        print(f"runs {report['runs_old']} -> {report['runs_new']} (added {report['runs_added'] or 'none'}); "
+              f"checked {report['checked']}; identity changes on {len(report['identity_changes'])} runs; "
               f"substantive changes: {report['substantive_changes'] or 'none'}; only_identity={report['only_identity']}")
         return 0 if report["only_identity"] else 1
     counts = files["manifest"]["counts"]

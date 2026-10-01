@@ -34,6 +34,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from delu_forecast import registry as G  # noqa: E402
+from delu_forecast import research as R  # noqa: E402
 from delu_forecast import research_claims as RC  # noqa: E402
 from delu_forecast.claims import (  # noqa: E402
     EXCHANGEABILITY,
@@ -148,8 +149,7 @@ def build_glance(target: str = "md") -> str:
     def para(text: str) -> str:
         return f"<p>{text}</p>" if html else text
 
-    terms = [render(key) for key in ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies",
-                                      "terms.class")]
+    terms = [render(key) for key in RC.headline_terms()]
     body = [
         f"<h2>At a glance</h2>" if html else "## At a glance",
         "",
@@ -205,6 +205,20 @@ def transition_lines(entry: G.Entry) -> list[str]:
 
 def generation_section(entry: G.Entry) -> list[str]:
     head = [f"### {entry.name}", "", f"*{entry.subtitle}.* {G.status_sentence(entry)}", ""]
+    if entry.id == "v4":
+        primary = R.get("cp21.uncertainty.HGL-HG.equal_fold.MAE")
+        return head + [
+            *transition_lines(entry),
+            md("v4.outcome.head"), "",
+            f"- {md('v4.outcome.mae')}.",
+            f"- {md('v4.outcome.wis')}.",
+            "",
+            md("v4.rule"), "",
+            md("v4.reading"), "",
+            *not_established(("v4.caveat.blocks", "v4.caveat.peak", "v4.caveat.class")),
+            md("v4.decision"), "",
+            audit_links("CP-21", source=primary.source_path, line=primary.source_line), "",
+        ]
     if entry.id == "v3":
         return head + [
             *transition_lines(entry),
@@ -289,6 +303,9 @@ def build_block() -> str:
             lines += branch_section(entry)
     lines += [
         "### Reading the comparison", "",
+        *[f"- {md(key)}" for key in RC.comparison_terms()],
+        *([""] if RC.comparison_terms() else []),
+        RC.target_sentence("md", surface=RC.README), "",
         md("overview.fairness.readme"), "",
         md("comparison.finding") + " " + md("comparison.caveat"), "",
         md("comparison.scale"), "",
@@ -296,7 +313,8 @@ def build_block() -> str:
         "### Further reading", "",
         "- The research updates behind each generation: [CP-20](docs/track-b/research-content/cp20-update.md) and "
         "[CP-15 and CP-16](docs/track-b/research-content/cp15-cp16-update.md).",
-        "- The landing records: [CP-20](docs/track-b/cp-20-landing-2026-09-24.md), "
+        "- The landing records: [CP-21](docs/track-b/cp-21-landing-2026-09-30.md), "
+        "[CP-20](docs/track-b/cp-20-landing-2026-09-24.md), "
         "[CP-16](docs/track-b/cp-16-landing-2026-09-23.md) and [CP-15](docs/track-b/cp-15-landing.md). CP-3B's "
         "[unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) is disclosed.",
         "- The Owner-managed Hebrew [Q&A record](שאלות%20תשובות.docx) and the "

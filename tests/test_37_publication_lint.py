@@ -90,9 +90,9 @@ def test_negative_control_precision_too_many_significant_figures(page):
 
 
 def test_negative_control_precision_eur_decimals(page):
-    marker = 'data-record="derived.periods.v3.stress" data-derived="period_stress">48.0<'
+    marker = 'data-record="derived.periods.v4.stress" data-derived="period_stress">47.0<'
     assert marker in page
-    broken = page.replace(marker, marker.replace(">48.0<", ">48.04<"), 1)
+    broken = page.replace(marker, marker.replace(">47.0<", ">47.03<"), 1)
     assert any("not shown to one decimal" in finding for finding in L.lint_document(broken))
 
 

@@ -1,0 +1,114 @@
+# A clean Python 3.12 run of every step of .github/workflows/tests.yml, in a fresh detached worktree (runbook §9)
+# script: .local/artifacts/pres-3/ci312/run.sh; started from a new worktree at the pre-candidate
+HEAD 4b64fd229ddf0dbd4cd524bbfe58f8540a27ca11; clean=yes
+=== uv sync --locked --dev (Python 3.12)
+Creating virtual environment at: .venv
+   Building delu-price-forecast @ file:///Users/djourno/Downloads/PJM/.local/worktrees/pres-3/ci312
+      Built delu-price-forecast @ file:///Users/djourno/Downloads/PJM/.local/worktrees/pres-3/ci312
+exit 0
+=== python version
+3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]
+exit 0
+=== Build the browser payload (M3.5 item 2)
+2026/10/01 02:11:31 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible
+payload: 15,363,807 bytes across 14 files
+  boosters: 30,823,690 bytes as text, 11,125,154 gzipped, 14,833,552 shipped as base64 text
+  series:   7,248 rows
+  fixture:  54 days / 1296 rows (4 fail-closed) / regimes ['crisis', 'dst-fall-back', 'dst-spring-forward', 'post-crisis (holdout)', 'post-crisis (holidays, bridge days)', 'pre-crisis']
+wrote /Users/djourno/Downloads/PJM/.local/worktrees/pres-3/ci312/reports/cp3b/payload.json
+exit 0
+=== uv run pytest -q
+........................................................................ [  5%]
+..................................................s..................... [ 11%]
+......................sss...................................ss.......... [ 16%]
+........................................................................ [ 22%]
+........................................................................ [ 27%]
+........................................................................ [ 33%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 50%]
+........................................................................ [ 55%]
+........................................................................ [ 61%]
+........................................................................ [ 67%]
+........................................................................ [ 72%]
+........................................................................ [ 78%]
+........................................................................ [ 83%]
+........................................................................ [ 89%]
+........................................................................ [ 95%]
+..............................................................           [100%]
+1280 passed, 7 skipped in 186.40s (0:03:06)
+exit 0
+=== CQR order-statistic fixture (§6.2)
+........                                                                 [100%]
+8 passed in 0.01s
+exit 0
+=== Cross-surface agreement and zero runtime calls (CP-3 items 3, 5)
+## Item 5 — cross-surface agreement
+
+| Claim | README | Space card | Static Space card | Pages export | MLflow record |
+|---|---|---|---|---|---|
+| `snapshot_cutoff` | yes | yes | yes | yes | yes |
+| `raw_model_fit_cutoff` | yes | yes | yes | yes | yes |
+| `final_calibration_window` | yes | yes | yes | yes | yes |
+| `holdout_window` | yes | yes | yes | yes | yes |
+| `selected_catalog` | yes | yes | yes | yes | yes |
+| `catalog_base_loss` | yes | yes | yes | yes | yes |
+| `catalog_augmented_loss` | yes | yes | yes | yes | yes |
+| `catalog_pct` | yes | yes | yes | yes | yes |
+| `holdout_mae_champion` | yes | yes | yes | yes | yes |
+| `holdout_mae_naive` | yes | yes | yes | yes | yes |
+| `holdout_mae_pct` | yes | yes | yes | yes | yes |
+| `holdout_pinball_champion` | yes | yes | yes | yes | yes |
+| `holdout_pinball_naive` | yes | yes | yes | yes | yes |
+| `holdout_pinball_pct` | yes | yes | yes | yes | yes |
+| `holdout_coverage_50` | yes | yes | yes | yes | yes |
+| `holdout_coverage_80` | yes | yes | yes | yes | yes |
+| `holdout_coverage_95` | yes | yes | yes | yes | yes |
+| `holdout_dm_statistic` | yes | yes | yes | yes | yes |
+| `holdout_dm_p_value` | yes | yes | yes | yes | yes |
+| `holdout_dm_effect_size` | yes | yes | yes | yes | yes |
+| `development_evidence_class` | yes | yes | yes | yes | yes |
+| `development_dm_point_p_value` | yes | yes | yes | yes | yes |
+| `benchmark_strict_loss` | yes | yes | yes | yes | yes |
+| `benchmark_a69_loss` | yes | yes | yes | yes | yes |
+| `benchmark_pct` | yes | yes | yes | yes | yes |
+| `benchmark_limitation` | yes | yes | yes | yes | yes |
+| `champion_fingerprint` | yes | yes | yes | yes | yes |
+| `snapshot_sha256` | yes | yes | yes | yes | yes |
+| `holdout_dm_label` | yes | yes | yes | yes | yes |
+| `shipped_is_evaluated` | yes | yes | yes | yes | yes |
+
+### The four cutoffs, separately
+
+| Cutoff | README | Space card | Static Space card | Pages export | MLflow record |
+|---|---|---|---|---|---|
+| `snapshot_cutoff` | yes | yes | yes | yes | yes |
+| `raw_model_fit_cutoff` | yes | yes | yes | yes | yes |
+| `final_calibration_window` | yes | yes | yes | yes | yes |
+| `holdout_window` | yes | yes | yes | yes | yes |
+
+
+disagreements: none
+
+## Item 3 — zero runtime calls
+
+scanned docs/index.html (1,906,528 bytes)
+fetching references to an external origin: 0
+
+## Link discipline
+
+gated DagsHub UI links on any surface: none
+tracking URI used everywhere: https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow
+
+## Cross-surface parity (Publication Standard v1 §8)
+
+headline block, names and statuses on page, README, Static Space card, Space card, MLflow export: agree
+
+PASS — every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces
+exit 0
+=== WASM model-identity equivalence (CP-3B item 2)
+...............                                                          [100%]
+15 passed in 1.16s
+exit 0
+=== publication_guard tree: runs only on refs/heads/main in CI; skipped on this branch
+clean-after=yes

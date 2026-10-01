@@ -46,7 +46,7 @@ def export() -> dict:
 def test_every_kind_the_standard_names_is_registered():
     kinds = {entry.kind for entry in G.entries()}
     assert kinds == set(G.KINDS)
-    assert [entry.version for entry in G.generations()] == ["v1", "v2", "v3"]
+    assert [entry.version for entry in G.generations()] == ["v1", "v2", "v3", "v4"]
     assert {entry.id for entry in G.branches()} == {"calibration", "model-comparison"}
     assert {entry.primary_code for entry in G.of_kind("reference")} == {"B0", "B2", "B3"}
     assert {entry.code_in("CP-15") for entry in G.of_kind("study arm") if entry.code_in("CP-15")} == {
@@ -90,10 +90,11 @@ def test_one_identity_across_experiment_codes():
 
 
 def test_status_is_derived_and_dated():
-    assert G.current_generation().version == "v3"
+    assert G.current_generation().version == "v4"
     assert G.released().version == "v1"
     assert G.hero().version == "v1", "the released model outranks a research generation (standard §2)"
     assert G.status_sentence(G.get("v3")) == "In September 2026, v3 was adopted in research."
+    assert G.status_sentence(G.get("v4")) == "In September 2026, v4 was adopted in research."
     assert G.status_sentence(G.get("calibration")) == "In September 2026, the calibration experiment was not adopted."
 
 
@@ -153,8 +154,8 @@ def test_negative_control_a_generation_missing_from_the_rail_is_caught(page):
 
 def test_negative_control_an_unregistered_generation_on_the_page_is_caught(page):
     start = page.index('<nav class="jump"')
-    broken = page[:start] + page[start:].replace("</nav>", '<a href="#v4">v4</a></nav>', 1)
-    assert any("names v4, which is not registered" in problem for problem in L.page_consistency_problems(broken))
+    broken = page[:start] + page[start:].replace("</nav>", '<a href="#v5">v5</a></nav>', 1)
+    assert any("names v5, which is not registered" in problem for problem in L.page_consistency_problems(broken))
 
 
 def test_negative_control_a_missing_readme_heading_is_caught(readme):
@@ -165,7 +166,7 @@ def test_negative_control_a_missing_readme_heading_is_caught(readme):
 
 
 def test_negative_control_an_unregistered_readme_heading_is_caught(readme):
-    broken = readme + "\n### v4 · something unregistered\n"
+    broken = readme + "\n### v5 · something unregistered\n"
     assert any("unregistered generation" in problem for problem in L.readme_consistency_problems(broken))
 
 

@@ -126,9 +126,20 @@ def test_bootstrap_index_set_is_cp20s():
     assert meta['replicates'] == 2000 and meta['block_days'] == 7
 
 
+#: CP-21 files that the later, authorized publication block amended (PRES-3, 2026-09-30): the export gained CP-21's
+#: specification (publication runbook §2 step 17), the draft-export test its post-publication invariant, and this test
+#: this exemption. Their reviewed bytes stay at `evidence/cp-21`, which the manifest still describes exactly; every
+#: other hash-bound file is checked byte for byte, as before.
+AMENDED_BY_PUBLICATION = frozenset({'scripts/mlflow_export.py', 'tests/cp21/test_draft_export.py',
+                                    'tests/cp21/test_saved_evidence.py'})
+
+
 def test_hash_bound_files_are_stored_byte_for_byte():
     manifest = json.loads((OUT / 'artifact-manifest.json').read_text())['artifact_sha256']
+    assert AMENDED_BY_PUBLICATION <= set(manifest)
     for name, digest in manifest.items():
+        if name in AMENDED_BY_PUBLICATION:
+            continue
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, name
     protocol = json.loads((OUT / 'protocol.json').read_text())
     for name, digest in protocol['preflight_sha256'].items():
@@ -144,3 +155,17 @@ def test_hg_parity_and_controls_passed():
     assert controls['all_passed']
     daily = json.loads((OUT / 'daily-cycle.json').read_text())
     assert daily['all_bitwise_checks_passed'] and daily['origins'] >= 20
+
+
+def test_files_amended_by_the_publication_keep_their_reviewed_bytes_at_the_evidence_tag():
+    """The exemption hides nothing: the tag still holds the bytes the manifest bound (a shallow clone without the tag,
+    as in CI, cannot check this and skips)."""
+    import subprocess
+    manifest = json.loads((OUT / 'artifact-manifest.json').read_text())['artifact_sha256']
+    tag = subprocess.run(['git', 'rev-parse', '--verify', '--quiet', 'evidence/cp-21^{commit}'], cwd=ROOT,
+                         capture_output=True, text=True)
+    if tag.returncode != 0:
+        pytest.skip('evidence/cp-21 is not in this checkout')
+    for name in sorted(AMENDED_BY_PUBLICATION):
+        data = subprocess.run(['git', 'show', f'evidence/cp-21:{name}'], cwd=ROOT, capture_output=True, check=True).stdout
+        assert hashlib.sha256(data).hexdigest() == manifest[name], name

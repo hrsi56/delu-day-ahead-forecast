@@ -7,11 +7,11 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Research, v3 · weather features.** Met both accuracy targets set before the experiments: error scores at least 10% below the strongest benchmark, daily LEAR (v3: 14% below on the point-error score and 17% below on the interval score; the first of 8 policies tested to meet them). `Development · post-selection`
+**Research, v4 · three-block LightGBM added.** Met the adoption rule set before the experiment: both error scores improved on v3's (v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] on the interval score; 1 policy tested against the rule). `Development · post-selection`
 
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
-- **Accuracy targets:** set on 2026-09-15; the distances are point comparisons.
-- **Daily LEAR:** the strongest benchmark, a linear model refitted daily.
+- **Adoption rule:** set on 2026-09-29; its four conditions are in the v4 chapter.
+- **Paired difference:** v4's error score minus v3's on identical hours, with its 95% confidence interval; below zero favours v4.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
 
@@ -33,6 +33,35 @@
 ## Generations, newest first
 
 Names and statuses come from the registry. The research results are development evidence after selection, on the same historical hours for every policy; the released model's one-shot holdout is a separate evidence class. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#chapters) has the charts and the values.
+
+### v4 · three-block LightGBM added
+
+*v3 plus a three-block LightGBM member.* In September 2026, v4 was adopted in research.
+
+**From v3 to v4: adding a three-block LightGBM.**
+
+- **What changed.** v4 kept v3's inputs and its two LEAR forecasts, added a three-block LightGBM forecaster (separate models for the night, the solar hours, and the shoulder and peak hours) with one third of the blend's weight, and re-estimated the hour-aware intervals on the new forecast's own errors.
+- **Comparator.** Set in advance: v3 itself, on identical hours, so the protocol's comparator is also the predecessor and the comparison is direct.
+- **Result.** Point-error score −5% [−6%, −4%] and interval score −5% [−6%, −4%], as a share of v3's score, with 95% confidence intervals of that ratio from the experiment's own bootstrap draws; development evidence, not a test on new data.
+
+Difference in error score (v4 − v3), with 95% confidence intervals. Below zero favours v4.
+
+- Point-error score: −0.0301 [−0.0368, −0.0228].
+- Interval score: −0.0266 [−0.0327, −0.0204].
+
+**The rule**, set on 2026-09-29 and frozen in the protocol before any fit: v4 would be adopted only if, against v3, the interval score's paired difference had its upper 95% confidence limit below zero and the point-error score's at or below zero; it met the six original screening criteria; the evaluation was complete and valid; and no test period was decisively worse, that is, none had a paired interval wholly above zero. All four held.
+
+All four conditions of the rule set in advance held: both paired differences' 95% confidence intervals lie below zero; v4 passed the six screening criteria set before the experiments (the two accuracy targets, interval coverage in each test period, the August 2022 peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts); the evaluation was complete and valid; and no test period's paired interval lies wholly above zero.
+
+**What this result does not establish:**
+
+- **That separate hour-block models help.** The three-block against the pooled LightGBM showed no demonstrated joint preference: point-error score +0.0050 [−0.0084, +0.0142], interval score +0.0063 [−0.0050, +0.0135].
+- **A gain in the August 2022 peak.** Over those 17 days its point error is higher than v3's: MAE 50.1 against 47.5 EUR/MWh. Descriptive, on a small sample; no inference is drawn.
+- **Performance on new data.** This is development evidence after selection, not a test on new data.
+
+In September 2026, v4 was adopted in research. It met the adoption rule set before the experiment against v3; the released model, v1, did not change. The three study arms were built only to separate the change into steps, and were never candidates for adoption.
+
+Evidence: [Engineering report, frozen 2026-09-30](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/report.md) · [Review verdict, frozen 2026-09-30](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/docs/track-b/evidence/cp-21/integration.md) · [Raw CSV rows, frozen 2026-09-30](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-21/reports/block-challenger/uncertainty.csv#L72)
 
 ### v3 · weather features
 
@@ -155,18 +184,23 @@ Evidence: [Engineering report, frozen 2026-09-16](https://github.com/hrsi56/delu
 
 ### Reading the comparison
 
+- **Accuracy targets:** each error score at least 10% below the strongest benchmark's, set on 2026-09-15; a policy's distance from them is a point comparison.
+- **Daily LEAR:** the strongest benchmark, a linear model refitted daily.
+
+The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set 2026-09-15). 12 policies were tested against them; v3 was the first to meet both; v4, pooled LightGBM with weather, three-block LightGBM and normalized three-block LightGBM met them too.
+
 Every policy was evaluated on the same 10,747 historical hours over 448 days, across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
 
-v3 against v2, as a share of v2's error scores: −12% [−16%, −9%] on the point-error score and −14% [−17%, −11%] on the interval score, with 95% confidence intervals. Development evidence, not a test on new data. Meeting the targets is a development diagnostic, not a product qualification.
+v4 against v3, as a share of v3's error scores: −5% [−6%, −4%] on the point-error score and −5% [−6%, −4%] on the interval score, with 95% confidence intervals. Development evidence, not a test on new data. Meeting the targets is a development diagnostic, not a product qualification.
 
-For scale, as mean absolute error per test period: v3 5.3–15.6 EUR/MWh in the four ordinary periods and 48.0 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
+For scale, as mean absolute error per test period: v4 4.9–15.0 EUR/MWh in the four ordinary periods and 47.0 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
 
 **Why v1 scores 1.052 in the shared development comparison but 28.58% worse in its own report.** Both figures describe the same 448 development days. v1's report compared its daily absolute error with the raw similar-day naive (MAE 32.45 EUR/MWh) and pooled all days, so the 2022 crisis dominates. This comparison gives each of the five folds equal weight, and its naive reference is the forecast's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own error is 41.74 EUR/MWh in both. v1's original nine-quantile pinball is a different score from the seven-quantile interval score used here.
 
 ### Further reading
 
 - The research updates behind each generation: [CP-20](docs/track-b/research-content/cp20-update.md) and [CP-15 and CP-16](docs/track-b/research-content/cp15-cp16-update.md).
-- The landing records: [CP-20](docs/track-b/cp-20-landing-2026-09-24.md), [CP-16](docs/track-b/cp-16-landing-2026-09-23.md) and [CP-15](docs/track-b/cp-15-landing.md). CP-3B's [unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) is disclosed.
+- The landing records: [CP-21](docs/track-b/cp-21-landing-2026-09-30.md), [CP-20](docs/track-b/cp-20-landing-2026-09-24.md), [CP-16](docs/track-b/cp-16-landing-2026-09-23.md) and [CP-15](docs/track-b/cp-15-landing.md). CP-3B's [unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) is disclosed.
 - The Owner-managed Hebrew [Q&A record](שאלות%20תשובות.docx) and the [research memo](docs/track-b/forecasting-research-2026-09-15.md), which is historical motivation, not a measured result.
 
 <!-- research:end -->

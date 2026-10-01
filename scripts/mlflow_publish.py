@@ -25,6 +25,10 @@ Rules it enforces, in order:
    script only reports whether they are set.
 
 `--fail-after N` stops after N write operations, to rehearse an interrupted upload.
+
+`--authorized-runs KEY,...` bounds an upload to the runs an instruction names (PRES-3: CP-21's five). Before the
+first write it reads the service and refuses unless every write the upload would make belongs to those runs: the
+experiment must exist with its tags already equal to the export's, and every other run must already be complete.
 """
 
 from __future__ import annotations
@@ -273,9 +277,39 @@ def _log_run(client, reader: V.Reader, experiment_id: str, run: dict, parent_id:
     return run_id
 
 
-def publish(uri: str, runs: dict[str, dict], tool_sha: str, writes: Writes) -> list[dict]:
+def write_plan(client, runs: dict[str, dict], authorized: tuple[str, ...]) -> dict:
+    """Read-only: what an upload would write, and whether all of it lies inside the authorized runs. Nothing outside
+    them may be written -- no experiment, no experiment tag, no other run -- so anything else refuses the upload."""
+    unknown = sorted(set(authorized) - set(runs))
+    if unknown:
+        raise Refused(f"authorized runs not in the export: {unknown}")
+    experiment = client.get_experiment_by_name(E.EXPERIMENT)
+    plan: dict = {"authorized": sorted(authorized), "experiment_exists": experiment is not None,
+                  "experiment_tags_to_write": [], "runs": {}}
+    if experiment is None:
+        raise Refused(f"the experiment {E.EXPERIMENT} does not exist; creating it is outside the authorized runs")
+    present = dict(experiment.tags)
+    plan["experiment_tags_to_write"] = sorted(key for key, value in E.EXPERIMENT_TAGS.items() if present.get(key) != value)
+    outside = [f"experiment tag {key}" for key in plan["experiment_tags_to_write"]]
+    for key in runs:
+        found = _find(client, experiment.experiment_id, key)
+        state = "absent" if found is None else found.data.tags.get("delu.upload_state", "incomplete")
+        plan["runs"][key] = state
+        if key not in authorized and state != "complete":
+            outside.append(f"run {key} ({state})")
+        elif key not in authorized and "/" not in key and found.data.tags.get("delu.package_complete") != "true":
+            outside.append(f"run {key} (its package is not marked complete)")
+    if outside:
+        raise Refused("the upload would write outside the authorized runs: " + "; ".join(outside) + "; nothing was written")
+    plan["to_write"] = sorted(key for key in authorized if plan["runs"][key] != "complete")
+    return plan
+
+
+def publish(uri: str, runs: dict[str, dict], tool_sha: str, writes: Writes,
+            authorized: tuple[str, ...] | None = None) -> list[dict]:
     client = _client(uri)
     reader = V.Reader(uri)
+    plan = write_plan(client, runs, authorized) if authorized is not None else None
     experiment = client.get_experiment_by_name(E.EXPERIMENT)
     experiment_id = experiment.experiment_id if experiment else client.create_experiment(E.EXPERIMENT)
     if experiment is None:
@@ -285,7 +319,7 @@ def publish(uri: str, runs: dict[str, dict], tool_sha: str, writes: Writes) -> l
         if present.get(key) != value:
             client.set_experiment_tag(experiment_id, key, value)
             writes.tick()
-    log: list[dict] = []
+    log: list[dict] = [{"write_plan": plan}] if plan is not None else []
     for checkpoint in G.parent_run_keys():
         parent = runs[checkpoint]
         parent_id = _log_run(client, reader, experiment_id, parent, None, tool_sha, writes, log)
@@ -320,7 +354,10 @@ def main() -> int:
     parser.add_argument("--owner-instruction", default=None,
                         help="public only: the Owner's instruction naming this upload, recorded verbatim")
     parser.add_argument("--log", type=Path, default=None)
+    parser.add_argument("--authorized-runs", default=None,
+                        help="comma-separated run keys: refuse before any write unless every write lies inside them")
     args = parser.parse_args()
+    authorized = tuple(key.strip() for key in args.authorized_runs.split(",")) if args.authorized_runs else None
     secrets = E.local_secrets()
     try:
         if args.precheck:
@@ -352,7 +389,7 @@ def main() -> int:
             raise Refused("--target local must point at a loopback server")
         started = V.utc_now()
         writes = Writes(args.fail_after)
-        log = publish(uri, runs, head, writes)
+        log = publish(uri, runs, head, writes, authorized)
         record = {"target": args.target, "tracking_uri": uri, "experiment": E.EXPERIMENT,
                   "export_commit": head, "started_utc": started, "finished_utc": V.utc_now(),
                   "write_operations": writes.count, "runs": log,
@@ -360,10 +397,11 @@ def main() -> int:
         if args.log:
             args.log.parent.mkdir(parents=True, exist_ok=True)
             args.log.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
-        created = sum(1 for entry in log if entry["action"] == "created")
-        resumed = sum(1 for entry in log if entry["action"] == "resumed")
-        print(f"published {len(log)} runs to {uri}: {created} created, {resumed} resumed, "
-              f"{len(log) - created - resumed} already complete; {writes.count} write operations")
+        entries = [entry for entry in log if "action" in entry]
+        created = sum(1 for entry in entries if entry["action"] == "created")
+        resumed = sum(1 for entry in entries if entry["action"] == "resumed")
+        print(f"published {len(entries)} runs to {uri}: {created} created, {resumed} resumed, "
+              f"{len(entries) - created - resumed} already complete; {writes.count} write operations")
         return 0
     except Interrupted as exc:
         print(f"mlflow-publish: {exc}", file=sys.stderr)

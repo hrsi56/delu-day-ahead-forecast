@@ -121,10 +121,16 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     assert RC.headline("md") in readme[:readme.index(readme_research.GLANCE_END)]
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text == re.sub(r"`", "", RC.headline("md"))
-    # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it.
-    assert text.startswith("Met both accuracy targets set before the experiments: error scores at least 10% below "
-                           "the strongest benchmark, daily LEAR (v3: 14% below on the point-error score and 17% below "
-                           "on the interval score; the first of 8 policies tested to meet them).")
+    # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it. v4 leads with its own rule (§3.3 a).
+    assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v3's "
+                           "(v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] "
+                           "on the interval score; 1 policy tested against the rule).")
+    # The v3-era form, from the same generator, is unchanged for a generation led by the accuracy targets.
+    claim, v3_form = RC.headline_template(G.get("v3"))
+    assert re.sub(r"<[^>]+>", "", RC.render_template(claim, v3_form)).startswith(
+        "Met both accuracy targets set before the experiments: error scores at least 10% below the strongest "
+        "benchmark, daily LEAR (v3: 14% below on the point-error score and 17% below on the interval score; the "
+        "first of 8 policies tested to meet them).")
 
 
 def test_the_terms_are_defined_directly_below_the_headline(page):
@@ -167,13 +173,13 @@ def test_the_comparison_finding_and_caveat_sit_above_its_chart(page):
 
 
 def test_every_research_chapter_fills_the_grammar():
-    for slots in (B.v3_slots(), B.v2_slots()):
+    for slots in (B.v4_slots(), B.v3_slots(), B.v2_slots()):
         assert B.slot_problems(slots) == [], slots.entry.id
 
 
 def test_the_page_renders_its_research_chapters_through_the_grammar(page):
     rendered = re.findall(r'<article class="chapter" id="(v\d+)"[^>]*data-grammar="chapter"', page)
-    assert rendered == ["v3", "v2"]
+    assert rendered == ["v4", "v3", "v2"]
     for chapter in rendered:
         body = page[page.index(f'<article class="chapter" id="{chapter}"'):]
         body = body[:body.index("</article>")]

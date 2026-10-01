@@ -65,20 +65,42 @@ value is in any of its files; this reads no secret for use and changes nothing:
 uv run python scripts/deploy_space.py --bundle dist/space-wasm --expect <reviewed bundle sha256>
 ```
 
-Then upload it:
+The check also reads the Space's file tree anonymously, at the revision it is serving, and prints the
+plan: `planned_adds` (bundle files the Space lacks), `planned_changes` (files whose content differs),
+`planned_deletes` (remote files the bundle does not carry) and `served_equals_bundle`. On 2026-09-30
+`planned_deletes` is `["style.css"]`, the Space template's unused stylesheet. Given the deletion set
+you intend to declare below, the check also reports `declared_matches` and exits non-zero when it
+does not match.
+
+Then upload it, declaring every file the upload will delete; repeat `--delete` once per file:
 
 ```bash
-uv run --with huggingface_hub python scripts/deploy_space.py --bundle dist/space-wasm --expect <reviewed bundle sha256> --upload --record reports/presentation/release-checks/<date>-space-deployment.json
+uv run --with huggingface_hub python scripts/deploy_space.py --bundle dist/space-wasm --expect <reviewed bundle sha256> --upload --delete style.css --record reports/presentation/release-checks/<date>-space-deployment.json
 ```
 
-The script repeats both checks, confirms the Space is public and Static, and uploads exactly those
-files with `HfApi.upload_folder` against the revision it has just read, so a concurrent change fails
-instead of being overwritten. It then compares every remote file with the bundle (the Git blob
-SHA-1, or the SHA-256 of a file stored through LFS) and writes the record. `HF_TOKEN` is read inside
-the process and is never printed, logged or written; `huggingface_hub` is supplied for that one run
-and `uv.lock` is untouched. A remote file the bundle does not carry, such as the Space template's
-unused `style.css`, is left in place and listed in the record. This is the operation PRES-1 used on
-2026-09-29.
+When the plan deletes nothing, declare that instead:
+
+```bash
+uv run --with huggingface_hub python scripts/deploy_space.py --bundle dist/space-wasm --expect <reviewed bundle sha256> --upload --delete-none --record reports/presentation/release-checks/<date>-space-deployment.json
+```
+
+The script repeats the checks, confirms the Space is public and Static, and recomputes the plan. It
+refuses before writing anything unless the deletion set it computes is exactly the declared one, and
+names both sets when they differ. It then makes one Hub commit with `HfApi.create_commit` against the
+revision it has just read, so a concurrent change fails instead of being overwritten: an add for every
+missing or changed file and a delete for every file the bundle does not carry. When the content
+already matches, the commit carries only the deletes; when nothing differs, no commit is made and the
+record says `already identical`. The commit lands whole or not at all, and a failure is recorded as
+the exception type and HTTP status only, never as a partial deployment.
+
+Afterwards the script lists the tree at the new revision and requires the served files to equal the
+bundle: the same paths, none extra and none missing, and per file the Git blob SHA-1, or the SHA-256
+of a file stored through LFS. The record names the before and after revisions, the planned and
+declared deletions, the commit, and every missing, extra or mismatched path; the script exits
+non-zero unless the verification passed. `HF_TOKEN` is read only inside the commit and is never
+printed, logged or written; the check reads no token at all. `huggingface_hub` is supplied for that
+one run and `uv.lock` is untouched. PRES-1 used an earlier form of this operation on 2026-09-29,
+`HfApi.upload_folder`, which left `style.css` in place.
 
 ## After a publication: the public checks
 

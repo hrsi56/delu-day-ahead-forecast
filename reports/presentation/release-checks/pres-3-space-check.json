@@ -1,0 +1,38 @@
+{
+ "before": {
+  "private": false,
+  "revision": "0c550e863711e19abbb35219cf64d45dfb39c888",
+  "sdk": "static",
+  "stage": "RUNNING"
+ },
+ "before_revision": "0c550e863711e19abbb35219cf64d45dfb39c888",
+ "bundle": "dist/space-wasm",
+ "bundle_sha256": "9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585",
+ "bytes": 44164910,
+ "check": "deploy_space.py check mode, anonymous and read-only, against the served Space",
+ "credential_guard": "passed",
+ "declared_deletes": [
+  "style.css"
+ ],
+ "declared_matches": true,
+ "files": 805,
+ "mode": "check only: nothing was written",
+ "planned_adds": [],
+ "planned_changes": [
+  "public/boosters/p025.txt.gz.b64",
+  "public/boosters/p05.txt.gz.b64",
+  "public/boosters/p10.txt.gz.b64",
+  "public/boosters/p25.txt.gz.b64",
+  "public/boosters/p50.txt.gz.b64",
+  "public/boosters/p75.txt.gz.b64",
+  "public/boosters/p90.txt.gz.b64",
+  "public/boosters/p95.txt.gz.b64",
+  "public/boosters/p975.txt.gz.b64"
+ ],
+ "planned_deletes": [
+  "style.css"
+ ],
+ "repo": "Yarden-Viktor/delu-day-ahead-forecast",
+ "served_equals_bundle": false,
+ "started_utc": "2026-09-30T22:23:24+00:00"
+}

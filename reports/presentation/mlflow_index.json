@@ -1,5 +1,5 @@
 {
-  "browser_checked_at_utc": "2026-09-29T02:03:00+00:00",
+  "browser_checked_at_utc": "2026-10-01T03:52:06+00:00",
   "experiment": "delu-generations",
   "experiment_id": "1",
   "not_advertised": {},
@@ -50,6 +50,7 @@
       "kind": "compare",
       "rest": "passed",
       "run_keys": [
+        "cp21/HGL",
         "cp20/HG",
         "cp16/V2-H",
         "cp15/B2",
@@ -58,7 +59,7 @@
         "cp15/B1",
         "cp15/B0"
       ],
-      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D"
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22d7c53e9d7db94ed48d91da14be2d343b%22,%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D"
     },
     "compare:v2": {
       "browser": {
@@ -86,6 +87,22 @@
         "cp16/V2-H"
       ],
       "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v4": {
+      "browser": {
+        "chromium": "passed",
+        "webkit": "passed"
+      },
+      "kind": "compare",
+      "rest": "passed",
+      "run_keys": [
+        "cp21/HGL",
+        "cp21/L-P",
+        "cp21/L-R",
+        "cp21/L-N",
+        "cp20/HG"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22d7c53e9d7db94ed48d91da14be2d343b%22,%22c9b0216014dd48ed8d02939f9f88b458%22,%22cbdb4a2a7b8e47a78c7bc1feeb9aa8eb%22,%222990b1081ea943c584548dc4a5190ad7%22,%2266e1e5f516da4be38db3d5b96bde4397%22%5D&experiments=%5B%221%22%5D"
     },
     "experiment": {
       "browser": {
@@ -190,9 +207,29 @@
     "cp20/HG": {
       "run_id": "66e1e5f516da4be38db3d5b96bde4397",
       "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1/runs/66e1e5f516da4be38db3d5b96bde4397"
+    },
+    "cp21": {
+      "run_id": "bc152519f4cc4c3abada756a67e9ad89",
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1/runs/bc152519f4cc4c3abada756a67e9ad89"
+    },
+    "cp21/HGL": {
+      "run_id": "d7c53e9d7db94ed48d91da14be2d343b",
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1/runs/d7c53e9d7db94ed48d91da14be2d343b"
+    },
+    "cp21/L-N": {
+      "run_id": "2990b1081ea943c584548dc4a5190ad7",
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1/runs/2990b1081ea943c584548dc4a5190ad7"
+    },
+    "cp21/L-P": {
+      "run_id": "c9b0216014dd48ed8d02939f9f88b458",
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1/runs/c9b0216014dd48ed8d02939f9f88b458"
+    },
+    "cp21/L-R": {
+      "run_id": "cbdb4a2a7b8e47a78c7bc1feeb9aa8eb",
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1/runs/cbdb4a2a7b8e47a78c7bc1feeb9aa8eb"
     }
   },
   "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow",
-  "verified_at_utc": "2026-09-29T01:57:02+00:00",
+  "verified_at_utc": "2026-10-01T03:43:47+00:00",
   "written_by": "scripts/verify_mlflow_mirror.py index"
 }

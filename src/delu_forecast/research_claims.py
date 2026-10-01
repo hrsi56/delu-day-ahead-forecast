@@ -36,6 +36,7 @@ REPO_ROOT = R.REPO_ROOT
 CLAIM_MAPS = (
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp15-cp16-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp20-claims.md",
+    REPO_ROOT / "docs" / "track-b" / "research-content" / "cp21-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md",
 )
 
@@ -104,16 +105,25 @@ _PB_WIS = "cp16.uncertainty.V2-P-B2.equal_fold.WIS"
 #: when this module loads: no template types "the latest research model" (standard §5).
 _CUR = G.current_generation()
 _CMP = G.get(_CUR.comparator)
+#: The shared comparison's record prefix: the experiment whose rows the overview draws (`cp21.metrics.…`).
+_OV = G.comparison_prefix()
 
 BLOCKS: tuple[Block, ...] = (
     # ---- the terms the headline introduces, directly below it (standard §1 ii, §3.1) ----------------
     _block("terms.error_scores", "P21", """**Error scores:** error relative to a simple naive forecast, averaged over the
            test periods; lower is better.""", PAGE, README),
-    _block("terms.targets", "P21", """**Accuracy targets:** set on {r:derived.rule.set_on}; the distances are point
-           comparisons.""", PAGE, README),
+    _block("terms.targets", "P21", """**Accuracy targets:** each error score at least {r:derived.rule.margin.S_MAE}
+           below the strongest benchmark's, set on {r:derived.rule.set_on}; a policy's distance from them is a point
+           comparison.""", PAGE, README),
     _block("terms.benchmark", "P21", """**{g:daily-lear.name}:** the strongest benchmark, a linear model refitted
            daily.""", PAGE, README),
     _block("terms.policies", "P21", """**Policies:** the models and variants tested.""", PAGE, README),
+    # The terms of a headline that leads with a generation's own adoption rule (standard §3.3 a; PUBLISH_RULES A1).
+    _block("terms.adoption_rule", "P51", """**Adoption rule:** set on {r:derived.adoption.v4.set_on}; its four
+           conditions are in the {g:v4.version} chapter.""", PAGE, README),
+    _block("terms.differences", "P51", """**Paired difference:** {g:v4.version}'s error score minus {g:v3.version}'s on
+           identical hours, with its {s:level:95%} confidence interval; below zero favours {g:v4.version}.""",
+           PAGE, README),
     _block("terms.class", "P21", """**{g:current.badge}:** development evidence, not a test on new data.""",
            PAGE, README),
     # ---- the comparison: the change against the comparator, and the main caveat (§1 i) ---------------
@@ -127,11 +137,11 @@ BLOCKS: tuple[Block, ...] = (
     # The visible fairness population (plan §7.9, review F04): hours and the days they fall on, together, from the
     # same committed row; the row count comes from the registry's comparison, never typed.
     _block("comparison.sub", "P07", f"""{{s:count:{len(G.comparison_rows())}}} policies · the same
-           {{r:cp20.metrics.B0.pooled.n_hours}} historical hours over {{r:cp20.metrics.B0.pooled.n_days}} days ·
+           {{r:{_OV}.metrics.B0.pooled.n_hours}} historical hours over {{r:{_OV}.metrics.B0.pooled.n_days}} days ·
            error scores averaged with equal weight over five test periods · lower is better"""),
-    _block("comparison.howto", "C68", """Each score divides a model's error by that of a simple similar-day forecast in the
-           same period, which therefore scores {r:cp20.metrics.B0.equal_fold.S_MAE|p=3}. The interval score accounts
-           for both interval width and missed outcomes."""),
+    _block("comparison.howto", "C68", f"""Each score divides a model's error by that of a simple similar-day forecast in
+           the same period, which therefore scores {{r:{_OV}.metrics.B0.equal_fold.S_MAE|p=3}}. The interval score
+           accounts for both interval width and missed outcomes."""),
     _block("comparison.scale", "P26", f"""For scale, as mean absolute error per test period: {{g:{_CUR.id}.version}}
            {{r:derived.periods.{_CUR.id}.ordinary_low}}–{{r:derived.periods.{_CUR.id}.ordinary_high}} EUR/MWh in the
            four ordinary periods and {{r:derived.periods.{_CUR.id}.stress}} EUR/MWh in the {{s:date:2022}} crisis
@@ -151,7 +161,10 @@ BLOCKS: tuple[Block, ...] = (
     _block("overview.fairness.detail", "P08", """Paired intervals come from a moving-block bootstrap with seed
            {r:cp20.protocol.bootstrap_seed}, {r:cp20.protocol.replicates} replicates and
            {r:cp20.protocol.block_days}-day blocks, resampled identically for every policy. They are confidence
-           intervals of an estimated difference, not forecast intervals."""),
+           intervals of an estimated difference, not forecast intervals. A change's interval as a share of the
+           comparator's score is, from {g:v4.version} on, the percentile interval of the ratio of the two scores over
+           the same draws; for {g:v2.version} and {g:v3.version}, it is the difference's interval divided by the
+           comparator's score."""),
     _block("overview.f07", "P09", """**Why {s:version:v1} scores {r:cp20.metrics.B1.equal_fold.S_MAE|p=3} in the shared
            development comparison but {r:cp2.dm_development.point_vs_naive.relative_improvement_pct|abs}% worse in its own
            report.** Both figures describe the same {r:cp2.dm_development.point_vs_naive.n_days} development days.
@@ -166,6 +179,102 @@ BLOCKS: tuple[Block, ...] = (
            periods (folds) of a policy's MAE divided by the similar-day naive's MAE in the same period; **the interval
            score (S_WIS)** does the same for the weighted interval score, which rewards narrow intervals and penalizes
            missed outcomes. MAE uses the emitted median."""),
+    # ---- the v4 chapter (the chapter grammar, standard §6; publication packet §5, CP-21 claim map) ----------
+    _block("v4.question", "C104", """Does adding a nonlinear, block-structured forecaster to {g:v3.version} improve
+           both of its error scores?"""),
+    _block("v4.change", "C104", """{g:v4.version} adds a three-block LightGBM forecaster, with the same information
+           as {g:v3.version}, to its blend of two linear forecasts, and re-estimates the hour-aware intervals on the new
+           forecast's own errors."""),
+    _block("v4.chart_headline", "C107", """Against {g:v3.version}, the point-error score changed by
+           {r:derived.change.v4.S_MAE} {r:derived.change.v4.S_MAE|ci} and the interval score by
+           {r:derived.change.v4.S_WIS} {r:derived.change.v4.S_WIS|ci}, each as a share of the comparator's score,
+           with {s:level:95%} confidence intervals."""),
+    _block("v4.reading", "C109", """All four conditions of the rule set in advance held: both paired differences'
+           {s:level:95%} confidence intervals lie below zero; {g:v4.version} passed the six screening criteria set before
+           the experiments (the two accuracy targets, interval coverage in each test period, the August {s:date:2022}
+           peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts); the
+           evaluation was complete and valid; and no test period's paired interval lies wholly above zero.""",
+           PAGE, README),
+    # README-only: the page shows these differences once, in the main chart and its table.
+    _block("v4.outcome.head", "C107", """Difference in error score ({s:version:v4} − {s:version:v3}), with {s:level:95%}
+           confidence intervals. Below zero favours {s:version:v4}.""", README),
+    _block("v4.outcome.mae", "C107", """Point-error score: {r:cp21.uncertainty.HGL-HG.equal_fold.MAE}
+           {r:cp21.uncertainty.HGL-HG.equal_fold.MAE|ci}""", README),
+    _block("v4.outcome.wis", "C108", """Interval score: {r:cp21.uncertainty.HGL-HG.equal_fold.WIS}
+           {r:cp21.uncertainty.HGL-HG.equal_fold.WIS|ci}""", README),
+    _block("v4.caveat.class", "C125", """**Performance on new data.** This is development evidence after selection, not a
+           test on new data.""", PAGE, README),
+    _block("v4.caveat.blocks", "C111", """**That separate hour-block models help.** The three-block against the pooled
+           LightGBM showed no demonstrated joint preference: point-error score
+           {r:cp21.uncertainty.L-R-L-P.equal_fold.MAE} {r:cp21.uncertainty.L-R-L-P.equal_fold.MAE|ci}, interval score
+           {r:cp21.uncertainty.L-R-L-P.equal_fold.WIS} {r:cp21.uncertainty.L-R-L-P.equal_fold.WIS|ci}.""",
+           PAGE, README),
+    _block("v4.caveat.peak", "C120", """**A gain in the August {s:date:2022} peak.** Over those
+           {r:cp21.diagnostics.HGL.peak.n_days} days its point error is higher than {g:v3.version}'s: MAE
+           {r:cp21.diagnostics.HGL.peak.MAE|p=1} against {r:cp21.diagnostics.HG.peak.MAE|p=1} EUR/MWh. Descriptive, on a
+           small sample; no inference is drawn.""", PAGE, README),
+    _block("v4.decision", "C127", """{g:v4.status} It met the adoption rule set before the experiment against
+           {g:v3.version}; the released model, {g:released.version}, did not change. The three study arms were built
+           only to separate the change into steps, and were never candidates for adoption.""", PAGE, README),
+    _block("v4.method.blend", "C104", """**The blend.** {g:v4.version}'s central forecast gives {g:v3.version}'s two LEAR
+           forecasts, bit for bit, two thirds of the weight, and the mean of the raw and normalized three-block
+           LightGBM forecasts one third. The weights were fixed before any result and never tuned. The hour-aware
+           intervals keep {g:v3.version}'s recipe, re-estimated on {g:v4.version}'s own errors."""),
+    _block("v4.method.inputs", "C105", """**The same information as {g:v3.version}.** Every LightGBM arm uses the model
+           comparison study's LightGBM inputs plus the three weather forecasts and their missing-data indicators. The
+           blocks are the night, the solar hours and the shoulder and peak hours, in local time. At every forecast
+           origin each block picks one of {s:count:4} model sizes on the training window's last
+           {s:days:28} days, by MAE, then refits."""),
+    _block("v4.method.ladder", "C106", """**The ladder.** Three study arms separate the change into steps, one at a time. Daily
+           LightGBM to the pooled LightGBM adds weather, bundled with the training-only choice of model size and the
+           missing-input rule, so that step is not a weather effect on its own. The pooled to the three-block
+           LightGBM adds the block split alone: the same rows, target, inputs, size grid, selection rule and interval
+           recipe. {g:v4.version} then blends the block models into {g:v3.version}."""),
+    _block("v4.method.split", "C111", """**The block split** (three-block minus pooled LightGBM): point-error score
+           {r:cp21.uncertainty.L-R-L-P.equal_fold.MAE} {r:cp21.uncertainty.L-R-L-P.equal_fold.MAE|ci}, interval score
+           {r:cp21.uncertainty.L-R-L-P.equal_fold.WIS} {r:cp21.uncertainty.L-R-L-P.equal_fold.WIS|ci}: no demonstrated
+           joint preference. It was tested on the raw price only, with one seed."""),
+    _block("v4.method.arms", "C115", """No study arm on its own shows a demonstrated joint preference over
+           {g:v3.version}: each arm's intervals against {g:v3.version} span zero, except the three-block LightGBM's interval score, whose interval lies
+           wholly above zero, worse: {r:cp21.uncertainty.L-R-HG.equal_fold.WIS}
+           {r:cp21.uncertainty.L-R-HG.equal_fold.WIS|ci}."""),
+    _block("v4.folds", "C110", """Every test period's point estimate favours {g:v4.version}, and no period's paired
+           interval lies wholly above zero. In fold {s:fold:3}, the {s:date:2022} crisis, both intervals cross zero: point error
+           {r:cp21.uncertainty.HGL-HG.fold_3.MAE|p=1} {r:cp21.uncertainty.HGL-HG.fold_3.MAE|ci1} EUR/MWh."""),
+    _block("v4.absolute", "C118", """Mean absolute error per test period: {g:v4.version}
+           {r:derived.periods.v4.ordinary_low}–{r:derived.periods.v4.ordinary_high} EUR/MWh in the four ordinary
+           periods and {r:derived.periods.v4.stress} EUR/MWh in the {s:date:2022} crisis period, where
+           {g:v3.version} had {r:derived.periods.v3.stress}."""),
+    _block("v4.peak", "C120", """**The August {s:date:2022} peak**, {r:cp21.diagnostics.HGL.peak.n_days} days inside
+           the crisis period: {g:v4.version}'s point error is higher than {g:v3.version}'s, MAE
+           {r:cp21.diagnostics.HGL.peak.MAE|p=1} against {r:cp21.diagnostics.HG.peak.MAE|p=1} EUR/MWh, and so is its
+           interval score, {r:cp21.diagnostics.HGL.peak.WIS|p=1} against {r:cp21.diagnostics.HG.peak.WIS|p=1} EUR/MWh;
+           {r:cp21.diagnostics.HGL.peak.hit_count95} against {r:cp21.diagnostics.HG.peak.hit_count95} of its
+           {r:cp21.diagnostics.HGL.peak.n_hours} hours fell inside the {s:level:95%} interval. Descriptive, on a small
+           sample: no inference is drawn."""),
+    _block("v4.coverage", "C121", """{g:v4.version}'s pooled intervals are narrower than {g:v3.version}'s at every level. Its
+           pooled coverage is {r:cp21.metrics.HGL.pooled.coverage50}, {r:cp21.metrics.HGL.pooled.coverage80} and
+           {r:cp21.metrics.HGL.pooled.coverage95} at the {s:level:50%}, {s:level:80%} and {s:level:95%} levels, against
+           {g:v3.version}'s {r:cp21.metrics.HG.pooled.coverage50}, {r:cp21.metrics.HG.pooled.coverage80} and
+           {r:cp21.metrics.HG.pooled.coverage95}. No hour or block effect is claimed."""),
+    _block("v4.rule", "C101", """**The rule**, set on {r:derived.adoption.v4.set_on} and frozen in the protocol before
+           any fit: {g:v4.version} would be adopted only if, against {g:v3.version}, the interval score's paired
+           difference had its upper {s:level:95%} confidence limit below zero and the point-error score's at or below
+           zero; it met the six original screening criteria; the evaluation was complete and valid; and no test
+           period was decisively worse, that is, none had a paired interval wholly above zero. All four held.""", PAGE,
+           README),
+    _block("v4.criteria", "C119", """As a diagnostic, {g:v4.version} meets all six original screening criteria, as
+           {g:v3.version} does. Among the study arms, the normalized three-block LightGBM meets them; the pooled
+           LightGBM misses criterion {s:criterion:4} (the August {s:date:2022} peak against the benchmarks), and the
+           three-block LightGBM misses criteria {s:criterion:4} and {s:criterion:5} (each test period against the daily
+           benchmarks). This is a development diagnostic, not a product qualification."""),
+    _block("v4.parity", "C122", """Run through this experiment's code, {g:v3.version} reproduced its accepted forecasts
+           bit for bit on all {r:cp21.hg_parity.rows} hours, so the comparison is with {g:v3.version} itself."""),
+    _block("v4.controls", "C123", """All {r:cp21.controls.checks} frozen causal and integrity controls passed: masking the
+           delivery day or future weather changed the forecast by exactly zero, a day-before price change moved every
+           arm, and the pooled and block arms saw the same rows."""),
+    _block("v4.cost", "C124", """{r:cp21.fit_cost.fits} LightGBM fits in the main run. The time of one daily cycle was
+           measured as a diagnostic, not as a qualification for daily operation."""),
     # ---- the v3 chapter (the chapter grammar, standard §6) ------------------------------------------
     _block("v3.question", "P29", """Do weather forecasts available before the auction improve {g:v2.version}?"""),
     _block("v3.change.short", "C65", """{g:v3.version} adds weather forecasts available before the auction to
@@ -298,6 +407,23 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp15.peak.B1.daily_mean_level_MAE|p=1} EUR/MWh against a within-day shape error of
            {r:cp15.peak.B1.within_day_shape_MAE|p=1} EUR/MWh.""", PAGE, README),
     # ---- adopted transitions (PUBLISH_RULES 1.0 A3): one summary per adopted generation after the first ---------
+    _block("transition.v3-v4.title", "P52", """From {g:v3.version} to {g:v4.version}: adding a three-block
+           LightGBM""", PAGE, README),
+    _block("transition.v3-v4.change", "P52", """{g:v4.version} kept {g:v3.version}'s inputs and its two LEAR forecasts,
+           added a three-block LightGBM forecaster (separate models for the night, the solar hours, and the shoulder and
+           peak hours) with one third of the blend's weight, and re-estimated the
+           hour-aware intervals on the new forecast's own errors.""", PAGE, README),
+    _block("transition.v3-v4.comparator", "P52", """Set in advance: {g:v3.version} itself, on identical hours, so the
+           protocol's comparator is also the predecessor and the comparison is direct.""", PAGE, README),
+    _block("transition.v3-v4.result", "P52", """Point-error score {r:derived.change.v4.S_MAE}
+           {r:derived.change.v4.S_MAE|ci} and interval score {r:derived.change.v4.S_WIS}
+           {r:derived.change.v4.S_WIS|ci}, as a share of {g:v3.version}'s score, with {s:level:95%} confidence
+           intervals of that ratio from the experiment's own bootstrap draws; development evidence, not a test on new data.""",
+           PAGE, README),
+    _block("transition.v3-v4.limits", "P52", """Separate hour-block models are not shown to help: the three-block
+           against the pooled LightGBM shows no demonstrated joint preference. A gain over the August {s:date:2022} peak
+           is not shown either: over those {r:cp21.diagnostics.HGL.peak.n_days} days, {g:v4.version}'s point error is
+           higher than {g:v3.version}'s.""", PAGE),
     _block("transition.v2-v3.title", "P35", """From {g:v2.version} to {g:v3.version}: adding weather forecasts""",
            PAGE, README),
     _block("transition.v2-v3.change", "P35", """{g:v3.version} kept {g:v2.version}'s blend of two LEAR forecasts and
@@ -502,6 +628,12 @@ BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
 #: Chart claims: the records each figure may plot, beyond those its caption names.
 CHART_CLAIMS: dict[str, str] = {
     "overview": "P07",
+    "v4.c2a": "C107",
+    "v4.ladder": "C106",
+    "v4.c2b": "C110",
+    "v4.c3": "C118",
+    "v4.c4": "C120",
+    "v4.c6": "C121",
     "v3.c2a": "C69",
     "v3.c2b": "C72",
     "v3.c3": "C74",
@@ -519,7 +651,7 @@ CHART_CLAIMS: dict[str, str] = {
 
 #: Claims bound outside a block: single chart rows where a chart mixes claims (v2's three
 #: contrasts), the target verdicts in the comparison, and the demo's startup figure (P13).
-ROW_CLAIMS: tuple[str, ...] = ("C33", "C34", "C38", "C70", "P13", "P16", "P20", "P22", "P23", "P28",
+ROW_CLAIMS: tuple[str, ...] = ("C33", "C34", "C38", "C70", "C108", "C112", "C113", "C114", "C116", "P13", "P16", "P20", "P22", "P23", "P28",
                                "P33", "P34", "P45", "P48", "P50")
 
 #: README research blocks (plan §9.4), each rendered from the same template as the page.
@@ -538,6 +670,22 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
     the change against the comparator otherwise (§3.3 b)."""
     entry = entry or G.current_generation()
     verdict_id = f"derived.criteria.{entry.id}.verdict"
+    if entry.id in D.ADOPTION_RULES:
+        # The generation's own pre-registered adoption rule (CP-21 on): it leads, with the rule's paired differences
+        # in the rule's unit, each metric named beside its value (A1), and N (§3.3 a). The change as a share of the
+        # comparator's score belongs to the orientation layer (§3.4).
+        base = f"derived.adoption.{entry.id}"
+        comparator = G.get(entry.comparator)
+        if D.get(f"{base}.verdict").value != "met":
+            raise ClaimError(f"{entry.id} is a generation whose adoption rule was not met")
+        tested = D.get(f"{base}.tested").value
+        return "P51", (
+            "Met the adoption rule set before the experiment: both error scores improved on {g:%s.version}'s "
+            "({g:%s.version} − {g:%s.version}: {r:%s.distance.S_MAE} "
+            "{r:%s.distance.S_MAE|ci} on the point-error score, {r:%s.distance.S_WIS} {r:%s.distance.S_WIS|ci} on "
+            "the interval score; {r:%s.tested} %s tested against the rule)."
+            % (comparator.id, entry.id, comparator.id, base, base, base, base, base,
+               "policy" if tested == "1" else "policies"))
     if "criteria-1-2" in entry.rules and verdict_id in D.records():
         margins = {D.get(f"derived.rule.margin.{score}").value for score in ("S_MAE", "S_WIS")}
         if len({D.display(D.get(f"derived.rule.margin.{s}")) for s in ("S_MAE", "S_WIS")}) != 1:
@@ -571,23 +719,53 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
         % (comparator.id, change, change, change, change, comparator.id))
 
 
-def target_sentence(target: str = "html") -> str:
+def target_sentence(target: str = "html", *, surface: str = PAGE) -> str:
     """The target line in words, with its date, and N (standard §15 amending plan §8.2): what the
-    comparison's dashed lines mark, how many policies were tested against it and who met it."""
+    comparison's dashed lines mark, how many policies were tested against it and who met it. The README, which draws
+    no chart, states the same targets without the lines."""
     entry = G.current_generation()
     base = f"derived.criteria.{entry.id}"
     benchmark = D.get("derived.rule.margin.S_MAE").subject
-    template = ("The dashed lines mark the targets: each error score at least {r:derived.rule.margin.S_MAE} below "
-                "the strongest benchmark, {g:%s.inline} (set {r:derived.rule.set_on}). {r:%s.tested} policies were "
-                "tested against them; " % (benchmark, base))
+    lead = "The dashed lines mark the targets" if surface == PAGE else "The accuracy targets"
+    template = ("%s: each error score at least {r:derived.rule.margin.S_MAE} below the strongest benchmark, "
+                "{g:%s.inline} (set {r:derived.rule.set_on}). {r:%s.tested} policies were tested against them; "
+                % (lead, benchmark, base))
     met = [record.subject for record in D.records().values() if record.kind == "verdict" and record.value == "met"]
+    first = [record.subject for record in D.records().values() if record.kind == "first_to_meet" and record.value == "yes"]
     if D.get(f"{base}.verdict").value == "met" and D.get(f"{base}.first_to_meet").value == "yes" and met == [entry.id]:
         template += "{g:%s.version} met both, the first and only one to do so." % entry.id
+    elif D.get(f"{base}.verdict").value == "met" and first and first != [entry.id]:
+        # Named from the verdict records, never typed: the first to meet them, then every later policy that did.
+        later = [subject for subject in met if subject not in first]
+        names = ["{g:%s.version}" % s if G.get(s).version else "{g:%s.inline}" % s for s in later]
+        listed = ", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else names[0]
+        template += "{g:%s.version} was the first to meet both; %s met them too." % (first[0], listed)
     elif D.get(f"{base}.verdict").value == "met":
         template += "{g:%s.version} met both." % entry.id
     else:
         template += "{g:%s.version} did not meet them." % entry.id
     return render_template("P25", template, target)
+
+
+#: Every term a headline form may introduce, in reading order.
+ALL_TERMS = ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.adoption_rule",
+             "terms.differences", "terms.class")
+
+
+def comparison_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
+    """The terms the headline does not introduce, defined where the comparison uses them: its targets, benchmark and
+    policies are still drawn there when the headline leads with a generation's own rule."""
+    used = headline_terms(entry)
+    return tuple(key for key in ALL_TERMS if key not in used and key not in ("terms.adoption_rule", "terms.differences"))
+
+
+def headline_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
+    """The terms the headline introduces, defined directly below it (standard §1 ii): they follow the headline's
+    form, so a term is never defined for a headline that does not use it."""
+    entry = entry or G.current_generation()
+    if entry.id in D.ADOPTION_RULES:
+        return ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies", "terms.class")
+    return ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.class")
 
 
 def _tested(entry: G.Entry) -> bool:
@@ -913,6 +1091,17 @@ WITHHELD_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
         # A nominal interval level ("the 95% interval") is not a relative gain.
         ("W20", r"\bv3\b[^.]{0,60}\b\d+(\.\d+)?\s?(%(?!\s+(prediction |confidence )?interval)|x\b|times\b)[^.]{0,30}\bv1\b"),
         ("W21", r"(?<!never )(?<!not )\bconfirmatory\b(?!-style)"),
+        # CP-21 (claim map W22–W27). W22: the block split beyond its endpoint reading, or a mechanism for it.
+        ("W22", r"(?<!that )(?<!whether )\b(the block split|separate (hour-)?block models)\b"
+                r" (helps?|helped|hurts?|hurt|improved?s?|is beneficial|is harmful|drives|explains)\b"),
+        # W23: the daily-to-pooled LightGBM step as weather alone.
+        ("W23", r"(?<!not )\b(a|the) weather effect on its own\b|\bweather alone (improved|lowered|explains)"),
+        # W24: v4, HGL or a CP-21 arm as the demo, the product or live.
+        ("W24", r"\b(v4 runs in|runs v4|try the v4|v4 demo|live v4|v4 is (the )?(product|live|released))\b"),
+        # W25: a mixed or non-significant contrast called equivalent, or no effect, benefit or harm.
+        ("W25", r"(?<!not )(?<!never )\b(is|are|was|were) equivalent\b|\bno (benefit|harm)\b"),
+        # W26: the daily-cycle or fit-cost figures as qualification for daily operation.
+        ("W26", r"(?<!not as a )\bqualif(y|ies|ied|ication) for daily operation\b"),
     )
 )
 
@@ -991,6 +1180,8 @@ __all__ = [
     "census_detail",
     "headline",
     "headline_template",
+    "headline_terms",
+    "comparison_terms",
     "svg_binding",
     "svg_value",
     "withheld_findings",

@@ -126,8 +126,9 @@ def test_a2_negative_control_an_unmeasured_header_is_a_finding():
 
 def test_a3_the_predecessor_relation_is_one_dated_chain():
     assert G.transition_problems() == []
-    assert [(item.predecessor.id, item.successor.id) for item in G.transitions(newest_first=False)] == [("v1", "v2"), ("v2", "v3")]
-    assert [item.comparator_is_predecessor for item in G.transitions(newest_first=False)] == [False, True]
+    assert [(item.predecessor.id, item.successor.id) for item in G.transitions(newest_first=False)] == [
+        ("v1", "v2"), ("v2", "v3"), ("v3", "v4")]
+    assert [item.comparator_is_predecessor for item in G.transitions(newest_first=False)] == [False, True, True]
 
 
 @pytest.mark.parametrize("change, expected", [
@@ -283,7 +284,7 @@ def detail_route_problems(chapter_html: str) -> list[str]:
     return problems
 
 
-@pytest.mark.parametrize("chapter", ["v3", "v2"])
+@pytest.mark.parametrize("chapter", ["v4", "v3", "v2"])
 def test_a5_every_detail_chart_has_a_descriptive_route(page, chapter):
     html = page[page.index(f'<article class="chapter" id="{chapter}"'):]
     html = html[:html.index("</article>")]
@@ -363,10 +364,11 @@ def test_f03_negative_controls_a_local_or_failed_record_is_refused(tmp_path):
 def test_f04_the_visible_population_states_hours_and_days_from_one_record(page):
     sub = page[page.index('data-block="comparison.sub"'):]
     sub = sub[:sub.index("</p>")]
-    assert 'data-record="cp20.metrics.B0.pooled.n_hours"' in sub and 'data-record="cp20.metrics.B0.pooled.n_days"' in sub
+    prefix = G.comparison_prefix()
+    assert f'data-record="{prefix}.metrics.B0.pooled.n_hours"' in sub and f'data-record="{prefix}.metrics.B0.pooled.n_days"' in sub
     text = _text(sub)
-    assert f"{R.display(R.get('cp20.metrics.B0.pooled.n_hours'))} historical hours over " \
-           f"{R.display(R.get('cp20.metrics.B0.pooled.n_days'))} days" in text
+    assert f"{R.display(R.get(f'{prefix}.metrics.B0.pooled.n_hours'))} historical hours over " \
+           f"{R.display(R.get(f'{prefix}.metrics.B0.pooled.n_days'))} days" in text
     assert f"{len(G.comparison_rows())} policies" in text
 
 
@@ -377,7 +379,8 @@ def test_the_census_distinction_is_derived(page):
     assert f"The chart's {len(rows)} rows are not that census: {len(tested)} of them" in sentence
     assert 'data-block="comparison.census"' in page and 'data-block="comparison.census.detail"' in page
     detail = _text(RC.census_detail())
-    assert detail.startswith(f"The {D.get('derived.criteria.v3.tested').value} policies tested against the targets")
+    current = G.current_generation().id
+    assert detail.startswith(f"The {D.get(f'derived.criteria.{current}.tested').value} policies tested against the targets")
 
 
 # --------------------------------------------------------------------------- F01 (the built Space page)
