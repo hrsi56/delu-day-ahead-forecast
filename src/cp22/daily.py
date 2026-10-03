@@ -5,8 +5,10 @@ never a criterion). Written to `reports/v4-revision/`.
   worker peak memory -- and PN's inner and final fits against CP-21 L-P's (committed fits.parquet).
 * ``daily-cycle``: the replacement's complete daily cycle, cold on the M3 with four worker processes,
   at 25 evaluation origins (five per fold). With no replacement, R's and M's cycles are measured
-  each, descriptively. Each cycle starts a fresh pool: every worker loads the data a live system has
-  on the morning of D-1; A1_w and B2_w are refitted; the member fits the policy needs (R: PN's four
+  each, descriptively. Each cycle starts a fresh pool: every worker loads the snapshot through delivery
+  day D, exactly as the main run materialised it (day D's own prices are present in the frame but never
+  enter a fit or a feature: the delivery-day mask control in `controls.json` shows they change no forecast
+  by even 0.0); A1_w and B2_w are refitted; the member fits the policy needs (R: PN's four
   full-window fits; M: PN-sel's selection and refit and L-P's) run in parallel; the parent forms the
   central forecast, loads the interval-layer state persisted that morning, releases, predicts and
   issues. Refitted components must equal CP-20's, member fits the main run's and the issued vector

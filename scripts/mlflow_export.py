@@ -1179,9 +1179,11 @@ def tracked_runs(key: str) -> list[dict]:
 
 
 def build_draft(name: str = "cp21") -> dict:
-    """CP-21's draft export: one file, the checkpoint's parent and its four new policies."""
+    """CP-21's draft export: one file, the checkpoint's parent and its four new policies (CP-22: `build_draft22`)."""
+    if name == "cp22":
+        return build_draft22()
     if name != "cp21":
-        raise SystemExit("the only draft export is cp21")
+        raise SystemExit("the draft exports are cp21 and cp22")
     spec, entries, checkpoint = draft_registry()
     runs = _tracked_runs(entries, checkpoint, spec, pending=spec["pending"], charts=False)
     return {"experiment": EXPERIMENT, "checkpoint": checkpoint.code, "status": "draft",
@@ -1263,7 +1265,7 @@ def _draft_readme(run_name: str, checkpoint: G.Checkpoint, spec: dict, blobs: di
 def draft_problems(draft: dict) -> list[str]:
     """The draft matches its draft entries: the run keys the draft checkpoint expects, each once,
     each parent CP-21's, each name the rule applied to its entry. Never a count."""
-    _, entries, checkpoint = draft_registry()
+    _, entries, checkpoint = draft_registry22() if draft.get("checkpoint") == "CP-22" else draft_registry()
     keys = [run["run_key"] for run in draft["runs"]]
     expected = [checkpoint.run_key] + [f"{checkpoint.run_key}/{code}" for code in checkpoint.children]
     problems = []
@@ -1278,6 +1280,239 @@ def draft_problems(draft: dict) -> list[str]:
     return problems
 
 
+# --------------------------------------------------------------------------- CP-22 draft (capstone v21-r9 §20.9)
+#
+# CP-22 registers nothing public either: its draft export is built by the same code path as CP-21's, from CP-22's
+# committed evidence and the packet's draft entries (reports/v4-revision/draft-registry.json), outside the published
+# set. Under a replacement, v4 keeps its number and gains a dated revision (PUBLISH_RULES 1.3 A10): the current
+# revision's run is a child of `cp22`, and CP-21's published runs, the superseded revision's, are untouched.
+
+DRAFT22_DIR = ROOT / "reports" / "v4-revision" / "mlflow-export-draft"
+DRAFT22_REGISTRY = "reports/v4-revision/draft-registry.json"
+CP22 = {
+    "metrics": "reports/v4-revision/metrics.csv",
+    "uncertainty": "reports/v4-revision/uncertainty.csv",
+    "criteria": "reports/v4-revision/criteria.csv",
+    "diagnostics": "reports/v4-revision/diagnostics.csv",
+    "protocol": "reports/v4-revision/protocol.json",
+    "decisions": "reports/v4-revision/decisions.json",
+}
+#: Each CP-22 run's contrasts: (candidate, base code, metric slug); "W" is the replacement, when one exists.
+DRAFT22_CONTRASTS = {
+    "R": (("R", "HGL", "v4"), ("R", "HG", "v3"), ("R", "M", "m"), ("R", "A-PN-sel", "a_pn_sel")),
+    "M": (("M", "HGL", "v4"), ("M", "HG", "v3")),
+    "A-PN-sel": (("A-PN-sel", "M", "m"), ("A-PN-sel", "A-LP", "a_lp"), ("A-PN-sel", "HG", "v3")),
+    "A-LP": (("A-LP", "HG", "v3"),),
+    "A-LN": (("A-LN", "HGL", "v4"), ("A-LN", "HG", "v3")),
+    "v4+DL": (("v4+DL", "HGL", "v4"), ("v4+DL", "HG", "v3")),
+    "v3+DL": (("v3+DL", "HG", "v3"),),
+    "W+ACI": (("W+ACI", "W", "w"), ("W+ACI", "HG", "v3")),
+    "W+DL": (("W+DL", "W", "w"), ("W+DL", "W+ACI", "w_aci"), ("W+DL", "HG", "v3")),
+    "W+DLF": (("W+DLF", "W+DL", "w_dl"), ("W+DLF", "HG", "v3")),
+}
+
+
+def draft_registry22() -> tuple[dict, dict[str, G.Entry], G.Checkpoint]:
+    """CP-22's draft entries as registry `Entry` objects, and its draft checkpoint."""
+    spec = json.loads((ROOT / DRAFT22_REGISTRY).read_text())
+
+    def entry(raw: dict) -> G.Entry:
+        fields = dict(raw)
+        fields["codes"] = tuple(G.Code(**code) for code in raw["codes"])
+        fields["statuses"] = tuple(G.StatusEvent(**event) for event in raw["statuses"])
+        for key in ("rules", "sources", "run_keys"):
+            fields[key] = tuple(raw[key])
+        return G.Entry(**fields)
+
+    entries = {raw["id"]: entry(raw) for raw in spec["entries"]}
+    checkpoint = G.Checkpoint(**{**spec["checkpoint"], "children": tuple(spec["checkpoint"]["children"])})
+    return spec, entries, checkpoint
+
+
+def _interval22() -> R.Interval:
+    settings = json.loads((ROOT / CP22["protocol"]).read_text())["uncertainty"]
+    return R.Interval(method="paired noncircular moving-block percentile bootstrap", level=0.95, seed=int(settings["seed"]),
+                      replicates=int(settings["replicates"]), block_days=int(settings["block_days"]))
+
+
+def _draft22_records() -> dict[str, R.EvidenceRecord]:
+    """CP-22's typed records, by the evidence layer's own builders from CP-22's committed rows, with CP-22's own
+    bootstrap settings (its frozen protocol), plus one ratio record per equal-fold contrast (§17.5)."""
+    import dataclasses
+    interval = _interval22()
+    windows = R._fold_windows(CP22["metrics"])
+    built = (R._metric_records("cp22", "CP-22", CP22["metrics"])
+             + [dataclasses.replace(r, interval=interval)
+                for r in R._uncertainty_records("cp22", "CP-22", CP22["uncertainty"], windows)]
+             + R._criteria_records("cp22", "CP-22", CP22["criteria"], windows)
+             + R._diagnostic_records("cp22", "CP-22", CP22["diagnostics"]))
+    for line, row in R._rows(CP22["uncertainty"]):
+        if row["scope"] != "equal_fold":
+            continue
+        built.append(R.EvidenceRecord(
+            record_id=f"cp22.ratio.{row['candidate']}-{row['baseline']}.{row['metric']}", checkpoint="CP-22",
+            generation=None, policy_code=row["candidate"], source_path=CP22["uncertainty"],
+            selector=(("scope", "equal_fold"), ("candidate", row["candidate"]), ("baseline", row["baseline"]),
+                      ("metric", row["metric"])),
+            field="ratio", metric=f"ratio_S_{row['metric']}", unit=UNIT_RATIO_CHANGE, aggregation="equal_fold_ratio",
+            population_id="common-10747h", comparator=row["baseline"], evidence_class="development_post_selection",
+            window=windows["all"], display_precision=4, raw=row["ratio"], source_line=line, interval=interval,
+            ci_low_raw=row["ratio_ci_lower"], ci_high_raw=row["ratio_ci_upper"]))
+    out: dict[str, R.EvidenceRecord] = {}
+    for record in built:
+        if record.record_id in out:
+            raise R.EvidenceError(f"duplicate draft record id {record.record_id}")
+        out[record.record_id] = record
+    return out
+
+
+def _draft22_scores(builder: DraftBuilder, code: str, winner: str | None) -> None:
+    equal, pooled = f"cp22.metrics.{code}.equal_fold", f"cp22.metrics.{code}.pooled"
+    fold, peak = f"cp22.metrics.{code}.{{fold}}", f"cp22.diagnostics.{code}.peak"
+    builder.single("s_mae", f"{equal}.S_MAE")
+    builder.single("s_wis", f"{equal}.S_WIS")
+    for key, column in (("pooled_mae_eur", "MAE"), ("pooled_wis_eur", "WIS"), ("pooled_rmse_eur", "RMSE"),
+                        ("pooled_bias_eur", "bias"), ("pooled_coverage95", "coverage95")):
+        builder.single(key, f"{pooled}.{column}")
+    for key, column in (("fold_mae_eur", "MAE"), ("fold_wis_eur", "WIS"), ("fold_coverage50", "coverage50"),
+                        ("fold_coverage80", "coverage80"), ("fold_coverage95", "coverage95"),
+                        ("fold_mean_width95_eur", "mean_width95")):
+        builder.per_fold(key, f"{fold}.{column}")
+    for key, column in (("peak_mae_eur", "MAE"), ("peak_wis_eur", "WIS"), ("peak_coverage95", "coverage95"),
+                        ("peak_hits95", "hit_count95")):
+        builder.single(key, f"{peak}.{column}")
+    builder.daily(CP22["diagnostics"], code)
+    for candidate, base, slug in DRAFT22_CONTRASTS[code]:
+        base = winner if base == "W" else base
+        prefix = f"cp22.uncertainty.{candidate}-{base}"
+        for metric, score in (("MAE", "mae"), ("WIS", "wis")):
+            equal_record = f"{prefix}.equal_fold.{metric}"
+            builder.single(f"delta_s_{score}_vs_{slug}", equal_record)
+            builder.single(f"delta_s_{score}_vs_{slug}_ci_low", equal_record, "ci_low")
+            builder.single(f"delta_s_{score}_vs_{slug}_ci_high", equal_record, "ci_high")
+            ratio = f"cp22.ratio.{candidate}-{base}.{metric}"
+            builder.single(f"ratio_s_{score}_vs_{slug}", ratio)
+            builder.single(f"ratio_s_{score}_vs_{slug}_ci_low", ratio, "ci_low")
+            builder.single(f"ratio_s_{score}_vs_{slug}_ci_high", ratio, "ci_high")
+            fold_pattern = f"{prefix}.{{fold}}.{metric}"
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}", fold_pattern)
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}_ci_low", fold_pattern, "ci_low")
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}_ci_high", fold_pattern, "ci_high")
+
+
+def _draft22_params(protocol: dict, code: str | None, winner: str | None) -> dict[str, str]:
+    cp15 = json.loads((ROOT / "reports/cp15/protocol.json").read_text())
+    out = {"anchor_version": "capstone_v21.md v21-r9 §20", "protocol_sha256": _file_sha256(CP22["protocol"])}
+    if code is None:
+        return out
+    policy = protocol["policies"][code]
+    layers = protocol["interval_layers"]
+    central = policy["central"] if policy["central"] != "W" else f"W = {winner}: {protocol['policies'][winner]['central']}"
+    out["quantile_set"] = ",".join(str(level) for level in cp15["quantiles"]["levels"])
+    out["seed"] = str(protocol["lgbm"]["seed"])
+    out["weather_features"] = "v3's three GFS columns plus missing indicators"
+    out["history_window"] = protocol["history"]["window"]
+    out["policy_definition"] = f"{policy['role']}; central {central}"
+    out["member_weight"] = protocol["member_weight"]
+    if policy["layer"] == "H":
+        out["interval_method"] = layers["H"]
+    else:
+        dl = layers["DL"]
+        out["interval_method"] = (f"{policy['layer']}: " + (layers["ACI"] if policy["layer"] == "ACI" else dl["recency_weight"]))
+        out["aci"] = (f"gamma {dl['aci']['gamma_per_day']} per day; clip {json.dumps(dl['aci']['clip'], separators=(',', ':'))}; "
+                      f"{dl['aci']['update']}")
+        if policy["layer"] == "DLF":
+            out["fast_component"] = layers["DLF"]["weights"]
+    if code in ("R", "M", "A-PN-sel") or (code.startswith("W") and winner in ("R", "M")):
+        out["pn"] = protocol["members"]["PN"]
+        out["capacity_grid"] = json.dumps(protocol["capacity_grid"], separators=(",", ":"))
+        out["capacity_selection"] = protocol["selection"]["inner_split"] + "; " + protocol["selection"]["tie"]
+    return {key: value[:500] for key, value in out.items()}
+
+
+def _draft22_readme(run_name: str, checkpoint: G.Checkpoint, spec: dict, blobs: dict[str, str]) -> str:
+    tag = checkpoint.evidence_tag
+    lines = [f"# {run_name}", "",
+             f"Tracked by CP-22 from its committed evidence (draft export; evidence tag `{tag}` and its commit are "
+             f"{spec['pending']}). Development evidence; nothing here is a live or confirmatory result.", "",
+             f"- Report: {GITHUB_URL}/blob/{tag}/{checkpoint.report}",
+             f"- Independent Integration review: {GITHUB_URL}/blob/{tag}/{checkpoint.verdict}",
+             f"- Landing record: {checkpoint.landing}", f"- Presentation: {PAGES_URL}", "",
+             "Source rows at the evidence tag:", ""]
+    lines += [f"- {GITHUB_URL}/blob/{tag}/{path} (blob {blob})" for path, blob in blobs.items()]
+    return "\n".join(lines) + "\n"
+
+
+def _draft22_runs(entries: dict[str, G.Entry], checkpoint: G.Checkpoint, spec: dict) -> list[dict]:
+    """CP-22's parent and children, from its committed evidence, with the draft's explicit pending fields."""
+    protocol = json.loads((ROOT / CP22["protocol"]).read_text())
+    winner = json.loads((ROOT / CP22["decisions"]).read_text())["replacement"]["winner"]
+    records = _draft22_records()
+    group = comparability()["common"]
+    pending = spec["pending"]
+    note = spec["note"]
+    runs = []
+    owner = entries[checkpoint.owner]
+    parent_tags = {
+        "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
+        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _draft_status_text(owner, pending),
+        "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
+        "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+        "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+        "delu.backfilled": "false", "delu.original_completed_utc": pending,
+        "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
+        "mlflow.note.content": _draft_description(owner, note, pending),
+    }
+    parent = {"run_key": checkpoint.run_key, "parent": None,
+              "run_name": draft_run_name(checkpoint.run_key, entries, checkpoint),
+              "params": _draft22_params(protocol, None, winner), "tags": parent_tags, "metrics": {}, "metric_provenance": {},
+              "metric_units": {}, "inputs": [], "comparability": dict(group)}
+    parent["artifacts"] = [
+        _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
+        _artifact("README.md", _draft22_readme(parent["run_name"], checkpoint, spec,
+                                               {CP22["protocol"]: R.blob_sha(R.source_bytes(CP22["protocol"]))})),
+    ]
+    runs.append(parent)
+    for code in checkpoint.children:
+        run_key = f"{checkpoint.run_key}/{code}"
+        entry = _draft_entry_for(run_key, entries)
+        builder = DraftBuilder(records)
+        _draft22_scores(builder, code, winner)
+        blobs = _draft_blobs(builder.provenance, records)
+        run_name = draft_run_name(run_key, entries, checkpoint)
+        comparator = G.get(entry.comparator).name if entry.comparator in {e.id for e in G.entries()} else entries[entry.comparator].name
+        tags = {
+            "delu.run_key": run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": entry.id,
+            "delu.kind": entry.kind, "delu.generation": entry.version or "none", "delu.policy_code": code,
+            "delu.public_name": entry.name, "delu.status": _draft_status_text(entry, pending), "delu.comparator": comparator,
+            "delu.role": "candidate", "delu.adopted": G.adopted_flag(entry),
+            "delu.evidence_class": "development_post_selection",
+            "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+            "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false", "delu.original_completed_utc": pending,
+            "mlflow.note.content": _draft_description(entry, note, pending, code=code, role="candidate"),
+        }
+        inputs = datasets("cp22", code, group, weather=True)
+        tags["delu.datasets"] = _canonical({dataset["name"]: dataset["sha256"] for dataset in inputs})
+        run = {"run_key": run_key, "parent": checkpoint.run_key, "run_name": run_name,
+               "params": _draft22_params(protocol, code, winner), "tags": tags, "metrics": builder.metrics,
+               "metric_provenance": builder.provenance,
+               "metric_units": {key: metric_unit(key) for key in builder.metrics}, "inputs": inputs}
+        summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
+        run["artifacts"] = [_artifact("summary.json", summary + "\n"),
+                            _artifact("README.md", _draft22_readme(run_name, checkpoint, spec, blobs))]
+        runs.append(run)
+    return runs
+
+
+def build_draft22() -> dict:
+    """CP-22's draft export: one file, the checkpoint's parent and every new policy."""
+    spec, entries, checkpoint = draft_registry22()
+    return {"experiment": EXPERIMENT, "checkpoint": checkpoint.code, "status": "draft",
+            "pending_fields": spec["pending_fields"], "draft_registry": DRAFT22_REGISTRY,
+            "revisions": spec.get("revisions"), "runs": _draft22_runs(entries, checkpoint, spec)}
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -1290,7 +1525,8 @@ def main() -> int:
                         help="with --diff-against: compare with the export committed at REF instead of a fresh one")
     parser.add_argument("--out", type=Path, default=None, help="with --diff-against: write the report here")
     parser.add_argument("--draft", metavar="NAME", default=None,
-                        help="build a checkpoint's draft export (cp21) under reports/block-challenger/mlflow-export-draft/")
+                        help="build a checkpoint's draft export: cp21 (reports/block-challenger/mlflow-export-draft/) or "
+                             "cp22 (reports/v4-revision/mlflow-export-draft/)")
     args = parser.parse_args()
     if args.draft:
         return draft_main(args.draft, check=args.check)
@@ -1344,14 +1580,15 @@ def draft_main(name: str, *, check: bool) -> int:
             print(f"mlflow-export: BLOCKED - {finding}", file=sys.stderr)
         return 1
     text = json.dumps(draft, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
-    path = DRAFT_DIR / f"{name}.json"
+    directory = DRAFT22_DIR if name == "cp22" else DRAFT_DIR
+    path = directory / f"{name}.json"
     if check:
         if not path.exists() or path.read_text() != text:
             print(f"the committed draft export is stale: {path.relative_to(ROOT)}")
             return 1
         print("the committed draft export is current")
         return 0
-    DRAFT_DIR.mkdir(parents=True, exist_ok=True)
+    directory.mkdir(parents=True, exist_ok=True)
     path.write_text(text)
     print(f"wrote {path.relative_to(ROOT)}: {len(draft['runs'])} runs (draft; pending fields {sorted(draft['pending_fields'])})")
     return 0

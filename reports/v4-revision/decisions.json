@@ -1,0 +1,986 @@
+{
+ "bootstrap": {
+  "block_days": 7,
+  "calendar_days": 90,
+  "index_equals_cp20": true,
+  "index_sha256": "e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b",
+  "method": "paired noncircular calendar moving-block percentile",
+  "ratio_method": "R_b = S_policy,b / S_comparator,b - 1 from the same replicates; point = full-sample ratio - 1",
+  "replicates": 2000,
+  "seed": 15042,
+  "shared_index_sets": 1,
+  "undefined_handling": "unresolved; no dropping or redrawing"
+ },
+ "consistency_with_committed": {
+  "HG-H0_equal_committed": true,
+  "HG-H0_interval_rows": 12,
+  "HG-H0_max_abs_difference_vs_committed": 4.440892098500626e-16,
+  "HGL-HG_equal_committed": true,
+  "HGL-HG_interval_rows": 12,
+  "HGL-HG_max_abs_difference_vs_committed": 2.220446049250313e-16,
+  "HGL_section8_rows_equal_committed": true,
+  "HG_section8_rows_equal_committed": true,
+  "all_equal": true
+ },
+ "contrasts": {
+  "A-LN-HG": {
+   "contrast": "A-LN-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.036479162957487765,
+     -0.02269513690775657
+    ],
+    "point": -0.029539720138240022,
+    "ratio": -0.052212398978139896,
+    "ratio_ci": [
+     -0.06320325454782627,
+     -0.039656053740771295
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.032759716736080496,
+     -0.02051225931759907
+    ],
+    "point": -0.02657115788549491,
+    "ratio": -0.04992526263295116,
+    "ratio_ci": [
+     -0.05932046960879461,
+     -0.03824405336369871
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "A-LN-HGL": {
+   "contrast": "A-LN-HGL",
+   "dS_MAE": {
+    "ci": [
+     -0.003463893664923623,
+     0.004338324948623918
+    ],
+    "point": 0.0005622633797445209,
+    "ratio": 0.0010496673122422084,
+    "ratio_ci": [
+     -0.006338808593464596,
+     0.008178274228321248
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0035125244443932916,
+     0.0037778625049293413
+    ],
+    "point": 7.269214914717992e-05,
+    "ratio": 0.0001437811840596659,
+    "ratio_ci": [
+     -0.006782574834377641,
+     0.0074542415660066
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "descriptive_blocks_under_normalization"
+  },
+  "A-LP-HG": {
+   "contrast": "A-LP-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.03510884255495639,
+     -0.0178629868231858
+    ],
+    "point": -0.027708923234827876,
+    "ratio": -0.04897640696733019,
+    "ratio_ci": [
+     -0.0613471926844341,
+     -0.03149237208866497
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.030988064412272857,
+     -0.015617810832437845
+    ],
+    "point": -0.02384184672402423,
+    "ratio": -0.044797086543272635,
+    "ratio_ci": [
+     -0.05689542533712617,
+     -0.02922651169989326
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "A-PN-sel-A-LP": {
+   "contrast": "A-PN-sel-A-LP",
+   "dS_MAE": {
+    "ci": [
+     -0.010201696066244877,
+     0.004149352921943828
+    ],
+    "point": -0.0022680206165015537,
+    "ratio": -0.004215246519634008,
+    "ratio_ci": [
+     -0.018488716128624384,
+     0.007779354818644639
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.00991950766575746,
+     0.0035054574838126683
+    ],
+    "point": -0.00304827552947573,
+    "ratio": -0.005996094371140459,
+    "ratio_ci": [
+     -0.019103724102277637,
+     0.006818931019637819
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "normalized_vs_raw_pooled"
+  },
+  "A-PN-sel-HG": {
+   "contrast": "A-PN-sel-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.0375622176851383,
+     -0.021892126031995827
+    ],
+    "point": -0.02997694385132943,
+    "ratio": -0.05298520585795097,
+    "ratio_ci": [
+     -0.065298742227842,
+     -0.03829567948923873
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0336227580211938,
+     -0.01923823956988918
+    ],
+    "point": -0.02689012225349996,
+    "ratio": -0.05052457335594751,
+    "ratio_ci": [
+     -0.061193539298314885,
+     -0.03606656386417129
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "A-PN-sel-M": {
+   "contrast": "A-PN-sel-M",
+   "dS_MAE": {
+    "ci": [
+     -0.002479857553462475,
+     0.004791561307885734
+    ],
+    "point": 0.0014520208318935524,
+    "ratio": 0.002717452296766787,
+    "ratio_ci": [
+     -0.004517431976769651,
+     0.008911261357215752
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0030186583355720194,
+     0.00395365981200675
+    ],
+    "point": 0.0005128418265964996,
+    "ratio": 0.001015899069858106,
+    "ratio_ci": [
+     -0.005937404601397633,
+     0.007655957018689004
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "dropping_the_raw_half"
+  },
+  "HGL-HG": {
+   "contrast": "HGL-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.03681584729111768,
+     -0.02278213336960615
+    ],
+    "point": -0.030101983517984543,
+    "ratio": -0.053206217463102945,
+    "ratio_ci": [
+     -0.06366480500951344,
+     -0.039665006210973686
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.032698827022918084,
+     -0.020441588003386926
+    ],
+    "point": -0.02664385003464209,
+    "ratio": -0.05006184586553608,
+    "ratio_ci": [
+     -0.05954167742638493,
+     -0.037980623814911595
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "M-HG": {
+   "contrast": "M-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.03823615781119405,
+     -0.022925355435125305
+    ],
+    "point": -0.03142896468322298,
+    "ratio": -0.055551699062511006,
+    "ratio_ci": [
+     -0.06664228291945531,
+     -0.04018200766702311
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.03339757488785945,
+     -0.019984554494674983
+    ],
+    "point": -0.02740296408009646,
+    "ratio": -0.05148816564621683,
+    "ratio_ci": [
+     -0.06124508615177692,
+     -0.03716444233154753
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "M-HGL": {
+   "contrast": "M-HGL",
+   "dS_MAE": {
+    "ci": [
+     -0.0035746827258298698,
+     0.0016436068728058282
+    ],
+    "point": -0.001326981165238439,
+    "ratio": -0.0024772887641102415,
+    "ratio_ci": [
+     -0.006654329018361085,
+     0.002985782112358547
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0030067798300917477,
+     0.002242430813362147
+    ],
+    "point": -0.0007591140454543677,
+    "ratio": -0.0015014869909928397,
+    "ratio_ci": [
+     -0.005886453301712441,
+     0.004339477627836258
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "replacement"
+  },
+  "R-A-PN-sel": {
+   "contrast": "R-A-PN-sel",
+   "dS_MAE": {
+    "ci": [
+     -0.0008501049153231993,
+     0.002502035503838826
+    ],
+    "point": 0.0010174461490362052,
+    "ratio": 0.0018989867755290213,
+    "ratio_ci": [
+     -0.0015614894271324925,
+     0.004648046067002231
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.000645923228520831,
+     0.0026398164203163925
+    ],
+    "point": 0.001249467691206152,
+    "ratio": 0.0024725847112274657,
+    "ratio_ci": [
+     -0.0012428048185135015,
+     0.0051252898995885745
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "averaging_vs_daily_selection"
+  },
+  "R-HG": {
+   "contrast": "R-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.036635247726296824,
+     -0.02104299274560739
+    ],
+    "point": -0.028959497702293224,
+    "ratio": -0.05118683728764484,
+    "ratio_ci": [
+     -0.06337827393235079,
+     -0.03691718847876706
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.03222700376899168,
+     -0.01851754391036901
+    ],
+    "point": -0.025640654562293808,
+    "ratio": -0.04817691493234122,
+    "ratio_ci": [
+     -0.05881115323262026,
+     -0.034898187572379225
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "R-HGL": {
+   "contrast": "R-HGL",
+   "dS_MAE": {
+    "ci": [
+     -0.003126339487328947,
+     0.005417691086284952
+    ],
+    "point": 0.0011424858156913187,
+    "ratio": 0.0021328616777005482,
+    "ratio_ci": [
+     -0.005726559114855548,
+     0.010049680278526273
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0028390200935139694,
+     0.004911223988987757
+    ],
+    "point": 0.0010031954723482839,
+    "ratio": 0.00198426700200538,
+    "ratio_ci": [
+     -0.005498327996993976,
+     0.009692544605779223
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "replacement"
+  },
+  "R-M": {
+   "contrast": "R-M",
+   "dS_MAE": {
+    "ci": [
+     -0.0016144088431618547,
+     0.00581381474942662
+    ],
+    "point": 0.0024694669809297576,
+    "ratio": 0.004621599478270566,
+    "ratio_ci": [
+     -0.002936029021911893,
+     0.010649405692422642
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0018146327272689777,
+     0.004878965497064458
+    ],
+    "point": 0.0017623095178026515,
+    "ratio": 0.0034909956775937,
+    "ratio_ci": [
+     -0.0033927430591347506,
+     0.009665715073972169
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "full_vs_minimal_refinement"
+  },
+  "v3+DL-HG": {
+   "contrast": "v3+DL-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.004142305222821022,
+     0.007223806304620946
+    ],
+    "point": 0.0018170958616862132,
+    "ratio": 0.003211774981885185,
+    "ratio_ci": [
+     -0.007153475440428455,
+     0.01274589635136442
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     0.016467660782751657,
+     0.031557510419558406
+    ],
+    "point": 0.02307332291153419,
+    "ratio": 0.04335308649842751,
+    "ratio_ci": [
+     0.030440341172106637,
+     0.05884131396688312
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "dl_on_v3_descriptive"
+  },
+  "v4+DL-HG": {
+   "contrast": "v4+DL-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.03720702906198385,
+     -0.018850632495488726
+    ],
+    "point": -0.02790165503208042,
+    "ratio": -0.049317066575709334,
+    "ratio_ci": [
+     -0.06361278526366797,
+     -0.03291118800021816
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.011192201333546791,
+     0.004991324784554229
+    ],
+    "point": -0.004131879624229784,
+    "ratio": -0.007763499667435281,
+    "ratio_ci": [
+     -0.020708132272817942,
+     0.00913732812985383
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "reference_vs_v3"
+  },
+  "v4+DL-HGL": {
+   "contrast": "v4+DL-HGL",
+   "dS_MAE": {
+    "ci": [
+     -0.00412822015058989,
+     0.0076513166312968985
+    ],
+    "point": 0.002200328485904124,
+    "ratio": 0.00410770640780167,
+    "ratio_ci": [
+     -0.007464222126087844,
+     0.014188308318722297
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     0.01614845506250434,
+     0.03078275094711521
+    ],
+    "point": 0.022511970410412308,
+    "ratio": 0.044527473724477185,
+    "ratio_ci": [
+     0.03120994660861756,
+     0.06068297131406234
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "dl_on_v4_descriptive"
+  }
+ },
+ "dynamic_layer": {
+  "adopted": false,
+  "applies": false,
+  "first_unmet_condition": null,
+  "rule": {
+   "applies": "only if W exists",
+   "candidate": "W+DL",
+   "comparator": "W",
+   "conditions": {
+    "1": "The upper 95% endpoint of dS_WIS is below zero.",
+    "2": "dS_MAE has no 95% interval lying entirely above zero.",
+    "3": "W+DL meets all six section-8 diagnostics.",
+    "4": "W+DL's pooled 95% coverage is closer to 0.95 than W's.",
+    "5": "No fold has a 95% paired daily-loss interval (W+DL - W) lying entirely above zero, in MAE or in WIS."
+   },
+   "otherwise": "the replacement is W with HG's H layer",
+   "set_on": "2026-10-01",
+   "source": "capstone_v21.md v21-r9 \u00a720.6 (Owner decision D7)"
+  },
+  "verdict": "not applicable: no winner W"
+ },
+ "evidence_class": "development_post_selection",
+ "fast_component": {
+  "adopted": false,
+  "applies": false,
+  "first_unmet_condition": null,
+  "rule": {
+   "applies": "only if W+DL was adopted",
+   "candidate": "W+DLF",
+   "comparator": "W+DL",
+   "conditions": {
+    "1": "The upper 95% endpoint of dS_WIS is below zero.",
+    "2": "dS_MAE has no 95% interval lying entirely above zero.",
+    "3": "W+DLF meets all six section-8 diagnostics.",
+    "4": "No fold has a 95% paired daily-loss interval (W+DLF - W+DL) lying entirely above zero, in MAE or in WIS."
+   },
+   "otherwise": "W+DL stands; if W+DL was not adopted, (W+DLF) - (W+DL) is descriptive only",
+   "set_on": "2026-10-01",
+   "source": "capstone_v21.md v21-r9 \u00a720.6 (Owner, 2026-10-01)"
+  },
+  "verdict": "not applicable: no winner W"
+ },
+ "original_section8_status": {
+  "A-LN": "met",
+  "A-LP": "met",
+  "A-PN-sel": "met",
+  "HG": "met",
+  "HGL": "met",
+  "M": "met",
+  "R": "met",
+  "v3+DL": "met",
+  "v4+DL": "met"
+ },
+ "pass": "pass 1 (no winner: no layer arms exist and no further pass is made)",
+ "pass1_reproduced": null,
+ "replacement": {
+  "application": "mechanical; never re-weighted, re-thresholded or overridden after results; attribution arms are never eligible; a mixed result is no demonstrated joint preference, never equivalence; an INCOMPLETE or BLOCKED return yields no decision and nothing to publish",
+  "candidates": {
+   "M": {
+    "conditions": {
+     "1": {
+      "met": true,
+      "values": {
+       "MAE": {
+        "ci_lower": -0.0035746827258298698,
+        "ci_upper": 0.0016436068728058282,
+        "difference": -0.001326981165238439,
+        "ratio": -0.0024772887641102415,
+        "ratio_ci": [
+         -0.006654329018361085,
+         0.002985782112358547
+        ]
+       },
+       "WIS": {
+        "ci_lower": -0.0030067798300917477,
+        "ci_upper": 0.002242430813362147,
+        "difference": -0.0007591140454543677,
+        "ratio": -0.0015014869909928397,
+        "ratio_ci": [
+         -0.005886453301712441,
+         0.004339477627836258
+        ]
+       }
+      }
+     },
+     "2": {
+      "met": true,
+      "values": {
+       "criteria_rows": 21,
+       "not_met": []
+      }
+     },
+     "3": {
+      "met": true,
+      "values": {
+       "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-22/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+       "keys_issued_finite_ordered": true
+      }
+     },
+     "4": {
+      "met": false,
+      "values": {
+       "folds_decisively_worse": [
+        {
+         "ci_lower": 0.05137364782736666,
+         "ci_upper": 0.3262108815689212,
+         "difference": 0.19750459924104824,
+         "metric": "MAE",
+         "scope": "fold_4"
+        },
+        {
+         "ci_lower": 0.02420659625911852,
+         "ci_upper": 0.1982126040684136,
+         "difference": 0.11177452701045532,
+         "metric": "WIS",
+         "scope": "fold_4"
+        }
+       ],
+       "per_fold": [
+        {
+         "ci_lower": -0.08049056503408365,
+         "ci_upper": 0.029240638465052263,
+         "difference": -0.0365337965897945,
+         "metric": "MAE",
+         "scope": "fold_1"
+        },
+        {
+         "ci_lower": -0.07890061969143579,
+         "ci_upper": 0.01848530239761524,
+         "difference": -0.031403867550792164,
+         "metric": "WIS",
+         "scope": "fold_1"
+        },
+        {
+         "ci_lower": -0.11743771450599114,
+         "ci_upper": 0.05459400928657384,
+         "difference": -0.03689806219033098,
+         "metric": "MAE",
+         "scope": "fold_2"
+        },
+        {
+         "ci_lower": -0.0765526785680523,
+         "ci_upper": 0.033113834773187564,
+         "difference": -0.02296244596775665,
+         "metric": "WIS",
+         "scope": "fold_2"
+        },
+        {
+         "ci_lower": -1.4354304671854425,
+         "ci_upper": -0.16448306395122114,
+         "difference": -0.7759279431096289,
+         "metric": "MAE",
+         "scope": "fold_3"
+        },
+        {
+         "ci_lower": -0.4751207927445077,
+         "ci_upper": 0.040885383036545056,
+         "difference": -0.22195376130102318,
+         "metric": "WIS",
+         "scope": "fold_3"
+        },
+        {
+         "ci_lower": 0.05137364782736666,
+         "ci_upper": 0.3262108815689212,
+         "difference": 0.19750459924104824,
+         "metric": "MAE",
+         "scope": "fold_4"
+        },
+        {
+         "ci_lower": 0.02420659625911852,
+         "ci_upper": 0.1982126040684136,
+         "difference": 0.11177452701045532,
+         "metric": "WIS",
+         "scope": "fold_4"
+        },
+        {
+         "ci_lower": -0.10039447352057436,
+         "ci_upper": 0.13727804614136238,
+         "difference": 0.005312902408023845,
+         "metric": "MAE",
+         "scope": "fold_5"
+        },
+        {
+         "ci_lower": -0.048014134878246836,
+         "ci_upper": 0.0823383597180101,
+         "difference": 0.007021675098787483,
+         "metric": "WIS",
+         "scope": "fold_5"
+        }
+       ]
+      }
+     }
+    },
+    "first_unmet_condition": 4,
+    "met": false,
+    "unmet_conditions": [
+     4
+    ]
+   },
+   "R": {
+    "conditions": {
+     "1": {
+      "met": true,
+      "values": {
+       "MAE": {
+        "ci_lower": -0.003126339487328947,
+        "ci_upper": 0.005417691086284952,
+        "difference": 0.0011424858156913187,
+        "ratio": 0.0021328616777005482,
+        "ratio_ci": [
+         -0.005726559114855548,
+         0.010049680278526273
+        ]
+       },
+       "WIS": {
+        "ci_lower": -0.0028390200935139694,
+        "ci_upper": 0.004911223988987757,
+        "difference": 0.0010031954723482839,
+        "ratio": 0.00198426700200538,
+        "ratio_ci": [
+         -0.005498327996993976,
+         0.009692544605779223
+        ]
+       }
+      }
+     },
+     "2": {
+      "met": true,
+      "values": {
+       "criteria_rows": 21,
+       "not_met": []
+      }
+     },
+     "3": {
+      "met": true,
+      "values": {
+       "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-22/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+       "keys_issued_finite_ordered": true
+      }
+     },
+     "4": {
+      "met": false,
+      "values": {
+       "folds_decisively_worse": [
+        {
+         "ci_lower": 0.148481324134723,
+         "ci_upper": 0.4227068532013648,
+         "difference": 0.30928279371552314,
+         "metric": "MAE",
+         "scope": "fold_4"
+        },
+        {
+         "ci_lower": 0.09712973663969753,
+         "ci_upper": 0.2309433812246246,
+         "difference": 0.17603386989263292,
+         "metric": "WIS",
+         "scope": "fold_4"
+        }
+       ],
+       "per_fold": [
+        {
+         "ci_lower": -0.029210887601628044,
+         "ci_upper": 0.14878354823309364,
+         "difference": 0.05620787254856818,
+         "metric": "MAE",
+         "scope": "fold_1"
+        },
+        {
+         "ci_lower": -0.05673996940437944,
+         "ci_upper": 0.06741322618618514,
+         "difference": 0.006430320613993068,
+         "metric": "WIS",
+         "scope": "fold_1"
+        },
+        {
+         "ci_lower": -0.2928848289689102,
+         "ci_upper": -0.006271888876965449,
+         "difference": -0.13007251795413222,
+         "metric": "MAE",
+         "scope": "fold_2"
+        },
+        {
+         "ci_lower": -0.18911280249693382,
+         "ci_upper": -0.013403922648798717,
+         "difference": -0.09183109583033744,
+         "metric": "WIS",
+         "scope": "fold_2"
+        },
+        {
+         "ci_lower": -1.4034451099213614,
+         "ci_upper": 0.7195880146317929,
+         "difference": -0.3058716300397819,
+         "metric": "MAE",
+         "scope": "fold_3"
+        },
+        {
+         "ci_lower": -0.6298644709018855,
+         "ci_upper": 0.5535351962513687,
+         "difference": -0.052771807246564606,
+         "metric": "WIS",
+         "scope": "fold_3"
+        },
+        {
+         "ci_lower": 0.148481324134723,
+         "ci_upper": 0.4227068532013648,
+         "difference": 0.30928279371552314,
+         "metric": "MAE",
+         "scope": "fold_4"
+        },
+        {
+         "ci_lower": 0.09712973663969753,
+         "ci_upper": 0.2309433812246246,
+         "difference": 0.17603386989263292,
+         "metric": "WIS",
+         "scope": "fold_4"
+        },
+        {
+         "ci_lower": -0.33346111175885174,
+         "ci_upper": 0.17142372374757023,
+         "difference": -0.0835238150958375,
+         "metric": "MAE",
+         "scope": "fold_5"
+        },
+        {
+         "ci_lower": -0.08500339058417321,
+         "ci_upper": 0.14874554217121091,
+         "difference": 0.021517501975765185,
+         "metric": "WIS",
+         "scope": "fold_5"
+        }
+       ]
+      }
+     }
+    },
+    "first_unmet_condition": 4,
+    "met": false,
+    "unmet_conditions": [
+     4
+    ]
+   }
+  },
+  "first_unmet_condition": {
+   "M": 4,
+   "R": 4
+  },
+  "rule": {
+   "candidates_in_sequence": [
+    "R",
+    "M"
+   ],
+   "comparator": "HGL (v4)",
+   "conditions": {
+    "1": "Non-inferior on both scores: neither dS_MAE nor dS_WIS (candidate - v4) has a 95% interval lying entirely above zero.",
+    "2": "No regression: the candidate meets all six original section-8 diagnostics.",
+    "3": "A complete, valid evaluation: Engineering PASS with a binding Integration verdict, and all 10,747 keys issued.",
+    "4": "No resolved per-fold degradation: no fold has a 95% paired daily-loss interval (candidate - v4) lying entirely above zero, in MAE or in WIS."
+   },
+   "sequence": "R replaces v4 if all four hold; otherwise M if all four hold; otherwise no replacement and CP-22 stops for the Owner. The winner is W.",
+   "set_on": "2026-10-01",
+   "source": "capstone_v21.md v21-r9 \u00a720.6 (Owner decisions D2, 2026-10-01)"
+  },
+  "verdict": "no replacement: CP-22 stops at its return and the Owner decides; three-block v4 stays current",
+  "winner": null
+ },
+ "scores": {
+  "A-LN": {
+   "S_MAE": 0.5362209174951242,
+   "S_WIS": 0.5056475322963709
+  },
+  "A-LP": {
+   "S_MAE": 0.5380517143985365,
+   "S_WIS": 0.5083768434578415
+  },
+  "A-PN-sel": {
+   "S_MAE": 0.5357836937820348,
+   "S_WIS": 0.5053285679283658
+  },
+  "A1": {
+   "S_MAE": 0.6722908121370033,
+   "S_WIS": 0.646015091607363
+  },
+  "B0": {
+   "S_MAE": 1.0,
+   "S_WIS": 1.0
+  },
+  "B1": {
+   "S_MAE": 1.051845134839199,
+   "S_WIS": 0.9856366964174134
+  },
+  "B2": {
+   "S_MAE": 0.6578109123747921,
+   "S_WIS": 0.6389910407326591
+  },
+  "B3": {
+   "S_MAE": 0.7841363977682992,
+   "S_WIS": 0.7399052224715813
+  },
+  "H0": {
+   "S_MAE": 0.6440721386286878,
+   "S_WIS": 0.6160299894915677
+  },
+  "HG": {
+   "S_MAE": 0.5657606376333641,
+   "S_WIS": 0.532218690181866
+  },
+  "HGL": {
+   "S_MAE": 0.5356586541153796,
+   "S_WIS": 0.5055748401472236
+  },
+  "M": {
+   "S_MAE": 0.5343316729501412,
+   "S_WIS": 0.5048157261017694
+  },
+  "R": {
+   "S_MAE": 0.5368011399310709,
+   "S_WIS": 0.5065780356195718
+  },
+  "v3+DL": {
+   "S_MAE": 0.5675777334950503,
+   "S_WIS": 0.5552920130934001
+  },
+  "v4+DL": {
+   "S_MAE": 0.5378589826012838,
+   "S_WIS": 0.528086810557636
+  }
+ },
+ "statuses": {
+  "engineering": "bound to the fresh Integration verdict on the final candidate",
+  "product": "v1 remains the released product and demo; no designation, freeze or Live",
+  "research": "development_post_selection finding under the three pre-registered rules"
+ }
+}

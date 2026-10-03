@@ -27,7 +27,7 @@ from cp15.data import LABELS, day_hours, prepare
 from cp16.residuals import SharedResidualState
 from cp20.components import HGComponents
 from cp21.components import augment, refit
-from cp21.lgbm import BLOCKS, GRID, POOLED, fit_arm, hg_central, hgl_central, model_rows
+from cp21.lgbm import BLOCKS, GRID, POOLED, arm_design, fit_arm, hg_central, hgl_central, model_rows
 from .budget import atomic, ledger
 from .dl import ALPHAS, DynamicResidualState, clip_bounds
 from .execution import (FIXED_NEW, LAYER, OUT, PNCache, Sources, _identities, _truth, _twice, charge_fits, check_protocol,
@@ -159,13 +159,18 @@ def representative(root: Path, budget, fold: str, day: date, idents) -> dict:
     fits21 = pd.read_parquet(root / 'reports/block-challenger/fits.parquet',
                              filters=[('delivery_date', '==', str(day)), ('arm', '==', 'L-P'), ('role', '==', 'final')])
     blocks = [model_rows(data, day, b, present) for b in BLOCKS]
+    ln_design = arm_design(data, wx, 'L-N')
     record['ladder_rows'] = {
         'pn_window_rows_equal_cp21_lp': bool(len(fits21) == 1 and fits21.window_rows_sha256.iloc[0] == cached['fits'][-1]['window_rows_sha256']),
         **{f'pn_{name}_equals_union_of_ln_blocks': bool(np.array_equal(np.sort(np.concatenate([b[i] for b in blocks])),
                                                                        np.sort((window, inner, validation, forecast)[i - 1])))
            for i, name in ((1, 'window'), (2, 'inner'), (3, 'validation'), (4, 'forecast'))},
-        'pn_target_is_ln_normalised_target': bool(np.array_equal(pdes.target, (data.y - data.level) / data.scale)),
-        'pn_features_are_ln_features': bool(np.array_equal(pdes.x, data.lgbm_normalized))}
+        # NaN marks ineligible rows in both designs: compare with equal_nan, against CP-21's own L-N design
+        'pn_target_is_ln_normalised_target': bool(np.array_equal(pdes.target, ln_design.target, equal_nan=True)),
+        'pn_features_are_ln_features': bool(np.array_equal(pdes.x, ln_design.x, equal_nan=True)
+                                            and np.array_equal(pdes.wx, ln_design.wx, equal_nan=True)),
+        'lp_target_differs_positive_control': not bool(np.array_equal(pdes.target, arm_design(data, wx, 'L-P').target,
+                                                                      equal_nan=True))}
     return record
 
 
@@ -255,18 +260,30 @@ def state_controls(root: Path, budget, idents) -> dict:
     early = load(root, before=first)
     m = json.loads((root / 'reports/v2-causal/input-manifest.json').read_text())
     f1 = next(f for f in m['folds'] if f['fold'] == fold)
-    parity, frames = {}, {}
-    for label, cls in (('h_parity', lambda: DynamicResidualState('H-PARITY')), ('dl', lambda: DynamicResidualState('DL'))):
-        st = {'R': cls()}
-        log = {'origins': []}
-        replay(early, fold, list(pd.date_range(f1['warmup_start'], first - timedelta(days=1)).date),
-               Sources(fold, early, fit_ident, cp21_ident, hg_ident, hashes, ('R',)), st, _truth(early), set(), log,
-               'control', None, budget, 'policy_days_control')
-        st = {'R': DynamicResidualState.from_dict(st['R'].to_dict())}
-        fr = []
-        replay(data, fold, dates, Sources(fold, data, fit_ident, cp21_ident, hg_ident, hashes, ('R',)), st, truth, None, log,
-               'control', fr, budget, 'policy_days_control')
-        frames[label] = pd.concat(fr, ignore_index=True).sort_values('timestamp_utc')[LABELS].to_numpy(float)
+    frames = {}
+    for label, variant in (('h_parity', 'H-PARITY'), ('dl', 'DL')):
+        state = DynamicResidualState(variant)
+        src_early = Sources(fold, early, fit_ident, cp21_ident, hg_ident, hashes, ('R',))
+        src_full = Sources(fold, data, fit_ident, cp21_ident, hg_ident, hashes, ('R',))
+        vectors = []
+        for phase, source, frame_data, days in (('warmup', src_early, early, list(pd.date_range(f1['warmup_start'], first - timedelta(days=1)).date)),
+                                                ('evaluation', src_full, data, dates)):
+            t = _truth(frame_data)
+            if phase == 'evaluation':
+                state = DynamicResidualState.from_dict(state.to_dict())  # the same state, reloaded on the full data
+            for d in days:
+                rows, centers, _, _ = source.get(d)
+                budget.reserve(policy_days=1, policy_days_control=1)
+                state.release(d, t)
+                if len(rows) and state.ready():
+                    c = _twice(centers['R'])
+                    q, _ = state.predict(d, frame_data.index[rows], c, c, frame_data.scale[rows])
+                    if phase == 'evaluation':
+                        vectors.append(q['DL'])
+                if len(rows):
+                    c = _twice(centers['R'])
+                    state.issue(d, frame_data.index[rows], c, c, frame_data.scale[rows])
+        frames[label] = np.concatenate(vectors)
     r_committed = committed.loc[committed.policy.eq('R')].sort_values('timestamp_utc')[LABELS].to_numpy(float)
     out['dl_without_weights_or_aci_equals_committed_R_bitwise'] = bool(np.array_equal(frames['h_parity'], r_committed))
     out['dl_differs_from_committed_R'] = bool(not np.array_equal(frames['dl'], r_committed))
