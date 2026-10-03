@@ -155,10 +155,16 @@ def build(root: Path):
         cand_d = rep['candidates'][cand]
         conds = '; '.join(f'condition {k} {"met" if v["met"] else "not met"}' for k, v in sorted(cand_d['conditions'].items()))
         worse = cand_d['conditions']['4']['values']['folds_decisively_worse']
+        worse_folds = {}
+        for row in worse:
+            worse_folds.setdefault(row['scope'], []).append(row['metric'])
+        worse_text = (f'{len(worse_folds)} (' + '; '.join(f'{f.replace("_", " ")}: {" and ".join(m)}'
+                                                          for f, m in sorted(worse_folds.items())) + ')'
+                      if worse_folds else '0')
         claim(f'C{int(ident[1:]) + 1}', f'Rule `cp22-replacement` for {cand}: '
               + ('all four conditions met' if cand_d['met'] else f'first unmet condition {cand_d["first_unmet_condition"]}')
               + f' ({conds}; condition 3\'s Engineering PASS is the fresh Integration verdict). Folds decisively worse in MAE or '
-                f'WIS (lower endpoint above zero): {len(worse)}.', f'DEC22 `replacement.candidates.{cand}`; C22; U22 per-fold rows', 'S')
+                f'WIS (lower endpoint above zero): {worse_text}.', f'DEC22 `replacement.candidates.{cand}`; C22; U22 per-fold rows', 'S')
     claim('C212', f'The mechanical result of `cp22-replacement`: **{rep["verdict"]}**.', 'DEC22 `replacement.verdict`', 'S')
     claim('C213', 'Whether the replacement shows a joint improvement over v4 under §17.5\'s reading: '
           + (f'{w} − v4 reads **{dec["contrasts"][f"{w}-HGL"]["reading"]}**.' if w else 'not applicable (no replacement); '
@@ -217,7 +223,8 @@ def build(root: Path):
         f'{s["from"]} → {s["to"]} ({s["change"]}) ΔS_MAE {num(s["dS_MAE"])}, ΔS_WIS {num(s["dS_WIS"])}' for s in lad['steps'])
         + '. The brackets sum to v4 − v3 exactly.', 'INV22 `ladder`', 'S-d')
     n += 1
-    claim(f'C{n}', 'The member-weight curve is an oracle computed on outcomes and selects nothing: '
+    curve_claim = f'C{n}'
+    claim(curve_claim, 'The member-weight curve is an oracle computed on outcomes and selects nothing: '
           + ', '.join(f'{k} lowest at {v}' for k, v in inv['member_weight_curve']['argmin_weight_by_member'].items())
           + ' (central forecast, before any interval layer). The fixed weight stays 1/3.', 'INV22 `member_weight_curve`', 'S-d')
     n += 1
@@ -272,7 +279,7 @@ def build(root: Path):
     withheld = [
         ('W28', 'Calling R, M or v4 "equivalent", or any non-inferior result "no worse" without its interval',
          'Non-inferiority means no 95% interval lies entirely above zero (CAP §20.6); never equivalence.'),
-        ('W29', 'Presenting the member-weight curve as a better or recommended weight', 'An oracle on outcomes, not selectable (C-curve).'),
+        ('W29', 'Presenting the member-weight curve as a better or recommended weight', f'An oracle on outcomes, not selectable ({curve_claim}).'),
         ('W30', 'Naming a mechanism for the block split, or reopening its removal', 'The Owner removed the split in every outcome (CAP §20.1).'),
         ('W31', 'Stating or implying that a CP-22 policy or v4 runs in the demo, is the product, or is live',
          'v1 remains the released product and demo (C202).'),
@@ -453,7 +460,7 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
     add(f'| Its 95% interval | S_MAE [{pct(rm["ratio_ci_lower"])}, {pct(rm["ratio_ci_upper"])}]; S_WIS [{pct(rw["ratio_ci_lower"])}, '
         f'{pct(rw["ratio_ci_upper"])}] — CP-22\'s own draws: seed 15042, 2,000 replicates, 7-calendar-day blocks | '
         f'`uncertainty.csv` L{lm}, L{lw}; every draw in `replicates.parquet` |')
-    add(f'| (b′) The superseded construction against v3, for reference | S_MAE {pct(rvm["ratio"])}, S_WIS {pct(rvw["ratio"])} | '
+    add(f'| (b′) {"The superseded construction" if w else "v4 (three-block), unchanged,"} against v3, for reference | S_MAE {pct(rvm["ratio"])}, S_WIS {pct(rvw["ratio"])} | '
         f'`uncertainty.csv` L{vm}, L{vw} |')
     add(f'| (c) Mean absolute error per period, EUR/MWh ({DISPLAY.get(cur, cur)}) | ordinary periods (folds 1, 2, 4, 5): '
         f'{num(lo[1][1]["MAE"], 1)} ({lo[0].replace("_", " ")}) to {num(hi[1][1]["MAE"], 1)} ({hi[0].replace("_", " ")}); '

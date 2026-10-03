@@ -29,6 +29,18 @@ predictions and both scoring passes ran once each, from the frozen protocol, wit
   modules `src/cp22/controls.py` and `src/cp22/daily.py`, and rewrote the tracked files with unchanged content.
   The Lead restored the two files from the stash (`git show stash@{0}:<path>`), verified that every frozen
   implementation file still hashes as the protocol records, and left the stash in place for the Owner.
+- **A drafting correction before the candidate.** The first generation of the claim map (`claims`, 25) counted the
+  decisive per-fold rows (two: fold 4's MAE and WIS) as "folds decisively worse", and the packet's reference row
+  called v4 "the superseded construction" although nothing replaced it. `src/cp22/claims.py` now counts distinct
+  folds ("1 (fold 4: MAE and WIS)") and names v4 as unchanged; the post-cycle sequence was rerun (29–36). No number
+  changed.
+- **The full test suite in the Lead's checkout** (`tests-full`, 45) failed three tests, all from local state outside
+  the repository's tracked files: two `tests/test_23_static_space.py` tests compare a gitignored local Space build
+  (`dist/space-wasm/`, built 2026-10-01 13:41 IDT, before CP-22 began) with the committed bundle manifest, a branch
+  the tests mark "never in CI"; `tests/test_19_static_page_is_offline.py`'s marimo positive control found the venv's
+  `marimo` but could not launch it, because the monitor's PATH does not include `.venv/bin`. CP-22 changed none of
+  these tests, `app/` or the Space build. The suite is rerun on a clean detached checkout of the candidate; the
+  result is in the checkpoint return.
 
 ## Results that are not defects
 
