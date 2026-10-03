@@ -239,10 +239,14 @@ Build order: 2 → 1 → 5 → 3 (one suspended task) → 4 → 6 → 7 → 8.
      (sub-agents#write-subagent-files), and says: "Leave the worktree; the Lead removes it with
      critic-close." This replaces `engineering-role.md:69`'s removal step, as
      `docs/track-b/evidence/cp-20/integration-assignment.md:9-10` and `:128` did. The Critic
-     writes `docs/track-b/evidence/<cp>/integration.md` and performs no Git write.
+     writes its verdict outside the worktree, to the absolute path `critic-brief` prints,
+     `.local/artifacts/<cp>/critic-<n>/integration.md` in the main checkout, so `critic-close`'s
+     clean check still holds; it performs no Git write (as
+     `docs/track-b/evidence/cp-20/integration-assignment.md:124-127` did).
    - **After:** `gauntlet.py critic-close` checks that the worktree is still clean and `HEAD` is
-     unchanged, removes the worktree and hashes the verdict. The Lead commits the verdict as the
-     sole Git writer (`engineering-role.md:39`). The Lead's five actions: assignment,
+     unchanged, removes the worktree and hashes the verdict. The Lead copies it to
+     `docs/track-b/evidence/<cp>/integration.md` and commits it as the sole Git writer
+     (`engineering-role.md:39`). The Lead's five actions: assignment,
      `critic-open`, the Agent call, `critic-close`, commit. The Owner's stay at 0.
 5. **Notes:** No locked file is edited. The launch stays guarded: `critic-brief` exits 1 and
    prints no brief when no `critic-open` record matches a clean worktree at its SHA.
