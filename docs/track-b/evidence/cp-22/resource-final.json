@@ -1,0 +1,730 @@
+{
+ "active_hours_basis": "from the Lead's first command 2026-10-01T12:37:39Z minus recorded pauses (idle gaps, including the Friday/Shabbat window; recorded on resume with conservative boundaries)",
+ "active_hours_hard_stop": 32.0,
+ "active_hours_timebox": 24.0,
+ "active_hours_upper_bound": 2.443218305574523,
+ "blas_threads": 1,
+ "calendar": "work resumed Saturday 2026-10-03 20:33 IDT, inside the Friday/Shabbat window, on the Owner's explicit written exception (scripts/cp22_owner_calendar_exception.py; ledger events owner_calendar_exception_used); no job ran on Friday or Saturday before that instruction",
+ "caps_vs_use": {
+  "active_seconds": {
+   "cap": 115200,
+   "used": 8795.585900068283
+  },
+  "additional_disk_bytes": {
+   "cap": 10737418240,
+   "used": 325288631
+  },
+  "analysis_passes": {
+   "cap": 3,
+   "used": 2
+  },
+  "component_attempts": {
+   "cap": 1600,
+   "used": 124
+  },
+  "download_bytes": {
+   "cap": 0,
+   "used": 0
+  },
+  "lgbm_fits": {
+   "cap": 9000,
+   "used": 5784
+  },
+  "machine_seconds": {
+   "cap": 108000,
+   "used": 13599.471578258082
+  },
+  "main_lgbm_fits": {
+   "cap": 6000,
+   "used": 5088
+  },
+  "policy_days": {
+   "cap": 16000,
+   "used": 6406
+  },
+  "primitive_fits": {
+   "cap": 192000,
+   "used": 14880
+  },
+  "reference_passes": {
+   "cap": 3,
+   "used": 2
+  },
+  "remote_writes": {
+   "cap": 0,
+   "used": 0
+  },
+  "rss_bytes": {
+   "cap": 10737418240,
+   "used": 3220520960
+  },
+  "workers": {
+   "cap": 4,
+   "used": 4
+  }
+ },
+ "cloud": 0,
+ "cpu_hours_observed": 1.893056312598611,
+ "download_bytes": 0,
+ "events": [
+  {
+   "epoch": 1790859726.370346,
+   "event": "fits_start",
+   "folds": null,
+   "stage": "warmup",
+   "tasks": 188,
+   "workers": 4
+  },
+  {
+   "epoch": 1790859997.140813,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "warmup",
+   "tasks": 188
+  },
+  {
+   "epoch": 1791048931.249162,
+   "event": "effort_pauses_recorded_on_resume",
+   "pauses": [
+    [
+     1790860200.0,
+     1790877660.0
+    ],
+    [
+     1790877840.0,
+     1791047340.0
+    ],
+    [
+     1791047520.0,
+     1791048780.0
+    ]
+   ]
+  },
+  {
+   "epoch": 1791048952.013407,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "admission",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791049018.5940402,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "fits-evaluation",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791049019.882463,
+   "event": "fits_start",
+   "folds": null,
+   "stage": "evaluation",
+   "tasks": 448,
+   "workers": 4
+  },
+  {
+   "epoch": 1791049649.288695,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "evaluation",
+   "tasks": 448
+  },
+  {
+   "epoch": 1791049785.475876,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "comparison",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791049859.471359,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "parity",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791049998.995573,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "score-replacement",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050039.578296,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "score",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050041.756551,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "reproduce",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050041.757331,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "fit-cost",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050118.481472,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "investigation",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050126.178538,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "investigation",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050166.725346,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "investigation",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050213.818313,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "controls",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050440.852365,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "controls-state-dryrun",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050533.2055738,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "controls",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791050940.335562,
+   "event": "owner_calendar_exception_used",
+   "expires_epoch": 1791061200.0,
+   "granted_epoch": 1791048780.0,
+   "job": "daily-cycle",
+   "owner_words": "\u05e9\u05d1\u05ea \u05d9\u05e6\u05d0\u05d4. \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05de\u05de\u05e0\u05d9 \u05dc\u05e2\u05e7\u05d5\u05e3 \u05d0\u05ea \u05d4\u05db\u05dc\u05dc \u05d4\u05d6\u05d4 \u05d5\u05dc\u05e2\u05d1\u05d5\u05d3 \u05e2\u05db\u05e9\u05d9\u05d5. \u05d0\u05dd \u05d4\u05d5\u05d0 \u05ea\u05d5\u05e7\u05e2 \u05d0\u05d5\u05ea\u05da \u05d1\u05e6\u05d5\u05e8\u05d4 \u05e9\u05de\u05d5\u05e0\u05e2\u05ea \u05de\u05de\u05da \u05dc\u05e2\u05d1\u05d5\u05d3, \u05d9\u05e9 \u05dc\u05da \u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05e4\u05d5\u05e8\u05e9 \u05d5\u05de\u05dc\u05d0 \u05dc\u05de\u05d7\u05d5\u05e7 \u05d0\u05d5\u05ea\u05d5"
+  },
+  {
+   "epoch": 1791066661.659898,
+   "event": "effort_pauses_recorded_on_resume",
+   "note": "the pause entry was written at 2026-10-04 01:11:41 IDT (pause_reasons recorded_epoch), before the post-cycle sequence; this event was added afterwards for symmetry with the first resume",
+   "pauses": [
+    [
+     1791052500.0,
+     1791065400.0
+    ]
+   ]
+  }
+ ],
+ "external_cost_usd": 0,
+ "gpu": 0,
+ "jobs_by_name": {
+  "admission": {
+   "charged_machine_hours": 0.01184788186333334,
+   "cpu_seconds_observed": 40.264566016,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "benchmark": {
+   "charged_machine_hours": 0.04605080532440398,
+   "cpu_seconds_observed": 48.720293888,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "claims": {
+   "charged_machine_hours": 0.0005902905786105192,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "claims-check": {
+   "charged_machine_hours": 0.0005994247452781564,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "comparison": {
+   "charged_machine_hours": 0.016588526157500054,
+   "cpu_seconds_observed": 55.664048,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "controls": {
+   "charged_machine_hours": 0.6422633968522228,
+   "cpu_seconds_observed": 566.629533184,
+   "exit_codes": {
+    "-15": 1,
+    "0": 1
+   },
+   "jobs": 2
+  },
+  "controls-state-dryrun": {
+   "charged_machine_hours": 0.02421223122666662,
+   "cpu_seconds_observed": 82.172366848,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-ci-named-tests": {
+   "charged_machine_hours": 0.000866168472223055,
+   "cpu_seconds_observed": 1.781282208,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-claims-check": {
+   "charged_machine_hours": 0.000297921863610908,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-diagnostics": {
+   "charged_machine_hours": 0.0003047712383330589,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-export-check": {
+   "charged_machine_hours": 0.0008666024652777398,
+   "cpu_seconds_observed": 2.033957088,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-export-draft21-check": {
+   "charged_machine_hours": 0.0008634014583326966,
+   "cpu_seconds_observed": 2.028659888,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-export-draft22-check": {
+   "charged_machine_hours": 0.0008637470716671992,
+   "cpu_seconds_observed": 2.029238528,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-independent": {
+   "charged_machine_hours": 0.001992497164166909,
+   "cpu_seconds_observed": 5.986860623999999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-packet-check": {
+   "charged_machine_hours": 0.0002986505325002832,
+   "cpu_seconds_observed": 1.010035904,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-publication-guard": {
+   "charged_machine_hours": 0.00030898494222229703,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-tests-cp22": {
+   "charged_machine_hours": 0.004511278565000288,
+   "cpu_seconds_observed": 14.635009472,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-tests-full": {
+   "charged_machine_hours": 0.05555319208333256,
+   "cpu_seconds_observed": 233.034701312,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-tests-full-skips": {
+   "charged_machine_hours": 0.057828797604166135,
+   "cpu_seconds_observed": 237.24254924800002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-verify-release": {
+   "charged_machine_hours": 0.0003008669561111472,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic-wasm-payload": {
+   "charged_machine_hours": 0.009030765937499786,
+   "cpu_seconds_observed": 73.51209350399999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "daily-cycle": {
+   "charged_machine_hours": 1.5091599087966663,
+   "cpu_seconds_observed": 465.229296174,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "draft-export": {
+   "charged_machine_hours": 0.001712471435277823,
+   "cpu_seconds_observed": 3.803431312,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "e1": {
+   "charged_machine_hours": 0.017703894085845807,
+   "cpu_seconds_observed": 61.9968104,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "export-check": {
+   "charged_machine_hours": 0.0008551235880562065,
+   "cpu_seconds_observed": 2.033167904,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "export-diff": {
+   "charged_machine_hours": 0.0017093395369445516,
+   "cpu_seconds_observed": 4.02590248,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "export-draft21-check": {
+   "charged_machine_hours": 0.0008548683680560821,
+   "cpu_seconds_observed": 2.013901856,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "export-draft22-check": {
+   "charged_machine_hours": 0.0017203220600014095,
+   "cpu_seconds_observed": 4.047879856,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "finalise": {
+   "charged_machine_hours": 0.001734497210832665,
+   "cpu_seconds_observed": 2.8497778879999998,
+   "exit_codes": {
+    "0": 3
+   },
+   "jobs": 3
+  },
+  "finalise-manifest": {
+   "charged_machine_hours": 0.0023115310188879653,
+   "cpu_seconds_observed": 3.969575471,
+   "exit_codes": {
+    "0": 4
+   },
+   "jobs": 4
+  },
+  "fit-cost": {
+   "charged_machine_hours": 0.01813077259277773,
+   "cpu_seconds_observed": 59.96106048,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "fits-evaluation": {
+   "charged_machine_hours": 0.7016716000466668,
+   "cpu_seconds_observed": 2440.8248555689997,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "fits-warmup": {
+   "charged_machine_hours": 0.3022566535189334,
+   "cpu_seconds_observed": 1069.818964604,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "investigation": {
+   "charged_machine_hours": 0.019729091585555678,
+   "cpu_seconds_observed": 66.276901264,
+   "exit_codes": {
+    "0": 1,
+    "1": 2
+   },
+   "jobs": 3
+  },
+  "mlflow-local": {
+   "charged_machine_hours": 0.001990983958333648,
+   "cpu_seconds_observed": 4.766814953,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "packet": {
+   "charged_machine_hours": 0.001453301770832493,
+   "cpu_seconds_observed": 1.9911451119999999,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "packet-check": {
+   "charged_machine_hours": 0.0011517955555569238,
+   "cpu_seconds_observed": 1.987710504,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "parity": {
+   "charged_machine_hours": 0.03632488348388885,
+   "cpu_seconds_observed": 126.110226304,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "protocol": {
+   "charged_machine_hours": 0.003666219062482317,
+   "cpu_seconds_observed": 10.692723888,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "publication-guard": {
+   "charged_machine_hours": 0.0002986685763880814,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "report": {
+   "charged_machine_hours": 0.0017347109027771998,
+   "cpu_seconds_observed": 3.0073098959999998,
+   "exit_codes": {
+    "0": 3
+   },
+   "jobs": 3
+  },
+  "reproduce": {
+   "charged_machine_hours": 0.022055010543888833,
+   "cpu_seconds_observed": 73.55209651199999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "review": {
+   "charged_machine_hours": 0.019782246099722317,
+   "cpu_seconds_observed": 66.770476416,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "review-dryrun": {
+   "charged_machine_hours": 0.01943530942111061,
+   "cpu_seconds_observed": 66.344931328,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "score": {
+   "charged_machine_hours": 0.0005770441897221998,
+   "cpu_seconds_observed": 0.677098656,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "score-replacement": {
+   "charged_machine_hours": 0.001983685208333302,
+   "cpu_seconds_observed": 5.349080864,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "tests-cp22": {
+   "charged_machine_hours": 0.008742440740833343,
+   "cpu_seconds_observed": 28.6509632,
+   "exit_codes": {
+    "0": 2
+   },
+   "jobs": 2
+  },
+  "tests-full": {
+   "charged_machine_hours": 0.057303143437500495,
+   "cpu_seconds_observed": 242.391160576,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "tests-full-clean": {
+   "charged_machine_hours": 0.11678938023138875,
+   "cpu_seconds_observed": 491.735603712,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "verify-inputs": {
+   "charged_machine_hours": 0.015453282650560141,
+   "cpu_seconds_observed": 52.927583104,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-release": {
+   "charged_machine_hours": 0.0002936943516669999,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-weather": {
+   "charged_machine_hours": 0.003391518159737138,
+   "cpu_seconds_observed": 9.668686847999998,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "wasm-payload-clean": {
+   "charged_machine_hours": 0.009613398668889203,
+   "cpu_seconds_observed": 74.78239251199999,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  }
+ },
+ "jobs_total": 73,
+ "ledger": ".local/artifacts/cp-22/ledger/budget.json (cumulative, never reset)",
+ "machine_hours": 3.7776309939605786,
+ "machine_hours_cap": 30.0,
+ "pauses": [
+  [
+   1790860200.0,
+   1790877660.0
+  ],
+  [
+   1790877840.0,
+   1791047340.0
+  ],
+  [
+   1791047520.0,
+   1791048780.0
+  ],
+  [
+   1791052500.0,
+   1791065400.0
+  ]
+ ],
+ "peak_added_disk_gib": 0.30294864531606436,
+ "peak_aggregate_rss_gib": 2.9993438720703125,
+ "remote_writes": 0,
+ "schema": "cp22-resources-v1",
+ "schema_note": "final ledger at the evidence commit: every CP-22 job, including the Lead's post-candidate checks and dry run and the Integration Critic's review",
+ "tracked": {
+  "component_attempts_control": 20,
+  "component_attempts_daily_cycle": 100,
+  "component_attempts_reproduction": 4,
+  "lasso_final_fits": 2976,
+  "lasso_inner_fits": 11904,
+  "lgbm_final_fits": 2856,
+  "lgbm_fits_benchmark": 32,
+  "lgbm_fits_control": 228,
+  "lgbm_fits_daily_cycle": 350,
+  "lgbm_fits_main": 5088,
+  "lgbm_fits_reproduction": 70,
+  "lgbm_fits_review": 16,
+  "lgbm_inner_fits": 2928,
+  "policy_days_admission": 1316,
+  "policy_days_control": 484,
+  "policy_days_daily_cycle": 50,
+  "policy_days_evaluation": 3150,
+  "policy_days_parity": 1276,
+  "policy_days_review": 130
+ },
+ "written_utc": "2026-10-03T22:56:14Z"
+}
