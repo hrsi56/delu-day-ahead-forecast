@@ -101,8 +101,29 @@ def one_cycle(root: Path, fold: str, day: date, idents, budget) -> dict:
             'epochs_run': {str(r['seed']): r['epochs_run'] for r in results}, 'buffer_days': meta['buffer_days']}
 
 
+def v4_cycle_beside(root: Path) -> dict:
+    """CP-21's committed cold-cycle measurement of v4's own components (its schema: `total_cold_cycle_seconds`)."""
+    v4_cycle = json.loads((root / 'reports/block-challenger/daily-cycle.json').read_text())
+    return {'source': 'reports/block-challenger/daily-cycle.json (CP-21, committed)',
+            'summary': v4_cycle.get('summary') or v4_cycle.get('total_cold_cycle_seconds'),
+            'origins': v4_cycle.get('origins'), 'cycle': v4_cycle.get('cycle'),
+            'note': 'v4\'s A1_w/B2_w refits and six block selections and fits; not refitted in CP-23 (§21.8 caps only DDNN '
+                    'fits). v5\'s full daily cycle needs both.'}
+
+
 def job_daily_cycle(root: Path, rest) -> int:
     check_protocol(root)
+    if '--beside-only' in rest:
+        # Repair (recorded): the first run read CP-21's cycle under the wrong key and wrote null; no fit is repeated.
+        path = root / OUT / 'daily-cycle.json'
+        out = json.loads(path.read_text())
+        out['v4_component_cycle_beside'] = v4_cycle_beside(root)
+        out['repairs'] = out.get('repairs', []) + [{'utc': stamp(), 'field': 'v4_component_cycle_beside',
+                                                    'what': 'CP-21 summary read from total_cold_cycle_seconds; no fit repeated'}]
+        ledger().event('daily_cycle_beside_repair', field='v4_component_cycle_beside')
+        atomic(path, out)
+        print(json.dumps(out['v4_component_cycle_beside']), flush=True)
+        return 0
     if int(os.environ.get('CP23_WORKERS', '1')) < WORKERS:
         raise ValueError('declare four workers for the daily cycle')
     idents = _identities(root)
@@ -116,7 +137,6 @@ def job_daily_cycle(root: Path, rest) -> int:
     totals = [r['seconds']['total_cold_cycle'] for r in records]
     by_fold = {f: statistics.median([r['seconds']['total_cold_cycle'] for r in records if r['fold'] == f])
                for f in sorted({r['fold'] for r in records})}
-    v4_cycle = json.loads((root / 'reports/block-challenger/daily-cycle.json').read_text())
     ok = all(all(r['checks'].values()) for r in records)
     out = {'schema': 'cp23-daily-cycle-v1', 'written_utc': stamp(), 'machine': 'Apple M3, 16 GB, CPU only', 'workers': WORKERS,
            'blas_threads': 1, 'policy': 'v5',
@@ -126,10 +146,7 @@ def job_daily_cycle(root: Path, rest) -> int:
            'what_the_cycle_covers': 'data and features through D; the four DDNN members in the fold\'s configuration (one per '
                                     'worker); the ensemble; v5\'s central from v4\'s verified cached members; the H layer from '
                                     'the state persisted that morning; issuance',
-           'v4_component_cycle_beside': {'source': 'reports/block-challenger/daily-cycle.json (CP-21, committed)',
-                                         'summary': v4_cycle.get('summary'),
-                                         'note': 'v4\'s A1_w/B2_w refits and six block selections and fits; not refitted in '
-                                                 'CP-23 (§21.8 caps only DDNN fits). v5\'s full daily cycle needs both.'},
+           'v4_component_cycle_beside': v4_cycle_beside(root),
            'all_bitwise_checks_passed': bool(ok), 'records': records,
            'role': 'diagnostic only (section 17.5 D3); not a selection criterion'}
     atomic(root / OUT / 'daily-cycle.json', out)

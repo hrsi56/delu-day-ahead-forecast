@@ -173,7 +173,7 @@ def build(root: Path) -> str:
             f'share above 0.95 {_f(cal["pit_share_above_0.95"], 3)} (uniform = 0.05 each).\n')
         ext = dg['extrapolation']
         add(f'**Extrapolation** (`diagnostics/extrapolation.csv`, beside CP-22\'s tree record): {ext["days"]} extreme or top-5% '
-            f'days ({ext["sets"]}). Hours forecast above the origin\'s training-window maximum on those days: '
+            f'days (' + ', '.join(f'{v} {k.replace("_", " ").replace("+", " and ")}' for k, v in ext['sets'].items()) + '). Hours forecast above the origin\'s training-window maximum on those days: '
             + ', '.join(f'{_n(p)} {v}' for p, v in ext['hours_above_window_max'].items()) + '.\n')
         add('**The 2022 peak and fold 4** (`diagnostics/peak-and-fold4.csv`, `diagnostics/fold4-intervals.csv`); fold 4 is the fold '
             'where CP-22\'s candidates were decisively worse than v4.\n')
@@ -187,7 +187,7 @@ def build(root: Path) -> str:
     if cost or cycle:
         add('## Fit cost and daily cycle (diagnostic, §17.5 D3)\n')
         if cost:
-            add(f'{cost["fits"]} main-run DDNN member fits ({cost["fits_by_stage"]}), {_f(cost["totals"]["wall_seconds"] / 3600, 2)} '
+            add(f'{cost["fits"]:,} main-run DDNN member fits (' + ', '.join(f'{k} {v:,}' for k, v in cost['fits_by_stage'].items()) + f'), {_f(cost["totals"]["wall_seconds"] / 3600, 2)} '
                 f'single-thread hours in total; median four-seed ensemble per origin {_f(cost["per_origin"]["median_ensemble_fit_wall_seconds"], 1)} s '
                 f'(maximum {_f(cost["per_origin"]["max_ensemble_fit_wall_seconds"], 1)} s). By configuration: '
                 + '; '.join(f'{c} {int(v["fits"])} fits, median {_f(v["median_wall"], 2)} s, median best epoch {_f(v["median_best_epoch"], 0)}'
@@ -198,7 +198,7 @@ def build(root: Path) -> str:
             add(f'Cold daily cycle of v5 (DDNN members, ensemble, v5 central, H layer, issuance; four workers): median '
                 f'{_f(s["median_seconds"], 1)} s, maximum {_f(s["max_seconds"], 1)} s over {s["origins"]} origins; every bitwise '
                 f'check {"passed" if cycle["all_bitwise_checks_passed"] else "FAILED"}. v4\'s own component cycle, measured by '
-                f'CP-21 and not refitted here: {v4c}.\n')
+                f'CP-21 and not refitted here: median {_f(v4c["median"], 1)} s, maximum {_f(v4c["max"], 1)} s over 25 origins.\n')
     add('## Integrity\n')
     if controls:
         add(f'- Controls (`controls.json`): {controls["checks"]} checks, all passed: {controls["all_passed"]}. They include '

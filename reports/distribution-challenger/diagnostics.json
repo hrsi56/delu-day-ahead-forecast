@@ -1,0 +1,145 @@
+{
+ "calibration": {
+  "pit_mean": 0.5144737023852936,
+  "pit_share_above_0.95": 0.0699730157253187,
+  "pit_share_below_0.05": 0.07229924630129339,
+  "pit_vs_emitted_quantile_agreement": {
+   "p025": 1.0,
+   "p10": 1.0,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "p90": 1.0,
+   "p975": 1.0
+  },
+  "pooled": {
+   "coverage50": 0.44096026798176235,
+   "coverage80": 0.7430910951893551,
+   "coverage95": 0.9254675723457709,
+   "mean_width50": 29.951340420600527,
+   "mean_width80": 61.31805969820341,
+   "mean_width95": 109.18388288170718,
+   "median_width50": 16.436854523843195,
+   "median_width80": 32.723209065711956,
+   "median_width95": 54.29093758211435,
+   "n_hours": 10747,
+   "nominal_p025": 0.025,
+   "nominal_p10": 0.1,
+   "nominal_p25": 0.25,
+   "nominal_p50": 0.5,
+   "nominal_p75": 0.75,
+   "nominal_p90": 0.9,
+   "nominal_p975": 0.975,
+   "p95_width50": 92.67434913103857,
+   "p95_width80": 189.82793344931872,
+   "p95_width95": 332.7464276293356,
+   "policy": "D",
+   "scope": "pooled",
+   "share_at_or_below_p025": 0.04047641202195962,
+   "share_at_or_below_p10": 0.12291802363450265,
+   "share_at_or_below_p25": 0.26137526751651624,
+   "share_at_or_below_p50": 0.4772494649669675,
+   "share_at_or_below_p75": 0.7023355354982785,
+   "share_at_or_below_p90": 0.8660091188238578,
+   "share_at_or_below_p975": 0.9659439843677305
+  }
+ },
+ "configuration_by_fold": {
+  "fold_1": {
+   "holdout_mae": {
+    "C1": 4.924072856144086,
+    "C2": 4.179260893029036,
+    "C3": 4.2047873573139505,
+    "C4": 4.22809323812761
+   },
+   "selected": "C2",
+   "tie": false,
+   "winner_margin_relative": 0.006107889633665262
+  },
+  "fold_2": {
+   "holdout_mae": {
+    "C1": 6.0375686310321175,
+    "C2": 5.896667237235927,
+    "C3": 5.899479034143182,
+    "C4": 5.779208028542895
+   },
+   "selected": "C4",
+   "tie": false,
+   "winner_margin_relative": 0.020324447244832403
+  },
+  "fold_3": {
+   "holdout_mae": {
+    "C1": 16.251165663722706,
+    "C2": 15.497892236135877,
+    "C3": 16.269536249933388,
+    "C4": 17.458523044813518
+   },
+   "selected": "C2",
+   "tie": false,
+   "winner_margin_relative": 0.04860489517603224
+  },
+  "fold_4": {
+   "holdout_mae": {
+    "C1": 25.679788724753042,
+    "C2": 26.788602530390573,
+    "C3": 25.673121245726644,
+    "C4": 25.84813474247273
+   },
+   "selected": "C3",
+   "tie": false,
+   "winner_margin_relative": 0.00025970659985517867
+  },
+  "fold_5": {
+   "holdout_mae": {
+    "C1": 18.46532838760763,
+    "C2": 17.664874432041156,
+    "C3": 19.0878298478988,
+    "C4": 17.644663300312924
+   },
+   "selected": "C4",
+   "tie": false,
+   "winner_margin_relative": 0.001145452955618212
+  }
+ },
+ "daily_cycle": "daily-cycle.json",
+ "definitions": "reports/distribution-challenger/protocol.json -> diagnostics (frozen before scoring)",
+ "extrapolation": {
+  "days": 26,
+  "hours_above_window_max": {
+   "D": 0,
+   "HG": 1,
+   "HGL": 0,
+   "v3+D": 0,
+   "v5": 0
+  },
+  "sets": {
+   "exceeds_window_max": 1,
+   "exceeds_window_max+top_5pct_daily_max": 7,
+   "top_5pct_daily_max": 18
+  }
+ },
+ "files": [
+  "calibration-by-level.csv",
+  "epochs.csv",
+  "extrapolation.csv",
+  "fold4-intervals.csv",
+  "peak-and-fold4.csv",
+  "pit-histogram.csv",
+  "seed-stability.csv"
+ ],
+ "fit_cost": "fit-cost.json, fit-cost-by-origin.csv, fits.parquet",
+ "role": "descriptive; chooses nothing (\u00a721.5)",
+ "schema": "cp23-diagnostics-v1",
+ "seed_stability_pooled": {
+  "ensemble_median_MAE": 21.201807872320035,
+  "member_median_spread_mean_abs": 6.898261485175639,
+  "n_hours": 10747,
+  "scope": "pooled",
+  "seed_42_median_MAE": 22.12442148272948,
+  "seed_43_median_MAE": 21.778034873838855,
+  "seed_44_median_MAE": 22.90812874585277,
+  "seed_45_median_MAE": 22.32177300550471,
+  "share_hours_members_straddle_actual": 0.30669023913650323
+ },
+ "written_utc": "2026-10-04T15:50:28Z"
+}
