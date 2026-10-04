@@ -1,0 +1,277 @@
+{
+ "folds": {
+  "fold_1": {
+   "content_sha256": "d95929e8043166ed0611960a1223d712a32fa5b70cb92edb0d24c4a7bb9753d9",
+   "epochs": {
+    "C1": [
+     8,
+     6,
+     6,
+     6
+    ],
+    "C2": [
+     3,
+     2,
+     2,
+     5
+    ],
+    "C3": [
+     2,
+     2,
+     1,
+     3
+    ],
+    "C4": [
+     2,
+     1,
+     2,
+     1
+    ]
+   },
+   "first_origin": "2020-05-25",
+   "holdout_mae": {
+    "C1": 4.924072856144086,
+    "C2": 4.179260893029036,
+    "C3": 4.2047873573139505,
+    "C4": 4.22809323812761
+   },
+   "rows": {
+    "history_start": "2019-01-01",
+    "holdout_first": "2020-04-27",
+    "holdout_last": "2020-05-24",
+    "holdout_rows_sha256": "861de69bedaea6eca06f117d1851b31f6c5215a763edbdb6050947fdf959b682",
+    "n_holdout": 672,
+    "n_stop": 669,
+    "n_train": 10169,
+    "stop_first": "2020-03-30",
+    "stop_last": "2020-04-26",
+    "stop_rows_sha256": "b8880ad91a9752cf79a25137cf49772c67c37373443634bb930e68af8b7de12a",
+    "train_first": "2019-01-31",
+    "train_last": "2020-03-29",
+    "train_rows_sha256": "d6231a4328d70cddafc1694782e16f8687a62e0610700c94b0ad6e5e0ea849ee"
+   },
+   "selected": "C2",
+   "tie": false,
+   "winner_margin_relative": 0.006107889633665262
+  },
+  "fold_2": {
+   "content_sha256": "2c1e1539c084cfe847c6551c1f883fe012d16ed5ac4ce774df4d41fcc830b083",
+   "epochs": {
+    "C1": [
+     17,
+     11,
+     14,
+     24
+    ],
+    "C2": [
+     13,
+     7,
+     11,
+     8
+    ],
+    "C3": [
+     4,
+     7,
+     3,
+     4
+    ],
+    "C4": [
+     5,
+     2,
+     3,
+     4
+    ]
+   },
+   "first_origin": "2021-02-23",
+   "holdout_mae": {
+    "C1": 6.0375686310321175,
+    "C2": 5.896667237235927,
+    "C3": 5.899479034143182,
+    "C4": 5.779208028542895
+   },
+   "rows": {
+    "history_start": "2019-02-26",
+    "holdout_first": "2021-01-26",
+    "holdout_last": "2021-02-22",
+    "holdout_rows_sha256": "32c43ae54a1968976a57f5cc1c43f0656cacfbd44d708b29e4d0b3bc7f6a46fa",
+    "n_holdout": 672,
+    "n_stop": 672,
+    "n_train": 16116,
+    "stop_first": "2020-12-29",
+    "stop_last": "2021-01-25",
+    "stop_rows_sha256": "1e49675ac6ea94443cfd3a20ba892134dbcd153be7c30030278b0a2fa1abfb7f",
+    "train_first": "2019-02-26",
+    "train_last": "2020-12-28",
+    "train_rows_sha256": "61c1ac64ca56b85f6952d5bed53258341d9c5cc69702fb06315ec9161e0ddf14"
+   },
+   "selected": "C4",
+   "tie": false,
+   "winner_margin_relative": 0.020324447244832403
+  },
+  "fold_3": {
+   "content_sha256": "513ff39300d74abd72439656f010c5ba6beef8706d15bee98e0e4f34b4d33070",
+   "epochs": {
+    "C1": [
+     17,
+     5,
+     14,
+     7
+    ],
+    "C2": [
+     4,
+     9,
+     10,
+     3
+    ],
+    "C3": [
+     3,
+     3,
+     1,
+     2
+    ],
+    "C4": [
+     4,
+     5,
+     1,
+     3
+    ]
+   },
+   "first_origin": "2022-05-25",
+   "holdout_mae": {
+    "C1": 16.251165663722706,
+    "C2": 15.497892236135877,
+    "C3": 16.269536249933388,
+    "C4": 17.458523044813518
+   },
+   "rows": {
+    "history_start": "2020-05-27",
+    "holdout_first": "2022-04-27",
+    "holdout_last": "2022-05-24",
+    "holdout_rows_sha256": "4ae817bbee57a72c27693245bd526525a23e5ef7ac8fc5a8005036cb774bb0bf",
+    "n_holdout": 672,
+    "n_stop": 671,
+    "n_train": 16069,
+    "stop_first": "2022-03-30",
+    "stop_last": "2022-04-26",
+    "stop_rows_sha256": "5c8a3cf860ec69e5a12bd155ea2b560f849a94f87db091d187d978303d51cd26",
+    "train_first": "2020-05-27",
+    "train_last": "2022-03-29",
+    "train_rows_sha256": "d122e084609ce083bfd4b49af2597399e4f75aec15ed32208191ffa2e22a567a"
+   },
+   "selected": "C2",
+   "tie": false,
+   "winner_margin_relative": 0.04860489517603224
+  },
+  "fold_4": {
+   "content_sha256": "e69e9ac92e707020d4546a5c8ec5d5d62a8a1b82f3f6e473989f663ee30039fa",
+   "epochs": {
+    "C1": [
+     3,
+     17,
+     9,
+     22
+    ],
+    "C2": [
+     3,
+     12,
+     5,
+     6
+    ],
+    "C3": [
+     14,
+     1,
+     17,
+     1
+    ],
+    "C4": [
+     2,
+     7,
+     3,
+     1
+    ]
+   },
+   "first_origin": "2025-03-22",
+   "holdout_mae": {
+    "C1": 25.679788724753042,
+    "C2": 26.788602530390573,
+    "C3": 25.673121245726644,
+    "C4": 25.84813474247273
+   },
+   "rows": {
+    "history_start": "2023-03-25",
+    "holdout_first": "2025-02-22",
+    "holdout_last": "2025-03-21",
+    "holdout_rows_sha256": "29bf2ee383c3b268d9a3ae466cb0a03050a2912111a1c6ff406c7619de6851cf",
+    "n_holdout": 672,
+    "n_stop": 672,
+    "n_train": 16042,
+    "stop_first": "2025-01-25",
+    "stop_last": "2025-02-21",
+    "stop_rows_sha256": "4356e45721e57f54a4d91c79b5f3fae103fb7ce5848919d39fb8140cd0f6cbaa",
+    "train_first": "2023-03-25",
+    "train_last": "2025-01-24",
+    "train_rows_sha256": "8cdc9b7edd12b205cd98cdf0868e479ff3ca5b7eb7050f3047e00cb293bfcafb"
+   },
+   "selected": "C3",
+   "tie": false,
+   "winner_margin_relative": 0.00025970659985517867
+  },
+  "fold_5": {
+   "content_sha256": "6f8b88d84727e15083bf05fc999d4238cfe03e2db17c0075223b85a08c36575b",
+   "epochs": {
+    "C1": [
+     21,
+     18,
+     22,
+     21
+    ],
+    "C2": [
+     9,
+     13,
+     17,
+     18
+    ],
+    "C3": [
+     7,
+     3,
+     6,
+     9
+    ],
+    "C4": [
+     4,
+     3,
+     5,
+     4
+    ]
+   },
+   "first_origin": "2025-12-02",
+   "holdout_mae": {
+    "C1": 18.46532838760763,
+    "C2": 17.664874432041156,
+    "C3": 19.0878298478988,
+    "C4": 17.644663300312924
+   },
+   "rows": {
+    "history_start": "2023-12-05",
+    "holdout_first": "2025-11-04",
+    "holdout_last": "2025-12-01",
+    "holdout_rows_sha256": "b4dfcb77c3dfb5aef2aa43d8b3064e442fb55a7bfbab90d83bcc3643b5628682",
+    "n_holdout": 672,
+    "n_stop": 670,
+    "n_train": 16093,
+    "stop_first": "2025-10-07",
+    "stop_last": "2025-11-03",
+    "stop_rows_sha256": "739b09a3f07226d124862f832bde457e84c12606275743828a643f5a5bbef3de",
+    "train_first": "2023-12-05",
+    "train_last": "2025-10-06",
+    "train_rows_sha256": "4465c7137c2bdb472a69a762f805efe9c3820721c66e020b4423f4a5775bda5b"
+   },
+   "selected": "C4",
+   "tie": false,
+   "winner_margin_relative": 0.001145452955618212
+  }
+ },
+ "rule": "lowest holdout MAE (EUR/MWh) of each configuration's four-seed ensemble median on [D0-28, D0); exact tie to the smaller configuration; training on [max(2019-01-01, D0-728), D0-56), early stopping on [D0-56, D0-28); D0 = the fold's first origin (its genuine warm-up start)",
+ "schema": "cp23-selection-v1",
+ "written_utc": "2026-10-04T15:11:10Z"
+}

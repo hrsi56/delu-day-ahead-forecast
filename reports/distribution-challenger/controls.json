@@ -1,0 +1,288 @@
+{
+ "all_passed": true,
+ "checks": 61,
+ "ddnn_code": {
+  "gradient_and_audit_tests": {
+   "exit_code": 0,
+   "summary": "23 passed in 0.85s"
+  },
+  "import_audit": {
+   "allowed": "numpy and the Python standard library (sys.stdlib_module_names)",
+   "modules": {
+    "src/cp23/ddnn.py": {
+     "imports": [
+      "__future__",
+      "dataclasses",
+      "hashlib",
+      "math",
+      "numpy",
+      "statistics",
+      "time"
+     ],
+     "violations": []
+    }
+   },
+   "passed": true
+  },
+  "reference": {
+   "counts": {
+    "deselected": 0,
+    "errors": 0,
+    "failed": 0,
+    "passed": 26,
+    "skipped": 0,
+    "summary": "26 passed, 1 warning in 4.01s",
+    "xfailed": 0,
+    "xpassed": 0
+   },
+   "ddnn_sha256": "9ee60719bed5ea620a84ec955025c2de5862bfa42e9a1aa8f32e2757ae1235ff",
+   "passed": true,
+   "versions": {
+    "numpy": "2.4.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.15",
+    "torch": "2.14.1"
+   }
+  }
+ },
+ "origins": [
+  {
+   "available_d1_nonuniform_price_mutation": {
+    "D_central": 66.08178744534732,
+    "D_quantiles": 124.09034021780744,
+    "v3+D": 22.027262481782437,
+    "v5": 22.027262481782437
+   },
+   "composites_bitwise_vs_committed": {
+    "v3+D": true,
+    "v5": true
+   },
+   "config": "C2",
+   "d1_mutation_rows": 5,
+   "day": "2020-07-01",
+   "delivery_day_and_future_mask": {
+    "D_central": 0.0,
+    "D_quantiles": 0.0,
+    "v3+D": 0.0,
+    "v5": 0.0
+   },
+   "determinism_vs_main_run": {
+    "central_bitwise": true,
+    "epochs_equal": true,
+    "params_bitwise": true,
+    "quantiles_bitwise": true
+   },
+   "extra_input_column_refused": true,
+   "fold": "fold_1",
+   "future_weather_mutation": {
+    "D_central": 0.0,
+    "D_quantiles": 0.0
+   },
+   "mask_epochs_and_params_unchanged": true,
+   "n_hours": 24,
+   "preprocessor_equals_cached": true,
+   "target_day_weather_rearranged": {
+    "D_central": 7.621775334457407
+   },
+   "training_weather_cross_date_permutation": {
+    "D_central": 4.54305948331108
+   },
+   "validation_outcome_mutation": {
+    "D_central_change": 34.986821978179236,
+    "best_epochs_after": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "best_epochs_before": [
+     19,
+     4,
+     7,
+     5
+    ],
+    "validation_history_changed": true
+   }
+  },
+  {
+   "available_d1_nonuniform_price_mutation": {
+    "D_central": 46.57478305131161,
+    "D_quantiles": 49.48778907974486,
+    "v3+D": 15.524927683770528,
+    "v5": 15.524927683770528
+   },
+   "composites_bitwise_vs_committed": {
+    "v3+D": true,
+    "v5": true
+   },
+   "config": "C3",
+   "d1_mutation_rows": 5,
+   "day": "2025-05-01",
+   "delivery_day_and_future_mask": {
+    "D_central": 0.0,
+    "D_quantiles": 0.0,
+    "v3+D": 0.0,
+    "v5": 0.0
+   },
+   "determinism_vs_main_run": {
+    "central_bitwise": true,
+    "epochs_equal": true,
+    "params_bitwise": true,
+    "quantiles_bitwise": true
+   },
+   "extra_input_column_refused": true,
+   "fold": "fold_4",
+   "future_weather_mutation": {
+    "D_central": 0.0,
+    "D_quantiles": 0.0
+   },
+   "mask_epochs_and_params_unchanged": true,
+   "n_hours": 24,
+   "preprocessor_equals_cached": true,
+   "target_day_weather_rearranged": {
+    "D_central": 100.427728308388
+   },
+   "training_weather_cross_date_permutation": {
+    "D_central": 42.632274252832104
+   },
+   "validation_outcome_mutation": {
+    "D_central_change": 34.45579704747283,
+    "best_epochs_after": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "best_epochs_before": [
+     24,
+     26,
+     40,
+     21
+    ],
+    "validation_history_changed": true
+   }
+  }
+ ],
+ "population": {
+  "D_central_is_members_D": true,
+  "D_p50_is_its_central": true,
+  "autumn_2025_10_26_canonical_hours": 25,
+  "boundary_guard_accepts_2026_04_07": true,
+  "boundary_guard_refuses_2026_04_08": true,
+  "composite_parity_max_abs_eur_mwh": {
+   "v3+D": 1.4210854715202004e-13,
+   "v5": 1.4210854715202004e-13
+  },
+  "composite_parity_passed": true,
+  "configuration_fixed_through_each_fold": true,
+  "ddnn_entries_checked": 636,
+  "ddnn_entries_finite_ordered_p50_central_four_seeds": true,
+  "ddnn_rows_rearranged": 0,
+  "dst_rows": {
+   "2026-03-29": {
+    "D": 23,
+    "v3+D": 23,
+    "v5": 23
+   }
+  },
+  "keys_aligned_with_members": true,
+  "layer_by_policy": {
+   "D": [
+    "JSU"
+   ],
+   "v3+D": [
+    "H"
+   ],
+   "v5": [
+    "H"
+   ]
+  },
+  "loader_max_date": "2026-04-07",
+  "max_delivery_date": "2026-04-07",
+  "members_v3_equals_committed_v3": true,
+  "members_v4_equals_committed_v4": true,
+  "one_configuration_per_fold": {
+   "fold_1": [
+    "C2"
+   ],
+   "fold_2": [
+    "C4"
+   ],
+   "fold_3": [
+    "C2"
+   ],
+   "fold_4": [
+    "C3"
+   ],
+   "fold_5": [
+    "C4"
+   ]
+  },
+  "p50_separate_from_central_for_v5_and_v3d": true,
+  "quantiles_finite": true,
+  "quantiles_ordered": true,
+  "rows_per_policy": {
+   "D": 10747,
+   "v3+D": 10747,
+   "v5": 10747
+  },
+  "spring_2026_03_29_canonical_hours": 23,
+  "v4_members_rebuild_committed_v4_central": true,
+  "v5_and_v3d_on_h_path": true
+ },
+ "schema": "cp23-controls-v1",
+ "seed": 15042,
+ "selection": {
+  "committed_choice": "C2",
+  "committed_holdout_mae": {
+   "C1": 4.924072856144086,
+   "C2": 4.179260893029036,
+   "C3": 4.2047873573139505,
+   "C4": 4.22809323812761
+  },
+  "evaluation_outcome_mutation": {
+   "choice": "C2",
+   "holdout_mae": {
+    "C1": 4.924072856144086,
+    "C2": 4.179260893029036,
+    "C3": 4.2047873573139505,
+    "C4": 4.22809323812761
+   },
+   "identical": true
+  },
+  "evaluation_start": "2020-07-01",
+  "first_origin": "2020-05-25",
+  "fold": "fold_1",
+  "holdout_outcome_mutation": {
+   "choice": "C2",
+   "choice_changed": false,
+   "holdout_mae": {
+    "C1": 96.51162486139891,
+    "C2": 82.83138679723476,
+    "C3": 86.31633391290575,
+    "C4": 100.91794221978866
+   },
+   "losses_changed": true
+  }
+ },
+ "state": {
+  "admission_freeze_commit": "ded8fc1c70b0ad7b1d7091b467631aa7f65a197d",
+  "intact_ddnn_cache_loads": true,
+  "intact_sources_load": true,
+  "release_rule_v5": {
+   "consume_once": true,
+   "d_minus_1_error_refused": true,
+   "d_minus_2_error_accepted": true,
+   "duplicate_issue_refused": true,
+   "partial_day_not_buffered": true,
+   "unavailable_truth_stays_pending": true
+  },
+  "replay_equals_committed_vectors": true,
+  "restart_replay_identical": true,
+  "tampered_ddnn_cache_refused": true,
+  "v4_member_differing_from_committed_lineage_refused": true,
+  "wrong_identity_ddnn_cache_refused": true
+ },
+ "threshold_eur_mwh": 1e-06,
+ "written_utc": "2026-10-04T15:40:37Z"
+}

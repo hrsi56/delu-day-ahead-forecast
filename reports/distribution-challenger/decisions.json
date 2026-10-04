@@ -1,0 +1,488 @@
+{
+ "adoption": {
+  "adopted": false,
+  "application": "mechanical; never re-weighted, re-thresholded or overridden after results; D and v3+D are never eligible; a mixed result is no demonstrated joint preference, never equivalence; an INCOMPLETE or BLOCKED return yields no decision and nothing to publish",
+  "candidate": "v5",
+  "comparator": "HGL",
+  "conditions": {
+   "1": {
+    "met": false,
+    "values": {
+     "MAE": {
+      "ci_lower": -0.001567181341404966,
+      "ci_upper": 0.01487210370253362,
+      "difference": 0.006445814350118595,
+      "ratio": 0.012033436406928999,
+      "ratio_ci": [
+       -0.0029053979655993905,
+       0.02738665836470154
+      ]
+     },
+     "WIS": {
+      "ci_lower": -0.0008912108189323642,
+      "ci_upper": 0.013847412674387813,
+      "difference": 0.007090050579139473,
+      "ratio": 0.014023740930373174,
+      "ratio_ci": [
+       -0.001722551743286424,
+       0.027153783174222925
+      ]
+     }
+    }
+   },
+   "2": {
+    "met": true,
+    "values": {
+     "criteria_rows": 21,
+     "not_met": []
+    }
+   },
+   "3": {
+    "met": true,
+    "values": {
+     "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-23/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+     "keys_issued_finite_ordered": true
+    }
+   },
+   "4": {
+    "met": false,
+    "values": {
+     "folds_decisively_worse": [
+      {
+       "ci_lower": 0.30060483685082,
+       "ci_upper": 4.394978581237331,
+       "difference": 1.9151813904733004,
+       "metric": "MAE",
+       "scope": "fold_3"
+      }
+     ],
+     "per_fold": [
+      {
+       "ci_lower": -0.06755181514992685,
+       "ci_upper": 0.24377558757429224,
+       "difference": 0.10856660319933731,
+       "metric": "MAE",
+       "scope": "fold_1"
+      },
+      {
+       "ci_lower": -0.004492016515595387,
+       "ci_upper": 0.13841481346618062,
+       "difference": 0.07470648631137777,
+       "metric": "WIS",
+       "scope": "fold_1"
+      },
+      {
+       "ci_lower": -0.5005703929554857,
+       "ci_upper": 0.10599303655711755,
+       "difference": -0.1503423318336461,
+       "metric": "MAE",
+       "scope": "fold_2"
+      },
+      {
+       "ci_lower": -0.26974562015601905,
+       "ci_upper": 0.26975251913015635,
+       "difference": 0.0025178276356374596,
+       "metric": "WIS",
+       "scope": "fold_2"
+      },
+      {
+       "ci_lower": 0.30060483685082,
+       "ci_upper": 4.394978581237331,
+       "difference": 1.9151813904733004,
+       "metric": "MAE",
+       "scope": "fold_3"
+      },
+      {
+       "ci_lower": -0.17917738837581948,
+       "ci_upper": 1.8240766893628426,
+       "difference": 0.648176713415701,
+       "metric": "WIS",
+       "scope": "fold_3"
+      },
+      {
+       "ci_lower": -0.3414253593665303,
+       "ci_upper": 0.2692646750838165,
+       "difference": -0.005129373454821007,
+       "metric": "MAE",
+       "scope": "fold_4"
+      },
+      {
+       "ci_lower": -0.16941113109665634,
+       "ci_upper": 0.15374277815801013,
+       "difference": 0.009734378138144706,
+       "metric": "WIS",
+       "scope": "fold_4"
+      },
+      {
+       "ci_lower": -0.1905826307644824,
+       "ci_upper": 0.7890801655109299,
+       "difference": 0.21986689092381795,
+       "metric": "MAE",
+       "scope": "fold_5"
+      },
+      {
+       "ci_lower": -0.027474156281382122,
+       "ci_upper": 0.39557486042155504,
+       "difference": 0.16015878436841646,
+       "metric": "WIS",
+       "scope": "fold_5"
+      }
+     ]
+    }
+   }
+  },
+  "first_unmet_condition": 1,
+  "met": false,
+  "reason": {
+   "first_unmet_condition": 1,
+   "values": {
+    "MAE": {
+     "ci_lower": -0.001567181341404966,
+     "ci_upper": 0.01487210370253362,
+     "difference": 0.006445814350118595,
+     "ratio": 0.012033436406928999,
+     "ratio_ci": [
+      -0.0029053979655993905,
+      0.02738665836470154
+     ]
+    },
+    "WIS": {
+     "ci_lower": -0.0008912108189323642,
+     "ci_upper": 0.013847412674387813,
+     "difference": 0.007090050579139473,
+     "ratio": 0.014023740930373174,
+     "ratio_ci": [
+      -0.001722551743286424,
+      0.027153783174222925
+     ]
+    }
+   }
+  },
+  "rule": {
+   "candidate": "v5",
+   "comparator": "HGL (v4, three-block)",
+   "conditions": {
+    "1": "Joint improvement over v4: on the paired v5 - v4 differences, the upper 95% endpoint of dS_WIS is < 0 and the upper 95% endpoint of dS_MAE is <= 0.",
+    "2": "No regression: v5 meets all six original section-8 diagnostics.",
+    "3": "A complete, valid evaluation: Engineering PASS with a fresh binding Integration verdict, and all 10,747 keys issued with finite, ordered quantiles.",
+    "4": "No resolved per-fold degradation: no fold has a 95% paired daily-loss interval (v5 - v4) lying entirely above zero, in MAE or in WIS."
+   },
+   "otherwise": "v5 is not adopted; CP-23 becomes the branch \"DDNN member on v4\", with the first unmet condition and its values as the reason",
+   "set_on": "2026-10-04",
+   "source": "capstone_v21.md v21-r10 \u00a721.6 (Owner decisions D1, D2; D7 under the Owner's grant)"
+  },
+  "unmet_conditions": [
+   1,
+   4
+  ],
+  "verdict": "v5 is not adopted: CP-23 becomes the branch \"DDNN member on v4\""
+ },
+ "bootstrap": {
+  "block_days": 7,
+  "calendar_days": 90,
+  "index_equals_cp20": true,
+  "index_sha256": "e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b",
+  "method": "paired noncircular calendar moving-block percentile",
+  "ratio_method": "R_b = S_policy,b / S_comparator,b - 1 from the same replicates; point = full-sample ratio - 1",
+  "replicates": 2000,
+  "seed": 15042,
+  "shared_index_sets": 1,
+  "undefined_handling": "unresolved; no dropping or redrawing"
+ },
+ "consistency_with_committed": {
+  "HGL-HG_equal_committed": true,
+  "HGL-HG_interval_rows": 12,
+  "HGL-HG_max_abs_difference_vs_committed": 2.220446049250313e-16,
+  "HGL_section8_rows_equal_committed": true,
+  "HG_section8_rows_equal_committed": true,
+  "all_equal": true
+ },
+ "contrasts": {
+  "D-HG": {
+   "contrast": "D-HG",
+   "dS_MAE": {
+    "ci": [
+     0.031451119352322844,
+     0.09485748167313758
+    ],
+    "point": 0.06614140273214608,
+    "ratio": 0.11690704218805759,
+    "ratio_ci": [
+     0.054178617580171375,
+     0.1662144204895432
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     0.002507407726040087,
+     0.06446475342792983
+    ],
+    "point": 0.03841018768569138,
+    "ratio": 0.072169933890458,
+    "ratio_ci": [
+     0.004818569916278776,
+     0.1197819426374786
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "observed joint worsening",
+   "role": "ddnn_alone_vs_v3_descriptive"
+  },
+  "D-HGL": {
+   "contrast": "D-HGL",
+   "dS_MAE": {
+    "ci": [
+     0.06346309794295418,
+     0.1235456593432891
+    ],
+    "point": 0.09624338625013062,
+    "ratio": 0.17967297925779424,
+    "ratio_ci": [
+     0.11535307768711728,
+     0.22866861483820383
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     0.029865204106750375,
+     0.08977013251449757
+    ],
+    "point": 0.06505403772033347,
+    "ratio": 0.12867340807819816,
+    "ratio_ci": [
+     0.05850028363518318,
+     0.17664967305502421
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "observed joint worsening",
+   "role": "ddnn_alone_vs_v4_descriptive"
+  },
+  "HGL-HG": {
+   "contrast": "HGL-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.03681584729111768,
+     -0.02278213336960615
+    ],
+    "point": -0.030101983517984543,
+    "ratio": -0.053206217463102945,
+    "ratio_ci": [
+     -0.06366480500951344,
+     -0.039665006210973686
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.032698827022918084,
+     -0.020441588003386926
+    ],
+    "point": -0.02664385003464209,
+    "ratio": -0.05006184586553608,
+    "ratio_ci": [
+     -0.05954167742638493,
+     -0.037980623814911595
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "lightgbm_as_v3_third_member_beside"
+  },
+  "v3+D-HG": {
+   "contrast": "v3+D-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.023458984730751024,
+     -0.005242827239928857
+    ],
+    "point": -0.01439540221637714,
+    "ratio": -0.025444333272449993,
+    "ratio_ci": [
+     -0.040500903125694376,
+     -0.00905624396027875
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.02003882653368104,
+     -0.0037917651136776098
+    ],
+    "point": -0.011096930914165304,
+    "ratio": -0.0208503217171373,
+    "ratio_ci": [
+     -0.037199819396152994,
+     -0.0071068660386519695
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "ddnn_as_v3_third_member"
+  },
+  "v5-HG": {
+   "contrast": "v5-HG",
+   "dS_MAE": {
+    "ci": [
+     -0.03536048099295171,
+     -0.010531330226604622
+    ],
+    "point": -0.023656169167865948,
+    "ratio": -0.041813034690469375,
+    "ratio_ci": [
+     -0.06140772986258371,
+     -0.018477138263242925
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.030698021153339076,
+     -0.009316986573576271
+    ],
+    "point": -0.01955379945550262,
+    "ratio": -0.03674015929207752,
+    "ratio_ci": [
+     -0.056004389588641,
+     -0.017318513239117445
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "reference_vs_v3"
+  },
+  "v5-HGL": {
+   "contrast": "v5-HGL",
+   "dS_MAE": {
+    "ci": [
+     -0.001567181341404966,
+     0.01487210370253362
+    ],
+    "point": 0.006445814350118595,
+    "ratio": 0.012033436406928999,
+    "ratio_ci": [
+     -0.0029053979655993905,
+     0.02738665836470154
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.0008912108189323642,
+     0.013847412674387813
+    ],
+    "point": 0.007090050579139473,
+    "ratio": 0.014023740930373174,
+    "ratio_ci": [
+     -0.001722551743286424,
+     0.027153783174222925
+    ]
+   },
+   "directions": {
+    "MAE": "higher (worse)",
+    "WIS": "higher (worse)"
+   },
+   "reading": "no demonstrated joint preference",
+   "role": "adoption_decision"
+  },
+  "v5-v3+D": {
+   "contrast": "v5-v3+D",
+   "dS_MAE": {
+    "ci": [
+     -0.013630507306205833,
+     -0.0035349373279081305
+    ],
+    "point": -0.009260766951488808,
+    "ratio": -0.016796066122096165,
+    "ratio_ci": [
+     -0.024709912779689886,
+     -0.0064261444098189955
+    ]
+   },
+   "dS_WIS": {
+    "ci": [
+     -0.012210980523959025,
+     -0.0040030891927158065
+    ],
+    "point": -0.008456868541337315,
+    "ratio": -0.016228200782138158,
+    "ratio_ci": [
+     -0.02297950389925748,
+     -0.007692121270585043
+    ]
+   },
+   "directions": {
+    "MAE": "lower (better)",
+    "WIS": "lower (better)"
+   },
+   "reading": "observed joint improvement",
+   "role": "lightgbm_still_adds_given_ddnn"
+  }
+ },
+ "evidence_class": "development_post_selection",
+ "original_section8_status": {
+  "D": "not_met",
+  "HG": "met",
+  "HGL": "met",
+  "v3+D": "met",
+  "v5": "met"
+ },
+ "scores": {
+  "A1": {
+   "S_MAE": 0.6722908121370033,
+   "S_WIS": 0.646015091607363
+  },
+  "B0": {
+   "S_MAE": 1.0,
+   "S_WIS": 1.0
+  },
+  "B1": {
+   "S_MAE": 1.051845134839199,
+   "S_WIS": 0.9856366964174134
+  },
+  "B2": {
+   "S_MAE": 0.6578109123747921,
+   "S_WIS": 0.6389910407326591
+  },
+  "B3": {
+   "S_MAE": 0.7841363977682992,
+   "S_WIS": 0.7399052224715813
+  },
+  "D": {
+   "S_MAE": 0.6319020403655105,
+   "S_WIS": 0.570628877867557
+  },
+  "HG": {
+   "S_MAE": 0.5657606376333641,
+   "S_WIS": 0.532218690181866
+  },
+  "HGL": {
+   "S_MAE": 0.5356586541153796,
+   "S_WIS": 0.5055748401472236
+  },
+  "v3+D": {
+   "S_MAE": 0.551365235416987,
+   "S_WIS": 0.5211217592677007
+  },
+  "v5": {
+   "S_MAE": 0.5421044684654983,
+   "S_WIS": 0.5126648907263633
+  }
+ },
+ "statuses": {
+  "engineering": "bound to the fresh Integration verdict on the final candidate",
+  "product": "v1 remains the released product and demo; no designation, freeze or Live (\u00a716)",
+  "research": "development_post_selection finding under the pre-registered rule cp23-adoption"
+ }
+}

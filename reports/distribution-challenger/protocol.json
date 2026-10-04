@@ -1,0 +1,4551 @@
+{
+ "E1": {
+  "feasible": true,
+  "fits": {
+   "main_total": 2624,
+   "origins": 2544,
+   "selection": 80
+  },
+  "machine_hours_projection": 15.210039776673147,
+  "main_fit_cap": 4000,
+  "origins": 638,
+  "passes": {
+   "bootstrap": "scoring + independent review = 2 of 3",
+   "reference": "scoring + independent review = 2 of 3"
+  },
+  "planned_non_main_fits": {
+   "controls": 240,
+   "daily_cycle": 100,
+   "repair_reserve": 1500,
+   "reproduction": 24,
+   "resource_admission": 32,
+   "review": 40
+  },
+  "policy_days": {
+   "D_issuance": 450,
+   "cap": 8000,
+   "controls": 300,
+   "daily_cycle": 100,
+   "hg_v4_parity": 1276,
+   "review": 1500,
+   "total": 4902,
+   "v5_and_v3+D_admission_and_evaluation": 1276
+  },
+  "spent_before_freeze": {
+   "ddnn_fits": 32,
+   "ddnn_fits_resource_admission": 32
+  },
+  "sufficiency_problems": [],
+  "total_fit_cap": 6000,
+  "with_eligible_hours": 636
+ },
+ "E2": {
+  "output_schema": {
+   "members.parquet": "fold, timestamp_utc, delivery_date, config, D, A1, B2, L-N, L-R, HG, HGL, c_v5, c_v3+D (10,747 rows)",
+   "predictions.parquet": "fold, policy, timestamp_utc, delivery_date, origin_utc, y_true, central, scale, level, evidence_class, p025..p975 (v5, v3+D, D: 32,241 rows)"
+  },
+  "reproduction": "reports/distribution-challenger/reproduce.md"
+ },
+ "E3": {
+  "ledger": ".local/artifacts/cp-23/ledger/budget.json (cumulative, never reset; counters reserved before use)",
+  "monitor": "scripts/cp23_ddnn.py monitor: wall x declared workers, process-tree and aggregate RSS, added disk, duplicate/5th-worker refusal, calendar stop 20 minutes before Friday 00:00 Asia/Jerusalem, markers",
+  "preflight_disk_free_bytes": 150526922752
+ },
+ "E4": {
+  "final_candidate_sha": "recorded at review",
+  "lead": "CP-23 Track B Engineering Lead (this session)",
+  "reviewer": "one fresh independent Integration Critic on a clean detached checkout of the exact final candidate, launched with scripts/gauntlet.py critic-open, critic-brief and critic-close"
+ },
+ "anchor": "capstone_v21.md v21-r10 \u00a721 (ratified 2026-10-04)",
+ "arms_verbatim": "### 21.2 DDNN, the candidate and the arms\n\n**DDNN** is a feed-forward network with a Johnson SU distributional head for each delivery hour.\nIt is written in NumPy only (\u00a718.2) and has these properties:\n\n- **Information:** exactly v4's (\u00a717.3). That covers `local_hour`, the three frozen GFS columns\n  and their missing indicators, under \u00a715.3's training-only imputation. The Lead fixes the\n  representation, for example one row per delivery day with 24 outputs, in the protocol.\n- **Target:** \u00a74's normalized target. It is inverted to EUR/MWh with the origin's common center\n  and scale, as L-N and PN are.\n- **History and refits:** `[max(2019-01-01, D\u2212728), D)`, with a fresh fit at every origin.\n- **Early stopping:** on the window's last 28 calendar delivery days, which are training-only\n  inner validation.\n- **Configuration:**\n  - The protocol freezes a finite set of at most four configurations, and a training-only\n    selection rule in which a tie goes to the smaller configuration.\n  - The configuration is chosen at most once per fold, before its first origin, from data before\n    that origin only. It then stays fixed through the fold.\n- **Ensemble:** a fixed number of seeds, at most four. The protocol fixes how members combine;\n  quantile averaging is the default.\n- **Emission:** the seven CP-15 quantiles and the p50, from the ensemble's JSU quantiles. The\n  central forecast **D** is the ensemble's median. Crossing quantiles are restored by sorting, and\n  every such case is recorded.\n\n| ID | Role | Central forecast and intervals |\n|---|---|---|\n| v4 | Comparator: CP-21's saved HGL vectors | `(2/3)\u00b7c_HG + (1/3)\u00b7mean(L-N, L-R)`, H layer |\n| v3, A1, B2 | References: saved vectors | As committed |\n| v5 | The single eligible candidate | `(2/3)\u00b7c_v4 + (1/3)\u00b7D`, with HG's H layer re-estimated on v5's own errors |\n| D | Study arm: DDNN alone, never eligible | D, with its own JSU quantiles and p50 |\n| v3+D | Attribution: DDNN as v3's third member, never eligible | `(2/3)\u00b7c_HG + (1/3)\u00b7D`, H layer on its own errors |\n\n**Fixed:**\n\n- the one-third member weight;\n- v4's components, bit for bit.\n\n**Excluded:**\n\n- learned or per-block weights, which belong to 4.8 (\u00a722);\n- new information, which belongs to stage 7 (\u00a722);\n- any other model family;\n- TabPFN (\u00a718.1).\n",
+ "cache_identities": {
+  "cp21_fits": ".local/artifacts/cp-21/fits (CP-21 identity recomputed from evidence/cp-21 objects; every central and v4 composite equal to CP-21's committed lineage hash)",
+  "hg_components": ".local/artifacts/cp-20/hg-components (every entry verified)",
+  "verification": {
+   "bitwise_equal_evaluation_vectors": {
+    "HG": 448,
+    "HGL": 448,
+    "L-N": 448,
+    "L-P": 448,
+    "L-R": 448
+   },
+   "cp21_entries": 1908,
+   "evaluation_days": 448,
+   "hg_entries": 638,
+   "lineage_hash_equal": {
+    "HGL": 636,
+    "L-N": 636,
+    "L-P": 636,
+    "L-R": 636
+   },
+   "warmup_days": 188
+  }
+ },
+ "caps": {
+  "active_seconds": 144000,
+  "additional_disk_bytes": 10737418240,
+  "analysis_passes": 3,
+  "data_download_bytes": 0,
+  "ddnn_fits": 6000,
+  "machine_seconds": 216000,
+  "main_ddnn_fits": 4000,
+  "policy_days": 8000,
+  "reference_passes": 3,
+  "remote_writes": 0,
+  "rss_bytes": 10737418240,
+  "workers": 4
+ },
+ "checkpoint": "CP-23",
+ "chronology": {
+  "boundary": "2026-04-07",
+  "delivery_calendar": "Europe/Berlin",
+  "errors": "complete released delivery days <= D-2, each consumed once",
+  "origin": "D-1 11:00 UTC (12:00 fixed UTC+01:00)"
+ },
+ "composite_parity_tolerance_eur_mwh": 1e-09,
+ "cp21_fit_identity": {
+  "cp21_input_fingerprint": "83765c0a713a17f621d263c3c8d89c08df7824a23dd814a3cfee8ce622d2d5f8",
+  "cp21_protocol_sha256": "a51cfbbeb7bc7861c78e1fe0916807d7ff5e0f45be495285959ff4ac52030db1",
+  "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0"
+ },
+ "ddnn": {
+  "architecture": {
+   "delta_floor": 0.05,
+   "family": "feed-forward network, ELU hidden activations, four linear outputs per row",
+   "head": "Johnson SU: xi = o1, lambda = softplus(o2) + 1e-3, gamma = o3, delta = softplus(o4) + 0.05; Y = xi + lambda*sinh((Z - gamma)/delta), Z ~ N(0,1)",
+   "initialisation": "Glorot uniform weights, zero biases, output biases at lambda = delta = 1, PCG64(seed)",
+   "lambda_floor": 0.001
+  },
+  "cache": ".local/artifacts/cp-23/fits/<fold>/<day>/DDNN.json bound to cp23_input_fingerprint, cp23_protocol_sha256 (this file) and the weather design; a stale or wrong entry is refitted and charged, never reused",
+  "configuration_order": "strictly increasing parameter count; the smaller configuration is the earlier one",
+  "configurations": [
+   {
+    "hidden": [
+     32
+    ],
+    "id": "C1",
+    "n_parameters": 2436
+   },
+   {
+    "hidden": [
+     32,
+     32
+    ],
+    "id": "C2",
+    "n_parameters": 3492
+   },
+   {
+    "hidden": [
+     64,
+     64
+    ],
+    "id": "C3",
+    "n_parameters": 9028
+   },
+   {
+    "hidden": [
+     128,
+     128
+    ],
+    "id": "C4",
+    "n_parameters": 26244
+   }
+  ],
+  "early_stopping": {
+   "criterion": "validation negative log-likelihood without the penalty, after every epoch",
+   "kept": "the weights of the best epoch (strict improvement)",
+   "max_epochs": 400,
+   "patience": 25,
+   "rows": "the window's last 28 calendar delivery days [D-28, D), training-only inner validation"
+  },
+  "emission": {
+   "levels": [
+    0.025,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    0.975
+   ],
+   "p50_and_central": "the ensemble median (the average of the members' medians); D's emitted p50 equals its central forecast by construction",
+   "quantile_function": "xi + lambda*sinh((Phi^-1(q) - gamma)/delta) per member",
+   "rearrangement": "sort a row's seven quantiles if any cross; every case recorded (averaging ordered quantile functions cannot cross)"
+  },
+  "ensemble": {
+   "combination": "quantile averaging at each level",
+   "seeds": [
+    42,
+    43,
+    44,
+    45
+   ],
+   "size": 4
+  },
+  "history": {
+   "minimum_early_stopping_rows": 336,
+   "minimum_training_rows": 8760,
+   "window": "[max(2019-01-01, D-728 calendar days), D), eligible rows; fresh fit at every origin"
+  },
+  "implementation": "src/cp23/ddnn.py (NumPy and the standard library only), sha256 9ee60719bed5ea620a84ec955025c2de5862bfa42e9a1aa8f32e2757ae1235ff",
+  "representation": {
+   "categorical_levels": {
+    "day_of_week": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "day_type": [
+     0,
+     1,
+     2
+    ],
+    "local_hour": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23
+    ],
+    "month": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "information": "exactly v4's (\u00a717.3): no other feature, lag, cross-hour expansion or source",
+   "inputs": "CP-15's 23 normalised LightGBM features (data.lgbm_normalized) with the categoricals ['day_of_week', 'day_type', 'local_hour', 'month'] one-hot encoded, plus the three frozen GFS columns and three missing indicators: 71 inputs",
+   "preprocessing": "\u00a715.3 on each fit's own training rows: weather training medians (all-null -> 0), one indicator per weather column, then a StandardScaler over every column (zero variance -> 1)",
+   "rows": "one row per delivery hour, pooled over the 24 local hours (PN's and L-P's rows)",
+   "target": "\u00a74: z = (y - level) / scale with each row's own origin statistics; quantiles inverted with the origin's level and scale"
+  },
+  "selection": {
+   "criterion": "the lowest holdout MAE (EUR/MWh) of each configuration's four-seed ensemble median",
+   "fits": 80,
+   "rows": "train [max(2019-01-01, D0-728), D0-56); early stopping [D0-56, D0-28); holdout [D0-28, D0)",
+   "tie": "an exact tie goes to the smaller configuration",
+   "when": "once per fold, before its first origin D0 (its genuine warm-up start), from data before D0 only; fixed for every origin of the fold"
+  },
+  "training": {
+   "batch_size": 256,
+   "batches": "a fresh PCG64 permutation each epoch, after initialisation, from the member's seed",
+   "beta1": 0.9,
+   "beta2": 0.999,
+   "eps": 1e-08,
+   "l2": 0.0001,
+   "loss": "mean Johnson SU negative log-likelihood + l2 * sum(W^2) over weight matrices",
+   "lr": 0.001,
+   "max_epochs": 400,
+   "optimizer": "Adam in PyTorch's update order (no weight decay, no amsgrad)",
+   "patience": 25
+  }
+ },
+ "dependencies": {
+  "lightgbm": "4.7.0",
+  "numpy": "2.4.6",
+  "pandas": "3.0.3",
+  "pyarrow": "25.0.1",
+  "scikit-learn": "1.9.1"
+ },
+ "diagnostics": {
+  "configuration_by_fold": "selection.json: the configuration chosen in each fold, each configuration's holdout MAE, ties and the winner's relative margin",
+  "ddnn_calibration": {
+   "coverage_by_level": "for D, per fold and pooled: the share of actual prices at or below each of the seven emitted quantiles (nominal 0.025 ... 0.975), and the 50/80/95% central-interval coverage with mean, median and 95th-percentile width",
+   "pit_histogram": "for D: PIT_t = F_ens(z_t), the CDF of the quantile-averaged ensemble -- the inverse in p of the mean of the four members' Johnson SU quantile functions, solved by bisection to |dp| < 1e-12 -- at the realised normalised price z_t = (y_t - level_t) / scale_t; 20 equal bins on [0, 1], per fold and pooled, with counts and shares (uniform = calibrated)"
+  },
+  "ensemble_and_seed_stability": {
+   "epochs": "the best-epoch and epochs-run distributions per seed and per configuration",
+   "per_seed": "each seed's own median forecast (inverted to EUR/MWh) scored by MAE on the evaluation keys, against the ensemble median's MAE, per fold and pooled",
+   "spread": "the mean absolute deviation of the four member medians around the ensemble median (EUR/MWh), per fold",
+   "straddle": "the share of hours whose member medians lie on both sides of the actual price"
+  },
+  "extrapolation": {
+   "extreme_days": "evaluation delivery days whose maximum actual hourly price exceeds the maximum eligible actual price in that origin's training window [max(2019-01-01, D-728), D); and, separately, each fold's top 5% of represented days by maximum actual hourly price (ceil) -- CP-22's definition, unchanged",
+   "report": "per extreme day: the window maximum, the actual maximum, and the maximum central forecast of D, v5, v3+D, v4 and v3 and the maximum emitted p975 of D; the share of hours each forecasts above the window maximum; beside CP-22's committed tree record (reports/v4-revision/investigation/extrapolation.csv: L-P, L-N, L-R, PN) on the same days"
+  },
+  "fit_cost_and_daily_cycle": {
+   "daily_cycle": "cold on the M3 with 4 worker processes at 25 evaluation origins (five per fold at offsets [0, 22, 44, 66, 88] days into the window, the next day with eligible hours if one has none): a fresh pool loads the data and features through delivery day D; the four seeds' fits run one per worker; the parent forms the ensemble and D, v5's central from v4's verified cached members, loads v5's H-layer state persisted that morning, releases, predicts and issues. The fits must equal the main run's bit for bit and the issued v5 vector the committed one. No LightGBM or LEAR component is refitted (\u00a721.8 caps only DDNN fits): v4's own cold cycle is CP-21's committed measurement (reports/block-challenger/daily-cycle.json), shown beside it",
+   "fit_cost": "every main-run DDNN member fit (selection, warm-up, evaluation): rows, configuration, seed, epochs run, best epoch, wall and CPU seconds; per origin (four-seed ensemble) and per fold",
+   "role": "diagnostic, not a criterion (\u00a717.5 D3)"
+  },
+  "peak_and_fold_4": {
+   "report": "MAE, WIS, bias, 50/80/95% coverage with mean width for every policy; every contrast's fold-4 paired daily-loss interval",
+   "scopes": "the 2022-08-15..31 peak (408 hours, 17 days, descriptive) and fold 4 (2025-05-01..07-29), the fold where CP-22's candidates were decisively worse than v4"
+  }
+ },
+ "entry_gates": {
+  "4.6L": {
+   "record": "reports/distribution-challenger/licence-admission.md",
+   "result": "research use and retention permitted; hosted service and product unresolved (carried to 4.7/4.10)",
+   "sha256": "7dfa28b2791d18fa48dd0cdb81ac6e65c778008f70888dd38000c2ce21117a88"
+  },
+  "4.6R": {
+   "record": "reports/distribution-challenger/resource-admission.md",
+   "sha256": "153e5cf53dc0008a8e7757d1f870b4bd89dc0506ce1f55881b14760b1a4a9ad9",
+   "verdict": "PASS"
+  },
+  "section_21_3": {
+   "gradient_checks": "tests/cp23/test_ddnn_gradients.py",
+   "import_audit": "tests/cp23/test_numpy_only.py (src/cp23/audit.py)",
+   "reference_counts": {
+    "deselected": 0,
+    "errors": 0,
+    "failed": 0,
+    "passed": 26,
+    "skipped": 0,
+    "summary": "26 passed, 1 warning in 4.01s",
+    "xfailed": 0,
+    "xpassed": 0
+   },
+   "reference_passed": true,
+   "reference_record": "reports/distribution-challenger/reference-checks.json",
+   "reference_sha256": "1c8b1db1ae566e88398d85981ba4f7109555147e6ae47376e8272f1e3b1d3c0d",
+   "reference_versions": {
+    "numpy": "2.4.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.15",
+    "torch": "2.14.1"
+   }
+  }
+ },
+ "evidence_class": "development_post_selection",
+ "fixtures": {
+  "command": "python -m pytest -q -p no:cacheprovider tests/cp23",
+  "exit_code": 0,
+  "files_sha256": {
+   "tests/cp23/test_composites_and_rule.py": "2f292cebf5801575f9c5f0c57fd51556559278de9ddabb1b49f8edf6d5de710a",
+   "tests/cp23/test_ddnn_gradients.py": "0dd6beff2f41c112468293632eb31a8552cdf7139c7ac7b8a9d4e8947a370ab9",
+   "tests/cp23/test_member_paths.py": "77a4edba384e0e586be24d6a04b1a42328184d4a7c2cd45f0e199951eb9d3e42",
+   "tests/cp23/test_numpy_only.py": "0d18e15fc59ab7705e2e8de0cb6a038a8d4e2d47fc95f41afb55aa99af188768",
+   "tests/cp23/test_reference_record.py": "114e6322a7f8a26fef2f8abf0314c9e8ad287794b00469a52b436ebdc9777fa2"
+  },
+  "summary": "28 passed in 3.41s"
+ },
+ "frozen_inputs_sha256": {
+  "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+  "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+  "pyproject.toml": "aa35326abbb13dfa4ea8ba1b4b367343b77f895e7724d5dc94e0bdb7637b4e4a",
+  "reports/block-challenger/criteria.csv": "00471a8e0f69d57d83c35b77b9a6b1e7a3bf6b3b068029310c69913980340184",
+  "reports/block-challenger/lineage.json": "34f2e05ecb515562227a3869cbbc7f8987b648241fe208cdfeedf68479b66b80",
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/block-challenger/protocol.json": "a51cfbbeb7bc7861c78e1fe0916807d7ff5e0f45be495285959ff4ac52030db1",
+  "reports/block-challenger/uncertainty.csv": "2fa86aca7eef835a065e0486b152929efdc1e60318ec4d1d0caca1e1444edfbf",
+  "reports/cp15/predictions.parquet": "1a606d613ba5f6af82712a7e44adcaf639ba0ece1b7865f407f559fafafeda92",
+  "reports/cp15/protocol.json": "051e4b7cdd1d5db68b26e6d6bc17333c4055c4bcbe5ea693d1d647fe355ccdd6",
+  "reports/distribution-challenger/licence-admission.md": "7dfa28b2791d18fa48dd0cdb81ac6e65c778008f70888dd38000c2ce21117a88",
+  "reports/distribution-challenger/reference-checks.json": "1c8b1db1ae566e88398d85981ba4f7109555147e6ae47376e8272f1e3b1d3c0d",
+  "reports/distribution-challenger/resource-admission.json": "153e5cf53dc0008a8e7757d1f870b4bd89dc0506ce1f55881b14760b1a4a9ad9",
+  "reports/distribution-challenger/resource-admission.md": "8dc5ff28d65ab5bd94f8d0f3ced8201fa7d7f9a20a7a1c8331a4ddee7dd43baf",
+  "reports/v2-causal/input-manifest.json": "cd5a1090390184df237132413d7ac7007402de054adbb3ee7615d9885947c20e",
+  "reports/v4-revision/preflight/e1.json": "4f2e63d90b5421cd880a97c0907214f46ffe1e60f8415a989402ad2bdd8413fc",
+  "reports/weather-ablation/criteria.csv": "668ebd2bafe32814c4c682e086bcd72044d14c3d7ae611bf69b6275d67458326",
+  "reports/weather-ablation/lineage.json": "fc4f037df44a195a77d77877721f3ab021d2707e717dbf1dc11088fcbfb766ed",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab",
+  "reports/weather-ablation/protocol.json": "6964223c53a084012c79033a8ffc36106710e122ea7b8800471fab4d462db714",
+  "reports/weather-ablation/run-manifest.json": "6ced5959f6ad7794be4beef6ea0eb72e2f6fb5e3530b549e5f184cae058af0a1",
+  "reports/weather-ablation/uncertainty.csv": "9a4a773c292bfcb8e40bf8d3fb25cd8f264cafd07ee644679faa573e60c78c26",
+  "reports/weather-ablation/weather-features.parquet": "66b8264bb6e124ae0cc540a40ff00d0e9f625cabee6e0ebb6e4605c3e7ea1b58",
+  "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+ },
+ "h_layer": "section 14.2 via cp16.residuals.SharedResidualState (V2-H), one state per policy, central passed twice",
+ "hg_identity": {
+  "input_fingerprint": "132369044ef45e3af3205de9ee3831a40e579070e7f16a96061d1708dc37a591",
+  "protocol_sha256": "6964223c53a084012c79033a8ffc36106710e122ea7b8800471fab4d462db714",
+  "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0"
+ },
+ "implementation_sha256": {
+  "scripts/cp23_ddnn.py": "fe5bbd57e0eb3f874ba0156ca9206b7ab537302c584f563e39f65cdcd84bdc01",
+  "src/cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+  "src/cp15/models.py": "49d9ce2dadbe92265c36d946362c08f1819a87501469975575b794984a23f67c",
+  "src/cp15/scoring.py": "837e822e96e5d3b2183faf8d8077bf6b418cbf3e26fcd97251a0987a1a04a9c0",
+  "src/cp16/residuals.py": "f442714ee867310bf3b820cf12dc6055d57b53d7630a751275c6311aa4f71580",
+  "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
+  "src/cp20/components.py": "073d29e493091e306ded008df93f562f0cb02a18a6296b39d5f3462dd5e9d5fc",
+  "src/cp20/scoring.py": "19206c26552c3af158c121526feb67130b2d0f93750142e0a139b40f69549346",
+  "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5",
+  "src/cp21/budget.py": "e273407648fddaee61fd70117784d6d5dd2164467287ec028a3f9e2a93847cd0",
+  "src/cp21/execution.py": "f34211cd4fa4a149e03d42905ba8c464458c9d398e7712ffcad8bbb6c18b1fe6",
+  "src/cp21/inputs.py": "46f33cd58bc323c422851c9cb618256540dd72ca4d96a4ef8b51e41d25e8db18",
+  "src/cp21/jobs.py": "51aebff53f2c8808c2e4c44aea2e406fdecbdbb8999a61be87efa0cb8abc9786",
+  "src/cp21/lgbm.py": "f35ba557c708aee9f6c83c3f974dcaad09d2c25fc81fcfd4105a70adedf038ad",
+  "src/cp22/budget.py": "da22ef2dbc9e6d2ce24ad51c6e40280301f6bc87449902af5a07c74500710f78",
+  "src/cp22/dl.py": "20ed3409d624ee769d447626fb590ab6b2fd10a9be4329de5731ec07e5a850bd",
+  "src/cp22/execution.py": "5a1f67d648c0ad4e94f0786cc9434d6f1aa498c619e486c85df3ce60352dfed4",
+  "src/cp22/inputs.py": "5281ec636ccf3f780ee29ab8bf265a753b229a37ad25e54a81882cf313c93839",
+  "src/cp22/jobs.py": "8bd0b7dc9ee9957ef1742b937b0e8ca9a10f5ee78311f399f0c87ab4db6f4dfc",
+  "src/cp22/pn.py": "4c2e6afec391f729faf7b85e1c66344a16e607b74d90883fdfebf2e39978c7d9",
+  "src/cp22/scoring.py": "b310d40e97c6e149f85465d22acb17ffacea6ef72ddc8b18649224b00a94c17d",
+  "src/cp23/__init__.py": "b3e5767b5f1664a2aa280242adcfa9d6c2026dd174cc12f6319cae8e8cb6e173",
+  "src/cp23/admission.py": "446090729bacbb5762736478aba0ac9c92c8e94c9c02781d7eabb3d9415e059d",
+  "src/cp23/audit.py": "5595e25d0214417b5900777748868e39ce7f273da6841374c9577b88d8daa2b7",
+  "src/cp23/budget.py": "16e76dbc82064ebf1fa9251dd7025a2c369672ce4dde0130cf6f78e20bc2d900",
+  "src/cp23/ddnn.py": "9ee60719bed5ea620a84ec955025c2de5862bfa42e9a1aa8f32e2757ae1235ff",
+  "src/cp23/evaluate.py": "0cf53d9123c819183b2c9ce0db5cbb8bac1fc99d8a8f114fcf4d6dbcae8d5188",
+  "src/cp23/execution.py": "c16822c399eda15bbfcefd07401b45a3070106bc0225f9f9e727dee451695416",
+  "src/cp23/features.py": "fd0bc908172f3f0fce364fbe6c51684c89a9e6598634a730a33a636e266bba7d",
+  "src/cp23/inputs.py": "82ed23e53010d8c3928655f6985ea9d56552d08b6bab62d293ea7679866fb5ae",
+  "src/cp23/jobs.py": "fcf59c1e03879e3c1df8b2fcefd7f18abc99ab0ed092976fa1c0b8ef2bc3c3cd",
+  "src/cp23/member.py": "d5c3eb35044c35e537e6dc3929c8d0eae344a8228bda89bdfac9d69e77960156",
+  "src/cp23/preflight.py": "33f0a5cf3aef37b9f41b98c032d7db988d924fd1db819a4c2fac3e625040100d",
+  "src/cp23/protocol.py": "ed275acbb75758c76c941175da51bd64cd3bebe566ecfdce76e57dacdd1469a7",
+  "src/cp23/reference.py": "e5f97a6fb65aa2caabda6b2cde038510412a01e1d0f93e6ce44774d78df06809",
+  "src/cp23/scoring.py": "b04e7515fd1479a4c2676b8b8230d539b52374f8e3d47f9d9cb9ef90f76d8559",
+  "src/delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+  "src/delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+  "src/delu_forecast/folds.py": "71743a4f677507afea215902ee82a8e9f990fc128f4456afc47c3f4e0bd11078",
+  "src/delu_forecast/ingest.py": "e7a1cd415733eccd4460a49ba3d3ea465a90259e92ae657436b1baf3bd0ce04c",
+  "tests/cp23/test_composites_and_rule.py": "2f292cebf5801575f9c5f0c57fd51556559278de9ddabb1b49f8edf6d5de710a",
+  "tests/cp23/test_ddnn_gradients.py": "0dd6beff2f41c112468293632eb31a8552cdf7139c7ac7b8a9d4e8947a370ab9",
+  "tests/cp23/test_member_paths.py": "77a4edba384e0e586be24d6a04b1a42328184d4a7c2cd45f0e199951eb9d3e42",
+  "tests/cp23/test_numpy_only.py": "0d18e15fc59ab7705e2e8de0cb6a038a8d4e2d47fc95f41afb55aa99af188768",
+  "tests/cp23/test_reference_record.py": "114e6322a7f8a26fef2f8abf0314c9e8ad287794b00469a52b436ebdc9777fa2",
+  "tests/cp23/torch-reference/pyproject.toml": "b9787aa327e463e2192aafe8aedd5566c7732a5bd79e018a5cbe97313b9ce6c2",
+  "tests/cp23/torch-reference/uv.lock": "b3164a375e871396e685d0e887972b092fcd0c24a7fe0047167e8fc41c25dfed",
+  "tests/cp23/torch_reference_checks.py": "f3ca91f2153973782a0e6721114292a576d1ea0889aeea4a2c8b84d6152776dc"
+ },
+ "issued_and_inherited_sha256": {
+  "1bdc75b8ab943092bb8de6ba893defb9e12250d8:AGENTS.md": "4a590cea7fd29f2b230a203f492f179318d50d825aed3d68918b3f7ba932bbee",
+  "1bdc75b8ab943092bb8de6ba893defb9e12250d8:capstone_v21.md": "44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3",
+  "capstone_v21.md": "150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167",
+  "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+  "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+  "docs/PUBLISH_RULES.md": "5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4",
+  "docs/track-b/capstone_v21-r3-to-v21-r4-amendments.md": "3e0bdf6a343d5336f406f0eeb726b1b65c0f767ec8d9418a7d8118902e1ace55",
+  "docs/track-b/capstone_v21-r9-to-v21-r10-amendments.md": "453a66a107e6b597cecc80c02e04995b4de4a0935960638df220c5722afa5199",
+  "docs/track-b/cp-15-resumption-brief.md": "b6a24e40f13f28ad0b459395f6969d29fa6ebc86b5d688fa8ed246475556b280",
+  "docs/track-b/cp-20-direct-weather-brief.md": "28a4e195fa7f66ff3270d5d54e477478e90aa42124bceb1ee529f95f5761883e",
+  "docs/track-b/evidence/cp-21/publication-packet.md": "b5ffceee4df9d09f7d12c106d3fa34ba5e84629fb7856b31998a69660a3b075c",
+  "docs/track-b/evidence/cp-23/issued-brief.md": "33f6b41202586b2fc4f1d87624c5978e1fd5bde1185ac05271429bf719502d0c",
+  "docs/track-b/presentation-and-tracking-plan-2026-09-24.md": "281193740a256a99a1676d53ef61c9babb5f744a7d0fb038927e305d1149812c",
+  "docs/track-b/publication-packet-template.md": "4efb01855ae2d9a6f54b5624607a93046b1fffa881e34af0c6798c513c7829cf",
+  "docs/track-b/publication-standard-v1.md": "01d721c2ba6316ca9a2f707e79da229bef732e91bad22f6ce457fb01e69478cc",
+  "docs/track-b/research-content/cp21-claims.md": "8df2e9a5c0edd160c4c0d6536c40eb1b0fee248db890a65da58abe4c3ec37c43",
+  "reports/block-challenger/adoption.json": "869923f03576ee1ceb23039c47dad3e9f5779dc00cdb7c8a68e8c88de73381a7",
+  "reports/block-challenger/criteria.csv": "00471a8e0f69d57d83c35b77b9a6b1e7a3bf6b3b068029310c69913980340184",
+  "reports/block-challenger/daily-cycle.json": "32f0b8ed16dfa0de60263943109e01691aead29d761ebc080b31774887845d26",
+  "reports/block-challenger/diagnostics.csv": "872205e1399b81f76d7cc10b1471139337f4291d3cf93d4b16bf79da0f786dfd",
+  "reports/block-challenger/draft-registry.json": "3e684d533379e5c69d5435ea75a52b0e2393c0a2b8ea119f5380ad84f303b55e",
+  "reports/block-challenger/fit-cost-by-origin.csv": "ea19334f078f3b83ab98f69190d463ffb5b9d1fca750a4c8267993753eafaa96",
+  "reports/block-challenger/fit-cost.json": "861c7d63df1a520635d127ac9c3b14798c371bdff0897677114df58612c6d06e",
+  "reports/block-challenger/fits.parquet": "2634bebfb427995ca911d3c693e1dd05f34676fa4694fde0ddad7b73f26edd44",
+  "reports/block-challenger/lineage.json": "34f2e05ecb515562227a3869cbbc7f8987b648241fe208cdfeedf68479b66b80",
+  "reports/block-challenger/metrics.csv": "268ddf33ea95a0c7de3507ff57bec8c828e0d3707f6ae10292aa5b9e34dfc2e8",
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/block-challenger/protocol.json": "a51cfbbeb7bc7861c78e1fe0916807d7ff5e0f45be495285959ff4ac52030db1",
+  "reports/block-challenger/replicates.parquet": "75a072c42cb82ea2219c8ee32a6aca1ed5d956852455d637c083d1b5419f9b33",
+  "reports/block-challenger/uncertainty.csv": "2fa86aca7eef835a065e0486b152929efdc1e60318ec4d1d0caca1e1444edfbf",
+  "reports/cp15/folds/fold_1-fits.parquet": "f2aad789fe984b5155adbfdbe6aee87436d3f064ccbb591acf750dfe1e065221",
+  "reports/cp15/folds/fold_1-issued.parquet": "b7b291ab8ae70727095860bcb606d62ecb57770847233337c902ff32447e12b8",
+  "reports/cp15/folds/fold_1-run.json": "564740e0484261fdf58a8874f43ce81b451737fa49bad66629e07bde2f2af8cf",
+  "reports/cp15/folds/fold_2-fits.parquet": "0b4635f3a6b22fbe0b186e379b8ac9f056a46a73848ca5301c83a614d8cddaf7",
+  "reports/cp15/folds/fold_2-issued.parquet": "78042446a0d4e74c74e6bc879c00e03700314b09d3456112b27c986b4b38d351",
+  "reports/cp15/folds/fold_2-run.json": "9f53d44aeec52b4e3f3c8ec86794f56eb5a9e7994e1ee714e7368ea71db2be41",
+  "reports/cp15/folds/fold_3-fits.parquet": "861369c9b195b0a5deca54d522e1e88c6c2980c87ba9be1b4ff72f3fc24f4a1b",
+  "reports/cp15/folds/fold_3-issued.parquet": "b8cdf33ec5488c76e00fd511eda8514f42fa866cd5c187b62e8cfb4dba92722b",
+  "reports/cp15/folds/fold_3-run.json": "f0b6819502ffeeb6dee02e593c27fcb93f0e11edd303fb9bb718ddcce968440c",
+  "reports/cp15/folds/fold_4-fits.parquet": "dcf5c5f0d2aa8fd1e8363748d327f48303409322cb6299e6e9e6358d1f3ea8d3",
+  "reports/cp15/folds/fold_4-issued.parquet": "b50e63b8b549e9f277cddb5644ea5e0d46a66b97fcd1384862a9d14de6e6a494",
+  "reports/cp15/folds/fold_4-run.json": "0878870280c22d856036d98b644679cb8a13196828fced157bb35377e99bda59",
+  "reports/cp15/folds/fold_5-fits.parquet": "7cf6d5df3421dda6261c67a356500a25cee01bf23c73b1fde8fdf6bfe5546bdc",
+  "reports/cp15/folds/fold_5-issued.parquet": "14c22d2ea99fadc65ded369e043333c702e0c04fe984279120917b0f64578387",
+  "reports/cp15/folds/fold_5-run.json": "3eae74f735a57a5e8c047402671288cb01612f4f9005c2fac7449201fab81ef6",
+  "reports/cp15/predictions.parquet": "1a606d613ba5f6af82712a7e44adcaf639ba0ece1b7865f407f559fafafeda92",
+  "reports/cp15/protocol.json": "051e4b7cdd1d5db68b26e6d6bc17333c4055c4bcbe5ea693d1d647fe355ccdd6",
+  "reports/cp2/development_baselines.parquet": "47a3186c6a953506313431cbe980650f9e1f76f5f2c84bedd3c2ca2f8e378f69",
+  "reports/cp2/development_predictions.parquet": "563ad94d2b57dc8792451f79ebf60a1669de954ef34717e644b5b9c6904fbdf6",
+  "reports/v2-causal/input-manifest.json": "cd5a1090390184df237132413d7ac7007402de054adbb3ee7615d9885947c20e",
+  "reports/v2-causal/lineage.json": "b13f8719b37fa3c1372a845db2c52e2bd40f3ebf8d759b0d5704704d730eb344",
+  "reports/v2-causal/predictions.parquet": "b4e92d35f12ac0ef77c293d9f11440dfc6799e4cca7786f603fcbd9a1bed37f4",
+  "reports/v2-causal/protocol.json": "f59c29db181e45f3c85fbfc2a5b73729a4abbd0e6be9b1e3842746e5472d0e7e",
+  "reports/v4-revision/daily-cycle.json": "e9a351f4dfe86cbb03edae49b5c51efe5f6a3f5a861a8699ac1ed9b931483702",
+  "reports/v4-revision/decisions.json": "ed5bdd1b1e1460a35edc80c4ae520db898368cf9c0d7ceed8c67241d73d06712",
+  "reports/v4-revision/fit-cost.json": "20e170cfb280968362b0fbd4105e87ee80945a856ed61555dd7e4f7896f538e1",
+  "reports/v4-revision/investigation/capacity-stability.csv": "d301262c2e6c92397d73ac395ce29548529e20a892939676fc23f191d32b6f8f",
+  "reports/v4-revision/investigation/extrapolation.csv": "eda2f1483bbcb68802a333c02e1fac422f600f7b7e46eeab69f63f27561d2370",
+  "reports/v4-revision/preflight/e1.json": "4f2e63d90b5421cd880a97c0907214f46ffe1e60f8415a989402ad2bdd8413fc",
+  "reports/weather-ablation/criteria.csv": "668ebd2bafe32814c4c682e086bcd72044d14c3d7ae611bf69b6275d67458326",
+  "reports/weather-ablation/extraction-summary.json": "069f5c0943d85a3876b71ff279cf62a110980dda2201ad0c4f736469e44ee875",
+  "reports/weather-ablation/lineage.json": "fc4f037df44a195a77d77877721f3ab021d2707e717dbf1dc11088fcbfb766ed",
+  "reports/weather-ablation/metrics.csv": "1dac385e9edce98db76d8a83a97d181d02416d17c82ec045221b4b6fa6f957e9",
+  "reports/weather-ablation/missingness.csv": "39f349535cc0178a8a45dab6ab2575285df82a53cf33f2cc7df17166ec45338f",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab",
+  "reports/weather-ablation/protocol.json": "6964223c53a084012c79033a8ffc36106710e122ea7b8800471fab4d462db714",
+  "reports/weather-ablation/run-manifest.json": "6ced5959f6ad7794be4beef6ea0eb72e2f6fb5e3530b549e5f184cae058af0a1",
+  "reports/weather-ablation/uncertainty.csv": "9a4a773c292bfcb8e40bf8d3fb25cd8f264cafd07ee644679faa573e60c78c26",
+  "reports/weather-ablation/weather-features.parquet": "66b8264bb6e124ae0cc540a40ff00d0e9f625cabee6e0ebb6e4605c3e7ea1b58",
+  "src/cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+  "src/cp15/models.py": "49d9ce2dadbe92265c36d946362c08f1819a87501469975575b794984a23f67c",
+  "src/cp16/inputs.py": "06405182a7eb1d6ecb02e4fe99796ec6fe8586c029ac98fef673e677698907b8",
+  "src/cp16/residuals.py": "f442714ee867310bf3b820cf12dc6055d57b53d7630a751275c6311aa4f71580",
+  "src/cp16/scoring.py": "fdbeee87fd98cad3e1060cf9b6756815953597b5ddc1ae792e6818c446073c42",
+  "src/delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+  "src/delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+  "src/delu_forecast/model.py": "fc0d8de59a5dee959e6c697e1f84cfedf0a35ed87df0c7339f4b1b76ae3e2809",
+  "src/delu_forecast/schema.py": "0278537f4f112cb92346ae4169a623eb6df5863bd41dc4bf02737f249b771085",
+  "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+ },
+ "issued_brief": {
+  "canonical_copy": ".local/artifacts/cp-23/issued-brief.md",
+  "identical_to_pasted_brief": true,
+  "path": "docs/track-b/evidence/cp-23/issued-brief.md",
+  "sha256": "33f6b41202586b2fc4f1d87624c5978e1fd5bde1185ac05271429bf719502d0c"
+ },
+ "layer_by_policy": {
+  "D": "JSU",
+  "HG": "H",
+  "HGL": "H",
+  "v3+D": "H",
+  "v5": "H"
+ },
+ "member_weight": "1/3, fixed",
+ "owner_rulings": {
+  "publish_rules_pin": "PUBLISH_RULES 1.3 at SHA-256 5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4 (the brief omitted the hash \u00a721.9 says it records; 1.3 has one identity; Owner, 2026-10-04)",
+  "torch_pin": "PyTorch pinned in the separate test-only uv project tests/cp23/torch-reference/ (pyproject.toml, uv.lock), not the root uv.lock, whose SHA-256 CP-10's lineage and CP-15's protocol bind (Owner, 2026-10-04)"
+ },
+ "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+ "policies": {
+  "A1": {
+   "role": "reference (saved)"
+  },
+  "B0, B1, B3": {
+   "role": "the B0 normaliser and the saved section-8 comparators, metric only"
+  },
+  "B2": {
+   "role": "reference (saved)"
+  },
+  "D": {
+   "central": "the ensemble median",
+   "layer": "its own Johnson SU quantiles and p50",
+   "role": "study arm: DDNN alone, never eligible"
+  },
+  "HG": {
+   "role": "reference v3 (CP-20's saved vectors)"
+  },
+  "HGL": {
+   "role": "comparator v4 (CP-21's saved vectors)"
+  },
+  "v3+D": {
+   "central": "A1/3 + B2/3 + D/3",
+   "layer": "H (on its own errors)",
+   "role": "attribution: DDNN as v3's third member, never eligible"
+  },
+  "v5": {
+   "central": "2*c_v4/3 + D/3, c_v4 = A1/3 + B2/3 + L-N/6 + L-R/6",
+   "layer": "H (HG's, on v5's own errors)",
+   "role": "the single eligible candidate"
+  }
+ },
+ "population": {
+  "admission_dates": 35,
+  "fold_counts": [
+   2160,
+   2159,
+   2112,
+   2160,
+   2156
+  ],
+  "keys": 10747,
+  "keys_sha256": "83ae00a307744b3a98825a2b1aa705c63eccb223b9bf74533f10fe2c2f0de0ac",
+  "origin_table": [
+   {
+    "day": "2020-05-25",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-05-26",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-05-27",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-05-28",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-05-29",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-05-30",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-05-31",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-01",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-02",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-03",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-04",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-05",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-06",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-07",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-08",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-09",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-10",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-11",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-12",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-13",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-14",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-15",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-16",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-17",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-18",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-19",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-20",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-21",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-22",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-06-23",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-24",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-25",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-26",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-27",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-28",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-29",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2020-06-30",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2020-07-01",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-02",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-03",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-04",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-05",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-06",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-07",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-08",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-09",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-10",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-11",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-12",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-13",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-14",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-15",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-16",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-17",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-18",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-19",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-20",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-21",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-22",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-23",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-24",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-25",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-26",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-27",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-28",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-29",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-30",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-07-31",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-01",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-02",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-03",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-04",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-05",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-06",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-07",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-08",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-09",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-10",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-11",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-12",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-13",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-14",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-15",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-16",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-17",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-18",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-19",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-20",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-21",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-22",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-23",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-24",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-25",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-26",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-27",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-28",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-29",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-30",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-08-31",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-01",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-02",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-03",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-04",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-05",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-06",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-07",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-08",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-09",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-10",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-11",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-12",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-13",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-14",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-15",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-16",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-17",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-18",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-19",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-20",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-21",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-22",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-23",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-24",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-25",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-26",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-27",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2020-09-28",
+    "fold": "fold_1",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-02-23",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-02-24",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-02-25",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-02-26",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-02-27",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-02-28",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-01",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-02",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-03",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-04",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-05",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-06",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-07",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-08",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-09",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-10",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-11",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-12",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-13",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-14",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-15",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-16",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-17",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-18",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-19",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-20",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-21",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-22",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-23",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-03-24",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-25",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-26",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-27",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-28",
+    "fold": "fold_2",
+    "n_forecast": 23,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-29",
+    "fold": "fold_2",
+    "n_forecast": 23,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-30",
+    "fold": "fold_2",
+    "n_forecast": 23,
+    "phase": "admission"
+   },
+   {
+    "day": "2021-03-31",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2021-04-01",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-02",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-03",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-04",
+    "fold": "fold_2",
+    "n_forecast": 23,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-05",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-06",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-07",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-08",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-09",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-10",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-11",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-12",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-13",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-14",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-15",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-16",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-17",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-18",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-19",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-20",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-21",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-22",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-23",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-24",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-25",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-26",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-27",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-28",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-29",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-04-30",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-01",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-02",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-03",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-04",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-05",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-06",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-07",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-08",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-09",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-10",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-11",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-12",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-13",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-14",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-15",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-16",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-17",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-18",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-19",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-20",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-21",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-22",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-23",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-24",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-25",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-26",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-27",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-28",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-29",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-30",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-05-31",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-01",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-02",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-03",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-04",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-05",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-06",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-07",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-08",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-09",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-10",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-11",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-12",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-13",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-14",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-15",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-16",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-17",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-18",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-19",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-20",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-21",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-22",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-23",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-24",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-25",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-26",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-27",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-28",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2021-06-29",
+    "fold": "fold_2",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-05-25",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-05-26",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-05-27",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-05-28",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-05-29",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-05-30",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-05-31",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-01",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-02",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-03",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-04",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-05",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-06",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-07",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-08",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-09",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-10",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-11",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-12",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-13",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-14",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-15",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-16",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-17",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-18",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-19",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-20",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-21",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-22",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-06-23",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-24",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-25",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-26",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-27",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-28",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-29",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2022-06-30",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2022-07-01",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-02",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-03",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-04",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-05",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-06",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-07",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-08",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-09",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-10",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-11",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-12",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-13",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-14",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-15",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-16",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-17",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-18",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-19",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-20",
+    "fold": "fold_3",
+    "n_forecast": 0,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-21",
+    "fold": "fold_3",
+    "n_forecast": 0,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-22",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-23",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-24",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-25",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-26",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-27",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-28",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-29",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-30",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-07-31",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-01",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-02",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-03",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-04",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-05",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-06",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-07",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-08",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-09",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-10",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-11",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-12",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-13",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-14",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-15",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-16",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-17",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-18",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-19",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-20",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-21",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-22",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-23",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-24",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-25",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-26",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-27",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-28",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-29",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-30",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-08-31",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-01",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-02",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-03",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-04",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-05",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-06",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-07",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-08",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-09",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-10",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-11",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-12",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-13",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-14",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-15",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-16",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-17",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-18",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-19",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-20",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-21",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-22",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-23",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-24",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-25",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-26",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-27",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2022-09-28",
+    "fold": "fold_3",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-03-22",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-23",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-24",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-25",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-26",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-27",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-28",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-29",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-30",
+    "fold": "fold_4",
+    "n_forecast": 23,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-03-31",
+    "fold": "fold_4",
+    "n_forecast": 23,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-01",
+    "fold": "fold_4",
+    "n_forecast": 23,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-02",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-03",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-04",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-05",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-06",
+    "fold": "fold_4",
+    "n_forecast": 23,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-07",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-08",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-09",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-10",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-11",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-12",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-13",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-14",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-15",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-16",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-17",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-18",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-19",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-20",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-21",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-22",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-04-23",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-24",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-25",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-26",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-27",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-28",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-29",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2025-04-30",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-05-01",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-02",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-03",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-04",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-05",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-06",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-07",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-08",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-09",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-10",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-11",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-12",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-13",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-14",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-15",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-16",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-17",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-18",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-19",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-20",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-21",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-22",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-23",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-24",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-25",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-26",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-27",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-28",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-29",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-30",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-05-31",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-01",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-02",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-03",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-04",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-05",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-06",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-07",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-08",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-09",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-10",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-11",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-12",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-13",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-14",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-15",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-16",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-17",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-18",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-19",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-20",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-21",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-22",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-23",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-24",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-25",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-26",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-27",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-28",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-29",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-06-30",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-01",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-02",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-03",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-04",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-05",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-06",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-07",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-08",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-09",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-10",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-11",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-12",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-13",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-14",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-15",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-16",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-17",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-18",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-19",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-20",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-21",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-22",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-23",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-24",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-25",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-26",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-27",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-28",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-07-29",
+    "fold": "fold_4",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2025-12-02",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-03",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-04",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-05",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-06",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-07",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-08",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-09",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-10",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-11",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-12",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-13",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-14",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-15",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-16",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-17",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-18",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-19",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-20",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-21",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-22",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-23",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-24",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-25",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-26",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-27",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-28",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-29",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-30",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2025-12-31",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-01",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-02",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-03",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-04",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-05",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-06",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "admission"
+   },
+   {
+    "day": "2026-01-07",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "warmup"
+   },
+   {
+    "day": "2026-01-08",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-09",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-10",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-11",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-12",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-13",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-14",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-15",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-16",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-17",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-18",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-19",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-20",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-21",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-22",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-23",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-24",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-25",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-26",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-27",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-28",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-29",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-30",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-01-31",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-01",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-02",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-03",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-04",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-05",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-06",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-07",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-08",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-09",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-10",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-11",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-12",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-13",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-14",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-15",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-16",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-17",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-18",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-19",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-20",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-21",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-22",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-23",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-24",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-25",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-26",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-27",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-02-28",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-01",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-02",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-03",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-04",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-05",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-06",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-07",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-08",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-09",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-10",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-11",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-12",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-13",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-14",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-15",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-16",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-17",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-18",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-19",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-20",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-21",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-22",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-23",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-24",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-25",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-26",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-27",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-28",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-29",
+    "fold": "fold_5",
+    "n_forecast": 23,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-30",
+    "fold": "fold_5",
+    "n_forecast": 23,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-03-31",
+    "fold": "fold_5",
+    "n_forecast": 23,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-01",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-02",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-03",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-04",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-05",
+    "fold": "fold_5",
+    "n_forecast": 23,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-06",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   },
+   {
+    "day": "2026-04-07",
+    "fold": "fold_5",
+    "n_forecast": 24,
+    "phase": "evaluation"
+   }
+  ],
+  "origins": 638,
+  "origins_with_eligible_hours": 636,
+  "origins_without_eligible_hours": [
+   "fold_3 2022-07-20",
+   "fold_3 2022-07-21"
+  ],
+  "represented_days": 448,
+  "warmup_starts": {
+   "fold_1": "2020-05-25",
+   "fold_2": "2021-02-23",
+   "fold_3": "2022-05-25",
+   "fold_4": "2025-03-22",
+   "fold_5": "2025-12-02"
+  }
+ },
+ "preflight_sha256": {
+  "reports/distribution-challenger/preflight/e1.json": "34e79f43f580386fa447a45159b78d18cef6fef840e1c8a84566aa09e2dafbca",
+  "reports/distribution-challenger/preflight/input-verification.json": "ee8d0337729a5db1cffc06d986788813c4f1085bb14a50b4b1172179d19132f2",
+  "reports/distribution-challenger/preflight/weather-regeneration.json": "7532c7a1ae7177e8e7905d3935a09d31020ae7ee7e7674428feb532ef83b0e52"
+ },
+ "protocol_change_rule": "no parameter, configuration, seed, policy, weight, tolerance, diagnostic definition or rule change informed by outcomes; implementation defects are corrected with explicit records and reruns, never hidden tuning",
+ "python": "3.13.15",
+ "reference_tolerances": {
+  "adam_trajectory": {
+   "atol": 1e-10,
+   "rtol": 1e-07
+  },
+  "cdf_at_quantiles": {
+   "atol": 1e-12,
+   "rtol": 0.0
+  },
+  "forward_outputs": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "jsu_parameters": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "log_likelihood": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "log_likelihood_partials": {
+   "atol": 1e-12,
+   "rtol": 1e-09
+  },
+  "network_gradients": {
+   "atol": 1e-11,
+   "rtol": 1e-08
+  },
+  "quantiles": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "training_loop_trajectory": {
+   "atol": 1e-10,
+   "rtol": 1e-07
+  }
+ },
+ "reference_training_loop_epochs": 3,
+ "reference_trajectory_steps": 25,
+ "revision": "cp23-prerun-1",
+ "rule_verbatim": "### 21.6 Pre-registered rule `cp23-adoption`, set 2026-10-04\n\nv5 is adopted in research as v5 if, and only if, all four of these hold against v4 on identical\nrows:\n\n1. **Joint improvement over v4.** On the paired v5 \u2212 v4 differences, the upper 95% endpoint of\n   \u0394S_WIS is < 0 and the upper 95% endpoint of \u0394S_MAE is \u2264 0.\n2. **No regression.** v5 meets all six original \u00a78 diagnostics.\n3. **A complete, valid evaluation.** Engineering PASS with a fresh binding Integration verdict,\n   and all 10,747 keys issued with finite, ordered quantiles.\n4. **No resolved per-fold degradation.** No fold has a 95% paired daily-loss interval\n   (v5 \u2212 v4) lying entirely above zero, in MAE or in WIS.\n\n**Otherwise,** v5 is not adopted. CP-23 becomes the branch \"DDNN member on v4\", with the first\nunmet condition and its values as the reason. If DDNN fails entry, there is no comparison and no\nadoption decision.\n\n**How the rule is applied:**\n\n- mechanically, never re-weighted, re-thresholded or overridden after results;\n- D and v3+D are never eligible;\n- a mixed result is no demonstrated joint preference, never equivalence;\n- an INCOMPLETE or BLOCKED return yields no decision and nothing to publish.\n\n**What adoption means:**\n\n- **A research status.** v1 remains the released product and the demo, and no designation,\n  freeze or Live follows (\u00a716).\n- **The opponent.** At CP-23's landing, \"same information, same opponent\" comes to name v5.\n- **4.7T.** Its frozen manifest carries v3, v4 and v5.\n- **Naming, proposed:**\n  - adopted: \"v5 \u00b7 DDNN member added\", with predecessor v4. The A3 transition is titled \"From v4\n    to v5: adding a distributional neural network\";\n  - not adopted: the branch \"DDNN member on v4\".\n",
+ "rules": {
+  "cp23-adoption": {
+   "candidate": "v5",
+   "comparator": "HGL (v4, three-block)",
+   "conditions": {
+    "1": "Joint improvement over v4: on the paired v5 - v4 differences, the upper 95% endpoint of dS_WIS is < 0 and the upper 95% endpoint of dS_MAE is <= 0.",
+    "2": "No regression: v5 meets all six original section-8 diagnostics.",
+    "3": "A complete, valid evaluation: Engineering PASS with a fresh binding Integration verdict, and all 10,747 keys issued with finite, ordered quantiles.",
+    "4": "No resolved per-fold degradation: no fold has a 95% paired daily-loss interval (v5 - v4) lying entirely above zero, in MAE or in WIS."
+   },
+   "otherwise": "v5 is not adopted; CP-23 becomes the branch \"DDNN member on v4\", with the first unmet condition and its values as the reason",
+   "set_on": "2026-10-04",
+   "source": "capstone_v21.md v21-r10 \u00a721.6 (Owner decisions D1, D2; D7 under the Owner's grant)"
+  }
+ },
+ "rules_application": "mechanical; never re-weighted, re-thresholded or overridden after results; D and v3+D are never eligible; a mixed result is no demonstrated joint preference, never equivalence; an INCOMPLETE or BLOCKED return yields no decision and nothing to publish",
+ "schema": "cp23-protocol-v1",
+ "scores": {
+  "display": {
+   "HG": "v3",
+   "HGL": "v4"
+  },
+  "interval": "seven-quantile WIS",
+  "point": "emitted-p50 MAE",
+  "primary": "S_MAE, S_WIS equal-fold ratios to B0",
+  "saved_references": [
+   "B0",
+   "B1",
+   "B2",
+   "B3",
+   "A1",
+   "HG",
+   "HGL"
+  ],
+  "secondary": "pooled observation-weighted scores"
+ },
+ "sequence": "protocol freeze (committed); the five folds' configuration choices (committed); warm-up fits; training-only admission of v5, v3+D and D (committed); evaluation fits; comparison replay; vectors committed; one scoring pass and cp23-adoption",
+ "status": "frozen after 4.6L, the \u00a721.3 checks and 4.6R, and before any main-run DDNN fit, admission or outer scoring; only the 32 accuracy-blind 4.6R fits on training-only data preceded it",
+ "support_rule": "at least 56 represented dates per fold for block/hour statements",
+ "timebox_active_seconds": 108000,
+ "uncertainty": {
+  "block_days": 7,
+  "contrasts": [
+   "v5-HGL (adoption_decision)",
+   "v5-HG (reference_vs_v3)",
+   "D-HGL (ddnn_alone_vs_v4_descriptive)",
+   "D-HG (ddnn_alone_vs_v3_descriptive)",
+   "v3+D-HG (ddnn_as_v3_third_member)",
+   "HGL-HG (lightgbm_as_v3_third_member_beside)",
+   "v5-v3+D (lightgbm_still_adds_given_ddnn)"
+  ],
+  "index_set": "cp20.scoring._indices (sha256 e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b)",
+  "per_fold": "paired difference of each fold's mean daily loss, the same 7-day block index set",
+  "reading": "observed joint improvement iff upper dS_WIS < 0 and upper dS_MAE <= 0; observed joint worsening iff lower dS_WIS > 0 and lower dS_MAE >= 0; otherwise no demonstrated joint preference",
+  "replicates": 2000,
+  "seed": 15042
+ },
+ "weather": {
+  "regenerated_from_grids": {
+   "committed_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0",
+   "feature_hours": 59446,
+   "keys_equal": true,
+   "max_feature_date": "2026-04-07",
+   "rebuilt_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0",
+   "retained_grids": ".local/artifacts/cp-20/weather",
+   "retrieval": "none",
+   "runs": 2476,
+   "schema": "cp23-weather-regeneration-v1",
+   "seconds": 10.121588945388794,
+   "status_equal": true,
+   "values_bitwise_equal": true,
+   "written_utc": "2026-10-04T15:05:38Z"
+  },
+  "source": "CP-20 retained decoded grids through the frozen conversion; no retrieval"
+ },
+ "written_utc": "2026-10-04T15:09:55Z"
+}

@@ -1,0 +1,191 @@
+{
+ "adopted": false,
+ "application": "mechanical; never re-weighted, re-thresholded or overridden after results; D and v3+D are never eligible; a mixed result is no demonstrated joint preference, never equivalence; an INCOMPLETE or BLOCKED return yields no decision and nothing to publish",
+ "candidate": "v5",
+ "comparator": "HGL",
+ "conditions": {
+  "1": {
+   "met": false,
+   "values": {
+    "MAE": {
+     "ci_lower": -0.001567181341404966,
+     "ci_upper": 0.01487210370253362,
+     "difference": 0.006445814350118595,
+     "ratio": 0.012033436406928999,
+     "ratio_ci": [
+      -0.0029053979655993905,
+      0.02738665836470154
+     ]
+    },
+    "WIS": {
+     "ci_lower": -0.0008912108189323642,
+     "ci_upper": 0.013847412674387813,
+     "difference": 0.007090050579139473,
+     "ratio": 0.014023740930373174,
+     "ratio_ci": [
+      -0.001722551743286424,
+      0.027153783174222925
+     ]
+    }
+   }
+  },
+  "2": {
+   "met": true,
+   "values": {
+    "criteria_rows": 21,
+    "not_met": []
+   }
+  },
+  "3": {
+   "met": true,
+   "values": {
+    "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-23/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+    "keys_issued_finite_ordered": true
+   }
+  },
+  "4": {
+   "met": false,
+   "values": {
+    "folds_decisively_worse": [
+     {
+      "ci_lower": 0.30060483685082,
+      "ci_upper": 4.394978581237331,
+      "difference": 1.9151813904733004,
+      "metric": "MAE",
+      "scope": "fold_3"
+     }
+    ],
+    "per_fold": [
+     {
+      "ci_lower": -0.06755181514992685,
+      "ci_upper": 0.24377558757429224,
+      "difference": 0.10856660319933731,
+      "metric": "MAE",
+      "scope": "fold_1"
+     },
+     {
+      "ci_lower": -0.004492016515595387,
+      "ci_upper": 0.13841481346618062,
+      "difference": 0.07470648631137777,
+      "metric": "WIS",
+      "scope": "fold_1"
+     },
+     {
+      "ci_lower": -0.5005703929554857,
+      "ci_upper": 0.10599303655711755,
+      "difference": -0.1503423318336461,
+      "metric": "MAE",
+      "scope": "fold_2"
+     },
+     {
+      "ci_lower": -0.26974562015601905,
+      "ci_upper": 0.26975251913015635,
+      "difference": 0.0025178276356374596,
+      "metric": "WIS",
+      "scope": "fold_2"
+     },
+     {
+      "ci_lower": 0.30060483685082,
+      "ci_upper": 4.394978581237331,
+      "difference": 1.9151813904733004,
+      "metric": "MAE",
+      "scope": "fold_3"
+     },
+     {
+      "ci_lower": -0.17917738837581948,
+      "ci_upper": 1.8240766893628426,
+      "difference": 0.648176713415701,
+      "metric": "WIS",
+      "scope": "fold_3"
+     },
+     {
+      "ci_lower": -0.3414253593665303,
+      "ci_upper": 0.2692646750838165,
+      "difference": -0.005129373454821007,
+      "metric": "MAE",
+      "scope": "fold_4"
+     },
+     {
+      "ci_lower": -0.16941113109665634,
+      "ci_upper": 0.15374277815801013,
+      "difference": 0.009734378138144706,
+      "metric": "WIS",
+      "scope": "fold_4"
+     },
+     {
+      "ci_lower": -0.1905826307644824,
+      "ci_upper": 0.7890801655109299,
+      "difference": 0.21986689092381795,
+      "metric": "MAE",
+      "scope": "fold_5"
+     },
+     {
+      "ci_lower": -0.027474156281382122,
+      "ci_upper": 0.39557486042155504,
+      "difference": 0.16015878436841646,
+      "metric": "WIS",
+      "scope": "fold_5"
+     }
+    ]
+   }
+  }
+ },
+ "consistency_with_committed": {
+  "HGL-HG_equal_committed": true,
+  "HGL-HG_interval_rows": 12,
+  "HGL-HG_max_abs_difference_vs_committed": 2.220446049250313e-16,
+  "HGL_section8_rows_equal_committed": true,
+  "HG_section8_rows_equal_committed": true,
+  "all_equal": true
+ },
+ "first_unmet_condition": 1,
+ "inputs_sha256": {
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/distribution-challenger/predictions.parquet": "7136a272b5a7a86c5ba46bc3f43fbfae08402cbfa7809a907f32253c7d7ce583",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab"
+ },
+ "met": false,
+ "reason": {
+  "first_unmet_condition": 1,
+  "values": {
+   "MAE": {
+    "ci_lower": -0.001567181341404966,
+    "ci_upper": 0.01487210370253362,
+    "difference": 0.006445814350118595,
+    "ratio": 0.012033436406928999,
+    "ratio_ci": [
+     -0.0029053979655993905,
+     0.02738665836470154
+    ]
+   },
+   "WIS": {
+    "ci_lower": -0.0008912108189323642,
+    "ci_upper": 0.013847412674387813,
+    "difference": 0.007090050579139473,
+    "ratio": 0.014023740930373174,
+    "ratio_ci": [
+     -0.001722551743286424,
+     0.027153783174222925
+    ]
+   }
+  }
+ },
+ "rule": {
+  "candidate": "v5",
+  "comparator": "HGL (v4, three-block)",
+  "conditions": {
+   "1": "Joint improvement over v4: on the paired v5 - v4 differences, the upper 95% endpoint of dS_WIS is < 0 and the upper 95% endpoint of dS_MAE is <= 0.",
+   "2": "No regression: v5 meets all six original section-8 diagnostics.",
+   "3": "A complete, valid evaluation: Engineering PASS with a fresh binding Integration verdict, and all 10,747 keys issued with finite, ordered quantiles.",
+   "4": "No resolved per-fold degradation: no fold has a 95% paired daily-loss interval (v5 - v4) lying entirely above zero, in MAE or in WIS."
+  },
+  "otherwise": "v5 is not adopted; CP-23 becomes the branch \"DDNN member on v4\", with the first unmet condition and its values as the reason",
+  "set_on": "2026-10-04",
+  "source": "capstone_v21.md v21-r10 \u00a721.6 (Owner decisions D1, D2; D7 under the Owner's grant)"
+ },
+ "unmet_conditions": [
+  1,
+  4
+ ],
+ "verdict": "v5 is not adopted: CP-23 becomes the branch \"DDNN member on v4\""
+}

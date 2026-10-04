@@ -1,0 +1,38 @@
+{
+ "candidate_root": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-23/critic-1",
+ "ddnn": [],
+ "replay": [],
+ "schema": "cp23-review-v1",
+ "score": {
+  "criteria": {
+   "max_abs_numeric_difference": 3.552713678800501e-15,
+   "nan_pattern_mismatches": 0,
+   "numeric_columns_compared": 4,
+   "rows_committed": 105,
+   "rows_recomputed": 105,
+   "unmatched": 0
+  },
+  "first_unmet_equal": true,
+  "metrics": {
+   "max_abs_numeric_difference": 5.684341886080802e-14,
+   "nan_pattern_mismatches": 0,
+   "numeric_columns_compared": 39,
+   "rows_committed": 70,
+   "rows_recomputed": 70,
+   "unmatched": 0
+  },
+  "policies": 10,
+  "readings_equal": true,
+  "uncertainty": {
+   "max_abs_numeric_difference": 4.440892098500626e-16,
+   "nan_pattern_mismatches": 0,
+   "numeric_columns_compared": 9,
+   "rows_committed": 84,
+   "rows_recomputed": 84,
+   "unmatched": 0
+  },
+  "unmet_equal": true,
+  "verdict_equal": true
+ },
+ "written_utc": "2026-10-04T17:18:15Z"
+}

@@ -1,0 +1,47 @@
+{
+ "all_read_back_equal": true,
+ "draft_export_sha256": "6c20b7e16e69dec9535189290b30d2f3465e1acab90ebff94ec3991437649f5f",
+ "experiment": "delu-generations",
+ "network": "none; telemetry disabled; no upload",
+ "runs": {
+  "cp23": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "2a1a0d75842245f5afab7e5d93078cb9",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp23/D": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "56a25e1ba8464bd9af1c0bbf91e163bb",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp23/v3+D": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "08e2f7512efc4d529d5604a7546ea404",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp23/v5": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "471cdf68b5a64951ad7916d2d0625470",
+   "run_name_equal": true,
+   "tags_equal": true
+  }
+ },
+ "schema": "cp23-mlflow-local-v1",
+ "tracking": "local SQLite store .local/mlruns/cp23 (ignored)",
+ "written_utc": "2026-10-04T15:51:20Z"
+}
