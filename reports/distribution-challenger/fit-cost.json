@@ -1,0 +1,77 @@
+{
+ "by_config": {
+  "C1": {
+   "fits": 20.0,
+   "max_wall": 0.8949477090063738,
+   "mean_epochs": 38.4,
+   "mean_wall": 0.6519731834010599,
+   "median_best_epoch": 14.0,
+   "median_wall": 0.7007457710024028
+  },
+  "C2": {
+   "fits": 1028.0,
+   "max_wall": 2.0491812079999363,
+   "mean_epochs": 32.952334630350194,
+   "mean_wall": 0.8721486017189669,
+   "median_best_epoch": 5.0,
+   "median_wall": 0.8391701040018233
+  },
+  "C3": {
+   "fits": 540.0,
+   "max_wall": 3.6558371249993797,
+   "mean_epochs": 33.2037037037037,
+   "mean_wall": 1.6909790932869968,
+   "median_best_epoch": 6.0,
+   "median_wall": 1.5790603744972032
+  },
+  "C4": {
+   "fits": 1036.0,
+   "max_wall": 4.5001949579964275,
+   "mean_epochs": 28.66891891891892,
+   "mean_wall": 2.7496619578165005,
+   "median_best_epoch": 3.0,
+   "median_wall": 2.673771271001897
+  }
+ },
+ "cp22_pn_beside": {
+  "full_window_cpu_total": 1550.7745849999994,
+  "full_window_wall_total": 1584.7121866491366,
+  "inner_cpu_total": 1520.0461259999977,
+  "inner_wall_total": 1556.6421413540668,
+  "median_per_origin_wall_all_eight": 4.982953375432771,
+  "median_per_origin_wall_m_selection_and_refit": 3.0564571245000707,
+  "median_per_origin_wall_r_four_full_window": 2.5174795839998296,
+  "peak_worker_maxrss_bytes": 758349824
+ },
+ "fits": 2624,
+ "fits_by_phase": {
+  "admission": 140,
+  "evaluation": 1792,
+  "selection": 80,
+  "warmup": 612
+ },
+ "fits_by_stage": {
+  "origin": 2544,
+  "selection": 80
+ },
+ "note": "one DDNN member fit = one network, one seed, trained with early stopping; the ensemble is four fits; diagnostic only (D3)",
+ "origins": 636,
+ "peak_worker_maxrss_bytes": 861569024,
+ "per_origin": {
+  "max_ensemble_fit_wall_seconds": 14.404960625994136,
+  "median_by_fold": {
+   "fold_1": 2.9343976659947657,
+   "fold_2": 10.881765252008336,
+   "fold_3": 3.8860016649996396,
+   "fold_4": 6.449855521001155,
+   "fold_5": 10.81295633300033
+  },
+  "median_ensemble_fit_wall_seconds": 6.4527991880022455
+ },
+ "schema": "cp23-fit-cost-v1",
+ "totals": {
+  "cpu_seconds": 4644.788623999997,
+  "wall_seconds": 4671.386724907992
+ },
+ "written_utc": "2026-10-04T15:35:16Z"
+}

@@ -1182,8 +1182,10 @@ def build_draft(name: str = "cp21") -> dict:
     """CP-21's draft export: one file, the checkpoint's parent and its four new policies (CP-22: `build_draft22`)."""
     if name == "cp22":
         return build_draft22()
+    if name == "cp23":
+        return build_draft23()
     if name != "cp21":
-        raise SystemExit("the draft exports are cp21 and cp22")
+        raise SystemExit("the draft exports are cp21, cp22 and cp23")
     spec, entries, checkpoint = draft_registry()
     runs = _tracked_runs(entries, checkpoint, spec, pending=spec["pending"], charts=False)
     return {"experiment": EXPERIMENT, "checkpoint": checkpoint.code, "status": "draft",
@@ -1265,7 +1267,7 @@ def _draft_readme(run_name: str, checkpoint: G.Checkpoint, spec: dict, blobs: di
 def draft_problems(draft: dict) -> list[str]:
     """The draft matches its draft entries: the run keys the draft checkpoint expects, each once,
     each parent CP-21's, each name the rule applied to its entry. Never a count."""
-    _, entries, checkpoint = draft_registry22() if draft.get("checkpoint") == "CP-22" else draft_registry()
+    _, entries, checkpoint = {"CP-22": draft_registry22, "CP-23": draft_registry23}.get(draft.get("checkpoint"), draft_registry)()
     keys = [run["run_key"] for run in draft["runs"]]
     expected = [checkpoint.run_key] + [f"{checkpoint.run_key}/{code}" for code in checkpoint.children]
     problems = []
@@ -1513,6 +1515,222 @@ def build_draft22() -> dict:
             "revisions": spec.get("revisions"), "runs": _draft22_runs(entries, checkpoint, spec)}
 
 
+# --------------------------------------------------------------------------- CP-23 draft (capstone v21-r10 §21.9)
+#
+# CP-23 registers nothing public either: its draft export is built by the same code path as CP-21's and CP-22's, from
+# CP-23's committed evidence and the packet's draft entries (reports/distribution-challenger/draft-registry.json),
+# outside the published set. Adopted, v5 is a generation with predecessor v4; otherwise the branch "DDNN member on v4"
+# owns the checkpoint and v5's run. D and v3+D are study arms either way.
+
+DRAFT23_DIR = ROOT / "reports" / "distribution-challenger" / "mlflow-export-draft"
+DRAFT23_REGISTRY = "reports/distribution-challenger/draft-registry.json"
+CP23 = {
+    "metrics": "reports/distribution-challenger/metrics.csv",
+    "uncertainty": "reports/distribution-challenger/uncertainty.csv",
+    "criteria": "reports/distribution-challenger/criteria.csv",
+    "diagnostics": "reports/distribution-challenger/diagnostics.csv",
+    "protocol": "reports/distribution-challenger/protocol.json",
+    "decisions": "reports/distribution-challenger/decisions.json",
+}
+#: Each CP-23 run's contrasts (§21.5): (candidate, base code, metric slug).
+DRAFT23_CONTRASTS = {
+    "v5": (("v5", "HGL", "v4"), ("v5", "HG", "v3"), ("v5", "v3+D", "v3_d")),
+    "D": (("D", "HGL", "v4"), ("D", "HG", "v3")),
+    "v3+D": (("v3+D", "HG", "v3"),),
+}
+
+
+def draft_registry23() -> tuple[dict, dict[str, G.Entry], G.Checkpoint]:
+    """CP-23's draft entries as registry `Entry` objects, and its draft checkpoint."""
+    spec = json.loads((ROOT / DRAFT23_REGISTRY).read_text())
+
+    def entry(raw: dict) -> G.Entry:
+        fields = dict(raw)
+        fields["codes"] = tuple(G.Code(**code) for code in raw["codes"])
+        fields["statuses"] = tuple(G.StatusEvent(**event) for event in raw["statuses"])
+        for key in ("rules", "sources", "run_keys"):
+            fields[key] = tuple(raw[key])
+        return G.Entry(**fields)
+
+    entries = {raw["id"]: entry(raw) for raw in spec["entries"]}
+    checkpoint = G.Checkpoint(**{**spec["checkpoint"], "children": tuple(spec["checkpoint"]["children"])})
+    return spec, entries, checkpoint
+
+
+def _interval23() -> R.Interval:
+    settings = json.loads((ROOT / CP23["protocol"]).read_text())["uncertainty"]
+    return R.Interval(method="paired noncircular moving-block percentile bootstrap", level=0.95, seed=int(settings["seed"]),
+                      replicates=int(settings["replicates"]), block_days=int(settings["block_days"]))
+
+
+def _draft23_records() -> dict[str, R.EvidenceRecord]:
+    """CP-23's typed records, by the evidence layer's own builders from CP-23's committed rows, with CP-23's own
+    bootstrap settings (its frozen protocol), plus one ratio record per equal-fold contrast (§17.5)."""
+    import dataclasses
+    interval = _interval23()
+    windows = R._fold_windows(CP23["metrics"])
+    built = (R._metric_records("cp23", "CP-23", CP23["metrics"])
+             + [dataclasses.replace(r, interval=interval)
+                for r in R._uncertainty_records("cp23", "CP-23", CP23["uncertainty"], windows)]
+             + R._criteria_records("cp23", "CP-23", CP23["criteria"], windows)
+             + R._diagnostic_records("cp23", "CP-23", CP23["diagnostics"]))
+    for line, row in R._rows(CP23["uncertainty"]):
+        if row["scope"] != "equal_fold":
+            continue
+        built.append(R.EvidenceRecord(
+            record_id=f"cp23.ratio.{row['candidate']}-{row['baseline']}.{row['metric']}", checkpoint="CP-23",
+            generation=None, policy_code=row["candidate"], source_path=CP23["uncertainty"],
+            selector=(("scope", "equal_fold"), ("candidate", row["candidate"]), ("baseline", row["baseline"]),
+                      ("metric", row["metric"])),
+            field="ratio", metric=f"ratio_S_{row['metric']}", unit=UNIT_RATIO_CHANGE, aggregation="equal_fold_ratio",
+            population_id="common-10747h", comparator=row["baseline"], evidence_class="development_post_selection",
+            window=windows["all"], display_precision=4, raw=row["ratio"], source_line=line, interval=interval,
+            ci_low_raw=row["ratio_ci_lower"], ci_high_raw=row["ratio_ci_upper"]))
+    out: dict[str, R.EvidenceRecord] = {}
+    for record in built:
+        if record.record_id in out:
+            raise R.EvidenceError(f"duplicate draft record id {record.record_id}")
+        out[record.record_id] = record
+    return out
+
+
+def _draft23_scores(builder: DraftBuilder, code: str) -> None:
+    equal, pooled = f"cp23.metrics.{code}.equal_fold", f"cp23.metrics.{code}.pooled"
+    fold, peak = f"cp23.metrics.{code}.{{fold}}", f"cp23.diagnostics.{code}.peak"
+    builder.single("s_mae", f"{equal}.S_MAE")
+    builder.single("s_wis", f"{equal}.S_WIS")
+    for key, column in (("pooled_mae_eur", "MAE"), ("pooled_wis_eur", "WIS"), ("pooled_rmse_eur", "RMSE"),
+                        ("pooled_bias_eur", "bias"), ("pooled_coverage95", "coverage95")):
+        builder.single(key, f"{pooled}.{column}")
+    for key, column in (("fold_mae_eur", "MAE"), ("fold_wis_eur", "WIS"), ("fold_coverage50", "coverage50"),
+                        ("fold_coverage80", "coverage80"), ("fold_coverage95", "coverage95"),
+                        ("fold_mean_width95_eur", "mean_width95")):
+        builder.per_fold(key, f"{fold}.{column}")
+    for key, column in (("peak_mae_eur", "MAE"), ("peak_wis_eur", "WIS"), ("peak_coverage95", "coverage95"),
+                        ("peak_hits95", "hit_count95")):
+        builder.single(key, f"{peak}.{column}")
+    builder.daily(CP23["diagnostics"], code)
+    for candidate, base, slug in DRAFT23_CONTRASTS[code]:
+        prefix = f"cp23.uncertainty.{candidate}-{base}"
+        for metric, score in (("MAE", "mae"), ("WIS", "wis")):
+            equal_record = f"{prefix}.equal_fold.{metric}"
+            builder.single(f"delta_s_{score}_vs_{slug}", equal_record)
+            builder.single(f"delta_s_{score}_vs_{slug}_ci_low", equal_record, "ci_low")
+            builder.single(f"delta_s_{score}_vs_{slug}_ci_high", equal_record, "ci_high")
+            ratio = f"cp23.ratio.{candidate}-{base}.{metric}"
+            builder.single(f"ratio_s_{score}_vs_{slug}", ratio)
+            builder.single(f"ratio_s_{score}_vs_{slug}_ci_low", ratio, "ci_low")
+            builder.single(f"ratio_s_{score}_vs_{slug}_ci_high", ratio, "ci_high")
+            fold_pattern = f"{prefix}.{{fold}}.{metric}"
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}", fold_pattern)
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}_ci_low", fold_pattern, "ci_low")
+            builder.per_fold(f"delta_fold_{score}_eur_vs_{slug}_ci_high", fold_pattern, "ci_high")
+
+
+def _draft23_params(protocol: dict, code: str | None) -> dict[str, str]:
+    cp15 = json.loads((ROOT / "reports/cp15/protocol.json").read_text())
+    out = {"anchor_version": "capstone_v21.md v21-r10 §21", "protocol_sha256": _file_sha256(CP23["protocol"])}
+    if code is None:
+        return out
+    policy = protocol["policies"][code]
+    ddnn = protocol["ddnn"]
+    out["quantile_set"] = ",".join(str(level) for level in cp15["quantiles"]["levels"])
+    out["seeds"] = ",".join(str(seed) for seed in ddnn["ensemble"]["seeds"])
+    out["weather_features"] = "v4's three GFS columns plus missing indicators"
+    out["history_window"] = ddnn["history"]["window"]
+    out["policy_definition"] = f"{policy['role']}; central {policy['central']}"
+    out["member_weight"] = protocol["member_weight"]
+    out["interval_method"] = protocol["h_layer"] if policy["layer"].startswith("H") else ddnn["emission"]["quantile_function"]
+    out["ddnn"] = ddnn["architecture"]["family"] + "; " + ddnn["architecture"]["head"]
+    out["ddnn_configurations"] = json.dumps([{k: c[k] for k in ("id", "hidden")} for c in ddnn["configurations"]],
+                                            separators=(",", ":"))
+    out["ddnn_selection"] = ddnn["selection"]["when"] + "; " + ddnn["selection"]["criterion"] + "; " + ddnn["selection"]["tie"]
+    out["ddnn_ensemble"] = ddnn["ensemble"]["combination"]
+    return {key: value[:500] for key, value in out.items()}
+
+
+def _draft23_readme(run_name: str, checkpoint: G.Checkpoint, spec: dict, blobs: dict[str, str]) -> str:
+    tag = checkpoint.evidence_tag
+    lines = [f"# {run_name}", "",
+             f"Tracked by CP-23 from its committed evidence (draft export; evidence tag `{tag}` and its commit are "
+             f"{spec['pending']}). Development evidence; nothing here is a live or confirmatory result.", "",
+             f"- Report: {GITHUB_URL}/blob/{tag}/{checkpoint.report}",
+             f"- Independent Integration review: {GITHUB_URL}/blob/{tag}/{checkpoint.verdict}",
+             f"- Landing record: {checkpoint.landing}", f"- Presentation: {PAGES_URL}", "",
+             "Source rows at the evidence tag:", ""]
+    lines += [f"- {GITHUB_URL}/blob/{tag}/{path} (blob {blob})" for path, blob in blobs.items()]
+    return "\n".join(lines) + "\n"
+
+
+def _draft23_runs(entries: dict[str, G.Entry], checkpoint: G.Checkpoint, spec: dict) -> list[dict]:
+    """CP-23's parent and children, from its committed evidence, with the draft's explicit pending fields."""
+    protocol = json.loads((ROOT / CP23["protocol"]).read_text())
+    records = _draft23_records()
+    group = comparability()["common"]
+    pending = spec["pending"]
+    note = spec["note"]
+    runs = []
+    owner = entries[checkpoint.owner]
+    parent_tags = {
+        "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
+        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _draft_status_text(owner, pending),
+        "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
+        "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+        "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+        "delu.backfilled": "false", "delu.original_completed_utc": pending,
+        "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
+        "mlflow.note.content": _draft_description(owner, note, pending),
+    }
+    parent = {"run_key": checkpoint.run_key, "parent": None,
+              "run_name": draft_run_name(checkpoint.run_key, entries, checkpoint),
+              "params": _draft23_params(protocol, None), "tags": parent_tags, "metrics": {}, "metric_provenance": {},
+              "metric_units": {}, "inputs": [], "comparability": dict(group)}
+    parent["artifacts"] = [
+        _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
+        _artifact("README.md", _draft23_readme(parent["run_name"], checkpoint, spec,
+                                               {CP23["protocol"]: R.blob_sha(R.source_bytes(CP23["protocol"]))})),
+    ]
+    runs.append(parent)
+    for code in checkpoint.children:
+        run_key = f"{checkpoint.run_key}/{code}"
+        entry = _draft_entry_for(run_key, entries)
+        builder = DraftBuilder(records)
+        _draft23_scores(builder, code)
+        blobs = _draft_blobs(builder.provenance, records)
+        run_name = draft_run_name(run_key, entries, checkpoint)
+        comparator = G.get(entry.comparator).name if entry.comparator in {e.id for e in G.entries()} else entries[entry.comparator].name
+        tags = {
+            "delu.run_key": run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": entry.id,
+            "delu.kind": entry.kind, "delu.generation": entry.version or "none", "delu.policy_code": code,
+            "delu.public_name": entry.name, "delu.status": _draft_status_text(entry, pending), "delu.comparator": comparator,
+            "delu.role": "candidate", "delu.adopted": G.adopted_flag(entry),
+            "delu.evidence_class": "development_post_selection",
+            "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+            "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false", "delu.original_completed_utc": pending,
+            "mlflow.note.content": _draft_description(entry, note, pending, code=code, role="candidate"),
+        }
+        inputs = datasets("cp23", code, group, weather=True)
+        tags["delu.datasets"] = _canonical({dataset["name"]: dataset["sha256"] for dataset in inputs})
+        run = {"run_key": run_key, "parent": checkpoint.run_key, "run_name": run_name,
+               "params": _draft23_params(protocol, code), "tags": tags, "metrics": builder.metrics,
+               "metric_provenance": builder.provenance,
+               "metric_units": {key: metric_unit(key) for key in builder.metrics}, "inputs": inputs}
+        summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
+        run["artifacts"] = [_artifact("summary.json", summary + "\n"),
+                            _artifact("README.md", _draft23_readme(run_name, checkpoint, spec, blobs))]
+        runs.append(run)
+    return runs
+
+
+def build_draft23() -> dict:
+    """CP-23's draft export: one file, the checkpoint's parent and every new policy."""
+    spec, entries, checkpoint = draft_registry23()
+    return {"experiment": EXPERIMENT, "checkpoint": checkpoint.code, "status": "draft",
+            "pending_fields": spec["pending_fields"], "draft_registry": DRAFT23_REGISTRY,
+            "revisions": spec.get("revisions"), "runs": _draft23_runs(entries, checkpoint, spec)}
+
+
 # --------------------------------------------------------------------------- main
 
 
@@ -1525,8 +1743,9 @@ def main() -> int:
                         help="with --diff-against: compare with the export committed at REF instead of a fresh one")
     parser.add_argument("--out", type=Path, default=None, help="with --diff-against: write the report here")
     parser.add_argument("--draft", metavar="NAME", default=None,
-                        help="build a checkpoint's draft export: cp21 (reports/block-challenger/mlflow-export-draft/) or "
-                             "cp22 (reports/v4-revision/mlflow-export-draft/)")
+                        help="build a checkpoint's draft export: cp21 (reports/block-challenger/mlflow-export-draft/), "
+                             "cp22 (reports/v4-revision/mlflow-export-draft/) or "
+                             "cp23 (reports/distribution-challenger/mlflow-export-draft/)")
     args = parser.parse_args()
     if args.draft:
         return draft_main(args.draft, check=args.check)
@@ -1580,7 +1799,7 @@ def draft_main(name: str, *, check: bool) -> int:
             print(f"mlflow-export: BLOCKED - {finding}", file=sys.stderr)
         return 1
     text = json.dumps(draft, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
-    directory = DRAFT22_DIR if name == "cp22" else DRAFT_DIR
+    directory = {"cp22": DRAFT22_DIR, "cp23": DRAFT23_DIR}.get(name, DRAFT_DIR)
     path = directory / f"{name}.json"
     if check:
         if not path.exists() or path.read_text() != text:
