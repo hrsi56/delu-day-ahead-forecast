@@ -33,6 +33,12 @@ remain estimates, not budgets. The notes added below for 4.5 are consistency edi
 The 4.6 text below was edited for consistency on that date; each edited passage is marked
 *2026-09-30*. Where §18 and the text below differ, §18 governs. Nothing here opens 4.6.
 
+**2026-10-04 CP-22 outcome.** CP-22 returned PASS with **no replacement**. Both pooled members
+were non-inferior to v4 overall, but each was decisively worse in fold 4 (summer 2025). The Owner
+decided that v4 stays as it is, so the block split stays in v4, and 4.6's DDNN faces the
+three-block v4. The Owner also filed a per-block weight idea in [4.8](#work-4-8). See the
+[landing record](cp-22-landing-2026-10-04.md).
+
 **2026-10-01 CP-22 update (ratified; execution authorized).** Before [4.6](#work-4-6), the Owner
 chose to revise v4 rather than extend it. [v21-r9 §20](../../capstone_v21.md) drafts CP-22:
 
