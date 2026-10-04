@@ -72,13 +72,21 @@ kept as it is after CP-22 (Owner, 2026-10-04).**
 | 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Published by PRES-3, closed 2026-10-01 |
 | 5a | v4 re-examined (CP-22; [v21-r9 §20](capstone_v21.md)) | ✅ Closed 2026-10-04: PASS, no replacement (R and M failed condition 4 on fold 4); the Owner kept v4 as it is; landed as `land/cp-22` ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). The v4 wording on the report and README was corrected the same day |
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
-| 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ▶ Ratified 2026-10-04. v5 = v4 plus a DDNN member at one third, against the three-block v4 (`cp23-adoption`). Next: its brief and the Owner's execution grant |
+| 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ▶ Ratified and execution authorized 2026-10-04; brief issued. v5 = v4 plus a DDNN member at one third, against the three-block v4 (`cp23-adoption`). Awaiting the Owner's launch of a local Engineering Lead |
 | 7 | Comprehensive data-admission research, immediately after DDNN, with 4.4V (VRE generation and residual load) ([v21-r10 §22](capstone_v21.md)) | ⬜ Not started. Scope filed 2026-10-04 (Notes, [Data admission research]) |
 | 8 | Recombination (4.8), with a NumPy meta-learner and per-block weights among its arms | ⬜ Not started. Filed 2026-10-04 (Notes, [4.8]) |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
 **Next pending Track B checkpoint: CP-23, the 4.6 DDNN route (stage 6).** It was ratified on
-2026-10-04 as [v21-r10 §21](capstone_v21.md).
+2026-10-04 as [v21-r10 §21](capstone_v21.md), and its execution was authorized the same day:
+"מאשר ביצוע CP-23, ההחלטות כפי שקבעת". The delegated decisions D4–D10 stand as set.
+
+- **The brief:** canonical copy `.local/artifacts/cp-23/issued-brief.md` (ignored), SHA-256
+  `33f6b41202586b2fc4f1d87624c5978e1fd5bde1185ac05271429bf719502d0c`.
+  - Its bar quote was checked against the anchor at `3f7aaf2` with `scripts/bar.py check`, and
+    its form with `scripts/bar.py brief`.
+  - The launch envelope is `.local/artifacts/cp-23/launch-envelope.md`.
+  - The Lead packages the brief as `docs/track-b/evidence/cp-23/issued-brief.md`.
 
 - **The candidate:** v5 = v4 plus a DDNN member at one third, against the three-block v4 on
   identical rows, under `cp23-adoption` (CP-21's four conditions).
@@ -88,10 +96,8 @@ kept as it is after CP-22 (Owner, 2026-10-04).**
   failure stops it before any evaluation fit.
 - **Ceilings:** 4,000 main and 6,000 total DDNN fits, 60 machine-hours, about 30 active hours
   (hard 40). The only download is the pinned PyTorch CPU test dependency.
-- **Next:**
-  1. The Orchestrator issues the brief and its launch envelope.
-  2. The Owner reviews the delegated decisions D4–D10 (§21.12) and grants CP-23's execution.
-  3. The Owner launches a local Engineering Lead.
+- **Next:** the Owner launches a local Engineering Lead with the envelope, recommended on Opus
+  5.5. The return comes back to the Orchestrator for the templates §4 receipt.
 
 **CP-22 is closed** ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). It ran under
 [v21-r9 §20](capstone_v21.md), from the brief `563f64f3…`.
@@ -612,6 +618,14 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **CP-23 authorized and its brief issued, 2026-10-04.**
+  - **The grant.** The Owner wrote "מאשר ביצוע CP-23, ההחלטות כפי שקבעת", so v21-r10 §21.12's
+    delegated decisions D4–D10 stand as set.
+  - **The brief.** It was issued as `33f6b412…`, with the grant quoted under "Owner-only actions
+    already authorized", and checked with `scripts/bar.py`: the bar quote is byte-exact at
+    `3f7aaf2`, and the form is complete. Its envelope is in `.local/artifacts/cp-23/`.
+  - **This commit** changes only this file, so the brief's expected state (a direct child of
+    `3f7aaf2`) holds.
 - **Automation implemented, branches cleaned, v21-r10 ratified, 2026-10-04.**
   - **The Owner's questions, answered:**
     - **A meta-learner that predicts each member's weight.** It is legal only walk-forward.
@@ -949,11 +963,12 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Next Owner action: CP-23's execution grant,** once its brief is issued.
-  - Before granting it, the Owner may reverse any delegated design choice in v21-r10 §21.12
-    (D4–D10), for example the one-third member weight or the ceilings.
-  - The Owner's decisions of 2026-10-04 settled the 4.6 candidate: v5 = v4 plus a DDNN member,
-    against v4, anchored in v21-r10.
+- **Next Owner action: launch CP-23 locally.**
+  - Open a new Claude Code session on this machine in `/Users/djourno/Downloads/PJM`, choose
+    Opus 5.5, and paste `.local/artifacts/cp-23/launch-envelope.md`.
+  - The return comes back to the Orchestrator for the templates §4 receipt.
+  - The execution grant and D4–D10 were given on 2026-10-04: "מאשר ביצוע CP-23, ההחלטות כפי
+    שקבעת".
 
 - **PRES-3's three advisories for the Owner (open; none blocks closure).** Details are in the
   advisory log at the evidence tip. Recommended: defer all three, as below.
@@ -1086,19 +1101,21 @@ Session Log.
       of S, so the gain may not be demonstrable.
   - **Timing.** Best done after DDNN, so that all members' weights are learned together once. Any
     result stays development evidence; 4.7T is the test.
-- **[CP-23 brief]** Cite v21-r10 §21 and its SHA-256, and bind §21.10 as the bar. Check the
-  brief with `scripts/bar.py brief`, and quote the bar with `scripts/bar.py bar … --quote`.
-  - **Tell the Lead to use the tools:**
-    - `scripts/gauntlet.py start cp-23` first;
-    - `critic-open`, `critic-brief` and `critic-close` for the Critic;
-    - `return` for the return.
-  - **Carry into every Lead instruction:**
-    - the non-interactive Git rule;
-    - commit work in progress before any pause, because GitHub Desktop stashes untracked files
-      when the Owner switches branches;
-    - export `MLFLOW_DISABLE_TELEMETRY=true` and `DO_NOT_TRACK=1`.
-  - **The test-only download.** The only download is the pinned PyTorch CPU wheel. The brief
-    names it as an Owner-authorized action.
+- **[CP-23 brief]** Issued 2026-10-04 (`33f6b412…`). It binds §21.10 as the bar and was checked
+  with `scripts/bar.py`. It tells the Lead to use the tools, carries the non-interactive Git rule,
+  the commit-before-pause rule and the MLflow telemetry exports, and names the PyTorch CPU wheel as
+  the one Owner-authorized download.
+- **[CP-23's return]**
+  1. Run the templates §4 receipt with
+     `git show main:scripts/gauntlet.py | python3 -I - receipt cp-23 <final> <tip>`.
+  2. Check the delta, the verdict and the checklist coverage, then the
+     NOT_ADMITTED / adopted / not-adopted outcome with its first unmet condition.
+  3. **If v5 is adopted:**
+     - ask for the Owner's LAND with `land-commands`;
+     - reclaim with `reclaim --disposition land`;
+     - before the next publication's brief, bring items 6 and 7 and v5's encoding to the Owner.
+  4. **Otherwise:** ask for the Owner's disposition, and record the outcome for 4.7.
+  5. **Then:** the data-admission research (§22).
 - **[CP-22]** Closed on 2026-10-04 with no replacement; v4 is unchanged
   ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). PRES-4's replacement plan was not
   entered. v21-r10 §20.13 records the outcome against §20.1.
