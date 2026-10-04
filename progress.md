@@ -19,7 +19,10 @@ on 2026-10-01 for the Owner's CP-22 decisions, the ratification of v21-r9 and PU
 and the issue of the CP-22 brief. Its commit and push follow the Owner's explicit, task-scoped
 instruction of 2026-10-01. It was updated in place again on 2026-10-04 for CP-22's receipt, the
 Owner's decision that v4 stays as it is, the landing and reclamation, the 4.8 note and the v4
-wording fix. That commit and push follow the Owner's explicit instruction of 2026-10-04.*
+wording fix. That commit and push follow the Owner's explicit instruction of 2026-10-04. Later
+that day it was updated again for the automation tools, the branch cleanup, the ratification of
+v21-r10 (CP-23, DDNN) and the programme order. That commit and push follow the Owner's
+instructions of the same day.*
 
 ---
 
@@ -68,19 +71,27 @@ kept as it is after CP-22 (Owner, 2026-10-04).**
 | 4 | v3 weather pipeline (CP-20, 4.4D) | ✅ Done and landed |
 | 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Published by PRES-3, closed 2026-10-01 |
 | 5a | v4 re-examined (CP-22; [v21-r9 §20](capstone_v21.md)) | ✅ Closed 2026-10-04: PASS, no replacement (R and M failed condition 4 on fold 4); the Owner kept v4 as it is; landed as `land/cp-22` ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). The v4 wording on the report and README was corrected the same day |
-| 6 | DDNN, written in NumPy only (4.6L → 4.6R → 4.6C). TabPFN was withdrawn on 2026-09-30 ([v21-r7 §18](capstone_v21.md)) | ⬜ Next. Faces the three-block v4. It needs the Owner's candidate decision, a new anchor section, its brief and D4 allowances |
-| 7 | VRE generation and residual-load model (4.4V, optional) | ⬜ Not started |
-| 8 | Recombination (4.8, optional, after 5–7) | ⬜ Not started. Carries the Owner's per-block weight idea of 2026-10-04 (Notes, [4.8]) |
+| 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
+| 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ▶ Ratified 2026-10-04. v5 = v4 plus a DDNN member at one third, against the three-block v4 (`cp23-adoption`). Next: its brief and the Owner's execution grant |
+| 7 | Comprehensive data-admission research, immediately after DDNN, with 4.4V (VRE generation and residual load) ([v21-r10 §22](capstone_v21.md)) | ⬜ Not started. Scope filed 2026-10-04 (Notes, [Data admission research]) |
+| 8 | Recombination (4.8), with a NumPy meta-learner and per-block weights among its arms | ⬜ Not started. Filed 2026-10-04 (Notes, [4.8]) |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Next pending Track B checkpoint: the 4.6 DDNN route (stage 6), facing the three-block v4.** It
-needs, in order:
+**Next pending Track B checkpoint: CP-23, the 4.6 DDNN route (stage 6).** It was ratified on
+2026-10-04 as [v21-r10 §21](capstone_v21.md).
 
-1. the Owner's candidate decision (Open Questions);
-2. a new anchor section (v21-r10) under a task-scoped Lockdown suspension. It also records CP-22's
-   outcome and the Owner's decision of 2026-10-04 against §20.1's sentence "the block split is
-   removed in every outcome";
-3. its brief.
+- **The candidate:** v5 = v4 plus a DDNN member at one third, against the three-block v4 on
+  identical rows, under `cp23-adoption` (CP-21's four conditions).
+- **The arms:** DDNN alone (its own Johnson SU quantiles) and v3+D, attribution only.
+- **The route:** 4.6L (provenance and licence), then 4.6R (training-only resource entry, after
+  the PyTorch reference checks), then 4.6C (the comparison), inside one checkpoint. An entry
+  failure stops it before any evaluation fit.
+- **Ceilings:** 4,000 main and 6,000 total DDNN fits, 60 machine-hours, about 30 active hours
+  (hard 40). The only download is the pinned PyTorch CPU test dependency.
+- **Next:**
+  1. The Orchestrator issues the brief and its launch envelope.
+  2. The Owner reviews the delegated decisions D4–D10 (§21.12) and grants CP-23's execution.
+  3. The Owner launches a local Engineering Lead.
 
 **CP-22 is closed** ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). It ran under
 [v21-r9 §20](capstone_v21.md), from the brief `563f64f3…`.
@@ -136,24 +147,27 @@ needs, in order:
 **Repository**, as verified on the Owner's machine on 2026-10-04:
 
 - **`main` = `origin/main`** at the commit that carries this update. Below it:
+  - `42e4ceb`, the automation tools;
+  - `6483324`, CP-22's closure records;
   - `b194c72`, the v4 wording fix;
   - `ebb7d42` = `land/cp-22`, CP-22's squash landing by the Owner;
   - `32bdf9b`, the last of four automation-plan commits from another session;
   - `940eb98`, the v21-r9 ratification.
 - **Tags on origin.** `evidence/cp-22` = `8daf7d0`, together with every earlier `land/*`,
   `evidence/*` and `archive/*` tag listed in [Where the history lives](#where-the-history-lives).
-- **CP-22 is reclaimed.**
+  Two archive tags were added on 2026-10-04 (below).
+- **Only `main` exists, locally and on origin.**
   - `gauntlet/cp-22` was deleted on 2026-10-04, after the tag checks. A verified Git bundle is in
     `.local/artifacts/cp22-landing-2026-10-04/`.
+  - The automation plan's branches were removed on the Owner's instruction ("אמור להשאר לנו רק
+    main"):
+    - `claude/kind-edison-77jsmw` was fully in `main`;
+    - `claude/automation-plan-corrections-t45wdc` was a superseded draft, kept as
+      `archive/automation-plan-corrections-20261001` = `1615866`.
+  - The sibling proposal `claude/deterministic-migration-plan-js1sd0` was kept as
+    `archive/deterministic-migration-plan-20261001` = `110e361` and deleted.
+  - The GitHub Desktop stash was dropped by the Owner.
   - No worktree exists besides the primary checkout.
-- **Not CP-22's, left to the Owner:**
-  - the local branch `claude/automation-plan-corrections-t45wdc`, created by GitHub Desktop
-    (it also exists on origin);
-  - `stash@{0}`, `!!GitHub_Desktop<gauntlet/cp-22>`, holding superseded drafts of two CP-22
-    modules;
-  - on origin, besides `main`: `claude/automation-plan-corrections-t45wdc`,
-    `claude/deterministic-migration-plan-js1sd0` and `claude/kind-edison-77jsmw`, from cloud
-    sessions.
 - **The retired cloud session branch.** `archive/v21-r7-session-20260930` = `e84d467` keeps the
   commits this file cites reachable.
 - **Retained local recovery material:**
@@ -199,15 +213,25 @@ decision remains a boundary, not an active workstream.
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Current anchors, ratified on 2026-10-01** under the Owner's task-scoped suspension ("ההשעיה
+- **Current research anchor, ratified on 2026-10-04** under the Owner's task-scoped suspension
+  ("מאושר באופן מלא, כולל השעיה וכולל קומיט פוש מה שאתה צריך"): `capstone_v21.md` **v21-r10**,
+  SHA-256 `6873c2501067c63692ec7cb79dfd4073164a8a014edbd6ebc23169e7e8ff6709`.
+  - **What it adds,** as additions only:
+    - §20.13: CP-22's outcome, and the Owner's decision that v4 stays as it is. §20.1's
+      "the block split is removed in every outcome" yields to it.
+    - §21: CP-23, the DDNN route.
+    - §22: the programme order after CP-22.
+    - A CP-23 row in §10.
+  - **Its amendment record:**
+    [r9 → r10](docs/track-b/capstone_v21-r9-to-v21-r10-amendments.md), SHA-256
+    `453a66a107e6b597cecc80c02e04995b4de4a0935960638df220c5722afa5199`.
+  - **v21-r9** is preserved at `940eb98:capstone_v21.md` (`5fc9c686…`).
+- **Anchors ratified on 2026-10-01** under the Owner's task-scoped suspension ("ההשעיה
   תכסה כל מה שצריך"):
   - **Research:** `capstone_v21.md` **v21-r9**, SHA-256
-    `5fc9c6862aa9f623af29db295e79456ecd94c60e213f8f286cdca97153e09175`.
+    `5fc9c6862aa9f623af29db295e79456ecd94c60e213f8f286cdca97153e09175`. Superseded by v21-r10
+    above, which keeps its bytes.
     - §20 governs CP-22. It adds a header, a CP-22 row in §10 and §20; additions only.
-    - CP-22 is closed. §20.1's sentence "the block split is removed in every outcome" yields to
-      the rule's result and the Owner's decision of 2026-10-04 that v4 stays as it is. The next
-      anchor revision records this
-      ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)).
     - v21-r8 is preserved at `c352436:capstone_v21.md` (`81d61271…`).
   - **Publication:** PUBLISH_RULES **1.3**, SHA-256
     `5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4`.
@@ -306,8 +330,29 @@ decision remains a boundary, not an active workstream.
   - **Checks:** `make verify` binds the cross-surface claim set. PRES-1 repaired F05:
     `scripts/check_links.py` now fails on broken required links; its post-deploy gate passed.
   - **Secret guard:** `.githooks/` together with `scripts/secret_guard.py`. It is enabled locally
-    with `git config core.hooksPath /Users/djourno/Downloads/PJM/.githooks`, and a fresh clone
-    must enable it again.
+    with `git config core.hooksPath /Users/djourno/Downloads/PJM/.githooks`.
+    - Since 2026-10-04, the SessionStart hook `.claude/hooks/session_start.py` (wired in
+      `.claude/settings.json`) restores it at every session start, when it is unset or points at
+      a missing directory.
+    - That covers fresh clones and cloud sessions. The Owner's suspension expressly authorized
+      that write.
+  - **Checkpoint tools (2026-10-04,
+    [automation plan](docs/automation-plan.md) items 1, 2, 4, 5 and 8).** A party checking
+    someone else's work runs `main`'s copy: `git show main:scripts/<tool> | python3 -I - …`.
+    - **`scripts/bar.py`**: verbatim plan sections with their SHA-256 (`bar`), byte checks of
+      quoted bars (`check`), the brief's templates §1 form (`brief`), and file identities
+      (`identity`).
+    - **`scripts/gauntlet.py`**, for the Lead:
+      - `start` and `return`;
+      - `critic-open`, `critic-brief` and `critic-close`.
+    - **`scripts/gauntlet.py`**, for the Orchestrator:
+      - `receipt`, which prints templates §4's list verbatim (the Owner's ruling of 2026-10-04:
+        that list governs);
+      - `inspect`, `citations` and `discard`;
+      - `reclaim --disposition`, which enforces the tag guard and keeps a verified bundle;
+      - `land-commands`, which only prints the Owner's non-interactive LAND sequence.
+    - **`scripts/progress_diff.py`**: this file's omission diff. Only the Orchestrator uses it,
+      and never from a hook.
   - **Claude Code cloud sessions (first used 2026-09-30):**
     - Each session is a fresh, shallow GitHub clone, without `.local/`, credentials or the
       Owner's local branches. State on the Owner's machine is confirmed by the Owner, never
@@ -567,6 +612,35 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Automation implemented, branches cleaned, v21-r10 ratified, 2026-10-04.**
+  - **The Owner's questions, answered:**
+    - **A meta-learner that predicts each member's weight.** It is legal only walk-forward.
+      Filed in 4.8 as a NumPy network, with baselines.
+    - **More data (energy prices, rates, a fear index).** CP-15's feasibility sheet already found
+      the blocker is legal, origin-correct data, not the idea. A comprehensive research was filed
+      for immediately after DDNN, including the Owner's "+2" vintage idea.
+  - **The Owner's instructions,** quoted in the r9 → r10 amendment record:
+    - the approved order;
+    - "השעיית Lockdown";
+    - the receipt ruling, that templates §4's list governs;
+    - "אישור commit ו-push להכל";
+    - "בצע".
+  - **Done.**
+    - **Branches.** The automation plan's branches were removed: `kind-edison` was fully merged,
+      and `t45wdc` was archived and deleted. The sibling proposal `js1sd0` was archived and
+      deleted. Only `main` remains.
+    - **Tools.** Items 2, 1, 5, 3, 4 and 8 were implemented, with 16 tests. The full suite passed
+      on a clean worktree (1,323 passed, 7 skipped), and they were pushed as `42e4ceb`.
+    - **The anchor.** v21-r10 was written as additions only (§20.13, §21 CP-23, §22 the order).
+      Its amendment record and this update were committed and pushed.
+  - **Resolved,** per the omission diff (`scripts/progress_diff.py`):
+    - the open question on the 4.6 candidate and v5 rule, by v21-r10 §21;
+    - the items left from CP-22's period: the stash, dropped by the Owner; the branches, removed;
+      the automation plan, implemented;
+    - the old next-pending text, replaced by CP-23;
+    - "[First 4.6 brief]", replaced by "[CP-23 brief]".
+  - **Not done.** No fit, model run, data retrieval, MLflow write or deployment. CP-23's
+    execution is not granted yet.
 - **CP-22 received, decided, landed and closed; the v4 wording fixed, 2026-10-04.**
   - **Return.**
     - The Lead's terminal return was PASS, with candidate `29d8d38` and evidence tip `8daf7d0`,
@@ -875,14 +949,11 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Next Owner action: the 4.6 candidate decision** (below). It opens the DDNN route against
-  the three-block v4.
-- **Left to the Owner from CP-22's period, not CP-22's:**
-  - `stash@{0}` (GitHub Desktop), whose two files are superseded drafts. It can be dropped.
-  - The local branch `claude/automation-plan-corrections-t45wdc`. It belongs to the automation
-    plan, and the same branch exists on origin.
-  - The [automation plan](docs/automation-plan.md) itself is a proposal from another session,
-    not implemented. It is independent of the research sequence.
+- **Next Owner action: CP-23's execution grant,** once its brief is issued.
+  - Before granting it, the Owner may reverse any delegated design choice in v21-r10 §21.12
+    (D4–D10), for example the one-third member weight or the ceilings.
+  - The Owner's decisions of 2026-10-04 settled the 4.6 candidate: v5 = v4 plus a DDNN member,
+    against v4, anchored in v21-r10.
 
 - **PRES-3's three advisories for the Owner (open; none blocks closure).** Details are in the
   advisory log at the evidence tip. Recommended: defer all three, as below.
@@ -901,27 +972,6 @@ Session Log.
   - **A-PRES3-5, a note on standard §15** on where the met / not-met column may sit.
     - It edits a locked publication anchor, so it needs a task-scoped Lockdown suspension.
     - Recommended: fold it into the pending governance follow-up (PRES-1 W16, D6 of 2026-09-28).
-- **The 4.6 candidate and v5 rule (open, Owner; needed before any 4.6 brief).** §18 (v21-r7)
-  fixes only DDNN, NumPy only, PyTorch as a test reference, the 4.6L → 4.6R → 4.6C route and
-  "Nothing is opened". There is no pre-registered adoption rule for a v5 yet.
-  - **Recommendation, following CP-21's pattern:**
-    - the candidate is v5 = v4 plus a DDNN component;
-    - DDNN alone is a study arm;
-    - the opponent is the three-block v4 on identical rows, with v3 as a reference.
-  - **Then a new anchor section.** It needs the Owner's task-scoped Lockdown suspension, and
-    would carry:
-    - the candidate;
-    - a v5 rule set in advance, like `cp21-adoption`: joint improvement, the six §8
-      diagnostics, a complete valid evaluation and a per-fold veto;
-    - 4.6L and the entry conditions for 4.6R (§18.3's checks);
-    - D4 ceilings and controls;
-    - a publication plan for both outcomes (PRES-4).
-  - **Then** the Owner's approval, the brief, the Lead, the receipt, the LAND and PRES-4.
-  - **Fixed whatever is decided:**
-    - v4's information;
-    - no data after 2026-04-07;
-    - positive controls that survive the model's own transforms;
-    - 4.7T's manifest carries v3 and v4, and v5 if adopted.
 - **Final-product Space decisions are deferred to the end, by the Owner's instruction (2026-09-30).**
   They are listed under "[End of programme]" in the Notes, and are not raised before then.
   Unattended daily publication was approved on 2026-09-30 and written into `AGENTS.md`.
@@ -1002,10 +1052,16 @@ Session Log.
     - The fix: count only tracked files, or exclude dotfiles.
     - Until then, before building the page locally, check `git status --ignored models/champion`.
 - **[4.8 Recombination] The Owner's idea, 2026-10-04: "תתייק ב4.8 לבחון משקל לכל בלוק".**
+  Bound by v21-r10 §22.
   - **To test:** a LightGBM weight for each hour block, in place of the fixed 1/3.
-  - **Noted as an idea only:**
-    - a weight that varies over time or by period;
-    - a model trained to predict the weight, for example from regime indicators.
+  - **Filed on the Owner's question, 2026-10-04:** "לבחון רשת ב-NumPy לצורך meta-learner".
+    - **The candidate:** a small NumPy network, on DDNN's code, that predicts each member's
+      weight for tomorrow from regime features. Examples are recent volatility, each member's
+      recent errors, season and hour block.
+    - **Its baselines:** fixed weights, per-block weights, and weights from recent errors.
+    - **Its rule:** set in advance. Simple baselines often match a meta-learner, which can lag
+      exactly at a regime change.
+  - **Also noted as an idea:** a weight that varies over time or by period.
   - **Admissibility.** Only causal forms are legal:
     - estimated at each origin from released errors only (≤ D−2), walk-forward;
     - designed and frozen before any scoring.
@@ -1030,23 +1086,66 @@ Session Log.
       of S, so the gain may not be demonstrable.
   - **Timing.** Best done after DDNN, so that all members' weights are learned together once. Any
     result stays development evidence; 4.7T is the test.
-- **[First 4.6 brief]** Only after the Owner's candidate decision and the new anchor section (Open
-  Questions). Cite v21-r7 §18 and that section. Fix the NumPy-only implementation rule, the
-  PyTorch reference-test tolerances and how those tests are installed and run so that they
-  cannot be skipped silently, and re-estimate 4.6's effort for DDNN. Under the standing rule,
-  amended 2026-09-30, DDNN gets v4's information and faces v4 on identical rows, with v3 as a
-  reference. v4 is the three-block construction, since CP-22 made no replacement. Carry the
-  non-interactive Git rule into every Lead instruction. Tell the Lead to commit work in progress
-  before any pause, because GitHub Desktop stashes untracked files when the Owner switches
-  branches.
+- **[CP-23 brief]** Cite v21-r10 §21 and its SHA-256, and bind §21.10 as the bar. Check the
+  brief with `scripts/bar.py brief`, and quote the bar with `scripts/bar.py bar … --quote`.
+  - **Tell the Lead to use the tools:**
+    - `scripts/gauntlet.py start cp-23` first;
+    - `critic-open`, `critic-brief` and `critic-close` for the Critic;
+    - `return` for the return.
+  - **Carry into every Lead instruction:**
+    - the non-interactive Git rule;
+    - commit work in progress before any pause, because GitHub Desktop stashes untracked files
+      when the Owner switches branches;
+    - export `MLFLOW_DISABLE_TELEMETRY=true` and `DO_NOT_TRACK=1`.
+  - **The test-only download.** The only download is the pinned PyTorch CPU wheel. The brief
+    names it as an Owner-authorized action.
 - **[CP-22]** Closed on 2026-10-04 with no replacement; v4 is unchanged
   ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). PRES-4's replacement plan was not
-  entered. The next anchor revision records the outcome against §20.1.
+  entered. v21-r10 §20.13 records the outcome against §20.1.
+- **[Data admission research] Immediately after DDNN** (v21-r10 §22, stage 7), with 4.4V. The
+  Owner's scope, 2026-10-04: "מחירי אנרגיה, ריביות, מדד פחד בבורסה המקומית כל מה שאפשר וחוקי
+  לשלוף וללמוד ממנו".
+  - **Candidates:**
+    - gas (TTF and alternatives), oil, coal and EUA;
+    - central-bank rates;
+    - a German volatility index (VDAX-NEW or V2X);
+    - neighbouring zones and cross-border capacity;
+    - outages;
+    - wind, solar and load forecasts.
+  - **Inputs published after the 11:00 UTC origin.** For example, the TSO wind and solar
+    forecasts are published at 18:00. Test two routes:
+    - an earlier vintage that already covers delivery day D, such as a forecast for D published
+      at 18:00 on D−2. This is the Owner's "+2" idea;
+    - another provider, or an API, that publishes before the origin.
+  - **Wind and solar.** Compare an external, reliable forecast API with building 4.4V's own
+    model.
+  - **Admission.** Every input must pass CP-15's five admission checks
+    (`reports/cp15/feasibility/structural_inputs.md`). They require a licence for research and
+    for the final product's daily operation, an `available_at` vintage, missingness, an
+    imputation rule, and coverage from 2019 with redistribution rights.
+  - **Starting point.** CP-15 found no free, redistributable, origin-correct TTF series from 2019;
+    EEX's terms restrict use, including AI use. EUA has only an auction archive.
+  - **Order.** Desk research first. Any retrieval, subscription or purchase is the Owner's
+    decision. Admitted inputs go to a pre-registered ablation checkpoint, and DDNN's comparison
+    stays on v4's information.
+- **[Security hardening before CP-18]** CP-18's daily pipeline handles credentials every day.
+  Before it, bring back the security items of the archived proposal
+  `archive/deterministic-migration-plan-20261001` (v21-r10 §22):
+  - a value-free leak scan with salted fingerprints;
+  - an AST lint for bare `os.environ[...]` reads;
+  - GitHub rulesets;
+  - a language rule for role files, which today say "Reply in English" while the Owner wants
+    Hebrew.
 - **[Formerly unscheduled hypothesis]** v3 plus a single pooled LightGBM member was tested inside
   CP-22's design (§20.2), as A-LP and the pooled members. None was adopted, and no replacement was
   made.
 - **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4. CP-22 made no
   replacement, so v4 there is the three-block construction; v5 joins if 4.6 adopts one.
+- **[Before the next publication's brief — binding, v21-r10 §22]** Bring automation items 6
+  (post-deploy publication receipt) and 7 (pre-review check runner) to the Owner for a decision.
+  The brief is not issued before it. Also carry:
+  - A-PRES3-1, -5 and -7 (Blockers);
+  - the Owner's choice of v5's encoding, if v5 is adopted (PUBLISH_RULES §14).
 - **[Every new publication brief]** Pin PUBLISH_RULES 1.3 (from 2026-10-01; 1.2 before) and
   incorporated source hashes;
   retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under
@@ -1178,7 +1277,10 @@ Each was paid for once. None should be relearned.
   - `archive/cp-0-attempt-1`, `archive/weather-admission-20260923` and
     `archive/cp15-cp16-content-20260923`;
   - `archive/v21-r7-session-20260930` = `e84d467`, the retired cloud session branch behind
-    PR #1, pushed by the Owner on 2026-09-30.
+    PR #1, pushed by the Owner on 2026-09-30;
+  - `archive/automation-plan-corrections-20261001` = `1615866`, a superseded draft of the
+    automation plan, and `archive/deterministic-migration-plan-20261001` = `110e361`, the sibling
+    security proposal. Both branches were deleted on 2026-10-04, on the Owner's instruction.
 
   Squash landings do not contain the candidate SHAs; only the tags preserve them. Verdicts are in
   `docs/track-b/evidence/<cp>/`.
@@ -1246,7 +1348,8 @@ Each was paid for once. None should be relearned.
   - `capstone_M4_v2-plan.md`;
   - `capstone_v20.md` and its archived CP-10 copy;
   - `capstone_v21.md` with its amendment sheets, the latest being
-    [r8 → r9](docs/track-b/capstone_v21-r8-to-v21-r9-amendments.md);
+    [r9 → r10](docs/track-b/capstone_v21-r9-to-v21-r10-amendments.md);
+  - the [automation plan](docs/automation-plan.md), with its implementation status;
   - the programme plan and its reviews in `docs/track-b/`;
   - the [CP-21 publication plan](docs/track-b/cp-21-publication-plan-2026-09-29.md) and the
     unexecuted [CP-22 publication plan](docs/track-b/cp-22-publication-plan-2026-10-01.md);

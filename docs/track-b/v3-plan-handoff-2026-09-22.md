@@ -33,6 +33,17 @@ remain estimates, not budgets. The notes added below for 4.5 are consistency edi
 The 4.6 text below was edited for consistency on that date; each edited passage is marked
 *2026-09-30*. Where §18 and the text below differ, §18 governs. Nothing here opens 4.6.
 
+**2026-10-04 v21-r10 update (ratified).** [v21-r10 §21](../../capstone_v21.md) specifies CP-23,
+the [4.6](#work-4-6) route (4.6L → 4.6R → 4.6C) inside one checkpoint.
+
+- **The candidate.** v5 = v4 plus a DDNN member at one third, under the rule `cp23-adoption`
+  against the three-block v4. CP-23's execution needs the Owner's grant with its brief.
+- **The order after CP-22 (§22).** DDNN comes first. A comprehensive data-admission research
+  follows, together with [4.4V](#work-4-4v). Then [4.8](#work-4-8), with a NumPy meta-learner
+  among its arms, and then [4.7T](#work-4-7t).
+
+Where §21 and §22 differ from the text below, they govern.
+
 **2026-10-04 CP-22 outcome.** CP-22 returned PASS with **no replacement**. Both pooled members
 were non-inferior to v4 overall, but each was decisively worse in fold 4 (summer 2025). The Owner
 decided that v4 stays as it is, so the block split stays in v4, and 4.6's DDNN faces the

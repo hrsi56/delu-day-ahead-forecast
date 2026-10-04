@@ -1,3 +1,52 @@
+# Capstone v21-r10 — CP-23: the DDNN route, v5 = v4 plus a DDNN member; CP-22's outcome; the programme order (ratified)
+
+**Ratified by the Owner on 2026-10-04.** CP-22 closed with no replacement. The Owner then
+decided four things:
+
+- v4 stays as it is: "v4 נשאר כפי שהוא";
+- v5 = v4 plus a DDNN member, competing against v4: "v5 = v4 ועוד רכיב DDNN", "יתחרה כמובן מול
+  V4";
+- this revision anchors that, under a Lockdown suspension, and records CP-22's outcome against
+  §20.1;
+- the order after CP-22, in this sequence:
+  - the automation items;
+  - DDNN;
+  - a comprehensive data-admission research, together with 4.4V;
+  - 4.8 with a meta-learner;
+  - 4.7T at the end.
+
+What this revision adds, as additions only:
+
+- **§20.13** records CP-22's outcome.
+- **§21** specifies CP-23: programme 4.6, run through its route 4.6L → 4.6R → 4.6C inside one
+  checkpoint.
+- **§22** fixes the programme order after CP-22.
+- **§10** gains one CP-23 row.
+
+No other line changes: the headers below and §§1–20.12 remain byte for byte.
+
+**Status:** ratified under the Owner's grant. CP-23's execution needs the Owner's separate grant
+when its brief is issued (§21.11).
+
+Previous v21-r9 is preserved at `940eb98:capstone_v21.md`, SHA-256
+`5fc9c6862aa9f623af29db295e79456ecd94c60e213f8f286cdca97153e09175`.
+
+**Authority.** On 2026-10-04 the Owner wrote: "צריך סעיף עוגן חדש, v21-r10, תחת השעיית Lockdown.
+הסעיף יתעד גם את תוצאת CP-22 מול §20.1. מאושר באופן מלא, כולל השעיה וכולל קומיט פוש מה שאתה
+צריך". After the sequence above was set, the Owner added "בצע". The exact words are quoted in
+[the amendment record](docs/track-b/capstone_v21-r9-to-v21-r10-amendments.md).
+
+- **What the grant covers.** It acts as a task-scoped Lockdown suspension for:
+  - this revision;
+  - its amendment record;
+  - directly necessary consistency edits to the programme handoff and `progress.md`.
+- **When it ends:** at this task's terminal return.
+- **Who wrote it.** The agent drafted this text under that authority. It also fixed the design
+  choices the Owner did not state, and §21.12 marks each one. This is not a claim that the Owner
+  reviewed every sentence.
+
+---
+
 # Capstone v21-r9 — CP-22: v4 revised, with one pooled member and a dynamic interval layer (ratified)
 
 **Ratified by the Owner on 2026-10-01, and CP-22's execution authorized the same day.** The Owner
@@ -444,6 +493,7 @@ metrics must be ratified before that stage starts. **No clock starts in CP-15.**
 | CP-20 | Direct-GFS paired ablation: weather-augmented minus no-weather V2-H | Ratified v21-r4 §15; CP-20 execution and §15.7 immutable packaging authorized 2026-09-23; research only |
 | CP-21 | Programme 4.5 on top of v3: HG plus a fixed three-block LightGBM member, compared with HG; adoption as v4 or a not-adopted branch under §17.6 | Ratified v21-r6 §17; CP-21 execution authorized 2026-09-29 under §17.11; research only |
 | CP-22 | v4 revised: the three-block member replaced by one pooled member (R, then M), and a dynamic interval layer on the winner, compared with v4 under §20.6 | Ratified v21-r9 §20; CP-22 execution authorized 2026-10-01 under §20.11; research only |
+| CP-23 | Programme 4.6 (4.6L → 4.6R → 4.6C): DDNN written in NumPy only; v5 = v4 plus a DDNN member at one third, compared with v4 under §21.6 | Ratified v21-r10 §21; execution requires the Owner's grant with the issued brief (§21.11); research only |
 | CP-17 | Freeze the selected update policy and register verified initialization | Requires demonstrated feasibility and complete future bar |
 | CP-18 | Run the same policy and build the live scorecard from recorded issued predictions | Requires operational and publication authorization |
 | CP-19 | Evaluate the preregistered prospective policy | Requires CP-17 plus elapsed horizon and complete future bar |
@@ -2438,3 +2488,490 @@ retrieval, governance edits and later checkpoints.
 | D6 | Learned weight | Excluded; it stays in 4.8 |
 | D7 | Interval calibration | In CP-22: DL on the winner, with its own rule. The Owner's dynamics decision sets its form (§20.3). The Owner then added a fast component, as an add-on decision that never replaces the 7-day memory (W+DLF, `cp22-fast-component`): "אני רוצה לבדוק האם נכון להוסיף משקל מהיר יותר בנוסף, לזיהוי שינויים חדים" |
 | D8 | LEAR's internals | Diagnostics only; any change goes to a later, separate checkpoint |
+
+### 20.13 Outcome and the Owner's decision (added in v21-r10)
+
+**CP-22 returned PASS on 2026-10-04,** with an Integration PASS at `29d8d38`. It landed as
+`land/cp-22` = `ebb7d42`, with `evidence/cp-22` = `8daf7d0`
+([landing record](docs/track-b/cp-22-landing-2026-10-04.md)).
+
+- **`cp22-replacement`: no replacement.** R and M met conditions 1–3 and failed condition 4. Fold
+  4 (2025-05-01..07-29) is decisively worse than v4 for both, in MAE and in WIS.
+- **`cp22-dynamic-layer` and `cp22-fast-component`** do not apply, because there is no winner W.
+
+**The Owner's decision, 2026-10-04:** "v4 נשאר כפי שהוא".
+
+- **§20.1 yields to the rule's result.** Its decisions "the new version replaces v4" and "the
+  block split is removed in every outcome" do not take effect. The three-block construction
+  remains v4's only revision, and A10 is not exercised.
+- **The opponent.** "Same information, same opponent" names the three-block v4, and DDNN (§21)
+  faces it.
+- **No publication from the plan.** The PRES-4 plan's replacement publication is not entered,
+  because its entry condition 3 is unmet.
+- **The site's wording.** The v4 text was corrected on 2026-10-04, wording only, so that the
+  block split is no longer put forward.
+
+## 21. CP-23 — the DDNN route: v5 = v4 plus a DDNN member (v21-r10)
+
+### 21.1 The question and the Owner's decisions
+
+**The Owner's decisions, 2026-10-04:**
+
+- **The candidate.** v5 = v4 plus a DDNN member: "v5 = v4 ועוד רכיב DDNN".
+- **The opponent.** v4: "יתחרה כמובן מול V4". That is the three-block v4 (§20.13), on identical
+  rows, with v3, A1 and B2 as references.
+- **This section.** It is written under a Lockdown suspension.
+
+**What CP-23 decides.** It runs programme 4.6 under §18 as one checkpoint, along its route:
+
+1. **4.6L**, the provenance and licence record;
+2. **4.6R**, training-only resource entry, after the correctness checks against PyTorch;
+3. **4.6C**, one predefined comparison. It decides whether v5 is adopted in research
+   (`cp23-adoption`, §21.6).
+
+An entry failure at 4.6L or 4.6R ends the route before any evaluation fit:
+
+- DDNN is NOT_ADMITTED;
+- no comparison runs;
+- the failure is reported to 4.7 (§18.4).
+
+Engineering PASS requires neither admission nor adoption. A complete, valid NOT_ADMITTED or
+not-adopted result can pass.
+
+**Disclosed.** The Owner and the agents know the results of CP-15, CP-20, CP-21 and CP-22 on these
+five folds. The Orchestrator's hindsight weight bound of 2026-10-04 (§22) is also known. CP-23's
+results therefore stay `development_post_selection`, and 4.7T carries the protection.
+
+### 21.2 DDNN, the candidate and the arms
+
+**DDNN** is a feed-forward network with a Johnson SU distributional head for each delivery hour.
+It is written in NumPy only (§18.2) and has these properties:
+
+- **Information:** exactly v4's (§17.3). That covers `local_hour`, the three frozen GFS columns
+  and their missing indicators, under §15.3's training-only imputation. The Lead fixes the
+  representation, for example one row per delivery day with 24 outputs, in the protocol.
+- **Target:** §4's normalized target. It is inverted to EUR/MWh with the origin's common center
+  and scale, as L-N and PN are.
+- **History and refits:** `[max(2019-01-01, D−728), D)`, with a fresh fit at every origin.
+- **Early stopping:** on the window's last 28 calendar delivery days, which are training-only
+  inner validation.
+- **Configuration:**
+  - The protocol freezes a finite set of at most four configurations, and a training-only
+    selection rule in which a tie goes to the smaller configuration.
+  - The configuration is chosen at most once per fold, before its first origin, from data before
+    that origin only. It then stays fixed through the fold.
+- **Ensemble:** a fixed number of seeds, at most four. The protocol fixes how members combine;
+  quantile averaging is the default.
+- **Emission:** the seven CP-15 quantiles and the p50, from the ensemble's JSU quantiles. The
+  central forecast **D** is the ensemble's median. Crossing quantiles are restored by sorting, and
+  every such case is recorded.
+
+| ID | Role | Central forecast and intervals |
+|---|---|---|
+| v4 | Comparator: CP-21's saved HGL vectors | `(2/3)·c_HG + (1/3)·mean(L-N, L-R)`, H layer |
+| v3, A1, B2 | References: saved vectors | As committed |
+| v5 | The single eligible candidate | `(2/3)·c_v4 + (1/3)·D`, with HG's H layer re-estimated on v5's own errors |
+| D | Study arm: DDNN alone, never eligible | D, with its own JSU quantiles and p50 |
+| v3+D | Attribution: DDNN as v3's third member, never eligible | `(2/3)·c_HG + (1/3)·D`, H layer on its own errors |
+
+**Fixed:**
+
+- the one-third member weight;
+- v4's components, bit for bit.
+
+**Excluded:**
+
+- learned or per-block weights, which belong to 4.8 (§22);
+- new information, which belongs to stage 7 (§22);
+- any other model family;
+- TabPFN (§18.1).
+
+### 21.3 NumPy only, and the PyTorch reference
+
+§18.2 and §18.3 apply in full. CP-23 fixes four things.
+
+- **The import audit.** An import audit proves that the DDNN code imports NumPy and the standard
+  library only, and a fixture that imports a framework fails the audit.
+- **Gradient checks.** Finite-difference checks cover the analytic gradients of the Johnson SU
+  negative log-likelihood and of every layer.
+- **The reference checks** compare against PyTorch on fixed inputs and seeds, at tolerances the
+  protocol freezes before any comparison run:
+  - the forward pass;
+  - the JSU log-likelihood and its gradients;
+  - short optimizer trajectories.
+- **How the reference is installed and run.** PyTorch's CPU build is pinned in `uv.lock` as a
+  test-only dependency, outside the runtime and default groups.
+  - Its run, its versions and its result are recorded in the ledger.
+  - A missing PyTorch fails the step; it is never a skip.
+  - A failed check blocks every DDNN result until the NumPy code is fixed (§18.3).
+
+### 21.4 The entry gates
+
+**4.6L: provenance and licence.** The record goes to
+`reports/distribution-challenger/licence-admission.md`.
+
+- **Provenance.** It cites the method sources and confirms that no third-party code or weights
+  were copied.
+- **Licences.** It records the licence of each test-only dependency, with source, version and
+  check date.
+- **Uses.** It gives every use in the handoff's use table a disposition.
+- **Stop.** If research use or reproducible retention is not permitted, or is unresolved, the
+  route stops. The cap is 4 active hours.
+
+**4.6R: training-only resource entry.** The record goes to
+`reports/distribution-challenger/resource-admission.md`.
+
+- **The data.** Training partitions only, with no evaluation-fold or reserved outcome.
+- **The order.** The §21.3 checks pass first.
+- **What it measures:**
+  - peak memory;
+  - fit and prediction time at the representative scale;
+  - finite, ordered emission of the seven quantiles and the p50.
+- **The projection.** It projects the full run against §21.8 and finishes PASS or NOT_ADMITTED,
+  with the cause.
+- **No smaller experiment.** A projection above a ceiling is NOT_ADMITTED, with a concrete
+  blocker. It does not lead to a smaller experiment.
+
+**Before any evaluation fit,** the Lead commits the frozen pre-run protocol:
+
+- DDNN's representation, architecture family, configuration set and selection rule;
+- the early-stopping rule, ensemble size, seeds and quantile construction;
+- the reference tolerances;
+- the arms;
+- budget accounting;
+- the rule's text.
+
+### 21.5 Population, metrics and diagnostics
+
+**The population.** §20.4 applies:
+
+- 10,747 keys, 638 origins and the genuine warm-up starts;
+- forecast origin D−1 11:00 UTC;
+- released errors at D−2 or earlier, each consumed once;
+- weather only from CP-20's retained grids;
+- nothing after 2026-04-07;
+- reused vectors only when they match their committed blobs.
+
+v5 and v3+D take their warm-up errors from DDNN fits at the warm-up origins, inside §21.8's
+caps.
+
+**Metrics and uncertainty.** §20.5's apply:
+
+- the emitted p50's S_MAE and S_WIS, equal-fold and B0-normalized;
+- the shared 2,000-replicate CP-20 index set, with seed 15042 and 7-day blocks within folds;
+- ratio intervals;
+- per-fold paired daily-loss intervals;
+- all six §8 diagnostics;
+- coverage with width;
+- the stress period and the peak.
+
+**Contrasts,** each read under §17.5:
+
+| Contrast | Role |
+|---|---|
+| v5 − v4 | The adoption decision (§21.6) |
+| v5 − v3 | Reference |
+| D − v4, D − v3 | DDNN alone, descriptive |
+| (v3+D) − v3, beside v4 − v3 | DDNN against LightGBM as v3's third member |
+| v5 − (v3+D) | Whether LightGBM still adds once DDNN is present |
+
+**Diagnostics.** They are descriptive and choose nothing:
+
+- DDNN's own calibration: coverage by level and the PIT histogram;
+- extrapolation: forecasts against the training-window maximum on extreme days, beside CP-22's
+  tree record;
+- the 2022 peak and fold 4;
+- ensemble and seed stability;
+- the configuration chosen in each fold;
+- fit cost, and a cold daily cycle at 20 or more origins stratified across folds.
+
+They are written to `reports/distribution-challenger/`.
+
+### 21.6 Pre-registered rule `cp23-adoption`, set 2026-10-04
+
+v5 is adopted in research as v5 if, and only if, all four of these hold against v4 on identical
+rows:
+
+1. **Joint improvement over v4.** On the paired v5 − v4 differences, the upper 95% endpoint of
+   ΔS_WIS is < 0 and the upper 95% endpoint of ΔS_MAE is ≤ 0.
+2. **No regression.** v5 meets all six original §8 diagnostics.
+3. **A complete, valid evaluation.** Engineering PASS with a fresh binding Integration verdict,
+   and all 10,747 keys issued with finite, ordered quantiles.
+4. **No resolved per-fold degradation.** No fold has a 95% paired daily-loss interval
+   (v5 − v4) lying entirely above zero, in MAE or in WIS.
+
+**Otherwise,** v5 is not adopted. CP-23 becomes the branch "DDNN member on v4", with the first
+unmet condition and its values as the reason. If DDNN fails entry, there is no comparison and no
+adoption decision.
+
+**How the rule is applied:**
+
+- mechanically, never re-weighted, re-thresholded or overridden after results;
+- D and v3+D are never eligible;
+- a mixed result is no demonstrated joint preference, never equivalence;
+- an INCOMPLETE or BLOCKED return yields no decision and nothing to publish.
+
+**What adoption means:**
+
+- **A research status.** v1 remains the released product and the demo, and no designation,
+  freeze or Live follows (§16).
+- **The opponent.** At CP-23's landing, "same information, same opponent" comes to name v5.
+- **4.7T.** Its frozen manifest carries v3, v4 and v5.
+- **Naming, proposed:**
+  - adopted: "v5 · DDNN member added", with predecessor v4. The A3 transition is titled "From v4
+    to v5: adding a distributional neural network";
+  - not adopted: the branch "DDNN member on v4".
+
+### 21.7 Causal and integrity controls
+
+§17.7's controls and §20.7's applicable ones apply to DDNN, v5 and v3+D. Each negative assertion
+is paired with a positive control.
+
+**Leakage and selection:**
+
+- delivery-day and future masking change nothing;
+- a non-uniform D−1 price mutation moves the forecast;
+- future weather changes nothing;
+- a validation-outcome mutation can change early stopping and the configuration choice, while
+  evaluation outcomes cannot.
+
+**DDNN:**
+
+- the import audit and the gradient checks (§21.3);
+- the reference checks, at the frozen tolerances;
+- determinism: a fixed seed reproduces a fit bit for bit on the same machine, or within a
+  tolerance it measures and records;
+- restart replay;
+- every emitted quantile finite and ordered, with each rearrangement recorded.
+
+**Composites:** `c_v5 − (2/3)·c_v4 = (1/3)·D` within tolerance, and v5 and v3+D run on HG's
+H-layer code path.
+
+**Identity and storage:**
+
+- reused HGL, HG, A1 and B2 vectors match their committed blobs;
+- an independent representative HG and v4 slice is reproduced;
+- the boundary guard after 2026-04-07;
+- byte-exact storage of hash-bound files.
+
+### 21.8 Ceilings and calendar (D4)
+
+These are maxima, not targets. 4.6R projects the full run against them.
+
+| Dimension | Maximum |
+|---|---|
+| New models | 1 (DDNN). 0 other families, information, features or learned weights |
+| Policies | 1 eligible (v5); 2 study and attribution arms (D, v3+D); saved references v4, v3, A1 and B2 |
+| DDNN member fits | 4,000 in the main run; 6,000 in total, including 4.6R, controls, reproduction, failures and review |
+| Replay | 8,000 new policy-days |
+| References and uncertainty | 3 metric-only reference passes; 3 bootstrap passes of 2,000 replicates, including independent review |
+| Compute | 60 aggregate machine-hours; at most 4 concurrent workers; BLAS 1; CPU only; no GPU, MPS or cloud |
+| Memory and disk | 10 GiB RSS; 10 GiB added peak disk |
+| Data, network and cost | 0 data bytes downloaded. The one permitted download is the pinned PyTorch CPU test dependency, from PyPI, with its licence recorded in 4.6L. 0 remote writes; $0 |
+| Effort | About 30 active hours; hard ceiling of 40 |
+
+**Calendar.** §17.8's rule: no scheduled work from Friday 00:00 to Sunday 00:00,
+Asia/Jerusalem. An Owner exception given in writing is honoured as in CP-22: a scoped, logged
+wrapper, with the rule and the frozen code unchanged.
+
+**Before dependent work,** the Lead completes §14.6 E1–E4 for CP-23. An insufficient allowance
+returns a concrete blocker, not a smaller experiment.
+
+### 21.9 Publication packet and MLflow
+
+§17.9 applies, with these changes:
+
+- **Pinned rules:** PUBLISH_RULES 1.3, at the hash the issued brief records.
+- **The packet:** `docs/track-b/evidence/cp-23/publication-packet.md`, completing every section
+  of the packet template. It contains:
+  - draft registry entries: v5 adopted, or the not-adopted branch; the study arms; comparator v4;
+    population `common-10747h`;
+  - the claim map `docs/track-b/research-content/cp23-claims.md`, with the withheld claims;
+  - the derived quantities: the verdict, the rule and its date, the distance from v4, N (one
+    candidate), the ratio intervals and the per-fold MAE;
+  - draft slot texts for the outcome the rule yields, including the v4 → v5 transition (A3) if
+    v5 is adopted;
+  - §5b and §5d marked not applicable;
+  - §8's intended identities.
+- **MLflow:**
+  - the experiment is `delu-generations`;
+  - local tracking only, in `.local/mlruns/cp23`;
+  - a draft export, `reports/distribution-challenger/mlflow-export-draft/cp23.json`;
+  - the published set is unchanged, and there is no public write.
+- **Public surfaces are unchanged in CP-23.**
+- **Publication** follows the Owner's LAND, as the next publication under PUBLISH_RULES 1.3.
+  - Before its brief, the Owner sets v5's encoding (PUBLISH_RULES §14) and decides automation
+    items 6 and 7 (§22).
+  - If v5 is not adopted, the Owner decides whether the branch is published.
+
+### 21.10 Complete CP-23 acceptance checklist
+
+All sixteen items are mandatory. Engineering PASS does not require admission or adoption: a
+complete, valid NOT_ADMITTED or not-adopted result can pass.
+
+1. **Verify the starting state** and preserve prior evidence and other sessions' work.
+   - Verify the ratified anchor's SHA-256 against the brief.
+   - Record the baseline with `scripts/gauntlet.py start cp-23`.
+   - On `gauntlet/cp-23`, package the issued brief byte for byte as
+     `docs/track-b/evidence/cp-23/issued-brief.md`.
+2. **Complete 4.6L,** with every use dispositioned. Stop at its cap, or if research use is not
+   permitted.
+3. **Prove the code's correctness under §21.3:**
+   - the NumPy-only import audit;
+   - finite-difference gradient checks;
+   - the PyTorch reference checks, passing at the frozen tolerances and installed so that they
+     cannot be skipped silently.
+4. **Complete 4.6R** on training data only, with the measured values, the projection against
+   §21.8, and PASS or NOT_ADMITTED with its cause. On NOT_ADMITTED, stop, with no comparison,
+   and report to 4.7.
+5. **Commit the frozen pre-run protocol** (§21.4) before any evaluation fit.
+6. **Verify the inputs:**
+   - population, manifest and frozen weather;
+   - saved-vector identities;
+   - an independent representative HG and v4 slice;
+   - no retrieval, and nothing after 2026-04-07.
+7. **Implement exactly DDNN, v5 and the arms,** with training-only selection and early stopping,
+   and prove composite parity.
+8. **Prove every control** of §21.7 and the inherited ones, each negative paired with a positive.
+9. **Produce all 10,747 keys** for every new policy, with finite, ordered quantiles and the
+   emitted p50 kept separate from the central forecast.
+10. **Score every policy,** and independently verify the scores, the diagnostics, coverage with
+    width, and all six §8 diagnostics for each new policy.
+11. **Apply `cp23-adoption` mechanically.** State the decision with its first unmet condition,
+    and every §21.5 contrast with its reading. Keep the Engineering, research and product
+    statuses distinct.
+12. **Deliver §21.5's diagnostics** to `reports/distribution-challenger/`.
+13. **Enforce and report every §21.8 cap,** and respect the calendar.
+14. **Supply the durable evidence,** executable reproduction commands and byte-exact storage.
+    Deliver §21.9's packet and draft export. Public surfaces and the published export set stay
+    unchanged, CI is green, and there is no public write.
+15. **Obtain one fresh, independent Integration-Critic PASS** on a clean detached checkout of
+    the final candidate. Launch it with `scripts/gauntlet.py critic-open`, `critic-brief` and
+    `critic-close`. The review independently:
+    - recomputes the metrics, intervals and the verdict;
+    - reruns the reference checks;
+    - reproduces a representative DDNN fit, its ensemble and its quantile emission;
+    - re-derives the packet.
+16. **Return the canonical packet** (templates §3), checked with `scripts/gauntlet.py return`.
+    It carries:
+    - both terminal SHAs and the verdict-only delta;
+    - resource totals;
+    - branch, worktree and stash accounting.
+
+    Stop at CP-23's local result.
+
+### 21.11 Paths and entry authority
+
+**Write paths:**
+
+- `src/cp23/`, `tests/cp23/`, `scripts/cp23_*.py`;
+- `reports/distribution-challenger/`, `docs/track-b/evidence/cp-23/`;
+- `docs/track-b/research-content/cp23-claims.md`;
+- `scripts/mlflow_export.py` and its tests, only as the draft export needs;
+- `pyproject.toml` and `uv.lock`, only for the pinned, test-only PyTorch reference.
+
+**Ignored material:** `.local/{worktrees,artifacts,tmp}/cp-23/` and `.local/mlruns/cp23`.
+
+**Read-only:**
+
+- CP-15, CP-16, CP-20, CP-21 and CP-22 code and reports;
+- `evidence/cp-21` and `evidence/cp-22`;
+- `.local/artifacts/cp-20/`, `cp-21/` and `cp-22/`.
+
+**Preserve:** v1; all earlier evidence; the public surfaces; Q&A; `progress.md`; every locked
+document.
+
+**Roles.** The accountable executor is the CP-23 Engineering Lead. The reviewer is its fresh,
+independent Integration Critic.
+
+**Ratification: GRANTED by the Owner, 2026-10-04** (the header's authority). **CP-23's
+execution: not yet granted.** It needs the Owner's explicit grant, with the issued brief. That
+grant would cover three things:
+
+- CP-23's execution under this section and the brief;
+- local `gauntlet/cp-23` candidate and evidence commits;
+- exact packaging of the issued brief.
+
+**Never authorized here:**
+
+- mainline operations, pushes and tags;
+- publication and remote writes;
+- data retrieval, beyond the pinned test dependency;
+- governance edits;
+- later checkpoints.
+
+### 21.12 Decisions recorded, 2026-10-04
+
+| # | Decision | Set by | Ratified outcome |
+|---|---|---|---|
+| D1 | The candidate | Owner | v5 = v4 plus a DDNN member |
+| D2 | The opponent | Owner | The three-block v4 on identical rows; v3, A1 and B2 as references |
+| D3 | This anchor | Owner | v21-r10, under a suspension, recording CP-22's outcome (§20.13) |
+| D4 | The member weight | Orchestrator, under the Owner's grant | One third, as CP-21 added LightGBM: `(2/3)·c_v4 + (1/3)·D`. Fixed, never tuned; learned weights stay in 4.8 |
+| D5 | Shape | Orchestrator, under the Owner's grant | One checkpoint running 4.6L → 4.6R → 4.6C with gates; entry failure ends it before any evaluation fit |
+| D6 | Intervals | Orchestrator, under the Owner's grant | v5 and v3+D use HG's H layer on their own errors; DDNN alone uses its own JSU quantiles |
+| D7 | The rule | Orchestrator, under the Owner's grant | `cp23-adoption`: CP-21's four conditions, against v4 |
+| D8 | Ceilings | Orchestrator, under the Owner's grant | §21.8 |
+| D9 | The reference tests | Orchestrator, under the Owner's grant | PyTorch CPU, pinned and test-only, run and recorded, never skipped silently |
+| D10 | Publication | Orchestrator, under the Owner's grant | The next publication after LAND if v5 is adopted; the Owner sets v5's encoding first |
+| D11 | The programme order | Owner | §22 |
+
+## 22. Programme order after CP-22 (Owner, 2026-10-04)
+
+The Owner approved this order on 2026-10-04 ("הסדר המאושר", then "בצע"). It amends the
+handoff's sequence only as stated here.
+
+1. **Automation, done 2026-10-04.**
+   - Items 2, 1, 5, 3, 4 and 8 of `docs/automation-plan.md` were implemented in commit
+     `42e4ceb`.
+   - Item 3 was created under the Owner's task-scoped suspension of the same day.
+   - Templates §4's receipt list governs (the Owner's ruling).
+2. **CP-23, DDNN (§21).**
+3. **Immediately after DDNN: a comprehensive data-admission research, together with 4.4V.**
+   - **Scope, in the Owner's words:** energy prices, interest rates, the local stock market's fear
+     index, and "כל מה שאפשר וחוקי לשלוף וללמוד ממנו". The research covers at least:
+     - gas (TTF and alternatives), oil, coal and carbon (EUA);
+     - central-bank rates;
+     - a German volatility index;
+     - neighbouring-zone and cross-border inputs;
+     - outages;
+     - wind, solar and load forecasts.
+   - **Late publication.** For an input published after the 11:00 UTC origin, the research tests
+     two routes. One is an earlier vintage that already covers the delivery day, for example a
+     forecast for day D published at 18:00 on D−2. The other is a provider that publishes before
+     the origin. It also assesses an external wind and solar forecast API, available and
+     reliable, as an alternative to building 4.4V's own model.
+   - **Admission checks.** Every input must pass CP-15's five admission checks
+     (`reports/cp15/feasibility/structural_inputs.md`). They require, for both research and the
+     final product's daily operation:
+     - a licence;
+     - an `available_at` vintage;
+     - missingness;
+     - an imputation rule;
+     - coverage from 2019 with redistribution rights.
+   - **Desk research first.** Any retrieval or purchase is the Owner's decision. Admitted inputs
+     then go to a pre-registered ablation checkpoint.
+4. **4.8, recombination with a meta-learner.**
+   - **The candidate.** A small NumPy network, on DDNN's infrastructure, that predicts each
+     member's weight from regime features.
+   - **How it learns.** Walk-forward only: at each origin it learns from released errors and
+     features available then, and its design is frozen before scoring.
+   - **What it faces,** under a pre-registered rule:
+     - the fixed weights;
+     - per-block weights, which the Owner filed on 2026-10-04;
+     - weights from recent errors.
+   - **Disclosed in advance.** The Orchestrator's hindsight bound for the LightGBM weight is
+     known: per block −0.8% and per fold and block −1.6% pooled central MAE. It is an oracle, not
+     selectable.
+5. **4.7T,** then CP-17–CP-19.
+
+**Binding reminders:**
+
+- **Before the next publication's brief is issued,** the Orchestrator brings automation items 6
+  (post-deploy publication receipt) and 7 (pre-review check runner) to the Owner for a decision.
+  The brief waits for that decision.
+- **Before CP-18's daily pipeline,** which handles credentials every day, the Orchestrator brings
+  back the security items of the archived proposal `archive/deterministic-migration-plan-20261001`:
+  - a value-free leak scan;
+  - a lint for bare environment reads;
+  - GitHub rulesets.
