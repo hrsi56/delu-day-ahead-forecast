@@ -12,9 +12,23 @@
 | 8. `progress.md` omission diff | Script | Per `progress.md` update: groups the removals in the existing `git diff` by section and flags removals from protected sections | S |
 
 Role-maintenance analysis, revised 2026-10-02 after a second independent review of `26a2615`.
-Proposal only: nothing below is implemented. Claude Code capabilities were re-checked on 2026-10-02
-against code.claude.com/docs/en/ (hooks, permissions, sub-agents, worktrees, cloud-environments)
-and are cited inline as page#anchor; what the docs do not settle is marked UNVERIFIED.
+Claude Code capabilities were re-checked on 2026-10-02 against code.claude.com/docs/en/ (hooks,
+permissions, sub-agents, worktrees, cloud-environments) and are cited inline as page#anchor; what
+the docs do not settle is marked UNVERIFIED.
+
+**Status, 2026-10-04 (Owner's decision, on the Orchestrator's recommendation).**
+
+- **Implemented, in the build order:** items 2, 1, 5, 3, 4 and 8, with tests in
+  `tests/test_46_checkpoint_tools.py` and `tests/test_47_session_start_hook.py`.
+  - Item 3 was created under the Owner's task-scoped Lockdown suspension of 2026-10-04. The grant
+    covers `.claude/settings.json` and `.claude/hooks/session_start.py`, and expressly authorizes
+    the hook's write of `core.hooksPath` in any session.
+  - Item 1's receipt mode follows the Owner's ruling of 2026-10-04: templates §4's receipt list
+    governs. `orchestrator-role.md`'s list was not aligned, since that is a locked edit.
+  - Item 4's `reclaim` also writes a verified bundle of the branch before deleting it, as the
+    CP-21 and CP-22 closures did by hand.
+- **Deferred:** items 6 and 7 go to the next publication. A binding reminder in `progress.md`
+  and in capstone v21-r10 brings them to the Owner before that publication's brief is issued.
 
 **Lockdown, stated once.** Every hook and setting lives under `.claude/**`, which
 `AGENTS.md:23-24` locks as agent configuration. The only suspension covers item 3:
