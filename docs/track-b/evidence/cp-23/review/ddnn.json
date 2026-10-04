@@ -1,0 +1,50 @@
+{
+ "candidate_root": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-23/critic-1",
+ "ddnn": [
+  {
+   "D_central_bitwise_vs_committed": true,
+   "D_equals_members_table": true,
+   "D_quantiles_bitwise_vs_committed": true,
+   "config": "C2",
+   "crossed_rows": 0,
+   "day": "2022-08-20",
+   "ensemble_is_member_quantile_mean": true,
+   "fold": "fold_3",
+   "members_equal_committed_fits": true,
+   "n_hours": 24,
+   "p50_is_central": true,
+   "quantiles_finite_ordered": true
+  },
+  {
+   "D_central_bitwise_vs_committed": true,
+   "D_equals_members_table": true,
+   "D_quantiles_bitwise_vs_committed": true,
+   "config": "C3",
+   "crossed_rows": 0,
+   "day": "2025-06-26",
+   "ensemble_is_member_quantile_mean": true,
+   "fold": "fold_4",
+   "members_equal_committed_fits": true,
+   "n_hours": 24,
+   "p50_is_central": true,
+   "quantiles_finite_ordered": true
+  },
+  {
+   "D_central_bitwise_vs_committed": true,
+   "D_equals_members_table": true,
+   "D_quantiles_bitwise_vs_committed": true,
+   "config": "C4",
+   "crossed_rows": 0,
+   "day": "2026-04-07",
+   "ensemble_is_member_quantile_mean": true,
+   "fold": "fold_5",
+   "members_equal_committed_fits": true,
+   "n_hours": 24,
+   "p50_is_central": true,
+   "quantiles_finite_ordered": true
+  }
+ ],
+ "replay": [],
+ "schema": "cp23-review-v1",
+ "written_utc": "2026-10-04T17:20:16Z"
+}
