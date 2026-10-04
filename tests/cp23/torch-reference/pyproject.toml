@@ -1,0 +1,22 @@
+# The pinned PyTorch CPU correctness reference for CP-23 (capstone v21-r10 §21.3, §18.3).
+#
+# A test-only dependency, outside every runtime and default group. It lives in this separate,
+# hash-locked uv project, not in the repository's root pyproject.toml and uv.lock, because the root
+# uv.lock's SHA-256 is bound into CP-10's lineage and CP-15's protocol; changing it would break those
+# committed identities and CI (the Owner's ruling of 2026-10-04 on §21.3). The constraints keep the
+# packages torch shares with the root lock at the root lock's installed versions, so installing the
+# reference only adds packages and never changes a runtime one.
+[project]
+name = "cp23-torch-reference"
+version = "0"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[dependency-groups]
+torch-reference = ["torch==2.14.1"]
+
+[tool.uv]
+package = false
+default-groups = []
+constraint-dependencies = ["jinja2==3.1.6", "markupsafe==3.0.3", "typing-extensions==4.16.0"]
+environments = ["sys_platform == 'darwin' and platform_machine == 'arm64'"]
