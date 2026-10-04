@@ -40,11 +40,12 @@ def fit_origin(data, x: np.ndarray, wx: np.ndarray, z: np.ndarray, present: np.n
     zq, each = D.ensemble_quantiles(members, x_fc)
     eur, central, crossed = D.emit(zq, data.level[forecast], data.scale[forecast])
     predict_seconds = time.perf_counter() - t_predict
+    jsu = np.stack([np.column_stack(D.head(D.forward(m.params, x_fc)[0])) for m in members])  # members x n x 4
     out = {'day': str(day), 'origin_utc': str(origin_utc(day).tz_convert('UTC')), 'config': config_id,
            'seeds': list(map(int, seeds)), 'n_inputs': int(x_train.shape[1]),
            'timestamp_utc': list(map(str, data.index[forecast])), 'rows': rows_record(data, rows),
            'scale_sha256': array_hash(data.scale[forecast]), 'level_sha256': array_hash(data.level[forecast]),
-           'central': central, 'quantiles': eur, 'z_quantiles': zq, 'member_z_quantiles': each,
+           'central': central, 'quantiles': eur, 'z_quantiles': zq, 'member_z_quantiles': each, 'member_jsu_params': jsu,
            'central_sha256': array_hash(central), 'quantiles_sha256': array_hash(eur), 'crossed_rows': crossed,
            'members': [m.record() for m in members], 'preprocessor': pre.record(),
            'predict_seconds': predict_seconds, 'seconds': time.perf_counter() - started, 'maxrss_bytes': maxrss()}
