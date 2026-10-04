@@ -38,9 +38,9 @@ Names and statuses come from the registry. The research results are development 
 
 *v3 plus a three-block LightGBM member.* In September 2026, v4 was adopted in research.
 
-**From v3 to v4: adding a three-block LightGBM.**
+**From v3 to v4: adding a LightGBM forecaster.**
 
-- **What changed.** v4 kept v3's inputs and its two LEAR forecasts, added a three-block LightGBM forecaster (separate models for the night, the solar hours, and the shoulder and peak hours) with one third of the blend's weight, and re-estimated the hour-aware intervals on the new forecast's own errors.
+- **What changed.** v4 kept v3's inputs and its two LEAR forecasts, added a LightGBM forecaster with one third of the blend's weight, and re-estimated the hour-aware intervals on the new forecast's own errors. The gain comes from the combination: on its own, no LightGBM arm showed an improvement over v3, but the blend improves both error scores, because a nonlinear model built from decision trees makes different errors from the two linear forecasts. The LightGBM's split into hour blocks is not shown to contribute.
 - **Comparator.** Set in advance: v3 itself, on identical hours, so the protocol's comparator is also the predecessor and the comparison is direct.
 - **Result.** Point-error score −5% [−6%, −4%] and interval score −5% [−6%, −4%], as a share of v3's score, with 95% confidence intervals of that ratio from the experiment's own bootstrap draws; development evidence, not a test on new data.
 

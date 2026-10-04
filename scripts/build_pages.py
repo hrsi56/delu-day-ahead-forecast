@@ -2444,7 +2444,7 @@ def block_change() -> str:
         "<li>hour-aware intervals from recent errors</li></ul></div>"
         '<div class="fc-arrow" aria-hidden="true">+</div>'
         f'<div class="fc-col fc-added fc-v4"><p class="fc-head">added in {ver(v4.version)}</p><ul>'
-        "<li>a three-block LightGBM forecaster: night, solar hours, shoulder and peak</li>"
+        "<li>a LightGBM forecaster: nonlinear, built from decision trees</li>"
         "<li>one third of the blend's weight, the LEAR pair two thirds</li></ul>"
         '<p class="fc-note">same information; intervals re-estimated on the new errors</p></div></div>'
     )

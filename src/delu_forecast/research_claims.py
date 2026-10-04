@@ -180,11 +180,11 @@ BLOCKS: tuple[Block, ...] = (
            score (S_WIS)** does the same for the weighted interval score, which rewards narrow intervals and penalizes
            missed outcomes. MAE uses the emitted median."""),
     # ---- the v4 chapter (the chapter grammar, standard §6; publication packet §5, CP-21 claim map) ----------
-    _block("v4.question", "C104", """Does adding a nonlinear, block-structured forecaster to {g:v3.version} improve
-           both of its error scores?"""),
-    _block("v4.change", "C104", """{g:v4.version} adds a three-block LightGBM forecaster, with the same information
-           as {g:v3.version}, to its blend of two linear forecasts, and re-estimates the hour-aware intervals on the new
-           forecast's own errors."""),
+    _block("v4.question", "C104", """Does adding a nonlinear forecaster, LightGBM, to {g:v3.version} improve both of
+           its error scores?"""),
+    _block("v4.change", "C104", """{g:v4.version} adds a LightGBM forecaster, a nonlinear model built from decision
+           trees, with the same information as {g:v3.version}, to its blend of two linear forecasts, and re-estimates the
+           hour-aware intervals on the new forecast's own errors."""),
     _block("v4.chart_headline", "C107", """Against {g:v3.version}, the point-error score changed by
            {r:derived.change.v4.S_MAE} {r:derived.change.v4.S_MAE|ci} and the interval score by
            {r:derived.change.v4.S_WIS} {r:derived.change.v4.S_WIS|ci}, each as a share of the comparator's score,
@@ -407,12 +407,14 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp15.peak.B1.daily_mean_level_MAE|p=1} EUR/MWh against a within-day shape error of
            {r:cp15.peak.B1.within_day_shape_MAE|p=1} EUR/MWh.""", PAGE, README),
     # ---- adopted transitions (PUBLISH_RULES 1.0 A3): one summary per adopted generation after the first ---------
-    _block("transition.v3-v4.title", "P52", """From {g:v3.version} to {g:v4.version}: adding a three-block
-           LightGBM""", PAGE, README),
+    _block("transition.v3-v4.title", "P52", """From {g:v3.version} to {g:v4.version}: adding a LightGBM
+           forecaster""", PAGE, README),
     _block("transition.v3-v4.change", "P52", """{g:v4.version} kept {g:v3.version}'s inputs and its two LEAR forecasts,
-           added a three-block LightGBM forecaster (separate models for the night, the solar hours, and the shoulder and
-           peak hours) with one third of the blend's weight, and re-estimated the
-           hour-aware intervals on the new forecast's own errors.""", PAGE, README),
+           added a LightGBM forecaster with one third of the blend's weight, and re-estimated the hour-aware intervals on
+           the new forecast's own errors. The gain comes from the combination: on its own, no LightGBM arm showed an
+           improvement over {g:v3.version}, but the blend improves both error scores, because a nonlinear model built
+           from decision trees makes different errors from the two linear forecasts. The LightGBM's split into hour
+           blocks is not shown to contribute.""", PAGE, README),
     _block("transition.v3-v4.comparator", "P52", """Set in advance: {g:v3.version} itself, on identical hours, so the
            protocol's comparator is also the predecessor and the comparison is direct.""", PAGE, README),
     _block("transition.v3-v4.result", "P52", """Point-error score {r:derived.change.v4.S_MAE}

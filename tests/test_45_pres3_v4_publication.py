@@ -389,7 +389,7 @@ def test_negative_control_a_chapter_without_its_peak_caveat_would_be_caught(page
 
 
 def test_the_transition_title_and_the_encoding():
-    assert RC.render("transition.v3-v4.title", "md") == "From v3 to v4: adding a three-block LightGBM"
+    assert RC.render("transition.v3-v4.title", "md") == "From v3 to v4: adding a LightGBM forecaster"
     assert B.TOKENS["v4"] == "#B45309"
     assert B.ROLE_STYLE["v4"] == {"color": "#B45309", "marker": "diamond", "filled": True}
     assert B.marker_problems() == []
