@@ -1,0 +1,325 @@
+{
+ "application": "mechanical; never re-weighted, re-thresholded or overridden after results; attribution arms are never eligible; a mixed result is no demonstrated joint preference, never equivalence; an INCOMPLETE or BLOCKED return yields no decision and nothing to publish",
+ "candidates": {
+  "M": {
+   "conditions": {
+    "1": {
+     "met": true,
+     "values": {
+      "MAE": {
+       "ci_lower": -0.0035746827258298698,
+       "ci_upper": 0.0016436068728058282,
+       "difference": -0.001326981165238439,
+       "ratio": -0.0024772887641102415,
+       "ratio_ci": [
+        -0.006654329018361085,
+        0.002985782112358547
+       ]
+      },
+      "WIS": {
+       "ci_lower": -0.0030067798300917477,
+       "ci_upper": 0.002242430813362147,
+       "difference": -0.0007591140454543677,
+       "ratio": -0.0015014869909928397,
+       "ratio_ci": [
+        -0.005886453301712441,
+        0.004339477627836258
+       ]
+      }
+     }
+    },
+    "2": {
+     "met": true,
+     "values": {
+      "criteria_rows": 21,
+      "not_met": []
+     }
+    },
+    "3": {
+     "met": true,
+     "values": {
+      "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-22/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+      "keys_issued_finite_ordered": true
+     }
+    },
+    "4": {
+     "met": false,
+     "values": {
+      "folds_decisively_worse": [
+       {
+        "ci_lower": 0.05137364782736666,
+        "ci_upper": 0.3262108815689212,
+        "difference": 0.19750459924104824,
+        "metric": "MAE",
+        "scope": "fold_4"
+       },
+       {
+        "ci_lower": 0.02420659625911852,
+        "ci_upper": 0.1982126040684136,
+        "difference": 0.11177452701045532,
+        "metric": "WIS",
+        "scope": "fold_4"
+       }
+      ],
+      "per_fold": [
+       {
+        "ci_lower": -0.08049056503408365,
+        "ci_upper": 0.029240638465052263,
+        "difference": -0.0365337965897945,
+        "metric": "MAE",
+        "scope": "fold_1"
+       },
+       {
+        "ci_lower": -0.07890061969143579,
+        "ci_upper": 0.01848530239761524,
+        "difference": -0.031403867550792164,
+        "metric": "WIS",
+        "scope": "fold_1"
+       },
+       {
+        "ci_lower": -0.11743771450599114,
+        "ci_upper": 0.05459400928657384,
+        "difference": -0.03689806219033098,
+        "metric": "MAE",
+        "scope": "fold_2"
+       },
+       {
+        "ci_lower": -0.0765526785680523,
+        "ci_upper": 0.033113834773187564,
+        "difference": -0.02296244596775665,
+        "metric": "WIS",
+        "scope": "fold_2"
+       },
+       {
+        "ci_lower": -1.4354304671854425,
+        "ci_upper": -0.16448306395122114,
+        "difference": -0.7759279431096289,
+        "metric": "MAE",
+        "scope": "fold_3"
+       },
+       {
+        "ci_lower": -0.4751207927445077,
+        "ci_upper": 0.040885383036545056,
+        "difference": -0.22195376130102318,
+        "metric": "WIS",
+        "scope": "fold_3"
+       },
+       {
+        "ci_lower": 0.05137364782736666,
+        "ci_upper": 0.3262108815689212,
+        "difference": 0.19750459924104824,
+        "metric": "MAE",
+        "scope": "fold_4"
+       },
+       {
+        "ci_lower": 0.02420659625911852,
+        "ci_upper": 0.1982126040684136,
+        "difference": 0.11177452701045532,
+        "metric": "WIS",
+        "scope": "fold_4"
+       },
+       {
+        "ci_lower": -0.10039447352057436,
+        "ci_upper": 0.13727804614136238,
+        "difference": 0.005312902408023845,
+        "metric": "MAE",
+        "scope": "fold_5"
+       },
+       {
+        "ci_lower": -0.048014134878246836,
+        "ci_upper": 0.0823383597180101,
+        "difference": 0.007021675098787483,
+        "metric": "WIS",
+        "scope": "fold_5"
+       }
+      ]
+     }
+    }
+   },
+   "first_unmet_condition": 4,
+   "met": false,
+   "unmet_conditions": [
+    4
+   ]
+  },
+  "R": {
+   "conditions": {
+    "1": {
+     "met": true,
+     "values": {
+      "MAE": {
+       "ci_lower": -0.003126339487328947,
+       "ci_upper": 0.005417691086284952,
+       "difference": 0.0011424858156913187,
+       "ratio": 0.0021328616777005482,
+       "ratio_ci": [
+        -0.005726559114855548,
+        0.010049680278526273
+       ]
+      },
+      "WIS": {
+       "ci_lower": -0.0028390200935139694,
+       "ci_upper": 0.004911223988987757,
+       "difference": 0.0010031954723482839,
+       "ratio": 0.00198426700200538,
+       "ratio_ci": [
+        -0.005498327996993976,
+        0.009692544605779223
+       ]
+      }
+     }
+    },
+    "2": {
+     "met": true,
+     "values": {
+      "criteria_rows": 21,
+      "not_met": []
+     }
+    },
+    "3": {
+     "met": true,
+     "values": {
+      "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-22/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+      "keys_issued_finite_ordered": true
+     }
+    },
+    "4": {
+     "met": false,
+     "values": {
+      "folds_decisively_worse": [
+       {
+        "ci_lower": 0.148481324134723,
+        "ci_upper": 0.4227068532013648,
+        "difference": 0.30928279371552314,
+        "metric": "MAE",
+        "scope": "fold_4"
+       },
+       {
+        "ci_lower": 0.09712973663969753,
+        "ci_upper": 0.2309433812246246,
+        "difference": 0.17603386989263292,
+        "metric": "WIS",
+        "scope": "fold_4"
+       }
+      ],
+      "per_fold": [
+       {
+        "ci_lower": -0.029210887601628044,
+        "ci_upper": 0.14878354823309364,
+        "difference": 0.05620787254856818,
+        "metric": "MAE",
+        "scope": "fold_1"
+       },
+       {
+        "ci_lower": -0.05673996940437944,
+        "ci_upper": 0.06741322618618514,
+        "difference": 0.006430320613993068,
+        "metric": "WIS",
+        "scope": "fold_1"
+       },
+       {
+        "ci_lower": -0.2928848289689102,
+        "ci_upper": -0.006271888876965449,
+        "difference": -0.13007251795413222,
+        "metric": "MAE",
+        "scope": "fold_2"
+       },
+       {
+        "ci_lower": -0.18911280249693382,
+        "ci_upper": -0.013403922648798717,
+        "difference": -0.09183109583033744,
+        "metric": "WIS",
+        "scope": "fold_2"
+       },
+       {
+        "ci_lower": -1.4034451099213614,
+        "ci_upper": 0.7195880146317929,
+        "difference": -0.3058716300397819,
+        "metric": "MAE",
+        "scope": "fold_3"
+       },
+       {
+        "ci_lower": -0.6298644709018855,
+        "ci_upper": 0.5535351962513687,
+        "difference": -0.052771807246564606,
+        "metric": "WIS",
+        "scope": "fold_3"
+       },
+       {
+        "ci_lower": 0.148481324134723,
+        "ci_upper": 0.4227068532013648,
+        "difference": 0.30928279371552314,
+        "metric": "MAE",
+        "scope": "fold_4"
+       },
+       {
+        "ci_lower": 0.09712973663969753,
+        "ci_upper": 0.2309433812246246,
+        "difference": 0.17603386989263292,
+        "metric": "WIS",
+        "scope": "fold_4"
+       },
+       {
+        "ci_lower": -0.33346111175885174,
+        "ci_upper": 0.17142372374757023,
+        "difference": -0.0835238150958375,
+        "metric": "MAE",
+        "scope": "fold_5"
+       },
+       {
+        "ci_lower": -0.08500339058417321,
+        "ci_upper": 0.14874554217121091,
+        "difference": 0.021517501975765185,
+        "metric": "WIS",
+        "scope": "fold_5"
+       }
+      ]
+     }
+    }
+   },
+   "first_unmet_condition": 4,
+   "met": false,
+   "unmet_conditions": [
+    4
+   ]
+  }
+ },
+ "consistency_with_committed": {
+  "HG-H0_equal_committed": true,
+  "HG-H0_interval_rows": 12,
+  "HG-H0_max_abs_difference_vs_committed": 4.440892098500626e-16,
+  "HGL-HG_equal_committed": true,
+  "HGL-HG_interval_rows": 12,
+  "HGL-HG_max_abs_difference_vs_committed": 2.220446049250313e-16,
+  "HGL_section8_rows_equal_committed": true,
+  "HG_section8_rows_equal_committed": true,
+  "all_equal": true
+ },
+ "first_unmet_condition": {
+  "M": 4,
+  "R": 4
+ },
+ "inputs_sha256": {
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/v4-revision/predictions.parquet": "ad446d80dac1a8e9bfd37473d48391a31f66cbdf65a0a82ab6ccaaa68d1cb321",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab"
+ },
+ "rule": {
+  "candidates_in_sequence": [
+   "R",
+   "M"
+  ],
+  "comparator": "HGL (v4)",
+  "conditions": {
+   "1": "Non-inferior on both scores: neither dS_MAE nor dS_WIS (candidate - v4) has a 95% interval lying entirely above zero.",
+   "2": "No regression: the candidate meets all six original section-8 diagnostics.",
+   "3": "A complete, valid evaluation: Engineering PASS with a binding Integration verdict, and all 10,747 keys issued.",
+   "4": "No resolved per-fold degradation: no fold has a 95% paired daily-loss interval (candidate - v4) lying entirely above zero, in MAE or in WIS."
+  },
+  "sequence": "R replaces v4 if all four hold; otherwise M if all four hold; otherwise no replacement and CP-22 stops for the Owner. The winner is W.",
+  "set_on": "2026-10-01",
+  "source": "capstone_v21.md v21-r9 \u00a720.6 (Owner decisions D2, 2026-10-01)"
+ },
+ "verdict": "no replacement: CP-22 stops at its return and the Owner decides; three-block v4 stays current",
+ "winner": null
+}

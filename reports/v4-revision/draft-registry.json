@@ -1,0 +1,532 @@
+{
+ "checkpoint": {
+  "children": [
+   "R",
+   "M",
+   "A-PN-sel",
+   "A-LP",
+   "A-LN",
+   "v4+DL",
+   "v3+DL"
+  ],
+  "code": "CP-22",
+  "evidence_sha": "pending-at-landing",
+  "evidence_tag": "evidence/cp-22",
+  "frozen_on": "pending-at-landing",
+  "landing": "pending-at-landing",
+  "owner": "pooled-lightgbm-member-for-v4",
+  "report": "reports/v4-revision/report.md",
+  "run_key": "cp22",
+  "verdict": "docs/track-b/evidence/cp-22/integration.md"
+ },
+ "code_additions_to_existing_entries": [
+  {
+   "code": {
+    "code": "HGL",
+    "experiment": "CP-22",
+    "note": "comparator, saved",
+    "population": "common-10747h"
+   },
+   "entry": "v4"
+  },
+  {
+   "code": {
+    "code": "HG",
+    "experiment": "CP-22",
+    "note": "reference, saved",
+    "population": "common-10747h"
+   },
+   "entry": "v3"
+  },
+  {
+   "code": {
+    "code": "H0",
+    "experiment": "CP-22",
+    "note": "saved reference",
+    "population": "common-10747h"
+   },
+   "entry": "v2"
+  },
+  {
+   "code": {
+    "code": "B0",
+    "experiment": "CP-22",
+    "note": "normalizer",
+    "population": "common-10747h"
+   },
+   "entry": "naive"
+  },
+  {
+   "code": {
+    "code": "B1",
+    "experiment": "CP-22",
+    "note": "development replay",
+    "population": "common-10747h"
+   },
+   "entry": "v1"
+  },
+  {
+   "code": {
+    "code": "B2",
+    "experiment": "CP-22",
+    "note": "",
+    "population": "common-10747h"
+   },
+   "entry": "daily-lear"
+  },
+  {
+   "code": {
+    "code": "B3",
+    "experiment": "CP-22",
+    "note": "",
+    "population": "common-10747h"
+   },
+   "entry": "daily-lightgbm"
+  },
+  {
+   "code": {
+    "code": "A1",
+    "experiment": "CP-22",
+    "note": "",
+    "population": "common-10747h"
+   },
+   "entry": "normalized-lear"
+  }
+ ],
+ "encoding": {
+  "v4": "amber #B45309, filled diamond, direct label \"v4\" (D6, unchanged)"
+ },
+ "entries": [
+  {
+   "after": "v4",
+   "anchor": "#branch-pooled-lightgbm-member-for-v4",
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "CP-22",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "pooled-lightgbm-member-for-v4",
+   "informed": null,
+   "kind": "branch",
+   "name": "Pooled LightGBM member for v4",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "Can one pooled LightGBM member replace v4's three-block member without losing accuracy?",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22"
+   ],
+   "short": "Pooled member for v4",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "cp22-replacement yielded no replacement: for R, condition 4 of rule cp22-replacement, no resolved per-fold degradation, was not met; for M, condition 4 of rule cp22-replacement, no resolved per-fold degradation, was not met; the Owner decides first (\u00a720.6)",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "branch",
+   "subtitle": "The block split removed, under non-inferiority"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "R",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v3-plus-pooled-normalized-lightgbm-averaged",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 plus a capacity-averaged pooled LightGBM",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/R"
+   ],
+   "short": "Pooled member, averaged",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "condition 4 of rule cp22-replacement, no resolved per-fold degradation, was not met",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "v3 with a normalized pooled LightGBM, capacities averaged"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "M",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v3-plus-pooled-lightgbm-pair",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 plus pooled normalized and raw LightGBM",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/M"
+   ],
+   "short": "Pooled pair",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "condition 4 of rule cp22-replacement, no resolved per-fold degradation, was not met",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "v4 with the block split removed"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "A-PN-sel",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v3-plus-pooled-normalized-lightgbm-selected",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 plus a pooled normalized LightGBM",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/A-PN-sel"
+   ],
+   "short": "Pooled normalized member",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "The raw half dropped; daily capacity selection"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "A-LP",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v3-plus-pooled-raw-lightgbm",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 plus a pooled raw LightGBM",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/A-LP"
+   ],
+   "short": "Pooled raw member",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "v3 with the pooled raw LightGBM member"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "A-LN",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v3-plus-normalized-block-lightgbm",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 plus normalized block LightGBM",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/A-LN"
+   ],
+   "short": "Normalized block member",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "v3 with the normalized three-block member"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "v4+DL",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v4-with-dynamic-intervals",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v4 with dynamic intervals",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/v4+DL"
+   ],
+   "short": "v4 + dynamic layer",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "Three-block v4 with the dynamic interval layer"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-22",
+   "claim_map": "docs/track-b/research-content/cp22-claims.md",
+   "codes": [
+    {
+     "code": "v3+DL",
+     "experiment": "CP-22",
+     "note": "",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v3-with-dynamic-intervals",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 with dynamic intervals",
+   "plan": "capstone_v21.md \u00a720 (v21-r9)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp22-replacement"
+   ],
+   "run_keys": [
+    "cp22/v3+DL"
+   ],
+   "short": "v3 + dynamic layer",
+   "sources": [
+    "reports/v4-revision/metrics.csv",
+    "reports/v4-revision/uncertainty.csv",
+    "reports/v4-revision/criteria.csv",
+    "reports/v4-revision/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-22 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "v3 with the dynamic interval layer"
+  }
+ ],
+ "evidence_ref": "evidence/cp-22@pending-at-landing",
+ "model_code_sha": "pending-at-landing",
+ "note": "CP-22 re-examined v4 under the pre-registered rule cp22-replacement (non-inferiority against v4 on both scores and per fold, with all six original screening diagnostics): neither R nor M met the rule. development_post_selection.",
+ "outcome": {
+  "current_revision_code": null,
+  "dynamic_layer_adopted": false,
+  "fast_component_adopted": false,
+  "replacement": null
+ },
+ "pending": "pending-at-landing",
+ "pending_fields": {
+  "checkpoint.evidence_sha": "the evidence/cp-22 tag commit, created by the Owner at landing",
+  "checkpoint.frozen_on": "the evidence tag freeze date",
+  "checkpoint.landing": "the landing record path",
+  "evidence_ref": "evidence/cp-22 at its commit",
+  "model_code_sha": "the final reviewed candidate SHA: a commit cannot contain its own SHA; it is recorded in the CP-22 return and filled by the publication block",
+  "original_completed_utc": "the terminal return time",
+  "revisions[].adopted / superseded": "the revision date, set at landing",
+  "statuses[].date": "the revision or not-adoption date, set at landing",
+  "statuses[].source": "the CP-22 landing record, written at landing"
+ },
+ "revisions": null,
+ "rules": [
+  {
+   "id": "cp22-replacement",
+   "plan": "capstone_v21.md \u00a720.6 (v21-r9)",
+   "provenance": [
+    "capstone_v21.md v21-r9 \u00a720.6 (ratified 2026-10-01)",
+    "reports/v4-revision/protocol.json rules_verbatim (frozen before scoring)"
+   ],
+   "set_on": "2026-10-01"
+  },
+  {
+   "id": "cp22-dynamic-layer",
+   "plan": "capstone_v21.md \u00a720.6 (v21-r9)",
+   "provenance": [
+    "capstone_v21.md v21-r9 \u00a720.6 (ratified 2026-10-01)",
+    "reports/v4-revision/protocol.json rules_verbatim (frozen before scoring)"
+   ],
+   "set_on": "2026-10-01"
+  },
+  {
+   "id": "cp22-fast-component",
+   "plan": "capstone_v21.md \u00a720.6 (v21-r9)",
+   "provenance": [
+    "capstone_v21.md v21-r9 \u00a720.6 (ratified 2026-10-01)",
+    "reports/v4-revision/protocol.json rules_verbatim (frozen before scoring)"
+   ],
+   "set_on": "2026-10-01"
+  }
+ ],
+ "schema": "cp22-draft-registry-v1",
+ "status": "draft registry entries for the publication packet; CP-22 registers nothing; PRES-4 registers them after the Owner's landing, and only after the Owner decides (no replacement)",
+ "transition": null,
+ "verdict_source": "reports/v4-revision/decisions.json"
+}

@@ -1,0 +1,190 @@
+policy,criterion,metric,scope,actual,lower_limit,upper_limit,comparator,status,passed
+R,1,S_MAE,equal_fold,0.5368011399310709,,0.5920298211373128,best B0-B3,met,True
+R,2,S_WIS,equal_fold,0.5065780356195718,,0.5750919366593932,best B0-B3,met,True
+R,3,coverage95,fold_1,0.9328703703703703,0.9,0.98,,met,True
+R,3,coverage95,fold_2,0.937471051412691,0.9,0.98,,met,True
+R,3,coverage95,fold_3,0.9332386363636364,0.9,0.98,,met,True
+R,3,coverage95,fold_4,0.9351851851851852,0.9,0.98,,met,True
+R,3,coverage95,fold_5,0.9489795918367347,0.9,0.98,,met,True
+R,4,coverage95,peak,0.9387254901960784,0.9,,,met,True
+R,4,MAE,peak,47.5747610926305,,57.617758673520505,best B0-B3 on matched peak,met,True
+R,5,MAE,fold_1,4.987168382191216,,6.530232537302945,best rolling B2/B3,met,True
+R,5,MAE,fold_2,7.582947147860642,,10.160199330508874,best rolling B2/B3,met,True
+R,5,MAE,fold_3,46.72186711824687,,56.7082158826891,best rolling B2/B3,met,True
+R,5,MAE,fold_4,14.081657351682393,,17.367639793808983,best rolling B2/B3,met,True
+R,5,MAE,fold_5,14.867916407567861,,20.162626935989135,best rolling B2/B3,met,True
+R,4,WIS,peak,26.644637432735955,,33.72970535812474,best B0-B3 on matched peak,met,True
+R,5,WIS,fold_1,3.024310560368546,,4.147146167403628,best rolling B2/B3,met,True
+R,5,WIS,fold_2,4.694559926555343,,6.339890674080492,best rolling B2/B3,met,True
+R,5,WIS,fold_3,26.95819128849266,,33.940454346635754,best rolling B2/B3,met,True
+R,5,WIS,fold_4,8.222668408219677,,10.400724362891893,best rolling B2/B3,met,True
+R,5,WIS,fold_5,8.708328767422094,,12.102308138409143,best rolling B2/B3,met,True
+R,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+M,1,S_MAE,equal_fold,0.5343316729501412,,0.5920298211373128,best B0-B3,met,True
+M,2,S_WIS,equal_fold,0.5048157261017694,,0.5750919366593932,best B0-B3,met,True
+M,3,coverage95,fold_1,0.9342592592592592,0.9,0.98,,met,True
+M,3,coverage95,fold_2,0.9379342288096341,0.9,0.98,,met,True
+M,3,coverage95,fold_3,0.9327651515151515,0.9,0.98,,met,True
+M,3,coverage95,fold_4,0.9337962962962963,0.9,0.98,,met,True
+M,3,coverage95,fold_5,0.9512987012987013,0.9,0.98,,met,True
+M,4,coverage95,peak,0.9411764705882353,0.9,,,met,True
+M,4,MAE,peak,48.983795343799805,,57.617758673520505,best B0-B3 on matched peak,met,True
+M,5,MAE,fold_1,4.894426713052852,,6.530232537302945,best rolling B2/B3,met,True
+M,5,MAE,fold_2,7.676157961238565,,10.160199330508874,best rolling B2/B3,met,True
+M,5,MAE,fold_3,46.25181080517698,,56.7082158826891,best rolling B2/B3,met,True
+M,5,MAE,fold_4,13.969879157207922,,17.367639793808983,best rolling B2/B3,met,True
+M,5,MAE,fold_5,14.95639596483556,,20.162626935989135,best rolling B2/B3,met,True
+M,4,WIS,peak,27.49623720016195,,33.72970535812474,best B0-B3 on matched peak,met,True
+M,5,WIS,fold_1,2.9864763722037604,,4.147146167403628,best rolling B2/B3,met,True
+M,5,WIS,fold_2,4.763456624077773,,6.339890674080492,best rolling B2/B3,met,True
+M,5,WIS,fold_3,26.789009334438198,,33.940454346635754,best rolling B2/B3,met,True
+M,5,WIS,fold_4,8.158409065337498,,10.400724362891893,best rolling B2/B3,met,True
+M,5,WIS,fold_5,8.693476882293487,,12.102308138409143,best rolling B2/B3,met,True
+M,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+A-PN-sel,1,S_MAE,equal_fold,0.5357836937820348,,0.5920298211373128,best B0-B3,met,True
+A-PN-sel,2,S_WIS,equal_fold,0.5053285679283658,,0.5750919366593932,best B0-B3,met,True
+A-PN-sel,3,coverage95,fold_1,0.9351851851851852,0.9,0.98,,met,True
+A-PN-sel,3,coverage95,fold_2,0.9397869383974062,0.9,0.98,,met,True
+A-PN-sel,3,coverage95,fold_3,0.9341856060606061,0.9,0.98,,met,True
+A-PN-sel,3,coverage95,fold_4,0.937962962962963,0.9,0.98,,met,True
+A-PN-sel,3,coverage95,fold_5,0.949443413729128,0.9,0.98,,met,True
+A-PN-sel,4,coverage95,peak,0.9387254901960784,0.9,,,met,True
+A-PN-sel,4,MAE,peak,47.67096596543511,,57.617758673520505,best B0-B3 on matched peak,met,True
+A-PN-sel,5,MAE,fold_1,4.970205425263849,,6.530232537302945,best rolling B2/B3,met,True
+A-PN-sel,5,MAE,fold_2,7.538726974157842,,10.160199330508874,best rolling B2/B3,met,True
+A-PN-sel,5,MAE,fold_3,46.55618977854975,,56.7082158826891,best rolling B2/B3,met,True
+A-PN-sel,5,MAE,fold_4,14.150138421636434,,17.367639793808983,best rolling B2/B3,met,True
+A-PN-sel,5,MAE,fold_5,14.823322982490279,,20.162626935989135,best rolling B2/B3,met,True
+A-PN-sel,4,WIS,peak,26.722824100001986,,33.72970535812474,best B0-B3 on matched peak,met,True
+A-PN-sel,5,WIS,fold_1,3.007460231305021,,4.147146167403628,best rolling B2/B3,met,True
+A-PN-sel,5,WIS,fold_2,4.659064234516377,,6.339890674080492,best rolling B2/B3,met,True
+A-PN-sel,5,WIS,fold_3,26.909724501492043,,33.940454346635754,best rolling B2/B3,met,True
+A-PN-sel,5,WIS,fold_4,8.262159741489459,,10.400724362891893,best rolling B2/B3,met,True
+A-PN-sel,5,WIS,fold_5,8.675891546035729,,12.102308138409143,best rolling B2/B3,met,True
+A-PN-sel,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+A-LP,1,S_MAE,equal_fold,0.5380517143985365,,0.5920298211373128,best B0-B3,met,True
+A-LP,2,S_WIS,equal_fold,0.5083768434578415,,0.5750919366593932,best B0-B3,met,True
+A-LP,3,coverage95,fold_1,0.9361111111111111,0.9,0.98,,met,True
+A-LP,3,coverage95,fold_2,0.9337656322371468,0.9,0.98,,met,True
+A-LP,3,coverage95,fold_3,0.9327651515151515,0.9,0.98,,met,True
+A-LP,3,coverage95,fold_4,0.9365740740740741,0.9,0.98,,met,True
+A-LP,3,coverage95,fold_5,0.9536178107606679,0.9,0.98,,met,True
+A-LP,4,coverage95,peak,0.9313725490196079,0.9,,,met,True
+A-LP,4,MAE,peak,50.921486488906105,,57.617758673520505,best B0-B3 on matched peak,met,True
+A-LP,5,MAE,fold_1,4.861510165070184,,6.530232537302945,best rolling B2/B3,met,True
+A-LP,5,MAE,fold_2,7.8937423090025645,,10.160199330508874,best rolling B2/B3,met,True
+A-LP,5,MAE,fold_3,46.765091817448194,,56.7082158826891,best rolling B2/B3,met,True
+A-LP,5,MAE,fold_4,13.849342480438352,,17.367639793808983,best rolling B2/B3,met,True
+A-LP,5,MAE,fold_5,15.209553438570335,,20.162626935989135,best rolling B2/B3,met,True
+A-LP,4,WIS,peak,28.689291455617322,,33.72970535812474,best B0-B3 on matched peak,met,True
+A-LP,5,WIS,fold_1,2.983048024001104,,4.147146167403628,best rolling B2/B3,met,True
+A-LP,5,WIS,fold_2,4.924228324982904,,6.339890674080492,best rolling B2/B3,met,True
+A-LP,5,WIS,fold_3,27.008901453725304,,33.940454346635754,best rolling B2/B3,met,True
+A-LP,5,WIS,fold_4,8.082751092575721,,10.400724362891893,best rolling B2/B3,met,True
+A-LP,5,WIS,fold_5,8.7755968649059,,12.102308138409143,best rolling B2/B3,met,True
+A-LP,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+A-LN,1,S_MAE,equal_fold,0.5362209174951242,,0.5920298211373128,best B0-B3,met,True
+A-LN,2,S_WIS,equal_fold,0.5056475322963709,,0.5750919366593932,best B0-B3,met,True
+A-LN,3,coverage95,fold_1,0.9347222222222222,0.9,0.98,,met,True
+A-LN,3,coverage95,fold_2,0.9407132931912923,0.9,0.98,,met,True
+A-LN,3,coverage95,fold_3,0.9332386363636364,0.9,0.98,,met,True
+A-LN,3,coverage95,fold_4,0.9310185185185185,0.9,0.98,,met,True
+A-LN,3,coverage95,fold_5,0.949443413729128,0.9,0.98,,met,True
+A-LN,4,coverage95,peak,0.9362745098039216,0.9,,,met,True
+A-LN,4,MAE,peak,47.70484780265976,,57.617758673520505,best B0-B3 on matched peak,met,True
+A-LN,5,MAE,fold_1,5.000630035406123,,6.530232537302945,best rolling B2/B3,met,True
+A-LN,5,MAE,fold_2,7.6020402791632335,,10.160199330508874,best rolling B2/B3,met,True
+A-LN,5,MAE,fold_3,46.98464704039001,,56.7082158826891,best rolling B2/B3,met,True
+A-LN,5,MAE,fold_4,13.92607319516887,,17.367639793808983,best rolling B2/B3,met,True
+A-LN,5,MAE,fold_5,14.8101358592504,,20.162626935989135,best rolling B2/B3,met,True
+A-LN,4,WIS,peak,26.7149949840817,,33.72970535812474,best B0-B3 on matched peak,met,True
+A-LN,5,WIS,fold_1,3.0326653050277006,,4.147146167403628,best rolling B2/B3,met,True
+A-LN,5,WIS,fold_2,4.703707634004349,,6.339890674080492,best rolling B2/B3,met,True
+A-LN,5,WIS,fold_3,27.017118930327282,,33.940454346635754,best rolling B2/B3,met,True
+A-LN,5,WIS,fold_4,8.128043324947885,,10.400724362891893,best rolling B2/B3,met,True
+A-LN,5,WIS,fold_5,8.67971926646531,,12.102308138409143,best rolling B2/B3,met,True
+A-LN,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+v4+DL,1,S_MAE,equal_fold,0.5378589826012838,,0.5920298211373128,best B0-B3,met,True
+v4+DL,2,S_WIS,equal_fold,0.528086810557636,,0.5750919366593932,best B0-B3,met,True
+v4+DL,3,coverage95,fold_1,0.9481481481481482,0.9,0.98,,met,True
+v4+DL,3,coverage95,fold_2,0.9379342288096341,0.9,0.98,,met,True
+v4+DL,3,coverage95,fold_3,0.9275568181818182,0.9,0.98,,met,True
+v4+DL,3,coverage95,fold_4,0.9439814814814815,0.9,0.98,,met,True
+v4+DL,3,coverage95,fold_5,0.9489795918367347,0.9,0.98,,met,True
+v4+DL,4,coverage95,peak,0.9534313725490197,0.9,,,met,True
+v4+DL,4,MAE,peak,49.76113032109208,,57.617758673520505,best B0-B3 on matched peak,met,True
+v4+DL,5,MAE,fold_1,4.965717199069652,,6.530232537302945,best rolling B2/B3,met,True
+v4+DL,5,MAE,fold_2,7.876077487706347,,10.160199330508874,best rolling B2/B3,met,True
+v4+DL,5,MAE,fold_3,47.55261450232105,,56.7082158826891,best rolling B2/B3,met,True
+v4+DL,5,MAE,fold_4,13.636087896210261,,17.367639793808983,best rolling B2/B3,met,True
+v4+DL,5,MAE,fold_5,14.852021327930759,,20.162626935989135,best rolling B2/B3,met,True
+v4+DL,4,WIS,peak,28.539693517318465,,33.72970535812474,best B0-B3 on matched peak,met,True
+v4+DL,5,WIS,fold_1,3.1571793329959847,,4.147146167403628,best rolling B2/B3,met,True
+v4+DL,5,WIS,fold_2,5.217431197423361,,6.339890674080492,best rolling B2/B3,met,True
+v4+DL,5,WIS,fold_3,28.532268338457683,,33.940454346635754,best rolling B2/B3,met,True
+v4+DL,5,WIS,fold_4,8.186892372191663,,10.400724362891893,best rolling B2/B3,met,True
+v4+DL,5,WIS,fold_5,8.856496184316734,,12.102308138409143,best rolling B2/B3,met,True
+v4+DL,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+v3+DL,1,S_MAE,equal_fold,0.5675777334950503,,0.5920298211373128,best B0-B3,met,True
+v3+DL,2,S_WIS,equal_fold,0.5552920130934001,,0.5750919366593932,best B0-B3,met,True
+v3+DL,3,coverage95,fold_1,0.9453703703703704,0.9,0.98,,met,True
+v3+DL,3,coverage95,fold_2,0.9337656322371468,0.9,0.98,,met,True
+v3+DL,3,coverage95,fold_3,0.9341856060606061,0.9,0.98,,met,True
+v3+DL,3,coverage95,fold_4,0.9449074074074074,0.9,0.98,,met,True
+v3+DL,3,coverage95,fold_5,0.9499072356215214,0.9,0.98,,met,True
+v3+DL,4,coverage95,peak,0.9534313725490197,0.9,,,met,True
+v3+DL,4,MAE,peak,47.23382078594436,,57.617758673520505,best B0-B3 on matched peak,met,True
+v3+DL,5,MAE,fold_1,5.314827280626418,,6.530232537302945,best rolling B2/B3,met,True
+v3+DL,5,MAE,fold_2,8.490946127570584,,10.160199330508874,best rolling B2/B3,met,True
+v3+DL,5,MAE,fold_3,48.28741522276528,,56.7082158826891,best rolling B2/B3,met,True
+v3+DL,5,MAE,fold_4,14.511318113052312,,17.367639793808983,best rolling B2/B3,met,True
+v3+DL,5,MAE,fold_5,15.572022096208014,,20.162626935989135,best rolling B2/B3,met,True
+v3+DL,4,WIS,peak,27.75192076767271,,33.72970535812474,best B0-B3 on matched peak,met,True
+v3+DL,5,WIS,fold_1,3.3543061088209587,,4.147146167403628,best rolling B2/B3,met,True
+v3+DL,5,WIS,fold_2,5.562662521126662,,6.339890674080492,best rolling B2/B3,met,True
+v3+DL,5,WIS,fold_3,29.30249687655968,,33.940454346635754,best rolling B2/B3,met,True
+v3+DL,5,WIS,fold_4,8.6708277184953,,10.400724362891893,best rolling B2/B3,met,True
+v3+DL,5,WIS,fold_5,9.24458051922119,,12.102308138409143,best rolling B2/B3,met,True
+v3+DL,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+HG,1,S_MAE,equal_fold,0.5657606376333641,,0.5920298211373128,best B0-B3,met,True
+HG,2,S_WIS,equal_fold,0.532218690181866,,0.5750919366593932,best B0-B3,met,True
+HG,3,coverage95,fold_1,0.9337962962962963,0.9,0.98,,met,True
+HG,3,coverage95,fold_2,0.9351551644279759,0.9,0.98,,met,True
+HG,3,coverage95,fold_3,0.9360795454545454,0.9,0.98,,met,True
+HG,3,coverage95,fold_4,0.9324074074074075,0.9,0.98,,met,True
+HG,3,coverage95,fold_5,0.950834879406308,0.9,0.98,,met,True
+HG,4,coverage95,peak,0.9387254901960784,0.9,,,met,True
+HG,4,MAE,peak,47.52143732035691,,57.617758673520505,best B0-B3 on matched peak,met,True
+HG,5,MAE,fold_1,5.253924602538004,,6.530232537302945,best rolling B2/B3,met,True
+HG,5,MAE,fold_2,8.380965193656028,,10.160199330508874,best rolling B2/B3,met,True
+HG,5,MAE,fold_3,48.035385691213605,,56.7082158826891,best rolling B2/B3,met,True
+HG,5,MAE,fold_4,14.636119694466323,,17.367639793808983,best rolling B2/B3,met,True
+HG,5,MAE,fold_5,15.640309999597784,,20.162626935989135,best rolling B2/B3,met,True
+HG,4,WIS,peak,27.308312686097484,,33.72970535812474,best B0-B3 on matched peak,met,True
+HG,5,WIS,fold_1,3.208235420275873,,4.147146167403628,best rolling B2/B3,met,True
+HG,5,WIS,fold_2,5.13448166723657,,6.339890674080492,best rolling B2/B3,met,True
+HG,5,WIS,fold_3,27.791822265728936,,33.940454346635754,best rolling B2/B3,met,True
+HG,5,WIS,fold_4,8.517781550107456,,10.400724362891893,best rolling B2/B3,met,True
+HG,5,WIS,fold_5,9.052235002444618,,12.102308138409143,best rolling B2/B3,met,True
+HG,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True
+HGL,1,S_MAE,equal_fold,0.5356586541153796,,0.5920298211373128,best B0-B3,met,True
+HGL,2,S_WIS,equal_fold,0.5055748401472236,,0.5750919366593932,best B0-B3,met,True
+HGL,3,coverage95,fold_1,0.9375,0.9,0.98,,met,True
+HGL,3,coverage95,fold_2,0.9402501157943493,0.9,0.98,,met,True
+HGL,3,coverage95,fold_3,0.9332386363636364,0.9,0.98,,met,True
+HGL,3,coverage95,fold_4,0.9337962962962963,0.9,0.98,,met,True
+HGL,3,coverage95,fold_5,0.9512987012987013,0.9,0.98,,met,True
+HGL,4,coverage95,peak,0.9362745098039216,0.9,,,met,True
+HGL,4,MAE,peak,50.085106925008226,,57.617758673520505,best B0-B3 on matched peak,met,True
+HGL,5,MAE,fold_1,4.930960509642647,,6.530232537302945,best rolling B2/B3,met,True
+HGL,5,MAE,fold_2,7.713016585113509,,10.160199330508874,best rolling B2/B3,met,True
+HGL,5,MAE,fold_3,47.02773874828664,,56.7082158826891,best rolling B2/B3,met,True
+HGL,5,MAE,fold_4,13.772374557966877,,17.367639793808983,best rolling B2/B3,met,True
+HGL,5,MAE,fold_5,14.950077113978647,,20.162626935989135,best rolling B2/B3,met,True
+HGL,4,WIS,peak,28.02151976713374,,33.72970535812474,best B0-B3 on matched peak,met,True
+HGL,5,WIS,fold_1,3.017880239754553,,4.147146167403628,best rolling B2/B3,met,True
+HGL,5,WIS,fold_2,4.786404255399961,,6.339890674080492,best rolling B2/B3,met,True
+HGL,5,WIS,fold_3,27.01096309573922,,33.940454346635754,best rolling B2/B3,met,True
+HGL,5,WIS,fold_4,8.046634538327039,,10.400724362891893,best rolling B2/B3,met,True
+HGL,5,WIS,fold_5,8.685815912228607,,12.102308138409143,best rolling B2/B3,met,True
+HGL,6,complete_finite_ordered,all_eligible,1.0,1.0,1.0,,met,True

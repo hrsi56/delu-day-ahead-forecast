@@ -1,0 +1,263 @@
+{
+ "all_passed": true,
+ "checks": 71,
+ "origins": [
+  {
+   "available_d1_nonuniform_price_mutation": {
+    "A-PN-sel": 33.598167125900055,
+    "M": 28.61188405546641,
+    "PN-avg": 37.229345219425596,
+    "PN-sel": 42.26211996350143,
+    "R": 33.36523597343087
+   },
+   "composites_bitwise_vs_committed": {
+    "A-PN-sel": true,
+    "M": true,
+    "R": true
+   },
+   "d1_mutation_rows": 5,
+   "day": "2020-07-01",
+   "delivery_day_and_future_mask": {
+    "A-PN-sel": 0.0,
+    "M": 0.0,
+    "PN-avg": 0.0,
+    "PN-sel": 0.0,
+    "R": 0.0
+   },
+   "fold": "fold_1",
+   "future_weather_mutation": {
+    "PN-avg": 0.0,
+    "PN-sel": 0.0
+   },
+   "hg_components_refit_bitwise_vs_cp20_cache": {
+    "A1": true,
+    "B2": true
+   },
+   "ladder_rows": {
+    "lp_target_differs_positive_control": true,
+    "pn_features_are_ln_features": true,
+    "pn_forecast_equals_union_of_ln_blocks": true,
+    "pn_inner_equals_union_of_ln_blocks": true,
+    "pn_target_is_ln_normalised_target": true,
+    "pn_validation_equals_union_of_ln_blocks": true,
+    "pn_window_equals_union_of_ln_blocks": true,
+    "pn_window_rows_equal_cp21_lp": true
+   },
+   "mask_selection_and_trees_unchanged": true,
+   "n_hours": 24,
+   "n_jobs_4_vs_main_run": true,
+   "pn_reproduction": {
+    "avg_bitwise": true,
+    "sel_bitwise": true,
+    "selected_equal": true,
+    "trees_equal": true
+   },
+   "pn_sel_independent_refit": {
+    "config": "G1",
+    "forecast_bitwise": true,
+    "tree_equal": true
+   },
+   "target_day_weather_rearranged": {
+    "PN-avg": 6.792629787668801,
+    "PN-sel": 6.320853555769784
+   },
+   "training_weather_cross_date_permutation": {
+    "PN-avg": 3.2872248208918755,
+    "PN-sel": 3.0996127293031286
+   },
+   "uniform_weather_scaling_x3_invariance": {
+    "PN-avg": 0.0,
+    "PN-sel": 0.0
+   },
+   "validation_outcome_mutation": {
+    "PN-avg_change": 4.379408188894079,
+    "selection_after": "G1",
+    "selection_before": "G1",
+    "validation_mae_changed": true
+   }
+  },
+  {
+   "available_d1_nonuniform_price_mutation": {
+    "A-PN-sel": 124.14128201447873,
+    "M": 103.72707508673898,
+    "PN-avg": 102.02201485779344,
+    "PN-sel": 122.48524156643849,
+    "R": 117.32020644493039
+   },
+   "composites_bitwise_vs_committed": {
+    "A-PN-sel": true,
+    "M": true,
+    "R": true
+   },
+   "d1_mutation_rows": 5,
+   "day": "2025-05-01",
+   "delivery_day_and_future_mask": {
+    "A-PN-sel": 0.0,
+    "M": 0.0,
+    "PN-avg": 0.0,
+    "PN-sel": 0.0,
+    "R": 0.0
+   },
+   "fold": "fold_4",
+   "future_weather_mutation": {
+    "PN-avg": 0.0,
+    "PN-sel": 0.0
+   },
+   "hg_components_refit_bitwise_vs_cp20_cache": {
+    "A1": true,
+    "B2": true
+   },
+   "ladder_rows": {
+    "lp_target_differs_positive_control": true,
+    "pn_features_are_ln_features": true,
+    "pn_forecast_equals_union_of_ln_blocks": true,
+    "pn_inner_equals_union_of_ln_blocks": true,
+    "pn_target_is_ln_normalised_target": true,
+    "pn_validation_equals_union_of_ln_blocks": true,
+    "pn_window_equals_union_of_ln_blocks": true,
+    "pn_window_rows_equal_cp21_lp": true
+   },
+   "mask_selection_and_trees_unchanged": true,
+   "n_hours": 24,
+   "n_jobs_4_vs_main_run": true,
+   "pn_reproduction": {
+    "avg_bitwise": true,
+    "sel_bitwise": true,
+    "selected_equal": true,
+    "trees_equal": true
+   },
+   "pn_sel_independent_refit": {
+    "config": "G4",
+    "forecast_bitwise": true,
+    "tree_equal": true
+   },
+   "target_day_weather_rearranged": {
+    "PN-avg": 64.62944134720625,
+    "PN-sel": 63.0649797530594
+   },
+   "training_weather_cross_date_permutation": {
+    "PN-avg": 27.621870353875977,
+    "PN-sel": 36.14645763173468
+   },
+   "uniform_weather_scaling_x3_invariance": {
+    "PN-avg": 0.0,
+    "PN-sel": 0.0
+   },
+   "validation_outcome_mutation": {
+    "PN-avg_change": 12.050610579595542,
+    "selection_after": "G1",
+    "selection_before": "G4",
+    "validation_mae_changed": true
+   }
+  }
+ ],
+ "population": {
+  "autumn_2025_10_26_canonical_hours": 25,
+  "boundary_guard_accepts_2026_04_07": true,
+  "boundary_guard_refuses_2026_04_08": true,
+  "composite_parity_max_abs_eur_mwh": {
+   "A-LN": 1.7053025658242404e-13,
+   "A-LP": 1.4210854715202004e-13,
+   "A-PN-sel": 1.4210854715202004e-13,
+   "M": 1.9895196601282805e-13,
+   "R": 1.4210854715202004e-13
+  },
+  "composite_parity_passed": true,
+  "dl_alpha_within_clip_bounds_every_emission": true,
+  "dl_emissions": 976,
+  "dl_recency_weights_sum_to_one_every_emission": true,
+  "dl_rows_rearranged": 0,
+  "dst_rows": {
+   "2026-03-29": {
+    "A-LN": 23,
+    "A-LP": 23,
+    "A-PN-sel": 23,
+    "M": 23,
+    "R": 23,
+    "v3+DL": 23,
+    "v4+DL": 23
+   }
+  },
+  "keys_aligned_with_members": true,
+  "layer_by_policy": {
+   "A-LN": [
+    "H"
+   ],
+   "A-LP": [
+    "H"
+   ],
+   "A-PN-sel": [
+    "H"
+   ],
+   "M": [
+    "H"
+   ],
+   "R": [
+    "H"
+   ],
+   "v3+DL": [
+    "DL"
+   ],
+   "v4+DL": [
+    "DL"
+   ]
+  },
+  "loader_max_date": "2026-04-07",
+  "max_delivery_date": "2026-04-07",
+  "non_dl_composites_on_h_path": true,
+  "p50_separate_from_central": true,
+  "pn_averaging_routes_max_abs_gap": 1.1368683772161603e-13,
+  "pn_avg_equals_mean_of_four_full_window_fits": true,
+  "pn_fits_checked": 636,
+  "pn_sel_equals_selected_full_window_fit": true,
+  "pn_selection_follows_rule": true,
+  "quantiles_finite": true,
+  "quantiles_ordered": true,
+  "rows_per_policy": {
+   "A-LN": 10747,
+   "A-LP": 10747,
+   "A-PN-sel": 10747,
+   "M": 10747,
+   "R": 10747,
+   "v3+DL": 10747,
+   "v4+DL": 10747
+  },
+  "spring_2026_03_29_canonical_hours": 23,
+  "v3_dl_central_is_v3": true,
+  "v4_dl_central_is_v4": true
+ },
+ "schema": "cp22-controls-v1",
+ "seed": 15042,
+ "state": {
+  "admission_freeze_commit": "94439d0c1198582aef504bfd7c53de663be96864",
+  "cp21_vector_differing_from_committed_lineage_refused": true,
+  "dl_differs_from_committed_R": true,
+  "dl_without_weights_or_aci_equals_committed_R_bitwise": true,
+  "intact_pn_cache_loads": true,
+  "intact_sources_load": true,
+  "release_rule_R": {
+   "consume_once": true,
+   "d_minus_1_error_refused": true,
+   "d_minus_2_error_accepted": true,
+   "duplicate_issue_refused": true,
+   "partial_day_not_buffered": true,
+   "unavailable_truth_stays_pending": true
+  },
+  "release_rule_v4+DL": {
+   "aci_updated_once_for_the_released_day": true,
+   "consume_once": true,
+   "d_minus_1_error_refused": true,
+   "d_minus_2_error_accepted": true,
+   "duplicate_issue_refused": true,
+   "partial_day_not_buffered": true,
+   "unavailable_truth_stays_pending": true
+  },
+  "replay_equals_committed_vectors": true,
+  "restart_replay_identical": true,
+  "tampered_pn_cache_refused": true,
+  "wrong_identity_cp21_cache_refused": true,
+  "wrong_identity_pn_cache_refused": true
+ },
+ "threshold_eur_mwh": 1e-06,
+ "written_utc": "2026-10-03T18:08:52Z"
+}

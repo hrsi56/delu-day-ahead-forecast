@@ -1,0 +1,29 @@
+{
+ "L-P (CP-21, committed)": {
+  "final_cpu_total": 440.22925599999957,
+  "final_wall_total": 448.9539437510539,
+  "inner_cpu_total": 1565.7454499999992,
+  "inner_wall_total": 1598.0272192744887,
+  "median_per_origin_wall_selection_and_refit": 3.2399004789767787,
+  "origins": 636
+ },
+ "PN": {
+  "full_window_cpu_total": 1550.7745849999994,
+  "full_window_wall_total": 1584.7121866491366,
+  "inner_cpu_total": 1520.0461259999977,
+  "inner_wall_total": 1556.6421413540668,
+  "median_per_origin_wall_all_eight": 4.982953375432771,
+  "median_per_origin_wall_m_selection_and_refit": 3.0564571245000707,
+  "median_per_origin_wall_r_four_full_window": 2.5174795839998296,
+  "peak_worker_maxrss_bytes": 758349824
+ },
+ "fits": 5088,
+ "fits_by_role": {
+  "final": 2544,
+  "inner": 2544
+ },
+ "note": "PN makes four full-window fits where L-P makes one refit; R needs only the four full-window fits, M needs PN-sel's selection and refit plus L-P's; diagnostic only (D3)",
+ "origins": 636,
+ "schema": "cp22-fit-cost-v1",
+ "written_utc": "2026-10-03T17:55:06Z"
+}

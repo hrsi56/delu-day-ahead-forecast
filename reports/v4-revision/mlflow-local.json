@@ -1,0 +1,83 @@
+{
+ "all_read_back_equal": true,
+ "draft_export_sha256": "7810af06132e3807a5438d08529af77f73d01cc1ba5cc2d2078089d2f2b0d83a",
+ "experiment": "delu-generations",
+ "network": "none; telemetry disabled; no upload",
+ "runs": {
+  "cp22": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "9cae312e0b8842a4816a640cff00bfd7",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/A-LN": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "98860fc7869f424abc58bb5086293668",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/A-LP": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "d1c31c2618854c21881b260b1476fb7d",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/A-PN-sel": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "a268003bcc4b4f088abba47df37f8079",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/M": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "8b13b2002de4451ca0747bd48f939fd9",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/R": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "1f2d93106ef14cce9ebdbc2b9f4f667a",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/v3+DL": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "21377a64c8554464a4d7861a8004a73e",
+   "run_name_equal": true,
+   "tags_equal": true
+  },
+  "cp22/v4+DL": {
+   "artifacts_equal": true,
+   "histories_equal": true,
+   "params_equal": true,
+   "parent_equal": true,
+   "run_id": "9593dff83de14f8cac568d3cb8e4860d",
+   "run_name_equal": true,
+   "tags_equal": true
+  }
+ },
+ "schema": "cp22-mlflow-local-v1",
+ "tracking": "local SQLite store .local/mlruns/cp22 (ignored)",
+ "written_utc": "2026-10-03T22:13:35Z"
+}

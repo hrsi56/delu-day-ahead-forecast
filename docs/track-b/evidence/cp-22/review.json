@@ -1,0 +1,84 @@
+{
+ "candidate_root": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-22/critic",
+ "pn": [
+  {
+   "committed_rows": 8,
+   "day": "2022-08-16",
+   "fold": "fold_3",
+   "pn_avg_bitwise": true,
+   "pn_sel_bitwise": true,
+   "selected_equal": true,
+   "trees_equal": true,
+   "validation_losses_equal": true
+  }
+ ],
+ "replay": [
+  {
+   "admission_freeze_commit": "94439d0c1198582aef504bfd7c53de663be96864",
+   "alpha_t_after": null,
+   "bitwise_equal": true,
+   "first": "2025-05-01",
+   "fold": "fold_4",
+   "last": "2025-05-10",
+   "layer": "H",
+   "policy": "M",
+   "rows": 240
+  },
+  {
+   "admission_freeze_commit": "94439d0c1198582aef504bfd7c53de663be96864",
+   "alpha_t_after": {
+    "0.05": 0.01833333333333334,
+    "0.2": 0.15500000000000028,
+    "0.5": 0.43749999999999983
+   },
+   "bitwise_equal": true,
+   "first": "2022-08-15",
+   "fold": "fold_3",
+   "last": "2022-08-24",
+   "layer": "DL",
+   "policy": "v4+DL",
+   "rows": 240
+  }
+ ],
+ "schema": "cp22-review-v1",
+ "score": {
+  "W": null,
+  "criteria": {
+   "max_abs_numeric_difference": 3.552713678800501e-15,
+   "nan_pattern_mismatches": 0,
+   "numeric_columns_compared": 4,
+   "rows_committed": 189,
+   "rows_recomputed": 189,
+   "unmatched": 0
+  },
+  "first_unmet_equal": {
+   "dynamic_layer": true,
+   "fast_component": true,
+   "replacement": true
+  },
+  "metrics": {
+   "max_abs_numeric_difference": 5.684341886080802e-14,
+   "nan_pattern_mismatches": 0,
+   "numeric_columns_compared": 39,
+   "rows_committed": 105,
+   "rows_recomputed": 105,
+   "unmatched": 0
+  },
+  "policies": 15,
+  "readings_equal": true,
+  "uncertainty": {
+   "max_abs_numeric_difference": 4.440892098500626e-16,
+   "nan_pattern_mismatches": 0,
+   "numeric_columns_compared": 9,
+   "rows_committed": 192,
+   "rows_recomputed": 192,
+   "unmatched": 0
+  },
+  "verdicts_equal": {
+   "dynamic_layer": true,
+   "fast_component": true,
+   "replacement": true
+  }
+ },
+ "written_utc": "2026-10-03T22:38:02Z"
+}
