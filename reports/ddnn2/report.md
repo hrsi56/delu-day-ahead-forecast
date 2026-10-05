@@ -106,10 +106,10 @@ Frozen protocol `attempt-1/protocol.json`; vectors `attempt-1/predictions.parque
 | scored_attempts | 2 | 1 |
 | rounds_before_attempt_1 | 3 | 1 |
 | rounds_before_attempt_2 | 1 | 0 |
-| machine_hours | 150 | 9.95 |
-| active_hours | 50 | 3.70 |
+| machine_hours | 150 | 10.10 |
+| active_hours | 50 | 4.00 |
 | rss_bytes (GiB) | 10 | 2.85 |
-| additional_disk_bytes (GiB) | 10 | 0.38 |
+| additional_disk_bytes (GiB) | 10 | 0.67 |
 | workers | 4 | 4 |
 | data_download_bytes | 0 | 0 |
 | remote_writes | 0 | 0 |

@@ -2,18 +2,18 @@
  "active_hours_basis": "from 2026-10-05T03:14:00Z (before the Lead's first command) minus recorded pauses",
  "active_hours_hard_stop": 50.0,
  "active_hours_timebox": 35.0,
- "active_hours_upper_bound": 3.7021385443872874,
+ "active_hours_upper_bound": 3.9951777241627373,
  "blas_threads": 1,
  "caps_vs_use": {
   "active_seconds": {
    "base_cap": 180000,
    "cap": 180000,
-   "used": 13327.698759794235
+   "used": 14382.639806985855
   },
   "additional_disk_bytes": {
    "base_cap": 10737418240,
    "cap": 10737418240,
-   "used": 406697212
+   "used": 723955332
   },
   "bootstrap_passes": {
    "base_cap": 6,
@@ -38,7 +38,7 @@
   "machine_seconds": {
    "base_cap": 540000,
    "cap": 540000,
-   "used": 35818.908364922056
+   "used": 36366.40191567308
   },
   "policy_days": {
    "base_cap": 12000,
@@ -87,7 +87,7 @@
   }
  },
  "cloud": 0,
- "cpu_hours_observed": 9.11723288980028,
+ "cpu_hours_observed": 9.264399135180833,
  "data_download_bytes": 0,
  "events": [
   {
@@ -247,6 +247,15 @@
    },
    "jobs": 1
   },
+  "ci-equivalent": {
+   "charged_machine_hours": 0.1509097040277791,
+   "cpu_seconds_observed": 528.073994546,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
   "comparison-a1": {
    "charged_machine_hours": 0.014337690520834358,
    "cpu_seconds_observed": 48.616250496,
@@ -338,21 +347,21 @@
    "jobs": 1
   },
   "finalise": {
-   "charged_machine_hours": 0.0008620489469427007,
-   "cpu_seconds_observed": 1.99655972,
+   "charged_machine_hours": 0.001450050324444116,
+   "cpu_seconds_observed": 2.739704616,
    "exit_codes": {
-    "0": 1,
+    "0": 2,
     "None": 1
    },
-   "jobs": 2
+   "jobs": 3
   },
   "finalise-manifest": {
-   "charged_machine_hours": 0.0006085449188847431,
-   "cpu_seconds_observed": 1.971364224,
+   "charged_machine_hours": 0.0011923813888885585,
+   "cpu_seconds_observed": 2.952708152,
    "exit_codes": {
-    "0": 2
+    "0": 3
    },
-   "jobs": 2
+   "jobs": 3
   },
   "fit-cost-a1": {
    "charged_machine_hours": 0.38920797658555484,
@@ -492,9 +501,9 @@
    "jobs": 1
   }
  },
- "jobs_total": 36,
+ "jobs_total": 40,
  "ledger": ".local/artifacts/cp-24/ledger/budget.json (cumulative, never reset)",
- "machine_hours": 9.949696768033904,
+ "machine_hours": 10.10177830990919,
  "machine_hours_cap": 150.0,
  "mps": 0,
  "pause_reasons": [
@@ -535,7 +544,7 @@
    1791205320.0
   ]
  ],
- "peak_added_disk_gib": 0.3787662945687771,
+ "peak_added_disk_gib": 0.6742359437048435,
  "peak_aggregate_rss_gib": 2.8492431640625,
  "raises": [],
  "remote_writes": 0,
@@ -569,5 +578,5 @@
   "rounds": 1,
   "v4_parity_origins": 11
  },
- "written_utc": "2026-10-05T13:43:45Z"
+ "written_utc": "2026-10-05T14:01:20Z"
 }

@@ -39,3 +39,15 @@ could depend on; none is outcome-driven.
    so it reported a difference for an identical file. It now compares after a JSON round trip; the registry did
    not change. Items 6 and 7 change files that attempt 1's protocol lists under `recorded_not_enforced_sha256`;
    their hashes at the freeze are recorded there.
+8. **Byte-exact storage attributes (found by the Lead after the first candidate, 2026-10-05 17:00 IDT).**
+   - **The gap.** CP-21 to CP-23 store their report and evidence directories with `* -text`, so no checkout
+     normalises line endings. CP-24 relied only on the manifest's SHA-256 check, which passed on this machine
+     and in the CI-equivalent run.
+   - **The repair.** `reports/ddnn2/.gitattributes` and `docs/track-b/evidence/cp-24/.gitattributes` now carry
+     `* -text`. Both are bound in the manifest. `tests/cp24/test_saved_evidence.py` checks them, checks that
+     `git check-attr text` is unset for every manifested report and evidence file, and checks the issued brief
+     against the hash in the protocol. `src/cp24/finalise.py` adds the evidence attribute file to its manifest
+     paths. No committed blob changed, because every file was already stored with LF and no conversion.
+   - **The review.** The first Integration review (`critic-1`) had been opened on the superseded candidate
+     `5fd4e3ae360855e45f504944dd21d570e2026490`. It was stopped before it ran any monitored job or wrote a
+     verdict. The corrected candidate receives its own fresh review.

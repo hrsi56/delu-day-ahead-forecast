@@ -143,6 +143,16 @@ def test_the_manifest_binds_every_committed_cp24_file_byte_for_byte():
     assert manifest, 'empty manifest'
     for name, digest in manifest.items():
         assert sha(ROOT / name) == digest, name
+    # byte-exact storage (§21.7, inherited by §23.10): no end-of-line normalisation of any CP-24 report or evidence file
+    for name in ('reports/ddnn2/.gitattributes', 'docs/track-b/evidence/cp-24/.gitattributes'):
+        assert name in manifest and '* -text' in (ROOT / name).read_text()
+    stored = sorted(n for n in manifest if n.startswith(('reports/ddnn2/', 'docs/track-b/evidence/cp-24/')))
+    attributes = subprocess.check_output(['git', 'check-attr', 'text', '--', *stored], cwd=ROOT, text=True).splitlines()
+    assert len(attributes) == len(stored) and all(line.endswith(': text: unset') for line in attributes)
+    # the issued brief is the one each scored attempt's protocol binds
+    for ad in ATTEMPTS:
+        protocol = json.loads((ad / 'protocol.json').read_text())
+        assert sha(ROOT / protocol['issued_brief']['path']) == protocol['issued_brief']['sha256']
 
 
 def test_the_generated_documents_equal_their_generators():

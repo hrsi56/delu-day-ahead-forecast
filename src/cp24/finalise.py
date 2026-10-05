@@ -20,7 +20,8 @@ from .jobs import art, stamp
 OUT = Path('reports/ddnn2')
 MANIFESTED = ('reports/ddnn2', 'src/cp24', 'tests/cp24', 'scripts/cp24_ddnn2.py',
               'docs/track-b/research-content/cp24-claims.md', 'docs/track-b/evidence/cp-24/issued-brief.md',
-              'docs/track-b/evidence/cp-24/publication-packet.md', 'docs/track-b/evidence/cp-24/steering')
+              'docs/track-b/evidence/cp-24/publication-packet.md', 'docs/track-b/evidence/cp-24/steering',
+              'docs/track-b/evidence/cp-24/.gitattributes')
 
 
 def failures_table(root: Path) -> pd.DataFrame:
