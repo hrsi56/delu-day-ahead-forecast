@@ -21,6 +21,7 @@ JOBS = {
     'v4-gate': ('gate', 'job_v4_gate'),
     'v4-parity': ('gate', 'job_v4_parity'),
     'gate': ('gate', 'job_gate'),
+    'round-design': ('rounds', 'job_round_design'),
     'round-report': ('rounds', 'job_round_report'),
     'protocol': ('protocol', 'job_protocol'),
     'fits': ('execution', 'job_fits'),
