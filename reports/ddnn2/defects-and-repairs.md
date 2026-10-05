@@ -23,3 +23,8 @@ could depend on; none is outcome-driven.
    2024-10-27: the snapshot lacks the 00:00 load forecast on both days (neither day has a feature-valid or eligible
    hour), the day table correctly keeps that hour missing, and the test compared NaN with NaN by `np.isclose`
    without `equal_nan`. The test now passes `equal_nan=True`; the design code did not change. All 17 cases pass.
+5. **A second session stopped by the usage limit (12:35–16:02 IDT).** Attempt 1's evaluation fits had finished at
+   12:32 IDT (448 origins, none failed, monitor exit 0). On resuming, every one of the 636 warm-up and evaluation cache
+   entries was verified read-only (identity, content hash, keys, finite ordered quantiles, eight members; no fit), and
+   the ledger's 10,813 charged fits match the records (5,725 before the attempt, 1,504 warm-up, 3,584 evaluation), so no
+   work was lost. The gap is recorded as an idle pause, like item 3.
