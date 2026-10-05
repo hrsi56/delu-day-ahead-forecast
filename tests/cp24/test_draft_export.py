@@ -27,10 +27,13 @@ def test_files_that_never_change_are_unchanged():
     lineage = json.loads((ROOT / 'reports/cp15/protocol.json').read_text())['input_sha256']
     cp15 = json.loads((ROOT / 'reports/cp15/artifact-manifest.json').read_text())['artifact_sha256']
     assert _sha(ROOT / 'uv.lock') == lineage['uv.lock'] and _sha(ROOT / 'pyproject.toml') == cp15['pyproject.toml']
+    latest = {}   # a later checkpoint's manifest re-binds a path it legitimately extended (scripts/mlflow_export.py)
     for manifest in ('reports/block-challenger/artifact-manifest.json', 'reports/v4-revision/artifact-manifest.json',
                      'reports/distribution-challenger/artifact-manifest.json'):
-        for name, digest in json.loads((ROOT / manifest).read_text())['artifact_sha256'].items():
-            assert _sha(ROOT / name) == digest, name
+        latest.update(json.loads((ROOT / manifest).read_text())['artifact_sha256'])
+    assert 'scripts/mlflow_export.py' in latest
+    for name, digest in latest.items():
+        assert _sha(ROOT / name) == digest, name
 
 
 @pytest.mark.skipif(not DRAFT.exists(), reason='no CP-24 draft export (no scored attempt yet, or a stop)')
