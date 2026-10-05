@@ -1,0 +1,62 @@
+{
+ "attempt": 1,
+ "by_fold": {
+  "fold_1": {
+   "cap_slot_levels_forecast": 176,
+   "ensemble_crossings_restored": 0,
+   "member_fits": 1016,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 3193,
+   "winsor_values_hold": 285716,
+   "winsor_values_train": 965964
+  },
+  "fold_2": {
+   "cap_slot_levels_forecast": 225,
+   "ensemble_crossings_restored": 0,
+   "member_fits": 1016,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 1792,
+   "winsor_values_hold": 349775,
+   "winsor_values_train": 1019746
+  },
+  "fold_3": {
+   "cap_slot_levels_forecast": 51,
+   "ensemble_crossings_restored": 0,
+   "member_fits": 1000,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 1274,
+   "winsor_values_hold": 320867,
+   "winsor_values_train": 915905
+  },
+  "fold_4": {
+   "cap_slot_levels_forecast": 17,
+   "ensemble_crossings_restored": 0,
+   "member_fits": 1040,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 1555,
+   "winsor_values_hold": 390683,
+   "winsor_values_train": 1190923
+  },
+  "fold_5": {
+   "cap_slot_levels_forecast": 114,
+   "ensemble_crossings_restored": 0,
+   "member_fits": 1016,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 5158,
+   "winsor_values_hold": 329609,
+   "winsor_values_train": 1006820
+  }
+ },
+ "guards": "winsorisation (training-row 0.5/99.5% quantiles, continuous inputs only), the cap (+-1.25 x max|z| on the member's training rows, every emitted slot-level), sorting of ensemble crossings, and the nonfinite-loss stop",
+ "schema": "cp24-guards-v1",
+ "source": ".local/artifacts/cp-24/attempt-1/fits (every member record)",
+ "totals": {
+  "cap_slot_levels_forecast": 583,
+  "ensemble_crossings_restored": 0,
+  "member_fits": 5088,
+  "nonfinite_loss_stops": 0,
+  "winsor_values_forecast": 12972,
+  "winsor_values_hold": 1676650,
+  "winsor_values_train": 5099358
+ }
+}
