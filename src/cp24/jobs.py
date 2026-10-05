@@ -15,7 +15,6 @@ import time
 JOBS = {
     'verify-inputs': ('preflight', 'verify_inputs'),
     'verify-weather': ('preflight', 'verify_weather'),
-    'slice': ('preflight', 'job_slice'),
     'reference-checks': ('reference', 'job_reference_checks'),
     'resource-admission': ('admission', 'job_resource_admission'),
     'search': ('search', 'job_search'),

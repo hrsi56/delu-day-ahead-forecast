@@ -1,0 +1,310 @@
+{
+ "code_path": "cp24.v4members.fit (wrapper applied): cp21.components.refit for A1_w/B2_w, cp21.lgbm.fit_arm for L-N/L-R -- the gate's exact path",
+ "origins": [
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2020-07-01",
+   "excluded_training_days": [],
+   "fold": "fold_1",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2020-08-15",
+   "excluded_training_days": [],
+   "fold": "fold_1",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2021-04-01",
+   "excluded_training_days": [],
+   "fold": "fold_2",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2021-05-16",
+   "excluded_training_days": [],
+   "fold": "fold_2",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2022-07-01",
+   "excluded_training_days": [],
+   "fold": "fold_3",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2022-08-15",
+   "excluded_training_days": [],
+   "fold": "fold_3",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "CP-20 HG component cache (A1, B2), identity-verified; CP-21 committed lineage central_sha256 (L-N, L-R, v4)",
+   "day": "2025-03-22",
+   "excluded_training_days": [],
+   "fold": "fold_4",
+   "phase": "warmup",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2025-05-01",
+   "excluded_training_days": [],
+   "fold": "fold_4",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2025-06-15",
+   "excluded_training_days": [],
+   "fold": "fold_4",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2026-01-08",
+   "excluded_training_days": [],
+   "fold": "fold_5",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  },
+  {
+   "HG_bitwise_equal": true,
+   "bitwise_equal": {
+    "A1": true,
+    "B2": true,
+    "L-N": true,
+    "L-R": true
+   },
+   "committed_source": "reports/distribution-challenger/members.parquet (A1, B2); reports/block-challenger/predictions.parquet (L-N, L-R)",
+   "day": "2026-02-22",
+   "excluded_training_days": [],
+   "fold": "fold_5",
+   "max_abs_difference": {
+    "A1": 0.0,
+    "B2": 0.0,
+    "L-N": 0.0,
+    "L-R": 0.0
+   },
+   "phase": "evaluation",
+   "v4_bitwise_equal": true,
+   "wrapper_changed_nothing": true
+  }
+ ],
+ "passed": true,
+ "reading": "bitwise parity with the committed vectors at covered origins, where the wrapper leaves out no training day; the unwrapped member code refuses a fold-4 gate day whose window reaches the gap",
+ "schema": "cp24-v4-parity-v1",
+ "unwrapped_refuses_fold4_gate_day": {
+  "A1_w/B2_w": "refused: 2025-01-25: a training/forecast row lacks a frozen weather record",
+  "L-N": "refused: L-N night 2025-01-25: a training/forecast row lacks a frozen weather record",
+  "L-R": "refused: L-R night 2025-01-25: a training/forecast row lacks a frozen weather record",
+  "all_refused": true,
+  "day": "2025-01-25",
+  "excluded_by_wrapper": [
+   "2023-01-28",
+   "2023-01-29",
+   "2023-01-30",
+   "2023-01-31",
+   "2023-02-01",
+   "2023-02-02",
+   "2023-02-03",
+   "2023-02-04",
+   "2023-02-05",
+   "2023-02-06",
+   "2023-02-07",
+   "2023-02-08",
+   "2023-02-09",
+   "2023-02-10",
+   "2023-02-11",
+   "2023-02-12",
+   "2023-02-13",
+   "2023-02-14",
+   "2023-02-15",
+   "2023-02-16",
+   "2023-02-17",
+   "2023-02-18",
+   "2023-02-19",
+   "2023-02-20",
+   "2023-02-21",
+   "2023-02-22",
+   "2023-02-23",
+   "2023-02-24",
+   "2023-02-25",
+   "2023-02-26",
+   "2023-02-27",
+   "2023-02-28",
+   "2023-03-01",
+   "2023-03-02",
+   "2023-03-03",
+   "2023-03-04",
+   "2023-03-05",
+   "2023-03-06",
+   "2023-03-07",
+   "2023-03-08",
+   "2023-03-09",
+   "2023-03-10",
+   "2023-03-11",
+   "2023-03-12",
+   "2023-03-14",
+   "2023-03-15",
+   "2023-03-16",
+   "2023-03-17",
+   "2023-03-18",
+   "2023-03-19",
+   "2023-03-20",
+   "2023-03-21",
+   "2023-03-22",
+   "2023-03-23",
+   "2023-03-24"
+  ],
+  "fold": "fold_4"
+ },
+ "written_utc": "2026-10-05T03:45:30Z"
+}
