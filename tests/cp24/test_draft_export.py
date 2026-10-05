@@ -22,18 +22,9 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_files_that_never_change_are_unchanged():
+def test_cp23s_test_only_reference_lock_is_unchanged():
+    """The one lock CP-24 reuses (§23.7); every other unchanged file is tests/cp24/test_base_tree.py's."""
     assert _sha(ROOT / 'tests/cp23/torch-reference/uv.lock') == 'b3164a375e871396e685d0e887972b092fcd0c24a7fe0047167e8fc41c25dfed'
-    lineage = json.loads((ROOT / 'reports/cp15/protocol.json').read_text())['input_sha256']
-    cp15 = json.loads((ROOT / 'reports/cp15/artifact-manifest.json').read_text())['artifact_sha256']
-    assert _sha(ROOT / 'uv.lock') == lineage['uv.lock'] and _sha(ROOT / 'pyproject.toml') == cp15['pyproject.toml']
-    latest = {}   # a later checkpoint's manifest re-binds a path it legitimately extended (scripts/mlflow_export.py)
-    for manifest in ('reports/block-challenger/artifact-manifest.json', 'reports/v4-revision/artifact-manifest.json',
-                     'reports/distribution-challenger/artifact-manifest.json'):
-        latest.update(json.loads((ROOT / manifest).read_text())['artifact_sha256'])
-    assert 'scripts/mlflow_export.py' in latest
-    for name, digest in latest.items():
-        assert _sha(ROOT / name) == digest, name
 
 
 @pytest.mark.skipif(not DRAFT.exists(), reason='no CP-24 draft export (no scored attempt yet, or a stop)')
