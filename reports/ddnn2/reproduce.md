@@ -30,6 +30,8 @@ $PY scripts/cp24_ddnn2.py monitor --name v4-gate --workers 3 --log $LOG/v4-gate.
 # each pre-fold round r (design committed before its search; search ledger and ensembles committed before its gate)
 $PY scripts/cp24_ddnn2.py monitor --name round-design-<r> --workers 1 --log $LOG/round-design-<r>.log -- $PY scripts/cp24_ddnn2.py job round-design --round <r> --before-attempt <k> [--changes <json> --steering <committed answer>]
 $PY scripts/cp24_ddnn2.py monitor --name search-r<r> --workers 4 --log $LOG/search-r<r>.log -- $PY scripts/cp24_ddnn2.py job search --round <r> --workers 4
+# only if the search's ledger write fails after every fit (defects-and-repairs item 1): the same post-processing, no refit
+$PY scripts/cp24_ddnn2.py monitor --name search-ledger-r<r> --workers 1 --log $LOG/search-ledger-r<r>.log -- $PY scripts/cp24_ddnn2.py job search-ledger --round <r>
 $PY scripts/cp24_ddnn2.py monitor --name gate-r<r> --workers 4 --log $LOG/gate-r<r>.log -- $PY scripts/cp24_ddnn2.py job gate --round <r> --workers 4
 $PY scripts/cp24_ddnn2.py monitor --name round-report-<r> --workers 1 --log $LOG/round-report-<r>.log -- $PY scripts/cp24_ddnn2.py job round-report --round <r>
 # a scored attempt k, after the S1 answer that freezes round r (committed under steering/)
@@ -53,6 +55,22 @@ PYTHONPATH=src $PY -m cp24.report
 PYTHONPATH=src $PY -m cp24.claims
 $PY scripts/cp24_ddnn2.py monitor --name finalise-manifest --workers 1 --log $LOG/finalise-manifest.log -- $PY scripts/cp24_ddnn2.py job finalise --manifest-only
 ```
+
+## This run
+
+CP-24 ran one pre-fold round and one scored attempt; the attempt adopted v5, so no attempt 2 ran (§23.6).
+
+- **Round 1:** `round-design --round 1 --before-attempt 1`; `search --round 1` (restarted once on four workers,
+  then `search-ledger --round 1`, defects-and-repairs items 1-2); `gate --round 1`; `round-report --round 1`.
+- **S1:** the report `docs/track-b/evidence/cp-24/steering/s1-round-1-report.md` and the Orchestrator's answer
+  `s1-round-1-answer.md` (freeze), committed before the protocol.
+- **Attempt 1:** `protocol --attempt 1 --round 1 --steering docs/track-b/evidence/cp-24/steering/s1-round-1-answer.md`,
+  then the attempt's jobs above with `<k>` = 1, and `cp24.export --attempt 1`.
+- **Monitored development checks**, recorded in the ledger and not part of the route: `dev-daytable`,
+  `dev-bench-synth`, `dev-search-smoke`, `dev-scoring-smoke` (the scoring code on CP-23's committed vectors, 50
+  replicates), `dev-design-dst-test` (the real-data DST test, defects-and-repairs item 4) and
+  `dev-verify-a1-fits` (a read-only check of every attempt-1 cache entry after the second usage-limit stop,
+  item 5). Their scripts live under `.local/tmp/cp-24/dev/`.
 
 ## Verification (no fit, no pass)
 

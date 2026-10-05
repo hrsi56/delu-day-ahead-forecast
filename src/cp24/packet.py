@@ -177,7 +177,8 @@ def main() -> int:
     root = Path.cwd()
     registry = build(root)
     if '--check' in sys.argv[1:]:
-        same = json.loads((root / OUT / 'draft-registry.json').read_text()) == registry
+        # compare as stored: JSON turns the integer round and attempt keys into strings
+        same = json.loads((root / OUT / 'draft-registry.json').read_text()) == json.loads(json.dumps(registry))
         print(json.dumps({'draft_registry_identical_to_committed': same}), flush=True)
         return 0 if same else 11
     atomic(root / OUT / 'draft-registry.json', registry)

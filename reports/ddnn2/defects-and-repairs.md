@@ -28,3 +28,14 @@ could depend on; none is outcome-driven.
    entries was verified read-only (identity, content hash, keys, finite ordered quantiles, eight members; no fit), and
    the ledger's 10,813 charged fits match the records (5,725 before the attempt, 1,504 warm-up, 3,584 evaluation), so no
    work was lost. The gap is recorded as an idle pause, like item 3.
+6. **The 97.5% interval test's levels (after scoring, 2026-10-05 16:42 IDT).** `tests/cp24/test_saved_evidence.py`
+   compared the committed 97.5% endpoints with `np.quantile` at the literal levels 0.0125 and 0.9875. The frozen
+   scoring code computes them as (1 − 0.975)/2 and its complement, which is 0.012500000000000011 in floating point,
+   so 52 of the 132 endpoints differed in the last bits (largest 3.6e-15). The test now rederives the endpoints at
+   the scoring code's levels exactly (132 of 132) and checks the literal levels within 1e-12. No frozen element,
+   score or decision changed; condition 1's upper endpoints are −0.0091 and −0.0084.
+7. **The draft registry's `--check` (after scoring, 16:42 IDT).** `python -m cp24.packet --check` compared the
+   stored JSON with the in-memory registry, whose round and attempt keys are integers that JSON stores as strings,
+   so it reported a difference for an identical file. It now compares after a JSON round trip; the registry did
+   not change. Items 6 and 7 change files that attempt 1's protocol lists under `recorded_not_enforced_sha256`;
+   their hashes at the freeze are recorded there.

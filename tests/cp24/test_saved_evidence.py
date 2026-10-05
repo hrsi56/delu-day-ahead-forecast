@@ -104,7 +104,11 @@ class TestAttempt:
             d = grouped[(row['scope'], row['candidate'], row['baseline'], row['metric'])].difference.to_numpy()
             assert len(d) == S.BOOTSTRAP_REPLICATES
             assert tuple(np.quantile(d, [.025, .975], method='linear')) == (row['ci_lower'], row['ci_upper'])
-            assert tuple(np.quantile(d, [.0125, .9875], method='linear')) == (row['ci97.5_lower'], row['ci97.5_upper'])
+            # the scoring code's levels, (1 - 0.975)/2 and 1 minus that, exactly; within 1e-12 of the textbook 1.25%/98.75%
+            lo = (1 - S.LEVEL_DECISION) / 2
+            assert tuple(np.quantile(d, [lo, 1 - lo], method='linear')) == (row['ci97.5_lower'], row['ci97.5_upper'])
+            assert np.allclose(np.quantile(d, [.0125, .9875], method='linear'), (row['ci97.5_lower'], row['ci97.5_upper']),
+                               rtol=0, atol=1e-12)
         # negative control: shifting the draws moves the interval
         any_row = unc.iloc[0]
         d = grouped[(any_row['scope'], any_row['candidate'], any_row['baseline'], any_row['metric'])].difference.to_numpy()
