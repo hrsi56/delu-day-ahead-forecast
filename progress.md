@@ -23,7 +23,10 @@ wording fix. That commit and push follow the Owner's explicit instruction of 202
 that day it was updated again for the automation tools, the branch cleanup, the ratification of
 v21-r10 (CP-23, DDNN) and the programme order. That commit and push follow the Owner's
 instructions of the same day. That evening it was updated for CP-23's grant and brief, and then
-for CP-23's receipt, the Owner's landing and its closure.*
+for CP-23's receipt, the Owner's landing and its closure. On 2026-10-05 it was updated for the
+ratification of v21-r11 (CP-24, DDNN-2) and CP-24's issue, under the Owner's delegation of
+2026-10-04 ("תמשיך באופן חופשי ומלא עד דוח ובקשת LAND"). Those commits and pushes follow
+that delegation.*
 
 ---
 
@@ -77,18 +80,33 @@ kept as it is after CP-22 (Owner, 2026-10-04).**
 | 5 | Three-block LightGBM (4.5) | ✅ CP-21 landed 2026-09-30: v4 adopted in research. Published by PRES-3, closed 2026-10-01 |
 | 5a | v4 re-examined (CP-22; [v21-r9 §20](capstone_v21.md)) | ✅ Closed 2026-10-04: PASS, no replacement (R and M failed condition 4 on fold 4); the Owner kept v4 as it is; landed as `land/cp-22` ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). The v4 wording on the report and README was corrected the same day |
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
-| 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2, a literature-faithful second design, is proposed and awaits the Owner's timing decision |
+| 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
+| 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | 🔄 Ratified and issued 2026-10-05 under the Owner's delegation of 2026-10-04. Running in the Lead's own worktree, with the Orchestrator steering at S1 and S2 |
 | 7 | Comprehensive data-admission research, immediately after DDNN, with 4.4V (VRE generation and residual load) ([v21-r10 §22](capstone_v21.md)) | ⬜ Not started. Scope filed 2026-10-04 (Notes, [Data admission research]) |
 | 8 | Recombination (4.8), with a NumPy meta-learner and per-block weights among its arms | ⬜ Not started. Filed 2026-10-04 (Notes, [4.8]) |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Next pending Track B checkpoint: the Owner's choice between two routes.** On 2026-10-04 the
-Orchestrator recommended (a).
+**Active Track B checkpoint: CP-24, DDNN-2** ([v21-r11 §23](capstone_v21.md)). It was ratified
+and issued on 2026-10-05 under the Owner's delegation of 2026-10-04. The delegation leaves the
+Owner out until the report and the LAND request.
 
-- **(a) DDNN-2 now, before stage 7.** A second, literature-faithful DDNN in a pre-registered
-  checkpoint (Notes, [DDNN-2]). It needs a new anchor section (v21-r11) and its brief.
-- **(b) The comprehensive data-admission research (stage 7) now,** with DDNN-2 after it, possibly
-  using admitted fuel and EUA prices.
+- **The candidate.** v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2, decided under `cp24-adoption`
+  against the three-block v4:
+  - condition 1 at 97.5%;
+  - a 0.5% practical size;
+  - at most two scored attempts.
+- **DDNN-2:**
+  - day-level rows, with 24 × 4 Johnson SU outputs;
+  - every member trained up to D−1;
+  - a per-fold training-only search;
+  - the top four configurations with two seeds each, combined by the per-level median.
+- **The pre-fold gate.** It covers the 280 days before the folds. The folds are touched only
+  if it passes.
+- **Execution.** The Lead runs in its own worktree on `gauntlet/cp-24`, from the brief that
+  CP-24's issue record names. The Orchestrator steers only at two points: S1, after each
+  pre-fold round, and S2, after attempt 1 if it is not adopted.
+- **Next.** The Orchestrator's report and the LAND request to the Owner. Then stage 7, the
+  data-admission research with 4.4V.
 
 **CP-23 is closed** ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). It ran under
 [v21-r10 §21](capstone_v21.md), from the brief `33f6b412…`.
@@ -165,9 +183,10 @@ Orchestrator recommended (a).
   [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md) carries their
   checklist into the CP-17 and CP-18 briefs.
 
-**Repository**, as verified on the Owner's machine on 2026-10-04:
+**Repository**, as verified on the Owner's machine on 2026-10-05:
 
 - **`main` = `origin/main`** at the commit that carries this update. Below it:
+  - `09eacd1`, CP-23's closure records;
   - `03c5b64` = `land/cp-23`, CP-23's squash landing by the Owner;
   - `a4acd79`, the record of CP-23's grant;
   - `3f7aaf2`, the v21-r10 ratification;
@@ -243,7 +262,18 @@ decision remains a boundary, not an active workstream.
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Current research anchor, ratified on 2026-10-04** under the Owner's task-scoped suspension
+- **Current research anchor, ratified on 2026-10-05** under the Owner's delegation of 2026-10-04.
+  The anchor's header quotes the suspension and the grant: `capstone_v21.md` **v21-r11**,
+  SHA-256 `11068e3f57bd9277be50db62d109f3e7d8ea7b8fdfa042886ccc4ae5ab1ed2d2`.
+  - **What it adds,** as additions only:
+    - §21.13: CP-23's outcome.
+    - §23: CP-24, DDNN-2.
+    - A CP-24 row in §10.
+  - **Its amendment record:**
+    [r10 → r11](docs/track-b/capstone_v21-r10-to-v21-r11-amendments.md), SHA-256
+    `474017e1c8e8584e9c2956f40a872aa8917a6e110cbc58dc7a4110c9c802d782`.
+  - **v21-r10** is preserved at `3f7aaf2:capstone_v21.md` (`6873c250…`).
+- **Research anchor ratified on 2026-10-04,** superseded by v21-r11, under the Owner's task-scoped suspension
   ("מאושר באופן מלא, כולל השעיה וכולל קומיט פוש מה שאתה צריך"): `capstone_v21.md` **v21-r10**,
   SHA-256 `6873c2501067c63692ec7cb79dfd4073164a8a014edbd6ebc23169e7e8ff6709`.
   - **What it adds,** as additions only:
@@ -642,6 +672,24 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **v21-r11 ratified and CP-24 (DDNN-2) issued under the Owner's delegation, 2026-10-05.**
+  - **The delegation, 2026-10-04.** The Owner handed DDNN-2 to the Orchestrator, to run through
+    independent agents without the Owner until the report and the LAND request. It came with a
+    Lockdown suspension, commit and push, and discretion over the design and the ceilings. The
+    words are quoted in the [r10 → r11 record](docs/track-b/capstone_v21-r10-to-v21-r11-amendments.md).
+    This answered the open question of DDNN-2's timing: DDNN-2 runs now, before stage 7. The
+    [DDNN-2] note became CP-24.
+  - **Research.** An independent research agent diagnosed CP-23 and proposed directions
+    ([report](docs/track-b/cp-24-research-directions-2026-10-05.md)). Its first run was lost at a
+    compaction. A usage limit interrupted the second, which was resumed and completed.
+  - **Plan review.** An independent plan critic reviewed the plan twice:
+    - first READY WITH FIXES, with 2 BLOCKING, 10 MAJOR and 23 MINOR findings;
+    - then READY WITH FIXES, with every first-review finding resolved and three new MAJOR findings applied as given.
+
+    The main catch: CP-20's weather grids have no record for 2022-09-29..2023-03-24, and
+    pre-fold fits now leave those days out.
+  - **Ratified.** v21-r11 was ratified in the commit that carries this entry. CP-24's issue
+    follows in the next commit.
 - **CP-23 received, landed and closed; DDNN-2 proposed, 2026-10-04.**
   - **Return.** PASS, with candidate `f9a737e` and evidence tip `928bc13`. DDNN was admitted, and
     v5 was not adopted (`cp23-adoption` condition 1, also condition 4 on fold 3). The run took
@@ -1023,13 +1071,6 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Next Owner decision: DDNN-2's timing** (Current Position).
-  - **(a) Now, before stage 7.** Recommended: the cause is specific and testable, and it stays
-    within the DDNN stage.
-  - **(b) After the data-admission research,** with any admitted fuel and EUA inputs.
-
-  Either way, DDNN-2 needs a new anchor section (v21-r11) under a suspension, then its brief and
-  an execution grant.
 - **Publishing the not-adopted branches (open, Owner; §20.13 and §21.9).** The Orchestrator
   recommends bundling CP-22 and CP-23, as "tested, not adopted", into the next publication. The
   public planned list still shows 4.6 as DDNN against v4 until then.
@@ -1169,25 +1210,6 @@ Session Log.
   ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). Its DDNN vectors are saved in
   `reports/distribution-challenger/members.parquet` and are available to 4.8 at no fit cost. The
   hindsight best weight inside v4 is 0.05–0.10, worth under 0.5%.
-- **[DDNN-2] Proposed 2026-10-04, awaiting the Owner's timing** (Blockers). It is a second,
-  pre-registered DDNN that follows the published design, not CP-23's per-hour rows:
-  - **Representation.** One row per delivery day. Inputs: the full price curves of D−1, D−2, D−3
-    and D−7, the day's load and weather profiles, and calendar dummies. Outputs: 24 hours × 4 JSU
-    parameters.
-  - **Search.** A real hyperparameter search, of tens to hundreds of trials, on training data
-    before each fold only, frozen before scoring.
-  - **Ensemble.** The best configurations, not the seeds of one configuration.
-  - **Transform.** Possibly a variance-stabilizing transform (asinh) for spikes.
-  - **Comparisons.** The same rule against v4, and an attribution against CP-23's DDNN to
-    measure the representation effect.
-  - **Cost.** Modest compute, since daily rows are about 700–1,000 per fit; about 10–20 active
-    hours.
-  - **Disclosure.** A second attempt on the same folds. The design is pre-registered,
-    development_post_selection, and 4.7T is the test. Nothing is tuned on CP-23's results.
-  - **Building on CP-23.** It reuses CP-23's NumPy DDNN code and its PyTorch reference.
-  - **The anchor and brief:**
-    - pin every hash the anchor delegates to the brief;
-    - prescribe any new dependency in its own lock, never the root `uv.lock`.
 - **[CP-22]** Closed on 2026-10-04 with no replacement; v4 is unchanged
   ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). PRES-4's replacement plan was not
   entered. v21-r10 §20.13 records the outcome against §20.1.

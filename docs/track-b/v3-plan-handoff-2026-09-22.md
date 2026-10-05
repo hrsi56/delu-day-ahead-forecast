@@ -44,6 +44,19 @@ the [4.6](#work-4-6) route (4.6L → 4.6R → 4.6C) inside one checkpoint.
 
 Where §21 and §22 differ from the text below, they govern.
 
+**2026-10-05 v21-r11 update (ratified).** [v21-r11 §23](../../capstone_v21.md) specifies CP-24,
+DDNN-2: a second, literature-faithful [4.6](#work-4-6) DDNN. It follows CP-23, which admitted
+DDNN and adopted no v5 (§21.13).
+
+- **The candidate.** v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2. It is decided under
+  `cp24-adoption` against the three-block v4, in at most two scored attempts, behind a pre-fold
+  gate.
+- **The route.** The Owner delegated it to the Orchestrator on 2026-10-04. The Orchestrator
+  steers at named points, and the Owner lands by hand.
+
+Where §23 differs from the text below, it governs. §22's order is unchanged: the data-admission
+research, with [4.4V](#work-4-4v), follows CP-24.
+
 **2026-10-04 CP-22 outcome.** CP-22 returned PASS with **no replacement**. Both pooled members
 were non-inferior to v4 overall, but each was decisively worse in fold 4 (summer 2025). The Owner
 decided that v4 stays as it is, so the block split stays in v4, and 4.6's DDNN faces the
