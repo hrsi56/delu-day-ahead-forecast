@@ -59,6 +59,18 @@ FROZEN = ['data/snapshot.parquet', 'data/partitions.json', 'uv.lock', 'pyproject
 LEVEL = {1: 0.975, 2: 0.975}
 
 
+def recorded_modules(root: Path) -> dict:
+    """Every other CP-24 module, test and script at the freeze, recorded but not enforced by
+    `check_protocol`: they run after scoring (controls, diagnostics, the daily cycle, fit cost, export,
+    packet, claims, report, review, finalise, tracking) or never touch an attempt's forecast (the base-tree
+    record, round 1's search-ledger repair). A later change is listed in `defects-and-repairs.md`, and none
+    may change a frozen element (§23.6)."""
+    root = Path(root)
+    names = sorted({str(q.relative_to(root)) for pattern in ('src/cp24/*.py', 'tests/cp24/*.py', 'scripts/cp24_*.py')
+                    for q in root.glob(pattern)} - set(IMPLEMENTATION))
+    return {name: sha(root / name) for name in names}
+
+
 def attempt_dir(root: Path, k: int) -> Path:
     return Path(root) / OUT / f'attempt-{k}'
 
@@ -169,6 +181,7 @@ def build(root: Path, k: int, round_number: int, steering: str) -> dict:
         'dependencies': {name: importlib.metadata.version(name) for name in ('numpy', 'pandas', 'lightgbm', 'scikit-learn', 'pyarrow')},
         'implementation_sha256': {name: sha(root / name) for name in IMPLEMENTATION if (root / name).exists()},
         'frozen_inputs_sha256': {name: sha(root / name) for name in FROZEN},
+        'recorded_not_enforced_sha256': recorded_modules(root),
         'written_utc': stamp(),
     }
 

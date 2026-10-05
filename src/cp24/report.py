@@ -106,6 +106,12 @@ def build(root: Path) -> str:
               f'- Guards: {g["cap_slot_levels_forecast"]:,} capped slot-levels, {g["winsor_values_forecast"]:,} winsorised forecast inputs, '
               f'{g["ensemble_crossings_restored"]} crossings restored, {g["nonfinite_loss_stops"]} nonfinite-loss stops, over '
               f'{g["member_fits"]:,} member fits.',
+              '- Guards by fold (every attempt fit; the cap\'s share of the members\' emitted hour-levels, the gate\'s G3 '
+              'measure and never a condition, beside the round\'s gate share; `diagnostics/guards-by-fold.csv`, '
+              '`diagnostics/guards-by-member.csv`): '
+              + '; '.join(f'{fold} {100 * v["cap_share"]:.3f}% (gate {100 * v["gate_cap_share_round"]:.3f}%), '
+                          f'{v["member_fits_with_cap"]:,} of {v["member_fits"]:,} member fits capped'
+                          for fold, v in diag['guards_by_fold'].items()) + '.',
               f'- Extrapolation: {diag["extrapolation"]["days"]} extreme or top-5% days; hours above the window maximum '
               + ', '.join(f'{p} {v}' for p, v in diag['extrapolation']['hours_above_window_max'].items()) + '.',
               '- Shape blend (descriptive, never eligible): ' + '; '.join(f'{x["policy"]} WIS {f(x["WIS"], 2)}, 95% coverage '

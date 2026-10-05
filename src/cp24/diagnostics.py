@@ -5,7 +5,10 @@
 * MAE by local hour beside L and HG;
 * extrapolation on extreme days, beside CP-23's record;
 * the 2022 peak, fold 3 and fold 4;
-* every guard activation and crossing (`guards.json`, written by the scoring job, summarised here);
+* every guard activation and crossing (`guards.json`, written by the scoring job, summarised here), and
+  per fold and stage (`guards-by-fold.csv`) and per fold and member (`guards-by-member.csv`): the cap's
+  share of the members' emitted hour-levels (the gate's G3 measure, here over every warm-up and
+  evaluation fit and never a condition), its concentration in member fits, beside the round's gate share;
 * the search: each fold's ensemble, with its validation and gate scores beside its fold scores;
 * member stability;
 * a shape blend, descriptive only and never eligible: v4's p50 plus the average of the H layer's and
@@ -32,7 +35,7 @@ from .budget import atomic
 from .evaluate import clean
 from .execution import D2Cache, fit_identity
 from .inputs import load, origin_manifest
-from .jobs import stamp
+from .jobs import art, stamp
 from .protocol import attempt_dir, check_protocol
 
 PIT_BINS = 20
@@ -276,6 +279,84 @@ def shape_blend(frame) -> tuple[pd.DataFrame, dict]:
     return pd.DataFrame(rows), {'crossings_restored': crossed, 'role': 'descriptive only, never eligible (§23.8)'}
 
 
+GUARD_COUNTS = ('member_fits', 'cap_slot_levels_forecast', 'winsor_values_train', 'winsor_values_hold', 'winsor_values_forecast',
+                'ensemble_crossings_restored', 'nonfinite_loss_stops')
+
+
+def guards_by_fold(root: Path, k: int, guards: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Every guard activation of the attempt's DDNN-2 fits, by fold and stage, and by fold and member.
+
+    The cap's share is the gate's G3 measure (capped emitted hour-levels over the members' emitted
+    hour-levels, each key taking its local-hour slot), here over every warm-up and evaluation fit; it is
+    descriptive and never a condition. Concentration: the member fits with any capped hour-level, and the
+    largest single member fit's share of the scope's capped hour-levels. The per-fold totals must equal
+    the scoring job's `guards.json`, which reads the same member records."""
+    protocol = json.loads((attempt_dir(root, k) / 'protocol.json').read_text())
+    cells: dict = {}
+    members: dict = {}
+    for path in sorted((art() / f'attempt-{k}' / 'fits').glob('*/*.json')):
+        item = json.loads(path.read_text())
+        slots = pd.DatetimeIndex(pd.to_datetime(item['timestamp_utc'], utc=True)).tz_convert('Europe/Berlin').hour.to_numpy()
+        for stage in (item['stage'], 'all'):
+            c = cells.setdefault((item['fold'], stage), {'origins': 0, 'emitted_hour_levels': 0, 'cap_hour_levels': 0,
+                                                         'member_fits_with_cap': 0, 'max_member_fit_cap_hour_levels': 0,
+                                                         **{key: 0 for key in GUARD_COUNTS}})
+            c['origins'] += 1
+            c['ensemble_crossings_restored'] += item['crossed_rows']
+            for mbr in item['members']:
+                active = np.asarray(mbr['active'], int)                       # 24 slots x 7 levels
+                g = mbr['guards']
+                if int(active.sum()) != g['cap_forecast_slot_levels']:
+                    raise ValueError(f'{path.name}: member {mbr["member"]} cap record disagrees with its guard count')
+                capped = int(active[slots].sum())
+                c['member_fits'] += 1
+                c['emitted_hour_levels'] += len(slots) * active.shape[1]
+                c['cap_hour_levels'] += capped
+                c['member_fits_with_cap'] += capped > 0
+                c['max_member_fit_cap_hour_levels'] = max(c['max_member_fit_cap_hour_levels'], capped)
+                c['cap_slot_levels_forecast'] += g['cap_forecast_slot_levels']
+                for side in ('train', 'hold', 'forecast'):
+                    c[f'winsor_values_{side}'] += g[f'winsor_{side}']['winsor_low'] + g[f'winsor_{side}']['winsor_high']
+                c['nonfinite_loss_stops'] += sum(e.get('event') == 'nonfinite_training_loss' for e in g['events'])
+                if stage == 'all':
+                    m = members.setdefault((item['fold'], mbr['member']), {'rank': mbr['rank'], 'config': mbr['config'],
+                                                                           'seed': mbr['seed'], 'member_fits': 0,
+                                                                           'emitted_hour_levels': 0, 'cap_hour_levels': 0,
+                                                                           'member_fits_with_cap': 0})
+                    m['member_fits'] += 1
+                    m['emitted_hour_levels'] += len(slots) * active.shape[1]
+                    m['cap_hour_levels'] += capped
+                    m['member_fits_with_cap'] += capped > 0
+    for fold, committed in guards['by_fold'].items():
+        mine = cells[(fold, 'all')]
+        if any(mine[key] != committed[key] for key in GUARD_COUNTS):
+            raise ValueError(f'{fold}: guard counts differ from guards.json')
+    rows = []
+    for stage in ('warmup', 'evaluation', 'all'):
+        pooled = {key: 0 for key in ('origins', 'emitted_hour_levels', 'cap_hour_levels', 'member_fits_with_cap', *GUARD_COUNTS)}
+        pooled['max_member_fit_cap_hour_levels'] = 0
+        for fold in FOLDS:
+            c = cells.get((fold, stage))
+            if c is None:
+                continue
+            for key in pooled:
+                pooled[key] = max(pooled[key], c[key]) if key.startswith('max_') else pooled[key] + c[key]
+            rows.append({'scope': fold, 'stage': stage, **c})
+        rows.append({'scope': 'pooled', 'stage': stage, **pooled})
+    table = pd.DataFrame(rows)
+    table['cap_share'] = table.cap_hour_levels / table.emitted_hour_levels
+    table['largest_member_fit_share_of_capped'] = np.where(table.cap_hour_levels > 0, table.max_member_fit_cap_hour_levels
+                                                           / table.cap_hour_levels.where(table.cap_hour_levels > 0, 1), np.nan)
+    gate = {fold: f['gate']['cap_share'] for fold, f in protocol['folds'].items()}
+    gate['pooled'] = protocol['gate']['conditions']['G3']['share']
+    table['gate_cap_share_round'] = table.scope.map(gate)
+    by_member = pd.DataFrame([{'fold': fold, 'member': j, **m} for (fold, j), m in sorted(members.items())])
+    by_member['cap_share'] = by_member.cap_hour_levels / by_member.emitted_hour_levels
+    fold_cap = by_member.groupby('fold').cap_hour_levels.transform('sum')
+    by_member['share_of_fold_capped'] = np.where(fold_cap > 0, by_member.cap_hour_levels / fold_cap.where(fold_cap > 0, 1), np.nan)
+    return table, by_member
+
+
 def job_diagnostics(root: Path, rest) -> int:
     import argparse
     ap = argparse.ArgumentParser()
@@ -310,6 +391,9 @@ def job_diagnostics(root: Path, rest) -> int:
     blend, blend_meta = shape_blend(frame)
     blend.to_csv(out / 'shape-blend.csv', index=False)
     guards = json.loads((attempt_dir(root, k) / 'guards.json').read_text())
+    guard_folds, guard_members = guards_by_fold(root, k, guards)
+    guard_folds.to_csv(out / 'guards-by-fold.csv', index=False)
+    guard_members.to_csv(out / 'guards-by-member.csv', index=False)
     pooled_corr = corr.loc[corr.scope.eq('pooled')].set_index(['a', 'b']).error_correlation
     summary = {'schema': 'cp24-diagnostics-v1', 'attempt': k, 'written_utc': stamp(),
                'role': 'descriptive; chooses nothing (§23.8)',
@@ -318,7 +402,12 @@ def job_diagnostics(root: Path, rest) -> int:
                'extrapolation': {'days': int(len(extreme)), 'sets': extreme.set.value_counts().to_dict(),
                                  'hours_above_window_max': {p: int(extreme[f'hours_above_window_max_{p}'].sum())
                                                             for p in ('D2', 'v5', 'v3+D2', 'HGL', 'HG', 'D')}},
-               'guards': guards['totals'], 'member_stability_pooled': stability.loc[stability.scope.eq('pooled')].iloc[0].to_dict(),
+               'guards': guards['totals'],
+               'guards_by_fold': guard_folds.loc[guard_folds.stage.eq('all')].set_index('scope')[
+                   ['member_fits', 'cap_share', 'gate_cap_share_round', 'cap_hour_levels', 'member_fits_with_cap',
+                    'largest_member_fit_share_of_capped', 'winsor_values_forecast', 'ensemble_crossings_restored',
+                    'nonfinite_loss_stops']].to_dict('index'),
+               'member_stability_pooled': stability.loc[stability.scope.eq('pooled')].iloc[0].to_dict(),
                'shape_blend': {**blend_meta, 'pooled': blend.loc[blend.scope.eq('pooled')].to_dict('records')},
                'files': sorted(p.name for p in out.iterdir())}
     atomic(attempt_dir(root, k) / 'diagnostics.json', clean(summary))

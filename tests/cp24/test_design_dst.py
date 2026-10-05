@@ -54,8 +54,9 @@ def test_inputs_mask_and_keys_on_a_transition_day(table, day):
         if spring and h == 2:
             assert not len(sel) and np.isnan(dd.price[i, h]) and np.isnan(dd.load[i, h])
         else:
-            assert np.isclose(dd.price[i, h], data.frame.price_eur_mwh.to_numpy()[sel].mean(), rtol=0, atol=1e-12)
-            assert np.isclose(dd.load[i, h], data.frame.load_forecast_mw.to_numpy()[sel].mean(), rtol=0, atol=1e-9)
+            # A missing observation stays missing (2023-10-29 and 2024-10-27 lack the 00:00 load forecast).
+            assert np.isclose(dd.price[i, h], data.frame.price_eur_mwh.to_numpy()[sel].mean(), rtol=0, atol=1e-12, equal_nan=True)
+            assert np.isclose(dd.load[i, h], data.frame.load_forecast_mw.to_numpy()[sel].mean(), rtol=0, atol=1e-9, equal_nan=True)
     if not spring:
         assert (hours == 2).sum() == 2
     # The next day's D-1 inputs are this day's curves.
