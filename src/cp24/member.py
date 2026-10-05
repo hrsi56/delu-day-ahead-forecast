@@ -88,6 +88,7 @@ def fit_member(dd: G.DayData, origin: date, config: dict, seed: int, forecast_da
     member = M.train(x_tr, t_tr, mask_tr, weight, x_ho, np.where(dd.mask[hold_ix], dd.y[hold_ix], 0.0), dd.mask[hold_ix],
                      dd.centre[stat][hold_ix], dd.scale[stat][hold_ix], config, seed, cap, **s)
     zq, active = M.member_quantiles_z(member.params, x_fc, config['activation'], form, cap)
+    jsu = np.stack(M.head(M.forward(member.params, x_fc, config['activation'])[0]), axis=-1)   # days x 24 x 4
     eur = dd.centre[stat][forecast_days, None, None] + dd.scale[stat][forecast_days, None, None] * zq
     if not np.isfinite(eur).all():
         raise M.TrainingFailure('nonfinite emitted quantile')
@@ -102,6 +103,7 @@ def fit_member(dd: G.DayData, origin: date, config: dict, seed: int, forecast_da
                        'excluded_uncovered_days': excluded, 'train_days_sha256': array_hash(train_ix)},
             'n_inputs': int(x_tr.shape[1]), 'columns': {'continuous': len(cnames), 'binary': len(bnames)},
             'preprocessor': pre.record(), 'cap_z': cap, 'active': active, 'eur': eur, 'forecast_days': forecast_days,
+            'jsu': jsu, 'centre': dd.centre[stat][forecast_days], 'scale': dd.scale[stat][forecast_days],
             'guards': guards, 'seconds': time.perf_counter() - started, 'maxrss_bytes': maxrss()}
 
 
