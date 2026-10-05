@@ -102,8 +102,8 @@ Owner out until the report and the LAND request.
   - the top four configurations with two seeds each, combined by the per-level median.
 - **The pre-fold gate.** It covers the 280 days before the folds. The folds are touched only
   if it passes.
-- **Execution.** The Lead runs in its own worktree on `gauntlet/cp-24`, from the brief that
-  CP-24's issue record names. The Orchestrator steers only at two points: S1, after each
+- **Execution.** The Lead runs in its own worktree on `gauntlet/cp-24`, from the brief
+  `a3f11470…` (SHA-256 prefix). The Orchestrator steers only at two points: S1, after each
   pre-fold round, and S2, after attempt 1 if it is not adopted.
 - **Next.** The Orchestrator's report and the LAND request to the Owner. Then stage 7, the
   data-admission research with 4.4V.
@@ -186,6 +186,7 @@ Owner out until the report and the LAND request.
 **Repository**, as verified on the Owner's machine on 2026-10-05:
 
 - **`main` = `origin/main`** at the commit that carries this update. Below it:
+  - `76ed485`, the v21-r11 ratification;
   - `09eacd1`, CP-23's closure records;
   - `03c5b64` = `land/cp-23`, CP-23's squash landing by the Owner;
   - `a4acd79`, the record of CP-23's grant;
@@ -688,8 +689,8 @@ Session Log.
 
     The main catch: CP-20's weather grids have no record for 2022-09-29..2023-03-24, and
     pre-fold fits now leave those days out.
-  - **Ratified.** v21-r11 was ratified in the commit that carries this entry. CP-24's issue
-    follows in the next commit.
+  - **Ratified and issued.** v21-r11 was ratified at `76ed485`, and the brief was issued as
+    `a3f11470…`. The Lead was launched in the background, in `.local/worktrees/cp-24/lead`.
 - **CP-23 received, landed and closed; DDNN-2 proposed, 2026-10-04.**
   - **Return.** PASS, with candidate `f9a737e` and evidence tip `928bc13`. DDNN was admitted, and
     v5 was not adopted (`cp23-adoption` condition 1, also condition 4 on fold 3). The run took
