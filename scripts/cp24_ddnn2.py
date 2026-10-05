@@ -295,6 +295,36 @@ def effort(kind: str, reason: str) -> None:
     print(json.dumps({'effort': kind, 'reason': reason, 'epoch': now}))
 
 
+def idle(start_iso: str, end_iso: str, reason: str) -> None:
+    """Record a past idle gap (for example, a session stopped by a usage limit) as a pause, so it is excluded
+    from active hours. Refused if any job ran in the interval, if it overlaps a recorded pause or lies in the
+    future: a recorded idle gap never hides compute."""
+    from datetime import datetime
+    start, end = datetime.fromisoformat(start_iso).timestamp(), datetime.fromisoformat(end_iso).timestamp()
+    budget = Budget(ledger_path())
+    with budget.transaction() as state:
+        reconcile(state)
+        now = time.time()
+        if not start < end <= now or start < state['effort']['session_start_epoch']:
+            raise SystemExit('refused: the idle interval must lie inside the session and end in the past')
+        for job in state['jobs']:
+            a = job['start_epoch']
+            b = job.get('end_epoch') or (now if job.get('running') else a + job.get('elapsed_seconds', 0))
+            if a < end and b > start:
+                raise SystemExit(f'refused: job {job["name"]} (index {job["index"]}) ran inside the interval')
+        for a, b in state['effort']['pauses']:
+            if a < end and b > start:
+                raise SystemExit('refused: the interval overlaps a recorded pause')
+        if state['effort'].get('paused_since') and state['effort']['paused_since'] < end:
+            raise SystemExit('refused: the interval overlaps the open pause')
+        state['effort']['pauses'].append([start, end])
+        state['effort'].setdefault('pause_reasons', []).append({'start_epoch': start, 'end_epoch': end, 'reason': reason,
+                                                                'recorded_epoch': now, 'kind': 'idle_gap'})
+        state['events'].append({'event': 'effort_idle_gap', 'epoch': now, 'start_epoch': start, 'end_epoch': end,
+                                'reason': reason})
+    print(json.dumps({'idle_gap': [start_iso, end_iso], 'hours': round((end - start) / 3600, 3), 'reason': reason}))
+
+
 def run_job(name: str, rest: list[str]) -> int:
     """Research jobs. Each is invoked as a child of `monitor`; none runs outside accounting."""
     if 'CP24_JOB_INDEX' not in os.environ:
@@ -311,6 +341,10 @@ def main():
     for kind in ('pause', 'resume'):
         e = sub.add_parser(kind)
         e.add_argument('--reason', required=True)
+    i = sub.add_parser('idle')
+    i.add_argument('--start', required=True, help='ISO time with offset, e.g. 2026-10-05T07:45:00+03:00')
+    i.add_argument('--end', required=True)
+    i.add_argument('--reason', required=True)
     r = sub.add_parser('raise')
     r.add_argument('--counter', required=True)
     r.add_argument('--to', type=float, required=True)
@@ -330,6 +364,9 @@ def main():
         return 0
     if args.cmd in ('pause', 'resume'):
         effort(args.cmd, args.reason)
+        return 0
+    if args.cmd == 'idle':
+        idle(args.start, args.end, args.reason)
         return 0
     if args.cmd == 'raise':
         value = int(args.to) if args.counter == 'ddnn2_fits' else float(args.to)

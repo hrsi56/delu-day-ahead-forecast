@@ -18,6 +18,7 @@ JOBS = {
     'reference-checks': ('reference', 'job_reference_checks'),
     'resource-admission': ('admission', 'job_resource_admission'),
     'search': ('search', 'job_search'),
+    'search-ledger': ('searchledger', 'job_search_ledger'),
     'v4-gate': ('gate', 'job_v4_gate'),
     'v4-parity': ('gate', 'job_v4_parity'),
     'gate': ('gate', 'job_gate'),

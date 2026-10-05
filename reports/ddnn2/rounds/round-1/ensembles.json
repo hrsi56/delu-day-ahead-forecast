@@ -1,0 +1,1177 @@
+{
+ "combination": "per-level median of the eight members' EUR/MWh quantiles",
+ "folds": {
+  "fold_1": {
+   "B": 3,
+   "complete": true,
+   "d0": "2020-05-25",
+   "fold": "fold_1",
+   "members": [
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       26,
+       238
+      ],
+      "id": "r1-f1-t099",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.004482544768673612,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25190011,
+     "validation_mae_all_batches": 4.750335647116639,
+     "validation_pinball_all_batches": 1.3332225045869772
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       26,
+       238
+      ],
+      "id": "r1-f1-t099",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.004482544768673612,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25190012,
+     "validation_mae_all_batches": 4.750335647116639,
+     "validation_pinball_all_batches": 1.3332225045869772
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 128,
+      "groups": [
+       "price_d3",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       447,
+       198
+      ],
+      "id": "r1-f1-t052",
+      "input_dropout": 0.07941022079335733,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": 0.00265281349281204,
+      "lr": 0.0035122379847538875,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25190021,
+     "validation_mae_all_batches": 4.900155086033225,
+     "validation_pinball_all_batches": 1.393782066558771
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 128,
+      "groups": [
+       "price_d3",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       447,
+       198
+      ],
+      "id": "r1-f1-t052",
+      "input_dropout": 0.07941022079335733,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": 0.00265281349281204,
+      "lr": 0.0035122379847538875,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25190022,
+     "validation_mae_all_batches": 4.900155086033225,
+     "validation_pinball_all_batches": 1.393782066558771
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       18
+      ],
+      "id": "r1-f1-t015",
+      "input_dropout": 0.11671178989006864,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 2.0134897661332623e-05,
+      "lr": 0.005568160061088688,
+      "transform": "asinh-s4"
+     },
+     "rank": 3,
+     "seed": 25190031,
+     "validation_mae_all_batches": 5.038358065515663,
+     "validation_pinball_all_batches": 1.412791499812781
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       18
+      ],
+      "id": "r1-f1-t015",
+      "input_dropout": 0.11671178989006864,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 2.0134897661332623e-05,
+      "lr": 0.005568160061088688,
+      "transform": "asinh-s4"
+     },
+     "rank": 3,
+     "seed": 25190032,
+     "validation_mae_all_batches": 5.038358065515663,
+     "validation_pinball_all_batches": 1.412791499812781
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 32,
+      "groups": [
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       107,
+       74
+      ],
+      "id": "r1-f1-t014",
+      "input_dropout": 0.10806164608929425,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.007927150093529685,
+      "lr": 0.0014439054951562403,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25190041,
+     "validation_mae_all_batches": 5.254372120710836,
+     "validation_pinball_all_batches": 1.4655159526280912
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 32,
+      "groups": [
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       107,
+       74
+      ],
+      "id": "r1-f1-t014",
+      "input_dropout": 0.10806164608929425,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.007927150093529685,
+      "lr": 0.0014439054951562403,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25190042,
+     "validation_mae_all_batches": 5.254372120710836,
+     "validation_pinball_all_batches": 1.4655159526280912
+    }
+   ]
+  },
+  "fold_2": {
+   "B": 7,
+   "complete": true,
+   "d0": "2021-02-23",
+   "fold": "fold_2",
+   "members": [
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       98
+      ],
+      "id": "r1-f2-t010",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 6.09954182010628e-06,
+      "l2": 0.001718062517851344,
+      "lr": 0.0008247864653312237,
+      "transform": "asinh-s4"
+     },
+     "rank": 1,
+     "seed": 25290011,
+     "validation_mae_all_batches": 5.00521088849525,
+     "validation_pinball_all_batches": 1.4277186852317374
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       98
+      ],
+      "id": "r1-f2-t010",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 6.09954182010628e-06,
+      "l2": 0.001718062517851344,
+      "lr": 0.0008247864653312237,
+      "transform": "asinh-s4"
+     },
+     "rank": 1,
+     "seed": 25290012,
+     "validation_mae_all_batches": 5.00521088849525,
+     "validation_pinball_all_batches": 1.4277186852317374
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       102,
+       423
+      ],
+      "id": "r1-f2-t006",
+      "input_dropout": 0.17509486106306088,
+      "kappa": 0.5,
+      "l1": 0.00010645133998863615,
+      "l2": null,
+      "lr": 0.0013710323739973178,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25290021,
+     "validation_mae_all_batches": 4.986008935016325,
+     "validation_pinball_all_batches": 1.4324036812552576
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       102,
+       423
+      ],
+      "id": "r1-f2-t006",
+      "input_dropout": 0.17509486106306088,
+      "kappa": 0.5,
+      "l1": 0.00010645133998863615,
+      "l2": null,
+      "lr": 0.0013710323739973178,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25290022,
+     "validation_mae_all_batches": 4.986008935016325,
+     "validation_pinball_all_batches": 1.4324036812552576
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       30,
+       27
+      ],
+      "id": "r1-f2-t095",
+      "input_dropout": 0.16670881861245196,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.000252251268080185,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25290031,
+     "validation_mae_all_batches": 5.05910797017535,
+     "validation_pinball_all_batches": 1.45803862123344
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       30,
+       27
+      ],
+      "id": "r1-f2-t095",
+      "input_dropout": 0.16670881861245196,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.000252251268080185,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25290032,
+     "validation_mae_all_batches": 5.05910797017535,
+     "validation_pinball_all_batches": 1.45803862123344
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": null,
+      "hidden": [
+       127,
+       69
+      ],
+      "id": "r1-f2-t053",
+      "input_dropout": 0.07663809084427525,
+      "kappa": 0.0,
+      "l1": 2.9172625372608675e-07,
+      "l2": 1.2170046315251564e-05,
+      "lr": 0.00015696154572483425,
+      "transform": "z-s4"
+     },
+     "rank": 4,
+     "seed": 25290041,
+     "validation_mae_all_batches": 5.085044328014297,
+     "validation_pinball_all_batches": 1.4720567000787579
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": null,
+      "hidden": [
+       127,
+       69
+      ],
+      "id": "r1-f2-t053",
+      "input_dropout": 0.07663809084427525,
+      "kappa": 0.0,
+      "l1": 2.9172625372608675e-07,
+      "l2": 1.2170046315251564e-05,
+      "lr": 0.00015696154572483425,
+      "transform": "z-s4"
+     },
+     "rank": 4,
+     "seed": 25290042,
+     "validation_mae_all_batches": 5.085044328014297,
+     "validation_pinball_all_batches": 1.4720567000787579
+    }
+   ]
+  },
+  "fold_3": {
+   "B": 11,
+   "complete": true,
+   "d0": "2022-05-25",
+   "fold": "fold_3",
+   "members": [
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       23
+      ],
+      "id": "r1-f3-t087",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.0016549971725802587,
+      "lr": 0.0001442952978055681,
+      "transform": "z-s4"
+     },
+     "rank": 1,
+     "seed": 25390011,
+     "validation_mae_all_batches": 20.933941018430602,
+     "validation_pinball_all_batches": 6.0479691318643845
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       23
+      ],
+      "id": "r1-f3-t087",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.0016549971725802587,
+      "lr": 0.0001442952978055681,
+      "transform": "z-s4"
+     },
+     "rank": 1,
+     "seed": 25390012,
+     "validation_mae_all_batches": 20.933941018430602,
+     "validation_pinball_all_batches": 6.0479691318643845
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs"
+      ],
+      "half_life": 180,
+      "hidden": [
+       143,
+       95
+      ],
+      "id": "r1-f3-t127",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00018496555759998562,
+      "l2": null,
+      "lr": 0.0034649574396715564,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25390021,
+     "validation_mae_all_batches": 21.81205929853362,
+     "validation_pinball_all_batches": 6.192980545613217
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs"
+      ],
+      "half_life": 180,
+      "hidden": [
+       143,
+       95
+      ],
+      "id": "r1-f3-t127",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00018496555759998562,
+      "l2": null,
+      "lr": 0.0034649574396715564,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25390022,
+     "validation_mae_all_batches": 21.81205929853362,
+     "validation_pinball_all_batches": 6.192980545613217
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       76,
+       17
+      ],
+      "id": "r1-f3-t033",
+      "input_dropout": 0.18427200629855764,
+      "kappa": 0.5,
+      "l1": 4.949476288286615e-06,
+      "l2": 0.0008040367673132963,
+      "lr": 0.0027151353996683844,
+      "transform": "z-s4"
+     },
+     "rank": 3,
+     "seed": 25390031,
+     "validation_mae_all_batches": 22.589547191337786,
+     "validation_pinball_all_batches": 6.381063525261443
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       76,
+       17
+      ],
+      "id": "r1-f3-t033",
+      "input_dropout": 0.18427200629855764,
+      "kappa": 0.5,
+      "l1": 4.949476288286615e-06,
+      "l2": 0.0008040367673132963,
+      "lr": 0.0027151353996683844,
+      "transform": "z-s4"
+     },
+     "rank": 3,
+     "seed": 25390032,
+     "validation_mae_all_batches": 22.589547191337786,
+     "validation_pinball_all_batches": 6.381063525261443
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       41,
+       29
+      ],
+      "id": "r1-f3-t084",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": 0.00044888689531059027,
+      "l2": 2.6252329885193927e-06,
+      "lr": 0.0014757377182402945,
+      "transform": "asinh-s4"
+     },
+     "rank": 4,
+     "seed": 25390041,
+     "validation_mae_all_batches": 22.115115417149518,
+     "validation_pinball_all_batches": 6.500288539487405
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       41,
+       29
+      ],
+      "id": "r1-f3-t084",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": 0.00044888689531059027,
+      "l2": 2.6252329885193927e-06,
+      "lr": 0.0014757377182402945,
+      "transform": "asinh-s4"
+     },
+     "rank": 4,
+     "seed": 25390042,
+     "validation_mae_all_batches": 22.115115417149518,
+     "validation_pinball_all_batches": 6.500288539487405
+    }
+   ]
+  },
+  "fold_4": {
+   "B": 11,
+   "complete": true,
+   "d0": "2025-03-22",
+   "fold": "fold_4",
+   "members": [
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       161,
+       24
+      ],
+      "id": "r1-f4-t079",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 3.279919824520378e-05,
+      "l2": 0.0011310865663189875,
+      "lr": 0.0016015082558033973,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25490011,
+     "validation_mae_all_batches": 17.019466102986925,
+     "validation_pinball_all_batches": 5.006345506361689
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       161,
+       24
+      ],
+      "id": "r1-f4-t079",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 3.279919824520378e-05,
+      "l2": 0.0011310865663189875,
+      "lr": 0.0016015082558033973,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25490012,
+     "validation_mae_all_batches": 17.019466102986925,
+     "validation_pinball_all_batches": 5.006345506361689
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       181,
+       96
+      ],
+      "id": "r1-f4-t103",
+      "input_dropout": 0.3163056098195944,
+      "kappa": 0.5,
+      "l1": 6.24328064162362e-07,
+      "l2": null,
+      "lr": 0.00030383907860944787,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25490021,
+     "validation_mae_all_batches": 17.558864258599126,
+     "validation_pinball_all_batches": 5.192252960551722
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       181,
+       96
+      ],
+      "id": "r1-f4-t103",
+      "input_dropout": 0.3163056098195944,
+      "kappa": 0.5,
+      "l1": 6.24328064162362e-07,
+      "l2": null,
+      "lr": 0.00030383907860944787,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25490022,
+     "validation_mae_all_batches": 17.558864258599126,
+     "validation_pinball_all_batches": 5.192252960551722
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       344
+      ],
+      "id": "r1-f4-t000",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00013818002709247218,
+      "l2": 0.0014087687224350004,
+      "lr": 0.0036945282718605266,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25490031,
+     "validation_mae_all_batches": 17.737065807084686,
+     "validation_pinball_all_batches": 5.320870774999087
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       344
+      ],
+      "id": "r1-f4-t000",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00013818002709247218,
+      "l2": 0.0014087687224350004,
+      "lr": 0.0036945282718605266,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25490032,
+     "validation_mae_all_batches": 17.737065807084686,
+     "validation_pinball_all_batches": 5.320870774999087
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d7",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       50
+      ],
+      "id": "r1-f4-t004",
+      "input_dropout": 0.2781532196498757,
+      "kappa": 0.0,
+      "l1": 2.2621381997848714e-06,
+      "l2": 0.0003034704362069219,
+      "lr": 0.005009796489231617,
+      "transform": "asinh-mad"
+     },
+     "rank": 4,
+     "seed": 25490041,
+     "validation_mae_all_batches": 17.80409517169137,
+     "validation_pinball_all_batches": 5.428375849255698
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d7",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       50
+      ],
+      "id": "r1-f4-t004",
+      "input_dropout": 0.2781532196498757,
+      "kappa": 0.0,
+      "l1": 2.2621381997848714e-06,
+      "l2": 0.0003034704362069219,
+      "lr": 0.005009796489231617,
+      "transform": "asinh-mad"
+     },
+     "rank": 4,
+     "seed": 25490042,
+     "validation_mae_all_batches": 17.80409517169137,
+     "validation_pinball_all_batches": 5.428375849255698
+    }
+   ]
+  },
+  "fold_5": {
+   "B": 11,
+   "complete": true,
+   "d0": "2025-12-02",
+   "fold": "fold_5",
+   "members": [
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       231
+      ],
+      "id": "r1-f5-t042",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.0006337375939106371,
+      "l2": null,
+      "lr": 0.0027405365567259215,
+      "transform": "z-mad"
+     },
+     "rank": 1,
+     "seed": 25590011,
+     "validation_mae_all_batches": 17.791322677666027,
+     "validation_pinball_all_batches": 5.125656489460751
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       231
+      ],
+      "id": "r1-f5-t042",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.0006337375939106371,
+      "l2": null,
+      "lr": 0.0027405365567259215,
+      "transform": "z-mad"
+     },
+     "rank": 1,
+     "seed": 25590012,
+     "validation_mae_all_batches": 17.791322677666027,
+     "validation_pinball_all_batches": 5.125656489460751
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       304
+      ],
+      "id": "r1-f5-t106",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 0.0017847821467530355,
+      "lr": 0.006882994381517239,
+      "transform": "z-mad"
+     },
+     "rank": 2,
+     "seed": 25590021,
+     "validation_mae_all_batches": 17.489882536190798,
+     "validation_pinball_all_batches": 5.128008246295844
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       304
+      ],
+      "id": "r1-f5-t106",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 0.0017847821467530355,
+      "lr": 0.006882994381517239,
+      "transform": "z-mad"
+     },
+     "rank": 2,
+     "seed": 25590022,
+     "validation_mae_all_batches": 17.489882536190798,
+     "validation_pinball_all_batches": 5.128008246295844
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       317
+      ],
+      "id": "r1-f5-t026",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.004378109628087222,
+      "lr": 0.0012168344076970907,
+      "transform": "z-mad"
+     },
+     "rank": 3,
+     "seed": 25590031,
+     "validation_mae_all_batches": 17.191966424420098,
+     "validation_pinball_all_batches": 5.152658845682225
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       317
+      ],
+      "id": "r1-f5-t026",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.004378109628087222,
+      "lr": 0.0012168344076970907,
+      "transform": "z-mad"
+     },
+     "rank": 3,
+     "seed": 25590032,
+     "validation_mae_all_batches": 17.191966424420098,
+     "validation_pinball_all_batches": 5.152658845682225
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       480,
+       107
+      ],
+      "id": "r1-f5-t091",
+      "input_dropout": 0.4232455333008336,
+      "kappa": 0.0,
+      "l1": 0.000266867486088514,
+      "l2": 3.1167650749313463e-06,
+      "lr": 0.0012586508660423978,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25590041,
+     "validation_mae_all_batches": 17.691717327902097,
+     "validation_pinball_all_batches": 5.166664980992084
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       480,
+       107
+      ],
+      "id": "r1-f5-t091",
+      "input_dropout": 0.4232455333008336,
+      "kappa": 0.0,
+      "l1": 0.000266867486088514,
+      "l2": 3.1167650749313463e-06,
+      "lr": 0.0012586508660423978,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25590042,
+     "validation_mae_all_batches": 17.691717327902097,
+     "validation_pinball_all_batches": 5.166664980992084
+    }
+   ]
+  }
+ },
+ "identity": {
+  "code_sha256": {
+   "src/cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+   "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5",
+   "src/cp24/ddnn2.py": "a70cbea6e9533ffb0c4030a8c40b7c6978f9a218f17213c30fbb5c6850827067",
+   "src/cp24/design.py": "585b0673846e0e459eb700be24d12a46554172ee2c52600d86947645a0d03190",
+   "src/cp24/member.py": "d5df1ef4f81a3ce5fe01349588259aa32ce6fd32064581f1c5947822431538ec",
+   "src/cp24/sampler.py": "4c42dd2ba70ca622868d9a19598b04549757bc3756c3ff913e71019aee528200",
+   "src/cp24/search.py": "4a5acdaf0c36d3d9bb6d32b34655038994f3e2376cd8cb12d122c0c42f90dda0"
+  },
+  "cp24_input_fingerprint": "d502b6acab7b2d4f5f529559c44eaa3ce026678b1fb0222963ad8137fe553a53",
+  "design_sha256": "0ab2db47d561c500c8aee57c102054ff41084273f4bdc1b18ceb087260b71612",
+  "round": 1,
+  "weather_design_sha256": "f5a9c6ed7dae18e711017e9f2887e3c72f64c286137bd7cabfb3469cd10274c0"
+ },
+ "repair": {
+  "what": "job_search completed every fit and failed while writing this ledger (an infinite metric is not JSON); written by cp24.searchledger from the identity-verified task records with job_search's post-processing; an undefined (infinite) metric is null; no fit repeated",
+  "written_utc": "2026-10-05T08:04:19Z"
+ },
+ "round": 1,
+ "schema": "cp24-ensembles-v1",
+ "written_utc": "2026-10-05T08:04:19Z"
+}
