@@ -1,0 +1,80 @@
+{
+ "attempt": 1,
+ "attempt_fits": 5088,
+ "by_rank": {
+  "1": {
+   "fits": 1272.0,
+   "max_wall": 6.927090833007242,
+   "mean_wall": 2.095271141583753,
+   "median_best_epoch": 87.5,
+   "median_epochs": 137.5,
+   "median_wall": 2.0343634789969656
+  },
+  "2": {
+   "fits": 1272.0,
+   "max_wall": 6.329068749997532,
+   "mean_wall": 2.22312441226915,
+   "median_best_epoch": 76.0,
+   "median_epochs": 126.0,
+   "median_wall": 1.9027558340021642
+  },
+  "3": {
+   "fits": 1272.0,
+   "max_wall": 8.239520290997461,
+   "mean_wall": 2.0634884406578218,
+   "median_best_epoch": 67.0,
+   "median_epochs": 117.0,
+   "median_wall": 1.52598572900024
+  },
+  "4": {
+   "fits": 1272.0,
+   "max_wall": 15.749846374994377,
+   "mean_wall": 2.689869054645599,
+   "median_best_epoch": 59.0,
+   "median_epochs": 109.0,
+   "median_wall": 1.3655374794980162
+  }
+ },
+ "cp23_beside": {
+  "max_ensemble_fit_wall_seconds": 14.404960625994136,
+  "median_by_fold": {
+   "fold_1": 2.9343976659947657,
+   "fold_2": 10.881765252008336,
+   "fold_3": 3.8860016649996396,
+   "fold_4": 6.449855521001155,
+   "fold_5": 10.81295633300033
+  },
+  "median_ensemble_fit_wall_seconds": 6.4527991880022455
+ },
+ "note": "one DDNN-2 member fit = one network, one seed, trained once with early stopping; the ensemble is eight fits; diagnostic only (D3)",
+ "origins": 636,
+ "peak_worker_maxrss_bytes": 837140480,
+ "per_origin": {
+  "max_ensemble_fit_wall_seconds": 44.83943804098817,
+  "median_by_fold": {
+   "fold_1": 5.832678418009891,
+   "fold_2": 35.43009004100168,
+   "fold_3": 12.276646957994672,
+   "fold_4": 17.815298665998853,
+   "fold_5": 18.57280204197741
+  },
+  "median_ensemble_fit_wall_seconds": 17.471210145027726
+ },
+ "round": {
+  "gate_ddnn2_fit_seconds_total": 4986.0321926475735,
+  "gate_v4_member_seconds_total": 6709.699357032077,
+  "round": 1,
+  "search_fit_seconds_total": 5900.331448963654,
+  "search_fits": 3464
+ },
+ "schema": "cp24-fit-cost-v1",
+ "stop_reasons": {
+  "max_epochs": 12,
+  "patience": 5076
+ },
+ "totals": {
+  "cpu_seconds": 11529.431346999998,
+  "wall_seconds": 11539.269878526844
+ },
+ "written_utc": "2026-10-05T13:29:55Z"
+}
