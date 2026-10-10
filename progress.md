@@ -102,13 +102,18 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | Comprehensive data-admission research, immediately after DDNN, with 4.4V (VRE generation and residual load) ([v21-r10 §22](capstone_v21.md)) | ⬜ Not started. Scope filed 2026-10-04 (Notes, [Data admission research]) |
-| 8 | Recombination (4.8), with a NumPy meta-learner and per-block weights among its arms | ⬜ Not started. Filed 2026-10-04 (Notes, [4.8]) |
-| End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | ⬜ Next: the v5 publication, which needs the Owner's decisions D1–D4. The source search and the protocol design can start alongside |
 
-**No Track B checkpoint is active.** Under v21-r10 §22 the next stage is 7, the data-admission
-research with 4.4V. The Owner has not yet chosen what opens next. Any publication of v5 first
-needs the Owner's §23.12 decisions (Blockers).
+**No Track B checkpoint is active.** The next steps follow the Owner's approved
+[programme plan](docs/track-b/programme-plan-2026-10-11.md) (stage 7 above):
+
+- **First, the v5 publication (PRES-4).** It needs the Owner's decisions D1–D4: report compaction,
+  CP-22 and CP-23, automation items 6 and 7, and the advisories (Blockers).
+- **Alongside it,** the new-source search and the evaluation protocol's design.
+
+**Where the plan departs from the anchor.** It changes v21-r10 §22's order: publication, the
+protocol and a re-baseline now come before data admission, and two windows after 2026-04-07 are
+fixed. That needs an anchor amendment before stage 5 of the plan (CP-25) opens.
 
 **CP-24 is closed** ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)). It ran under
 [v21-r11 §23](capstone_v21.md), from the issued brief `a3f11470…` and the continuation brief
@@ -735,6 +740,18 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Programme plan approved, 2026-10-11.** The Owner approved the
+  [programme plan](docs/track-b/programme-plan-2026-10-11.md), with two of his own rulings:
+  - v5 is published before any new data enters a model, so that v1 → v5 stays comparable;
+  - all the data, existing gaps and new sources alike, is collected in one checkpoint before
+    anything is retrained.
+
+  The re-baseline stays before the new-source tests, as their control arm. The red line holds for
+  development: data after 2026-04-07 stays closed until 4.7T. Both post-boundary windows are fixed
+  in the plan. The plan's order departs from v21-r10 §22, so an anchor amendment is needed before
+  CP-25. The omission diff replaces rows 7, 8 and End of the stage table, and the "next stage"
+  paragraph, with the plan; nothing else was dropped.
 
 - **The codex r13 draft reviewed and kept as notes, 2026-10-11.**
   - **The review.** The Orchestrator reviewed the uncommitted v21-r13 / PUBLISH_RULES 1.5 draft
@@ -1379,7 +1396,9 @@ Session Log.
 - **[CP-22]** Closed on 2026-10-04 with no replacement; v4 is unchanged
   ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). PRES-4's replacement plan was not
   entered. v21-r10 §20.13 records the outcome against §20.1.
-- **[Data admission research] Immediately after DDNN** (v21-r10 §22, stage 7), with 4.4V. The
+- **[Data admission research]** Now stages 3, 5 and 7 of the
+  [programme plan](docs/track-b/programme-plan-2026-10-11.md): search, then collect with the
+  existing gaps, then test against the re-baseline. Originally v21-r10 §22, with 4.4V. The
   Owner's scope, 2026-10-04: "מחירי אנרגיה, ריביות, מדד פחד בבורסה המקומית כל מה שאפשר וחוקי
   לשלוף וללמוד ממנו".
   - **Candidates:**
