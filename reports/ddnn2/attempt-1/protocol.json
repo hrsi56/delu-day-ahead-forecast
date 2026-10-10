@@ -1,0 +1,2812 @@
+{
+ "anchor": "capstone_v21.md v21-r11 \u00a723 (ratified 2026-10-05)",
+ "arms": {
+  "D2": {
+   "central": "the ensemble median",
+   "layer": "its own Johnson SU quantiles; p50 = central",
+   "role": "study arm, never eligible"
+  },
+  "references": {
+   "A1": "saved",
+   "B2": "saved",
+   "D": "CP-23's DDNN (saved, evidence/cp-23)",
+   "HG": "v3 (CP-20 saved)",
+   "HGL": "v4, the comparator (CP-21 saved)",
+   "v3+D": "CP-23 saved, beside v3+D2"
+  },
+  "v3+D2": {
+   "central": "A1_w/3 + B2_w/3 + D2/3",
+   "layer": "H on its own errors",
+   "role": "attribution, never eligible"
+  },
+  "v5": {
+   "central": "A1_w/3 + B2_w/3 + L-N/12 + L-R/12 + D2/6 = (2/3)c_HG + (1/6)L + (1/6)D2",
+   "layer": "HG's H layer re-estimated on v5's own errors",
+   "role": "the single eligible candidate"
+  }
+ },
+ "arms_verbatim": "### 23.5 The candidate, the arms and the references\n\n| ID | Role | Central forecast and intervals |\n|---|---|---|\n| v4 | Comparator: CP-21's saved HGL vectors | `(2/3)\u00b7c_HG + (1/3)\u00b7L`, H layer, as committed |\n| v3 | Reference: saved vectors | As committed |\n| A1, B2 | References: CP-15's no-weather LEAR models, as in CP-23 | As committed |\n| D | Reference: CP-23's DDNN, saved vectors (`evidence/cp-23`) | As committed |\n| v5 | The single eligible candidate of every attempt | `(2/3)\u00b7c_HG + (1/6)\u00b7L + (1/6)\u00b7D2`, with HG's H layer re-estimated on v5's own errors |\n| D2 | Study arm: DDNN-2 alone, never eligible | D2, with its own Johnson SU quantiles and p50 |\n| v3+D2 | Attribution: DDNN-2 in LightGBM's place, never eligible | `(2/3)\u00b7c_HG + (1/3)\u00b7D2`, H layer on its own errors |\n\nc_HG is the mean of HG's weather components A1_w and B2_w (\u00a717.2). L is v4's LightGBM member,\n`mean(L-N, L-R)`. Both come from the saved vectors.\n\n**The weight.** v4 gives two thirds to LEAR and one third to LightGBM, with equal weights for the\nmembers inside each third. DDNN-2 joins LightGBM's third by the same rule. The weight is fixed\nbefore any fit and is never estimated on any data. Two properties follow:\n\n- `c_v5 \u2212 c_v4 = (1/6)\u00b7(D2 \u2212 L)`;\n- LEAR keeps its two thirds.\n\nThe weight never changes in CP-24.\n\n**Excluded:**\n\n- learned, per-block or per-fold weights, and any weight estimated on outcomes (4.8, \u00a722);\n- new information (stage 7);\n- other model families, a per-hour network family, and TabPFN;\n- DDNN-2's distribution as v5's interval provider, which stays descriptive (\u00a723.8).\n",
+ "attempt": 1,
+ "attempt_fits": {
+  "data": "warm-up origins: materialised before the fold's first evaluation day; evaluation origins: all data through 2026-04-07",
+  "members": "the fold's eight frozen members (configuration, seed), trained fresh at every origin",
+  "origins": "every warm-up and evaluation origin of the frozen manifest with eligible hours",
+  "window": "[max(2019-01-01, D-728), D); no warm-up or evaluation window changes (\u00a723.6); a window day without a frozen weather record fails the fit"
+ },
+ "budget": {
+  "caps": {
+   "active_seconds": 180000,
+   "additional_disk_bytes": 10737418240,
+   "bootstrap_passes": 6,
+   "cost_usd": 0,
+   "data_download_bytes": 0,
+   "ddnn2_fits": 40000,
+   "machine_seconds": 540000,
+   "policy_days": 12000,
+   "reference_passes": 3,
+   "remote_writes": 0,
+   "rounds_before_attempt_1": 3,
+   "rounds_before_attempt_2": 1,
+   "rss_bytes": 10737418240,
+   "scored_attempts": 2,
+   "v4_gate_origins": 280,
+   "workers": 4
+  },
+  "effective_caps": {
+   "active_seconds": 180000,
+   "additional_disk_bytes": 10737418240,
+   "bootstrap_passes": 6,
+   "cost_usd": 0,
+   "data_download_bytes": 0,
+   "ddnn2_fits": 40000,
+   "machine_seconds": 540000,
+   "policy_days": 12000,
+   "reference_passes": 3,
+   "remote_writes": 0,
+   "rounds_before_attempt_1": 3,
+   "rounds_before_attempt_2": 1,
+   "rss_bytes": 10737418240,
+   "scored_attempts": 2,
+   "v4_gate_origins": 280,
+   "workers": 4
+  },
+  "raises": [],
+  "spent_at_freeze": {
+   "component_attempts": 582,
+   "component_attempts_gate": 560,
+   "component_attempts_parity": 22,
+   "ddnn2_epochs": 1063068,
+   "ddnn2_fits": 5725,
+   "ddnn2_fits_correctness": 2,
+   "ddnn2_fits_gate": 2240,
+   "ddnn2_fits_resource_admission": 18,
+   "ddnn2_fits_search": 3465,
+   "lasso_final_fits": 13954,
+   "lasso_inner_fits": 55816,
+   "lgbm_fits": 8730,
+   "lgbm_fits_gate": 8400,
+   "lgbm_fits_parity": 330,
+   "machine_seconds": 19060.595583000046,
+   "policy_days": 840,
+   "policy_days_gate": 840,
+   "primitive_fits": 69770,
+   "reference_check_runs": 1,
+   "rounds": 1,
+   "rounds_before_attempt_1": 1,
+   "v4_gate_origins": 280,
+   "v4_parity_origins": 11
+  },
+  "timebox_active_seconds": 126000
+ },
+ "checkpoint": "CP-24",
+ "dependencies": {
+  "lightgbm": "4.7.0",
+  "numpy": "2.4.6",
+  "pandas": "3.0.3",
+  "pyarrow": "25.0.1",
+  "scikit-learn": "1.9.1"
+ },
+ "evidence_class": "development_post_selection",
+ "folds": {
+  "fold_1": {
+   "B": 3,
+   "batches": [
+    [
+     "2020-03-02",
+     "2020-03-29"
+    ],
+    [
+     "2020-02-03",
+     "2020-03-01"
+    ],
+    [
+     "2020-01-06",
+     "2020-02-02"
+    ]
+   ],
+   "d0": "2020-05-25",
+   "ensemble": [
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       26,
+       238
+      ],
+      "id": "r1-f1-t099",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.004482544768673612,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25190011,
+     "validation_mae_all_batches": 4.750335647116639,
+     "validation_pinball_all_batches": 1.3332225045869772
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       26,
+       238
+      ],
+      "id": "r1-f1-t099",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.004482544768673612,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25190012,
+     "validation_mae_all_batches": 4.750335647116639,
+     "validation_pinball_all_batches": 1.3332225045869772
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 128,
+      "groups": [
+       "price_d3",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       447,
+       198
+      ],
+      "id": "r1-f1-t052",
+      "input_dropout": 0.07941022079335733,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": 0.00265281349281204,
+      "lr": 0.0035122379847538875,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25190021,
+     "validation_mae_all_batches": 4.900155086033225,
+     "validation_pinball_all_batches": 1.393782066558771
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 128,
+      "groups": [
+       "price_d3",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       447,
+       198
+      ],
+      "id": "r1-f1-t052",
+      "input_dropout": 0.07941022079335733,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": 0.00265281349281204,
+      "lr": 0.0035122379847538875,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25190022,
+     "validation_mae_all_batches": 4.900155086033225,
+     "validation_pinball_all_batches": 1.393782066558771
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       18
+      ],
+      "id": "r1-f1-t015",
+      "input_dropout": 0.11671178989006864,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 2.0134897661332623e-05,
+      "lr": 0.005568160061088688,
+      "transform": "asinh-s4"
+     },
+     "rank": 3,
+     "seed": 25190031,
+     "validation_mae_all_batches": 5.038358065515663,
+     "validation_pinball_all_batches": 1.412791499812781
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       18
+      ],
+      "id": "r1-f1-t015",
+      "input_dropout": 0.11671178989006864,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 2.0134897661332623e-05,
+      "lr": 0.005568160061088688,
+      "transform": "asinh-s4"
+     },
+     "rank": 3,
+     "seed": 25190032,
+     "validation_mae_all_batches": 5.038358065515663,
+     "validation_pinball_all_batches": 1.412791499812781
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 32,
+      "groups": [
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       107,
+       74
+      ],
+      "id": "r1-f1-t014",
+      "input_dropout": 0.10806164608929425,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.007927150093529685,
+      "lr": 0.0014439054951562403,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25190041,
+     "validation_mae_all_batches": 5.254372120710836,
+     "validation_pinball_all_batches": 1.4655159526280912
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 32,
+      "groups": [
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       107,
+       74
+      ],
+      "id": "r1-f1-t014",
+      "input_dropout": 0.10806164608929425,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.007927150093529685,
+      "lr": 0.0014439054951562403,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25190042,
+     "validation_mae_all_batches": 5.254372120710836,
+     "validation_pinball_all_batches": 1.4655159526280912
+    }
+   ],
+   "gate": {
+    "MAE_D2": 4.284258621480688,
+    "MAE_HG": 5.496642503760433,
+    "MAE_L": 4.510760093261826,
+    "MAE_v4": 4.870713700893943,
+    "MAE_v5": 4.85861886992391,
+    "cap_share": 0.0032624906785980613,
+    "corr_D2_HG": 0.8892998181326225,
+    "corr_D2_L": 0.927114051027266,
+    "days": 56,
+    "excluded_training_days_d2_max": 0,
+    "excluded_training_days_v4_max": 0,
+    "gate": [
+     "2020-03-30",
+     "2020-05-24"
+    ],
+    "hours": 1341
+   },
+   "sampler_seed": [
+    24,
+    1,
+    1,
+    1443
+   ]
+  },
+  "fold_2": {
+   "B": 7,
+   "batches": [
+    [
+     "2020-12-01",
+     "2020-12-28"
+    ],
+    [
+     "2020-11-03",
+     "2020-11-30"
+    ],
+    [
+     "2020-10-06",
+     "2020-11-02"
+    ],
+    [
+     "2020-04-21",
+     "2020-05-18"
+    ],
+    [
+     "2020-03-24",
+     "2020-04-20"
+    ],
+    [
+     "2020-02-25",
+     "2020-03-23"
+    ],
+    [
+     "2020-01-28",
+     "2020-02-24"
+    ]
+   ],
+   "d0": "2021-02-23",
+   "ensemble": [
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       98
+      ],
+      "id": "r1-f2-t010",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 6.09954182010628e-06,
+      "l2": 0.001718062517851344,
+      "lr": 0.0008247864653312237,
+      "transform": "asinh-s4"
+     },
+     "rank": 1,
+     "seed": 25290011,
+     "validation_mae_all_batches": 5.00521088849525,
+     "validation_pinball_all_batches": 1.4277186852317374
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d7",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       98
+      ],
+      "id": "r1-f2-t010",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 6.09954182010628e-06,
+      "l2": 0.001718062517851344,
+      "lr": 0.0008247864653312237,
+      "transform": "asinh-s4"
+     },
+     "rank": 1,
+     "seed": 25290012,
+     "validation_mae_all_batches": 5.00521088849525,
+     "validation_pinball_all_batches": 1.4277186852317374
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       102,
+       423
+      ],
+      "id": "r1-f2-t006",
+      "input_dropout": 0.17509486106306088,
+      "kappa": 0.5,
+      "l1": 0.00010645133998863615,
+      "l2": null,
+      "lr": 0.0013710323739973178,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25290021,
+     "validation_mae_all_batches": 4.986008935016325,
+     "validation_pinball_all_batches": 1.4324036812552576
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       102,
+       423
+      ],
+      "id": "r1-f2-t006",
+      "input_dropout": 0.17509486106306088,
+      "kappa": 0.5,
+      "l1": 0.00010645133998863615,
+      "l2": null,
+      "lr": 0.0013710323739973178,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25290022,
+     "validation_mae_all_batches": 4.986008935016325,
+     "validation_pinball_all_batches": 1.4324036812552576
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       30,
+       27
+      ],
+      "id": "r1-f2-t095",
+      "input_dropout": 0.16670881861245196,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.000252251268080185,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25290031,
+     "validation_mae_all_batches": 5.05910797017535,
+     "validation_pinball_all_batches": 1.45803862123344
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       30,
+       27
+      ],
+      "id": "r1-f2-t095",
+      "input_dropout": 0.16670881861245196,
+      "kappa": 0.0,
+      "l1": null,
+      "l2": null,
+      "lr": 0.000252251268080185,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25290032,
+     "validation_mae_all_batches": 5.05910797017535,
+     "validation_pinball_all_batches": 1.45803862123344
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": null,
+      "hidden": [
+       127,
+       69
+      ],
+      "id": "r1-f2-t053",
+      "input_dropout": 0.07663809084427525,
+      "kappa": 0.0,
+      "l1": 2.9172625372608675e-07,
+      "l2": 1.2170046315251564e-05,
+      "lr": 0.00015696154572483425,
+      "transform": "z-s4"
+     },
+     "rank": 4,
+     "seed": 25290041,
+     "validation_mae_all_batches": 5.085044328014297,
+     "validation_pinball_all_batches": 1.4720567000787579
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": null,
+      "hidden": [
+       127,
+       69
+      ],
+      "id": "r1-f2-t053",
+      "input_dropout": 0.07663809084427525,
+      "kappa": 0.0,
+      "l1": 2.9172625372608675e-07,
+      "l2": 1.2170046315251564e-05,
+      "lr": 0.00015696154572483425,
+      "transform": "z-s4"
+     },
+     "rank": 4,
+     "seed": 25290042,
+     "validation_mae_all_batches": 5.085044328014297,
+     "validation_pinball_all_batches": 1.4720567000787579
+    }
+   ],
+   "gate": {
+    "MAE_D2": 5.0595771307690445,
+    "MAE_HG": 6.875041663962282,
+    "MAE_L": 6.130432904950133,
+    "MAE_v4": 6.299403787751582,
+    "MAE_v5": 6.10389920415853,
+    "cap_share": 9.300595238095238e-05,
+    "corr_D2_HG": 0.8039111992594774,
+    "corr_D2_L": 0.8536539838457069,
+    "days": 56,
+    "excluded_training_days_d2_max": 0,
+    "excluded_training_days_v4_max": 0,
+    "gate": [
+     "2020-12-29",
+     "2021-02-22"
+    ],
+    "hours": 1344
+   },
+   "sampler_seed": [
+    24,
+    1,
+    2,
+    1443
+   ]
+  },
+  "fold_3": {
+   "B": 11,
+   "batches": [
+    [
+     "2022-03-02",
+     "2022-03-29"
+    ],
+    [
+     "2022-02-02",
+     "2022-03-01"
+    ],
+    [
+     "2022-01-05",
+     "2022-02-01"
+    ],
+    [
+     "2021-12-08",
+     "2022-01-04"
+    ],
+    [
+     "2021-11-10",
+     "2021-12-07"
+    ],
+    [
+     "2021-10-13",
+     "2021-11-09"
+    ],
+    [
+     "2021-09-15",
+     "2021-10-12"
+    ],
+    [
+     "2021-08-18",
+     "2021-09-14"
+    ],
+    [
+     "2021-07-21",
+     "2021-08-17"
+    ],
+    [
+     "2021-01-06",
+     "2021-02-02"
+    ],
+    [
+     "2020-12-09",
+     "2021-01-05"
+    ]
+   ],
+   "d0": "2022-05-25",
+   "ensemble": [
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       23
+      ],
+      "id": "r1-f3-t087",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.0016549971725802587,
+      "lr": 0.0001442952978055681,
+      "transform": "z-s4"
+     },
+     "rank": 1,
+     "seed": 25390011,
+     "validation_mae_all_batches": 20.933941018430602,
+     "validation_pinball_all_batches": 6.0479691318643845
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       23
+      ],
+      "id": "r1-f3-t087",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.0016549971725802587,
+      "lr": 0.0001442952978055681,
+      "transform": "z-s4"
+     },
+     "rank": 1,
+     "seed": 25390012,
+     "validation_mae_all_batches": 20.933941018430602,
+     "validation_pinball_all_batches": 6.0479691318643845
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs"
+      ],
+      "half_life": 180,
+      "hidden": [
+       143,
+       95
+      ],
+      "id": "r1-f3-t127",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00018496555759998562,
+      "l2": null,
+      "lr": 0.0034649574396715564,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25390021,
+     "validation_mae_all_batches": 21.81205929853362,
+     "validation_pinball_all_batches": 6.192980545613217
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 64,
+      "groups": [
+       "price_d2",
+       "gfs"
+      ],
+      "half_life": 180,
+      "hidden": [
+       143,
+       95
+      ],
+      "id": "r1-f3-t127",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00018496555759998562,
+      "l2": null,
+      "lr": 0.0034649574396715564,
+      "transform": "asinh-s4"
+     },
+     "rank": 2,
+     "seed": 25390022,
+     "validation_mae_all_batches": 21.81205929853362,
+     "validation_pinball_all_batches": 6.192980545613217
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       76,
+       17
+      ],
+      "id": "r1-f3-t033",
+      "input_dropout": 0.18427200629855764,
+      "kappa": 0.5,
+      "l1": 4.949476288286615e-06,
+      "l2": 0.0008040367673132963,
+      "lr": 0.0027151353996683844,
+      "transform": "z-s4"
+     },
+     "rank": 3,
+     "seed": 25390031,
+     "validation_mae_all_batches": 22.589547191337786,
+     "validation_pinball_all_batches": 6.381063525261443
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       76,
+       17
+      ],
+      "id": "r1-f3-t033",
+      "input_dropout": 0.18427200629855764,
+      "kappa": 0.5,
+      "l1": 4.949476288286615e-06,
+      "l2": 0.0008040367673132963,
+      "lr": 0.0027151353996683844,
+      "transform": "z-s4"
+     },
+     "rank": 3,
+     "seed": 25390032,
+     "validation_mae_all_batches": 22.589547191337786,
+     "validation_pinball_all_batches": 6.381063525261443
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       41,
+       29
+      ],
+      "id": "r1-f3-t084",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": 0.00044888689531059027,
+      "l2": 2.6252329885193927e-06,
+      "lr": 0.0014757377182402945,
+      "transform": "asinh-s4"
+     },
+     "rank": 4,
+     "seed": 25390041,
+     "validation_mae_all_batches": 22.115115417149518,
+     "validation_pinball_all_batches": 6.500288539487405
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       41,
+       29
+      ],
+      "id": "r1-f3-t084",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": 0.00044888689531059027,
+      "l2": 2.6252329885193927e-06,
+      "lr": 0.0014757377182402945,
+      "transform": "asinh-s4"
+     },
+     "rank": 4,
+     "seed": 25390042,
+     "validation_mae_all_batches": 22.115115417149518,
+     "validation_pinball_all_batches": 6.500288539487405
+    }
+   ],
+   "gate": {
+    "MAE_D2": 19.787385503785266,
+    "MAE_HG": 24.356016555632383,
+    "MAE_L": 22.659480100086792,
+    "MAE_v4": 22.308825409659583,
+    "MAE_v5": 21.955329361509932,
+    "cap_share": 0.00029252207211998726,
+    "corr_D2_HG": 0.789892993830664,
+    "corr_D2_L": 0.7688759527719696,
+    "days": 56,
+    "excluded_training_days_d2_max": 0,
+    "excluded_training_days_v4_max": 0,
+    "gate": [
+     "2022-03-30",
+     "2022-05-24"
+    ],
+    "hours": 1343
+   },
+   "sampler_seed": [
+    24,
+    1,
+    3,
+    1443
+   ]
+  },
+  "fold_4": {
+   "B": 11,
+   "batches": [
+    [
+     "2024-12-28",
+     "2025-01-24"
+    ],
+    [
+     "2024-11-30",
+     "2024-12-27"
+    ],
+    [
+     "2024-11-02",
+     "2024-11-29"
+    ],
+    [
+     "2024-10-05",
+     "2024-11-01"
+    ],
+    [
+     "2024-09-07",
+     "2024-10-04"
+    ],
+    [
+     "2024-08-10",
+     "2024-09-06"
+    ],
+    [
+     "2024-07-13",
+     "2024-08-09"
+    ],
+    [
+     "2024-06-15",
+     "2024-07-12"
+    ],
+    [
+     "2024-05-18",
+     "2024-06-14"
+    ],
+    [
+     "2024-04-20",
+     "2024-05-17"
+    ],
+    [
+     "2024-03-23",
+     "2024-04-19"
+    ]
+   ],
+   "d0": "2025-03-22",
+   "ensemble": [
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       161,
+       24
+      ],
+      "id": "r1-f4-t079",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 3.279919824520378e-05,
+      "l2": 0.0011310865663189875,
+      "lr": 0.0016015082558033973,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25490011,
+     "validation_mae_all_batches": 17.019466102986925,
+     "validation_pinball_all_batches": 5.006345506361689
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": 365,
+      "hidden": [
+       161,
+       24
+      ],
+      "id": "r1-f4-t079",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 3.279919824520378e-05,
+      "l2": 0.0011310865663189875,
+      "lr": 0.0016015082558033973,
+      "transform": "asinh-mad"
+     },
+     "rank": 1,
+     "seed": 25490012,
+     "validation_mae_all_batches": 17.019466102986925,
+     "validation_pinball_all_batches": 5.006345506361689
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       181,
+       96
+      ],
+      "id": "r1-f4-t103",
+      "input_dropout": 0.3163056098195944,
+      "kappa": 0.5,
+      "l1": 6.24328064162362e-07,
+      "l2": null,
+      "lr": 0.00030383907860944787,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25490021,
+     "validation_mae_all_batches": 17.558864258599126,
+     "validation_pinball_all_batches": 5.192252960551722
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 32,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       181,
+       96
+      ],
+      "id": "r1-f4-t103",
+      "input_dropout": 0.3163056098195944,
+      "kappa": 0.5,
+      "l1": 6.24328064162362e-07,
+      "l2": null,
+      "lr": 0.00030383907860944787,
+      "transform": "asinh-mad"
+     },
+     "rank": 2,
+     "seed": 25490022,
+     "validation_mae_all_batches": 17.558864258599126,
+     "validation_pinball_all_batches": 5.192252960551722
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       344
+      ],
+      "id": "r1-f4-t000",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00013818002709247218,
+      "l2": 0.0014087687224350004,
+      "lr": 0.0036945282718605266,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25490031,
+     "validation_mae_all_batches": 17.737065807084686,
+     "validation_pinball_all_batches": 5.320870774999087
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d3",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "calendar"
+      ],
+      "half_life": 365,
+      "hidden": [
+       344
+      ],
+      "id": "r1-f4-t000",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.00013818002709247218,
+      "l2": 0.0014087687224350004,
+      "lr": 0.0036945282718605266,
+      "transform": "asinh-mad"
+     },
+     "rank": 3,
+     "seed": 25490032,
+     "validation_mae_all_batches": 17.737065807084686,
+     "validation_pinball_all_batches": 5.320870774999087
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d7",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       50
+      ],
+      "id": "r1-f4-t004",
+      "input_dropout": 0.2781532196498757,
+      "kappa": 0.0,
+      "l1": 2.2621381997848714e-06,
+      "l2": 0.0003034704362069219,
+      "lr": 0.005009796489231617,
+      "transform": "asinh-mad"
+     },
+     "rank": 4,
+     "seed": 25490041,
+     "validation_mae_all_batches": 17.80409517169137,
+     "validation_pinball_all_batches": 5.428375849255698
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "price_d7",
+       "load_d1",
+       "load_d7",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       50
+      ],
+      "id": "r1-f4-t004",
+      "input_dropout": 0.2781532196498757,
+      "kappa": 0.0,
+      "l1": 2.2621381997848714e-06,
+      "l2": 0.0003034704362069219,
+      "lr": 0.005009796489231617,
+      "transform": "asinh-mad"
+     },
+     "rank": 4,
+     "seed": 25490042,
+     "validation_mae_all_batches": 17.80409517169137,
+     "validation_pinball_all_batches": 5.428375849255698
+    }
+   ],
+   "gate": {
+    "MAE_D2": 13.17352053234774,
+    "MAE_HG": 14.360611781233176,
+    "MAE_L": 17.40533260067175,
+    "MAE_v4": 14.526631464183346,
+    "MAE_v5": 13.821027307538074,
+    "cap_share": 3.985969387755102e-05,
+    "corr_D2_HG": 0.83997929970501,
+    "corr_D2_L": 0.7824293559962584,
+    "days": 56,
+    "excluded_training_days_d2_max": 55,
+    "excluded_training_days_v4_max": 55,
+    "gate": [
+     "2025-01-25",
+     "2025-03-21"
+    ],
+    "hours": 1344
+   },
+   "sampler_seed": [
+    24,
+    1,
+    4,
+    1443
+   ]
+  },
+  "fold_5": {
+   "B": 11,
+   "batches": [
+    [
+     "2025-09-09",
+     "2025-10-06"
+    ],
+    [
+     "2025-08-12",
+     "2025-09-08"
+    ],
+    [
+     "2025-01-28",
+     "2025-02-24"
+    ],
+    [
+     "2024-12-31",
+     "2025-01-27"
+    ],
+    [
+     "2024-12-03",
+     "2024-12-30"
+    ],
+    [
+     "2024-11-05",
+     "2024-12-02"
+    ],
+    [
+     "2024-10-08",
+     "2024-11-04"
+    ],
+    [
+     "2024-09-10",
+     "2024-10-07"
+    ],
+    [
+     "2024-08-13",
+     "2024-09-09"
+    ],
+    [
+     "2024-07-16",
+     "2024-08-12"
+    ],
+    [
+     "2024-06-18",
+     "2024-07-15"
+    ]
+   ],
+   "d0": "2025-12-02",
+   "ensemble": [
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       231
+      ],
+      "id": "r1-f5-t042",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.0006337375939106371,
+      "l2": null,
+      "lr": 0.0027405365567259215,
+      "transform": "z-mad"
+     },
+     "rank": 1,
+     "seed": 25590011,
+     "validation_mae_all_batches": 17.791322677666027,
+     "validation_pinball_all_batches": 5.125656489460751
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "load_d1",
+       "gfs",
+       "stats"
+      ],
+      "half_life": null,
+      "hidden": [
+       231
+      ],
+      "id": "r1-f5-t042",
+      "input_dropout": null,
+      "kappa": 0.0,
+      "l1": 0.0006337375939106371,
+      "l2": null,
+      "lr": 0.0027405365567259215,
+      "transform": "z-mad"
+     },
+     "rank": 1,
+     "seed": 25590012,
+     "validation_mae_all_batches": 17.791322677666027,
+     "validation_pinball_all_batches": 5.125656489460751
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       304
+      ],
+      "id": "r1-f5-t106",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 0.0017847821467530355,
+      "lr": 0.006882994381517239,
+      "transform": "z-mad"
+     },
+     "rank": 2,
+     "seed": 25590021,
+     "validation_mae_all_batches": 17.489882536190798,
+     "validation_pinball_all_batches": 5.128008246295844
+    },
+    {
+     "config": {
+      "activation": "softplus",
+      "batch_size": 64,
+      "groups": [
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       304
+      ],
+      "id": "r1-f5-t106",
+      "input_dropout": null,
+      "kappa": 1.0,
+      "l1": null,
+      "l2": 0.0017847821467530355,
+      "lr": 0.006882994381517239,
+      "transform": "z-mad"
+     },
+     "rank": 2,
+     "seed": 25590022,
+     "validation_mae_all_batches": 17.489882536190798,
+     "validation_pinball_all_batches": 5.128008246295844
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       317
+      ],
+      "id": "r1-f5-t026",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.004378109628087222,
+      "lr": 0.0012168344076970907,
+      "transform": "z-mad"
+     },
+     "rank": 3,
+     "seed": 25590031,
+     "validation_mae_all_batches": 17.191966424420098,
+     "validation_pinball_all_batches": 5.152658845682225
+    },
+    {
+     "config": {
+      "activation": "elu",
+      "batch_size": 128,
+      "groups": [
+       "price_d2",
+       "load_d1",
+       "load_d7",
+       "gfs"
+      ],
+      "half_life": 365,
+      "hidden": [
+       317
+      ],
+      "id": "r1-f5-t026",
+      "input_dropout": null,
+      "kappa": 0.5,
+      "l1": null,
+      "l2": 0.004378109628087222,
+      "lr": 0.0012168344076970907,
+      "transform": "z-mad"
+     },
+     "rank": 3,
+     "seed": 25590032,
+     "validation_mae_all_batches": 17.191966424420098,
+     "validation_pinball_all_batches": 5.152658845682225
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       480,
+       107
+      ],
+      "id": "r1-f5-t091",
+      "input_dropout": 0.4232455333008336,
+      "kappa": 0.0,
+      "l1": 0.000266867486088514,
+      "l2": 3.1167650749313463e-06,
+      "lr": 0.0012586508660423978,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25590041,
+     "validation_mae_all_batches": 17.691717327902097,
+     "validation_pinball_all_batches": 5.166664980992084
+    },
+    {
+     "config": {
+      "activation": "tanh",
+      "batch_size": 32,
+      "groups": [
+       "price_d3",
+       "price_d7",
+       "load_d1",
+       "gfs",
+       "stats",
+       "calendar"
+      ],
+      "half_life": 180,
+      "hidden": [
+       480,
+       107
+      ],
+      "id": "r1-f5-t091",
+      "input_dropout": 0.4232455333008336,
+      "kappa": 0.0,
+      "l1": 0.000266867486088514,
+      "l2": 3.1167650749313463e-06,
+      "lr": 0.0012586508660423978,
+      "transform": "z-mad"
+     },
+     "rank": 4,
+     "seed": 25590042,
+     "validation_mae_all_batches": 17.691717327902097,
+     "validation_pinball_all_batches": 5.166664980992084
+    }
+   ],
+   "gate": {
+    "MAE_D2": 14.501633131548687,
+    "MAE_HG": 17.459086529452442,
+    "MAE_L": 15.92774777449126,
+    "MAE_v4": 16.235861937630514,
+    "MAE_v5": 15.944880180389704,
+    "cap_share": 0.0007185437513306366,
+    "corr_D2_HG": 0.8703851260079223,
+    "corr_D2_L": 0.8759961292195503,
+    "days": 56,
+    "excluded_training_days_d2_max": 0,
+    "excluded_training_days_v4_max": 0,
+    "gate": [
+     "2025-10-07",
+     "2025-12-01"
+    ],
+    "hours": 1342
+   },
+   "sampler_seed": [
+    24,
+    1,
+    5,
+    1443
+   ]
+  }
+ },
+ "freezing_steering_answer": {
+  "path": "docs/track-b/evidence/cp-24/steering/s1-round-1-answer.md",
+  "sha256": "64811aa4d51dc82fdc98dd2c0f21ff74af7fa0f64c817a109cea152a28557143"
+ },
+ "frozen_inputs_sha256": {
+  "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+  "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+  "pyproject.toml": "aa35326abbb13dfa4ea8ba1b4b367343b77f895e7724d5dc94e0bdb7637b4e4a",
+  "reports/block-challenger/criteria.csv": "00471a8e0f69d57d83c35b77b9a6b1e7a3bf6b3b068029310c69913980340184",
+  "reports/block-challenger/lineage.json": "34f2e05ecb515562227a3869cbbc7f8987b648241fe208cdfeedf68479b66b80",
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/block-challenger/uncertainty.csv": "2fa86aca7eef835a065e0486b152929efdc1e60318ec4d1d0caca1e1444edfbf",
+  "reports/cp15/predictions.parquet": "1a606d613ba5f6af82712a7e44adcaf639ba0ece1b7865f407f559fafafeda92",
+  "reports/cp15/protocol.json": "051e4b7cdd1d5db68b26e6d6bc17333c4055c4bcbe5ea693d1d647fe355ccdd6",
+  "reports/ddnn2/licence-admission.md": "fb0720e15787f0cea7d06e0e1bf9c2775e9d61f98e297596681ed8ef962b15b7",
+  "reports/ddnn2/preflight/input-verification.json": "9f035a9985a70b572f90075b29da7f789ebb4ecf58eb1f267c45c8cd939d1b15",
+  "reports/ddnn2/preflight/weather-regeneration.json": "3457408c55d7db134f072eb06e2e67d083945a30ca8e257092929f87d8cfefbb",
+  "reports/ddnn2/reference-checks.json": "cdbce657d666a4301fc53c9625618db266ef2e1f12aa8cb50b38743c0beb96fb",
+  "reports/ddnn2/resource-admission.json": "1400e895365f063a8f70da184983e48e9d657cca1fc46d4b0d0970a221b968fa",
+  "reports/ddnn2/resource-admission.md": "1ace9febe6af62002c30404d9f4a4e5603485a339c5f1b58e935250592bab056",
+  "reports/ddnn2/v4-parity.json": "9db67d0fe06e9f5b5569767e5d4ff644bb290961fb75f43787083615e63b751b",
+  "reports/distribution-challenger/members.parquet": "71e17c1a6653091b7f4f4abff4b9c9fe51b31e05e8bb8b7e7d6ec5632d45be7f",
+  "reports/distribution-challenger/predictions.parquet": "7136a272b5a7a86c5ba46bc3f43fbfae08402cbfa7809a907f32253c7d7ce583",
+  "reports/v2-causal/input-manifest.json": "cd5a1090390184df237132413d7ac7007402de054adbb3ee7615d9885947c20e",
+  "reports/weather-ablation/criteria.csv": "668ebd2bafe32814c4c682e086bcd72044d14c3d7ae611bf69b6275d67458326",
+  "reports/weather-ablation/lineage.json": "fc4f037df44a195a77d77877721f3ab021d2707e717dbf1dc11088fcbfb766ed",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab",
+  "reports/weather-ablation/protocol.json": "6964223c53a084012c79033a8ffc36106710e122ea7b8800471fab4d462db714",
+  "reports/weather-ablation/weather-features.parquet": "66b8264bb6e124ae0cc540a40ff00d0e9f625cabee6e0ebb6e4605c3e7ea1b58",
+  "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+ },
+ "gate": {
+  "conditions": {
+   "G0": {
+    "met": true,
+    "text": "every forecast is finite and ordered"
+   },
+   "G1": {
+    "difference": -0.3116699472882445,
+    "met": true,
+    "text": "v5's central MAE <= v4's central MAE, both from the gate-day members",
+    "v4": 12.849433675450149,
+    "v5": 12.537763728161904
+   },
+   "G2": {
+    "D2": 11.362246718015564,
+    "L": 13.328525083765825,
+    "met": true,
+    "ratio": 0.8524759226251378,
+    "text": "D2's MAE <= 1.10 x L's MAE"
+   },
+   "G3": {
+    "binding": 331,
+    "emitted_hour_levels": 375984,
+    "met": true,
+    "share": 0.0008803566109196136,
+    "text": "the quantile cap binds on fewer than 0.1% of the members' emitted hour-levels"
+   }
+  },
+  "excluded_training_days": {
+   "ddnn2_by_day": {
+    "2020-03-30": 0,
+    "2020-03-31": 0,
+    "2020-04-01": 0,
+    "2020-04-02": 0,
+    "2020-04-03": 0,
+    "2020-04-04": 0,
+    "2020-04-05": 0,
+    "2020-04-06": 0,
+    "2020-04-07": 0,
+    "2020-04-08": 0,
+    "2020-04-09": 0,
+    "2020-04-10": 0,
+    "2020-04-11": 0,
+    "2020-04-12": 0,
+    "2020-04-13": 0,
+    "2020-04-14": 0,
+    "2020-04-15": 0,
+    "2020-04-16": 0,
+    "2020-04-17": 0,
+    "2020-04-18": 0,
+    "2020-04-19": 0,
+    "2020-04-20": 0,
+    "2020-04-21": 0,
+    "2020-04-22": 0,
+    "2020-04-23": 0,
+    "2020-04-24": 0,
+    "2020-04-25": 0,
+    "2020-04-26": 0,
+    "2020-04-27": 0,
+    "2020-04-28": 0,
+    "2020-04-29": 0,
+    "2020-04-30": 0,
+    "2020-05-01": 0,
+    "2020-05-02": 0,
+    "2020-05-03": 0,
+    "2020-05-04": 0,
+    "2020-05-05": 0,
+    "2020-05-06": 0,
+    "2020-05-07": 0,
+    "2020-05-08": 0,
+    "2020-05-09": 0,
+    "2020-05-10": 0,
+    "2020-05-11": 0,
+    "2020-05-12": 0,
+    "2020-05-13": 0,
+    "2020-05-14": 0,
+    "2020-05-15": 0,
+    "2020-05-16": 0,
+    "2020-05-17": 0,
+    "2020-05-18": 0,
+    "2020-05-19": 0,
+    "2020-05-20": 0,
+    "2020-05-21": 0,
+    "2020-05-22": 0,
+    "2020-05-23": 0,
+    "2020-05-24": 0,
+    "2020-12-29": 0,
+    "2020-12-30": 0,
+    "2020-12-31": 0,
+    "2021-01-01": 0,
+    "2021-01-02": 0,
+    "2021-01-03": 0,
+    "2021-01-04": 0,
+    "2021-01-05": 0,
+    "2021-01-06": 0,
+    "2021-01-07": 0,
+    "2021-01-08": 0,
+    "2021-01-09": 0,
+    "2021-01-10": 0,
+    "2021-01-11": 0,
+    "2021-01-12": 0,
+    "2021-01-13": 0,
+    "2021-01-14": 0,
+    "2021-01-15": 0,
+    "2021-01-16": 0,
+    "2021-01-17": 0,
+    "2021-01-18": 0,
+    "2021-01-19": 0,
+    "2021-01-20": 0,
+    "2021-01-21": 0,
+    "2021-01-22": 0,
+    "2021-01-23": 0,
+    "2021-01-24": 0,
+    "2021-01-25": 0,
+    "2021-01-26": 0,
+    "2021-01-27": 0,
+    "2021-01-28": 0,
+    "2021-01-29": 0,
+    "2021-01-30": 0,
+    "2021-01-31": 0,
+    "2021-02-01": 0,
+    "2021-02-02": 0,
+    "2021-02-03": 0,
+    "2021-02-04": 0,
+    "2021-02-05": 0,
+    "2021-02-06": 0,
+    "2021-02-07": 0,
+    "2021-02-08": 0,
+    "2021-02-09": 0,
+    "2021-02-10": 0,
+    "2021-02-11": 0,
+    "2021-02-12": 0,
+    "2021-02-13": 0,
+    "2021-02-14": 0,
+    "2021-02-15": 0,
+    "2021-02-16": 0,
+    "2021-02-17": 0,
+    "2021-02-18": 0,
+    "2021-02-19": 0,
+    "2021-02-20": 0,
+    "2021-02-21": 0,
+    "2021-02-22": 0,
+    "2022-03-30": 0,
+    "2022-03-31": 0,
+    "2022-04-01": 0,
+    "2022-04-02": 0,
+    "2022-04-03": 0,
+    "2022-04-04": 0,
+    "2022-04-05": 0,
+    "2022-04-06": 0,
+    "2022-04-07": 0,
+    "2022-04-08": 0,
+    "2022-04-09": 0,
+    "2022-04-10": 0,
+    "2022-04-11": 0,
+    "2022-04-12": 0,
+    "2022-04-13": 0,
+    "2022-04-14": 0,
+    "2022-04-15": 0,
+    "2022-04-16": 0,
+    "2022-04-17": 0,
+    "2022-04-18": 0,
+    "2022-04-19": 0,
+    "2022-04-20": 0,
+    "2022-04-21": 0,
+    "2022-04-22": 0,
+    "2022-04-23": 0,
+    "2022-04-24": 0,
+    "2022-04-25": 0,
+    "2022-04-26": 0,
+    "2022-04-27": 0,
+    "2022-04-28": 0,
+    "2022-04-29": 0,
+    "2022-04-30": 0,
+    "2022-05-01": 0,
+    "2022-05-02": 0,
+    "2022-05-03": 0,
+    "2022-05-04": 0,
+    "2022-05-05": 0,
+    "2022-05-06": 0,
+    "2022-05-07": 0,
+    "2022-05-08": 0,
+    "2022-05-09": 0,
+    "2022-05-10": 0,
+    "2022-05-11": 0,
+    "2022-05-12": 0,
+    "2022-05-13": 0,
+    "2022-05-14": 0,
+    "2022-05-15": 0,
+    "2022-05-16": 0,
+    "2022-05-17": 0,
+    "2022-05-18": 0,
+    "2022-05-19": 0,
+    "2022-05-20": 0,
+    "2022-05-21": 0,
+    "2022-05-22": 0,
+    "2022-05-23": 0,
+    "2022-05-24": 0,
+    "2025-01-25": 55,
+    "2025-01-26": 54,
+    "2025-01-27": 53,
+    "2025-01-28": 52,
+    "2025-01-29": 51,
+    "2025-01-30": 50,
+    "2025-01-31": 49,
+    "2025-02-01": 48,
+    "2025-02-02": 47,
+    "2025-02-03": 46,
+    "2025-02-04": 45,
+    "2025-02-05": 44,
+    "2025-02-06": 43,
+    "2025-02-07": 42,
+    "2025-02-08": 41,
+    "2025-02-09": 40,
+    "2025-02-10": 39,
+    "2025-02-11": 38,
+    "2025-02-12": 37,
+    "2025-02-13": 36,
+    "2025-02-14": 35,
+    "2025-02-15": 34,
+    "2025-02-16": 33,
+    "2025-02-17": 32,
+    "2025-02-18": 31,
+    "2025-02-19": 30,
+    "2025-02-20": 29,
+    "2025-02-21": 28,
+    "2025-02-22": 27,
+    "2025-02-23": 26,
+    "2025-02-24": 25,
+    "2025-02-25": 24,
+    "2025-02-26": 23,
+    "2025-02-27": 22,
+    "2025-02-28": 21,
+    "2025-03-01": 20,
+    "2025-03-02": 19,
+    "2025-03-03": 18,
+    "2025-03-04": 17,
+    "2025-03-05": 16,
+    "2025-03-06": 15,
+    "2025-03-07": 14,
+    "2025-03-08": 13,
+    "2025-03-09": 12,
+    "2025-03-10": 11,
+    "2025-03-11": 11,
+    "2025-03-12": 10,
+    "2025-03-13": 9,
+    "2025-03-14": 8,
+    "2025-03-15": 7,
+    "2025-03-16": 6,
+    "2025-03-17": 5,
+    "2025-03-18": 4,
+    "2025-03-19": 3,
+    "2025-03-20": 2,
+    "2025-03-21": 1,
+    "2025-10-07": 0,
+    "2025-10-08": 0,
+    "2025-10-09": 0,
+    "2025-10-10": 0,
+    "2025-10-11": 0,
+    "2025-10-12": 0,
+    "2025-10-13": 0,
+    "2025-10-14": 0,
+    "2025-10-15": 0,
+    "2025-10-16": 0,
+    "2025-10-17": 0,
+    "2025-10-18": 0,
+    "2025-10-19": 0,
+    "2025-10-20": 0,
+    "2025-10-21": 0,
+    "2025-10-22": 0,
+    "2025-10-23": 0,
+    "2025-10-24": 0,
+    "2025-10-25": 0,
+    "2025-10-26": 0,
+    "2025-10-27": 0,
+    "2025-10-28": 0,
+    "2025-10-29": 0,
+    "2025-10-30": 0,
+    "2025-10-31": 0,
+    "2025-11-01": 0,
+    "2025-11-02": 0,
+    "2025-11-03": 0,
+    "2025-11-04": 0,
+    "2025-11-05": 0,
+    "2025-11-06": 0,
+    "2025-11-07": 0,
+    "2025-11-08": 0,
+    "2025-11-09": 0,
+    "2025-11-10": 0,
+    "2025-11-11": 0,
+    "2025-11-12": 0,
+    "2025-11-13": 0,
+    "2025-11-14": 0,
+    "2025-11-15": 0,
+    "2025-11-16": 0,
+    "2025-11-17": 0,
+    "2025-11-18": 0,
+    "2025-11-19": 0,
+    "2025-11-20": 0,
+    "2025-11-21": 0,
+    "2025-11-22": 0,
+    "2025-11-23": 0,
+    "2025-11-24": 0,
+    "2025-11-25": 0,
+    "2025-11-26": 0,
+    "2025-11-27": 0,
+    "2025-11-28": 0,
+    "2025-11-29": 0,
+    "2025-11-30": 0,
+    "2025-12-01": 0
+   },
+   "v4_members_by_day": {
+    "2020-03-30": 0,
+    "2020-03-31": 0,
+    "2020-04-01": 0,
+    "2020-04-02": 0,
+    "2020-04-03": 0,
+    "2020-04-04": 0,
+    "2020-04-05": 0,
+    "2020-04-06": 0,
+    "2020-04-07": 0,
+    "2020-04-08": 0,
+    "2020-04-09": 0,
+    "2020-04-10": 0,
+    "2020-04-11": 0,
+    "2020-04-12": 0,
+    "2020-04-13": 0,
+    "2020-04-14": 0,
+    "2020-04-15": 0,
+    "2020-04-16": 0,
+    "2020-04-17": 0,
+    "2020-04-18": 0,
+    "2020-04-19": 0,
+    "2020-04-20": 0,
+    "2020-04-21": 0,
+    "2020-04-22": 0,
+    "2020-04-23": 0,
+    "2020-04-24": 0,
+    "2020-04-25": 0,
+    "2020-04-26": 0,
+    "2020-04-27": 0,
+    "2020-04-28": 0,
+    "2020-04-29": 0,
+    "2020-04-30": 0,
+    "2020-05-01": 0,
+    "2020-05-02": 0,
+    "2020-05-03": 0,
+    "2020-05-04": 0,
+    "2020-05-05": 0,
+    "2020-05-06": 0,
+    "2020-05-07": 0,
+    "2020-05-08": 0,
+    "2020-05-09": 0,
+    "2020-05-10": 0,
+    "2020-05-11": 0,
+    "2020-05-12": 0,
+    "2020-05-13": 0,
+    "2020-05-14": 0,
+    "2020-05-15": 0,
+    "2020-05-16": 0,
+    "2020-05-17": 0,
+    "2020-05-18": 0,
+    "2020-05-19": 0,
+    "2020-05-20": 0,
+    "2020-05-21": 0,
+    "2020-05-22": 0,
+    "2020-05-23": 0,
+    "2020-05-24": 0,
+    "2020-12-29": 0,
+    "2020-12-30": 0,
+    "2020-12-31": 0,
+    "2021-01-01": 0,
+    "2021-01-02": 0,
+    "2021-01-03": 0,
+    "2021-01-04": 0,
+    "2021-01-05": 0,
+    "2021-01-06": 0,
+    "2021-01-07": 0,
+    "2021-01-08": 0,
+    "2021-01-09": 0,
+    "2021-01-10": 0,
+    "2021-01-11": 0,
+    "2021-01-12": 0,
+    "2021-01-13": 0,
+    "2021-01-14": 0,
+    "2021-01-15": 0,
+    "2021-01-16": 0,
+    "2021-01-17": 0,
+    "2021-01-18": 0,
+    "2021-01-19": 0,
+    "2021-01-20": 0,
+    "2021-01-21": 0,
+    "2021-01-22": 0,
+    "2021-01-23": 0,
+    "2021-01-24": 0,
+    "2021-01-25": 0,
+    "2021-01-26": 0,
+    "2021-01-27": 0,
+    "2021-01-28": 0,
+    "2021-01-29": 0,
+    "2021-01-30": 0,
+    "2021-01-31": 0,
+    "2021-02-01": 0,
+    "2021-02-02": 0,
+    "2021-02-03": 0,
+    "2021-02-04": 0,
+    "2021-02-05": 0,
+    "2021-02-06": 0,
+    "2021-02-07": 0,
+    "2021-02-08": 0,
+    "2021-02-09": 0,
+    "2021-02-10": 0,
+    "2021-02-11": 0,
+    "2021-02-12": 0,
+    "2021-02-13": 0,
+    "2021-02-14": 0,
+    "2021-02-15": 0,
+    "2021-02-16": 0,
+    "2021-02-17": 0,
+    "2021-02-18": 0,
+    "2021-02-19": 0,
+    "2021-02-20": 0,
+    "2021-02-21": 0,
+    "2021-02-22": 0,
+    "2022-03-30": 0,
+    "2022-03-31": 0,
+    "2022-04-01": 0,
+    "2022-04-02": 0,
+    "2022-04-03": 0,
+    "2022-04-04": 0,
+    "2022-04-05": 0,
+    "2022-04-06": 0,
+    "2022-04-07": 0,
+    "2022-04-08": 0,
+    "2022-04-09": 0,
+    "2022-04-10": 0,
+    "2022-04-11": 0,
+    "2022-04-12": 0,
+    "2022-04-13": 0,
+    "2022-04-14": 0,
+    "2022-04-15": 0,
+    "2022-04-16": 0,
+    "2022-04-17": 0,
+    "2022-04-18": 0,
+    "2022-04-19": 0,
+    "2022-04-20": 0,
+    "2022-04-21": 0,
+    "2022-04-22": 0,
+    "2022-04-23": 0,
+    "2022-04-24": 0,
+    "2022-04-25": 0,
+    "2022-04-26": 0,
+    "2022-04-27": 0,
+    "2022-04-28": 0,
+    "2022-04-29": 0,
+    "2022-04-30": 0,
+    "2022-05-01": 0,
+    "2022-05-02": 0,
+    "2022-05-03": 0,
+    "2022-05-04": 0,
+    "2022-05-05": 0,
+    "2022-05-06": 0,
+    "2022-05-07": 0,
+    "2022-05-08": 0,
+    "2022-05-09": 0,
+    "2022-05-10": 0,
+    "2022-05-11": 0,
+    "2022-05-12": 0,
+    "2022-05-13": 0,
+    "2022-05-14": 0,
+    "2022-05-15": 0,
+    "2022-05-16": 0,
+    "2022-05-17": 0,
+    "2022-05-18": 0,
+    "2022-05-19": 0,
+    "2022-05-20": 0,
+    "2022-05-21": 0,
+    "2022-05-22": 0,
+    "2022-05-23": 0,
+    "2022-05-24": 0,
+    "2025-01-25": 55,
+    "2025-01-26": 54,
+    "2025-01-27": 53,
+    "2025-01-28": 52,
+    "2025-01-29": 51,
+    "2025-01-30": 50,
+    "2025-01-31": 49,
+    "2025-02-01": 48,
+    "2025-02-02": 47,
+    "2025-02-03": 46,
+    "2025-02-04": 45,
+    "2025-02-05": 44,
+    "2025-02-06": 43,
+    "2025-02-07": 42,
+    "2025-02-08": 41,
+    "2025-02-09": 40,
+    "2025-02-10": 39,
+    "2025-02-11": 38,
+    "2025-02-12": 37,
+    "2025-02-13": 36,
+    "2025-02-14": 35,
+    "2025-02-15": 34,
+    "2025-02-16": 33,
+    "2025-02-17": 32,
+    "2025-02-18": 31,
+    "2025-02-19": 30,
+    "2025-02-20": 29,
+    "2025-02-21": 28,
+    "2025-02-22": 27,
+    "2025-02-23": 26,
+    "2025-02-24": 25,
+    "2025-02-25": 24,
+    "2025-02-26": 23,
+    "2025-02-27": 22,
+    "2025-02-28": 21,
+    "2025-03-01": 20,
+    "2025-03-02": 19,
+    "2025-03-03": 18,
+    "2025-03-04": 17,
+    "2025-03-05": 16,
+    "2025-03-06": 15,
+    "2025-03-07": 14,
+    "2025-03-08": 13,
+    "2025-03-09": 12,
+    "2025-03-10": 11,
+    "2025-03-11": 11,
+    "2025-03-12": 10,
+    "2025-03-13": 9,
+    "2025-03-14": 8,
+    "2025-03-15": 7,
+    "2025-03-16": 6,
+    "2025-03-17": 5,
+    "2025-03-18": 4,
+    "2025-03-19": 3,
+    "2025-03-20": 2,
+    "2025-03-21": 1,
+    "2025-10-07": 0,
+    "2025-10-08": 0,
+    "2025-10-09": 0,
+    "2025-10-10": 0,
+    "2025-10-11": 0,
+    "2025-10-12": 0,
+    "2025-10-13": 0,
+    "2025-10-14": 0,
+    "2025-10-15": 0,
+    "2025-10-16": 0,
+    "2025-10-17": 0,
+    "2025-10-18": 0,
+    "2025-10-19": 0,
+    "2025-10-20": 0,
+    "2025-10-21": 0,
+    "2025-10-22": 0,
+    "2025-10-23": 0,
+    "2025-10-24": 0,
+    "2025-10-25": 0,
+    "2025-10-26": 0,
+    "2025-10-27": 0,
+    "2025-10-28": 0,
+    "2025-10-29": 0,
+    "2025-10-30": 0,
+    "2025-10-31": 0,
+    "2025-11-01": 0,
+    "2025-11-02": 0,
+    "2025-11-03": 0,
+    "2025-11-04": 0,
+    "2025-11-05": 0,
+    "2025-11-06": 0,
+    "2025-11-07": 0,
+    "2025-11-08": 0,
+    "2025-11-09": 0,
+    "2025-11-10": 0,
+    "2025-11-11": 0,
+    "2025-11-12": 0,
+    "2025-11-13": 0,
+    "2025-11-14": 0,
+    "2025-11-15": 0,
+    "2025-11-16": 0,
+    "2025-11-17": 0,
+    "2025-11-18": 0,
+    "2025-11-19": 0,
+    "2025-11-20": 0,
+    "2025-11-21": 0,
+    "2025-11-22": 0,
+    "2025-11-23": 0,
+    "2025-11-24": 0,
+    "2025-11-25": 0,
+    "2025-11-26": 0,
+    "2025-11-27": 0,
+    "2025-11-28": 0,
+    "2025-11-29": 0,
+    "2025-11-30": 0,
+    "2025-12-01": 0
+   }
+  },
+  "passed": true,
+  "pooled": {
+   "MAE_D2": 11.362246718015564,
+   "MAE_HG": 13.710446855023072,
+   "MAE_L": 13.328525083765825,
+   "MAE_v4": 12.849433675450149,
+   "MAE_v5": 12.537763728161904,
+   "corr_D2_HG": 0.8263755179936424,
+   "corr_D2_L": 0.8061615366802105,
+   "days": 280,
+   "hours": 6714
+  }
+ },
+ "implementation_sha256": {
+  "scripts/cp24_ddnn2.py": "2cb67dd8e374ae4a64580be5567db759a9261f749952ff49b565b8d3a3455897",
+  "src/cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+  "src/cp15/models.py": "49d9ce2dadbe92265c36d946362c08f1819a87501469975575b794984a23f67c",
+  "src/cp15/scoring.py": "837e822e96e5d3b2183faf8d8077bf6b418cbf3e26fcd97251a0987a1a04a9c0",
+  "src/cp16/residuals.py": "f442714ee867310bf3b820cf12dc6055d57b53d7630a751275c6311aa4f71580",
+  "src/cp20/budget.py": "ed0ef4cc465264497942657731179d474bc29b5d74d8acb640063001298761b2",
+  "src/cp20/components.py": "073d29e493091e306ded008df93f562f0cb02a18a6296b39d5f3462dd5e9d5fc",
+  "src/cp20/scoring.py": "19206c26552c3af158c121526feb67130b2d0f93750142e0a139b40f69549346",
+  "src/cp20/weather.py": "9277bea351146794932eb8fd04a5a06b817fa2ac53e36e45e21dd771116545c5",
+  "src/cp21/components.py": "976fb273a361098a74ca3d2a61baf0f6f698a3e78254c12991934388b1c6b231",
+  "src/cp21/execution.py": "f34211cd4fa4a149e03d42905ba8c464458c9d398e7712ffcad8bbb6c18b1fe6",
+  "src/cp21/inputs.py": "46f33cd58bc323c422851c9cb618256540dd72ca4d96a4ef8b51e41d25e8db18",
+  "src/cp21/lgbm.py": "f35ba557c708aee9f6c83c3f974dcaad09d2c25fc81fcfd4105a70adedf038ad",
+  "src/cp22/execution.py": "5a1f67d648c0ad4e94f0786cc9434d6f1aa498c619e486c85df3ce60352dfed4",
+  "src/cp22/inputs.py": "5281ec636ccf3f780ee29ab8bf265a753b229a37ad25e54a81882cf313c93839",
+  "src/cp22/pn.py": "4c2e6afec391f729faf7b85e1c66344a16e607b74d90883fdfebf2e39978c7d9",
+  "src/cp22/scoring.py": "b310d40e97c6e149f85465d22acb17ffacea6ef72ddc8b18649224b00a94c17d",
+  "src/cp23/audit.py": "5595e25d0214417b5900777748868e39ce7f273da6841374c9577b88d8daa2b7",
+  "src/cp23/inputs.py": "82ed23e53010d8c3928655f6985ea9d56552d08b6bab62d293ea7679866fb5ae",
+  "src/cp23/scoring.py": "b04e7515fd1479a4c2676b8b8230d539b52374f8e3d47f9d9cb9ef90f76d8559",
+  "src/cp24/__init__.py": "01e59a51ef166fcf206bdaad67703ee440c569be04d16800f4db4ed0f25c33e4",
+  "src/cp24/admission.py": "cfc099e40242161bea077ca799698e09b1b7db002d26b237a2a3d42928ec1527",
+  "src/cp24/audit.py": "5a94109182528d24878ac475cfc822241e2048285d19272b6fca50d73ce621e3",
+  "src/cp24/budget.py": "d4c18860e9c4d962452f9aff8d8fa2935660e625f1825d92dbd82250a903b9c9",
+  "src/cp24/ddnn2.py": "a70cbea6e9533ffb0c4030a8c40b7c6978f9a218f17213c30fbb5c6850827067",
+  "src/cp24/design.py": "585b0673846e0e459eb700be24d12a46554172ee2c52600d86947645a0d03190",
+  "src/cp24/evaluate.py": "8d77f6bf20c90a3be3069b3a033bdbbcfa878b3660a44feda6af687f34431472",
+  "src/cp24/execution.py": "5d80030b33b858f5165f2d51f4e1017005e6a38ae7e32cb005477c7f7efbde76",
+  "src/cp24/gate.py": "e8739491c925248023ec2cb37b977715abc5e6f964d30c1daca0a69c377a43f5",
+  "src/cp24/inputs.py": "ed56f5c5c9e53418deae38c73101a1e97982ddc4d7c3d5dc09be92f80d10c08e",
+  "src/cp24/jobs.py": "358e68cf2d4cedfbbece08abab9b6a82761f00260902ed536b05cadff9772358",
+  "src/cp24/member.py": "d5df1ef4f81a3ce5fe01349588259aa32ce6fd32064581f1c5947822431538ec",
+  "src/cp24/preflight.py": "d175e94ebc6d5278698318979d361a0f8d082a85919e6022d3e5fe9e46fc7b9b",
+  "src/cp24/protocol.py": "024a18e33ebb6b92e856cae21df5cdf04d2f7142452ffd924a8972193dd49bdf",
+  "src/cp24/reference.py": "973488462684e3bbaef944bf563b3e28418f37a3f377cd010f8022e24ca4b496",
+  "src/cp24/rounds.py": "c5455b93b7d9344f4ec3865b44b8b6f1be8d361e9fc6a5f35a250dad7678f01d",
+  "src/cp24/sampler.py": "4c42dd2ba70ca622868d9a19598b04549757bc3756c3ff913e71019aee528200",
+  "src/cp24/scoring.py": "485d4a6bb74947c09227692d9334a8e63c3686f34346aa8a648d97fdfa50ba19",
+  "src/cp24/search.py": "4a5acdaf0c36d3d9bb6d32b34655038994f3e2376cd8cb12d122c0c42f90dda0",
+  "src/cp24/v4members.py": "38b9b520af4d8c46166ae67a766acb3ffebb88029c626e583181e27add495508",
+  "src/delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+  "src/delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+  "src/delu_forecast/folds.py": "71743a4f677507afea215902ee82a8e9f990fc128f4456afc47c3f4e0bd11078",
+  "src/delu_forecast/ingest.py": "e7a1cd415733eccd4460a49ba3d3ea465a90259e92ae657436b1baf3bd0ce04c",
+  "tests/cp23/torch-reference/pyproject.toml": "b9787aa327e463e2192aafe8aedd5566c7732a5bd79e018a5cbe97313b9ce6c2",
+  "tests/cp23/torch-reference/uv.lock": "b3164a375e871396e685d0e887972b092fcd0c24a7fe0047167e8fc41c25dfed",
+  "tests/cp24/test_ddnn2_gradients.py": "10bbc41f1cdf5d4029d4fbfd76ab2c06e7c12583f2455d55d76b2c1cc8e3910a",
+  "tests/cp24/test_numpy_only.py": "25c9f0fe34f70b79e1b6b4ded50ac9af58d02a3b583861a9d4f14513b6050bc7",
+  "tests/cp24/test_reference_record.py": "25804e7639fe8f0c9eb1a5c59ba1dccf9286ad1d3defbffa8eda25fdb5787d0b",
+  "tests/cp24/torch_reference_checks.py": "1d920abb666c2f293cda02d5b649117759e0a214f2450ac34149ae095ed9fdf9"
+ },
+ "issued_and_inherited_sha256": {
+  "1bdc75b8ab943092bb8de6ba893defb9e12250d8:AGENTS.md": "4a590cea7fd29f2b230a203f492f179318d50d825aed3d68918b3f7ba932bbee",
+  "1bdc75b8ab943092bb8de6ba893defb9e12250d8:capstone_v21.md": "44ea4e545d2caa276a36a7a70db6ea044b3975196ead06f3ce59f976c83354b3",
+  "928bc1389627499fba14222e552feb62492f6e2d:capstone_v21.md": "6873c2501067c63692ec7cb79dfd4073164a8a014edbd6ebc23169e7e8ff6709",
+  "928bc1389627499fba14222e552feb62492f6e2d:docs/PUBLISH_RULES.md": "5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4",
+  "928bc1389627499fba14222e552feb62492f6e2d:docs/track-b/capstone_v21-r9-to-v21-r10-amendments.md": "453a66a107e6b597cecc80c02e04995b4de4a0935960638df220c5722afa5199",
+  "928bc1389627499fba14222e552feb62492f6e2d:docs/track-b/evidence/cp-23/issued-brief.md": "33f6b41202586b2fc4f1d87624c5978e1fd5bde1185ac05271429bf719502d0c",
+  "928bc1389627499fba14222e552feb62492f6e2d:docs/track-b/presentation-and-tracking-plan-2026-09-24.md": "281193740a256a99a1676d53ef61c9babb5f744a7d0fb038927e305d1149812c",
+  "928bc1389627499fba14222e552feb62492f6e2d:docs/track-b/publication-packet-template.md": "4efb01855ae2d9a6f54b5624607a93046b1fffa881e34af0c6798c513c7829cf",
+  "928bc1389627499fba14222e552feb62492f6e2d:docs/track-b/publication-standard-v1.md": "01d721c2ba6316ca9a2f707e79da229bef732e91bad22f6ce457fb01e69478cc",
+  "capstone_v21.md": "150bd53fa15067b1d138c95d0912f86a1e92ce74092059be09034758c1926167",
+  "data/partitions.json": "6bee065368b721ae8092ba287e04bb6dda0d4bde80909e72380503ba61e0b090",
+  "data/snapshot.parquet": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00",
+  "docs/PUBLISH_RULES.md": "5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4",
+  "docs/track-b/capstone_v21-r10-to-v21-r11-amendments.md": "474017e1c8e8584e9c2956f40a872aa8917a6e110cbc58dc7a4110c9c802d782",
+  "docs/track-b/capstone_v21-r3-to-v21-r4-amendments.md": "3e0bdf6a343d5336f406f0eeb726b1b65c0f767ec8d9418a7d8118902e1ace55",
+  "docs/track-b/cp-15-resumption-brief.md": "b6a24e40f13f28ad0b459395f6969d29fa6ebc86b5d688fa8ed246475556b280",
+  "docs/track-b/cp-20-direct-weather-brief.md": "28a4e195fa7f66ff3270d5d54e477478e90aa42124bceb1ee529f95f5761883e",
+  "docs/track-b/evidence/cp-21/publication-packet.md": "b5ffceee4df9d09f7d12c106d3fa34ba5e84629fb7856b31998a69660a3b075c",
+  "docs/track-b/evidence/cp-23/publication-packet.md": "e0eba4419d9b60f8ddfdf1523a48798db3edb77b657f31b5307e236500a5ce49",
+  "docs/track-b/evidence/cp-24/issued-brief.md": "a3f11470dde0a36e9bdf84fbf02de0597ae3d0eca4c4c75f18e79ab173c34bd0",
+  "docs/track-b/presentation-and-tracking-plan-2026-09-24.md": "281193740a256a99a1676d53ef61c9babb5f744a7d0fb038927e305d1149812c",
+  "docs/track-b/publication-packet-template.md": "4efb01855ae2d9a6f54b5624607a93046b1fffa881e34af0c6798c513c7829cf",
+  "docs/track-b/publication-standard-v1.md": "01d721c2ba6316ca9a2f707e79da229bef732e91bad22f6ce457fb01e69478cc",
+  "docs/track-b/research-content/cp21-claims.md": "8df2e9a5c0edd160c4c0d6536c40eb1b0fee248db890a65da58abe4c3ec37c43",
+  "docs/track-b/research-content/cp23-claims.md": "5c12f47b7de9b279df9f5bb31344156a1461c37d873a2425034c9d2ea040a172",
+  "reports/block-challenger/adoption.json": "869923f03576ee1ceb23039c47dad3e9f5779dc00cdb7c8a68e8c88de73381a7",
+  "reports/block-challenger/criteria.csv": "00471a8e0f69d57d83c35b77b9a6b1e7a3bf6b3b068029310c69913980340184",
+  "reports/block-challenger/daily-cycle.json": "32f0b8ed16dfa0de60263943109e01691aead29d761ebc080b31774887845d26",
+  "reports/block-challenger/diagnostics.csv": "872205e1399b81f76d7cc10b1471139337f4291d3cf93d4b16bf79da0f786dfd",
+  "reports/block-challenger/draft-registry.json": "3e684d533379e5c69d5435ea75a52b0e2393c0a2b8ea119f5380ad84f303b55e",
+  "reports/block-challenger/fit-cost-by-origin.csv": "ea19334f078f3b83ab98f69190d463ffb5b9d1fca750a4c8267993753eafaa96",
+  "reports/block-challenger/fit-cost.json": "861c7d63df1a520635d127ac9c3b14798c371bdff0897677114df58612c6d06e",
+  "reports/block-challenger/fits.parquet": "2634bebfb427995ca911d3c693e1dd05f34676fa4694fde0ddad7b73f26edd44",
+  "reports/block-challenger/lineage.json": "34f2e05ecb515562227a3869cbbc7f8987b648241fe208cdfeedf68479b66b80",
+  "reports/block-challenger/metrics.csv": "268ddf33ea95a0c7de3507ff57bec8c828e0d3707f6ae10292aa5b9e34dfc2e8",
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/block-challenger/protocol.json": "a51cfbbeb7bc7861c78e1fe0916807d7ff5e0f45be495285959ff4ac52030db1",
+  "reports/block-challenger/replicates.parquet": "75a072c42cb82ea2219c8ee32a6aca1ed5d956852455d637c083d1b5419f9b33",
+  "reports/block-challenger/uncertainty.csv": "2fa86aca7eef835a065e0486b152929efdc1e60318ec4d1d0caca1e1444edfbf",
+  "reports/cp15/folds/fold_1-fits.parquet": "f2aad789fe984b5155adbfdbe6aee87436d3f064ccbb591acf750dfe1e065221",
+  "reports/cp15/folds/fold_1-issued.parquet": "b7b291ab8ae70727095860bcb606d62ecb57770847233337c902ff32447e12b8",
+  "reports/cp15/folds/fold_1-run.json": "564740e0484261fdf58a8874f43ce81b451737fa49bad66629e07bde2f2af8cf",
+  "reports/cp15/folds/fold_2-fits.parquet": "0b4635f3a6b22fbe0b186e379b8ac9f056a46a73848ca5301c83a614d8cddaf7",
+  "reports/cp15/folds/fold_2-issued.parquet": "78042446a0d4e74c74e6bc879c00e03700314b09d3456112b27c986b4b38d351",
+  "reports/cp15/folds/fold_2-run.json": "9f53d44aeec52b4e3f3c8ec86794f56eb5a9e7994e1ee714e7368ea71db2be41",
+  "reports/cp15/folds/fold_3-fits.parquet": "861369c9b195b0a5deca54d522e1e88c6c2980c87ba9be1b4ff72f3fc24f4a1b",
+  "reports/cp15/folds/fold_3-issued.parquet": "b8cdf33ec5488c76e00fd511eda8514f42fa866cd5c187b62e8cfb4dba92722b",
+  "reports/cp15/folds/fold_3-run.json": "f0b6819502ffeeb6dee02e593c27fcb93f0e11edd303fb9bb718ddcce968440c",
+  "reports/cp15/folds/fold_4-fits.parquet": "dcf5c5f0d2aa8fd1e8363748d327f48303409322cb6299e6e9e6358d1f3ea8d3",
+  "reports/cp15/folds/fold_4-issued.parquet": "b50e63b8b549e9f277cddb5644ea5e0d46a66b97fcd1384862a9d14de6e6a494",
+  "reports/cp15/folds/fold_4-run.json": "0878870280c22d856036d98b644679cb8a13196828fced157bb35377e99bda59",
+  "reports/cp15/folds/fold_5-fits.parquet": "7cf6d5df3421dda6261c67a356500a25cee01bf23c73b1fde8fdf6bfe5546bdc",
+  "reports/cp15/folds/fold_5-issued.parquet": "14c22d2ea99fadc65ded369e043333c702e0c04fe984279120917b0f64578387",
+  "reports/cp15/folds/fold_5-run.json": "3eae74f735a57a5e8c047402671288cb01612f4f9005c2fac7449201fab81ef6",
+  "reports/cp15/predictions.parquet": "1a606d613ba5f6af82712a7e44adcaf639ba0ece1b7865f407f559fafafeda92",
+  "reports/cp15/protocol.json": "051e4b7cdd1d5db68b26e6d6bc17333c4055c4bcbe5ea693d1d647fe355ccdd6",
+  "reports/cp2/development_baselines.parquet": "47a3186c6a953506313431cbe980650f9e1f76f5f2c84bedd3c2ca2f8e378f69",
+  "reports/cp2/development_predictions.parquet": "563ad94d2b57dc8792451f79ebf60a1669de954ef34717e644b5b9c6904fbdf6",
+  "reports/distribution-challenger/adoption.json": "4041d1dd1f896b54a54618fa7e3c329762325fa513132b5377d6daf08ebf4ff6",
+  "reports/distribution-challenger/criteria.csv": "8ccc6b4ec5b1b9c5f1cc53e8267e33821f6082890f8bccf4ff95430562f7f99a",
+  "reports/distribution-challenger/daily-cycle.json": "edaee4eb920277b8319ea956a7e06e576d2a27c65832a120a3d3426ed4261178",
+  "reports/distribution-challenger/diagnostics/calibration-by-level.csv": "749b95de65248328e4665a94e4ae473d51318b0873b76d3868e00a95f6681b26",
+  "reports/distribution-challenger/diagnostics/extrapolation.csv": "be8168cdba680aca19d8b9e16f1a5e551979f22388200c1de23260b0aa262b3b",
+  "reports/distribution-challenger/diagnostics/pit-histogram.csv": "e7b9b0aae4704ba26c2e57b9e3bfd0ad55128cee1bcba72a82e35c61e7853580",
+  "reports/distribution-challenger/diagnostics/seed-stability.csv": "527fd2d147cddb48a76d31b73ab2d7511afea5c568da59a5981aa4b832927473",
+  "reports/distribution-challenger/fit-cost.json": "0f3a47f479739221842bcc7c20993b62493d91d9198a5cbf07b769b3a14da31e",
+  "reports/distribution-challenger/licence-admission.md": "7dfa28b2791d18fa48dd0cdb81ac6e65c778008f70888dd38000c2ce21117a88",
+  "reports/distribution-challenger/lineage.json": "f957abdc2d3a3cc2425dace63022793f4e3fa8ea08cfabdba6b22a58ab93c1fd",
+  "reports/distribution-challenger/members.parquet": "71e17c1a6653091b7f4f4abff4b9c9fe51b31e05e8bb8b7e7d6ec5632d45be7f",
+  "reports/distribution-challenger/metrics.csv": "466706c4498a29d09f6870249a72fc7b4f73a30c91f8ee82ad648fb5ffd8e36f",
+  "reports/distribution-challenger/predictions.parquet": "7136a272b5a7a86c5ba46bc3f43fbfae08402cbfa7809a907f32253c7d7ce583",
+  "reports/distribution-challenger/protocol.json": "1cb267d4bfae30857b2c2340caaa0cae7ff400f30447309d474305d290aac969",
+  "reports/distribution-challenger/reference-checks.json": "1c8b1db1ae566e88398d85981ba4f7109555147e6ae47376e8272f1e3b1d3c0d",
+  "reports/distribution-challenger/resource-admission.json": "153e5cf53dc0008a8e7757d1f870b4bd89dc0506ce1f55881b14760b1a4a9ad9",
+  "reports/distribution-challenger/uncertainty.csv": "bd44d52f23023a1b8481339f12337c8374ad5ebfd18b9579a81dc36ed6b13ab0",
+  "reports/v2-causal/input-manifest.json": "cd5a1090390184df237132413d7ac7007402de054adbb3ee7615d9885947c20e",
+  "reports/v2-causal/lineage.json": "b13f8719b37fa3c1372a845db2c52e2bd40f3ebf8d759b0d5704704d730eb344",
+  "reports/v2-causal/predictions.parquet": "b4e92d35f12ac0ef77c293d9f11440dfc6799e4cca7786f603fcbd9a1bed37f4",
+  "reports/v2-causal/protocol.json": "f59c29db181e45f3c85fbfc2a5b73729a4abbd0e6be9b1e3842746e5472d0e7e",
+  "reports/v4-revision/daily-cycle.json": "e9a351f4dfe86cbb03edae49b5c51efe5f6a3f5a861a8699ac1ed9b931483702",
+  "reports/v4-revision/decisions.json": "ed5bdd1b1e1460a35edc80c4ae520db898368cf9c0d7ceed8c67241d73d06712",
+  "reports/v4-revision/fit-cost.json": "20e170cfb280968362b0fbd4105e87ee80945a856ed61555dd7e4f7896f538e1",
+  "reports/v4-revision/investigation/capacity-stability.csv": "d301262c2e6c92397d73ac395ce29548529e20a892939676fc23f191d32b6f8f",
+  "reports/v4-revision/investigation/extrapolation.csv": "eda2f1483bbcb68802a333c02e1fac422f600f7b7e46eeab69f63f27561d2370",
+  "reports/v4-revision/preflight/e1.json": "4f2e63d90b5421cd880a97c0907214f46ffe1e60f8415a989402ad2bdd8413fc",
+  "reports/weather-ablation/criteria.csv": "668ebd2bafe32814c4c682e086bcd72044d14c3d7ae611bf69b6275d67458326",
+  "reports/weather-ablation/extraction-summary.json": "069f5c0943d85a3876b71ff279cf62a110980dda2201ad0c4f736469e44ee875",
+  "reports/weather-ablation/lineage.json": "fc4f037df44a195a77d77877721f3ab021d2707e717dbf1dc11088fcbfb766ed",
+  "reports/weather-ablation/metrics.csv": "1dac385e9edce98db76d8a83a97d181d02416d17c82ec045221b4b6fa6f957e9",
+  "reports/weather-ablation/missingness.csv": "39f349535cc0178a8a45dab6ab2575285df82a53cf33f2cc7df17166ec45338f",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab",
+  "reports/weather-ablation/protocol.json": "6964223c53a084012c79033a8ffc36106710e122ea7b8800471fab4d462db714",
+  "reports/weather-ablation/run-manifest.json": "6ced5959f6ad7794be4beef6ea0eb72e2f6fb5e3530b549e5f184cae058af0a1",
+  "reports/weather-ablation/uncertainty.csv": "9a4a773c292bfcb8e40bf8d3fb25cd8f264cafd07ee644679faa573e60c78c26",
+  "reports/weather-ablation/weather-features.parquet": "66b8264bb6e124ae0cc540a40ff00d0e9f625cabee6e0ebb6e4605c3e7ea1b58",
+  "scripts/mlflow_export.py": "5400ac05c2875da016384b268b04d5765ee345ac769e8a6ee7867b36d81d9f9f",
+  "src/cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+  "src/cp15/models.py": "49d9ce2dadbe92265c36d946362c08f1819a87501469975575b794984a23f67c",
+  "src/cp16/inputs.py": "06405182a7eb1d6ecb02e4fe99796ec6fe8586c029ac98fef673e677698907b8",
+  "src/cp16/residuals.py": "f442714ee867310bf3b820cf12dc6055d57b53d7630a751275c6311aa4f71580",
+  "src/cp16/scoring.py": "fdbeee87fd98cad3e1060cf9b6756815953597b5ddc1ae792e6818c446073c42",
+  "src/cp23/audit.py": "5595e25d0214417b5900777748868e39ce7f273da6841374c9577b88d8daa2b7",
+  "src/cp23/ddnn.py": "9ee60719bed5ea620a84ec955025c2de5862bfa42e9a1aa8f32e2757ae1235ff",
+  "src/cp23/scoring.py": "b04e7515fd1479a4c2676b8b8230d539b52374f8e3d47f9d9cb9ef90f76d8559",
+  "src/delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+  "src/delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+  "src/delu_forecast/model.py": "fc0d8de59a5dee959e6c697e1f84cfedf0a35ed87df0c7339f4b1b76ae3e2809",
+  "src/delu_forecast/schema.py": "0278537f4f112cb92346ae4169a623eb6df5863bd41dc4bf02737f249b771085",
+  "tests/cp23/torch-reference/pyproject.toml": "b9787aa327e463e2192aafe8aedd5566c7732a5bd79e018a5cbe97313b9ce6c2",
+  "tests/cp23/torch-reference/uv.lock": "b3164a375e871396e685d0e887972b092fcd0c24a7fe0047167e8fc41c25dfed",
+  "tests/cp23/torch_reference_checks.py": "f3ca91f2153973782a0e6721114292a576d1ea0889aeea4a2c8b84d6152776dc",
+  "uv.lock": "5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94"
+ },
+ "issued_brief": {
+  "path": "docs/track-b/evidence/cp-24/issued-brief.md",
+  "sha256": "a3f11470dde0a36e9bdf84fbf02de0597ae3d0eca4c4c75f18e79ab173c34bd0"
+ },
+ "level": 0.975,
+ "model_constants": {
+  "adam": {
+   "beta1": 0.9,
+   "beta2": 0.999,
+   "eps": 1e-08
+  },
+  "cap_multiple": 1.25,
+  "delta_floor": 0.05,
+  "grid": [
+   0.025,
+   0.05,
+   0.1,
+   0.15,
+   0.2,
+   0.25,
+   0.3,
+   0.35,
+   0.4,
+   0.5,
+   0.6,
+   0.65,
+   0.7,
+   0.75,
+   0.8,
+   0.85,
+   0.9,
+   0.95,
+   0.975
+  ],
+  "holdout_share": 0.2,
+  "lambda_floor": 0.001,
+  "levels": [
+   0.025,
+   0.1,
+   0.25,
+   0.5,
+   0.75,
+   0.9,
+   0.975
+  ],
+  "max_epochs": 1000,
+  "min_hold_days": 14,
+  "min_train_days": 250,
+  "patience": 50,
+  "recent_excluded_days": 7,
+  "warm_epochs": 20,
+  "winsor": [
+   0.005,
+   0.995
+  ]
+ },
+ "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+ "population": {
+  "fold_counts": [
+   2160,
+   2159,
+   2112,
+   2160,
+   2156
+  ],
+  "keys": 10747,
+  "origins": 638
+ },
+ "protocol_change_rule": "no parameter, configuration, seed, policy, weight, tolerance, diagnostic definition or rule change informed by outcomes; a repair after scoring that changes any frozen element is a new attempt (\u00a723.6)",
+ "python": "3.13.15",
+ "recorded_not_enforced_sha256": {
+  "src/cp24/basetree.py": "67553f0f49072fac2a45c894708334d65d93573074f4893b0a4819939865ba12",
+  "src/cp24/claims.py": "0e0867e806ddbbf3202cd92c688c17da7065e2e8f6561fc320dc3d9913bcd36d",
+  "src/cp24/controls.py": "21a977676e53c0f2cae22716ab3ce288f83d3e651802724e8ff9e97e1ab16036",
+  "src/cp24/daily.py": "c805bde0b28d8f6bfe6249596f80fbee1e91c4bfff890bbe5e3c4ed4ca6cec88",
+  "src/cp24/diagnostics.py": "4ebb5c987495a63b646d10b96f26abf42a12edfbf2c4f832007c8937ec780fdc",
+  "src/cp24/export.py": "3db262a9e20a5363408b9af8a2b9227ff6588e6a611e8499c99347e2c6f43d09",
+  "src/cp24/finalise.py": "29cd0119e7aea4e341617dd5ca77ec31401228de8441e3a28b4bfedf7d86b4bc",
+  "src/cp24/packet.py": "f6f7f600e285395110f669e02c61dbc648771ab62f7af713e33b2e707fd54427",
+  "src/cp24/report.py": "9bcd2b50605c31c05ae111db0df2e0d76e49b6ef32553f395aff03dfe94d4fb0",
+  "src/cp24/review.py": "1393ccdd219103b6b3386cc666ab8f086d545d5534b53d9044a2ef209cd57173",
+  "src/cp24/searchledger.py": "55c9a8f80cf6eec16d6c7052891ddf06363326164785467a9b90e7c17358f0d8",
+  "src/cp24/tracking.py": "48d7bfd5cc89ef009fdd32a6c7c0800c6246a654fdbaffa2a6dca6ae098f6d2e",
+  "tests/cp24/test_base_tree.py": "c8f9f51cc0f849d79ccfc24ad696dfe635da95ac385f0dc503cd62052500dbcf",
+  "tests/cp24/test_composites_and_rule.py": "1e5279fdbac64eaa4e9a1719e303e6e4b30ba5769b5f2b116f4244054e52d506",
+  "tests/cp24/test_design_dst.py": "7ebc2f6a715cf99689fc58783f5bf48c6b4ff0387a6f03a1094891409ef92eca",
+  "tests/cp24/test_draft_export.py": "5be3d7d3e662819252e462536a97b6ce891114b5a54b5d8997b04bef4f7e402c",
+  "tests/cp24/test_guards_by_fold.py": "6ace144def80f0db4924870073d7d545cbf4a055dd8d8e5492173a47b1241596",
+  "tests/cp24/test_saved_evidence.py": "afa59eb43e26f54f33d1e4742c37d28c7cc45fdf24cfa44603cc76f201bf43f0",
+  "tests/cp24/test_search_procedure.py": "bc08587d1772698d7adf852f749aa9ca668fedb7a1b942b61f68213015834b02"
+ },
+ "reference_passed": true,
+ "reference_record_sha256": "cdbce657d666a4301fc53c9625618db266ef2e1f12aa8cb50b38743c0beb96fb",
+ "reference_tolerances": {
+  "adam_trajectory": {
+   "atol": 1e-10,
+   "rtol": 1e-07
+  },
+  "forward_outputs": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "full_loss": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "jsu_parameters": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "loss_gradients": {
+   "atol": 1e-11,
+   "rtol": 1e-08
+  },
+  "nll_loss": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "pinball_loss": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "quantiles": {
+   "atol": 1e-12,
+   "rtol": 1e-10
+  },
+  "stopping_metric": {
+   "atol": 1e-10,
+   "rtol": 1e-08
+  },
+  "training_loop_trajectory": {
+   "atol": 1e-10,
+   "rtol": 1e-07
+  }
+ },
+ "reference_training_loop_epochs": 4,
+ "reference_trajectory_steps": 25,
+ "representation": {
+  "always": [
+   "price_d1",
+   "load_d0",
+   "weekday"
+  ],
+  "encoding": "cp24.design (module docstring): price curves and price-location statistics as the transform of (value - c_d)/s_d; SD statistics as value/s_d; the negative-price count as is; load and weather in their units; weekday dummies; the calendar group as 0/1 flags and one-hot day type and month; weather missing indicators",
+  "optional_groups": [
+   "price_d2",
+   "price_d3",
+   "price_d7",
+   "load_d1",
+   "load_d7",
+   "gfs",
+   "stats",
+   "calendar"
+  ],
+  "outputs": "24 local-hour slots x 4 Johnson SU parameters (CP-23's parameterisation)",
+  "preprocessing": "winsorise continuous inputs at the training rows' 0.5/99.5% quantiles; training medians; StandardScaler on the training rows",
+  "rows": "one row per delivery day D, whole-day inputs by Europe/Berlin local hour (src/cp15/data.py convention: a repeated local hour averages its two observations; a missing local hour stays missing until training-only imputation)",
+  "target": "z = (y - c_d)/s_d with the row's own origin statistics (s4: \u00a74 level and scale; mad: 168-h median and 1.4826 x MAD, floor 1), then z or asinh(z); quantiles inverted with the forecast origin's statistics"
+ },
+ "resource_admission": {
+  "fixed": {
+   "largest_route_that_fits": "maximal",
+   "review_reserve": {
+    "active_hours": 5.0,
+    "bootstrap_passes": 2,
+    "ddnn2_fits": 400,
+    "machine_hours": 6.0,
+    "policy_days": 600,
+    "reference_passes": 1
+   },
+   "rule": "the largest trial count in [32, 48, 64, 96, 128] at which the maximal route fits every ceiling with the review reserve",
+   "trials_per_fold_per_round": 128
+  },
+  "verdict": "PASS"
+ },
+ "round": 1,
+ "round_files_sha256": {
+  "design.json": "0ab2db47d561c500c8aee57c102054ff41084273f4bdc1b18ceb087260b71612",
+  "ensembles.json": "adde176bd40fb482bfd4e95da09aadff19ebd36906919a781549e974c7f65758",
+  "gate.json": "444a4f1d60d1e6d3df14e7f0f0e77f3d1517eabd2284473e557a46b4c298cbda",
+  "report.md": "d803b588f7b71205762085fa445d7afe665f82ceb0d6548c4542b6a220fec4d2",
+  "search-ledger.json": "07a253f306ca9bcd033dfea77f4c0b08bd9dee94f7a17cbdacac05e2cbcdb16b"
+ },
+ "rule": "cp24-adoption",
+ "rule_verbatim": "### 23.9 Pre-registered rule `cp24-adoption`, set 2026-10-05\n\nv5 of scored attempt k (k \u2264 2) is adopted in research as v5 if, and only if, all five of these\nhold against v4 on identical rows:\n\n1. **Joint improvement over v4, at the attempts-adjusted level.** The paired v5 \u2212 v4 differences\n   use two-sided 97.5% intervals: the 1.25% and 98.75% percentiles of the shared replicates.\n   - The upper endpoint of \u0394S_WIS is < 0.\n   - The upper endpoint of \u0394S_MAE is \u2264 0.\n2. **No regression.** v5 meets all six original \u00a78 diagnostics.\n3. **A complete, valid evaluation.**\n   - Engineering PASS with a fresh binding Integration verdict.\n   - All 10,747 keys issued with finite, ordered quantiles.\n   - Every guard activation reported.\n4. **No resolved per-fold degradation.** No fold has a 95% paired daily-loss interval (v5 \u2212 v4)\n   lying entirely above zero, in MAE or in WIS.\n5. **A practical size.** Both point estimates improve v4's score by at least 0.5%:\n   - \u0394S_MAE \u2264 \u22120.005\u00b7S_MAE(v4);\n   - \u0394S_WIS \u2264 \u22120.005\u00b7S_WIS(v4).\n\n**Why 97.5%.** The level in condition 1 splits 5% across the cap of two attempts. It is fixed in\nadvance, whatever number of attempts runs. Condition 4 stays at 95%, its stricter side.\n\n**What the split does not cover.** The split controls the number of looks, not the adaptation of\nattempt 2 to attempt 1's fold results. 4.7T carries that protection. Attempt 2 is the\nOwner-delegated route of \u00a723.6, never the Lead's discretion.\n\n**Otherwise,** attempt k's v5 is not adopted, with its first unmet condition and its values.\n\n**How the rule is applied:**\n\n- mechanically, never re-weighted, re-thresholded or overridden after results;\n- D2, v3+D2 and D are never eligible;\n- a mixed result is no demonstrated joint preference, never equivalence;\n- an INCOMPLETE or BLOCKED return yields no decision and nothing to publish.\n\n**CP-24's outcome** is one of four:\n\n- adopted in attempt k;\n- the branch \"DDNN-2 member on v4\", with each scored attempt's first unmet condition;\n- stopped at the pre-fold gate;\n- DDNN-2 NOT_ADMITTED.\n\nIn every outcome, whatever DDNN-2 vectors exist are stored for 4.8.\n\n**What adoption means:**\n\n- **A research status, and provisional.** v1 remains the released product and the demo, and no\n  designation, freeze or Live follows (\u00a716).\n- **The opponent.** At CP-24's landing, \"same information, same opponent\" comes to name v5.\n- **4.7T** is the confirmation. Its frozen manifest carries v3, v4 and v5, with the number of\n  DDNN looks disclosed, and nothing is re-tuned for it.\n- **Naming, proposed:**\n  - adopted: \"v5 \u00b7 DDNN-2 member added\", with predecessor v4. The A3 transition is titled \"From\n    v4 to v5: adding a distributional neural network\";\n  - not adopted: the branch \"DDNN-2 member on v4\".\n",
+ "schema": "cp24-protocol-v1",
+ "search": {
+  "design": {
+   "before_attempt": 1,
+   "changes_from_previous": null,
+   "projection": {
+    "active_hours_so_far": 0.65,
+    "expected": {
+     "fits": true,
+     "fits_cap": 40000,
+     "machine_hours_cap": 150.0,
+     "maximal_remaining_route_fits_total": 33810,
+     "maximal_remaining_route_machine_hours_total": 23.91,
+     "member_seconds": 1.2048966039947118,
+     "this_round_fits": 5704,
+     "this_round_machine_hours": 1.98
+    },
+    "spent": {
+     "ddnn2_fits": 18,
+     "machine_seconds": 2037.0682092060451,
+     "policy_days": 0,
+     "rounds_before_attempt_1": 0,
+     "rounds_before_attempt_2": 0,
+     "scored_attempts": 0
+    },
+    "this_round_fits_alone": true,
+    "worst_case": {
+     "fits": true,
+     "fits_cap": 40000,
+     "machine_hours_cap": 150.0,
+     "maximal_remaining_route_fits_total": 33810,
+     "maximal_remaining_route_machine_hours_total": 66.97,
+     "member_seconds": 9.306738583007245,
+     "this_round_fits": 5704,
+     "this_round_machine_hours": 7.02
+    }
+   },
+   "recipe": {
+    "emission": "the day's feature-valid keys; on a 25-hour day both keys of the repeated hour take that slot's forecast",
+    "ensemble": "four best distinct configurations x two seeds; per-level median of the eight members' EUR/MWh quantiles (mean of the two middle values); p50 = central = D2",
+    "guards": "winsorisation of continuous inputs at the training rows' (0.005, 0.995) quantiles; the cap at +-1.25 x max|z| on the member's training rows (before any asinh); sorting of crossings; every activation counted",
+    "head": "xi = o1, lambda = softplus(o2) + 1e-3, gamma = o3, delta = softplus(o4) + 0.05, per local-hour slot",
+    "held_out_weeks": "the member's seeded random 20% (rounded, at least one) of the whole Monday-Sunday weeks inside [window start, D-7); PCG64(SeedSequence([seed, 0x5EED]))",
+    "loss": "first 20 epochs NLL only; then kappa*NLL + (1-kappa)*mean pinball over the 19-level grid [0.025, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.975]; + l1*sum|W| + l2*sum W^2 over weight matrices; present slots only; rows weighted by recency (mean 1)",
+    "minimum_rows": {
+     "held_out_days": 14,
+     "training_days": 250
+    },
+    "optimizer": "Adam {'beta1': 0.9, 'beta2': 0.999, 'eps': 1e-08} in PyTorch's update order; Glorot-uniform init, zero biases, output biases at lambda = delta = 1",
+    "stopping": "mean pinball over the seven scored levels in EUR/MWh after inversion and the cap, on the held-out weeks, after every epoch from 21; patience 50; maximum 1000 epochs; best epoch kept (strict improvement); a nonfinite loss stops training and keeps the best epoch (recorded)",
+    "window": "[max(2019-01-01, D-728), D) day rows with an eligible target slot and finite origin statistics; pre-fold fits leave out every delivery day without a frozen weather record (\u00a723.6)"
+   },
+   "round": 1,
+   "sampler": "cp24.sampler (seed SeedSequence([24, round, fold_index, 0x5A3])); fit seeds cp24.sampler.fit_seed; ensemble seeds cp24.sampler.member_seeds",
+   "schema": "cp24-round-design-v1",
+   "space": {
+    "activation": {
+     "choices": [
+      "elu",
+      "relu",
+      "softplus",
+      "tanh"
+     ]
+    },
+    "batch_size": {
+     "choices": [
+      32,
+      64,
+      128
+     ]
+    },
+    "groups": {
+     "flags": [
+      "price_d2",
+      "price_d3",
+      "price_d7",
+      "load_d1",
+      "load_d7",
+      "gfs",
+      "stats",
+      "calendar"
+     ],
+     "inclusion_probability": 0.5
+    },
+    "half_life": {
+     "choices": [
+      null,
+      365,
+      180
+     ]
+    },
+    "hidden_layers": {
+     "choices": [
+      1,
+      2
+     ]
+    },
+    "input_dropout": {
+     "off_probability": 0.5,
+     "uniform": [
+      0.05,
+      0.5
+     ]
+    },
+    "kappa": {
+     "choices": [
+      1.0,
+      0.5,
+      0.0
+     ]
+    },
+    "l1": {
+     "log_uniform": [
+      1e-07,
+      0.001
+     ],
+     "off_probability": 0.5
+    },
+    "l2": {
+     "log_uniform": [
+      1e-06,
+      0.01
+     ],
+     "off_probability": 0.5
+    },
+    "lr": {
+     "log_uniform": [
+      0.0001,
+      0.01
+     ]
+    },
+    "transform": {
+     "choices": [
+      "z-s4",
+      "asinh-s4",
+      "z-mad",
+      "asinh-mad"
+     ]
+    },
+    "width": {
+     "log_uniform": [
+      16,
+      512
+     ],
+     "per_layer": true,
+     "round": "nearest integer"
+    }
+   },
+   "steering": null,
+   "trials_per_fold": 128,
+   "written_utc": "2026-10-05T03:53:00Z"
+  },
+  "failed_fits": 2,
+  "halving": "min(4, B_f) most recent batches, then the best ceil(N/3) on all B_f",
+  "ranking_metric": "mean seven-level pinball in EUR/MWh after inversion, pooled over the scored hours of the batches each trial ran",
+  "sampler": "cp24.sampler (seed SeedSequence([24, round, fold_index, 0x5A3])); fit seeds cp24.sampler.fit_seed; ensemble seeds cp24.sampler.member_seeds",
+  "space": {
+   "activation": {
+    "choices": [
+     "elu",
+     "relu",
+     "softplus",
+     "tanh"
+    ]
+   },
+   "batch_size": {
+    "choices": [
+     32,
+     64,
+     128
+    ]
+   },
+   "groups": {
+    "flags": [
+     "price_d2",
+     "price_d3",
+     "price_d7",
+     "load_d1",
+     "load_d7",
+     "gfs",
+     "stats",
+     "calendar"
+    ],
+    "inclusion_probability": 0.5
+   },
+   "half_life": {
+    "choices": [
+     null,
+     365,
+     180
+    ]
+   },
+   "hidden_layers": {
+    "choices": [
+     1,
+     2
+    ]
+   },
+   "input_dropout": {
+    "off_probability": 0.5,
+    "uniform": [
+     0.05,
+     0.5
+    ]
+   },
+   "kappa": {
+    "choices": [
+     1.0,
+     0.5,
+     0.0
+    ]
+   },
+   "l1": {
+    "log_uniform": [
+     1e-07,
+     0.001
+    ],
+    "off_probability": 0.5
+   },
+   "l2": {
+    "log_uniform": [
+     1e-06,
+     0.01
+    ],
+    "off_probability": 0.5
+   },
+   "lr": {
+    "log_uniform": [
+     0.0001,
+     0.01
+    ]
+   },
+   "transform": {
+    "choices": [
+     "z-s4",
+     "asinh-s4",
+     "z-mad",
+     "asinh-mad"
+    ]
+   },
+   "width": {
+    "log_uniform": [
+     16,
+     512
+    ],
+    "per_layer": true,
+    "round": "nearest integer"
+   }
+  },
+  "trials_per_fold": 128
+ },
+ "status": "frozen after round 1's gate passed and S1 froze its design; before any warm-up or evaluation fit of attempt 1",
+ "training_recipe": {
+  "emission": "the day's feature-valid keys; on a 25-hour day both keys of the repeated hour take that slot's forecast",
+  "ensemble": "four best distinct configurations x two seeds; per-level median of the eight members' EUR/MWh quantiles (mean of the two middle values); p50 = central = D2",
+  "guards": "winsorisation of continuous inputs at the training rows' (0.005, 0.995) quantiles; the cap at +-1.25 x max|z| on the member's training rows (before any asinh); sorting of crossings; every activation counted",
+  "head": "xi = o1, lambda = softplus(o2) + 1e-3, gamma = o3, delta = softplus(o4) + 0.05, per local-hour slot",
+  "held_out_weeks": "the member's seeded random 20% (rounded, at least one) of the whole Monday-Sunday weeks inside [window start, D-7); PCG64(SeedSequence([seed, 0x5EED]))",
+  "loss": "first 20 epochs NLL only; then kappa*NLL + (1-kappa)*mean pinball over the 19-level grid [0.025, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.975]; + l1*sum|W| + l2*sum W^2 over weight matrices; present slots only; rows weighted by recency (mean 1)",
+  "minimum_rows": {
+   "held_out_days": 14,
+   "training_days": 250
+  },
+  "optimizer": "Adam {'beta1': 0.9, 'beta2': 0.999, 'eps': 1e-08} in PyTorch's update order; Glorot-uniform init, zero biases, output biases at lambda = delta = 1",
+  "stopping": "mean pinball over the seven scored levels in EUR/MWh after inversion and the cap, on the held-out weeks, after every epoch from 21; patience 50; maximum 1000 epochs; best epoch kept (strict improvement); a nonfinite loss stops training and keeps the best epoch (recorded)",
+  "window": "[max(2019-01-01, D-728), D) day rows with an eligible target slot and finite origin statistics; pre-fold fits leave out every delivery day without a frozen weather record (\u00a723.6)"
+ },
+ "weight": "1/6 for DDNN-2 inside LightGBM's third; fixed before any fit, never estimated",
+ "written_utc": "2026-10-05T08:39:39Z"
+}

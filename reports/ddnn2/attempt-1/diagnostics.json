@@ -1,0 +1,224 @@
+{
+ "attempt": 1,
+ "calibration": {
+  "pit_mean": 0.49423933508036316,
+  "pit_share_above_0.95": 0.045128873173909,
+  "pit_share_below_0.05": 0.05071182655624826,
+  "pit_vs_emitted_quantile_agreement": {
+   "p025": 1.0,
+   "p10": 1.0,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "p90": 1.0,
+   "p975": 1.0
+  },
+  "pooled": {
+   "coverage50": 0.4843212059179306,
+   "coverage80": 0.7938029217456034,
+   "coverage95": 0.9537545361496231,
+   "mean_width50": 23.68650617677512,
+   "mean_width80": 48.199876620717504,
+   "mean_width95": 83.7012432523922,
+   "median_width50": 14.304215066304295,
+   "median_width80": 29.20178465146815,
+   "median_width95": 50.329746828896674,
+   "n_hours": 10747,
+   "nominal_p025": 0.025,
+   "nominal_p10": 0.1,
+   "nominal_p25": 0.25,
+   "nominal_p50": 0.5,
+   "nominal_p75": 0.75,
+   "nominal_p90": 0.9,
+   "nominal_p975": 0.975,
+   "p95_width50": 69.70089637048765,
+   "p95_width80": 141.8626210395178,
+   "p95_width95": 249.4002196147535,
+   "policy": "D2",
+   "scope": "pooled",
+   "share_at_or_below_p025": 0.023355354982785893,
+   "share_at_or_below_p10": 0.10830929561738159,
+   "share_at_or_below_p25": 0.26593467944542665,
+   "share_at_or_below_p50": 0.503024099748767,
+   "share_at_or_below_p75": 0.7502558853633572,
+   "share_at_or_below_p90": 0.902112217362985,
+   "share_at_or_below_p975": 0.9771098911324091
+  }
+ },
+ "error_correlations_pooled": {
+  "A1~B2": 0.7675672720105534,
+  "A1~L": 0.7438681998112895,
+  "B2~L": 0.7348912623057374,
+  "D2~A1": 0.833924898989759,
+  "D2~B2": 0.7241476538414391,
+  "D2~D": 0.786283142638004,
+  "D2~HG": 0.8261226903404808,
+  "D2~L": 0.8028477249240038,
+  "D~A1": 0.7031529886957505,
+  "D~B2": 0.62744040557154,
+  "D~HG": 0.7059121346665215,
+  "D~L": 0.829307965413273,
+  "HG~A1": 0.934786569220835,
+  "HG~B2": 0.9451898934600563,
+  "HG~L": 0.7862000019663471
+ },
+ "extrapolation": {
+  "days": 26,
+  "hours_above_window_max": {
+   "D": 0,
+   "D2": 1,
+   "HG": 1,
+   "HGL": 0,
+   "v3+D2": 1,
+   "v5": 0
+  },
+  "sets": {
+   "exceeds_window_max": 1,
+   "exceeds_window_max+top_5pct_daily_max": 7,
+   "top_5pct_daily_max": 18
+  }
+ },
+ "files": [
+  "calibration-by-level.csv",
+  "epochs.csv",
+  "error-correlations.csv",
+  "extrapolation.csv",
+  "fold3-fold4-intervals.csv",
+  "guards-by-fold.csv",
+  "guards-by-member.csv",
+  "mae-by-local-hour.csv",
+  "member-stability.csv",
+  "peak-fold3-fold4.csv",
+  "pit-histogram.csv",
+  "search-validation-gate-fold.csv",
+  "shape-blend.csv"
+ ],
+ "guards": {
+  "cap_slot_levels_forecast": 583,
+  "ensemble_crossings_restored": 0,
+  "member_fits": 5088,
+  "nonfinite_loss_stops": 0,
+  "winsor_values_forecast": 12972,
+  "winsor_values_hold": 1676650,
+  "winsor_values_train": 5099358
+ },
+ "guards_by_fold": {
+  "fold_1": {
+   "cap_hour_levels": 176,
+   "cap_share": 0.0010311211098612673,
+   "ensemble_crossings_restored": 0,
+   "gate_cap_share_round": 0.0032624906785980613,
+   "largest_member_fit_share_of_capped": 0.10227272727272728,
+   "member_fits": 1016,
+   "member_fits_with_cap": 35,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 3193
+  },
+  "fold_2": {
+   "cap_hour_levels": 225,
+   "cap_share": 0.0013199267880608222,
+   "ensemble_crossings_restored": 0,
+   "gate_cap_share_round": 9.300595238095238e-05,
+   "largest_member_fit_share_of_capped": 0.1511111111111111,
+   "member_fits": 1016,
+   "member_fits_with_cap": 40,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 1792
+  },
+  "fold_3": {
+   "cap_hour_levels": 51,
+   "cap_share": 0.00030357142857142855,
+   "ensemble_crossings_restored": 0,
+   "gate_cap_share_round": 0.00029252207211998726,
+   "largest_member_fit_share_of_capped": 0.11764705882352941,
+   "member_fits": 1000,
+   "member_fits_with_cap": 19,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 1274
+  },
+  "fold_4": {
+   "cap_hour_levels": 17,
+   "cap_share": 9.742343664038144e-05,
+   "ensemble_crossings_restored": 0,
+   "gate_cap_share_round": 3.985969387755102e-05,
+   "largest_member_fit_share_of_capped": 0.29411764705882354,
+   "member_fits": 1040,
+   "member_fits_with_cap": 8,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 1555
+  },
+  "fold_5": {
+   "cap_hour_levels": 114,
+   "cap_share": 0.0006687629059508166,
+   "ensemble_crossings_restored": 0,
+   "gate_cap_share_round": 0.0007185437513306366,
+   "largest_member_fit_share_of_capped": 0.12280701754385964,
+   "member_fits": 1016,
+   "member_fits_with_cap": 23,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 5158
+  },
+  "pooled": {
+   "cap_hour_levels": 583,
+   "cap_share": 0.0006825802705031659,
+   "ensemble_crossings_restored": 0,
+   "gate_cap_share_round": 0.0008803566109196136,
+   "largest_member_fit_share_of_capped": 0.058319039451114926,
+   "member_fits": 5088,
+   "member_fits_with_cap": 125,
+   "nonfinite_loss_stops": 0,
+   "winsor_values_forecast": 12972
+  }
+ },
+ "member_stability_pooled": {
+  "ensemble_median_MAE": 15.781194387301442,
+  "member_0_median_MAE": 16.45546103497738,
+  "member_1_median_MAE": 16.360040405360643,
+  "member_2_median_MAE": 16.506191618714084,
+  "member_3_median_MAE": 16.610848650682243,
+  "member_4_median_MAE": 17.014646457096724,
+  "member_5_median_MAE": 16.910350754419497,
+  "member_6_median_MAE": 17.234034824652454,
+  "member_7_median_MAE": 16.92851516280204,
+  "member_median_spread_mean_abs": 5.3059008867281525,
+  "n_hours": 10747,
+  "scope": "pooled",
+  "share_hours_members_straddle_actual": 0.41313855029310503
+ },
+ "role": "descriptive; chooses nothing (\u00a723.8)",
+ "schema": "cp24-diagnostics-v1",
+ "shape_blend": {
+  "crossings_restored": 0,
+  "pooled": [
+   {
+    "MAE": 17.549693593320555,
+    "WIS": 9.858461257530296,
+    "coverage95": 0.9504978133432586,
+    "mean_width95": 92.80850753978706,
+    "n_hours": 10747,
+    "policy": "shape-blend",
+    "scope": "pooled"
+   },
+   {
+    "MAE": 17.549693593320555,
+    "WIS": 10.23606326165729,
+    "coverage95": 0.9392388573555411,
+    "mean_width95": 101.91577182718189,
+    "n_hours": 10747,
+    "policy": "HGL",
+    "scope": "pooled"
+   },
+   {
+    "MAE": 15.781194387301442,
+    "WIS": 8.816268595603182,
+    "coverage95": 0.9537545361496231,
+    "mean_width95": 83.7012432523922,
+    "n_hours": 10747,
+    "policy": "D2",
+    "scope": "pooled"
+   }
+  ],
+  "role": "descriptive only, never eligible (\u00a723.8)"
+ },
+ "written_utc": "2026-10-05T13:08:11Z"
+}

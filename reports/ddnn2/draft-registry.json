@@ -1,0 +1,295 @@
+{
+ "checkpoint": {
+  "children": [
+   "v5",
+   "D2",
+   "v3+D2"
+  ],
+  "code": "CP-24",
+  "evidence_sha": "pending-at-landing",
+  "evidence_tag": "evidence/cp-24",
+  "frozen_on": "pending-at-landing",
+  "landing": "pending-at-landing",
+  "owner": "v5",
+  "report": "reports/ddnn2/report.md",
+  "run_key": "cp24",
+  "verdict": "docs/track-b/evidence/cp-24/integration.md"
+ },
+ "code_additions_to_existing_entries": [
+  {
+   "code": {
+    "code": "HGL",
+    "experiment": "CP-24",
+    "note": "comparator, saved",
+    "population": "common-10747h"
+   },
+   "entry": "v4"
+  },
+  {
+   "code": {
+    "code": "HG",
+    "experiment": "CP-24",
+    "note": "reference, saved",
+    "population": "common-10747h"
+   },
+   "entry": "v3"
+  },
+  {
+   "code": {
+    "code": "B0",
+    "experiment": "CP-24",
+    "note": "normalizer",
+    "population": "common-10747h"
+   },
+   "entry": "naive"
+  },
+  {
+   "code": {
+    "code": "B1",
+    "experiment": "CP-24",
+    "note": "development replay",
+    "population": "common-10747h"
+   },
+   "entry": "v1"
+  },
+  {
+   "code": {
+    "code": "B2",
+    "experiment": "CP-24",
+    "note": "reference",
+    "population": "common-10747h"
+   },
+   "entry": "daily-lear"
+  },
+  {
+   "code": {
+    "code": "B3",
+    "experiment": "CP-24",
+    "note": "section-8 comparator",
+    "population": "common-10747h"
+   },
+   "entry": "daily-lightgbm"
+  },
+  {
+   "code": {
+    "code": "A1",
+    "experiment": "CP-24",
+    "note": "reference",
+    "population": "common-10747h"
+   },
+   "entry": "normalized-lear"
+  },
+  {
+   "code": {
+    "code": "D",
+    "experiment": "CP-24",
+    "note": "CP-23's DDNN, saved",
+    "population": "common-10747h"
+   },
+   "entry": "ddnn-alone"
+  }
+ ],
+ "encoding": {
+  "v5": "set by the Owner before the publication brief (PUBLISH_RULES \u00a714; \u00a723.12)"
+ },
+ "entries": [
+  {
+   "after": null,
+   "anchor": "#v5",
+   "checkpoint": "CP-24",
+   "claim_map": "docs/track-b/research-content/cp24-claims.md",
+   "codes": [
+    {
+     "code": "v5",
+     "experiment": "CP-24",
+     "note": "scored attempt 1",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "v5",
+   "informed": null,
+   "kind": "generation",
+   "name": "v5 \u00b7 DDNN-2 member added",
+   "plan": "capstone_v21.md \u00a723 (v21-r11)",
+   "population": "common-10747h",
+   "predecessor": "v4",
+   "question": "",
+   "rules": [
+    "cp24-adoption"
+   ],
+   "run_keys": [
+    "cp24",
+    "cp24/v5"
+   ],
+   "short": "v5",
+   "sources": [
+    "reports/ddnn2/attempt-1/metrics.csv",
+    "reports/ddnn2/attempt-1/uncertainty.csv",
+    "reports/ddnn2/attempt-1/criteria.csv",
+    "reports/ddnn2/attempt-1/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "",
+     "source": "pending-at-landing: the CP-24 landing record",
+     "status": "adopted in research"
+    }
+   ],
+   "style": "v5",
+   "subtitle": "v4 plus a DDNN-2 member"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-24",
+   "claim_map": "docs/track-b/research-content/cp24-claims.md",
+   "codes": [
+    {
+     "code": "D2",
+     "experiment": "CP-24",
+     "note": "scored attempt 1",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v4",
+   "evidence_class": "development_post_selection",
+   "id": "ddnn2-alone",
+   "informed": null,
+   "kind": "study arm",
+   "name": "DDNN-2 alone",
+   "plan": "capstone_v21.md \u00a723 (v21-r11)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp24-adoption"
+   ],
+   "run_keys": [
+    "cp24/D2"
+   ],
+   "short": "DDNN-2 alone",
+   "sources": [
+    "reports/ddnn2/attempt-1/metrics.csv",
+    "reports/ddnn2/attempt-1/uncertainty.csv",
+    "reports/ddnn2/attempt-1/criteria.csv",
+    "reports/ddnn2/attempt-1/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-24 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "A day-level distributional network with its own quantiles"
+  },
+  {
+   "after": null,
+   "anchor": null,
+   "checkpoint": "CP-24",
+   "claim_map": "docs/track-b/research-content/cp24-claims.md",
+   "codes": [
+    {
+     "code": "v3+D2",
+     "experiment": "CP-24",
+     "note": "scored attempt 1",
+     "population": "common-10747h"
+    }
+   ],
+   "comparator": "v3",
+   "evidence_class": "development_post_selection",
+   "id": "v3-plus-ddnn2",
+   "informed": null,
+   "kind": "study arm",
+   "name": "v3 plus a DDNN-2 member",
+   "plan": "capstone_v21.md \u00a723 (v21-r11)",
+   "population": "common-10747h",
+   "predecessor": null,
+   "question": "",
+   "rules": [
+    "cp24-adoption"
+   ],
+   "run_keys": [
+    "cp24/v3+D2"
+   ],
+   "short": "v3 + DDNN-2",
+   "sources": [
+    "reports/ddnn2/attempt-1/metrics.csv",
+    "reports/ddnn2/attempt-1/uncertainty.csv",
+    "reports/ddnn2/attempt-1/criteria.csv",
+    "reports/ddnn2/attempt-1/decisions.json"
+   ],
+   "statuses": [
+    {
+     "date": "pending-at-landing",
+     "reason": "a study arm for attribution; never eligible",
+     "source": "pending-at-landing: the CP-24 landing record",
+     "status": "not adopted"
+    }
+   ],
+   "style": "study",
+   "subtitle": "DDNN-2 as v3's third member, in LightGBM's place"
+  }
+ ],
+ "evidence_ref": "evidence/cp-24@pending-at-landing",
+ "model_code_sha": "pending-at-landing",
+ "note": "CP-24 added DDNN-2, a NumPy-only day-level distributional network chosen per fold by a training-only random search, to v4 inside LightGBM's third: v5 = (2/3)\u00b7HG + (1/6)\u00b7L + (1/6)\u00b7DDNN-2, under the pre-registered rule cp24-adoption (97.5% joint improvement over v4, the six original screening diagnostics, a complete evaluation, no resolved per-fold degradation, a 0.5% practical size), in 1 scored attempt(s) after 1 pre-fold round(s): v5 met all five conditions in attempt 1 and is adopted in research. development_post_selection.",
+ "outcome": {
+  "deciding_attempt": 1,
+  "decisions": {
+   "1": {
+    "adopted": true,
+    "first_unmet_condition": null,
+    "unmet_conditions": []
+   }
+  },
+  "gates_passed": {
+   "1": true
+  },
+  "kind": "adopted",
+  "rounds": [
+   1
+  ],
+  "scored_attempts": [
+   1
+  ]
+ },
+ "pending": "pending-at-landing",
+ "pending_fields": {
+  "checkpoint.evidence_sha": "the evidence/cp-24 tag commit, created by the Owner at landing",
+  "checkpoint.frozen_on": "the evidence tag freeze date",
+  "checkpoint.landing": "the landing record path",
+  "evidence_ref": "evidence/cp-24 at its commit",
+  "model_code_sha": "the final reviewed candidate SHA: a commit cannot contain its own SHA; it is recorded in the CP-24 return and filled by the publication block",
+  "original_completed_utc": "the terminal return time",
+  "statuses[].date": "the adoption or not-adoption date, set at landing",
+  "statuses[].source": "the CP-24 landing record, written at landing"
+ },
+ "revisions": null,
+ "rules": [
+  {
+   "id": "cp24-adoption",
+   "plan": "capstone_v21.md \u00a723.9 (v21-r11)",
+   "provenance": [
+    "capstone_v21.md v21-r11 \u00a723.9 (ratified 2026-10-05)",
+    "reports/ddnn2/attempt-1/protocol.json rule_verbatim (frozen before its fits)"
+   ],
+   "set_on": "2026-10-05"
+  }
+ ],
+ "schema": "cp24-draft-registry-v1",
+ "status": "draft registry entries for the publication packet; CP-24 registers nothing; publication follows the Owner's landing and the Owner's decisions (\u00a723.12)",
+ "transition": {
+  "comparator_is_predecessor": true,
+  "predecessor": "v4",
+  "title": "From v4 to v5: adding a distributional neural network"
+ },
+ "verdict_sources": [
+  "reports/ddnn2/attempt-1/decisions.json"
+ ]
+}

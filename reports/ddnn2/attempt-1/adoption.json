@@ -1,0 +1,178 @@
+{
+ "adopted": true,
+ "application": "mechanical; never re-weighted, re-thresholded or overridden after results; D2, v3+D2 and D are never eligible; a mixed result is no demonstrated joint preference, never equivalence; an INCOMPLETE or BLOCKED return yields no decision and nothing to publish",
+ "attempt": 1,
+ "candidate": "v5",
+ "comparator": "HGL",
+ "conditions": {
+  "1": {
+   "met": true,
+   "values": {
+    "MAE": {
+     "ci97.5_lower": -0.016593515917557655,
+     "ci97.5_upper": -0.009139871117277598,
+     "ci_lower": -0.016121484421607043,
+     "ci_upper": -0.009595925721551714,
+     "difference": -0.01333737807223645,
+     "ratio": -0.024899024723613605,
+     "ratio_ci": [
+      -0.029584699118793495,
+      -0.01793927483038195
+     ]
+    },
+    "WIS": {
+     "ci97.5_lower": -0.014686660762561797,
+     "ci97.5_upper": -0.00838381402215626,
+     "ci_lower": -0.01434812523649127,
+     "ci_upper": -0.008704317096786424,
+     "difference": -0.011912051066056362,
+     "ratio": -0.023561400054218584,
+     "ratio_ci": [
+      -0.027786808736341522,
+      -0.01714496476404881
+     ]
+    }
+   }
+  },
+  "2": {
+   "met": true,
+   "values": {
+    "criteria_rows": 21,
+    "not_met": []
+   }
+  },
+  "3": {
+   "met": true,
+   "values": {
+    "engineering_pass": "bound to the fresh Integration verdict on the final candidate (docs/track-b/evidence/cp-24/integration.md); an INCOMPLETE or BLOCKED return yields no decision",
+    "guard_activations_reported": true,
+    "keys_issued_finite_ordered": true
+   }
+  },
+  "4": {
+   "met": true,
+   "values": {
+    "folds_decisively_worse": [],
+    "per_fold": [
+     {
+      "ci_lower": -0.15663215817633505,
+      "ci_upper": -0.04421789306202459,
+      "difference": -0.10876490668787397,
+      "metric": "MAE",
+      "scope": "fold_1"
+     },
+     {
+      "ci_lower": -0.09755633072365016,
+      "ci_upper": -0.03564519265431773,
+      "difference": -0.06835227177153058,
+      "metric": "WIS",
+      "scope": "fold_1"
+     },
+     {
+      "ci_lower": -0.34059887455329213,
+      "ci_upper": -0.04333364194639319,
+      "difference": -0.19256961026946673,
+      "metric": "MAE",
+      "scope": "fold_2"
+     },
+     {
+      "ci_lower": -0.2372618917234631,
+      "ci_upper": -0.07229258216697157,
+      "difference": -0.14796142322496664,
+      "metric": "WIS",
+      "scope": "fold_2"
+     },
+     {
+      "ci_lower": -2.3424333977644825,
+      "ci_upper": -0.6608124920680131,
+      "difference": -1.5290001479454176,
+      "metric": "MAE",
+      "scope": "fold_3"
+     },
+     {
+      "ci_lower": -1.1408621219016533,
+      "ci_upper": -0.2633714453431077,
+      "difference": -0.766031483921644,
+      "metric": "WIS",
+      "scope": "fold_3"
+     },
+     {
+      "ci_lower": -0.32426378499738184,
+      "ci_upper": -0.048799840996407925,
+      "difference": -0.1863791897791387,
+      "metric": "MAE",
+      "scope": "fold_4"
+     },
+     {
+      "ci_lower": -0.1527542467215385,
+      "ci_upper": -0.009112545231936373,
+      "difference": -0.0898975815374854,
+      "metric": "WIS",
+      "scope": "fold_4"
+     },
+     {
+      "ci_lower": -0.7532426698565389,
+      "ci_upper": -0.21945882194836108,
+      "difference": -0.5067149415746428,
+      "metric": "MAE",
+      "scope": "fold_5"
+     },
+     {
+      "ci_lower": -0.362733768402562,
+      "ci_upper": -0.09657068000428516,
+      "difference": -0.23494216061499174,
+      "metric": "WIS",
+      "scope": "fold_5"
+     }
+    ]
+   }
+  },
+  "5": {
+   "met": true,
+   "values": {
+    "S_MAE_v4": 0.5356586541153796,
+    "S_WIS_v4": 0.5055748401472236,
+    "dS_MAE": -0.01333737807223645,
+    "dS_WIS": -0.011912051066056362,
+    "relative_MAE": -0.02489902472361365,
+    "relative_WIS": -0.023561400054218612,
+    "threshold_MAE": -0.002678293270576898,
+    "threshold_WIS": -0.002527874200736118
+   }
+  }
+ },
+ "consistency_with_committed": {
+  "HGL-HG_equal_committed": true,
+  "HGL-HG_interval_rows": 12,
+  "HGL-HG_max_abs_difference_vs_committed": 2.220446049250313e-16,
+  "HGL_section8_rows_equal_committed": true,
+  "HG_section8_rows_equal_committed": true,
+  "all_equal": true
+ },
+ "counts_as_not_adopted_for_s2": false,
+ "first_unmet_condition": null,
+ "inputs_sha256": {
+  "reports/block-challenger/predictions.parquet": "d8ba42e91f99de0b8f5216707a9353f0d51ff14ef2221bb62ff2aef923705d89",
+  "reports/ddnn2/attempt-1/predictions.parquet": "9d3f539fa78e34e65cb495a0e79f8044731e33d5b2d9e95d110a1ce886a05cf9",
+  "reports/distribution-challenger/predictions.parquet": "7136a272b5a7a86c5ba46bc3f43fbfae08402cbfa7809a907f32253c7d7ce583",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab"
+ },
+ "met": true,
+ "reason": null,
+ "rule": {
+  "candidate": "v5",
+  "comparator": "HGL (v4, three-block)",
+  "conditions": {
+   "1": "Joint improvement over v4, at the attempts-adjusted level: on the paired v5 - v4 differences, two-sided 97.5% intervals (the 1.25% and 98.75% percentiles of the shared replicates); the upper endpoint of dS_WIS is < 0 and the upper endpoint of dS_MAE is <= 0.",
+   "2": "No regression: v5 meets all six original section-8 diagnostics.",
+   "3": "A complete, valid evaluation: Engineering PASS with a fresh binding Integration verdict; all 10,747 keys issued with finite, ordered quantiles; every guard activation reported.",
+   "4": "No resolved per-fold degradation: no fold has a 95% paired daily-loss interval (v5 - v4) lying entirely above zero, in MAE or in WIS.",
+   "5": "A practical size: both point estimates improve v4's score by at least 0.5%: dS_MAE <= -0.005 x S_MAE(v4) and dS_WIS <= -0.005 x S_WIS(v4)."
+  },
+  "otherwise": "attempt k's v5 is not adopted, with its first unmet condition and its values",
+  "set_on": "2026-10-05",
+  "source": "capstone_v21.md v21-r11 \u00a723.9 (D8, the Orchestrator under the Owner's delegation)"
+ },
+ "unmet_conditions": [],
+ "verdict": "v5 is adopted in research as v5 (\"v5 \u00b7 DDNN-2 member added\", predecessor v4)"
+}

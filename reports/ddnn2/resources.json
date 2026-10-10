@@ -1,0 +1,778 @@
+{
+ "active_hours_basis": "from 2026-10-05T03:14:00Z (before the Lead's first command) minus recorded pauses",
+ "active_hours_hard_stop": 50.0,
+ "active_hours_timebox": 35.0,
+ "active_hours_upper_bound": 7.340308874911732,
+ "blas_threads": 1,
+ "caps_vs_use": {
+  "active_seconds": {
+   "base_cap": 180000,
+   "cap": 180000,
+   "used": 26425.111949682236
+  },
+  "additional_disk_bytes": {
+   "base_cap": 10737418240,
+   "cap": 10737418240,
+   "used": 3470424355
+  },
+  "bootstrap_passes": {
+   "base_cap": 6,
+   "cap": 6,
+   "used": 3
+  },
+  "cost_usd": {
+   "base_cap": 0,
+   "cap": 0,
+   "used": 0
+  },
+  "data_download_bytes": {
+   "base_cap": 0,
+   "cap": 0,
+   "used": 0
+  },
+  "ddnn2_fits": {
+   "base_cap": 40000,
+   "cap": 40000,
+   "used": 16395
+  },
+  "machine_seconds": {
+   "base_cap": 540000,
+   "cap": 540000,
+   "used": 65891.3982978821
+  },
+  "policy_days": {
+   "base_cap": 12000,
+   "cap": 12000,
+   "used": 3697
+  },
+  "reference_passes": {
+   "base_cap": 3,
+   "cap": 3,
+   "used": 3
+  },
+  "remote_writes": {
+   "base_cap": 0,
+   "cap": 0,
+   "used": 0
+  },
+  "rounds_before_attempt_1": {
+   "base_cap": 3,
+   "cap": 3,
+   "used": 1
+  },
+  "rounds_before_attempt_2": {
+   "base_cap": 1,
+   "cap": 1,
+   "used": 0
+  },
+  "rss_bytes": {
+   "base_cap": 10737418240,
+   "cap": 10737418240,
+   "used": 4265377792
+  },
+  "scored_attempts": {
+   "base_cap": 2,
+   "cap": 2,
+   "used": 1
+  },
+  "v4_gate_origins": {
+   "base_cap": 280,
+   "cap": 280,
+   "used": 280
+  },
+  "workers": {
+   "base_cap": 4,
+   "cap": 4,
+   "used": 4
+  }
+ },
+ "cloud": 0,
+ "cpu_hours_observed": 16.782240054570558,
+ "data_download_bytes": 0,
+ "events": [
+  {
+   "epoch": 1791171956.638415,
+   "event": "v4_gate_start",
+   "tasks": 280,
+   "workers": 3
+  },
+  {
+   "check_file_sha256": "1d920abb666c2f293cda02d5b649117759e0a214f2450ac34149ae095ed9fdf9",
+   "counts": {
+    "deselected": 0,
+    "errors": 0,
+    "failed": 0,
+    "passed": 32,
+    "skipped": 0,
+    "summary": "32 passed in 4.61s",
+    "xfailed": 0,
+    "xpassed": 0
+   },
+   "epoch": 1791171972.506944,
+   "event": "reference_checks",
+   "model_sha256": "a70cbea6e9533ffb0c4030a8c40b7c6978f9a218f17213c30fbb5c6850827067",
+   "passed": true,
+   "versions": {
+    "numpy": "2.4.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.15",
+    "torch": "2.14.1"
+   }
+  },
+  {
+   "epoch": 1791172098.008683,
+   "event": "resource_admission_start",
+   "tasks": 18,
+   "workers": 1
+  },
+  {
+   "epoch": 1791172667.047916,
+   "event": "search_start",
+   "round": 1,
+   "stage_a": 2432,
+   "trials": 128,
+   "workers": 1
+  },
+  {
+   "epoch": 1791174242.730426,
+   "event": "v4_gate_complete",
+   "failed": 0
+  },
+  {
+   "epoch": 1791174250.3966348,
+   "event": "search_start",
+   "round": 1,
+   "stage_a": 2432,
+   "trials": 128,
+   "workers": 4
+  },
+  {
+   "epoch": 1791174972.407795,
+   "event": "search_stage_b",
+   "round": 1,
+   "stage_b": 1032
+  },
+  {
+   "end_epoch": 1791187320.0,
+   "epoch": 1791187414.845504,
+   "event": "effort_idle_gap",
+   "reason": "session stopped by an account usage limit at about 07:45 IDT; resumed by the Orchestrator's message at 11:02 IDT; no job ran in the gap (the search's last job ended 07:42:51 IDT)",
+   "start_epoch": 1791175500.0
+  },
+  {
+   "epoch": 1791187459.740891,
+   "event": "search_ledger_written",
+   "failed": 2,
+   "repair": "job_search completed every fit and failed while writing this ledger (an infinite metric is not JSON); written by cp24.searchledger from the identity-verified task records with job_search's post-processing; an undefined (infinite) metric is null; no fit repeated",
+   "round": 1
+  },
+  {
+   "epoch": 1791187487.689161,
+   "event": "gate_start",
+   "round": 1,
+   "tasks": 2240,
+   "workers": 4
+  },
+  {
+   "epoch": 1791188807.894453,
+   "event": "gate_complete",
+   "failed": 0,
+   "passed": true,
+   "round": 1
+  },
+  {
+   "epoch": 1791188917.495213,
+   "event": "effort_pause",
+   "reason": "waiting for the Orchestrator's S1 answer after round 1 (report committed at the S1 commit)"
+  },
+  {
+   "epoch": 1791189135.0960262,
+   "event": "effort_resume",
+   "reason": "the Orchestrator's S1 answer received at 11:30 IDT: freeze round 1's design"
+  },
+  {
+   "epoch": 1791189605.9192488,
+   "event": "attempt_1_first_fit",
+   "protocol_commit": "62b8e51f483f2c35dad3dc6273ea60f021d97365",
+   "protocol_sha256": "2fd3c464840df4f9e88b0f1a52f7f98c9abfff28b7d0412b13000208645cf51f"
+  },
+  {
+   "attempt": 1,
+   "epoch": 1791189659.215165,
+   "event": "fits_start",
+   "stage": "warmup",
+   "tasks": 188,
+   "workers": 4
+  },
+  {
+   "attempt": 1,
+   "epoch": 1791190565.555966,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "warmup",
+   "tasks": 188
+  },
+  {
+   "attempt": 1,
+   "epoch": 1791190650.019673,
+   "event": "fits_start",
+   "stage": "evaluation",
+   "tasks": 448,
+   "workers": 4
+  },
+  {
+   "attempt": 1,
+   "epoch": 1791192722.505976,
+   "event": "fits_complete",
+   "failed": 0,
+   "stage": "evaluation",
+   "tasks": 448
+  },
+  {
+   "end_epoch": 1791205320.0,
+   "epoch": 1791205349.576285,
+   "event": "effort_idle_gap",
+   "reason": "second account usage limit: the session stopped about 12:35 IDT and resumed at 16:02 IDT on the coordinator's message; no job ran in the gap (fits-a1-evaluation ended 12:32 IDT, exit 0)",
+   "start_epoch": 1791192900.0
+  },
+  {
+   "end_epoch": 1791651240.0,
+   "epoch": 1791651365.002191,
+   "event": "effort_idle_gap",
+   "reason": "third account usage limit: the previous Lead stopped about 17:28 IDT on 2026-10-05 while waiting for Critic 2 (stopped by the same limit about 14:22Z); no CP-24 job ran in the gap (the last, critic2-independent-score, ended 14:19:15Z); the Owner's 2026-10-10 maintenance commit 9667fb4 ran no research job and wrote no ledger; resumed by the continuation Lead at 2026-10-10 16:54Z under the continuation brief 5960b908",
+   "start_epoch": 1791210480.0
+  }
+ ],
+ "external_cost_usd": 0,
+ "gpu": 0,
+ "jobs_by_name": {
+  "admission-a1": {
+   "charged_machine_hours": 0.011864450289443388,
+   "cpu_seconds_observed": 40.413264608000006,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "ci-equivalent": {
+   "charged_machine_hours": 0.22475968026638937,
+   "cpu_seconds_observed": 785.323968608,
+   "exit_codes": {
+    "0": 2,
+    "1": 1
+   },
+   "jobs": 3
+  },
+  "comparison-a1": {
+   "charged_machine_hours": 0.014337690520834358,
+   "cpu_seconds_observed": 48.616250496,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "controls-a1": {
+   "charged_machine_hours": 0.1197852166205525,
+   "cpu_seconds_observed": 424.04020995200005,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-full-suite": {
+   "charged_machine_hours": 0.06432022931694115,
+   "cpu_seconds_observed": 258.158055424,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic2-full-suite-ci": {
+   "charged_machine_hours": 0.06361547055555598,
+   "cpu_seconds_observed": 256.850345472,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-independent-score": {
+   "charged_machine_hours": 0.0005923490047239788,
+   "cpu_seconds_observed": 1.014265912,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-score-smoke": {
+   "charged_machine_hours": 0.00030835738416499223,
+   "cpu_seconds_observed": 0.996606352,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-wasm-payload": {
+   "charged_machine_hours": 0.008446208217501408,
+   "cpu_seconds_observed": 67.999744928,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-blind-refit": {
+   "charged_machine_hours": 0.058339574930553986,
+   "cpu_seconds_observed": 208.830159168,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-gapcheck": {
+   "charged_machine_hours": 0.004284976631946241,
+   "cpu_seconds_observed": 14.304497168,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-independent-decision": {
+   "charged_machine_hours": 0.0003416978933334273,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-landsim-edits": {
+   "charged_machine_hours": 0.07344605253471753,
+   "cpu_seconds_observed": 253.95415498,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic3-landsim-main": {
+   "charged_machine_hours": 0.07389234813665907,
+   "cpu_seconds_observed": 255.65444767999998,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-pytest-full": {
+   "charged_machine_hours": 0.06239651103000344,
+   "cpu_seconds_observed": 254.491931392,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic3-pytest-full-ci": {
+   "charged_machine_hours": 0.06309332158583048,
+   "cpu_seconds_observed": 257.251764224,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-review": {
+   "charged_machine_hours": 0.03029111892360864,
+   "cpu_seconds_observed": 105.343768704,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-torch-reference": {
+   "charged_machine_hours": 0.002313493368055788,
+   "cpu_seconds_observed": 4.314713728,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-wasm-payload": {
+   "charged_machine_hours": 0.008253788356386293,
+   "cpu_seconds_observed": 68.223917552,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "daily-cycle-a1": {
+   "charged_machine_hours": 0.6611451876855668,
+   "cpu_seconds_observed": 302.31577134699995,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "dev-bench-synth": {
+   "charged_machine_hours": 0.0033911536341676967,
+   "cpu_seconds_observed": 11.124201672,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "dev-daytable": {
+   "charged_machine_hours": 0.005360941053056902,
+   "cpu_seconds_observed": 18.171105328,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "dev-design-dst-test": {
+   "charged_machine_hours": 0.01075786506944294,
+   "cpu_seconds_observed": 36.672076352000005,
+   "exit_codes": {
+    "0": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "dev-precandidate-checks": {
+   "charged_machine_hours": 0.023635648703885737,
+   "cpu_seconds_observed": 62.978570784000006,
+   "exit_codes": {
+    "0": 2,
+    "1": 1
+   },
+   "jobs": 3
+  },
+  "dev-precandidate-cont": {
+   "charged_machine_hours": 0.008205486574168188,
+   "cpu_seconds_observed": 20.432413012999998,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "dev-scoring-smoke": {
+   "charged_machine_hours": 0.0014335480441635203,
+   "cpu_seconds_observed": 4.1224998479999995,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "dev-search-smoke": {
+   "charged_machine_hours": 0.005926972650554994,
+   "cpu_seconds_observed": 20.165240400000002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "dev-verify-a1-fits": {
+   "charged_machine_hours": 0.0362898552663925,
+   "cpu_seconds_observed": 127.48178176,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "diagnostics-a1": {
+   "charged_machine_hours": 0.010414155092500247,
+   "cpu_seconds_observed": 35.142069824,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "finalise": {
+   "charged_machine_hours": 0.002660057581391205,
+   "cpu_seconds_observed": 4.680436136,
+   "exit_codes": {
+    "0": 4,
+    "None": 1
+   },
+   "jobs": 5
+  },
+  "finalise-manifest": {
+   "charged_machine_hours": 0.0018102195369485547,
+   "cpu_seconds_observed": 4.947758992000001,
+   "exit_codes": {
+    "0": 5
+   },
+   "jobs": 5
+  },
+  "fit-cost-a1": {
+   "charged_machine_hours": 0.38920797658555484,
+   "cpu_seconds_observed": 1397.847576064,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "fits-a1-evaluation": {
+   "charged_machine_hours": 2.3237830286577807,
+   "cpu_seconds_observed": 8257.018413054,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "fits-a1-warmup": {
+   "charged_machine_hours": 1.0676038644444392,
+   "cpu_seconds_observed": 3634.469731973,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "gate-r1": {
+   "charged_machine_hours": 1.4704463691211196,
+   "cpu_seconds_observed": 5125.484418946,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-candidate": {
+   "charged_machine_hours": 0.08379815819444451,
+   "cpu_seconds_observed": 270.30138747200004,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-main": {
+   "charged_machine_hours": 0.08499651436333402,
+   "cpu_seconds_observed": 271.43131611200005,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-main-edits": {
+   "charged_machine_hours": 0.08484091490749658,
+   "cpu_seconds_observed": 271.058427008,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "landsim-tip": {
+   "charged_machine_hours": 0.07617486281250119,
+   "cpu_seconds_observed": 256.364025885,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "leakage-a1": {
+   "charged_machine_hours": 7.1865561442589065,
+   "cpu_seconds_observed": 23582.430360938,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "leakage-a1-smoke": {
+   "charged_machine_hours": 0.07930643578777866,
+   "cpu_seconds_observed": 102.715732184,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "mlflow-local": {
+   "charged_machine_hours": 0.0008634511458351173,
+   "cpu_seconds_observed": 1.934367267,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "protocol-a1": {
+   "charged_machine_hours": 0.000583385440000307,
+   "cpu_seconds_observed": 0.95283888,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "reference-checks": {
+   "charged_machine_hours": 0.0019797744327782613,
+   "cpu_seconds_observed": 5.726392864,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "resource-admission": {
+   "charged_machine_hours": 0.017168077499999424,
+   "cpu_seconds_observed": 59.483628964,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "round-design-1": {
+   "charged_machine_hours": 0.0005787729166655077,
+   "cpu_seconds_observed": 0.8797910640000001,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "round-report-1": {
+   "charged_machine_hours": 0.0005880409027789332,
+   "cpu_seconds_observed": 0.85236948,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "score-a1": {
+   "charged_machine_hours": 0.0022794863311113053,
+   "cpu_seconds_observed": 5.3427626880000005,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "search-ledger-r1": {
+   "charged_machine_hours": 0.0011517110186105128,
+   "cpu_seconds_observed": 1.74576112,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "search-r1": {
+   "charged_machine_hours": 1.685894866018049,
+   "cpu_seconds_observed": 6029.87607007,
+   "exit_codes": {
+    "-15": 1,
+    "1": 1
+   },
+   "jobs": 2
+  },
+  "v4-gate": {
+   "charged_machine_hours": 1.9061604652083406,
+   "cpu_seconds_observed": 6771.010311285,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "v4-parity": {
+   "charged_machine_hours": 0.17445016120334103,
+   "cpu_seconds_observed": 386.994032436,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-inputs": {
+   "charged_machine_hours": 0.005928895868055406,
+   "cpu_seconds_observed": 19.087308928000002,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "verify-weather": {
+   "charged_machine_hours": 0.003111210277776182,
+   "cpu_seconds_observed": 9.041179968,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  }
+ },
+ "jobs_total": 68,
+ "ledger": ".local/artifacts/cp-24/ledger/budget.json (cumulative, never reset)",
+ "machine_hours": 18.30316619385614,
+ "machine_hours_cap": 150.0,
+ "mps": 0,
+ "pause_reasons": [
+  {
+   "end_epoch": 1791187320.0,
+   "kind": "idle_gap",
+   "reason": "session stopped by an account usage limit at about 07:45 IDT; resumed by the Orchestrator's message at 11:02 IDT; no job ran in the gap (the search's last job ended 07:42:51 IDT)",
+   "recorded_epoch": 1791187414.845504,
+   "start_epoch": 1791175500.0
+  },
+  {
+   "reason": "waiting for the Orchestrator's S1 answer after round 1 (report committed at the S1 commit)",
+   "start_epoch": 1791188917.495213
+  },
+  {
+   "end_epoch": 1791189135.0960262,
+   "reason": "the Orchestrator's S1 answer received at 11:30 IDT: freeze round 1's design"
+  },
+  {
+   "end_epoch": 1791205320.0,
+   "kind": "idle_gap",
+   "reason": "second account usage limit: the session stopped about 12:35 IDT and resumed at 16:02 IDT on the coordinator's message; no job ran in the gap (fits-a1-evaluation ended 12:32 IDT, exit 0)",
+   "recorded_epoch": 1791205349.576285,
+   "start_epoch": 1791192900.0
+  },
+  {
+   "end_epoch": 1791651240.0,
+   "kind": "idle_gap",
+   "reason": "third account usage limit: the previous Lead stopped about 17:28 IDT on 2026-10-05 while waiting for Critic 2 (stopped by the same limit about 14:22Z); no CP-24 job ran in the gap (the last, critic2-independent-score, ended 14:19:15Z); the Owner's 2026-10-10 maintenance commit 9667fb4 ran no research job and wrote no ledger; resumed by the continuation Lead at 2026-10-10 16:54Z under the continuation brief 5960b908",
+   "recorded_epoch": 1791651365.002191,
+   "start_epoch": 1791210480.0
+  }
+ ],
+ "pauses": [
+  [
+   1791175500.0,
+   1791187320.0
+  ],
+  [
+   1791188917.495213,
+   1791189135.0960262
+  ],
+  [
+   1791192900.0,
+   1791205320.0
+  ],
+  [
+   1791210480.0,
+   1791651240.0
+  ]
+ ],
+ "peak_added_disk_gib": 3.2320845453068614,
+ "peak_aggregate_rss_gib": 3.972442626953125,
+ "raises": [],
+ "remote_writes": 0,
+ "schema": "cp24-resources-v1",
+ "test_dependency_download_bytes": 0,
+ "tracked": {
+  "component_attempts": 582,
+  "component_attempts_gate": 560,
+  "component_attempts_parity": 22,
+  "ddnn2_epochs": 1961331,
+  "ddnn2_fits_control": 5325,
+  "ddnn2_fits_correctness": 2,
+  "ddnn2_fits_daily_cycle": 200,
+  "ddnn2_fits_evaluation": 3584,
+  "ddnn2_fits_gate": 2240,
+  "ddnn2_fits_resource_admission": 18,
+  "ddnn2_fits_review": 57,
+  "ddnn2_fits_search": 3465,
+  "ddnn2_fits_warmup": 1504,
+  "lasso_final_fits": 13954,
+  "lasso_inner_fits": 55816,
+  "lgbm_fits": 8730,
+  "lgbm_fits_gate": 8400,
+  "lgbm_fits_parity": 330,
+  "policy_days_admission": 564,
+  "policy_days_control": 64,
+  "policy_days_daily_cycle": 25,
+  "policy_days_evaluation": 1350,
+  "policy_days_gate": 1680,
+  "policy_days_review": 14,
+  "primitive_fits": 69770,
+  "reference_check_runs": 1,
+  "rounds": 1,
+  "v4_parity_origins": 11
+ },
+ "written_utc": "2026-10-10T19:48:02Z"
+}

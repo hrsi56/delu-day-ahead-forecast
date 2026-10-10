@@ -1,0 +1,150 @@
+{
+ "before_attempt": 1,
+ "changes_from_previous": null,
+ "projection": {
+  "active_hours_so_far": 0.65,
+  "expected": {
+   "fits": true,
+   "fits_cap": 40000,
+   "machine_hours_cap": 150.0,
+   "maximal_remaining_route_fits_total": 33810,
+   "maximal_remaining_route_machine_hours_total": 23.91,
+   "member_seconds": 1.2048966039947118,
+   "this_round_fits": 5704,
+   "this_round_machine_hours": 1.98
+  },
+  "spent": {
+   "ddnn2_fits": 18,
+   "machine_seconds": 2037.0682092060451,
+   "policy_days": 0,
+   "rounds_before_attempt_1": 0,
+   "rounds_before_attempt_2": 0,
+   "scored_attempts": 0
+  },
+  "this_round_fits_alone": true,
+  "worst_case": {
+   "fits": true,
+   "fits_cap": 40000,
+   "machine_hours_cap": 150.0,
+   "maximal_remaining_route_fits_total": 33810,
+   "maximal_remaining_route_machine_hours_total": 66.97,
+   "member_seconds": 9.306738583007245,
+   "this_round_fits": 5704,
+   "this_round_machine_hours": 7.02
+  }
+ },
+ "recipe": {
+  "emission": "the day's feature-valid keys; on a 25-hour day both keys of the repeated hour take that slot's forecast",
+  "ensemble": "four best distinct configurations x two seeds; per-level median of the eight members' EUR/MWh quantiles (mean of the two middle values); p50 = central = D2",
+  "guards": "winsorisation of continuous inputs at the training rows' (0.005, 0.995) quantiles; the cap at +-1.25 x max|z| on the member's training rows (before any asinh); sorting of crossings; every activation counted",
+  "head": "xi = o1, lambda = softplus(o2) + 1e-3, gamma = o3, delta = softplus(o4) + 0.05, per local-hour slot",
+  "held_out_weeks": "the member's seeded random 20% (rounded, at least one) of the whole Monday-Sunday weeks inside [window start, D-7); PCG64(SeedSequence([seed, 0x5EED]))",
+  "loss": "first 20 epochs NLL only; then kappa*NLL + (1-kappa)*mean pinball over the 19-level grid [0.025, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.975]; + l1*sum|W| + l2*sum W^2 over weight matrices; present slots only; rows weighted by recency (mean 1)",
+  "minimum_rows": {
+   "held_out_days": 14,
+   "training_days": 250
+  },
+  "optimizer": "Adam {'beta1': 0.9, 'beta2': 0.999, 'eps': 1e-08} in PyTorch's update order; Glorot-uniform init, zero biases, output biases at lambda = delta = 1",
+  "stopping": "mean pinball over the seven scored levels in EUR/MWh after inversion and the cap, on the held-out weeks, after every epoch from 21; patience 50; maximum 1000 epochs; best epoch kept (strict improvement); a nonfinite loss stops training and keeps the best epoch (recorded)",
+  "window": "[max(2019-01-01, D-728), D) day rows with an eligible target slot and finite origin statistics; pre-fold fits leave out every delivery day without a frozen weather record (\u00a723.6)"
+ },
+ "round": 1,
+ "sampler": "cp24.sampler (seed SeedSequence([24, round, fold_index, 0x5A3])); fit seeds cp24.sampler.fit_seed; ensemble seeds cp24.sampler.member_seeds",
+ "schema": "cp24-round-design-v1",
+ "space": {
+  "activation": {
+   "choices": [
+    "elu",
+    "relu",
+    "softplus",
+    "tanh"
+   ]
+  },
+  "batch_size": {
+   "choices": [
+    32,
+    64,
+    128
+   ]
+  },
+  "groups": {
+   "flags": [
+    "price_d2",
+    "price_d3",
+    "price_d7",
+    "load_d1",
+    "load_d7",
+    "gfs",
+    "stats",
+    "calendar"
+   ],
+   "inclusion_probability": 0.5
+  },
+  "half_life": {
+   "choices": [
+    null,
+    365,
+    180
+   ]
+  },
+  "hidden_layers": {
+   "choices": [
+    1,
+    2
+   ]
+  },
+  "input_dropout": {
+   "off_probability": 0.5,
+   "uniform": [
+    0.05,
+    0.5
+   ]
+  },
+  "kappa": {
+   "choices": [
+    1.0,
+    0.5,
+    0.0
+   ]
+  },
+  "l1": {
+   "log_uniform": [
+    1e-07,
+    0.001
+   ],
+   "off_probability": 0.5
+  },
+  "l2": {
+   "log_uniform": [
+    1e-06,
+    0.01
+   ],
+   "off_probability": 0.5
+  },
+  "lr": {
+   "log_uniform": [
+    0.0001,
+    0.01
+   ]
+  },
+  "transform": {
+   "choices": [
+    "z-s4",
+    "asinh-s4",
+    "z-mad",
+    "asinh-mad"
+   ]
+  },
+  "width": {
+   "log_uniform": [
+    16,
+    512
+   ],
+   "per_layer": true,
+   "round": "nearest integer"
+  }
+ },
+ "steering": null,
+ "trials_per_fold": 128,
+ "written_utc": "2026-10-05T03:53:00Z"
+}
