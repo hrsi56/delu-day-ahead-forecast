@@ -26,7 +26,9 @@ instructions of the same day. That evening it was updated for CP-23's grant and 
 for CP-23's receipt, the Owner's landing and its closure. On 2026-10-05 it was updated for the
 ratification of v21-r11 (CP-24, DDNN-2) and CP-24's issue, under the Owner's delegation of
 2026-10-04 ("תמשיך באופן חופשי ומלא עד דוח ובקשת LAND"). Those commits and pushes follow
-that delegation.*
+that delegation. On 2026-10-11 it was updated in place for CP-24's pause, the Owner's handover
+to a new Orchestrator session, the continuation, the receipt, the Owner's landing and CP-24's
+closure. That commit and push follow the Owner's instruction.*
 
 ---
 
@@ -34,18 +36,36 @@ that delegation.*
 
 ### Track B — capstone (the critical path)
 
-**Foundation established.** The v1 product is released. CP-10, CP-15, CP-16, CP-20, CP-21, CP-22
-and CP-23 are landed, GFS is admitted, and PRES-1, PRES-2 and PRES-3 are closed. PRES-3 published
-v4 on every surface on 2026-10-01. On 2026-10-04 two checkpoints closed:
+**Foundation established.** The v1 product is released. CP-10, CP-15, CP-16, CP-20, CP-21, CP-22,
+CP-23 and CP-24 are landed, GFS is admitted, and PRES-1, PRES-2 and PRES-3 are closed. PRES-3
+published v4 on every surface on 2026-10-01. Since then three checkpoints closed:
 
-- CP-22 re-examined v4 and made no replacement;
-- CP-23 tested a DDNN member and did not adopt v5.
+- CP-22 re-examined v4 and made no replacement (2026-10-04);
+- CP-23 tested a DDNN member and did not adopt v5 (2026-10-04);
+- CP-24 tested DDNN-2 and **adopted v5 in research** (landed 2026-10-11).
 
-v4 is unchanged. Their detailed results and accepted
-limitations remain in the [landing and closure records and evidence tags](#where-the-history-lives).
+Their detailed results and accepted limitations remain in the
+[landing and closure records and evidence tags](#where-the-history-lives).
 
-**Released product: frozen v1. Research base: v4 (HGL), adopted in research on 2026-09-30 and
-kept as it is after CP-22 (Owner, 2026-10-04).**
+**Released product: frozen v1. Research base: v5, adopted in research by CP-24 (landed
+2026-10-11).** No public surface shows v5 yet; the published research headline is still v4.
+
+- **What v5 is.** v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2: v4 with half of LightGBM's third given
+  to DDNN-2, a NumPy DDNN with day-level rows and 24 × 4 Johnson SU outputs. HG's hour-aware
+  interval layer is re-estimated on v5's own errors. The weight is fixed, never estimated.
+- **Why it was adopted.** On the same 10,747 development hours it met all five conditions of the
+  pre-registered rule `cp24-adoption` against v4: S_MAE −2.49% and S_WIS −2.36%, with 97.5%
+  intervals [−3.04%, −1.68%] and [−2.86%, −1.62%], all six §8 diagnostics, a complete valid
+  evaluation, no fold decisively worse, and the 0.5% practical size.
+- **What it does not show.** DDNN-2 alone was −10.67% S_MAE and −15.53% S_WIS against v4, but it
+  was never eligible, so that is descriptive. Leakage was ruled out at all 636 origins (below).
+- **Evidence class.** `development_post_selection`, and the second DDNN decision on these five
+  folds. No promotion, product qualification or Live eligibility; 4.7T carries the protection.
+  Exact values: the CP-24 [return](docs/track-b/evidence/cp-24/checkpoint-return.md) and
+  [verdict](docs/track-b/evidence/cp-24/integration.md).
+
+**v4 (HGL) is now the retained comparator.** It was adopted in research on 2026-09-30 and kept as
+it is after CP-22 (Owner, 2026-10-04).
 
 - **What v4 is.** v3's two LEAR components plus a three-block LightGBM member at one-third
   weight (the mean of raw and normalized block models), with v3's hour-aware interval layer
@@ -69,7 +89,7 @@ kept as it is after CP-22 (Owner, 2026-10-04).**
   plus the admitted GFS wind and radiation features; its scores and fold qualifications are in
   the [CP-20 landing record](docs/track-b/cp-20-landing-2026-09-24.md).
 
-**Programme stages** (Owner's sequence, current state 2026-10-04):
+**Programme stages** (Owner's sequence, current state 2026-10-11):
 
 | # | Stage | Status |
 |---|---|---|
@@ -81,32 +101,47 @@ kept as it is after CP-22 (Owner, 2026-10-04).**
 | 5a | v4 re-examined (CP-22; [v21-r9 §20](capstone_v21.md)) | ✅ Closed 2026-10-04: PASS, no replacement (R and M failed condition 4 on fold 4); the Owner kept v4 as it is; landed as `land/cp-22` ([landing record](docs/track-b/cp-22-landing-2026-10-04.md)). The v4 wording on the report and README was corrected the same day |
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
-| 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | 🔄 Ratified and issued 2026-10-05 under the Owner's delegation of 2026-10-04. Running in the Lead's own worktree, with the Orchestrator steering at S1 and S2 |
+| 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
 | 7 | Comprehensive data-admission research, immediately after DDNN, with 4.4V (VRE generation and residual load) ([v21-r10 §22](capstone_v21.md)) | ⬜ Not started. Scope filed 2026-10-04 (Notes, [Data admission research]) |
 | 8 | Recombination (4.8), with a NumPy meta-learner and per-block weights among its arms | ⬜ Not started. Filed 2026-10-04 (Notes, [4.8]) |
 | End | Fresh-data test (4.7T), then live run of the final model (CP-17 → CP-19), then public presentation and CV (4.3C/4.10R) | Reserved for the end |
 
-**Active Track B checkpoint: CP-24, DDNN-2** ([v21-r11 §23](capstone_v21.md)). It was ratified
-and issued on 2026-10-05 under the Owner's delegation of 2026-10-04. The delegation leaves the
-Owner out until the report and the LAND request.
+**No Track B checkpoint is active.** Under v21-r10 §22 the next stage is 7, the data-admission
+research with 4.4V. The Owner has not yet chosen what opens next. Any publication of v5 first
+needs the Owner's §23.12 decisions (Blockers).
 
-- **The candidate.** v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2, decided under `cp24-adoption`
-  against the three-block v4:
-  - condition 1 at 97.5%;
-  - a 0.5% practical size;
-  - at most two scored attempts.
-- **DDNN-2:**
-  - day-level rows, with 24 × 4 Johnson SU outputs;
-  - every member trained up to D−1;
-  - a per-fold training-only search;
-  - the top four configurations with two seeds each, combined by the per-level median.
-- **The pre-fold gate.** It covers the 280 days before the folds. The folds are touched only
-  if it passes.
-- **Execution.** The Lead runs in its own worktree on `gauntlet/cp-24`, from the brief
-  `a3f11470…` (SHA-256 prefix). The Orchestrator steers only at two points: S1, after each
-  pre-fold round, and S2, after attempt 1 if it is not adopted.
-- **Next.** The Orchestrator's report and the LAND request to the Owner. Then stage 7, the
-  data-admission research with 4.4V.
+**CP-24 is closed** ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)). It ran under
+[v21-r11 §23](capstone_v21.md), from the issued brief `a3f11470…` and the continuation brief
+`5960b908…`.
+
+- **Status.** PASS, with an Integration PASS at `7949a98`. The evidence tip is `05b7e61`
+  (`evidence/cp-24`), and the landing is `05e6015` (`land/cp-24`).
+- **Entry and gate.** DDNN-2 passed 4.6L′, the §23.7 correctness checks and 4.6R′. The pre-fold
+  gate (G0–G3) passed in round 1, and S1 froze that design.
+- **`cp24-adoption`: v5 is adopted** in scored attempt 1, against v4:
+
+  | Score | v5 − v4 | Share of v4, 97.5% |
+  |---|---|---|
+  | ΔS_MAE | −0.0133 [−0.0166, −0.0091] | −2.49% [−3.04%, −1.68%] |
+  | ΔS_WIS | −0.0119 [−0.0147, −0.0084] | −2.36% [−2.86%, −1.62%] |
+
+  No fold is decisively worse. No attempt 2 ran, because an adoption ends the attempts.
+- **Leakage, ruled out at full coverage.** The committed controls proved the masks at only two
+  origins, too few for a member this strong. The continuation refitted the frozen ensemble at all
+  636 warm-up and evaluation origins with every outcome on or after the delivery day destroyed.
+  All 636 were bit-identical, a planted one-day leak was caught in 5 of 5 folds, and a D−1 price
+  change moved the forecast at 22 of 22 origins.
+- **The run.** The usage limit stopped the first Lead three times on 2026-10-05, the last time
+  with its nested Critic mid-review. The Owner handed the work to a new Orchestrator session,
+  which issued a continuation. The continuation Lead (about 3.5 active hours, about 8 in all):
+  - repaired a base-tree test that would have turned `main` red after the LAND;
+  - extended the leakage controls;
+  - closed the two unfinished reviews.
+
+  Critic 3 failed the candidate for reporting ratio intervals at 95% only. The repair derived the
+  97.5% intervals from the stored draws, and Critic 4 passed.
+- **Resources.** All within §23.11, with no raise. 16,436 of 40,000 DDNN-2 fits and 18.9 of 150
+  machine-hours. The reference passes are spent (3 of 3).
 
 **CP-23 is closed** ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). It ran under
 [v21-r10 §21](capstone_v21.md), from the brief `33f6b412…`.
@@ -183,9 +218,12 @@ Owner out until the report and the LAND request.
   [final-product Space plan](docs/track-b/final-product-space-plan-2026-09-30.md) carries their
   checklist into the CP-17 and CP-18 briefs.
 
-**Repository**, as verified on the Owner's machine on 2026-10-05:
+**Repository**, as verified on the Owner's machine on 2026-10-11:
 
 - **`main` = `origin/main`** at the commit that carries this update. Below it:
+  - `05e6015` = `land/cp-24`, CP-24's squash landing by the Owner;
+  - `7ff6a50`, the Owner's work-availability amendment (v21-r12, PUBLISH_RULES 1.4);
+  - `522d7ea`, the record of CP-24's issue;
   - `76ed485`, the v21-r11 ratification;
   - `09eacd1`, CP-23's closure records;
   - `03c5b64` = `land/cp-23`, CP-23's squash landing by the Owner;
@@ -197,11 +235,18 @@ Owner out until the report and the LAND request.
   - `ebb7d42` = `land/cp-22`, CP-22's squash landing by the Owner;
   - `32bdf9b`, the last of four automation-plan commits from another session;
   - `940eb98`, the v21-r9 ratification.
-- **Tags on origin.** `evidence/cp-23` = `928bc13` and `evidence/cp-22` = `8daf7d0`, together
+- **Tags on origin.** `evidence/cp-24` = `05b7e61`, `evidence/cp-23` = `928bc13` and
+  `evidence/cp-22` = `8daf7d0`, together
   with every earlier `land/*`, `evidence/*` and `archive/*` tag listed in
   [Where the history lives](#where-the-history-lives). Two archive tags were added on 2026-10-04
   (below).
-- **Only `main` exists, locally and on origin.**
+- **Branches.** Only `main` is on origin. Locally there is also
+  `codex/final-product-price-lock-plan`, at `7ff6a50`, with its worktree
+  `.local/worktrees/final-product-price-lock-plan`. It holds another Orchestrator session's
+  Owner-authorized, deliberately uncommitted v21-r13 planning work: the final product's lock-price
+  extension. Its disposition is the Owner's.
+  - `gauntlet/cp-24` was reclaimed on 2026-10-11 with `scripts/gauntlet.py reclaim`, with a
+    verified bundle in `.local/artifacts/cp-24-reclaim-20261010/`. Its worktrees are removed.
   - `gauntlet/cp-23` was reclaimed on 2026-10-04 with `scripts/gauntlet.py reclaim`, with a verified
     bundle in `.local/artifacts/cp-23-reclaim-20261004/`.
   - `gauntlet/cp-22` was deleted on 2026-10-04, after the tag checks. A verified Git bundle is in
@@ -214,10 +259,13 @@ Owner out until the report and the LAND request.
   - The sibling proposal `claude/deterministic-migration-plan-js1sd0` was kept as
     `archive/deterministic-migration-plan-20261001` = `110e361` and deleted.
   - The GitHub Desktop stash was dropped by the Owner.
-  - No worktree exists besides the primary checkout.
 - **The retired cloud session branch.** `archive/v21-r7-session-20260930` = `e84d467` keeps the
   commits this file cites reachable.
 - **Retained local recovery material:**
+  - `.local/artifacts/cp-24/` (102 MB), `.local/mlruns/cp24/`,
+    `.local/artifacts/cp-24-reclaim-20261010/` and `.local/artifacts/cp-24-orchestrator/`.
+    `.local/artifacts/cp-24/` holds the only copy of DDNN-2's warm-up and gate-day vectors, which
+    4.8 may need (Critic observation O2). Keep it;
   - `.local/artifacts/cp-23/` (32 MB), `.local/mlruns/cp23/` and
     `.local/artifacts/cp-23-reclaim-20261004/`. The PyTorch reference is installed in `.venv` from
     `tests/cp23/torch-reference/`, and a plain `uv sync --locked` removes it;
@@ -233,7 +281,7 @@ Owner out until the report and the LAND request.
 
 | Surface | Last evidenced state / pending action |
 |---|---|
-| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `land/cp-23` = `03c5b64`, pushed by the Owner on 2026-10-04 with `evidence/cp-23` = `928bc13`. Before it, `land/cp-22` = `ebb7d42` with `evidence/cp-22` = `8daf7d0`, and the Orchestrator's pushes on the Owner's instruction: the v4 wording fix `b194c72`, the tools, v21-r10 and the records. The README carries the corrected v3 → v4 transition. |
+| [GitHub repository](https://github.com/hrsi56/delu-day-ahead-forecast) | `land/cp-24` = `05e6015`, pushed by the Owner on 2026-10-11 with `evidence/cp-24` = `05b7e61`, on top of the Owner's work-availability commit `7ff6a50`. Before them, `land/cp-23` = `03c5b64` with `evidence/cp-23` = `928bc13`; `land/cp-22` = `ebb7d42` with `evidence/cp-22` = `8daf7d0`; and the Orchestrator's pushes on the Owner's instruction: the v4 wording fix `b194c72`, the tools, v21-r10 and the records. The README carries the corrected v3 → v4 transition. |
 | [Static report](https://hrsi56.github.io/delu-day-ahead-forecast/) | v4 wording fix, served after the push of `b194c72`: HTTP 200, 1,907,718 bytes, SHA-256 `8a1fedd8bc6bf89d1db170b3fb83df34255e4c350c22113d1df52088c25c8c39`, equal to `docs/index.html`, read anonymously 2026-10-04. Wording only: no number, name or status changed. Browser checks were not rerun for a wording-only change; the reviews were waived by the Owner. The PRES-3 page before it was `97e1d862…`. |
 | [Static Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast) ([direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/)) | PRES-3 deployment 2026-10-01 10:45 UTC: revision `0331088725fedab2f5a1ec804ae03bf960cf126f`, public/static/RUNNING, 805 files, verified file by file against the reviewed bundle `9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585` (44,164,910 bytes; copy at `.local/artifacts/pres-3/space-wasm-9028a118/`). `style.css` deleted. It runs v1. The card is unchanged. Public demo checks passed on 2026-10-01; the first cold run's HF 429 is retained beside its passing retry. |
 | [MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow) | PRES-3's authorized upload, 2026-10-01 03:32–03:43 UTC: `cp21` and its four children created; the 23 published runs found complete and untouched; no experiment tag written. Public mirror 28/28 and 7/7 routes, including `compare:v4`, in Chromium and WebKit, before the final build. The experiment description still names only the four earlier parents (A-PRES3-1). Post-deploy recheck 2026-10-01: 28/28 runs, and the routes pass in Chromium and WebKit. |
@@ -247,7 +295,7 @@ decision remains a boundary, not an active workstream.
 ## 2. Setup State
 
 - **No pending setup action.** PRES-3's closure set was committed and pushed as `ddb9379` on
-  2026-10-01. CP-22's records are in the commit that carries this update.
+  2026-10-01. CP-24's closure records are in the commit that carries this update.
 
 ---
 
@@ -338,6 +386,7 @@ decision remains a boundary, not an active workstream.
 
   | Authority | Governed | Where the exact bytes are |
   |---|---|---|
+  | v21-r11 | CP-24 | `evidence/cp-24:capstone_v21.md` (`11068e3f…`, verified 2026-10-11), also `76ed485` |
   | v21-r7 | Defined §18; governed no checkpoint | `c9dc364:capstone_v21.md` (`e6a4e301…`) |
   | v21-r6 | CP-21 | `evidence/cp-21:capstone_v21.md` (`ee402c47…`, verified 2026-09-30), also `270a0a0` |
   | v21-r5 | Defined §16; governed no checkpoint | `81ab3be:capstone_v21.md` (`a4e178c3…`) |
@@ -681,6 +730,55 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-24 paused, continued, received, landed and closed, 2026-10-05 to 2026-10-11.**
+  - **The pause, 2026-10-05.** The account's usage limit stopped the first Lead at 17:28 IDT, with
+    attempt 1 scored and v5 adopted, and its nested Critic 2 mid-review. The previous Orchestrator
+    session wrote a pause packet.
+  - **The Owner's handover, the same evening.** The Owner handed CP-24 to a new Orchestrator
+    session himself ("אני מוסר לך את העבודה בעצמי").
+    - He called `ORCHESTRATOR-HANDOFF.md` not relevant.
+    - He said `RESUME.md` might contain errors, and should be read only for CP-24's state.
+    - He had both deleted; they went to the Trash.
+  - **The new session's findings.**
+    - It verified the state against the branch, the ledgers and origin.
+    - It set aside the old notes' re-derived metrics, which the Orchestrator may not compute.
+    - It also set aside their plan to order extra leakage controls by "steering": §23.6 has no
+      such channel after an adoption.
+    - It confirmed the base-tree defect in the code.
+  - **The continuation brief.** It was issued as `11063a11…`, without a `progress.md` update, to
+    keep `main` clean during the run. The Owner's maintenance of 2026-10-10 re-issued it as
+    `5960b908…`, with the calendar clauses removed.
+    - It asks for a landing-safe base-tree proof.
+    - It asks for item 9 evidence matched to D2's strength, with any extension verification only.
+    - It asks for a fresh Critic that receives nothing from Critics 1 and 2.
+  - **The return, 2026-10-10.** PASS, with candidate `7949a98` and evidence tip `05b7e61`. Critic 3
+    failed `7ea9bdd` on the missing 97.5% ratio intervals. They were derived without rescoring,
+    and Critic 4 passed.
+  - **The receipt.** It was run with `main`'s `gauntlet.py receipt`, and every check passed:
+    - the delta is evidence-only: four files;
+    - the verdict is PASS at the candidate;
+    - all 18 checklist rows carry evidence;
+    - nothing of CP-24 was on origin.
+
+    The staged squash was 122 added files inside §23.14's paths, byte-identical to the evidence
+    tip.
+  - **The LAND, 2026-10-11 01:00 IDT.** The Owner landed it by hand as `05e6015` and pushed
+    `land/cp-24` and `evidence/cp-24`. The Orchestrator reclaimed the branch and its worktree, kept
+    `.local/artifacts/cp-24/`, and wrote the
+    [landing record](docs/track-b/cp-24-landing-2026-10-11.md). It filed Q&A entries 55–57: the
+    leakage proof, the 97.5% review FAIL and the landing-safe test.
+  - **Not carried forward.** The Owner said that the rest of the old pause notes would be dealt
+    with later. Their programme-order and coverage proposals are therefore not recorded here as
+    decisions.
+  - **The omission diff.** Three items were removed:
+    - the active-checkpoint block, which became the CP-24 closure;
+    - "Only `main` exists", superseded by the codex branch;
+    - "No worktree exists besides the primary checkout".
+
+    The blocker on publishing the not-adopted CP-22 and CP-23 branches is still open: it is folded
+    unchanged into the new "Publishing v5" blocker, with its recommendation. Nothing else was
+    dropped.
 
 - **Work availability, Owner decision, 2026-10-10.** A dedicated maintenance editor removed
   calendar restrictions from rules, plans and runtime monitors under the Owner’s explicit
@@ -1088,9 +1186,14 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Publishing the not-adopted branches (open, Owner; §20.13 and §21.9).** The Orchestrator
-  recommends bundling CP-22 and CP-23, as "tested, not adopted", into the next publication. The
-  public planned list still shows 4.6 as DDNN against v4 until then.
+- **Publishing v5 (open, Owner; v21-r11 §23.12).** v5 is adopted in research, but no public
+  surface shows it. Before any publication brief the Owner decides:
+  - v5's encoding (PUBLISH_RULES §14);
+  - whether the not-adopted CP-22 and CP-23 branches are published. The Orchestrator recommends
+    bundling them, as "tested, not adopted", into the same publication;
+  - automation items 6 and 7 (Notes).
+
+  The public planned list still shows 4.6 as DDNN against v4 until then.
 
 - **PRES-3's three advisories for the Owner (open; none blocks closure).** Details are in the
   advisory log at the evidence tip. Recommended: defer all three, as below.
@@ -1129,9 +1232,9 @@ Session Log.
   Historical active-hour total and added-disk baseline remain unavailable, not retroactively
   certified compliant. Required tags preserve all evidence. New rules do not retroactively turn
   PRES-1 advisories into violations.
-- **Scoring passes are exhausted for CP-20 and CP-21.** Further CP-20 scoring would need a cap
-  decision; CP-21's reference and bootstrap passes stand at 3/3, so any rescoring of CP-21 needs
-  a new Owner-approved allowance.
+- **Scoring passes are exhausted for CP-20, CP-21 and CP-24.** Further CP-20 scoring would need a
+  cap decision; CP-21's reference and bootstrap passes stand at 3/3, and CP-24's reference passes
+  at 3/3, so any rescoring of CP-21 or CP-24 needs a new Owner-approved allowance.
 - **The weather admission is conditional** on inferred NCAR field presence and reconstructed
   availability. 2019-01-01 is structurally missing.
 - **Product feasibility remains `NOT_DEMONSTRATED`** (CP-15). No policy is qualified.
@@ -1150,6 +1253,11 @@ Session Log.
   from the later review's F01–F04, which PRES-2 closed.
   Transient hosting 429s remain an availability limitation, with initial failures retained.
 - **Known issues, no action scheduled:**
+  - a later change to CP-23's test-only lock `tests/cp23/torch-reference/uv.lock` turns CI red
+    unless CP-23's tests and CP-24's frozen `test_reference_record.py` get the Owner's
+    `AMENDED_BY_…` treatment. A later change to `scripts/mlflow_export.py` needs the same in
+    CP-23's tests. Both files are frozen today
+    ([CP-24 land simulation](docs/track-b/evidence/cp-24/land-simulation.md));
   - a cold first visit to the Space can hit a Hugging Face `429`;
   - `reports/cp3/pages_build.json` stamps its build date;
   - `actions/checkout@v4` and `setup-uv@v6` target the deprecated Node 20, though they run on
@@ -1223,6 +1331,14 @@ Session Log.
       of S, so the gain may not be demonstrable.
   - **Timing.** Best done after DDNN, so that all members' weights are learned together once. Any
     result stays development evidence; 4.7T is the test.
+- **[CP-24]** Closed on 2026-10-11. v5 is adopted in research
+  ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)).
+  - **DDNN-2's vectors for 4.8.** The scored vectors are in `reports/ddnn2/attempt-1/members.parquet`
+    and `predictions.parquet`. The warm-up and gate-day vectors exist only in
+    `.local/artifacts/cp-24/` (Critic observation O2), so do not clean that folder before 4.8.
+  - **DDNN-2 alone was −10.67% S_MAE against v4,** descriptively. That invites a 4.8 arm, with
+    its weight set by a pre-registered rule before any scoring and an honest post-selection label.
+    It cannot be a further CP-24 attempt.
 - **[CP-23]** Closed on 2026-10-04. DDNN was admitted and v5 was not adopted
   ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). Its DDNN vectors are saved in
   `reports/distribution-challenger/members.parquet` and are available to 4.8 at no fit cost. The
@@ -1268,13 +1384,14 @@ Session Log.
   CP-22's design (§20.2), as A-LP and the pooled members. None was adopted, and no replacement was
   made.
 - **[4.7T]** v4 is adopted, so its frozen manifest carries both v3 and v4. CP-22 made no
-  replacement, so v4 there is the three-block construction. CP-23 adopted no v5. A v5 joins only
-  if DDNN-2 or 4.8 adopts one.
+  replacement, so v4 there is the three-block construction. CP-23 adopted no v5. CP-24 adopted
+  v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2 in research, so v5 joins too, unless 4.8 replaces it.
+  Whether DDNN-2 alone should face 4.7T is a decision for before 4.7T, under a pre-registered rule.
 - **[Before the next publication's brief — binding, v21-r10 §22]** Bring automation items 6
   (post-deploy publication receipt) and 7 (pre-review check runner) to the Owner for a decision.
   The brief is not issued before it. Also carry:
   - A-PRES3-1, -5 and -7 (Blockers);
-  - the Owner's choice of v5's encoding, if v5 is adopted (PUBLISH_RULES §14).
+  - the Owner's choice of v5's encoding (PUBLISH_RULES §14). v5 was adopted by CP-24.
 - **[Every new publication brief]** Pin PUBLISH_RULES 1.4 (from 2026-10-10) and
   incorporated source hashes;
   retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under
@@ -1389,6 +1506,10 @@ Each was paid for once. None should be relearned.
   The hash binding refused it.
 - **Owner-run Git must be non-interactive.** The CP-21 LAND stalled in the pager and then in vim.
   Every owner packet uses `git --no-pager` and `git commit -F <message file>`.
+- **A result far from the prior widens the controls before the review.** CP-24's DDNN-2 jumped
+  from CP-23's weakest member to −10.7% against v4, while its leakage masks were proven at only
+  two origins. The full-coverage refit settled it. A test that pins living files is a landing
+  hazard too, and the CP-24 base-tree test would have turned `main` red.
 - **The holdout is opened once.** v1's is spent, and the model that ships is the model that was
   evaluated.
 
@@ -1399,7 +1520,8 @@ Each was paid for once. None should be relearned.
 - **Reviewed chains:**
   - `evidence/cp-0`, `evidence/cp-1`, `evidence/cp-2`, `evidence/cp-3`, `evidence/cp-3b`,
     `evidence/cp-15` (including CP-10), `evidence/cp-16`, `evidence/cp-20`, `evidence/cp-21`,
-    `evidence/cp-22` and `evidence/cp-23`, with landings at the matching `land/` tags;
+    `evidence/cp-22`, `evidence/cp-23` and `evidence/cp-24`, with landings at the matching
+    `land/` tags;
   - `evidence/pres-1` / `land/pres-1`, `evidence/pres-2` / `land/pres-2` and
     `evidence/pres-3` / `land/pres-3` preserve the publication chains; all three publications
     are closed and their branches reclaimed;
@@ -1438,6 +1560,19 @@ Each was paid for once. None should be relearned.
     [report](reports/distribution-challenger/report.md).
 
   Its identities: candidate `f9a737e`, evidence tip `928bc13`, landing `03c5b64`.
+- **CP-24 evidence:**
+  - the [return](docs/track-b/evidence/cp-24/checkpoint-return.md);
+  - the [Integration verdict](docs/track-b/evidence/cp-24/integration.md), with Critic 3's
+    [FAIL](docs/track-b/evidence/cp-24/review/critic-3-integration-FAIL.md);
+  - the [land simulation](docs/track-b/evidence/cp-24/land-simulation.md);
+  - the [publication packet](docs/track-b/evidence/cp-24/publication-packet.md);
+  - the [issued brief](docs/track-b/evidence/cp-24/issued-brief.md) (`a3f11470…`) and the
+    [continuation brief](docs/track-b/evidence/cp-24/continuation-brief.md) (`5960b908…`), with
+    the S1 exchange under `steering/`;
+  - the entry records, round 1, attempt 1 and the leakage controls under `reports/ddnn2/`, with
+    the [report](reports/ddnn2/report.md).
+
+  Its identities: candidate `7949a98`, evidence tip `05b7e61`, landing `05e6015`.
 - **Publication evidence:**
   - PRES-1: [landing](docs/track-b/pres-1-landing-2026-09-29.md);
   - the [later independent public review](docs/track-b/publication-postdeploy-independent-review-2026-09-29.md):
@@ -1477,6 +1612,8 @@ Each was paid for once. None should be relearned.
   - the [CP-23 landing and closure record](docs/track-b/cp-23-landing-2026-10-04.md). It includes
     the receipt, the Owner's two rulings during the run, and the Orchestrator's diagnosis behind
     DDNN-2;
+  - the [CP-24 landing and closure record](docs/track-b/cp-24-landing-2026-10-11.md). It includes
+    the pause, the Owner's handover, the continuation, the receipt and the LAND;
   - the [credential exposure record](docs/track-b/credential-exposure-2026-09-24.md).
 - **Earlier state narrative:**
   - `f704ac4:progress.md`;
