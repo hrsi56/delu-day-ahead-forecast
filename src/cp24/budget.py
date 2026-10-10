@@ -24,7 +24,7 @@ Every other ceiling never changes.
 from __future__ import annotations
 
 import contextlib
-from datetime import datetime, timedelta
+from datetime import datetime
 import fcntl
 import hashlib
 import json
@@ -75,22 +75,7 @@ GAUGES = {'rss_bytes', 'additional_disk_bytes', 'workers'}
 #: Conservative effort start: before the Lead's first command, 2026-10-05 06:14 IDT (03:14 UTC), the
 #: time the issued brief's canonical copy was written.
 SESSION_START_EPOCH = datetime(2026, 10, 5, 3, 14, 0, tzinfo=ZoneInfo('UTC')).timestamp()
-JERUSALEM = ZoneInfo('Asia/Jerusalem')
 STEERING = 'docs/track-b/evidence/cp-24/steering/'
-
-
-def calendar_stop(now: float | None = None) -> tuple[bool, float]:
-    """(inside the Friday/Shabbat window, seconds until the next window opens).
-
-    The window is Friday 00:00 to Sunday 00:00, Asia/Jerusalem (§23.11, §17.8). No job starts inside
-    it and none runs into it."""
-    moment = datetime.fromtimestamp(time.time() if now is None else now, JERUSALEM)
-    inside = moment.weekday() in (4, 5)  # Friday, Saturday
-    days = (4 - moment.weekday()) % 7
-    friday = (moment + timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
-    if friday <= moment:
-        friday += timedelta(days=7)
-    return inside, (friday - moment).total_seconds()
 
 
 class CapExceeded(RuntimeError):

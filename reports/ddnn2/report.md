@@ -114,7 +114,7 @@ Frozen protocol `attempt-1/protocol.json`; vectors `attempt-1/predictions.parque
 | data_download_bytes | 0 | 0 |
 | remote_writes | 0 | 0 |
 
-Raises (§23.6): none. Calendar: no job ran in or into the Friday 00:00 – Sunday 00:00 window (Asia/Jerusalem); every job checked it before starting.
+Raises (§23.6): none. Authorized work may run at any time; resource accounting and hard caps remain enforced.
 
 ## Reproduction
 

@@ -132,8 +132,8 @@ def build(root: Path) -> str:
                 L.append(f'| {key} (GiB) | {v["cap"] / 1024**3:.0f} | {v["used"] / 1024**3:.2f} |')
             else:
                 L.append(f'| {key} | {v["cap"]} | {v["used"]} |')
-        L.append(f'\nRaises (§23.6): {res["raises"] or "none"}. Calendar: no job ran in or into the Friday 00:00 – Sunday 00:00 '
-                 'window (Asia/Jerusalem); every job checked it before starting.\n')
+        L.append(f'\nRaises (§23.6): {res["raises"] or "none"}. Authorized work may run at any time; '
+                 'resource accounting and hard caps remain enforced.\n')
     L += ['## Reproduction\n', 'See [`reproduce.md`](reproduce.md).\n']
     return '\n'.join(L) + '\n'
 
