@@ -96,6 +96,11 @@ def build(root: Path):
         def eq(c, b, m):
             return U.find(scope='equal_fold', candidate=c, baseline=b, metric=m)
 
+        RI = Rows(root, str(A / 'ratio-intervals.csv'))
+
+        def ri(c, b, m):
+            return RI.find(candidate=c, baseline=b, metric=m)
+
         def pf(p, fo):
             return M.find(policy=p, scope='per_fold', fold=fo)
 
@@ -110,17 +115,24 @@ def build(root: Path):
                              f'({pct(r1["ratio"])}); WIS not defined (L has no interval forecast): **{reading}**.',
                       f'U24 L{l1}; DEC24 `contrasts`', status)
                 return
+            (i1, x1), (i2, x2) = ri(c, b, 'MAE'), ri(c, b, 'WIS')
             claim(ident, f'{what}: ΔS_MAE {num(r1["difference"])} [{num(r1["ci_lower"])}, {num(r1["ci_upper"])}] '
-                         f'({pct(r1["ratio"])} [{pct(r1["ratio_ci_lower"])}, {pct(r1["ratio_ci_upper"])}]), ΔS_WIS '
+                         f'({pct(r1["ratio"])} [{pct(r1["ratio_ci_lower"])}, {pct(r1["ratio_ci_upper"])}]; 97.5% '
+                         f'[{pct(x1["ratio_ci97.5_lower"])}, {pct(x1["ratio_ci97.5_upper"])}]), ΔS_WIS '
                          f'{num(r2["difference"])} [{num(r2["ci_lower"])}, {num(r2["ci_upper"])}] ({pct(r2["ratio"])} '
-                         f'[{pct(r2["ratio_ci_lower"])}, {pct(r2["ratio_ci_upper"])}]): **{reading}**{resolved_note(r1, r2)}.',
-                  f'U24 L{l1}, L{l2}; DEC24 `contrasts`', status)
+                         f'[{pct(r2["ratio_ci_lower"])}, {pct(r2["ratio_ci_upper"])}]; 97.5% [{pct(x2["ratio_ci97.5_lower"])}, '
+                         f'{pct(x2["ratio_ci97.5_upper"])}]): **{reading}**{resolved_note(r1, r2)}.',
+                  f'U24 L{l1}, L{l2}; RI24 L{i1}, L{i2}; DEC24 `contrasts`', status)
 
         (lm, rm), (lw, rw) = eq('v5', 'HGL', 'MAE'), eq('v5', 'HGL', 'WIS')
         claim('C420', f'Scored attempt {k}, v5 − v4: ΔS_MAE {num(rm["difference"])} [95% {num(rm["ci_lower"])}, {num(rm["ci_upper"])}; '
-                      f'97.5% {num(rm["ci97.5_lower"])}, {num(rm["ci97.5_upper"])}] ({pct(rm["ratio"])} of v4\'s score); ΔS_WIS '
+                      f'97.5% {num(rm["ci97.5_lower"])}, {num(rm["ci97.5_upper"])}] ({pct(rm["ratio"])} of v4\'s score, 95% '
+                      f'[{pct(rm["ratio_ci_lower"])}, {pct(rm["ratio_ci_upper"])}], 97.5% [{pct(ri("v5", "HGL", "MAE")[1]["ratio_ci97.5_lower"])}, '
+                      f'{pct(ri("v5", "HGL", "MAE")[1]["ratio_ci97.5_upper"])}]); ΔS_WIS '
                       f'{num(rw["difference"])} [95% {num(rw["ci_lower"])}, {num(rw["ci_upper"])}; 97.5% {num(rw["ci97.5_lower"])}, '
-                      f'{num(rw["ci97.5_upper"])}] ({pct(rw["ratio"])}).', f'U24 L{lm}, L{lw}', 'S')
+                      f'{num(rw["ci97.5_upper"])}] ({pct(rw["ratio"])}, 95% [{pct(rw["ratio_ci_lower"])}, {pct(rw["ratio_ci_upper"])}], '
+                      f'97.5% [{pct(ri("v5", "HGL", "WIS")[1]["ratio_ci97.5_lower"])}, {pct(ri("v5", "HGL", "WIS")[1]["ratio_ci97.5_upper"])}]).',
+              f'U24 L{lm}, L{lw}; RI24 L{ri("v5", "HGL", "MAE")[0]}, L{ri("v5", "HGL", "WIS")[0]}', 'S')
         conds = a['conditions']
         cond_text = '; '.join(f'condition {x} {"met" if v["met"] else "not met"}' for x, v in sorted(conds.items(), key=lambda kv: int(kv[0])))
         claim('C421', f'Rule `cp24-adoption` for v5 in attempt {k}: ' + ('all five conditions met' if a['adopted'] else
@@ -177,12 +189,13 @@ def build(root: Path):
                       f'{cycle["summary"]["origins"]} origins.', 'FC24; DC24', 'S')
         if (root / A / 'leakage-controls.json').exists():
             lk = _load(root, A / 'leakage-controls.json')
-            claim('C441', f'Leakage ruled out at every origin: with every outcome on or after the delivery day destroyed, the frozen '
+            claim('C441', f'No outcome dated on or after the delivery day is used, at any origin: with every such outcome destroyed, the frozen '
                           f'eight-member ensemble refitted at all {lk["blind"]["origins"]} warm-up and evaluation origins reproduces the '
                           f'committed DDNN-2 vectors bit for bit ({lk["blind"]["bitwise"]} of {lk["blind"]["origins"]}); a D−1 price '
                           'mutation moves them and a planted one-day leak is detected in every fold; the search and gate controls hold '
-                          f'in all {len(lk["search_and_gate_by_fold"])} folds.', 'LK24', 'S')
-        ctx.update(dict(dec=dec, eq=eq, pf=pf, k=k, adopted=bool(a['adopted'])))
+                          f'in all {len(lk["search_and_gate_by_fold"])} folds. The input vintages (A65 load forecasts, CP-20\'s GFS '
+                          'availability rule) are inherited from CP-15 and CP-20, not re-tested here.', 'LK24', 'S')
+        ctx.update(dict(dec=dec, eq=eq, ri=ri, pf=pf, k=k, adopted=bool(a['adopted'])))
     claim('C449', 'Development evidence after selection on the same five folds CP-15 and CP-20 to CP-23 used; DDNN-2 is the second '
                   'DDNN decision on them; not a test on new data; 4.7T carries the protection.', 'CAP §23.1', 'S')
     withheld = [
@@ -210,7 +223,7 @@ def build(root: Path):
         base = f'reports/ddnn2/attempt-{k}'
         src += [('M24', f'{base}/metrics.csv'), ('U24', f'{base}/uncertainty.csv'), ('C24', f'{base}/criteria.csv'),
                 ('D24', f'{base}/diagnostics.csv'), ('DEC24', f'{base}/decisions.json'), ('P24', f'{base}/protocol.json'),
-                ('CT24', f'{base}/controls.json'), ('DG24', f'{base}/diagnostics.json'), ('GU24', f'{base}/guards.json'),
+                ('RI24', f'{base}/ratio-intervals.csv'), ('CT24', f'{base}/controls.json'), ('DG24', f'{base}/diagnostics.json'), ('GU24', f'{base}/guards.json'),
                 ('DC24', f'{base}/daily-cycle.json'), ('FC24', f'{base}/fit-cost.json'),
                 *([('LK24', f'{base}/leakage-controls.json')] if (root / base / 'leakage-controls.json').exists() else []),
                 ('X24', 'reports/ddnn2/mlflow-export-draft/cp24.json')]
@@ -320,6 +333,10 @@ def packet(root: Path, registry: dict, ctx: dict, claims_sha: str) -> tuple[str,
         add(f'| Its 95% interval | S_MAE [{pct(rm["ratio_ci_lower"])}, {pct(rm["ratio_ci_upper"])}]; S_WIS [{pct(rw["ratio_ci_lower"])}, '
             f'{pct(rw["ratio_ci_upper"])}] — CP-24\'s own draws: seed 15042, 2,000 replicates, 7-calendar-day blocks | '
             f'`uncertainty.csv`; `replicates.parquet` |')
+        (li_m, xm), (li_w, xw) = ctx['ri']('v5', 'HGL', 'MAE'), ctx['ri']('v5', 'HGL', 'WIS')
+        add(f'| Its 97.5% interval, the decision level (§23.8) | S_MAE [{pct(xm["ratio_ci97.5_lower"])}, {pct(xm["ratio_ci97.5_upper"])}]; '
+            f'S_WIS [{pct(xw["ratio_ci97.5_lower"])}, {pct(xw["ratio_ci97.5_upper"])}] — the 1.25% and 98.75% percentiles of the same '
+            f'stored draws | `ratio-intervals.csv` L{li_m}, L{li_w} |')
         ordinary = [float(ctx['pf']('v5', fo)[1]['MAE']) for fo in ('fold_1', 'fold_2', 'fold_4', 'fold_5')]
         add(f'| (c) Mean absolute error per period, EUR/MWh (v5) | ordinary periods {num(min(ordinary), 1)}–{num(max(ordinary), 1)}; '
             f'stress period, fold 3: {num(ctx["pf"]("v5", "fold_3")[1]["MAE"], 1)} | `metrics.csv` per-fold rows |\n')

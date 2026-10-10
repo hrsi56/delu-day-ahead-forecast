@@ -84,8 +84,19 @@ def build(root: Path) -> str:
             L.append(f'{c}. {a["rule"]["conditions"][str(c)] if str(c) in a["rule"]["conditions"] else a["rule"]["conditions"][int(c)]} '
                      f'→ **{"met" if v["met"] else "not met"}**.')
         L.append(f'\n**Decision:** {a["verdict"]}.\n')
+        ri = pd.read_csv(root / A / 'ratio-intervals.csv', float_precision='round_trip').set_index(['candidate', 'baseline', 'metric'])
+
+        def ratio(c_, b_, m):
+            x = ri.loc[(c_, b_, m)]
+            if not bool(x.defined):
+                return 'n/a'
+            return (f'{100 * x.ratio:+.2f}% [{100 * x.ratio_ci95_lower:+.2f}%, {100 * x.ratio_ci95_upper:+.2f}%] '
+                    f'[{100 * x["ratio_ci97.5_lower"]:+.2f}%, {100 * x["ratio_ci97.5_upper"]:+.2f}%]')
         L += ['### Every §23.8 contrast, with its reading\n',
-              '| Contrast | Role | dS_MAE [95%] [97.5%] | dS_WIS [95%] [97.5%] | ratio S_MAE | ratio S_WIS | Reading |', '|---|---|---|---|---|---|---|']
+              'Ratios are R = S_candidate / S_comparator − 1, with their 95% and 97.5% (decision-level) intervals from the stored '
+              f'equal-fold draws (`attempt-{k}/ratio-intervals.csv`).\n',
+              '| Contrast | Role | dS_MAE [95%] [97.5%] | dS_WIS [95%] [97.5%] | ratio S_MAE [95%] [97.5%] | ratio S_WIS [95%] [97.5%] | '
+              'Reading |', '|---|---|---|---|---|---|---|']
         for key, r in dec['contrasts'].items():
             e = unc.loc[unc.scope.eq('equal_fold')]
             c, b = key.split('-', 1) if key.count('-') == 1 else (key.rsplit('-', 1)[0], key.rsplit('-', 1)[1])
@@ -94,8 +105,8 @@ def build(root: Path) -> str:
             wis = (f'{f(w_.difference)} [{f(w_.ci_lower)}, {f(w_.ci_upper)}] [{f(w_["ci97.5_lower"])}, {f(w_["ci97.5_upper"])}]'
                    if bool(w_.defined) else 'not defined')
             L.append(f'| {key} | {r["role"]} | {f(m_.difference)} [{f(m_.ci_lower)}, {f(m_.ci_upper)}] [{f(m_["ci97.5_lower"])}, '
-                     f'{f(m_["ci97.5_upper"])}] | {wis} | {100 * m_.ratio:+.2f}% | '
-                     f'{(f"{100 * w_.ratio:+.2f}%") if bool(w_.defined) else "n/a"} | {r["reading"]} |')
+                     f'{f(m_["ci97.5_upper"])}] | {wis} | {ratio(m_.candidate, m_.baseline, "MAE")} | '
+                     f'{ratio(w_.candidate, w_.baseline, "WIS")} | {r["reading"]} |')
         diag = load(A / 'diagnostics.json')
         g = diag['guards']
         L += ['', '### Diagnostics (descriptive; `attempt-%d/diagnostics/`)\n' % k,

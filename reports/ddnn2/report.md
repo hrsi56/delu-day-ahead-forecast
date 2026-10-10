@@ -70,19 +70,21 @@ Frozen protocol `attempt-1/protocol.json`; vectors `attempt-1/predictions.parque
 
 ### Every §23.8 contrast, with its reading
 
-| Contrast | Role | dS_MAE [95%] [97.5%] | dS_WIS [95%] [97.5%] | ratio S_MAE | ratio S_WIS | Reading |
+Ratios are R = S_candidate / S_comparator − 1, with their 95% and 97.5% (decision-level) intervals from the stored equal-fold draws (`attempt-1/ratio-intervals.csv`).
+
+| Contrast | Role | dS_MAE [95%] [97.5%] | dS_WIS [95%] [97.5%] | ratio S_MAE [95%] [97.5%] | ratio S_WIS [95%] [97.5%] | Reading |
 |---|---|---|---|---|---|---|
-| D2-D | ddnn2_vs_cp23_ddnn | -0.1534 [-0.1795, -0.1242] [-0.1842, -0.1196] | -0.1436 [-0.1686, -0.1107] [-0.1714, -0.1067] | -24.27% | -25.16% | observed joint improvement |
-| D2-HG | ddnn2_alone_vs_lear | -0.0872 [-0.1107, -0.0662] [-0.1136, -0.0641] | -0.1052 [-0.1272, -0.0845] [-0.1299, -0.0809] | -15.42% | -19.76% | observed joint improvement |
-| D2-HGL | ddnn2_alone_vs_v4 | -0.0571 [-0.0786, -0.0388] [-0.0811, -0.0360] | -0.0785 [-0.0982, -0.0608] [-0.1013, -0.0588] | -10.67% | -15.53% | observed joint improvement |
-| D2-L | ddnn2_alone_vs_same_information_twin_point_only | -0.0712 [-0.0910, -0.0545] [-0.0933, -0.0521] | not defined | -12.94% | n/a | MAE only (L has no interval forecast): lower (better) |
-| HGL-HG | lightgbm_as_v3_third_member_beside | -0.0301 [-0.0368, -0.0228] [-0.0379, -0.0217] | -0.0266 [-0.0327, -0.0204] [-0.0336, -0.0197] | -5.32% | -5.01% | observed joint improvement |
-| v3+D-HGL | cp23_ddnn_in_lightgbms_place_beside | 0.0157 [0.0081, 0.0232] [0.0069, 0.0241] | 0.0155 [0.0074, 0.0222] [0.0061, 0.0236] | +2.93% | +3.08% | observed joint worsening |
-| v3+D2-HG | ddnn2_as_v3_third_member | -0.0501 [-0.0563, -0.0425] [-0.0573, -0.0415] | -0.0448 [-0.0502, -0.0383] [-0.0512, -0.0374] | -8.86% | -8.41% | observed joint improvement |
-| v3+D2-HGL | ddnn2_in_lightgbms_place | -0.0200 [-0.0257, -0.0130] [-0.0266, -0.0122] | -0.0181 [-0.0233, -0.0118] [-0.0240, -0.0110] | -3.74% | -3.59% | observed joint improvement |
-| v5-HG | reference_vs_v3 | -0.0434 [-0.0491, -0.0366] [-0.0501, -0.0358] | -0.0386 [-0.0437, -0.0326] [-0.0445, -0.0319] | -7.68% | -7.24% | observed joint improvement |
-| v5-HGL | adoption_decision | -0.0133 [-0.0161, -0.0096] [-0.0166, -0.0091] | -0.0119 [-0.0143, -0.0087] [-0.0147, -0.0084] | -2.49% | -2.36% | observed joint improvement |
-| v5-v3+D2 | lightgbm_still_adds_given_ddnn2 | 0.0067 [0.0033, 0.0097] [0.0028, 0.0100] | 0.0062 [0.0031, 0.0089] [0.0026, 0.0094] | +1.30% | +1.28% | observed joint worsening |
+| D2-D | ddnn2_vs_cp23_ddnn | -0.1534 [-0.1795, -0.1242] [-0.1842, -0.1196] | -0.1436 [-0.1686, -0.1107] [-0.1714, -0.1067] | -24.27% [-27.02%, -20.25%] [-27.43%, -19.83%] | -25.16% [-28.03%, -20.32%] [-28.41%, -19.85%] | observed joint improvement |
+| D2-HG | ddnn2_alone_vs_lear | -0.0872 [-0.1107, -0.0662] [-0.1136, -0.0641] | -0.1052 [-0.1272, -0.0845] [-0.1299, -0.0809] | -15.42% [-18.80%, -11.82%] [-19.32%, -11.32%] | -19.76% [-22.97%, -16.02%] [-23.49%, -15.62%] | observed joint improvement |
+| D2-HGL | ddnn2_alone_vs_v4 | -0.0571 [-0.0786, -0.0388] [-0.0811, -0.0360] | -0.0785 [-0.0982, -0.0608] [-0.1013, -0.0588] | -10.67% [-14.02%, -7.28%] [-14.63%, -6.78%] | -15.53% [-18.76%, -11.93%] [-19.31%, -11.62%] | observed joint improvement |
+| D2-L | ddnn2_alone_vs_same_information_twin_point_only | -0.0712 [-0.0910, -0.0545] [-0.0933, -0.0521] | not defined | -12.94% [-15.86%, -9.95%] [-16.15%, -9.65%] | n/a | MAE only (L has no interval forecast): lower (better) |
+| HGL-HG | lightgbm_as_v3_third_member_beside | -0.0301 [-0.0368, -0.0228] [-0.0379, -0.0217] | -0.0266 [-0.0327, -0.0204] [-0.0336, -0.0197] | -5.32% [-6.37%, -3.97%] [-6.53%, -3.81%] | -5.01% [-5.95%, -3.80%] [-6.14%, -3.63%] | observed joint improvement |
+| v3+D-HGL | cp23_ddnn_in_lightgbms_place_beside | 0.0157 [0.0081, 0.0232] [0.0069, 0.0241] | 0.0155 [0.0074, 0.0222] [0.0061, 0.0236] | +2.93% [+1.49%, +4.30%] [+1.32%, +4.45%] | +3.08% [+1.44%, +4.29%] [+1.18%, +4.63%] | observed joint worsening |
+| v3+D2-HG | ddnn2_as_v3_third_member | -0.0501 [-0.0563, -0.0425] [-0.0573, -0.0415] | -0.0448 [-0.0502, -0.0383] [-0.0512, -0.0374] | -8.86% [-9.69%, -7.49%] [-9.81%, -7.31%] | -8.41% [-9.17%, -7.15%] [-9.32%, -6.98%] | observed joint improvement |
+| v3+D2-HGL | ddnn2_in_lightgbms_place | -0.0200 [-0.0257, -0.0130] [-0.0266, -0.0122] | -0.0181 [-0.0233, -0.0118] [-0.0240, -0.0110] | -3.74% [-4.70%, -2.42%] [-4.82%, -2.24%] | -3.59% [-4.50%, -2.31%] [-4.66%, -2.15%] | observed joint improvement |
+| v5-HG | reference_vs_v3 | -0.0434 [-0.0491, -0.0366] [-0.0501, -0.0358] | -0.0386 [-0.0437, -0.0326] [-0.0445, -0.0319] | -7.68% [-8.45%, -6.40%] [-8.59%, -6.30%] | -7.24% [-7.96%, -6.09%] [-8.08%, -5.92%] | observed joint improvement |
+| v5-HGL | adoption_decision | -0.0133 [-0.0161, -0.0096] [-0.0166, -0.0091] | -0.0119 [-0.0143, -0.0087] [-0.0147, -0.0084] | -2.49% [-2.96%, -1.79%] [-3.04%, -1.68%] | -2.36% [-2.78%, -1.71%] [-2.86%, -1.62%] | observed joint improvement |
+| v5-v3+D2 | lightgbm_still_adds_given_ddnn2 | 0.0067 [0.0033, 0.0097] [0.0028, 0.0100] | 0.0062 [0.0031, 0.0089] [0.0026, 0.0094] | +1.30% [+0.63%, +1.84%] [+0.54%, +1.91%] | +1.28% [+0.62%, +1.81%] [+0.53%, +1.90%] | observed joint worsening |
 
 ### Diagnostics (descriptive; `attempt-1/diagnostics/`)
 
@@ -106,18 +108,18 @@ Frozen protocol `attempt-1/protocol.json`; vectors `attempt-1/predictions.parque
 
 | Ceiling | Cap | Used |
 |---|---|---|
-| ddnn2_fits | 40000 | 16338 |
+| ddnn2_fits | 40000 | 16395 |
 | v4_gate_origins | 280 | 280 |
-| policy_days | 12000 | 2843 |
-| reference_passes | 3 | 2 |
-| bootstrap_passes | 6 | 2 |
+| policy_days | 12000 | 3697 |
+| reference_passes | 3 | 3 |
+| bootstrap_passes | 6 | 3 |
 | scored_attempts | 2 | 1 |
 | rounds_before_attempt_1 | 3 | 1 |
 | rounds_before_attempt_2 | 1 | 0 |
-| machine_hours | 150 | 17.66 |
-| active_hours | 50 | 6.57 |
-| rss_bytes (GiB) | 10 | 3.36 |
-| additional_disk_bytes (GiB) | 10 | 1.10 |
+| machine_hours | 150 | 18.30 |
+| active_hours | 50 | 7.34 |
+| rss_bytes (GiB) | 10 | 3.97 |
+| additional_disk_bytes (GiB) | 10 | 3.23 |
 | workers | 4 | 4 |
 | data_download_bytes | 0 | 0 |
 | remote_writes | 0 | 0 |

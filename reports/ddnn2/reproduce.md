@@ -78,7 +78,25 @@ CP-24 ran one pre-fold round and one scored attempt; the attempt adopted v5, so 
   `leakage-a1-smoke`). It also ran the monitored LAND simulations `landsim-*`: the squash tree of the candidate onto
   `main`, run with CI's steps in a fresh one-commit repository with no tags, and once more after simulated later
   edits to living files. Their scripts live under `.local/tmp/cp-24/cont/`. `finalise`, the report and the
-  manifest were then regenerated.
+  manifest were then regenerated. After the third Integration review (FAIL: the 97.5% ratio intervals were
+  missing), `cp24.ratios --attempt 1` derived them from the stored draws (no pass), and the report, claim map and
+  packet were regenerated.
+
+## At the final candidate: what runs where
+
+- **The attempt-1 route refuses here, by design.** The Owner's work-availability maintenance (`9667fb4`) changed
+  `scripts/cp24_ddnn2.py` and `src/cp24/budget.py`, which are in attempt 1's `implementation_sha256`. So
+  `check_protocol(root, 1)` refuses at every later commit, and with it every attempt-1 entry point that calls it:
+  `fits`, `admission`, `comparison`, `score`, `controls`, `daily-cycle`, `fit-cost` and `diagnostics`. Nothing frozen
+  changed (`defects-and-repairs.md` item 10).
+- **Where the original entry points run.** In a clean detached checkout of `d637590`, the last commit before the
+  maintenance, with the same ledger and caches.
+- **The reproduction path at the candidate:**
+  - `cp24.review` (`--score`, `--gate`, `--trial`, `--ensemble`, `--replay`), which does not call
+    `check_protocol`. Note that `--score` spends a reference pass, and the three of §23.11 are spent;
+  - `cp24.leakage`, whose `frozen_guard` applies `check_protocol`'s conditions with the one recorded maintenance
+    exception;
+  - the verification commands below.
 
 ## Verification (no fit, no pass)
 
@@ -89,6 +107,7 @@ PYTHONPATH=src $PY -m cp24.claims --check
 PYTHONPATH=src $PY -m cp24.report --check
 PYTHONPATH=src $PY -m cp24.basetree --check-rev <candidate>   # every base file unchanged; every other file under CP-24's paths
 PYTHONPATH=src $PY -m cp24.basetree --check
+PYTHONPATH=src $PY -m cp24.ratios --attempt <k> --check   # 97.5% and 95% ratio intervals from the stored draws
 MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 PYTHONPATH=src $PY -m cp24.export --attempt <deciding k> --check
 ```
 

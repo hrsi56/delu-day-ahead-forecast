@@ -135,3 +135,36 @@ attempt 1's frozen implementation list. It touched only their calendar gate, nev
     - **A function check of `cp24.landsim`.** It ran `preconditions` and `materialise` once, outside the monitor:
       `git archive`, an untar and a scratch-repository commit, in about 8 seconds, with no test run. The tree it
       built (`3e19dd1`) equals the monitored simulation's squash tree. The scratch tree was deleted.
+15. **The third Integration review returned FAIL: the 97.5% ratio intervals were missing (2026-10-10).**
+    - **The review.** Critic 3 (record n = 3) reviewed candidate `7ea9bdd73fb7df50991083e674c4dad24335aaf0`, opened at
+      19:08:13Z and closed at 19:45:05Z. Its verdict is preserved byte for byte as
+      `docs/track-b/evidence/cp-24/review/critic-3-integration-FAIL.md`, SHA-256 `eaf3ada6…de01e8`.
+    - **What reproduced.** Every other item: the scores, the decision, the gate, a search trial, an ensemble fit,
+      a replay, pre-registration, the reference checks, the leakage extension, the landing safety and the accounting.
+    - **The gap.** §23.8 asks for ratio intervals "at 97.5%, the decision level, and at 95%". Attempt 1's frozen
+      scoring stored the 95% ratio interval and the 2,000 equal-fold ratio draws, but computed 97.5% intervals only
+      for the score differences.
+    - **The repair** is `cp24.ratios`. It writes `attempt-1/ratio-intervals.csv` from the committed draws in
+      `replicates.parquet`, with no rescoring and no bootstrap or reference pass.
+      - Its 95% interval equals `uncertainty.csv`'s exactly. Its 97.5% interval uses the scoring code's decision
+        levels.
+      - For v5 − v4: S_MAE −2.49% [95% −2.96%, −1.79%; 97.5% −3.04%, −1.68%]; S_WIS −2.36% [95% −2.78%, −1.71%;
+        97.5% −2.86%, −1.62%]. D2 − L in WIS stays undefined.
+      - The report's contrast table, the claim map (C420 and every contrast claim, source RI24) and the packet's
+        headline (b) now carry both levels. `tests/cp24/test_ratio_intervals.py` re-derives the table.
+      - No file of attempt 1's protocol, predictions, members, fits, lineage, metrics, uncertainty, criteria,
+        decisions or replicates changed.
+    - **The verdict's other observations, each addressed:**
+      - The leakage job `leakage-a1` started at 17:12:32Z, 15 seconds before `src/cp24/leakage.py` was committed in
+        `1dd919a` at 17:12:47Z. That is why its `frozen_guard.head` reads `3580bf9`. The module has not changed since.
+      - The review's `cp24.review --gate` recomputation charged its 840 policy-days to `policy_days_gate`, which now
+        reads 1,680, and not to a review counter. The total `policy_days` (3,697 of 12,000) is right.
+      - Reference passes are at their cap, 3 of 3: the Lead's scoring, Critic 2's aborted review and Critic 3's
+        review. Bootstrap passes stand at 3 of 6. A further review must not run `cp24.review --score`.
+      - `reproduce.md` now states that the attempt-1 entry points refuse at the candidate, that they run at
+        `d637590`, and what reproduces at the candidate.
+      - Claim C441 is scoped to what was tested: no use of any outcome dated on or after the delivery day. The
+        inherited input vintages are named as not re-tested.
+      - `resources.json` is the ledger at the candidate, before the review. The final totals are in
+        `docs/track-b/evidence/cp-24/resource-final.json` and the return. The §14.6 E4 session identities are in the
+        return.

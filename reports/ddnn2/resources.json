@@ -2,23 +2,23 @@
  "active_hours_basis": "from 2026-10-05T03:14:00Z (before the Lead's first command) minus recorded pauses",
  "active_hours_hard_stop": 50.0,
  "active_hours_timebox": 35.0,
- "active_hours_upper_bound": 6.565689623024729,
+ "active_hours_upper_bound": 7.340308874911732,
  "blas_threads": 1,
  "caps_vs_use": {
   "active_seconds": {
    "base_cap": 180000,
    "cap": 180000,
-   "used": 23636.482642889023
+   "used": 26425.111949682236
   },
   "additional_disk_bytes": {
    "base_cap": 10737418240,
    "cap": 10737418240,
-   "used": 1181328223
+   "used": 3470424355
   },
   "bootstrap_passes": {
    "base_cap": 6,
    "cap": 6,
-   "used": 2
+   "used": 3
   },
   "cost_usd": {
    "base_cap": 0,
@@ -33,22 +33,22 @@
   "ddnn2_fits": {
    "base_cap": 40000,
    "cap": 40000,
-   "used": 16338
+   "used": 16395
   },
   "machine_seconds": {
    "base_cap": 540000,
    "cap": 540000,
-   "used": 63589.49335646517
+   "used": 65891.3982978821
   },
   "policy_days": {
    "base_cap": 12000,
    "cap": 12000,
-   "used": 2843
+   "used": 3697
   },
   "reference_passes": {
    "base_cap": 3,
    "cap": 3,
-   "used": 2
+   "used": 3
   },
   "remote_writes": {
    "base_cap": 0,
@@ -68,7 +68,7 @@
   "rss_bytes": {
    "base_cap": 10737418240,
    "cap": 10737418240,
-   "used": 3604135936
+   "used": 4265377792
   },
   "scored_attempts": {
    "base_cap": 2,
@@ -87,7 +87,7 @@
   }
  },
  "cloud": 0,
- "cpu_hours_observed": 16.155132628468056,
+ "cpu_hours_observed": 16.782240054570558,
  "data_download_bytes": 0,
  "events": [
   {
@@ -319,6 +319,86 @@
    },
    "jobs": 1
   },
+  "critic3-blind-refit": {
+   "charged_machine_hours": 0.058339574930553986,
+   "cpu_seconds_observed": 208.830159168,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-gapcheck": {
+   "charged_machine_hours": 0.004284976631946241,
+   "cpu_seconds_observed": 14.304497168,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-independent-decision": {
+   "charged_machine_hours": 0.0003416978933334273,
+   "cpu_seconds_observed": 0.0,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-landsim-edits": {
+   "charged_machine_hours": 0.07344605253471753,
+   "cpu_seconds_observed": 253.95415498,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic3-landsim-main": {
+   "charged_machine_hours": 0.07389234813665907,
+   "cpu_seconds_observed": 255.65444767999998,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-pytest-full": {
+   "charged_machine_hours": 0.06239651103000344,
+   "cpu_seconds_observed": 254.491931392,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic3-pytest-full-ci": {
+   "charged_machine_hours": 0.06309332158583048,
+   "cpu_seconds_observed": 257.251764224,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-review": {
+   "charged_machine_hours": 0.03029111892360864,
+   "cpu_seconds_observed": 105.343768704,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-torch-reference": {
+   "charged_machine_hours": 0.002313493368055788,
+   "cpu_seconds_observed": 4.314713728,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic3-wasm-payload": {
+   "charged_machine_hours": 0.008253788356386293,
+   "cpu_seconds_observed": 68.223917552,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
   "daily-cycle-a1": {
    "charged_machine_hours": 0.6611451876855668,
    "cpu_seconds_observed": 302.31577134699995,
@@ -361,6 +441,14 @@
    },
    "jobs": 3
   },
+  "dev-precandidate-cont": {
+   "charged_machine_hours": 0.008205486574168188,
+   "cpu_seconds_observed": 20.432413012999998,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
   "dev-scoring-smoke": {
    "charged_machine_hours": 0.0014335480441635203,
    "cpu_seconds_observed": 4.1224998479999995,
@@ -394,21 +482,21 @@
    "jobs": 1
   },
   "finalise": {
-   "charged_machine_hours": 0.002049091886951323,
-   "cpu_seconds_observed": 3.684812936,
+   "charged_machine_hours": 0.002660057581391205,
+   "cpu_seconds_observed": 4.680436136,
    "exit_codes": {
-    "0": 3,
+    "0": 4,
     "None": 1
    },
-   "jobs": 4
+   "jobs": 5
   },
   "finalise-manifest": {
-   "charged_machine_hours": 0.001497103379446748,
-   "cpu_seconds_observed": 3.9495464240000002,
+   "charged_machine_hours": 0.0018102195369485547,
+   "cpu_seconds_observed": 4.947758992000001,
    "exit_codes": {
-    "0": 4
+    "0": 5
    },
-   "jobs": 4
+   "jobs": 5
   },
   "fit-cost-a1": {
    "charged_machine_hours": 0.38920797658555484,
@@ -439,6 +527,30 @@
    "cpu_seconds_observed": 5125.484418946,
    "exit_codes": {
     "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-candidate": {
+   "charged_machine_hours": 0.08379815819444451,
+   "cpu_seconds_observed": 270.30138747200004,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-main": {
+   "charged_machine_hours": 0.08499651436333402,
+   "cpu_seconds_observed": 271.43131611200005,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-main-edits": {
+   "charged_machine_hours": 0.08484091490749658,
+   "cpu_seconds_observed": 271.058427008,
+   "exit_codes": {
+    "1": 1
    },
    "jobs": 1
   },
@@ -572,9 +684,9 @@
    "jobs": 1
   }
  },
- "jobs_total": 52,
+ "jobs_total": 68,
  "ledger": ".local/artifacts/cp-24/ledger/budget.json (cumulative, never reset)",
- "machine_hours": 17.66374815457366,
+ "machine_hours": 18.30316619385614,
  "machine_hours_cap": 150.0,
  "mps": 0,
  "pause_reasons": [
@@ -626,8 +738,8 @@
    1791651240.0
   ]
  ],
- "peak_added_disk_gib": 1.1001976421102881,
- "peak_aggregate_rss_gib": 3.3566131591796875,
+ "peak_added_disk_gib": 3.2320845453068614,
+ "peak_aggregate_rss_gib": 3.972442626953125,
  "raises": [],
  "remote_writes": 0,
  "schema": "cp24-resources-v1",
@@ -643,6 +755,7 @@
   "ddnn2_fits_evaluation": 3584,
   "ddnn2_fits_gate": 2240,
   "ddnn2_fits_resource_admission": 18,
+  "ddnn2_fits_review": 57,
   "ddnn2_fits_search": 3465,
   "ddnn2_fits_warmup": 1504,
   "lasso_final_fits": 13954,
@@ -654,11 +767,12 @@
   "policy_days_control": 64,
   "policy_days_daily_cycle": 25,
   "policy_days_evaluation": 1350,
-  "policy_days_gate": 840,
+  "policy_days_gate": 1680,
+  "policy_days_review": 14,
   "primitive_fits": 69770,
   "reference_check_runs": 1,
   "rounds": 1,
   "v4_parity_origins": 11
  },
- "written_utc": "2026-10-10T19:01:34Z"
+ "written_utc": "2026-10-10T19:48:02Z"
 }
