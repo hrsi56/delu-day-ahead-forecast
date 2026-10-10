@@ -253,7 +253,18 @@ decision remains a boundary, not an active workstream.
 
 ## 3. Strategic Anchors
 
-- **Publication anchor:** [PUBLISH_RULES](docs/PUBLISH_RULES.md) **1.2**, Owner-authorized
+- **Current work-availability amendment (Owner, 2026-10-10):** research **v21-r12**,
+  `capstone_v21.md` SHA-256 `caf03d705a785369972b6e9ef3d043815a4a7ba77830cabb51e939c486477ce4`; publication
+  **PUBLISH_RULES 1.4**, SHA-256 `ccfe6199535dc104250ee1ed1d8ff57bf0b12fbfb4945a3521e2e29fad479a80`.
+  Incorporated amended baseline: Publication Standard v1 SHA-256 `7bb90c4cbd15bde42121d615bd850854610a1aa0b3a776190a58ef481abeb68c`;
+  presentation plan SHA-256 `b04a0bb1af171545ad74b5a91cf96d67b53e5322a0b5394c58cbbb0ca6ace19c`.
+  The [amendment record](docs/track-b/capstone_v21-r11-to-v21-r12-amendments.md) records authority and scope.
+  Older scheduling instructions are superseded even in a hash-pinned brief. All research
+  bars and resource ceilings remain in force; no checkpoint is opened, resumed or closed here.
+  Earlier identities below record ratification history. Where a copy was amended for work
+  availability, its historical hash binds the original at `522d7ea:<path>`, not the amended copy.
+
+- **Historical publication anchor:** [PUBLISH_RULES](docs/PUBLISH_RULES.md) **1.2**, Owner-authorized
   2026-09-30; SHA-256 `a43ac02021b7de468e02db30b61ec73f86cdafa69df845cf084ab196528bb15b`.
   A1–A6 continue; strengthened A7 and A8 govern future final-product rollout/daily operation,
   and 1.2's conditional A9 (§7.3) governs the final product's Space. Revision 1.1
@@ -263,7 +274,7 @@ decision remains a boundary, not an active workstream.
   preserved at `evidence/pres-2:docs/PUBLISH_RULES.md`; PRES-1 retains Publication Standard v1.
   Incorporated baseline: Publication Standard v1 `01d721c2…`; presentation plan revision 3
   `28119374…`.
-- **Current research anchor, ratified on 2026-10-05** under the Owner's delegation of 2026-10-04.
+- **Previous research anchor, ratified on 2026-10-05** under the Owner's delegation of 2026-10-04.
   The anchor's header quotes the suspension and the grant: `capstone_v21.md` **v21-r11**,
   SHA-256 `11068e3f57bd9277be50db62d109f3e7d8ea7b8fdfa042886ccc4ae5ab1ed2d2`.
   - **What it adds,** as additions only:
@@ -433,12 +444,11 @@ Session Log.
 **Added 2026-09-30 (Owner — unattended daily publication; `AGENTS.md`):**
 
 - **Daily data-only publication of the final product needs no per-day instruction.** Once an
-  authorized CP-18 brief launches the pipeline, it covers every delivery day, including
-  Friday/Shabbat.
+  authorized CP-18 brief launches the pipeline, it covers every delivery day.
 - **Its limits** are in `AGENTS.md` § Git and publication authority, under the standing
   publication exception.
-- **This supersedes plan §5.1's row that reads "Open".** The plan is hash-pinned by the r7→r8
-  amendment record, so it is kept byte-identical.
+- **This supersedes plan §5.1's row that reads "Open".** The plan’s r7→r8
+  hash binds its prior bytes; the 2026-10-10 work-availability amendment removes its scheduling restrictions.
 - **The Owner's other final-product decisions** (τ, τ_eq, where the job runs, visual approval,
   the Headline Arena reply) are surfaced only at the end of the programme.
 
@@ -497,8 +507,7 @@ Session Log.
 - Business profit/value curves require a defined, evaluated decision policy, costs, benchmark,
   full time series and risk/loss context; label simulation versus realization. Otherwise show
   the evidence gap. Forecast accuracy is not profit; no economic experiment is opened here.
-- Every delivery day is in scope, including DST and Friday/Shabbat, without scheduled manual
-  Owner work on those days. Future operating authorization must supply unattended coverage,
+- Every delivery day is in scope, including DST. Future operating authorization must supply unattended coverage,
   monitoring and failure rules. No scheduler or standing public-write permission is created now.
 - Research v21-r5 §16 and publication 1.1 A7/A8 are prospective; PRES-1/PRES-2 evidence and
   immutable v1 remain unchanged. CP-17–19 and CP-21 require their own bars/briefs. Live may be
@@ -637,9 +646,9 @@ Session Log.
 
 **Process:**
 
-- **Owner observance (clarified 2026-09-29): no scheduled manual Owner work on Friday or
-  Shabbat.** The ratified daily-product obligation still covers those delivery days; its future
-  brief must explicitly authorize unattended coverage and failure handling before launch.
+- **Work availability (Owner, 2026-10-10):** authorized work may run at any time on every day.
+  No weekday/time check, approaching-weekend stop, calendar pause or resumption exception is
+  required. This replaces all earlier scheduling restrictions; see `AGENTS.md` § Work availability.
 - **Reasoning capture is active** (`AGENTS.md` § Interview-answer capture).
   - Only the Orchestrator files entries, through `scripts/qa_append.py`; the Lead names triggers
     in its return.
@@ -672,6 +681,13 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Work availability, Owner decision, 2026-10-10.** A dedicated maintenance editor removed
+  calendar restrictions from rules, plans and runtime monitors under the Owner’s explicit
+  task-scoped edit/commit/push authority, including main. Research v21-r12 and publication
+  1.4 record the amendment; existing evidence and historical commits remain preserved.
+  The omission diff removes only the superseded scheduling conditions and updates affected
+  anchor identities; checkpoint state, research requirements and other pending actions are unchanged.
 
 - **v21-r11 ratified and CP-24 (DDNN-2) issued under the Owner's delegation, 2026-10-05.**
   - **The delegation, 2026-10-04.** The Owner handed DDNN-2 to the Orchestrator, to run through
@@ -1099,7 +1115,7 @@ Session Log.
 - **Final-product operating specification remains pending:** no final version designated and no
   daily system running. Future authorized work must fix numeric fit/issuance schedules, training
   windows, resources, percent-score formula/tolerance, source/outcome timing, business-use-case
-  evaluation (if any), deployment/daily-demo design and Friday/Shabbat failure coverage. These
+  evaluation (if any), deployment/daily-demo design and daily failure coverage. These
   implementation fields do not reopen the now-ratified product identity/order/daily-fit decision.
 - **PRES-2 advisories R1–R7 were dispositioned in PRES-3** (the
   [advisory log](docs/track-b/publication-advisory-log.md)):
@@ -1259,7 +1275,7 @@ Session Log.
   The brief is not issued before it. Also carry:
   - A-PRES3-1, -5 and -7 (Blockers);
   - the Owner's choice of v5's encoding, if v5 is adopted (PUBLISH_RULES §14).
-- **[Every new publication brief]** Pin PUBLISH_RULES 1.3 (from 2026-10-01; 1.2 before) and
+- **[Every new publication brief]** Pin PUBLISH_RULES 1.4 (from 2026-10-10) and
   incorporated source hashes;
   retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under
   its original 1.0 contract. Predecessor comparisons and descriptive chart routes remain;

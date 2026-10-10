@@ -1,5 +1,9 @@
 # Presentation and tracking plan, revision 3: one scrolling history page and MLflow
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/presentation-and-tracking-plan-2026-09-24.md`; they do not bind this amended copy.
+
 **Revision 3, approved by the Owner on 2026-09-24, together with the decisions in §16.** It is
 executed as task PRES-1 under the [Engineering Lead brief](pres-1-brief-2026-09-24.md).
 
@@ -1448,8 +1452,7 @@ commit to `main`, a push, an MLflow upload or a Space redeploy.
   `test_24` checks only the keys of `build_claims()`, so live values rendered from another source
   would get past it. It must be extended.
 
-  Daily automated commits and publication need a future authorization (CP-18). The daily schedule
-  must resolve the Friday and Shabbat observance.
+  Daily automated commits and publication need a future authorization (CP-18).
 
 ---
 

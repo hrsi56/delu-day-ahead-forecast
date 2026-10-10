@@ -134,11 +134,19 @@ AMENDED_BY_PUBLICATION = frozenset({'scripts/mlflow_export.py', 'tests/cp21/test
                                     'tests/cp21/test_saved_evidence.py'})
 
 
+#: Owner-authorized work-availability amendment, 2026-10-10. Check these historical bytes
+#: at the reviewed evidence tag; current monitor behaviour is tested in test_work_availability.
+AMENDED_BY_WORK_AVAILABILITY = frozenset({
+    'scripts/cp21_blocks.py', 'src/cp21/budget.py', 'src/cp21/protocol.py',
+    'tests/cp21/test_guards.py',
+})
+
+
 def test_hash_bound_files_are_stored_byte_for_byte():
     manifest = json.loads((OUT / 'artifact-manifest.json').read_text())['artifact_sha256']
-    assert AMENDED_BY_PUBLICATION <= set(manifest)
+    assert (AMENDED_BY_PUBLICATION | AMENDED_BY_WORK_AVAILABILITY) <= set(manifest)
     for name, digest in manifest.items():
-        if name in AMENDED_BY_PUBLICATION:
+        if name in AMENDED_BY_PUBLICATION | AMENDED_BY_WORK_AVAILABILITY:
             continue
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, name
     protocol = json.loads((OUT / 'protocol.json').read_text())
@@ -157,7 +165,7 @@ def test_hg_parity_and_controls_passed():
     assert daily['all_bitwise_checks_passed'] and daily['origins'] >= 20
 
 
-def test_files_amended_by_the_publication_keep_their_reviewed_bytes_at_the_evidence_tag():
+def test_amended_files_keep_their_reviewed_bytes_at_the_evidence_tag():
     """The exemption hides nothing: the tag still holds the bytes the manifest bound (a shallow clone without the tag,
     as in CI, cannot check this and skips)."""
     import subprocess
@@ -166,6 +174,6 @@ def test_files_amended_by_the_publication_keep_their_reviewed_bytes_at_the_evide
                          capture_output=True, text=True)
     if tag.returncode != 0:
         pytest.skip('evidence/cp-21 is not in this checkout')
-    for name in sorted(AMENDED_BY_PUBLICATION):
+    for name in sorted(AMENDED_BY_PUBLICATION | AMENDED_BY_WORK_AVAILABILITY):
         data = subprocess.run(['git', 'show', f'evidence/cp-21:{name}'], cwd=ROOT, capture_output=True, check=True).stdout
         assert hashlib.sha256(data).hexdigest() == manifest[name], name

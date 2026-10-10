@@ -276,7 +276,7 @@ required; no command here schedules training or grants publication permission.
    headline/placement rule and A5's routes; avoid duplicate charts across product sections.
 4. Implement authorized daily data acquisition, training, issuance, publication and later outcome
    reconciliation. Separate successful training time from data refresh/issuance; record missed
-   fits and stale/fallback forecasts. Cover DST and Friday/Shabbat without scheduled manual work.
+   fits and stale/fallback forecasts. Cover every delivery day, including DST.
    If the model only refreshes context, obtain the explicit exception required by research §16.
 5. Render today's genuinely issued predictions against available published prices, the frozen
    percentage metric and MAE, tomorrow's issued forecasts/intervals, and past interval coverage

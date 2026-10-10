@@ -1,5 +1,9 @@
 # Capstone v21-r4 → v21-r5 — final-product lifecycle amendment
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/capstone_v21-r4-to-v21-r5-amendments.md`; they do not bind this amended copy.
+
 **Ratified by explicit Owner approval, 2026-09-29. Documentation only.**
 
 ## Decision and authority
@@ -40,8 +44,8 @@ service, publication or Git history operation is authorized or performed by this
 | Business value could be inferred from forecast accuracy | Defined use case, costs, constraints, benchmark, cumulative net value and risk, or explicit evaluation gap | Reproduce evaluated economic series; separate simulation from realized outcomes and accuracy from money |
 | Live display could be delayed until validation ends | Authorized CP-18 displays live operation with evaluation-in-progress status; CP-19 retains ≥90-day bar | Actual prospective records; no qualification claim from selection, deployment or elapsed time alone |
 
-Daily operation must cover every delivery day while preserving no scheduled manual Owner work
-on Friday/Shabbat. The future brief supplies authorized unattended coverage, resources and
+Daily operation must cover every delivery day. The future brief supplies authorized unattended
+coverage, resources and
 incident rules; this document schedules nothing. Immutable v1 and historical comparators are
 not retrained. Daily artifacts are not new research-generation numbers.
 

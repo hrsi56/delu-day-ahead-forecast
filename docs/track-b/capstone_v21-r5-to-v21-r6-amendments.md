@@ -1,5 +1,9 @@
 # Capstone v21-r5 → v21-r6 — CP-21: three-block LightGBM on top of v3 (ratified)
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/capstone_v21-r5-to-v21-r6-amendments.md`; they do not bind this amended copy.
+
 **Ratified by the Owner on 2026-09-29, with two changes. CP-21 execution was authorized the same
 day.**
 
@@ -95,7 +99,6 @@ preference.
 | Memory and disk | 10 GiB RSS; 20 GiB added disk |
 | Data, network and cost | 0 bytes downloaded; 0 remote writes; $0 |
 | Timebox | About 32 active hours; hard ceiling 40 |
-| Calendar | No work from Friday 00:00 to Sunday 00:00, Asia/Jerusalem |
 
 **Alternatives considered in the draft:**
 

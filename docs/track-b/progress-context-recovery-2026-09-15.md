@@ -72,7 +72,7 @@ operational context was returned to current progress; it does not create fresh g
 | 11 | Governance Lockdown | Retained in canonical AGENTS.md and current progress; not duplicated or amended. |
 | 12 | Orchestrator-only interview capture; owner owns presentation | Already restored before this investigation. Q&A entry 2 was never lost. |
 | 13 | AMD-G5 negative control knowingly waived | Restored as a closed historical decision, without waiving present CP-15 controls. |
-| 14 | No scheduled work Friday or Shabbat | Restored as the owner’s standing preference. No later withdrawal was found in the reviewed record. |
+| 14 | Work availability | Owner decision of 2026-10-10 supersedes the earlier scheduling preference; see `AGENTS.md` § Work availability. |
 | 15 | Do not use the free scheduler for a hard deadline | Restored as a historical operational lesson; no claim of a fresh provider verification. |
 | 16 | External-source degradation is outside our control | Restored with the fallback lesson. The old outage remains closed. |
 | 17 | Execution-contract reviews unscoped by default | Historical governance context retained here, not promoted over the current role’s closed packet-check boundary. Canonical contracts govern a future Owner-requested governance review. |

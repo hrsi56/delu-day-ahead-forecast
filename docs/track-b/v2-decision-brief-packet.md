@@ -1,5 +1,9 @@
 # Preparation packet 4.0a — one existing-input v2 experiment
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/v2-decision-brief-packet.md`; they do not bind this amended copy.
+
 > Subsequent disposition, 2026-09-23: CP-16 landed and closed under the Owner's explicit
 > local integration/cleanup authorization. Use `land/cp-16` for the squash landing and
 > `evidence/cp-16` for the complete reviewed chain. `gauntlet/cp-16` and its Lead checkout
@@ -96,8 +100,7 @@ was commissioned or performed by 4.0b.
   receive status/identity edits; earlier landing permissions have expired.
 - Future live operation and unused-data comparison remain separate stages. Preparation of
   v2 neither starts nor contributes days to the ≥90-day post-final-freeze evaluation.
-- No scheduled Owner work on Friday/Shabbat. No scheduler or operational commitment is
-  created by this packet. Existing Q&A and unrelated dirty work are preserved.
+- No scheduler or operational commitment is created by this packet. Existing Q&A and unrelated dirty work are preserved.
 
 The Owner has now approved the research use, comparison contract and numerical ceilings
 below. No new product gate or commercial exposure is adopted. Approved document decisions

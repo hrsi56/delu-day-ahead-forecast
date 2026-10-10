@@ -174,9 +174,8 @@ def build(root: Path) -> dict:
                'reproduction': 'reports/block-challenger/reproduce.md'},
         'E3': {'ledger': '.local/artifacts/cp-21/ledger/budget.json (cumulative, never reset; counters reserved before use)',
                'monitor': 'scripts/cp21_blocks.py monitor: wall x declared workers, process-tree and aggregate RSS, added disk, '
-                          'duplicate/5th-worker refusal, calendar stop line, completion markers',
-               'calendar': 'no job starts Friday 00:00-Sunday 00:00 Asia/Jerusalem; a running job stops 20 minutes before; fits and '
-                           'states are written atomically, so a stopped job resumes from its cache',
+                          'duplicate/5th-worker refusal, completion markers',
+               'resumability': 'fits and states are written atomically, so a stopped job resumes from its cache',
                'preflight_disk_free_bytes': shutil.disk_usage(str(art())).free},
         'E4': {'lead': 'CP-21 Track B Engineering Lead (this session)', 'reviewer': 'one fresh independent Integration Critic, '
                'launched by the Lead on a clean detached checkout of the exact final candidate under .local/worktrees/cp-21/critic',

@@ -8,7 +8,7 @@ CP-16, CP-20 or CP-21; their debits stay in their own ledgers.
 from __future__ import annotations
 
 import contextlib
-from datetime import datetime, timedelta
+from datetime import datetime
 import fcntl
 import json
 import os
@@ -49,21 +49,6 @@ TRACKED = {
 GAUGES = {'rss_bytes', 'additional_disk_bytes', 'workers'}
 #: Conservative effort start: the Lead's first command, 2026-10-01 15:37:39 IDT (12:37:39 UTC).
 SESSION_START_EPOCH = datetime(2026, 10, 1, 12, 37, 39, tzinfo=ZoneInfo('UTC')).timestamp()
-JERUSALEM = ZoneInfo('Asia/Jerusalem')
-
-
-def calendar_stop(now: float | None = None) -> tuple[bool, float]:
-    """(inside the Friday/Shabbat window, seconds until the next window opens).
-
-    The window is Friday 00:00 to Sunday 00:00, Asia/Jerusalem (§20.8, §17.8). No job starts
-    inside it and none runs into it."""
-    moment = datetime.fromtimestamp(time.time() if now is None else now, JERUSALEM)
-    inside = moment.weekday() in (4, 5)  # Friday, Saturday
-    days = (4 - moment.weekday()) % 7
-    friday = (moment + timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
-    if friday <= moment:
-        friday += timedelta(days=7)
-    return inside, (friday - moment).total_seconds()
 
 
 class CapExceeded(RuntimeError):

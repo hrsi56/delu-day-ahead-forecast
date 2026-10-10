@@ -60,6 +60,14 @@
 > bookkeeping and require no Lockdown suspension. This exception does not authorize changing defect
 > definitions, acceptance criteria, historical evidence, ratified anchors, or governance policy.
 
+## Work availability
+
+Authorized work may run at any time, on every day. Do not check the weekday, local time or
+approaching weekend to decide whether work may start, continue or resume. No calendar-based
+pause, resumption message or exception is required. This Owner decision of 2026-10-10 supersedes
+all earlier scheduling restrictions in plans, briefs, historical records and agent instructions.
+Resource ceilings, elapsed-time accounting and all other authorization boundaries still apply.
+
 ## Project-local working files
 
 Keep all agent-created temporary worktrees, handoff packets, scratch files, caches and recovery
@@ -161,7 +169,7 @@ All agent work is local. Publication and mainline history belong to Yarden alone
 - **Local evidence preservation is part of that exception.** Critic verdicts are markdown files committed under `docs/track-b/evidence/<checkpoint>/` on that same local branch, after their review is complete. The candidate SHA cited by a verdict must stay reachable — on the `gauntlet/<checkpoint>` branch while it exists, and afterwards on the disposition tag required below. Nothing is pushed.
 - **Standing publication exception — the final product's unattended daily updates.** Approved by the Owner on 2026-09-30, with explicit authority for this edit (research anchor `capstone_v21.md` §§16, 19; `docs/PUBLISH_RULES.md` §7.2, A9). It is the only exception to "never publish" and "never commit to `main`".
   - **Who.** It applies only to the daily pipeline that an authorized CP-18 brief launches for the Owner-designated final product. It needs no further per-day or per-launch publication instruction.
-  - **What, every delivery day** (DST days and Friday/Shabbat included, with no manual Owner work), for that day's data-only update of the frozen policy:
+  - **What, every delivery day** (including DST days), for that day's data-only update of the frozen policy:
     - upload the dated daily bundle to the Hugging Face Space;
     - commit and push to `main` only the day's generated data-only records, in the paths the CP-18 brief names, and the regenerated report and generated blocks;
     - write the day's records to the prescribed `delu-live` MLflow destination.

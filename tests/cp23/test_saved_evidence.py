@@ -174,14 +174,37 @@ def test_the_generated_documents_equal_their_generators():
         assert run.returncode == 0, (module, run.stdout[-2000:], run.stderr[-2000:])
 
 
+#: Owner-authorized work-availability amendment, 2026-10-10. Historical source hashes
+#: bind the evidence tag; current monitor behaviour is tested in test_work_availability.
+AMENDED_BY_WORK_AVAILABILITY = frozenset({
+    'scripts/cp23_ddnn.py', 'src/cp23/budget.py', 'src/cp23/protocol.py',
+    'tests/cp23/test_saved_evidence.py',
+})
+
+
 def test_byte_exact_storage_of_every_manifested_file():
     path = OUT / 'artifact-manifest.json'
     if not path.exists():
         pytest.skip('the artifact manifest is written at finalisation')
     from cp15.data import sha
     manifest = json.loads(path.read_text())['artifact_sha256']
-    assert manifest and all(sha(ROOT / name) == digest for name, digest in manifest.items())
+    assert AMENDED_BY_WORK_AVAILABILITY <= set(manifest)
+    for name, digest in manifest.items():
+        if name not in AMENDED_BY_WORK_AVAILABILITY:
+            assert sha(ROOT / name) == digest, name
     protocol = json.loads((OUT / 'protocol.json').read_text())
     assert sha(ROOT / 'docs/track-b/evidence/cp-23/issued-brief.md') == protocol['issued_brief']['sha256']
     for name in ('docs/track-b/evidence/cp-23/.gitattributes', 'reports/distribution-challenger/.gitattributes'):
         assert '* -text' in (ROOT / name).read_text()
+
+
+def test_amended_files_keep_their_reviewed_bytes_at_the_evidence_tag():
+    import hashlib
+    manifest = json.loads((OUT / 'artifact-manifest.json').read_text())['artifact_sha256']
+    tag = subprocess.run(['git', 'rev-parse', '--verify', '--quiet', 'evidence/cp-23^{commit}'],
+                         cwd=ROOT, capture_output=True, text=True)
+    if tag.returncode != 0:
+        pytest.skip('evidence/cp-23 is not in this checkout')
+    for name in sorted(AMENDED_BY_WORK_AVAILABILITY):
+        data = subprocess.check_output(['git', 'show', f'evidence/cp-23:{name}'], cwd=ROOT)
+        assert hashlib.sha256(data).hexdigest() == manifest[name], name

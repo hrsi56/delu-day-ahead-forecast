@@ -518,9 +518,8 @@ daily cycle time.
   lags use the forecasts as issued, not actual load. Use the same holiday calendar as LEAR.
 
 **Engineering and operations**
-- Compute grows 10-30x versus CP-23; the HPO ledger, resumability and the programme's job-window rules (CP-23 avoided
-  the Friday 00:00 - Sunday 00:00 window) must be planned; set MLflow telemetry off (MLFLOW_DISABLE_TELEMETRY and
-  DO_NOT_TRACK) for any tracked job.
+- Compute grows 10-30x versus CP-23; plan the HPO ledger and resumability; set MLflow telemetry off
+  (MLFLOW_DISABLE_TELEMETRY and DO_NOT_TRACK) for any tracked job.
 - The daily product cycle must still fit: 8 longer-trained members could take 10-50 s per origin on 4 workers;
   measure the cold cycle as CP-23 did.
 - NumPy-only: the HPO sampler, pinball loss and guards stay in NumPy and the standard library; PyTorch only in the

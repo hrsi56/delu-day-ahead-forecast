@@ -1,4 +1,15 @@
-# Capstone v21-r11 — CP-24: DDNN-2, a literature-faithful DDNN, and v5 = v4 plus a DDNN-2 member; CP-23's outcome (ratified)
+# Capstone v21-r12 — unrestricted work availability (Owner-authorized 2026-10-10)
+
+Authorized work may run on every day and at any time, under `AGENTS.md` § Work availability.
+The Owner removed calendar-based work restrictions, advance clock checks, mandatory pauses
+and resumption exceptions throughout the project. Resource ceilings and research requirements
+are unchanged. The prior revision is preserved at `522d7ea:capstone_v21.md`.
+
+Authority and scope: [r11 → r12 amendment record](docs/track-b/capstone_v21-r11-to-v21-r12-amendments.md).
+The r11 authority record below describes that historical revision; its additions-only statement
+does not describe the scheduling deletions made in r12.
+
+## Historical authority: Capstone v21-r11 — CP-24: DDNN-2, a literature-faithful DDNN, and v5 = v4 plus a DDNN-2 member; CP-23's outcome (ratified)
 
 **Ratified on 2026-10-05 under the Owner's delegation of 2026-10-04.** After CP-23 closed, the
 Owner delegated a second DDNN route to the Orchestrator, to run without the Owner until the report
@@ -1245,8 +1256,7 @@ admission; no alternative cadence or exemption is silently inferred from model f
 Immutable historical v1/reference artifacts remain untouched; this requirement does not
 retroactively retrain them or force every research comparator to train daily.
 
-Daily operation covers all delivery days, including DST and Friday/Shabbat. No manual Owner
-work is scheduled on Friday/Shabbat; the operational brief must reconcile coverage through an
+Daily operation covers all delivery days, including DST. The operational brief supplies an
 explicitly authorized unattended schedule and incident/fallback policy. Publication authority,
 operator ownership, monitoring, permissions and resources must be settled before launch. This
 amendment creates no automation or standing authority to publish externally.
@@ -1664,15 +1674,7 @@ block model trains on about a third of those rows. Worst case, with single-threa
 workers, the 22,330 main fits need about 28 aggregate machine-hours. Controls, reproduction,
 review, scoring and tests add about 12. The 60-hour cap leaves a 1.5× margin.
 
-**Calendar: no scheduled work on Friday or Shabbat,** Asia/Jerusalem, from Friday 00:00 to
-Sunday 00:00.
-
-- No compute job starts in that window or runs unattended into it. A job that cannot finish
-  before Friday 00:00 is not started. A running job is stopped at an atomic checkpoint and
-  resumed after Shabbat, on the Owner's message.
-- No long unattended run is required or authorized.
-- The pause is not a terminal return and is excluded from elapsed hours.
-- No Owner action is requested for those days.
+**Unattended execution.** No long unattended run is required or authorized.
 
 **Before dependent work,** the Lead completes §14.6 E1–E4 for CP-21:
 
@@ -1798,7 +1800,7 @@ valid "Not adopted" result can pass.
      distinct. No promotion, freeze or economic claim.
 8. Deliver §17.5's fit-cost and daily-retrain diagnostic in `reports/block-challenger/`.
 9. Enforce and report every §17.8 cap from the first job, including controls, failures and
-   independent review, and respect the Friday/Shabbat calendar. At an exhausted cap, retain the
+   independent review. At an exhausted cap, retain the
    partial evidence and return the applicable non-PASS status.
 10. Supply the durable evidence and executable reproduction commands: the protocol, lineage,
     predictions, metrics, diagnostics, uncertainty with stored replicates, criteria, failures,
@@ -2430,8 +2432,6 @@ These are maxima, not targets, derived from CP-21's measured costs:
 | Data, network and cost | 0 bytes downloaded; 0 remote writes; $0 |
 | Effort | About 24 active hours; hard ceiling of 32 |
 
-**Calendar.** §17.8's rule: no scheduled work from Friday 00:00 to Sunday 00:00, Asia/Jerusalem.
-
 **Before dependent work,** the Lead completes §14.6 E1–E4 for CP-22. An insufficient allowance
 returns a concrete blocker, not a smaller experiment.
 
@@ -2835,10 +2835,6 @@ These are maxima, not targets. 4.6R projects the full run against them.
 | Memory and disk | 10 GiB RSS; 10 GiB added peak disk |
 | Data, network and cost | 0 data bytes downloaded. The one permitted download is the pinned PyTorch CPU test dependency, from PyPI, with its licence recorded in 4.6L. 0 remote writes; $0 |
 | Effort | About 30 active hours; hard ceiling of 40 |
-
-**Calendar.** §17.8's rule: no scheduled work from Friday 00:00 to Sunday 00:00,
-Asia/Jerusalem. An Owner exception given in writing is honoured as in CP-22: a scoped, logged
-wrapper, with the rule and the frozen code unchanged.
 
 **Before dependent work,** the Lead completes §14.6 E1–E4 for CP-23. An insufficient allowance
 returns a concrete blocker, not a smaller experiment.
@@ -3655,14 +3651,6 @@ These are maxima, not targets. 4.6R′ projects against them, and §23.6 allows 
 | Memory and disk | 10 GiB RSS; 10 GiB added peak disk |
 | Data, network and cost | 0 data bytes. If the local cache lacks CP-23's pinned PyTorch CPU wheels, the one permitted download is that same pinned set, from PyPI. 0 remote writes; $0 |
 | Effort | About 35 active hours; hard ceiling of 50 |
-
-**Calendar.** §17.8's rule applies: no scheduled work from Friday 00:00 to Sunday 00:00,
-Asia/Jerusalem.
-
-- **The pause.** Work not finished by Friday 2026-10-09 00:00 pauses at a committed, coherent
-  boundary.
-- **The resume.** It resumes after Sunday 00:00, on the Orchestrator's message. In CP-24 the
-  Orchestrator attends the run in the Owner's place.
 
 **Before dependent work,** the Lead completes §14.6 E1–E4 for CP-24, with the Lead and Critic
 sessions named by the Lead.

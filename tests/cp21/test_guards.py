@@ -1,11 +1,10 @@
 """CP-21 §17.1/§17.7/§17.8: the 2026-04-07 boundary guard, the strict raw schema, the ledger's
-charge-before-use and the Friday/Shabbat calendar, each with a positive control."""
+charge-before-use, each with a positive control."""
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
 import json
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 import pandas as pd
 import pytest
@@ -59,13 +58,3 @@ def test_ledger_refuses_before_a_cap_and_never_resets(tmp_path):
     assert B.CAPS['download_bytes'] == 0 and B.CAPS['remote_writes'] == 0
     with pytest.raises(B.CapExceeded):
         ledger.reserve(remote_writes=1)
-
-
-def test_calendar_window_is_friday_and_saturday_in_jerusalem():
-    tz = ZoneInfo('Asia/Jerusalem')
-    thursday = datetime(2026, 10, 1, 23, 0, tzinfo=tz).timestamp()
-    inside, until = B.calendar_stop(thursday)
-    assert not inside and until == 3600
-    assert B.calendar_stop(datetime(2026, 10, 2, 0, 0, tzinfo=tz).timestamp())[0]
-    assert B.calendar_stop(datetime(2026, 10, 3, 23, 59, tzinfo=tz).timestamp())[0]
-    assert not B.calendar_stop(datetime(2026, 10, 4, 0, 0, tzinfo=tz).timestamp())[0]

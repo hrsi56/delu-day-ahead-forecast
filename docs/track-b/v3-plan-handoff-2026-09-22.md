@@ -1,5 +1,9 @@
 # v2 / v3 programme plan — owner handoff
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/v3-plan-handoff-2026-09-22.md`; they do not bind this amended copy.
+
 **2026-09-29 final-product update:** the programme proposal below remains subordinate to the
 research anchor. Owner-ratified `capstone_v21.md` v21-r5 §16 now governs the final-product
 lifecycle and daily-training requirement; PUBLISH_RULES 1.1 governs its page order and display.
@@ -834,8 +838,7 @@ planned sections unchanged. The panel includes today's issued-versus-published p
 percentage performance plus MAE, tomorrow's forecasts/intervals, measured past coverage/width
 and distinct training/issuance/freshness states. Use PUBLISH_RULES 1.1 §§5/7.2; economic claims
 require §4.E evidence. A selected but not yet operational model is shown as pending, not live.
-Calendar coverage includes every delivery day; preserve the Owner's no-manual-work
-Friday/Shabbat boundary through a separately authorized unattended operational plan.
+Calendar coverage includes every delivery day under a separately authorized operational plan.
 
 *2026-09-30:* the primary demo is the Hugging Face Space, under research v21-r8 §19 and
 PUBLISH_RULES 1.2 A9.

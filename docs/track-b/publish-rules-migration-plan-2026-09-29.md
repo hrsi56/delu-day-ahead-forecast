@@ -1,5 +1,9 @@
 # Migration to PUBLISH_RULES 1.0 — execution plan
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/publish-rules-migration-plan-2026-09-29.md`; they do not bind this amended copy.
+
 **Prepared:** 2026-09-29 · **Status:** complete planning deliverable; implementation not started.
 **Proposed work item:** PRES-2, a presentation migration, separate from closed PRES-1 and unopened CP-21.
 **Planning role:** Orchestrator. The Engineering Lead owns implementation choices when a valid brief
@@ -464,7 +468,7 @@ Carry forward a release checklist for the authorized future product:
 - A7's issue time, delivery date/timezone, actual availability, score window/sample count, interval
   level, observed coverage/width, freshness and failure states populated from real records;
 - daily inference versus retraining, frozen policy versus fixed weights and publication/scheduling
-  authority explicitly resolved, including Friday and Shabbat restrictions;
+  authority explicitly resolved;
 - no “percent correct” or “confidence tomorrow” label without its defined evidence and semantics.
 
 This handoff is a documented interface for future work, not a placeholder live panel on today's site.

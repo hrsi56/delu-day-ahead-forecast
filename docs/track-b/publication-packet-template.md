@@ -131,7 +131,7 @@ otherwise state the unmet trigger. A completed form is not operational evidence 
 | One product identity | Incoming/outgoing product; registry/policy identity across opening, primary demo, README, Space and tracking; dated daily artifacts and historical replay labels |
 | Frozen policy | Code/dependency, feature/input, hyperparameter, history/label-delay, initialization, seed, uncertainty/scoring and failure contracts; exact registry versions/fingerprints |
 | Daily training and issuance | Numeric schedule, cutoffs, windows, resources, successful-fit records, artifact/input lineage; separate fit/refresh/issue times; explicit Owner-approved exception if retraining is impossible |
-| Operational coverage | Every delivery day including DST; authorized unattended Friday/Shabbat coverage without manual Owner work; operator, monitoring, retry/fallback/staleness and failed-issuance records |
+| Operational coverage | Every delivery day including DST; authorized unattended coverage; operator, monitoring, retry/fallback/staleness and failed-issuance records |
 | Today | Saved pre-outcome hourly forecasts versus available published prices; source/revision timestamps, eligible hours, partial-day completeness and original issuing artifact |
 | Percentage performance and MAE | Frozen formula, denominator, success tolerance if any, window/sample count, zero/negative/missing-price handling; distinguish benchmark improvement from correctness |
 | Tomorrow and reliability | Issued hourly point/interval forecasts or pending/unavailable state; nominal interval level; measured past coverage and width with named window; no unqualified confidence percentage |

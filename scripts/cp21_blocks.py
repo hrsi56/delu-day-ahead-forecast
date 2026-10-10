@@ -7,9 +7,8 @@
 
 The monitor owns the job's resource accounting (§17.8): it charges machine time as wall-clock x
 declared workers, samples the process-tree RSS and the aggregate of all running CP-21 jobs,
-measures added disk, refuses a duplicate instance or a fifth concurrent worker, refuses to start
-inside the Friday/Shabbat window (Asia/Jerusalem) and stops a job at an atomic checkpoint before
-the window opens, terminates a job at any hard cap, and writes a completion marker. A job whose
+measures added disk, refuses a duplicate instance or a fifth concurrent worker, terminates a job
+at any hard cap, and writes a completion marker. A job whose
 monitor died is reconciled on the next start with a conservative tail charge; accounting is
 never reset.
 """
@@ -35,14 +34,11 @@ BLAS = ('OPENBLAS_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'OMP_NUM_THREADS', 'MK
         'NUMEXPR_NUM_THREADS')
 for _name in BLAS:
     os.environ[_name] = '1'
-from cp21.budget import CAPS, TIMEBOX_ACTIVE_SECONDS, Budget, atomic, calendar_stop, dir_bytes, ledger_path, pid_alive  # noqa: E402
+from cp21.budget import CAPS, TIMEBOX_ACTIVE_SECONDS, Budget, atomic, dir_bytes, ledger_path, pid_alive  # noqa: E402
 
 TICK = 1.0
 DISK_EVERY = 60.0
 RECONCILE_TAIL_SECONDS = 60.0
-#: Stop a running job this long before the Friday window opens, so it ends at an atomic
-#: checkpoint (every fit and state file is written atomically) before Friday 00:00.
-CALENDAR_MARGIN_SECONDS = 20 * 60
 
 
 def disk_paths():
@@ -104,11 +100,6 @@ def monitor(args):
     command = args.command[1:] if args.command and args.command[0] == '--' else args.command
     if not command:
         raise ValueError('missing command')
-    inside, until = calendar_stop()
-    if inside:
-        raise SystemExit('refused: inside the Friday/Shabbat window (Asia/Jerusalem); resume after Shabbat on the Owner\'s message')
-    if args.expected_minutes and args.expected_minutes * 60 + CALENDAR_MARGIN_SECONDS >= until:
-        raise SystemExit('refused: the job could not finish before the Friday window opens')
     locks = ART / 'locks'
     locks.mkdir(parents=True, exist_ok=True)
     lock = (locks / f'{args.name}.lock').open('a')
@@ -194,7 +185,6 @@ def monitor(args):
                         state['peaks']['additional_disk_bytes'] = max(state['peaks'].get('additional_disk_bytes', 0), disk)
                         state['last_disk'] = {'epoch': time.time(), 'added_bytes': disk, **parts}
                     active = Budget.active_seconds(state)
-                    inside, until = calendar_stop()
                     if counts['machine_seconds'] >= CAPS['machine_seconds']:
                         reason = 'machine_seconds_cap'
                     elif active >= CAPS['active_seconds']:
@@ -203,8 +193,6 @@ def monitor(args):
                         reason = 'aggregate_rss_cap'
                     elif measure and disk >= CAPS['additional_disk_bytes']:
                         reason = 'additional_disk_cap'
-                    elif inside or until <= CALENDAR_MARGIN_SECONDS:
-                        reason = 'calendar_friday_shabbat_stop'
                     elif stop['signal'] is not None:
                         reason = f'monitor_signal_{stop["signal"]}'
                 if reason or proc.poll() is not None:
@@ -275,7 +263,8 @@ def main():
     m.add_argument('--name', required=True)
     m.add_argument('--workers', type=int, default=1)
     m.add_argument('--log', type=Path, required=True)
-    m.add_argument('--expected-minutes', type=float, default=None)
+    m.add_argument('--expected-minutes', type=float, default=None,
+                   help='Compatibility option; does not restrict when a job may run')
     m.add_argument('command', nargs=argparse.REMAINDER)
     j = sub.add_parser('job')
     j.add_argument('name')

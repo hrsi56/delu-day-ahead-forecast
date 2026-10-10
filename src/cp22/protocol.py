@@ -258,7 +258,7 @@ def build(root: Path) -> dict:
             'members.parquet': 'fold, timestamp_utc, delivery_date, PN-avg, PN-sel, L-P, L-N, L-R, A1, B2, HG, HGL (10,747 rows)'}},
         'E3': {'ledger': '.local/artifacts/cp-22/ledger/budget.json (cumulative, never reset; counters reserved before use)',
                'monitor': 'scripts/cp22_revision.py monitor: wall x declared workers, process-tree and aggregate RSS, added disk, '
-                          'duplicate/5th-worker refusal, calendar stop 20 minutes before Friday 00:00 Asia/Jerusalem, markers',
+                          'duplicate/5th-worker refusal, markers',
                'preflight_disk_free_bytes': shutil.disk_usage(str(art())).free},
         'E4': {'lead': 'CP-22 Track B Engineering Lead (this session)',
                'reviewer': 'one fresh independent Integration Critic on a clean detached checkout of the exact final candidate '

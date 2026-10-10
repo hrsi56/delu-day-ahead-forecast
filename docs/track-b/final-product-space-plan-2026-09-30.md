@@ -1,5 +1,9 @@
 # Final-product Space plan — from a frozen demo to a daily product tool
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/final-product-space-plan-2026-09-30.md`; they do not bind this amended copy.
+
 **Orchestrator planning document, 2026-09-30, written at the Owner's request. Not an execution
 brief.** It plans how the Hugging Face Space becomes the final product's useful, informative
 tool: trained and updated daily, with the Owner's panels and analyses. It executes as part of
@@ -89,7 +93,7 @@ The final product already carries a demanding contract. The Space has to satisfy
 | The browser and accessibility matrix, including framework widgets | PUBLISH_RULES §9 | Applies to every Space view and control. |
 | Hugging Face is a required destination; served identity verified per release and daily | runbook §1a; packet §8 | The daily pipeline must deliver each admitted artifact to the Space and verify what it serves. |
 | "Do not assume a browser-only WASM demo can retrain or refresh itself automatically" | runbook §7b | The Space never fetches or trains on its own schedule; a delivery pipeline publishes each day. |
-| Before Live: publication authority, Friday/Shabbat coverage, `delu-live`, the registry model, an extended `test_24`, a live claim builder and a demo concept for daily weather inputs | PUBLISH_RULES §7.2; Standard v1 §16 | Prerequisites of CP-18, carried into §7 of this plan. |
+| Before Live: publication authority, daily coverage, `delu-live`, the registry model, an extended `test_24`, a live claim builder and a demo concept for daily weather inputs | PUBLISH_RULES §7.2; Standard v1 §16 | Prerequisites of CP-18, carried into §7 of this plan. |
 | Daily data-only updates need an `AGENTS.md` amendment by the Owner or an Owner-run push | Standard v1 §16 | Unattended daily publication is an Owner authority decision (§5.1). |
 | Evidence classes are never pooled; development, one-shot and prospective stay separate | PUBLISH_RULES §3.1 | Validation and reliability views keep the classes apart (§4.6). |
 | No data after 2026-04-07 in research numbers or charts before the final test | Standing decision, 2026-09-24 | Governs which dates the data and feature views may show before 4.7T (§4.10). |
@@ -395,7 +399,7 @@ authorized pipeline (§5) publishes a dated bundle:
 | The percentage tolerance τ, from §4.3's proposal | At CP-17, before 4.7T | Open |
 | The equality tolerance τ_eq, after the feasibility probe measures the browser | At CP-17 | Open |
 | An exception, if the designated model cannot be retrained in the browser within the measured limits, with its public wording | At CP-17, only if needed | Conditional |
-| **Unattended daily publication authority:** an `AGENTS.md` amendment naming the automation, the surfaces (Space, and the report if regenerated), the credential use, and the Friday/Shabbat coverage | At CP-18, before launch | Open; Owner-only (Standard v1 §16; `AGENTS.md`) |
+| **Unattended daily publication authority:** an `AGENTS.md` amendment naming the automation, the surfaces (Space, and the report if regenerated), the credential use, and the daily coverage | At CP-18, before launch | Open; Owner-only (Standard v1 §16; `AGENTS.md`) |
 | Where the daily pipeline runs (§8) | At CP-18 | Open |
 | Visual approval of the new Space | Before its first publication | Open; presentation is the Owner's |
 | The reply to Headline Arena (§9) | Any time | Open; recommendation in §9 |
@@ -498,8 +502,7 @@ publication A8 and A9 bind the release. Every future brief pins both.
    - publish it to the Space and verify the served identity;
    - reconcile outcomes later and update the records.
 
-   Failures and staleness stay visible, and every delivery day is covered, including DST days
-   and Friday/Shabbat, without manual work. This needs the Owner's `AGENTS.md` authority first.
+   Failures and staleness stay visible, and every delivery day is covered, including DST days. This needs the Owner's `AGENTS.md` authority first.
 5. **Space build (CP-18):** §4's views under A9, from the payload only, with the History route
    for v1.
 6. **Tests (CP-18):**

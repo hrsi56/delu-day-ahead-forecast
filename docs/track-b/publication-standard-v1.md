@@ -1,5 +1,9 @@
 # Publication Standard, version 1
 
+> **Work-availability amendment, Owner-authorized 2026-10-10.** Scheduling restrictions
+> have been removed under `AGENTS.md` § Work availability. Historical hashes and reviews
+> bind the prior text at `522d7ea:docs/track-b/publication-standard-v1.md`; they do not bind this amended copy.
+
 **Ratified by the Owner, 2026-09-28,** with the decisions recorded in §17. The record of how the
 standard was derived and challenged is `docs/track-b/publication-standard-derivation-2026-09-28.md`.
 
@@ -679,7 +683,6 @@ Its brief is `docs/track-b/pres-1-conformance-brief-2026-09-28.md`.
 - **Before Live.**
   - **Daily data-only updates.** They need an `AGENTS.md` amendment by the Owner, or an Owner-run
     push. "Pre-authorised" publishing does not exist under today's rules.
-  - **The Friday and Shabbat schedule** (plan §15).
   - **The `delu-live` experiment and the `delu-day-ahead-policy` registry model** (plan §10.11).
   - **An extended `test_24`.**
   - **A live panel** with its own claim builder.
