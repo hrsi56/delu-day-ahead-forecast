@@ -1,0 +1,392 @@
+{
+ "all_passed": true,
+ "attempt": 1,
+ "blind": {
+  "bitwise": 636,
+  "by_stage": {
+   "evaluation": {
+    "bitwise": 448,
+    "origins": 448
+   },
+   "warmup": {
+    "bitwise": 188,
+    "origins": 188
+   }
+  },
+  "committed_predictions": {
+   "days_equal_bitwise": 448,
+   "evaluation_days_in_predictions": 448,
+   "keys_compared": 10747
+  },
+  "max_abs_difference": 0.0,
+  "origins": 636
+ },
+ "checks": {
+  "d1_positive_moves_every_pick": true,
+  "evaluation_origins_equal_committed_predictions": true,
+  "every_origin_bitwise_with_the_future_destroyed": true,
+  "every_origin_refitted": true,
+  "gate_days_exhaustive": true,
+  "gate_negative_every_fold": true,
+  "gate_positive_every_fold": true,
+  "member_windows_exhaustive": true,
+  "planted_leak_detected_in_every_fold": true,
+  "search_batches_exhaustive": true,
+  "search_negative_every_fold": true,
+  "search_positive_every_fold": true
+ },
+ "destroyed_from_d": {
+  "load_forecast_mw": "set to 1e8 after D",
+  "price_eur_mwh": "removed on and after D",
+  "weather": "['wx_wind10_mean', 'wx_wind100_mean', 'wx_dswrf_mean'] set to 1e6 after D"
+ },
+ "frozen_guard": {
+  "frozen_inputs": 25,
+  "head": "3580bf946bf61a66f328c1ad63584f59eaa77c70",
+  "implementation_files": 50,
+  "maintenance_exceptions": {
+   "scripts/cp24_ddnn2.py": {
+    "frozen_sha256": "2cb67dd8e374ae4a64580be5567db759a9261f749952ff49b565b8d3a3455897",
+    "maintenance_commit": "9667fb4698076fe942aae2246e44366e91efd388",
+    "maintenance_sha256": "74f4180427b7db4f1ff338b5af949237dfdf683da2038a215459b26c6cef2016"
+   },
+   "src/cp24/budget.py": {
+    "frozen_sha256": "d4c18860e9c4d962452f9aff8d8fa2935660e625f1825d92dbd82250a903b9c9",
+    "maintenance_commit": "9667fb4698076fe942aae2246e44366e91efd388",
+    "maintenance_sha256": "85b344639305d0cd04c82d0f66971138941469d22e74b1b6dea4ac97415b6d57"
+   }
+  },
+  "protocol_commit": "62b8e51f483f2c35dad3dc6273ea60f021d97365",
+  "protocol_sha256": "2fd3c464840df4f9e88b0f1a52f7f98c9abfff28b7d0412b13000208645cf51f"
+ },
+ "positives": {
+  "d1_evening_prices": [
+   {
+    "day": "2020-07-01",
+    "error": null,
+    "fold": "fold_1",
+    "max_abs_difference": 70.21244062369419,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2020-08-30",
+    "error": null,
+    "fold": "fold_1",
+    "max_abs_difference": 31.282781632638603,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2020-09-03",
+    "error": null,
+    "fold": "fold_1",
+    "max_abs_difference": 54.77320262911192,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2020-09-28",
+    "error": null,
+    "fold": "fold_1",
+    "max_abs_difference": 227.15256550016693,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2021-04-01",
+    "error": null,
+    "fold": "fold_2",
+    "max_abs_difference": 69.78405626886557,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2021-04-04",
+    "error": null,
+    "fold": "fold_2",
+    "max_abs_difference": 188.88664003495555,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2021-05-03",
+    "error": null,
+    "fold": "fold_2",
+    "max_abs_difference": 131.6672720015693,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2021-06-13",
+    "error": null,
+    "fold": "fold_2",
+    "max_abs_difference": 131.87786811720298,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2021-06-29",
+    "error": null,
+    "fold": "fold_2",
+    "max_abs_difference": 115.705991512787,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2022-07-01",
+    "error": null,
+    "fold": "fold_3",
+    "max_abs_difference": 182.7518865484874,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2022-09-02",
+    "error": null,
+    "fold": "fold_3",
+    "max_abs_difference": 191.58467752681292,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2022-09-25",
+    "error": null,
+    "fold": "fold_3",
+    "max_abs_difference": 219.47258595806466,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2022-09-28",
+    "error": null,
+    "fold": "fold_3",
+    "max_abs_difference": 367.0250236698929,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2025-05-01",
+    "error": null,
+    "fold": "fold_4",
+    "max_abs_difference": 91.48689193771634,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2025-05-10",
+    "error": null,
+    "fold": "fold_4",
+    "max_abs_difference": 49.77378797761273,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2025-06-23",
+    "error": null,
+    "fold": "fold_4",
+    "max_abs_difference": 120.54034166109574,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2025-07-29",
+    "error": null,
+    "fold": "fold_4",
+    "max_abs_difference": 122.47004733407269,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2026-01-08",
+    "error": null,
+    "fold": "fold_5",
+    "max_abs_difference": 480.86192096070766,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2026-01-22",
+    "error": null,
+    "fold": "fold_5",
+    "max_abs_difference": 444.53410902141627,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2026-02-22",
+    "error": null,
+    "fold": "fold_5",
+    "max_abs_difference": 81.82181386701575,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2026-03-29",
+    "error": null,
+    "fold": "fold_5",
+    "max_abs_difference": 97.097131813365,
+    "rows_mutated": 5
+   },
+   {
+    "day": "2026-04-07",
+    "error": null,
+    "fold": "fold_5",
+    "max_abs_difference": 535.6619784482899,
+    "rows_mutated": 5
+   }
+  ],
+  "planted_one_day_leak": [
+   {
+    "day": "2020-07-01",
+    "error": null,
+    "fold": "fold_1",
+    "leak_detected_max_abs_difference": 10.616799251509839,
+    "leaky_window_contains_d": true,
+    "leaky_window_end_exclusive": "2020-07-02",
+    "member": "r1-f1-t099"
+   },
+   {
+    "day": "2021-04-01",
+    "error": null,
+    "fold": "fold_2",
+    "leak_detected_max_abs_difference": 4.5395237967979085,
+    "leaky_window_contains_d": true,
+    "leaky_window_end_exclusive": "2021-04-02",
+    "member": "r1-f2-t010"
+   },
+   {
+    "day": "2022-07-01",
+    "error": null,
+    "fold": "fold_3",
+    "leak_detected_max_abs_difference": 7.49171365188846,
+    "leaky_window_contains_d": true,
+    "leaky_window_end_exclusive": "2022-07-02",
+    "member": "r1-f3-t087"
+   },
+   {
+    "day": "2025-05-01",
+    "error": null,
+    "fold": "fold_4",
+    "leak_detected_max_abs_difference": 128.30356321263432,
+    "leaky_window_contains_d": true,
+    "leaky_window_end_exclusive": "2025-05-02",
+    "member": "r1-f4-t079"
+   },
+   {
+    "day": "2026-01-08",
+    "error": null,
+    "fold": "fold_5",
+    "leak_detected_max_abs_difference": 86.37863904924657,
+    "leaky_window_contains_d": true,
+    "leaky_window_end_exclusive": "2026-01-09",
+    "member": "r1-f5-t042"
+   }
+  ]
+ },
+ "schema": "cp24-leakage-controls-v1",
+ "search_and_gate_by_fold": {
+  "fold_1": {
+   "gate": {
+    "d0": "2020-05-25",
+    "day": "2020-03-30",
+    "negative_identical": true,
+    "negative_max_abs_difference": 0.0,
+    "positive_fit_day": "2020-04-19",
+    "positive_max_abs_difference": 141.7970407799928,
+    "positive_mutated_day": "2020-04-04"
+   },
+   "search": {
+    "batch_end": "2020-03-29",
+    "batch_start": "2020-03-02",
+    "cutoff": "2020-03-30",
+    "negative_identical": true,
+    "pinball_sum_ledger": 5030.647480447085,
+    "pinball_sum_with_a_validation_day_mutated": 13895.398126780132,
+    "pinball_sum_with_outcomes_from_cutoff_mutated": 5030.647480447085,
+    "positive_changed": true,
+    "trial": "r1-f1-t099"
+   }
+  },
+  "fold_2": {
+   "gate": {
+    "d0": "2021-02-23",
+    "day": "2020-12-29",
+    "negative_identical": true,
+    "negative_max_abs_difference": 0.0,
+    "positive_fit_day": "2021-01-18",
+    "positive_max_abs_difference": 5.776253007995081,
+    "positive_mutated_day": "2021-01-03"
+   },
+   "search": {
+    "batch_end": "2020-12-28",
+    "batch_start": "2020-12-01",
+    "cutoff": "2020-12-29",
+    "negative_identical": true,
+    "pinball_sum_ledger": 11249.785606589758,
+    "pinball_sum_with_a_validation_day_mutated": 23059.130137114513,
+    "pinball_sum_with_outcomes_from_cutoff_mutated": 11249.785606589758,
+    "positive_changed": true,
+    "trial": "r1-f2-t010"
+   }
+  },
+  "fold_3": {
+   "gate": {
+    "d0": "2022-05-25",
+    "day": "2022-03-30",
+    "negative_identical": true,
+    "negative_max_abs_difference": 0.0,
+    "positive_fit_day": "2022-04-19",
+    "positive_max_abs_difference": 11.884990615923755,
+    "positive_mutated_day": "2022-04-04"
+   },
+   "search": {
+    "batch_end": "2022-03-29",
+    "batch_start": "2022-03-02",
+    "cutoff": "2022-03-30",
+    "negative_identical": true,
+    "pinball_sum_ledger": 54290.403694920635,
+    "pinball_sum_with_a_validation_day_mutated": 55059.550693429286,
+    "pinball_sum_with_outcomes_from_cutoff_mutated": 54290.403694920635,
+    "positive_changed": true,
+    "trial": "r1-f3-t087"
+   }
+  },
+  "fold_4": {
+   "gate": {
+    "d0": "2025-03-22",
+    "day": "2025-01-25",
+    "negative_identical": true,
+    "negative_max_abs_difference": 0.0,
+    "positive_fit_day": "2025-02-14",
+    "positive_max_abs_difference": 97.44520440566004,
+    "positive_mutated_day": "2025-01-30"
+   },
+   "search": {
+    "batch_end": "2025-01-24",
+    "batch_start": "2024-12-28",
+    "cutoff": "2025-01-25",
+    "negative_identical": true,
+    "pinball_sum_ledger": 27593.877126517218,
+    "pinball_sum_with_a_validation_day_mutated": 35297.72390578462,
+    "pinball_sum_with_outcomes_from_cutoff_mutated": 27593.877126517218,
+    "positive_changed": true,
+    "trial": "r1-f4-t079"
+   }
+  },
+  "fold_5": {
+   "gate": {
+    "d0": "2025-12-02",
+    "day": "2025-10-07",
+    "negative_identical": true,
+    "negative_max_abs_difference": 0.0,
+    "positive_fit_day": "2025-10-27",
+    "positive_max_abs_difference": 18.376682756244833,
+    "positive_mutated_day": "2025-10-12"
+   },
+   "search": {
+    "batch_end": "2025-10-06",
+    "batch_start": "2025-09-09",
+    "cutoff": "2025-10-07",
+    "negative_identical": true,
+    "pinball_sum_ledger": 24354.954594976156,
+    "pinball_sum_with_a_validation_day_mutated": 29677.472213226883,
+    "pinball_sum_with_outcomes_from_cutoff_mutated": 24354.954594976156,
+    "positive_changed": true,
+    "trial": "r1-f5-t042"
+   }
+  }
+ },
+ "seed": 24010,
+ "structure": {
+  "entries_checked": 636,
+  "gate_problems": [],
+  "members_checked": 5088,
+  "search_batch_problems": [],
+  "search_batches_checked": 3464,
+  "window_problems": []
+ },
+ "threshold_eur_mwh": 1e-06,
+ "verification_only": "no frozen element changed, no forecast produced or replaced, nothing rescored",
+ "written_utc": "2026-10-10T19:00:19Z"
+}
