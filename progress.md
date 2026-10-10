@@ -240,11 +240,14 @@ needs the Owner's §23.12 decisions (Blockers).
   with every earlier `land/*`, `evidence/*` and `archive/*` tag listed in
   [Where the history lives](#where-the-history-lives). Two archive tags were added on 2026-10-04
   (below).
-- **Branches.** Only `main` is on origin. Locally there is also
-  `codex/final-product-price-lock-plan`, at `7ff6a50`, with its worktree
-  `.local/worktrees/final-product-price-lock-plan`. It holds another Orchestrator session's
-  Owner-authorized, deliberately uncommitted v21-r13 planning work: the final product's lock-price
-  extension. Its disposition is the Owner's.
+- **Only `main` exists, locally and on origin.** No worktree exists besides the primary checkout.
+  - `codex/final-product-price-lock-plan` held another Orchestrator session's uncommitted v21-r13
+    draft, the final product's lock-price extension. On 2026-10-11 the Owner kept it out of the
+    anchor and had its ideas captured as
+    [notes](docs/track-b/final-product-lock-price-notes-2026-10-11.md). The branch had no commit of
+    its own. It and its worktree are deleted right after the commit that carries this update, on
+    the Owner's instruction. The draft is preserved in
+    `.local/artifacts/codex-r13-preserved-2026-10-11/`.
   - `gauntlet/cp-24` was reclaimed on 2026-10-11 with `scripts/gauntlet.py reclaim`, with a
     verified bundle in `.local/artifacts/cp-24-reclaim-20261010/`. Its worktrees are removed.
   - `gauntlet/cp-23` was reclaimed on 2026-10-04 with `scripts/gauntlet.py reclaim`, with a verified
@@ -262,6 +265,8 @@ needs the Owner's §23.12 decisions (Blockers).
 - **The retired cloud session branch.** `archive/v21-r7-session-20260930` = `e84d467` keeps the
   commits this file cites reachable.
 - **Retained local recovery material:**
+  - `.local/artifacts/codex-r13-preserved-2026-10-11/`: the r13 draft as a patch on `7ff6a50`, with
+    file copies, its validation record and `SHA256SUMS`;
   - `.local/artifacts/cp-24/` (102 MB), `.local/mlruns/cp24/`,
     `.local/artifacts/cp-24-reclaim-20261010/` and `.local/artifacts/cp-24-orchestrator/`.
     `.local/artifacts/cp-24/` holds the only copy of DDNN-2's warm-up and gate-day vectors, which
@@ -730,6 +735,25 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **The codex r13 draft reviewed and kept as notes, 2026-10-11.**
+  - **The review.** The Orchestrator reviewed the uncommitted v21-r13 / PUBLISH_RULES 1.5 draft
+    (the final product's daily lock-price decision and simulated economic record). It found the
+    draft applicable, and raised three points:
+    - it records post-cutoff prices and quotes;
+    - its information clock is fixed late, at CP-17;
+    - the free EEX feed keeps no archive.
+  - **The Owner's decision.**
+    - Not to amend the anchor now: no urgency, and it invites mistakes under pressure.
+    - The prices are not a concern for a final-stage plan, which trains on all available data.
+    - The clock problem is larger than the draft's fixed hours: GitHub automation cannot
+      guarantee a time.
+  - **The outcome.** The ideas and open questions are kept in the
+    [notes](docs/track-b/final-product-lock-price-notes-2026-10-11.md), to be taken up at the
+    final stage. The draft is preserved under `.local/artifacts/`. The branch and its worktree
+    were deleted on the Owner's instruction.
+  - **The omission diff.** It drops the `codex/...` branch paragraph, now superseded by its
+    deletion. Nothing else was dropped.
 
 - **CP-24 paused, continued, received, landed and closed, 2026-10-05 to 2026-10-11.**
   - **The pause, 2026-10-05.** The account's usage limit stopped the first Lead at 17:28 IDT, with
@@ -1331,6 +1355,15 @@ Session Log.
       of S, so the gain may not be demonstrable.
   - **Timing.** Best done after DDNN, so that all members' weights are learned together once. Any
     result stays development evidence; 4.7T is the test.
+- **[Final product — lock-price idea, Owner 2026-10-11]** When CP-17 to CP-19 and the final
+  publication are planned, read the
+  [lock-price notes](docs/track-b/final-product-lock-price-notes-2026-10-11.md).
+  - **The idea:** a daily "lock only at or below X" recommendation, checked against delayed EEX
+    Base Day quotes, with separate forecast-error and simulated-savings graphs.
+  - **Its open questions:** the issue time under GitHub automation, quote display rights, the
+    lack of a quote archive, and the daily-aggregate calibration.
+
+  Nothing in it is ratified.
 - **[CP-24]** Closed on 2026-10-11. v5 is adopted in research
   ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)).
   - **DDNN-2's vectors for 4.8.** The scored vectors are in `reports/ddnn2/attempt-1/members.parquet`
