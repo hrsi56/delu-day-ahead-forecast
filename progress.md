@@ -102,13 +102,13 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | ⬜ Next: the v5 publication, which needs the Owner's decisions D1–D4. The source search and the protocol design can start alongside |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | ⬜ Next: the v5 publication's brief. Its decisions were made and items 6 and 7 built on 2026-10-11. The source search and the protocol design can start alongside |
 
 **No Track B checkpoint is active.** The next steps follow the Owner's approved
 [programme plan](docs/track-b/programme-plan-2026-10-11.md) (stage 7 above):
 
-- **First, the v5 publication (PRES-4).** It needs the Owner's decisions D1–D4: report compaction,
-  CP-22 and CP-23, automation items 6 and 7, and the advisories (Blockers).
+- **First, the v5 publication (PRES-4).** The Owner made its decisions on 2026-10-11, and
+  automation items 6 and 7 are built. The PRES-4 brief is next (Blockers).
 - **Alongside it,** the new-source search and the evaluation protocol's design.
 
 **Where the plan departs from the anchor.** It changes v21-r10 §22's order: publication, the
@@ -482,6 +482,10 @@ decision remains a boundary, not an active workstream.
       - `inspect`, `citations` and `discard`;
       - `reclaim --disposition`, which enforces the tag guard and keeps a verified bundle;
       - `land-commands`, which only prints the Owner's non-interactive LAND sequence.
+    - **`scripts/publication_receipt.py`** (item 6, 2026-10-11): the post-deploy receipt of every
+      public surface, anonymous and read-only, with retries kept.
+    - **`scripts/prerelease.py`** / `make prerelease` (item 7, 2026-10-11): the runbook §9 offline
+      checks in order, from a clean tree, with one record.
     - **`scripts/progress_diff.py`**: this file's omission diff. Only the Orchestrator uses it,
       and never from a hook.
   - **Claude Code cloud sessions (first used 2026-09-30):**
@@ -740,6 +744,38 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **PRES-4 decisions and automation items 6 and 7, 2026-10-11.**
+  - **The Owner's decisions for the v5 publication:**
+    - no compaction, with v2 and v3 untouched;
+    - CP-22 and CP-23 published briefly and point by point as "tested, not adopted", in the
+      comparison chart where there is something to add;
+    - the advisories as recommended.
+  - **The Space stays on v1** until the final product's freeze. The Orchestrator agreed: the
+    Space's card is generation-neutral, and a redeploy would cost a full build and review with no
+    product change.
+  - **Built in session, on the Owner's instruction,** as the earlier automation items were:
+    - `scripts/publication_receipt.py`, the post-deploy receipt;
+    - `scripts/prerelease.py` with `make prerelease`, the pre-review runner;
+    - tests in `tests/test_48_publication_tools.py`.
+
+    The runbook cites both.
+  - **The receipt's live run.** It confirmed five surfaces: `main`; Pages, byte for byte; the
+    Space, still serving PRES-3's bundle file by file at `0331088`; the demo page, after the
+    Hugging Face script is removed; and MLflow, 28 of 28 runs. Its link check hit GitHub returning
+    503 to anonymous requests from this machine after two link runs in an hour. GitHub's status
+    was operational; the failure is recorded with its retry.
+  - **The pre-review runner's verification.** It ran in full twice, in a throwaway local clone
+    (since removed, records under `.local/artifacts/automation-6-7-verify-2026-10-11/`).
+    - **The first run found two defects,** both fixed and covered by tests:
+      - the checks inherited the caller's uv interpreter and environment;
+      - the browser payload was not built before the Python 3.13 pytest, as CI builds it.
+    - **The second run:** every check as expected, with 1,498 passed on both Pythons, except
+      links. That was the same GitHub 503.
+  - **A side effect, undone.** A `--help` call to `scripts/check_links.py`, which takes no options,
+    ran it and rewrote `reports/cp3/link_check.json`. It was restored with `git restore`.
+  - **The omission diff.** It rewrites the "Publishing v5" blocker and the binding publication
+    note as resolved, with the decisions above. Nothing else was dropped.
 
 - **Programme plan approved, 2026-10-11.** The Owner approved the
   [programme plan](docs/track-b/programme-plan-2026-10-11.md), with two of his own rulings:
@@ -1227,17 +1263,28 @@ Session Log.
 
 ## 6. Blockers / Open Questions
 
-- **Publishing v5 (open, Owner; v21-r11 §23.12).** v5 is adopted in research, but no public
-  surface shows it. Before any publication brief the Owner decides:
-  - v5's encoding (PUBLISH_RULES §14);
-  - whether the not-adopted CP-22 and CP-23 branches are published. The Orchestrator recommends
-    bundling them, as "tested, not adopted", into the same publication;
-  - automation items 6 and 7 (Notes).
+- **Publishing v5 (PRES-4): the Owner's decisions are made (2026-10-11); the brief is next.**
+  v5 is adopted in research, but no public surface shows it yet. The decisions:
+  - **No compaction** (PUBLISH_RULES §14): the v2 and v3 sections are not edited.
+  - **CP-22 and CP-23 are published** in the same publication, briefly and point by point, as
+    "tested, not adopted". They are added to the comparison chart where there is something to add.
+  - **Automation items 6 and 7 are built first** (Notes).
+  - **The Space stays on v1** until the final product's freeze. Its card already points to the
+    report for research, so it does not contradict v5.
+  - **The advisories,** as recommended: A-PRES3-1 in this publication; A-PRES3-7 waits for the
+    final product's Space deployment; A-PRES3-5 stays deferred.
+
+  **Two risks the brief must carry:**
+  - **The page budget.** PUBLISH_RULES caps the page at 2.0 MB, and it is about 1.91 MB now. v5 and
+    the CP-22/CP-23 notes must fit without touching v2 and v3; otherwise the Lead stops and reports
+    the measured size.
+  - **A-PRES3-1 changes a frozen file.** It edits `scripts/mlflow_export.py`, which CP-23's tests
+    bind, so it needs the Owner's `AMENDED_BY_…` treatment, authorized in the brief.
 
   The public planned list still shows 4.6 as DDNN against v4 until then.
 
-- **PRES-3's three advisories for the Owner (open; none blocks closure).** Details are in the
-  advisory log at the evidence tip. Recommended: defer all three, as below.
+- **PRES-3's three advisories (decided 2026-10-11, above; none blocks closure).** Details are in the
+  advisory log at the evidence tip. The descriptions below stand.
   - **A-PRES3-7, GFS attribution.** Extend `DATA-LICENSE.md`'s line to "the research models'
     weather data, from v3 on".
     - The wording also feeds both Space cards and the v1 demo's `claims.json`, so changing it now
@@ -1439,11 +1486,10 @@ Session Log.
   replacement, so v4 there is the three-block construction. CP-23 adopted no v5. CP-24 adopted
   v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2 in research, so v5 joins too, unless 4.8 replaces it.
   Whether DDNN-2 alone should face 4.7T is a decision for before 4.7T, under a pre-registered rule.
-- **[Before the next publication's brief — binding, v21-r10 §22]** Bring automation items 6
-  (post-deploy publication receipt) and 7 (pre-review check runner) to the Owner for a decision.
-  The brief is not issued before it. Also carry:
-  - A-PRES3-1, -5 and -7 (Blockers);
-  - the Owner's choice of v5's encoding (PUBLISH_RULES §14). v5 was adopted by CP-24.
+- **[Before the next publication's brief — binding, v21-r10 §22] Resolved 2026-10-11.** The Owner
+  decided automation items 6 and 7, A-PRES3-1, -5 and -7, and v5's encoding (no compaction).
+  Items 6 and 7 are built: `scripts/publication_receipt.py` and `scripts/prerelease.py`
+  (`make prerelease`). The PRES-4 brief pins them in its pre-review and receipt steps.
 - **[Every new publication brief]** Pin PUBLISH_RULES 1.4 (from 2026-10-10) and
   incorporated source hashes;
   retain A1–A6 and apply A7/A8/A9 at their final-product/live triggers. PRES-2 was closed under

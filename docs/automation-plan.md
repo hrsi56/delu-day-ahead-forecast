@@ -27,8 +27,10 @@ the docs do not settle is marked UNVERIFIED.
     governs. `orchestrator-role.md`'s list was not aligned, since that is a locked edit.
   - Item 4's `reclaim` also writes a verified bundle of the branch before deleting it, as the
     CP-21 and CP-22 closures did by hand.
-- **Deferred:** items 6 and 7 go to the next publication. A binding reminder in `progress.md`
-  and in capstone v21-r10 brings them to the Owner before that publication's brief is issued.
+- **Items 6 and 7, implemented 2026-10-11** on the Owner's decision, before the v5 publication's
+  brief: `scripts/publication_receipt.py` and `scripts/prerelease.py` (`make prerelease`), with
+  tests in `tests/test_48_publication_tools.py`. They had been deferred to the next publication,
+  under a binding reminder in `progress.md` and capstone v21-r10.
 
 **Lockdown, stated once.** Every hook and setting lives under `.claude/**`, which
 `AGENTS.md:23-24` locks as agent configuration. The only suspension covers item 3:

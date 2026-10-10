@@ -64,6 +64,15 @@ or Hub upload response alone cannot close a publication.
 | MLflow | Evidence identity, public experiment/run/model-version references, export diff and dated anonymous verification of the actual required records and routes |
 | Hugging Face card and direct demo | Exact intended Space revision/bundle and model/policy identity; actual Hub revision, served artifacts and applicable public demo checks |
 
+**The receipt is produced, not hand-built.** `scripts/publication_receipt.py::main`
+(`--landing <sha> --bundle <dir> --expect <bundle sha256>`) checks every surface anonymously and
+independently. It covers `origin`'s `main`, the bytes Pages serves, the Space's file tree and served
+page against the bundle the Space should serve, the MLflow mirror and the links. It keeps every
+retry and first failure, writes `<date>-publication-receipt.json` under
+`reports/presentation/release-checks/`, and prints this table's rows. An unchanged Space is
+verified the same way, against the bundle it was last deployed with. The browser checks stay with
+`scripts/check_reader_paths.py::release`.
+
 **MLflow is accounted for in every release.** For changed research/model evidence, upload the
 authorized matching export and verify it before the final page build. For a presentation-only
 release with an identical export, record its unchanged identity, existing public run references
@@ -308,6 +317,9 @@ omitted (standard §9). The patterns:
 ## 9. The checks before the independent check
 
 Recorded under `reports/presentation/release-checks/` and in the checkpoint's evidence folder.
+`scripts/prerelease.py::main` (`make prerelease`) runs the first four items below in order, from a
+clean tree, and writes one record, `<date>-prerelease.json`. Its `--stage final` expects the guard
+to pass after the final build. The browser checks that follow stay manual.
 
 - `uv run pytest -q` on Python 3.13, and a clean Python 3.12 run of every step of
   `.github/workflows/tests.yml`.

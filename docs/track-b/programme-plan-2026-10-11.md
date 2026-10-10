@@ -81,8 +81,24 @@ branch and its worktree are deleted. Publication briefs keep pinning PUBLISH_RUL
 The name PRES-4 was reserved for CP-22's replacement plan, which never ran. That plan stays an
 unexecuted record.
 
-**The Owner's decisions before the brief** (binding, v21-r10 §22), with the Orchestrator's
-recommendations:
+**Decided by the Owner on 2026-10-11,** departing from the recommendations below on D1:
+
+- **D1, no compaction:** the v2 and v3 sections are not edited.
+- **D2, yes:** CP-22 and CP-23 go in briefly and point by point, as "tested, not adopted", and
+  into the comparison chart where there is something to add.
+- **D3, built first:** `scripts/publication_receipt.py` and `scripts/prerelease.py`, on 2026-10-11.
+- **D4, as recommended.**
+- **The Space stays on v1** until the final product's freeze, so A-PRES3-7 waits for that
+  deployment.
+
+**Two risks the brief carries:**
+
+- **The page budget:** 2.0 MB, against about 1.91 MB now. The brief requires fitting without
+  touching v2 and v3, or stopping with the measured size.
+- **A-PRES3-1 changes `scripts/mlflow_export.py`,** which CP-23's tests bind. It needs the Owner's
+  `AMENDED_BY_…` treatment, authorized in the brief.
+
+The decisions as they were put to the Owner, with the Orchestrator's recommendations:
 
 | # | Decision | Recommendation |
 |---|---|---|

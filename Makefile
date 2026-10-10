@@ -1,7 +1,8 @@
 .PHONY: audit spectral sql test train benchmark holdout diagnostics report readme cp2 \
         pages space register showcase cli container container-verify readme-cp3 verify cp3 \
         wasm-payload wasm wasm-serve cp3b readme-research \
-        mlflow-export mlflow-dry-run mlflow-verify-local presentation lint-publication publication-guard
+        mlflow-export mlflow-dry-run mlflow-verify-local presentation lint-publication publication-guard \
+        prerelease
 
 test:
 	uv run pytest -q
@@ -129,3 +130,8 @@ lint-publication:
 # runs it for every push to main, after the secret guard; CI runs it on main as the backstop).
 publication-guard:
 	python3 scripts/publication_guard.py tree
+
+# The publication runbook §9 offline checks, in order, recorded once (automation plan item 7): pytest on
+# Python 3.13, every CI step on Python 3.12, verify, lint, rebuild determinism, links and the guard.
+prerelease:
+	uv run python scripts/prerelease.py
