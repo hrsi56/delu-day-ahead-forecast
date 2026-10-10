@@ -35,6 +35,7 @@ Owner's decisions (§23.12).
 | GU24 | [reports/ddnn2/attempt-1/guards.json](../../../reports/ddnn2/attempt-1/guards.json) |
 | DC24 | [reports/ddnn2/attempt-1/daily-cycle.json](../../../reports/ddnn2/attempt-1/daily-cycle.json) |
 | FC24 | [reports/ddnn2/attempt-1/fit-cost.json](../../../reports/ddnn2/attempt-1/fit-cost.json) |
+| LK24 | [reports/ddnn2/attempt-1/leakage-controls.json](../../../reports/ddnn2/attempt-1/leakage-controls.json) |
 | X24 | [reports/ddnn2/mlflow-export-draft/cp24.json](../../../reports/ddnn2/mlflow-export-draft/cp24.json) |
 
 ## Claim map: CP-24
@@ -72,6 +73,7 @@ definition; **O** an Owner decision.
 | C438 | Guards over 5,088 attempt member fits: cap activations 583 emitted slot-levels; winsorised forecast inputs 12,972; ensemble crossings restored 0; nonfinite-loss stops 0. | GU24 | S |
 | C439 | All §23.10 controls and the inherited ones passed (80 checks), each negative paired with a positive: masking and future inputs exactly 0.0; a non-uniform D−1 mutation, weather permutations, held-out weeks and recent training days move DDNN-2; search and gate outcomes after their cut-offs change nothing; pre-registration by ancestry; composite parity on every key; restart replay and cache refusals. | CT24 | S |
 | C440 | Fit cost and the daily cycle (diagnostic only): 5,088 attempt member fits, median eight-member ensemble 17.5 s per origin; v5's cold daily cycle median 17 s, maximum 42 s at 25 origins. | FC24; DC24 | S |
+| C441 | Leakage ruled out at every origin: with every outcome on or after the delivery day destroyed, the frozen eight-member ensemble refitted at all 636 warm-up and evaluation origins reproduces the committed DDNN-2 vectors bit for bit (636 of 636); a D−1 price mutation moves them and a planted one-day leak is detected in every fold; the search and gate controls hold in all 5 folds. | LK24 | S |
 | C449 | Development evidence after selection on the same five folds CP-15 and CP-20 to CP-23 used; DDNN-2 is the second DDNN decision on them; not a test on new data; 4.7T carries the protection. | CAP §23.1 | S |
 
 ## Withheld claims: do not use

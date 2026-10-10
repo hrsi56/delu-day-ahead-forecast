@@ -94,22 +94,30 @@ Frozen protocol `attempt-1/protocol.json`; vectors `attempt-1/predictions.parque
 - Shape blend (descriptive, never eligible): shape-blend WIS 9.86, 95% coverage 0.950; HGL WIS 10.24, 95% coverage 0.939; D2 WIS 8.82, 95% coverage 0.954.
 - Also: MAE by local hour, member stability, the 2022 peak, folds 3 and 4, the search beside the folds (`attempt-1/diagnostics/*.csv`); fit cost and the cold daily cycle (`fit-cost.json`, `daily-cycle.json`).
 
+### Causal and integrity controls (§23.10; verification only, nothing rescored)
+
+- `attempt-1/controls.json`: 80 checks, all passed. The masks, the weather and the recency controls at two representative origins (fold_1 2020-07-01, fold_4 2025-05-01); the search and gate controls for one fold each; pre-registration, states, caches, the population and the code.
+- `attempt-1/leakage-controls.json` (`leakage-by-origin.csv`), extended because D2 alone is far ahead of v4: at all 636 origins (448 evaluation, 188 warm-up), the frozen eight-member ensemble refitted with every outcome on or after the delivery day destroyed reproduces the committed D2 vectors bit for bit at 636 of 636, every member at its recorded weights; 10,747 evaluation keys equal `predictions.parquet`.
+- Paired positives in every fold: a D-1 evening price mutation moves the ensemble at 22 of 22 origins (smallest move 31.28 EUR/MWh); a planted one-day leak is detected in 5 of 5 folds.
+- Search and gate, fold by fold: outcomes from D0-56 change no rank-1 search result in 5 of 5 folds, outcomes from D0 change no gate result in 5 of 5, and each paired positive moves. Structure: 5,088 member windows, 3,464 search batches and the gate days, problems 0.
+- 12 leakage checks, all passed. The frozen code is guarded as `check_protocol` guards it, except for the Owner's recorded work-availability maintenance of `scripts/cp24_ddnn2.py` and `src/cp24/budget.py` (calendar gate removed).
+
 ## Resources (§23.11; at the candidate, before the review)
 
 | Ceiling | Cap | Used |
 |---|---|---|
-| ddnn2_fits | 40000 | 11044 |
+| ddnn2_fits | 40000 | 16338 |
 | v4_gate_origins | 280 | 280 |
 | policy_days | 12000 | 2843 |
-| reference_passes | 3 | 1 |
-| bootstrap_passes | 6 | 1 |
+| reference_passes | 3 | 2 |
+| bootstrap_passes | 6 | 2 |
 | scored_attempts | 2 | 1 |
 | rounds_before_attempt_1 | 3 | 1 |
 | rounds_before_attempt_2 | 1 | 0 |
-| machine_hours | 150 | 10.10 |
-| active_hours | 50 | 4.00 |
-| rss_bytes (GiB) | 10 | 2.85 |
-| additional_disk_bytes (GiB) | 10 | 0.67 |
+| machine_hours | 150 | 17.66 |
+| active_hours | 50 | 6.57 |
+| rss_bytes (GiB) | 10 | 3.36 |
+| additional_disk_bytes (GiB) | 10 | 1.10 |
 | workers | 4 | 4 |
 | data_download_bytes | 0 | 0 |
 | remote_writes | 0 | 0 |

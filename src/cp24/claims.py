@@ -175,6 +175,13 @@ def build(root: Path):
                       f'ensemble {num(cost["per_origin"]["median_ensemble_fit_wall_seconds"], 1)} s per origin; v5\'s cold daily cycle '
                       f'median {num(cycle["summary"]["median_seconds"], 0)} s, maximum {num(cycle["summary"]["max_seconds"], 0)} s at '
                       f'{cycle["summary"]["origins"]} origins.', 'FC24; DC24', 'S')
+        if (root / A / 'leakage-controls.json').exists():
+            lk = _load(root, A / 'leakage-controls.json')
+            claim('C441', f'Leakage ruled out at every origin: with every outcome on or after the delivery day destroyed, the frozen '
+                          f'eight-member ensemble refitted at all {lk["blind"]["origins"]} warm-up and evaluation origins reproduces the '
+                          f'committed DDNN-2 vectors bit for bit ({lk["blind"]["bitwise"]} of {lk["blind"]["origins"]}); a D−1 price '
+                          'mutation moves them and a planted one-day leak is detected in every fold; the search and gate controls hold '
+                          f'in all {len(lk["search_and_gate_by_fold"])} folds.', 'LK24', 'S')
         ctx.update(dict(dec=dec, eq=eq, pf=pf, k=k, adopted=bool(a['adopted'])))
     claim('C449', 'Development evidence after selection on the same five folds CP-15 and CP-20 to CP-23 used; DDNN-2 is the second '
                   'DDNN decision on them; not a test on new data; 4.7T carries the protection.', 'CAP §23.1', 'S')
@@ -205,6 +212,7 @@ def build(root: Path):
                 ('D24', f'{base}/diagnostics.csv'), ('DEC24', f'{base}/decisions.json'), ('P24', f'{base}/protocol.json'),
                 ('CT24', f'{base}/controls.json'), ('DG24', f'{base}/diagnostics.json'), ('GU24', f'{base}/guards.json'),
                 ('DC24', f'{base}/daily-cycle.json'), ('FC24', f'{base}/fit-cost.json'),
+                *([('LK24', f'{base}/leakage-controls.json')] if (root / base / 'leakage-controls.json').exists() else []),
                 ('X24', 'reports/ddnn2/mlflow-export-draft/cp24.json')]
     claims_md = '\n'.join([
         '# CP-24 research result: claim-to-evidence map', '',

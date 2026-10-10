@@ -118,6 +118,36 @@ def build(root: Path) -> str:
                                                                          f'{f(x["coverage95"], 3)}' for x in diag['shape_blend']['pooled']) + '.',
               '- Also: MAE by local hour, member stability, the 2022 peak, folds 3 and 4, the search beside the folds '
               '(`attempt-%d/diagnostics/*.csv`); fit cost and the cold daily cycle (`fit-cost.json`, `daily-cycle.json`).\n' % k]
+        if (A / 'controls.json').exists():
+            ctl = load(A / 'controls.json')
+            L += ['### Causal and integrity controls (§23.10; verification only, nothing rescored)\n',
+                  f'- `attempt-{k}/controls.json`: {ctl["checks"]} checks, {"all passed" if ctl["all_passed"] else "NOT all passed"}. The masks, the weather and '
+                  'the recency controls at two representative origins (' + ', '.join(f'{o["fold"]} {o["day"]}' for o in ctl['origins'])
+                  + '); the search and gate controls for one fold each; pre-registration, states, caches, the population and the code.']
+            if (A / 'leakage-controls.json').exists():
+                lk = load(A / 'leakage-controls.json')
+                sg, st, pos = lk['search_and_gate_by_fold'], lk['structure'], lk['positives']
+                L += [f'- `attempt-{k}/leakage-controls.json` (`leakage-by-origin.csv`), extended because D2 alone is far ahead of v4: '
+                      f'at all {lk["blind"]["origins"]} origins ({lk["blind"]["by_stage"]["evaluation"]["origins"]} evaluation, '
+                      f'{lk["blind"]["by_stage"]["warmup"]["origins"]} warm-up), the frozen eight-member ensemble refitted with every '
+                      'outcome on or after the delivery day destroyed reproduces the committed D2 vectors bit for bit at '
+                      f'{lk["blind"]["bitwise"]} of {lk["blind"]["origins"]}, every member at its recorded weights; '
+                      f'{lk["blind"]["committed_predictions"]["keys_compared"]:,} evaluation keys equal `predictions.parquet`.',
+                      f'- Paired positives in every fold: a D-1 evening price mutation moves the ensemble at {len(pos["d1_evening_prices"])} '
+                      f'of {len(pos["d1_evening_prices"])} origins (smallest move '
+                      f'{f(min(r["max_abs_difference"] for r in pos["d1_evening_prices"]), 2)} EUR/MWh); a planted one-day leak is '
+                      f'detected in {sum(r["leak_detected_max_abs_difference"] > lk["threshold_eur_mwh"] for r in pos["planted_one_day_leak"])} '
+                      f'of {len(pos["planted_one_day_leak"])} folds.',
+                      f'- Search and gate, fold by fold: outcomes from D0-56 change no rank-1 search result in '
+                      f'{sum(v["search"]["negative_identical"] for v in sg.values())} of {len(sg)} folds, outcomes from D0 change no gate '
+                      f'result in {sum(v["gate"]["negative_identical"] for v in sg.values())} of {len(sg)}, and each paired positive moves. '
+                      f'Structure: {st["members_checked"]:,} member windows, {st["search_batches_checked"]:,} search batches and the gate '
+                      f'days, problems {len(st["window_problems"]) + len(st["search_batch_problems"]) + len(st["gate_problems"])}.',
+                      f'- {len(lk["checks"])} leakage checks, {"all passed" if lk["all_passed"] else "NOT all passed"}. The frozen code is guarded as '
+                      '`check_protocol` guards it, except for the Owner\'s recorded work-availability maintenance of '
+                      + ' and '.join(f'`{n}`' for n in lk['frozen_guard']['maintenance_exceptions']) + ' (calendar gate removed).\n']
+            else:
+                L[-1] += '\n'
     if (root / OUT / 'resources.json').exists():
         res = load(OUT / 'resources.json')
         cv = res['caps_vs_use']

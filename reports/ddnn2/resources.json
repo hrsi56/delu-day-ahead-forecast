@@ -2,23 +2,23 @@
  "active_hours_basis": "from 2026-10-05T03:14:00Z (before the Lead's first command) minus recorded pauses",
  "active_hours_hard_stop": 50.0,
  "active_hours_timebox": 35.0,
- "active_hours_upper_bound": 3.9951777241627373,
+ "active_hours_upper_bound": 6.565689623024729,
  "blas_threads": 1,
  "caps_vs_use": {
   "active_seconds": {
    "base_cap": 180000,
    "cap": 180000,
-   "used": 14382.639806985855
+   "used": 23636.482642889023
   },
   "additional_disk_bytes": {
    "base_cap": 10737418240,
    "cap": 10737418240,
-   "used": 723955332
+   "used": 1181328223
   },
   "bootstrap_passes": {
    "base_cap": 6,
    "cap": 6,
-   "used": 1
+   "used": 2
   },
   "cost_usd": {
    "base_cap": 0,
@@ -33,12 +33,12 @@
   "ddnn2_fits": {
    "base_cap": 40000,
    "cap": 40000,
-   "used": 11044
+   "used": 16338
   },
   "machine_seconds": {
    "base_cap": 540000,
    "cap": 540000,
-   "used": 36366.40191567308
+   "used": 63589.49335646517
   },
   "policy_days": {
    "base_cap": 12000,
@@ -48,7 +48,7 @@
   "reference_passes": {
    "base_cap": 3,
    "cap": 3,
-   "used": 1
+   "used": 2
   },
   "remote_writes": {
    "base_cap": 0,
@@ -68,7 +68,7 @@
   "rss_bytes": {
    "base_cap": 10737418240,
    "cap": 10737418240,
-   "used": 3059351552
+   "used": 3604135936
   },
   "scored_attempts": {
    "base_cap": 2,
@@ -87,7 +87,7 @@
   }
  },
  "cloud": 0,
- "cpu_hours_observed": 9.264399135180833,
+ "cpu_hours_observed": 16.155132628468056,
  "data_download_bytes": 0,
  "events": [
   {
@@ -234,6 +234,13 @@
    "event": "effort_idle_gap",
    "reason": "second account usage limit: the session stopped about 12:35 IDT and resumed at 16:02 IDT on the coordinator's message; no job ran in the gap (fits-a1-evaluation ended 12:32 IDT, exit 0)",
    "start_epoch": 1791192900.0
+  },
+  {
+   "end_epoch": 1791651240.0,
+   "epoch": 1791651365.002191,
+   "event": "effort_idle_gap",
+   "reason": "third account usage limit: the previous Lead stopped about 17:28 IDT on 2026-10-05 while waiting for Critic 2 (stopped by the same limit about 14:22Z); no CP-24 job ran in the gap (the last, critic2-independent-score, ended 14:19:15Z); the Owner's 2026-10-10 maintenance commit 9667fb4 ran no research job and wrote no ledger; resumed by the continuation Lead at 2026-10-10 16:54Z under the continuation brief 5960b908",
+   "start_epoch": 1791210480.0
   }
  ],
  "external_cost_usd": 0,
@@ -248,13 +255,13 @@
    "jobs": 1
   },
   "ci-equivalent": {
-   "charged_machine_hours": 0.1509097040277791,
-   "cpu_seconds_observed": 528.073994546,
+   "charged_machine_hours": 0.22475968026638937,
+   "cpu_seconds_observed": 785.323968608,
    "exit_codes": {
-    "0": 1,
+    "0": 2,
     "1": 1
    },
-   "jobs": 2
+   "jobs": 3
   },
   "comparison-a1": {
    "charged_machine_hours": 0.014337690520834358,
@@ -267,6 +274,46 @@
   "controls-a1": {
    "charged_machine_hours": 0.1197852166205525,
    "cpu_seconds_observed": 424.04020995200005,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-full-suite": {
+   "charged_machine_hours": 0.06432022931694115,
+   "cpu_seconds_observed": 258.158055424,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "critic2-full-suite-ci": {
+   "charged_machine_hours": 0.06361547055555598,
+   "cpu_seconds_observed": 256.850345472,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-independent-score": {
+   "charged_machine_hours": 0.0005923490047239788,
+   "cpu_seconds_observed": 1.014265912,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-score-smoke": {
+   "charged_machine_hours": 0.00030835738416499223,
+   "cpu_seconds_observed": 0.996606352,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "critic2-wasm-payload": {
+   "charged_machine_hours": 0.008446208217501408,
+   "cpu_seconds_observed": 67.999744928,
    "exit_codes": {
     "0": 1
    },
@@ -306,13 +353,13 @@
    "jobs": 2
   },
   "dev-precandidate-checks": {
-   "charged_machine_hours": 0.01573960116916472,
-   "cpu_seconds_observed": 42.059052699000006,
+   "charged_machine_hours": 0.023635648703885737,
+   "cpu_seconds_observed": 62.978570784000006,
    "exit_codes": {
-    "0": 1,
+    "0": 2,
     "1": 1
    },
-   "jobs": 2
+   "jobs": 3
   },
   "dev-scoring-smoke": {
    "charged_machine_hours": 0.0014335480441635203,
@@ -347,21 +394,21 @@
    "jobs": 1
   },
   "finalise": {
-   "charged_machine_hours": 0.001450050324444116,
-   "cpu_seconds_observed": 2.739704616,
+   "charged_machine_hours": 0.002049091886951323,
+   "cpu_seconds_observed": 3.684812936,
    "exit_codes": {
-    "0": 2,
+    "0": 3,
     "None": 1
    },
-   "jobs": 3
+   "jobs": 4
   },
   "finalise-manifest": {
-   "charged_machine_hours": 0.0011923813888885585,
-   "cpu_seconds_observed": 2.952708152,
+   "charged_machine_hours": 0.001497103379446748,
+   "cpu_seconds_observed": 3.9495464240000002,
    "exit_codes": {
-    "0": 3
+    "0": 4
    },
-   "jobs": 3
+   "jobs": 4
   },
   "fit-cost-a1": {
    "charged_machine_hours": 0.38920797658555484,
@@ -390,6 +437,30 @@
   "gate-r1": {
    "charged_machine_hours": 1.4704463691211196,
    "cpu_seconds_observed": 5125.484418946,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "landsim-tip": {
+   "charged_machine_hours": 0.07617486281250119,
+   "cpu_seconds_observed": 256.364025885,
+   "exit_codes": {
+    "1": 1
+   },
+   "jobs": 1
+  },
+  "leakage-a1": {
+   "charged_machine_hours": 7.1865561442589065,
+   "cpu_seconds_observed": 23582.430360938,
+   "exit_codes": {
+    "0": 1
+   },
+   "jobs": 1
+  },
+  "leakage-a1-smoke": {
+   "charged_machine_hours": 0.07930643578777866,
+   "cpu_seconds_observed": 102.715732184,
    "exit_codes": {
     "0": 1
    },
@@ -501,9 +572,9 @@
    "jobs": 1
   }
  },
- "jobs_total": 40,
+ "jobs_total": 52,
  "ledger": ".local/artifacts/cp-24/ledger/budget.json (cumulative, never reset)",
- "machine_hours": 10.10177830990919,
+ "machine_hours": 17.66374815457366,
  "machine_hours_cap": 150.0,
  "mps": 0,
  "pause_reasons": [
@@ -528,6 +599,13 @@
    "reason": "second account usage limit: the session stopped about 12:35 IDT and resumed at 16:02 IDT on the coordinator's message; no job ran in the gap (fits-a1-evaluation ended 12:32 IDT, exit 0)",
    "recorded_epoch": 1791205349.576285,
    "start_epoch": 1791192900.0
+  },
+  {
+   "end_epoch": 1791651240.0,
+   "kind": "idle_gap",
+   "reason": "third account usage limit: the previous Lead stopped about 17:28 IDT on 2026-10-05 while waiting for Critic 2 (stopped by the same limit about 14:22Z); no CP-24 job ran in the gap (the last, critic2-independent-score, ended 14:19:15Z); the Owner's 2026-10-10 maintenance commit 9667fb4 ran no research job and wrote no ledger; resumed by the continuation Lead at 2026-10-10 16:54Z under the continuation brief 5960b908",
+   "recorded_epoch": 1791651365.002191,
+   "start_epoch": 1791210480.0
   }
  ],
  "pauses": [
@@ -542,10 +620,14 @@
   [
    1791192900.0,
    1791205320.0
+  ],
+  [
+   1791210480.0,
+   1791651240.0
   ]
  ],
- "peak_added_disk_gib": 0.6742359437048435,
- "peak_aggregate_rss_gib": 2.8492431640625,
+ "peak_added_disk_gib": 1.1001976421102881,
+ "peak_aggregate_rss_gib": 3.3566131591796875,
  "raises": [],
  "remote_writes": 0,
  "schema": "cp24-resources-v1",
@@ -555,7 +637,7 @@
   "component_attempts_gate": 560,
   "component_attempts_parity": 22,
   "ddnn2_epochs": 1961331,
-  "ddnn2_fits_control": 31,
+  "ddnn2_fits_control": 5325,
   "ddnn2_fits_correctness": 2,
   "ddnn2_fits_daily_cycle": 200,
   "ddnn2_fits_evaluation": 3584,
@@ -578,5 +660,5 @@
   "rounds": 1,
   "v4_parity_origins": 11
  },
- "written_utc": "2026-10-05T14:01:20Z"
+ "written_utc": "2026-10-10T19:01:34Z"
 }

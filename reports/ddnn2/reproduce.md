@@ -45,6 +45,8 @@ $PY scripts/cp24_ddnn2.py monitor --name fit-cost-a<k> --workers 1 --log $LOG/fi
 $PY scripts/cp24_ddnn2.py monitor --name controls-a<k> --workers 1 --log $LOG/controls-a<k>.log -- $PY scripts/cp24_ddnn2.py job controls --attempt <k>
 $PY scripts/cp24_ddnn2.py monitor --name daily-cycle-a<k> --workers 4 --log $LOG/daily-cycle-a<k>.log -- $PY scripts/cp24_ddnn2.py job daily-cycle --attempt <k>
 $PY scripts/cp24_ddnn2.py monitor --name diagnostics-a<k> --workers 1 --log $LOG/diagnostics-a<k>.log -- $PY scripts/cp24_ddnn2.py job diagnostics --attempt <k>
+# the future-blind leakage controls at full coverage (the continuation's item-9 extension; verification only)
+PYTHONPATH=src $PY scripts/cp24_ddnn2.py monitor --name leakage-a<k> --workers 4 --log $LOG/leakage-a<k>.log -- $PY -m cp24.leakage --attempt <k> --workers 4
 # the packet, the export, local tracking, the report and the manifest
 PYTHONPATH=src $PY -m cp24.packet
 MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 PYTHONPATH=src $PY -m cp24.export --attempt <deciding k>
@@ -71,6 +73,12 @@ CP-24 ran one pre-fold round and one scored attempt; the attempt adopted v5, so 
   replicates), `dev-design-dst-test` (the real-data DST test, defects-and-repairs item 4) and
   `dev-verify-a1-fits` (a read-only check of every attempt-1 cache entry after the second usage-limit stop,
   item 5). Their scripts live under `.local/tmp/cp-24/dev/`.
+- **The continuation (2026-10-10).** The Owner's maintenance commit `9667fb4` removed the calendar gates. Then
+  the continuation Lead ran `leakage-a1` (`cp24.leakage --attempt 1`, preceded by the 4-origin smoke
+  `leakage-a1-smoke`). It also ran the monitored LAND simulations `landsim-*`: the squash tree of the candidate onto
+  `main`, run with CI's steps in a fresh one-commit repository with no tags, and once more after simulated later
+  edits to living files. Their scripts live under `.local/tmp/cp-24/cont/`. `finalise`, the report and the
+  manifest were then regenerated.
 
 ## Verification (no fit, no pass)
 
@@ -79,6 +87,7 @@ MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 $PY -m pytest -q tests/cp24
 PYTHONPATH=src $PY -m cp24.packet --check
 PYTHONPATH=src $PY -m cp24.claims --check
 PYTHONPATH=src $PY -m cp24.report --check
+PYTHONPATH=src $PY -m cp24.basetree --check-rev <candidate>   # every base file unchanged; every other file under CP-24's paths
 PYTHONPATH=src $PY -m cp24.basetree --check
 MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 PYTHONPATH=src $PY -m cp24.export --attempt <deciding k> --check
 ```

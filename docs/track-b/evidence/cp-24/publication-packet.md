@@ -89,7 +89,7 @@ Pinned rules (the issued brief also records them): PUBLISH_RULES 1.3 `5a660864f8
 
 ## 3. The claim map
 
-`docs/track-b/research-content/cp24-claims.md` (SHA-256 `c9faebd87acc54db887cfba835c1208271136baf899f31a23e9e780af550dc7b`): every claim with its committed rows, the entry gates, every round's gate, the steering record, the adoption decision, every §23.8 contrast and diagnostic, and the withheld claims W42–W48 (W1–W41 stay in force).
+`docs/track-b/research-content/cp24-claims.md` (SHA-256 `72ccef361a7344b88ba3e442170520c990258a13d48e637f04d7dfd7aa6efc4f`): every claim with its committed rows, the entry gates, every round's gate, the steering record, the adoption decision, every §23.8 contrast and diagnostic, and the withheld claims W42–W48 (W1–W41 stay in force).
 
 ## 4. The derived headline quantities (standard §3.3), computed inside the checkpoint
 

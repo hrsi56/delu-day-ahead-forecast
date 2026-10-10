@@ -1,7 +1,8 @@
 # CP-24 — defects and repairs
 
 Every defect found during CP-24 and its repair, in order. No repair changed a frozen element after any outcome it
-could depend on; none is outcome-driven.
+could depend on; none is outcome-driven. The Owner's work-availability maintenance (item 10) changed two files in
+attempt 1's frozen implementation list. It touched only their calendar gate, never a forecast path.
 
 1. **Round 1's search ledger write (2026-10-05, 07:42 IDT).** `job_search` completed all 3,464 trial-batch fits
    (3,462 succeeded; 2 failed with a nonfinite training loss at epoch 21 and rank last, as the procedure says), then
@@ -51,3 +52,86 @@ could depend on; none is outcome-driven.
    - **The review.** The first Integration review (`critic-1`) had been opened on the superseded candidate
      `5fd4e3ae360855e45f504944dd21d570e2026490`. It was stopped before it ran any monitored job or wrote a
      verdict. The corrected candidate receives its own fresh review.
+9. **The third usage-limit stop and the two unfinished reviews (2026-10-05, about 14:22–14:28Z).**
+   - **What stopped.** Critic 2, opened at 14:06Z on `d637590`, was stopped by the account's usage limit at about
+     14:22Z and wrote no verdict. The Lead stopped at about 14:28Z while it waited. No job ran after 14:19:15Z.
+   - **The idle gap,** 2026-10-05 14:28Z to 2026-10-10 16:54Z, 122.43 hours, is recorded in the ledger as an idle
+     pause (`scripts/cp24_ddnn2.py idle`), like items 3 and 5. The continuation Lead started at 16:54Z.
+   - **The two open Critic records** in `.local/artifacts/cp-24/critic-open.json` are closed with
+     `verdict_sha256: null` and a no-verdict disposition. They are n = 1 at `5fd4e3a` (item 8) and n = 2 at
+     `d637590`.
+   - **Critic 2's leftovers.** Its clean detached worktree was removed under the continuation brief's
+     authorization. Its partial output (8 files, no verdict) stays unread under `.local/artifacts/cp-24/critic-2/`.
+     The new review received nothing from either Critic.
+10. **The Owner's work-availability maintenance (2026-10-10, `9667fb4`).**
+    - **What changed.** The commit removed the calendar gate from `scripts/cp24_ddnn2.py` and
+      `src/cp24/budget.py`. It also changed the report text, the manifest paths and the tests, and packaged the
+      continuation brief byte for byte. The continuation's first commit therefore had nothing to copy;
+      `cmp` against `.local/artifacts/cp-24/continuation-brief.md` shows them equal, SHA-256 `5960b908…`.
+    - **The consequence.** Both scripts are in attempt 1's `implementation_sha256`, so `check_protocol(root, 1)`
+      now refuses at every later commit, as designed: "implementation changed since attempt 1's freeze:
+      scripts/cp24_ddnn2.py".
+    - **Why it changes no frozen element.** Every attempt-1 fit, the scoring and the controls ran before the
+      maintenance. Its diff touches only the calendar check, never a forecast path. The continuation runs no
+      entry point that calls `check_protocol`.
+    - **How the continuation guards the frozen code.** Its leakage controls use `cp24.leakage.frozen_guard`,
+      which applies `check_protocol`'s conditions with this one recorded exception. Each of the two files must
+      equal its blob at `9667fb4`, and its blob at the protocol commit must equal the frozen hash. Their
+      bit-for-bit reproduction of every committed D2 vector (item 13) shows the forecast path is the frozen one.
+11. **The base-tree test bound living files (found by the Orchestrator; repaired by the continuation).**
+    - **The defect.** `tests/cp24/test_base_tree.py` hashed all 1,322 files tracked at `522d7ea` in the default
+      suite, among them `progress.md`, `capstone_v21.md`, `AGENTS.md`, `README.md` and `docs/index.html`.
+      Authorized work on `main` changes those files, and the closure records after the LAND would too.
+    - **The evidence.** A simulated LAND of `9667fb4` onto today's `main` (`7ff6a50`) already failed it:
+      1 failed, 1474 passed, 13 skipped. That squash tree was built in a fresh one-commit repository and run with
+      CI's steps.
+    - **The repair.** "Unchanged" is a property of the candidate commit, so it is now proved
+      candidate-scoped by `python -m cp24.basetree --check-rev <candidate>`. That Git-object check requires every
+      recorded file to be byte-identical and every other entry to be a file under CP-24's write paths. The Lead runs
+      it before the review, and the Critic reruns it. `--check` keeps the in-checkout form. `build()` is refactored
+      and rebuilds `base-tree.json` byte for byte.
+    - **The test now.** The default-suite test checks only the committed record and both checkers, on fixtures,
+      with paired positives and negatives.
+    - **The candidate's LAND.** `cp24.landsim` builds the squash tree read-only and runs CI's steps. It is green
+      on `main` as it stands, and again after simulated later edits to the living files (see the return).
+12. **The other CP-24 tests, audited for the same property.**
+    - **`test_draft_export.py`.** Its live hash of CP-23's test-only lock is removed; the candidate-scoped proof
+      covers that lock. The fresh-build comparison of the draft export runs while `scripts/mlflow_export.py` holds
+      its base bytes, and otherwise skips with the reason. The manifest still binds the draft byte for byte.
+    - **`test_reference_record.py`.** It is part of attempt 1's frozen implementation, and it still asserts
+      `torch_lock_sha256 == sha(tests/cp23/torch-reference/uv.lock)`.
+      - Why unchanged: editing it would change a frozen element (§23.6).
+      - Why it adds no exposure: CP-23's manifest test on `main` binds the same file. A later change to that lock
+        must already amend CP-23's test, and the same `AMENDED_BY_…` pattern the Owner used for CP-21 and CP-23 on
+        2026-10-10 then applies here.
+    - **Tests that bind only CP-24's own files or fixtures:** `test_saved_evidence.py`, `test_leakage_controls.py`,
+      `test_work_availability.py`, `test_guards_by_fold.py`, `test_composites_and_rule.py`,
+      `test_search_procedure.py`, `test_numpy_only.py` and `test_ddnn2_gradients.py`.
+    - **`test_design_dst.py`.** It reads the frozen snapshot through CP-21's loader, a behavioural dependency every
+      earlier checkpoint's tests share. It pins no hash.
+13. **Item 9's control evidence, extended (the continuation's decision).**
+    - **The decision.** The committed controls (`controls.json`, 80 of 80) do not on their own support item 9 for a
+      result this strong. D2 alone is −10.67% S_MAE and −15.53% S_WIS against v4. The controls prove the masks at
+      two origins, with member 0 and one weather member, and the search and gate negatives for one fold each. A
+      leak confined to another input group of the 20 frozen configurations, another fold or another origin would
+      pass them.
+    - **The extension** is `cp24.leakage`, job `leakage-a1`. It is verification only: no frozen element changed,
+      no forecast was produced or replaced, and nothing was rescored. Its refits are charged as control fits.
+    - **Results:**
+      - at all 636 warm-up and evaluation origins, the frozen eight-member ensemble, refitted with every outcome on
+        or after the delivery day destroyed, reproduces the committed D2 vectors bit for bit:
+        636 of 636, every member at its recorded weights;
+      - 10,747 evaluation keys equal `predictions.parquet`;
+      - a D−1 evening price mutation moves the ensemble at 22 of 22 stratified origins, with the smallest
+        move 31.28 EUR/MWh;
+      - a planted one-day leak is detected in 5 of 5 folds;
+      - the search and gate negatives and positives hold fold by fold in all 5 folds;
+      - the structure is clean: 5,088 member windows, 3,464 search batches and the 280 gate days.
+    - **Cost:** 5,294 control fits, the 4-origin smoke included, and 7.27 charged machine-hours (the smoke 0.08,
+      the full job 7.19).
+14. **Unmonitored checks.**
+    - **A dry check before the leakage smoke.** It ran `cp24.leakage.tasks`, `structure` and `frozen_guard` once,
+      outside the monitor, for about one minute in one process. It made no fit and charged nothing.
+    - **A function check of `cp24.landsim`.** It ran `preconditions` and `materialise` once, outside the monitor:
+      `git archive`, an untar and a scratch-repository commit, in about 8 seconds, with no test run. The tree it
+      built (`3e19dd1`) equals the monitored simulation's squash tree. The scratch tree was deleted.
