@@ -122,7 +122,7 @@
     }
   },
   "check": "Release checks of PUBLISH_RULES 1.0 \u00a79 (Publication Standard v1 \u00a710), the \u00a71 placements with A2's measured header, and A5's discovery routes",
-  "checked_at_utc": "2026-10-11T04:07:18+00:00",
+  "checked_at_utc": "2026-10-11T11:40:31+00:00",
   "discovery": [
     {
       "engine": "chrome",
@@ -8725,7 +8725,7 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 4640,
+          "checked": 4648,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -8735,7 +8735,7 @@
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 4627,
+          "checked": 4635,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -8753,7 +8753,7 @@
         "tab_key": "Tab",
         "without_visible_focus": []
       },
-      "page": "http://127.0.0.1:8741/index.html",
+      "page": "http://127.0.0.1:8742/index.html",
       "passed": true,
       "touch_targets_390": {
         "checked": 198,
@@ -8786,7 +8786,7 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 4640,
+          "checked": 4648,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -8796,7 +8796,7 @@
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 4627,
+          "checked": 4635,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -8814,7 +8814,7 @@
         "tab_key": "Alt+Tab",
         "without_visible_focus": []
       },
-      "page": "http://127.0.0.1:8741/index.html",
+      "page": "http://127.0.0.1:8742/index.html",
       "passed": true,
       "touch_targets_390": {
         "checked": 198,
@@ -8843,7 +8843,7 @@
     }
   ],
   "not_used": "No real Safari, no real iPhone and no screen reader were used (standard \u00a710); the phone widths are emulated viewports, and the iPhone is Playwright's emulated device in WebKit.",
-  "page": "http://127.0.0.1:8741/index.html",
+  "page": "http://127.0.0.1:8742/index.html",
   "passed": true,
   "placement_rule": "PUBLISH_RULES 1.0 A2: finding bottom <= N x H - (N - 1) x h, N = 2 at 1440x900 and 3 at 390x844, h the largest persistent-header height seen on the route",
   "served_over": "http(s)",
@@ -8863,7 +8863,7 @@
         "smallest_text_px": 12.38
       },
       "cold_reader_screens": {
-        "folder": ".local/artifacts/pres-4/release-3/cold-reader/chrome-1440x900",
+        "folder": ".local/artifacts/pres-4/release-4/cold-reader/chrome-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -8927,7 +8927,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-4/release-3/cold-reader/chrome-1440x900",
+        "folder": ".local/artifacts/pres-4/release-4/cold-reader/chrome-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -9020,7 +9020,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/chrome/1440x900.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/chrome/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -9053,37 +9053,37 @@
         "byline_in_disclosure": false,
         "client_width": 768,
         "demo_action": {
-          "bottom": 925.5,
-          "top": 876.5
+          "bottom": 946.5,
+          "top": 897.5
         },
         "finding": {
-          "bottom": 2268.3,
-          "top": 2184.3
+          "bottom": 2289.3,
+          "top": 2205.3
         },
         "finding_chart": {
-          "bottom": 5136.4,
-          "top": 2624.3
+          "bottom": 5157.4,
+          "top": 2645.3
         },
         "header_px": 56,
         "headline": {
           "bottom": 650.5,
           "top": 546.5
         },
-        "page_height": 23858,
+        "page_height": 23879,
         "release_rule": {
-          "bottom": 1003.5,
-          "top": 937.5
+          "bottom": 1024.5,
+          "top": 958.5
         },
         "release_rule_in_disclosure": false,
         "scroll_width": 768,
         "terms": {
-          "bottom": 817.5,
+          "bottom": 838.5,
           "top": 660.5
         }
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/chrome/768x1024.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/chrome/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -9110,7 +9110,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-4/release-3/placement/chrome-390x844",
+        "folder": ".local/artifacts/pres-4/release-4/placement/chrome-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -9235,7 +9235,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/chrome/390x844.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/chrome/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -9298,7 +9298,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/chrome/360x780.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/chrome/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -9361,7 +9361,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/chrome/320x640.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/chrome/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -9388,7 +9388,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-4/release-3/placement/webkit-1440x900",
+        "folder": ".local/artifacts/pres-4/release-4/placement/webkit-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -9481,7 +9481,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/webkit/1440x900.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/webkit/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -9514,37 +9514,37 @@
         "byline_in_disclosure": false,
         "client_width": 768,
         "demo_action": {
-          "bottom": 899.9,
-          "top": 851
+          "bottom": 920.9,
+          "top": 872
         },
         "finding": {
-          "bottom": 2242.7,
-          "top": 2158.7
+          "bottom": 2263.7,
+          "top": 2179.7
         },
         "finding_chart": {
-          "bottom": 5131.8,
-          "top": 2619.7
+          "bottom": 5152.8,
+          "top": 2640.7
         },
         "header_px": 56,
         "headline": {
           "bottom": 625,
           "top": 520.5
         },
-        "page_height": 23959,
+        "page_height": 23980,
         "release_rule": {
-          "bottom": 977.9,
-          "top": 911.9
+          "bottom": 998.9,
+          "top": 932.9
         },
         "release_rule_in_disclosure": false,
         "scroll_width": 768,
         "terms": {
-          "bottom": 792,
+          "bottom": 813,
           "top": 635
         }
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/webkit/768x1024.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/webkit/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -9563,7 +9563,7 @@
         "smallest_text_px": 14.58
       },
       "cold_reader_screens": {
-        "folder": ".local/artifacts/pres-4/release-3/cold-reader/webkit-390x844",
+        "folder": ".local/artifacts/pres-4/release-4/cold-reader/webkit-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -9659,7 +9659,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-4/release-3/cold-reader/webkit-390x844",
+        "folder": ".local/artifacts/pres-4/release-4/cold-reader/webkit-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -9784,7 +9784,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/webkit/390x844.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/webkit/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -9847,7 +9847,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/webkit/360x780.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/webkit/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -9910,7 +9910,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/webkit/320x640.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/webkit/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -9973,7 +9973,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-4/release-3/webkit/iphone-15.png",
+      "screenshot": ".local/artifacts/pres-4/release-4/webkit/iphone-15.png",
       "view": "iphone-15",
       "viewport": "393x659"
     }

@@ -194,29 +194,31 @@ Not applicable: no final-product designation, rollout or live panel.
 ## 7. Checks run
 
 Records under `reports/presentation/release-checks/` unless a path says otherwise. First failures and superseded runs
-are kept beside their retries. A check run on `b0ed15542f987f0228bf388d2a6902044d95b140` covered a tree that differs
-from the candidate only in this packet and the prerelease record that the next commit adds.
+are kept beside their retries. A check run on `2064fb6e7c01e662332a5401a2e86344e24d1b1c` covered a tree that differs
+from the candidate only in this packet and the records that the next commit adds. The candidate follows Integration
+review 1's FAIL at `a852c0a` and its repair, `1cae93f` (below).
 
 | Check (runbook §9; brief "Reviews and evidence") | Record | Result |
 |---|---|---|
-| The offline checks, `scripts/prerelease.py --stage pre-final` from a clean tree: the browser payload; pytest on Python 3.13; a clean Python 3.12 run of every CI step (`uv sync --locked --dev`, the payload, pytest, the CQR fixture, cross-surface agreement, the WASM equivalence); `make verify`; `make lint-publication`; the rebuild and `git status`; links; the publication guard | `pres-4-pre-final-prerelease.json` (at `b0ed155`; raw output local only, `.local/artifacts/prerelease/pres-4-pre-final/`) | **PASS**, 2026-10-11 10:54–11:04 UTC, every check as expected: the payload on 3.13; pytest on 3.13.15, 1,652 passed, 8 skipped by design; on 3.12.14, `uv sync --locked --dev`, the payload, pytest (1,652 passed, 8 skipped), the CQR fixture (8 passed), cross-surface agreement, the WASM equivalence (15 passed); `make verify`; `make lint-publication`; the rebuild with 0 changed paths; links (46, none failed); the publication guard exiting 1 as expected before the `--final` build |
-| — its earlier attempts | attempt 1 (stopped after four steps because the tree changed under it; logs only, kept locally at `.local/artifacts/pres-4/prerelease-attempt-1-aborted/`); `pres-4-pre-final-prerelease-attempt-2.json` (at `db65a46`: every check as expected except links, which met 26 GitHub `blob` 503s) | superseded by attempt 3 |
-| Links (`check_links.py`), unauthenticated | `pres-4-links-attempt-1.json` (the first failure: GitHub 503s); `pres-4-links-attempt-2.json` = `pres-4-links.json` (after a 30-minute pause); `reports/cp3/link_check.json`, the prerelease's own run at `b0ed155` | 46 links, no failed destination; the four gated DagsHub UI paths redirect to login, as controls. Against the published page, the link set changes only where v5 replaces v4 at the top of the page and the branch cards add their reports and verdicts; the v4 chapter keeps its links |
+| The offline checks, `scripts/prerelease.py --stage pre-final` from a clean tree: the browser payload; pytest on Python 3.13; a clean Python 3.12 run of every CI step (`uv sync --locked --dev`, the payload, pytest, the CQR fixture, cross-surface agreement, the WASM equivalence); `make verify`; `make lint-publication`; the rebuild and `git status`; links; the publication guard | `pres-4-pre-final-prerelease.json` (at `2064fb6`; raw output local only, `.local/artifacts/prerelease/pres-4-pre-final/`) | **PASS**, 2026-10-11 11:34–11:45 UTC, every check as expected: the payload on 3.13; pytest on 3.13.15, 1,658 passed, 8 skipped by design; on 3.12.14, `uv sync --locked --dev`, the payload, pytest (1,658 passed, 8 skipped), the CQR fixture (8 passed), cross-surface agreement, the WASM equivalence (15 passed); `make verify`; `make lint-publication`; the rebuild with 0 changed paths; links (46, none failed); the publication guard exiting 1 as expected before the `--final` build |
+| — its earlier attempts | attempt 1 (stopped after four steps because the tree changed under it; logs only, kept locally at `.local/artifacts/pres-4/prerelease-attempt-1-aborted/`); `pres-4-pre-final-prerelease-attempt-2.json` (at `db65a46`: every check as expected except links, which met 26 GitHub `blob` 503s); `pres-4-pre-final-prerelease-attempt-3.json` (at `b0ed155`: PASS, 1,652 passed and 8 skipped on each Python; the candidate Integration review 1 failed) | superseded by attempt 4 |
+| Links (`check_links.py`), unauthenticated | `pres-4-links-attempt-1.json` (the first failure: GitHub 503s); `pres-4-links-attempt-2.json` = `pres-4-links.json` (after a 30-minute pause); `reports/cp3/link_check.json`, the prerelease's own run at `2064fb6` | 46 links, no failed destination; the four gated DagsHub UI paths redirect to login, as controls. Against the published page, the link set changes only where v5 replaces v4 at the top of the page and the branch cards add their reports and verdicts; the v4 chapter keeps its links |
 | `make verify`; `make lint-publication` | inside the prerelease record | PASS; page, README and templates 0 findings |
 | `make publication-guard` | inside the prerelease record | BLOCKED, by design, until the `--final` build: `reports/cp3/pages_build.json` is a non-final build record |
 | Determinism: `rebuild_presentation.py`, then `git status` | inside the prerelease record | every generated surface equals its committed bytes |
-| The page budget | `reports/cp3/pages_build.json` | 1,993,644 bytes ≤ 2,000,000 (6,356 to spare), without compaction; v2 and v3 sections byte-identical (`tests/test_45`, `tests/test_49`) |
-| The §10 release checks and the placements, Chrome 154.0.8037.98 and WebKit 26.6, at 1440 × 900, 768 × 1024, 390 × 844, 360 × 780, 320 × 640 and the emulated iPhone 393 × 659 | `pres-4-local-release.json` (attempt 3, at `db65a46`, the page `e22525a9…`, the fresh reader's screens) | passed: the headline block ends at 800.6 / 801.3 px (desktop) and 628.6 / 628.7 px (phone); the finding at 1,727.6 / 1,728.3 px (A2 limit 1,744) and 2,402.5 px (limit 2,420); chart text at least 12.21 px (320 px), 14.58 px (390 px) and 12.38 px (1440 px), with every disclosure open as well; no chart overlap or clipping, no collapsed space, no horizontal overflow; no console error, failed request, HTTP error or resource after the document; accessibility trees, keyboard, touch targets at 390 px, contrast, 200% zoom and 320 px reflow, in both engines |
-| — its earlier attempts | `pres-4-local-release-attempt-1.json` (failed: the phone finding at 2,443.5 px, beyond A2's 2,420; the per-period route reached a table inside a closed disclosure); `-attempt-2.json` (passed, but the editorial repairs changed the page during the run) | superseded by attempt 3 |
+| The page budget | `reports/cp3/pages_build.json` | 1,994,385 bytes ≤ 2,000,000 (5,615 to spare), without compaction; v2 and v3 sections byte-identical (`tests/test_45`, `tests/test_49`) |
+| The §10 release checks and the placements, Chrome 154.0.8037.98 and WebKit 26.6, at 1440 × 900, 768 × 1024, 390 × 844, 360 × 780, 320 × 640 and the emulated iPhone 393 × 659 | `pres-4-local-release.json` (attempt 4, at `1cae93f`, the page `1512deee…`, the candidate's) | passed: the headline block ends at 800.6 / 801.3 px (desktop) and 628.6 / 628.7 px (phone); the finding at 1,727.6 / 1,728.3 px (A2 limit 1,744) and 2,402.5 px (limit 2,420); chart text at least 12.21 px (320 px), 14.58 px (390 px) and 12.38 px (1440 px), with every disclosure open as well; no chart overlap or clipping, no collapsed space, no horizontal overflow; no console error, failed request, HTTP error or resource after the document; accessibility trees, keyboard, touch targets at 390 px, contrast, 200% zoom and 320 px reflow, in both engines |
+| — its earlier attempts | `pres-4-local-release-attempt-1.json` (failed: the phone finding at 2,443.5 px, beyond A2's 2,420; the per-period route reached a table inside a closed disclosure); `-attempt-2.json` (passed, but the editorial repairs changed the page during the run); `-attempt-3.json` (passed, at `db65a46`, the page `e22525a9…`, the fresh reader's screens; the same placements as attempt 4) | superseded by attempt 4 |
 | A5 discovery, from the closed default page, by mouse, keyboard and deep link | inside the release record | 40 routes in each engine at both placement sizes |
 | The demo: cold start and controls; accessibility and keyboard; startup states (the bundle served locally on 127.0.0.1) | `pres-4-local-demo.json`, `pres-4-local-demo-a11y.json`, `pres-4-local-states.json` | ready in 10.1–11.7 s, 0 console errors, 0 failed requests; every control named, no target under 44 px, keyboard operation of the slider, the level and the menu; loading, failure and retry |
-| The Space unchanged | `pres-4-space-unchanged.json`; `pres-4-space-check.json` | `make wasm` rebuilds bundle `9028a118…` (805 files, 44,164,910 bytes), equal file by file to the reviewed copy; both cards byte-identical to `e398a30` (`745bbb93…`, `c92a2666…`); the bitwise-equivalence gate at deviation 0.0 with its three positive controls breaking it; `make wasm` changes no tracked file. Read-only check mode: the served Space, revision `0331088725fedab2f5a1ec804ae03bf960cf126f`, equals the bundle; nothing to add, change or delete; nothing written |
+| The Space unchanged | `pres-4-space-unchanged.json` (at `db65a46`); `pres-4-space-check.json`; `make wasm` again at `2064fb6` (the bundle `9028a118…`, its 805 files equal to the reviewed copy; no tracked file changed) | `make wasm` rebuilds bundle `9028a118…` (805 files, 44,164,910 bytes), equal file by file to the reviewed copy; both cards byte-identical to `e398a30` (`745bbb93…`, `c92a2666…`); the bitwise-equivalence gate at deviation 0.0 with its three positive controls breaking it; `make wasm` changes no tracked file. Read-only check mode: the served Space, revision `0331088725fedab2f5a1ec804ae03bf960cf126f`, equals the bundle; nothing to add, change or delete; nothing written |
 | The export | `pres-4-export-diff.json`, `pres-4-export-final-vs-draft.json` | `--check` current; runs 28 → 44, the 16 of cp22, cp23 and cp24 added, `only_identity` true, no identity or substantive change, the one experiment-tag change `mlflow.note.content`; each later export equals its draft apart from its pending fields (cp24 also the Owner's name and v5's two charts); `--draft cp22 --check` and `--draft cp23 --check` current |
 | The publisher, dry run (no `--target`) | the run's output, local | 44 runs, 16,753 metric points, 107 artifacts in the plan; the outbound credential-value scan clean; nothing written |
 | The value-based secret scan | `scripts/secret_guard.py` | the pre-commit and commit-msg hooks on every commit; an explicit pre-commit scan before each evidence commit; the pre-push scan over `gauntlet/pres-4` at the evidence tip, in the return |
 | One editorial review | `docs/track-b/evidence/pres-4/editorial.md` | 10 violations (V1–V10), repaired in `db65a46`; 13 recommendations, each dispositioned in the advisory log |
-| The fresh reader | `docs/track-b/evidence/pres-4/fresh-reader.md` | answers 1–5 agree with the registry and the records; no violation; one new advisory (A-PRES4-7) |
-| The independent check, and the focused recheck at the final SHA | `docs/track-b/evidence/pres-4/integration.md` | after this packet |
+| The fresh reader | `docs/track-b/evidence/pres-4/fresh-reader.md` | answers 1–5 agree with the registry and the records; no violation; one new advisory (A-PRES4-7). A section appended after Integration review 1 corrects its observation 3 and records the reading's continued applicability to the repaired page: no answer quotes the changed text, and the placements are unchanged |
+| Integration review 1, at `a852c0a` | `docs/track-b/evidence/pres-4/integration-review-1.md` | **FAIL**: V1, the v5 exact-ratio table's interval columns showed the rounded point value (`research_claims._render_derived` ignored `ciexact`); V2, the error scores' term had drifted from the standard's definition (P21) and the paired-difference term from P53's quotation. Both repaired in `1cae93f`, each bound by `tests/test_49` with negative controls; dispositions of its five observations in the advisory log (A-PRES4-8) |
+| Integration review 2, at the candidate, and the focused recheck at the final SHA | `docs/track-b/evidence/pres-4/integration.md` | after this packet |
 | The authorized MLflow upload, the mirror verification, the browser routes and the index | `pres-4-mlflow-upload.json`, `pres-4-public-mirror.json`, `pres-4-public-mlflow-routes.json`, `reports/presentation/mlflow_index.json` | after the independent check's PASS, before the `--final` build |
 
 No real Safari, real iPhone or screen reader was used; the phone widths are emulated viewports, and the iPhone is
@@ -228,8 +230,8 @@ Playwright's emulated device in WebKit.
 
 | Surface | Reviewed output | Identity | Now public |
 |---|---|---|---|
-| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>` (the return and `integration.md`); at the candidate, before the index, 1,993,644 bytes, `e22525a960ad4cd1147c6d8179ace980123a3b6c2051565b134c0c68bddaa366` | 1,907,718 bytes, `8a1fedd8bc6bf89d1db170b3fb83df34255e4c350c22113d1df52088c25c8c39` (PRES-3, `main` `e398a30`), read by the Orchestrator 2026-10-10T23:17Z |
-| README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>`; at the candidate `142c27a2aef82c3294d6f836cd32af03c15ae9bb63c9b79f74543d96fb107d25` | at `main` `e398a30`: `4ee0602e8809810d19c97e53f7cf50bf24536d2eb7a2a95652db44957385e4fa` |
+| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>` (the return and `integration.md`); at the candidate, before the index, 1,994,385 bytes, `1512deee08086daf4a38362fcb98ff945785bb99222cc98756c6d743509090ac` | 1,907,718 bytes, `8a1fedd8bc6bf89d1db170b3fb83df34255e4c350c22113d1df52088c25c8c39` (PRES-3, `main` `e398a30`), read by the Orchestrator 2026-10-10T23:17Z |
+| README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>`; at the candidate `c816972a7ddb4509f4e7617f4f480588b2500becb9217d8d36a4afebee8315fc` | at `main` `e398a30`: `4ee0602e8809810d19c97e53f7cf50bf24536d2eb7a2a95652db44957385e4fa` |
 | Static Space bundle | none: unchanged by the Owner's decision of 2026-10-11 | `9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585`, 805 files, 44,164,910 bytes; the reviewed copy at `.local/artifacts/pres-3/space-wasm-9028a118/`; `make wasm` at the candidate rebuilds it file for file (`pres-4-space-unchanged.json`) | revision `0331088725fedab2f5a1ec804ae03bf960cf126f`, serving exactly that bundle (`pres-4-space-check.json`, read 2026-10-11T10:49Z) |
 | Space change | **none**: no upload, no deletion | — | — |
 | Static Space card | `space-wasm/README.md` (the bundle's `README.md`) | `c92a2666d76255b24d8e0fb159f97bedcbee0a7a948fb6afeac4b02089bb9a67`, unchanged | the same |
@@ -292,7 +294,7 @@ the squash):
 git --no-pager diff --name-only e398a30bb53ecd4c397aad0f34fd122d42e74553 <evidence_tip_sha> | while IFS= read -r f; do git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 && ! git --no-pager diff --quiet -- "$f" && echo "MODIFIED $f"; git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 || { [ -e "$f" ] && echo "TWIN $f"; }; done; echo twins-checked
 ```
 
-Expect only `twins-checked` (it printed only that against `b0ed155` on 2026-10-11).
+Expect only `twins-checked` (it printed only that against `2064fb6` on 2026-10-11 at 11:47 UTC).
 
 ```bash
 git --no-pager merge --squash gauntlet/pres-4
@@ -469,14 +471,14 @@ history rewrite or MLflow change is part of a recovery; a rollback is its own Ow
 | §4 registry, transitions, branches; A3 | yes | One registry; v5's transition card (A3); the two branch cards after v4 with question, comparator, deciding result, "Not adopted", reason, date and evidence | `tests/test_43` A3; `tests/test_49` |
 | §4 A10 revision in place | no | v5 is a new generation; no adopted generation is revised in place | — |
 | §5 page architecture; A4 | yes, unchanged | The A4 order is unchanged; the product section documents the released v1 and is byte-identical | `tests/test_45` published sections |
-| §5.2 chapter grammar; page budget | yes | v5's chapter fills every slot (`slot_problems` empty); one page, 1,993,644 bytes ≤ 2.0 MB without compaction (the Owner's D1) | `tests/test_49`; `reports/cp3/pages_build.json` |
+| §5.2 chapter grammar; page budget | yes | v5's chapter fills every slot (`slot_problems` empty); one page, 1,994,385 bytes ≤ 2.0 MB without compaction (the Owner's D1) | `tests/test_49`; `reports/cp3/pages_build.json` |
 | §6 charts, discovery; A5 | yes | v5's main chart with direct labels, the pentagon and readable values; the comparison's study points; A5 routes from the closed default page in both engines | `pres-4-local-release.json` (`discovery`); `tests/test_43` A5 |
 | §7.1 product contract | yes, unchanged | The opening names v1 as the demo's model and v5 as research; release rule and startup line unchanged | the opening |
 | §7.2 live presentation; A7 | no | No live panel is authorized | — |
 | §7.3 final-product Space; A9 | no | No final-product designation | — |
 | §8 surfaces | yes | Report, README, MLflow updated; Space card and demo verified unchanged (`pres-4-space-unchanged.json`, `pres-4-space-check.json`) | §8 of this packet |
 | §9 browser and accessibility matrix | yes | Chrome and WebKit, every width, AX trees, keyboard, touch, contrast, zoom and reflow, requests, placements; the demo's controls | `pres-4-local-release.json`; `pres-4-local-demo*.json`, `pres-4-local-states.json` |
-| §10.1 independence | yes | The editorial review, the fresh reader and the Integration Critic authored none of the changes | `editorial.md`, `fresh-reader.md`, `integration.md` |
+| §10.1 independence | yes | The editorial review, the fresh reader and both Integration Critics authored none of the changes | `editorial.md`, `fresh-reader.md`, `integration.md` |
 | §10.2 fresh reader | yes | The six unchanged questions, closed-state screens only, answers kept | `fresh-reader.md` |
 | §10.3 public identity; A6 | yes, after the Owner's steps | The receipt and the browser records on the public URLs | §8.5 |
 | §10.4 verdict | yes | The Integration verdict | `integration.md` |
@@ -494,7 +496,7 @@ history rewrite or MLflow change is part of a recovery; a rollback is its own Ow
 | Authority | Rules 1.4 `ccfe6199…a80`; standard `7bb90c4c…68c`; plan `b04a0bb1…19c`; research anchor v21-r12 `caf03d70…7e4`; brief `54169c7c…bdd`; A7–A10 not applicable, with reasons (§9.1) |
 | Identity | `gauntlet/pres-4` off `e398a30`; `<final_candidate_sha>`; `<evidence_tip_sha>`; the landing and the served identities after the Owner's steps |
 | Claims | §4: source rows by blob and line, derivations, class, comparator and population, the census, the limitations |
-| Reader | Default path and placements (`pres-4-local-release.json`); definitions under the headline; the fresh reader's record |
+| Reader | Default path and placements (`pres-4-local-release.json`); definitions under the headline, bound to their claims (`tests/test_49`); the fresh reader's record and its appended continued applicability |
 | Journey | The v4 → v5 transition; two branch cards between v4 and v5; the planned list after the programme plan; no unperformed experiment implied |
 | Content | The twelve product subjects unchanged for the released v1; v5's concise history; the v1 archive unchanged |
 | Charts | v5's main chart; the comparison with its study points; A5 routes |
@@ -503,7 +505,7 @@ history rewrite or MLflow change is part of a recovery; a rollback is its own Ow
 | Tracking | The upload record, the mirror verification and the browser routes (§6–§7) |
 | Release | `--final` build, guard and test results; the exact-candidate Integration check; the authorized upload's record |
 | Public check | After the Owner's steps (§8.5) |
-| Follow-up | Advisories A-PRES4-1 to A-PRES4-7; dispositions of A-PRES3-1, -5, -7; the editorial review's 13 recommendations and the fresh reader's 18 observations (§10) |
+| Follow-up | Advisories A-PRES4-1 to A-PRES4-8; Integration review 1's two violations, repaired, and five observations; dispositions of A-PRES3-1, -5, -7; the editorial review's 13 recommendations and the fresh reader's 18 observations (§10) |
 | Final product, daily panel, business, final-product Space | Not applicable |
 
 ### 9.3 The runbook
@@ -566,7 +568,9 @@ All in `docs/track-b/publication-advisory-log.md`, PRES-4's section:
   A-PRES3-5 deferred (it needs a Lockdown suspension).
 - **New:** A-PRES4-1 (whole-percent intervals that coincide at two levels), A-PRES4-2 (the share of days as a count),
   A-PRES4-3 (the experiment code `v5` in CP-23's run name), A-PRES4-4 (a draft subtitle over the field's length), A-PRES4-5
-  (6,356 bytes left in the page budget: the Owner decides compaction before the next generation), A-PRES4-6 (runbook §2
-  still names CP-21 as the model), A-PRES4-7 (the branch cards do not name their own rules; the fresh reader).
+  (5,615 bytes left in the page budget at the candidate: the Owner decides compaction before the next generation), A-PRES4-6 (runbook §2
+  still names CP-21 as the model), A-PRES4-7 (the branch cards do not name their own rules; the fresh reader), A-PRES4-8 (the draft-equality check
+  cannot see a non-pending description change; Integration review 1).
 - **The editorial review's** ten violations, repaired, and thirteen recommendations, each dispositioned; **the fresh
-  reader's** eighteen observations, dispositioned in its record.
+  reader's** eighteen observations, dispositioned in its record; **Integration review 1's** two violations, repaired in
+  `1cae93f`, and five observations, each dispositioned.
