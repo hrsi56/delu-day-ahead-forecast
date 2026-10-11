@@ -205,6 +205,20 @@ def transition_lines(entry: G.Entry) -> list[str]:
 
 def generation_section(entry: G.Entry) -> list[str]:
     head = [f"### {entry.name}", "", f"*{entry.subtitle}.* {G.status_sentence(entry)}", ""]
+    if entry.id == "v5":
+        primary = R.get("cp24.uncertainty.v5-HGL.equal_fold.MAE")
+        return head + [
+            *transition_lines(entry),
+            md("v5.outcome.head"), "",
+            f"- {md('v5.outcome.mae')}.",
+            f"- {md('v5.outcome.wis')}.",
+            "",
+            md("v5.rule"), "",
+            md("v5.reading"), "",
+            *not_established(("v5.caveat.coverage", "v5.caveat.class", "v5.caveat.alone")),
+            md("v5.decision"), "",
+            audit_links("CP-24", source=primary.source_path, line=primary.source_line), "",
+        ]
     if entry.id == "v4":
         primary = R.get("cp21.uncertainty.HGL-HG.equal_fold.MAE")
         return head + [
@@ -313,7 +327,9 @@ def build_block() -> str:
         "### Further reading", "",
         "- The research updates behind each generation: [CP-20](docs/track-b/research-content/cp20-update.md) and "
         "[CP-15 and CP-16](docs/track-b/research-content/cp15-cp16-update.md).",
-        "- The landing records: [CP-21](docs/track-b/cp-21-landing-2026-09-30.md), "
+        "- The landing records: [CP-24](docs/track-b/cp-24-landing-2026-10-11.md), "
+        "[CP-23](docs/track-b/cp-23-landing-2026-10-04.md), [CP-22](docs/track-b/cp-22-landing-2026-10-04.md), "
+        "[CP-21](docs/track-b/cp-21-landing-2026-09-30.md), "
         "[CP-20](docs/track-b/cp-20-landing-2026-09-24.md), "
         "[CP-16](docs/track-b/cp-16-landing-2026-09-23.md) and [CP-15](docs/track-b/cp-15-landing.md). CP-3B's "
         "[unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) is disclosed.",

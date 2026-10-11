@@ -214,8 +214,11 @@ CODE_PATTERNS = (
 
 
 def code_denylist() -> tuple[str, ...]:
-    """Generated from the registry's code fields (standard §4): no hand-kept list."""
-    return tuple(code for code in G.codes() if not re.fullmatch(r"CP-\d+", code))
+    """Generated from the registry's code fields (standard §4): no hand-kept list. A code whose text is a registered
+    generation's public version label (CP-24's `v5`, which CP-23 also used for its candidate) is that label on the
+    reading path, not an internal code, and stays allowed; every other code stays denied."""
+    versions = {entry.version for entry in G.generations()}
+    return tuple(code for code in G.codes() if not re.fullmatch(r"CP-\d+", code) and code not in versions)
 
 
 def code_findings(nodes: list[Node]) -> list[str]:

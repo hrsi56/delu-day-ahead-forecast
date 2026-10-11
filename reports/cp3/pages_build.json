@@ -1,8 +1,13 @@
 {
   "build_path": "purpose-built static assembly (\u00a79.2 fallback)",
-  "bytes": 1907718,
-  "final": true,
-  "links_omitted_until_verified": [],
+  "bytes": 1987869,
+  "final": false,
+  "links_omitted_until_verified": [
+    "compare:ddnn-member-on-v4",
+    "compare:overview",
+    "compare:pooled-lightgbm-member-for-v4",
+    "compare:v5"
+  ],
   "load_scale_points": 11,
   "marimo_export_external_hosts": [
     "cdn.jsdelivr.net"
@@ -13,17 +18,19 @@
   "output": "docs/index.html",
   "routes_expected": [
     "compare:calibration",
+    "compare:ddnn-member-on-v4",
     "compare:model-comparison",
     "compare:overview",
+    "compare:pooled-lightgbm-member-for-v4",
     "compare:v2",
     "compare:v3",
     "compare:v4",
+    "compare:v5",
     "experiment"
   ],
   "routes_published": [
     "compare:calibration",
     "compare:model-comparison",
-    "compare:overview",
     "compare:v2",
     "compare:v3",
     "compare:v4",

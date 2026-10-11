@@ -297,12 +297,8 @@ CHANGES = {
 RATIO_CHANGES = {
     "v4": "cp21.ratio.HGL-HG.{metric}",
     "v5": "cp24.ratio.v5-HGL.{metric}",
-    # PRES-4: v5's study arm DDNN-2 alone (descriptive, never eligible), and the candidates of the branches tested
-    # against v4, each against its comparator, v4.
+    # PRES-4: v5's study arm DDNN-2 alone, against its comparator v4 (descriptive, never eligible).
     "ddnn2-alone": "cp24.ratio.D2-HGL.{metric}",
-    "v3-plus-pooled-normalized-lightgbm-averaged": "cp22.ratio.R-HGL.{metric}",
-    "v3-plus-pooled-lightgbm-pair": "cp22.ratio.M-HGL.{metric}",
-    "ddnn-member-on-v4": "cp23.ratio.v5-HGL.{metric}",
 }
 
 #: The same change at a rule's own decision level, where it is not 95% (capstone v21-r11 §23.8-§23.9): v5's rule decided

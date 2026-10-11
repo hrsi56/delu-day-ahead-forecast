@@ -29,6 +29,8 @@ Rules it enforces, in order:
 `--authorized-runs KEY,...` bounds an upload to the runs an instruction names (PRES-3: CP-21's five). Before the
 first write it reads the service and refuses unless every write the upload would make belongs to those runs: the
 experiment must exist with its tags already equal to the export's, and every other run must already be complete.
+`--authorized-experiment-tags KEY,...` admits writes to exactly those experiment tags as well (PRES-4: the one
+description write, `mlflow.note.content`, that A-PRES3-1 asked for); any other experiment tag still refuses.
 """
 
 from __future__ import annotations
@@ -277,9 +279,11 @@ def _log_run(client, reader: V.Reader, experiment_id: str, run: dict, parent_id:
     return run_id
 
 
-def write_plan(client, runs: dict[str, dict], authorized: tuple[str, ...]) -> dict:
-    """Read-only: what an upload would write, and whether all of it lies inside the authorized runs. Nothing outside
-    them may be written -- no experiment, no experiment tag, no other run -- so anything else refuses the upload."""
+def write_plan(client, runs: dict[str, dict], authorized: tuple[str, ...],
+               authorized_tags: tuple[str, ...] = ()) -> dict:
+    """Read-only: what an upload would write, and whether all of it lies inside the authorized runs and experiment
+    tags. Nothing outside them may be written -- no experiment, no other experiment tag, no other run -- so anything
+    else refuses the upload."""
     unknown = sorted(set(authorized) - set(runs))
     if unknown:
         raise Refused(f"authorized runs not in the export: {unknown}")
@@ -290,7 +294,8 @@ def write_plan(client, runs: dict[str, dict], authorized: tuple[str, ...]) -> di
         raise Refused(f"the experiment {E.EXPERIMENT} does not exist; creating it is outside the authorized runs")
     present = dict(experiment.tags)
     plan["experiment_tags_to_write"] = sorted(key for key, value in E.EXPERIMENT_TAGS.items() if present.get(key) != value)
-    outside = [f"experiment tag {key}" for key in plan["experiment_tags_to_write"]]
+    plan["authorized_experiment_tags"] = sorted(authorized_tags)
+    outside = [f"experiment tag {key}" for key in plan["experiment_tags_to_write"] if key not in authorized_tags]
     for key in runs:
         found = _find(client, experiment.experiment_id, key)
         state = "absent" if found is None else found.data.tags.get("delu.upload_state", "incomplete")
@@ -306,10 +311,10 @@ def write_plan(client, runs: dict[str, dict], authorized: tuple[str, ...]) -> di
 
 
 def publish(uri: str, runs: dict[str, dict], tool_sha: str, writes: Writes,
-            authorized: tuple[str, ...] | None = None) -> list[dict]:
+            authorized: tuple[str, ...] | None = None, authorized_tags: tuple[str, ...] = ()) -> list[dict]:
     client = _client(uri)
     reader = V.Reader(uri)
-    plan = write_plan(client, runs, authorized) if authorized is not None else None
+    plan = write_plan(client, runs, authorized, authorized_tags) if authorized is not None else None
     experiment = client.get_experiment_by_name(E.EXPERIMENT)
     experiment_id = experiment.experiment_id if experiment else client.create_experiment(E.EXPERIMENT)
     if experiment is None:
@@ -356,8 +361,13 @@ def main() -> int:
     parser.add_argument("--log", type=Path, default=None)
     parser.add_argument("--authorized-runs", default=None,
                         help="comma-separated run keys: refuse before any write unless every write lies inside them")
+    parser.add_argument("--authorized-experiment-tags", default="",
+                        help="with --authorized-runs: comma-separated experiment tags the upload may also write")
     args = parser.parse_args()
     authorized = tuple(key.strip() for key in args.authorized_runs.split(",")) if args.authorized_runs else None
+    authorized_tags = tuple(key.strip() for key in args.authorized_experiment_tags.split(",") if key.strip())
+    if authorized_tags and authorized is None:
+        parser.error("--authorized-experiment-tags needs --authorized-runs")
     secrets = E.local_secrets()
     try:
         if args.precheck:
@@ -389,7 +399,7 @@ def main() -> int:
             raise Refused("--target local must point at a loopback server")
         started = V.utc_now()
         writes = Writes(args.fail_after)
-        log = publish(uri, runs, head, writes, authorized)
+        log = publish(uri, runs, head, writes, authorized, authorized_tags)
         record = {"target": args.target, "tracking_uri": uri, "experiment": E.EXPERIMENT,
                   "export_commit": head, "started_utc": started, "finished_utc": V.utc_now(),
                   "write_operations": writes.count, "runs": log,

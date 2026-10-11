@@ -287,7 +287,7 @@ BLOCKS: tuple[Block, ...] = (
     # ---- the v5 chapter (the chapter grammar, standard §6; publication packet §5, CP-24 claim map) ----------
     _block("v5.question", "C403", """Does a distributional neural network that forecasts the whole next day at once,
            added to {g:v4.version} with a fixed one-sixth weight, improve both of its error scores?"""),
-    _block("v5.change", "C403", """{g:v5.version} adds DDNN-2, a distributional neural network: it forecasts the {s:hours:24} hours
+    _block("v5.change", "C403", """{g:v5.version} adds {s:name:DDNN-2}, a distributional neural network: it forecasts the {s:hours:24} hours
            of the next day together, each as a full probability distribution, from the same information as
            {g:v4.version}. It takes half of the third that {g:v4.version}'s LightGBM held; the two LEAR forecasts keep two
            thirds, and the hour-aware intervals are re-estimated on the new forecast's own errors."""),
@@ -319,19 +319,19 @@ BLOCKS: tuple[Block, ...] = (
     _block("v5.caveat.class", "C449", """**Performance on new data.** This is development evidence after selection: the
            second decision on a distributional neural network over the same five test periods. The one-shot test on
            days never used, which is planned, carries the protection.""", PAGE, README),
-    _block("v5.caveat.alone", "C427", """**That DDNN-2 should replace {g:v4.version} on its own.** {g:ddnn2-alone.name}
+    _block("v5.caveat.alone", "C427", """**That {s:name:DDNN-2} should replace {g:v4.version} on its own.** {g:ddnn2-alone.name}
            scored lower than {g:v4.version} on both scores, {r:derived.change.ddnn2-alone.S_MAE} and
-           {r:derived.change.ddnn2-alone.S_WIS} as shares of its score, but it was a study arm, never eligible for
+           {r:derived.change.ddnn2-alone.S_WIS} as shares of {g:v4.version}'s score, but it was a study arm, never eligible for
            adoption; no rule tested it.""", PAGE, README),
     _block("v5.decision", "C422", """{g:v5.status} It met the adoption rule set before the experiment against
            {g:v4.version}; the released model, {g:released.version}, did not change. The two study arms,
            {g:ddnn2-alone.name} and {g:v3-plus-ddnn2.inline}, were built only to read the change, and were never
            candidates for adoption.""", PAGE, README),
     _block("v5.method.blend", "C403", """**The blend.** {g:v5.version}'s central forecast gives {g:v4.version}'s two LEAR
-           forecasts, bit for bit, two thirds of the weight, {g:v4.version}'s LightGBM one sixth and DDNN-2 one sixth.
+           forecasts, bit for bit, two thirds of the weight, {g:v4.version}'s LightGBM one sixth and {s:name:DDNN-2} one sixth.
            The weights were fixed before any fit and never tuned. The hour-aware intervals keep {g:v4.version}'s recipe,
            re-estimated on {g:v5.version}'s own errors."""),
-    _block("v5.method.network", "C403", """**DDNN-2.** A feed-forward network written in NumPy, on one row per delivery
+    _block("v5.method.network", "C403", """**{s:name:DDNN-2}.** A feed-forward network written in NumPy, on one row per delivery
            day, with a Johnson SU distribution for each of the {s:hours:24} hours, and exactly {g:v4.version}'s information. Each
            member trains on the two years before the forecast day, minus a random fifth of whole weeks held out to stop
            its training; four configurations, chosen per test period by a search on training data only, times two seeds,
@@ -339,11 +339,11 @@ BLOCKS: tuple[Block, ...] = (
     _block("v5.method.arms", "C429", """**The study arms.** {g:ddnn2-alone.name}, against {g:v4.version}:
            {r:derived.change.ddnn2-alone.S_MAE} {r:derived.change.ddnn2-alone.S_MAE|ci} on the point-error score and
            {r:derived.change.ddnn2-alone.S_WIS} {r:derived.change.ddnn2-alone.S_WIS|ci} on the interval score, as shares
-           of its score: descriptive, never eligible. {g:v3-plus-ddnn2.name}, DDNN-2 in the LightGBM's place, scored
+           of {g:v4.version}'s score: descriptive, never eligible. {g:v3-plus-ddnn2.name}, {s:name:DDNN-2} in the LightGBM's place, scored
            better than {g:v5.version} itself: {g:v5.version} minus it is {r:cp24.uncertainty.v5-v3+D2.equal_fold.MAE}
            {r:cp24.uncertainty.v5-v3+D2.equal_fold.MAE|ci} on the point-error score and
            {r:cp24.uncertainty.v5-v3+D2.equal_fold.WIS} {r:cp24.uncertainty.v5-v3+D2.equal_fold.WIS|ci} on the interval
-           score: with DDNN-2 present, the LightGBM member no longer helped. It too was a study arm, never eligible, so
+           score: with {s:name:DDNN-2} present, adding the LightGBM member did not help. It too was a study arm, never eligible, so
            the rule's candidate was {g:v5.version}."""),
     _block("v5.folds", "C421", """Every test period favours {g:v5.version}: in each, the paired {s:level:95%} intervals
            of both errors lie below zero. The largest change is in fold {s:fold:3}, the {s:date:2022} crisis: point error
@@ -376,7 +376,7 @@ BLOCKS: tuple[Block, ...] = (
            product qualification."""),
     _block("v5.controls", "C439", """All {r:cp24.controls.checks} frozen causal and integrity controls passed, each
            negative check paired with a positive one: masking the delivery day and future inputs changed the forecast by
-           exactly zero, and a day-before price change, weather permutations and held-out weeks moved DDNN-2."""),
+           exactly zero, and a day-before price change, weather permutations and held-out weeks moved {s:name:DDNN-2}."""),
     _block("v5.leakage", "C441", """**No outcome from the delivery day on is used, at any origin.** With every such
            outcome destroyed, the frozen network refitted at all {r:cp24.leakage.origins} warm-up and evaluation origins
            reproduced the committed forecasts bit for bit at {r:cp24.leakage.bitwise} of them, over
@@ -502,26 +502,23 @@ BLOCKS: tuple[Block, ...] = (
            {g:v4.version}'s three-block LightGBM member without losing accuracy against {g:v4.version} itself?""",
            PAGE, README),
     _block("branch.pooled-lightgbm-member-for-v4.result", "C208", """Against {g:v4.version}, over the five test periods
-           together, neither candidate's {s:level:95%} interval lay wholly above zero: the averaged member changed the point-error score by
-           {r:derived.change.v3-plus-pooled-normalized-lightgbm-averaged.S_MAE}
-           {r:derived.change.v3-plus-pooled-normalized-lightgbm-averaged.S_MAE|ci} and the interval score by
-           {r:derived.change.v3-plus-pooled-normalized-lightgbm-averaged.S_WIS}
-           {r:derived.change.v3-plus-pooled-normalized-lightgbm-averaged.S_WIS|ci}, the pair by
-           {r:derived.change.v3-plus-pooled-lightgbm-pair.S_MAE} {r:derived.change.v3-plus-pooled-lightgbm-pair.S_MAE|ci}
-           and {r:derived.change.v3-plus-pooled-lightgbm-pair.S_WIS}
-           {r:derived.change.v3-plus-pooled-lightgbm-pair.S_WIS|ci}, as shares of its score with {s:level:95%} intervals.
-           In fold {s:fold:4}, both were decisively worse: point error {r:cp22.uncertainty.R-HGL.fold_4.MAE|p=1}
-           {r:cp22.uncertainty.R-HGL.fold_4.MAE|ci1} and {r:cp22.uncertainty.M-HGL.fold_4.MAE|p=1}
-           {r:cp22.uncertainty.M-HGL.fold_4.MAE|ci1} EUR/MWh.""", PAGE, README),
+           together, neither candidate's {s:level:95%} interval lay wholly above zero: the averaged member's paired
+           difference is {r:cp22.uncertainty.R-HGL.equal_fold.MAE} {r:cp22.uncertainty.R-HGL.equal_fold.MAE|ci} in the
+           point-error score and {r:cp22.uncertainty.R-HGL.equal_fold.WIS} {r:cp22.uncertainty.R-HGL.equal_fold.WIS|ci}
+           in the interval score; the pair's {r:cp22.uncertainty.M-HGL.equal_fold.MAE}
+           {r:cp22.uncertainty.M-HGL.equal_fold.MAE|ci} and {r:cp22.uncertainty.M-HGL.equal_fold.WIS}
+           {r:cp22.uncertainty.M-HGL.equal_fold.WIS|ci}. In fold {s:fold:4}, both were decisively worse: point error
+           {r:cp22.uncertainty.R-HGL.fold_4.MAE|p=1} {r:cp22.uncertainty.R-HGL.fold_4.MAE|ci1} and
+           {r:cp22.uncertainty.M-HGL.fold_4.MAE|p=1} {r:cp22.uncertainty.M-HGL.fold_4.MAE|ci1} EUR/MWh.""", PAGE, README),
     _block("branch.pooled-lightgbm-member-for-v4.reason", "C212", """The rule allowed no test period to be decisively
            worse, so {g:v4.version} was kept as it was.""", PAGE, README),
     _block("branch.ddnn-member-on-v4.question", "P56", """Does a distributional neural network, added to
            {g:v4.version} as a one-third member, improve on {g:v4.version} in point and interval accuracy together?""",
            PAGE, README),
-    _block("branch.ddnn-member-on-v4.result", "C308", """Against {g:v4.version}, the point-error score changed by
-           {r:derived.change.ddnn-member-on-v4.S_MAE} {r:derived.change.ddnn-member-on-v4.S_MAE|ci} and the interval score
-           by {r:derived.change.ddnn-member-on-v4.S_WIS} {r:derived.change.ddnn-member-on-v4.S_WIS|ci}, as shares of its
-           score with {s:level:95%} intervals; in fold {s:fold:3}, the {s:date:2022} crisis, its point error was
+    _block("branch.ddnn-member-on-v4.result", "C308", """Against {g:v4.version}, the paired difference is
+           {r:cp23.uncertainty.v5-HGL.equal_fold.MAE} {r:cp23.uncertainty.v5-HGL.equal_fold.MAE|ci} in the point-error
+           score and {r:cp23.uncertainty.v5-HGL.equal_fold.WIS} {r:cp23.uncertainty.v5-HGL.equal_fold.WIS|ci} in the
+           interval score, with {s:level:95%} intervals; in fold {s:fold:3}, the {s:date:2022} crisis, its point error was
            decisively worse, {r:cp23.uncertainty.v5-HGL.fold_3.MAE|p=1} {r:cp23.uncertainty.v5-HGL.fold_3.MAE|ci1}
            EUR/MWh.""", PAGE, README),
     _block("branch.ddnn-member-on-v4.reason", "C310", """The improvement over {g:v4.version} that the rule required was
@@ -547,7 +544,7 @@ BLOCKS: tuple[Block, ...] = (
     _block("transition.v4-v5.title", "P55", """From {g:v4.version} to {g:v5.version}: adding a distributional neural
            network""", PAGE, README),
     _block("transition.v4-v5.change", "P55", """{g:v5.version} kept {g:v4.version}'s inputs, its two LEAR forecasts and its
-           LightGBM, and added DDNN-2, a distributional neural network that forecasts the whole next day at once, with one
+           LightGBM, and added {s:name:DDNN-2}, a distributional neural network that forecasts the whole next day at once, with one
            sixth of the blend's weight, taken from the LightGBM's third; the hour-aware intervals were re-estimated on the
            new forecast's own errors.""", PAGE, README),
     _block("transition.v4-v5.comparator", "P55", """Set in advance: {g:v4.version} itself, on identical hours, so the
@@ -786,6 +783,7 @@ BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
 #: Chart claims: the records each figure may plot, beyond those its caption names.
 CHART_CLAIMS: dict[str, str] = {
     "overview": "P07",
+    "v5.c2a": "C420",
     "v4.c2a": "C107",
     "v4.ladder": "C106",
     "v4.c2b": "C110",
@@ -896,17 +894,27 @@ def target_sentence(target: str = "html", *, surface: str = PAGE) -> str:
     if D.get(f"{base}.verdict").value == "met" and D.get(f"{base}.first_to_meet").value == "yes" and met == [entry.id]:
         template += "{g:%s.version} met both, the first and only one to do so." % entry.id
     elif D.get(f"{base}.verdict").value == "met" and first and first != [entry.id]:
-        # Named from the verdict records, never typed: the first to meet them, then every later policy that did.
+        # Named from the verdict records, never typed: the first to meet them, then every later policy that did. Once
+        # more than four did, they are counted and only the adopted generations among them are named.
         later = [subject for subject in met if subject not in first]
-        names = ["{g:%s.version}" % s if G.get(s).version else "{g:%s.inline}" % s for s in later]
-        listed = ", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else names[0]
-        template += "{g:%s.version} was the first to meet both; %s met them too." % (first[0], listed)
+        if len(later) <= LISTED_LATER:
+            names = ["{g:%s.version}" % s if G.get(s).version else "{g:%s.inline}" % s for s in later]
+            listed = ", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else names[0]
+            template += "{g:%s.version} was the first to meet both; %s met them too." % (first[0], listed)
+        else:
+            names = ["{g:%s.version}" % s for s in later if G.get(s).version]
+            listed = ", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else "".join(names)
+            template += ("{g:%s.version} was the first to meet both; {s:count:%d} later policies met them too, among "
+                         "them %s." % (first[0], len(later), listed))
     elif D.get(f"{base}.verdict").value == "met":
         template += "{g:%s.version} met both." % entry.id
     else:
         template += "{g:%s.version} did not meet them." % entry.id
     return render_template("P25", template, target)
 
+
+#: The most later policies the target sentence names one by one; beyond it they are counted (PRES-4: seventeen met).
+LISTED_LATER = 4
 
 #: Every term a headline form may introduce, in reading order.
 ALL_TERMS = ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.adoption_rule",
@@ -1103,12 +1111,22 @@ def _v1(claim_id: str, spec: str, target: str) -> str:
     )
 
 
+#: Model names that carry a digit as part of the name, declared structural wherever a name or fixed copy uses them.
+STRUCTURAL_NAMES = ("DDNN-2",)
+_NAME_PARTS = re.compile(r"\b(v\d+)\b|(" + "|".join(re.escape(name) for name in STRUCTURAL_NAMES) + r")(?![\w-])")
+
+
 def _structural_name(name: str, target: str) -> str:
-    """A registry name with its version label declared structural: 'v3 · weather features'."""
-    match = re.match(r"^(v\d+)( · .*)$", name)
-    if target == "md" or match is None:
-        return name if target == "md" else html.escape(name)
-    return structural("version", match.group(1)) + html.escape(match.group(2))
+    """A registry name with its version labels and digit-bearing model names declared structural: 'v3 · weather
+    features', 'v5 · DDNN-2 added', 'DDNN member on v4'."""
+    if target == "md":
+        return name
+    out, last = [], 0
+    for match in _NAME_PARTS.finditer(name):
+        out.append(html.escape(name[last:match.start()]))
+        out.append(structural("version", match.group(1)) if match.group(1) else structural("name", match.group(2)))
+        last = match.end()
+    return "".join(out) + html.escape(name[last:])
 
 
 def _registry(spec: str, target: str) -> str:

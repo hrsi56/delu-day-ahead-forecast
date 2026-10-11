@@ -51,10 +51,10 @@ EXPERIMENT = "delu-generations"
 #: Experiment-level tags. The kind tag stops MLflow 3.5's UI from asking an anonymous reader to
 #: confirm an inferred experiment type (observed in the 2026-09-24 rehearsal). The description says
 #: the repository is the source of truth (standard §8), and names the parents from the registry.
-#: The checkpoints the experiment's description names, as it was published on 2026-09-28. Rewriting that description
-#: is a write to the experiment itself, which a checkpoint's upload authority (its runs only) does not cover; the
-#: description is therefore pinned, and naming a later checkpoint in it waits for an instruction naming that write.
-EXPERIMENT_NOTE_CHECKPOINTS = ("CP-10", "CP-15", "CP-16", "CP-20")
+#: The checkpoints the experiment's description names. It named the four parents published on 2026-09-28 until PRES-4,
+#: whose Owner authority (2026-10-11) covers one write of it naming every parent (A-PRES3-1). A later checkpoint's
+#: upload authority covers its runs only, so naming the next parent waits for an instruction naming that write again.
+EXPERIMENT_NOTE_CHECKPOINTS = ("CP-10", "CP-15", "CP-16", "CP-20", "CP-21", "CP-22", "CP-23", "CP-24")
 EXPERIMENT_TAGS = {
     "mlflow.experimentKind": "custom_model_development",
     "mlflow.note.content": (
@@ -170,7 +170,67 @@ CHECKPOINTS: dict[str, dict] = {
             "against pooled LightGBM) showed no demonstrated joint preference. development_post_selection."
         ),
     },
+    # PRES-4 (2026-10-11): CP-22, CP-23 and CP-24 tracked their runs while they ran and drafted their exports; the
+    # publication fills each draft's pending fields from the checkpoint's return and landing (its evidence tip's commit
+    # time is the completion time, as for CP-21) and adds nothing else, apart from the Owner's name for v5 and the
+    # charts of v5's chapter on its candidate run. Each note is its draft registry's, verbatim.
+    "cp22": {
+        "checkpoint": "CP-22",
+        "tracked": True,
+        "model_code_sha": "29d8d383a8870fee10b04158c5e3e5fd89514fdc",
+        "evidence_ref": "evidence/cp-22@8daf7d0",
+        "evidence_tag": "evidence/cp-22",
+        # The terminal return: the evidence tip's commit time, 2026-10-04 01:58:51 +03:00.
+        "original_completed_utc": "2026-10-03T22:58:51Z",
+        "protocol": "reports/v4-revision/protocol.json",
+        "anchor_version": "capstone_v21.md v21-r9 §20",
+        "report": "reports/v4-revision/report.md",
+        "verdict": "docs/track-b/evidence/cp-22/integration.md",
+        "landing": "docs/track-b/cp-22-landing-2026-10-04.md",
+        "draft": "reports/v4-revision/mlflow-export-draft/cp22.json",
+        "draft_registry": "reports/v4-revision/draft-registry.json",
+    },
+    "cp23": {
+        "checkpoint": "CP-23",
+        "tracked": True,
+        "model_code_sha": "f9a737eb2bb8ccdb93c0de5cf1449630ee246e90",
+        "evidence_ref": "evidence/cp-23@928bc13",
+        "evidence_tag": "evidence/cp-23",
+        # The terminal return: the evidence tip's commit time, 2026-10-04 20:40:50 +03:00.
+        "original_completed_utc": "2026-10-04T17:40:50Z",
+        "protocol": "reports/distribution-challenger/protocol.json",
+        "anchor_version": "capstone_v21.md v21-r10 §21",
+        "report": "reports/distribution-challenger/report.md",
+        "verdict": "docs/track-b/evidence/cp-23/integration.md",
+        "landing": "docs/track-b/cp-23-landing-2026-10-04.md",
+        "draft": "reports/distribution-challenger/mlflow-export-draft/cp23.json",
+        "draft_registry": "reports/distribution-challenger/draft-registry.json",
+    },
+    "cp24": {
+        "checkpoint": "CP-24",
+        "tracked": True,
+        "model_code_sha": "7949a98f80c81c5a789dd69c213da16c811d345c",
+        "evidence_ref": "evidence/cp-24@05b7e61",
+        "evidence_tag": "evidence/cp-24",
+        # The terminal return: the evidence tip's commit time, 2026-10-10 23:21:02 +03:00.
+        "original_completed_utc": "2026-10-10T20:21:02Z",
+        "protocol": "reports/ddnn2/attempt-1/protocol.json",
+        "anchor_version": "capstone_v21.md v21-r11 §23",
+        "report": "reports/ddnn2/report.md",
+        "verdict": "docs/track-b/evidence/cp-24/integration.md",
+        "landing": "docs/track-b/cp-24-landing-2026-10-11.md",
+        "draft": "reports/ddnn2/mlflow-export-draft/cp24.json",
+        "draft_registry": "reports/ddnn2/draft-registry.json",
+        "scored_attempt": 1,
+        #: The Owner's name for v5 (2026-10-11) replaces the draft's; nothing else in the draft is renamed.
+        "renamed": {"v5 · DDNN-2 member added": "v5 · DDNN-2 added"},
+    },
 }
+
+#: Each later tracked checkpoint's note is its draft registry's, verbatim (the publication changes no record but the
+#: pending fields).
+for _key in ("cp22", "cp23", "cp24"):
+    CHECKPOINTS[_key]["note"] = json.loads((ROOT / CHECKPOINTS[_key]["draft_registry"]).read_text())["note"]
 
 #: The checkpoints whose runs were tracked while they ran and whose export was drafted inside them (CP-21 on): they
 #: are built by the draft's own code path, with the registry's entries in place of the draft entries.
@@ -1175,7 +1235,150 @@ def tracked_runs(key: str) -> list[dict]:
     """A tracked checkpoint's published runs: the draft's code path, with the registry's entries and identities."""
     checkpoint = G.CHECKPOINTS[CHECKPOINTS[key]["checkpoint"]]
     entries = {entry.id: entry for entry in G.entries() if any(run.split("/")[0] == key for run in entry.run_keys)}
-    return _tracked_runs(entries, checkpoint, CHECKPOINTS[key], pending=None, charts=True)
+    if key == "cp21":
+        return _tracked_runs(entries, checkpoint, CHECKPOINTS[key], pending=None, charts=True)
+    return _later_tracked_runs(key, entries, checkpoint)
+
+
+def _later_path(key: str) -> dict:
+    """CP-22's, CP-23's and CP-24's own draft code paths: their record builders, scores and parameters. CP-24's live in
+    its own module, `cp24.export`, which built its draft by importing this file's functions unchanged."""
+    if key == "cp22":
+        protocol = json.loads((ROOT / CP22["protocol"]).read_text())
+        winner = json.loads((ROOT / CP22["decisions"]).read_text())["replacement"]["winner"]
+        return {"records": _draft22_records(), "scores": lambda builder, code: _draft22_scores(builder, code, winner),
+                "params": lambda code: _draft22_params(protocol, code, winner), "protocol": CP22["protocol"]}
+    if key == "cp23":
+        protocol = json.loads((ROOT / CP23["protocol"]).read_text())
+        return {"records": _draft23_records(), "scores": _draft23_scores,
+                "params": lambda code: _draft23_params(protocol, code), "protocol": CP23["protocol"]}
+    if key == "cp24":
+        from cp24 import export as X24
+        attempt = CHECKPOINTS[key]["scored_attempt"]
+        return {"records": X24.records(attempt), "scores": lambda builder, code: X24.scores(builder, attempt, code),
+                "params": lambda code: X24.params(attempt, code), "protocol": X24.paths(attempt)["protocol"]}
+    raise KeyError(key)
+
+
+def _later_tracked_runs(key: str, entries: dict[str, G.Entry], checkpoint: G.Checkpoint) -> list[dict]:
+    """A later tracked checkpoint's published parent and children: its draft's runs, built the same way, with the
+    registry's entries and the identities its landing fixed. The candidate run of an adopted generation carries the
+    page's charts of its chapter (plan §10.6)."""
+    spec, path = CHECKPOINTS[key], _later_path(key)
+    records, group, note = path["records"], comparability()["common"], spec["note"]
+    completed = spec["original_completed_utc"]
+    owner = entries[checkpoint.owner]
+    parent_tags = {
+        "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
+        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _status_text(owner),
+        "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
+        "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+        "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+        "delu.backfilled": "false", "delu.original_completed_utc": completed,
+        "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
+        "mlflow.note.content": _description(owner, note),
+    }
+    parent = {"run_key": checkpoint.run_key, "parent": None,
+              "run_name": draft_run_name(checkpoint.run_key, entries, checkpoint),
+              "params": path["params"](None), "tags": parent_tags, "metrics": {}, "metric_provenance": {},
+              "metric_units": {}, "inputs": [], "comparability": dict(group)}
+    parent["artifacts"] = [
+        _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
+        _artifact("README.md", _tracked_readme(parent["run_name"], checkpoint,
+                                               {path["protocol"]: R.blob_sha(R.source_bytes(path["protocol"]))})),
+    ]
+    runs = [parent]
+    for code in checkpoint.children:
+        run_key = f"{checkpoint.run_key}/{code}"
+        entry = _draft_entry_for(run_key, entries)
+        builder = DraftBuilder(records)
+        path["scores"](builder, code)
+        blobs = _draft_blobs(builder.provenance, records)
+        run_name = draft_run_name(run_key, entries, checkpoint)
+        tags = {
+            "delu.run_key": run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": entry.id,
+            "delu.kind": entry.kind, "delu.generation": entry.version or "none", "delu.policy_code": code,
+            "delu.public_name": entry.name, "delu.status": _status_text(entry),
+            "delu.comparator": G.get(entry.comparator).name, "delu.role": "candidate",
+            "delu.adopted": G.adopted_flag(entry), "delu.evidence_class": "development_post_selection",
+            "delu.population_id": group["population_id"], "delu.comparability_id": group["comparability_id"],
+            "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false", "delu.original_completed_utc": completed,
+            "mlflow.note.content": _description(entry, note, code=code, role="candidate"),
+        }
+        inputs = datasets(key, code, group, weather=True)
+        tags["delu.datasets"] = _canonical({dataset["name"]: dataset["sha256"] for dataset in inputs})
+        run = {"run_key": run_key, "parent": checkpoint.run_key, "run_name": run_name, "params": path["params"](code),
+               "tags": tags, "metrics": builder.metrics, "metric_provenance": builder.provenance,
+               "metric_units": {k: metric_unit(k) for k in builder.metrics}, "inputs": inputs}
+        summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
+        chart_files = [(f"charts/{chart_id}.svg", build_pages.standalone_svg(build()))
+                       for chart_id, build in build_pages.CHARTS_BY_RUN.get(run_key, ())]
+        text = _tracked_readme(run_name, checkpoint, blobs)
+        if chart_files:
+            text += ("\nCharts, drawn by the page build from the same records as the report:\n\n"
+                     + "".join(f"- `{path_}`\n" for path_, _ in chart_files))
+        run["artifacts"] = ([_artifact("summary.json", summary + "\n"), _artifact("README.md", text)]
+                            + [_artifact(path_, content) for path_, content in chart_files])
+        runs.append(run)
+    return runs
+
+
+def committed_draft(key: str) -> dict:
+    """A later tracked checkpoint's committed draft export, as its checkpoint wrote it."""
+    return json.loads((ROOT / CHECKPOINTS[key]["draft"]).read_text())
+
+
+def renamed_draft(draft: dict, renamed: dict[str, str]) -> dict:
+    """The draft with the Owner's renames applied to its name fields only: each run's name, its public-name tag, its
+    description, and the two artifacts that carry them (`summary.json`, `README.md`), digests recomputed. Every other
+    field is untouched, so `final_vs_draft` still compares everything else exactly."""
+    import copy
+
+    out = copy.deepcopy(draft)
+
+    def apply(text: str) -> str:
+        for old, new in renamed.items():
+            text = text.replace(old, new)
+        return text
+
+    for run in out["runs"]:
+        run["run_name"] = apply(run["run_name"])
+        for tag in ("delu.public_name", "mlflow.note.content"):
+            run["tags"][tag] = apply(run["tags"][tag])
+        for artifact in run["artifacts"]:
+            if artifact["path"] in IDENTITY_ARTIFACTS:
+                artifact.update(_artifact(artifact["path"], apply(artifact["content"])))
+    return out
+
+
+def renamed_fields(draft: dict, renamed: dict[str, str]) -> list[str]:
+    """Where the Owner's renames changed the draft: each (run, field). Anything here outside the name fields would be
+    a renamed value, not a name."""
+    after = renamed_draft(draft, renamed)
+    changes = []
+    for a, b in zip(draft["runs"], after["runs"]):
+        for field in sorted(set(a) | set(b)):
+            if field in ("tags", "artifacts"):
+                continue
+            if a.get(field) != b.get(field):
+                changes.append(f"{a['run_key']}: {field}")
+        changes += [f"{a['run_key']}: tag {tag}" for tag in sorted(a["tags"]) if a["tags"][tag] != b["tags"][tag]]
+        changes += [f"{a['run_key']}: artifact {x['path']}" for x, y in zip(a["artifacts"], b["artifacts"])
+                    if x["content"] != y["content"]]
+    return changes
+
+
+def later_final_vs_draft(key: str, files: dict[str, dict] | None = None) -> dict:
+    """A later tracked checkpoint's published runs against its committed draft, after the Owner's renames: equal apart
+    from the pending fields, plus the chart artifacts of an adopted generation's candidate run."""
+    files = files or build_export()
+    renamed = CHECKPOINTS[key].get("renamed", {})
+    draft = committed_draft(key)
+    report = final_vs_draft(renamed_draft(draft, renamed), files[key]["runs"])
+    report["renamed"] = renamed
+    report["renamed_fields"] = renamed_fields(draft, renamed)
+    return report
 
 
 def build_draft(name: str = "cp21") -> dict:
