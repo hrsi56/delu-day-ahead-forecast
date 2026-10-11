@@ -7,13 +7,14 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Research, v4 · three-block LightGBM added.** Met the adoption rule set before the experiment: both error scores improved on v3's (v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] on the interval score; 1 policy tested against the rule). `Development · post-selection`
+**Research, v5 · DDNN-2 added.** Met the adoption rule set before the experiment: both error scores improved on v4's (v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, −0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule). `Development · post-selection`
 
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
-- **Adoption rule:** set on 2026-09-29; its four conditions are in the v4 chapter.
-- **Paired difference:** v4's error score minus v3's on identical hours, with its 95% confidence interval; below zero favours v4.
+- **Adoption rule:** set on 2026-10-05; its five conditions are in the v5 chapter.
+- **Paired difference:** v5's score minus v4's, with the rule's 97.5% interval; below zero favours v5.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
+- **DDNN-2:** a distributional neural network (DDNN).
 
 **Demo, v1 · released LightGBM:** [try the v1 demo](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
 
@@ -33,6 +34,35 @@
 ## Generations, newest first
 
 Names and statuses come from the registry. The research results are development evidence after selection, on the same historical hours for every policy; the released model's one-shot holdout is a separate evidence class. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#chapters) has the charts and the values.
+
+### v5 · DDNN-2 added
+
+*v4 plus a DDNN-2 member.* In October 2026, v5 was adopted in research.
+
+**From v4 to v5: adding a distributional neural network.**
+
+- **What changed.** v5 kept v4's inputs, its two LEAR forecasts and its LightGBM, and added DDNN-2, a distributional neural network that forecasts the whole next day at once, with one sixth of the blend's weight, taken from the LightGBM's third; the hour-aware intervals were re-estimated on the new forecast's own errors.
+- **Comparator.** Set in advance: v4 itself, on identical hours, so the protocol's comparator is also the predecessor and the comparison is direct.
+- **Result.** Point-error score −2% [−3%, −2%] and interval score −2% [−3%, −2%], as a share of v4's score, with 95% confidence intervals of that ratio from the experiment's own bootstrap draws; at the rule's 97.5% decision level, [−3%, −2%] and [−3%, −2%]. Development evidence after selection, not a test on new data.
+
+Difference in error score (v5 − v4), with its 95% confidence interval and its interval at the rule's 97.5% decision level. Below zero favours v5.
+
+- Point-error score: −0.0133 [−0.0161, −0.0096] at 95%; [−0.0166, −0.0091] at 97.5%.
+- Interval score: −0.0119 [−0.0143, −0.0087] at 95%; [−0.0147, −0.0084] at 97.5%.
+
+**The rule**, set on 2026-10-05 and frozen in the protocol before any of its fits: v5 would be adopted only if, against v4, the paired differences' intervals at 97.5% lay below zero for the interval score and at or below zero for the point-error score; it met the six original screening criteria; the evaluation was complete and valid; no test period was decisively worse, that is, none had a 95% paired interval wholly above zero; and both point estimates improved on v4's score by at least half a percent. The 97.5% level splits a 5% error rate across the two attempts the plan allowed; one ran. All five conditions held.
+
+All five conditions of the rule set in advance held: at the rule's 97.5% level both paired differences' intervals lie below zero; v5 passed the six screening criteria set before the experiments (the two accuracy targets, interval coverage in each test period, the August 2022 peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts); the evaluation was complete and valid; no test period's paired interval lies wholly above zero; and both scores improved on v4's by more than the practical size set in advance, half a percent.
+
+**What this result does not establish:**
+
+- **That the gain holds across the year.** The comparison scores 448 of the 2,654 days of data up to the end of the development period, 2019-01-01 to 2026-04-07; 0 of them fall in October to December, and only 1 winter (December to February) contains any of them.
+- **Performance on new data.** This is development evidence after selection, and the second decision on a distributional neural network over the same five test periods, after the DDNN member on v4; only a one-shot test on days never used for development or selection protects against that reuse.
+- **That DDNN-2 is best used as v5 uses it.** DDNN-2 alone had lower, that is better, error scores than v4: −11% [−14%, −7%] on the point-error score and −16% [−19%, −12%] on the interval score, as shares of v4's score, with 95% confidence intervals; v3 plus a DDNN-2 member also scored better than v5. Descriptive only: both were study arms, never eligible for adoption, and no rule tested them.
+
+In October 2026, v5 was adopted in research. It met the adoption rule set before the experiment against v4; the released model, v1, did not change. The two study arms, DDNN-2 alone and v3 plus a DDNN-2 member, were built only to show where the change came from, and were never candidates for adoption.
+
+Evidence: [Engineering report, frozen 2026-10-10](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-24/reports/ddnn2/report.md) · [Review verdict, frozen 2026-10-10](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-24/docs/track-b/evidence/cp-24/integration.md) · [Raw CSV rows, frozen 2026-10-10](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-24/reports/ddnn2/attempt-1/uncertainty.csv#L112)
 
 ### v4 · three-block LightGBM added
 
@@ -182,25 +212,43 @@ Which forecasting approach copes best with the 2022 crisis? Nine policies on the
 
 Evidence: [Engineering report, frozen 2026-09-16](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/reports/cp15/report.md) · [Review verdict, frozen 2026-09-16](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-15/docs/track-b/evidence/cp-15/integration.md)
 
+### Experiments not adopted between v4 and v5
+
+#### Pooled LightGBM member for v4
+
+*The block split removed, under non-inferiority.* In October 2026, the pooled LightGBM member for v4 was not adopted.
+
+Can one pooled LightGBM, for all 24 hours, replace v4's three-block LightGBM member without losing accuracy against v4 itself? Against v4, over the five test periods together, neither candidate's 95% interval lay wholly above zero: the averaged member's paired difference is +0.0011 [−0.0031, +0.0054] in the point-error score and +0.0010 [−0.0028, +0.0049] in the interval score; the pair's −0.0013 [−0.0036, +0.0016] and −0.0008 [−0.0030, +0.0022]. In fold 4, both were decisively worse: point error +0.3 [+0.1, +0.4] and +0.2 [+0.1, +0.3] EUR/MWh, interval score +0.2 [+0.1, +0.2] and +0.1 [+0.024, +0.2] EUR/MWh. Development evidence after selection, not a test on new data. Both candidates were decisively worse than v4 in one test period, with a 95% interval wholly above zero; the rule allowed none, so v4 was kept as it was.
+
+Evidence: [Engineering report, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-22/reports/v4-revision/report.md) · [Review verdict, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-22/docs/track-b/evidence/cp-22/integration.md)
+
+#### DDNN member on v4
+
+*v4 plus a DDNN member, under rule cp23-adoption.* In October 2026, the DDNN member on v4 was not adopted.
+
+Does a distributional neural network, added to v4 as a one-third member, improve on v4 in point and interval accuracy together? Against v4, the paired difference is +0.0064 [−0.0016, +0.0149] in the point-error score and +0.0071 [−0.0009, +0.0138] in the interval score, with 95% intervals; in fold 3, the 2022 crisis, its point error was decisively worse, +1.9 [+0.3, +4.4] EUR/MWh. Development evidence after selection, not a test on new data. The improvement over v4 that the rule required was not shown, on either score.
+
+Evidence: [Engineering report, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-23/reports/distribution-challenger/report.md) · [Review verdict, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-23/docs/track-b/evidence/cp-23/integration.md)
+
 ### Reading the comparison
 
 - **Accuracy targets:** each error score at least 10% below the strongest benchmark's, set on 2026-09-15; a policy's distance from them is a point comparison.
 - **Daily LEAR:** the strongest benchmark, a linear model refitted daily.
 
-The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set 2026-09-15). 12 policies were tested against them; v3 was the first to meet both; v4, pooled LightGBM with weather, three-block LightGBM and normalized three-block LightGBM met them too.
+The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set 2026-09-15). 25 policies were tested against them; v3 was the first to meet both; 16 later policies met them too, among them v4 and v5.
 
 Every policy was evaluated on the same 10,747 historical hours over 448 days, across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
 
-v4 against v3, as a share of v3's error scores: −5% [−6%, −4%] on the point-error score and −5% [−6%, −4%] on the interval score, with 95% confidence intervals. Development evidence, not a test on new data. Meeting the targets is a development diagnostic, not a product qualification.
+v5 against v4, as a share of v4's error scores: −2% [−3%, −2%] on the point-error score and −2% [−3%, −2%] on the interval score, with 95% confidence intervals. Development evidence, not a test on new data. Meeting the targets is a development diagnostic, not a product qualification.
 
-For scale, as mean absolute error per test period: v4 4.9–15.0 EUR/MWh in the four ordinary periods and 47.0 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
+For scale, as mean absolute error per test period: v5 4.8–14.4 EUR/MWh in the four ordinary periods and 45.5 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
 
 **Why v1 scores 1.052 in the shared development comparison but 28.58% worse in its own report.** Both figures describe the same 448 development days. v1's report compared its daily absolute error with the raw similar-day naive (MAE 32.45 EUR/MWh) and pooled all days, so the 2022 crisis dominates. This comparison gives each of the five folds equal weight, and its naive reference is the forecast's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own error is 41.74 EUR/MWh in both. v1's original nine-quantile pinball is a different score from the seven-quantile interval score used here.
 
 ### Further reading
 
 - The research updates behind each generation: [CP-20](docs/track-b/research-content/cp20-update.md) and [CP-15 and CP-16](docs/track-b/research-content/cp15-cp16-update.md).
-- The landing records: [CP-21](docs/track-b/cp-21-landing-2026-09-30.md), [CP-20](docs/track-b/cp-20-landing-2026-09-24.md), [CP-16](docs/track-b/cp-16-landing-2026-09-23.md) and [CP-15](docs/track-b/cp-15-landing.md). CP-3B's [unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) is disclosed.
+- The landing records: [CP-24](docs/track-b/cp-24-landing-2026-10-11.md), [CP-23](docs/track-b/cp-23-landing-2026-10-04.md), [CP-22](docs/track-b/cp-22-landing-2026-10-04.md), [CP-21](docs/track-b/cp-21-landing-2026-09-30.md), [CP-20](docs/track-b/cp-20-landing-2026-09-24.md), [CP-16](docs/track-b/cp-16-landing-2026-09-23.md) and [CP-15](docs/track-b/cp-15-landing.md). CP-3B's [unmet Integration item](docs/track-b/evidence/cp-3b/item-6-NOT-COMPLETED.md) is disclosed.
 - The Owner-managed Hebrew [Q&A record](שאלות%20תשובות.docx) and the [research memo](docs/track-b/forecasting-research-2026-09-15.md), which is historical motivation, not a measured result.
 
 <!-- research:end -->

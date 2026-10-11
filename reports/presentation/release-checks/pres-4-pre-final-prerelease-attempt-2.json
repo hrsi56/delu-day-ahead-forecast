@@ -1,0 +1,257 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/build_wasm_payload.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "Python 3.13, before pytest: Build the browser payload (M3.5 item 2)",
+      "python": "3.13",
+      "result": "as expected",
+      "seconds": 36.7
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "counts": {
+        "passed": 1652,
+        "skipped": 8
+      },
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "pytest, Python 3.13",
+      "python": "3.13",
+      "result": "as expected",
+      "seconds": 244.2
+    },
+    {
+      "argv": [
+        "uv",
+        "sync",
+        "--locked",
+        "--dev"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: uv sync --locked --dev",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 0.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/build_wasm_payload.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: Build the browser payload (M3.5 item 2)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 35.3
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "counts": {
+        "passed": 1652,
+        "skipped": 8
+      },
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: uv run pytest -q",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 242.2
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "tests/test_10_cqr_order_statistic.py",
+        "-q"
+      ],
+      "counts": {
+        "passed": 8
+      },
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: CQR order-statistic fixture (\u00a76.2)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 0.7
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/verify_release.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: Cross-surface agreement and zero runtime calls (CP-3 items 3, 5)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 1.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "tests/test_22_wasm_equivalence.py",
+        "-q"
+      ],
+      "counts": {
+        "passed": 15
+      },
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: WASM model-identity equivalence (CP-3B item 2)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 2.1
+    },
+    {
+      "argv": [
+        "make",
+        "verify"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "make verify",
+      "result": "as expected",
+      "seconds": 1.4
+    },
+    {
+      "argv": [
+        "make",
+        "lint-publication"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "make lint-publication",
+      "result": "as expected",
+      "seconds": 1.2
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/rebuild_presentation.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "rebuild the presentation",
+      "result": "as expected",
+      "seconds": 16.3
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "changed_paths": 0,
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "the tree is unchanged after the rebuild",
+      "result": "as expected",
+      "seconds": 0.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/check_links.py"
+      ],
+      "counts": {},
+      "exit": 1,
+      "expected_exit": [
+        0
+      ],
+      "name": "links",
+      "result": "UNEXPECTED",
+      "seconds": 21.6
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/publication_guard.py",
+        "tree"
+      ],
+      "counts": {},
+      "exit": 1,
+      "expected_exit": [
+        1
+      ],
+      "name": "publication guard (tree)",
+      "result": "as expected",
+      "seconds": 0.0
+    }
+  ],
+  "completed_utc": "2026-10-11T04:10:44+00:00",
+  "conditional_ci_steps_left_to_the_guard_check": [
+    "No placeholder or non-final build record on main (Publication Standard v1 \u00a79)"
+  ],
+  "head": "db65a461f40533974ab69507923ac3f318e189ac",
+  "partial": false,
+  "raw_output": ".local/artifacts/prerelease/pres-4-pre-final (local only, never committed)",
+  "schema": "prerelease-v1",
+  "stage": "pre-final",
+  "started_utc": "2026-10-11T04:00:41+00:00",
+  "status": "FAIL",
+  "unexpected": [
+    "links"
+  ]
+}

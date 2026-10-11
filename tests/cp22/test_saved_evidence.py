@@ -157,3 +157,25 @@ def test_hash_bound_files_are_stored_byte_for_byte():
     attributes = subprocess.check_output(['git', 'check-attr', 'text', 'reports/v4-revision/protocol.json',
                                           'docs/track-b/evidence/cp-22/issued-brief.md'], cwd=ROOT, text=True)
     assert attributes.count('text: unset') == 2
+
+
+#: CP-22 files that the later, authorized publication block amended (PRES-4, 2026-10-11): the export gained CP-22's
+#: specification (publication runbook §3 step 5), the draft-export test its post-publication invariant, and this test
+#: this record. CP-22's artifact manifest still describes their reviewed bytes, which stay at `evidence/cp-22`.
+AMENDED_BY_PUBLICATION = frozenset({'scripts/mlflow_export.py', 'tests/cp22/test_draft_export.py',
+                                    'tests/cp22/test_saved_evidence.py'})
+
+
+def test_amended_files_keep_their_reviewed_bytes_at_the_evidence_tag():
+    """The amendment hides nothing: the tag still holds the bytes the manifest bound (a shallow clone without the tag,
+    as in CI, cannot check this and skips)."""
+    import hashlib
+    manifest = json.loads((OUT / 'artifact-manifest.json').read_text())['artifact_sha256']
+    assert AMENDED_BY_PUBLICATION <= set(manifest)
+    tag = subprocess.run(['git', 'rev-parse', '--verify', '--quiet', 'evidence/cp-22^{commit}'], cwd=ROOT,
+                         capture_output=True, text=True)
+    if tag.returncode != 0:
+        pytest.skip('evidence/cp-22 is not in this checkout')
+    for name in sorted(AMENDED_BY_PUBLICATION):
+        data = subprocess.check_output(['git', 'show', f'evidence/cp-22:{name}'], cwd=ROOT)
+        assert hashlib.sha256(data).hexdigest() == manifest[name], name

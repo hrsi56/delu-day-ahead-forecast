@@ -181,6 +181,13 @@ AMENDED_BY_WORK_AVAILABILITY = frozenset({
     'tests/cp23/test_saved_evidence.py',
 })
 
+#: CP-23 files that the later, authorized publication block amended (PRES-4, 2026-10-11): the export gained CP-23's
+#: specification (publication runbook §3 step 5), the draft-export test its post-publication invariant, and this test
+#: this exemption. Their reviewed bytes stay at `evidence/cp-23`, which the manifest still describes exactly; every
+#: other hash-bound file is checked byte for byte, as before.
+AMENDED_BY_PUBLICATION = frozenset({'scripts/mlflow_export.py', 'tests/cp23/test_draft_export.py',
+                                    'tests/cp23/test_saved_evidence.py'})
+
 
 def test_byte_exact_storage_of_every_manifested_file():
     path = OUT / 'artifact-manifest.json'
@@ -188,9 +195,9 @@ def test_byte_exact_storage_of_every_manifested_file():
         pytest.skip('the artifact manifest is written at finalisation')
     from cp15.data import sha
     manifest = json.loads(path.read_text())['artifact_sha256']
-    assert AMENDED_BY_WORK_AVAILABILITY <= set(manifest)
+    assert (AMENDED_BY_WORK_AVAILABILITY | AMENDED_BY_PUBLICATION) <= set(manifest)
     for name, digest in manifest.items():
-        if name not in AMENDED_BY_WORK_AVAILABILITY:
+        if name not in AMENDED_BY_WORK_AVAILABILITY | AMENDED_BY_PUBLICATION:
             assert sha(ROOT / name) == digest, name
     protocol = json.loads((OUT / 'protocol.json').read_text())
     assert sha(ROOT / 'docs/track-b/evidence/cp-23/issued-brief.md') == protocol['issued_brief']['sha256']
@@ -205,6 +212,6 @@ def test_amended_files_keep_their_reviewed_bytes_at_the_evidence_tag():
                          cwd=ROOT, capture_output=True, text=True)
     if tag.returncode != 0:
         pytest.skip('evidence/cp-23 is not in this checkout')
-    for name in sorted(AMENDED_BY_WORK_AVAILABILITY):
+    for name in sorted(AMENDED_BY_WORK_AVAILABILITY | AMENDED_BY_PUBLICATION):
         data = subprocess.check_output(['git', 'show', f'evidence/cp-23:{name}'], cwd=ROOT)
         assert hashlib.sha256(data).hexdigest() == manifest[name], name

@@ -84,3 +84,71 @@ Its five violations, V1–V5, are repaired, each with a test in `tests/test_45_p
 | 12 — a stale MLflow route | Taken up: a verified route is linked only while its runs are the registry's, and the final build refuses until the index covers them; the comparison's link returns with the index written after CP-21's upload. |
 | 13 — the met / not-met column on the reading path | P25 updated; A-PRES3-5. Naming the tested rows that did not meet the targets in the sentence is deferred: the value table names every verdict. |
 | 14 — "8 policies" counts references | Deferred: it predates PRES-3, and the census sentence says the chart's rows are not the census. |
+
+## PRES-4 (the publication of v5, with CP-22 and CP-23 as branch cards, 2026-10-11)
+
+### PRES-3's open advisories named by the brief, one disposition each
+
+| Advisory | Disposition |
+|---|---|
+| A-PRES3-1 — the experiment description does not name every parent | Taken up. `scripts/mlflow_export.py::EXPERIMENT_NOTE_CHECKPOINTS` names all eight parents, and the description is written once under the Owner's authority of 2026-10-11. The publisher admits that one experiment-tag write only when it is named (`--authorized-experiment-tags mlflow.note.content`), and refuses any other. |
+| A-PRES3-7 — the GFS attribution names "the v3 research model's weather data" | Deferred to the final product's Space deployment. By the Owner's decision of 2026-10-11 the Space is unchanged in PRES-4. Rewording `DATA-LICENSE.md` would change both Space cards and the reviewed bundle `9028a118…`. |
+| A-PRES3-5 — where the met / not-met column sits | Deferred: the note it proposes is on the incorporated standard, which needs a Lockdown suspension. |
+
+### New advisories
+
+| ID | Source | Finding | Why advisory | Proposal |
+|---|---|---|---|---|
+| A-PRES4-1 | Lead | At whole-percent precision, v5's ratio intervals at 95% and at the 97.5% decision level both read [−3%, −2%] on the reading path; they differ only from the third significant figure (−2.96% against −3.04%). The chapter's main chart therefore draws the paired differences in score units at both levels, where they visibly differ, and the value tables carry the exact ratios. | Standard §4 fixes relative percentages to whole numbers; both intervals are shown, as the brief requires, and W47 is respected. | Allow one decimal for a relative change whose intervals at two published levels would otherwise coincide. Owner |
+| A-PRES4-2 | Lead | The share of the days in the data is stated as a count over its named denominator — "448 of the 2,654 days in the data, from 2019-01-01 to 2026-04-07" — not as "17%", the programme plan's wording. | Standard §4's percentage family admits a `%` only as a derived relative change, a structural level or an exempt v1 statement; a share of days is none of them. | A "share of a named denominator" percentage category in a later revision, if the Owner wants the percentage on the page. Owner |
+| A-PRES4-3 | Lead | CP-23's candidate's MLflow run is named "DDNN member on v4 (v5)": its experiment code `v5`, fixed in its draft, is the same text as CP-24's adopted v5. The registry scopes codes per experiment, the page's value table shows it as "v5, CP-23", and the lint treats `v5` as the version label. | Run names are the deep layer (A-PRES1-7), and the published export must equal the draft apart from its pending fields. | Code-free run names before a later upload (A-PRES1-7); a checkpoint's plan names candidate codes that cannot be read as a version. Owner |
+| A-PRES4-4 | Lead | CP-23's draft entry for "DDNN alone" had a thirteen-word subtitle; the registry's field holds at most eight (standard §5; `tests/test_35_registry.py`). The registry shortens it to "A distributional neural network with its own quantiles". It reaches the `cp23/D` run's description, a pending field the publication fills. | No published record changes; every other field of the draft entry is entered as drafted. | Check draft registries against §5's field rules inside the checkpoint that writes them. Orchestrator |
+| A-PRES4-5 | Lead; editorial review, recommendation 12 | The page is 1,993,644 bytes against the 2.0 MB budget (6,356 bytes to spare) after the Owner's no-compaction decision (D1). The v5 chapter carries one chart: its per-period differences sit in a value table, not a chart. A sixth generation's chapter will not fit. | Within the budget. | The Owner decides compaction before the next generation's publication (PUBLISH_RULES §5.2, §14). Owner |
+| A-PRES4-6 | Lead | The runbook's §2 still names CP-21 as the model (`COMPARISON_EXPERIMENT` as the one experiment the comparison draws, `PERIOD_SUBJECTS` from it, `v3_slots` as the chapter model). PRES-4 draws each comparison row from the newest experiment carrying it (`registry.py::comparison_source`, `COMPARISON_EXPERIMENTS`, guarded by `derived.py::comparison_parity_problems`) and periods per experiment (`derived.py::PERIOD_SOURCES`). Every symbol the runbook names still resolves. | The runbook is a pinned input of this brief and cannot change acceptance (PUBLISH_RULES §1.1). | Refresh runbook §2 steps 5, 10 and 13 in the next maintenance pass. Orchestrator |
+| A-PRES4-7 | Fresh reader, observation 2 | The headline's "1 policy tested against the rule" sits beside the comparison's three candidates "tested against v4 and not adopted"; the reader asked whether they were tested under the same rule. N counts rule `cp24-adoption` only, as A1's form requires; CP-22's candidates were tested against `cp22-replacement` and CP-23's against `cp23-adoption`, named in the registry and the linked verdicts but not on the cards. | The count and every card are correct as stated, and the A2 placement leaves 17.5 px on the phone for any addition to the opening. | Name each branch's own rule on its card ("under its own rule, set on …"), from `registry.py::Rule`, in a later publication. Owner |
+| A-PRES4-8 | Integration review 1, O1 | `mlflow_export.final_vs_draft` treats any change to `mlflow.note.content` as a filled pending field when the draft's value carries the pending sentence, so a non-pending change to a run's description passes unseen. The one such change in PRES-4, `cp23/D`'s shortened subtitle, is recorded in packet §2 and A-PRES4-4. | The change is declared and correct; the check's blind spot hides nothing in this publication. | Compare the description apart from its pending sentence and the declared renames and departures. Orchestrator (tooling) |
+
+### The editorial review's findings (`docs/track-b/evidence/pres-4/editorial.md`), one disposition each
+
+Its ten violations, V1–V10, are repaired at the candidate, each checked by `tests/test_49`, `tests/test_43` or the lint:
+DDNN-2 is defined beneath the headline (V1a) and the comparison's not-adopted candidates beneath the comparison (V1b);
+CP-22's reason says the candidates were decisively worse (V1c); the six screening criteria are named (V1d); the legend
+reads "study arm, or a candidate not adopted" (V2); DDNN-2 alone carries its intervals and "Descriptive only" (V3); the
+coverage limit reads "only 1 winter (December to February) contains any of them", with the development period named
+(V4); each branch card states its evidence class (V5); `registry.status_sentence` keeps an acronym's case (V6, no
+published record changes); the study-arms paragraph is split by claim (C427, C432), the peak and the intervals are bound
+to P59, and the training window reads "up to two years" (V7); no caveat says "planned", and the protection is named
+(V8); the leakage test has its own heading and route (V9); the exact ratios are in a value table (V10). To keep A2's
+phone placement, the error-score and paired-difference terms were shortened when the DDNN-2 term was added.
+
+| Recommendation | Disposition |
+|---|---|
+| 1 — both study arms scored better than v5 | Taken up: the third "not established" item names both, descriptive. |
+| 2 — name the first DDNN decision | Taken up: "after the DDNN member on v4". |
+| 3 — the drafts' branch subtitles | Deferred: the registry enters them as drafted (A-PRES4-4 covers draft checks). |
+| 4 — the code `v5` beside CP-23's candidate | The value table shows "v5, CP-23"; A-PRES4-3. |
+| 5 — the order of the branch groups | Deferred: `lineage` attaches groups in time order, unchanged since PRES-2. |
+| 6 — CP-22's fold-4 interval score | Taken up. |
+| 7 — "to show where the change came from" | Taken up in v5's decision; v4's published decision is unchanged. |
+| 8 — the README's repeated "All five conditions" | Deferred: the inherited v4 pattern. |
+| 9 — "on the same days" for the re-evaluation | Deferred: the section names the registry's generation; the wording is general. |
+| 10 — the GFS attribution | Deferred to the Space's redeployment (A-PRES3-7). |
+| 11 — the MLflow routes on a non-final build | Expected: the routes return with the index and the `--final` build, checked in the focused recheck. |
+| 12 — compaction at v5 | Decided by the Owner on 2026-10-11 (D1): no compaction; A-PRES4-5 for the next generation. |
+| 13 — the winter span as a record | Not taken: P54 records the span; the page states the count. |
+
+### The fresh reader (`docs/track-b/evidence/pres-4/fresh-reader.md`)
+
+Answers 1–5 agree with the registry and the records; no observation is a violation of an effective rule. Its eighteen observations are disposed of in the record: one new advisory (A-PRES4-7), recurrences of A-PRES4-1, A-PRES1-10, A-PRES1-18 and A-PRES3-7, the MLflow route expected with the final build, and unchanged published sections. Answer 6 feeds the return's interview-capture triggers.
+
+### Integration review 1 (FAIL at `a852c0a`; `docs/track-b/evidence/pres-4/integration-review-1.md`), one disposition each
+
+| Finding | Disposition |
+|---|---|
+| V1 — the v5 exact-ratio table's interval columns showed the rounded point value | Repaired. `research_claims._render_derived` renders `ciexact` (both endpoints, `data-field` `ci_low` / `ci_high`, full precision in `value`) and refuses an unknown option instead of falling back to the point. `tests/test_49` pins the four intervals' endpoints, with negative controls for a point value in an interval column and for an unknown option. Until this repair, the closures that relied on the table (editorial V10, A-PRES4-1's "the value tables carry the exact ratios", the fresh reader's disposition 3) were unsupported; they hold from the new candidate on |
+| V2 — two headline terms no longer read as their claims bind | Repaired. The error scores' term is the standard's definition again ("error relative to a simple naive forecast, averaged over the test periods; lower is better", P21). P53 now quotes the rendered paired-difference term ("with the rule's 97.5% interval"). To keep A2's phone placement, the DDNN-2 term reads "a distributional neural network (DDNN)" (one line at 390 px); the finding stays at 2,402.5 px in Chrome and WebKit. `tests/test_49` binds both terms to their claims, with negative controls. The editorial disposition above, that the error-score term was shortened, no longer describes the page |
+| O1 — the draft-equality check cannot see a description change | Advisory, A-PRES4-8 |
+| O2 — the fresh reader's disposition 3 cites values that match no record | Corrected by an appended section of the record; the row stays as written |
+| O3 — the land commit message file does not exist yet | Written with the return, at `.local/artifacts/pres-4/land-commit-message.txt` |
+| O4 — the page budget at the final build | Re-measured at the new candidate and at the final SHA |
+| O5 — "In October 2026, the DDNN-2 alone was not adopted" | Advisory: `registry.status_sentence`'s article before a study arm's name; the sentence is correct, and changing the shared builder belongs with A-PRES1-7's run-name work |

@@ -153,7 +153,7 @@ def test_candidate_runs_carry_the_pages_own_charts(runs):
     import build_pages as B
 
     with_charts = {key for key, run in runs.items() if any(a["path"].startswith("charts/") for a in run["artifacts"])}
-    assert with_charts == set(B.CHARTS_BY_RUN) == {"cp21/HGL", "cp20/HG", "cp16/V2-H"}
+    assert with_charts == set(B.CHARTS_BY_RUN) == {"cp24/v5", "cp21/HGL", "cp20/HG", "cp16/V2-H"}
     page = (REPO_ROOT / "docs" / "index.html").read_text()
     for run_key, charts in B.CHARTS_BY_RUN.items():
         artifacts = {a["path"]: a["content"] for a in runs[run_key]["artifacts"]}

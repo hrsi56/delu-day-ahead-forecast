@@ -1,0 +1,357 @@
+{
+  "experiment": "delu-generations",
+  "export_commit": "460750d02013a40ab3ac7dd92dcec1b1eb190eef",
+  "finished_utc": "2026-10-11T16:14:28+00:00",
+  "owner_instruction": "PRES-4 brief, issued by the Orchestrator 2026-10-11, Owner-only actions already authorized: It also authorizes exactly one external action, by the Owner's decision of 2026-10-11: the MLflow upload of runbook \u00a71 step 5. When: only after the independent check has passed at the candidate SHA. What: exactly the regenerated cp24, cp22 and cp23 exports the check reviewed, each parent with its children, into the experiment delu-generations on DagsHub; one write of the experiment description that EXPERIMENT_NOTE_CHECKPOINTS produces (A-PRES3-1). (Independent check PASS at 460750d02013a40ab3ac7dd92dcec1b1eb190eef, 2026-10-11.)",
+  "runs": [
+    {
+      "write_plan": {
+        "authorized": [
+          "cp22",
+          "cp22/A-LN",
+          "cp22/A-LP",
+          "cp22/A-PN-sel",
+          "cp22/M",
+          "cp22/R",
+          "cp22/v3+DL",
+          "cp22/v4+DL",
+          "cp23",
+          "cp23/D",
+          "cp23/v3+D",
+          "cp23/v5",
+          "cp24",
+          "cp24/D2",
+          "cp24/v3+D2",
+          "cp24/v5"
+        ],
+        "authorized_experiment_tags": [
+          "mlflow.note.content"
+        ],
+        "experiment_exists": true,
+        "experiment_tags_to_write": [
+          "mlflow.note.content"
+        ],
+        "runs": {
+          "cp10": "complete",
+          "cp10/c1_head_spread": "complete",
+          "cp10/c1_price_volatility": "complete",
+          "cp10/c2_aci_gamma_0.000001": "complete",
+          "cp10/c2_aci_gamma_0.000005": "complete",
+          "cp10/c2_aci_gamma_0.00001": "complete",
+          "cp10/c2_aci_gamma_0.00002": "complete",
+          "cp10/v1_reference": "complete",
+          "cp15": "complete",
+          "cp15/A1": "complete",
+          "cp15/A2": "complete",
+          "cp15/A3": "complete",
+          "cp15/A4": "complete",
+          "cp15/A5": "complete",
+          "cp15/B0": "complete",
+          "cp15/B1": "complete",
+          "cp15/B2": "complete",
+          "cp15/B3": "complete",
+          "cp16": "complete",
+          "cp16/V2-H": "complete",
+          "cp16/V2-P": "complete",
+          "cp20": "complete",
+          "cp20/HG": "complete",
+          "cp21": "complete",
+          "cp21/HGL": "complete",
+          "cp21/L-N": "complete",
+          "cp21/L-P": "complete",
+          "cp21/L-R": "complete",
+          "cp22": "absent",
+          "cp22/A-LN": "absent",
+          "cp22/A-LP": "absent",
+          "cp22/A-PN-sel": "absent",
+          "cp22/M": "absent",
+          "cp22/R": "absent",
+          "cp22/v3+DL": "absent",
+          "cp22/v4+DL": "absent",
+          "cp23": "absent",
+          "cp23/D": "absent",
+          "cp23/v3+D": "absent",
+          "cp23/v5": "absent",
+          "cp24": "absent",
+          "cp24/D2": "absent",
+          "cp24/v3+D2": "absent",
+          "cp24/v5": "absent"
+        },
+        "to_write": [
+          "cp22",
+          "cp22/A-LN",
+          "cp22/A-LP",
+          "cp22/A-PN-sel",
+          "cp22/M",
+          "cp22/R",
+          "cp22/v3+DL",
+          "cp22/v4+DL",
+          "cp23",
+          "cp23/D",
+          "cp23/v3+D",
+          "cp23/v5",
+          "cp24",
+          "cp24/D2",
+          "cp24/v3+D2",
+          "cp24/v5"
+        ]
+      }
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "2b7c648b7a3b47ac8e1115672096266b",
+      "run_key": "cp10"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "2a78da98d6984c55b2c2c31e4e1f498a",
+      "run_key": "cp10/v1_reference"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "31a984a28dce4ff69abed0172ac71165",
+      "run_key": "cp10/c1_head_spread"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "b95809838bb74972b5fd72d3a5d63c61",
+      "run_key": "cp10/c1_price_volatility"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "bf30d3dee57141cebe3d4ef41b39c907",
+      "run_key": "cp10/c2_aci_gamma_0.000001"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "8e7e60963cad465ab436035d324d3760",
+      "run_key": "cp10/c2_aci_gamma_0.000005"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "250f44b8704e4c52bf5d9bd9de66f36c",
+      "run_key": "cp10/c2_aci_gamma_0.00001"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "754fcaa4bcc0482badb084a7cd56117e",
+      "run_key": "cp10/c2_aci_gamma_0.00002"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "48867457b6554f59928493af90469555",
+      "run_key": "cp15"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "733341b233284f758702cde99044f4a9",
+      "run_key": "cp15/B0"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "656fd6dc4ebd48ec878b06fb3e042b54",
+      "run_key": "cp15/B1"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "79c27a8d702f42a59db2bea0aeb71186",
+      "run_key": "cp15/B2"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "d61166d3413747d2b07d6350df704f2d",
+      "run_key": "cp15/B3"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "26d695d8a1de465a9a1a156ad6226430",
+      "run_key": "cp15/A1"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "c5b522f86dd54415b085c1f69ff42948",
+      "run_key": "cp15/A2"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "1c31337399104ba881aa0caeefa24a6c",
+      "run_key": "cp15/A3"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "9182613a781b455daf70704f30ee99db",
+      "run_key": "cp15/A4"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "c3da9c3d87714550aa4ef68fc0ec8913",
+      "run_key": "cp15/A5"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "a9f285e009844f8e8a9f671fd2fab86e",
+      "run_key": "cp16"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "c8e1cc9025b041d9adff72a8e244099f",
+      "run_key": "cp16/V2-P"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "de8fde118e71406ab440246ec2072b84",
+      "run_key": "cp16/V2-H"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "ceaa8e1ac8f140f9abc233709fd17836",
+      "run_key": "cp20"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "66e1e5f516da4be38db3d5b96bde4397",
+      "run_key": "cp20/HG"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "bc152519f4cc4c3abada756a67e9ad89",
+      "run_key": "cp21"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "d7c53e9d7db94ed48d91da14be2d343b",
+      "run_key": "cp21/HGL"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "c9b0216014dd48ed8d02939f9f88b458",
+      "run_key": "cp21/L-P"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "cbdb4a2a7b8e47a78c7bc1feeb9aa8eb",
+      "run_key": "cp21/L-R"
+    },
+    {
+      "action": "skipped (complete)",
+      "run_id": "2990b1081ea943c584548dc4a5190ad7",
+      "run_key": "cp21/L-N"
+    },
+    {
+      "action": "created",
+      "datasets": "none",
+      "points_logged": 0,
+      "run_id": "b93f1feafd634fa18b7af44724acb054",
+      "run_key": "cp22"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 657,
+      "run_id": "f0c3258715b140e19ad0b5085399efba",
+      "run_key": "cp22/R"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 573,
+      "run_id": "8829c99afa524d47bcffcb16080b3510",
+      "run_key": "cp22/M"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 615,
+      "run_id": "f7773812153f43458e87c594780e54ef",
+      "run_key": "cp22/A-PN-sel"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 531,
+      "run_id": "ec67bfec11db4308bcba71535781463e",
+      "run_key": "cp22/A-LP"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 573,
+      "run_id": "32bda8bc99564425b39984bbace24631",
+      "run_key": "cp22/A-LN"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 573,
+      "run_id": "8f25ca7fac244b458f215c25005f53ac",
+      "run_key": "cp22/v4+DL"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 531,
+      "run_id": "449ca0aa988a43e5a83886c81ff1b13a",
+      "run_key": "cp22/v3+DL"
+    },
+    {
+      "action": "created",
+      "datasets": "none",
+      "points_logged": 0,
+      "run_id": "6bb5b17721a44502a32d7b074d4f5ec3",
+      "run_key": "cp23"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 615,
+      "run_id": "7eed5eecc48c4aeb8aebdb3ea1616099",
+      "run_key": "cp23/v5"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 573,
+      "run_id": "7cf1e2b137574dfbb513bec0f948292d",
+      "run_key": "cp23/D"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 531,
+      "run_id": "a0244146107c4551b44d0055fffa8977",
+      "run_key": "cp23/v3+D"
+    },
+    {
+      "action": "created",
+      "datasets": "none",
+      "points_logged": 0,
+      "run_id": "d6b8061fab3e4fa49bb6eb45e5aebdb7",
+      "run_key": "cp24"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 615,
+      "run_id": "4efaef01e7e441f5ad09a8c5e4ef1c82",
+      "run_key": "cp24/v5"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 615,
+      "run_id": "dd360e325c754a2eb264cf8cd6bf4979",
+      "run_key": "cp24/D2"
+    },
+    {
+      "action": "created",
+      "datasets": "logged",
+      "points_logged": 573,
+      "run_id": "004be4217f084bc4adea91dc2bf4f6c6",
+      "run_key": "cp24/v3+D2"
+    }
+  ],
+  "started_utc": "2026-10-11T15:38:37+00:00",
+  "target": "public",
+  "tracking_uri": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow",
+  "write_operations": 855
+}

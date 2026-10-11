@@ -58,14 +58,16 @@ def page_consistency_problems(page: str) -> list[str]:
         for version in linked:
             if version not in versions:
                 problems.append(f"page: the {name} names {version}, which is not registered")
-    branches = _section(page, '<ul class="branches"', "</ul>") or ""
+    # Every group of branch cards, compared as text: a name's version labels are declared structural.
+    branches = " ".join(re.sub(r"<[^>]+>", "", match) for match in re.findall(r'<ul class="branches".*?</ul>', page, re.DOTALL))
     for entry in G.branches():
         if entry.name not in branches:
             problems.append(f"page: registered branch {entry.name!r} is missing from the lineage")
     overview = _section(page, 'data-chart-id="overview"', "</div>") or ""
     for entry in G.comparison_rows():
-        code = entry.code_in(G.COMPARISON_EXPERIMENT)
-        if f'data-record="{G.comparison_prefix()}.metrics.{code}.equal_fold.S_MAE"' not in overview:
+        source = G.comparison_source(entry)
+        code = entry.code_in(source)
+        if f'data-record="{G.comparison_prefix(source)}.metrics.{code}.equal_fold.S_MAE"' not in overview:
             problems.append(f"page: comparison row {entry.id} ({code}) is missing")
     return problems
 
@@ -214,8 +216,11 @@ CODE_PATTERNS = (
 
 
 def code_denylist() -> tuple[str, ...]:
-    """Generated from the registry's code fields (standard §4): no hand-kept list."""
-    return tuple(code for code in G.codes() if not re.fullmatch(r"CP-\d+", code))
+    """Generated from the registry's code fields (standard §4): no hand-kept list. A code whose text is a registered
+    generation's public version label (CP-24's `v5`, which CP-23 also used for its candidate) is that label on the
+    reading path, not an internal code, and stays allowed; every other code stays denied."""
+    versions = {entry.version for entry in G.generations()}
+    return tuple(code for code in G.codes() if not re.fullmatch(r"CP-\d+", code) and code not in versions)
 
 
 def code_findings(nodes: list[Node]) -> list[str]:

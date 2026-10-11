@@ -74,7 +74,10 @@ def test_the_registry_holds_the_packets_draft_entries_exactly_apart_from_the_lan
         for field in dataclasses.fields(drafted):
             if field.name == "statuses":
                 continue
-            assert getattr(entry, field.name) == getattr(drafted, field.name), (ident, field.name)
+            value = getattr(entry, field.name)
+            if field.name == "codes":  # PRES-4 appended the later experiments' saved rows of v4 (their code additions)
+                value = tuple(code for code in value if code.experiment not in ("CP-22", "CP-23", "CP-24"))
+            assert value == getattr(drafted, field.name), (ident, field.name)
         assert [(e.status, e.reason) for e in entry.statuses] == [(e.status, e.reason) for e in drafted.statuses]
         assert all(e.date == "pending-at-landing" for e in drafted.statuses)
         assert [(e.date, e.source) for e in entry.statuses] == [("2026-09-30", LANDING)]
@@ -101,7 +104,7 @@ def test_the_packets_code_additions_are_all_entered_and_change_no_published_run_
         assert wanted in G.get(addition["entry"]).codes, addition
     # a run's public name reads its code in its own experiment: every published run keeps its name
     for key in G.expected_run_keys():
-        if not key.startswith("cp21"):
+        if key.split("/")[0] in ("cp10", "cp15", "cp16", "cp20"):
             assert G.mlflow_run_name(key) == next(
                 run["run_name"] for name in ("cp10", "cp15", "cp16", "cp20")
                 for run in json.loads((E.EXPORT_DIR / f"{name}.json").read_text())["runs"] if run["run_key"] == key)
@@ -113,14 +116,16 @@ def test_the_rule_the_orders_and_the_study_arms():
     assert (rule.id, rule.plan, rule.words, rule.set_on, list(rule.provenance)) == (
         spec["rule"]["id"], spec["rule"]["plan"], spec["rule"]["words"], spec["rule"]["set_on"],
         spec["rule"]["provenance"])
-    assert G.COMPARISON_ORDER[0] == "v4" and G.COMPARISON_ORDER[1:] == G.V3_COMPARISON_ORDER
+    # v4's comparison as PRES-3 published it; PRES-4 put v5 first in the live order and pinned this one.
+    assert G.V4_COMPARISON_ORDER[0] == "v4" and G.V4_COMPARISON_ORDER[1:] == G.V3_COMPARISON_ORDER
+    assert G.COMPARISON_ORDER[:2] == ("v5", "v4")
     assert G.CRISIS_ORDER[-1] == "v4" and "v4" not in G.V3_CRISIS_ORDER
-    assert [(t.predecessor.id, t.successor.id, t.comparator_is_predecessor) for t in G.transitions(newest_first=False)][-1] \
-        == ("v3", "v4", True)
+    assert ("v3", "v4", True) in [(t.predecessor.id, t.successor.id, t.comparator_is_predecessor)
+                                  for t in G.transitions(newest_first=False)]
     for ident in ("pooled-lightgbm-weather", "block-lightgbm", "normalized-block-lightgbm"):
         entry = G.get(ident)
         assert entry.kind == "study arm" and G.adoption_label(entry) == "Not adopted"
-    assert G.current_generation().id == "v4" and G.released().id == "v1"
+    assert G.get("v4").status.status == G.ADOPTED_IN_RESEARCH and G.released().id == "v1"
 
 
 # --------------------------------------------------------------------------- evidence (steps 7-10)
@@ -158,7 +163,8 @@ def test_the_comparison_moved_to_cp21s_rows_which_equal_cp20s_on_every_shared_po
         assert R.get(twin).raw == record.raw, twin
         compared += 1
     assert compared > 500
-    assert G.COMPARISON_EXPERIMENT == "CP-21" and G.comparison_prefix() == "cp21"
+    # PRES-4 moved the live comparison to CP-24's rows (v5 is only there); v4's published one stays on CP-21's.
+    assert B.V4_EXPERIMENT == "CP-21" and G.comparison_prefix(B.V4_EXPERIMENT) == "cp21"
 
 
 def test_the_derived_headline_quantities():
@@ -209,15 +215,18 @@ def test_the_headline_leads_with_the_rules_verdict_and_names_each_metric(page):
 
 
 def test_the_opening_pairs_research_v4_with_released_v1(page):
+    """At PRES-3 the research half named v4; it names the registry's current generation (v5 since PRES-4)."""
     pair = page[page.index('class="status-pair"'):page.index("</dl>", page.index('class="status-pair"'))]
-    assert 'data-registry="v1"' in pair and 'data-registry="v4"' in pair
+    assert 'data-registry="v1"' in pair and f'data-registry="{G.current_generation().id}"' in pair
     assert "Try the" in page and 'data-structural="version">v1</span> demo' in page
 
 
 def test_the_terms_follow_the_headline(page):
     # "policy" is in the headline ("1 policy tested against the rule"), so it is defined beneath it (the fresh reader)
-    assert RC.headline_terms() == ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies",
-                                   "terms.class")
+    assert RC.headline_terms()[:5] == ("terms.error_scores", "terms.adoption_rule", "terms.differences",
+                                       "terms.policies", "terms.class")
+    # PRES-4: the current generation's name introduces DDNN-2, defined beneath the headline too.
+    assert RC.headline_terms()[5:] == (("terms.ddnn2",) if "DDNN-2" in G.current_generation().name else ())
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     for key in RC.headline_terms():
         assert f'data-block="{key}"' in terms
@@ -226,7 +235,8 @@ def test_the_terms_follow_the_headline(page):
 
 #: A word the headline may use, and the term that defines it (PUBLISH_RULES §2: directly beneath the headline).
 HEADLINE_WORDS = (("polic", "terms.policies"), ("adoption rule", "terms.adoption_rule"),
-                  ("error score", "terms.error_scores"), ("v4 − v3", "terms.differences"))
+                  ("error score", "terms.error_scores"), ("v4 − v3", "terms.differences"),
+                  ("v5 − v4", "terms.differences"))
 
 
 def _undefined(headline: str, terms: tuple[str, ...]) -> list[str]:
@@ -268,7 +278,7 @@ def test_the_comparison_labels_each_generation_by_its_short_name_and_leaves_the_
     table = B.overview_table()
     assert '<th scope="col">Both targets</th>' in table
     tested = [entry for entry in G.comparison_rows() if f"derived.criteria.{entry.id}.verdict" in D.records()]
-    assert len(tested) == 4
+    assert len(tested) == 8  # v2-v5, the study's best challenger, and (PRES-4) the three branch candidates
     for entry in tested:
         assert f'data-record="derived.criteria.{entry.id}.verdict"' in table
     for entry in generations:
@@ -305,7 +315,7 @@ def test_the_readme_states_the_targets_their_n_and_who_met_them():
     research = README.read_text()
     reading = research[research.index("### Reading the comparison"):]
     assert "The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set " \
-           "2026-09-15). 12 policies were tested against them; v3 was the first to meet both;" in reading
+           "2026-09-15). 25 policies were tested against them; v3 was the first to meet both;" in reading
     assert "dashed lines" not in reading
     assert "the distances are point comparisons" not in research
 
@@ -320,7 +330,8 @@ def test_the_reading_names_what_the_rule_tested_and_the_readme_carries_the_rule(
     v4 = v4[v4.index("### v4 · three-block LightGBM added"):v4.index("### v3 · weather features")]
     assert _text(RC.render("v4.rule", "md")).replace("*", "") in v4.replace("*", "")
     opening = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
-    assert 'href="#v4-rule"' in opening and 'id="v4-rule" data-block="v4.rule"' in page
+    current = G.current_generation().id  # v4 at PRES-3; the headline routes to the current rule (v5 since PRES-4)
+    assert f'href="#{current}-rule"' in opening and 'id="v4-rule" data-block="v4.rule"' in page
 
 
 def test_the_arms_state_no_demonstrated_joint_preference_never_no_benefit(page):
@@ -443,13 +454,10 @@ def planned_problems(surfaces: dict[str, str], comparator: str) -> list[str]:
     if page:
         start = page.index('id="planned"')
         section = _text(page[start:page.index("</section>", start)])
-        if "4.6 · DDNN" not in section:
-            problems.append("page: 4.6 is not DDNN")
         if "4.5" in section or "Three-block LightGBM" in section:
             problems.append("page: 4.5 is still planned")
-        if f"improve on {comparator}," not in section:
-            problems.append(f"page: 4.6's question does not name {comparator}")
-        if f"compared with {comparator} on identical hours" not in section:
+        # PRES-4 took 4.6 off the list (it is v5's chapter and a branch card) and compares on the same days.
+        if f"compared with {comparator} on the same days" not in section:
             problems.append(f"page: the section's comparator is not {comparator}")
     return problems
 
@@ -465,39 +473,37 @@ def _generated_surfaces() -> dict[str, str]:
 def test_the_planned_list_is_corrected_on_every_generated_surface():
     assert planned_problems(_generated_surfaces(), G.current_generation().version) == []
     items = {item: (name, code, question) for name, item, code, question, _ in B.planned_items()}
-    assert set(items) == {"4.6", "4.4V", "4.8", "4.7T and live"}
-    assert items["4.6"][1] == "DDNN" and "v4" in items["4.6"][2]
+    assert {"4.4V", "4.8", "4.7T and live"} <= set(items) and "4.5" not in items
 
 
 def test_the_other_planned_items_keep_their_content():
     kept = {item: (name, code, question, evidence) for name, item, code, question, evidence in B.PLANNED_WORK}
-    assert kept["4.4V"] == ("Wind and solar generation forecasts", "VRE",
-                            "Does an in-house wind and solar generation forecast add information beyond direct weather?",
-                            "A held-forward generation model, then an ablation")
+    # 4.4V became source-neutral at PRES-4 (the Owner's programme plan of 2026-10-11); test_49 binds its new text.
+    assert kept["4.4V"][:2] == ("Wind and solar generation forecasts", "VRE")
     assert kept["4.8"] == ("Combining models", "Recombination", "Does combining adopted models help?",
                            "A predefined combination test")
     assert kept["4.7T and live"][0] == "Frozen-protocol evaluation, then prospective monitoring"
 
 
 @pytest.mark.parametrize("doctored, expected", [
-    (lambda s: s.replace("· DDNN</dd>", "· DDNN / TabPFN</dd>"), "TabPFN"),
+    (lambda s: s.replace("· VRE</dd>", "· VRE / TabPFN</dd>"), "TabPFN"),
     (lambda s: s.replace("a distributional neural network", "a tabular foundation model"), "tabular foundation model"),
-    (lambda s: s.replace('improve on <span data-structural="version">v4</span>,',
-                         'improve on <span data-structural="version">v3</span>,'), "does not name v4"),
+    (lambda s: s.replace('compared with <span data-structural="version">v5</span> on the same days',
+                         'compared with <span data-structural="version">v3</span> on the same days'), "is not v5"),
     (lambda s: s.replace('<ol class="planned-list">', '<ol class="planned-list"><li>4.5 · Three-block LightGBM</li>'),
      "4.5 is still planned"),
 ])
 def test_negative_controls_a_stale_planned_list_is_caught(doctored, expected):
     surfaces = _generated_surfaces()
     surfaces["page"] = doctored(surfaces["page"])
-    assert any(expected in problem for problem in planned_problems(surfaces, "v4"))
+    assert any(expected in problem for problem in planned_problems(surfaces, "v5"))
 
 
 def test_negative_control_tabpfn_in_a_space_card_or_the_readme_is_caught():
     surfaces = _generated_surfaces()
     surfaces["space/README.md"] += "\nPlanned: TabPFN.\n"
     surfaces["readme"] += "\nA tabular foundation model is planned.\n"
-    problems = planned_problems(surfaces, "v4")
+    problems = planned_problems(surfaces, "v5")
     assert any(p.startswith("space/README.md") for p in problems) and any(p.startswith("readme") for p in problems)
 
 
@@ -554,9 +560,12 @@ def test_negative_controls_a_final_export_that_differs_beyond_the_pending_fields
 
 
 def test_the_experiment_description_is_the_published_one():
+    """PRES-3 kept the description of 2026-09-28 (A-PRES3-1); PRES-4's authorized write names every parent."""
     manifest = json.loads((E.EXPORT_DIR / "manifest.json").read_text())
     assert manifest["experiment_tags"] == E.EXPERIMENT_TAGS
-    assert "(CP-21)" not in E.EXPERIMENT_TAGS["mlflow.note.content"]
+    note = E.EXPERIMENT_TAGS["mlflow.note.content"]
+    assert all(f"({G.CHECKPOINTS[code].code})" in note for code in E.EXPERIMENT_NOTE_CHECKPOINTS)
+    assert list(E.EXPERIMENT_NOTE_CHECKPOINTS) == list(G.CHECKPOINTS)
 
 
 # --------------------------------------------------------------------------- the publisher's authorized-runs guard

@@ -1,0 +1,24 @@
+{
+  "before": {
+    "private": false,
+    "revision": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+    "sdk": "static",
+    "stage": "RUNNING"
+  },
+  "before_revision": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+  "bundle": "dist/space-wasm",
+  "bundle_sha256": "9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585",
+  "bytes": 44164910,
+  "check": "deploy_space.py check mode, anonymous and read-only, against the served Space: the Space already serves the reviewed bundle, so PRES-4 has nothing to upload",
+  "credential_guard": "passed",
+  "declared_deletes": [],
+  "declared_matches": true,
+  "files": 805,
+  "mode": "check only: nothing was written",
+  "planned_adds": [],
+  "planned_changes": [],
+  "planned_deletes": [],
+  "repo": "Yarden-Viktor/delu-day-ahead-forecast",
+  "served_equals_bundle": true,
+  "started_utc": "2026-10-11T10:49:14+00:00"
+}
