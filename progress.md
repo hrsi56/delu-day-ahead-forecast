@@ -37,18 +37,20 @@ closure. That commit and push follow the Owner's instruction.*
 ### Track B — capstone (the critical path)
 
 **Foundation established.** The v1 product is released. CP-10, CP-15, CP-16, CP-20, CP-21, CP-22,
-CP-23 and CP-24 are landed, GFS is admitted, and PRES-1, PRES-2 and PRES-3 are closed. PRES-3
-published v4 on every surface on 2026-10-01. Since then three checkpoints closed:
+CP-23 and CP-24 are landed, GFS is admitted, and PRES-1 to PRES-4 are closed. PRES-3 published
+v4 on every surface on 2026-10-01. Since then three checkpoints and one publication closed:
 
 - CP-22 re-examined v4 and made no replacement (2026-10-04);
 - CP-23 tested a DDNN member and did not adopt v5 (2026-10-04);
-- CP-24 tested DDNN-2 and **adopted v5 in research** (landed 2026-10-11).
+- CP-24 tested DDNN-2 and **adopted v5 in research** (landed 2026-10-11);
+- PRES-4 published v5, with CP-22 and CP-23 as branch cards (closed 2026-10-11).
 
 Their detailed results and accepted limitations remain in the
 [landing and closure records and evidence tags](#where-the-history-lives).
 
 **Released product: frozen v1. Research base: v5, adopted in research by CP-24 (landed
-2026-10-11).** No public surface shows v5 yet; the published research headline is still v4.
+2026-10-11).** Since PRES-4 (2026-10-11) the report, the README and MLflow lead with v5; the
+Space stays on v1 until the final product's freeze.
 
 - **What v5 is.** v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2: v4 with half of LightGBM's third given
   to DDNN-2, a NumPy DDNN with day-level rows and 24 × 4 Johnson SU outputs. HG's hour-aware
@@ -102,15 +104,106 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 The v5 publication (PRES-4) is issued, brief `54169c7c…`, 2026-10-11. The source search and the protocol design can start alongside |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stage 2 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)). Next: the source search (3) and the protocol design (4), which can run side by side |
 
-**No Track B checkpoint is active.** The next steps follow the Owner's approved
-[programme plan](docs/track-b/programme-plan-2026-10-11.md) (stage 7 above):
+**No active Track B checkpoint.** PRES-4 closed on 2026-10-11, and the next two stages are
+research briefs, which can start now and run side by side.
 
-- **First, the v5 publication (PRES-4). Issued 2026-10-11** as brief `54169c7c…`, at
-  `bfadb39`. The canonical copy is `.local/artifacts/pres-4/issued-brief.md`, with its launch
-  envelope beside it. It runs in a new Lead session the Owner opens.
-- **Alongside it,** the new-source search and the evaluation protocol's design.
+**PRES-4 is closed** ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)). It ran from the
+brief `54169c7c…`, under PUBLISH_RULES 1.4.
+
+- **Status.** BLOCKED at the external gate, as expected, with an Integration PASS at `e7bdb60`.
+  The evidence tip is `80ccc18` (`evidence/pres-4`), and the landing is `aebebc1`
+  (`land/pres-4`), pushed by the Owner the same evening; CI passed.
+- **What is published.** v5, "v5 · DDNN-2 added", in rose with a filled pentagon, on the report,
+  the README and MLflow (`cp22`, `cp23` and `cp24` added: 44 runs). CP-22 and CP-23 appear as
+  branch cards, "tested, not adopted". v1 remains the product, and the Space is unchanged.
+- **Public checks.** All passed, 18:28–18:55 UTC. The Chrome demo and the 12-run MLflow overview
+  first failed on HTTP 429s from Hugging Face and DagsHub; their retries passed, and the first
+  failures are kept.
+- **The independent post-deployment review was waived** by the Owner, the third time in a row. He
+  chose the rule change that ends these waivers; it goes into stage 4's suspension.
+- **Carried forward.** The page has 3,733 bytes left under the 2.0 MB budget, so the next
+  generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
+  advisories are in the closure record.
+
+**Next pending Track B checkpoint: CP-25, all the data** (stage 5). It needs stage 3's shortlist,
+an anchor section under a suspension, the retrieval approval and a brief. Stages 3 and 4 come
+first, and neither is a checkpoint.
+
+**Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
+Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
+the data checkpoint after the protocol and the new-source search after the re-baseline, is
+superseded.
+
+3. **Search for new data sources.** Desk research only: no download and no evaluation. It is a
+   research brief and can start now.
+   - **Start from** Notes, [Data admission research], and CP-15's five admission checks.
+   - **The candidates:**
+     - fuel and carbon prices (TTF, EUA, coal), interest rates and a fear index;
+     - neighbouring zones and cross-border links. Only D−1 prices and capacities published before
+       the auction qualify; neighbours' day-D prices are set in the same auction;
+     - the "+2" early forecasts that already cover day D;
+     - external wind and solar forecast archives, as issued. ENTSO-E's forecast is due only by
+       18:00 the day before, after the auction.
+   - **The filters:** free, redistributable, published before the issue time, and data up to
+     2026-04-07 only.
+4. **The evaluation protocol.** It can start now.
+   - **First, an external research run** on rolling recalibration, window length, season coverage
+     and the tests (Diebold–Mariano, Giacomini–White).
+   - **Then an anchor section,** reviewed by an independent plan critic. It fixes:
+     - every eligible day, about 1,926 from 2020-12-29 to 2026-04-07, with the never-scored days
+       reported apart;
+     - a daily refit;
+     - the window, 728 days or expanding, fixed in advance;
+     - the admission rule, with control for testing many sources;
+     - 4.8's walk-forward rule;
+     - the compute ceilings.
+   - **The same amendment** should fix the programme order, the red line and both post-boundary
+     windows, as the plan departs from v21-r10 §22. That needs the Owner's suspension, before
+     CP-25.
+   - **The same suspension carries one publication-rule change,** the Owner's choice at PRES-4's
+     closure: the independent post-deployment review is required only when the served bytes
+     differ from the reviewed bytes, or a public check fails without a passing retry.
+5. **CP-25: all the data in one checkpoint.** It starts after 3.
+   - An inventory from 2019-01-01 to 2026-04-07.
+   - Our gaps filled, GFS for 2022-09-29 to 2023-03-24 first, and every shortlisted source
+     collected.
+   - As-of vintages, a boundary guard in every downloader, licences, and credential tests.
+   - Historical GFS arrival times.
+   - **Gates:** an anchor section, the retrieval approval, the brief and the LAND.
+6. **CP-26: re-baseline v1–v5 on every eligible day,** with the existing features only.
+   - It is the control arm for the new-source tests.
+   - Its results are reported, not tuned against.
+   - It produces the out-of-sample member forecasts that 4.8 needs.
+   - It starts after 4 is ratified and CP-25 has landed. PRES-4, its other precondition, is
+     published.
+7. **CP-27: the new-source admission tests,** against CP-26's control.
+8. **CP-28: 4.8.**
+   - The arms: DDNN-2 alone, fixed blends and per-block weights, and NumPy stacking.
+   - Walk-forward, with the selection rule fixed before anyone looks.
+   - No arm is required to win.
+9. **The CP-17 freeze and 4.7T,** on 2026-04-08 to 2026-07-06, 90 days, opened once.
+   - **Fixed in advance:** the candidate, its retraining rule, the reference model, the pass
+     conditions, and the lock-price policy if it is adopted.
+   - **On failure,** no runner-up moves up.
+10. **Replay daily retraining** on 2026-07-07 to 2026-10-04, 90 days, after 9 passes.
+    - It needs an anchor change to CP-18.
+    - It cannot test lock-price decisions, since the quote feed keeps no archive.
+11. **Live.**
+    - Security hardening, which can be prepared from stage 9.
+    - A controlled live trial: the Orchestrator recommends at least four weeks; the length is the
+      Owner's decision.
+    - Site activation: CP-18, then CP-19.
+12. **Final publication and CV.**
+
+**The Owner's item: review the lock-price notes** during stage 11
+([notes](docs/track-b/final-product-lock-price-notes-2026-10-11.md)). One dependency: if the idea
+is adopted for the final product, its numeric policy and information clock must be fixed before
+4.7T opens, at stage 9. To keep that option, the review has to start before the freeze.
+
+**The red line:** data after 2026-04-07 stays closed until 4.7T. That covers data on disk, reading
+about later market events, and the windows, which are fixed now.
 
 **Where the plan departs from the anchor.** It changes v21-r10 §22's order: publication, the
 protocol and a re-baseline now come before data admission, and two windows after 2026-04-07 are
@@ -745,6 +838,29 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **PRES-4 closed, 2026-10-11: v5 published.**
+  - **The receipt:** the Lead's return was BLOCKED at the external gate, as expected, with an
+    Integration PASS at `e7bdb60`. The two-SHA delta was the verdict files only, and `main` was
+    untouched. An independent anonymous check of the public MLflow mirror matched the tip's
+    export.
+  - **The Owner** landed `aebebc1`, tagged `land/pres-4` and `evidence/pres-4`, and pushed after
+    the secret scan and the guard. CI passed.
+  - **The public checks** passed, with the first failures (HTTP 429s) kept beside their retries.
+    The Owner waived the independent public review and chose to carry the conditional rule into
+    stage 4's suspension.
+  - **Reclaimed:** the branch and the worktree, after a verified bundle; `progress.md`'s one live
+    citation repointed. Three Q&A entries filed.
+  - **The omission diff:** the PRES-4 running block and its four return steps became the closure
+    summary; the next pending checkpoint is named.
+
+- **Next actions saved before a chat compaction, 2026-10-11.**
+  - **Where they are:** PRES-4 is running, and the detailed next actions are in Current Position.
+  - **The order:** the Owner's approved one, with all the data before any retraining. The earlier
+    order is superseded.
+  - **The Owner's new item:** the lock-price notes, reviewed during stage 11.
+  - **Why uncommitted:** this file stays uncommitted while PRES-4 runs, as its brief allows.
+  - **The omission diff:** the "no active checkpoint" paragraph became the PRES-4 block.
 
 - **PRES-4 issued, 2026-10-11.** The brief is `54169c7c…`, at `bfadb39`.
   - **The Owner's three further decisions:**
@@ -1437,8 +1553,9 @@ Session Log.
       of S, so the gain may not be demonstrable.
   - **Timing.** Best done after DDNN, so that all members' weights are learned together once. Any
     result stays development evidence; 4.7T is the test.
-- **[Final product — lock-price idea, Owner 2026-10-11]** When CP-17 to CP-19 and the final
-  publication are planned, read the
+- **[Final product — lock-price idea, Owner 2026-10-11]** The Owner schedules its review during
+  stage 11, the live stage. If it is adopted, it must be decided before the stage-9 freeze.
+  Read the
   [lock-price notes](docs/track-b/final-product-lock-price-notes-2026-10-11.md).
   - **The idea:** a daily "lock only at or below X" recommendation, checked against delayed EEX
     Base Day quotes, with separate forecast-error and simulated-savings graphs.

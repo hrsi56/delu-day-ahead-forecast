@@ -1,0 +1,132 @@
+{
+  "browser_checks": "not run here: scripts/check_reader_paths.py records are cited by the packet",
+  "bundle": ".local/artifacts/pres-3/space-wasm-9028a118",
+  "bundle_sha256": "9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585",
+  "client": "anonymous urllib and git ls-remote: no cookie, no token, no credential",
+  "completed_utc": "2026-10-11T18:42:48+00:00",
+  "landing": "aebebc193bc95501eaf36bfca87861acfb2697d3",
+  "schema": "publication-receipt-v1",
+  "started_utc": "2026-10-11T18:28:55+00:00",
+  "status": "PASS",
+  "surfaces": {
+    "GitHub Pages": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "bytes": 1996267,
+          "checked_at_utc": "2026-10-11T18:28:55+00:00",
+          "intended": "54708134fdfeb2ce3f2ee2d04b1f93008b7506917690a74d93548951a18d37ce",
+          "observed": "54708134fdfeb2ce3f2ee2d04b1f93008b7506917690a74d93548951a18d37ce",
+          "passed": true,
+          "url": "https://hrsi56.github.io/delu-day-ahead-forecast/"
+        }
+      ],
+      "checked_at_utc": "2026-10-11T18:28:55+00:00",
+      "first_failure": null,
+      "intended": "54708134fdfeb2ce3f2ee2d04b1f93008b7506917690a74d93548951a18d37ce",
+      "observed": "54708134fdfeb2ce3f2ee2d04b1f93008b7506917690a74d93548951a18d37ce",
+      "passed": true
+    },
+    "GitHub main": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-11T18:28:55+00:00",
+          "intended": "aebebc193bc95501eaf36bfca87861acfb2697d3",
+          "observed": "aebebc193bc95501eaf36bfca87861acfb2697d3",
+          "passed": true
+        }
+      ],
+      "checked_at_utc": "2026-10-11T18:28:55+00:00",
+      "first_failure": null,
+      "intended": "aebebc193bc95501eaf36bfca87861acfb2697d3",
+      "observed": "aebebc193bc95501eaf36bfca87861acfb2697d3",
+      "passed": true
+    },
+    "Hugging Face Space files": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-11T18:28:56+00:00",
+          "extra": [],
+          "files": 805,
+          "identity": {
+            "private": false,
+            "revision": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+            "sdk": "static",
+            "stage": "RUNNING"
+          },
+          "intended": "9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585",
+          "mismatched": [],
+          "missing": [],
+          "observed": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+          "passed": true,
+          "verified": true
+        }
+      ],
+      "checked_at_utc": "2026-10-11T18:28:56+00:00",
+      "first_failure": null,
+      "intended": "9028a11869a378ea5c3401a00ad46368e1c9e2f2f9f8732330d32b71af081585",
+      "observed": "0331088725fedab2f5a1ec804ae03bf960cf126f",
+      "passed": true
+    },
+    "Hugging Face direct demo page": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-11T18:28:57+00:00",
+          "exact_bytes_match": false,
+          "hosting_injection": "Hugging Face window.huggingface public creator metadata script",
+          "injected_script_count": 1,
+          "intended": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
+          "normalized_sha256": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
+          "observed": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
+          "passed": true,
+          "sha256": "0122c63cbe668e323afde577782e6b6e056f8d2f476311ef717d9bcae77f50db",
+          "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/"
+        }
+      ],
+      "checked_at_utc": "2026-10-11T18:28:57+00:00",
+      "first_failure": null,
+      "intended": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
+      "observed": "fcb0ed136f063276252c9d2230181a848d94f17ce59ef4cc7945cdd8dcb16a8e",
+      "passed": true
+    },
+    "Public MLflow mirror": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-11T18:28:58+00:00",
+          "intended": "44 runs of the committed export",
+          "observed": "44 runs found",
+          "passed": true,
+          "problems": [],
+          "record": "reports/presentation/release-checks/pres-4-postdeploy-mlflow-mirror.json"
+        }
+      ],
+      "checked_at_utc": "2026-10-11T18:28:58+00:00",
+      "first_failure": null,
+      "intended": "44 runs of the committed export",
+      "observed": "44 runs found",
+      "passed": true
+    },
+    "Public links": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "checked_at_utc": "2026-10-11T18:42:23+00:00",
+          "failed": {},
+          "intended": "every destination answers 200",
+          "observed": "0 failed destinations",
+          "passed": true,
+          "record": "reports/presentation/release-checks/pres-4-postdeploy-links.json"
+        }
+      ],
+      "checked_at_utc": "2026-10-11T18:42:23+00:00",
+      "first_failure": null,
+      "intended": "every destination answers 200",
+      "observed": "0 failed destinations",
+      "passed": true
+    }
+  }
+}

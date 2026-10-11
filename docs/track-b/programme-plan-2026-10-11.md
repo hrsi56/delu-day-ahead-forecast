@@ -29,7 +29,7 @@ to it, to forecast days that have not happened yet.
 | # | Stage | Kind | Starts after | Runs alongside |
 |---|---|---|---|---|
 | 1 | ✅ The codex r13: kept as notes, not merged | Orchestrator | done | — |
-| 2 | Publish v5 (PRES-4) | Publication | the Owner's four decisions | 3, 4, 5 |
+| 2 | ✅ Publish v5 (PRES-4): closed 2026-10-11 | Publication | done | — |
 | 3 | Search for new data sources | Research, no evaluation | now | 2, 4 |
 | 4 | Design the evaluation protocol | Research and anchor | now | 2, 3, 5 |
 | 5 | Collect all the data: existing gaps and every shortlisted new source (CP-25) | Checkpoint | 3 | 2, 4 |
@@ -76,7 +76,14 @@ quote archive.
 **What remains.** The draft is preserved in `.local/artifacts/codex-r13-preserved-2026-10-11/`. The
 branch and its worktree are deleted. Publication briefs keep pinning PUBLISH_RULES 1.4.
 
-## Stage 2 — Publish v5 (PRES-4)
+## Stage 2 — Publish v5 (PRES-4): done
+
+**Closed 2026-10-11** ([closure record](pres-4-closure-2026-10-11.md)). v5 is on the report, the
+README and MLflow, with CP-22 and CP-23 as branch cards; the Space stays on v1. The Owner landed
+`aebebc1` (`land/pres-4`, `evidence/pres-4`) and pushed it, and every public check passed. The
+independent post-deployment review was waived, with the rule change carried to stage 4. The page
+has 3,733 bytes left under the budget, so the next generation's publication needs a compaction or
+budget decision first (A-PRES4-5).
 
 The name PRES-4 was reserved for CP-22's replacement plan, which never ran. That plan stays an
 unexecuted record.
@@ -170,6 +177,11 @@ section, and an independent plan critic reviews it.
 - **The compute ceilings.**
 
 **Owner gates:** the research brief; the anchor section with its suspension.
+
+**The same suspension carries one publication-rule change,** chosen by the Owner on 2026-10-11 at
+PRES-4's closure: require the independent post-deployment review only when the served bytes differ
+from the independently reviewed bytes, or a public check fails without a passing retry. PRES-2,
+PRES-3 and PRES-4 each waived it on that basis.
 
 ## Stage 5 — Collect all the data (CP-25)
 
@@ -282,7 +294,7 @@ The final product, its report, and the CV surfaces, under the publication rules 
 ## The Owner's decision points, in order
 
 1. Stage 1: done. r13 is kept as notes, and the codex branch is deleted.
-2. Stage 2: D1–D4 above, then the publication's own gates.
+2. Stage 2: done. D1–D4 above, the LAND and the push on 2026-10-11.
 3. Stages 3 and 4: the two research briefs, then the protocol's ratification.
 4. Stage 5: the anchor section, the retrieval approval and the LAND.
 5. Stages 6, 7 and 8: each checkpoint's anchor section and LAND.
@@ -291,4 +303,5 @@ The final product, its report, and the CV surfaces, under the publication rules 
 8. Stage 11: the live trial's length, and the final activation.
 
 **Saving suspensions.** One anchor amendment can fix the programme order, the red line and both
-post-boundary windows at once. Each later stage then needs only its own section.
+post-boundary windows at once, and the same suspension can carry the conditional public-review rule
+(stage 4). Each later stage then needs only its own section.
