@@ -1,0 +1,383 @@
+{
+  "purpose": "Bounded aggregate-only archive-coverage metadata; no MW observations; original-issue preservation and arrival unverified",
+  "cutoff_delivery_day": "2026-04-07 Europe/Brussels",
+  "original_vintage_admission": "unverified",
+  "queries": [
+    {
+      "year": 2019,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272018-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272019-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35040,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 34752
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 34752
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 34752
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 34752
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 34752
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2020,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272019-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272020-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35136,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35136,
+            "forecast_rows": 35136
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2021,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272020-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272021-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35040,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 34944
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 34944
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 34944
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 34944
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 34944
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2022,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272021-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272022-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35040,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2023,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272022-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272023-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35040,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2024,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272023-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272024-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35136,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35136,
+            "forecast_rows": 35136
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35136,
+            "forecast_rows": 35136
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2025,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272024-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272025-12-31T23%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 35040,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 35040,
+            "forecast_rows": 35040
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 35040,
+            "forecast_rows": 35040
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    },
+    {
+      "year": 2026,
+      "retrieved": "2026-10-11",
+      "url": "https://opendata.elia.be/api/explore/v2.1/catalog/datasets/ods031/records?select=region%2Coffshoreonshore%2Cgridconnectiontype%2Ccount%28%2A%29+as+rows%2Ccount%28dayahead11hforecast%29+as+forecast_rows&where=datetime+%3E%3D+date%272025-12-31T23%3A00%3A00Z%27+and+datetime+%3C+date%272026-04-07T22%3A00%3A00Z%27&group_by=region%2Coffshoreonshore%2Cgridconnectiontype&limit=20",
+      "expected_intervals_per_category": 9308,
+      "result": {
+        "total_count": 5,
+        "results": [
+          {
+            "region": "Federal",
+            "offshoreonshore": "Offshore",
+            "gridconnectiontype": "Elia",
+            "rows": 9308,
+            "forecast_rows": 9308
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 9308,
+            "forecast_rows": 9308
+          },
+          {
+            "region": "Flanders",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 9308,
+            "forecast_rows": 9308
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Dso",
+            "rows": 9308,
+            "forecast_rows": 9308
+          },
+          {
+            "region": "Wallonia",
+            "offshoreonshore": "Onshore",
+            "gridconnectiontype": "Elia",
+            "rows": 9308,
+            "forecast_rows": 9308
+          }
+        ]
+      },
+      "retrieval_date_timezone": "UTC"
+    }
+  ]
+}

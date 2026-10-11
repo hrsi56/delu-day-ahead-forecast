@@ -104,10 +104,10 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stage 2 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)). Next: the source search (3) and the protocol design (4), which can run side by side |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Next: the protocol research (4) |
 
-**No active Track B checkpoint.** PRES-4 closed on 2026-10-11, and the next two stages are
-research briefs, which can start now and run side by side.
+**No active Track B checkpoint.** PRES-4 closed on 2026-10-11, and stage 3's source search
+reported on 2026-10-12. The next step is stage 4's research brief, on the evaluation protocol.
 
 **PRES-4 is closed** ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)). It ran from the
 brief `54169c7c…`, under PUBLISH_RULES 1.4.
@@ -127,28 +127,38 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next pending Track B checkpoint: CP-25, all the data** (stage 5). It needs stage 3's shortlist,
-an anchor section under a suspension, the retrieval approval and a brief. Stages 3 and 4 come
-first, and neither is a checkpoint.
+**Next pending Track B checkpoint: CP-25, all the data** (stage 5). Stage 3's shortlist is in. It
+still needs stage 4's protocol, an anchor section under a suspension, the retrieval approval and a
+brief.
 
 **Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
 Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
 the data checkpoint after the protocol and the new-source search after the re-baseline, is
 superseded.
 
-3. **Search for new data sources.** Desk research only: no download and no evaluation. It is a
-   research brief and can start now.
-   - **Start from** Notes, [Data admission research], and CP-15's five admission checks.
-   - **The candidates:**
-     - fuel and carbon prices (TTF, EUA, coal), interest rates and a fear index;
-     - neighbouring zones and cross-border links. Only D−1 prices and capacities published before
-       the auction qualify; neighbours' day-D prices are set in the same auction;
-     - the "+2" early forecasts that already cover day D;
-     - external wind and solar forecast archives, as issued. ENTSO-E's forecast is due only by
-       18:00 the day before, after the auction.
-   - **The filters:** free, redistributable, published before the issue time, and data up to
-     2026-04-07 only.
+3. **Search for new data sources: done 2026-10-12.**
+   - **The report:** [data-source-research-2026-10-11.md](docs/track-b/data-source-research-2026-10-11.md),
+     from the brief `d3ee57cd…` (`.local/artifacts/stage-3/research-brief.md`). 78 products were
+     assessed, and none passed all five filters without conditions. The Orchestrator checked the
+     decisive claims against the primary pages, and the report holds no market value after
+     2026-04-07.
+   - **Wind and solar:** our own GFS forecast (4.4V), as planned.
+   - **CP-25's conditional list:**
+     - Elia's 11:00 Belgian wind forecast;
+     - the neighbours' D−1 prices (SMARD, Energinet);
+     - ENTSO-E neighbour load forecasts (6.1.B, 6.1.C);
+     - pre-auction capacities (11.1, 11.1.B; Core from June 2022);
+     - optionally, TIGGE ECMWF ensembles;
+     - ECB rates.
+
+     Fuels, volatility indices and Euribor have no qualifying free route.
+   - **The Owner, 2026-10-12:** no enquiry or registration for now; the vintage standard (stage 4,
+     and Standing Scope Decisions).
 4. **The evaluation protocol.** It can start now.
+   - **Its admission rule follows the Owner's vintage standard of 2026-10-12** (Standing Scope
+     Decisions): original vintages enter the main evaluation; preserved values with reconstructed
+     availability may enter with disclosure and delay-sensitivity checks; revised history is
+     tested separately.
    - **First, an external research run** on rolling recalibration, window length, season coverage
      and the tests (Diebold–Mariano, Giacomini–White).
    - **Then an anchor section,** reviewed by an independent plan critic. It fixes:
@@ -598,6 +608,20 @@ decision remains a boundary, not an active workstream.
 These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
 Session Log.
 
+**Added 2026-10-12 (Owner — the vintage standard for data admission; programme plan stage 4):**
+
+- **Three tiers, per product:**
+  1. original vintages with publication timestamps enter the main evaluation;
+  2. preserved original values, with availability reconstructed from documented schedules, may
+     enter, with disclosure and delay-sensitivity checks;
+  3. revised historical values without original vintages are excluded from the main evaluation and
+     tested separately.
+- **The line:** reconstructing the availability time is acceptable; substituting retrospectively
+  corrected values is not.
+- **Each product is verified individually, and licensing remains mandatory.**
+- **Why:** stage 3 found that almost no free source keeps its first-published values. A strict rule
+  would admit nearly nothing, and a loose one would let revised history into the backtest.
+
 **Added 2026-09-30 (Owner — unattended daily publication; `AGENTS.md`):**
 
 - **Daily data-only publication of the final product needs no per-day instruction.** Once an
@@ -838,6 +862,18 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Stage 3's source search reported, 2026-10-12.**
+  - **The brief** (`d3ee57cd…`) went to a research agent, which wrote the report and Elia's
+    bounded coverage counts into `docs/track-b/`. 78 products were assessed, and none passed all
+    five filters without conditions.
+  - **The Orchestrator's checks:** the red line held (the counts stop at 2026-04-07, Brussels). The
+    primary pages confirm Elia's 11:00 field and its CC BY 4.0 licence, the ENTSO-E reuse list
+    (load 6.1.b/c and capacities 11.1.a/b covered; prices, wind and solar, and outages not), and
+    the TIGGE licence (ECMWF CC BY 4.0, 48 hours late).
+  - **The Owner decided** the three-tier vintage standard, now in Standing Scope Decisions, and no
+    enquiry or registration for now.
+  - **Plan:** stage 3 marked done; stage 4 carries the standard; CP-25 records each product's tier.
 
 - **PRES-4 closed, 2026-10-11: v5 published.**
   - **The receipt:** the Lead's return was BLOCKED at the external gate, as expected, with an
@@ -1580,7 +1616,9 @@ Session Log.
   entered. v21-r10 §20.13 records the outcome against §20.1.
 - **[Data admission research]** Now stages 3, 5 and 7 of the
   [programme plan](docs/track-b/programme-plan-2026-10-11.md): search, then collect with the
-  existing gaps, then test against the re-baseline. Originally v21-r10 §22, with 4.4V. The
+  existing gaps, then test against the re-baseline. Stage 3 reported on 2026-10-12
+  ([report](docs/track-b/data-source-research-2026-10-11.md)); the Owner's vintage standard is in
+  Standing Scope Decisions. Originally v21-r10 §22, with 4.4V. The
   Owner's scope, 2026-10-04: "מחירי אנרגיה, ריביות, מדד פחד בבורסה המקומית כל מה שאפשר וחוקי
   לשלוף וללמוד ממנו".
   - **Candidates:**

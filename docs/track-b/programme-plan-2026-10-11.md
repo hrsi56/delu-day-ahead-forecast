@@ -30,8 +30,8 @@ to it, to forecast days that have not happened yet.
 |---|---|---|---|---|
 | 1 | ✅ The codex r13: kept as notes, not merged | Orchestrator | done | — |
 | 2 | ✅ Publish v5 (PRES-4): closed 2026-10-11 | Publication | done | — |
-| 3 | Search for new data sources | Research, no evaluation | now | 2, 4 |
-| 4 | Design the evaluation protocol | Research and anchor | now | 2, 3, 5 |
+| 3 | ✅ Search for new data sources: report received 2026-10-12 | Research, no evaluation | done | — |
+| 4 | Design the evaluation protocol | Research and anchor | now | 5 |
 | 5 | Collect all the data: existing gaps and every shortlisted new source (CP-25) | Checkpoint | 3 | 2, 4 |
 | 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
 | 7 | Admission tests for the new sources against that control (CP-27) | Checkpoint | 6 | — |
@@ -123,7 +123,33 @@ The decisions as they were put to the Owner, with the Orchestrator's recommendat
 
 **Route:** the brief, a Lead, one fresh independent review, the Owner's publication authority.
 
-## Stage 3 — Search for new data sources
+## Stage 3 — Search for new data sources: done
+
+**Received 2026-10-12** ([research report](data-source-research-2026-10-11.md), with the
+[Elia coverage counts](research/stage3-elia-coverage-metadata-2026-10-11.json)). 78 products
+were assessed against the five filters, and none passed all five without conditions. The
+Orchestrator checked the decisive claims against the primary pages: Elia's 11:00 field and its
+CC BY 4.0 licence, ENTSO-E's reuse list, and the TIGGE licence. No market value after 2026-04-07
+appears in the report.
+
+- **Wind and solar:** our own forecast from GFS (4.4V), as planned. No free German archive of
+  forecasts published before the origin, kept as issued, was found.
+- **CP-25's conditional list, in order:**
+  1. Elia's Belgian `dayahead11hforecast` wind field (CC BY 4.0, published at 11:00 Brussels);
+  2. the neighbours' D−1 and older prices, zone by zone (SMARD, Energinet; CC BY 4.0);
+  3. the neighbours' load forecasts, ENTSO-E 6.1.B and 6.1.C;
+  4. the pre-auction capacities, ENTSO-E 11.1 and the flow-based parameters 11.1.B (Core from
+     2022-06-09 only);
+  5. optionally, TIGGE's ECMWF ensembles (CC BY 4.0, 48 hours late, registration needed);
+  6. the ECB deposit-facility rate and the lagged USD/EUR reference rate.
+- **Held:** RTE's D−2 French load, GIE storage and LNG, generation outages, EIA Brent and EUA
+  auctions. **Rejected,** with reasons in the report: every free fuel route found, the volatility
+  indices, Euribor, FRED/ALFRED, direct JAO, the German TSOs' forecasts and Open-Meteo's archives.
+- **The Owner's decisions, 2026-10-12:**
+  - **No enquiry or registration for now.** The report's nine Owner questions stay open.
+  - **The vintage standard** in stage 4 below, which decides how each product enters.
+
+The stage as planned on 2026-10-11 follows; the issued brief is SHA-256 `d3ee57cd…`.
 
 Desk research only: no download into the project and no evaluation. Its output is a shortlist,
 which stage 5 collects.
@@ -176,6 +202,19 @@ section, and an independent plan critic reviews it.
   earlier days that they never trained on.
 - **The compute ceilings.**
 
+**The vintage standard, decided by the Owner on 2026-10-12** after stage 3 found that almost no
+source keeps its first-published values:
+
+1. **Original vintages with publication timestamps** enter the main evaluation.
+2. **Preserved original values, with availability reconstructed from documented schedules,** may
+   enter, with disclosure and delay-sensitivity checks.
+3. **Revised historical values without original vintages** are excluded from the main evaluation
+   and tested separately.
+
+Reconstructing the availability time is acceptable; substituting retrospectively corrected values
+is not. Each product is verified individually, and licensing remains mandatory. The protocol turns
+this into its admission rule, and CP-25 records each product's tier.
+
 **Owner gates:** the research brief; the anchor section with its suspension.
 
 **The same suspension carries one publication-rule change,** chosen by the Owner on 2026-10-11 at
@@ -195,6 +234,9 @@ PRES-3 and PRES-4 each waived it on that basis.
   - The boundary guard is in every downloader.
   - Each value enters as it was available at forecast time. Revised series, such as actual load
     and generation, enter only in the version known on the day, or only as lags.
+  - Each product's vintage tier is recorded under the Owner's standard (stage 4): original
+    vintages, preserved values with reconstructed availability, or revised history, which stays
+    out of the main evaluation.
   - Each source has its provenance and licence recorded.
   - Credentials follow `AGENTS.md`: no value in a log, URL or error message, with tests for it.
 - **5d. GFS availability at forecast time, historically.** Reconstruct each run's arrival from the
@@ -295,7 +337,8 @@ The final product, its report, and the CV surfaces, under the publication rules 
 
 1. Stage 1: done. r13 is kept as notes, and the codex branch is deleted.
 2. Stage 2: done. D1–D4 above, the LAND and the push on 2026-10-11.
-3. Stages 3 and 4: the two research briefs, then the protocol's ratification.
+3. Stages 3 and 4: stage 3 done, with the vintage standard and no enquiries (2026-10-12); stage
+   4's research brief, then the protocol's ratification.
 4. Stage 5: the anchor section, the retrieval approval and the LAND.
 5. Stages 6, 7 and 8: each checkpoint's anchor section and LAND.
 6. Stage 9: the frozen candidate and every pre-registered term, before the test opens.
