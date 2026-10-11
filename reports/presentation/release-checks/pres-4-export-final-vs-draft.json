@@ -1,0 +1,194 @@
+{
+ "check": "the final cp22, cp23 and cp24 exports against their checkpoints' draft exports, apart from the pending fields, the Owner's rename of v5 (cp24 only) and the chart artifacts (mlflow_export.later_final_vs_draft)",
+ "cp22": {
+  "chart_artifacts_added": {},
+  "differences": [],
+  "equal_apart_from_pending": true,
+  "filled": {
+   "cp22": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/A-LN": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/A-LP": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/A-PN-sel": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/M": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/R": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/v3+DL": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp22/v4+DL": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ]
+  },
+  "pending_fields": [
+   "checkpoint.evidence_sha",
+   "checkpoint.frozen_on",
+   "checkpoint.landing",
+   "evidence_ref",
+   "model_code_sha",
+   "original_completed_utc",
+   "revisions[].adopted / superseded",
+   "statuses[].date",
+   "statuses[].source"
+  ],
+  "renamed": {},
+  "renamed_fields": [],
+  "run_keys_equal": true
+ },
+ "cp23": {
+  "chart_artifacts_added": {},
+  "differences": [],
+  "equal_apart_from_pending": true,
+  "filled": {
+   "cp23": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp23/D": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp23/v3+D": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp23/v5": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ]
+  },
+  "pending_fields": [
+   "checkpoint.evidence_sha",
+   "checkpoint.frozen_on",
+   "checkpoint.landing",
+   "evidence_ref",
+   "model_code_sha",
+   "original_completed_utc",
+   "statuses[].date",
+   "statuses[].source"
+  ],
+  "renamed": {},
+  "renamed_fields": [],
+  "run_keys_equal": true
+ },
+ "cp24": {
+  "chart_artifacts_added": {
+   "cp24/v5": [
+    "charts/overview.svg",
+    "charts/v5-c2a.svg"
+   ]
+  },
+  "differences": [],
+  "equal_apart_from_pending": true,
+  "filled": {
+   "cp24": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp24/D2": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp24/v3+D2": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ],
+   "cp24/v5": [
+    "delu.evidence_ref",
+    "delu.model_code_sha",
+    "delu.original_completed_utc",
+    "delu.status",
+    "mlflow.note.content"
+   ]
+  },
+  "pending_fields": [
+   "checkpoint.evidence_sha",
+   "checkpoint.frozen_on",
+   "checkpoint.landing",
+   "evidence_ref",
+   "model_code_sha",
+   "original_completed_utc",
+   "statuses[].date",
+   "statuses[].source"
+  ],
+  "renamed": {
+   "v5 \u00b7 DDNN-2 member added": "v5 \u00b7 DDNN-2 added"
+  },
+  "renamed_fields": [
+   "cp24: run_name",
+   "cp24: tag delu.public_name",
+   "cp24: tag mlflow.note.content",
+   "cp24: artifact summary.json",
+   "cp24: artifact README.md",
+   "cp24/v5: run_name",
+   "cp24/v5: tag delu.public_name",
+   "cp24/v5: tag mlflow.note.content",
+   "cp24/v5: artifact summary.json",
+   "cp24/v5: artifact README.md"
+  ],
+  "run_keys_equal": true
+ }
+}
