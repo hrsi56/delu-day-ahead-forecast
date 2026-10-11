@@ -13,7 +13,11 @@ history -- `current_generation()`, `released()`, `status_sentence()` -- in the p
 
 **One identity across experiment codes.** v2 is `V2-H` in CP-16 and `H0` in CP-20; v1 is `B1` in
 CP-15 and `v1_reference` in CP-10. `by_code()` resolves either to the same entry, so a policy is
-never renamed by the experiment that happens to evaluate it.
+never renamed by the experiment that happens to evaluate it. A code is an experiment's own label, so
+the same text can name different identities in different experiments: `v5` is CP-23's candidate,
+the branch "DDNN member on v4", and CP-24's adopted v5. Inside one experiment a code names one
+identity; `by_code(code, experiment)` resolves it there, and an unscoped lookup of a shared text
+refuses rather than guess.
 
 **Nothing here is a research number.** Dates, codes and names are identity; every score comes from
 `delu_forecast.research` and `delu_forecast.derived`. `tests/test_35_registry.py` holds the
@@ -206,6 +210,56 @@ RULES: dict[str, Rule] = {
         set_on="2026-09-09",
         provenance=("reports/cp2/holdout_report.json", "data/partitions.json"),
     ),
+    # CP-22's three rules (capstone v21-r9 §20.6), set together on 2026-10-01 and frozen before any fit.
+    "cp22-replacement": Rule(
+        id="cp22-replacement",
+        plan="capstone_v21.md §20.6 (v21-r9)",
+        words="a pooled LightGBM member replaces v4's three-block member only if neither paired score difference "
+              "against v4 has a 95% interval entirely above zero, it meets the six original screening diagnostics, "
+              "the evaluation is complete and valid, and no fold is decisively worse",
+        set_on="2026-10-01",
+        provenance=("capstone_v21.md v21-r9 §20.6 (ratified 2026-10-01)",
+                    "reports/v4-revision/protocol.json rules_verbatim (frozen before scoring)"),
+    ),
+    "cp22-dynamic-layer": Rule(
+        id="cp22-dynamic-layer",
+        plan="capstone_v21.md §20.6 (v21-r9)",
+        words="the dynamic interval layer replaces the winner's interval layer only if it improves the interval "
+              "score without worsening the point error, meets the screen, brings pooled 95% coverage closer to "
+              "nominal and leaves no fold decisively worse",
+        set_on="2026-10-01",
+        provenance=("capstone_v21.md v21-r9 §20.6 (ratified 2026-10-01)",
+                    "reports/v4-revision/protocol.json rules_verbatim (frozen before scoring)"),
+    ),
+    "cp22-fast-component": Rule(
+        id="cp22-fast-component",
+        plan="capstone_v21.md §20.6 (v21-r9)",
+        words="the fast component is decided only as an add-on to an adopted dynamic layer",
+        set_on="2026-10-01",
+        provenance=("capstone_v21.md v21-r9 §20.6 (ratified 2026-10-01)",
+                    "reports/v4-revision/protocol.json rules_verbatim (frozen before scoring)"),
+    ),
+    "cp23-adoption": Rule(
+        id="cp23-adoption",
+        plan="capstone_v21.md §21.6 (v21-r10)",
+        words="v4 plus a DDNN member is adopted only if both paired differences against v4 improve (the interval "
+              "score's upper 95% endpoint below zero, the point error's at or below zero), it meets the six original "
+              "screening diagnostics, the evaluation is complete and valid, and no fold is decisively worse",
+        set_on="2026-10-04",
+        provenance=("capstone_v21.md v21-r10 §21.6 (ratified 2026-10-04)",
+                    "reports/distribution-challenger/protocol.json rule_verbatim (frozen before scoring)"),
+    ),
+    "cp24-adoption": Rule(
+        id="cp24-adoption",
+        plan="capstone_v21.md §23.9 (v21-r11)",
+        words="v5 is adopted only if, against v4, both paired differences improve at the attempts-adjusted 97.5% "
+              "level (the interval score's upper endpoint below zero, the point error's at or below zero), it meets "
+              "the six original screening diagnostics, the evaluation is complete and valid, no fold is decisively "
+              "worse, and both point estimates improve v4's score by at least 0.5%",
+        set_on="2026-10-05",
+        provenance=("capstone_v21.md v21-r11 §23.9 (ratified 2026-10-05)",
+                    "reports/ddnn2/attempt-1/protocol.json rule_verbatim (frozen before its fits)"),
+    ),
 }
 
 
@@ -245,6 +299,17 @@ CHECKPOINTS: dict[str, Checkpoint] = {
     "CP-21": Checkpoint("CP-21", "cp21", "v4", "evidence/cp-21", "1d13f99", "2026-09-30",
                         "reports/block-challenger/report.md", "docs/track-b/evidence/cp-21/integration.md",
                         "docs/track-b/cp-21-landing-2026-09-30.md", ("HGL", "L-P", "L-R", "L-N")),
+    # PRES-4 (2026-10-11): CP-22 and CP-23 as branches, CP-24 as v5, from their draft registries and landing records.
+    "CP-22": Checkpoint("CP-22", "cp22", "pooled-lightgbm-member-for-v4", "evidence/cp-22", "8daf7d0", "2026-10-04",
+                        "reports/v4-revision/report.md", "docs/track-b/evidence/cp-22/integration.md",
+                        "docs/track-b/cp-22-landing-2026-10-04.md",
+                        ("R", "M", "A-PN-sel", "A-LP", "A-LN", "v4+DL", "v3+DL")),
+    "CP-23": Checkpoint("CP-23", "cp23", "ddnn-member-on-v4", "evidence/cp-23", "928bc13", "2026-10-04",
+                        "reports/distribution-challenger/report.md", "docs/track-b/evidence/cp-23/integration.md",
+                        "docs/track-b/cp-23-landing-2026-10-04.md", ("v5", "D", "v3+D")),
+    "CP-24": Checkpoint("CP-24", "cp24", "v5", "evidence/cp-24", "05b7e61", "2026-10-10",
+                        "reports/ddnn2/report.md", "docs/track-b/evidence/cp-24/integration.md",
+                        "docs/track-b/cp-24-landing-2026-10-11.md", ("v5", "D2", "v3+D2")),
 }
 
 #: Every evidence tag a public link may cite, with the date it froze (the date its commit was
@@ -257,10 +322,13 @@ EVIDENCE_TAGS: dict[str, tuple[str, str]] = {
     "evidence/cp-16": ("5ec8a92", "2026-09-23"),
     "evidence/cp-20": ("a7a9b2e", "2026-09-24"),
     "evidence/cp-21": ("1d13f99", "2026-09-30"),
+    "evidence/cp-22": ("8daf7d0", "2026-10-04"),
+    "evidence/cp-23": ("928bc13", "2026-10-04"),
+    "evidence/cp-24": ("05b7e61", "2026-10-10"),
 }
 
 POPULATIONS = {
-    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16, CP-20 and CP-21",
+    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16 and CP-20 to CP-24",
     "cp10-fold-block": "CP-10's full fold blocks, v1's nine-quantile scores",
     "v1-holdout-90d": "v1's pre-specified 90-day holdout, delivery 2026-06-09..2026-09-06",
 }
@@ -274,11 +342,77 @@ _CP21_SOURCES = ("reports/block-challenger/metrics.csv", "reports/block-challeng
                  "reports/block-challenger/criteria.csv", "reports/block-challenger/adoption.json")
 _PLAN21 = "capstone_v21.md"
 
+_CP22 = "docs/track-b/research-content/cp22-claims.md"
+_CP23 = "docs/track-b/research-content/cp23-claims.md"
+_CP24 = "docs/track-b/research-content/cp24-claims.md"
+_LANDING22 = "docs/track-b/cp-22-landing-2026-10-04.md"
+_LANDING23 = "docs/track-b/cp-23-landing-2026-10-04.md"
+_LANDING24 = "docs/track-b/cp-24-landing-2026-10-11.md"
+#: Each checkpoint's committed rows, the sources of its entries (each draft registry's `sources`).
+_CP22_SOURCES = ("reports/v4-revision/metrics.csv", "reports/v4-revision/uncertainty.csv",
+                 "reports/v4-revision/criteria.csv", "reports/v4-revision/decisions.json")
+_CP23_SOURCES = ("reports/distribution-challenger/metrics.csv", "reports/distribution-challenger/uncertainty.csv",
+                 "reports/distribution-challenger/criteria.csv", "reports/distribution-challenger/decisions.json")
+_CP24_SOURCES = ("reports/ddnn2/attempt-1/metrics.csv", "reports/ddnn2/attempt-1/uncertainty.csv",
+                 "reports/ddnn2/attempt-1/criteria.csv", "reports/ddnn2/attempt-1/decisions.json")
+#: A study arm's status, as the three draft registries word it.
+_ATTRIBUTION_ONLY = "a study arm for attribution; never eligible"
+
+#: The codes the CP-22, CP-23 and CP-24 draft registries add to existing entries
+#: (`code_additions_to_existing_entries`): each experiment's saved rows of an identity evaluated first elsewhere.
+#: None changes a published MLflow record: a run's name reads only its own experiment's code.
+_LATER_CODES: dict[str, tuple[Code, ...]] = {
+    "v4": (Code("CP-22", "HGL", "common-10747h", "comparator, saved"),
+           Code("CP-23", "HGL", "common-10747h", "comparator, saved"),
+           Code("CP-24", "HGL", "common-10747h", "comparator, saved")),
+    "v3": (Code("CP-22", "HG", "common-10747h", "reference, saved"),
+           Code("CP-23", "HG", "common-10747h", "reference, saved"),
+           Code("CP-24", "HG", "common-10747h", "reference, saved")),
+    "v2": (Code("CP-22", "H0", "common-10747h", "saved reference"),),
+    "v1": (Code("CP-22", "B1", "common-10747h", "development replay"),
+           Code("CP-23", "B1", "common-10747h", "development replay"),
+           Code("CP-24", "B1", "common-10747h", "development replay")),
+    "naive": (Code("CP-22", "B0", "common-10747h", "normalizer"), Code("CP-23", "B0", "common-10747h", "normalizer"),
+              Code("CP-24", "B0", "common-10747h", "normalizer")),
+    "daily-lear": (Code("CP-22", "B2", "common-10747h"), Code("CP-23", "B2", "common-10747h", "reference"),
+                   Code("CP-24", "B2", "common-10747h", "reference")),
+    "daily-lightgbm": (Code("CP-22", "B3", "common-10747h"),
+                       Code("CP-23", "B3", "common-10747h", "section-8 comparator"),
+                       Code("CP-24", "B3", "common-10747h", "section-8 comparator")),
+    "normalized-lear": (Code("CP-22", "A1", "common-10747h"), Code("CP-23", "A1", "common-10747h", "reference"),
+                        Code("CP-24", "A1", "common-10747h", "reference")),
+    "ddnn-alone": (Code("CP-24", "D", "common-10747h", "CP-23's DDNN, saved"),),
+}
+
+
+def _later(ident: str) -> tuple[Code, ...]:
+    return _LATER_CODES.get(ident, ())
+
+
+def _arm(ident: str, checkpoint: str, code: str, name: str, subtitle: str, short: str, *, comparator: str,
+         reason: str = _ATTRIBUTION_ONLY) -> Entry:
+    """A study arm of CP-22, CP-23 or CP-24, as its draft registry enters it: not adopted on the day the checkpoint
+    landed, sourced from its landing record."""
+    plan, rules, sources, claim_map, landing, date = {
+        "CP-22": (f"{_PLAN21} §20 (v21-r9)", ("cp22-replacement",), _CP22_SOURCES, _CP22, _LANDING22, "2026-10-04"),
+        "CP-23": (f"{_PLAN21} §21 (v21-r10)", ("cp23-adoption",), _CP23_SOURCES, _CP23, _LANDING23, "2026-10-04"),
+        "CP-24": (f"{_PLAN21} §23 (v21-r11)", ("cp24-adoption",), _CP24_SOURCES, _CP24, _LANDING24, "2026-10-11"),
+    }[checkpoint]
+    note = "scored attempt 1" if checkpoint == "CP-24" else ""
+    return Entry(
+        id=ident, name=name, subtitle=subtitle, kind="study arm",
+        codes=(Code(checkpoint, code, "common-10747h", note), *_later(ident)),
+        statuses=(StatusEvent(NOT_ADOPTED, date, landing, reason),),
+        comparator=comparator, population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=plan, rules=rules, sources=sources, claim_map=claim_map,
+        run_keys=(f"{checkpoint.lower().replace('-', '')}/{code}",), style="study", checkpoint=checkpoint, short=short,
+    )
+
 
 def _study(ident: str, code: str, name: str, subtitle: str, short: str = "") -> Entry:
     # A1 is the study's best challenger; CP-16 and CP-20 carry its saved rows as a comparator.
     later = (Code("CP-16", code, "common-10747h"), Code("CP-20", code, "common-10747h"),
-             Code("CP-21", code, "common-10747h")) if code == "A1" else ()
+             Code("CP-21", code, "common-10747h"), *_later(ident)) if code == "A1" else ()
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="study arm",
         codes=(Code("CP-15", code, "common-10747h"), *later),
@@ -295,7 +429,7 @@ def _reference(ident: str, code: str, name: str, subtitle: str, *, comparator: s
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="reference",
         codes=(Code("CP-15", code, "common-10747h", note), Code("CP-16", code, "common-10747h", note),
-               Code("CP-20", code, "common-10747h", note), Code("CP-21", code, "common-10747h", note)),
+               Code("CP-20", code, "common-10747h", note), Code("CP-21", code, "common-10747h", note), *_later(ident)),
         statuses=(), comparator=comparator, population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §5 (v21-r1)", rules=(), sources=("reports/cp15/relative_scores.csv",),
         claim_map=_CP15, run_keys=(f"cp15/{code}",), style="reference", checkpoint="CP-15", short=name,
@@ -338,7 +472,7 @@ _ENTRIES: tuple[Entry, ...] = (
                Code("CP-16", "B1", "common-10747h", "development replay"),
                Code("CP-20", "B1", "common-10747h", "development replay"),
                Code("CP-10", "v1_reference", "cp10-fold-block", "unscaled CQR reference"),
-               Code("CP-21", "B1", "common-10747h", "development replay")),
+               Code("CP-21", "B1", "common-10747h", "development replay"), *_later("v1")),
         statuses=(StatusEvent(RELEASED, "2026-09-15", "land/cp-3 and land/cp-3b, 2026-09-15"),),
         comparator="naive", population="v1-holdout-90d", evidence_class=EVIDENCE_V1_HOLDOUT,
         plan="capstone_V6_8.md", rules=("v1-holdout",),
@@ -350,7 +484,7 @@ _ENTRIES: tuple[Entry, ...] = (
         id="v2", name="v2 · blended LEAR, hour-aware intervals",
         subtitle="Two LEAR forecasts blended, hour-aware intervals", kind="generation",
         codes=(Code("CP-16", "V2-H", "common-10747h"), Code("CP-20", "H0", "common-10747h"),
-               Code("CP-21", "H0", "common-10747h", "saved reference")),
+               Code("CP-21", "H0", "common-10747h", "saved reference"), *_later("v2")),
         statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-09-23", "docs/track-b/cp-16-landing-2026-09-23.md"),),
         comparator="daily-lear", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §14 (v21-r3)", rules=("criteria-1-2", "joint-improvement"),
@@ -361,7 +495,8 @@ _ENTRIES: tuple[Entry, ...] = (
     Entry(
         id="v3", name="v3 · weather features", subtitle="v2 plus three weather forecast inputs",
         kind="generation",
-        codes=(Code("CP-20", "HG", "common-10747h"), Code("CP-21", "HG", "common-10747h", "comparator, saved")),
+        codes=(Code("CP-20", "HG", "common-10747h"), Code("CP-21", "HG", "common-10747h", "comparator, saved"),
+               *_later("v3")),
         statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-09-24", "docs/track-b/cp-20-landing-2026-09-24.md"),),
         comparator="v2", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §15 (v21-r4)", rules=("criteria-1-2", "joint-improvement"),
@@ -373,12 +508,23 @@ _ENTRIES: tuple[Entry, ...] = (
     Entry(
         id="v4", name="v4 · three-block LightGBM added", subtitle="v3 plus a three-block LightGBM member",
         kind="generation",
-        codes=(Code("CP-21", "HGL", "common-10747h"),),
+        codes=(Code("CP-21", "HGL", "common-10747h"), *_later("v4")),
         statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-09-30", _LANDING21),),
         comparator="v3", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §17 (v21-r6)", rules=("cp21-adoption",), sources=_CP21_SOURCES,
         claim_map=_CP21, run_keys=("cp21", "cp21/HGL"), style="v4", anchor="#v4", checkpoint="CP-21", short="v4",
         predecessor="v3",
+    ),
+    # PRES-4: the packet's draft entry (reports/ddnn2/draft-registry.json) as drafted, with the Owner's name of
+    # 2026-10-11 and its status dated and sourced from the CP-24 landing record.
+    Entry(
+        id="v5", name="v5 · DDNN-2 added", subtitle="v4 plus a DDNN-2 member", kind="generation",
+        codes=(Code("CP-24", "v5", "common-10747h", "scored attempt 1"),),
+        statuses=(StatusEvent(ADOPTED_IN_RESEARCH, "2026-10-11", _LANDING24),),
+        comparator="v4", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §23 (v21-r11)", rules=("cp24-adoption",), sources=_CP24_SOURCES,
+        claim_map=_CP24, run_keys=("cp24", "cp24/v5"), style="v5", anchor="#v5", checkpoint="CP-24", short="v5",
+        predecessor="v4",
     ),
     # ---- branches ------------------------------------------------------------------------
     Entry(
@@ -405,6 +551,35 @@ _ENTRIES: tuple[Entry, ...] = (
         checkpoint="CP-15", after="calibration", informed="v2",
         question="Which forecasting approach copes best with the 2022 crisis?",
         short="Model comparison study",
+    ),
+    # PRES-4: CP-22's and CP-23's branches, from their draft registries; each was tested against v4 and not adopted.
+    Entry(
+        id="pooled-lightgbm-member-for-v4", name="Pooled LightGBM member for v4",
+        subtitle="The block split removed, under non-inferiority", kind="branch",
+        codes=(Code("CP-22", "CP-22", "common-10747h"),),
+        statuses=(StatusEvent(NOT_ADOPTED, "2026-10-04", _LANDING22,
+                              "cp22-replacement yielded no replacement: for R and for M, condition 4 of rule "
+                              "cp22-replacement, no resolved per-fold degradation, was not met; the Owner kept v4 "
+                              "unchanged"),),
+        comparator="v4", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §20 (v21-r9)", rules=("cp22-replacement",), sources=_CP22_SOURCES, claim_map=_CP22,
+        run_keys=("cp22",), style="branch", anchor="#branch-pooled-lightgbm-member-for-v4", checkpoint="CP-22",
+        after="v4", question="Can one pooled LightGBM member replace v4's three-block member without losing accuracy?",
+        short="Pooled member for v4",
+    ),
+    Entry(
+        id="ddnn-member-on-v4", name="DDNN member on v4", subtitle="v4 plus a DDNN member, under rule cp23-adoption",
+        kind="branch", codes=(Code("CP-23", "v5", "common-10747h"),),
+        statuses=(StatusEvent(NOT_ADOPTED, "2026-10-04", _LANDING23,
+                              "condition 1 of rule cp23-adoption, a joint improvement over v4, with the upper 95% "
+                              "endpoint of the interval-score difference below zero and that of the point-error "
+                              "difference at or below zero, was not met"),),
+        comparator="v4", population="common-10747h", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §21 (v21-r10)", rules=("cp23-adoption",), sources=_CP23_SOURCES, claim_map=_CP23,
+        run_keys=("cp23", "cp23/v5"), style="branch", anchor="#branch-ddnn-member-on-v4", checkpoint="CP-23",
+        after="v4", question="Does a distributional neural network, added to v4 as a one-third member, improve on v4 "
+                             "jointly in point and interval accuracy?",
+        short="DDNN member on v4",
     ),
     # ---- references ----------------------------------------------------------------------
     _reference("naive", "B0", "Similar-day naive", "The forecast every error score divides by",
@@ -439,6 +614,31 @@ _ENTRIES: tuple[Entry, ...] = (
               "Block LightGBM"),
     _cp21_arm("normalized-block-lightgbm", "L-N", "Normalized three-block LightGBM",
               "The block models on a normalized price", "Normalized block LightGBM"),
+    # ---- study arms (CP-22, CP-23, CP-24): from their draft registries; never adopted -----------------------
+    _arm("v3-plus-pooled-normalized-lightgbm-averaged", "CP-22", "R", "v3 plus a capacity-averaged pooled LightGBM",
+         "v3 with a normalized pooled LightGBM, capacities averaged", "Pooled member, averaged", comparator="v4",
+         reason="condition 4 of rule cp22-replacement, no resolved per-fold degradation, was not met"),
+    _arm("v3-plus-pooled-lightgbm-pair", "CP-22", "M", "v3 plus pooled normalized and raw LightGBM",
+         "v4 with the block split removed", "Pooled pair", comparator="v4",
+         reason="condition 4 of rule cp22-replacement, no resolved per-fold degradation, was not met"),
+    _arm("v3-plus-pooled-normalized-lightgbm-selected", "CP-22", "A-PN-sel", "v3 plus a pooled normalized LightGBM",
+         "The raw half dropped; daily capacity selection", "Pooled normalized member", comparator="v4"),
+    _arm("v3-plus-pooled-raw-lightgbm", "CP-22", "A-LP", "v3 plus a pooled raw LightGBM",
+         "v3 with the pooled raw LightGBM member", "Pooled raw member", comparator="v4"),
+    _arm("v3-plus-normalized-block-lightgbm", "CP-22", "A-LN", "v3 plus normalized block LightGBM",
+         "v3 with the normalized three-block member", "Normalized block member", comparator="v4"),
+    _arm("v4-with-dynamic-intervals", "CP-22", "v4+DL", "v4 with dynamic intervals",
+         "Three-block v4 with the dynamic interval layer", "v4 + dynamic layer", comparator="v4"),
+    _arm("v3-with-dynamic-intervals", "CP-22", "v3+DL", "v3 with dynamic intervals",
+         "v3 with the dynamic interval layer", "v3 + dynamic layer", comparator="v4"),
+    _arm("ddnn-alone", "CP-23", "D", "DDNN alone",
+         "A distributional neural network with a Johnson SU head, with its own quantiles", "DDNN alone", comparator="v4"),
+    _arm("v3-plus-ddnn", "CP-23", "v3+D", "v3 plus a DDNN member", "DDNN as v3's third member, in LightGBM's place",
+         "v3 + DDNN", comparator="v3"),
+    _arm("ddnn2-alone", "CP-24", "D2", "DDNN-2 alone", "A day-level distributional network with its own quantiles",
+         "DDNN-2 alone", comparator="v4"),
+    _arm("v3-plus-ddnn2", "CP-24", "v3+D2", "v3 plus a DDNN-2 member", "DDNN-2 as v3's third member, in LightGBM's place",
+         "v3 + DDNN-2", comparator="v3"),
     # ---- the calibration experiment's arms (CP-10) ---------------------------------------
     _cp10("cp10-head-spread", "c1_head_spread", "Scaled conformal, head spread",
           "Conformal scores scaled by the heads' spread"),
@@ -454,9 +654,15 @@ _ENTRIES: tuple[Entry, ...] = (
           "Adaptive conformal intervals, largest step", "selected step"),
 )
 
-#: The order of the shared comparison's rows (plan §8.2): generations newest first, then the
-#: benchmarks and the study's best challenger by score, v1's development replay, and the naive.
-COMPARISON_ORDER = ("v4", "v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
+#: The order of the shared comparison's rows (plan §8.2): generations newest first, then the candidates of the branches
+#: tested against v4 and not adopted, as study points (the Owner's decision D2 of 2026-10-11), then the benchmarks and
+#: the study's best challenger by score, v1's development replay, and the naive.
+COMPARISON_ORDER = ("v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
+                    "ddnn-member-on-v4", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
+
+#: The shared comparison as v4's chapter published it, from CP-21's rows (PRES-3). It redraws the overview that the
+#: `cp21/HGL` MLflow run carries as an artifact, byte for byte: a published record never changes (§17.9).
+V4_COMPARISON_ORDER = ("v4", "v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
 #: The shared comparison as v3's chapter published it, from CP-20's rows. It redraws the overview that the
 #: `cp20/HG` MLflow run carries as an artifact, byte for byte: a published record never changes (§17.9).
@@ -508,21 +714,41 @@ def get(ident: str) -> Entry:
 
 
 @lru_cache(maxsize=1)
-def _by_code() -> dict[str, Entry]:
-    out: dict[str, Entry] = {}
+def _by_scoped_code() -> dict[tuple[str, str], Entry]:
+    """(experiment, code) -> identity. Inside one experiment a code names one identity, or the registry refuses."""
+    out: dict[tuple[str, str], Entry] = {}
     for entry in entries():
         for code in entry.codes:
-            if code.code in out and out[code.code].id != entry.id:
-                raise RegistryError(f"code {code.code!r} names two identities")
-            out[code.code] = entry
+            key = (code.experiment, code.code)
+            if key in out and out[key].id != entry.id:
+                raise RegistryError(f"code {code.code!r} names two identities in {code.experiment}")
+            out[key] = entry
     return out
 
 
-def by_code(code: str) -> Entry:
-    """The one identity behind an experiment code: `H0` and `V2-H` are both v2."""
+@lru_cache(maxsize=1)
+def _by_code() -> dict[str, Entry]:
+    """code -> identity, for the codes that name one identity in every experiment that uses them."""
+    named: dict[str, set[str]] = {}
+    for (_, code), entry in _by_scoped_code().items():
+        named.setdefault(code, set()).add(entry.id)
+    return {code: get(next(iter(ids))) for code, ids in named.items() if len(ids) == 1}
+
+
+def by_code(code: str, experiment: str | None = None) -> Entry:
+    """The one identity behind an experiment code: `H0` and `V2-H` are both v2. A code whose text names different
+    identities in different experiments (`v5`) resolves only with its experiment."""
+    if experiment is not None:
+        try:
+            return _by_scoped_code()[(experiment, code)]
+        except KeyError:
+            raise RegistryError(f"no registry entry carries the code {code!r} in {experiment}") from None
     try:
         return _by_code()[code]
     except KeyError:
+        if any(key[1] == code for key in _by_scoped_code()):
+            raise RegistryError(f"the code {code!r} names different identities in different experiments; "
+                                "name the experiment") from None
         raise RegistryError(f"no registry entry carries the code {code!r}") from None
 
 
@@ -546,9 +772,10 @@ def branches() -> tuple[Entry, ...]:
     return of_kind("branch")
 
 
-def generation_of(code: str) -> str | None:
-    """The adopted generation a code belongs to, or None: references and study arms have none."""
-    entry = _by_code().get(code)
+def generation_of(code: str, experiment: str | None = None) -> str | None:
+    """The adopted generation a code belongs to, or None: references and study arms have none. In CP-23, `v5` is
+    the branch's candidate and has none; in CP-24 it is v5."""
+    entry = (_by_scoped_code().get((experiment, code)) if experiment is not None else _by_code().get(code))
     return entry.version if entry is not None else None
 
 
@@ -590,24 +817,45 @@ def population_in(entry: Entry, experiment: str) -> str:
     raise RegistryError(f"{entry.id} was not evaluated in {experiment}")
 
 
-#: The experiment whose committed rows the shared comparison draws (plan §8.2).
-COMPARISON_EXPERIMENT = "CP-21"
+#: The newest experiment of the shared comparison (plan §8.2): its rows carry the targets' line and the population's
+#: counts.
+COMPARISON_EXPERIMENT = "CP-24"
+
+#: The experiments whose committed rows the live comparison draws, newest first. Each row comes from the newest one
+#: that evaluated its identity on the shared population: CP-24 carries no v2 and no branch candidate, so v2 comes from
+#: CP-22, CP-22's candidates from CP-22 and CP-23's from CP-23. They are one population, not a join of incompatible
+#: results: every identity two of them carry has byte-identical committed rows there
+#: (`delu_forecast.derived.comparison_parity_problems`), and the build refuses otherwise (PUBLISH_RULES §3.2).
+COMPARISON_EXPERIMENTS = ("CP-24", "CP-23", "CP-22", "CP-21")
 
 #: Each experiment's record prefix in `delu_forecast.research`.
-EXPERIMENT_PREFIX = {"CP-15": "cp15", "CP-16": "cp16", "CP-20": "cp20", "CP-21": "cp21"}
+EXPERIMENT_PREFIX = {"CP-15": "cp15", "CP-16": "cp16", "CP-20": "cp20", "CP-21": "cp21", "CP-22": "cp22",
+                     "CP-23": "cp23", "CP-24": "cp24"}
 
 
 def comparison_prefix(experiment: str | None = None) -> str:
-    """The record prefix of the experiment whose rows a comparison draws: `cp21.metrics.…`."""
+    """The record prefix of the experiment whose rows a comparison draws: `cp24.metrics.…`."""
     return EXPERIMENT_PREFIX[experiment or COMPARISON_EXPERIMENT]
+
+
+def comparison_source(entry: Entry, experiment: str | None = None) -> str:
+    """The experiment a comparison row is drawn from: a pinned comparison's own experiment, or, for the live one,
+    the newest of `COMPARISON_EXPERIMENTS` that carries the identity."""
+    if experiment is not None:
+        return experiment
+    for candidate in COMPARISON_EXPERIMENTS:
+        if entry.code_in(candidate) is not None:
+            return candidate
+    raise RegistryError(f"{entry.id} was not evaluated in any of {COMPARISON_EXPERIMENTS}")
 
 
 def comparison_rows(order: tuple[str, ...] | None = None, experiment: str | None = None) -> tuple[Entry, ...]:
     """The shared comparison's rows, refusing a mix of evaluated populations (standard §5). Without arguments, the
-    live comparison; v3's pinned one is `comparison_rows(V3_COMPARISON_ORDER, "CP-20")`."""
-    order, experiment = order or COMPARISON_ORDER, experiment or COMPARISON_EXPERIMENT
+    live comparison, each row from its `comparison_source`; v3's pinned one is
+    `comparison_rows(V3_COMPARISON_ORDER, "CP-20")` and v4's `comparison_rows(V4_COMPARISON_ORDER, "CP-21")`."""
+    order = order or COMPARISON_ORDER
     rows = tuple(get(ident) for ident in order)
-    populations = {population_in(entry, experiment) for entry in rows}
+    populations = {population_in(entry, comparison_source(entry, experiment)) for entry in rows}
     if len(populations) != 1:
         raise RegistryError(f"one comparison chart holds one comparability ID; got {sorted(populations)}")
     return rows
@@ -835,7 +1083,7 @@ __all__ = [
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
     "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "Transition",
-    "V2_SCORES_ORDER", "V3_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "comparison_prefix", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
+    "V2_SCORES_ORDER", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
     "transitions",
     "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
     "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",

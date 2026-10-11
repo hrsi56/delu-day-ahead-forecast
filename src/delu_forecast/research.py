@@ -60,6 +60,37 @@ def _source(path: str, tag: str, blob: str) -> tuple[str, Source]:
 #: CP-10's files landed with CP-15, and CP-16's are also reachable from `evidence/cp-20`.
 SOURCES: dict[str, Source] = dict(
     [
+        # CP-24 (v5, scored attempt 1), registered by PRES-4
+        _source("reports/ddnn2/attempt-1/metrics.csv", "evidence/cp-24", "9e9dcec32887a8684930e19ae244b7be317cb087"),
+        _source("reports/ddnn2/attempt-1/uncertainty.csv", "evidence/cp-24", "a584caff5121b52ebe4b9f423791aa3b10c7d606"),
+        _source("reports/ddnn2/attempt-1/ratio-intervals.csv", "evidence/cp-24", "468ab28d21d2f1d50d00d9e81bf0426394e70fcb"),
+        _source("reports/ddnn2/attempt-1/criteria.csv", "evidence/cp-24", "42e0cb41d928e14c12572ad47669978e582461b4"),
+        _source("reports/ddnn2/attempt-1/diagnostics.csv", "evidence/cp-24", "3b6e2c1ab5895f6440fb308fe8667055a076df7c"),
+        _source("reports/ddnn2/attempt-1/protocol.json", "evidence/cp-24", "51cfe59d5d29f305df10d374dab25d91a75d1a61"),
+        _source("reports/ddnn2/attempt-1/decisions.json", "evidence/cp-24", "cb164128f96b9005cedfec790bd029c223f093be"),
+        _source("reports/ddnn2/attempt-1/controls.json", "evidence/cp-24", "190d29c3388f4c378828e3e0ebb189947e04d9d3"),
+        _source("reports/ddnn2/attempt-1/leakage-controls.json", "evidence/cp-24",
+                "a01fdeb5dc85e6bda5e09410618725fa1a1c3314"),
+        # CP-23 (the branch "DDNN member on v4")
+        _source("reports/distribution-challenger/metrics.csv", "evidence/cp-23", "a9fb20ec0272420091e2f063cbbfa72d5da45348"),
+        _source("reports/distribution-challenger/uncertainty.csv", "evidence/cp-23",
+                "1eae3fe473bab425ba91f0b51a124fe840244870"),
+        _source("reports/distribution-challenger/criteria.csv", "evidence/cp-23", "f23656dc75f944697358db581a27d5f049be6ea8"),
+        _source("reports/distribution-challenger/diagnostics.csv", "evidence/cp-23",
+                "d7572377978e6e76f08214974fedf053e1183864"),
+        _source("reports/distribution-challenger/protocol.json", "evidence/cp-23", "a7018661bc3df169ea90694e12b61b897463d959"),
+        _source("reports/distribution-challenger/decisions.json", "evidence/cp-23", "a07073be22b19b6be1149e87eff5acdc4bb8cebc"),
+        # CP-22 (the branch "Pooled LightGBM member for v4")
+        _source("reports/v4-revision/metrics.csv", "evidence/cp-22", "2b22bf79791ac21095ca5ffa3f4ebc4419faca7b"),
+        _source("reports/v4-revision/uncertainty.csv", "evidence/cp-22", "fe4600d74624ea559efc1d5726e534b4f2d6b054"),
+        _source("reports/v4-revision/criteria.csv", "evidence/cp-22", "171a4c51b253b2c580236b883dee13e12a0788f6"),
+        _source("reports/v4-revision/diagnostics.csv", "evidence/cp-22", "bdaaa93622aed5b511c0686bc8cff0816babbc3d"),
+        _source("reports/v4-revision/protocol.json", "evidence/cp-22", "7463370d0d6aa1b0eb1a74077f319246b7153209"),
+        _source("reports/v4-revision/decisions.json", "evidence/cp-22", "9c4f1598e9c0ddf20aa3bf5afe3829d864d9782a"),
+        # The data's own range, for the coverage limits of the shared population (PRES-4): the first data day and the
+        # development boundary, read from these committed records, never from post-boundary rows.
+        _source("data/source_manifest.json", "evidence/cp-2", "bd53ae262273280a79ebaba84be5da5e54823530"),
+        _source("data/partitions.json", "evidence/cp-2", "6cabcd6674fb426d16514640be0436484ca6df79"),
         # CP-21 (v4)
         _source("reports/block-challenger/metrics.csv", "evidence/cp-21", "677ccf0ce4bf826508a1d195a1dfdf829d8568f6"),
         _source("reports/block-challenger/uncertainty.csv", "evidence/cp-21", "390969f619cf163869f7b2b349bc561e87e05a9a"),
@@ -316,8 +347,18 @@ PEAK_FIELDS = (
 )
 
 #: Which adopted generation a policy code is, if any, from the registry: references, study arms
-#: and controls have none, and one identity keeps one generation across codes (V2-H = H0).
+#: and controls have none, and one identity keeps one generation across codes (V2-H = H0). A code whose text names
+#: different identities in different experiments (`v5`) is left out here and resolved by `_generation`.
 GENERATION_OF = {code: _registry.generation_of(code) for code in _registry.codes() if _registry.generation_of(code)}
+
+
+def _generation(code: str, checkpoint: str) -> str | None:
+    """The generation a policy code is in the experiment whose rows carry it: CP-23's `v5` is the branch's candidate,
+    with none, and CP-24's is v5. A code the registry does not scope to that experiment keeps its global reading."""
+    try:
+        return _registry.by_code(code, checkpoint).version
+    except _registry.RegistryError:
+        return GENERATION_OF.get(code)
 
 EVIDENCE_CLASS_DEVELOPMENT = "development_post_selection"
 EVIDENCE_CLASS_CALIBRATION = "development_calibration_comparison"
@@ -388,7 +429,7 @@ def _metric_records(prefix: str, checkpoint: str, path: str) -> list[EvidenceRec
                 EvidenceRecord(
                     record_id=f"{prefix}.metrics.{policy}.{key}.{column}",
                     checkpoint=checkpoint,
-                    generation=GENERATION_OF.get(policy),
+                    generation=_generation(policy, checkpoint),
                     policy_code=policy,
                     source_path=path,
                     selector=(("policy", policy), ("scope", scope), ("fold", row["fold"])),
@@ -411,6 +452,17 @@ def _metric_records(prefix: str, checkpoint: str, path: str) -> list[EvidenceRec
 def _interval(checkpoint: str) -> Interval:
     """The bootstrap settings, read from the checkpoint's own frozen record. CP-16 inherited
     CP-15's recorded settings unchanged (capstone §14.4); CP-21 reused CP-20's index generator."""
+    if checkpoint in ("CP-22", "CP-23", "CP-24"):
+        # CP-22's and CP-23's frozen protocols carry their bootstrap settings; CP-24's decision record does.
+        settings = (_json(CP24_ROWS["decisions"])["bootstrap"] if checkpoint == "CP-24"
+                    else _json(CP22_ROWS["protocol"] if checkpoint == "CP-22" else CP23_ROWS["protocol"])["uncertainty"])
+        return Interval(
+            method="paired noncircular moving-block percentile bootstrap",
+            level=0.95,
+            seed=int(settings["seed"]),
+            replicates=int(settings["replicates"]),
+            block_days=int(settings["block_days"]),
+        )
     if checkpoint == "CP-21":
         settings = _json("reports/block-challenger/protocol.json")["uncertainty"]
         return Interval(
@@ -451,7 +503,7 @@ def _uncertainty_records(prefix: str, checkpoint: str, path: str, windows) -> li
             EvidenceRecord(
                 record_id=f"{prefix}.uncertainty.{candidate}-{baseline}.{scope}.{metric}",
                 checkpoint=checkpoint,
-                generation=GENERATION_OF.get(candidate),
+                generation=_generation(candidate, checkpoint),
                 policy_code=candidate,
                 source_path=path,
                 selector=(("scope", scope), ("candidate", candidate), ("baseline", baseline), ("metric", metric)),
@@ -489,7 +541,7 @@ def _ratio_records(prefix: str, checkpoint: str, path: str, windows) -> list[Evi
         candidate, baseline, metric = row["candidate"], row["baseline"], row["metric"]
         records.append(EvidenceRecord(
             record_id=f"{prefix}.ratio.{candidate}-{baseline}.{metric}", checkpoint=checkpoint,
-            generation=GENERATION_OF.get(candidate), policy_code=candidate, source_path=path,
+            generation=_generation(candidate, checkpoint), policy_code=candidate, source_path=path,
             selector=(("scope", "equal_fold"), ("candidate", candidate), ("baseline", baseline), ("metric", metric)),
             field="ratio", metric=f"ratio_S_{metric}", unit=UNIT_RATIO_CHANGE, aggregation="equal_fold_ratio",
             population_id="common-10747h", comparator=baseline, evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
@@ -498,6 +550,50 @@ def _ratio_records(prefix: str, checkpoint: str, path: str, windows) -> list[Evi
                               int(row.get("replicates") or interval.replicates), interval.block_days),
             ci_low_raw=row["ratio_ci_lower"], ci_high_raw=row["ratio_ci_upper"],
             ci_columns=("ratio_ci_lower", "ratio_ci_upper"),
+        ))
+    return records
+
+
+#: CP-24's decision level (capstone v21-r11 §23.9): condition 1 reads two-sided 97.5% intervals of the same stored
+#: draws, the 1.25% and 98.75% percentiles; condition 4 stays at 95%. Both levels are published (§23.8).
+DECISION_LEVEL_CP24 = 0.975
+
+
+def _decision_level_records(prefix: str, checkpoint: str, path: str, ratio_path: str, windows) -> list[EvidenceRecord]:
+    """CP-24's equal-fold contrasts at the decision level: each paired difference with its 97.5% interval
+    (`ci97.5_lower`, `ci97.5_upper` of the uncertainty rows) and each ratio with its 97.5% interval
+    (`ratio_ci97.5_lower`, `ratio_ci97.5_upper` of `ratio-intervals.csv`), from the checkpoint's own draws."""
+    base = _interval(checkpoint)
+    level = float(_json(CP24_ROWS["decisions"])["bootstrap"]["decision_level"])
+    records = []
+    for line, row in _rows(path):
+        if row["scope"] != "equal_fold" or row.get("ci97.5_lower", "") == "":
+            continue
+        candidate, baseline, metric = row["candidate"], row["baseline"], row["metric"]
+        records.append(EvidenceRecord(
+            record_id=f"{prefix}.uncertainty97_5.{candidate}-{baseline}.equal_fold.{metric}", checkpoint=checkpoint,
+            generation=_generation(candidate, checkpoint), policy_code=candidate, source_path=path,
+            selector=(("scope", "equal_fold"), ("candidate", candidate), ("baseline", baseline), ("metric", metric)),
+            field="difference", metric=f"delta_S_{metric}", unit=UNIT_NORM_DIFF, aggregation="equal_fold_contrast",
+            population_id="common-10747h", comparator=baseline, evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+            window=windows["all"], display_precision=4, raw=row["difference"], source_line=line,
+            interval=Interval(base.method, level, base.seed, int(row.get("replicates") or base.replicates), base.block_days),
+            ci_low_raw=row["ci97.5_lower"], ci_high_raw=row["ci97.5_upper"], ci_columns=("ci97.5_lower", "ci97.5_upper"),
+        ))
+    for line, row in _rows(ratio_path):
+        if row.get("defined") != "True" or row.get("ratio", "") == "":
+            continue
+        candidate, baseline, metric = row["candidate"], row["baseline"], row["metric"]
+        records.append(EvidenceRecord(
+            record_id=f"{prefix}.ratio97_5.{candidate}-{baseline}.{metric}", checkpoint=checkpoint,
+            generation=_generation(candidate, checkpoint), policy_code=candidate, source_path=ratio_path,
+            selector=(("candidate", candidate), ("baseline", baseline), ("metric", metric)),
+            field="ratio", metric=f"ratio_S_{metric}", unit=UNIT_RATIO_CHANGE, aggregation="equal_fold_ratio",
+            population_id="common-10747h", comparator=baseline, evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+            window=windows["all"], display_precision=4, raw=row["ratio"], source_line=line,
+            interval=Interval(base.method, level, base.seed, int(row.get("replicates") or base.replicates), base.block_days),
+            ci_low_raw=row["ratio_ci97.5_lower"], ci_high_raw=row["ratio_ci97.5_upper"],
+            ci_columns=("ratio_ci97.5_lower", "ratio_ci97.5_upper"),
         ))
     return records
 
@@ -535,7 +631,7 @@ def _criteria_records(prefix: str, checkpoint: str, path: str, windows) -> list[
                 EvidenceRecord(
                     record_id=base + suffix,
                     checkpoint=checkpoint,
-                    generation=GENERATION_OF.get(policy),
+                    generation=_generation(policy, checkpoint),
                     policy_code=policy,
                     source_path=path,
                     selector=selector,
@@ -557,7 +653,7 @@ def _criteria_records(prefix: str, checkpoint: str, path: str, windows) -> list[
             EvidenceRecord(
                 record_id=base + ".status",
                 checkpoint=checkpoint,
-                generation=GENERATION_OF.get(policy),
+                generation=_generation(policy, checkpoint),
                 policy_code=policy,
                 source_path=path,
                 selector=selector,
@@ -593,7 +689,7 @@ def _diagnostic_records(prefix: str, checkpoint: str, path: str) -> list[Evidenc
                 EvidenceRecord(
                     record_id=f"{prefix}.diagnostics.{policy}.{key}.{column}",
                     checkpoint=checkpoint,
-                    generation=GENERATION_OF.get(policy),
+                    generation=_generation(policy, checkpoint),
                     policy_code=policy,
                     source_path=path,
                     selector=(("policy", policy), ("fold", fold), ("scope", scope), ("group", row["group"])),
@@ -820,6 +916,42 @@ def _json_records() -> list[EvidenceRecord]:
         _json_record("cp21.fit_cost.fits", "CP-21", "reports/block-challenger/fit-cost.json", "fits",
                      unit=UNIT_RUNS, precision=0, population="protocol", metric="main-run LightGBM fits"),
     ]
+    # CP-24 (v5): its mechanical decision, its bootstrap settings, its controls and its full-coverage leakage
+    # controls (capstone v21-r11 §23.9-§23.10; claim map C421, C439, C441).
+    decisions, controls, leakage = CP24_ROWS["decisions"], CP24_ROWS["controls"], CP24_ROWS["leakage"]
+    for key, dotted in (("adopted", "adoption.adopted"), ("candidate", "adoption.candidate"),
+                        ("comparator", "adoption.comparator"), ("first_unmet_condition", "adoption.first_unmet_condition")):
+        records.append(_json_record(f"cp24.adoption.{key}", "CP-24", decisions, dotted, unit=UNIT_LABEL, precision=0,
+                                    population="protocol"))
+    for condition in ("1", "2", "3", "4", "5"):
+        records.append(_json_record(f"cp24.adoption.condition_{condition}_met", "CP-24", decisions,
+                                    f"adoption.conditions.{condition}.met", unit=UNIT_LABEL, precision=0,
+                                    population="protocol"))
+    for key, dotted, unit in (("bootstrap_seed", "bootstrap.seed", UNIT_SEED),
+                              ("replicates", "bootstrap.replicates", UNIT_REPLICATES),
+                              ("block_days", "bootstrap.block_days", UNIT_DAYS)):
+        records.append(_json_record(f"cp24.protocol.{key}", "CP-24", decisions, dotted, unit=unit, precision=0,
+                                    population="protocol"))
+    records += [
+        _json_record("cp24.protocol.rule_id", "CP-24", CP24_ROWS["protocol"], "rule", unit=UNIT_LABEL, precision=0,
+                     population="protocol"),
+        _json_record("cp24.controls.checks", "CP-24", controls, "checks", unit=UNIT_COUNT, precision=0,
+                     population="protocol"),
+        _json_record("cp24.controls.all_passed", "CP-24", controls, "all_passed", unit=UNIT_LABEL, precision=0,
+                     population="protocol"),
+        _json_record("cp24.leakage.origins", "CP-24", leakage, "blind.origins", unit=UNIT_COUNT, precision=0,
+                     population="protocol", metric="warm-up and evaluation origins refitted with the future destroyed"),
+        _json_record("cp24.leakage.bitwise", "CP-24", leakage, "blind.bitwise", unit=UNIT_COUNT, precision=0,
+                     population="protocol", metric="origins bit-identical to the committed vectors"),
+        _json_record("cp24.leakage.keys", "CP-24", leakage, "blind.committed_predictions.keys_compared",
+                     unit=UNIT_HOURS, precision=0, population="common-10747h", metric="evaluation keys compared"),
+        _json_record("cp24.leakage.all_passed", "CP-24", leakage, "all_passed", unit=UNIT_LABEL, precision=0,
+                     population="protocol"),
+        _json_record("cp24.leakage.d1_mutation_moves", "CP-24", leakage, "checks.d1_positive_moves_every_pick",
+                     unit=UNIT_LABEL, precision=0, population="protocol"),
+        _json_record("cp24.leakage.planted_leak_caught", "CP-24", leakage, "checks.planted_leak_detected_in_every_fold",
+                     unit=UNIT_LABEL, precision=0, population="protocol"),
+    ]
     point = next(i for i, t in enumerate(_json(dm2)["dm_tests"])
                  if t["analysis"] == "point_median_absolute_error" and t["comparator"] == "similar_day_naive")
     for key, unit, precision in (("relative_improvement_pct", UNIT_PERCENT, 2), ("n_days", UNIT_DAYS, 0),
@@ -950,6 +1082,30 @@ def _cp2_product_records() -> list[EvidenceRecord]:
     return out
 
 
+#: The committed rows of the checkpoints PRES-4 publishes, by role.
+CP22_ROWS = {name: f"reports/v4-revision/{name}.{ext}" for name, ext in (
+    ("metrics", "csv"), ("uncertainty", "csv"), ("criteria", "csv"), ("diagnostics", "csv"), ("protocol", "json"),
+    ("decisions", "json"))}
+CP23_ROWS = {name: f"reports/distribution-challenger/{name}.{ext}" for name, ext in (
+    ("metrics", "csv"), ("uncertainty", "csv"), ("criteria", "csv"), ("diagnostics", "csv"), ("protocol", "json"),
+    ("decisions", "json"))}
+CP24_ROWS = {name: f"reports/ddnn2/attempt-1/{file}" for name, file in (
+    ("metrics", "metrics.csv"), ("uncertainty", "uncertainty.csv"), ("ratios", "ratio-intervals.csv"),
+    ("criteria", "criteria.csv"), ("diagnostics", "diagnostics.csv"), ("protocol", "protocol.json"),
+    ("decisions", "decisions.json"), ("controls", "controls.json"), ("leakage", "leakage-controls.json"))}
+
+
+def _checkpoint_records(prefix: str, checkpoint: str, rows: dict[str, str]) -> list[EvidenceRecord]:
+    """One later checkpoint's committed rows, by the same builders as CP-21's: scores, paired differences, ratios,
+    the original screening criteria and the diagnostics."""
+    windows = _fold_windows(rows["metrics"])
+    return (_metric_records(prefix, checkpoint, rows["metrics"])
+            + _uncertainty_records(prefix, checkpoint, rows["uncertainty"], windows)
+            + _ratio_records(prefix, checkpoint, rows["uncertainty"], windows)
+            + _criteria_records(prefix, checkpoint, rows["criteria"], windows)
+            + _diagnostic_records(prefix, checkpoint, rows["diagnostics"]))
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, EvidenceRecord]:
     """Every published evidence record, keyed by `record_id`."""
@@ -957,6 +1113,11 @@ def records() -> dict[str, EvidenceRecord]:
     cp16_windows = _fold_windows("reports/v2-causal/metrics.csv")
     cp21_windows = _fold_windows("reports/block-challenger/metrics.csv")
     built: list[EvidenceRecord] = []
+    built += _checkpoint_records("cp24", "CP-24", CP24_ROWS)
+    built += _decision_level_records("cp24", "CP-24", CP24_ROWS["uncertainty"], CP24_ROWS["ratios"],
+                                     _fold_windows(CP24_ROWS["metrics"]))
+    built += _checkpoint_records("cp23", "CP-23", CP23_ROWS)
+    built += _checkpoint_records("cp22", "CP-22", CP22_ROWS)
     built += _metric_records("cp21", "CP-21", "reports/block-challenger/metrics.csv")
     built += _uncertainty_records("cp21", "CP-21", "reports/block-challenger/uncertainty.csv", cp21_windows)
     built += _ratio_records("cp21", "CP-21", "reports/block-challenger/uncertainty.csv", cp21_windows)

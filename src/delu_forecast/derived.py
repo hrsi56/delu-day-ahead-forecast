@@ -43,6 +43,9 @@ CRITERIA_FILES = {
     "CP-16": ("cp16", "reports/v2-causal/criteria.csv"),
     "CP-20": ("cp20", "reports/weather-ablation/criteria.csv"),
     "CP-21": ("cp21", "reports/block-challenger/criteria.csv"),
+    "CP-22": ("cp22", "reports/v4-revision/criteria.csv"),
+    "CP-23": ("cp23", "reports/distribution-challenger/criteria.csv"),
+    "CP-24": ("cp24", "reports/ddnn2/attempt-1/criteria.csv"),
 }
 REFERENCE_CODES = ("B0", "B1", "B2", "B3")
 FOLDS = ("fold_1", "fold_2", "fold_3", "fold_4", "fold_5")
@@ -195,7 +198,7 @@ def _fresh_decision_counts(fresh: R.FreshRead) -> dict[str, tuple[str, str]]:
         _, path = CRITERIA_FILES[experiment]
         rows = fresh.matches(path, {"scope": "equal_fold"})
         for code in sorted({row["policy"] for row in rows}):
-            entry = G.by_code(code)
+            entry = G.by_code(code, experiment)
             if entry.id in census:
                 continue  # H0 is the already evaluated V2-H, never a ninth policy.
             verdict = []
@@ -238,7 +241,7 @@ def _criteria_records() -> list[DerivedRecord]:
     for experiment in sorted(CRITERIA_FILES, key=lambda exp: G.CHECKPOINTS[exp].frozen_on):
         prefix, _ = CRITERIA_FILES[experiment]
         for code in _criteria_policies(experiment):
-            entry = G.by_code(code)
+            entry = G.by_code(code, experiment)
             passed, inputs, distances = [], [], {}
             for score, criterion in (("S_MAE", "c1"), ("S_WIS", "c2")):
                 actual = f"{prefix}.criteria.{code}.{criterion}.equal_fold.{score}"
@@ -293,6 +296,19 @@ CHANGES = {
 #: ratio, S_policy / S_comparator − 1, with the interval of that ratio from its own bootstrap draws.
 RATIO_CHANGES = {
     "v4": "cp21.ratio.HGL-HG.{metric}",
+    "v5": "cp24.ratio.v5-HGL.{metric}",
+    # PRES-4: v5's study arm DDNN-2 alone (descriptive, never eligible), and the candidates of the branches tested
+    # against v4, each against its comparator, v4.
+    "ddnn2-alone": "cp24.ratio.D2-HGL.{metric}",
+    "v3-plus-pooled-normalized-lightgbm-averaged": "cp22.ratio.R-HGL.{metric}",
+    "v3-plus-pooled-lightgbm-pair": "cp22.ratio.M-HGL.{metric}",
+    "ddnn-member-on-v4": "cp23.ratio.v5-HGL.{metric}",
+}
+
+#: The same change at a rule's own decision level, where it is not 95% (capstone v21-r11 §23.8-§23.9): v5's rule decided
+#: at 97.5%, so its ratio is published at both levels, from the same stored draws.
+DECISION_LEVEL_CHANGES = {
+    "v5": ("cp24.ratio97_5.v5-HGL.{metric}", "97.5%"),
 }
 
 
@@ -311,6 +327,19 @@ def _change_records() -> list[DerivedRecord]:
                 0, "P18", ci_low=_text(_d(ratio_id, "ci_low") * hundred),
                 ci_high=_text(_d(ratio_id, "ci_high") * hundred),
                 label=f"as a share of {comparator.short}'s score"))
+    for subject, (ratio, level) in DECISION_LEVEL_CHANGES.items():
+        comparator = G.get(G.get(subject).comparator)
+        for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
+            ratio_id = ratio.format(metric=metric)
+            hundred = Decimal(100)
+            out.append(DerivedRecord(
+                f"derived.change_decision.{subject}.{score}", "ratio_change", subject, UNIT_RELATIVE,
+                _text(_d(ratio_id) * hundred), (ratio_id,),
+                f"the checkpoint's ratio S_policy / S_comparator − 1 × 100; its interval at the rule's {level} decision "
+                "level, the 1.25th and 98.75th percentiles of the same ratio over the bootstrap draws, × 100",
+                0, "P18", ci_low=_text(_d(ratio_id, "ci_low") * hundred),
+                ci_high=_text(_d(ratio_id, "ci_high") * hundred),
+                label=f"as a share of {comparator.short}'s score, {level} interval"))
     for subject, (difference, denominator) in CHANGES.items():
         comparator = G.get(G.get(subject).comparator)
         for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
@@ -326,8 +355,11 @@ def _change_records() -> list[DerivedRecord]:
     return out
 
 
-#: Absolute context (§3.3 c): per-period MAE in EUR/MWh for these identities, from the shared comparison's rows.
-PERIOD_SUBJECTS = ("v4", "v3", "v2", "daily-lear", "naive")
+#: Absolute context (§3.3 c): per-period MAE in EUR/MWh for these identities, each from the experiment whose rows it
+#: was published from: v5's from CP-24; the others from CP-21, as v4's chapter and the comparison published them. The
+#: shared rows are byte-identical across the comparison's experiments (`comparison_parity_problems`).
+PERIOD_SOURCES = {"v5": "CP-24", "v4": "CP-21", "v3": "CP-21", "v2": "CP-21", "daily-lear": "CP-21", "naive": "CP-21"}
+PERIOD_SUBJECTS = tuple(PERIOD_SOURCES)
 
 
 def _period_records() -> list[DerivedRecord]:
@@ -336,9 +368,9 @@ def _period_records() -> list[DerivedRecord]:
     out.append(DerivedRecord("derived.periods.stress_period", "stress_period", None, UNIT_LABEL, stress, (),
                              "the protocol's named stress period", 0, "P19",
                              sources=tuple(path for path, _ in STRESS_QUOTES) + ("reports/cp10/protocol.json",)))
-    prefix = G.comparison_prefix()
-    for subject in PERIOD_SUBJECTS:
-        code = G.get(subject).code_in(G.COMPARISON_EXPERIMENT)
+    for subject, experiment in PERIOD_SOURCES.items():
+        prefix = G.comparison_prefix(experiment)
+        code = G.get(subject).code_in(experiment)
         ordinary = [f"{prefix}.metrics.{code}.{fold}.MAE" for fold in FOLDS if fold != stress]
         low = min(ordinary, key=_d)
         high = max(ordinary, key=_d)
@@ -356,43 +388,74 @@ def _period_records() -> list[DerivedRecord]:
 # --------------------------------------------------------------------------- an adoption rule (§3.3 a)
 
 #: A generation adopted under its own pre-registered rule (CP-21 on): the rule, the committed record of its
-#: mechanical verdict, the paired differences it judged, the anchor text that dates it, and the eligible policies.
+#: mechanical verdict, the paired differences it judged at its own decision level, the anchor text that dates it, and the
+#: eligible policies. CP-21's record names the generation in its verdict; CP-24's records whether its candidate, code
+#: `v5` in CP-24, was adopted. v5's rule decided at 97.5% (capstone v21-r11 §23.9), so its headline reads those intervals.
 ADOPTION_RULES = {
     "v4": {
         "rule": "cp21-adoption",
+        "claim": "P51",
         "prefix": "cp21",
+        "experiment": "CP-21",
+        "conditions": ("1", "2", "3", "4"),
+        "set_on": "cp21.adoption.rule_set_on",
+        "verbatim": "adoption_rule_verbatim",
         "differences": "cp21.uncertainty.HGL-HG.equal_fold.{metric}",
+        "level": "95%",
         "dated_by": (("capstone_v21.md", "Rule `cp21-adoption` was set on 2026-09-29"),
                      ("reports/block-challenger/protocol.json", "Rule `cp21-adoption` was set on 2026-09-29")),
+    },
+    "v5": {
+        "rule": "cp24-adoption",
+        "claim": "P53",
+        "prefix": "cp24",
+        "experiment": "CP-24",
+        "conditions": ("1", "2", "3", "4", "5"),
+        "set_on": None,
+        "verbatim": "rule_verbatim",
+        "differences": "cp24.uncertainty97_5.v5-HGL.equal_fold.{metric}",
+        "level": "97.5%",
+        "dated_by": (("capstone_v21.md", "Pre-registered rule `cp24-adoption`, set 2026-10-05"),
+                     ("reports/ddnn2/attempt-1/protocol.json", "Pre-registered rule `cp24-adoption`, set 2026-10-05")),
     },
 }
 
 
+def _subject_of(spec: dict) -> str:
+    return next(subject for subject, item in ADOPTION_RULES.items() if item is spec)
+
+
 def _adoption_date(spec: dict, fresh: R.FreshRead | None = None) -> str:
-    """The rule's date, as its adoption record states it, and as the ratified anchor and the protocol frozen
-    before scoring both quote it."""
-    prefix = spec["prefix"]
-    record = R.get(f"{prefix}.adoption.rule_set_on")
-    date = R.rederive(record, fresh)["value"] if fresh else record.raw
+    """The rule's date, as its adoption record or the registry's rule states it, and as the ratified anchor and the
+    protocol frozen before scoring both quote it."""
+    if spec["set_on"]:
+        record = R.get(spec["set_on"])
+        date = R.rederive(record, fresh)["value"] if fresh else record.raw
+    else:
+        date = G.RULES[spec["rule"]].set_on
     for path, quote in spec["dated_by"]:
-        text = (R._json(path)["adoption_rule_verbatim"] if path.endswith(".json") else (REPO_ROOT / path).read_text())
+        text = (R._json(path)[spec["verbatim"]] if path.endswith(".json") else (REPO_ROOT / path).read_text())
         if quote not in text or not quote.endswith(date):
             raise DerivedError(f"{path} no longer dates rule {spec['rule']} {date}")
     return date
 
 
 def _adoption_verdict(spec: dict, value) -> str:
-    """Met only when the committed mechanical verdict names the generation and every condition is met."""
-    prefix = spec["prefix"]
-    conditions = [value(f"{prefix}.adoption.condition_{n}_met") for n in ("1", "2", "3", "4")]
-    named = value(f"{prefix}.adoption.verdict")
-    return "met" if all(c == "True" for c in conditions) and named == G.get(next(
-        subject for subject, s in ADOPTION_RULES.items() if s is spec)).version else "not met"
+    """Met only when every condition is met and the committed mechanical verdict names this generation: CP-21's verdict
+    names the version, CP-24's records its candidate's code and that it was adopted."""
+    prefix, subject = spec["prefix"], _subject_of(spec)
+    conditions = [value(f"{prefix}.adoption.condition_{n}_met") for n in spec["conditions"]]
+    if spec["set_on"]:
+        named = value(f"{prefix}.adoption.verdict") == G.get(subject).version
+    else:
+        named = (value(f"{prefix}.adoption.adopted") == "True"
+                 and value(f"{prefix}.adoption.candidate") == G.get(subject).code_in(spec["experiment"]))
+    return "met" if all(c == "True" for c in conditions) and named else "not met"
 
 
 def _adoption_eligible(spec: dict, value) -> str:
     """N (§3.3 a): the policies eligible under the rule up to its decision. The rule names one candidate; the
-    study arms are never eligible (§17.6), so N counts the committed candidate, never the arms."""
+    study arms are never eligible (§17.6, §23.5), so N counts the committed candidate, never the arms."""
     return str(len([value(f"{spec['prefix']}.adoption.candidate")]))
 
 
@@ -401,15 +464,17 @@ def _adoption_records() -> list[DerivedRecord]:
     for subject, spec in ADOPTION_RULES.items():
         prefix, base = spec["prefix"], f"derived.adoption.{subject}"
         raw = lambda record_id: R.get(record_id).raw  # noqa: E731
-        conditions = tuple(f"{prefix}.adoption.condition_{n}_met" for n in ("1", "2", "3", "4"))
+        conditions = tuple(f"{prefix}.adoption.condition_{n}_met" for n in spec["conditions"])
+        named = ((f"{prefix}.adoption.verdict",) if spec["set_on"]
+                 else (f"{prefix}.adoption.adopted", f"{prefix}.adoption.candidate"))
         out.append(DerivedRecord(f"{base}.verdict", "adoption_verdict", subject, UNIT_LABEL,
-                                 _adoption_verdict(spec, raw), (f"{prefix}.adoption.verdict",) + conditions,
-                                 "met when the committed mechanical verdict names this generation and all four "
-                                 "conditions are met", 0, "P51"))
+                                 _adoption_verdict(spec, raw), named + conditions,
+                                 "met when the committed mechanical verdict names this generation and all "
+                                 f"{len(spec['conditions'])} conditions are met", 0, "P51"))
         out.append(DerivedRecord(f"{base}.set_on", "adoption_date", subject, UNIT_DATE, _adoption_date(spec),
-                                 (f"{prefix}.adoption.rule_set_on",), "the rule's date, quoted by the ratified anchor "
-                                 "and by the protocol frozen before scoring", 0, "P51",
-                                 sources=tuple(path for path, _ in spec["dated_by"])))
+                                 ((spec["set_on"],) if spec["set_on"] else (f"{prefix}.protocol.rule_id",)),
+                                 "the rule's date, quoted by the ratified anchor and by the protocol frozen before "
+                                 "scoring", 0, "P51", sources=tuple(path for path, _ in spec["dated_by"])))
         out.append(DerivedRecord(f"{base}.tested", "adoption_tested", subject, UNIT_COUNT,
                                  _adoption_eligible(spec, raw), (f"{prefix}.adoption.candidate",),
                                  "policies eligible under the rule up to its decision: its one candidate", 0, "P51"))
@@ -418,14 +483,130 @@ def _adoption_records() -> list[DerivedRecord]:
             record = R.get(difference)
             out.append(DerivedRecord(f"{base}.distance.{score}", "adoption_distance", subject, UNIT_NORM_DIFF,
                                      record.raw, (difference,), "the rule's paired difference, in the rule's unit, "
-                                     "with its 95% confidence interval", 4, "P51",
+                                     f"with its interval at the rule's decision level, {spec['level']}", 4, "P51",
                                      ci_low=record.ci_low_raw, ci_high=record.ci_high_raw))
     return out
 
 
+# --------------------------------------------------------------------------- the coverage limits (PRES-4)
+
+#: The shared population's coverage of the calendar, stated beside v5 (the Owner's programme plan of 2026-10-11, stage 2):
+#: how many delivery days it scores, out of how many days the data holds up to the development boundary, that none falls
+#: in October to December, and how many winters it holds. Counted from committed records: the represented dates of the
+#: comparison's naive row, the data's first price hour (`data/source_manifest.json`) and the development boundary
+#: (`data/partitions.json`, `eda_cutoff`). No row after the boundary is read.
+COVERAGE_POPULATION = ("CP-24", "reports/ddnn2/attempt-1/metrics.csv")
+COVERAGE_FIRST_HOUR = ("data/source_manifest.json", "coverage.price_eur_mwh")
+COVERAGE_BOUNDARY = ("data/partitions.json", "eda_cutoff")
+DATA_TIMEZONE = "Europe/Berlin"
+
+
+def _represented(row: dict[str, str]) -> list[str]:
+    import json
+
+    return sorted(json.loads(row["represented_dates"]))
+
+
+def _coverage_facts(population_row: dict[str, str], manifest: dict, partitions: dict) -> dict[str, str]:
+    """Every coverage fact from its committed inputs; the same function serves the build and the fresh re-derivation."""
+    from datetime import date, datetime
+    from zoneinfo import ZoneInfo
+
+    days = _represented(population_row)
+    if len(days) != len(set(days)) or str(len(days)) != str(int(float(population_row["n_days"]))):
+        raise DerivedError("the represented dates do not match the population's day count")
+    price = manifest["coverage"]["price_eur_mwh"]
+    if int(price["null_rows"]) != 0:
+        raise DerivedError("the data's price series has missing hours; its days cannot be counted from its range")
+    first = datetime.fromisoformat(price["first_valid_utc"]).astimezone(ZoneInfo(DATA_TIMEZONE)).date()
+    boundary = date.fromisoformat(partitions["eda_cutoff"])
+    if boundary.isoformat() != R.EVIDENCE_BOUNDARY:
+        raise DerivedError(f"the partition boundary {boundary} is not the evidence boundary {R.EVIDENCE_BOUNDARY}")
+    if days[0] < first.isoformat() or days[-1] > boundary.isoformat():
+        raise DerivedError("a scored day lies outside the data's development range")
+    winters = {(int(d[:4]) if d[5:7] == "12" else int(d[:4]) - 1) for d in days if d[5:7] in ("12", "01", "02")}
+    return {
+        "days": str(len(days)),
+        "data_days": str((boundary - first).days + 1),
+        "first_data_day": first.isoformat(),
+        "data_end": boundary.isoformat(),
+        "q4_days": str(sum(d[5:7] in ("10", "11", "12") for d in days)),
+        "winters": str(len(winters)),
+    }
+
+
+COVERAGE_KINDS = {
+    "days": (UNIT_COUNT, "the distinct delivery dates the shared population scores (its naive row's represented dates)"),
+    "data_days": (UNIT_COUNT, "calendar days from the data's first day, in the market's time zone, to the development "
+                              "boundary, inclusive; the price series has no missing hour"),
+    "first_data_day": (UNIT_DATE, "the delivery date of the data's first price hour, in the market's time zone"),
+    "data_end": (UNIT_DATE, "the development boundary: no research result reads data after it"),
+    "q4_days": (UNIT_COUNT, "scored delivery dates in October, November or December"),
+    "winters": (UNIT_COUNT, "distinct winters, December to February, holding at least one scored day"),
+}
+
+
+def _coverage_inputs(fresh: R.FreshRead | None = None) -> tuple[dict[str, str], dict, dict]:
+    experiment, path = COVERAGE_POPULATION
+    if fresh is None:
+        row = next(row for _, row in R._rows(path) if row["policy"] == "B0" and row["scope"] == "pooled")
+        return row, R._json(COVERAGE_FIRST_HOUR[0]), R._json(COVERAGE_BOUNDARY[0])
+    rows = fresh.matches(path, {"policy": "B0", "scope": "pooled"})
+    if len(rows) != 1:
+        raise DerivedError(f"{path}: {len(rows)} pooled naive rows")
+    return rows[0], fresh.document(COVERAGE_FIRST_HOUR[0]), fresh.document(COVERAGE_BOUNDARY[0])
+
+
+def _coverage_records() -> list[DerivedRecord]:
+    experiment, path = COVERAGE_POPULATION
+    facts = _coverage_facts(*_coverage_inputs())
+    prefix = G.comparison_prefix(experiment)
+    out = []
+    for key, (unit, formula) in COVERAGE_KINDS.items():
+        out.append(DerivedRecord(f"derived.coverage.{key}", "coverage", None, unit, facts[key],
+                                 (f"{prefix}.metrics.B0.pooled.n_days",), formula, 0, "P54",
+                                 sources=(path, COVERAGE_FIRST_HOUR[0], COVERAGE_BOUNDARY[0])))
+    return out
+
+
+# --------------------------------------------------------------------------- the comparison's population (PRES-4)
+
+
+#: The committed cells a comparison row is drawn from. Every experiment of the live comparison that carries an identity
+#: must hold exactly these cells for it, and the naive's per-period hours must agree: one population, not a join.
+PARITY_FIELDS = (("equal_fold", ("S_MAE", "S_WIS")), ("pooled", ("MAE", "WIS", "n_hours", "n_days")))
+
+
+def comparison_parity_problems(rows=None) -> list[str]:
+    """Why the live comparison's rows are not one population: an identity whose committed cells differ between two of
+    the comparison's experiments, or a naive whose per-period hours do. Empty when they are one (PUBLISH_RULES §3.2)."""
+    problems = []
+    entries = rows if rows is not None else G.comparison_rows()
+    experiments = G.COMPARISON_EXPERIMENTS
+    for entry in tuple(entries) + (G.get("naive"),):
+        source = G.comparison_source(entry)
+        for experiment in experiments:
+            code = entry.code_in(experiment)
+            if code is None or experiment == source:
+                continue
+            for scope, fields in PARITY_FIELDS:
+                for field_name in fields:
+                    here = f"{G.comparison_prefix(source)}.metrics.{entry.code_in(source)}.{scope}.{field_name}"
+                    there = f"{G.comparison_prefix(experiment)}.metrics.{code}.{scope}.{field_name}"
+                    if R.get(here).raw != R.get(there).raw:
+                        problems.append(f"{entry.id}: {field_name} ({scope}) differs between {source} and {experiment}")
+    for experiment in experiments[1:]:
+        for fold in FOLDS:
+            here = f"{G.comparison_prefix(experiments[0])}.metrics.B0.{fold}.n_hours"
+            there = f"{G.comparison_prefix(experiment)}.metrics.B0.{fold}.n_hours"
+            if R.get(here).raw != R.get(there).raw:
+                problems.append(f"the naive's {fold} hours differ between {experiments[0]} and {experiment}")
+    return problems
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, DerivedRecord]:
-    built = _criteria_records() + _change_records() + _adoption_records() + _period_records()
+    built = _criteria_records() + _change_records() + _adoption_records() + _period_records() + _coverage_records()
     out: dict[str, DerivedRecord] = {}
     for record in built:
         if record.record_id in out:
@@ -521,10 +702,14 @@ def validate_all() -> list[str]:
                 expected = _text(pick)
             elif record.kind == "period_stress":
                 expected = _text(value(record.inputs[0]))
+            elif record.kind == "coverage":
+                expected = _coverage_facts(*_coverage_inputs(fresh))[record.record_id.rsplit(".", 1)[1]]
             else:
                 problems.append(f"{record.record_id}: unknown kind {record.kind}")
                 continue
             recorded = record.value if record.unit in (UNIT_LABEL, UNIT_DATE) else _text(Decimal(record.value))
+            if record.kind == "coverage" and record.unit != UNIT_DATE:
+                expected = _text(Decimal(expected))
             if expected != recorded:
                 problems.append(f"{record.record_id}: {recorded!r} no longer follows from its rows ({expected!r})")
         except (R.EvidenceError, DerivedError, KeyError) as exc:
@@ -558,7 +743,8 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
 
 
 __all__ = [
-    "ADOPTION_RULES", "CHANGES", "RATIO_CHANGES", "DerivedError", "DerivedRecord", "PERIOD_SUBJECTS", "RULE", "UNIT_COUNT", "UNIT_DATE", "UNIT_EUR",
+    "ADOPTION_RULES", "CHANGES", "COVERAGE_KINDS", "DECISION_LEVEL_CHANGES", "PERIOD_SOURCES", "RATIO_CHANGES",
+    "comparison_parity_problems", "DerivedError", "DerivedRecord", "PERIOD_SUBJECTS", "RULE", "UNIT_COUNT", "UNIT_DATE", "UNIT_EUR",
     "UNIT_LABEL", "UNIT_RELATIVE", "display", "get", "is_derived", "records", "section_8", "stress_period",
     "validate_all",
 ]
