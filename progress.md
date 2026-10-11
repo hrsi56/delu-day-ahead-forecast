@@ -102,13 +102,14 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | ⬜ Next: the v5 publication's brief. Its decisions were made and items 6 and 7 built on 2026-10-11. The source search and the protocol design can start alongside |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 The v5 publication (PRES-4) is issued, brief `54169c7c…`, 2026-10-11. The source search and the protocol design can start alongside |
 
 **No Track B checkpoint is active.** The next steps follow the Owner's approved
 [programme plan](docs/track-b/programme-plan-2026-10-11.md) (stage 7 above):
 
-- **First, the v5 publication (PRES-4).** The Owner made its decisions on 2026-10-11, and
-  automation items 6 and 7 are built. The PRES-4 brief is next (Blockers).
+- **First, the v5 publication (PRES-4). Issued 2026-10-11** as brief `54169c7c…`, at
+  `bfadb39`. The canonical copy is `.local/artifacts/pres-4/issued-brief.md`, with its launch
+  envelope beside it. It runs in a new Lead session the Owner opens.
 - **Alongside it,** the new-source search and the evaluation protocol's design.
 
 **Where the plan departs from the anchor.** It changes v21-r10 §22's order: publication, the
@@ -744,6 +745,23 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **PRES-4 issued, 2026-10-11.** The brief is `54169c7c…`, at `bfadb39`.
+  - **The Owner's three further decisions:**
+    - v5's public name is "v5 · DDNN-2 added", not the draft's "v5 · DDNN-2 member added";
+    - its encoding is rose `#BE123C`, a filled pentagon, with the direct label "v5";
+    - the run may upload `cp24`, `cp22` and `cp23` with their children, plus the
+      experiment-description write for A-PRES3-1, after the independent check passes.
+  - **The scope:**
+    - v5 on the report, the README and MLflow;
+    - CP-22 and CP-23 as branch cards;
+    - a planned-work list that follows the Owner's programme plan at item level;
+    - the Space verified unchanged.
+  - **The frozen-file treatment.** Adding the export specifications edits
+    `scripts/mlflow_export.py`, so CP-22's and CP-23's tests take the `AMENDED_BY_PUBLICATION`
+    treatment PRES-3 used for CP-21.
+  - **A correction by the Orchestrator.** It had folded v5's "encoding", the colour and marker,
+    into the compaction question. The two were separated before the brief.
 
 - **PRES-4 decisions and automation items 6 and 7, 2026-10-11.**
   - **The Owner's decisions for the v5 publication:**
