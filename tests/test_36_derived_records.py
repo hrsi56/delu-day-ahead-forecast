@@ -53,10 +53,11 @@ def test_the_per_period_ranges_rederive_exactly():
 
 def test_n_is_eight_and_v3_is_the_only_and_first_policy_to_meet_the_targets():
     """At v3's decision (2026-09-24) N was 8 and v3 the only policy to meet the targets; the count is frozen at that
-    date. CP-21 (2026-09-30) added four policies tested against them as diagnostics, three of them meeting both."""
+    date. CP-21 (2026-09-30) added four policies tested against them as diagnostics, three of them meeting both;
+    CP-22 and CP-23 (2026-10-04) ten more and CP-24 (2026-10-11) three, each identity once (PRES-4)."""
     assert show("derived.criteria.v3.tested") == "8"
     verdicts = {record.subject: record.value for record in D.records().values() if record.kind == "verdict"}
-    assert len(verdicts) == 12, "one identity, one verdict: v2 (V2-H = H0) and v3 (HG in CP-20 and CP-21) once each"
+    assert len(verdicts) == 25, "one identity, one verdict: v2 (V2-H = H0) and v3 (HG in CP-20 to CP-24) once each"
     decided = {subject: G.first_status(G.get(subject)).date for subject in verdicts}
     assert [s for s, verdict in verdicts.items() if verdict == "met" and decided[s] <= "2026-09-24"] == ["v3"]
     assert show("derived.criteria.v3.first_to_meet") == "yes"
@@ -190,6 +191,12 @@ def test_counts_include_all_policies_at_each_recorded_decision_date():
     expected.update({"v2": "7", "pooled-control": "7", "v3": "8"})
     expected.update({ident: "12" for ident in ("v4", "pooled-lightgbm-weather", "block-lightgbm",
                                                 "normalized-block-lightgbm")})
+    # PRES-4: CP-22's seven and CP-23's three policies were decided on 2026-10-04, CP-24's three on 2026-10-11.
+    expected.update({ident: "22" for ident in (
+        "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
+        "v3-plus-pooled-normalized-lightgbm-selected", "v3-plus-pooled-raw-lightgbm", "v3-plus-normalized-block-lightgbm",
+        "v4-with-dynamic-intervals", "v3-with-dynamic-intervals", "ddnn-member-on-v4", "ddnn-alone", "v3-plus-ddnn")})
+    expected.update({ident: "25" for ident in ("v5", "ddnn2-alone", "v3-plus-ddnn2")})
     assert {r.subject: r.value for r in D.records().values() if r.kind == "tested"} == expected
     for subject in expected:
         record = D.get(f"derived.criteria.{subject}.tested")

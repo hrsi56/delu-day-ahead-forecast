@@ -64,9 +64,12 @@ def _section(document: str, ident: str) -> str:
 
 
 def a1_problems(headline_text: str) -> list[str]:
-    """Each headline percentage is followed, before the next number, by the name of its metric."""
+    """Each headline percentage is followed, before the next number, by the name of its metric. A rule's decision level
+    ("at the rule's 97.5% level") is a level, not a value."""
     problems = []
-    for match in re.finditer(r"\d+%", headline_text):
+    for match in re.finditer(r"\d+(?:\.\d+)?%", headline_text):
+        if headline_text[match.end():].startswith(" level"):
+            continue
         rest = headline_text[match.end():]
         following = re.split(r"\d", rest, maxsplit=1)[0]
         if match.start() > 0 and "at least" in headline_text[max(0, match.start() - 12):match.start()]:
@@ -127,8 +130,8 @@ def test_a2_negative_control_an_unmeasured_header_is_a_finding():
 def test_a3_the_predecessor_relation_is_one_dated_chain():
     assert G.transition_problems() == []
     assert [(item.predecessor.id, item.successor.id) for item in G.transitions(newest_first=False)] == [
-        ("v1", "v2"), ("v2", "v3"), ("v3", "v4")]
-    assert [item.comparator_is_predecessor for item in G.transitions(newest_first=False)] == [False, True, True]
+        ("v1", "v2"), ("v2", "v3"), ("v3", "v4"), ("v4", "v5")]
+    assert [item.comparator_is_predecessor for item in G.transitions(newest_first=False)] == [False, True, True, True]
 
 
 @pytest.mark.parametrize("change, expected", [
@@ -162,6 +165,33 @@ def test_a3_every_transition_has_its_summary_and_the_branches_are_headed_apart(p
     assert "Experiments not adopted between" in _text(journey)
     assert not re.search(r"Experiments (between|after) ", _text(journey))
     assert journey.index('class="transitions"') < journey.index('class="branches"')
+
+
+def test_a3_the_v4_to_v5_transition(page):
+    """PRES-4: v5's transition names its predecessor, v4, which is also its comparator, so the result row is the
+    predecessor comparison; it states the ratio at 95% and at the rule's 97.5% decision level, and the coverage limits
+    and the evidence class among what it does not establish."""
+    item = G.transition_into(G.get("v5"))
+    assert (item.predecessor.id, item.comparator.id, item.comparator_is_predecessor) == ("v4", "v4", True)
+    assert RC.render("transition.v4-v5.title", "md") == "From v4 to v5: adding a distributional neural network"
+    journey = _section(page, "journey")
+    card = journey[journey.index('data-transition="v4-v5"'):]
+    card = _text(card[:card.index("</article>")])
+    assert "Against the predecessor" not in card
+    assert "with 95% confidence intervals of that ratio" in card and "at the rule's 97.5% decision level" in card
+    for record in ("derived.change.v5.S_MAE", "derived.change_decision.v5.S_WIS", "derived.coverage.days",
+                   "derived.coverage.data_days", "derived.coverage.q4_days", "derived.coverage.winters"):
+        assert record in RC.BLOCKS_BY_KEY["transition.v4-v5.result"].template + \
+            RC.BLOCKS_BY_KEY["transition.v4-v5.limits"].template, record
+    assert "second decision on a distributional neural network" in card
+    assert journey.index('data-transition="v4-v5"') < journey.index('data-transition="v3-v4"')
+
+
+def test_a3_negative_control_the_v5_transition_without_its_limits_stops_the_build(monkeypatch):
+    blocks = {key: block for key, block in RC.BLOCKS_BY_KEY.items() if key != "transition.v4-v5.limits"}
+    monkeypatch.setattr(RC, "BLOCKS_BY_KEY", blocks)
+    with pytest.raises(B.ChapterError, match="v4-v5.limits"):
+        B.transitions_html()
 
 
 def test_a3_negative_control_a_transition_without_its_summary_blocks_stops_the_build(monkeypatch):
@@ -284,7 +314,7 @@ def detail_route_problems(chapter_html: str) -> list[str]:
     return problems
 
 
-@pytest.mark.parametrize("chapter", ["v4", "v3", "v2"])
+@pytest.mark.parametrize("chapter", ["v5", "v4", "v3", "v2"])
 def test_a5_every_detail_chart_has_a_descriptive_route(page, chapter):
     html = page[page.index(f'<article class="chapter" id="{chapter}"'):]
     html = html[:html.index("</article>")]

@@ -498,7 +498,7 @@ BLOCKS: tuple[Block, ...] = (
     _block("branch.model-comparison.reason", "P27", """No policy met the criteria; the study informed {g:v2.version}'s
            blend of two LEAR forecasts.""", PAGE, README),
     # ---- the branch cards after v4 (PRES-4; runbook §3): CP-22's and CP-23's, tested against v4 and not adopted ----
-    _block("branch.pooled-lightgbm-member-for-v4.question", "P56", """Can one pooled LightGBM, for all 24 hours, replace
+    _block("branch.pooled-lightgbm-member-for-v4.question", "P56", """Can one pooled LightGBM, for all {s:hours:24} hours, replace
            {g:v4.version}'s three-block LightGBM member without losing accuracy against {g:v4.version} itself?""",
            PAGE, README),
     _block("branch.pooled-lightgbm-member-for-v4.result", "C208", """Against {g:v4.version}, over the five test periods
@@ -1281,6 +1281,20 @@ WITHHELD_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
         ("W25", r"(?<!not )(?<!never )\b(is|are|was|were) equivalent\b|\bno (benefit|harm)\b"),
         # W26: the daily-cycle or fit-cost figures as qualification for daily operation.
         ("W26", r"(?<!not as a )\bqualif(y|ies|ied|ication) for daily operation\b"),
+        # CP-24 (claim map W42-W48). W42: distributional networks "do not work" or "cannot help" in general.
+        ("W42", r"\b(distributional (neural )?networks?|neural networks?|DDNN(-2)?)\b[^.]{0,20}"
+                r"\b(do not|don't|does not|doesn't|cannot|can't) (work|help)\b"),
+        # W43: v5 and v4 called equivalent, or as good as each other.
+        ("W43", r"\bv5\b[^.]{0,40}\b(equivalent|as good as)\b[^.]{0,20}\bv4\b"),
+        # W44: a forecast or metric attributed to PyTorch, a test-only correctness reference.
+        ("W44", r"\bPyTorch\b(?![- ]reference)"),
+        # W45: v5 or DDNN-2 as the product, live, or in the demo.
+        ("W45", r"\b(v5 runs in|runs v5|try the v5|v5 demo|live v5|v5 is (the )?(product|live|released)|"
+                r"DDNN-2 (runs in|is) the (demo|product))\b"),
+        # W46: the pre-fold gate presented as evidence of improvement.
+        ("W46", r"\bgate (shows?|showed|proves?|proved|demonstrates?|demonstrated)\b[^.]{0,30}\bimprove"),
+        # W47: a 95% interval quoted as v5's decision interval (the rule decided at 97.5%).
+        ("W47", r"\b95% decision (level|interval)\b|\bdecided at (the )?95%"),
     )
 )
 

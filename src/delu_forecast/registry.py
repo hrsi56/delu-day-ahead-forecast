@@ -631,8 +631,10 @@ _ENTRIES: tuple[Entry, ...] = (
          "Three-block v4 with the dynamic interval layer", "v4 + dynamic layer", comparator="v4"),
     _arm("v3-with-dynamic-intervals", "CP-22", "v3+DL", "v3 with dynamic intervals",
          "v3 with the dynamic interval layer", "v3 + dynamic layer", comparator="v4"),
+    # CP-23's draft subtitle had thirteen words; the registry's field holds at most eight (standard §5), so it is
+    # shortened to its first clause and its last: no other field of the draft entry changes.
     _arm("ddnn-alone", "CP-23", "D", "DDNN alone",
-         "A distributional neural network with a Johnson SU head, with its own quantiles", "DDNN alone", comparator="v4"),
+         "A distributional neural network with its own quantiles", "DDNN alone", comparator="v4"),
     _arm("v3-plus-ddnn", "CP-23", "v3+D", "v3 plus a DDNN member", "DDNN as v3's third member, in LightGBM's place",
          "v3 + DDNN", comparator="v3"),
     _arm("ddnn2-alone", "CP-24", "D2", "DDNN-2 alone", "A day-level distributional network with its own quantiles",

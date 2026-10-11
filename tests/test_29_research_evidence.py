@@ -121,7 +121,9 @@ def test_every_record_declares_its_unit_population_and_class(registry):
         base = record.population_id.split("/")[0]
         assert base in R.POPULATIONS, record.population_id
         if record.interval is not None:
-            assert record.interval.level == 0.95 and record.interval.replicates == 2000
+            # CP-24's decision-level records carry the rule's 97.5% interval (capstone v21-r11 §23.9); every other is 95%.
+            level = 0.975 if "97_5." in record.record_id else 0.95
+            assert record.interval.level == level and record.interval.replicates == 2000
             assert record.interval.seed == 15042 and record.interval.block_days == 7
 
 

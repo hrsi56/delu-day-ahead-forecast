@@ -82,3 +82,17 @@ def test_pending_fields_are_explicit_and_nothing_published_changes(draft):
     assert 'statuses[].date' in draft['pending_fields']
     assert E.build_draft('cp21') == json.loads((ROOT / 'reports/block-challenger/mlflow-export-draft/cp21.json').read_text())
     assert E.build_draft('cp22') == json.loads((ROOT / 'reports/v4-revision/mlflow-export-draft/cp22.json').read_text())
+
+
+def test_the_published_export_set_carries_cp23_as_its_draft_with_the_pending_fields_filled(draft):
+    """Until PRES-4 the published set carried no CP-23 run. The publication registered the entries, so the published
+    set now carries the four CP-23 runs, built by the draft's own code path: equal to the committed draft apart from
+    the pending fields (research anchor §21.9). The branch's candidate carries no chart: it has no chapter."""
+    files = E.build_export()
+    assert E.contract_problems(files) == []
+    for name, text in E.render(files).items():
+        assert (E.EXPORT_DIR / name).read_text() == text
+    assert sorted(r['run_key'] for r in files['manifest']['runs'] if r['run_key'].startswith('cp23')) == sorted(_runs(draft))
+    report = E.later_final_vs_draft('cp23', files)
+    assert report['equal_apart_from_pending'], report['differences']
+    assert report['chart_artifacts_added'] == {} and report['renamed_fields'] == []

@@ -121,10 +121,17 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     assert RC.headline("md") in readme[:readme.index(readme_research.GLANCE_END)]
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text == re.sub(r"`", "", RC.headline("md"))
-    # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it. v4 leads with its own rule (§3.3 a).
-    assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v3's "
-                           "(v4 − v3: −0.0301 [−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] "
-                           "on the interval score; 1 policy tested against the rule).")
+    # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it. v5 leads with its own rule (§3.3 a), at the
+    # rule's own decision level, 97.5% (capstone v21-r11 §23.9; W47).
+    assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v4's "
+                           "(v5 − v4, at the rule's 97.5% level: −0.0133 [−0.0166, −0.0091] on the point-error score, "
+                           "−0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule).")
+    # v4's form, from the same generator, is unchanged for a rule that decided at 95%.
+    claim, v4_form = RC.headline_template(G.get("v4"))
+    assert re.sub(r"<[^>]+>", "", RC.render_template(claim, v4_form)).startswith(
+        "Met the adoption rule set before the experiment: both error scores improved on v3's (v4 − v3: −0.0301 "
+        "[−0.0368, −0.0228] on the point-error score, −0.0266 [−0.0327, −0.0204] on the interval score; 1 policy "
+        "tested against the rule).")
     # The v3-era form, from the same generator, is unchanged for a generation led by the accuracy targets.
     claim, v3_form = RC.headline_template(G.get("v3"))
     assert re.sub(r"<[^>]+>", "", RC.render_template(claim, v3_form)).startswith(
@@ -173,13 +180,13 @@ def test_the_comparison_finding_and_caveat_sit_above_its_chart(page):
 
 
 def test_every_research_chapter_fills_the_grammar():
-    for slots in (B.v4_slots(), B.v3_slots(), B.v2_slots()):
+    for slots in (B.v5_slots(), B.v4_slots(), B.v3_slots(), B.v2_slots()):
         assert B.slot_problems(slots) == [], slots.entry.id
 
 
 def test_the_page_renders_its_research_chapters_through_the_grammar(page):
     rendered = re.findall(r'<article class="chapter" id="(v\d+)"[^>]*data-grammar="chapter"', page)
-    assert rendered == ["v4", "v3", "v2"]
+    assert rendered == ["v5", "v4", "v3", "v2"]
     for chapter in rendered:
         body = page[page.index(f'<article class="chapter" id="{chapter}"'):]
         body = body[:body.index("</article>")]
@@ -210,7 +217,7 @@ def test_negative_control_a_main_chart_without_the_comparator_fails():
 
 
 def test_chart_headlines_are_claim_bound_blocks(page):
-    for chapter in ("v3", "v2"):
+    for chapter in ("v5", "v4", "v3", "v2"):
         assert f'<h3 id="{chapter}-chart-title" class="panel-title" data-block="{chapter}.chart_headline">' in page
 
 
@@ -222,7 +229,9 @@ def test_the_branch_cards_attach_to_the_lineage_with_their_content(page):
     for entry in G.branches():
         card = lineage[lineage.index(f'id="{entry.anchor[1:]}"'):]
         card = card[:card.index("</li>")]
-        assert f"{entry.name}<" in card and ">Not adopted<" in card
+        # A name's version labels are declared structural (`Pooled LightGBM member for v4`), so compare its text.
+        assert f"{entry.name}<" in re.sub(r"<span data-structural=\"[^\"]+\">([^<]*)</span>", r"\1", card)
+        assert ">Not adopted<" in card
         for part in ("question", "result", "reason"):
             assert f'data-block="branch.{entry.id}.{part}"' in card, (entry.id, part)
         assert 'class="evidence-row"' in card

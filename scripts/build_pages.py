@@ -1477,11 +1477,11 @@ def v5_main_panels() -> list[Panel]:
 def v5_main_chart() -> str:
     return single_rows(
         "v5-c2a", "C420", v5_main_panels(),
-        title="v5 minus v4: equal-fold error-score differences with 95 percent intervals and with the rule's "
-              "97.5 percent decision-level intervals",
-        desc="Four rows: the point-error score and the interval score, each at the 95 percent level and at the rule's "
-             "97.5 percent decision level. Each shows the estimated difference as a pentagon and its interval as a "
-             "line; every interval lies wholly left of zero, which favours v5.",
+        title="v5 minus v4: equal-fold error-score differences with 95 percent intervals and with the intervals "
+              "at the rule's decision level",
+        desc="Four rows: the point-error score and the interval score, each with its 95 percent interval and with its "
+             "wider interval at the rule's decision level, named in the row labels. Each shows the estimated difference "
+             "as a pentagon and its interval as a line; every interval lies wholly left of zero, which favours v5.",
         label_width=250, row_h=56, wrap_labels=True,
     )
 
@@ -1834,7 +1834,9 @@ def is_branch_point(entry: G.Entry) -> bool:
     if entry.kind == "branch":
         return True
     checkpoint = G.CHECKPOINTS.get(entry.checkpoint)
-    return entry.kind == "study arm" and checkpoint is not None and G.get(checkpoint.owner).kind == "branch"
+    # Only the live comparison's own experiments: CP-15's study arms (a branch's too) stay the study they always were.
+    return (entry.kind == "study arm" and checkpoint is not None and checkpoint.code in G.COMPARISON_EXPERIMENTS
+            and G.get(checkpoint.owner).kind == "branch")
 
 
 def comparison_role(entry: G.Entry) -> str:
@@ -2579,11 +2581,11 @@ def v5_slots() -> ChapterSlots:
         change=block("v5.change") + ddnn_change(),
         chart=MainChart("v5-c2a", "C420", tuple(v5_main_panels()),
                         title="v5 minus v4: equal-fold error-score differences with 95 percent intervals and with the "
-                              "rule's 97.5 percent decision-level intervals",
-                        desc="Four rows: the point-error score and the interval score, each at the 95 percent level and "
-                             "at the rule's 97.5 percent decision level. Each shows the estimated difference as a "
-                             "pentagon and its interval as a line; every interval lies wholly left of zero, which "
-                             "favours v5.",
+                              "intervals at the rule's decision level",
+                        desc="Four rows: the point-error score and the interval score, each with its 95 percent "
+                             "interval and with its wider interval at the rule's decision level, named in the row "
+                             "labels. Each shows the estimated difference as a pentagon and its interval as a line; "
+                             "every interval lies wholly left of zero, which favours v5.",
                         subtitle="Difference in error score, v5 − v4 · paired intervals at 95% and at the rule's 97.5% "
                                  "decision level · identical hours · development, post-selection",
                         label_width=250, wrap_labels=True),
