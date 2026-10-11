@@ -116,24 +116,38 @@ _OV = G.comparison_prefix()
 
 BLOCKS: tuple[Block, ...] = (
     # ---- the terms the headline introduces, directly below it (standard §1 ii, §3.1) ----------------
-    _block("terms.error_scores", "P21", """**Error scores:** error relative to a simple naive forecast, averaged over the
-           test periods; lower is better.""", PAGE, README),
+    _block("terms.error_scores", "P21", """**Error scores:** error relative to a naive forecast, averaged by test period;
+           lower is better.""", PAGE, README),
     _block("terms.targets", "P21", """**Accuracy targets:** each error score at least {r:derived.rule.margin.S_MAE}
            below the strongest benchmark's, set on {r:derived.rule.set_on}; a policy's distance from them is a point
            comparison.""", PAGE, README),
     _block("terms.benchmark", "P21", """**{g:daily-lear.name}:** the strongest benchmark, a linear model refitted
            daily.""", PAGE, README),
     _block("terms.policies", "P21", """**Policies:** the models and variants tested.""", PAGE, README),
+    _block("terms.not_adopted", "P57", """**Not adopted:** the candidates of the two experiments tested against
+           {g:v4.version} and not adopted, drawn as open circles. {g:v3-plus-pooled-normalized-lightgbm-averaged.short}:
+           one LightGBM for all {s:hours:24} hours, averaged over four sizes, in place of {g:v4.version}'s three blocks.
+           {g:v3-plus-pooled-lightgbm-pair.short}: {g:v4.version}'s normalized and raw-price LightGBM pair, each pooled over
+           all {s:hours:24} hours. {g:ddnn-member-on-v4.short}: a distributional neural network with one third of the
+           blend's weight. Their cards are under the experiments not adopted between {g:v4.version} and
+           {g:v5.version}.""", PAGE),
     # The terms of a headline that leads with a generation's own adoption rule (standard §3.3 a; PUBLISH_RULES A1).
     # They follow the current generation and its rule: its date, its number of conditions and its decision level.
     _block("terms.adoption_rule", _RULE["claim"] if _RULE else "P51", f"""**Adoption rule:** set on
            {{r:derived.adoption.{_CUR.id}.set_on}}; its {_COUNT_WORDS[len(_RULE["conditions"]) if _RULE else 4]}
            conditions are in the {{g:{_CUR.id}.version}} chapter.""", PAGE, README),
-    _block("terms.differences", _RULE["claim"] if _RULE else "P51", f"""**Paired difference:**
-           {{g:{_CUR.id}.version}}'s error score minus {{g:{_CMP.id}.version}}'s on identical hours, with its
-           {{s:level:{_RULE["level"] if _RULE else "95%"}}} confidence interval{", the rule's level" if _RULE
-           and _RULE["level"] != "95%" else ""}; below zero favours {{g:{_CUR.id}.version}}.""", PAGE, README),
+    # A rule that decided at another level than 95% names it as the rule's (W47); the phone placement (A2) keeps this
+    # term to two lines.
+    _block("terms.differences", _RULE["claim"] if _RULE else "P51", (f"""**Paired difference:**
+           {{g:{_CUR.id}.version}}'s score minus {{g:{_CMP.id}.version}}'s, with the rule's
+           {{s:level:{_RULE["level"]}}} interval; below zero favours {{g:{_CUR.id}.version}}.""" if _RULE and
+           _RULE["level"] != "95%" else f"""**Paired difference:** {{g:{_CUR.id}.version}}'s error score minus
+           {{g:{_CMP.id}.version}}'s on identical hours, with its {{s:level:95%}} confidence interval; below zero favours
+           {{g:{_CUR.id}.version}}."""), PAGE, README),
     _block("terms.class", "P21", """**{g:current.badge}:** development evidence, not a test on new data.""",
+           PAGE, README),
+    # The model the current generation's name introduces (PRES-4, editorial V1): defined beneath the headline.
+    _block("terms.ddnn2", "C403", """**{s:name:DDNN-2}:** our second distributional neural network (DDNN).""",
            PAGE, README),
     # ---- the comparison: the change against the comparator, and the main caveat (§1 i) ---------------
     _block("comparison.finding", "P24", f"""{{g:{_CUR.id}.version}} against {{g:{_CMP.id}.version}}, as a share of
@@ -297,8 +311,10 @@ BLOCKS: tuple[Block, ...] = (
            {s:level:95%} confidence intervals; at the rule's {s:level:97.5%} decision level the intervals are
            {r:derived.change_decision.v5.S_MAE|ci} and {r:derived.change_decision.v5.S_WIS|ci}."""),
     _block("v5.reading", "C421", """All five conditions of the rule set in advance held: at the rule's {s:level:97.5%}
-           level both paired differences' intervals lie below zero; {g:v5.version} passed the six original screening
-           criteria; the evaluation was complete and valid; no test period's paired interval lies wholly above zero; and
+           level both paired differences' intervals lie below zero; {g:v5.version} passed the six screening criteria set
+           before the experiments (the two accuracy targets, interval coverage in each test period, the August
+           {s:date:2022} peak against the benchmarks, each test period against the daily benchmarks, and complete
+           forecasts); the evaluation was complete and valid; no test period's paired interval lies wholly above zero; and
            both scores improved on {g:v4.version}'s by more than the practical size set in advance, half a percent.""",
            PAGE, README),
     # README-only: the page shows these differences once, in the main chart and its table.
@@ -312,39 +328,45 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp24.uncertainty.v5-HGL.equal_fold.WIS|ci} at {s:level:95%};
            {r:cp24.uncertainty97_5.v5-HGL.equal_fold.WIS|ci} at {s:level:97.5%}""", README),
     _block("v5.caveat.coverage", "P54", """**That the gain holds across the year.** The comparison scores
-           {r:derived.coverage.days} of the {r:derived.coverage.data_days} days in the data, from
-           {r:derived.coverage.first_data_day} to {r:derived.coverage.data_end}; {r:derived.coverage.q4_days} of them fall
-           in October to December, and they hold {r:derived.coverage.winters} winter. A re-evaluation on every eligible
-           day is planned.""", PAGE, README),
-    _block("v5.caveat.class", "C449", """**Performance on new data.** This is development evidence after selection: the
-           second decision on a distributional neural network over the same five test periods. The one-shot test on
-           days never used, which is planned, carries the protection.""", PAGE, README),
-    _block("v5.caveat.alone", "C427", """**That {s:name:DDNN-2} should replace {g:v4.version} on its own.** {g:ddnn2-alone.name}
-           scored lower than {g:v4.version} on both scores, {r:derived.change.ddnn2-alone.S_MAE} and
-           {r:derived.change.ddnn2-alone.S_WIS} as shares of {g:v4.version}'s score, but it was a study arm, never eligible for
-           adoption; no rule tested it.""", PAGE, README),
+           {r:derived.coverage.days} of the {r:derived.coverage.data_days} days of data up to the end of the development
+           period, {r:derived.coverage.first_data_day} to {r:derived.coverage.data_end}; {r:derived.coverage.q4_days} of
+           them fall in October to December, and only {r:derived.coverage.winters} winter (December to February) contains
+           any of them.""", PAGE, README),
+    _block("v5.caveat.class", "C449", """**Performance on new data.** This is development evidence after selection,
+           and the second decision on a distributional neural network over the same five test periods, after the
+           {g:ddnn-member-on-v4.inline}; only a one-shot test on days never used for development or selection protects
+           against that reuse.""", PAGE, README),
+    _block("v5.caveat.alone", "C427", """**That {s:name:DDNN-2} is best used as {g:v5.version} uses it.**
+           {g:ddnn2-alone.name} had lower, that is better, error scores than {g:v4.version}:
+           {r:derived.change.ddnn2-alone.S_MAE} {r:derived.change.ddnn2-alone.S_MAE|ci} on the point-error score and
+           {r:derived.change.ddnn2-alone.S_WIS} {r:derived.change.ddnn2-alone.S_WIS|ci} on the interval score, as shares
+           of {g:v4.version}'s score, with {s:level:95%} confidence intervals; {g:v3-plus-ddnn2.inline} also scored better
+           than {g:v5.version}. Descriptive only: both were study arms, never eligible for adoption, and no rule tested
+           them.""", PAGE, README),
     _block("v5.decision", "C422", """{g:v5.status} It met the adoption rule set before the experiment against
            {g:v4.version}; the released model, {g:released.version}, did not change. The two study arms,
-           {g:ddnn2-alone.name} and {g:v3-plus-ddnn2.inline}, were built only to read the change, and were never
-           candidates for adoption.""", PAGE, README),
+           {g:ddnn2-alone.name} and {g:v3-plus-ddnn2.inline}, were built only to show where the change came from, and
+           were never candidates for adoption.""", PAGE, README),
     _block("v5.method.blend", "C403", """**The blend.** {g:v5.version}'s central forecast gives {g:v4.version}'s two LEAR
            forecasts, bit for bit, two thirds of the weight, {g:v4.version}'s LightGBM one sixth and {s:name:DDNN-2} one sixth.
            The weights were fixed before any fit and never tuned. The hour-aware intervals keep {g:v4.version}'s recipe,
            re-estimated on {g:v5.version}'s own errors."""),
     _block("v5.method.network", "C403", """**{s:name:DDNN-2}.** A feed-forward network written in NumPy, on one row per delivery
            day, with a Johnson SU distribution for each of the {s:hours:24} hours, and exactly {g:v4.version}'s information. Each
-           member trains on the two years before the forecast day, minus a random fifth of whole weeks held out to stop
-           its training; four configurations, chosen per test period by a search on training data only, times two seeds,
+           member trains on up to two years before the forecast day, from {s:date:2019-01-01} at the earliest, minus a
+           random fifth of whole weeks held out to stop its training; four configurations, chosen per test period by a search on training data only, times two seeds,
            are combined by the median of their forecasts."""),
-    _block("v5.method.arms", "C429", """**The study arms.** {g:ddnn2-alone.name}, against {g:v4.version}:
+    _block("v5.method.arms", "C427", """**The study arms.** {g:ddnn2-alone.name}, against {g:v4.version}:
            {r:derived.change.ddnn2-alone.S_MAE} {r:derived.change.ddnn2-alone.S_MAE|ci} on the point-error score and
            {r:derived.change.ddnn2-alone.S_WIS} {r:derived.change.ddnn2-alone.S_WIS|ci} on the interval score, as shares
-           of {g:v4.version}'s score: descriptive, never eligible. {g:v3-plus-ddnn2.name}, {s:name:DDNN-2} in the LightGBM's place, scored
-           better than {g:v5.version} itself: {g:v5.version} minus it is {r:cp24.uncertainty.v5-v3+D2.equal_fold.MAE}
-           {r:cp24.uncertainty.v5-v3+D2.equal_fold.MAE|ci} on the point-error score and
-           {r:cp24.uncertainty.v5-v3+D2.equal_fold.WIS} {r:cp24.uncertainty.v5-v3+D2.equal_fold.WIS|ci} on the interval
-           score: with {s:name:DDNN-2} present, adding the LightGBM member did not help. It too was a study arm, never eligible, so
-           the rule's candidate was {g:v5.version}."""),
+           of {g:v4.version}'s score: descriptive, never eligible."""),
+    _block("v5.method.arms_lightgbm", "C432", """{g:v3-plus-ddnn2.name}, {s:name:DDNN-2} in the LightGBM's place, scored
+           better than {g:v5.version} itself: {g:v5.version} minus it is
+           {r:cp24.uncertainty.v5-v3+D2.equal_fold.MAE} {r:cp24.uncertainty.v5-v3+D2.equal_fold.MAE|ci} on the
+           point-error score and {r:cp24.uncertainty.v5-v3+D2.equal_fold.WIS}
+           {r:cp24.uncertainty.v5-v3+D2.equal_fold.WIS|ci} on the interval score, both intervals wholly above zero: with
+           {s:name:DDNN-2} present, adding the LightGBM member made both scores worse. It too was a study arm, never
+           eligible, so the rule's candidate was {g:v5.version}."""),
     _block("v5.folds", "C421", """Every test period favours {g:v5.version}: in each, the paired {s:level:95%} intervals
            of both errors lie below zero. The largest change is in fold {s:fold:3}, the {s:date:2022} crisis: point error
            {r:cp24.uncertainty.v5-HGL.fold_3.MAE|p=1} {r:cp24.uncertainty.v5-HGL.fold_3.MAE|ci1} EUR/MWh."""),
@@ -352,11 +374,11 @@ BLOCKS: tuple[Block, ...] = (
            {r:derived.periods.v5.ordinary_low}–{r:derived.periods.v5.ordinary_high} EUR/MWh in the four ordinary
            periods and {r:derived.periods.v5.stress} EUR/MWh in the {s:date:2022} crisis period, where {g:v4.version} had
            {r:derived.periods.v4.stress}."""),
-    _block("v5.peak", "C435", """**The August {s:date:2022} peak**, {r:cp24.diagnostics.v5.peak.n_days} days inside the
+    _block("v5.peak", "P59", """**The August {s:date:2022} peak**, {r:cp24.diagnostics.v5.peak.n_days} days inside the
            crisis period: {g:v5.version}'s point error is {r:cp24.diagnostics.v5.peak.MAE|p=1} EUR/MWh against
            {g:v4.version}'s {r:cp24.diagnostics.HGL.peak.MAE|p=1}. Descriptive, on a small sample: no inference is
            drawn."""),
-    _block("v5.coverage", "C433", """{g:v5.version}'s pooled intervals are narrower than {g:v4.version}'s at every level:
+    _block("v5.coverage", "P59", """{g:v5.version}'s pooled intervals are narrower than {g:v4.version}'s at every level:
            mean widths {r:cp24.metrics.v5.pooled.mean_width50|p=1}, {r:cp24.metrics.v5.pooled.mean_width80|p=1} and
            {r:cp24.metrics.v5.pooled.mean_width95|p=1} EUR/MWh at the {s:level:50%}, {s:level:80%} and {s:level:95%} levels,
            against {r:cp24.metrics.HGL.pooled.mean_width50|p=1}, {r:cp24.metrics.HGL.pooled.mean_width80|p=1} and
@@ -509,9 +531,13 @@ BLOCKS: tuple[Block, ...] = (
            {r:cp22.uncertainty.M-HGL.equal_fold.MAE|ci} and {r:cp22.uncertainty.M-HGL.equal_fold.WIS}
            {r:cp22.uncertainty.M-HGL.equal_fold.WIS|ci}. In fold {s:fold:4}, both were decisively worse: point error
            {r:cp22.uncertainty.R-HGL.fold_4.MAE|p=1} {r:cp22.uncertainty.R-HGL.fold_4.MAE|ci1} and
-           {r:cp22.uncertainty.M-HGL.fold_4.MAE|p=1} {r:cp22.uncertainty.M-HGL.fold_4.MAE|ci1} EUR/MWh.""", PAGE, README),
-    _block("branch.pooled-lightgbm-member-for-v4.reason", "C212", """The rule allowed no test period to be decisively
-           worse, so {g:v4.version} was kept as it was.""", PAGE, README),
+           {r:cp22.uncertainty.M-HGL.fold_4.MAE|p=1} {r:cp22.uncertainty.M-HGL.fold_4.MAE|ci1} EUR/MWh, interval score
+           {r:cp22.uncertainty.R-HGL.fold_4.WIS|p=1} {r:cp22.uncertainty.R-HGL.fold_4.WIS|ci1} and
+           {r:cp22.uncertainty.M-HGL.fold_4.WIS|p=1} {r:cp22.uncertainty.M-HGL.fold_4.WIS|ci1} EUR/MWh. Development
+           evidence after selection, not a test on new data.""", PAGE, README),
+    _block("branch.pooled-lightgbm-member-for-v4.reason", "C212", """Both candidates were decisively worse than
+           {g:v4.version} in one test period, with a {s:level:95%} interval wholly above zero; the rule allowed none, so
+           {g:v4.version} was kept as it was.""", PAGE, README),
     _block("branch.ddnn-member-on-v4.question", "P56", """Does a distributional neural network, added to
            {g:v4.version} as a one-third member, improve on {g:v4.version} in point and interval accuracy together?""",
            PAGE, README),
@@ -520,7 +546,7 @@ BLOCKS: tuple[Block, ...] = (
            score and {r:cp23.uncertainty.v5-HGL.equal_fold.WIS} {r:cp23.uncertainty.v5-HGL.equal_fold.WIS|ci} in the
            interval score, with {s:level:95%} intervals; in fold {s:fold:3}, the {s:date:2022} crisis, its point error was
            decisively worse, {r:cp23.uncertainty.v5-HGL.fold_3.MAE|p=1} {r:cp23.uncertainty.v5-HGL.fold_3.MAE|ci1}
-           EUR/MWh.""", PAGE, README),
+           EUR/MWh. Development evidence after selection, not a test on new data.""", PAGE, README),
     _block("branch.ddnn-member-on-v4.reason", "C310", """The improvement over {g:v4.version} that the rule required was
            not shown, on either score.""", PAGE, README),
     # ---- the v1 chapter (standard §4; its archive is preserved as published) ------------------------
@@ -556,10 +582,12 @@ BLOCKS: tuple[Block, ...] = (
            {r:derived.change_decision.v5.S_MAE|ci} and {r:derived.change_decision.v5.S_WIS|ci}. Development evidence
            after selection, not a test on new data.""", PAGE, README),
     _block("transition.v4-v5.limits", "P54", """The comparison scores {r:derived.coverage.days} of the
-           {r:derived.coverage.data_days} days in the data from {r:derived.coverage.first_data_day} to
-           {r:derived.coverage.data_end}; {r:derived.coverage.q4_days} fall in October to December and they hold
-           {r:derived.coverage.winters} winter. It is the second decision on a distributional neural network over the same
-           five test periods; the one-shot test on days never used carries the protection.""", PAGE),
+           {r:derived.coverage.data_days} days of data up to the end of the development period,
+           {r:derived.coverage.first_data_day} to {r:derived.coverage.data_end}; {r:derived.coverage.q4_days} of them fall
+           in October to December, and only {r:derived.coverage.winters} winter (December to February) contains any of
+           them. It is the second decision on a distributional neural network over the same
+           five test periods; only a one-shot test on days never used for development or selection protects against
+           that reuse.""", PAGE),
     _block("transition.v3-v4.title", "P52", """From {g:v3.version} to {g:v4.version}: adding a LightGBM
            forecaster""", PAGE, README),
     _block("transition.v3-v4.change", "P52", """{g:v4.version} kept {g:v3.version}'s inputs and its two LEAR forecasts,
@@ -918,23 +946,31 @@ LISTED_LATER = 4
 
 #: Every term a headline form may introduce, in reading order.
 ALL_TERMS = ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.adoption_rule",
-             "terms.differences", "terms.class")
+             "terms.differences", "terms.class", "terms.ddnn2", "terms.not_adopted")
 
 
 def comparison_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     """The terms the headline does not introduce, defined where the comparison uses them: its targets, benchmark and
     policies are still drawn there when the headline leads with a generation's own rule."""
     used = headline_terms(entry)
-    return tuple(key for key in ALL_TERMS if key not in used and key not in ("terms.adoption_rule", "terms.differences"))
+    comparison = tuple(key for key in ALL_TERMS if key not in used
+                       and key not in ("terms.adoption_rule", "terms.differences", "terms.ddnn2", "terms.not_adopted"))
+    # The comparison's rows include the candidates of branches tested and not adopted (PRES-4): named where they are drawn.
+    points = [row for row in G.comparison_rows() if row.kind == "branch" or (
+        row.kind == "study arm" and row.checkpoint in G.COMPARISON_EXPERIMENTS
+        and G.get(G.CHECKPOINTS[row.checkpoint].owner).kind == "branch")]
+    return comparison + (("terms.not_adopted",) if points else ())
 
 
 def headline_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     """The terms the headline introduces, defined directly below it (standard §1 ii): they follow the headline's
     form, so a term is never defined for a headline that does not use it."""
     entry = entry or G.current_generation()
+    # A model name the generation's own name introduces is defined beneath the headline too (PRES-4: DDNN-2).
+    named = ("terms.ddnn2",) if "DDNN-2" in entry.name else ()
     if entry.id in D.ADOPTION_RULES:
-        return ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies", "terms.class")
-    return ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.class")
+        return ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies", "terms.class") + named
+    return ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.class") + named
 
 
 def _tested(entry: G.Entry) -> bool:
@@ -1132,7 +1168,7 @@ def _structural_name(name: str, target: str) -> str:
 def _registry(spec: str, target: str) -> str:
     """A registry token (standard §5): a name, version, badge or dated status, never typed in a template.
 
-    `{g:ID.name}`, `{g:ID.inline}`, `{g:ID.version}`, `{g:ID.badge}`, `{g:ID.adoption}`,
+    `{g:ID.name}`, `{g:ID.inline}`, `{g:ID.short}`, `{g:ID.version}`, `{g:ID.badge}`, `{g:ID.adoption}`,
     `{g:ID.status}` and `{g:release_rule}`; `ID` may be `current` or `released`."""
     if spec == "release_rule":
         sentence = G.release_sentence()
@@ -1143,8 +1179,8 @@ def _registry(spec: str, target: str) -> str:
         return f'<span data-status="release-rule">{body}</span>'
     ident, _, attribute = spec.partition(".")
     entry = G.resolve(ident)
-    if attribute in ("name", "inline"):
-        name = entry.name if attribute == "name" else G.inline_name(entry)
+    if attribute in ("name", "inline", "short"):
+        name = {"name": entry.name, "inline": G.inline_name(entry), "short": entry.short}[attribute]
         text = _structural_name(name, target)
         return text if target == "md" else f'<span data-registry="{entry.id}">{text}</span>'
     if attribute == "version":

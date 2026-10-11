@@ -317,7 +317,8 @@ def build_block() -> str:
             lines += branch_section(entry)
     lines += [
         "### Reading the comparison", "",
-        *[f"- {md(key)}" for key in RC.comparison_terms()],
+        # The README draws no chart, so a term about the chart's marks (the open circles) stays on the page.
+        *[f"- {md(key)}" for key in RC.comparison_terms() if RC.README in RC.BLOCKS_BY_KEY[key].surfaces],
         *([""] if RC.comparison_terms() else []),
         RC.target_sentence("md", surface=RC.README), "",
         md("overview.fairness.readme"), "",

@@ -9,11 +9,12 @@
 
 **Research, v5 · DDNN-2 added.** Met the adoption rule set before the experiment: both error scores improved on v4's (v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, −0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule). `Development · post-selection`
 
-- **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
+- **Error scores:** error relative to a naive forecast, averaged by test period; lower is better.
 - **Adoption rule:** set on 2026-10-05; its five conditions are in the v5 chapter.
-- **Paired difference:** v5's error score minus v4's on identical hours, with its 97.5% confidence interval, the rule's level; below zero favours v5.
+- **Paired difference:** v5's score minus v4's, with the rule's 97.5% interval; below zero favours v5.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
+- **DDNN-2:** our second distributional neural network (DDNN).
 
 **Demo, v1 · released LightGBM:** [try the v1 demo](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
 
@@ -51,15 +52,15 @@ Difference in error score (v5 − v4), with its 95% confidence interval and its 
 
 **The rule**, set on 2026-10-05 and frozen in the protocol before any of its fits: v5 would be adopted only if, against v4, the paired differences' intervals at 97.5% lay below zero for the interval score and at or below zero for the point-error score; it met the six original screening criteria; the evaluation was complete and valid; no test period was decisively worse, that is, none had a 95% paired interval wholly above zero; and both point estimates improved on v4's score by at least half a percent. The 97.5% level splits a 5% error rate across the two attempts the plan allowed; one ran. All five conditions held.
 
-All five conditions of the rule set in advance held: at the rule's 97.5% level both paired differences' intervals lie below zero; v5 passed the six original screening criteria; the evaluation was complete and valid; no test period's paired interval lies wholly above zero; and both scores improved on v4's by more than the practical size set in advance, half a percent.
+All five conditions of the rule set in advance held: at the rule's 97.5% level both paired differences' intervals lie below zero; v5 passed the six screening criteria set before the experiments (the two accuracy targets, interval coverage in each test period, the August 2022 peak against the benchmarks, each test period against the daily benchmarks, and complete forecasts); the evaluation was complete and valid; no test period's paired interval lies wholly above zero; and both scores improved on v4's by more than the practical size set in advance, half a percent.
 
 **What this result does not establish:**
 
-- **That the gain holds across the year.** The comparison scores 448 of the 2,654 days in the data, from 2019-01-01 to 2026-04-07; 0 of them fall in October to December, and they hold 1 winter. A re-evaluation on every eligible day is planned.
-- **Performance on new data.** This is development evidence after selection: the second decision on a distributional neural network over the same five test periods. The one-shot test on days never used, which is planned, carries the protection.
-- **That DDNN-2 should replace v4 on its own.** DDNN-2 alone scored lower than v4 on both scores, −11% and −16% as shares of v4's score, but it was a study arm, never eligible for adoption; no rule tested it.
+- **That the gain holds across the year.** The comparison scores 448 of the 2,654 days of data up to the end of the development period, 2019-01-01 to 2026-04-07; 0 of them fall in October to December, and only 1 winter (December to February) contains any of them.
+- **Performance on new data.** This is development evidence after selection, and the second decision on a distributional neural network over the same five test periods, after the DDNN member on v4; only a one-shot test on days never used for development or selection protects against that reuse.
+- **That DDNN-2 is best used as v5 uses it.** DDNN-2 alone had lower, that is better, error scores than v4: −11% [−14%, −7%] on the point-error score and −16% [−19%, −12%] on the interval score, as shares of v4's score, with 95% confidence intervals; v3 plus a DDNN-2 member also scored better than v5. Descriptive only: both were study arms, never eligible for adoption, and no rule tested them.
 
-In October 2026, v5 was adopted in research. It met the adoption rule set before the experiment against v4; the released model, v1, did not change. The two study arms, DDNN-2 alone and v3 plus a DDNN-2 member, were built only to read the change, and were never candidates for adoption.
+In October 2026, v5 was adopted in research. It met the adoption rule set before the experiment against v4; the released model, v1, did not change. The two study arms, DDNN-2 alone and v3 plus a DDNN-2 member, were built only to show where the change came from, and were never candidates for adoption.
 
 Evidence: [Engineering report, frozen 2026-10-10](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-24/reports/ddnn2/report.md) · [Review verdict, frozen 2026-10-10](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-24/docs/track-b/evidence/cp-24/integration.md) · [Raw CSV rows, frozen 2026-10-10](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-24/reports/ddnn2/attempt-1/uncertainty.csv#L112)
 
@@ -217,15 +218,15 @@ Evidence: [Engineering report, frozen 2026-09-16](https://github.com/hrsi56/delu
 
 *The block split removed, under non-inferiority.* In October 2026, the pooled LightGBM member for v4 was not adopted.
 
-Can one pooled LightGBM, for all 24 hours, replace v4's three-block LightGBM member without losing accuracy against v4 itself? Against v4, over the five test periods together, neither candidate's 95% interval lay wholly above zero: the averaged member's paired difference is +0.0011 [−0.0031, +0.0054] in the point-error score and +0.0010 [−0.0028, +0.0049] in the interval score; the pair's −0.0013 [−0.0036, +0.0016] and −0.0008 [−0.0030, +0.0022]. In fold 4, both were decisively worse: point error +0.3 [+0.1, +0.4] and +0.2 [+0.1, +0.3] EUR/MWh. The rule allowed no test period to be decisively worse, so v4 was kept as it was.
+Can one pooled LightGBM, for all 24 hours, replace v4's three-block LightGBM member without losing accuracy against v4 itself? Against v4, over the five test periods together, neither candidate's 95% interval lay wholly above zero: the averaged member's paired difference is +0.0011 [−0.0031, +0.0054] in the point-error score and +0.0010 [−0.0028, +0.0049] in the interval score; the pair's −0.0013 [−0.0036, +0.0016] and −0.0008 [−0.0030, +0.0022]. In fold 4, both were decisively worse: point error +0.3 [+0.1, +0.4] and +0.2 [+0.1, +0.3] EUR/MWh, interval score +0.2 [+0.1, +0.2] and +0.1 [+0.024, +0.2] EUR/MWh. Development evidence after selection, not a test on new data. Both candidates were decisively worse than v4 in one test period, with a 95% interval wholly above zero; the rule allowed none, so v4 was kept as it was.
 
 Evidence: [Engineering report, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-22/reports/v4-revision/report.md) · [Review verdict, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-22/docs/track-b/evidence/cp-22/integration.md)
 
 #### DDNN member on v4
 
-*v4 plus a DDNN member, under rule cp23-adoption.* In October 2026, the dDNN member on v4 was not adopted.
+*v4 plus a DDNN member, under rule cp23-adoption.* In October 2026, the DDNN member on v4 was not adopted.
 
-Does a distributional neural network, added to v4 as a one-third member, improve on v4 in point and interval accuracy together? Against v4, the paired difference is +0.0064 [−0.0016, +0.0149] in the point-error score and +0.0071 [−0.0009, +0.0138] in the interval score, with 95% intervals; in fold 3, the 2022 crisis, its point error was decisively worse, +1.9 [+0.3, +4.4] EUR/MWh. The improvement over v4 that the rule required was not shown, on either score.
+Does a distributional neural network, added to v4 as a one-third member, improve on v4 in point and interval accuracy together? Against v4, the paired difference is +0.0064 [−0.0016, +0.0149] in the point-error score and +0.0071 [−0.0009, +0.0138] in the interval score, with 95% intervals; in fold 3, the 2022 crisis, its point error was decisively worse, +1.9 [+0.3, +4.4] EUR/MWh. Development evidence after selection, not a test on new data. The improvement over v4 that the rule required was not shown, on either score.
 
 Evidence: [Engineering report, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-23/reports/distribution-challenger/report.md) · [Review verdict, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-23/docs/track-b/evidence/cp-23/integration.md)
 

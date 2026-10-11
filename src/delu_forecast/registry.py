@@ -891,7 +891,7 @@ def status_sentence(entry: Entry) -> str:
     event = entry.status
     if event is None:
         raise RegistryError(f"{entry.id} has no status")
-    subject = entry.version or f"the {entry.name[0].lower()}{entry.name[1:]}"
+    subject = entry.version or f"the {inline_name(entry)}"  # keeps an acronym's case: "the DDNN member on v4"
     verb = {"adopted in research": "was adopted in research", "not adopted": "was not adopted",
             "released": "was released", "final candidate": "became the final candidate",
             "live": "went live", "retired": "was retired"}[event.status]

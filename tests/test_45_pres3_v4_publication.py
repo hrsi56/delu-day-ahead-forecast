@@ -223,8 +223,10 @@ def test_the_opening_pairs_research_v4_with_released_v1(page):
 
 def test_the_terms_follow_the_headline(page):
     # "policy" is in the headline ("1 policy tested against the rule"), so it is defined beneath it (the fresh reader)
-    assert RC.headline_terms() == ("terms.error_scores", "terms.adoption_rule", "terms.differences", "terms.policies",
-                                   "terms.class")
+    assert RC.headline_terms()[:5] == ("terms.error_scores", "terms.adoption_rule", "terms.differences",
+                                       "terms.policies", "terms.class")
+    # PRES-4: the current generation's name introduces DDNN-2, defined beneath the headline too.
+    assert RC.headline_terms()[5:] == (("terms.ddnn2",) if "DDNN-2" in G.current_generation().name else ())
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     for key in RC.headline_terms():
         assert f'data-block="{key}"' in terms

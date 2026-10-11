@@ -296,9 +296,10 @@ def test_the_limits_are_stated_in_the_chapter_and_the_transition(page):
     chapter, journey = _text(_chapter(page, "v5")), page[page.index('id="journey"'):page.index('id="chapters"')]
     card = _text(journey[journey.index('data-transition="v4-v5"'):])
     for text in (chapter, card):
-        assert "448 of the 2,654 days in the data" in text and "0 of them fall in October to December" in text or \
-            "0 fall in October to December" in text
-        assert "1 winter" in text and "second decision on a distributional neural network" in text
+        assert "448 of the 2,654 days of data up to the end of the development period" in text
+        assert "0 of them fall in October to December" in text
+        assert "only 1 winter (December to February) contains any of them" in text
+        assert "second decision on a distributional neural network" in text and "planned" not in text.split("winter")[1][:200]
 
 
 # --------------------------------------------------------------------------- the comparison
@@ -354,7 +355,7 @@ def test_the_headline_leads_with_the_verdict_at_the_decision_level_and_names_eac
     assert claim == "P53" and RC.headline("md") in README.read_text()
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     plain = re.sub(r"<[^>]+>", "", terms)
-    assert "97.5% confidence interval, the rule's level" in plain
+    assert "with the rule's 97.5% interval" in plain and "DDNN-2: our second distributional neural network" in plain
     assert "its five conditions are in the v5 chapter" in plain and 'href="#v5-rule"' in terms
 
 
@@ -395,9 +396,14 @@ def test_the_v5_chapter_fills_the_grammar_with_both_intervals_and_the_limits(pag
     for key in ("v5.caveat.coverage", "v5.caveat.class", "v5.caveat.alone", "v5.decision", "v5.reading",
                 "v5.chart_headline"):
         assert f'data-block="{key}"' in reading, key
-    for key in ("v5.leakage", "v5.controls", "v5.rule", "v5.method.arms", "v5.folds"):
+    for key in ("v5.leakage", "v5.controls", "v5.rule", "v5.method.arms", "v5.method.arms_lightgbm", "v5.folds"):
         assert f'data-block="{key}"' in chapter, key
     assert "descriptive, never eligible" in _text(chapter) and "never eligible for adoption" in _text(reading)
+    # the editorial review's repairs: DDNN-2 alone with its intervals, descriptive; the leakage route visible
+    alone = _text(reading[reading.index('data-block="v5.caveat.alone"'):])
+    assert "lower, that is better" in alone and "Descriptive only" in alone and alone.count("[") >= 2
+    assert 'href="#v5-leakage"' in reading and 'id="v5-leakage"' in chapter
+    assert 'id="v5-ratio-values"' in chapter and "View the change as a share of v4" in _text(chapter)
     assert 'id="v5-rule"' in chapter and 'href="#v5-c2a-values"' not in chapter
 
 

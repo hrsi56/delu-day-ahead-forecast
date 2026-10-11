@@ -1574,8 +1574,8 @@ def hour_values_table(ident: str, claim_id: str, series: tuple[tuple[str, str], 
     return disclosure(ident, "View values", table_html)
 
 
-def legend(roles: tuple[str, ...]) -> str:
-    names = {**{entry.style: entry.version for entry in G.generations()}, **G.STYLE_LABELS}
+def legend(roles: tuple[str, ...], labels: dict[str, str] | None = None) -> str:
+    names = {**{entry.style: entry.version for entry in G.generations()}, **G.STYLE_LABELS, **(labels or {})}
     items = []
     for role in roles:
         svg = (f'<svg class="legend-mark" viewBox="-8 -8 16 16" width="16" height="16" aria-hidden="true">'
@@ -1847,6 +1847,14 @@ def comparison_role(entry: G.Entry) -> str:
     return "study" if is_branch_point(entry) else entry.style
 
 
+def comparison_legend_labels() -> dict[str, str]:
+    """The live comparison's legend words: the open circle also marks the candidates of branches not adopted, which are
+    not study arms (PUBLISH_RULES §3.3), when the comparison draws them (PRES-4, editorial V2)."""
+    if any(is_branch_point(entry) for entry in G.comparison_rows()):
+        return {"study": f"{G.STYLE_LABELS['study']}, or a candidate not adopted"}
+    return {}
+
+
 def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
     """A comparison row's label: the canonical name, qualified by its role in that comparison. A pinned comparison
     qualifies a row by its code's note in that experiment, as it was published; the live one by the identity's role
@@ -1918,7 +1926,7 @@ def results() -> str:
   {block("comparison.caveat", cls="qualification caveat-line")}
   {comparison_terms_list()}
   <p class="panel-sub" data-block="comparison.sub">{RC.render("comparison.sub")}</p>
-  {legend(tuple(dict.fromkeys(comparison_role(entry) for entry in G.comparison_rows())))}
+  {legend(tuple(dict.fromkeys(comparison_role(entry) for entry in G.comparison_rows())), comparison_legend_labels())}
   {overview_chart()}
   <p data-block="comparison.target">{RC.target_sentence()} <span data-block="comparison.census">{RC.census_sentence()}</span></p>
   {block("comparison.howto")}
@@ -2371,6 +2379,8 @@ class MainChart:
     label_width: int = 230
     row_h: int = 56
     wrap_labels: bool = False
+    #: Further exact values beside the chart's own table (PRES-4: v5's change as a share of v4's score).
+    extra_values: str = ""
 
 
 @dataclass(frozen=True)
@@ -2475,7 +2485,7 @@ def render_chapter(slots: ChapterSlots, *, open_details: tuple[str, ...] = ()) -
   {single_rows(chart.chart_id, chart.claim_id, list(chart.panels), title=chart.title, desc=chart.desc,
                label_width=chart.label_width, row_h=chart.row_h, wrap_labels=chart.wrap_labels)}
   {block(slots.reading, cls="finding reading")}
-  {values_table(f"{chart.chart_id}-values", chart.claim_id, list(chart.panels))}
+  {values_table(f"{chart.chart_id}-values", chart.claim_id, list(chart.panels))}{chart.extra_values}
  </figure>
  <aside class="caveats" aria-label="What this result does not establish" data-slot="not-established">
   <h3>What this result does not establish</h3><ul class="not-established">{not_established}</ul>
@@ -2566,19 +2576,40 @@ def fold_difference_panels(prefix: str, pair: str, role: str, title: str) -> lis
     return [panel("MAE", "Point error"), panel("WIS", "Interval score")]
 
 
+def ratio_change_table(ident: str, subject: str, levels: tuple[tuple[str, str], ...]) -> str:
+    """The change as a share of the comparator's score, exact (standard §4: exact values live in the value tables), at
+    each published interval level, from the derived records."""
+    comparator = G.get(G.get(subject).comparator).version
+    head = ('<th scope="col">Score</th><th scope="col">Change, percent</th>'
+            + "".join(f'<th scope="col">{_label(name)}</th>' for name, _ in levels))
+    body = ""
+    for score, name in (("S_MAE", "Point-error score"), ("S_WIS", "Interval score")):
+        cells = "".join(f'<td class="n exact">{interval(f"{prefix}.{subject}.{score}", "P55", exact=True)}</td>'
+                        for _, prefix in levels)
+        body += (f'<tr><th scope="row">{name}</th><td class="n exact">'
+                 f'{value(f"derived.change.{subject}.{score}", "P55", option="exact")}</td>{cells}</tr>')
+    table_html = (f'<div class="scroll" role="region" aria-label="Change as a share of the score" tabindex="0">'
+                  f'<table class="data"><caption>{_label(f"Change as a share of {comparator}" + chr(39) + "s score")}'
+                  f"</caption><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
+    return disclosure(ident, f"View the change as a share of {comparator}'s score", table_html)
+
+
 def v5_slots() -> ChapterSlots:
     entry = G.get("v5")
     method = (block("v5.method.blend") + block("v5.method.network")
               + detail_head("v5-arms", "The study arms: DDNN-2 alone, and DDNN-2 in the LightGBM's place")
-              + block("v5.method.arms"))
+              + block("v5.method.arms") + block("v5.method.arms_lightgbm"))
+    ratios = ratio_change_table("v5-ratio-values", "v5", (("95% interval", "derived.change"),
+                                                         ("97.5% interval, the decision level", "derived.change_decision")))
     folds = (detail_head("v5-per-period-differences", "Did v5 help in every test period?") + block("v5.folds")
              + values_table("v5-c2b-values", "C421", fold_difference_panels("cp24", "v5-HGL", "v5", "v5 − v4"),
                             visible=True)
              + detail_head("v5-absolute-errors", "Absolute errors per test period") + block("v5.absolute"))
     stress = detail_head("v5-peak", "The August 2022 peak") + block("v5.peak")
     coverage = detail_head("v5-coverage", "Did the intervals get more reliable, or only wider?") + block("v5.coverage")
-    protocol = block("v5.rule", ident="v5-rule") + "".join(block(key) for key in ("v5.criteria", "v5.controls",
-                                                                                   "v5.leakage"))
+    protocol = (block("v5.rule", ident="v5-rule") + block("v5.criteria") + block("v5.controls")
+                + detail_head("v5-leakage", "No delivery-day outcome is used: the leakage test at every origin")
+                + block("v5.leakage"))
     return ChapterSlots(
         entry=entry,
         question="v5.question",
@@ -2592,7 +2623,7 @@ def v5_slots() -> ChapterSlots:
                              "every interval lies wholly left of zero, which favours v5.",
                         subtitle="Difference in error score, v5 − v4 · paired intervals at 95% and at the rule's 97.5% "
                                  "decision level · identical hours · development, post-selection",
-                        label_width=250, wrap_labels=True),
+                        label_width=250, wrap_labels=True, extra_values=ratios),
         headline="v5.chart_headline",
         reading="v5.reading",
         not_established=("v5.caveat.coverage", "v5.caveat.class", "v5.caveat.alone"),
