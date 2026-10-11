@@ -116,8 +116,8 @@ _OV = G.comparison_prefix()
 
 BLOCKS: tuple[Block, ...] = (
     # ---- the terms the headline introduces, directly below it (standard §1 ii, §3.1) ----------------
-    _block("terms.error_scores", "P21", """**Error scores:** error relative to a naive forecast, averaged by test period;
-           lower is better.""", PAGE, README),
+    _block("terms.error_scores", "P21", """**Error scores:** error relative to a simple naive forecast, averaged over the
+           test periods; lower is better.""", PAGE, README),
     _block("terms.targets", "P21", """**Accuracy targets:** each error score at least {r:derived.rule.margin.S_MAE}
            below the strongest benchmark's, set on {r:derived.rule.set_on}; a policy's distance from them is a point
            comparison.""", PAGE, README),
@@ -136,8 +136,8 @@ BLOCKS: tuple[Block, ...] = (
     _block("terms.adoption_rule", _RULE["claim"] if _RULE else "P51", f"""**Adoption rule:** set on
            {{r:derived.adoption.{_CUR.id}.set_on}}; its {_COUNT_WORDS[len(_RULE["conditions"]) if _RULE else 4]}
            conditions are in the {{g:{_CUR.id}.version}} chapter.""", PAGE, README),
-    # A rule that decided at another level than 95% names it as the rule's (W47); the phone placement (A2) keeps this
-    # term to two lines.
+    # A rule that decided at another level than 95% names it as the rule's (W47), in the wording P53 quotes; the phone
+    # placement (A2) keeps this term to two lines.
     _block("terms.differences", _RULE["claim"] if _RULE else "P51", (f"""**Paired difference:**
            {{g:{_CUR.id}.version}}'s score minus {{g:{_CMP.id}.version}}'s, with the rule's
            {{s:level:{_RULE["level"]}}} interval; below zero favours {{g:{_CUR.id}.version}}.""" if _RULE and
@@ -146,8 +146,9 @@ BLOCKS: tuple[Block, ...] = (
            {{g:{_CUR.id}.version}}."""), PAGE, README),
     _block("terms.class", "P21", """**{g:current.badge}:** development evidence, not a test on new data.""",
            PAGE, README),
-    # The model the current generation's name introduces (PRES-4, editorial V1): defined beneath the headline.
-    _block("terms.ddnn2", "C403", """**{s:name:DDNN-2}:** our second distributional neural network (DDNN).""",
+    # The model the current generation's name introduces (PRES-4, editorial V1): defined beneath the headline, on one
+    # line at phone width (A2).
+    _block("terms.ddnn2", "C403", """**{s:name:DDNN-2}:** a distributional neural network (DDNN).""",
            PAGE, README),
     # ---- the comparison: the change against the comparator, and the main caveat (§1 i) ---------------
     _block("comparison.finding", "P24", f"""{{g:{_CUR.id}.version}} against {{g:{_CMP.id}.version}}, as a share of
@@ -1078,13 +1079,16 @@ def _render_derived(claim_id: str, record_id: str, option: str | None, target: s
         return (f'<data value="{html.escape(raw)}" data-claim="{claim_id}" data-record="{record_id}" '
                 f'data-derived="{record.kind}"{field}>{html.escape(text)}</data>')
 
-    if option == "ci":
+    if option in ("ci", "ciexact"):
         if not record.interval:
             raise ClaimError(f"{record_id} has no interval")
-        return f"[{one('ci_low', None)}, {one('ci_high', None)}]"
+        style = "exact" if option == "ciexact" else None
+        return f"[{one('ci_low', style)}, {one('ci_high', style)}]"
     if option in ("lo", "hi"):
         return one("ci_low" if option == "lo" else "ci_high", None)
-    return one("value", option if option in ("abs", "exact") else None)
+    if option not in (None, "abs", "exact"):
+        raise ClaimError(f"{record_id}: unknown option {option!r} for a derived record")  # never the point instead
+    return one("value", option)
 
 
 def _render_record(claim_id: str, spec: str, target: str) -> str:

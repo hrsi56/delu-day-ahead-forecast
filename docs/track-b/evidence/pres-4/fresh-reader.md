@@ -279,3 +279,25 @@ a37bb10008a480caee83d9f29b72d9f80e2f4132fba609d8c17594cec7ae0d8d  P37.png
 53faa8c04c3da70e643c4c53336f05fe9b9412c320389467fcb46662e3ec65e5  P38.png
 2a17496c180db5c8aeeb27bc5bd9ee43c8e934885cecf67fa3a7aaf5c5972f2f  P39.png
 ```
+
+## Appended after Integration review 1 (2026-10-11)
+
+The record above is unchanged; this section corrects it.
+
+- **Observation 3's disposition cites values that match no record.** "−2.48% [−3.11%, −1.70%]" was typed by hand. The
+  records hold −2.49% [−2.96%, −1.79%] at 95% and [−3.04%, −1.68%] at the 97.5% decision level on the point-error
+  score, and −2.36% [−2.78%, −1.71%] and [−2.86%, −1.62%] on the interval score (`derived.change.v5.*`,
+  `derived.change_decision.v5.*`). The same disposition says "the exact ratios are in the value table": on the page the
+  reader saw, `e22525a9…`, that table's interval columns showed the rounded point value instead (Integration review 1,
+  V1). The table is repaired at the next candidate.
+- **The page changed after the reading, in three places** (Integration review 1, V1 and V2): the error scores' term is
+  the standard's definition again ("error relative to a simple naive forecast, averaged over the test periods; lower is
+  better", in place of "error relative to a naive forecast, averaged by test period"); the DDNN-2 term reads "a
+  distributional neural network (DDNN)" (in place of "our second distributional neural network (DDNN)"); and the exact
+  ratio table carries both interval endpoints. The outcome's sentence "No text on the page changed after the reading"
+  holds only for `e22525a9…`.
+- **Continued applicability, not a new reading.** None of answers 1–5 quotes the changed text: their quotes are the
+  headline, the relative change, the comparison and its terms, the caveats, the release rule and the branch cards,
+  all unchanged. The placements the grading cites are unchanged: the headline block ends at 800.6 / 801.3 px (desktop)
+  and 628.6 / 628.7 px (phone), the finding at 1,727.6 / 1,728.3 px and 2,402.5 px. The grading of answers 1–5 therefore
+  stands for the repaired page.

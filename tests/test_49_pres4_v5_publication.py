@@ -355,8 +355,106 @@ def test_the_headline_leads_with_the_verdict_at_the_decision_level_and_names_eac
     assert claim == "P53" and RC.headline("md") in README.read_text()
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     plain = re.sub(r"<[^>]+>", "", terms)
-    assert "with the rule's 97.5% interval" in plain and "DDNN-2: our second distributional neural network" in plain
+    assert "with the rule's 97.5% interval" in plain and "DDNN-2: a distributional neural network (DDNN)" in plain
     assert "its five conditions are in the v5 chapter" in plain and 'href="#v5-rule"' in terms
+
+
+def _standard_definition() -> str:
+    """The error scores' definition at first use, as Publication Standard v1 §3.1 prescribes it."""
+    text = (REPO_ROOT / "docs" / "track-b" / "publication-standard-v1.md").read_text()
+    quoted = re.search(r'\*\*Definition, at first use:\*\* "([^"]+)"', text, flags=re.S).group(1)
+    return re.sub(r"\s+", " ", quoted)
+
+
+def _term_problems(page: str) -> list[str]:
+    """The headline terms against the text their claims bind (Integration review 1, V2): the error scores'
+    definition is the standard's (P21), and the paired difference reads as P53 quotes it."""
+    start = page.index('class="headline-terms"')
+    terms = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", page[start:page.index("</dd>", start)]))
+    p53 = next(line for line in (REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md"
+                                 ).read_text().splitlines() if line.startswith("| P53 |"))
+    quoted = re.search(r'the paired difference is defined beneath it at that level \("([^"]+)"', p53).group(1)
+    problems = []
+    if f"Error scores: {_standard_definition()}." not in terms:
+        problems.append("the error scores' term is not the standard's definition (P21)")
+    if quoted not in terms:
+        problems.append(f"the paired-difference term does not read as P53 quotes it: {quoted!r}")
+    return problems
+
+
+def test_the_headline_terms_read_as_their_claims_bind(page):
+    assert _term_problems(page) == []
+
+
+@pytest.mark.parametrize("old, new", [
+    ("averaged over the test periods", "averaged by test period"),
+    ("with the rule's", "with its"),
+])
+def test_negative_controls_a_term_that_drifts_from_its_claim_is_caught(page, old, new):
+    start = page.index('class="headline-terms"')
+    end = page.index("</dd>", start)
+    terms = re.sub(r"\s+", " ", page[start:end])
+    assert old in terms
+    assert _term_problems(page[:start] + terms.replace(old, new) + page[end:])
+
+
+#: The exact interval endpoints of v5's change as a share of v4's score (`ratio-intervals.csv` L2–L3), as the
+#: Integration review's acceptance test names them.
+V5_RATIO_ENDPOINTS = {
+    "Point-error score": ("-2.9584699118793495", "-1.793927483038195", "-3.0367905356064449", "-1.6822708947669157"),
+    "Interval score": ("-2.7786808736341522", "-1.714496476404881", "-2.8593332937828102", "-1.6208499381219484"),
+}
+
+
+def _ratio_table_problems(page: str) -> list[str]:
+    """Each interval cell of v5's exact-ratio table holds both endpoints of its derived record, at full precision
+    (Integration review 1, V1): never the point value standing in for an interval."""
+    start = page.index('id="v5-ratio-values"')
+    table = page[start:page.index("</table>", start)]
+    problems = []
+    for name, score in (("Point-error score", "S_MAE"), ("Interval score", "S_WIS")):
+        row = re.search(r'<th scope="row">%s</th>(.*?)</tr>' % name, table, flags=re.S).group(1)
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", row, flags=re.S)
+        point, intervals = cells[0], cells[1:]
+        expected = []
+        for prefix in ("derived.change", "derived.change_decision"):
+            record = D.get(f"{prefix}.v5.{score}")
+            expected.append((prefix, record.ci_low, record.ci_high))
+        if 'data-field' in point or f'data-record="derived.change.v5.{score}"' not in point:
+            problems.append(f"{name}: the change column is not the point value")
+        if len(intervals) != 2:
+            problems.append(f"{name}: {len(intervals)} interval columns")
+            continue
+        for cell, (prefix, low, high) in zip(intervals, expected):
+            found = {field: value for value, field in re.findall(
+                r'<data value="([^"]+)"[^>]*data-record="%s\.v5\.%s"[^>]*data-field="(ci_low|ci_high)"'
+                % (re.escape(prefix), score), cell)}
+            if found != {"ci_low": low, "ci_high": high}:
+                problems.append(f"{name}, {prefix}: {found} is not [{low}, {high}]")
+    return problems
+
+
+def test_the_v5_ratio_table_carries_each_interval_at_full_precision(page):
+    assert _ratio_table_problems(page) == []
+    for name, endpoints in V5_RATIO_ENDPOINTS.items():
+        score = "S_MAE" if name == "Point-error score" else "S_WIS"
+        records = [D.get(f"{prefix}.v5.{score}") for prefix in ("derived.change", "derived.change_decision")]
+        assert (records[0].ci_low, records[0].ci_high, records[1].ci_low, records[1].ci_high) == endpoints
+
+
+def test_negative_control_a_point_value_in_an_interval_column_is_caught(page):
+    start = page.index('id="v5-ratio-values"')
+    end = page.index("</table>", start)
+    point = B.value("derived.change.v5.S_MAE", "P55", option="exact")
+    doctored = re.sub(r"(<th scope=\"row\">Point-error score</th><td[^>]*>.*?</td><td[^>]*>).*?(</td>)",
+                      lambda m: m.group(1) + point + m.group(2), page[start:end], count=1, flags=re.S)
+    assert doctored != page[start:end]
+    assert _ratio_table_problems(page[:start] + doctored + page[end:])
+
+
+def test_negative_control_an_unknown_option_on_a_derived_record_refuses():
+    with pytest.raises(RC.ClaimError):
+        RC.render_template("P55", "{r:derived.change.v5.S_MAE|cixact}")
 
 
 @pytest.mark.parametrize("text", [

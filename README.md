@@ -9,12 +9,12 @@
 
 **Research, v5 · DDNN-2 added.** Met the adoption rule set before the experiment: both error scores improved on v4's (v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, −0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule). `Development · post-selection`
 
-- **Error scores:** error relative to a naive forecast, averaged by test period; lower is better.
+- **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
 - **Adoption rule:** set on 2026-10-05; its five conditions are in the v5 chapter.
 - **Paired difference:** v5's score minus v4's, with the rule's 97.5% interval; below zero favours v5.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
-- **DDNN-2:** our second distributional neural network (DDNN).
+- **DDNN-2:** a distributional neural network (DDNN).
 
 **Demo, v1 · released LightGBM:** [try the v1 demo](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The demo runs the released model, v1. Research generations are not released one by one; only the final model, after its one-shot test and live run, replaces the released one.
 
