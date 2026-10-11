@@ -122,9 +122,9 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text == re.sub(r"`", "", RC.headline("md"))
     # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it. v5 leads with its own rule (§3.3 a), at the
-    # rule's own decision level, 97.5% (capstone v21-r11 §23.9; W47).
+    # rule's own decision level, 97.5% (capstone v21-r11 §23.9; W47), which the paired-difference term defines.
     assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v4's "
-                           "(v5 − v4, at the rule's 97.5% level: −0.0133 [−0.0166, −0.0091] on the point-error score, "
+                           "(v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, "
                            "−0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule).")
     # v4's form, from the same generator, is unchanged for a rule that decided at 95%.
     claim, v4_form = RC.headline_template(G.get("v4"))

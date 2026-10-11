@@ -131,7 +131,7 @@ BLOCKS: tuple[Block, ...] = (
            conditions are in the {{g:{_CUR.id}.version}} chapter.""", PAGE, README),
     _block("terms.differences", _RULE["claim"] if _RULE else "P51", f"""**Paired difference:**
            {{g:{_CUR.id}.version}}'s error score minus {{g:{_CMP.id}.version}}'s on identical hours, with its
-           {{s:level:{_RULE["level"] if _RULE else "95%"}}} confidence interval{", the level the rule decided at" if _RULE
+           {{s:level:{_RULE["level"] if _RULE else "95%"}}} confidence interval{", the rule's level" if _RULE
            and _RULE["level"] != "95%" else ""}; below zero favours {{g:{_CUR.id}.version}}.""", PAGE, README),
     _block("terms.class", "P21", """**{g:current.badge}:** development evidence, not a test on new data.""",
            PAGE, README),
@@ -836,7 +836,7 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
             raise ClaimError(f"{entry.id} is a generation whose adoption rule was not met")
         tested = D.get(f"{base}.tested").value
         level = D.ADOPTION_RULES[entry.id]["level"]
-        at_level = ", at the rule's {s:level:%s} level" % level if level != "95%" else ""
+        at_level = " at {s:level:%s}" % level if level != "95%" else ""  # the rule's decision level, defined beneath
         template = (
             "Met the adoption rule set before the experiment: both error scores improved on {g:%s.version}'s "
             "({g:%s.version} − {g:%s.version}%s: {r:%s.distance.S_MAE} "

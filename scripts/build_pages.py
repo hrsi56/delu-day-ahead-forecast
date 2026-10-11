@@ -1518,8 +1518,9 @@ def _unit_header(record_id: str) -> str:
     return _label(R.get(record_id).unit)
 
 
-def values_table(ident: str, claim_id: str, panels: list[Panel]) -> str:
-    """Every plotted value of a row chart, with its interval and unit, from the same typed rows."""
+def values_table(ident: str, claim_id: str, panels: list[Panel], *, visible: bool = False) -> str:
+    """Every plotted value of a row chart, with its interval and unit, from the same typed rows. `visible` shows the
+    table itself, for a result given as a table rather than a chart (an A5 route must land on a visible result)."""
     labels = [row.label for row in panels[0].rows]
     head = '<th scope="col">Row</th>' + "".join(
         f'<th scope="col">{_label(panel.title)}<br><span class="unit">{_unit_header(panel.rows[0].record_id)}</span></th>'
@@ -1538,6 +1539,8 @@ def values_table(ident: str, claim_id: str, panels: list[Panel]) -> str:
         body.append("<tr>" + "".join(cells) + "</tr>")
     table_html = (f'<div class="scroll" role="region" aria-label="Values" tabindex="0"><table class="data">'
                   f"<thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>")
+    if visible:
+        return f'<div id="{ident}">{table_html}</div>'
     return disclosure(ident, "View values", table_html)
 
 
@@ -2569,7 +2572,8 @@ def v5_slots() -> ChapterSlots:
               + detail_head("v5-arms", "The study arms: DDNN-2 alone, and DDNN-2 in the LightGBM's place")
               + block("v5.method.arms"))
     folds = (detail_head("v5-per-period-differences", "Did v5 help in every test period?") + block("v5.folds")
-             + values_table("v5-c2b-values", "C421", fold_difference_panels("cp24", "v5-HGL", "v5", "v5 − v4"))
+             + values_table("v5-c2b-values", "C421", fold_difference_panels("cp24", "v5-HGL", "v5", "v5 − v4"),
+                            visible=True)
              + detail_head("v5-absolute-errors", "Absolute errors per test period") + block("v5.absolute"))
     stress = detail_head("v5-peak", "The August 2022 peak") + block("v5.peak")
     coverage = detail_head("v5-coverage", "Did the intervals get more reliable, or only wider?") + block("v5.coverage")

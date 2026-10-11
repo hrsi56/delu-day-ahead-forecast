@@ -7,11 +7,11 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Research, v5 · DDNN-2 added.** Met the adoption rule set before the experiment: both error scores improved on v4's (v5 − v4, at the rule's 97.5% level: −0.0133 [−0.0166, −0.0091] on the point-error score, −0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule). `Development · post-selection`
+**Research, v5 · DDNN-2 added.** Met the adoption rule set before the experiment: both error scores improved on v4's (v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, −0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule). `Development · post-selection`
 
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
 - **Adoption rule:** set on 2026-10-05; its five conditions are in the v5 chapter.
-- **Paired difference:** v5's error score minus v4's on identical hours, with its 97.5% confidence interval, the level the rule decided at; below zero favours v5.
+- **Paired difference:** v5's error score minus v4's on identical hours, with its 97.5% confidence interval, the rule's level; below zero favours v5.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
 

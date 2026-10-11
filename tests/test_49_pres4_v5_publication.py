@@ -348,13 +348,13 @@ def test_v4s_published_comparison_stays_pinned_on_its_run():
 def test_the_headline_leads_with_the_verdict_at_the_decision_level_and_names_each_metric(page):
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v4's "
-                           "(v5 − v4, at the rule's 97.5% level: ")
+                           "(v5 − v4 at 97.5%: ")
     assert "on the point-error score" in text and "on the interval score" in text
     claim, _ = RC.headline_template()
     assert claim == "P53" and RC.headline("md") in README.read_text()
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     plain = re.sub(r"<[^>]+>", "", terms)
-    assert "97.5% confidence interval, the level the rule decided at" in plain
+    assert "97.5% confidence interval, the rule's level" in plain
     assert "its five conditions are in the v5 chapter" in plain and 'href="#v5-rule"' in terms
 
 

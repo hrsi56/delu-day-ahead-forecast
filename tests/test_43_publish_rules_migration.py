@@ -65,10 +65,10 @@ def _section(document: str, ident: str) -> str:
 
 def a1_problems(headline_text: str) -> list[str]:
     """Each headline percentage is followed, before the next number, by the name of its metric. A rule's decision level
-    ("at the rule's 97.5% level") is a level, not a value."""
+    ("v5 − v4 at 97.5%: …", defined beneath the headline) is a level, not a value."""
     problems = []
     for match in re.finditer(r"\d+(?:\.\d+)?%", headline_text):
-        if headline_text[match.end():].startswith(" level"):
+        if headline_text[max(0, match.start() - 3):match.start()] == "at " and headline_text[match.end():].startswith(":"):
             continue
         rest = headline_text[match.end():]
         following = re.split(r"\d", rest, maxsplit=1)[0]
