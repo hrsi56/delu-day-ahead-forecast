@@ -104,11 +104,12 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** Next: the anchor amendment under one suspension |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** Next: the anchor amendment under one suspension |
 
 **No active Track B checkpoint.** PRES-4 closed on 2026-10-11. Stages 3 and 4 reported on
-2026-10-12, the Owner decided their open questions, and **he chose the short path: no new data
-sources** (programme plan, top). The next step is the anchor amendment, under one suspension: the
+2026-10-12, the Owner decided their open questions, **he chose the short path: no new data
+sources**, and he moved 4.7T to 2026-09-07 to 2026-12-05 (programme plan, top). The draft
+amendment v21-r13 is written and goes to an independent plan critic. The next step is the anchor amendment, under one suspension: the
 programme order, the red line and the windows, the evaluation protocol for CP-26 and CP-28, the new
 issue time, the narrowed CP-25 section and the conditional public-review rule.
 
@@ -177,7 +178,8 @@ superseded.
    - **First, an external research run** on rolling recalibration, window length, season coverage
      and the tests (Diebold–Mariano, Giacomini–White).
    - **Then an anchor section,** reviewed by an independent plan critic. It fixes:
-     - every eligible day, about 1,926 from 2020-12-29 to 2026-04-07, with the never-scored days
+     - every eligible day, about 1,926 from 2020-12-29 to 2026-04-07 (2,078 to 2026-09-06 since
+       the window move of 2026-10-12), with the never-scored days
        reported apart;
      - a daily refit;
      - the window, 728 days or expanding, fixed in advance;
@@ -192,7 +194,7 @@ superseded.
      differ from the reviewed bytes, or a public check fails without a passing retry.
 5. **CP-25: our own data gaps** (narrowed by the short path, 2026-10-12). It starts after the
    anchor amendment is ratified.
-   - An inventory from 2019-01-01 to 2026-04-07.
+   - An inventory from 2019-01-01 to 2026-09-06 (moved from 2026-04-07 on 2026-10-12).
    - Our gaps filled, GFS for 2022-09-29 to 2023-03-24 first. No new source is collected.
    - Every existing input checked against D−1 11:00 Europe/Berlin, strictly before, with its
      vintage tier recorded.
@@ -211,13 +213,13 @@ superseded.
      the NumPy meta-learner. The union arm falls away with CP-27.
    - Walk-forward, with the selection rule fixed before anyone looks.
    - No arm is required to win.
-9. **The CP-17 freeze and 4.7T,** on 2026-04-08 to 2026-07-06, 90 days, opened once.
+9. **The CP-17 freeze and 4.7T,** on 2026-09-07 to 2026-12-05, 90 days, opened once (moved on
+   2026-10-12 from 2026-04-08 to 2026-07-06, which v1 had already used).
    - **Fixed in advance:** the candidate, its retraining rule, the reference model, the pass
      conditions, and the lock-price policy if it is adopted.
    - **On failure,** no runner-up moves up.
-10. **Replay daily retraining** on 2026-07-07 to 2026-10-04, 90 days, after 9 passes.
-    - It needs an anchor change to CP-18.
-    - It cannot test lock-price decisions, since the quote feed keeps no archive.
+10. ~~**Replay daily retraining**~~: withdrawn by the Owner, 2026-10-12. Its window fell mostly
+    inside v1's holdout; the live trial after 4.7T does its job on real days.
 11. **Live.**
     - Security hardening, which can be prepared from stage 9.
     - A controlled live trial: the Orchestrator recommends at least four weeks; the length is the
@@ -230,12 +232,15 @@ superseded.
 is adopted for the final product, its numeric policy and information clock must be fixed before
 4.7T opens, at stage 9. To keep that option, the review has to start before the freeze.
 
-**The red line:** data after 2026-04-07 stays closed until 4.7T. That covers data on disk, reading
-about later market events, and the windows, which are fixed now.
+**The red line:** data after 2026-09-06 stays closed until 4.7T (moved from 2026-04-07 by the
+Owner, 2026-10-12). That covers data on disk, reading about later market events, and 4.7T's window,
+which is fixed now.
 
 **Where the plan departs from the anchor.** It changes v21-r10 §22's order: publication, the
-protocol and a re-baseline now come before data admission, and two windows after 2026-04-07 are
-fixed. That needs an anchor amendment before stage 5 of the plan (CP-25) opens.
+protocol and a re-baseline now come before CP-28, the development boundary moves to 2026-09-06, and
+4.7T's window after it is fixed. That needs an anchor amendment before stage 5 of the plan (CP-25)
+opens; the draft, v21-r13, is in `.local/artifacts/v21-r13/plan-for-critic.md`, awaiting an
+independent plan critic.
 
 **CP-24 is closed** ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)). It ran under
 [v21-r11 §23](capstone_v21.md), from the issued brief `a3f11470…` and the continuation brief
@@ -733,7 +738,10 @@ Session Log.
   from HG to v4.
 - **No data after the development window until the final test.** Nothing dated after
   2026-04-07, the last fold-5 delivery day, may be read, scored, plotted or used for any choice
-  before the single final fresh-data test (4.7T). This covers prices, weather and every other
+  before the single final fresh-data test (4.7T). *Amended 2026-10-12 by the Owner:* the
+  development window extends to 2026-09-06, the snapshot's cutoff, because v1 had already used
+  2026-04-09 to 2026-09-06 for its calibration and published holdout; nothing dated after
+  2026-09-06 may be used before 4.7T, whose window is 2026-09-07 to 2026-12-05. This covers prices, weather and every other
   input or outcome. Each additional model selected on the same development periods makes that
   test more important.
 - **Final sequence.** The fresh-data test (4.7T) is reserved for the end. Only the final model
@@ -890,6 +898,18 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **The windows move; v21-r13 drafted, 2026-10-12.**
+  - **The finding.** While drafting, the Orchestrator found that `data/snapshot.parquet` holds 3,648
+    hourly rows after 2026-04-07, to 2026-09-06. v1 used 2026-04-09 to 2026-06-07 for its CQR
+    calibration and 2026-06-09 to 2026-09-06 for its published one-shot holdout. The fixed 4.7T
+    window (2026-04-08 to 2026-07-06) and most of the replay window fell on that period.
+  - **The Owner decided:** 4.7T moves to 2026-09-07 to 2026-12-05; 2026-04-08 to 2026-09-06 joins
+    development (CP-26 scores 2,078 days); the replay is withdrawn. Standing Scope Decisions'
+    boundary entry is amended accordingly.
+  - **The draft:** `.local/artifacts/v21-r13/plan-for-critic.md`: the header, three §10 rows, §24
+    (the short path, the boundary, the issue time, the tiers, CP-25, CP-26, CP-28, CP-17 and 4.7T)
+    and PUBLISH_RULES 1.5 (A12). Every Orchestrator choice is marked in §24.11.
 
 - **The short path, 2026-10-12.** The Owner asked, in Hebrew, for the remaining steps, their cost
   and their likely gain, as he weighed stopping the knowledge expansion.
@@ -1745,7 +1765,7 @@ Session Log.
 - **[Every research brief]** Apply the 2026-09-24 standing decisions:
   - v4's information set (HG's, including the GFS features), with v4 as the opponent on
     identical rows and v3 as a reference (amended 2026-09-30);
-  - no data after 2026-04-07;
+  - no data after 2026-09-06 (2026-04-07 until the Owner's window move of 2026-10-12);
   - DDNN is written in NumPy only, with PyTorch only as a correctness reference in tests on the
     development machine; TabPFN is withdrawn (v21-r7 §18);
   - positive controls must survive the model's own transforms (see Lessons).

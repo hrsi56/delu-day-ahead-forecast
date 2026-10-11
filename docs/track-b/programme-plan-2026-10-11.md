@@ -21,22 +21,32 @@ nothing. The Owner chose to continue **without new data sources**:
   shortlist is a possible extension after the final product, not part of this programme.
 - **Stage 8 (CP-28) runs on CP-26's stored forecasts,** without the union arm. Whether it runs at
   all is confirmed after CP-26.
-- **Unchanged:** the red line and both windows; the issue time; the vintage standard; stage 6's
-  full-calendar re-baseline; the freeze, 4.7T, the replay, the live stages and the final
-  publication.
+- **Unchanged:** the issue time; the vintage standard; stage 6's full-calendar re-baseline; the
+  freeze, 4.7T, the live stages and the final publication.
+
+**The windows move, Owner, 2026-10-12.** While drafting the anchor amendment, the Orchestrator found
+that `data/snapshot.parquet` already holds prices to 2026-09-06. v1 used 2026-04-09 to 2026-06-07
+for its calibration and 2026-06-09 to 2026-09-06 for its published one-shot holdout
+(`data/partitions.json`, `docs/cp2-model-report.md` §4). The fixed 4.7T window (2026-04-08 to
+2026-07-06) therefore fell on exposed data. The Owner decided:
+
+- **4.7T moves to 2026-09-07 to 2026-12-05,** the first 90 days after the snapshot's cutoff;
+- **2026-04-08 to 2026-09-06 joins development,** so stage 6 evaluates through 2026-09-06;
+- **the replay (stage 10) is withdrawn;** the live trial after 4.7T does its job on real days.
 
 The expected time to the end is about two and a half to three months, most of it the live trial.
 
 ## The red line
 
-Data dated after **2026-04-07** stays closed until 4.7T opens it. That covers three things:
+Data dated after **2026-09-06** stays closed until 4.7T opens it (moved from 2026-04-07 on
+2026-10-12; see the top). That covers three things:
 
 - **Data on disk.** Every downloader refuses rows after the open boundary, in code. Only the 4.7T
   gate moves the boundary, and only to the end of that gate's window.
-- **Reading.** No agent reads reports, news or analyses of market events after 2026-04-07. That
+- **Reading.** No agent reads reports, news or analyses of market events after 2026-09-06. That
   is knowledge leakage too.
-- **The windows themselves.** Both post-boundary windows (stages 9 and 10) are fixed now, before
-  anyone looks, and are never extended after a result.
+- **The window itself.** 4.7T's window (stage 9) is fixed now, before anyone looks, and is never
+  extended after a result.
 
 The red line governs development. The final product, once live, trains on all the data available
 to it, to forecast days that have not happened yet.
@@ -53,8 +63,8 @@ to it, to forecast days that have not happened yet.
 | 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
 | 7 | ~~Admission tests for the new sources (CP-27)~~: dropped by the short path, 2026-10-12 | — | — | — |
 | 8 | 4.8: choose the winner on stored forecasts (CP-28; confirmed after 6) | Checkpoint | 6 | — |
-| 9 | Freeze one candidate (CP-17) and run 4.7T | Checkpoint and test | 8 | security hardening (11a) |
-| 10 | Replay daily retraining on the next 90 days | Test | 9 passed | 11a |
+| 9 | Freeze one candidate (CP-17) and run 4.7T on 2026-09-07 to 2026-12-05 | Checkpoint and test | 8 | security hardening (11a) |
+| 10 | ~~Replay daily retraining~~: withdrawn 2026-10-12 | — | — | — |
 | 11 | Security hardening, controlled live trial, site activation (CP-18 → CP-19) | Live | 10 | — |
 | 12 | Final publication and CV | Publication | 11 | — |
 
@@ -209,7 +219,8 @@ section, and an independent plan critic reviews it.
 
 **What the protocol fixes in advance:**
 
-- **The days:** every eligible day, about 1,926 from 2020-12-29 to 2026-04-07, with the never-scored
+- **The days:** every eligible day, about 1,926 from 2020-12-29 to 2026-04-07 (2,078 to 2026-09-06
+  since the window move of 2026-10-12), with the never-scored
   days reported apart as a diagnostic and the old folds kept as the historical record.
 - **The training rule:** the refit cadence should match production (daily, under §16). The
   window length, 728 days or expanding, is chosen before the run.
@@ -274,7 +285,8 @@ PRES-3 and PRES-4 each waived it on that basis.
 
 **The gap was our choice, not the source's.** The days were available; no fold needed them.
 
-- **5a. Inventory.** Every input series the generations use, from 2019-01-01 to 2026-04-07. Record
+- **5a. Inventory.** Every input series the generations use, from 2019-01-01 to 2026-04-07 (to
+  2026-09-06 since the window move of 2026-10-12). Record
   every gap with its cause: our extraction or the source.
 - **5b. Fill the existing gaps,** starting with GFS for 2022-09-29 to 2023-03-24.
 - **5c. ~~Collect every source stage 3 shortlisted~~:** dropped by the short path (2026-10-12).
@@ -350,10 +362,15 @@ whether CP-28 runs is confirmed after CP-26.
   [lock-price idea](final-product-lock-price-notes-2026-10-11.md);
 - what happens on failure. The runner-up never moves up, and v1 stays the product.
 
-**The window:** 2026-04-08 to 2026-07-06, 90 days. The boundary moves to 2026-07-06 only, and the
-test is opened once. Its results are never used for tuning or for choosing another candidate.
+**The window:** 2026-09-07 to 2026-12-05, 90 days (moved on 2026-10-12 from 2026-04-08 to
+2026-07-06, which v1 had used). The boundary moves to 2026-12-05 only, and the test is opened once.
+Its results are never used for tuning or for choosing another candidate.
 
-## Stage 10 — Replay daily retraining on the next 90 days
+## Stage 10 — Replay daily retraining on the next 90 days: withdrawn
+
+**Withdrawn by the Owner, 2026-10-12.** Its window, 2026-07-07 to 2026-10-04, fell mostly inside
+v1's holdout, and the live trial after 4.7T exercises daily retraining on real days. The plan as
+approved follows.
 
 **The window:** 2026-07-07 to 2026-10-04, 90 days, opened only after stage 9 passes.
 
@@ -399,7 +416,7 @@ The final product, its report, and the CV surfaces, under the publication rules 
 5. Stage 5: the anchor section, the retrieval approval and the LAND.
 6. Stages 6 and 8: each checkpoint's anchor section and LAND; stage 8 is confirmed after stage 6.
 7. Stage 9: the frozen candidate and every pre-registered term, before the test opens.
-8. Stage 10: the anchor change to CP-18.
+8. ~~Stage 10: the anchor change to CP-18~~ (the replay is withdrawn).
 9. Stage 11: the live trial's length, and the final activation.
 
 **Saving suspensions.** One anchor amendment can fix the programme order, the red line and both
