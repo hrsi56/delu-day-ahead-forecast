@@ -31,7 +31,7 @@ to it, to forecast days that have not happened yet.
 | 1 | ✅ The codex r13: kept as notes, not merged | Orchestrator | done | — |
 | 2 | ✅ Publish v5 (PRES-4): closed 2026-10-11 | Publication | done | — |
 | 3 | ✅ Search for new data sources: report received 2026-10-12 | Research, no evaluation | done | — |
-| 4 | Design the evaluation protocol | Research and anchor | now | 5 |
+| 4 | Design the evaluation protocol: memo received and decided 2026-10-12; the anchor section next | Research and anchor | now | 5 |
 | 5 | Collect all the data: existing gaps and every shortlisted new source (CP-25) | Checkpoint | 3 | 2, 4 |
 | 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
 | 7 | Admission tests for the new sources against that control (CP-27) | Checkpoint | 6 | — |
@@ -202,6 +202,36 @@ section, and an independent plan critic reviews it.
   earlier days that they never trained on.
 - **The compute ceilings.**
 
+**The research memo, received 2026-10-12:**
+[stage-4-methodology-memo-2026-10-12.md](stage-4-methodology-memo-2026-10-12.md), from the brief
+`fae94cc6…`. It recommends the protocol's values: daily refits on a 728-day window; v5 as the
+research control; p50 MAE and WIS, averaged over hours within each day and then with equal weight
+per day; paired 14-day blocks with 10,000 replicates; more than 0.5% improvement plus 2% year and
+season non-inferiority, under Holm; an early admission slice (2020-12-29 to 2024-12-31) and a later
+confirmation slice (2025-01-01 to 2026-04-07) for new sources; and +1, +6 and +24-hour delay checks
+for tier 2. The agent disclosed that one search showed it an excerpt from after 2026-04-07, which it
+discarded; nothing in the memo comes from that period.
+
+- **A correction to the brief.** The Orchestrator's brief said DDNN-2 alone is never an eligible
+  candidate. That holds for CP-26 only: stage 8 makes it a CP-28 arm. The memo followed the brief,
+  and the anchor section follows this plan.
+
+**The Owner's decisions on the memo, 2026-10-12:**
+
+1. **The issue time becomes D−1 11:00 Europe/Berlin,** one hour before the 12:00 auction gate,
+   all year (10:00 UTC in winter, 09:00 UTC in summer). Inputs must be published strictly before
+   it. It replaces D−1 11:00 UTC, which in summer fell after the gate and after the results were
+   public, from CP-25 on, through the anchor amendment. Earlier records keep 11:00 UTC. CP-25
+   checks every input against the new time.
+2. **CP-28 pre-registers the plan's arms,** each specified in full before CP-26's results:
+   DDNN-2 alone; equal weights; one learned global weight set; per-block weights (three hour
+   blocks, shrunk toward the global weights); and the NumPy meta-learner on regime features.
+3. **CP-27 may admit several sources.** Each of up to eight packages passes the early and later
+   gates on its own, under Holm across all eight; CP-28 adds one pre-registered arm, v5 plus every
+   admitted source.
+
+The memo's other values are the default for the anchor section, which the Owner ratifies.
+
 **The vintage standard, decided by the Owner on 2026-10-12** after stage 3 found that almost no
 source keeps its first-published values:
 
@@ -274,7 +304,9 @@ the same snapshot.
 - fixed blends and per-block weights;
 - stacking with a NumPy meta-learner.
 
-All are fitted with stage 7's admitted data.
+All are fitted with stage 7's admitted data. **Decided 2026-10-12** (stage 4): DDNN-2 alone; equal
+weights; one learned global weight set; per-block weights; the NumPy meta-learner on regime
+features; and one union arm, v5 plus every source CP-27 admits.
 
 **The rules:**
 
@@ -338,7 +370,8 @@ The final product, its report, and the CV surfaces, under the publication rules 
 1. Stage 1: done. r13 is kept as notes, and the codex branch is deleted.
 2. Stage 2: done. D1–D4 above, the LAND and the push on 2026-10-11.
 3. Stages 3 and 4: stage 3 done, with the vintage standard and no enquiries (2026-10-12); stage
-   4's research brief, then the protocol's ratification.
+   4's memo decided the same day (issue time, CP-28 arms, several sources); then the anchor
+   section and its ratification.
 4. Stage 5: the anchor section, the retrieval approval and the LAND.
 5. Stages 6, 7 and 8: each checkpoint's anchor section and LAND.
 6. Stage 9: the frozen candidate and every pre-registered term, before the test opens.

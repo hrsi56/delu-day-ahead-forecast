@@ -104,10 +104,12 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Next: the protocol research (4) |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-04-08..07-06 → replay daily retraining on 2026-07-07..10-04 → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). Next: the anchor amendment under one suspension |
 
-**No active Track B checkpoint.** PRES-4 closed on 2026-10-11, and stage 3's source search
-reported on 2026-10-12. The next step is stage 4's research brief, on the evaluation protocol.
+**No active Track B checkpoint.** PRES-4 closed on 2026-10-11. Stages 3 and 4 reported on
+2026-10-12, and the Owner decided their open questions. The next step is the anchor amendment,
+under one suspension: the programme order, the red line and the windows, the evaluation protocol,
+the new issue time, the CP-25 section and the conditional public-review rule.
 
 **PRES-4 is closed** ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)). It ran from the
 brief `54169c7c…`, under PUBLISH_RULES 1.4.
@@ -127,9 +129,9 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next pending Track B checkpoint: CP-25, all the data** (stage 5). Stage 3's shortlist is in. It
-still needs stage 4's protocol, an anchor section under a suspension, the retrieval approval and a
-brief.
+**Next pending Track B checkpoint: CP-25, all the data** (stage 5). Stage 3's shortlist and stage
+4's memo are in. It still needs the anchor amendment under a suspension, reviewed by an independent
+plan critic, then the retrieval approval and a brief.
 
 **Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
 Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
@@ -154,7 +156,19 @@ superseded.
      Fuels, volatility indices and Euribor have no qualifying free route.
    - **The Owner, 2026-10-12:** no enquiry or registration for now; the vintage standard (stage 4,
      and Standing Scope Decisions).
-4. **The evaluation protocol.** It can start now.
+4. **The evaluation protocol: memo received and decided 2026-10-12.**
+   - **The memo:** [stage-4-methodology-memo-2026-10-12.md](docs/track-b/stage-4-methodology-memo-2026-10-12.md),
+     from the brief `fae94cc6…`. Its values are the anchor section's defaults; the programme plan,
+     stage 4, summarizes them.
+   - **The Owner's decisions:**
+     - **the issue time becomes D−1 11:00 Europe/Berlin,** one hour before the gate, all year
+       (Standing Scope Decisions);
+     - **CP-28 pre-registers the plan's arms:** DDNN-2 alone, equal weights, a learned global
+       weight set, per-block weights and the NumPy meta-learner;
+     - **CP-27 may admit several sources,** each through the early and later gates under Holm
+       across up to eight; CP-28 adds one union arm.
+   - **A correction:** the Orchestrator's brief wrongly said DDNN-2 alone is never eligible. That
+     holds for CP-26 only; the plan makes it a CP-28 arm.
    - **Its admission rule follows the Owner's vintage standard of 2026-10-12** (Standing Scope
      Decisions): original vintages enter the main evaluation; preserved values with reconstructed
      availability may enter with disclosure and delay-sensitivity checks; revised history is
@@ -608,6 +622,16 @@ decision remains a boundary, not an active workstream.
 These carry forward indefinitely. Each changes only by explicit Owner ratification, named in the
 Session Log.
 
+**Added 2026-10-12 (Owner — the forecast issue time; to enter the anchor by amendment):**
+
+- **D−1 11:00 Europe/Berlin, all year,** one hour before the 12:00 day-ahead gate: 10:00 UTC in
+  winter, 09:00 UTC in summer. Inputs must be published strictly before it.
+- **Why:** the anchor's D−1 11:00 UTC is 13:00 CEST in summer, after the gate and after the
+  auction results are published. No day-D price was ever used, but a live forecast at that time
+  would not be a forecast.
+- **Scope:** from CP-25 on. Earlier records keep 11:00 UTC; CP-25 checks every input against the
+  new time.
+
 **Added 2026-10-12 (Owner — the vintage standard for data admission; programme plan stage 4):**
 
 - **Three tiers, per product:**
@@ -862,6 +886,19 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Stage 4's methodology memo received and decided, 2026-10-12.**
+  - **The memo** (from the brief `fae94cc6…`): a protocol skeleton with 80-odd fixed values,
+    pitfalls, nine Owner questions and 37 verified references. Its main unresolved issue: 11:00
+    UTC falls after the summer gate.
+  - **Disclosure:** the agent reported that one search showed it an excerpt from after
+    2026-04-07, which it discarded. It left no raw material, the Orchestrator did not look for the
+    excerpt, and the memo contains nothing from that period.
+  - **The Orchestrator's review:** the anchor confirms the problem (a fixed UTC+01:00 origin, no
+    summer rule). It also found its own brief's error on DDNN-2 alone, and the memo's departure
+    from the plan's CP-28 arms.
+  - **The Owner decided:** the issue time D−1 11:00 Europe/Berlin; the plan's CP-28 arms; several
+    sources may be admitted, with one union arm.
 
 - **Stage 3's source search reported, 2026-10-12.**
   - **The brief** (`d3ee57cd…`) went to a research agent, which wrote the report and Elia's
