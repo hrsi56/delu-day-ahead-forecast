@@ -10,6 +10,23 @@ the Owner made the same day:
 - v5 is published before any new data enters a model;
 - all the data is collected before anything is retrained or re-evaluated.
 
+**The short path, chosen by the Owner on 2026-10-12.** After stages 3 and 4 reported, the
+Orchestrator set out the remaining cost and the likely gain. The full plan would take about
+three to four months, and new sources were expected to add 0–3% at most, with a real chance of
+nothing. The Owner chose to continue **without new data sources**:
+
+- **Stage 5 (CP-25) narrows** to our own gaps: the inventory, GFS for 2022-09-29 to 2023-03-24,
+  and a check of every existing input against the new issue time (D−1 11:00 Europe/Berlin).
+- **Stage 7 (CP-27) is dropped.** Stage 3's research stays as a documented finding, and its
+  shortlist is a possible extension after the final product, not part of this programme.
+- **Stage 8 (CP-28) runs on CP-26's stored forecasts,** without the union arm. Whether it runs at
+  all is confirmed after CP-26.
+- **Unchanged:** the red line and both windows; the issue time; the vintage standard; stage 6's
+  full-calendar re-baseline; the freeze, 4.7T, the replay, the live stages and the final
+  publication.
+
+The expected time to the end is about two and a half to three months, most of it the live trial.
+
 ## The red line
 
 Data dated after **2026-04-07** stays closed until 4.7T opens it. That covers three things:
@@ -32,10 +49,10 @@ to it, to forecast days that have not happened yet.
 | 2 | ✅ Publish v5 (PRES-4): closed 2026-10-11 | Publication | done | — |
 | 3 | ✅ Search for new data sources: report received 2026-10-12 | Research, no evaluation | done | — |
 | 4 | Design the evaluation protocol: memo received and decided 2026-10-12; the anchor section next | Research and anchor | now | 5 |
-| 5 | Collect all the data: existing gaps and every shortlisted new source (CP-25) | Checkpoint | 3 | 2, 4 |
+| 5 | Collect our own data gaps and check the issue time (CP-25; narrowed 2026-10-12) | Checkpoint | 4 ratified | — |
 | 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
-| 7 | Admission tests for the new sources against that control (CP-27) | Checkpoint | 6 | — |
-| 8 | 4.8: choose the winner (CP-28) | Checkpoint | 7 | — |
+| 7 | ~~Admission tests for the new sources (CP-27)~~: dropped by the short path, 2026-10-12 | — | — | — |
+| 8 | 4.8: choose the winner on stored forecasts (CP-28; confirmed after 6) | Checkpoint | 6 | — |
 | 9 | Freeze one candidate (CP-17) and run 4.7T | Checkpoint and test | 8 | security hardening (11a) |
 | 10 | Replay daily retraining on the next 90 days | Test | 9 passed | 11a |
 | 11 | Security hardening, controlled live trial, site activation (CP-18 → CP-19) | Live | 10 | — |
@@ -51,7 +68,8 @@ to it, to forecast days that have not happened yet.
   shortlisted new source in a single pass: one boundary guard, one manifest, one licence check.
   Nothing is retrained until it has landed.
 
-**Why the re-baseline (6) still comes before the new-source tests (7):**
+**Why the re-baseline (6) still comes before the new-source tests (7)** (the rationale as approved;
+stage 7 is dropped by the short path):
 
 - **It is the control arm.** A source's test asks whether v5 with it beats v5 without it, under the
   new protocol. The "without" run is the re-baseline.
@@ -259,7 +277,9 @@ PRES-3 and PRES-4 each waived it on that basis.
 - **5a. Inventory.** Every input series the generations use, from 2019-01-01 to 2026-04-07. Record
   every gap with its cause: our extraction or the source.
 - **5b. Fill the existing gaps,** starting with GFS for 2022-09-29 to 2023-03-24.
-- **5c. Collect every source stage 3 shortlisted,** over the same period.
+- **5c. ~~Collect every source stage 3 shortlisted~~:** dropped by the short path (2026-10-12).
+- **5e. The issue time.** Check every existing input against D−1 11:00 Europe/Berlin, strictly
+  before, with its vintage tier recorded.
 - **The rules for 5b and 5c:**
   - The boundary guard is in every downloader.
   - Each value enters as it was available at forecast time. Revised series, such as actual load
@@ -280,21 +300,22 @@ the brief; the LAND.
 ## Stage 6 — Re-baseline v1–v5 on all eligible days (CP-26)
 
 Run every generation under stage 4's protocol, on stage 5's snapshot, **with the existing
-features only.** The new sources wait for stage 7.
+features only.** Under the short path no new source follows.
 
 **Output:**
 
-- the full-coverage results of the existing generations: the new baseline, and stage 7's control
-  arm;
+- the full-coverage results of the existing generations: the new baseline (under the short path
+  there is no stage 7 to control for);
 - every member's out-of-sample forecast for every eligible day, which feeds stage 8.
 
 **The rule:** whatever these results show, they are reported, not tuned against. If v5 does not
 hold, the record says so.
 
-## Stage 7 — Admission tests for the new sources (CP-27)
+## Stage 7 — Admission tests for the new sources (CP-27): dropped
 
-Each collected candidate is tested against stage 6's control, under stage 4's admission rule, on
-the same snapshot.
+**Dropped by the Owner's short path, 2026-10-12.** The plan as approved on 2026-10-11 tested each
+collected candidate against stage 6's control, under stage 4's admission rule, on the same
+snapshot.
 
 ## Stage 8 — 4.8: choose the winner (CP-28)
 
@@ -306,7 +327,9 @@ the same snapshot.
 
 All are fitted with stage 7's admitted data. **Decided 2026-10-12** (stage 4): DDNN-2 alone; equal
 weights; one learned global weight set; per-block weights; the NumPy meta-learner on regime
-features; and one union arm, v5 plus every source CP-27 admits.
+features; and one union arm, v5 plus every source CP-27 admits. **Under the short path
+(2026-10-12)** the union arm falls away, every arm learns from CP-26's stored member forecasts, and
+whether CP-28 runs is confirmed after CP-26.
 
 **The rules:**
 
@@ -372,11 +395,12 @@ The final product, its report, and the CV surfaces, under the publication rules 
 3. Stages 3 and 4: stage 3 done, with the vintage standard and no enquiries (2026-10-12); stage
    4's memo decided the same day (issue time, CP-28 arms, several sources); then the anchor
    section and its ratification.
-4. Stage 5: the anchor section, the retrieval approval and the LAND.
-5. Stages 6, 7 and 8: each checkpoint's anchor section and LAND.
-6. Stage 9: the frozen candidate and every pre-registered term, before the test opens.
-7. Stage 10: the anchor change to CP-18.
-8. Stage 11: the live trial's length, and the final activation.
+4. The short path (2026-10-12): done.
+5. Stage 5: the anchor section, the retrieval approval and the LAND.
+6. Stages 6 and 8: each checkpoint's anchor section and LAND; stage 8 is confirmed after stage 6.
+7. Stage 9: the frozen candidate and every pre-registered term, before the test opens.
+8. Stage 10: the anchor change to CP-18.
+9. Stage 11: the live trial's length, and the final activation.
 
 **Saving suspensions.** One anchor amendment can fix the programme order, the red line and both
 post-boundary windows at once, and the same suspension can carry the conditional public-review rule
