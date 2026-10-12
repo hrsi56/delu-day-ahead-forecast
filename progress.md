@@ -106,7 +106,14 @@ it is after CP-22 (Owner, 2026-10-04).
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
 | 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. Next: CP-25's brief |
 
-**No active Track B checkpoint.** PRES-4 closed on 2026-10-11. Stages 3 and 4 reported on
+**Active Track B work: CP-25, our own data gaps** (v21-r13 §24.6). Issued 2026-10-12, brief
+`5d2bf393…`, canonical copy `.local/artifacts/cp-25/issued-brief.md`, launch envelope
+`.local/artifacts/cp-25/launch-envelope.md`. The Owner approved the GFS retrieval the same day
+("מאשר אחזור GFS מהארכיונים הציבוריים ל־CP-25, ללא עלות"). It runs in the Owner's Lead session on
+`gauntlet/cp-25`, worktree `.local/worktrees/cp-25/lead`. On its return: the receipt, the LAND,
+then the Owner's tier and margin rulings (§24.5) before CP-26's brief.
+
+**Before CP-25:** PRES-4 closed on 2026-10-11. Stages 3 and 4 reported on
 2026-10-12, the Owner decided their open questions, **he chose the short path: no new data
 sources**, and he moved 4.7T to 2026-09-07 to 2026-12-05 (programme plan, top). **The anchor
 amendment is ratified (2026-10-12): research v21-r13 §24 and PUBLISH_RULES 1.5** govern the
@@ -130,8 +137,8 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next pending Track B checkpoint: CP-25, our own data gaps** (v21-r13 §24.6). Its section is
-ratified. It needs the Owner's retrieval approval (free public archives, $0) and the issued brief.
+**Next pending Track B checkpoint: CP-26, the re-baseline** (v21-r13 §24.7), after CP-25's LAND
+and the Owner's tier and margin rulings. CP-25 itself is issued (above).
 
 **Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
 Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
@@ -901,6 +908,12 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-25 issued, 2026-10-12.** The Owner approved the GFS retrieval from the public archives at no
+  cost. The brief (`5d2bf393…`) cites v21-r13 §24.6 verbatim as its bar (checked with
+  `scripts/bar.py check` at `d58486d`). It pins every input hash, the anchors and the amendment
+  record, and asks the return to summarize the tiers and margins for the Owner's rulings. Timebox
+  about 16 active hours.
 
 - **v21-r13 and PUBLISH_RULES 1.5 ratified, 2026-10-12.**
   - **The Owner's words:** he added A6 and A7 (A3 and A5 without shrinkage), then granted the
