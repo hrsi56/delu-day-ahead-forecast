@@ -66,10 +66,11 @@ def cmd_timed(args):
 def cmd_build(args):
     from cp25 import build
     summary = {}
+    out = Path(args.out).resolve() if args.out else None   # a scratch directory leaves the checkout untouched
     if args.part in ('weather', 'all'):
-        summary['weather'] = build.weather(ROOT, WEATHER)
+        summary['weather'] = build.weather(ROOT, WEATHER, out=out)
     if args.part in ('data', 'all'):
-        summary['data'] = build.data_side(ROOT, WEATHER)
+        summary['data'] = build.data_side(ROOT, WEATHER, out=out)
     print(json.dumps(summary, indent=1, default=str))
 
 
@@ -122,6 +123,7 @@ def main(argv=None):
     t.set_defaults(func=cmd_timed)
     b = sub.add_parser('build')
     b.add_argument('part', choices=['weather', 'data', 'all'])
+    b.add_argument('--out', help='write into this directory instead of reports/development-inputs/')
     b.set_defaults(func=cmd_build)
     sub.add_parser('identity').set_defaults(func=cmd_identity)
     sub.add_parser('resources').set_defaults(func=cmd_resources)

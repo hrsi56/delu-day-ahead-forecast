@@ -11,7 +11,7 @@
  "counts": {
   "decoded_messages": 16450,
   "failed_requests": 22,
-  "machine_seconds": 4860.453283786774,
+  "machine_seconds": 4930.209548473358,
   "message_attempts": 20,
   "message_tries": 16470,
   "network_retries": 22,
@@ -197,9 +197,27 @@
    "start_utc": "2026-10-12T11:16:54Z",
    "wall_seconds": 0.7177488803863525,
    "workers": 1
+  },
+  {
+   "charged_seconds": 68.89503598213196,
+   "end_utc": "2026-10-12T11:19:07Z",
+   "exit_code": 0,
+   "name": "rebuild-scratch-check",
+   "start_utc": "2026-10-12T11:17:58Z",
+   "wall_seconds": 68.89503598213196,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.8612287044525146,
+   "end_utc": "2026-10-12T11:19:16Z",
+   "exit_code": 0,
+   "name": "tests-cp25-e",
+   "start_utc": "2026-10-12T11:19:16Z",
+   "wall_seconds": 0.8612287044525146,
+   "workers": 1
   }
  ],
- "machine_hours": 1.3501,
+ "machine_hours": 1.3695,
  "peaks": {
   "workers": 4
  },

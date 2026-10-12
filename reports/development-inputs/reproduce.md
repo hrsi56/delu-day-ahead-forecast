@@ -34,7 +34,16 @@ PY scripts/cp25_data_gaps.py manifest
 ```
 
 `build all` needs `.local/artifacts/cp-25/weather/` (the decoded regional boxes, which are never
-committed). `identity` needs CP-20's retained grids in `.local/artifacts/cp-20/weather/`.
+committed). `identity` needs CP-20's retained grids in `.local/artifacts/cp-20/weather/`. To leave
+a checkout untouched, rebuild into a scratch directory and compare:
+
+```
+PY scripts/cp25_data_gaps.py build all --out <scratch>
+diff <(cd <scratch> && shasum -a 256 *) <(cd reports/development-inputs && shasum -a 256 $(cd <scratch> && ls))
+```
+
+The scratch rebuild covers every file except the hand-written documents (`*.md`), the run
+manifest, `conversion-identity.json`, `resources.json` and `manifest.json`.
 
 ## With the network: the retrieval (Owner-approved, anonymous, $0)
 

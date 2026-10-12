@@ -44,9 +44,10 @@ def _json(obj, path: Path):
     path.write_text(json.dumps(obj, indent=1, sort_keys=True, default=str) + '\n')
 
 
-def weather(root: Path, weather_dir: Path, classifications: dict | None = None) -> dict:
-    out = root / OUT
-    manifest = json.loads((out / 'gfs-run-manifest.json').read_text())
+def weather(root: Path, weather_dir: Path, classifications: dict | None = None, out: Path | None = None) -> dict:
+    out = Path(out) if out else root / OUT
+    out.mkdir(parents=True, exist_ok=True)
+    manifest = json.loads((root / OUT / 'gfs-run-manifest.json').read_text())
     cp20 = pd.read_parquet(root / F.CP20_FEATURES)
     feats = F.gap_features(manifest, weather_dir, classifications, list(cp20.columns),
                            {c: cp20[c].dtype for c in ('dswrf_clipped_cells', 'dswrf_quantum', 'dswrf_min_block',
@@ -72,8 +73,9 @@ def weather(root: Path, weather_dir: Path, classifications: dict | None = None) 
             'messages': len(messages), 'requests': len(log)}
 
 
-def data_side(root: Path, weather_dir: Path) -> dict:
-    out = root / OUT
+def data_side(root: Path, weather_dir: Path, out: Path | None = None) -> dict:
+    out = Path(out) if out else root / OUT
+    out.mkdir(parents=True, exist_ok=True)
     cal = C.eligibility_calendar(root)
     _csv(cal, out / 'eligibility-calendar.csv')
     _csv(C.ineligible_hour_reasons(root, cal), out / 'ineligible-hours.csv')
