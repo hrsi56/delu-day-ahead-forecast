@@ -899,6 +899,26 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **The plan critic's second review of v21-r13, and revision 3, 2026-10-12.**
+  - **The review:** READY WITH FIXES (`.local/artifacts/v21-r13/plan-critic-review-r2.md`). Of the
+    first review's 27 findings, 24 were resolved and 3 partly resolved (B1, M5, M11). New findings:
+    no BLOCKING, 3 MAJOR and 11 MINOR. It found no leakage path in the new rules, and recommended
+    a short check rather than a third full review.
+  - **The three major findings:**
+    - N1: the tier-3 variant was not wired through §§24.8–24.9;
+    - N2: the GFS guard's valid-time clause refused a pre-boundary message that §15.2 needs;
+    - N3: under schedule-level tier 2, every delay run was predetermined, and for the load forecast
+      it was "fragile" by construction.
+  - **Revision 3** (`plan-for-critic-r3.md`, `48b44de9…`) fixes N1–N14:
+    - "the control" is defined, and a tier ruling specifies any variant;
+    - the guard tests GFS initialization;
+    - a margin table replaces the delay reruns.
+
+    It moves one Owner decision, on the load forecast's one-hour margin, from CP-17 to the tier
+    ruling after CP-25.
+  - **Next:** a short check by the critic (`plan-critic-check-r3.md`), then the Owner's suspension
+    and ratification.
+
 - **The plan critic's first review of v21-r13, and revision 2, 2026-10-12.**
   - **The review:** NOT READY, with 3 BLOCKING, 11 MAJOR and 13 MINOR findings
     (`.local/artifacts/v21-r13/plan-critic-review.md`). It confirmed that no committed file holds
