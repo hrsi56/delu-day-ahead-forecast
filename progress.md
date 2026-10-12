@@ -899,6 +899,23 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **The plan critic's first review of v21-r13, and revision 2, 2026-10-12.**
+  - **The review:** NOT READY, with 3 BLOCKING, 11 MAJOR and 13 MINOR findings
+    (`.local/artifacts/v21-r13/plan-critic-review.md`). It confirmed that no committed file holds
+    a row after 2026-09-06. It disclosed one command whose file list included `progress.md`; its
+    output was discarded unseen.
+  - **The blocking findings:**
+    - B1: the control's own inputs, starting with SMARD's load forecast, may be tier 3, and the
+      draft had no rule for that case;
+    - B2: CP-28's arms averaged quantiles that member L does not have;
+    - B3: v1-R would carry v1's hindsight regime flags into a daily refit.
+  - **Revision 2** (`.local/artifacts/v21-r13/plan-for-critic-r2.md`) resolves every finding (its
+    Part G). The Owner rules on any tier-3 input after CP-25. CP-28 is built as v5 is. v1-R drops
+    the flags.
+  - **A correction to the Owner:** the earlier estimate of two and a half to three months to the end
+    was wrong. CP-19 needs at least 90 live days after the freeze, so about March 2027 (the plan's
+    m13 note).
+
 - **The windows move; v21-r13 drafted, 2026-10-12.**
   - **The finding.** While drafting, the Orchestrator found that `data/snapshot.parquet` holds 3,648
     hourly rows after 2026-04-07, to 2026-09-06. v1 used 2026-04-09 to 2026-06-07 for its CQR

@@ -35,6 +35,10 @@ for its calibration and 2026-06-09 to 2026-09-06 for its published one-shot hold
 - **the replay (stage 10) is withdrawn;** the live trial after 4.7T does its job on real days.
 
 The expected time to the end is about two and a half to three months, most of it the live trial.
+**Corrected 2026-10-12** (the plan critic's finding m13): anchor §16.4 requires CP-19 to cover at
+least 90 consecutive delivery days after the final freeze. With 4.7T opening no earlier than
+2026-12-05, CP-19 cannot finish before about March 2027. CP-18 may publish the live product earlier,
+labelled "prospective evaluation in progress".
 
 ## The red line
 
