@@ -63,7 +63,7 @@ to it, to forecast days that have not happened yet.
 | 2 | ✅ Publish v5 (PRES-4): closed 2026-10-11 | Publication | done | — |
 | 3 | ✅ Search for new data sources: report received 2026-10-12 | Research, no evaluation | done | — |
 | 4 | ✅ Design the evaluation protocol: ratified 2026-10-12 as research v21-r13 §24, with PUBLISH_RULES 1.5 | Research and anchor | done | — |
-| 5 | Collect our own data gaps and check the issue time (CP-25; narrowed 2026-10-12) | Checkpoint | 4 ratified | — |
+| 5 | ✅ Collect our own data gaps and check the issue time (CP-25): landed 2026-10-12 | Checkpoint | done | — |
 | 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
 | 7 | ~~Admission tests for the new sources (CP-27)~~: dropped by the short path, 2026-10-12 | — | — | — |
 | 8 | 4.8: choose the winner on stored forecasts (CP-28; confirmed after 6) | Checkpoint | 6 | — |
@@ -290,7 +290,9 @@ PRES-4's closure: require the independent post-deployment review only when the s
 from the independently reviewed bytes, or a public check fails without a passing retry. PRES-2,
 PRES-3 and PRES-4 each waived it on that basis.
 
-## Stage 5 — Collect all the data (CP-25)
+## Stage 5 — Collect all the data (CP-25): done
+
+**Landed 2026-10-12** ([landing record](cp-25-landing-2026-10-12.md); the Owner's [rulings](cp-25-rulings-2026-10-12.md)).
 
 **The gap was our choice, not the source's.** The days were available; no fold needed them.
 
