@@ -1,0 +1,225 @@
+{
+ "basis": "machine time = wall time x declared workers per job, charged by the job itself; transfer reserved before each request",
+ "caps": {
+  "cost_usd": 0,
+  "machine_seconds": 86400,
+  "message_attempts": 49350,
+  "transfer_bytes": 42949672960,
+  "workers": 4
+ },
+ "cost_usd": 0,
+ "counts": {
+  "decoded_messages": 16450,
+  "failed_requests": 22,
+  "machine_seconds": 4930.209548473358,
+  "message_attempts": 20,
+  "message_tries": 16470,
+  "network_retries": 22,
+  "requests": 16553,
+  "transfer_bytes": 15823546871
+ },
+ "events": [
+  {
+   "description": "document reads, hash checks, git inspection, code reading 10:30-11:20Z; no network, fits or decoding; conservative upper bound",
+   "event": "pre_ledger_orientation_upper_bound",
+   "seconds": 1800,
+   "utc": "2026-10-12T10:48:38Z"
+  }
+ ],
+ "jobs": [
+  {
+   "charged_seconds": 0.8884768486022949,
+   "end_utc": "2026-10-12T10:48:31Z",
+   "exit_code": 0,
+   "name": "orientation-and-guard-tests",
+   "start_utc": "2026-10-12T10:48:30Z",
+   "wall_seconds": 0.8884768486022949,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 7.618632793426514,
+   "end_utc": "2026-10-12T10:48:56Z",
+   "exit_code": 0,
+   "name": "gfs-extract",
+   "start_utc": "2026-10-12T10:48:48Z",
+   "wall_seconds": 7.618632793426514,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 2595.886631965637,
+   "end_utc": "2026-10-12T10:59:58Z",
+   "exit_code": 0,
+   "name": "gfs-extract",
+   "start_utc": "2026-10-12T10:49:09Z",
+   "wall_seconds": 648.9716579914093,
+   "workers": 4
+  },
+  {
+   "charged_seconds": 2.886953830718994,
+   "end_utc": "2026-10-12T11:00:49Z",
+   "exit_code": 0,
+   "name": "build-weather",
+   "start_utc": "2026-10-12T11:00:46Z",
+   "wall_seconds": 2.886953830718994,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 8.671221017837524,
+   "end_utc": "2026-10-12T11:01:03Z",
+   "exit_code": 1,
+   "name": "conversion-identity",
+   "start_utc": "2026-10-12T11:00:54Z",
+   "wall_seconds": 8.671221017837524,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 8.429516077041626,
+   "end_utc": "2026-10-12T11:01:30Z",
+   "exit_code": 1,
+   "name": "conversion-identity-2",
+   "start_utc": "2026-10-12T11:01:21Z",
+   "wall_seconds": 8.429516077041626,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 2.2335550785064697,
+   "end_utc": "2026-10-12T11:01:32Z",
+   "exit_code": 0,
+   "name": "build-weather-2",
+   "start_utc": "2026-10-12T11:01:30Z",
+   "wall_seconds": 2.2335550785064697,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 8.312925815582275,
+   "end_utc": "2026-10-12T11:02:07Z",
+   "exit_code": 0,
+   "name": "conversion-identity-3",
+   "start_utc": "2026-10-12T11:01:59Z",
+   "wall_seconds": 8.312925815582275,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 2.2391929626464844,
+   "end_utc": "2026-10-12T11:02:09Z",
+   "exit_code": 0,
+   "name": "build-weather-3",
+   "start_utc": "2026-10-12T11:02:07Z",
+   "wall_seconds": 2.2391929626464844,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 67.52322721481323,
+   "end_utc": "2026-10-12T11:03:21Z",
+   "exit_code": 1,
+   "name": "build-data-1",
+   "start_utc": "2026-10-12T11:02:14Z",
+   "wall_seconds": 67.52322721481323,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 67.74288702011108,
+   "end_utc": "2026-10-12T11:04:36Z",
+   "exit_code": 0,
+   "name": "build-data-2",
+   "start_utc": "2026-10-12T11:03:29Z",
+   "wall_seconds": 67.74288702011108,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.5337262153625488,
+   "end_utc": "2026-10-12T11:06:59Z",
+   "exit_code": 0,
+   "name": "tests-cp25-a",
+   "start_utc": "2026-10-12T11:06:58Z",
+   "wall_seconds": 0.5337262153625488,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.8656361103057861,
+   "end_utc": "2026-10-12T11:07:57Z",
+   "exit_code": 0,
+   "name": "tests-cp25-b",
+   "start_utc": "2026-10-12T11:07:56Z",
+   "wall_seconds": 0.8656361103057861,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 68.96810388565063,
+   "end_utc": "2026-10-12T11:12:19Z",
+   "exit_code": 0,
+   "name": "build-all-1",
+   "start_utc": "2026-10-12T11:11:10Z",
+   "wall_seconds": 68.96810388565063,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.6983778476715088,
+   "end_utc": "2026-10-12T11:12:37Z",
+   "exit_code": 0,
+   "name": "tests-cp25-c",
+   "start_utc": "2026-10-12T11:12:36Z",
+   "wall_seconds": 0.6983778476715088,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.3314990997314453,
+   "end_utc": "2026-10-12T11:12:44Z",
+   "exit_code": 4,
+   "name": "tests-full-suite",
+   "start_utc": "2026-10-12T11:12:44Z",
+   "wall_seconds": 0.3314990997314453,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 213.56302404403687,
+   "end_utc": "2026-10-12T11:16:22Z",
+   "exit_code": 1,
+   "name": "tests-full-suite-2",
+   "start_utc": "2026-10-12T11:12:48Z",
+   "wall_seconds": 213.56302404403687,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 2.341947078704834,
+   "end_utc": "2026-10-12T11:16:45Z",
+   "exit_code": 0,
+   "name": "build-weather-4",
+   "start_utc": "2026-10-12T11:16:42Z",
+   "wall_seconds": 2.341947078704834,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.7177488803863525,
+   "end_utc": "2026-10-12T11:16:55Z",
+   "exit_code": 0,
+   "name": "tests-cp25-d",
+   "start_utc": "2026-10-12T11:16:54Z",
+   "wall_seconds": 0.7177488803863525,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 68.89503598213196,
+   "end_utc": "2026-10-12T11:19:07Z",
+   "exit_code": 0,
+   "name": "rebuild-scratch-check",
+   "start_utc": "2026-10-12T11:17:58Z",
+   "wall_seconds": 68.89503598213196,
+   "workers": 1
+  },
+  {
+   "charged_seconds": 0.8612287044525146,
+   "end_utc": "2026-10-12T11:19:16Z",
+   "exit_code": 0,
+   "name": "tests-cp25-e",
+   "start_utc": "2026-10-12T11:19:16Z",
+   "wall_seconds": 0.8612287044525146,
+   "workers": 1
+  }
+ ],
+ "machine_hours": 1.3695,
+ "peaks": {
+  "workers": 4
+ },
+ "transfer_gib": 14.7368
+}

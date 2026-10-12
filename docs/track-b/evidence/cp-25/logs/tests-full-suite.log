@@ -1,0 +1,479 @@
+........................................................................ [  4%]
+..................................................s..................... [  8%]
+......................sss...................................ss.......... [ 12%]
+........................................................................ [ 16%]
+........................................................................ [ 20%]
+........................................................................ [ 24%]
+......................s................................................. [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 36%]
+................................................s....................... [ 40%]
+.......................FEEEEEEEEEEEEFF.................................. [ 44%]
+........................................................................ [ 48%]
+........................................................................ [ 52%]
+........................................................................ [ 57%]
+........................................................................ [ 61%]
+........................................................................ [ 65%]
+........................................................................ [ 69%]
+..............................................s......................... [ 73%]
+........................................................................ [ 77%]
+........................................................................ [ 81%]
+........................................................................ [ 85%]
+........................................................................ [ 89%]
+........................................................................ [ 93%]
+........................................................................ [ 97%]
+.......................................                                  [100%]
+==================================== ERRORS ====================================
+______ ERROR at setup of test_the_fixture_exercises_every_calendar_branch ______
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+___ ERROR at setup of test_the_fixture_spans_the_regimes_and_is_large_enough ___
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+__ ERROR at setup of test_the_fixture_was_generated_from_the_frozen_artifact ___
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+__ ERROR at setup of test_the_browser_path_equals_the_frozen_champion_bitwise __
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+____ ERROR at setup of test_the_fail_closed_rows_are_reproduced_not_filled _____
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+_ ERROR at setup of test_positive_control_a_perturbed_cqr_threshold_breaks_equivalence _
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+____ ERROR at setup of test_positive_control_a_reordered_catalog_is_refused ____
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+__ ERROR at setup of test_positive_control_one_fewer_tree_breaks_equivalence ___
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+__ ERROR at setup of test_positive_control_a_swapped_head_breaks_equivalence ___
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+_ ERROR at setup of test_delivery_day_prices_change_nothing_and_a_d_minus_1_price_does _
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+_ ERROR at setup of test_the_scenario_probe_moves_the_forecast_and_touches_only_the_target_day _
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+___ ERROR at setup of test_browser_output_is_monotone_wherever_it_is_defined ___
+
+    @pytest.fixture(scope="module")
+    def payload():
+        import lightgbm as lgb
+    
+        import base64
+        import gzip
+    
+>       meta = _load("champion.json")
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'champion.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+=================================== FAILURES ===================================
+________________ test_the_shipped_fixture_is_the_committed_one _________________
+
+    def test_the_shipped_fixture_is_the_committed_one():
+        """The answer key is committed and reviewed in git, never regenerated by the
+        build it judges; the payload builder refuses to proceed if the frozen champion
+        no longer reproduces it."""
+        committed = (REPO_ROOT / "tests" / "fixtures" / "wasm_equivalence_fixture.json").read_text()
+>       assert (PUBLIC / "fixture.json").read_text() == committed
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/djourno/Downloads/PJM/.local/worktrees/cp-25/lead/app/public/fixture.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/djourno/Downloads/PJM/.local/worktrees/cp-25/lead/app/public/fixture.json'
+
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+___________ test_the_notebook_fetches_the_module_this_test_verified ____________
+
+    def test_the_notebook_fetches_the_module_this_test_verified():
+        import hashlib
+    
+        source = (APP / "browser_champion.py").read_bytes()
+>       shipped = (PUBLIC / "browser_champion.py").read_bytes()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:324: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_abc.py:625: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/djourno/Downloads/PJM/.local/worktrees/cp-25/lead/app/public/browser_champion.py')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/djourno/Downloads/PJM/.local/worktrees/cp-25/lead/app/public/browser_champion.py'
+
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+_____________ test_the_browser_page_renders_from_the_one_claim_set _____________
+
+    def test_the_browser_page_renders_from_the_one_claim_set():
+        """Item 5 carried into the browser: the WASM surface retypes nothing.
+    
+        Every number the page shows comes from this file, and this file is
+        `build_claims()` verbatim — so the page cannot round a figure differently
+        from the README, the Pages export, the Space card or the MLflow record.
+        """
+        from delu_forecast.claims import build_claims
+    
+>       shipped = _load("claims.json")
+                  ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_22_wasm_equivalence.py:343: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'claims.json'
+
+    def _load(name: str) -> dict:
+        path = PUBLIC / name
+        if not path.exists():
+>           raise AssertionError(MISSING)
+E           AssertionError: app/public/ is absent. It is generated from the committed models/champion/ by
+E               make wasm-payload
+E           and deliberately not committed: 31 MB of boosters derived losslessly from an
+E           artifact already in the repository would duplicate it, not preserve it.
+E           This is a failure rather than a skip so a green run cannot hide the hard gate.
+
+tests/test_22_wasm_equivalence.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_22_wasm_equivalence.py::test_the_shipped_fixture_is_the_committed_one
+FAILED tests/test_22_wasm_equivalence.py::test_the_notebook_fetches_the_module_this_test_verified
+FAILED tests/test_22_wasm_equivalence.py::test_the_browser_page_renders_from_the_one_claim_set
+ERROR tests/test_22_wasm_equivalence.py::test_the_fixture_exercises_every_calendar_branch
+ERROR tests/test_22_wasm_equivalence.py::test_the_fixture_spans_the_regimes_and_is_large_enough
+ERROR tests/test_22_wasm_equivalence.py::test_the_fixture_was_generated_from_the_frozen_artifact
+ERROR tests/test_22_wasm_equivalence.py::test_the_browser_path_equals_the_frozen_champion_bitwise
+ERROR tests/test_22_wasm_equivalence.py::test_the_fail_closed_rows_are_reproduced_not_filled
+ERROR tests/test_22_wasm_equivalence.py::test_positive_control_a_perturbed_cqr_threshold_breaks_equivalence
+ERROR tests/test_22_wasm_equivalence.py::test_positive_control_a_reordered_catalog_is_refused
+ERROR tests/test_22_wasm_equivalence.py::test_positive_control_one_fewer_tree_breaks_equivalence
+ERROR tests/test_22_wasm_equivalence.py::test_positive_control_a_swapped_head_breaks_equivalence
+ERROR tests/test_22_wasm_equivalence.py::test_delivery_day_prices_change_nothing_and_a_d_minus_1_price_does
+ERROR tests/test_22_wasm_equivalence.py::test_the_scenario_probe_moves_the_forecast_and_touches_only_the_target_day
+ERROR tests/test_22_wasm_equivalence.py::test_browser_output_is_monotone_wherever_it_is_defined
+3 failed, 1743 passed, 10 skipped, 12 errors in 212.75s (0:03:32)
+[cp25 ledger] job 16 tests-full-suite-2: exit 1; machine-seconds used so far 4857

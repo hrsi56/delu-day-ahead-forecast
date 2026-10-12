@@ -1,0 +1,86 @@
+{
+ "cp23_selection_windows": {
+  "fold_1": {
+   "days": 56,
+   "first": "2020-03-30",
+   "inside_cp24_gate_days": true,
+   "last": "2020-05-24"
+  },
+  "fold_2": {
+   "days": 56,
+   "first": "2020-12-29",
+   "inside_cp24_gate_days": true,
+   "last": "2021-02-22"
+  },
+  "fold_3": {
+   "days": 56,
+   "first": "2022-03-30",
+   "inside_cp24_gate_days": true,
+   "last": "2022-05-24"
+  },
+  "fold_4": {
+   "days": 56,
+   "first": "2025-01-25",
+   "inside_cp24_gate_days": true,
+   "last": "2025-03-21"
+  },
+  "fold_5": {
+   "days": 56,
+   "first": "2025-10-07",
+   "inside_cp24_gate_days": true,
+   "last": "2025-12-01"
+  }
+ },
+ "definition": "a day counts as scored if a forecast's loss on it entered a reported result, a selection or an admission decision (capstone v21-r13 \u00a724.6 item 8)",
+ "fit_or_calibrate_only_days": 213,
+ "fit_or_calibrate_sources_days": {
+  "genuine_warm_up_buffers": 188,
+  "v1_final_calibration": 60,
+  "v1_fold_calibration": 300
+ },
+ "fold_1_evaluation_days": 90,
+ "never_scored_days": 1167,
+ "never_scored_eligible_days": 1132,
+ "old_fold_2_5_days": 360,
+ "old_fold_2_5_eligible_days": 358,
+ "scored_union_days": 1639,
+ "subtracted_sources_days": {
+  "cp16_admission_slices": 35,
+  "cp24_gate_days": 280,
+  "cp24_search_batches": 901,
+  "folds_1_5_evaluation": 450,
+  "v1_holdout": 90
+ },
+ "within_anchor_reference_windows": {
+  "cp26_scored_calendar": {
+   "days": 2078,
+   "eligible": 2068,
+   "never_scored_eligible": 755,
+   "old_fold_2_5_eligible": 358,
+   "window": [
+    "2020-12-29",
+    "2026-09-06"
+   ]
+  },
+  "cp26_warm_up": {
+   "days": 363,
+   "eligible": 363,
+   "never_scored_eligible": 42,
+   "old_fold_2_5_eligible": 0,
+   "window": [
+    "2020-01-01",
+    "2020-12-28"
+   ]
+  },
+  "newly_opened": {
+   "days": 152,
+   "eligible": 152,
+   "never_scored_eligible": 62,
+   "old_fold_2_5_eligible": 0,
+   "window": [
+    "2026-04-08",
+    "2026-09-06"
+   ]
+  }
+ }
+}

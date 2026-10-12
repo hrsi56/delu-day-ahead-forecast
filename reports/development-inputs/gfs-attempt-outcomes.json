@@ -1,0 +1,189 @@
+{
+ "counted_message_attempts": 20,
+ "not_success": [
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u10",
+   "lead": 27,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v10",
+   "lead": 27,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u100",
+   "lead": 27,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v100",
+   "lead": 27,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "dswrf",
+   "lead": 27,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u10",
+   "lead": 33,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v10",
+   "lead": 33,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u100",
+   "lead": 33,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v100",
+   "lead": 33,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "dswrf",
+   "lead": 33,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u10",
+   "lead": 36,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v10",
+   "lead": 36,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u100",
+   "lead": 36,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v100",
+   "lead": 36,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "dswrf",
+   "lead": 36,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u10",
+   "lead": 45,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v10",
+   "lead": 45,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "u100",
+   "lead": 45,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "v100",
+   "lead": 45,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  },
+  {
+   "counted": true,
+   "detail": "missing GRIB2 section 0",
+   "endpoint": "aws",
+   "field": "dswrf",
+   "lead": 45,
+   "outcome": "integrity_failure",
+   "run": "2022-11-30"
+  }
+ ],
+ "outcome_counts": {
+  "integrity_failure": 20,
+  "success": 16450
+ }
+}

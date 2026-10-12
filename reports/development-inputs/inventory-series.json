@@ -1,0 +1,122 @@
+[
+ {
+  "gap_hours_total": 0,
+  "granularity": "hourly; SDAC 60-minute MTU through 2025-09-30, then four 15-minute MTU prices per hour averaged by the snapshot pull (aggregation \"mean\"); intervals: [{\"source_intervals_per_hour\": 1, \"first_delivery_day\": \"2019-01-01\", \"last_delivery_day\": \"2025-09-30\", \"hours\": 59159}, {\"source_intervals_per_hour\": 4, \"first_delivery_day\": \"2025-10-01\", \"last_delivery_day\": \"2026-09-06\", \"hours\": 8184}]",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "B0, v1-R, v2, v3, v4, v5",
+  "product": "DE-LU day-ahead price, SDAC clearing price (ENTSO-E 12.1.D / A44)",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "target, and price lags / statistics / normalisation / released errors",
+  "series": "price_eur_mwh",
+  "source": "SMARD filter 4169 \"Day-ahead price\" (Bundesnetzagentur | SMARD.de; ENTSO-E Transparency Platform)",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 194,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "v1-R, v2, v3, v4, v5",
+  "product": "DE-LU day-ahead total load forecast (ENTSO-E 6.1.B / A65 A01)",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "input (load forecast of D; LEAR and DDNN-2 also D-1, D-7)",
+  "series": "load_forecast_mw",
+  "source": "SMARD filter 411 \"Forecast consumption: total grid load\"",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 3,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "none",
+  "product": "A69 day-ahead wind onshore forecast",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "not an input: post-gate A69, refused by \u00a72",
+  "series": "wind_onshore_forecast_mw",
+  "source": "SMARD filter 123",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 3,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "none",
+  "product": "A69 day-ahead solar forecast",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "not an input: post-gate A69, refused by \u00a72",
+  "series": "solar_forecast_mw",
+  "source": "SMARD filter 125",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 0,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "none",
+  "product": "A69 day-ahead wind offshore forecast",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "not an input: post-gate A69, refused by \u00a72",
+  "series": "wind_offshore_forecast_mw",
+  "source": "SMARD filter 3791",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 1,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "none",
+  "product": "A75 actual wind onshore generation",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "not an input of B0, v1-R or v2-v5 (v1's unselected residual-load catalog only)",
+  "series": "wind_onshore_actual_mw",
+  "source": "SMARD filter 4067",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 1,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "none",
+  "product": "A75 actual solar generation",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "not an input of B0, v1-R or v2-v5 (v1's unselected residual-load catalog only)",
+  "series": "solar_actual_mw",
+  "source": "SMARD filter 4068",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_hours_total": 0,
+  "granularity": "hourly; four quarter-hour SMARD values summed to MWh per hour (= hour-average MW); partial hours null",
+  "licence": "CC BY 4.0; attribution \"Data: ENTSO-E Transparency Platform; Bundesnetzagentur | SMARD.de\" (DATA-LICENSE.md)",
+  "policies": "none",
+  "product": "A75 actual wind offshore generation",
+  "retrieval": "preserved snapshot bytes (pulled 2026-09-08, SMARD route); not re-pulled (\u00a724.6 item 1)",
+  "role": "not an input of B0, v1-R or v2-v5 (v1's unselected residual-load catalog only)",
+  "series": "wind_offshore_actual_mw",
+  "source": "SMARD filter 1225",
+  "timezone": "timestamp_utc in UTC (canonical hours); delivery calendar Europe/Berlin (23/24/25 hours); SMARD clock CET/CEST"
+ },
+ {
+  "gap_days_after_cp25": 0,
+  "granularity": "0.25\u00b0 grid, box 47-55.25\u00b0N 5.5-15.5\u00b0E (34 x 41 cells); converted by \u00a715.2 to hourly mean 10 m and 100 m wind speed and mean DSWRF per canonical delivery hour",
+  "licence": "NOAA open data (NODD) and NCAR GDEX d084001 \"Freely Available\" (doi:10.5065/D65D8PWK); derived aggregates carry the CP-20 weather attribution; no raw GRIB or decoded grid committed (DATA-LICENSE.md, rights-notice.md)",
+  "policies": "v3, v4, v5",
+  "product": "NCEP GFS 0.25\u00b0 operational D-1 00 UTC run, leads f021-f048 (3-hourly); fields u10, v10, u100, v100 (m/s), DSWRF (W/m\u00b2, 6-hour-reset averages)",
+  "retrieval": "CP-20 retained grids (2,476 runs) + CP-25 (329 runs), anonymous archives",
+  "role": "input (three weather columns + three missing indicators)",
+  "series": "gfs_weather",
+  "source": "NOAA AWS noaa-gfs-bdp-pds (primary for 2021+), NCAR GDEX d084001 THREDDS (alternate; CP-20 2019-2020)",
+  "timezone": "run initialization and leads in UTC; delivery hours Europe/Berlin (h22-h46 after the run)"
+ },
+ {
+  "gap_hours_total": 0,
+  "granularity": "per canonical hour / delivery day",
+  "licence": "derived in code (MIT, LICENSE); no third-party data",
+  "policies": "B0 (weekday rule), v1-R, v2, v3, v4, v5",
+  "product": "local hour, day of week, month, German federal holidays, day after holiday, bridge day, day type, DST-transition day, summer/winter peak flags, weekday dummies, month one-hot",
+  "retrieval": "none",
+  "role": "input",
+  "series": "calendar (deterministic)",
+  "source": "computed: Python `holidays` (DE national calendar; version pinned in uv.lock) and the IANA tz database",
+  "timezone": "Europe/Berlin"
+ }
+]
