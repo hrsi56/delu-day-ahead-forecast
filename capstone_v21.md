@@ -1,3 +1,51 @@
+# Capstone v21-r13 — the programme after CP-24: the short path, the issue time, the fresh-test window, CP-25, CP-26 and CP-28 (ratified)
+
+**Ratified by the Owner on 2026-10-12.** After CP-24 and PRES-4, the Owner
+approved a programme plan on 2026-10-11, and on PRES-4's closure that day chose a conditional
+public review. On 2026-10-12 he made five more decisions, plus a sixth that the short path made
+moot (§24.11, D6):
+
+- **the short path:** no new data sources in this programme;
+- **the issue time:** D−1 11:00 Europe/Berlin, one hour before the gate, all year;
+- **the vintage standard:** three tiers, for every input;
+- **the fresh-test window:** 4.7T moves to the first 90 untouched days, 2026-09-07 to 2026-12-05.
+  The period 2026-04-08 to 2026-09-06, which v1 already used, joins development, and the separate
+  replay window is withdrawn;
+- **the 4.8 arms:** DDNN-2 alone, equal weights, learned global weights, per-block weights and the
+  NumPy meta-learner. In his ratification he added two unshrunk arms: the learned global weights,
+  and the meta-learner.
+
+What this revision adds, as additions only:
+
+- **§24** fixes the programme after CP-24 and specifies CP-25, CP-26 and CP-28.
+- **§10** gains three rows: CP-25, CP-26 and CP-28.
+- **PUBLISH_RULES 1.5** adds A12 and moves invariant 10's date.
+
+Apart from §10's three new rows, no line changes: the headers below and §§1–23 remain byte for
+byte. §24.1 lists every earlier rule that §24 replaces for future work.
+
+**Status:** ratified under the Owner's task-scoped Lockdown suspension of 2026-10-12. No checkpoint
+starts on ratification alone (§24.10).
+
+Previous v21-r12 is preserved at `7ff6a50:capstone_v21.md`, SHA-256
+`caf03d705a785369972b6e9ef3d043815a4a7ba77830cabb51e939c486477ce4`.
+
+**Authority.** On 2026-10-12 the Owner wrote: "תוסיף A6 A3 בלי כיווץ: משקל גלובלי נלמד, שיכול
+להגיע לכל ערך; A7 A5 בלי כיווץ: המטא־לומד, עם הפלט שלו כפי שהוא", and then: "מאשר השעיית Lockdown
+ל־v21-r13 ול־PUBLISH_RULES 1.5, מאשר את הטקסט של plan-for-critic-r4.md עם התוספת של a6 a7 מראש,
+ומאשר commit ו־push לכל מה שצריך". The English sense is in
+[the amendment record](docs/track-b/capstone_v21-r12-to-v21-r13-amendments.md).
+
+- **What the grant covers:** a task-scoped Lockdown suspension for this revision, PUBLISH_RULES
+  1.5, their amendment record, and directly necessary consistency edits to the programme plan and
+  `progress.md`, with their commit and push.
+- **When it ends:** at this task's terminal return.
+- **Who wrote it.** The Orchestrator drafted this text from the Owner's decisions, the stage 3 and
+  4 research, two independent plan-critic reviews and the critic's check of the revisions. §24.11 marks every design choice the Owner
+  did not state. This is not a claim that the Owner reviewed every sentence.
+
+---
+
 # Capstone v21-r12 — unrestricted work availability (Owner-authorized 2026-10-10)
 
 Authorized work may run on every day and at any time, under `AGENTS.md` § Work availability.
@@ -571,6 +619,9 @@ metrics must be ratified before that stage starts. **No clock starts in CP-15.**
 | CP-22 | v4 revised: the three-block member replaced by one pooled member (R, then M), and a dynamic interval layer on the winner, compared with v4 under §20.6 | Ratified v21-r9 §20; CP-22 execution authorized 2026-10-01 under §20.11; research only |
 | CP-23 | Programme 4.6 (4.6L → 4.6R → 4.6C): DDNN written in NumPy only; v5 = v4 plus a DDNN member at one third, compared with v4 under §21.6 | Ratified v21-r10 §21; execution requires the Owner's grant with the issued brief (§21.11); research only |
 | CP-24 | DDNN-2 (§23): a literature-faithful DDNN in NumPy only, with day-level rows, a per-fold training-only search and an ensemble of tuned configurations, behind a pre-fold gate. v5 = (2/3)·HG + (1/6)·L + (1/6)·DDNN-2, compared with v4 under §23.9 in at most two scored attempts | Ratified v21-r11 §23; execution granted by the Owner's delegation of 2026-10-04 (§23.14); research only |
+| CP-25 | Our own data gaps (§24.6): weather features for the gaps; the new partition specification to 2026-09-06; every input's tier; the eligibility calendar; the record masks | Ratified v21-r13 §24.6; execution requires the Owner's retrieval approval and grant with the issued brief; research only |
+| CP-26 | Re-baseline (§24.7): B0, v1-R and v2–v5 refit daily on every eligible development day, 2020-12-29 to 2026-09-06; the forecast ledger; CP-28's frozen protocol | Ratified v21-r13 §24.7; execution requires CP-25's LAND, the tier and margin rulings (§24.5) and the Owner's grant with the issued brief; research only |
+| CP-28 | 4.8 (§24.8): seven pre-registered recombination arms on CP-26's stored forecasts, against the control (§24.5) | Ratified v21-r13 §24.8; requires CP-26's LAND and the Owner's confirmation, then the issued brief; research only |
 | CP-17 | Freeze the selected update policy and register verified initialization | Requires demonstrated feasibility and complete future bar |
 | CP-18 | Run the same policy and build the live scorecard from recorded issued predictions | Requires operational and publication authorization |
 | CP-19 | Evaluate the preregistered prospective policy | Requires CP-17 plus elapsed horizon and complete future bar |
@@ -3829,3 +3880,720 @@ header's authority). The grant covers:
 | D10 | The reference tests | Orchestrator, under the delegation | CP-23's test-only lock, or a new one under `tests/cp24/` with the same pins; never the root lock |
 | D11 | Weather coverage | Orchestrator, under the delegation | Pre-fold fits leave out the days without a frozen weather record (2022-09-29..2023-03-24); no retrieval (§23.6) |
 | D12 | Publication | Orchestrator, under the delegation | None in CP-24; the Owner decides after the LAND |
+
+## 24. The programme after CP-24: the short path, the issue time, the fresh-test window, CP-25, CP-26 and CP-28 (v21-r13)
+
+### 24.1 What this section decides, and what it replaces
+
+**Origin.**
+
+- The Owner's programme plan of 2026-10-11, and the stage 3 research report and stage 4
+  methodology memo it commissioned.
+- The Owner's decisions of 2026-10-11 and 2026-10-12, recorded in the programme plan.
+
+**The order from here:**
+
+1. CP-25, our own data gaps (§24.6);
+2. CP-26, the re-baseline (§24.7);
+3. CP-28, 4.8, if the Owner confirms it after CP-26 (§24.8);
+4. CP-17, the freeze, then 4.7T (§24.9);
+5. CP-18, with security hardening, a controlled live trial and site activation; then CP-19 (§16);
+6. the final publication.
+
+**No checkpoint is numbered CP-27.** The new-source admission tests it named are dropped by the
+short path (§24.2).
+
+**For future work, §24 replaces these earlier rules:**
+
+| Earlier rule | Replaced by |
+|---|---|
+| §2: the inherited v1 issue-time convention | §24.4: D−1 11:00 Europe/Berlin |
+| §3 and §14.1: the spent v1 holdout and the reserved tail are not read | §24.2: 2026-04-08 to 2026-09-06 is development data |
+| §14.2 and §17.4: no substitution, and a lost target makes the evaluation incomplete | §24.7 and §24.8: the failure rules, for CP-26 and CP-28 |
+| §15.2: "public availability before D−1 11:00 UTC" | §24.4 and §24.5: before the new issue time, as tier 2 |
+| §17.4 and §23.6: no weather is retrieved; CP-20's grids only | §24.6: CP-20's grids, plus CP-25's for the gaps |
+| §19.6: "v1's holdout stays v1 history" | §24.2: v1's holdout results stay v1's record; the days are development data |
+| §19.8: no research display uses data after 2026-04-07 before the final test | §24.2: the date is 2026-09-06 (and PUBLISH_RULES 1.5's invariant 10) |
+| §22, items 3–5 | Item 3 ran as stage 3, and its sources are deferred (§24.2); item 4 is §24.8; item 5 is §24.3 and §24.9 |
+| §23.3: every input keeps its inherited vintage assumption | §24.5: the tiers |
+| §23.4: one search per fold | §24.7: the 182-day search schedule, for CP-26 |
+| §16.4's "before fresh-data test" row: replay the daily refit contract | §24.9: met by CP-26's daily refits of the control and CP-28's of the arms |
+| The programme plan's stage 10 replay | Withdrawn (§24.3) |
+
+**What stays:**
+
+- **§15.3's missing-weather rule** stays and governs every weather gap, including the delay runs
+  (§24.5).
+- **Where §24 differs,** §§14–23 govern their own historical records. §16, §19 and §22's binding
+  reminders continue to govern future work, except as §24 states.
+- **Every result before 4.7T** is `development_post_selection`.
+
+### 24.2 The short path, the development boundary and the red line
+
+**The short path (Owner, 2026-10-12).** No new data source is collected, tested or admitted in this
+programme. Stage 3's shortlist (`docs/track-b/data-source-research-2026-10-11.md`) stays a
+documented finding: a possible extension after the final product. No enquiry, registration or
+purchase follows from it.
+
+**Development data:** delivery days 2019-01-01 to 2026-09-06, the existing snapshot's span.
+
+- **The period 2026-04-08 to 2026-09-06 joins development by this revision** (Owner, 2026-10-12).
+  - The research never used it: the earlier boundary was `data/partitions.json`'s `eda_cutoff`,
+    2026-04-07.
+  - v1 used it for its CQR calibration (2026-04-09 to 2026-06-07) and its one-shot holdout
+    (2026-06-09 to 2026-09-06), whose results are published (`docs/cp2-model-report.md` §4).
+  - It therefore cannot serve as a fresh test, and serves as development data instead.
+- **v1's historical records stay unchanged,** and so do `data/partitions.json` and
+  `data/snapshot.parquet` (§1). CP-25 writes a new partition specification beside them. v1's
+  holdout results stay v1's record, while the days themselves are development data.
+- **Displays and publication.** Before the final test, no research number, chart or choice uses
+  data after 2026-09-06. That replaces §19.8's 2026-04-07, and PUBLISH_RULES invariant 10 moves
+  with it (PUBLISH_RULES 1.5).
+
+**The red line.** Delivery days from 2026-09-07 stay closed until 4.7T opens (§24.9).
+
+- **Data on disk.** Every downloader refuses any row whose Europe/Berlin delivery day is after
+  2026-09-06, in code.
+  - **For GFS, the guard tests the run's initialization, not its valid time.** A run serves the
+    delivery day after its run date. The guard refuses any run initialized at or after 2026-09-06
+    00 UTC, and any lead outside §15.2's f021–f048. A forecast's valid time after the boundary is
+    not an outcome.
+  - **Tests:**
+    - the instants 2026-09-06 21:00 and 22:00 UTC, for rows;
+    - the 2026-09-06 00 UTC run, which is refused;
+    - the 2026-09-05 00 UTC run's f048 message, which serves delivery day 2026-09-06 and is
+      admitted.
+- **The boundary moves only twice.** The 4.7T gate moves it to 2026-12-05. After 4.7T, CP-18's
+  brief retires the guard for the live pipeline only.
+- **Reading.** No agent reads reports, news, analyses or prices about market events after
+  2026-09-06.
+- **The window.** 4.7T's window is fixed now (§24.3) and is never extended after a result.
+
+**The exposure ledger** lives in `docs/track-b/exposure-ledger.md`. The Orchestrator keeps it,
+seeds it with the entries below at ratification, and adds every later exposure. Known entries:
+
+1. **2026-09-08, the snapshot pull** (`data/source_manifest.json`). The first review found no
+   committed row after 2026-09-06; the audit verifies the pull's request bounds.
+2. **2026-09-15, CP-15's retrieval of smard.de pages**
+   (`reports/cp15/feasibility/source_retrieval_manifest.json`).
+3. **2026-10-11, stage 3's retrieval of provider pages:** documentation and metadata only, by its
+   report. Its only data query was Elia's record counts, bounded at 2026-04-07 Brussels.
+4. **2026-10-12, the stage 4 research agent** reported that a search showed it an excerpt from
+   after 2026-04-07, which it discarded. It left no raw material, and the Orchestrator did not look
+   for the excerpt.
+
+**Their impact assessment** is recorded in the ledger before CP-26's first score, and CP-26's
+Integration Critic reviews it. For entry 4, the assessment considers whether any value adopted
+from the stage 4 memo could carry a market outcome.
+
+**The audit standard (for §24.9):**
+
+- **The test:** no outcome after 2026-09-06 entered any fit, tuning, selection, registration or
+  recorded Owner decision.
+- **Incidental exposures** are listed, each with an impact assessment. They block 4.7T only if they
+  could have informed a registered choice.
+- **The Owner declares in the audit** that his decisions used no information after 2026-09-06:
+  the tier ruling (§24.5), the CP-28 decision, the margin rulings, and CP-17.
+- **The CP-28 decision:** the Owner's confirmation of CP-28 may rest only on CP-26's report, its
+  resources and this section.
+
+**The boundary governs development only.** The live product, once running, trains on all the data
+available to it.
+
+### 24.3 The fresh-data test window, and the replay
+
+**4.7T covers delivery days 2026-09-07 to 2026-12-05:** the first 90 days after the snapshot's
+cutoff. It tests one frozen candidate, once. It opens after CP-17's freeze, and after the price for
+2026-12-05 is published, on 2026-12-04.
+
+**The replay window is withdrawn.**
+
+- The programme plan's stage 10 (2026-07-07 to 2026-10-04) fell mostly inside v1's holdout.
+- The controlled live trial after 4.7T (§24.9) exercises daily retraining on real, unseen days.
+
+**A null result is valid.** If the candidate fails, no runner-up moves up, and the window is spent.
+
+### 24.4 The forecast issue time
+
+**From CP-25 on, the issue time is D−1 11:00 Europe/Berlin,** one hour before the 12:00 day-ahead
+gate, every day:
+
+- 10:00 UTC when D−1 is on CET, and 09:00 UTC when it is on CEST;
+- the UTC instant follows D−1's own local offset at 11:00, including on transition days.
+
+**Rules:**
+
+- **Strictly before.** An input is usable only if it was published strictly before the issue time.
+  A publication at exactly the issue time is not.
+- **The target-day embargo.** No price of delivery day D in any zone, and no transformation or
+  same-auction output that reveals it, enters, whatever its timestamp says.
+- **Calendar features.** Deterministic calendar features known in advance, such as day of week,
+  month, statutory holidays and day length, are admissible. Hindsight labels are not (§24.5).
+- **§2's released-error rule is unchanged:** errors come from complete delivery days ≤ D−2,
+  consumed once.
+
+**Why.** §14's origin, D−1 11:00 UTC with a fixed UTC+01:00, is 13:00 CEST in summer: after the
+gate, and after the auction's results are published. No generation ever used a day-D price, but a
+live forecast at that hour is not a forecast.
+
+**Records before this revision keep 11:00 UTC** and are not relabelled. CP-26's results are under
+the new issue time.
+
+**The live product** publishes its forecast before 12:00 local. CP-18 fixes the schedule, its
+deadline and its failure rule; a late forecast is recorded as late.
+
+### 24.5 The vintage tiers (Owner, 2026-10-12)
+
+**For every published input of every policy:**
+
+1. **Tier 1:** original vintages with publication timestamps enter the main evaluation.
+2. **Tier 2:** preserved original values, with availability reconstructed from documented
+   schedules, may enter, with disclosure and delay-sensitivity checks.
+3. **Tier 3:** revised historical values without original vintages are excluded from the main
+   evaluation and tested separately.
+
+Reconstructing the availability time is acceptable; substituting retrospectively corrected values
+is not. Each input is verified individually, and licensing remains mandatory.
+
+**The tier register,** which CP-25 writes, has three categories:
+
+- **published inputs,** each with its tier and its evidence;
+- **deterministic calendar features known in advance,** which are admissible;
+- **hindsight labels,** which are inadmissible. For example, v1's `crisis_period`
+  (2021-09-01 to 2022-12-31) and `post_crisis` (from 2023-01-01), in
+  `src/delu_forecast/features.py`, encode regime boundaries known only later.
+
+**The target price** is tier 2 only if CP-25 documents SDAC result finality. Otherwise the Owner
+rules before CP-26.
+
+**An input whose originality cannot be established** is treated as tier 3 for the ruling below.
+
+**Tier 3 among the inputs of B0 or v1–v5.** The day-ahead load forecast is the known risk, because
+`data/snapshot.parquet` holds SMARD's current values.
+
+- **CP-25 returns the tier register to the Owner** before CP-26's brief is issued.
+- **If any of those inputs is tier 3,** CP-26 does not start until the Owner rules, before any
+  score.
+- **The default, under his standard:**
+  - the main evaluation runs each affected policy without that input, or with a substitute that
+    CP-25 registers and that is itself tier 1 or tier 2. The variant is named, for example
+    "v5 (no revised load)";
+  - the as-landed policy runs beside it, labelled revision-contaminated, and is never used for
+    selection, combination or freezing.
+- **The Owner may instead grant a recorded exception** for that input.
+- **The ruling specifies the variant's construction,** for each affected member, as a declared
+  method change:
+  - the columns removed or substituted (for example LEAR's load lags, and v1-R's two load
+    features);
+  - DDNN-2's always-included inputs, with the search space adjusted to match;
+  - a fresh run of the 14 searches (§24.7).
+
+  The harness may apply exactly those changes and no others.
+- **A parity check for the variant.** With the removed inputs restored, the variant's code
+  reproduces the as-landed parity vectors (§24.7).
+- **The control.** In this section and in §§24.7–24.9, "the control" is v5, unless the ruling names
+  a variant. The ruling then names it.
+
+**Tier 2: delay sensitivity, from a margin table.** Availability is reconstructed from documented
+schedules, so a uniform shift either changes nothing on a day or removes the input that day.
+
+- **The margin table.** For each tier-2 input group and each shift (+1, +6 and +24 hours), CP-25
+  computes the days on which the shifted availability is no longer strictly before the issue time.
+- **What follows from it:**
+  - **a shift that affects no day** is recorded as passed, without a run;
+  - **a shift that affects every day** is recorded as structural, with the result of the input's
+    registered missing-input rule. For weather that is §15.3; for the load forecast and prices it is
+    a failure, so the day falls back (§24.7);
+  - **a run is made only when the affected days are a non-empty proper subset.** It runs the
+    control with the shift applied, including its 14 searches, and is reported beside the nominal
+    run.
+- **Fragile.** A shift that is run is fragile if the control's shifted run worsens either primary
+  score by more than 2% relative to the nominal run.
+- **When the Owner rules:**
+  - on structural shifts, with the tier register, before CP-26;
+  - on a fragile result from a delay run, with CP-26's report, before CP-28.
+
+  For
+  example, the load forecast's deadline is two hours before the gate, about 10:00 local, so a
+  one-hour delay reaches the issue time on every day. He may accept that margin as a disclosed
+  operational risk, measured in CP-18's live trial. CP-17 records the rulings; it does not discover
+  them.
+- **No previous-run or previous-day fallback** is introduced.
+- **The missing-input rules:**
+  - for weather, §15.3: the three derived columns go missing and their indicators are set;
+  - for the load forecast and prices, the inherited rule in the landed code, which CP-25 states with
+    its file and line.
+
+**Licences:** every input has a recorded licence. `DATA-LICENSE.md` is unchanged.
+
+### 24.6 CP-25: our own data gaps (stage 5)
+
+**Purpose:** the frozen development inputs for delivery days 2019-01-01 to 2026-09-06, covering
+every input of B0, v1-R and v2–v5, with our gaps filled and every input checked against the new
+issue time.
+
+**Scope:**
+
+1. **Prices and load are not re-pulled.** They come from the preserved bytes of
+   `data/snapshot.parquet`, which v2–v5 were scored on.
+2. **Inventory.** For every input series: its source, product, licence, granularity and timezone,
+   and its gaps by year, each with a cause: the source, or our extraction.
+3. **Weather for the gaps.** GFS 0.25° D−1 00 UTC, with §15.2's source, recipe, fields and leads,
+   for:
+   - delivery days 2022-09-29 to 2023-03-24;
+   - delivery days 2026-04-08 to 2026-09-06.
+
+   That is about 329 runs. They take §15.2's targeted checks for runs outside the inventoried
+   scope, and are not labelled already admitted. CP-20's retained grids are reused as they are.
+4. **The tier register (§24.5).** For each input, its documented publication time against D−1
+   11:00 Europe/Berlin, strictly before, with evidence:
+   - v1's load inputs, `load_forecast_mw` and `load_forecast_day_mean_mw`;
+   - LEAR's and DDNN-2's load forecast and price lags;
+   - the target price's finality;
+   - GFS, as tier 2 on CP-20's dated NCEP schedule evidence (`reports/weather-admission/dossier.md`),
+     extended to the new issue time, with per-run evidence where it exists;
+   - every calendar feature and hindsight label.
+
+   §2's refusal of the post-gate A69 wind and solar forecast columns stands.
+5. **The missing-input rule of each input,** stated with its file and line in the landed code, and
+   **the margin table** (§24.5).
+6. **The new partition specification:** development to 2026-09-06, written as a new file.
+7. **The eligibility calendar.** The frozen list of eligible delivery days for CP-26, with every
+   exclusion and its reason.
+   - Exclusions follow target completeness, and the inputs whose absence makes the as-landed v5
+     fail: prices and the load forecast.
+   - Weather gaps follow §15.3 and exclude no day.
+   - No model, candidate or score enters the calendar.
+8. **The record masks,** fixed from existing records before any CP-26 score:
+   - **the days never scored before.** A day counts as scored if a forecast's loss on it entered a
+     reported result, a selection or an admission decision. The mask subtracts:
+     - folds 1–5's evaluation days;
+     - v1's holdout;
+     - CP-16's training-only admission slices;
+     - CP-24's gate days and search batches.
+
+     Days used only to fit or calibrate, such as v1's calibration windows, do not count as scored,
+     and the mask lists them;
+   - the old-fold days, folds 2–5. Fold 1, 2020-07-01 to 2020-09-28, lies inside CP-26's warm-up.
+9. **The boundary guard (§24.2),** with its tests. Credentials follow `AGENTS.md`: no value in a
+   log, URL or error message, with tests for it.
+
+**Outputs:**
+
+- the manifest with hashes;
+- the weather features for the gaps;
+- the tier register;
+- the partition specification, the eligibility calendar and the masks;
+- the retrieval log.
+
+No raw GRIB bytes or decoded grids are committed, under `DATA-LICENSE.md`.
+
+**Ceilings, proposed:**
+
+- 24 machine-hours, summed over workers' wall time;
+- at most 4 concurrent workers;
+- at most 40 GiB of transient transfer;
+- $0.
+
+The basis is CP-20, which retrieved about 2,100 GFS runs in 5.7 hours.
+
+**Not in CP-25:** any new source (§24.2).
+
+**Gates:**
+
+- this ratified section;
+- the Owner's retrieval approval (free public archives, $0);
+- the issued brief;
+- the LAND.
+
+Then the tier register and the margin table go to the Owner, for the tier and margin rulings
+(§24.5).
+
+### 24.7 CP-26: the re-baseline on every development day (stage 6)
+
+**Purpose:** run B0, v1-R and v2–v5 daily on every eligible development day under one protocol.
+The result is the new all-season baseline, and a stored ledger of every member's out-of-sample
+forecasts for CP-28 and 4.7T.
+
+#### Days
+
+- **The scored calendar:** delivery days 2020-12-29 to 2026-09-06, 2,078 calendar days, less
+  CP-25's frozen exclusions.
+- **The warm-up:** delivery days 2020-01-01 to 2020-12-28, forecast the same way and never scored.
+  It only fills interval buffers and CP-28's first ledger.
+- **Four masks are reported separately:**
+  - every eligible day;
+  - the days never scored before (CP-25's mask);
+  - the old-fold days, folds 2–5, re-run under this protocol;
+  - 2026-04-08 to 2026-09-06, newly opened and used earlier by v1.
+
+  The old five-fold results, their S_MAE and S_WIS and their uncertainty stay as the historical
+  record, never overwritten.
+
+#### Policies
+
+- **B0,** the similar-day naive, unchanged.
+- **v1-R (728-day window, no hindsight regime flags):** the released v1 recipe, refit daily, with
+  two declared method changes:
+  - `crisis_period` and `post_crisis` are removed (§24.5);
+  - the training window is 728 days, where v1 expanded from 2019-01-01.
+
+  The rest of the recipe is the `base` catalog, the nine LightGBM quantile heads, CQR, and isotonic
+  ordering, laid out for each origin D as follows:
+  - the heads train on `[max(2019-01-01, D−728), D−62)`;
+  - day D−62 is an embargo;
+  - CQR calibrates on D−61 to D−2;
+  - day D−1 is an embargo.
+  - The thread count follows the worker's allotment; that is not a method change.
+  - **The released artifact** is reported descriptively, on its holdout days only: 2026-06-09 to
+    2026-09-06.
+  - If v1-R cannot be built without a further method change, CP-26 reports v1 through the released
+    artifact and B1's preserved vectors on the old folds, and says so.
+- **v2, v3, v4 and v5,** through the harness below: their landed member code, fixed blend weights,
+  interval layers, seeds and inner tuning rules, unchanged. Only the data identity, the boundary,
+  the weather source, the issue time and the calendar follow this section.
+  - **A tier-3 ruling** may name a variant, built only by the ruling's declared changes (§24.5).
+- **DDNN-2 alone** is descriptive in CP-26. It is a CP-28 arm (§24.8).
+
+#### The harness and the parity gate
+
+- **The harness.** The landed code refuses any snapshot, boundary or anchor other than its own
+  (`src/cp15/data.py`, `src/cp20/inputs.py`, `src/cp24/inputs.py`). CP-26 therefore builds a
+  harness that imports the landed member code unchanged and replaces only:
+  - the data identity: the new partition specification and CP-25's manifest;
+  - the boundary;
+  - the weather source: CP-20's grids plus CP-25's;
+  - the issue-time label;
+  - the identity pins: the protocol revision, the anchor and issued-document hashes, and the lineage
+    checks. Each replaced pin is listed in the harness log.
+- **The parity gate, before the full run.** Under the old settings (11:00 UTC, the old identity and
+  boundary), the harness reproduces the committed central vectors bitwise at sampled old-fold
+  origins:
+  - for A1, B2, A1_w, B2_w, L-N and L-R;
+  - for D2, on CP-24's committed ensembles. Those ensembles check parity only, and never serve a
+    CP-26 forecast;
+  - for B0, and for the assembled v2–v5 central vectors.
+
+  If parity fails, the Lead stops and reports.
+
+#### DDNN-2's training-only search, for CP-26
+
+- **Search dates:** S_k = 2020-01-01 + 182k days, for k = 0 to 13. Search k serves the origins from
+  S_k up to the day before S_(k+1).
+- **The batches:** consecutive 28-day blocks, tiling backward from S_k − 1.
+  - Only blocks starting on or after 2019-07-01 are kept.
+  - B_k = min(11, the blocks kept), so B_0 = 6.
+  - There is no fold skip rule: every block lies before the search's first origin.
+- **One fit per trial and batch,** on `[max(2019-01-01, b − 728), b)`.
+- **The sampler:** seeded with `SeedSequence([26, k, 0x5A3])`, with 128 trials. Successive halving,
+  the ranking metric and the tie rule follow §23.4.
+- **The ensemble:** the four best distinct configurations, with two seeds each.
+- **CP-24's ensembles are never reused** for a CP-26 forecast.
+
+#### Training and information
+
+- **A daily refit** at every origin, for every member, on `[max(2019-01-01, D−728), D)`, filtered
+  by availability at the issue time. For every scored day the window is exactly 728 days.
+- **A training target enters only once its price was published** before the issue time.
+- **No expanding-window sensitivity** is run under the short path.
+
+#### Scores
+
+- **Primary:**
+  - p50 MAE, and the seven-quantile WIS (50/80/95% intervals, weights α/2, median weight 1/2,
+    divided by 3.5);
+  - each day's loss is the mean over its actual hours, and days weigh equally;
+  - the B0 ratio is the policy's mean daily loss over B0's, reported beside the raw losses.
+- **Secondary:**
+  - the mean of the four pooled-season ratios;
+  - the mean of the five complete-year ratios, 2021 to 2025;
+  - 2020 and 2026, both partial, reported separately; quarters descriptive.
+- **Calibration, descriptive:**
+  - 50/80/95% coverage, the lower and upper exceedance rates and the widths;
+  - quantile hits, and the eight-bin quantile histogram;
+  - Christoffersen's tests;
+  - the memo's moment-test family (HAC lag 14, 100,000 replicates, seed 20261013, Holm at 5%), as
+    a diagnostic only.
+- **Registered breakdowns:**
+  - season (DJF, MAM, JJA, SON);
+  - year and quarter;
+  - local hour;
+  - day type: weekday or weekend, the nationwide holiday flag, and 23-, 24- and 25-hour days;
+  - the 2021–2022 stress label, descriptive;
+  - two states known at the issue time:
+    - negative-price risk: any negative hour in the last 7 fully known delivery days;
+    - high volatility: the standard deviation of the last 28 fully known daily mean prices is above
+      the 90th percentile of the previous 365 such values, using linear percentiles and a strict
+      comparison;
+  - realized-outcome slices, descriptive only.
+
+#### Inference
+
+- **The bootstrap:**
+  - paired, non-circular moving blocks of 14 calendar days, 10,000 replicates, seed 20261012;
+  - drawn within calendar-year strata (the three 2020 days join 2021; 2026 is a partial stratum),
+    never across a real gap;
+  - studentized, with Bartlett HAC at lag 14.
+- **Sensitivity:** 7- and 28-day blocks, and an unstratified 14-day variant.
+- **Secondary tests:**
+  - Diebold–Mariano on daily losses;
+  - Giacomini–White, with these instruments: a constant, the lag-1 differential, a weekend flag,
+    and the two states above;
+  - the 90% Model Confidence Set, descriptive.
+
+#### Failures
+
+- **A failed fit or forecast** is scored, on that day, with B0's forecast as the policy's fallback.
+  Fallback days are counted and reported by policy.
+- **If B0's own inputs are also unavailable,** the policy fails that day. The failure is counted,
+  and the day is scored as missing in every paired comparison involving that policy.
+- **Nothing enters a policy's or an arm's interval-layer buffer** on a fallback or failed day, so the
+  buffer spans more calendar days. That is disclosed.
+- **If a main policy's fallback days exceed 1% of the calendar,** the Lead reports before CP-28.
+  Every main policy counts, including a tier-3 variant. Delay runs and the revision-contaminated
+  as-landed policies are reported separately.
+- **No day leaves the calendar** after scoring.
+
+#### What CP-26 claims
+
+- **It is a control audit.** For each adopted transition (v2 → v3, v3 → v4, v4 → v5) it reports
+  the paired differences, the ratio intervals and the year and season breakdowns, all
+  descriptive.
+- **No adoption, replacement or demotion follows from it.** If v5 does not improve on v4 over the
+  full calendar, the record says so, and the control (§24.5) stays CP-28's control.
+
+#### CP-28's frozen protocol
+
+- **Author and timing:** the CP-26 Lead writes it from §24.8, without inspecting any outcome, and
+  commits it on `gauntlet/cp-26` before CP-26 computes its first score.
+- **Review:** CP-26's Integration Critic reviews it.
+- **Custody:** it lands with CP-26. If CP-26 is discarded, the protocol goes with it.
+- **The Owner's later confirmation** decides only whether CP-28 runs, never what it tests.
+
+#### The ledger
+
+Every forecast is stored with its issue instant, training-target cutoff, input vintages, seeds and
+code identity.
+
+#### Ceilings, proposed
+
+- **400 machine-hours,** summed over workers' wall time, as CP-24's ledger defines it. This
+  includes the warm-up, the parity gate, the searches, the delay runs, the bootstrap, diagnostics,
+  tests and failed jobs.
+- At most 4 concurrent workers; BLAS 1; CPU only; peak memory 12 GB; no cloud and no GPU.
+- **The basis.** The first review projects about 150–165 machine-hours from measured costs per
+  origin.
+  - A run of the control costs about 29 hours of fits, and about 34 with its 14 searches (the second
+    review's reconstruction from CP-24's measured costs).
+  - Under §24.5's margin table, delay runs are expected to be few or none.
+  - **A tier ruling that adds a variant also sets the ceiling it needs:** each variant costs about
+    70–85 machine-hours, and the ruling records the new ceiling.
+- **A timing pilot comes first:** 14 origins, training only, with scores sealed. If it projects
+  more than 80% of the ceiling, the Lead stops and reports before the full run.
+
+#### Outputs, gates and publication
+
+- **Outputs:** the ledger; the scores, and the uncertainty with its stored replicates; the
+  diagnostics; the report; CP-28's frozen protocol; and a draft publication packet under
+  PUBLISH_RULES §11.
+- **Gates:**
+  - CP-25's LAND;
+  - the Owner's tier and margin rulings (§24.5);
+  - the issued brief;
+  - the LAND.
+- **Publication:** CP-26's results may be published before 4.7T, under PUBLISH_RULES 1.5's
+  invariant 10. Publishing is a separate decision.
+
+### 24.8 CP-28: 4.8 on stored forecasts (stage 8)
+
+**Status:** it runs only if the Owner confirms it after CP-26 lands. Every arm is specified here,
+and in CP-28's frozen protocol (§24.7).
+
+**The members** are the control's three, from CP-26's ledger:
+
+- c_HG: v3's central forecast;
+- L: the mean of L-N and L-R;
+- D2: DDNN-2's median.
+
+**The control** is the control named under §24.5: v5, unless a tier ruling names a variant. It
+keeps the weights (2/3, 1/6, 1/6) and its interval layer. **Wherever §§24.8–24.9 say v5, they mean
+the control** (§24.5): in its weights, its forecast, the gates' L_v5, and the disclosures.
+
+**The construction, as v5's own:**
+
+- Weights apply to the members' central forecasts.
+- Each combined arm's quantiles come from HG's H layer, re-estimated on that arm's own issued
+  central errors.
+- The learned arms minimize mean daily central MAE.
+- A1 keeps DDNN-2's own Johnson SU quantiles.
+
+**The ledger rule:**
+
+- A member forecast for day s enters any arm's learning only if s ≤ D−2: a complete delivery day
+  released under §2. Its forecast was made without its outcome.
+- D's combined forecast is produced before D's outcome enters the ledger.
+- CP-26's warm-up supplies the first ledger days.
+
+**The arms (Owner, 2026-10-12):**
+
+| Arm | Rule |
+|---|---|
+| A1 | DDNN-2 alone, with its own quantiles |
+| A2 | Equal weights, (1/3, 1/3, 1/3) |
+| A3 | One global weight vector, chosen on the simplex grid with step 0.01 (5,151 points). It minimizes mean daily central MAE over the latest 728 ledger days on which all three members are valid, and needs at least 364 such days. Ties go to the point nearest v5's weights (Euclidean), then to the lowest grid index. Deployed weights = 0.5 × fitted + 0.5 × v5's, updated daily. Before 364 days: v5's weights |
+| A4 | One weight vector for each of CP-21's blocks (night 22–05, solar 10–16, shoulder/peak 06–09 and 17–21), on the same grid, minimizing central MAE over the block's hours across the latest 728 ledger days, and needing 728. Deployed = 0.25 × the block's fitted vector + 0.75 × A3's deployed weights. Before 728 days: A3's deployed weights |
+| A5 | The NumPy meta-learner (below) |
+| A6 | A3 without shrinkage: the same grid, objective, window, minimum history and tie rule, with deployed weights = the fitted weights. It can reach any weighting, including 100% on one member. Before 364 days: v5's weights |
+| A7 | A5 without shrinkage: the same network and training, with deployed weights = the network's output as it is. Before 364 days: v5's weights |
+
+**A5, the NumPy meta-learner:**
+
+- **Sixteen inputs, all known at the issue time:**
+  - for each member, its mean absolute central error over the last 7 and the last 28 ledger days;
+  - the high-volatility and negative-price-risk states (§24.7), and the "volatility unknown" flag
+    below;
+  - season, as four one-hot values;
+  - hour block, as three one-hot values.
+- **Output:** for each day and block, a softmax over the three members.
+- **The network:** one hidden layer of 8 tanh units.
+- **The loss:** the mean absolute error of the weighted central forecast over the block's hours.
+- **Training:**
+  - full-batch Adam, learning rate 0.01, 300 epochs, L2 penalty 1e-3 on the weights;
+  - initialization seeded with `SeedSequence([28, D.toordinal(), 0x4D4C])`;
+  - refit daily, from scratch, on the latest 728 ledger days, needing at least 364.
+- **Deployed weights** = 0.5 × the network's output + 0.5 × v5's weights. Before 364 days: v5's
+  weights.
+
+**Further fixed details:**
+
+- Training rows for every learned arm, A3 to A7, require all three members to be valid.
+- The grid points are ordered lexicographically by (w_HG, w_L), ascending. A4's ties follow A3's
+  rule.
+- A5's and A7's inputs are standardized on the training window only. A6 and A7 share A3's and
+  A5's fits: only the shrinkage differs.
+- An unknown volatility state is encoded as "not high", with a separate 0/1 flag for "unknown".
+- Adam's β1 = 0.9, β2 = 0.999 and ε = 1e-8; weights are initialized from a normal distribution with
+  standard deviation 0.1, and biases at zero.
+- **Any implementation detail this section still leaves open** is fixed in CP-28's frozen protocol
+  before CP-26's first score. CP-26's Integration Critic checks that none depends on an outcome.
+
+**Failures:**
+
+- A missing member makes the arm use v5's forecast that day.
+- If v5's forecast is missing too, B0's forecast is used.
+- A solver failure, with every member valid, makes the arm use A2's.
+- No arm renormalizes over a subset of members, and every fallback day is counted.
+
+**The gates, against the control (written v5 below), on CP-26's scored calendar:**
+
+1. **Improvement:** `H0: E[L_arm − 0.995·L_v5] ≥ 0` is rejected for both MAE and WIS; that is, by
+   more than 0.5%.
+2. **Non-inferiority:** `E[L_arm − 1.02·L_v5 | g] ≥ 0` is rejected for both MAE and WIS in each
+   complete year, 2021 to 2025, and in each pooled season. A required cell with fewer than 90 days
+   makes the arm inconclusive.
+3. **The compound test:** the arm's p-value is the largest over its required endpoints. Holm runs
+   across the seven arms at α = 0.05; CP-27's family no longer exists.
+4. **Sensitivity.** Every arm's compound p-value and Holm are recomputed under each variant: 7-day
+   blocks, 28-day blocks, and unstratified. An arm that passes under the primary analysis but fails
+   under any variant is inconclusive, and is not adopted.
+
+**Disclosed in advance:**
+
+- A4 equals A3 until 728 ledger days exist, roughly through 2021. Its 2021 cell therefore tests
+  A3's weights.
+- The learned arms equal v5 until their minimum history exists.
+- **A6 and A7 are unshrunk** (Owner, 2026-10-12). They can place any weight on DDNN-2, up to 100%,
+  and are the arms most exposed to overfitting and to lag at regime changes. The gates, the
+  simplicity order and 4.7T are their protection.
+- **CP-28's Holm control is conditional on the Owner's decision to run it.** That decision follows
+  CP-26's report, which includes DDNN-2 alone (A1's forecasts) on the same calendar. 4.7T still
+  carries the protection.
+
+**Selection:**
+
+- Among the arms that pass, the one with the lowest WIS wins.
+- Arms whose WIS is less than 0.5% above the best are tied, and the simpler arm wins, in the order
+  A1, A2, A3, A6, A4, A5, A7.
+- If no arm passes, the control is the candidate for the freeze.
+
+**Further rules:**
+
+- There is one look, and no arm is added. A failed or unexecuted arm counts with p = 1.
+- **Ceiling, proposed:** 40 machine-hours.
+- **Evidence class:** `development_post_selection`; 4.7T carries the protection.
+- **Gates:** CP-26's LAND, the Owner's confirmation, the issued brief, and the LAND.
+
+### 24.9 CP-17 and 4.7T
+
+**CP-17 freezes one candidate,** CP-28's selection or the control (§24.5), together with:
+
+- its daily retraining rule (§16.2), the issue time, and its inputs and their tiers;
+- its DDNN-2 search state and its combiner state at the freeze;
+- **DDNN-2's search schedule in operation:** the 182-day searches continue, the next being
+  S_14 = 2026-12-23, under the same rules, as part of the frozen refit schedule;
+- the tier and margin rulings (§24.5);
+- its fallback and failure rules;
+- §19.5's definitions;
+- the lock-price policy, if the final product adopts it
+  (`docs/track-b/final-product-lock-price-notes-2026-10-11.md`).
+
+**§16.4's "before fresh-data test" row** is met by CP-26's daily refits of the control and CP-28's
+of the arms.
+
+**Registered before 4.7T opens:**
+
+- **the comparators:**
+  - the candidate against the control, when they differ;
+  - the candidate against B0, in every case;
+  - v3, v4 and v1's released artifact, as descriptive references;
+- the primary scores and their aggregation, from §24.7;
+- the pass conditions and margins;
+- a dependence treatment suited to 90 days;
+- the failure rules;
+- PUBLISH_RULES §14's "before final-candidate test" trigger.
+
+**The audit (§24.2's standard).** Before opening, the Lead and an independent reviewer check the
+download logs, the boundary guard's tests, the exposure ledger and the Owner's declaration. If the
+standard is not met, 4.7T returns BLOCKED.
+
+**Then:** CP-18, with security hardening (§22's reminder), a controlled live trial whose length the
+Owner sets, and site activation; then CP-19.
+
+**On the timeline.** §16.4 requires CP-19 to cover at least 90 consecutive delivery days after the
+final freeze. With 4.7T opening no earlier than 2026-12-04, CP-19 cannot finish before about March
+2027. CP-18 may still publish live observations labelled "prospective evaluation in progress".
+
+### 24.10 What this section does not authorize
+
+- **No checkpoint starts on ratification alone.** Each needs its issued brief and the Owner's
+  grant; CP-25 also needs the retrieval approval.
+- **No new data source,** purchase, registration or enquiry.
+- **No publication.** Publishing CP-26's or CP-28's results is a separate decision under
+  PUBLISH_RULES.
+
+### 24.11 Decisions recorded
+
+| # | Decision | Who |
+|---|---|---|
+| D1 | The short path: no new sources; CP-27 dropped; CP-28 on stored forecasts, confirmed after CP-26 | Owner, 2026-10-12 |
+| D2 | The issue time, D−1 11:00 Europe/Berlin, strictly before; the target-day embargo | Owner, 2026-10-12 (the embargo from the stage 4 memo) |
+| D3 | The vintage tiers | Owner, 2026-10-12 |
+| D4 | 4.7T on 2026-09-07 to 2026-12-05; 2026-04-08 to 2026-09-06 joins development; the replay withdrawn | Owner, 2026-10-12 |
+| D5 | CP-28's arms: A1–A5, and A6–A7 added in the ratification | Owner, 2026-10-12 |
+| D6 | Several sources admissible, with a union arm: moot under D1, recorded only | Owner, 2026-10-12 |
+| D7 | The conditional independent post-deployment check (PUBLISH_RULES 1.5, A12) | Owner, 2026-10-11 |
+| T1 | A tier-3 input in B0 or v1–v5 waits for the Owner's ruling, defaulting to a named clean variant whose construction the ruling specifies; "the control" defined; unverifiable originality treated as tier 3 | Orchestrator, applying D3 (first review B1; second review N1) |
+| O1 | v1-R with a 728-day window and without the hindsight regime flags, with its CQR layout; the artifact descriptive; the stated fallback | Orchestrator (first review B3; second review N4) |
+| O2 | DDNN-2's 182-day search schedule and seeds | Orchestrator (first review, M4) |
+| O3 | The warm-up, 2020-01-01 to 2020-12-28 | Orchestrator |
+| O4 | Delay sensitivity from CP-25's margin table: runs only for partial shifts, on the control; the Owner's margin ruling before CP-26; fragility at 2% | Orchestrator (first review M5 and M11; second review N3) |
+| O5 | CP-28 built as v5 is: central weights, with the H layer re-estimated per arm | Orchestrator (first review, B2) |
+| O6 | A3–A5's full specification, and the shrinkage targets | Orchestrator, adapting the memo (first review, M8) |
+| O7 | α = 0.05 across CP-28's seven arms | Orchestrator, from the memo's two 2.5% families, CP-27's now gone |
+| O8 | The ceilings (24, 400 and 40 machine-hours) and the timing pilot | Orchestrator, from measured costs |
+| O9 | No expanding-window sensitivity | Orchestrator, under D1 |
+| O10 | CP-28's protocol frozen before CP-26's first score, with its custody | Orchestrator |
+| O11 | B0's forecast as the fallback on a failed day; the memo's member and solver rules for CP-28 | Orchestrator (first review, M7) |
+| O12 | The harness and the parity gate | Orchestrator (first review, M6) |
+| O13 | Publication of pre-4.7T results through 2026-09-06 (invariant 10) | Orchestrator, following D4 (first review, M9) |
+| M | Every other numeric value in §24.7 and §24.8 | The stage 4 memo, adopted |

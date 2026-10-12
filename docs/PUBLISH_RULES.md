@@ -1,6 +1,12 @@
 # PUBLISH_RULES — publication anchor
 
-**Revision:** 1.4 · **Updated:** 2026-10-10 · **Owner:** Yarden Viktor Dejorno
+**Revision:** 1.5 · **Updated:** 2026-10-12 · **Owner:** Yarden Viktor Dejorno
+
+**Revision 1.5 authority:** the Owner's task-scoped Lockdown suspension of 2026-10-12 for research
+v21-r13, and his ratification of the text the same day (§16.5). Revision 1.4 is preserved at
+`7ff6a50:docs/PUBLISH_RULES.md`. This revision adds A12 (§10.5), the conditional independent
+post-deployment check, and moves invariant 10's date to 2026-09-06 (§12). See the
+[amendment record](track-b/capstone_v21-r12-to-v21-r13-amendments.md).
 
 **Revision 1.4 authority:** the Owner explicitly authorized removal of all calendar-based work
 restrictions on 2026-10-10, including edits to locked documents and this task’s commit and push
@@ -100,6 +106,9 @@ by reachable Git references. No historical review is regraded under a newly prop
   research releases keep their effective contract. Research authority is `capstone_v21.md` §16.
 - **Revision 1.2 / A9:** the final-product Space's views, presentation, loading, network and
   acceptance (§7.3). It applies at A8's trigger, together with research anchor §19.
+- **Revision 1.5 / A12:** the independent post-deployment check becomes conditional (§10.5), from
+  the next publication; PRES-2–4's waivers stand as recorded. Invariant 10's date moves to
+  2026-09-06 (§12), with research anchor §24.2.
 - **Future trigger:** one-shot test, final candidate, daily updates or live operation. Applies when
   its prerequisite and governing protocol exist. Not a reason to invent data, retrain or start a service.
 - **Historical example:** illustrates an observed case; never a permanent test constant or live status feed.
@@ -703,6 +712,24 @@ If a product FAIL and environmental gaps coexist, retain FAIL and list the incom
 Do not describe an untested requirement as PASS or a test-environment limitation as a demonstrated
 product defect. Keep publication-readiness separate from research adoption and earlier checkpoint closure.
 
+### 10.5 When the independent post-deployment check is required (A12)
+
+The independent post-deployment check is §10.3's evidence and A6, carried out by a checker who is
+independent under §10.1 and who gives a §10.4 verdict. It is required when either:
+
+1. **any served surface differs from what the binding independent pre-deployment review
+   covered:**
+   - for pages, the bytes, after the documented normalization of hosting injections;
+   - for MLflow, equality with the committed export (run identities, parameters, metrics and
+     tags);
+   - for the Space, the reviewed bundle, served after injection removal; or
+2. **a required public check fails** without a passing targeted retry.
+
+Otherwise, the publication's own public checks are its public-check record: the receipt and the
+browser records, with every first failure and retry kept. The closure states that neither
+condition arose. The Owner may still order the check. The fresh reader (§10.2) and the
+pre-deployment independent review are unaffected.
+
 ## 11. Publication packet and execution sequence
 
 Each research checkpoint supplies its packet from inside the checkpoint, including:
@@ -774,7 +801,7 @@ These tables are an index into binding text, not a replacement that drops unlist
 | 7 live namespace | §7.2; research/live separation |
 | 8 attribution/licensing | §8 |
 | 9 v2 wording/near-zero endpoint | v1 §4 sign/precision amendment; exact endpoint remains in value table |
-| 10 date boundary | Before final test, no v2+ research number/chart/choice uses data after 2026-04-07; v1 published replay exception preserved |
+| 10 date boundary | Before final test, no v2+ research number/chart/choice uses data after 2026-09-06 (2026-04-07 until revision 1.5); v1 published replay exception preserved |
 | 11 labels/no equivalence | §3.1/§3.2; plain labels on reading path, internal identifiers in depth |
 | 12 language/Owner presentation | §§1, 8, 11 |
 | 13 dependency files | `pyproject.toml` and `uv.lock` remain unchanged by presentation work unless separately authorized under governing rules |
@@ -819,7 +846,7 @@ One review record can carry this matrix; duplicate certificates are unnecessary:
 | Accessibility | Engine/width matrix, keyboard, AX controls, focus, targets, contrast, zoom/reflow, tool gaps |
 | Tracking | Mirror, histories/artifacts, anonymous routes and settled charts; no substituted local proof |
 | Release | Final build, guard/test results, exact-candidate independent check, authorized action record |
-| Public check | Per-surface identity/behaviour, first failures/retries, limitations and verdict |
+| Public check | Per-surface identity and behaviour, first failures and retries, limitations; and the independent verdict when §10.5 requires it |
 | Follow-up | Violations versus recommendations versus rule proposals; comparison with earlier findings |
 | Final product (A8, conditional) | Owner designation; one product/demo/daily-policy identity; frozen update contract; daily fit/issuance lineage; ordered method/results/business/comparison sections; actual rollout status |
 | Daily panel (A7/A8, conditional) | Today issued-versus-published prices; percentage and MAE derivations including zero/negative/missing outcomes; tomorrow intervals; coverage/width; separate training/issuance timestamps and stale/failure states |
@@ -863,7 +890,8 @@ future reviews can distinguish an intentional amendment from an accidental parap
 
 Revision 1.1 strengthens A7 as specified in §7.2 and adds A8 below; the original A1–A7
 authority and PRES-2's revision-1.0 acceptance remain historical and unchanged.
-Revision 1.2 adds the conditional A9 below (§16.2).
+Revision 1.2 adds the conditional A9 below (§16.2). Revision 1.5 adds A12 below (§16.5) and moves
+invariant 10's date (§12).
 
 ### A1 — Name each headline metric
 
@@ -1046,6 +1074,21 @@ baseline/plans. `AGENTS.md` § Work availability governs all future work, includ
 whose older brief pins a prior anchor. Every delivery day remains covered. Resource limits,
 publication permissions and historical release verdicts retain their existing scope.
 
+### A12 — The independent post-deployment check when it can add something
+
+**Observed need.** PRES-2, PRES-3 and PRES-4 each waived the check on the same basis: the served
+surfaces equalled what the independent review had covered, and every public check passed or
+passed on retry. A rule that is always waived is not a rule.
+
+**Addition:** §10.5.
+
+**Effective scope:** from the next publication. PRES-2–4's waivers stand as recorded.
+
+**Check:** the closure record names which condition arose, if any, and links the receipt.
+
+**Maintenance:** `scripts/publication_receipt.py` already records byte identity, mirror equality
+and retries.
+
 ## 16. Owner authority and integration record
 
 ### 16.0 Historical establishment of revision 1.0
@@ -1139,6 +1182,14 @@ including on main. The grant is scoped to this removal and directly necessary co
 The [r11 → r12 record](track-b/capstone_v21-r11-to-v21-r12-amendments.md) records the authority,
 prior revision and preservation of historical evidence.
 
+### 16.5 Revision 1.5 — the conditional post-deployment check and the development boundary, 2026-10-12
+
+The Owner granted a task-scoped Lockdown suspension for research v21-r13 and this revision, and
+ratified both texts on 2026-10-12, with commit and push. The grant is scoped to those texts, their
+amendment record and directly necessary consistency edits. The
+[r12 → r13 record](track-b/capstone_v21-r12-to-v21-r13-amendments.md) quotes the authority and
+records the prior revisions.
+
 ## 17. Source identities and change record
 
 Prepared on `main` at `01e394d475202bb44a226f2ac5403aa084dc5b4c`. The existing untracked independent
@@ -1183,3 +1234,14 @@ network and acceptance, conditional on A8. Revision 1.1 is preserved at
 v4's construction. Revision 1.2 is preserved at `c352436:docs/PUBLISH_RULES.md`, SHA-256
 `a43ac02021b7de468e02db30b61ec73f86cdafa69df845cf084ab196528bb15b`. Later publication briefs pin
 1.3.
+
+**1.4, 2026-10-10:** unrestricted work availability (A11); calendar-based restrictions removed
+from §7.2 and the incorporated baseline and plans. Revision 1.3 is preserved at
+`522d7ea:docs/PUBLISH_RULES.md`, SHA-256
+`5a660864f8b82943174741320c71087a3d0508f707edeb997cb2c1395c1c73b4`.
+
+**1.5, 2026-10-12:** the conditional independent post-deployment check (§10.5, A12), and invariant
+10's date moved to 2026-09-06 with research v21-r13 §24.2. Revision 1.4 is preserved at
+`7ff6a50:docs/PUBLISH_RULES.md`, SHA-256
+`ccfe6199535dc104250ee1ed1d8ff57bf0b12fbfb4945a3521e2e29fad479a80`. Later publication briefs pin
+1.5.

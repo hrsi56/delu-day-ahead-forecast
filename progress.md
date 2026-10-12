@@ -104,14 +104,13 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** Next: the anchor amendment under one suspension |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. Next: CP-25's brief |
 
 **No active Track B checkpoint.** PRES-4 closed on 2026-10-11. Stages 3 and 4 reported on
 2026-10-12, the Owner decided their open questions, **he chose the short path: no new data
-sources**, and he moved 4.7T to 2026-09-07 to 2026-12-05 (programme plan, top). The draft
-amendment v21-r13 is written and goes to an independent plan critic. The next step is the anchor amendment, under one suspension: the
-programme order, the red line and the windows, the evaluation protocol for CP-26 and CP-28, the new
-issue time, the narrowed CP-25 section and the conditional public-review rule.
+sources**, and he moved 4.7T to 2026-09-07 to 2026-12-05 (programme plan, top). **The anchor
+amendment is ratified (2026-10-12): research v21-r13 §24 and PUBLISH_RULES 1.5** govern the
+programme from here. The next step is CP-25's brief, after the Owner's retrieval approval.
 
 **PRES-4 is closed** ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)). It ran from the
 brief `54169c7c…`, under PUBLISH_RULES 1.4.
@@ -131,9 +130,8 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next pending Track B checkpoint: CP-25, our own data gaps** (stage 5, narrowed). It needs the
-anchor amendment under a suspension, reviewed by an independent plan critic, then the retrieval
-approval and a brief.
+**Next pending Track B checkpoint: CP-25, our own data gaps** (v21-r13 §24.6). Its section is
+ratified. It needs the Owner's retrieval approval (free public archives, $0) and the issued brief.
 
 **Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
 Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
@@ -438,7 +436,12 @@ decision remains a boundary, not an active workstream.
 
 ## 3. Strategic Anchors
 
-- **Current work-availability amendment (Owner, 2026-10-10):** research **v21-r12**,
+- **Current anchors (Owner, ratified 2026-10-12):** research **v21-r13**, `capstone_v21.md` SHA-256
+  `173799d818387b9d82db16b9ccd7195afaebbea8e11259809e4a8b704bd525a8`; publication **PUBLISH_RULES
+  1.5**, SHA-256 `1bc0c52351656c5a499291bf15ccb82b0ae8b4e6475d1879b0a4d307daaef94e`. The
+  [r12 → r13 record](docs/track-b/capstone_v21-r12-to-v21-r13-amendments.md) records authority and
+  scope. The exposure ledger is `docs/track-b/exposure-ledger.md`.
+- **Previous work-availability amendment (Owner, 2026-10-10):** research **v21-r12**,
   `capstone_v21.md` SHA-256 `caf03d705a785369972b6e9ef3d043815a4a7ba77830cabb51e939c486477ce4`; publication
   **PUBLISH_RULES 1.4**, SHA-256 `ccfe6199535dc104250ee1ed1d8ff57bf0b12fbfb4945a3521e2e29fad479a80`.
   Incorporated amended baseline: Publication Standard v1 SHA-256 `7bb90c4cbd15bde42121d615bd850854610a1aa0b3a776190a58ef481abeb68c`;
@@ -898,6 +901,29 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **v21-r13 and PUBLISH_RULES 1.5 ratified, 2026-10-12.**
+  - **The Owner's words:** he added A6 and A7 (A3 and A5 without shrinkage), then granted the
+    Lockdown suspension, approved the text of revision 4 with A6 and A7, and approved commit and
+    push. They are quoted in the
+    [amendment record](docs/track-b/capstone_v21-r12-to-v21-r13-amendments.md).
+  - **Applied:**
+    - `capstone_v21.md` v21-r13: the header, §10's three rows and §24, additions only;
+    - PUBLISH_RULES 1.5: A12, §10.5, invariant 10 moved to 2026-09-06, and §§1.3, 13, 15, 16.5 and
+      17;
+    - the amendment record;
+    - `docs/track-b/exposure-ledger.md`, seeded with entries 1–4;
+    - consistency edits to the programme plan and Strategic Anchors.
+  - **The ratified text** is revision 5 (`.local/artifacts/v21-r13/plan-for-critic-r5.md`,
+    `32e2d189…`).
+  - **Next:** CP-25's brief, after the Owner's retrieval approval. The Owner's tier and margin
+    rulings follow CP-25.
+
+- **The critic's check of revision 3, and the final text, 2026-10-12.**
+  - **The check:** N1–N3 landed, and N4–N14 landed, with five wording edits and one optional edit
+    (R1–R6). The critic judged they change no design and need no further review.
+  - **Revision 4** (`.local/artifacts/v21-r13/plan-for-critic-r4.md`, `b93f4d2a…`) applies R1–R6.
+    It is the text put to the Owner for his suspension and ratification.
 
 - **The plan critic's second review of v21-r13, and revision 3, 2026-10-12.**
   - **The review:** READY WITH FIXES (`.local/artifacts/v21-r13/plan-critic-review-r2.md`). Of the

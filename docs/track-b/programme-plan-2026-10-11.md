@@ -62,7 +62,7 @@ to it, to forecast days that have not happened yet.
 | 1 | ✅ The codex r13: kept as notes, not merged | Orchestrator | done | — |
 | 2 | ✅ Publish v5 (PRES-4): closed 2026-10-11 | Publication | done | — |
 | 3 | ✅ Search for new data sources: report received 2026-10-12 | Research, no evaluation | done | — |
-| 4 | Design the evaluation protocol: memo received and decided 2026-10-12; the anchor section next | Research and anchor | now | 5 |
+| 4 | ✅ Design the evaluation protocol: ratified 2026-10-12 as research v21-r13 §24, with PUBLISH_RULES 1.5 | Research and anchor | done | — |
 | 5 | Collect our own data gaps and check the issue time (CP-25; narrowed 2026-10-12) | Checkpoint | 4 ratified | — |
 | 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
 | 7 | ~~Admission tests for the new sources (CP-27)~~: dropped by the short path, 2026-10-12 | — | — | — |
@@ -214,7 +214,12 @@ CP-15 already found no free, redistributable, origin-correct TTF series from 201
 
 **Owner gate:** the research brief.
 
-## Stage 4 — Design the evaluation protocol
+## Stage 4 — Design the evaluation protocol: ratified
+
+**Ratified by the Owner on 2026-10-12** as research v21-r13 §24 and PUBLISH_RULES 1.5
+([amendment record](capstone_v21-r12-to-v21-r13-amendments.md)), after two independent plan-critic
+reviews and a check. The anchor governs from here; where this plan and §24 differ, §24 wins. The Owner
+added two unshrunk CP-28 arms in his ratification (A6, A7).
 
 **First, an external research run.** It reviews best practice for evaluating day-ahead price
 forecasts: rolling recalibration, window length, season and regime coverage, and the tests
@@ -345,7 +350,9 @@ All are fitted with stage 7's admitted data. **Decided 2026-10-12** (stage 4): D
 weights; one learned global weight set; per-block weights; the NumPy meta-learner on regime
 features; and one union arm, v5 plus every source CP-27 admits. **Under the short path
 (2026-10-12)** the union arm falls away, every arm learns from CP-26's stored member forecasts, and
-whether CP-28 runs is confirmed after CP-26.
+whether CP-28 runs is confirmed after CP-26. **At ratification (2026-10-12)** the Owner added two
+unshrunk arms, the learned global weights (A6) and the meta-learner (A7): seven arms, specified in
+research v21-r13 §24.8.
 
 **The rules:**
 
@@ -414,8 +421,8 @@ The final product, its report, and the CV surfaces, under the publication rules 
 1. Stage 1: done. r13 is kept as notes, and the codex branch is deleted.
 2. Stage 2: done. D1–D4 above, the LAND and the push on 2026-10-11.
 3. Stages 3 and 4: stage 3 done, with the vintage standard and no enquiries (2026-10-12); stage
-   4's memo decided the same day (issue time, CP-28 arms, several sources); then the anchor
-   section and its ratification.
+   4's memo decided the same day (issue time, CP-28 arms, several sources); the anchor section
+   ratified the same day as v21-r13 §24.
 4. The short path (2026-10-12): done.
 5. Stage 5: the anchor section, the retrieval approval and the LAND.
 6. Stages 6 and 8: each checkpoint's anchor section and LAND; stage 8 is confirmed after stage 6.
