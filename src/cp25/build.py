@@ -5,7 +5,7 @@ the SHA-256 of every output, every decision-bearing input and every implementati
 """
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, timedelta
 import hashlib
 import json
 from pathlib import Path
@@ -47,8 +47,10 @@ def _json(obj, path: Path):
 def weather(root: Path, weather_dir: Path, classifications: dict | None = None) -> dict:
     out = root / OUT
     manifest = json.loads((out / 'gfs-run-manifest.json').read_text())
-    cp20_cols = list(pd.read_parquet(root / F.CP20_FEATURES).columns)
-    feats = F.gap_features(manifest, weather_dir, classifications, cp20_cols)
+    cp20 = pd.read_parquet(root / F.CP20_FEATURES)
+    feats = F.gap_features(manifest, weather_dir, classifications, list(cp20.columns),
+                           {c: cp20[c].dtype for c in ('dswrf_clipped_cells', 'dswrf_quantum', 'dswrf_min_block',
+                                                       'dswrf_clipped_magnitude_sum')})
     feats.to_parquet(out / 'weather-features-gaps.parquet', index=False)
     messages, run_rows, checks = F.provenance(manifest, weather_dir)
     messages.to_parquet(out / 'gfs-messages.parquet', index=False)
@@ -56,6 +58,15 @@ def weather(root: Path, weather_dir: Path, classifications: dict | None = None) 
     _csv(checks, out / 'gfs-targeted-checks.csv')
     log = F.retrieval_log(weather_dir)
     _csv(log, out / 'retrieval-log.csv')
+    # Per-run availability evidence: the exact AWS listings (keys, sizes, LastModified, ETags).
+    listing = [json.loads(l) for l in (weather_dir / 'listing.jsonl').read_text().splitlines()]
+    (out / 'gfs-aws-listing.jsonl').write_text(''.join(json.dumps(e, sort_keys=True) + '\n'
+                                                       for e in sorted(listing, key=lambda e: e['run'])))
+    outcomes = pd.DataFrame([json.loads(l) for l in (weather_dir / 'attempt-outcomes.jsonl').read_text().splitlines()])
+    attempts = {'outcome_counts': outcomes.outcome.value_counts().sort_index().to_dict(),
+                'counted_message_attempts': int(outcomes.counted.sum()),
+                'not_success': outcomes[outcomes.outcome != 'success'].drop(columns=['epoch', 'try_id']).to_dict('records')}
+    _json(attempts, out / 'gfs-attempt-outcomes.json')
     return {'feature_rows': len(feats), 'delivery_days': int(feats.delivery_date.nunique()),
             'status_counts': feats.status.value_counts().to_dict(), 'runs_complete': int((run_rows.status == 'complete').sum()),
             'messages': len(messages), 'requests': len(log)}
@@ -89,13 +100,14 @@ def data_side(root: Path, weather_dir: Path) -> dict:
     reg = T.register()
     reg['margin_table_summary'] = table[['group', 'subgroup', 'tier', 'shift_hours', 'affected_days', 'days_considered', 'class',
                                          'class_on_eligible_days']].to_dict('records')
-    ev = pd.Series({k: v for k, v in evidence.items() if v is not None})
-    issue = {r: pd.Timestamp(T.guard.issue_time(date.fromisoformat(r) + pd.Timedelta(days=1).to_pytimedelta()))
-             for r in ev.index}
-    reg['gfs_per_run_evidence'] = {'runs_with_listing_evidence': int(len(ev)),
-                                   'all_strictly_before_issue': bool(all(ev[r] < issue[r] for r in ev.index)),
-                                   'latest_last_modified_time_of_day_utc': max(v.strftime('%H:%M:%S') for v in ev.values) if len(ev) else None,
-                                   'min_margin_hours': round(min((issue[r] - ev[r]).total_seconds() / 3600 for r in ev.index), 4) if len(ev) else None}
+    ev = {k: v for k, v in evidence.items() if v is not None}
+    margins = {r: (T.guard.issue_time(date.fromisoformat(r) + timedelta(days=1)) - t).total_seconds() / 3600 for r, t in ev.items()}
+    reg['gfs_per_run_evidence'] = {
+        'runs': len(evidence), 'runs_with_all_20_listing_timestamps': len(ev),
+        'all_strictly_before_issue': bool(ev) and all(m > 0 for m in margins.values()),
+        'latest_last_modified_time_of_day_utc': max(t.strftime('%H:%M:%S') for t in ev.values()) if ev else None,
+        'min_margin_hours': round(min(margins.values()), 4) if ev else None,
+        'basis': "the latest AWS LastModified among each run's 10 target objects and 10 indexes (listing.jsonl)"}
     _json(reg, out / 'tier-register.json')
     return {'calendar': spec['eligibility_summary'], 'masks': mask_summary, 'margin': reg['margin_table_summary'],
             'per_run': reg['gfs_per_run_evidence']}

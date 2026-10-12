@@ -48,8 +48,43 @@ LISTING_BOUND = 20_000
 CHARGE_EVERY_S = 30.0
 
 
+class _RedactingFile:
+    def __init__(self, fh):
+        self.fh = fh
+
+    def write(self, text):
+        return self.fh.write(guard.redact(text))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.fh.close()
+        return False
+
+
+class RedactingPath:
+    """The request log's path, as CP-20's `Fetcher` uses it (`.parent`, `.open('a')`): every line is
+    passed through `guard.redact` before it reaches the file, so no credential value can be logged."""
+
+    def __init__(self, path):
+        self.path = Path(path)
+        self.parent = self.path.parent
+
+    def open(self, mode='r', *args, **kwargs):
+        fh = self.path.open(mode, *args, **kwargs)
+        return _RedactingFile(fh) if any(m in mode for m in 'aw') else fh
+
+    def __fspath__(self):
+        return str(self.path)
+
+
 class GuardedFetcher(Fetcher):
     """CP-20's metered fetcher behind the §24.2 boundary guard and the credential rule."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.log_path = RedactingPath(self.log_path)
 
     def get(self, url, purpose, **kwargs):
         guard.admit_url(url)

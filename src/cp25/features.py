@@ -37,18 +37,22 @@ def _runs(manifest: dict, weather_dir: Path) -> list[dict]:
 
 
 def gap_features(manifest: dict, weather_dir: Path, classifications: dict | None = None,
-                 columns: list[str] | None = None) -> pd.DataFrame:
+                 columns: list[str] | None = None, dtypes: dict | None = None) -> pd.DataFrame:
     """CP-20's `build_features` on CP-25's runs; unfinished extraction refuses (never imputed)."""
     frame = W.build_features({'structural_missing': [], 'runs': _runs(manifest, weather_dir)}, Path(weather_dir),
                              classifications or {})
     guard.admit_rows(pd.DatetimeIndex(frame.timestamp_utc).to_pydatetime())
     if 'reason' not in frame.columns:
         frame['reason'] = pd.Series([None] * len(frame), dtype='str')
+    frame['timestamp_utc'] = frame.timestamp_utc.astype('datetime64[ms, UTC]')   # CP-20's stored unit
     if columns is not None:
         missing = set(columns) - set(frame.columns)
         if missing:
             raise ValueError(f'gap features lack CP-20 columns {sorted(missing)}')
         frame = frame[columns]
+    for col, dtype in (dtypes or {}).items():   # CP-20's stored dtypes, so the two files concatenate exactly
+        if str(frame[col].dtype) != str(dtype):
+            frame[col] = frame[col].astype(dtype)
     return frame
 
 
@@ -61,8 +65,11 @@ def conversion_identity(root: Path, grids: Path = CP20_GRIDS) -> dict:
     rebuilt = rebuilt[cols].sort_values('timestamp_utc').reset_index(drop=True)
     committed = committed.sort_values('timestamp_utc').reset_index(drop=True)
     numeric = ['wx_wind10_mean', 'wx_wind100_mean', 'wx_dswrf_mean']
-    same_keys = rebuilt.timestamp_utc.equals(committed.timestamp_utc) and \
-        (rebuilt.delivery_date.astype(str) == committed.delivery_date.astype(str)).all()
+    # The instants are compared, not their storage unit (CP-20's file holds ms; a fresh build holds s).
+    same_keys = bool(len(rebuilt) == len(committed)) and bool(
+        (rebuilt.timestamp_utc.astype('datetime64[ns, UTC]').to_numpy() == committed.timestamp_utc.astype('datetime64[ns, UTC]').to_numpy()).all()
+        and (rebuilt.delivery_date.astype(str) == committed.delivery_date.astype(str)).all()
+        and (rebuilt.run_00z.fillna('').astype(str) == committed.run_00z.fillna('').astype(str)).all())
     a, b = rebuilt[numeric].to_numpy(float), committed[numeric].to_numpy(float)
     bitwise = bool(np.array_equal(a, b, equal_nan=True))
     status = bool((rebuilt.status.astype(str) == committed.status.astype(str)).all())

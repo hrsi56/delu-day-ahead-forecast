@@ -63,6 +63,45 @@ def cmd_timed(args):
     return code
 
 
+def cmd_build(args):
+    from cp25 import build
+    summary = {}
+    if args.part in ('weather', 'all'):
+        summary['weather'] = build.weather(ROOT, WEATHER)
+    if args.part in ('data', 'all'):
+        summary['data'] = build.data_side(ROOT, WEATHER)
+    print(json.dumps(summary, indent=1, default=str))
+
+
+def cmd_identity(_):
+    from cp25 import features
+    result = features.conversion_identity(ROOT)
+    (REPORT / 'conversion-identity.json').write_text(json.dumps(result, indent=1, sort_keys=True) + '\n')
+    print(json.dumps(result, indent=1))
+    return 0 if result['values_bitwise_identical'] and result['keys_identical'] and result['status_identical'] else 1
+
+
+def cmd_resources(_):
+    from cp25.ledger import Ledger
+    state = Ledger(LEDGER).read()
+    counts = state['counts']
+    out = {'caps': state['caps'], 'counts': counts, 'peaks': state['peaks'],
+           'machine_hours': round(counts.get('machine_seconds', 0) / 3600, 4),
+           'transfer_gib': round(counts.get('transfer_bytes', 0) / 2**30, 4),
+           'jobs': [{k: j.get(k) for k in ('name', 'workers', 'start_utc', 'end_utc', 'wall_seconds', 'charged_seconds', 'exit_code')}
+                    for j in state['jobs']],
+           'events': state['events'], 'cost_usd': 0,
+           'basis': 'machine time = wall time x declared workers per job, charged by the job itself; transfer reserved before each request'}
+    (REPORT / 'resources.json').write_text(json.dumps(out, indent=1, sort_keys=True, default=str) + '\n')
+    print(json.dumps({k: out[k] for k in ('machine_hours', 'transfer_gib', 'peaks')}))
+
+
+def cmd_manifest(_):
+    from cp25 import build
+    m = build.manifest(ROOT, {'extraction_directory': str(WEATHER), 'ledger': str(LEDGER)})
+    print(len(m['outputs_sha256']), 'outputs hashed')
+
+
 def cmd_scan(args):
     from cp25 import guard
     paths = [Path(p) for p in (args.paths or [REPORT, ROOT / 'docs/track-b/evidence/cp-25', STATE])]
@@ -81,6 +120,12 @@ def main(argv=None):
     t.add_argument('--workers', type=int, default=1)
     t.add_argument('command', nargs=argparse.REMAINDER)
     t.set_defaults(func=cmd_timed)
+    b = sub.add_parser('build')
+    b.add_argument('part', choices=['weather', 'data', 'all'])
+    b.set_defaults(func=cmd_build)
+    sub.add_parser('identity').set_defaults(func=cmd_identity)
+    sub.add_parser('resources').set_defaults(func=cmd_resources)
+    sub.add_parser('manifest').set_defaults(func=cmd_manifest)
     s = sub.add_parser('scan')
     s.add_argument('paths', nargs='*')
     s.set_defaults(func=cmd_scan)

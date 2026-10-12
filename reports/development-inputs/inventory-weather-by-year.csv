@@ -1,0 +1,9 @@
+series,year,delivery_days,before_cp25_days_without_record,before_cp25_cause,before_cp25_first_last_absent,after_cp25_days_without_record,structural_missing_days,structural_cause,confirmed_missing_or_invalid_days
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2019,365,0,,,0,1,run before the 2019 input floor (§15.3),0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2020,366,0,,,0,0,,0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2021,365,0,,,0,0,,0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2022,365,94,our_extraction (outside CP-20 scope),2022-09-29..2022-12-31,0,0,,0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2023,365,83,our_extraction (outside CP-20 scope),2023-01-01..2023-03-24,0,0,,0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2024,366,0,,,0,0,,0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2025,365,0,,,0,0,,0
+"gfs_weather (u10, v10, u100, v100, dswrf -> 3 derived columns)",2026,249,152,our_extraction (outside CP-20 scope),2026-04-08..2026-09-06,0,0,,0
