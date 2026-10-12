@@ -106,7 +106,13 @@ it is after CP-22 (Owner, 2026-10-04).
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
 | 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. Next: CP-25's brief |
 
-**No active Track B checkpoint. CP-25 closed on 2026-10-12** ([landing record](docs/track-b/cp-25-landing-2026-10-12.md)).
+**Active Track B work: CP-26, the re-baseline** (v21-r13 §24.7). Issued 2026-10-12, brief
+`5e16a134…`, canonical copy `.local/artifacts/cp-26/issued-brief.md`, launch envelope
+`.local/artifacts/cp-26/launch-envelope.md`. It runs in the Owner's Lead session on `gauntlet/cp-26`,
+worktree `.local/worktrees/cp-26/lead`, with about 60 active hours plus unattended compute, under a
+485-machine-hour ceiling. On its return: the receipt, the LAND, then the Owner's CP-28 decision.
+
+**Before CP-26: CP-25 closed on 2026-10-12** ([landing record](docs/track-b/cp-25-landing-2026-10-12.md)).
 The development inputs to 2026-09-06 are frozen (`land/cp-25` = `5336aef`, `evidence/cp-25` =
 `ba4e130`; the branch was reclaimed after a verified bundle). The Owner ruled the same day
 ([rulings](docs/track-b/cp-25-rulings-2026-10-12.md)):
@@ -117,7 +123,7 @@ The development inputs to 2026-09-06 are frozen (`land/cp-25` = `5336aef`, `evid
 - **the structural shifts** are accepted as disclosed risks, and GFS +6 h runs on the control;
 - **the two late GFS runs** are treated under §15.3.
 
-The exposure ledger's entries 1–5 are assessed. **Next: CP-26's brief.**
+The exposure ledger's entries 1–5 are assessed.
 
 **Before CP-25:** PRES-4 closed on 2026-10-11. Stages 3 and 4 reported on
 2026-10-12, the Owner decided their open questions, **he chose the short path: no new data
@@ -143,9 +149,8 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next pending Track B checkpoint: CP-26, the re-baseline** (v21-r13 §24.7). Its preconditions
-are met: CP-25 landed, and the Owner's tier and margin rulings are recorded. It needs the issued
-brief and the Owner's grant.
+**Next pending Track B checkpoint: CP-28, 4.8** (v21-r13 §24.8), only if the Owner confirms it after
+CP-26 lands. Otherwise CP-17 and 4.7T follow. CP-26 itself is issued (above).
 
 **Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
 Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
@@ -916,6 +921,12 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-26 issued, 2026-10-12** (the Owner: "סגור הכל, קומיט פוש ותן בריף"). The brief (`5e16a134…`)
+  cites v21-r13 §24.7 verbatim as its bar (checked at `d58486d`). It binds the Owner's CP-25 rulings
+  (`c7af67f8…`), pins CP-25's frozen inputs and the landed generations' tags, and sets the ceiling at
+  485 machine-hours with the pilot's stop line at 388. It asks the return to summarize the basis
+  for the Owner's CP-28 decision.
 
 - **CP-25 landed, ruled on and closed, 2026-10-12.**
   - **The return:** PASS, in about one hour of work (1.39 of 24 machine-hours, $0), with a fresh
