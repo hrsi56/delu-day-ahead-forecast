@@ -8,7 +8,9 @@ to 2026-12-05.
 **What gets recorded:** every known exposure of the project to data, reports or market events
 after the development boundary, with the date, source, what was exposed and what was done. Each
 entry's impact assessment is recorded before CP-26's first score, and CP-26's Integration Critic
-reviews it. Entries 1–5 were assessed on 2026-10-12.
+reviews it. Entries 1–5 were assessed on 2026-10-12. CP-26's Integration Critic reviewed them at
+`6f57feb` (verdict `docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md`),
+and no CP-26 return reports a new exposure (Orchestrator, 2026-10-21).
 
 **How the audit uses it.** Before 4.7T opens, the audit (§24.9) applies §24.2's standard:
 

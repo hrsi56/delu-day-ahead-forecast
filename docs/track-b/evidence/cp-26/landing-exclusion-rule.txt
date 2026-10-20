@@ -1,0 +1,17 @@
+# CP-26 curated landing: every path that main..<evidence tip> adds or changes is landed,
+# EXCEPT these. A line ending in "/" excludes that folder; any other line excludes that file.
+reports/rebaseline/continuation-v21-r14/
+reports/rebaseline/continuation-v21-r14-accounting-2/
+reports/rebaseline/continuation-v21-r14-accounting-3/
+docs/track-b/evidence/cp-26/continuation-v21-r14/
+reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/
+reports/rebaseline/cold-rerun-2026-10-15/search-results/
+reports/rebaseline/cold-rerun-2026-10-15/search-plans/
+reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/
+reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/
+reports/rebaseline/cold-rerun-2026-10-15/replay-state.json
+reports/rebaseline/cold-rerun-2026-10-15/inference-manifest.json
+reports/rebaseline/cold-rerun-2026-10-15/learning-ledger.json
+reports/rebaseline/cold-rerun-2026-10-15/timing-pilot.json
+reports/rebaseline/repair-v21-r14/repair-candidate-full.diff
+reports/rebaseline/repair-v21-r14/search-support.json

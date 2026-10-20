@@ -24,6 +24,29 @@ nothing. The Owner chose to continue **without new data sources**:
 - **Unchanged:** the issue time; the vintage standard; stage 6's full-calendar re-baseline; the
   freeze, 4.7T, the live stages and the final publication.
 
+**After CP-26, Owner, 2026-10-19 to 2026-10-21.** CP-26 landed on 2026-10-21
+([landing record](cp-26-landing-2026-10-21.md)). The Owner confirmed that CP-28 runs, and set the
+order from here:
+
+1. **The off-device backup and the cleanup.** The backup goes to the Owner's drive,
+   `/Volumes/Samsung/delu-day-ahead-forecast`, and an anchor section records what it holds and how
+   each item is restored. Then everything no longer needed is deleted locally; CP-28's inputs stay.
+2. **CP-28,** opening with r17's no-training GFS supplement.
+3. **Publish the winner and its comparison with the other models (new stage 8a, PRES-5).** It is
+   labelled development, post-selection, pending 4.7T, and it can carry CP-26's all-season
+   results. It needs its own decision under PUBLISH_RULES (§24.10).
+4. **CP-17, the freeze,** with the lock-price decision and 4.7T's registered terms. Security
+   hardening, the daily pipeline and the Space are built alongside, with dry runs on data to
+   2026-09-06 only.
+5. **4.7T,** which opens no earlier than 2026-12-04.
+6. **Publish and upload the frozen model** (Hugging Face and MLflow).
+7. **The live trial (CP-18),** then its publication on the site and CP-19.
+8. **The final publication and CV.**
+
+**4.7T's window stays at 90 days** (Owner, 2026-10-20). A shorter window or a rolling opening may
+be decided only after all of the planned pre-4.7T work, and before CP-17 registers 4.7T's terms.
+Either choice needs an anchor amendment, and the red line holds until then.
+
 **The windows move, Owner, 2026-10-12.** While drafting the anchor amendment, the Orchestrator found
 that `data/snapshot.parquet` already holds prices to 2026-09-06. v1 used 2026-04-09 to 2026-06-07
 for its calibration and 2026-06-09 to 2026-09-06 for its published one-shot holdout
@@ -64,9 +87,10 @@ to it, to forecast days that have not happened yet.
 | 3 | ✅ Search for new data sources: report received 2026-10-12 | Research, no evaluation | done | — |
 | 4 | ✅ Design the evaluation protocol: ratified 2026-10-12 as research v21-r13 §24, with PUBLISH_RULES 1.5 | Research and anchor | done | — |
 | 5 | ✅ Collect our own data gaps and check the issue time (CP-25): landed 2026-10-12 | Checkpoint | done | — |
-| 6 | Re-baseline v1–v5 on the existing features, as the control arm (CP-26) | Checkpoint | 2 published, 4 ratified, 5 landed | — |
+| 6 | ✅ Re-baseline v1–v5 on the existing features, as the control arm (CP-26): landed 2026-10-21 | Checkpoint | done | — |
 | 7 | ~~Admission tests for the new sources (CP-27)~~: dropped by the short path, 2026-10-12 | — | — | — |
-| 8 | 4.8: choose the winner on stored forecasts (CP-28; confirmed after 6) | Checkpoint | 6 | — |
+| 8 | 4.8: choose the winner on stored forecasts (CP-28; confirmed by the Owner 2026-10-19) | Checkpoint | 6 | — |
+| 8a | Publish the winner and the comparison (PRES-5), pending 4.7T | Publication | 8 | 9's freeze work |
 | 9 | Freeze one candidate (CP-17) and run 4.7T on 2026-09-07 to 2026-12-05 | Checkpoint and test | 8 | security hardening (11a) |
 | 10 | ~~Replay daily retraining~~: withdrawn 2026-10-12 | — | — | — |
 | 11 | Security hardening, controlled live trial, site activation (CP-18 → CP-19) | Live | 10 | — |

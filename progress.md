@@ -28,7 +28,9 @@ ratification of v21-r11 (CP-24, DDNN-2) and CP-24's issue, under the Owner's del
 2026-10-04 ("תמשיך באופן חופשי ומלא עד דוח ובקשת LAND"). Those commits and pushes follow
 that delegation. On 2026-10-11 it was updated in place for CP-24's pause, the Owner's handover
 to a new Orchestrator session, the continuation, the receipt, the Owner's landing and CP-24's
-closure. That commit and push follow the Owner's instruction.*
+closure. That commit and push follow the Owner's instruction. On 2026-10-21 it was updated in
+place for CP-26's three landing-repair rounds, the Owner's curated landing and CP-26's closure.
+That commit and push follow the Owner's instruction of 2026-10-19 ("אני מאשר לך לעשות הכל").*
 
 ---
 
@@ -37,7 +39,7 @@ closure. That commit and push follow the Owner's instruction.*
 ### Track B — capstone (the critical path)
 
 **Foundation established.** The v1 product is released. CP-10, CP-15, CP-16, CP-20, CP-21, CP-22,
-CP-23 and CP-24 are landed, GFS is admitted, and PRES-1 to PRES-4 are closed. PRES-3 published
+CP-23, CP-24, CP-25 and CP-26 are landed, GFS is admitted, and PRES-1 to PRES-4 are closed. PRES-3 published
 v4 on every surface on 2026-10-01. Since then three checkpoints and one publication closed:
 
 - CP-22 re-examined v4 and made no replacement (2026-10-04);
@@ -104,13 +106,25 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. Next: CP-25's brief |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`). Next: the backup, then CP-28's brief |
 
-**Active Track B work: CP-26, the re-baseline** (v21-r13 §24.7). Issued 2026-10-12, brief
-`5e16a134…`, canonical copy `.local/artifacts/cp-26/issued-brief.md`, launch envelope
-`.local/artifacts/cp-26/launch-envelope.md`. It runs in the Owner's Lead session on `gauntlet/cp-26`,
-worktree `.local/worktrees/cp-26/lead`, with about 60 active hours plus unattended compute, under a
-485-machine-hour ceiling. On its return: the receipt, the LAND, then the Owner's CP-28 decision.
+**CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
+all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
+
+- **Identities:**
+  - `land/cp-26` = `61658c7`;
+  - `evidence/cp-26` = `ca20331`, a **local-only** tag;
+  - the scientific PASS binds `6f57feb`.
+- **A curated landing:** 931 files on `main`. The 9,419 bulk files (3.39 GB, among them the stored
+  forecast ledger CP-28 reads) stay in the evidence tag, the reclamation bundle and the coming
+  off-device backup.
+- **The results, on 2,068 days, as MAE / WIS:**
+  - v5 18.5 / 10.9 and v4 18.6 / 10.9, so v5 shows no established advantage;
+  - **DDNN-2 alone 17.2 / 9.7, the best;**
+  - GFS +6 h about 14–16% worse, a fragility the Owner accepted with nominal v5 as the control
+    ([ruling](docs/track-b/cp-26-gfs-ruling-2026-10-19.md)).
+- **Three landing-repair rounds** made the suite pass without branch history and on a 4-vCPU
+  runner. They changed tests only. Round 3's Critic was waived by the Owner.
 
 **Before CP-26: CP-25 closed on 2026-10-12** ([landing record](docs/track-b/cp-25-landing-2026-10-12.md)).
 The development inputs to 2026-09-06 are frozen (`land/cp-25` = `5336aef`, `evidence/cp-25` =
@@ -149,8 +163,11 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next pending Track B checkpoint: CP-28, 4.8** (v21-r13 §24.8), only if the Owner confirms it after
-CP-26 lands. Otherwise CP-17 and 4.7T follow. CP-26 itself is issued (above).
+**Next: the off-device backup and the cleanup, then CP-28, 4.8** (v21-r17 §24.8). The Owner
+confirmed CP-28 on 2026-10-19. Its brief opens with r17's no-training GFS supplement, and its arms
+read CP-26's stored forecasts from `evidence/cp-26`. The Owner's order from there is in the
+[programme plan](docs/track-b/programme-plan-2026-10-11.md): PRES-5, CP-17, 4.7T (not before
+2026-12-04), the frozen model's upload, the live trial, and the final publication.
 
 **Then the approved order.** The programme plan of 2026-10-11 is amended the same day by the
 Owner's ruling that all the data is collected before anything is retrained. An earlier order, with
@@ -456,7 +473,18 @@ decision remains a boundary, not an active workstream.
 
 ## 3. Strategic Anchors
 
-- **Current anchors (Owner, ratified 2026-10-12):** research **v21-r13**, `capstone_v21.md` SHA-256
+- **Current anchors (on `main` since CP-26's LAND, 2026-10-21):** research **v21-r17**,
+  `capstone_v21.md` SHA-256 `3124451da84c3cd99fae728c371207aace6ae537474f7769d0ff6333ee53e4fc`;
+  publication **PUBLISH_RULES 1.5** (unchanged, below).
+  - The revisions r14–r17 were approved by the Owner in turn, under scoped suspensions. Their
+    authority is quoted in the records
+    [r13 → r14](docs/track-b/capstone_v21-r13-to-v21-r14-amendments.md),
+    [r14 → r15](docs/track-b/capstone_v21-r14-to-v21-r15-amendments.md),
+    [r15 → r16](docs/track-b/capstone_v21-r15-to-v21-r16-amendments.md) and
+    [r16 → r17](docs/track-b/capstone_v21-r16-to-v21-r17-amendments.md).
+  - The process deviations are disclosed in the
+    [CP-26 landing record](docs/track-b/cp-26-landing-2026-10-21.md).
+- **Previous anchors (Owner, ratified 2026-10-12):** research **v21-r13**, `capstone_v21.md` SHA-256
   `173799d818387b9d82db16b9ccd7195afaebbea8e11259809e4a8b704bd525a8`; publication **PUBLISH_RULES
   1.5**, SHA-256 `1bc0c52351656c5a499291bf15ccb82b0ae8b4e6475d1879b0a4d307daaef94e`. The
   [r12 → r13 record](docs/track-b/capstone_v21-r12-to-v21-r13-amendments.md) records authority and
@@ -921,6 +949,28 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-26 received, landed and closed, 2026-10-19 to 2026-10-21.**
+  - **The return:** PASS on `6f57feb`, plus the Owner's GFS ruling and r17. The PASS on `f014e5b`
+    covers documents only.
+  - **The receipt:** another agent's LAND attempt staged all 3.43 GB on `main`, including a 357 MB
+    file GitHub refuses. The Owner reset it.
+    - The Owner approved a curated landing (931 files).
+    - A clean CI-style run found five failing tests that the scientific Critic's subset had
+      missed.
+  - **The landing repair:**
+    - Round 1 passed: tests read recorded identities instead of history.
+    - The Orchestrator's 4-vCPU emulation then failed the rich-admin stress test, and round 2
+      returned BLOCKED on two stale r14 lock limits.
+    - Round 3 passed with its Critic waived by the Owner. The Orchestrator verified it
+      independently: CI on 3.12 and 3.13, 10/10 under load, and the secret guard.
+  - **The LAND:** the Owner pushed the landing to a temporary branch first. CI passed on GitHub,
+    then the Owner pushed `main` and `land/cp-26` (`61658c7`). `evidence/cp-26` stays local.
+  - **The reclaim:** a verified, restore-tested bundle. The worktree's 32 GB of untracked outputs
+    were hard links into `.local/artifacts`, and the two files with no other copy were moved
+    there.
+  - **The Owner's order** for everything that follows, and his decision that 4.7T keeps 90 days,
+    are in the programme plan.
 
 - **CP-26 issued, 2026-10-12** (the Owner: "סגור הכל, קומיט פוש ותן בריף"). The brief (`5e16a134…`)
   cites v21-r13 §24.7 verbatim as its bar (checked at `d58486d`). It binds the Owner's CP-25 rulings
