@@ -20,6 +20,8 @@
 >   `docs/track-b/publication-standard-v1.md`. Their prior ratified revisions remain protected.
 > - **The governance record:** `docs/track-b/rule-inventory.md`, `docs/track-b/cp-0-defects.md`, and
 >   every capstone amendment sheet, including `capstone_[Vv]*-to-[Vv]*-amendments.md`
+> - **The backup register:** `docs/track-b/backup-register.md`, the record of every off-device
+>   snapshot and how to restore it
 > - **Agent configuration:** `.claude/**`, and any file that configures how agents run in this
 >   repository
 >
@@ -78,6 +80,12 @@ location. Commit durable decisions and required evidence in their normal project
 `.local/` is local recovery material, not the sole copy of required evidence. Remove disposable
 artifacts when finished and account for retained recovery material. This containment rule does
 not relax role isolation, evidence preservation, worktree lifecycle or publication authority.
+
+**Off-device backup.** Required evidence that GitHub cannot hold, and outputs that would cost a
+retraining or a re-download to rebuild, are kept in snapshots on the Owner's external drive.
+`docs/track-b/backup-register.md` records each snapshot: what it holds, where it is, which items
+exist only there, and how to restore each one to its original path. Consult it before rebuilding
+anything. No agent writes to, mounts or ejects the drive.
 
 ## Credentials
 
