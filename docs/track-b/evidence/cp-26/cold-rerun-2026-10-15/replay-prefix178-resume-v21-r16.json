@@ -1,0 +1,28 @@
+{
+ "allocation_reason": "Single replay worker with existing independent supervision; native-fit jobs stay stopped until this bounded prefix finishes.",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-replay-prefix178-2",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-replay-prefix178-2.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+  "replay-cached",
+  "2020-06-26"
+ ],
+ "launched_epoch": 1792143711.315918,
+ "pid": 69437,
+ "preserves_materialized_origins": 6,
+ "registered_workers_before": 0,
+ "requested_workers": 1,
+ "resumes_job": "cold-r16-replay-prefix178-1",
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

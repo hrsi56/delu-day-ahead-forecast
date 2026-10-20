@@ -1,0 +1,23 @@
+{
+ "all1013signed_probes_have_once_only_ledger_tasks": true,
+ "all_candidate_deltas_evidence_only": true,
+ "all_cold_owned_processes_gone_or_reused": true,
+ "candidate": "80f12d09690aa34813c9b715b5cf5edc3a351037",
+ "closing_commit_only_adds": [
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-terminal-resources.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-terminal-validation.json"
+ ],
+ "initial946_and_old47_hash_checks": "ledger-fix-terminal-custody.json",
+ "inspected_evidence_tip": "43de4cc5f3186d191e13b70e2fb4fdf9ece95086",
+ "integration_review": "not run; artifact incomplete",
+ "primary_main_clean_and_unchanged": true,
+ "running_jobs": [],
+ "scratch_commit_messages_and_targeted_test_fixtures_removed": true,
+ "verified_delta": [
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-changed-files.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-checklist.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-diff-stat.txt",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-return.md",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-validation.json"
+ ]
+}

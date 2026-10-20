@@ -1,0 +1,458 @@
+diff --git a/scripts/cp26_cold_run.py b/scripts/cp26_cold_run.py
+new file mode 100644
+index 0000000..724b295
+--- /dev/null
++++ b/scripts/cp26_cold_run.py
+@@ -0,0 +1,112 @@
++"""Small cold-run preparation and sealed-pilot entry points; no restore queue."""
++from pathlib import Path
++import argparse
++import contextlib
++import hashlib
++import json
++import os
++import shutil
++import subprocess
++import sys
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'src'))
++for name in ('OPENBLAS_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'OMP_NUM_THREADS',
++             'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS'):
++    os.environ[name] = '1'
++
++from cp26.budget import Budget, atomic, resource_summary
++from cp26.gates import OUTPUT, LOCAL_NAME, RUN_ID, RUN_EVIDENCE, code_identity, protocol_identity
++from cp26 import execution as E, harness as H
++
++
++def setup():
++    if os.environ.get('CP26_RUN_ID') != RUN_ID or not os.environ.get('CP26_MONITORED_JOB'):
++        raise RuntimeError('registered cold-run monitor required')
++    paths = E.Paths.build(ROOT)
++    forbidden = [paths.output / name for name in ('forecast-ledger', 'search-results', 'replay-state.json',
++                                                  'learning-ledger.json', 'timing-pilot')]
++    forbidden += [paths.local / name for name in ('fits', 'searches', 'state')]
++    if any(p.exists() for p in forbidden):
++        raise RuntimeError('cold scientific namespace is not empty at initial setup')
++    old = ROOT / 'reports/rebaseline/continuation-v21-r14-accounting-3'
++    preserve = [old / n for n in ('replay-state.json', 'learning-ledger.json', 'execution-manifest.json',
++                                 'timing-pilot.json', 'cost-projection.json')]
++    preserve += sorted((old / 'search-results').glob('*/*.json'))
++    sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
++    from cp26.parity import require_pass
++    parity = require_pass(ROOT, output=old.relative_to(ROOT) / 'parity.json')
++    paths.output.mkdir(parents=True, exist_ok=True)
++    shutil.copyfile(old / 'parity.json', paths.output / 'parity.json')
++    from cp26.scoring import load_population, MASKS
++    population = load_population(ROOT)
++    population.verify_key_mapping(population.keys_by_day())
++    summary = {'eligible_measurement_days': int(population.keys.delivery_date.nunique()),
++               'eligible_hours': len(population.keys), 'measurement_calendar_days': len(population.calendar),
++               'warmup_origins': 363, 'total_origins': len(E.calendar()),
++               'mask_days': {m: int(population.masks[m].sum()) for m in MASKS},
++               'population_evidence': population.evidence}
++    if summary['eligible_measurement_days'] != 2068 or summary['measurement_calendar_days'] != 2078:
++        raise RuntimeError('CP25 population differs from issued expectation')
++    atomic(ROOT / RUN_EVIDENCE / 'namespace-and-population.json', {
++        'run_id': RUN_ID, 'output': str(OUTPUT), 'local': str(paths.local),
++        'scientific_namespace_empty_before_setup': True, 'old_science_imported': False,
++        'old_hashes': {str(p.relative_to(ROOT)): sha(p) for p in preserve},
++        'old_terminal_searches': len(list((old / 'search-results').glob('*/*.json'))),
++        'old_issued_origins': len(list((old / 'forecast-ledger').glob('*.json'))),
++        'parity_reuse': {'path': str(old.relative_to(ROOT) / 'parity.json'),
++                        'sha256': sha(old / 'parity.json'), 'checks': len(parity['checks'])},
++        'population': summary, 'protocol': protocol_identity(ROOT)})
++    print(json.dumps(summary), flush=True)
++
++
++def tests():
++    target = H.art() / LOCAL_NAME / 'preparation-tests.log'
++    target.parent.mkdir(parents=True, exist_ok=True)
++    arguments = ['-q', 'tests/test_cp26_run_accounting.py', 'tests/test_cp26_execution.py',
++                 'tests/test_cp26_costing.py', '--basetemp', str(H.art() / LOCAL_NAME / 'pytest-tmp-affected')]
++    import pytest
++    # Nested fixture monitors own isolated synthetic ledgers, not this scientific run.
++    run_id = os.environ.pop('CP26_RUN_ID', None)
++    try:
++        with target.open('w') as log, contextlib.redirect_stdout(log), contextlib.redirect_stderr(log):
++            exit_code = int(pytest.main(arguments))
++    finally:
++        if run_id is not None:
++            os.environ['CP26_RUN_ID'] = run_id
++    value = {'status': 'PASS' if exit_code == 0 else 'FAIL',
++             'command': ['pytest.main', *arguments], 'exit_code': exit_code,
++             'code_sha256': code_identity(ROOT), 'protocol': protocol_identity(ROOT),
++             'job_id': os.environ['CP26_JOB_ID'], 'job_index': int(os.environ['CP26_JOB_INDEX']),
++             'log': str(target), 'log_sha256': hashlib.sha256(target.read_bytes()).hexdigest()}
++    atomic(ROOT / OUTPUT / 'preparation-tests.json', value)
++    print(target.read_text(), flush=True)
++    return exit_code
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('action', choices=('setup', 'tests', 'pilot-shard', 'pilot-assemble'))
++    parser.add_argument('--shard', type=int, choices=range(4))
++    args = parser.parse_args()
++    if args.action == 'setup':
++        setup()
++    elif args.action == 'tests':
++        return tests()
++    else:
++        from cp26.gates import ExecutionGate, authorize_consuming_process
++        authorize_consuming_process(ROOT)
++        pairs = None
++        if args.action == 'pilot-shard':
++            if args.shard is None:
++                parser.error('--shard required')
++            pairs = [(r, k) for k in range(14) for i, r in enumerate(E.ROUTES)
++                     if (k * 3 + i) % 4 == args.shard]
++        result = E.timing_pilot(ROOT, protocol_identity(ROOT), gate=ExecutionGate(ROOT), pairs=pairs)
++        print(json.dumps({'status': result.get('status', 'SEALED_PILOT_COMPLETE'),
++                          'probes': result['probes'] if pairs else len(result['probes'])}), flush=True)
++    return 0
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/scripts/cp26_rebaseline.py b/scripts/cp26_rebaseline.py
+index 5a2d84a..b7c4621 100644
+--- a/scripts/cp26_rebaseline.py
++++ b/scripts/cp26_rebaseline.py
+@@ -73,9 +73,12 @@ def monitor(args) -> int:
+     now = time.time()
+     monitor_identity = process_identity()
+     job_id = uuid.uuid4().hex
++    run_id = os.environ.get('CP26_RUN_ID')
+     def reserve(state):
+         reconcile_running(state)
+         require_compute_ready(state)
++        if run_id and run_id not in state.get('scientific_runs', {}):
++            raise ValueError('CP26_RUN_ID must name a registered scientific run')
+         running = [j for j in state['jobs'] if j['running']]
+         workers = args.workers + sum(j['workers'] for j in running)
+         if workers > CAPS['workers'] or any(j['name'] == args.name for j in running):
+@@ -86,6 +89,7 @@ def monitor(args) -> int:
+         clock = prefix.with_name(prefix.name + '.clock.json')
+         progress = prefix.with_name(prefix.name + '.progress.json')
+         request = {'schema': 'cp26-request-v2', 'job_id': job_id, 'job_index': index,
++                   'run_id': run_id,
+                    'name': args.name, 'workers': args.workers, 'started_epoch': now,
+                    'monitor_identity': monitor_identity, 'ledger': str(budget.path.resolve()),
+                    'command': command, 'cwd': str(ROOT), 'log': str(log_path),
+@@ -94,6 +98,7 @@ def monitor(args) -> int:
+         atomic(request_path, request)
+         request_sha = hashlib.sha256(request_path.read_bytes()).hexdigest()
+         state['jobs'].append({'name': args.name, 'workers': args.workers, 'running': True,
++                              'run_id': run_id,
+                               'job_id': job_id, 'job_index': index, 'phase': 'reserved',
+                               'monitor_identity': monitor_identity, 'monitor_pid': os.getpid(),
+                               'monitor_create_time': monitor_identity['create_time'],
+@@ -106,6 +111,7 @@ def monitor(args) -> int:
+                               'last_charge_epoch': now, 'live_rss_bytes': 0, 'log': str(log_path)})
+         state['peaks']['workers'] = max(workers, state['peaks'].get('workers', 0))
+         return index, request_path
++    budget.resource_read()
+     index, request_path = budget.resource_update(reserve, timeout_seconds=LEDGER_TIMEOUT_SECONDS)
+     env = os.environ.copy()
+     env['CP26_WORKERS'] = str(args.workers)
+@@ -139,6 +145,7 @@ def monitor(args) -> int:
+                     if job['supervisor_identity'] not in (None, supervisor_identity):
+                         raise RuntimeError('CP-26 supervisor identity changed during launch')
+                     job.update(supervisor_identity=supervisor_identity, supervisor_pid=supervisor.pid)
++            budget.resource_read()
+             budget.resource_update(bind_supervisor, timeout_seconds=LEDGER_TIMEOUT_SECONDS)
+             while supervisor.poll() is None:
+                 job = budget.resource_read()['jobs'][index]
+@@ -182,6 +189,7 @@ def monitor(args) -> int:
+                       'peak_rss_bytes': job['peak_rss_bytes'], 'log': str(log_path),
+                       'resources': resource_summary(state),
+                       'machine_hours_cumulative': resource_summary(state)['machine_hours']}
++        budget.resource_read()
+         result = budget.resource_update(finish, timeout_seconds=LEDGER_TIMEOUT_SECONDS)
+         atomic(art() / 'jobs' / f'{args.name}.json', result)
+         print(json.dumps(result))
+diff --git a/src/cp26/analysis.py b/src/cp26/analysis.py
+index 6b0d3f8..d50f056 100644
+--- a/src/cp26/analysis.py
++++ b/src/cp26/analysis.py
+@@ -24,7 +24,7 @@ import pandas as pd
+ 
+ from .budget import Budget, atomic
+ 
+-OUTPUT = Path('reports/rebaseline/continuation-v21-r14-accounting-3')
++from .gates import OUTPUT, LOCAL_NAME
+ SCORE_SCHEMA = 'cp26-scores-manifest-v1'
+ INFERENCE_SCHEMA = 'cp26-inference-manifest-v1'
+ DIAGNOSTIC_SCHEMA = 'cp26-diagnostics-manifest-v1'
+@@ -474,7 +474,7 @@ def _numeric(root, relative_stem, result):
+                         arrays[name]
+             except (OSError, EOFError, ValueError, zipfile.BadZipFile):
+                 from .harness import art
+-                recovery = art() / 'continuation-v21-r14/analysis-recovery'
++                recovery = art() / LOCAL_NAME / 'analysis-recovery'
+                 recovery.mkdir(parents=True, exist_ok=True)
+                 for partial in (pending_arrays, pending_metadata):
+                     if partial.exists():
+diff --git a/src/cp26/budget.py b/src/cp26/budget.py
+index b81f182..24696fd 100644
+--- a/src/cp26/budget.py
++++ b/src/cp26/budget.py
+@@ -131,9 +131,31 @@ def resource_summary(state: dict) -> dict:
+         result.update(continuation_seconds_used=total - continuation['baseline_seconds'],
+                       post_repair_seconds=total - scope['terminal_snapshot']['total_seconds'],
+                       continuation_authority_sha256=continuation['authority_sha256'])
++    if state.get('scientific_runs'):
++        result['scientific_runs'] = {run_id: scientific_run_summary(state, run_id)
++                                     for run_id in state['scientific_runs']}
+     return result
+ 
+ 
++def scientific_run_summary(state: dict, run_id: str) -> dict:
++    """A view of attributed existing receipts, never another cumulative charge."""
++    registration = state.get('scientific_runs', {}).get(run_id)
++    if registration is None:
++        raise ValueError('unregistered CP-26 scientific run')
++    components = {f'{kind}_seconds': 0.0 for kind in ('measured', 'reported', 'reserved')}
++    for job in state.get('jobs', []):
++        if job.get('run_id') == run_id:
++            components['measured_seconds'] += job['charged_wall_seconds'] * job['workers']
++    for charge in state.get('charges', []):
++        if charge.get('source', {}).get('run_id') == run_id:
++            components[f"{charge['kind']}_seconds"] += charge['seconds']
++    total = sum(components.values())
++    return {'run_id': run_id, **components, 'total_seconds': total,
++            'machine_hours': total / HOUR,
++            'historical_baseline_hours': registration['cumulative_baseline']['machine_hours'],
++            'cumulative_machine_hours': total_seconds(state) / HOUR}
++
++
+ def projected_cost(state: dict, searches: list[dict], remaining: dict[str, dict]) -> dict:
+     """A future pilot must price all 42 searches separately and include prior reserves.
+ 
+@@ -247,7 +269,8 @@ def _validate_ledger(state: dict, frozen: dict | None) -> None:
+ 
+ 
+ _RESOURCE_MUTABLE = frozenset(('counts', 'accounting', 'peaks', 'jobs'))
+-_RESOURCE_POLICY = frozenset(('schema', 'caps', 'repair_scope', 'reserves', 'continuation_scope'))
++_RESOURCE_POLICY = frozenset(('schema', 'caps', 'repair_scope', 'reserves', 'charges', 'continuation_scope',
++                              'scientific_runs'))
+ _RESOURCE_FIELDS = _RESOURCE_MUTABLE | _RESOURCE_POLICY
+ _JSON_WHITESPACE = ' \t\r\n'
+ 
+diff --git a/src/cp26/execution.py b/src/cp26/execution.py
+index 138af23..83959c0 100644
+--- a/src/cp26/execution.py
++++ b/src/cp26/execution.py
+@@ -25,7 +25,7 @@ from .members import Context, RUN_MEMBERS, fit_members
+ from .replay import POLICIES, bundles_from_fits, replay_origin
+ from .state import ReplayState, _save, digest, timestamps
+ 
+-OUTPUT = 'reports/rebaseline/continuation-v21-r14-accounting-3'
++from .gates import OUTPUT, LOCAL_NAME
+ SCHEMA = 'cp26-execution-manifest-v1'
+ DAY_SCHEMA = 'cp26-forecast-day-v1'
+ ROUTES = tuple(S.ROUTES)
+@@ -46,7 +46,7 @@ class Paths:
+         output = output.resolve()
+         if not output.is_relative_to(root / 'reports/rebaseline'):
+             raise ValueError('durable execution outputs must remain in reports/rebaseline')
+-        return cls(root, output, H.art() / 'continuation-v21-r14')
++        return cls(root, output, H.art() / LOCAL_NAME)
+ 
+     def plan(self, route, k):
+         return self.output / 'search-plans' / route / f'k{k:02d}.json'
+@@ -252,7 +252,7 @@ def _raw_probe(ctx, origin, forecast_days, config, seed, budget):
+             'crossed_slots': int((np.diff(values, axis=-1) < 0).any(axis=-1).sum())}
+ 
+ 
+-def timing_pilot(root, protocol_identity, *, gate, output_root=None, budget=None):
++def timing_pilot(root, protocol_identity, *, gate, output_root=None, budget=None, pairs=None):
+     """Registered independent timing probes; no serving ensemble, replay or scores.
+ 
+     Origins are S_k. Daily D2 probes use the first four distinct effective
+@@ -265,11 +265,16 @@ def timing_pilot(root, protocol_identity, *, gate, output_root=None, budget=None
+     paths = Paths.build(root, output_root)
+     manifest = manifest_for(paths, protocol_identity)
+     budget = budget or Budget()
++    selected_pairs = set(pairs) if pairs is not None else {(r, k) for r in ROUTES for k in range(S.SEARCH_COUNT)}
++    if not selected_pairs or not selected_pairs <= {(r, k) for r in ROUTES for k in range(S.SEARCH_COUNT)}:
++        raise ValueError('pilot subset must use registered route/search pairs')
+     contexts = {route: Context.build(paths.root, H.GFS6 if route == 'gfs6' else H.NEW, route)
+-                for route in ROUTES}
++                for route in ROUTES if any(r == route for r, _ in selected_pairs)}
+     probes = []
+     for k in range(S.SEARCH_COUNT):
+         for route in ROUTES:
++            if (route, k) not in selected_pairs:
++                continue
+             plan = _read(paths.plan(route, k))
+             S.validate_plan(plan)
+             if plan['identity'] != S.search_identity(paths.root, k, route):
+@@ -320,6 +325,9 @@ def timing_pilot(root, protocol_identity, *, gate, output_root=None, budget=None
+                     with H.ddnn2_without_load(ctx.noload_active):
+                         return _raw_probe(ctx, first, forecast, config, seed, budget)
+                 probes.append(_probe(paths, key, search_probe, budget))
++    if pairs is not None:
++        return {'status': 'SEALED_PILOT_SUBSET_COMPLETE', 'pairs': sorted(selected_pairs),
++                'probes': len(probes), 'evaluation_scores_computed': False}
+     summary = []
+     for k in range(S.SEARCH_COUNT):
+         for route in ROUTES:
+diff --git a/src/cp26/gates.py b/src/cp26/gates.py
+index cc5cadf..0dee635 100644
+--- a/src/cp26/gates.py
++++ b/src/cp26/gates.py
+@@ -13,7 +13,10 @@ from . import harness as H
+ from .budget import Budget, CapExceeded, projected_cost, require_compute_ready
+ from .state import digest
+ 
+-OUTPUT = Path('reports/rebaseline/continuation-v21-r14-accounting-3')
++RUN_ID = 'cp26-cold-rerun-2026-10-15-01'
++OUTPUT = Path('reports/rebaseline/cold-rerun-2026-10-15')
++LOCAL_NAME = 'cold-rerun-2026-10-15'
++RUN_EVIDENCE = Path('docs/track-b/evidence/cp-26') / LOCAL_NAME
+ PROTOCOL = Path('docs/track-b/evidence/cp-26/continuation-v21-r14/execution-protocol.json')
+ 
+ 
+@@ -36,11 +39,26 @@ def protocol_identity(root: Path) -> dict:
+         raise RuntimeError('execution details must be frozen in a local commit before compute')
+     if protocol.get('research_sha256') != H.PINS['capstone_v21.md']:
+         raise RuntimeError('execution protocol names a different research anchor')
++    registration_path = RUN_EVIDENCE / 'registration.json'
++    registration_raw = (root / registration_path).read_bytes()
++    registration = json.loads(registration_raw)
++    brief_path = RUN_EVIDENCE / 'issued-brief.md'
++    for path in (registration_path, brief_path):
++        if subprocess.check_output(['git', 'show', f'HEAD:{path}'], cwd=root) != (root / path).read_bytes():
++            raise RuntimeError('cold-run authority must be committed before compute')
++    if (registration['run_id'] != RUN_ID or registration['output'] != str(OUTPUT)
++            or registration['local'] != str(H.art() / LOCAL_NAME)
++            or registration['initial_run_machine_hours'] != 0
++            or registration['reuse_old_scientific_state'] is not False
++            or hashlib.sha256((root / brief_path).read_bytes()).hexdigest() != registration['issued_brief_sha256']):
++        raise RuntimeError('cold-run authority/namespace identity differs')
+     return {'schema': protocol['schema'], 'document': str(PROTOCOL),
+             'document_sha256': hashlib.sha256(raw).hexdigest(),
+             'authority_sha256': H.PINS[H.AUTHORITY_PATH],
+             'research_sha256': protocol['research_sha256'],
+-            'cp28_protocol_sha256': H.PINS['docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md']}
++            'cp28_protocol_sha256': H.PINS['docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md'],
++            'run_id': RUN_ID, 'run_authority_document': str(registration_path),
++            'run_authority_sha256': hashlib.sha256(registration_raw).hexdigest()}
+ 
+ 
+ class ExecutionGate:
+@@ -53,6 +71,8 @@ class ExecutionGate:
+             raise ValueError('unregistered CP-26 execution stage')
+         H.continuation_authority(self.root)
+         H.check_blas()
++        if os.environ.get('CP26_RUN_ID') != RUN_ID:
++            raise RuntimeError('cold execution requires its registered CP26_RUN_ID')
+         if not os.environ.get('CP26_MONITORED_JOB'):
+             raise RuntimeError('CP-26 execution stages require cumulative supervision')
+         from .supervisor import reconcile_running
+diff --git a/src/cp26/reporting.py b/src/cp26/reporting.py
+index 9d572e4..92d006b 100644
+--- a/src/cp26/reporting.py
++++ b/src/cp26/reporting.py
+@@ -24,10 +24,11 @@ BREAKDOWNS = ('season', 'year', 'quarter', 'local_hour', 'weekday_weekend', 'nat
+               'canonical_hours', 'stress_2021_2022', 'negative_price_risk', 'high_volatility',
+               'realized_outcome_slices')
+ EVIDENCE_CLASS = 'development_post_selection'
+-OUTPUT = 'reports/rebaseline/continuation-v21-r14-accounting-3'
++from .gates import OUTPUT, RUN_EVIDENCE
+ DOCS = ('capstone_v21.md', 'docs/track-b/evidence/cp-26/issued-continuation-brief-v21-r14.md',
+         'docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md', 'docs/PUBLISH_RULES.md',
+-        'docs/track-b/publication-standard-v1.md', 'docs/track-b/publication-packet-template.md')
++        'docs/track-b/publication-standard-v1.md', 'docs/track-b/publication-packet-template.md',
++        str(RUN_EVIDENCE / 'issued-brief.md'), str(RUN_EVIDENCE / 'registration.json'))
+ ARRAY_FIELDS = ('draw_starts', 'draw_indices')
+ 
+ 
+diff --git a/src/cp26/search.py b/src/cp26/search.py
+index f6f34e8..2998221 100644
+--- a/src/cp26/search.py
++++ b/src/cp26/search.py
+@@ -405,7 +405,8 @@ def load_search_for_origin(base: Path, day: date, route: str, identity: dict | N
+ 
+ def search_identity(root: Path, k: int, route: str) -> dict:
+     from . import harness as H
+-    return {'protocol': PROTOCOL, 'k': k, 'route': _route(route),
++    from .gates import RUN_ID
++    return {'protocol': PROTOCOL, 'run_id': RUN_ID, 'k': k, 'route': _route(route),
+             'cp26_input_fingerprint': H.input_fingerprint(root),
+             'code_sha256': {name: hashlib.sha256((Path(root) / name).read_bytes()).hexdigest() for name in MODEL_CODE}}
+ 
+diff --git a/src/cp26/supervisor.py b/src/cp26/supervisor.py
+index f5560b1..9c8c8e2 100644
+--- a/src/cp26/supervisor.py
++++ b/src/cp26/supervisor.py
+@@ -406,6 +406,7 @@ def _update_live_job(budget: Budget, index: int, job_id: str, callback):
+             return False
+         callback(job)
+         return True
++    budget.resource_read()
+     live = budget.resource_update(mutate, timeout_seconds=LEDGER_TIMEOUT_SECONDS,
+                                  guard=lambda state: _completion_clock_token(state, index, job_id))
+     if not live:
+@@ -479,6 +480,7 @@ def tick(budget: Budget, index: int, job_id: str, wall: float, rss: int,
+         if job.get('worker_ceiling_error'):
+             reason = 'registered_worker_ceiling'
+         return reason
++    budget.resource_read()
+     return budget.resource_update(sample, timeout_seconds=LEDGER_TIMEOUT_SECONDS,
+                                   guard=lambda state: _completion_clock_token(state, index, job_id))
+ 
+diff --git a/tests/test_cp26_run_accounting.py b/tests/test_cp26_run_accounting.py
+new file mode 100644
+index 0000000..3957c6d
+--- /dev/null
++++ b/tests/test_cp26_run_accounting.py
+@@ -0,0 +1,45 @@
++"""Scientific-run views retain historical and unrelated cumulative spending."""
++from cp26.budget import Budget, add_seconds, scientific_run_summary
++
++
++def test_run_view_counts_each_receipt_once_and_excludes_history_and_other_work():
++    state = {'counts': {}, 'accounting': {'measured_seconds': 100.,
++        'reported_seconds': 10., 'reserved_seconds': 2826.},
++        'scientific_runs': {'cold': {'cumulative_baseline': {'machine_hours': 2936 / 3600}}},
++        'jobs': [{'run_id': 'cold', 'charged_wall_seconds': 12., 'workers': 3},
++                 {'run_id': 'other', 'charged_wall_seconds': 5., 'workers': 1}],
++        'charges': [{'kind': 'reported', 'seconds': 2., 'source': {'run_id': 'cold'}},
++                    {'kind': 'reserved', 'seconds': 2826., 'source': {}}]}
++    add_seconds(state, 43.)
++    first = scientific_run_summary(state, 'cold')
++    assert first['measured_seconds'] == 36.
++    assert first['reported_seconds'] == 2.
++    assert first['reserved_seconds'] == 0.
++    assert first['total_seconds'] == 38.
++    assert first['cumulative_machine_hours'] == 2979 / 3600
++    assert scientific_run_summary(state, 'cold') == first
++    assert state['accounting']['reserved_seconds'] == 2826.
++
++
++def test_registered_run_starts_at_zero_even_with_historical_spending():
++    state = {'counts': {}, 'accounting': {'measured_seconds': 99.,
++        'reported_seconds': 7., 'reserved_seconds': 2826.},
++        'scientific_runs': {'cold': {'cumulative_baseline': {'machine_hours': 2932 / 3600}}}}
++    result = scientific_run_summary(state, 'cold')
++    assert result['total_seconds'] == 0.
++    assert result['machine_hours'] == 0.
++    assert result['historical_baseline_hours'] == 2932 / 3600
++
++
++def test_resource_view_retains_attributed_maintenance_receipts(tmp_path):
++    budget = Budget(tmp_path / 'budget.json')
++    budget.initialise()
++    with budget.transaction() as state:
++        state['scientific_runs'] = {'cold': {'cumulative_baseline': {'machine_hours': 0.0}}}
++    budget.record_charge('setup', 2.0, 'measured', {'run_id': 'cold'})
++    budget.record_charge('reported', 3.0, 'reported', {'run_id': 'cold'})
++    full = scientific_run_summary(budget.read(), 'cold')
++    hot = scientific_run_summary(budget.resource_read(), 'cold')
++    assert full == hot
++    assert hot['measured_seconds'] == 2.0
++    assert hot['reported_seconds'] == 3.0

@@ -1,0 +1,31 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "job",
+  "prepare"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-prepare-plans-1.338.9107b0b8ce4f4bb59459a22cfac00302.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "9107b0b8ce4f4bb59459a22cfac00302",
+ "job_index": 338,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/cold-prepare-plans-1.log",
+ "monitor_identity": {
+  "create_time": 1792078731.478392,
+  "pid": 45532
+ },
+ "name": "cold-prepare-plans-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-prepare-plans-1.338.9107b0b8ce4f4bb59459a22cfac00302.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792078732.574281,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 2.0,
+  "ledger_timeout_seconds": 0.5,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 10.0
+ },
+ "workers": 1
+}

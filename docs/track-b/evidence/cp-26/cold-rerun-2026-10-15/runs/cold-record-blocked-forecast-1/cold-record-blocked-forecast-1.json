@@ -1,0 +1,38 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "cold-record-blocked-forecast-1",
+ "job_id": "b911aca10cb04dafbea8a9e2e8736fbc",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/cold-record-blocked-forecast-1.log",
+ "machine_hours_cumulative": 66.31826167296983,
+ "peak_rss_bytes": 1226489856,
+ "resources": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 233931.67047464344,
+  "headroom_hours": 418.6817383270302,
+  "machine_hours": 66.31826167296983,
+  "measured_seconds": 235354.8946296362,
+  "pilot_stop_hours": 388.0,
+  "post_repair_seconds": 234027.00258552041,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 564.8473930551493,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.31826167296983,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.156137032846862,
+    "measured_seconds": 3698.608903748798,
+    "reported_seconds": 463.484414499905,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 4162.093318248703
+   }
+  },
+  "total_seconds": 238745.74202269135,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 5.05958741705399
+}

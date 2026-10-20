@@ -1,0 +1,31 @@
+{
+ "abort_reason": null,
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "clock_sha256": "2da7be0794c22974e366ba4c17296aa49b25382072b35aa22c58b06b7547a7ac",
+ "daily_issuances_claimed": false,
+ "exit_code": 0,
+ "first": "2022-01-05",
+ "group": 4,
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g04-nominal-2.392.ab04db020065413fb324d6e2f54e9c9a.clock.json",
+  "job_id": "ab04db020065413fb324d6e2f54e9c9a",
+  "job_index": 392,
+  "name": "cold-r16-fit-g04-nominal-2"
+ },
+ "ledger_timeouts": 0,
+ "native_origins": 245,
+ "peak_rss_bytes": 1686913024,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-642d8adadfc141b42aca43556d3439d23a1e8cb2da8bcf746ef0dd8229758d76.json",
+ "phase_sha256": "9c4d340459d2acdadf1a68f5b3c9f99db179311bea34c2f6b485fb2985a5498d",
+ "route": "nominal",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Exact complete245-date group4 native window, all nine nominal members and zero-key dates. The separate group3 window remains in progress; no complete980-origin nominal prefix or new forecast is claimed yet.",
+ "through": "2022-09-06",
+ "validation_status": "PASS",
+ "wall_seconds": 16752.502468083985,
+ "workers_stopped": true
+}

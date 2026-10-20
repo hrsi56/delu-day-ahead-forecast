@@ -1,0 +1,73 @@
+{
+  "review_jobs": [
+    {
+      "name": "cold-r16-integration-review-1",
+      "job_id": "1e3036c945fe4b50886d66649cf96698",
+      "job_index": 479,
+      "exit_code": 1,
+      "wall_seconds": 9.052805040992098,
+      "charged_wall_seconds": 9.052805040992098,
+      "peak_rss_bytes": 1730297856,
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-1.479.1e3036c945fe4b50886d66649cf96698.request.json",
+      "request_sha256": "0aafbea5496d01ede28e5fd9bcfc91f03338db15576e73aa4c0df03f541cceb8",
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-1.479.1e3036c945fe4b50886d66649cf96698.clock.json",
+      "group_empty": true,
+      "workers_stopped": true,
+      "clock_sha256": "cb50d21b942f5c171d035051843fb7d22668e45300546a218e12048b652c7dab"
+    },
+    {
+      "name": "cold-r16-integration-review-2",
+      "job_id": "4972cc83cea547669a203478b47a0695",
+      "job_index": 480,
+      "exit_code": 0,
+      "wall_seconds": 137.11984220899467,
+      "charged_wall_seconds": 137.11984220899467,
+      "peak_rss_bytes": 2174844928,
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-2.480.4972cc83cea547669a203478b47a0695.request.json",
+      "request_sha256": "c4bf4e9d42c9c3caf909d6e1c5ee9c52a8303076cf4dc7ffe12986425ee8ecbd",
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-2.480.4972cc83cea547669a203478b47a0695.clock.json",
+      "group_empty": true,
+      "workers_stopped": true,
+      "clock_sha256": "9e882f64f9ae205713bea582b4dee2ccbadf3bfcae9b3358c79374219066f632"
+    }
+  ],
+  "settled_ending_proofs": [
+    {
+      "status": "CLOSING_OBSERVERS_SETTLED",
+      "job_id": "1e3036c945fe4b50886d66649cf96698",
+      "job_index": 479,
+      "worker_identity_count": 4,
+      "quiet_seconds": 3.547134749998804,
+      "wall_seconds": 4.1169797079928685,
+      "maximum_wait_with_read_and_poll_seconds": 17.2
+    },
+    {
+      "status": "CLOSING_OBSERVERS_SETTLED",
+      "job_id": "4972cc83cea547669a203478b47a0695",
+      "job_index": 480,
+      "worker_identity_count": 2,
+      "quiet_seconds": 3.5031955000013113,
+      "wall_seconds": 3.929658875000314,
+      "maximum_wait_with_read_and_poll_seconds": 17.2
+    }
+  ],
+  "launcher_process_seconds": [
+    1.0805978339922149,
+    0.8668143329996383,
+    1.2519037909951294,
+    1.0482159579987638,
+    1.0320294580014888,
+    0.9438697500008857
+  ],
+  "launcher_process_seconds_total": 6.223431123988121,
+  "allocated_worker_wall_seconds_total": 146.17264724998677,
+  "soft_deferred_name": "cold-r16-integration-review-3",
+  "soft_deferred_registered": false,
+  "raw_pre_supervisor_rows": "Not imported by this Critic; Lead owns one-time import from canonical raw receipts; excluded from launcher/operator total.",
+  "ledger_accounting_snapshot": {
+    "measured_seconds": 846967.1509904255,
+    "reported_seconds": 2360.863321947783,
+    "reserved_seconds": 7367.7453770840075
+  },
+  "historical_baseline_hours": 65.16212464012295
+}

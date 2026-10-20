@@ -1,0 +1,7 @@
+payload: 15,363,807 bytes across 14 files
+  boosters: 30,823,690 bytes as text, 11,125,154 gzipped, 14,833,552 shipped as base64 text
+  series:   7,248 rows
+  fixture:  54 days / 1296 rows (4 fail-closed) / regimes ['crisis', 'dst-fall-back', 'dst-spring-forward', 'post-crisis (holdout)', 'post-crisis (holidays, bridge days)', 'pre-crisis']
+wrote /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/reports/cp3b/payload.json
+2026/10/20 20:58:08 INFO mlflow.agent.hint: Load the `instrumenting-with-mlflow-tracing` skill at /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-full/lib/python3.12/site-packages/mlflow/assistant/skills/instrumenting-with-mlflow-tracing/SKILL.md before writing any tracing code; it ships with this MLflow install. Set MLFLOW_DISABLE_AGENT_HINT=1 to silence this.
+2026/10/20 20:58:33 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible

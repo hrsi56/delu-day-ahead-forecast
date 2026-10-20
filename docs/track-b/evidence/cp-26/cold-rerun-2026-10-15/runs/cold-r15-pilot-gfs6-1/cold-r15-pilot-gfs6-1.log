@@ -1,0 +1,12 @@
+# CP-26 supervised job cold-r15-pilot-gfs6-1; workers=1
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in add
+  v += (1.0 - self.beta2) * g * g
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:260: RuntimeWarning: invalid value encountered in multiply
+  da = dh * activate_grad(activation, pre[k], inputs[k + 1])
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g
+{"status": "SEALED_PILOT_SUBSET_COMPLETE", "pairs": [["gfs6", 13]], "probes": 24, "evaluation_scores_computed": false}

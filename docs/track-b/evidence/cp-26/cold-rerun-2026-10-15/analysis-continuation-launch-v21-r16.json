@@ -1,0 +1,80 @@
+{
+ "basis": "Owner-reported external machine freeze corrected; verified positive same-policy supervision health receipt. Original production diagnostics/report continue, validating completed score/inference artifacts and deterministic prefix RNG advances; no searches, fits or forecast replay restart.",
+ "content_sha256": "3c19c8a12ceebdf0c6747839ffc3f7e201ea9d638dca4d6e97b5e7916db21c7c",
+ "cumulative_machine_hours": 214.5080543413786,
+ "identities": {
+  "child": {
+   "create_time": 1792341512.762717,
+   "pid": 2596
+  },
+  "monitor": {
+   "create_time": 1792341509.176414,
+   "pid": 2588
+  },
+  "supervisor": {
+   "create_time": 1792341510.334061,
+   "pid": 2593
+  },
+  "watchdog": {
+   "create_time": 1792341511.505184,
+   "pid": 2594
+  }
+ },
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-analysis-continue-1.474.27d21f60fc2541178851bb83fc36eb01.clock.json",
+  "job_id": "27d21f60fc2541178851bb83fc36eb01",
+  "job_index": 474,
+  "name": "cold-r16-analysis-continue-1",
+  "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-analysis-continue-1.474.27d21f60fc2541178851bb83fc36eb01.progress.json",
+  "request_sha256": "f869a925be821fee2ffa084538daa0a856b71622ce59f7228413f841f3f75d80"
+ },
+ "launch": {
+  "available_bytes": 8604368896,
+  "code_sha256": "140c44815351af6899ad6c3ef523da5ee7de504dd87846b0045dcc374a8a9b9d",
+  "monitor_pid": 2588,
+  "name": "cold-r16-analysis-continue-1",
+  "process_seconds": 1.3001675000000148,
+  "projected_cumulative_h": 299.49475515515917,
+  "required_available_bytes": 8216586931,
+  "status": "LAUNCHED",
+  "verified_launcher_release_credit_bytes": 261586944
+ },
+ "new_run": {
+  "cumulative_machine_hours": 214.5080543413786,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 149.34592970125513,
+  "measured_seconds": 530911.4456025405,
+  "reported_seconds": 2192.1559448939524,
+  "reserved_seconds": 4541.7453770840075,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 537645.3469245185
+ },
+ "original_partial_files_preserved": true,
+ "partial_custody_sha256": "ae410143b0127d0f1bf5a897332145a177f0c83944a4299caafe6f08b576bd4f",
+ "predecessor_clock_sha256": "b68a54820e469f7ab1a858dbb44ed0cf9d4d320c81860fc5a511bd35b984aa8c",
+ "predecessor_job_index": 472,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g09g10-close-raw-birth-two-native.json",
+ "projection_sha256": "641c45a0b4e6aacfb0aa666ff5610045f3c3045ab5578527b52d8be0634548f0",
+ "request_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-analysis-continue-1.474.27d21f60fc2541178851bb83fc36eb01.request.json",
+ "request_sha256": "f869a925be821fee2ffa084538daa0a856b71622ce59f7228413f841f3f75d80",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-analysis-continuation-launch-v1",
+ "scientific_sources_changed": false,
+ "stages_executed": [
+  "diagnostics",
+  "report"
+ ],
+ "stages_reused": [
+  "scores",
+  "inference"
+ ],
+ "successful_health_job": {
+  "clock_sha256": "f5f7bd7578b8482259d125ca906d586a281d0275c86fa566ac3efd43ac7dc205",
+  "exit_code": 0,
+  "job_id": "4ef8caa4a0a24476982943dad06f0e05",
+  "job_index": 473,
+  "quiet_seconds": 3.4385037499996542,
+  "timeouts": 0
+ },
+ "supervision_limits_changed": false
+}

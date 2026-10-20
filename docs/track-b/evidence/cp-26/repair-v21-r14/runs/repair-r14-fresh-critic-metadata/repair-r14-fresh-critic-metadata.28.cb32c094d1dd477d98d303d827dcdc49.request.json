@@ -1,0 +1,22 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-fresh-critic-metadata.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-68d5db5",
+ "job_id": "cb32c094d1dd477d98d303d827dcdc49",
+ "job_index": 28,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-fresh-critic-metadata.log",
+ "monitor_identity": {
+  "create_time": 1791914704.756003,
+  "pid": 77082
+ },
+ "name": "repair-r14-fresh-critic-metadata",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791914706.031081,
+ "workers": 1
+}

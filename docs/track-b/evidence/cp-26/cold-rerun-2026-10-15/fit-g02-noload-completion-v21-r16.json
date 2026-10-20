@@ -1,0 +1,38 @@
+{
+ "clock_sha256": "ce56a68136de8c9cbb91f8505983f992118b6961150c29f0b6e00a8789024fec",
+ "group_origins": 245,
+ "job": {
+  "abort_reason": null,
+  "charged_wall_seconds": 10229.805929875001,
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g02-noload-2.379.7d674bdd1e9e4570b8d5703df4db6339.clock.json",
+  "exit_code": 0,
+  "job_id": "7d674bdd1e9e4570b8d5703df4db6339",
+  "peak_rss_bytes": 1737179136,
+  "workers": 1
+ },
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.00040954200085252523,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.016431082971394062,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.43089254095684737,
+  "peak_wait_seconds": 0.7916251249844208,
+  "read_bytes": 9836165,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.26523933303542435,
+  "transactions": 22858,
+  "wait_seconds": 0.24880570801906288,
+  "written": true,
+  "written_bytes": 9836167
+ },
+ "next": "Current nominal/GFS6 group2 fits continue. Keep first-two-group/replay barrier before the prospectively registered four-job native batches.",
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-51281b7e59d75fa03cda9ac14bc88e7ea79e1adf4176ce701c46b373e0c1a9b9.json",
+ "phase_sha256": "1a320da5802d0d16cfbc6f04c9eb658767a3a69314c3e1de5205d999f30e04ff",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "status": "GROUP2_NOLOAD_NATIVE_COMPLETE",
+ "total_noload_native_origins_ready": 490
+}

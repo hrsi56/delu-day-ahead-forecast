@@ -1,0 +1,105 @@
+{
+ "authority": "Existing Owner full-baseline grant and ordinary hardware/concurrency scheduling authority; no new Owner consent or scientific protocol.",
+ "completed_no_load_phase_sha256": "093c959fb0c24578638738f964a5f98175689bfdcf5464cc2c9483998ced21a2",
+ "content_sha256": "bde96ec72ca7c30dd3b0b54711444fe2355fdf4cd7a27a805932ff441df2b845",
+ "cost": {
+  "basis": "Same remaining registered origins/routes/fits/controls, already completely priced. No added search, refit cadence, seed or model/configuration. Every margin and failure/replay/operational allowance retained, with160seconds future monitor setup. Require live admission and memory headroom before dispatch.",
+  "live_cumulative_h": 174.82667744634276,
+  "live_projected_cumulative_h": 396.813633969947,
+  "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close-raw-birth.json",
+  "projection_sha256": "442cdaac303b483bb9de646e0892e2ed7cf7953934536e3bf87c4fe47c157d80"
+ },
+ "drain_before_replay": "Close current nominal group8, GFS6 groups7/8 and the final no-load groups9/10 window, with positive bound endings. No native/replay overlap.",
+ "final_replay_prefixes": [
+  {
+   "origins": 2205,
+   "through": "2026-01-13"
+  },
+  {
+   "origins": 2441,
+   "through": "2026-09-06"
+  }
+ ],
+ "guards": {
+  "aggregate_rss_bytes": 12000000000,
+  "blas_threads": 1,
+  "cumulative_hard_hours": 500.0,
+  "heartbeat_seconds": 8.0,
+  "ledger_deadline_seconds": 3.0,
+  "native_maximum_during_canonical_accounting": 2,
+  "native_worker_maximum": 3,
+  "poll_seconds": 0.2,
+  "projection_hours": 440.0,
+  "registered_worker_maximum": 4
+ },
+ "kind": "prospective_finite_execution_order",
+ "next_registered_task": {
+  "first": "2025-05-14",
+  "fit_identity_sha256": "9c115588a97a628c0456d467d974e5f8eb0abfc14a34040c2fc323cfaf97ef54",
+  "name": "cold-r16-fit-g09g10-noload-1",
+  "native_dates": 481,
+  "preexisting_native_cache_files": 0,
+  "route": "noload",
+  "through": "2026-09-06"
+ },
+ "reason": "The no-load groups7/8 window is complete while the longer nominal and GFS6 windows still fit. Use its free slot for the already-registered final no-load window, keeping useful independent work running and leaving three native tasks for the final wave. The two remaining nominal windows can then run together with the final GFS6 control. Whole-baseline forecast completion is prioritized; no score/result guides this order.",
+ "registration": {
+  "native_window_plan_path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-plan-v21-r16.json",
+  "native_window_plan_sha256": "32bbcbff3c7c760b04f06ff175b8f526129c880dcfd7c4edee55e12fda6addc4",
+  "registered_window_verified": true,
+  "scientific_caller_path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "scientific_caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "remaining_native_after1960_replay": [
+  {
+   "first": "2025-05-14",
+   "name": "cold-r16-fit-g09-nominal-1",
+   "native_dates": 245,
+   "route": "nominal",
+   "through": "2026-01-13"
+  },
+  {
+   "first": "2026-01-14",
+   "name": "cold-r16-fit-g10-nominal-1",
+   "native_dates": 236,
+   "route": "nominal",
+   "through": "2026-09-06"
+  },
+  {
+   "first": "2025-05-14",
+   "name": "cold-r16-fit-g09g10-gfs6-1",
+   "native_dates": 481,
+   "route": "gfs6",
+   "through": "2026-09-06"
+  }
+ ],
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "running_predecessors": [
+  "cold-r16-fit-g07g08-gfs6-2",
+  "cold-r16-fit-g08-nominal-2"
+ ],
+ "scientific_invariants": "Independent native fits consume no H/learning state. All forecast emission, feedback consumption and H/CQR/learning updates remain chronological in the original cache-only replay. All2441 origins, frozen masks/partial/DST rules, nominal policies and both registered controls remain required; scores stay sealed until complete.",
+ "supersedes": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/filled-native-queue-through1960-v21-r16.json",
+  "raw_sha256": "a58e11a71ec15788a39c9bc590bc166423ae414f44eaccce78b59a58b31e381b",
+  "scope": "Only the Lead execution-order instruction to leave groups9/10 until after the1960-origin replay. Its scientific/chronological/registration requirements remain intact."
+ },
+ "unchanged_chronological_replay_prefixes": [
+  {
+   "origins": 1225,
+   "through": "2023-05-09"
+  },
+  {
+   "origins": 1470,
+   "through": "2024-01-09"
+  },
+  {
+   "origins": 1715,
+   "through": "2024-09-10"
+  },
+  {
+   "origins": 1960,
+   "through": "2025-05-13"
+  }
+ ]
+}

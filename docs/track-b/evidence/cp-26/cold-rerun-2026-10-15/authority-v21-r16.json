@@ -1,0 +1,85 @@
+{
+ "actual_ceiling_hours": 500,
+ "admission_hours": 440,
+ "anchor_commit": "4766a61cb0c836573406f5a9729997d1b6ee9862",
+ "brief_path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/issued-continuation-v21-r16.md",
+ "brief_sha256": "4fe30292467596ad65d9391829d6849401ede1cc6be3b7bc9789c47dece60107",
+ "checkpoint": "cp-26",
+ "cumulative_before": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 235241.3257022665,
+  "headroom_hours": 418.317945208246,
+  "live_shutdown_exposure_seconds": 0.0,
+  "machine_hours": 66.682054791754,
+  "measured_seconds": 236575.24860063323,
+  "pilot_stop_hours": 436.5,
+  "post_repair_seconds": 235336.65781314348,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 654.1486496811788,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.682054791754,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.5199301516310468,
+    "measured_seconds": 4918.962874745834,
+    "reported_seconds": 552.7856711259344,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 5471.748545871768
+   }
+  },
+  "total_seconds": 240055.39725031442,
+  "unreconciled_reserves": []
+ },
+ "delivery_source": "Owner attachment delivered in this Codex chat; policy consent is the recorded 2026-10-16 approval, not new consent.",
+ "general_admission_hours": 436.5,
+ "ledger_sha256_before": "0d693aa21ea569fc9f2f7f75b78d84d38aa003c7391eb1be09583ffd8953d776",
+ "limits_preserved": {
+  "heartbeat": 8,
+  "ledger": 3,
+  "poll": 0.2,
+  "startup": 14
+ },
+ "maximum_calibrated_heartbeat_seconds": 15,
+ "maximum_calibrated_ledger_seconds": 5,
+ "new_run_before": {
+  "cumulative_machine_hours": 66.682054791754,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 1.5199301516310468,
+  "measured_seconds": 4918.962874745834,
+  "reported_seconds": 552.7856711259344,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 5471.748545871768
+ },
+ "no_cp28_execution": true,
+ "no_new_lockdown_suspension": true,
+ "no_publication": true,
+ "original_scientific_anchor_commit": "332baeb861cec5a58516c58a29a1a3afe1eec909",
+ "original_scientific_anchor_sha256": "3be866bd10af02cc2b0b956ed91be660dca29a62c0b23b00997bf0b415d100c5",
+ "pilot_probes_preserved": 1064,
+ "poll_seconds": 0.2,
+ "prior_authority_document": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/authority-v21-r15.json",
+ "ratified_documents": [
+  {
+   "path": "capstone_v21.md",
+   "sha256": "27bdc6046117a543d4bfcaa439651e7bf2a8fa4d0c58af9631b606a358c10fd1"
+  },
+  {
+   "path": "docs/track-b/capstone_v21-r15-to-v21-r16-amendments.md",
+   "sha256": "36b104634d22093990aa2641a644572e8f892c9547118247023fc4267d5aae72"
+  }
+ ],
+ "recorded_at_utc": "2026-10-16T01:20:59.925644+00:00",
+ "role": "Engineering Lead",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "run_reset": false,
+ "schema": "cp26-operational-authority-v21-r16",
+ "scientific_base_commit": "1e7eb029f1cbbec6483aea4a7dda0754fd7adf0b",
+ "scientific_protocol_preserved": true,
+ "starting_tip": "77008c10273e5a4d8a298d5f7e0ac35047c2d1a0",
+ "status": "owner_ratified_and_delivered"
+}

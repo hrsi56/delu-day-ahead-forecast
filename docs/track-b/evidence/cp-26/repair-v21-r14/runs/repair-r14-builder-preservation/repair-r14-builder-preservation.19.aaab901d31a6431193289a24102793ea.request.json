@@ -1,0 +1,22 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/archive_repair_builders.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "aaab901d31a6431193289a24102793ea",
+ "job_index": 19,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-builder-preservation.log",
+ "monitor_identity": {
+  "create_time": 1791913382.254689,
+  "pid": 69092
+ },
+ "name": "repair-r14-builder-preservation",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791913383.535441,
+ "workers": 1
+}

@@ -1,0 +1,13 @@
+{
+ "failed_job_names": [
+  "cold-ledger-fixed-pilot-shard-2-1",
+  "cold-ledger-fixed-pilot-shard-1-2"
+ ],
+ "followup": "One single-worker normal pilot continuation after all prior workers ended. No fit with a terminal probe is repeated; no timeout or protocol changes. No further continuation after a new actual deadline failure.",
+ "initial946_unchanged": true,
+ "probes": 970,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "swap_mib_before": 5890.06,
+ "swap_mib_peak_observed": 7940.31,
+ "three_worker_attempt": "One watchdog actual timeout0.6453919999767095s with1conflict; another worker stopped at actual deadline during task append; third completed24missing probes."
+}

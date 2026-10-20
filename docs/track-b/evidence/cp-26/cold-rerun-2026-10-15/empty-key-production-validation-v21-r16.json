@@ -1,0 +1,15 @@
+{
+ "caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "log_prefix_bytes": 4807,
+ "log_prefix_sha256": "46d3b168766d1a47a7f4631689f86ea65db7d8df7034677d24e1e3dcafc364be",
+ "new_previously_unsaved_cache_sha256": {
+  "D2": "8d21127fbb09a6535322b10d0ca27c129ac1398a30458b1c1f1d48edc0440b9f",
+  "v1-R": "42fd9b723e52e2903b36635034b739ad91af38695953a5d47a3c935771039467"
+ },
+ "preserved_cache_files_verified_unchanged": 439,
+ "preserved_cache_reference_sha256": "50a51848ffd022900a2e941478e801466ea58090dc02a548dfe531a2d3146427",
+ "ready_through": "2022-02-28",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Production resumed past the demonstrated zero-key serialization boundary. Every439 previously saved native file is byte-identical; only missing native results were fitted. No source-code identity, scientific recipe, input, mask, seed, successful probe or prior forecast changed.",
+ "status": "PASS"
+}

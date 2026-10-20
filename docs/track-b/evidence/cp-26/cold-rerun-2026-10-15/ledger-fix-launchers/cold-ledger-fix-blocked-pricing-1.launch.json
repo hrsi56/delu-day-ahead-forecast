@@ -1,0 +1,21 @@
+{
+  "pid": 82131,
+  "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-ledger-fix-blocked-pricing-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/ledger-fix/cold-ledger-fix-blocked-pricing-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocked-forecast.py"
+  ],
+  "launched_epoch": 1792103008.441942,
+  "scope": "Resource-only repricing and blocker record; no scientific work or retry"
+}

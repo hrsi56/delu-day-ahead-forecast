@@ -1,0 +1,24 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "job",
+  "verify-inputs"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "2bcf9f217f054345a7b18046dab6f892",
+ "job_index": 13,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-verify-inputs.log",
+ "monitor_identity": {
+  "create_time": 1791911943.677162,
+  "pid": 47979
+ },
+ "name": "repair-r14-verify-inputs",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791911944.699836,
+ "workers": 1
+}

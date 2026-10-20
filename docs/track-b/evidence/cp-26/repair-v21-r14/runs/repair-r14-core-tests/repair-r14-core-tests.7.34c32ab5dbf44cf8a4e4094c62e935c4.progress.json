@@ -1,0 +1,29 @@
+{
+ "child_identity": {
+  "create_time": 1791911418.271076,
+  "pid": 45078
+ },
+ "job_id": "34c32ab5dbf44cf8a4e4094c62e935c4",
+ "observed_epoch": 1791911445.51072,
+ "schema": "cp26-progress-v2",
+ "supervisor_identity": {
+  "create_time": 1791911417.499641,
+  "pid": 45076
+ },
+ "wall_seconds": 27.980107208015397,
+ "worker_identities": [
+  {
+   "create_time": 1791911418.271076,
+   "pid": 45078
+  },
+  {
+   "create_time": 1791911419.387325,
+   "pid": 45082
+  },
+  {
+   "create_time": 1791911419.619733,
+   "pid": 45092
+  }
+ ],
+ "worker_pgid": 45078
+}

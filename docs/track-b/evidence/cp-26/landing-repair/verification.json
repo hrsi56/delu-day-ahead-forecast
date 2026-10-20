@@ -1,0 +1,862 @@
+{
+ "bytecode_experiments": {
+  "ci-bytecode-experiment-1": {
+   "PYTHONDONTWRITEBYTECODE": "unset, as on CI",
+   "candidate": "04f00eac5506c550ed4c775b84dc65a41f86c007",
+   "pyc_after_sync": 0,
+   "runs": [
+    {
+     "admin_exit_code": 0,
+     "admin_running": false,
+     "admin_wall_seconds": 9.07315870799357,
+     "exit_code": 0,
+     "index": 0,
+     "pyc_in_env": 1314,
+     "seconds": 114.02,
+     "summary": "1 passed in 75.65s (0:01:15)"
+    },
+    {
+     "admin_exit_code": 0,
+     "admin_running": false,
+     "admin_wall_seconds": 8.342646292003337,
+     "exit_code": 0,
+     "index": 1,
+     "pyc_in_env": 1314,
+     "seconds": 17.97,
+     "summary": "1 passed in 17.38s"
+    },
+    {
+     "admin_exit_code": 0,
+     "admin_running": false,
+     "admin_wall_seconds": 8.517374167015078,
+     "exit_code": 0,
+     "index": 2,
+     "pyc_in_env": 1314,
+     "seconds": 18.22,
+     "summary": "1 passed in 17.59s"
+    },
+    {
+     "admin_exit_code": 0,
+     "admin_running": false,
+     "admin_wall_seconds": 8.250888042006409,
+     "exit_code": 0,
+     "index": 3,
+     "pyc_in_env": 1314,
+     "seconds": 17.82,
+     "summary": "1 passed in 17.25s"
+    },
+    {
+     "admin_exit_code": 0,
+     "admin_running": false,
+     "admin_wall_seconds": 8.29270304198144,
+     "exit_code": 0,
+     "index": 4,
+     "pyc_in_env": 1314,
+     "seconds": 17.64,
+     "summary": "1 passed in 17.10s"
+    }
+   ]
+  },
+  "cold-experiment-1": {
+   "candidate": "04f00eac5506c550ed4c775b84dc65a41f86c007",
+   "pyc_after_cold_import": 0,
+   "pyc_after_cold_tests": 0,
+   "pyc_after_sync": 0,
+   "pyc_after_warm": 0,
+   "steps": [
+    {
+     "exit_code": 0,
+     "seconds": 2.04,
+     "step": "sync",
+     "summary": " + zipp==4.1.0"
+    },
+    {
+     "exit_code": 0,
+     "seconds": 39.12,
+     "step": "import-cold-B",
+     "summary": ""
+    },
+    {
+     "exit_code": 1,
+     "seconds": 31.41,
+     "step": "test-cold-0",
+     "summary": "1 failed in 29.30s"
+    },
+    {
+     "exit_code": 1,
+     "seconds": 30.17,
+     "step": "test-cold-1",
+     "summary": "1 failed in 28.65s"
+    },
+    {
+     "exit_code": 0,
+     "seconds": 2.42,
+     "step": "warm-bytecode",
+     "summary": ""
+    },
+    {
+     "exit_code": 0,
+     "seconds": 2.4,
+     "step": "import-warm-B",
+     "summary": ""
+    },
+    {
+     "exit_code": 1,
+     "seconds": 30.29,
+     "step": "test-warm-0",
+     "summary": "1 failed in 28.86s"
+    },
+    {
+     "exit_code": 1,
+     "seconds": 30.42,
+     "step": "test-warm-1",
+     "summary": "1 failed in 28.91s"
+    }
+   ]
+  },
+  "finding": "tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history times out at its 15 s admin wait when run alone in a venv that has never compiled bytecode while PYTHONDONTWRITEBYTECODE=1 (this machine's shell); every inner python -B process then compiles numpy, pandas and cp26 from source. With bytecode writing allowed, as on CI, it passed 5 of 5 alone in a brand-new venv (admin job 8.3-9.1 s), and it passed in every full-suite run."
+ },
+ "candidate": "04f00eac5506c550ed4c775b84dc65a41f86c007",
+ "environment": "fresh uv environment per run (UV_PROJECT_ENVIRONMENT), Python 3.12 as CI pins it, UV_OFFLINE=1; CP<n>_* variables and PYTHONPATH dropped; CP26_PROJECT_ROOT set to a path that does not exist; MLFLOW_DISABLE_TELEMETRY=true, DO_NOT_TRACK=1; worktrees and environments removed after each run",
+ "exclusion_rule": {
+  "path": ".local/artifacts/cp-26-landing/exclusion-rule.txt",
+  "sha256": "7cbd68734f864d78a076800ecb1db273a8b8e50ba00f0bf79b76d24ac72af565"
+ },
+ "ledger_after": {
+  "accounting": {
+   "measured_seconds": 874744.3959401707,
+   "reported_seconds": 2464.2344734407784,
+   "reserved_seconds": 7367.7453770840075
+  },
+  "counts_machine_seconds": 884576.3757906955,
+  "jobs": 513
+ },
+ "ledger_jobs": [
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 609.9792802089942,
+   "exit_code": 1,
+   "group_empty": true,
+   "job_index": 493,
+   "name": "landing-repair-baseline-scratch-1",
+   "wall_seconds": 609.9792802089942,
+   "workers": 1,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": "supervisor_identity_lost",
+   "charged_machine_seconds": 484.6335288360133,
+   "exit_code": 70,
+   "group_empty": true,
+   "job_index": 494,
+   "name": "landing-repair-targeted-1",
+   "wall_seconds": 121.15838220900332,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2552.2937108320184,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 495,
+   "name": "landing-repair-candidate-scratch-1",
+   "wall_seconds": 638.0734277080046,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2542.2118696640246,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 496,
+   "name": "landing-repair-candidate-worktree-1",
+   "wall_seconds": 635.5529674160061,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2552.5061478320276,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 497,
+   "name": "landing-repair-candidate-full-1",
+   "wall_seconds": 638.1265369580069,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2503.3546114999917,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 498,
+   "name": "critic-1-curated",
+   "wall_seconds": 625.8386528749979,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2478.994998336013,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 499,
+   "name": "critic-1-ci-sim",
+   "wall_seconds": 619.7487495840032,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2523.4086045000004,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 500,
+   "name": "critic-1-full",
+   "wall_seconds": 630.8521511250001,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 415.8843683319865,
+   "exit_code": 1,
+   "group_empty": true,
+   "job_index": 501,
+   "name": "critic-1-eight-ci-sim",
+   "wall_seconds": 103.97109208299662,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 394.7675595000037,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 502,
+   "name": "critic-1-rich-admin-x3",
+   "wall_seconds": 98.69188987500092,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 254.03703683201456,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 503,
+   "name": "critic-1-rich-admin-order",
+   "wall_seconds": 63.50925920800364,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 135.01376199995866,
+   "exit_code": 1,
+   "group_empty": true,
+   "job_index": 504,
+   "name": "critic-1-rich-admin-debug",
+   "wall_seconds": 33.753440499989665,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 243.384162664006,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 505,
+   "name": "critic-1-rich-admin-warm",
+   "wall_seconds": 60.8460406660015,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 709.1751063319389,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 506,
+   "name": "landing-repair-cold-experiment-1",
+   "wall_seconds": 177.29377658298472,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 784.9741449999856,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 507,
+   "name": "landing-repair-ci-bytecode-experiment-1",
+   "wall_seconds": 196.2435362499964,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2467.34921200003,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 508,
+   "name": "critic-2-curated",
+   "wall_seconds": 616.8373030000075,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2466.4794903320726,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 509,
+   "name": "critic-2-ci-sim",
+   "wall_seconds": 616.6198725830182,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 2637.368885835982,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 510,
+   "name": "critic-2-full",
+   "wall_seconds": 659.3422214589955,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 346.114818164031,
+   "exit_code": 1,
+   "group_empty": true,
+   "job_index": 511,
+   "name": "critic-2-rich-admin-nobytecode",
+   "wall_seconds": 86.52870454100776,
+   "workers": 4,
+   "workers_stopped": true
+  },
+  {
+   "abort_reason": null,
+   "charged_machine_seconds": 272.49860083602834,
+   "exit_code": 0,
+   "group_empty": true,
+   "job_index": 512,
+   "name": "critic-2-rich-admin-bytecode",
+   "wall_seconds": 68.12465020900709,
+   "workers": 4,
+   "workers_stopped": true
+  }
+ ],
+ "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+ "modes": {
+  "full": "detached worktree at the candidate",
+  "scratch": "CI after a squash LAND: one commit holding main plus the curated paths; no history, tags or branch objects",
+  "worktree": "the brief's procedure: detached worktree at main, curated paths checked out from the candidate, git write-tree"
+ },
+ "notes": [
+  "landing-repair-baseline-scratch-1 declared one worker; tests/test_cp26_ledger_liveness.py runs up to four processes, so later runs declared four, as that file requires.",
+  "landing-repair-targeted-1 ended with abort_reason supervisor_identity_lost after pytest had finished (226 passed); its watchdog receipt shows workers stopped and an empty group, and its full wall time is charged.",
+  "critic-1 jobs belong to a first Integration Critic that a usage limit stopped before any verdict; its worktree was removed and a fresh Critic (critic-2) reviewed the same candidate."
+ ],
+ "runs": {
+  "baseline-scratch-1": {
+   "candidate": "d8f912ad9be0867f11e4b634c2f482792ea5e951",
+   "cleaned": true,
+   "curated_bytes": 44562935,
+   "curated_paths": 839,
+   "excluded_paths": 9419,
+   "finished_utc": "2026-10-19T22:18:02Z",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "mode": "scratch",
+   "schema": "cp26-landing-ci-check-v1",
+   "scratch_commits": 1,
+   "skipped": [
+    "SKIPPED [1] tests/cp20/test_gfs_eccodes.py:11: could not import 'eccodes': No module named 'eccodes'",
+    "SKIPPED [1] tests/cp16/conftest.py:66: CP-16 identity is bound to the v21-r3 anchor; capstone_v21.md is now ratified v21-r17. Reviewed bytes: evidence/cp-16:capstone_v21.md",
+    "SKIPPED [5] tests/cp16/conftest.py:61: production verification: set CP16_LEDGER (charges the CP-16 ledger) or CP16_REQUIRE_SAVED_EVIDENCE=1",
+    "SKIPPED [1] tests/cp21/test_saved_evidence.py:176: evidence/cp-21 is not in this checkout",
+    "SKIPPED [1] tests/cp22/test_saved_evidence.py:178: evidence/cp-22 is not in this checkout",
+    "SKIPPED [1] tests/cp23/test_saved_evidence.py:214: evidence/cp-23 is not in this checkout",
+    "SKIPPED [1] tests/cp24/test_draft_export.py:38: scripts/mlflow_export.py changed after CP-24; the draft stays bound by its artifact manifest",
+    "SKIPPED [1] tests/test_29_research_evidence.py:49: no evidence tags in this checkout (shallow CI clone); blobs are checked from bytes",
+    "SKIPPED [1] tests/test_36_derived_records.py:88: Git history is not available in this checkout (shallow CI clone)",
+    "SKIPPED [1] tests/test_38_page_architecture.py:249: Git history is not available in this checkout (shallow CI clone)",
+    "SKIPPED [1] tests/test_49_pres4_v5_publication.py:138: the published export's commit is not in this checkout",
+    "SKIPPED [1] tests/test_49_pres4_v5_publication.py:693: the published export's commit is not in this checkout"
+   ],
+   "started_utc": "2026-10-19T22:07:58Z",
+   "steps": [
+    {
+     "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--dev"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 2.0,
+     "step": "sync",
+     "summary": " + zipp==4.1.0",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/build_wasm_payload.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 77.3,
+     "step": "payload",
+     "summary": "2026/10/20 01:08:57 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "-rfEs"
+     ],
+     "exit_code": 1,
+     "failed": [
+      "FAILED tests/test_cp26_ledger_liveness.py::test_three_jobs_keep_fresh_supervision_with_full_future_history",
+      "FAILED tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history",
+      "FAILED tests/test_cp26_parity.py::test_real_references_are_committed_and_internally_bitwise_consistent",
+      "FAILED tests/test_cp26_r15.py::test_original_numeric_functions_are_unchanged_by_r15",
+      "FAILED tests/test_cp26_r15.py::test_r15_authority_does_not_relabel_scientific_plan_or_parity",
+      "FAILED tests/test_cp26_repair_contract.py::test_anchor_commit_and_landed_base_are_distinct_and_explicit",
+      "FAILED tests/test_cp26_repair_contract.py::test_original_documents_and_sections_1_through_23_stay_historical",
+      "FAILED tests/test_cp26_search.py::test_search_lineage_changes_when_context_adapter_changes"
+     ],
+     "seconds": 509.9,
+     "step": "suite",
+     "summary": "8 failed, 2197 passed, 16 skipped in 507.38s (0:08:27)",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_10_cqr_order_statistic.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 0.8,
+     "step": "cqr",
+     "summary": "8 passed in 0.02s",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/verify_release.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 1.2,
+     "step": "verify-release",
+     "summary": "PASS \u2014 every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_22_wasm_equivalence.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 2.5,
+     "step": "wasm",
+     "summary": "15 passed in 1.84s",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "python3",
+      "scripts/publication_guard.py",
+      "tree"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 0.0,
+     "step": "publication-guard",
+     "summary": "publication-guard: the tree carries no placeholder and a final build record",
+     "tracked_changes_after": 0
+    }
+   ],
+   "suite_green": false,
+   "suite_log_sha256": "fa5a0e147d879e79700dac440cf0f71c594aa002611c53eeffd2c6c6ec4d783c",
+   "tree": "892f5655c5f2af8f47a86b1268cd28a64cda02a1",
+   "tree_files": 2390
+  },
+  "candidate-full-1": {
+   "candidate": "04f00eac5506c550ed4c775b84dc65a41f86c007",
+   "cleaned": true,
+   "finished_utc": "2026-10-19T22:59:24Z",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "mode": "full",
+   "schema": "cp26-landing-ci-check-v1",
+   "skipped": [
+    "SKIPPED [1] tests/cp20/test_gfs_eccodes.py:11: could not import 'eccodes': No module named 'eccodes'",
+    "SKIPPED [1] tests/cp16/conftest.py:66: CP-16 identity is bound to the v21-r3 anchor; capstone_v21.md is now ratified v21-r17. Reviewed bytes: evidence/cp-16:capstone_v21.md",
+    "SKIPPED [5] tests/cp16/conftest.py:61: production verification: set CP16_LEDGER (charges the CP-16 ledger) or CP16_REQUIRE_SAVED_EVIDENCE=1",
+    "SKIPPED [1] tests/cp24/test_draft_export.py:38: scripts/mlflow_export.py changed after CP-24; the draft stays bound by its artifact manifest"
+   ],
+   "started_utc": "2026-10-19T22:48:52Z",
+   "steps": [
+    {
+     "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--dev"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 1.2,
+     "step": "sync",
+     "summary": " + zipp==4.1.0",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/build_wasm_payload.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 75.1,
+     "step": "payload",
+     "summary": "2026/10/20 01:49:53 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "-rfEs"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 540.7,
+     "step": "suite",
+     "summary": "2213 passed, 8 skipped in 538.56s (0:08:58)",
+     "tracked_changes_after": 0
+    }
+   ],
+   "suite_green": true,
+   "suite_log_sha256": "749d91de8de8985f54c15a3ce1a16d3ee18180a07047bbfb015c902cd80e0434",
+   "tree": "1f2ca6728102558eebd4d3aed29028e5775c7096",
+   "tree_files": 11816
+  },
+  "candidate-scratch-1": {
+   "candidate": "04f00eac5506c550ed4c775b84dc65a41f86c007",
+   "cleaned": true,
+   "curated_bytes": 44801005,
+   "curated_paths": 846,
+   "excluded_paths": 9419,
+   "finished_utc": "2026-10-19T22:37:41Z",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "mode": "scratch",
+   "schema": "cp26-landing-ci-check-v1",
+   "scratch_commits": 1,
+   "skipped": [
+    "SKIPPED [1] tests/cp20/test_gfs_eccodes.py:11: could not import 'eccodes': No module named 'eccodes'",
+    "SKIPPED [1] tests/cp16/conftest.py:66: CP-16 identity is bound to the v21-r3 anchor; capstone_v21.md is now ratified v21-r17. Reviewed bytes: evidence/cp-16:capstone_v21.md",
+    "SKIPPED [5] tests/cp16/conftest.py:61: production verification: set CP16_LEDGER (charges the CP-16 ledger) or CP16_REQUIRE_SAVED_EVIDENCE=1",
+    "SKIPPED [1] tests/cp21/test_saved_evidence.py:176: evidence/cp-21 is not in this checkout",
+    "SKIPPED [1] tests/cp22/test_saved_evidence.py:178: evidence/cp-22 is not in this checkout",
+    "SKIPPED [1] tests/cp23/test_saved_evidence.py:214: evidence/cp-23 is not in this checkout",
+    "SKIPPED [1] tests/cp24/test_draft_export.py:38: scripts/mlflow_export.py changed after CP-24; the draft stays bound by its artifact manifest",
+    "SKIPPED [1] tests/test_29_research_evidence.py:49: no evidence tags in this checkout (shallow CI clone); blobs are checked from bytes",
+    "SKIPPED [1] tests/test_36_derived_records.py:88: Git history is not available in this checkout (shallow CI clone)",
+    "SKIPPED [1] tests/test_38_page_architecture.py:249: Git history is not available in this checkout (shallow CI clone)",
+    "SKIPPED [1] tests/test_49_pres4_v5_publication.py:138: the published export's commit is not in this checkout",
+    "SKIPPED [1] tests/test_49_pres4_v5_publication.py:693: the published export's commit is not in this checkout"
+   ],
+   "started_utc": "2026-10-19T22:27:08Z",
+   "steps": [
+    {
+     "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--dev"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 1.8,
+     "step": "sync",
+     "summary": " + zipp==4.1.0",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/build_wasm_payload.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 75.9,
+     "step": "payload",
+     "summary": "2026/10/20 01:28:03 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "-rfEs"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 541.8,
+     "step": "suite",
+     "summary": "2205 passed, 16 skipped in 539.21s (0:08:59)",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_10_cqr_order_statistic.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 0.8,
+     "step": "cqr",
+     "summary": "8 passed in 0.02s",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/verify_release.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 1.2,
+     "step": "verify-release",
+     "summary": "PASS \u2014 every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_22_wasm_equivalence.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 2.5,
+     "step": "wasm",
+     "summary": "15 passed in 1.84s",
+     "tracked_changes_after": 0
+    },
+    {
+     "command": [
+      "python3",
+      "scripts/publication_guard.py",
+      "tree"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 0.1,
+     "step": "publication-guard",
+     "summary": "publication-guard: the tree carries no placeholder and a final build record",
+     "tracked_changes_after": 0
+    }
+   ],
+   "suite_green": true,
+   "suite_log_sha256": "55199fe56353b6b878802ee94971ed8ecd07d59afad9547f9ddf09042e805e15",
+   "tree": "c4e3b0ba914bba33b4d2f27e635705df55a3ad42",
+   "tree_files": 2397
+  },
+  "candidate-worktree-1": {
+   "candidate": "04f00eac5506c550ed4c775b84dc65a41f86c007",
+   "cleaned": true,
+   "curated_bytes": 44801005,
+   "curated_paths": 846,
+   "excluded_paths": 9419,
+   "finished_utc": "2026-10-19T22:48:32Z",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "mode": "worktree",
+   "schema": "cp26-landing-ci-check-v1",
+   "skipped": [
+    "SKIPPED [1] tests/cp20/test_gfs_eccodes.py:11: could not import 'eccodes': No module named 'eccodes'",
+    "SKIPPED [1] tests/cp16/conftest.py:66: CP-16 identity is bound to the v21-r3 anchor; capstone_v21.md is now ratified v21-r17. Reviewed bytes: evidence/cp-16:capstone_v21.md",
+    "SKIPPED [5] tests/cp16/conftest.py:61: production verification: set CP16_LEDGER (charges the CP-16 ledger) or CP16_REQUIRE_SAVED_EVIDENCE=1",
+    "SKIPPED [1] tests/cp24/test_draft_export.py:38: scripts/mlflow_export.py changed after CP-24; the draft stays bound by its artifact manifest"
+   ],
+   "started_utc": "2026-10-19T22:38:02Z",
+   "steps": [
+    {
+     "command": [
+      "uv",
+      "sync",
+      "--locked",
+      "--dev"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 1.2,
+     "step": "sync",
+     "summary": " + zipp==4.1.0",
+     "tracked_changes_after": 846
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/build_wasm_payload.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 79.7,
+     "step": "payload",
+     "summary": "2026/10/20 01:38:51 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+     "tracked_changes_after": 846
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "-rfEs"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 542.1,
+     "step": "suite",
+     "summary": "2213 passed, 8 skipped in 539.39s (0:08:59)",
+     "tracked_changes_after": 846
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_10_cqr_order_statistic.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 0.8,
+     "step": "cqr",
+     "summary": "8 passed in 0.02s",
+     "tracked_changes_after": 846
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "python",
+      "scripts/verify_release.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 1.2,
+     "step": "verify-release",
+     "summary": "PASS \u2014 every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces",
+     "tracked_changes_after": 846
+    },
+    {
+     "command": [
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_22_wasm_equivalence.py"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 2.4,
+     "step": "wasm",
+     "summary": "15 passed in 1.73s",
+     "tracked_changes_after": 846
+    },
+    {
+     "command": [
+      "python3",
+      "scripts/publication_guard.py",
+      "tree"
+     ],
+     "exit_code": 0,
+     "failed": [],
+     "seconds": 0.1,
+     "step": "publication-guard",
+     "summary": "publication-guard: the tree carries no placeholder and a final build record",
+     "tracked_changes_after": 846
+    }
+   ],
+   "suite_green": true,
+   "suite_log_sha256": "49e66d61b0dc40a755649f3d2d0acce467f75d5b6a5f40793a857da25c417a18",
+   "tree": "c4e3b0ba914bba33b4d2f27e635705df55a3ad42",
+   "tree_files": 2397
+  }
+ },
+ "schema": "cp26-landing-repair-verification-v1",
+ "targeted_run": {
+  "job": "landing-repair-targeted-1",
+  "result": "226 passed in 115.90s (five repaired test files)",
+  "tree": "Lead worktree at the uncommitted repair"
+ },
+ "tool": {
+  "path": "docs/track-b/evidence/cp-26/landing-repair/ci_check.py",
+  "sha256": "7db7e2acc54d13b73808f6c7f3dff4f4ea55ce78b7c55eed8c74cc53de12c5c2"
+ }
+}

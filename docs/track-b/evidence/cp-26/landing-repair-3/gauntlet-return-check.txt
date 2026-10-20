@@ -1,0 +1,8 @@
+$ python3 scripts/gauntlet.py return cp-26 c7829b3687ed7e295f1aeac3738e4d1a257a81aa 4239913fa2639768d1345c3c98d9db87b6533914
+exit_code: 1
+checks: 5 cited SHA(s) examined; 1 problem(s)
+PROBLEM: the verdict's Candidate SHA line does not cite the final candidate in full
+
+The single problem is expected under the Owner's explicit round-3 Critic waiver. The preserved round-1 verdict is not relabelled.
+Full output: /Users/djourno/Downloads/PJM/.local/artifacts/cp-26-landing-repair-3/gauntlet-first-evidence-tip.txt
+Full-output SHA-256: 4af15a2b343fdd117cde8ed02dcf09912e4c222df18f7cd7ba51c855b67085d1

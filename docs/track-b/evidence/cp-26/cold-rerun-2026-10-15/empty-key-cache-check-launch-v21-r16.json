@@ -1,0 +1,23 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-check-empty-key-cache-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-check-empty-key-cache-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/check-empty-key-cache-v21-r16.py"
+ ],
+ "launched_epoch": 1792169946.038771,
+ "name": "cold-r16-check-empty-key-cache-1",
+ "pid": 28118,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "workers": 1
+}

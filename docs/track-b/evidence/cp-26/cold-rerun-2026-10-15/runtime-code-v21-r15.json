@@ -1,0 +1,38 @@
+{
+ "actual_code_sha256": {
+  "src/cp26/__init__.py": "80b5d7a61f997842f8ccf7b2fd007ea5601d63e7a5c90d301008473a395a245d",
+  "src/cp26/analysis.py": "4f70eab9216666b7c685da10a6cc882820fd98af23c105a62604494fe8193684",
+  "src/cp26/budget.py": "d7ed696a9cd58ec6e061942acda1babae7990d4c6ac3060dc18c7386c16119a1",
+  "src/cp26/costing.py": "5c7cd734ea7cccd19cfde36e309dd3b8d19dfccbce9424c3a3d1eaa4837015bf",
+  "src/cp26/diagnostics.py": "37e076c67fc01d4324cca96b5dde2c2a957d061b57c07adb9a1ac57fd0d18fb9",
+  "src/cp26/execution.py": "9b91d8afff93bf14a85b6003debed8186479035b516d3aeeac08edd3fc862374",
+  "src/cp26/fits.py": "2605abe74736ca1d28a8bf64e5a9be1e7f00f538ce07515a6fa649099dd5d9f8",
+  "src/cp26/gates.py": "38076d3ae4a37a32c24433f79d80622cb9a6ef5c9ea40185aef937b9cfd0c234",
+  "src/cp26/harness.py": "a113e21573ba952a6201e4653809d2fcabd6d28fc378665689eec43d30da8763",
+  "src/cp26/inference.py": "2acb53725bc4131a66e1ead5e87c3cf22fd2a38f3e503551a8cfe90f324da7e1",
+  "src/cp26/limits.py": "d1b3143809d3d2edae73c528bf9f98cb23ab774478ebe299da0c0e3cb7f3de0e",
+  "src/cp26/members.py": "56fcf1ba6fad564d1a5b2ac181dedc6cb223956e4467ff99bd32254cdeb668a7",
+  "src/cp26/parity.py": "9f91940318eb00695fa76d2150590af6ef453bf16d0ddfef1a2637e0d655a521",
+  "src/cp26/replay.py": "e7b27f247c142b4254506355b8c26e695a795c20e756ce84d7c196f7517e9c78",
+  "src/cp26/reporting.py": "cd1d6f9d9661183fdde40c791e1a9bec9e0d611036b902774ce179cbbd630ca7",
+  "src/cp26/scoring.py": "9e776a1724aad7337e046ac4d6a8c9ddaf7fb2456e309ccb3bcb9a052a105736",
+  "src/cp26/search.py": "941f9b3fb694c856689740a3675af4ea36e60250d6f39cfd1702e9eb9ae44d84",
+  "src/cp26/state.py": "8c031249c24431d7c145ab81f239a07a7641f97cc8ea45c67394c505d5be9e77",
+  "src/cp26/supervisor.py": "e624b3cc06b0ec8e4dca9ecf51e7580e1fb7877703f08b153d2e8a5b860c3ad9"
+ },
+ "numeric_model_source_unchanged": {
+  "src/cp24/ddnn2.py": "a70cbea6e9533ffb0c4030a8c40b7c6978f9a218f17213c30fbb5c6850827067",
+  "src/cp24/design.py": "585b0673846e0e459eb700be24d12a46554172ee2c52600d86947645a0d03190",
+  "src/cp24/member.py": "d5df1ef4f81a3ce5fe01349588259aa32ce6fd32064581f1c5947822431538ec",
+  "src/cp24/sampler.py": "4c42dd2ba70ca622868d9a19598b04549757bc3756c3ff913e71019aee528200",
+  "src/cp26/members.py": "56fcf1ba6fad564d1a5b2ac181dedc6cb223956e4467ff99bd32254cdeb668a7"
+ },
+ "original_recipe_code_sha256": {
+  "src/cp26/harness.py": "7c5e3c30d9254650654ef79d7c1aa04012684ff3065e468cc3c49da816cdd537",
+  "src/cp26/parity.py": "8a73ff522d0b6958fb751f1f5c7b5b43a2a38ce7ccae4c9111857ecf123cf231",
+  "src/cp26/search.py": "a8bda41a22693f5e0a894618bd6043400138a396129929338ef37458444e4680"
+ },
+ "schema": "cp26-r15-runtime-code-v1",
+ "scientific_base_commit": "1e7eb029f1cbbec6483aea4a7dda0754fd7adf0b",
+ "scope": "Exactly this run and r15 operational amendment. Signed scientific plan/probe keys retain their original recipe identity. New artifacts also carry current operational_lineage; old receipts are never edited."
+}

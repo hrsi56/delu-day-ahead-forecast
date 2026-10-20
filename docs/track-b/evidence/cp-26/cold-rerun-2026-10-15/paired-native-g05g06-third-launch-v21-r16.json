@@ -1,0 +1,57 @@
+{
+ "allocation": "Third independent single-worker native job. Conservative startup headroom includes remaining growth of both starting workers to their observed prior peaks. No native/replay overlap or scientific changes.",
+ "caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-fit-g05g06-noload-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g05g06-noload-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "fit-route",
+  "noload",
+  "2022-09-07",
+  "2024-01-09"
+ ],
+ "complete_growth_projection_sha256": "73a4267f518005381a4d8fad8e1c916ff9693e2a62f04d7a14d5b16a364b97b2",
+ "launched_epoch": 1792195419.584171,
+ "live_admission": {
+  "admission_h": 440.0,
+  "cumulative_actual_h": 138.38919186938483,
+  "hard_actual_h": 500.0,
+  "new_run_actual": {
+   "cumulative_machine_hours": 138.38919186938483,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 73.2270672292619,
+   "measured_seconds": 262225.7886148299,
+   "reported_seconds": 1391.6534105129276,
+   "reserved_seconds": 0.0,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 263617.44202534284
+  },
+  "projected_cumulative_completion_h": 360.217037281878,
+  "status": "PASS"
+ },
+ "memory_admission": {
+  "available_bytes": 4119265280,
+  "hard_aggregate_rss_bytes": 12000000000,
+  "live_worker_rss_bytes": 2659319808,
+  "new_worker_prior_peak_bytes": 1737179136,
+  "pressure_level": "1",
+  "remaining_to_prior_peak_bytes": 1455554560,
+  "soft_margin_bytes": 750000000
+ },
+ "name": "cold-r16-fit-g05g06-noload-1",
+ "pid": 97614,
+ "registered_workers_before": 2,
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

@@ -1,0 +1,24 @@
+{
+  "measured_seconds": 1795.4874371709302,
+  "reported_seconds": 97.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4718.739437170931,
+  "machine_hours": 1.310760954769703,
+  "headroom_hours": 483.6892390452303,
+  "pilot_stop_hours": 388.0,
+  "unreconciled_reserves": [],
+  "repair_seconds_used": 1255.047680753924,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_scope_active": false,
+  "remaining_to_pilot_stop_hours": 386.6892390452303,
+  "peaks": {
+    "rss_bytes": 2362785792,
+    "workers": 2
+  },
+  "counts": {
+    "machine_seconds": 4718.739437170931
+  },
+  "jobs_running": [],
+  "reserve_explanation": "2826 seconds authorized conservative failed-audit reserve; not measured, not reduced; 15.01 lower bound not charged twice",
+  "terminal_bookkeeping_body_seconds": 0.39432520896662027
+}

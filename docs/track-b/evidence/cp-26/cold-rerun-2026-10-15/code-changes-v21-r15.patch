@@ -1,0 +1,592 @@
+diff --git a/scripts/cp26_calibrate.py b/scripts/cp26_calibrate.py
+new file mode 100644
+index 0000000..cecb0a9
+--- /dev/null
++++ b/scripts/cp26_calibrate.py
+@@ -0,0 +1,93 @@
++"""Short real-ledger contention/observer calibration; no model or market-data reads."""
++from pathlib import Path
++import argparse
++import hashlib
++import json
++import os
++import shutil
++import subprocess
++import sys
++import time
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'src'))
++for name in ('OPENBLAS_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'OMP_NUM_THREADS',
++             'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS'):
++    os.environ[name] = '1'
++from cp26.budget import Budget, atomic
++from cp26.gates import RUN_ID, RUN_EVIDENCE
++from cp26.harness import art, continuation_authority
++from cp26.supervisor import register_worker, SUPERVISION_POLICY
++
++LOCAL = art() / 'cold-rerun-2026-10-15/calibration-r15'
++
++
++def worker(path, output):
++    register_worker()
++    budget = Budget(path)
++    rows = []
++    for i in range(8):
++        start = time.perf_counter()
++        budget.resource_read()
++        refresh = time.perf_counter() - start
++        budget.resource_update(lambda state: state['counts'].update(
++            calibration=state['counts'].get('calibration', 0) + 1))
++        sample = budget.last_transaction.copy()
++        budget.event('r15_calibration_only', worker=os.getpid(), sequence=i)
++        rows.append({'refresh_seconds': refresh, 'resource_transaction': sample,
++                     'append_transaction': budget.last_transaction.copy(),
++                     'total_seconds': time.perf_counter() - start})
++    atomic(output, {'pid': os.getpid(), 'rows': rows})
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--worker', type=Path)
++    parser.add_argument('--output', type=Path)
++    args = parser.parse_args()
++    if args.worker:
++        worker(args.worker, args.output)
++        return
++    if os.environ.get('CP26_RUN_ID') != RUN_ID or int(os.environ.get('CP26_WORKERS', '0')) != 4:
++        raise RuntimeError('registered four-slot calibration monitor required')
++    continuation_authority(ROOT)
++    LOCAL.mkdir(parents=True, exist_ok=True)
++    original = Budget().path
++    phases = []
++    for children in (2, 3):
++        copy = LOCAL / f'ledger-{children+1}.json'
++        shutil.copyfile(original, copy)
++        # This copy is a resource fixture, never a second production account.
++        start = time.perf_counter()
++        processes, outputs = [], []
++        for i in range(children):
++            out = LOCAL / f'phase-{children+1}-worker-{i}.json'
++            process = subprocess.Popen([sys.executable, '-B', __file__, '--worker', str(copy),
++                                        '--output', str(out)], cwd=ROOT)
++            processes.append(process)
++            outputs.append(out)
++        for process in processes:
++            if process.wait(timeout=60) != 0:
++                raise RuntimeError('bounded calibration worker failed; no automatic retry')
++        rows = [json.loads(path.read_text()) for path in outputs]
++        phases.append({'actual_process_allocation': children+1, 'outer_reserved_slots': 4,
++            'seconds': time.perf_counter()-start, 'completed_operations': children*16,
++            'workers': rows, 'resource_fixture_bytes': copy.stat().st_size})
++    samples = [row for phase in phases for worker_row in phase['workers'] for row in worker_row['rows']]
++    production = Budget().resource_read()['jobs'][int(os.environ['CP26_JOB_INDEX'])]
++    result = {'schema': 'cp26-r15-calibration-v1', 'run_id': RUN_ID, 'phases': phases,
++        'source_ledger_bytes': original.stat().st_size,
++        'maximum_refresh_seconds': max(r['refresh_seconds'] for r in samples),
++        'maximum_resource_transaction_seconds': max(r['resource_transaction']['total_seconds'] for r in samples),
++        'maximum_append_transaction_seconds': max(r['append_transaction']['total_seconds'] for r in samples),
++        'observer_telemetry': {role: production.get(role+'_ledger_lock_telemetry')
++                               for role in ('supervisor', 'watchdog')},
++        'policy_tested': SUPERVISION_POLICY, 'prior_measured_tail_seconds': .6453919999767095,
++        'models_fit': 0, 'market_data_read': False, 'resource_copy_only': True,
++        'job_id': os.environ['CP26_JOB_ID'], 'job_index': int(os.environ['CP26_JOB_INDEX'])}
++    atomic(ROOT / RUN_EVIDENCE / 'calibration-v21-r15.json', result)
++    print(json.dumps({k: v for k, v in result.items() if k != 'phases'}), flush=True)
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/cp26_rebaseline.py b/scripts/cp26_rebaseline.py
+index b7c4621..64ed0c9 100644
+--- a/scripts/cp26_rebaseline.py
++++ b/scripts/cp26_rebaseline.py
+@@ -32,0 +33 @@ from cp25.guard import redact  # noqa: E402
++from cp26.limits import shutdown_exposure_seconds  # noqa: E402
+@@ -85,0 +87,3 @@ def monitor(args) -> int:
++        if (resource_summary(state)['total_seconds'] + shutdown_exposure_seconds(workers)
++                >= CAPS['machine_seconds']):
++            raise RuntimeError('CP-26 shutdown headroom refuses admission before485hours')
+@@ -277 +281 @@ def dispatch(name: str) -> int:
+-                                  'the 388-hour stop line; Owner resource/protocol decision required')
++                                  'the 436.5-hour cumulative admission line; Owner resource/protocol decision required')
+@@ -279 +283 @@ def dispatch(name: str) -> int:
+-                              'stop_hours': 388, 'searches_priced': 42,
++                              'stop_hours': 436.5, 'searches_priced': 42,
+@@ -302 +306 @@ def dispatch(name: str) -> int:
+-                          'stop_hours': 388, 'searches_priced': 42,
++                          'stop_hours': 436.5, 'searches_priced': 42,
+diff --git a/src/cp26/budget.py b/src/cp26/budget.py
+index a62afb5..5a12127 100644
+--- a/src/cp26/budget.py
++++ b/src/cp26/budget.py
+@@ -3 +3 @@
+-The unchanged ceiling is 485 machine-hours; the pilot stop line is 388 hours.
++The unchanged ceiling is 485 machine-hours; the r15 admission line is 436.5 hours.
+@@ -21,0 +22 @@ from .harness import art
++from .limits import LEDGER_TIMEOUT_SECONDS, shutdown_exposure_seconds
+@@ -30 +31 @@ CAPS = {
+-PILOT_STOP_FRACTION = 0.80
++PILOT_STOP_FRACTION = 0.90
+@@ -90 +91,2 @@ def limit_reason(state: dict) -> str | None:
+-    if total_seconds(state) >= CAPS['machine_seconds']:
++    allocated = sum(j['workers'] for j in state.get('jobs', []) if j.get('running'))
++    if total_seconds(state) + shutdown_exposure_seconds(allocated) >= CAPS['machine_seconds']:
+@@ -115,0 +118,2 @@ def resource_summary(state: dict) -> dict:
++    result['live_shutdown_exposure_seconds'] = shutdown_exposure_seconds(
++        sum(j['workers'] for j in state.get('jobs', []) if j.get('running')))
+@@ -669 +673 @@ class Budget:
+-    def resource_update(self, callback, *, timeout_seconds: float = 0.5, guard=None):
++    def resource_update(self, callback, *, timeout_seconds: float = LEDGER_TIMEOUT_SECONDS, guard=None):
+@@ -681 +685 @@ class Budget:
+-    def append_execution_task(self, proposed, event, *, timeout_seconds: float = 0.5):
++    def append_execution_task(self, proposed, event, *, timeout_seconds: float = LEDGER_TIMEOUT_SECONDS):
+@@ -710 +714 @@ class Budget:
+-    def _resource_update(self, callback, *, timeout_seconds: float = 0.5, guard=None,
++    def _resource_update(self, callback, *, timeout_seconds: float = LEDGER_TIMEOUT_SECONDS, guard=None,
+@@ -876 +880 @@ class Budget:
+-    def update(self, callback, *, timeout_seconds: float = 0.5, guard=None):
++    def update(self, callback, *, timeout_seconds: float = LEDGER_TIMEOUT_SECONDS, guard=None):
+diff --git a/src/cp26/costing.py b/src/cp26/costing.py
+index 1948be6..0d47dbf 100644
+--- a/src/cp26/costing.py
++++ b/src/cp26/costing.py
+@@ -110,2 +110,2 @@ def _protocol(raw: bytes, identity: dict, code: dict):
+-            or pricing.get('ceiling_hours') != 485 or pricing.get('stop_hours') != 388
+-            or CAPS['machine_seconds'] != 485 * 3600 or PILOT_STOP_FRACTION != 0.8):
++            or pricing.get('ceiling_hours') != 485 or pricing.get('stop_hours') not in (388, 436.5)
++            or CAPS['machine_seconds'] != 485 * 3600 or PILOT_STOP_FRACTION != 0.9):
+@@ -119 +119 @@ def _protocol(raw: bytes, identity: dict, code: dict):
+-def _plans(plans, manifest, pilot, protocol, code):
++def _plans(plans, manifest, pilot, protocol, code, recipe_code=None):
+@@ -146 +146,4 @@ def _plans(plans, manifest, pilot, protocol, code):
+-                or any(code.get(path) != sha for path, sha in bound_code.items() if path.startswith('src/cp26/'))):
++                or any(code.get(path) != sha and not (
++                    path in ('src/cp26/harness.py', 'src/cp26/search.py')
++                    and (recipe_code or {}).get(path) == sha)
++                    for path, sha in bound_code.items() if path.startswith('src/cp26/'))):
+@@ -218 +221,2 @@ def price_pilot(state: dict, pilot: dict, *, plans: list[dict], execution_manife
+-                additional_costs: dict, zero_support_overheads: dict | None = None) -> dict:
++                additional_costs: dict, zero_support_overheads: dict | None = None,
++                recipe_code_sha256: dict | None = None) -> dict:
+@@ -227 +231 @@ def price_pilot(state: dict, pilot: dict, *, plans: list[dict], execution_manife
+-    indexed = _plans(plans, execution_manifest, pilot, protocol, code_sha256)
++    indexed = _plans(plans, execution_manifest, pilot, protocol, code_sha256, recipe_code_sha256)
+@@ -289 +293 @@ def require_projection(projection: dict, state: dict) -> dict:
+-    """Executable 388-hour refusal, repriced against all current cumulative charges."""
++    """Executable 436.5-hour refusal, repriced against all cumulative charges."""
+@@ -298 +302 @@ def require_projection(projection: dict, state: dict) -> dict:
+-                          'the 388-hour stop line; Owner resource/protocol decision required')
++                          'the 436.5-hour cumulative admission line; Owner resource/protocol decision required')
+diff --git a/src/cp26/execution.py b/src/cp26/execution.py
+index 83959c0..b12e5d7 100644
+--- a/src/cp26/execution.py
++++ b/src/cp26/execution.py
+@@ -227,0 +228 @@ def _probe(paths, key, run, budget):
++                          'operational_lineage': H.runtime_lineage(paths.root),
+@@ -478,0 +480 @@ def materialize_day(paths, state, day, caches, ensembles, manifest):
++                     'operational_lineage': H.runtime_lineage(paths.root),
+diff --git a/src/cp26/gates.py b/src/cp26/gates.py
+index 0dee635..4c2ab9d 100644
+--- a/src/cp26/gates.py
++++ b/src/cp26/gates.py
+@@ -35 +35,2 @@ def protocol_identity(root: Path) -> dict:
+-    if protocol.get('schema') != 'cp26-execution-protocol-v21-r14' or protocol.get('authority_sha256') != H.PINS[H.AUTHORITY_PATH]:
++    H.continuation_authority(root)
++    if protocol.get('schema') != 'cp26-execution-protocol-v21-r14' or protocol.get('authority_sha256') != H.PINS[H.SCIENTIFIC_AUTHORITY_PATH]:
+@@ -40 +41 @@ def protocol_identity(root: Path) -> dict:
+-    if protocol.get('research_sha256') != H.PINS['capstone_v21.md']:
++    if protocol.get('research_sha256') != H.SCIENTIFIC_ANCHOR_SHA256:
+@@ -57 +58 @@ def protocol_identity(root: Path) -> dict:
+-            'authority_sha256': H.PINS[H.AUTHORITY_PATH],
++            'authority_sha256': H.PINS[H.SCIENTIFIC_AUTHORITY_PATH],
+@@ -78 +79 @@ class ExecutionGate:
+-        from .supervisor import reconcile_running
++        from .supervisor import reconcile_running, LEDGER_TIMEOUT_SECONDS
+@@ -82 +83 @@ class ExecutionGate:
+-            if not state.get('continuation_scope') or state['continuation_scope']['authority_sha256'] != H.PINS[H.AUTHORITY_PATH]:
++            if not state.get('continuation_scope') or state['continuation_scope']['authority_sha256'] != H.PINS[H.SCIENTIFIC_AUTHORITY_PATH]:
+@@ -84 +85,2 @@ class ExecutionGate:
+-        self.budget.resource_update(admit_resources, timeout_seconds=0.5)
++        self.budget.resource_update(admit_resources, timeout_seconds=LEDGER_TIMEOUT_SECONDS)
++        H.runtime_lineage(self.root)
+@@ -122 +124 @@ class ExecutionGate:
+-                              'the 388-hour stop line; Owner resource/protocol decision required')
++                              'the 436.5-hour cumulative admission line; Owner resource/protocol decision required')
+diff --git a/src/cp26/harness.py b/src/cp26/harness.py
+index 98f9a8b..5366a52 100644
+--- a/src/cp26/harness.py
++++ b/src/cp26/harness.py
+@@ -1 +1 @@
+-"""The CP-26 harness (capstone v21-r14 candidate §24.7, "The harness and the parity gate").
++"""The CP-26 harness (capstone v21-r15 §24.7, "The harness and the parity gate").
+@@ -37,0 +38 @@ import subprocess
++from functools import lru_cache
+@@ -55,4 +56,10 @@ BASE_COMMIT = '647d6eb81b2cf6e0cfaf4152f659d689ff973578'   # main at CP-26's iss
+-ANCHOR_COMMIT = '332baeb861cec5a58516c58a29a1a3afe1eec909'  # exact r14 bytes, ratified by continuation delivery
+-AUTHORITY_COMMIT = '815fbb7332ee527b0131cd70688899ea8b1da1b4'
+-AUTHORITY_PATH = 'docs/track-b/evidence/cp-26/continuation-v21-r14/authority.json'
+-CONTINUATION_BRIEF = 'docs/track-b/evidence/cp-26/issued-continuation-brief-v21-r14.md'
++SCIENTIFIC_ANCHOR_COMMIT = '332baeb861cec5a58516c58a29a1a3afe1eec909'
++SCIENTIFIC_ANCHOR_SHA256 = '3be866bd10af02cc2b0b956ed91be660dca29a62c0b23b00997bf0b415d100c5'
++SCIENTIFIC_AUTHORITY_PATH = 'docs/track-b/evidence/cp-26/continuation-v21-r14/authority.json'
++SCIENTIFIC_BRIEF = 'docs/track-b/evidence/cp-26/issued-continuation-brief-v21-r14.md'
++SCIENTIFIC_BASE_COMMIT = '1e7eb029f1cbbec6483aea4a7dda0754fd7adf0b'
++ANCHOR_COMMIT = 'c9d5ab98d590ac9b1958e0ec9efe61a78ffcde7c'
++AUTHORITY_COMMIT = '56736c89a787306cb95de72f04e95955f7938578'
++AUTHORITY_PATH = 'docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/authority-v21-r15.json'
++CONTINUATION_BRIEF = 'docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/issued-admission-calibration-v21-r15.md'
++R15_LINEAGE = 'docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runtime-code-v21-r15.json'
+@@ -62,2 +69,2 @@ PINS = {
+-    AUTHORITY_PATH: '6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db',
+-    CONTINUATION_BRIEF: '3e689e0cc3dda0cacf21103ce76da86ffa429af2c84ed8ce90c2e5417baa5c0c',
++    SCIENTIFIC_AUTHORITY_PATH: '6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db',
++    SCIENTIFIC_BRIEF: '3e689e0cc3dda0cacf21103ce76da86ffa429af2c84ed8ce90c2e5417baa5c0c',
+@@ -65 +72 @@ PINS = {
+-    'capstone_v21.md': '3be866bd10af02cc2b0b956ed91be660dca29a62c0b23b00997bf0b415d100c5',
++    'capstone_v21.md': '490aea3bef90887af1fc3e0776c21eff53b2a155142c4dcf54c0977a27842521',
+@@ -83,0 +91,9 @@ PINS = {
++# This run's original scientific identity is retained, rather than relabelling
++# its signed r14 probes/plans. Active r15 authority is checked independently.
++SCIENTIFIC_PINS = {**PINS, 'capstone_v21.md': SCIENTIFIC_ANCHOR_SHA256}
++PINS.update({
++    AUTHORITY_PATH: 'a07d1b1b32976052da0756ef47a17fa30a9af7ae9ad6ff477305d1a9b09381c4',
++    CONTINUATION_BRIEF: '743721cd6746fefbfe4e2315d3b9c37f5e30e967faa7913b62d609b523b8e444',
++    'docs/track-b/capstone_v21-r14-to-v21-r15-amendments.md':
++        '9e7e87361a7030c14158bb880370acaef52940cd2c76f699a59f47d19c03dc41',
++})
+@@ -99,0 +116,2 @@ HARNESS_LOG = [
++    {'item': 'r15 operational authority', 'landed': 'r14 scientific identity retained in signed plans/probes',
++     'harness': 'Active r15 anchor/Owner authority and436.5h admission are verified separately; current runtime hashes accompany new artifacts. Only operational source/provenance changed; original recipes, seeds and input identities remain frozen.'},
+@@ -231 +249,7 @@ def input_fingerprint(root: Path) -> str:
+-    ident = {'identities': identities(root), 'landed_code': landed_code(root)}
++    current = identities(root)
++    scientific = {name: current[name] for name in SCIENTIFIC_PINS}
++    if git_blob_sha256(root, SCIENTIFIC_ANCHOR_COMMIT, 'capstone_v21.md') != SCIENTIFIC_ANCHOR_SHA256:
++        raise HarnessError('original scientific anchor is not preserved')
++    scientific['capstone_v21.md'] = SCIENTIFIC_ANCHOR_SHA256
++    scientific.update({name: current[name] for name in CP25_READ})
++    ident = {'identities': scientific, 'landed_code': landed_code(root)}
+@@ -234,0 +259,38 @@ def input_fingerprint(root: Path) -> str:
++@lru_cache(maxsize=4)
++def _runtime_record(root: Path) -> dict:
++    path = Path(root) / R15_LINEAGE
++    raw = path.read_bytes()
++    if raw != subprocess.check_output(['git', 'show', f'HEAD:{R15_LINEAGE}'], cwd=root):
++        raise HarnessError('r15 operational lineage must be committed')
++    record = json.loads(raw)
++    if record.get('scientific_base_commit') != SCIENTIFIC_BASE_COMMIT:
++        raise HarnessError('r15 lineage names a different scientific base')
++    return record
++
++
++def recipe_code_sha256(root: Path, name: str) -> str:
++    """Historical recipe identity for three explicitly checked operational edits.
++
++    Actual executed source hashes are retained separately in runtime_lineage;
++    existing probe receipts are never rewritten to imply execution of r15 code.
++    """
++    actual = sha(Path(root) / name)
++    if name not in ('src/cp26/harness.py', 'src/cp26/search.py', 'src/cp26/parity.py'):
++        return actual
++    record = _runtime_record(Path(root))
++    if record['actual_code_sha256'].get(name) != actual:
++        raise HarnessError('operational code changed after compatibility validation: ' + name)
++    return record['original_recipe_code_sha256'][name]
++
++
++def runtime_lineage(root: Path) -> dict:
++    record = _runtime_record(Path(root))
++    for name, expected in record['actual_code_sha256'].items():
++        if sha(Path(root) / name) != expected:
++            raise HarnessError('operational source identity changed: ' + name)
++    return {'authority_document': AUTHORITY_PATH, 'authority_sha256': PINS[AUTHORITY_PATH],
++            'active_anchor_sha256': PINS['capstone_v21.md'],
++            'actual_code_sha256': record['actual_code_sha256'],
++            'scientific_base_commit': SCIENTIFIC_BASE_COMMIT}
++
++
+diff --git a/src/cp26/limits.py b/src/cp26/limits.py
+new file mode 100644
+index 0000000..8273d52
+--- /dev/null
++++ b/src/cp26/limits.py
+@@ -0,0 +1,16 @@
++"""Finite CP-26 operational limits; calibration supersedes historical r14 values."""
++# Prior measured three-worker tail0.645392s;3s permits >4.6x that observation.
++# The short real-ledger calibration must validate these choices before model fits.
++LEDGER_TIMEOUT_SECONDS = 3.0
++HEARTBEAT_TIMEOUT_SECONDS = 8.0
++STARTUP_GRACE_SECONDS = 14.0
++POLL_SECONDS = 0.2
++TERMINATION_GRACE_SECONDS = 5.0
++KILL_CONFIRM_SECONDS = 5.0
++
++
++def shutdown_exposure_seconds(workers: int) -> float:
++    """Uncharged upper tail: detection, lock/poll jitter, termination and closure."""
++    return workers * (HEARTBEAT_TIMEOUT_SECONDS + 2 * LEDGER_TIMEOUT_SECONDS +
++                      2 * POLL_SECONDS + TERMINATION_GRACE_SECONDS +
++                      KILL_CONFIRM_SECONDS + STARTUP_GRACE_SECONDS)
+diff --git a/src/cp26/parity.py b/src/cp26/parity.py
+index d34d244..99f1fb9 100644
+--- a/src/cp26/parity.py
++++ b/src/cp26/parity.py
+@@ -254,2 +254,3 @@ def require_pass(root: Path, *, output: Path | None = None) -> dict:
+-    current = {name: sha(Path(root) / name) for name in report['code_sha256']}
+-    if current != report['code_sha256'] or report.get('input_fingerprint') != H.input_fingerprint(Path(root)):
++    current = {name: H.recipe_code_sha256(Path(root), name) for name in report['code_sha256']}
++    if any(report['code_sha256'][name] not in (value, sha(Path(root) / name))
++           for name, value in current.items()) or report.get('input_fingerprint') != H.input_fingerprint(Path(root)):
+diff --git a/src/cp26/search.py b/src/cp26/search.py
+index 2998221..a3046ac 100644
+--- a/src/cp26/search.py
++++ b/src/cp26/search.py
+@@ -411 +411 @@ def search_identity(root: Path, k: int, route: str) -> dict:
+-            'code_sha256': {name: hashlib.sha256((Path(root) / name).read_bytes()).hexdigest() for name in MODEL_CODE}}
++            'code_sha256': {name: H.recipe_code_sha256(root, name) for name in MODEL_CODE}}
+@@ -508 +508,2 @@ def execute_search(root: Path, plan_path: Path, cache_root: Path, result_path: P
+-                'code_identity': plan['identity']['code_sha256']}
++                'code_identity': plan['identity']['code_sha256'],
++                'operational_lineage': H.runtime_lineage(root)}
+@@ -510,0 +512,2 @@ def execute_search(root: Path, plan_path: Path, cache_root: Path, result_path: P
++    result = _signed({**{key: value for key, value in result.items() if key != 'content_sha256'},
++                      'operational_lineage': H.runtime_lineage(root)})
+diff --git a/src/cp26/supervisor.py b/src/cp26/supervisor.py
+index 9c8c8e2..1c955e1 100644
+--- a/src/cp26/supervisor.py
++++ b/src/cp26/supervisor.py
+@@ -19,0 +20 @@ import time
++from concurrent.futures import ThreadPoolExecutor, wait
+@@ -22,4 +23,2 @@ _SUPERVISOR_BEGAN = time.monotonic()
+-STARTUP_GRACE_SECONDS = 10.0
+-HEARTBEAT_TIMEOUT_SECONDS = 2.0
+-POLL_SECONDS = 0.2
+-LEDGER_TIMEOUT_SECONDS = 0.5
++from .limits import (STARTUP_GRACE_SECONDS, HEARTBEAT_TIMEOUT_SECONDS,
++                     POLL_SECONDS, LEDGER_TIMEOUT_SECONDS)
+@@ -35,0 +35,2 @@ from .budget import Budget, CAPS, CapExceeded, add_seconds, atomic, limit_reason
++from .budget import total_seconds
++from .limits import shutdown_exposure_seconds
+@@ -487,0 +489,50 @@ def tick(budget: Budget, index: int, job_id: str, wall: float, rss: int,
++def observer_tick(budget, snapshot, known, *, sample_role, wall, rss, **updates):
++    """Keep direct ownership/time/RSS enforcement live while the ledger refreshes.
++
++    The one I/O thread does no fitting. Its finite transaction is still exactly
++    the normal tick; independent checks never acquire the ledger lock. Workers
++    are stopped before waiting for an in-flight accounting operation to finish.
++    """
++    state = _resource_state(budget)
++    early_reason = None
++    with ThreadPoolExecutor(max_workers=1) as writer:
++        future = writer.submit(tick, budget, snapshot['job_index'], snapshot['job_id'],
++                               wall, rss, sample_role=sample_role, **updates)
++        while not future.done():
++            root = snapshot.get('child_identity')
++            if root is not None:
++                members = worker_members(snapshot['worker_pgid'], root, known)
++                for identity in members:
++                    known[(identity['pid'], identity['create_time'])] = identity
++            live_rss, uncharged, allocation = 0, 0., 0
++            now = time.monotonic()
++            for job in state['jobs']:
++                if not job['running']:
++                    continue
++                allocation += job['workers']
++                began = job.get('accounting_began_monotonic')
++                if _finite(began):
++                    uncharged += max(0., now - began - job['charged_wall_seconds']) * job['workers']
++                identities = { (i['pid'], i['create_time']): i for i in
++                    [job.get('child_identity'), *job.get('worker_identities', []),
++                     job.get('monitor_identity'), job.get('supervisor_identity'),
++                     job.get('watchdog_identity')] if i is not None }
++                if job['job_id'] == snapshot['job_id']:
++                    identities.update(known)
++                live_rss += identities_rss(list(identities.values()))
++            if total_seconds(state) + uncharged + shutdown_exposure_seconds(allocation) >= CAPS['machine_seconds']:
++                early_reason = 'machine_hours_cap'
++            elif live_rss >= CAPS['rss_bytes']:
++                early_reason = 'aggregate_memory_cap'
++            peer = 'watchdog' if sample_role == 'supervisor' else 'supervisor'
++            if identity_status(snapshot.get(peer + '_identity')) != 'same':
++                early_reason = early_reason or peer + '_identity_lost'
++            if early_reason:
++                if root is not None:
++                    terminate_workers(snapshot['worker_pgid'], root, known)
++                break
++            wait([future], timeout=POLL_SECONDS)
++        result = future.result()
++    return early_reason or result
++
++
+@@ -624 +675 @@ def watchdog_run(request_path: Path) -> int:
+-            reason = tick(budget, index, job_id, wall, rss, sample_role='watchdog',
++            reason = observer_tick(budget, snapshot, known, wall=wall, rss=rss, sample_role='watchdog',
+@@ -869 +920,2 @@ def run(request_path: Path) -> int:
+-                cap_reason = tick(budget, index, job_id, wall, rss, sample_role='supervisor',
++                cap_reason = observer_tick(budget, _job(_resource_state(budget), index, job_id), known,
++                                  wall=wall, rss=rss, sample_role='supervisor',
+diff --git a/tests/test_cp26_costing.py b/tests/test_cp26_costing.py
+index e16b4aa..3e0b3ad 100644
+--- a/tests/test_cp26_costing.py
++++ b/tests/test_cp26_costing.py
+@@ -202,2 +202,2 @@ def test_projection_gate_actually_raises_and_reprices_new_ledger_charges(evidenc
+-    B.add_seconds(evidence['state'], 388 * B.HOUR, 'reported')
+-    with pytest.raises(B.CapExceeded, match='388-hour stop line'):
++    B.add_seconds(evidence['state'], 436.5 * B.HOUR, 'reported')
++    with pytest.raises(B.CapExceeded, match='436.5-hour cumulative admission line'):
+@@ -208 +208 @@ def test_expensive_projection_is_retained_before_gate_refuses(evidence, tmp_path
+-    evidence['additional_costs']['bootstrap'] = basis('registered bootstrap upper bound', 388 * B.HOUR)
++    evidence['additional_costs']['bootstrap'] = basis('registered bootstrap upper bound', 436.5 * B.HOUR)
+diff --git a/tests/test_cp26_execution.py b/tests/test_cp26_execution.py
+index ec28614..ea1b1b5 100644
+--- a/tests/test_cp26_execution.py
++++ b/tests/test_cp26_execution.py
+@@ -84,0 +85 @@ def authorized(monkeypatch):
++    monkeypatch.setattr(H, 'runtime_lineage', lambda root: {'synthetic-operational-provenance': True})
+diff --git a/tests/test_cp26_gates.py b/tests/test_cp26_gates.py
+index 69274cf..125745b 100644
+--- a/tests/test_cp26_gates.py
++++ b/tests/test_cp26_gates.py
+@@ -23 +23 @@ def test_prepare_admission_reconciles_through_resource_api_without_history_lock(
+-    authority = G.H.PINS[G.H.AUTHORITY_PATH]
++    authority = G.H.PINS[G.H.SCIENTIFIC_AUTHORITY_PATH]
+@@ -28,0 +29,2 @@ def test_prepare_admission_reconciles_through_resource_api_without_history_lock(
++    monkeypatch.setenv('CP26_RUN_ID', G.RUN_ID)
++    monkeypatch.setattr(G.H, 'runtime_lineage', lambda root: {'synthetic': True})
+@@ -57 +59 @@ def test_cli_project_persists_refused_estimate_and_stops_execution(driver, monke
+-    searches[0]['machine_seconds'] = 388 * B.HOUR
++    searches[0]['machine_seconds'] = 436.5 * B.HOUR
+@@ -77 +79 @@ def test_cli_project_persists_refused_estimate_and_stops_execution(driver, monke
+-    with pytest.raises(B.CapExceeded, match='388-hour stop line'):
++    with pytest.raises(B.CapExceeded, match='436.5-hour cumulative admission line'):
+@@ -162,3 +164,3 @@ def test_project_retry_reuses_frozen_identity_and_reprices_live_ledger(driver, t
+-    state['counts']['machine_seconds'] = 388 * B.HOUR
+-    state['accounting']['measured_seconds'] = 388 * B.HOUR
+-    with pytest.raises(B.CapExceeded, match='388-hour stop line'):
++    state['counts']['machine_seconds'] = 436.5 * B.HOUR
++    state['accounting']['measured_seconds'] = 436.5 * B.HOUR
++    with pytest.raises(B.CapExceeded, match='436.5-hour cumulative admission line'):
+diff --git a/tests/test_cp26_monitor.py b/tests/test_cp26_monitor.py
+index bfd4b0c..15672d4 100644
+--- a/tests/test_cp26_monitor.py
++++ b/tests/test_cp26_monitor.py
+@@ -240 +240 @@ def test_projection_prices_42_searches_and_every_prior_classification():
+-    expensive[0]['machine_seconds'] = 388 * B.HOUR
++    expensive[0]['machine_seconds'] = 436.5 * B.HOUR
+diff --git a/tests/test_cp26_r15.py b/tests/test_cp26_r15.py
+new file mode 100644
+index 0000000..5ffd5d6
+--- /dev/null
++++ b/tests/test_cp26_r15.py
+@@ -0,0 +1,86 @@
++"""Small checks for r15 admission, shutdown headroom and operational-only lineage."""
++import ast
++import copy
++import subprocess
++from pathlib import Path
++
++from cp26 import budget as B
++from cp26 import harness as H
++from cp26.limits import shutdown_exposure_seconds
++
++
++def resource_state(seconds):
++    return {'counts': {'machine_seconds': seconds}, 'accounting': {
++        'measured_seconds': seconds, 'reported_seconds': 0., 'reserved_seconds': 0.},
++        'jobs': [], 'peaks': {}, 'reserves': []}
++
++
++def test_r15_boundary_is436point5_cumulative_and485_actual():
++    searches = [{'run': r, 'k': k, 'classification': 'conservative', 'basis': 'fixture',
++                 'machine_seconds': 1.} for r in ('nominal', 'noload', 'gfs6') for k in range(14)]
++    remaining = {k: {'classification': 'conservative', 'basis': 'fixture', 'machine_seconds': 1.}
++                 for k in ('daily_fits', 'parity', 'tests', 'bootstrap', 'diagnostics', 'failed_jobs_and_resume')}
++    state = resource_state(436.5 * 3600 - 48.)
++    assert B.projected_cost(state, searches, remaining)['within_pilot_stop']
++    B.add_seconds(state, 1.)
++    assert not B.projected_cost(state, searches, remaining)['within_pilot_stop']
++    assert B.CAPS['machine_seconds'] == 485 * 3600 and B.PILOT_STOP_FRACTION == .9
++
++
++def test_shutdown_exposure_is_reserved_headroom_not_another_charge():
++    state = resource_state(B.CAPS['machine_seconds'] - 100.)
++    state['jobs'] = [{'running': True, 'workers': 4}]
++    before = copy.deepcopy(state)
++    assert shutdown_exposure_seconds(4) > 100
++    assert B.limit_reason(state) == 'machine_hours_cap'
++    assert state == before and B.total_seconds(state) < B.CAPS['machine_seconds']
++    state['jobs'][0]['running'] = False
++    assert B.limit_reason(state) is None
++
++
++class StripOperationalMetadata(ast.NodeTransformer):
++    def visit_Dict(self, node):
++        self.generic_visit(node)
++        pairs = [(k, v) for k, v in zip(node.keys, node.values)
++                 if not isinstance(k, ast.Constant) or k.value != 'operational_lineage']
++        node.keys, node.values = [p[0] for p in pairs], [p[1] for p in pairs]
++        return node
++
++
++def test_original_numeric_functions_are_unchanged_by_r15():
++    root = Path(__file__).resolve().parents[1]
++    skip = {'harness': {'input_fingerprint'}, 'search': {'search_identity', 'execute_search'},
++            'parity': {'require_pass'}, 'execution': set()}
++    for module, omitted in skip.items():
++        path = f'src/cp26/{module}.py'
++        old = ast.parse(subprocess.check_output(['git', 'show', H.SCIENTIFIC_BASE_COMMIT + ':' + path], cwd=root))
++        new = ast.parse((root / path).read_text())
++        old_functions = {n.name: n for n in old.body if isinstance(n, (ast.FunctionDef, ast.ClassDef))}
++        new_functions = {n.name: n for n in new.body if isinstance(n, (ast.FunctionDef, ast.ClassDef))}
++        for name, node in old_functions.items():
++            if name in omitted:
++                continue
++            assert ast.dump(StripOperationalMetadata().visit(node), include_attributes=False) == ast.dump(
++                StripOperationalMetadata().visit(new_functions[name]), include_attributes=False), (module, name)
++        if module == 'search':
++            def evaluator(tree):
++                outer = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'execute_search')
++                return next(n for n in outer.body if isinstance(n, ast.FunctionDef) and n.name == 'evaluate')
++            assert ast.dump(StripOperationalMetadata().visit(evaluator(old))) == ast.dump(
++                StripOperationalMetadata().visit(evaluator(new)))
++
++
++def test_r15_authority_does_not_relabel_scientific_plan_or_parity():
++    from cp26.gates import protocol_identity, OUTPUT
++    from cp26.execution import _read
++    from cp26.parity import require_pass
++    from cp26.search import search_identity
++    root = Path(__file__).resolve().parents[1]
++    assert H.continuation_authority(root)['anchor_commit'] == H.ANCHOR_COMMIT
++    manifest = _read(root / OUTPUT / 'execution-manifest.json')
++    assert manifest['protocol_identity'] == protocol_identity(root)
++    assert manifest['input_fingerprint'] == H.input_fingerprint(root)
++    plan = _read(root / OUTPUT / 'search-plans/nominal/k13.json')
++    assert plan['identity'] == search_identity(root, 13, 'nominal')
++    assert len(require_pass(root, output=OUTPUT / 'parity.json')['checks']) == 96
++    assert H.runtime_lineage(root)['active_anchor_sha256'] == H.PINS['capstone_v21.md']
+diff --git a/tests/test_cp26_supervision.py b/tests/test_cp26_supervision.py
+index 577bebf..6b07768 100644
+--- a/tests/test_cp26_supervision.py
++++ b/tests/test_cp26_supervision.py
+@@ -60 +60,2 @@ def test_startup_grace_reserves_workers_only_and_expires():
+-        S.reconcile_running({'jobs': [job]}, status=lambda identity: 'same' if identity else 'unknown', now=111.0)
++        S.reconcile_running({'jobs': [job]}, status=lambda identity: 'same' if identity else 'unknown',
++                            now=100.0 + S.STARTUP_GRACE_SECONDS + 1.0)
+@@ -155,0 +157 @@ def test_stopped_watchdog_is_detected_by_supervisor(tmp_path):
++        began = time.monotonic()
+@@ -157 +159,2 @@ def test_stopped_watchdog_is_detected_by_supervisor(tmp_path):
+-        proc.wait(timeout=12)
++        from cp26.limits import shutdown_exposure_seconds
++        proc.wait(timeout=shutdown_exposure_seconds(1))
+@@ -160 +163,8 @@ def test_stopped_watchdog_is_detected_by_supervisor(tmp_path):
+-        assert terminal['abort_reason'] == 'watchdog_heartbeat_stale'
++        # SIGSTOP can catch the watchdog while it owns flock. In that case
++        # the independent monitor retires both stale accounting writers.
++        assert ('watchdog_heartbeat_stale' in terminal['abort_reason']
++                or 'ledger accounting lock did not progress' in terminal['abort_reason'])
++        assert time.monotonic() - began <= shutdown_exposure_seconds(1)
++        receipt = json.loads(Path(terminal['completion_clock']).read_text())
++        assert receipt['completion_issuer'] in ('supervisor', 'monitor')
++        assert receipt['completion_issuer_identity'] == terminal[receipt['completion_issuer'] + '_identity']

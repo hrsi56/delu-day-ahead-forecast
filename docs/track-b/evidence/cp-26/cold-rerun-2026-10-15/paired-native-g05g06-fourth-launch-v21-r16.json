@@ -1,0 +1,71 @@
+{
+ "allocation": "Fourth independent single-worker native job on the next disjoint nominal window. First two workers have completed native dates; headroom includes any remaining startup growth of the third. Four slots in total, no computing coordinator, no replay overlap, unchanged scientific recipes/seeds/cadence.",
+ "caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-fit-g06-nominal-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g06-nominal-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "fit-route",
+  "nominal",
+  "2023-05-10",
+  "2024-01-09"
+ ],
+ "complete_growth_projection_sha256": "73a4267f518005381a4d8fad8e1c916ff9693e2a62f04d7a14d5b16a364b97b2",
+ "launched_epoch": 1792195521.923316,
+ "live_admission": {
+  "admission_h": 440.0,
+  "cumulative_actual_h": 138.47398282007902,
+  "hard_actual_h": 500.0,
+  "new_run_actual": {
+   "cumulative_machine_hours": 138.47398282007902,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 73.31185817995606,
+   "measured_seconds": 262531.0360373289,
+   "reported_seconds": 1391.6534105129276,
+   "reserved_seconds": 0.0,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 263922.68944784184
+  },
+  "projected_cumulative_completion_h": 360.3018282325722,
+  "status": "PASS"
+ },
+ "memory_admission": {
+  "active_observations": {
+   "cold-r16-fit-g05-nominal-1": {
+    "native_ready_days": 2,
+    "rss_bytes": 783056896
+   },
+   "cold-r16-fit-g05g06-gfs6-1": {
+    "native_ready_days": 2,
+    "rss_bytes": 626016256
+   },
+   "cold-r16-fit-g05g06-noload-1": {
+    "native_ready_days": 0,
+    "rss_bytes": 1304887296
+   }
+  },
+  "available_bytes": 3529523200,
+  "hard_aggregate_rss_bytes": 12000000000,
+  "live_worker_rss_bytes": 2713960448,
+  "new_worker_prior_peak_bytes": 2144157696,
+  "pressure_level": "1",
+  "remaining_noload_startup_to_prior_peak_bytes": 432291840,
+  "soft_margin_bytes": 750000000
+ },
+ "name": "cold-r16-fit-g06-nominal-1",
+ "pid": 98021,
+ "registered_workers_before": 3,
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

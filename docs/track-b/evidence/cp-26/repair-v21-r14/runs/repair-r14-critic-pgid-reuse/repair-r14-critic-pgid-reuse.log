@@ -1,0 +1,17 @@
+# CP-26 supervised job repair-r14-critic-pgid-reuse; workers=1
+Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+    S.terminate_group(10001)
+    ~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-c1e46/src/cp26/supervisor.py", line 265, in terminate_group
+    if group_members(pgid):
+       ~~~~~~~~~~~~~^^^^^^
+  File "/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/unittest/mock.py", line 1236, in _execute_mock_call
+    result = next(effect)
+StopIteration

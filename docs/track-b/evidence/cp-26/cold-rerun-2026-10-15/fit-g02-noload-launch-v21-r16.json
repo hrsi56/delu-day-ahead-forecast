@@ -1,0 +1,40 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-fit-g02-noload-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g02-noload-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+  "fit-route",
+  "noload",
+  "2020-09-02",
+  "2021-05-04"
+ ],
+ "continuity": "Existing cold-run namespace; no replay/state reset or successful fit rerun.",
+ "group": {
+  "first": "2020-09-02",
+  "origins": 245,
+  "through": "2021-05-04"
+ },
+ "launched_epoch": 1792142864.955113,
+ "pid": 67500,
+ "prerequisite": {
+  "noload_prior_native_days": 245,
+  "noload_prior_phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-c06e1797474c4133cb7532f99d524b920f9b33100a87a8665fcfb9c0ae3b5310.json",
+  "noload_prior_phase_sha256": "8a5ee809cad4ae5ca1937d1b1c8f2a037b7d83b81b12a22b850a15b74362d9a3",
+  "released_slot_exit_code": 0,
+  "released_slot_job_id": "74c69fcc69524bd2ac796bc55e485de9"
+ },
+ "registered_workers_before": 3,
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

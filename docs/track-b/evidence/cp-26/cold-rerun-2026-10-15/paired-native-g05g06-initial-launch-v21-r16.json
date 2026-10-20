@@ -1,0 +1,137 @@
+{
+ "caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "complete_growth_projection_sha256": "73a4267f518005381a4d8fad8e1c916ff9693e2a62f04d7a14d5b16a364b97b2",
+ "fourth_pending": {
+  "first": "2023-05-10",
+  "group": 6,
+  "origins": 245,
+  "route": "nominal",
+  "through": "2024-01-09"
+ },
+ "initial_three_worker_preflight": {
+  "admitted": false,
+  "native_jobs_dispatched": 0,
+  "reason": "The conservative three-worker startup predicate required5852053504+750000000bytes of available headroom and was not met. A subsequent lightweight observation was6471581696bytes at normal pressure. Start two, then admit remaining workers from actual headroom."
+ },
+ "initial_workers": 2,
+ "launches": [
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g05-nominal-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g05-nominal-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+    "fit-route",
+    "nominal",
+    "2022-09-07",
+    "2023-05-09"
+   ],
+   "launched_epoch": 1792195310.9701078,
+   "name": "cold-r16-fit-g05-nominal-1",
+   "pid": 97028,
+   "requested_workers": 1,
+   "window": {
+    "first": "2022-09-07",
+    "group": 5,
+    "origins": 245,
+    "route": "nominal",
+    "through": "2023-05-09"
+   }
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g05g06-gfs6-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g05g06-gfs6-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+    "fit-route",
+    "gfs6",
+    "2022-09-07",
+    "2024-01-09"
+   ],
+   "launched_epoch": 1792195310.9722722,
+   "name": "cold-r16-fit-g05g06-gfs6-1",
+   "pid": 97029,
+   "requested_workers": 1,
+   "window": {
+    "first": "2022-09-07",
+    "groups": [
+     5,
+     6
+    ],
+    "origins": 490,
+    "route": "gfs6",
+    "through": "2024-01-09"
+   }
+  }
+ ],
+ "live_admission": {
+  "actual_hard_h": 500.0,
+  "admission_h": 440.0,
+  "cumulative_actual_h": 138.32971525267178,
+  "new_run_actual": {
+   "cumulative_machine_hours": 138.32971525267178,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 73.16759061254885,
+   "measured_seconds": 262011.67279466288,
+   "reported_seconds": 1391.6534105129276,
+   "reserved_seconds": 0.0,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 263403.32620517584
+  },
+  "projected_cumulative_completion_h": 360.15756066516497,
+  "status": "PASS"
+ },
+ "memory_admission": {
+  "available_bytes_before": 6216744960,
+  "hard_aggregate_rss_bytes": 12000000000,
+  "historical_single_job_peaks": {
+   "gfs6": 1970716672,
+   "noload": 1737179136,
+   "nominal": 2144157696
+  },
+  "pressure_level": "1",
+  "soft_startup_margin_bytes": 750000000,
+  "sum_prior_single_job_peak_bytes": 4114874368
+ },
+ "policy": "Two independent one-worker native jobs start immediately; admit no-load then fourth disjoint nominal when actual normal pressure/headroom permit. Existing finite windows/source/input/protocol/seeds unchanged; tested empty-key cache codec applies. Exclusive chronological replay retains group5/group6 boundaries after native jobs close. No computing coordinator, new scheduler or accounting mechanism.",
+ "pricing_job": {
+  "clock_sha256": "2601b57c8849b0ad5347fbeb9d96bd284f94ce34e92d0c72ce9e187ab34130d8",
+  "exit_code": 0,
+  "job_id": "211a647633284e489acdc77f5fa586ec",
+  "job_index": 397,
+  "wall_seconds": 22.57545216602739
+ },
+ "replay_prerequisite_phase_sha256": "d01da2e1afb4f684cb0158103d4be42eaac933523f1fd3ddf48cbf15a7df86cf",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "third_pending": {
+  "first": "2022-09-07",
+  "groups": [
+   5,
+   6
+  ],
+  "origins": 490,
+  "route": "noload",
+  "through": "2024-01-09"
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "pid": 90254,
+  "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r15-pilot-gfs6-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/cold-r15-pilot-gfs6-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-completion-v21-r15.py",
+    "--pair",
+    "gfs6:13"
+  ],
+  "launched_epoch": 1792106991.108663,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "initial_probes": 1013
+}

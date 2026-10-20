@@ -1,0 +1,48 @@
+{
+ "abort_reason": null,
+ "admission": "PASS",
+ "charge_occurrences": 1,
+ "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-observation-import-45.425.8fa65b17f757436f9e9f7fbc3a325cf5.clock.json",
+ "clock_sha256": "4e6a17342a31af35ed28403910274368d5ec461e7cc058360dd1cfd2b23292df",
+ "content_sha256": "13bd622f044b4aeaf86ec2f6e153b9e6643e2f1bc2810b87a7a88dc2669c3c41",
+ "cumulative_h": 170.09957176985952,
+ "exit_code": 0,
+ "healthy_native_jobs_after_canonical_import": [
+  {
+   "job_id": "190ee23d827149708a4bb2fd4cc91062",
+   "job_index": 418,
+   "name": "cold-r16-fit-g07g08-noload-1",
+   "observed_epoch": 1792233557.0163279,
+   "request_sha256": "87622e7d0b5313b49753a3b392736b711813f86d2ea5d37656c245cdd4d39542"
+  },
+  {
+   "job_id": "34c0d7c5f9f8455e9a1c788fc731b3ce",
+   "job_index": 424,
+   "name": "cold-r16-fit-g07g08-gfs6-1",
+   "observed_epoch": 1792233557.056289,
+   "request_sha256": "6f500daeb5bbe2dec7a75ed097e1dd88463ad1bcffadec1ac3fe17487ae96c83"
+  }
+ ],
+ "job_id": "8fa65b17f757436f9e9f7fbc3a325cf5",
+ "job_index": 425,
+ "native_observer_timeouts": 0,
+ "new_run": {
+  "cumulative_machine_hours": 170.09957176985952,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 104.93744712973658,
+  "measured_seconds": 375583.67676974984,
+  "reported_seconds": 1694.1365319268396,
+  "reserved_seconds": 496.9963653750019,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 377774.8096670517
+ },
+ "peak_rss_bytes": 1344782336,
+ "projected_cumulative_h": 392.0420838490193,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close.json",
+ "projection_sha256": "186012b016f920c3b647ef09e87ec8520714eb7dd8f810ce738528a40c27afc8",
+ "reported_seconds": 10.960058335773638,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "One necessary existing-accounting import during the free native boundary. No full canonical accountant overlapped three native fits.",
+ "status": "PASS_EXACTLY_ONCE_ACCOUNTING_AT_TWO_NATIVE_BOUNDARY",
+ "wall_seconds": 7.5638242500135675
+}

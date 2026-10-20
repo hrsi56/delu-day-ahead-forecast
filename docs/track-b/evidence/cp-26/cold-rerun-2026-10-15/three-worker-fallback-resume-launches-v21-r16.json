@@ -1,0 +1,88 @@
+{
+ "allocation_ceiling_native_workers": 3,
+ "caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "initial_workers": 2,
+ "launches": [
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g05-nominal-2",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g05-nominal-2.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+    "fit-route",
+    "nominal",
+    "2022-09-07",
+    "2023-05-09"
+   ],
+   "launched_epoch": 1792200839.891205,
+   "name": "cold-r16-fit-g05-nominal-2",
+   "pid": 7760,
+   "requested_workers": 1
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g05g06-gfs6-2",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g05g06-gfs6-2.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+    "fit-route",
+    "gfs6",
+    "2022-09-07",
+    "2024-01-09"
+   ],
+   "launched_epoch": 1792200839.8933,
+   "name": "cold-r16-fit-g05g06-gfs6-2",
+   "pid": 7761,
+   "requested_workers": 1
+  }
+ ],
+ "live_admission": {
+  "admission_h": 440.0,
+  "cumulative_actual_h": 143.9179308912247,
+  "hard_h": 500.0,
+  "new_run_actual": {
+   "cumulative_machine_hours": 143.9179308912247,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 78.75580625110175,
+   "measured_seconds": 282055.6918561219,
+   "reported_seconds": 1465.210647844424,
+   "reserved_seconds": 0.0,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 283520.9025039663
+  },
+  "projected_cumulative_h": 365.7457763037179,
+  "status": "PASS"
+ },
+ "memory": {
+  "available_bytes": 6800375808,
+  "pressure_level": "1",
+  "soft_margin_bytes": 750000000,
+  "two_worker_prior_peak_bytes": 4322803712
+ },
+ "policy": "Same registered windows, inputs, model and serving-ensemble identities/seeds. Valid saved success/failure caches loaded unchanged; only missing entries fit. Start two for bounded cold-start headroom, add no-load under measured headroom, then reserve the fourth slot for one accounting check. Second nominal window stays queued until a native slot closes. No limits/core code/run-counter changes.",
+ "preservation_reference_sha256": "969aeb5af2eb718ae58cdde61845c4c13ab053c9ac725430d6635c0322a460f4",
+ "preserved_cache_hashes_verified": 2290,
+ "queued_fourth_window": "cold-r16-fit-g06-nominal-2",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "third_pending": "cold-r16-fit-g05g06-noload-2"
+}

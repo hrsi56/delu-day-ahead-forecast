@@ -1,0 +1,29 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/forecast-v21-r15.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r15-complete-forecast-1.365.ab8769fda6a94bd18a5e9dd623c531cf.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "ab8769fda6a94bd18a5e9dd623c531cf",
+ "job_index": 365,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/cold-r15-complete-forecast-1.log",
+ "monitor_identity": {
+  "create_time": 1792107297.88273,
+  "pid": 91402
+ },
+ "name": "cold-r15-complete-forecast-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r15-complete-forecast-1.365.ab8769fda6a94bd18a5e9dd623c531cf.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792107298.7077382,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 8.0,
+  "ledger_timeout_seconds": 3.0,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 14.0
+ },
+ "workers": 1
+}

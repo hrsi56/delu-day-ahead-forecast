@@ -1,0 +1,52 @@
+{
+ "available_bytes": 5674844160,
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/raw-kernel-ctime-v21-r16.py",
+  "--sha",
+  "76b64ab46a8e129177bb0ab250891646dc0cbe251f2864b31f93b98a905ad30f",
+  "script",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-two-native-pricing-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-two-native-pricing-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/raw-kernel-ctime-v21-r16.py",
+  "--sha",
+  "76b64ab46a8e129177bb0ab250891646dc0cbe251f2864b31f93b98a905ad30f",
+  "script",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/quiescent-exit-v21-r16.py",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/price-two-native-v21-r16.py",
+  "g05g06",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/observation-batch49-charge.json"
+ ],
+ "content_sha256": "1da1a84be3d6deca8847cecec69ab07e514a2981309145dc5ba334d1bb877207",
+ "cumulative_h_before_launch": 186.09777527243,
+ "guards_unchanged": true,
+ "memory_pressure": "1",
+ "monitor_pid": 22888,
+ "name": "cold-r16-two-native-pricing-1",
+ "native_jobs": [
+  {
+   "job_id": "36d11bae461c4116bf6210bd8fc7c42f",
+   "name": "cold-r16-fit-g09g10-noload-1"
+  }
+ ],
+ "planning_peak_bytes": 1975635968,
+ "policy_sha256": "ee48e153e53b7db5cff3bc45ef51270c7bfdc1d2f6925a16f35298bce6c40c95",
+ "prelaunch_complete_projection_with_restart_h": 409.59739891168107,
+ "projection_required_before_next_scientific_dispatch": true,
+ "reported_metadata_seconds": 45.60161632851688,
+ "reported_payload_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/observation-batch49-charge.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "soft_margin_bytes": 750000000,
+ "status": "LAUNCHED",
+ "stop_sha256": "12b45b0964e0c1eaa3c58b6bba1b850997c48be4f5a5268dc008fec54e6ccfce"
+}

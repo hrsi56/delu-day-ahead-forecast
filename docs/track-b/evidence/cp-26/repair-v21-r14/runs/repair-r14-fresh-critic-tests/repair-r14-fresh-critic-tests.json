@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "repair-r14-fresh-critic-tests",
+ "job_id": "3d7ba9521adf43779b6ab407007336b9",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-fresh-critic-tests.log",
+ "machine_hours_cumulative": 1.3083797122580512,
+ "peak_rss_bytes": 1578385408,
+ "resources": {
+  "headroom_hours": 483.6916202877419,
+  "machine_hours": 1.3083797122580512,
+  "measured_seconds": 1787.9149641289841,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 34753.52479228802,
+  "repair_seconds_used": 1246.4752077119779,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4710.166964128985,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 40.33212904102402
+}

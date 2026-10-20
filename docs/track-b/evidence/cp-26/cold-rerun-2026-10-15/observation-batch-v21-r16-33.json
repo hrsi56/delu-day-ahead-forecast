@@ -1,0 +1,9 @@
+{
+ "charge_id": "cold-r16-observation-batch-33",
+ "seconds": 21.146554955444273,
+ "source": {
+  "basis": "Measured read-only progress/resource observations following batch32 during the sustained four-native-worker batch. Interpreter startup0.1second bound per sample or larger tool wall; importer runtime plus5second closing bound. Idle waits excluded; all four native workers remain charged exclusively through their independent supervisors.",
+  "external_observation_seconds": 14.507752913446142,
+  "run_id": "cp26-cold-rerun-2026-10-15-01"
+ }
+}

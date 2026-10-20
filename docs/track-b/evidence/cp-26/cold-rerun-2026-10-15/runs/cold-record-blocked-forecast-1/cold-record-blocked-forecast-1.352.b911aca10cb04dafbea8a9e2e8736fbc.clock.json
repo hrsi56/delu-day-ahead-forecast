@@ -1,0 +1,96 @@
+{
+ "abort_reason": null,
+ "child_identity": {
+  "create_time": 1792082870.186269,
+  "pid": 57034
+ },
+ "completion_issuer": "supervisor",
+ "completion_issuer_identity": {
+  "create_time": 1792082868.016009,
+  "pid": 57031
+ },
+ "ended_epoch": 1792082873.1009321,
+ "ending_error": null,
+ "exit_code": 0,
+ "group_empty": true,
+ "job_id": "b911aca10cb04dafbea8a9e2e8736fbc",
+ "job_index": 352,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.00015637499745935202,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.0077300420962274075,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.011196292005479336,
+  "peak_wait_seconds": 0.00010554201435297728,
+  "read_bytes": 8563907,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.007795750047080219,
+  "transactions": 23,
+  "wait_seconds": 6.341596599668264e-05,
+  "written": true,
+  "written_bytes": 8563909
+ },
+ "peak_rss_bytes": 1226489856,
+ "request_sha256": "129400b0dad52c6da53ac4f50f5b7b53f2d16748de334aa88593487ea75e5dff",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792082867.846415,
+ "supervisor_identity": {
+  "create_time": 1792082868.016009,
+  "pid": 57031
+ },
+ "wall_seconds": 5.05958741705399,
+ "watchdog_identity": {
+  "create_time": 1792082869.023733,
+  "pid": 57032
+ },
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1792082870.186269,
+   "pid": 57034
+  },
+  {
+   "create_time": 1792082872.154745,
+   "pid": 57058
+  },
+  {
+   "create_time": 1792082872.342709,
+   "pid": 57074
+  },
+  {
+   "create_time": 1792082872.382328,
+   "pid": 57077
+  },
+  {
+   "create_time": 1792082872.573453,
+   "pid": 57095
+  },
+  {
+   "create_time": 1792082872.586438,
+   "pid": 57096
+  },
+  {
+   "create_time": 1792082872.613164,
+   "pid": 57098
+  },
+  {
+   "create_time": 1792082872.625918,
+   "pid": 57099
+  },
+  {
+   "create_time": 1792082872.826521,
+   "pid": 57100
+  },
+  {
+   "create_time": 1792082872.845245,
+   "pid": 57101
+  }
+ ],
+ "worker_pgid": 57034,
+ "workers": 1,
+ "workers_stopped": true
+}

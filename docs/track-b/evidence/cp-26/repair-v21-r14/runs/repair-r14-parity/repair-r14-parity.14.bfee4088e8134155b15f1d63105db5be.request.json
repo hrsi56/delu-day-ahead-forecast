@@ -1,0 +1,24 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "job",
+  "parity"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "bfee4088e8134155b15f1d63105db5be",
+ "job_index": 14,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-parity.log",
+ "monitor_identity": {
+  "create_time": 1791912151.65103,
+  "pid": 48491
+ },
+ "name": "repair-r14-parity",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791912153.1226938,
+ "workers": 1
+}

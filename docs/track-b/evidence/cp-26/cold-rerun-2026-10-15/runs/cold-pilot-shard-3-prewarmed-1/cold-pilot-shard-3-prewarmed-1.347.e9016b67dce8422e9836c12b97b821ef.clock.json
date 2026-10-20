@@ -1,0 +1,87 @@
+{
+ "abort_reason": "supervisor_heartbeat_stale",
+ "child_identity": {
+  "create_time": 1792080026.942288,
+  "pid": 50781
+ },
+ "completion_issuer": "watchdog",
+ "completion_issuer_identity": {
+  "create_time": 1792080025.749951,
+  "pid": 50777
+ },
+ "ended_epoch": 1792080258.174316,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "e9016b67dce8422e9836c12b97b821ef",
+ "job_index": 347,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 2,
+  "body_seconds": 0.00048041599802672863,
+  "canonical_input": true,
+  "conflicts": 1,
+  "hold_seconds": 0.028233250021003187,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.08499099989421666,
+  "peak_wait_seconds": 0.0660330830141902,
+  "read_bytes": 8222043,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.35936366696842015,
+  "transactions": 854,
+  "wait_seconds": 0.0004079589853063226,
+  "written": true,
+  "written_bytes": 8222046
+ },
+ "peak_rss_bytes": 2103607296,
+ "request_sha256": "7fe78976e970bc485398287719e0d92cb0cdda83b9a0e500160138641d8dc836",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792080024.365911,
+ "supervisor_identity": {
+  "create_time": 1792080024.548161,
+  "pid": 50776
+ },
+ "wall_seconds": 233.58881745801773,
+ "watchdog_identity": {
+  "create_time": 1792080025.749951,
+  "pid": 50777
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792080026.942288,
+   "pid": 50781
+  },
+  {
+   "create_time": 1792080029.407975,
+   "pid": 50787
+  },
+  {
+   "create_time": 1792080029.815824,
+   "pid": 50795
+  },
+  {
+   "create_time": 1792080029.908628,
+   "pid": 50796
+  },
+  {
+   "create_time": 1792080030.19178,
+   "pid": 50803
+  },
+  {
+   "create_time": 1792080030.298147,
+   "pid": 50806
+  },
+  {
+   "create_time": 1792080092.818596,
+   "pid": 51079
+  },
+  {
+   "create_time": 1792080092.879511,
+   "pid": 51081
+  }
+ ],
+ "worker_pgid": 50781,
+ "workers": 1,
+ "workers_stopped": true
+}

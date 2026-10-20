@@ -1,0 +1,29 @@
+{
+ "caller_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-fit-g03g04-gfs6-2",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g03g04-gfs6-2.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "fit-route",
+  "gfs6",
+  "2021-05-05",
+  "2022-09-06"
+ ],
+ "evidence": "empty-key-resume-g03g04-gfs6-v21-r16.json",
+ "launched_epoch": 1792182137.837046,
+ "name": "cold-r16-fit-g03g04-gfs6-2",
+ "pid": 54492,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "workers": 1
+}

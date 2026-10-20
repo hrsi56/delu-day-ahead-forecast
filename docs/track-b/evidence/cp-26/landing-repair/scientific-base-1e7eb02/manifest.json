@@ -1,0 +1,33 @@
+{
+ "commit": "1e7eb029f1cbbec6483aea4a7dda0754fd7adf0b",
+ "cross_checks": "src/cp26/harness.py, src/cp26/parity.py and src/cp26/search.py equal original_recipe_code_sha256 in docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runtime-code-v21-r16.json; every git_blob equals `git rev-parse <commit>:<path>`.",
+ "files": {
+  "src/cp26/execution.py": {
+   "bytes": 32280,
+   "git_blob": "83959c0c07d667d0ed760404d0376b4f462e9875",
+   "sha256": "3b8de55d4967fa5826c92b95007092fe29c4663dbb113d9e6b4fb44d6e2d5d37",
+   "snapshot": "execution.py"
+  },
+  "src/cp26/harness.py": {
+   "bytes": 24187,
+   "git_blob": "98f9a8bc476a1bfc5037d3d07e907caf4896067c",
+   "sha256": "7c5e3c30d9254650654ef79d7c1aa04012684ff3065e468cc3c49da816cdd537",
+   "snapshot": "harness.py"
+  },
+  "src/cp26/parity.py": {
+   "bytes": 19207,
+   "git_blob": "d34d244fa9f37f8fa5d50d9a2f76ee35dbf05679",
+   "sha256": "8a73ff522d0b6958fb751f1f5c7b5b43a2a38ce7ccae4c9111857ecf123cf231",
+   "snapshot": "parity.py"
+  },
+  "src/cp26/search.py": {
+   "bytes": 27300,
+   "git_blob": "29982217a3c040a40d4c1c69bd3a0118182acca3",
+   "sha256": "a8bda41a22693f5e0a894618bd6043400138a396129929338ef37458444e4680",
+   "snapshot": "search.py"
+  }
+ },
+ "purpose": "The four CP-26 modules at the r15 lineage's scientific base commit, recorded for tests/test_cp26_r15.py::test_original_numeric_functions_are_unchanged_by_r15. A squash LAND, and CI's depth-1 checkout, carry no branch history, so the test reads these recorded bytes instead of `git show <commit>:<path>`.",
+ "recorded_from": "git show 1e7eb029f1cbbec6483aea4a7dda0754fd7adf0b:<path>, on gauntlet/cp-26, 2026-10-20 (landing repair)",
+ "schema": "cp26-scientific-base-sources-v1"
+}

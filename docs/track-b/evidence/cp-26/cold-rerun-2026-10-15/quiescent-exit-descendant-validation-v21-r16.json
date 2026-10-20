@@ -1,0 +1,50 @@
+{
+ "abort_reason": null,
+ "actual_ceiling_hours": 500.0,
+ "admission_hours": 440.0,
+ "clock_sha256": "c27864db91c9dabc9457ab5add73630c81581549cc19b0e7b4a86f884483e12e",
+ "closing_proof": {
+  "entry_point": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/price-quiescent-close-v21-r16.py",
+  "entry_point_sha256": "4d7fd229005d9f506f66e372864ad7882aabf8be5399ded010523ffc1240f8b0",
+  "job_id": "1f144bb1d9c548b696d04abfc9bbceca",
+  "job_index": 411,
+  "maximum_wait_with_read_and_poll_seconds": 17.2,
+  "quiet_seconds": 4.220021457993425,
+  "status": "CLOSING_OBSERVERS_SETTLED",
+  "wall_seconds": 4.577137125073932,
+  "worker_identity_count": 3,
+  "wrapper_sha256": "492631281ae4b1b623c0d20588df3eef8728c6832342e266a57ee85a6159b1b5"
+ },
+ "cumulative_actual_hours": 154.5362747762141,
+ "exit_code": 0,
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-price-quiescent-close-g05g06-1.411.1f144bb1d9c548b696d04abfc9bbceca.clock.json",
+  "job_id": "1f144bb1d9c548b696d04abfc9bbceca",
+  "job_index": 411,
+  "name": "cold-r16-price-quiescent-close-g05g06-1"
+ },
+ "new_run_actual": {
+  "cumulative_machine_hours": 154.5362747762141,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 89.37415013609116,
+  "measured_seconds": 320163.2264129969,
+  "reported_seconds": 1583.7140769312846,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 321746.9404899282
+ },
+ "projected_cumulative_completion_hours": 376.47878685537387,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close.json",
+ "projection_sha256": "186012b016f920c3b647ef09e87ec8520714eb7dd8f810ce738528a40c27afc8",
+ "projection_status": "PASS",
+ "real_descendant_identity": {
+  "create_time": 1792213767.482965,
+  "pid": 33901
+ },
+ "real_descendant_in_job_and_receipt": true,
+ "scientific_source_or_limits_changed": false,
+ "status": "PASS_REAL_DESCENDANT_AND_COMPLETION_ADMISSION",
+ "wall_seconds": 13.513362083001994,
+ "workers_stopped": true
+}

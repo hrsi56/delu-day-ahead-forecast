@@ -1,0 +1,10 @@
+{
+ "charge_id": "cold-r16-observation-batch-10",
+ "seconds": 128.7309522069816,
+ "source": {
+  "basis": "Conservative 60-second process-startup/metadata bound for the preceding at-most-48-call observer whose in-isolate timings were discarded when its read-only cell was cancelled; 60 seconds for the completed48-call observer because its external tool wall omitted Python startup; plus1second independent reads, returned tool wall, importer startup and5second closing/custody bound. No idle waits or supervisor-measured scientific work duplicated.",
+  "external_tool_wall_seconds": 1.0007003740000004,
+  "metadata_startup_bounds_seconds": 121.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01"
+ }
+}

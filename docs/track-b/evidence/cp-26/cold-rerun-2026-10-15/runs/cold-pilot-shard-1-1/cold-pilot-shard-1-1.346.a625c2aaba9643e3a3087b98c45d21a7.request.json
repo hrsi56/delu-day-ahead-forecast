@@ -1,0 +1,32 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_cold_run.py",
+  "pilot-shard",
+  "--shard",
+  "1"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-pilot-shard-1-1.346.a625c2aaba9643e3a3087b98c45d21a7.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "a625c2aaba9643e3a3087b98c45d21a7",
+ "job_index": 346,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/cold-pilot-shard-1-1.log",
+ "monitor_identity": {
+  "create_time": 1792079668.741895,
+  "pid": 49876
+ },
+ "name": "cold-pilot-shard-1-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-pilot-shard-1-1.346.a625c2aaba9643e3a3087b98c45d21a7.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792079669.689708,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 2.0,
+  "ledger_timeout_seconds": 0.5,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 10.0
+ },
+ "workers": 1
+}

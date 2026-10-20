@@ -1,0 +1,696 @@
+{
+  "schema": "cp26-repair-file-reasons-v1",
+  "initial_head": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+  "landed_code_base": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "repair_candidate_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e",
+  "files": [
+    {
+      "path": "capstone_v21.md",
+      "reason": "Owner-authorized candidate r14: support-only search phase, native recovery, eligibility and continuation dates."
+    },
+    {
+      "path": "docs/track-b/capstone_v21-r13-to-v21-r14-amendments.md",
+      "reason": "Record exact bounded amendment, provenance, pending ratification and retained research rules."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md",
+      "reason": "Candidate registration of native arm errors and separate learning ledger; original protocol retained; no arms executed."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/issued-repair-brief-v21-r14.md",
+      "reason": "Active bounded repair contract with supersession; original issued brief remains unchanged."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/README.md",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/active-documents.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/archive_repair_builders.py",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/audit-time-bound.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/build_handover.py",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/candidate-diffs.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/document-generation-duration.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/files-changed.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/finalize_handover.py",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/fresh-critic-metadata.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/fresh-critic-metadata.py",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/independent-audit.txt",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/inherited-uncommitted.patch",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/initial-inventory.json",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/local-lifecycle.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/pack_receipts.py",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/pin-generation-duration.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/capstone_v21.md",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/reports/rebaseline/harness-log.json",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/reports/rebaseline/parity.json",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/scripts/cp26_rebaseline.py",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/tests/test_cp26_monitor.py",
+      "reason": "Byte-exact custody of prior anchor/output and inherited uncommitted material."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/repair-return.md",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/repair-review-attempt-1.md",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/repair-review-attempt-2.md",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/resource-reconciliation.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/run-receipts.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.clock.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.progress.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.request.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.json",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.log",
+      "reason": "Preserve exact monitored argv, completion/progress evidence, outcome or log, including failed checks."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/terminal-ledger.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/repair-v21-r14/terminal-resources.json",
+      "reason": "Durable repair provenance, identities, review, resource/lifecycle bookkeeping or reproducible packaging command."
+    },
+    {
+      "path": "reports/rebaseline/harness-log.json",
+      "reason": "Current input/pin/base verification; original log preserved before replacement."
+    },
+    {
+      "path": "reports/rebaseline/parity.json",
+      "reason": "96 current old-settings parity comparisons; original output preserved before replacement."
+    },
+    {
+      "path": "reports/rebaseline/repair-v21-r14/main-to-candidate-stat.txt",
+      "reason": "Fixed-candidate review diff/status artifact; reproducible from the reachable Git commits."
+    },
+    {
+      "path": "reports/rebaseline/repair-v21-r14/repair-candidate-full.diff",
+      "reason": "Fixed-candidate review diff/status artifact; reproducible from the reachable Git commits."
+    },
+    {
+      "path": "reports/rebaseline/repair-v21-r14/repair-candidate-source.diff",
+      "reason": "Fixed-candidate review diff/status artifact; reproducible from the reachable Git commits."
+    },
+    {
+      "path": "reports/rebaseline/repair-v21-r14/repair-candidate-stat.txt",
+      "reason": "Fixed-candidate review diff/status artifact; reproducible from the reachable Git commits."
+    },
+    {
+      "path": "reports/rebaseline/repair-v21-r14/search-support.json",
+      "reason": "Support-only exhaustive week extrema and signed common schedules for all dates/routes."
+    },
+    {
+      "path": "reports/rebaseline/repair-v21-r14/search-support.md",
+      "reason": "Support-only exhaustive week extrema and signed common schedules for all dates/routes."
+    },
+    {
+      "path": "scripts/cp26_rebaseline.py",
+      "reason": "Preserve inherited work; supervise resource-accounted jobs and reconcile resumptions without idle charges."
+    },
+    {
+      "path": "scripts/cp26_repair_manifest.py",
+      "reason": "Build non-circular version/supersession identities after the anchor-only commit."
+    },
+    {
+      "path": "scripts/cp26_search_support.py",
+      "reason": "Reproduce all 42 support schedules without model training or experimental scores."
+    },
+    {
+      "path": "src/cp26/budget.py",
+      "reason": "Classify measured/reported/reserved expense, preserve history, enforce repair/cumulative limits and price all 42 future searches."
+    },
+    {
+      "path": "src/cp26/fits.py",
+      "reason": "Fresh native fit adapters and signed per-origin cache lineage, including failed fits."
+    },
+    {
+      "path": "src/cp26/harness.py",
+      "reason": "Pin candidate anchor, new active protocols/manifest, while keeping landed-code baseline fixed."
+    },
+    {
+      "path": "src/cp26/members.py",
+      "reason": "Route production D2 through verified CP26 ensembles; strict eight members; retain old-settings parity fixtures."
+    },
+    {
+      "path": "src/cp26/replay.py",
+      "reason": "Chronological synthetic replay adapters and route-specific persistent state with immutable measured outputs."
+    },
+    {
+      "path": "src/cp26/search.py",
+      "reason": "Qualified signed support windows, fixed sampler/halving/seeds, effective diversity, strict ensemble and search cache."
+    },
+    {
+      "path": "src/cp26/state.py",
+      "reason": "Separate native/interval/output/full-error eligibility, D-2 recovery, historical scales and persistent isolated buffers/ledger."
+    },
+    {
+      "path": "src/cp26/supervisor.py",
+      "reason": "Independent completion/worker identity accounting, safe bound termination, fail-closed uncertain endings and worker ceilings."
+    },
+    {
+      "path": "tests/test_cp26_monitor.py",
+      "reason": "Focused synthetic regression/contract acceptance evidence for the bounded repair."
+    },
+    {
+      "path": "tests/test_cp26_repair_contract.py",
+      "reason": "Focused synthetic regression/contract acceptance evidence for the bounded repair."
+    },
+    {
+      "path": "tests/test_cp26_replay.py",
+      "reason": "Focused synthetic regression/contract acceptance evidence for the bounded repair."
+    },
+    {
+      "path": "tests/test_cp26_search.py",
+      "reason": "Focused synthetic regression/contract acceptance evidence for the bounded repair."
+    },
+    {
+      "path": "tests/test_cp26_state.py",
+      "reason": "Focused synthetic regression/contract acceptance evidence for the bounded repair."
+    }
+  ]
+}

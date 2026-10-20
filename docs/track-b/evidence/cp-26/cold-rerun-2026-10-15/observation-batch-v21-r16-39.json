@@ -1,0 +1,10 @@
+{
+ "charge_id": "cold-r16-observation-batch-39",
+ "import_job_id": "e07aede0f45e4471b420ca5e3bde8bcb",
+ "import_job_index": 415,
+ "seconds": 24.222244415173567,
+ "source": {
+  "basis": "Administrative work after batch38: actual ending-check/pricing terminal validation, serial commits, two guarded launch preflight failures/soft-memory deferrals, old-clock and identity inspection, committed one-job ending reconciliation (including conservative2second external allowance when the tool's output chunk was lost), current partial-cache payload/hash verification, live admission, same-cache resume launches, and passive memory/progress checks. Idle waits, every monitored test/pricing/model/importer wall duration and the separately retained496.996365375second ending reserve are excluded; none is charged again here.",
+  "run_id": "cp26-cold-rerun-2026-10-15-01"
+ }
+}

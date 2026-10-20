@@ -1,0 +1,26 @@
+{
+ "basis": "Existing committed conservative pricing helper, original sealed projection and unchanged production timing reference; no new fits or pilot.",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-cost-state-growth-g05g06-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-cost-state-growth-g05g06-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/forecast-state-growth-v21-r16.py",
+  "g05g06"
+ ],
+ "completed_forecast_origins": 980,
+ "launched_epoch": 1792195072.270423,
+ "name": "cold-r16-cost-state-growth-g05g06-1",
+ "pid": 96725,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "workers": 1
+}

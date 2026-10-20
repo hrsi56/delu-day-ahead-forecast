@@ -1,0 +1,40 @@
+{
+ "allocation": "Fit-only phase with3 independent one-worker route jobs; chronological replay remains separate.",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-fit-g02-gfs6-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g02-gfs6-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+  "fit-route",
+  "gfs6",
+  "2020-09-02",
+  "2021-05-04"
+ ],
+ "group": {
+  "first": "2020-09-02",
+  "origins": 245,
+  "through": "2021-05-04"
+ },
+ "launched_epoch": 1792147306.920346,
+ "pid": 86240,
+ "prerequisite": {
+  "exit_code": 0,
+  "gfs6_native_days": 245,
+  "job_id": "b0f7738a8a834988a210569804bc4848",
+  "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-d17c43677a3a58ced962341bd29c5534aa5b9da85d98062b9c1e2fca446514cf.json",
+  "phase_sha256": "ee6e18fd59f87d7158b5c928755a5caf86b5a9661c8d5d4e4e55e4f4d9a9886e"
+ },
+ "registered_workers_before": 2,
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

@@ -1,0 +1,64 @@
+{
+ "content_sha256": "a132231e55cb98ae2115741facd6e031ea65b1f5ef2252556c645ce855a33e6d",
+ "created_utc": "2026-10-18T08:40:18.611158+00:00",
+ "cumulative_h": 210.73643210234073,
+ "forecast_ledger_origins": 1960,
+ "forecast_ledger_through": "2025-05-13",
+ "frozen_eligible_measurement_days": 2068,
+ "frozen_measurement_calendar_days": 2078,
+ "native_member_records_expected": 46379,
+ "new_run": {
+  "cumulative_machine_hours": 210.73643210234073,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 145.57430746221777,
+  "measured_seconds": 517496.7609082066,
+  "reported_seconds": 2029.0005786934132,
+  "reserved_seconds": 4541.7453770840075,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 524067.506863984
+ },
+ "projected_cumulative_h": 337.34522027057477,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g07g08-close-raw-birth-two-native.json",
+ "projection_sha256": "2706707b4dccd5dab4db9ea3e5cead1676d191e5c32f18092c564d5ed57154bb",
+ "routes": {
+  "gfs6": {
+   "clock_sha256": "8306f3d462bd3fe0644b8644d74e3613846715a73c016041da6758495f9597fb",
+   "completion_path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/native-g09g10-gfs6-completion-v21-r16.json",
+   "completion_sha256": "f37c2c0720f04abf2c0caba6eeb3950a38f7506e978d0f7ddb898e533e5919e5",
+   "fit_identity_sha256": "77604aa160ada2c942a726173b4ca23657be1d19a021917946e9ed25ffd56e29",
+   "job_id": "02e78abc705141c396f9de920ba71be4",
+   "job_index": 454,
+   "native_origins": 2441,
+   "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-52c762ec9028f5bf50907f14b0e64c496d6fcd9561c9da6119d58f8dd9ef7318.json",
+   "phase_sha256": "2fdfd37fa559661a01fb68e9853e9f1acf04308b8524add7a8e376162949ca0e"
+  },
+  "noload": {
+   "clock_sha256": "d753775595e92871ca5568eea840faf6629a2cea5a03ea351f6f10361b550882",
+   "completion_path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/native-g09g10-noload-completion-v21-r16.json",
+   "completion_sha256": "649bae0c2fa97c9624e76f99ad388b9fba4355b4c9b29ce98833e2e448ef7a9a",
+   "fit_identity_sha256": "9c115588a97a628c0456d467d974e5f8eb0abfc14a34040c2fc323cfaf97ef54",
+   "job_id": "36d11bae461c4116bf6210bd8fc7c42f",
+   "job_index": 434,
+   "native_origins": 2441,
+   "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-374c23da3173331464fc6604f907980c4a64ab61dd7f6168ed1eccef9fc5c64d.json",
+   "phase_sha256": "ca608abd287b6b39e4ea3de4fc60e5ea7b170d476ad16dba8a83aabc45263b74"
+  },
+  "nominal": {
+   "clock_sha256": "aaa5fc4413a9984a69ef911682634db89cec56273294015ff4b75e241552989b",
+   "completion_path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/native-g10-nominal-completion-v21-r16.json",
+   "completion_sha256": "9830d27daffbeca5490acf780c5ec1cac37b16331a453ea5b76dc194e3664d57",
+   "fit_identity_sha256": "195857d79c60b5573ae2238989be1f3042d71a67df9831fc36471a81e9736f3b",
+   "job_id": "346d5b5e53264f1385c26f4b07806841",
+   "job_index": 456,
+   "native_origins": 2441,
+   "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-9c30f838e22b2df59210326a57c5995c9bfe81df22cf84e1aada1c8862a08840.json",
+   "phase_sha256": "3ab9ae5fccb79a0e43b433422d630cbef015360efd7088cc64374fe52db1a289"
+  }
+ },
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-native-final-coverage-v1",
+ "scope": "Original fresh-run native fits and normal same-run checkpoints only. All routes now have full registered native coverage. This does not claim complete forecasts, scoring, inference, diagnostics, report or Integration PASS.",
+ "status": "ALL_THREE_NATIVE_ROUTES_COMPLETE_FORECAST_REPLAY_PENDING",
+ "target_origins": 2441,
+ "warm_up_origins": 363
+}

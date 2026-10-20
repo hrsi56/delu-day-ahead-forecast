@@ -1,0 +1,133 @@
+{
+ "caller_sha256": "d1c3af6608108e8f75156ff1ae9219979a000edb2cf37b7fecbf1d69aaf492e3",
+ "fourth_pending": {
+  "first": "2022-01-05",
+  "group": 4,
+  "origins": 245,
+  "route": "nominal",
+  "through": "2022-09-06"
+ },
+ "initial_workers": 3,
+ "launches": [
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g03-nominal-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g03-nominal-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-fit-only.py",
+    "fit-route",
+    "nominal",
+    "2021-05-05",
+    "2022-01-04"
+   ],
+   "launched_epoch": 1792165057.045588,
+   "name": "cold-r16-fit-g03-nominal-1",
+   "pid": 19335,
+   "requested_workers": 1,
+   "window": {
+    "first": "2021-05-05",
+    "group": 3,
+    "origins": 245,
+    "route": "nominal",
+    "through": "2022-01-04"
+   }
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g03g04-noload-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g03g04-noload-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-fit-only.py",
+    "fit-route",
+    "noload",
+    "2021-05-05",
+    "2022-09-06"
+   ],
+   "launched_epoch": 1792165057.0480409,
+   "name": "cold-r16-fit-g03g04-noload-1",
+   "pid": 19336,
+   "requested_workers": 1,
+   "window": {
+    "first": "2021-05-05",
+    "groups": [
+     3,
+     4
+    ],
+    "origins": 490,
+    "route": "noload",
+    "through": "2022-09-06"
+   }
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g03g04-gfs6-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g03g04-gfs6-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-fit-only.py",
+    "fit-route",
+    "gfs6",
+    "2021-05-05",
+    "2022-09-06"
+   ],
+   "launched_epoch": 1792165057.050684,
+   "name": "cold-r16-fit-g03g04-gfs6-1",
+   "pid": 19337,
+   "requested_workers": 1,
+   "window": {
+    "first": "2021-05-05",
+    "groups": [
+     3,
+     4
+    ],
+    "origins": 490,
+    "route": "gfs6",
+    "through": "2022-09-06"
+   }
+  }
+ ],
+ "memory_admission": {
+  "available_bytes_before": 6694830080,
+  "four_worker_sum_prior_peaks_bytes": 7733952512,
+  "hard_aggregate_rss_bytes": 12000000000,
+  "historical_single_job_peaks": {
+   "gfs6": 1708457984,
+   "noload": 1737179136,
+   "nominal": 2144157696
+  },
+  "soft_startup_margin_bytes": 750000000,
+  "sum_prior_single_job_peak_bytes": 5589794816
+ },
+ "policy": "Three start immediately; fourth nominal disjoint window follows only when actual startup headroom/pressure permit. Four independent one-worker jobs, no computing coordinator; replay takes all route locks exclusively after native completion. All original cost margins/estimates retained.",
+ "replay_prerequisite_phase_sha256": "888d7036c296806f26853809b3ae306f6a24464cfde87d4499fb617edf732001",
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

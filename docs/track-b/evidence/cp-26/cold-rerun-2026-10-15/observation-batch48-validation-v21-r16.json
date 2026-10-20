@@ -1,0 +1,46 @@
+{
+ "abort_reason": null,
+ "admission": "PASS",
+ "clock_sha256": "2b32918f3506d66b6bf89ff9c6acf7e718edfba622022de1c417781c878edaac",
+ "content_sha256": "2543369c2fdc4853ba2fb5b310c53d65e65cac41c7eaa2791424183a8949a349",
+ "cumulative_h": 174.97716360200192,
+ "exit_code": 0,
+ "healthy_native_jobs_after_canonical_import": [
+  {
+   "job_id": "96b607b699c8441bb0bbc54d92509aa3",
+   "job_index": 430,
+   "name": "cold-r16-fit-g08-nominal-2",
+   "observed_epoch": 1792240665.727829
+  },
+  {
+   "job_id": "754dc785db4d40ebaf773a5d63da780d",
+   "job_index": 432,
+   "name": "cold-r16-fit-g07g08-gfs6-2",
+   "observed_epoch": 1792240665.693068
+  }
+ ],
+ "job_id": "7935ebfb40fe44a4a9b1d90ce5278806",
+ "job_index": 433,
+ "monitor_setup_reported_next": true,
+ "native_observer_timeouts": 0,
+ "new_run": {
+  "cumulative_machine_hours": 174.97716360200192,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 109.81503896187898,
+  "measured_seconds": 389055.6414561245,
+  "reported_seconds": 1736.7534295558314,
+  "reserved_seconds": 4541.7453770840075,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 395334.14026276435
+ },
+ "peak_rss_bytes": 1262698496,
+ "pre_reservation_monitor_setup_seconds": 0.020905334036797285,
+ "projected_cumulative_h": 396.96412012560614,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close-raw-birth.json",
+ "projection_sha256": "442cdaac303b483bb9de646e0892e2ed7cf7953934536e3bf87c4fe47c157d80",
+ "reported_charge_occurrences": 1,
+ "reported_seconds": 21.82347629009745,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "status": "PASS_EXACTLY_ONCE_ACCOUNTING_AT_FREE_NATIVE_BOUNDARY",
+ "wall_seconds": 7.956555207958445
+}

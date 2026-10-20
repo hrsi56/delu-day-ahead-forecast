@@ -1,0 +1,59 @@
+{
+ "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+ "child_identity": {
+  "create_time": 1792106796.522992,
+  "pid": 89638
+ },
+ "completion_issuer": "watchdog",
+ "completion_issuer_identity": {
+  "create_time": 1792106795.481342,
+  "pid": 89636
+ },
+ "ended_epoch": 1792106800.774432,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "9e7c327e467f4ac49908ae41aab2585a",
+ "job_index": 0,
+ "ledger_lock_telemetry": {
+  "acquired": false,
+  "attempts": 1,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 0,
+  "hold_seconds": 0.0,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.02053170802537352,
+  "peak_wait_seconds": 3.0039080830756575,
+  "read_bytes": 0,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 3.00393095810432,
+  "transactions": 7,
+  "wait_seconds": 3.0039080830756575,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 768458752,
+ "request_sha256": "4d5261fefb64d0ec37344c1b685f1a773eb70b7226c07fb89508b906a370955c",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792106794.641458,
+ "supervisor_identity": {
+  "create_time": 1792106794.642968,
+  "pid": 89635
+ },
+ "wall_seconds": 6.0969481660285965,
+ "watchdog_identity": {
+  "create_time": 1792106795.481342,
+  "pid": 89636
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792106796.522992,
+   "pid": 89638
+  }
+ ],
+ "worker_pgid": 89638,
+ "workers": 1,
+ "workers_stopped": true
+}

@@ -1,0 +1,32 @@
+{
+ "abort_reason": null,
+ "child_identity": {
+  "create_time": 1791914373.17774,
+  "pid": 72752
+ },
+ "ended_epoch": 1791914373.441629,
+ "ending_error": null,
+ "exit_code": 0,
+ "group_empty": true,
+ "job_id": "26578b1c275a4b85804258b75a86e7e7",
+ "job_index": 24,
+ "peak_rss_bytes": 404865024,
+ "request_sha256": "d290cd2935195ffa3e335b3d1a86fea5fa22ee17751ffac1d89b8b2c5be472ea",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1791914372.3908281,
+ "supervisor_identity": {
+  "create_time": 1791914372.393163,
+  "pid": 72749
+ },
+ "wall_seconds": 1.0240827920497395,
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1791914373.17774,
+   "pid": 72752
+  }
+ ],
+ "worker_pgid": 72752,
+ "workers": 1,
+ "workers_stopped": true
+}

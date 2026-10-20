@@ -1,0 +1,121 @@
+{
+  "artifacts": {
+    "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json": {
+      "bytes": 71768,
+      "sha256": "e85db7056b62c6e8a349c4eec41b315c0112695085795cdfbcb1c904a03ac1f8"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/diagnostics-manifest.json": {
+      "bytes": 1479135,
+      "sha256": "123c603083b8a5c7585e7a5dac144d9f477ac4428594b350c467a54a3c31d2fc"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/inference-manifest.json": {
+      "bytes": 30279879,
+      "sha256": "1e6b8f11632a7a1079b2715ad10ef515f5ecfc71405f1a9f7fdde060fc6d8379"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/publication-packet.json": {
+      "bytes": 2838153,
+      "sha256": "4684882b7554c819c71334789b75284ae42e196580ff0ca37e3d1e9254224d24"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/publication-packet.md": {
+      "bytes": 5311,
+      "sha256": "fc7a5f62550fd64356963aac37c373418b5f1b1cb6beb94d12bb7171a16bd4c9"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/report.json": {
+      "bytes": 133691080,
+      "sha256": "1b1aa805a066cda2da142cb9039fe63dd7a02c9b859f8129bd29b943ec1756d8"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/report.md": {
+      "bytes": 331160,
+      "sha256": "9b069382db7cb63430a077bcebd1d99375188c411a6bf4ab48673b94953b47c7"
+    },
+    "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json": {
+      "bytes": 719878,
+      "sha256": "b9f10917ab471177eda1b5f8ef735ddca5a651fa2e9bb47844497f3a6deaf84d"
+    }
+  },
+  "clock": {
+    "abort_reason": null,
+    "exit_code": 0,
+    "group_empty": true,
+    "ledger_lock_telemetry": {
+      "acquired": true,
+      "attempts": 1,
+      "body_seconds": 0.00020491699979174882,
+      "canonical_input": true,
+      "conflicts": 0,
+      "hold_seconds": 0.021109791996423155,
+      "outcome": "committed",
+      "peak_hold_seconds": 0.4762847499951022,
+      "peak_wait_seconds": 0.27734516699274536,
+      "read_bytes": 20672696,
+      "serialized_fallback": false,
+      "timeouts": 0,
+      "total_seconds": 0.021234459010884166,
+      "transactions": 289828,
+      "wait_seconds": 0.00012154200521763414,
+      "written": true,
+      "written_bytes": 20672697
+    },
+    "peak_rss_bytes": 5878743040,
+    "wall_seconds": 84152.986132417,
+    "workers_stopped": true
+  },
+  "clock_sha256": "c036027bd1751b222eb78fdc1bc942f008a586dd96fe9a4c4641fb0cff0e9cc3",
+  "closing_proof": {
+    "job_id": "27d21f60fc2541178851bb83fc36eb01",
+    "job_index": 474,
+    "maximum_wait_with_read_and_poll_seconds": 17.2,
+    "quiet_seconds": 3.4719643330026884,
+    "status": "CLOSING_OBSERVERS_SETTLED",
+    "wall_seconds": 3.867850417009322,
+    "worker_identity_count": 84
+  },
+  "completed_scores_inference_source_job": {
+    "clock_sha256": "b68a54820e469f7ab1a858dbb44ed0cf9d4d320c81860fc5a511bd35b984aa8c",
+    "index": 472,
+    "interruption_preserved": true,
+    "job_id": "1d6293f330b64ad58cd91ceaf54a610e"
+  },
+  "content_sha256": "f96fd0ed4bef07f922e99568fc91b86381f84435c762e858338c70a6d3bd6c35",
+  "cumulative_machine_hours": 237.87284543541747,
+  "diagnostics_verified_evidence": "diagnostics-completion-v21-r16.json",
+  "job_id": "27d21f60fc2541178851bb83fc36eb01",
+  "job_index": 474,
+  "new_run": {
+    "cumulative_machine_hours": 237.87284543541747,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 172.71072079530597,
+    "measured_seconds": 615024.6935411235,
+    "reported_seconds": 2192.1559448939524,
+    "reserved_seconds": 4541.7453770840075,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 621758.5948631015
+  },
+  "observed_epoch": 1792425881.8633049,
+  "raw_birth_identities_verified_gone": 87,
+  "request_sha256": "f869a925be821fee2ffa084538daa0a856b71622ce59f7228413f841f3f75d80",
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "schema": "cp26-analysis-continuation-completion-v1",
+  "scope": "Positive completed diagnostics/report continuation. Final artifact custody, complete checklist and fresh binding independent Integration remain required; no checkpoint PASS.",
+  "stage_completion_events": [
+    {
+      "inference_manifest_sha256": "74033296ff098f023ae8eaf1fb3883efd9cfdbd8591157565aba9ce95f481590",
+      "scores_manifest_sha256": "86abda54558fa965d41f44768f5142611e59c40fc521439913cf3c98de392b49",
+      "stages": [
+        "scores",
+        "inference"
+      ],
+      "status": "COMPLETED_ANALYSIS_REUSED"
+    },
+    {
+      "stage": "diagnostics",
+      "status": "SERIAL_ANALYSIS_STAGE_COMPLETE",
+      "wall_seconds": 83952.790513792
+    },
+    {
+      "stage": "report",
+      "status": "SERIAL_ANALYSIS_STAGE_COMPLETE",
+      "wall_seconds": 163.62444041699928
+    }
+  ]
+}

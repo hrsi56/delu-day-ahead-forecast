@@ -1,0 +1,95 @@
+[
+  {
+    "command": "git rev-parse HEAD",
+    "exit_code": 0,
+    "stdout": "f014e5b2f09dc7defa103b3c4ec5796d199c262d\n",
+    "stderr": ""
+  },
+  {
+    "command": "git status --porcelain=v1",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git symbolic-ref -q HEAD",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git rev-parse main",
+    "exit_code": 0,
+    "stdout": "647d6eb81b2cf6e0cfaf4152f659d689ff973578\n",
+    "stderr": ""
+  },
+  {
+    "command": "git merge-base --is-ancestor 6f57febe3659b1f902c17f3db31ba41e41136178 252725e0431826b6d32f1fc8200cfa3baf3750f6",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git merge-base --is-ancestor 252725e0431826b6d32f1fc8200cfa3baf3750f6 f014e5b2f09dc7defa103b3c4ec5796d199c262d",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git diff --name-status 252725e0431826b6d32f1fc8200cfa3baf3750f6 HEAD",
+    "exit_code": 0,
+    "stdout": "M\tcapstone_v21.md\nA\tdocs/track-b/capstone_v21-r16-to-v21-r17-amendments.md\nA\tdocs/track-b/cp-26-gfs-ruling-2026-10-19.md\nA\tdocs/track-b/evidence/cp-26/cp28-gfs-postresults-addendum-v21-r17.md\nA\tdocs/track-b/evidence/cp-26/gfs-v21-r17/document-validation.json\nA\tdocs/track-b/evidence/cp-26/gfs-v21-r17/integration-review-brief.md\n",
+    "stderr": ""
+  },
+  {
+    "command": "git diff --check 252725e0431826b6d32f1fc8200cfa3baf3750f6 HEAD",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git ls-tree -r 252725e0431826b6d32f1fc8200cfa3baf3750f6",
+    "exit_code": 0,
+    "stdout": "100644 blob 886dd8ad4f30344211a5db9450a182aefb1792d5\t.claude/hooks/session_start.py\n100644 blob c18af026eafd22ac0b185a059c4d51ca168f7873\t.claude/settings.json\n100644 blob 565093d68639bb4755eb90acfa96928c816f92a6\t.codex/environments/environment.toml\n100644 blob 422baffa8ff3ff824a04e8cf64e9552569fe1efa\t.dockerignore\n100755 blob 571246de1fc68562052fea3cd6ba1c38c92db8f8\t.githooks/commit-msg\n100755 blob 571246de1fc68562052fea3cd6ba1c38c92db8f8\t.githooks/pre-commit\n100755 blob 8bf76599461f080f6bf100276e8ce392fdbb4a5d\t.githooks/pre-push\n100644 blob a5097b4074924c6f17cd3e19ea12394563280d3f\t.github/workflows/tests.yml\n100644 blob 9e389c2961c91d0d879801c8389dc52f6825c02a\t.gitignore\n100644 blob 3474a7c2a7fe51f7628bc89d8a99cd53c917d8f1\tAGENTS.md\n100644 blob 0094728d8c0784cb55efd9902cfac36a4142cd95\tBinary Classification Mini-Capstone.md\n100644 blob 2f2c0cb27dad4fa93c48dce57bf27bc6b4aa38af\tCLAUDE.md\n100644 blob a2582d013abc3790b74d10b752553e845db7e8c8\tDATA-LICENSE.md\n100644 blob 109d1b87401f0c23fc34\n[large read-only output summarized; digest above]\n",
+    "stderr": "",
+    "stdout_sha256": "3616fee42b5afe167ae351246b1d987a52f5b7cb017776b8ed7b1f5057548bc3",
+    "stdout_bytes": 1732906,
+    "stdout_lines": 11795
+  },
+  {
+    "command": "git ls-tree -r f014e5b2f09dc7defa103b3c4ec5796d199c262d",
+    "exit_code": 0,
+    "stdout": "100644 blob 886dd8ad4f30344211a5db9450a182aefb1792d5\t.claude/hooks/session_start.py\n100644 blob c18af026eafd22ac0b185a059c4d51ca168f7873\t.claude/settings.json\n100644 blob 565093d68639bb4755eb90acfa96928c816f92a6\t.codex/environments/environment.toml\n100644 blob 422baffa8ff3ff824a04e8cf64e9552569fe1efa\t.dockerignore\n100755 blob 571246de1fc68562052fea3cd6ba1c38c92db8f8\t.githooks/commit-msg\n100755 blob 571246de1fc68562052fea3cd6ba1c38c92db8f8\t.githooks/pre-commit\n100755 blob 8bf76599461f080f6bf100276e8ce392fdbb4a5d\t.githooks/pre-push\n100644 blob a5097b4074924c6f17cd3e19ea12394563280d3f\t.github/workflows/tests.yml\n100644 blob 9e389c2961c91d0d879801c8389dc52f6825c02a\t.gitignore\n100644 blob 3474a7c2a7fe51f7628bc89d8a99cd53c917d8f1\tAGENTS.md\n100644 blob 0094728d8c0784cb55efd9902cfac36a4142cd95\tBinary Classification Mini-Capstone.md\n100644 blob 2f2c0cb27dad4fa93c48dce57bf27bc6b4aa38af\tCLAUDE.md\n100644 blob a2582d013abc3790b74d10b752553e845db7e8c8\tDATA-LICENSE.md\n100644 blob 109d1b87401f0c23fc34\n[large read-only output summarized; digest above]\n",
+    "stderr": "",
+    "stdout_sha256": "cc5d12460d643a74940f95fcef553177a98b4136c76b178adbeeba2839d919b8",
+    "stdout_bytes": 1733472,
+    "stdout_lines": 11800
+  },
+  {
+    "command": "git show 252725e0431826b6d32f1fc8200cfa3baf3750f6:capstone_v21.md",
+    "exit_code": 0,
+    "stdout": "# Capstone v21-r16 \u2014 CP-26 same-run admission exception and cumulative ceiling\n\n**Owner-approved policy amendment, 2026-10-16.** The Owner explicitly approved a\n**440-machine-hour cumulative admission exception** for the existing run\n`cp26-cold-rerun-2026-10-15-01` and raised CP-26's **actual cumulative hard ceiling from\n485 to 500 machine-hours**. These are absolute limits: this decision does not create a\n450-hour admission line by recalculating 90% of 500. The general admission line remains\n436.5 hours outside this named-run exception; no additional run is authorized.\n\nAll historical charges, reported time and retained reserves remain included exactly once;\nneither the cumulative account nor the separate current-run counter resets. Preserve the\ncompleted 1,064-probe pilot and continue the same run. Before full training, verify a complete,\nsupported conservative cumulative completion forecast at or below 440 hours, including current\ncharges and remaining startup, execution and closure\n[large read-only output summarized; digest above]\n",
+    "stderr": "",
+    "stdout_sha256": "27bdc6046117a543d4bfcaa439651e7bf2a8fa4d0c58af9631b606a358c10fd1",
+    "stdout_bytes": 290041,
+    "stdout_lines": 4740
+  },
+  {
+    "command": "git status --porcelain=v1",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "git rev-parse HEAD",
+    "exit_code": 0,
+    "stdout": "f014e5b2f09dc7defa103b3c4ec5796d199c262d\n",
+    "stderr": ""
+  },
+  {
+    "command": "git rev-parse main",
+    "exit_code": 0,
+    "stdout": "647d6eb81b2cf6e0cfaf4152f659d689ff973578\n",
+    "stderr": ""
+  }
+]

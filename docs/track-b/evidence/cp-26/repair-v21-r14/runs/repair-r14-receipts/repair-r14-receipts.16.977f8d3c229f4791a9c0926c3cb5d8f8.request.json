@@ -1,0 +1,24 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/repair-v21-r14/pack_receipts.py",
+  "--lead",
+  "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "977f8d3c229f4791a9c0926c3cb5d8f8",
+ "job_index": 16,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-receipts.log",
+ "monitor_identity": {
+  "create_time": 1791912868.707443,
+  "pid": 64818
+ },
+ "name": "repair-r14-receipts",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791912870.244381,
+ "workers": 1
+}

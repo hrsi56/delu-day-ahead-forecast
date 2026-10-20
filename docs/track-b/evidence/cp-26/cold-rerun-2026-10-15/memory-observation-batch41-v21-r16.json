@@ -1,0 +1,44 @@
+{
+ "action": "Retained three native workers; no additional native admission while pressure elevated. No processes killed, purge/swap/global power changes, or source/cache changes. No idle owned worker was available to release. Measurements are observations, not reserved memory or a new benchmark.",
+ "first_epoch": 1792222416.879,
+ "first_progress": {
+  "cold-r16-fit-g06-nominal-2": {
+   "days": 144,
+   "through": "2023-09-30"
+  },
+  "cold-r16-fit-g07-nominal-1": {
+   "days": 91,
+   "through": "2024-04-09"
+  },
+  "cold-r16-fit-g07g08-noload-1": {
+   "days": 66,
+   "through": "2024-03-15"
+  }
+ },
+ "last_epoch": 1792225977.519,
+ "last_progress": {
+  "cold-r16-fit-g06-nominal-2": {
+   "days": 184,
+   "through": "2023-11-09"
+  },
+  "cold-r16-fit-g07-nominal-1": {
+   "days": 153,
+   "through": "2024-06-10"
+  },
+  "cold-r16-fit-g07g08-noload-1": {
+   "days": 165,
+   "through": "2024-06-22"
+  }
+ },
+ "max_aggregate_worker_rss_GB": 3.23,
+ "max_available_GB": 4.51,
+ "memory_pressure_sample_counts": {
+  "1": 68,
+  "2": 4
+ },
+ "min_aggregate_worker_rss_GB": 2.21,
+ "min_available_GB": 3.6,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "samples": 72,
+ "swap_out_growth_bytes": 78561280
+}

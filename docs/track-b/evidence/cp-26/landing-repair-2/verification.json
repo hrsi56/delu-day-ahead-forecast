@@ -1,0 +1,693 @@
+{
+ "schema": "cp26-landing-repair-2-verification-v1",
+ "final_candidate": "da7acf773a19d9f1781e7386189d626019c31ac3",
+ "copies": {
+  "c4816f3 (baseline)": {
+   "schema": "cp26-landing-repair-2-copy-v1",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "candidate": "c4816f3b0470190bbaa375086c60262963c47329",
+   "curated_paths": 852,
+   "excluded_paths": 9419,
+   "curated_paths_sha256": "6fcb18d2971b60e6ef22d1b8cdb8ef75e9e1c93ee4e1925d1acd61755cb1c1d1",
+   "tree": "f14a676b5192a76c95fb29211131d0b5d6653277",
+   "tree_files": 2403,
+   "copy_tree": "f14a676b5192a76c95fb29211131d0b5d6653277",
+   "copy_tree_matches": true,
+   "copy_commits": 1,
+   "copy_tags": [],
+   "created_utc": "2026-10-20T14:13:00Z",
+   "curated_worktree": "removed"
+  },
+  "2aa7539 (first candidate)": {
+   "schema": "cp26-landing-repair-2-copy-v1",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "candidate": "2aa75395262a93787b4115ecbacae4bf8fceb5f4",
+   "curated_paths": 856,
+   "excluded_paths": 9419,
+   "curated_paths_sha256": "d628beb88e53e5122473e2b96ddd245ff1665a12344d59e79b955d88359b7429",
+   "tree": "67febf6f357ee2bf9205991ee87f910b0f097864",
+   "tree_files": 2407,
+   "copy_tree": "67febf6f357ee2bf9205991ee87f910b0f097864",
+   "copy_tree_matches": true,
+   "copy_commits": 1,
+   "copy_tags": [],
+   "created_utc": "2026-10-20T14:27:49Z",
+   "curated_worktree": "removed"
+  },
+  "da7acf7 (final candidate)": {
+   "schema": "cp26-landing-repair-2-copy-v1",
+   "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+   "candidate": "da7acf773a19d9f1781e7386189d626019c31ac3",
+   "curated_paths": 856,
+   "excluded_paths": 9419,
+   "curated_paths_sha256": "d628beb88e53e5122473e2b96ddd245ff1665a12344d59e79b955d88359b7429",
+   "tree": "78a7eabe5874c345f9d035db0d31db2b38c731d0",
+   "tree_files": 2407,
+   "copy_tree": "78a7eabe5874c345f9d035db0d31db2b38c731d0",
+   "copy_tree_matches": true,
+   "copy_commits": 1,
+   "copy_tags": [],
+   "created_utc": "2026-10-20T14:35:30Z",
+   "curated_worktree": "removed"
+  }
+ },
+ "environment": "history-free single-commit copy of the curated tree (stress_check.py copy); a fresh uv environment per copy, Python 3.12 (UV_PYTHON=3.12), UV_OFFLINE=1; CP<n>_* variables, PYTHONPATH, VIRTUAL_ENV and PYTHONDONTWRITEBYTECODE dropped; CP26_PROJECT_ROOT set to a path that does not exist; MLFLOW_DISABLE_TELEMETRY=true, DO_NOT_TRACK=1",
+ "emulation": "four `/bin/sh -c \"while :; do :; done\"` burners, outside the CP-26 monitor; every test batch ran under scripts/cp26_rebaseline.py monitor --workers 4, whose own supervisor and watchdog use about 0.6 core (patience-measurement.json outer_monitor_overhead), so four burners here are about 4.6 burners of load and three burners about 3.6: they bracket the brief's four",
+ "final_candidate_batches": {
+  "emulated-four-burners": {
+   "label": "bar2-emulated",
+   "node": "tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history",
+   "python": "3.12",
+   "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+   "copy_head": "067d9dba37dbca00990d60a9655755419de88e27",
+   "copy_tree": "78a7eabe5874c345f9d035db0d31db2b38c731d0",
+   "emulation": "four-burners",
+   "started_utc": "2026-10-20T14:35:38Z",
+   "finished_utc": "2026-10-20T14:39:10Z",
+   "passed": 3,
+   "runs": [
+    {
+     "index": 0,
+     "exit_code": 1,
+     "summary": "1 failed in 58.16s",
+     "test_seconds": 29.515,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.166,
+      "admin_job_wall": 14.809,
+      "admin_exit_code": 1,
+      "admin_abort_reason": null,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.4974,
+      "owner_lock_peak_hold_max": 0.5093,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 1,
+     "exit_code": 0,
+     "summary": "1 passed in 33.68s",
+     "test_seconds": 32.825,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.057,
+      "controller_wait_lower": 18.949,
+      "admin_observations": 8,
+      "controller_wait_upper": 21.328,
+      "owner_span_max": 21.563,
+      "admin_job_wall": 16.231,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.718,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.3438,
+      "owner_lock_peak_hold_max": 0.0865,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 2,
+     "exit_code": 0,
+     "summary": "1 passed in 33.13s",
+     "test_seconds": 32.21,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.58,
+      "controller_wait_lower": 19.551,
+      "admin_observations": 7,
+      "controller_wait_upper": 21.59,
+      "owner_span_max": 22.35,
+      "admin_job_wall": 16.598,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.348,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.4988,
+      "owner_lock_peak_hold_max": 0.4182,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 3,
+     "exit_code": 1,
+     "summary": "1 failed in 27.49s",
+     "test_seconds": 26.44,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.265,
+      "admin_job_wall": 13.546,
+      "admin_exit_code": 1,
+      "admin_abort_reason": null,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.8923,
+      "owner_lock_peak_hold_max": 0.7052,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 4,
+     "exit_code": 0,
+     "summary": "1 passed in 34.59s",
+     "test_seconds": 33.393,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.417,
+      "controller_wait_lower": 19.104,
+      "admin_observations": 9,
+      "controller_wait_upper": 21.159,
+      "owner_span_max": 21.74,
+      "admin_job_wall": 16.624,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.8,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2454,
+      "owner_lock_peak_hold_max": 0.0677,
+      "owner_lock_timeouts": 0
+     }
+    }
+   ],
+   "monitor_job": "landing-repair-2-bar2-emulated",
+   "burners": {
+    "pids": [
+     37810,
+     37811,
+     37812,
+     37813
+    ],
+    "started_epoch": 1792506930.3874261,
+    "started_utc": "2026-10-20T14:35:30Z",
+    "stopped_epoch": 1792507152.410967,
+    "stopped_utc": "2026-10-20T14:39:12Z",
+    "alive_after_stop": [],
+    "wall_seconds": 222.02,
+    "burner_seconds": 888.08
+   },
+   "admin_log_tails": {
+    "0": [
+     "Traceback (most recent call last):",
+     "  File \"<string>\", line 17, in <module>",
+     "AssertionError"
+    ],
+    "3": [
+     "Traceback (most recent call last):",
+     "  File \"<string>\", line 17, in <module>",
+     "AssertionError"
+    ]
+   }
+  },
+  "quiet": {
+   "label": "bar2-quiet",
+   "node": "tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history",
+   "python": "3.12",
+   "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+   "copy_head": "067d9dba37dbca00990d60a9655755419de88e27",
+   "copy_tree": "78a7eabe5874c345f9d035db0d31db2b38c731d0",
+   "emulation": "quiet",
+   "started_utc": "2026-10-20T14:39:32Z",
+   "finished_utc": "2026-10-20T14:41:29Z",
+   "passed": 5,
+   "runs": [
+    {
+     "index": 0,
+     "exit_code": 0,
+     "summary": "1 passed in 21.39s",
+     "test_seconds": 20.272,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.436,
+      "controller_wait_lower": 10.524,
+      "admin_observations": 7,
+      "controller_wait_upper": 12.269,
+      "owner_span_max": 12.868,
+      "admin_job_wall": 9.422,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.456,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2899,
+      "owner_lock_peak_hold_max": 0.0865,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 1,
+     "exit_code": 0,
+     "summary": "1 passed in 24.34s",
+     "test_seconds": 23.616,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.078,
+      "controller_wait_lower": 13.061,
+      "admin_observations": 7,
+      "controller_wait_upper": 15.509,
+      "owner_span_max": 15.755,
+      "admin_job_wall": 12.417,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.479,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2345,
+      "owner_lock_peak_hold_max": 0.1275,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 2,
+     "exit_code": 0,
+     "summary": "1 passed in 21.40s",
+     "test_seconds": 20.632,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.303,
+      "controller_wait_lower": 11.285,
+      "admin_observations": 8,
+      "controller_wait_upper": 12.907,
+      "owner_span_max": 13.38,
+      "admin_job_wall": 10.091,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.514,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.3331,
+      "owner_lock_peak_hold_max": 0.2275,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 3,
+     "exit_code": 0,
+     "summary": "1 passed in 21.01s",
+     "test_seconds": 20.283,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.173,
+      "controller_wait_lower": 10.956,
+      "admin_observations": 8,
+      "controller_wait_upper": 12.866,
+      "owner_span_max": 13.197,
+      "admin_job_wall": 9.997,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.498,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.3914,
+      "owner_lock_peak_hold_max": 0.096,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 4,
+     "exit_code": 0,
+     "summary": "1 passed in 24.37s",
+     "test_seconds": 23.57,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.369,
+      "controller_wait_lower": 12.75,
+      "admin_observations": 9,
+      "controller_wait_upper": 14.517,
+      "owner_span_max": 15.063,
+      "admin_job_wall": 11.092,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.203,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2318,
+      "owner_lock_peak_hold_max": 0.0846,
+      "owner_lock_timeouts": 0
+     }
+    }
+   ],
+   "monitor_job": "landing-repair-2-bar2-quiet"
+  },
+  "emulated-three-burners": {
+   "label": "bracket3-emulated",
+   "node": "tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history",
+   "python": "3.12",
+   "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+   "copy_head": "067d9dba37dbca00990d60a9655755419de88e27",
+   "copy_tree": "78a7eabe5874c345f9d035db0d31db2b38c731d0",
+   "emulation": "three-burners",
+   "started_utc": "2026-10-20T14:41:56Z",
+   "finished_utc": "2026-10-20T14:44:32Z",
+   "passed": 4,
+   "runs": [
+    {
+     "index": 0,
+     "exit_code": 0,
+     "summary": "1 passed in 28.43s",
+     "test_seconds": 27.268,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.354,
+      "controller_wait_lower": 15.087,
+      "admin_observations": 8,
+      "controller_wait_upper": 17.344,
+      "owner_span_max": 17.863,
+      "admin_job_wall": 13.369,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.146,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2173,
+      "owner_lock_peak_hold_max": 0.1633,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 1,
+     "exit_code": 0,
+     "summary": "1 passed in 31.63s",
+     "test_seconds": 30.669,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.318,
+      "controller_wait_lower": 18.088,
+      "admin_observations": 8,
+      "controller_wait_upper": 20.368,
+      "owner_span_max": 20.883,
+      "admin_job_wall": 15.837,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.677,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2421,
+      "owner_lock_peak_hold_max": 0.2358,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 2,
+     "exit_code": 1,
+     "summary": "1 failed in 25.05s",
+     "test_seconds": 23.937,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.061,
+      "admin_job_wall": 11.16,
+      "admin_exit_code": 1,
+      "admin_abort_reason": null,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.8138,
+      "owner_lock_peak_hold_max": 0.7334,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 3,
+     "exit_code": 0,
+     "summary": "1 passed in 30.38s",
+     "test_seconds": 29.516,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.407,
+      "controller_wait_lower": 15.561,
+      "admin_observations": 7,
+      "controller_wait_upper": 18.26,
+      "owner_span_max": 18.815,
+      "admin_job_wall": 13.686,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.391,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.2624,
+      "owner_lock_peak_hold_max": 0.0767,
+      "owner_lock_timeouts": 0
+     }
+    },
+    {
+     "index": 4,
+     "exit_code": 0,
+     "summary": "1 passed in 34.44s",
+     "test_seconds": 33.468,
+     "timing": {
+      "found": true,
+      "ready_spread": 0.188,
+      "controller_wait_lower": 19.2,
+      "admin_observations": 7,
+      "controller_wait_upper": 21.222,
+      "owner_span_max": 21.599,
+      "admin_job_wall": 16.598,
+      "admin_exit_code": 0,
+      "admin_abort_reason": null,
+      "owner_exit_after_stop": 0.559,
+      "owner_abort_reasons": [
+       null,
+       null,
+       null
+      ],
+      "owner_lock_peak_wait_max": 0.4602,
+      "owner_lock_peak_hold_max": 0.192,
+      "owner_lock_timeouts": 0
+     }
+    }
+   ],
+   "monitor_job": "landing-repair-2-bracket3-emulated",
+   "burners": {
+    "pids": [
+     39045,
+     39046,
+     39047
+    ],
+    "count": 3,
+    "started_epoch": 1792507310.2984772,
+    "started_utc": "2026-10-20T14:41:50Z",
+    "stopped_epoch": 1792507474.014299,
+    "stopped_utc": "2026-10-20T14:44:34Z",
+    "alive_after_stop": [],
+    "wall_seconds": 163.72,
+    "burner_seconds": 491.16
+   },
+   "admin_log_tails": {
+    "2": [
+     "Traceback (most recent call last):",
+     "  File \"<string>\", line 18, in <module>",
+     "AssertionError"
+    ]
+   }
+  },
+  "cp26-tests-emulated": {
+   "label": "cp26-emulated",
+   "python": "3.12",
+   "copy_tree": "78a7eabe5874c345f9d035db0d31db2b38c731d0",
+   "emulation": "four-burners",
+   "files": 24,
+   "started_utc": "2026-10-20T14:45:07Z",
+   "finished_utc": "2026-10-20T14:51:53Z",
+   "run": {
+    "exit_code": 0,
+    "seconds": 406.06,
+    "summary": "452 passed in 404.44s (0:06:44)",
+    "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/landing-repair-2/records/cp26/cp26-emulated.log",
+    "failed": [],
+    "timeout_lines": []
+   },
+   "monitor_job": "landing-repair-2-cp26-emulated",
+   "burners": {
+    "pids": [
+     39830,
+     39831,
+     39832,
+     39833
+    ],
+    "count": 4,
+    "started_epoch": 1792507498.3061519,
+    "started_utc": "2026-10-20T14:44:58Z",
+    "stopped_epoch": 1792507915.8929589,
+    "stopped_utc": "2026-10-20T14:51:55Z",
+    "alive_after_stop": [],
+    "wall_seconds": 417.59,
+    "burner_seconds": 1670.36
+   }
+  }
+ },
+ "earlier_batches": "patience-measurement.json (baseline c4816f3, diagnostics, first candidate 2aa7539)",
+ "admin_script_lines": {
+  "17": "assert telemetry[\"timeouts\"]==0 and telemetry[\"peak_hold_seconds\"]<0.5",
+  "18": "assert telemetry[\"peak_wait_seconds\"]<0.5"
+ },
+ "ledger": {
+  "jobs": [
+   {
+    "job_index": 514,
+    "name": "landing-repair-2-baseline-emulated",
+    "workers": 4,
+    "wall_seconds": 101.59825029099011,
+    "charged_wall_seconds": 101.59825029099011,
+    "exit_code": 1,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 515,
+    "name": "landing-repair-2-baseline-quiet",
+    "workers": 4,
+    "wall_seconds": 23.925319625006523,
+    "charged_wall_seconds": 23.925319625006523,
+    "exit_code": 0,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 516,
+    "name": "landing-repair-2-diagnostic-emulated",
+    "workers": 4,
+    "wall_seconds": 172.82797424998716,
+    "charged_wall_seconds": 172.82797424998716,
+    "exit_code": 1,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 517,
+    "name": "landing-repair-2-diagnostic2-emulated",
+    "workers": 4,
+    "wall_seconds": 186.13458458299283,
+    "charged_wall_seconds": 186.13458458299283,
+    "exit_code": 1,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 518,
+    "name": "landing-repair-2-monitor-overhead",
+    "workers": 1,
+    "wall_seconds": 32.85769929099479,
+    "charged_wall_seconds": 32.85769929099479,
+    "exit_code": 0,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 519,
+    "name": "landing-repair-2-bar-emulated",
+    "workers": 4,
+    "wall_seconds": 299.8839454999834,
+    "charged_wall_seconds": 299.8839454999834,
+    "exit_code": 1,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 520,
+    "name": "landing-repair-2-bar2-emulated",
+    "workers": 4,
+    "wall_seconds": 217.96743287501158,
+    "charged_wall_seconds": 217.96743287501158,
+    "exit_code": 1,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 521,
+    "name": "landing-repair-2-bar2-quiet",
+    "workers": 4,
+    "wall_seconds": 121.58754004200455,
+    "charged_wall_seconds": 121.58754004200455,
+    "exit_code": 0,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 522,
+    "name": "landing-repair-2-bracket3-emulated",
+    "workers": 4,
+    "wall_seconds": 160.11364470797707,
+    "charged_wall_seconds": 160.11364470797707,
+    "exit_code": 1,
+    "abort_reason": null,
+    "running": false
+   },
+   {
+    "job_index": 523,
+    "name": "landing-repair-2-cp26-emulated",
+    "workers": 4,
+    "wall_seconds": 413.63084962501307,
+    "charged_wall_seconds": 413.63084962501307,
+    "exit_code": 0,
+    "abort_reason": null,
+    "running": false
+   }
+  ],
+  "charged_machine_seconds": 6823.54,
+  "after": {
+   "measured_seconds": 884188.9393759578,
+   "reported_seconds": 2464.2344734407784,
+   "reserved_seconds": 7367.7453770840075,
+   "total_seconds": 894020.9192264826,
+   "machine_hours": 248.3391442295785
+  },
+  "before_this_round_machine_hours": 246.4437176003321,
+  "job_count_after": 524
+ },
+ "emulation_load_not_charged": {
+  "burner_seconds": 6152.56,
+  "by_batch": {
+   "baseline": 418.52,
+   "diagnostic": 705.96,
+   "diagnostic2": 762.6,
+   "bar": 1215.88,
+   "bar2": 888.08,
+   "bracket3": 491.16,
+   "cp26": 1670.36
+  },
+  "why": "the burners are emulation load, not tests; they ran outside the monitor because the ledger's 4-worker cap admits no second job, and the ledger has no entry point for reported time"
+ }
+}

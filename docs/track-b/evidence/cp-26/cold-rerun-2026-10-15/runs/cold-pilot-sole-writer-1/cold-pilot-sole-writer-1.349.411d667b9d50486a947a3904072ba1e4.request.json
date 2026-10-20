@@ -1,0 +1,29 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-prewarmed.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-pilot-sole-writer-1.349.411d667b9d50486a947a3904072ba1e4.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "411d667b9d50486a947a3904072ba1e4",
+ "job_index": 349,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/cold-pilot-sole-writer-1.log",
+ "monitor_identity": {
+  "create_time": 1792080384.153561,
+  "pid": 52257
+ },
+ "name": "cold-pilot-sole-writer-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-pilot-sole-writer-1.349.411d667b9d50486a947a3904072ba1e4.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792080385.258118,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 2.0,
+  "ledger_timeout_seconds": 0.5,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 10.0
+ },
+ "workers": 1
+}

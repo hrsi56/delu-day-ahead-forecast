@@ -1,0 +1,135 @@
+{
+ "analysis_launch": {
+  "cumulative_h": 213.1610022197704,
+  "launch_sha256": "c7c4ddf1cb78dd3a41f755a6a692755bb214d3d47bcd37482367c4897f7b0b00",
+  "memory": {
+   "available_after_verified_launcher_exit_bytes": 8699019264,
+   "available_bytes": 8434761728,
+   "basis": "Production full-state score-gate high water plus the full-shape statistical kernel/frame high water, then the unchanged15percent and750MB margins. This sums separate validated phases conservatively. Full-replay history/context copies are not assumed to be concurrent analysis work. Launcher private memory is credited only after an exact-identity, finite14second parent-exit check before data loading.",
+   "launcher_rss_bytes": 317079552,
+   "launcher_unique_bytes": 264257536,
+   "planning_peak_bytes": 7466586931,
+   "pressure_level": "1",
+   "required_available_bytes": 8216586931,
+   "soft_margin_bytes": 750000000,
+   "successful_full_ledger_replay_peak_bytes": 7173439488,
+   "unchanged_synthetic_analysis_kernel_peak_bytes": 724746240,
+   "validated_score_gate_clock_sha256": "2f2b4ea34b0fd59cb61fa3fe613a4ed49556402dc7e934bb306c61f4cd8b9aa4",
+   "validated_score_gate_measurement_sha256": "d99c272c92f501d9535cdc77d25ce257a6b26e720e8e2fc6d3a087a29ffe2852",
+   "validated_score_gate_peak_bytes": 5767938048,
+   "verified_launcher_release_credit_bytes": 264257536
+  },
+  "monitor_pid": 30363,
+  "name": "cold-r16-full-analysis-1",
+  "process_seconds": 2.016869625000254,
+  "projected_cumulative_h": 298.1587414207272,
+  "status": "LAUNCHED"
+ },
+ "content_sha256": "1e224284b634574825744aefc3a87dfffe99449ae023ba94a3b3ea8e74fd30fb",
+ "deferrals": [
+  {
+   "available_bytes": 8107474944,
+   "phase": "full-analysis original whole-replay proxy",
+   "process_seconds": 2.0420184999984485,
+   "required_available_bytes": 8999455411
+  },
+  {
+   "available_bytes": 8094515200,
+   "phase": "full-analysis lightweight parent, same original proxy",
+   "process_seconds": 1.9446837499999674,
+   "required_available_bytes": 8999455411
+  },
+  {
+   "available_bytes": 7883948032,
+   "phase": "required gate validation, first parent",
+   "process_seconds": 0.9879228330009937,
+   "required_available_bytes": 7923439488
+  },
+  {
+   "available_bytes": 7805845504,
+   "launcher_unique_bytes": 261537792,
+   "phase": "required gate validation, lightweight parent",
+   "process_seconds": 0.984975958999712,
+   "required_available_bytes": 7923439488
+  },
+  {
+   "available_bytes": 7772225536,
+   "phase": "required gate validation, half-private-memory release bound",
+   "process_seconds": 0.8576505830005772,
+   "release_credit_bytes": 130326528,
+   "required_available_bytes": 7923439488
+  }
+ ],
+ "forecast_proof": "replay-g10-completion-v21-r16.json",
+ "forecast_proof_sha256": "107a912d2710ced71db5509a3bf4b05267b2bff7e2485d4c4bd65746fdffe2e5",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-analysis-memory-admission-history-v1",
+ "scope": "Soft preflight deferrals dispatched no scientific job. One mandatory original score gate was validated under real supervision and exact parent-exit ownership; no scores, fits or forecasts were recomputed by that check. Analysis-specific planning sums measured gate peak5767938048 and unchanged full-shape statistical kernel/frame peak724746240, then retains15percent and750000000bytes: required8216586931. Actual full analysis launch available8434761728 already exceeds that requirement before the additionally verified parent release. All runtime RSS/worker-time/ownership/budget guards, fixed numerical recipes and replicate counts remain unchanged. Setup observations are pending existing once-only batch import; allocated validation/analysis wall time is measured by the same canonical ledger.",
+ "validation_ending": {
+  "clock": {
+   "abort_reason": null,
+   "exit_code": 0,
+   "group_empty": true,
+   "ledger_lock_telemetry": {
+    "acquired": true,
+    "attempts": 1,
+    "body_seconds": 0.00024395899890805595,
+    "canonical_input": true,
+    "conflicts": 0,
+    "hold_seconds": 0.02048662500055798,
+    "outcome": "committed",
+    "peak_hold_seconds": 0.05156745800013596,
+    "peak_wait_seconds": 0.00014795900096942205,
+    "read_bytes": 20647735,
+    "serialized_fallback": false,
+    "timeouts": 0,
+    "total_seconds": 0.020591333000993473,
+    "transactions": 452,
+    "wait_seconds": 0.00010199999996984843,
+    "written": true,
+    "written_bytes": 20647735
+   },
+   "peak_rss_bytes": 5767938048,
+   "wall_seconds": 121.15706725000018,
+   "workers_stopped": true
+  },
+  "clock_sha256": "2f2b4ea34b0fd59cb61fa3fe613a4ed49556402dc7e934bb306c61f4cd8b9aa4",
+  "closing_proof": {
+   "job_id": "a5e89809b776444881c75b87e5bb7b2d",
+   "job_index": 471,
+   "maximum_wait_with_read_and_poll_seconds": 17.2,
+   "quiet_seconds": 3.498882040999888,
+   "status": "CLOSING_OBSERVERS_SETTLED",
+   "wall_seconds": 3.810336582999298,
+   "worker_identity_count": 37
+  },
+  "cumulative_h": 213.1610022197704,
+  "events": [],
+  "job_id": "a5e89809b776444881c75b87e5bb7b2d",
+  "job_index": 471,
+  "new_run": {
+   "cumulative_machine_hours": 213.1610022197704,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 147.99887757964888,
+   "measured_seconds": 526104.5016311236,
+   "reported_seconds": 2149.7122785283914,
+   "reserved_seconds": 4541.7453770840075,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 532795.959286736
+  },
+  "process_seconds": 1.0496511660003307,
+  "projected_cumulative_h": 298.1587414207272,
+  "status": "ENDED"
+ },
+ "validation_launch": {
+  "available_bytes": 7740751872,
+  "code_sha256": "e5c870ad34163610dda3eb933addbe61d7ac14cf186e8715beb096beade30eeb",
+  "monitor_pid": 30056,
+  "name": "cold-r16-analysis-gate-memory-1",
+  "process_seconds": 0.9734623749991442,
+  "projected_cumulative_h": 298.1250866798245,
+  "required_available_bytes": 7923439488,
+  "status": "LAUNCHED",
+  "verified_launcher_release_credit_bytes": 261603328
+ }
+}

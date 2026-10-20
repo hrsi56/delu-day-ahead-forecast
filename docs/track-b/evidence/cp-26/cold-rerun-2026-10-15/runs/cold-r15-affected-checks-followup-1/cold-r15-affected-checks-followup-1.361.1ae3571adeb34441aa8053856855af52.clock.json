@@ -1,0 +1,84 @@
+{
+ "abort_reason": null,
+ "child_identity": {
+  "create_time": 1792106910.881404,
+  "pid": 89961
+ },
+ "completion_issuer": "supervisor",
+ "completion_issuer_identity": {
+  "create_time": 1792106908.787881,
+  "pid": 89958
+ },
+ "ended_epoch": 1792106933.499553,
+ "ending_error": null,
+ "exit_code": 0,
+ "group_empty": true,
+ "job_id": "1ae3571adeb34441aa8053856855af52",
+ "job_index": 361,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.00013887498062103987,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.008917749975807965,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.06439258402679116,
+  "peak_wait_seconds": 0.05370804201811552,
+  "read_bytes": 8636185,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.009023249964229763,
+  "transactions": 82,
+  "wait_seconds": 0.00010329100769013166,
+  "written": true,
+  "written_bytes": 8636185
+ },
+ "peak_rss_bytes": 1951711232,
+ "request_sha256": "20b9a157e710c5f32371ea1a54440847eee07e82facafed9e89dd34fef00b7d9",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792106908.621989,
+ "supervisor_identity": {
+  "create_time": 1792106908.787881,
+  "pid": 89958
+ },
+ "wall_seconds": 24.68017270800192,
+ "watchdog_identity": {
+  "create_time": 1792106909.74154,
+  "pid": 89959
+ },
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1792106910.881404,
+   "pid": 89961
+  },
+  {
+   "create_time": 1792106912.886482,
+   "pid": 89962
+  },
+  {
+   "create_time": 1792106913.699245,
+   "pid": 89963
+  },
+  {
+   "create_time": 1792106914.516403,
+   "pid": 89964
+  },
+  {
+   "create_time": 1792106915.553744,
+   "pid": 89965
+  },
+  {
+   "create_time": 1792106915.558256,
+   "pid": 89966
+  },
+  {
+   "create_time": 1792106933.149298,
+   "pid": 89977
+  }
+ ],
+ "worker_pgid": 89961,
+ "workers": 4,
+ "workers_stopped": true
+}

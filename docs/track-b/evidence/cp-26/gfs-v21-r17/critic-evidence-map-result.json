@@ -1,0 +1,327 @@
+{
+  "groups": {
+    "P1": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/execution-manifest.json",
+        "bytes": 50713,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-completion.json",
+        "bytes": 1122,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/",
+        "file_count": 2441,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/development-inputs/eligibility-calendar.csv",
+        "bytes": 122769,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/development-inputs/record-masks.csv",
+        "bytes": 198763,
+        "existence_checked": true
+      }
+    ],
+    "P2": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/parity.json",
+        "bytes": 1324366,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/harness.py",
+        "bytes": 27927,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/members.py",
+        "bytes": 18206,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/parity.py",
+        "bytes": 19308,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/fits.py",
+        "bytes": 7952,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/replay.py",
+        "bytes": 7250,
+        "existence_checked": true
+      }
+    ],
+    "P3": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md",
+        "bytes": 332342,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json",
+        "bytes": 2842418,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.md",
+        "bytes": 6493,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/MLflow-export.json",
+        "bytes": 74829,
+        "existence_checked": true
+      }
+    ],
+    "P4": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/search-plans/",
+        "file_count": 42,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/search-results/",
+        "file_count": 42,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot.json",
+        "bytes": 3234009,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/search.py",
+        "bytes": 27505,
+        "existence_checked": true
+      }
+    ],
+    "P5": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json",
+        "bytes": 719878,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/",
+        "file_count": 18,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/scoring.py",
+        "bytes": 39767,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/analysis.py",
+        "bytes": 48436,
+        "existence_checked": true
+      }
+    ],
+    "P6": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/diagnostics-manifest.json",
+        "bytes": 1479135,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/diagnostics.py",
+        "bytes": 26559,
+        "existence_checked": true
+      },
+      {
+        "path": "tests/test_cp26_diagnostic_cells.py",
+        "bytes": 19529,
+        "existence_checked": true
+      }
+    ],
+    "P7": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/inference-manifest.json",
+        "bytes": 30279879,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/inference.py",
+        "bytes": 37578,
+        "existence_checked": true
+      },
+      {
+        "path": "tests/test_cp26_inference_rng.py",
+        "bytes": 15332,
+        "existence_checked": true
+      }
+    ],
+    "P8": [
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/replay-state.json",
+        "bytes": 357270213,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/learning-ledger.json",
+        "bytes": 28768210,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/",
+        "file_count": 2441,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/state.py",
+        "bytes": 29410,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/replay.py",
+        "bytes": 7250,
+        "existence_checked": true
+      }
+    ],
+    "P9": [
+      {
+        "path": "docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md",
+        "bytes": 27551,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/evidence/cp-26/continuation-v21-r14/execution-protocol.json",
+        "bytes": 15740,
+        "existence_checked": true
+      }
+    ],
+    "P10": [
+      {
+        "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/admission-v21-r16.json",
+        "bytes": 6952,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/terminal-resource-snapshot-v21-r16.json",
+        "bytes": 1409,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/final-integration-custody-v21-r16.json",
+        "bytes": 2789,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-accounting.json",
+        "bytes": 5278,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/budget.py",
+        "bytes": 70248,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/gates.py",
+        "bytes": 17986,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/supervisor.py",
+        "bytes": 55661,
+        "existence_checked": true
+      },
+      {
+        "path": "src/cp26/limits.py",
+        "bytes": 773,
+        "existence_checked": true
+      }
+    ],
+    "P11": [
+      {
+        "path": "docs/PUBLISH_RULES.md",
+        "bytes": 88402,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/publication-standard-v1.md",
+        "bytes": 33023,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/cp-25-landing-2026-10-12.md",
+        "bytes": 5973,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/cp-25-rulings-2026-10-12.md",
+        "bytes": 5250,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/issued-brief.md",
+        "bytes": 20068,
+        "existence_checked": true
+      },
+      {
+        "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/issued-continuation-v21-r16.md",
+        "bytes": 5502,
+        "existence_checked": true
+      },
+      {
+        "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json",
+        "bytes": 2842418,
+        "existence_checked": true
+      }
+    ]
+  },
+  "resource_snapshot_read_now": {
+    "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+    "schema": "cp26-ledger-v2",
+    "accounting": {
+      "measured_seconds": 847369.9660406297,
+      "reported_seconds": 2464.2344734407784,
+      "reserved_seconds": 7367.7453770840075
+    },
+    "total_machine_hours": 238.1116516364318,
+    "caps": {
+      "machine_seconds": 1800000,
+      "workers": 4,
+      "rss_bytes": 12000000000,
+      "data_download_bytes": 0,
+      "remote_writes": 0,
+      "cost_usd": 0,
+      "gpu_jobs": 0,
+      "cloud_jobs": 0
+    },
+    "last_job_index": 492
+  },
+  "freeze_ancestry_commands": [
+    {
+      "command": "git merge-base --is-ancestor 5cc3cc083c4340fd8d792eeaf6551a007987a877 f7a0273798a76ad55aad1c69f40893bc149d1f6e",
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "command": "git merge-base --is-ancestor 563be855d918cb7ec3a2b53497414a863dc43431 eb0e2de745feb614d6b1a2eca458395112ef17e6",
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "command": "git merge-base --is-ancestor 57cfce9262d1c1eb1ebcf3a8b57b3b0b8b5e816e eb0e2de745feb614d6b1a2eca458395112ef17e6",
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "command": "git merge-base --is-ancestor 563be855d918cb7ec3a2b53497414a863dc43431 f7a0273798a76ad55aad1c69f40893bc149d1f6e",
+      "exit_code": 0,
+      "stdout": ""
+    }
+  ],
+  "previous_reproduction_verdict": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md",
+  "previous_reproduction_verdict_sha256": "32fc2af7eef6c030d4a0763c0d2cf3c55d8ed0cc4f4b2428192e9e638f413725",
+  "inheritance": "All original scientific reproduction claims remain inherited; current checks preserve their exact candidate evidence and verify availability."
+}

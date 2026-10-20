@@ -1,0 +1,35 @@
+{
+ "abort_reason": null,
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-fit-only.py",
+  "sha256": "d1c3af6608108e8f75156ff1ae9219979a000edb2cf37b7fecbf1d69aaf492e3"
+ },
+ "clock_sha256": "0f389550f5b78a7cd28ed1af83aa50d4a668181ef44d63188c4c6a1c58670dfa",
+ "daily_issuances_claimed": false,
+ "earlier_native_origins": 490,
+ "exit_code": 0,
+ "first": "2021-05-05",
+ "group": 3,
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g03-nominal-1.386.3f39800c1daa45cb8ae5a5df21b553be.clock.json",
+  "job_id": "3f39800c1daa45cb8ae5a5df21b553be",
+  "job_index": 386,
+  "name": "cold-r16-fit-g03-nominal-1"
+ },
+ "ledger_timeouts": 0,
+ "native_origins": 245,
+ "other_group4_reference_sha256": "51a3712a4a45dd117dbc35f00c5063730d13ee60926dd011db44ca7b8d93aad8",
+ "peak_rss_bytes": 2025062400,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-3affaf906d5d4e6cf0851b258fe9e36037b41f2c0ffdf55de58e4e21edcef130.json",
+ "phase_sha256": "4f1bd2ce0a41dce52b4d96215ee3448187ada8674dddc1fc1528421a0c03fc2e",
+ "prefix_through": "2022-09-06",
+ "route": "nominal",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Exact complete245-date group3 native window, all nine nominal members. Together with earlier490dates and completed group4, nominal native cache now covers980dates. GFS+6 is still fitting; new forecast issuance remains pending chronological replay.",
+ "through": "2022-01-04",
+ "total_complete_native_prefix": 980,
+ "validation_status": "PASS",
+ "wall_seconds": 22970.810813333956,
+ "workers_stopped": true
+}

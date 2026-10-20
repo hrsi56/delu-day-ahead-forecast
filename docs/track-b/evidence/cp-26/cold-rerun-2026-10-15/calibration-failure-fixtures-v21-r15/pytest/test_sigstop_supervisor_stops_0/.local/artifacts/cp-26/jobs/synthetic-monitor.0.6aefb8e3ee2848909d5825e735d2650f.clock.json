@@ -1,0 +1,59 @@
+{
+ "abort_reason": "supervisor_heartbeat_stale",
+ "child_identity": {
+  "create_time": 1792106772.702264,
+  "pid": 89618
+ },
+ "completion_issuer": "watchdog",
+ "completion_issuer_identity": {
+  "create_time": 1792106771.645981,
+  "pid": 89610
+ },
+ "ended_epoch": 1792106781.741678,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "6aefb8e3ee2848909d5825e735d2650f",
+ "job_index": 0,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 8.191599044948816e-05,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.0018276670016348362,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.006203915923833847,
+  "peak_wait_seconds": 0.023507875041104853,
+  "read_bytes": 4145,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.01966349990107119,
+  "transactions": 38,
+  "wait_seconds": 0.017834333004429936,
+  "written": true,
+  "written_bytes": 4147
+ },
+ "peak_rss_bytes": 759037952,
+ "request_sha256": "b66bf38a8f90def12541237d6694e677994df760fda4ff9ec154bc144ef083ee",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792106770.718451,
+ "supervisor_identity": {
+  "create_time": 1792106770.719949,
+  "pid": 89602
+ },
+ "wall_seconds": 10.98278558300808,
+ "watchdog_identity": {
+  "create_time": 1792106771.645981,
+  "pid": 89610
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792106772.702264,
+   "pid": 89618
+  }
+ ],
+ "worker_pgid": 89618,
+ "workers": 1,
+ "workers_stopped": true
+}

@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 1,
+ "job": "repair-r14-critic-pgid-reuse",
+ "job_id": "3cf363e1923f4fada6e774f76aa926a8",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-pgid-reuse.log",
+ "machine_hours_cumulative": 1.263124579156063,
+ "peak_rss_bytes": 573603840,
+ "resources": {
+  "headroom_hours": 483.7368754208439,
+  "machine_hours": 1.263124579156063,
+  "measured_seconds": 1624.9964849618264,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 34916.44327145518,
+  "repair_seconds_used": 1083.55672854482,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4547.248484961827,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 1.9519169589621015
+}

@@ -1,0 +1,34 @@
+# CP-26 supervised job cold-pilot-shard-2-1; workers=1
+Traceback (most recent call last):
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/scripts/cp26_cold_run.py", line 112, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/scripts/cp26_cold_run.py", line 105, in main
+    result = E.timing_pilot(ROOT, protocol_identity(ROOT), gate=ExecutionGate(ROOT), pairs=pairs)
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/execution.py", line 295, in timing_pilot
+    probes.append(_probe(paths, {**common, 'task': f'daily-{member}', 'member': member,
+                  ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 'origin': str(origin)}, regular, budget))
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/execution.py", line 231, in _probe
+    record_evidence_once(budget, f"pilot/{digest(key)}", {'probe_sha256': result['content_sha256']},
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         {'completed_timing_probes': 1, 'failed_timing_probes': int(result['status'] == 'failed')})
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/execution.py", line 115, in record_evidence_once
+    return budget.append_execution_task(proposed, {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+        'event': 'cp26_execution_task_terminal', 'task_id': task_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'evidence_sha256': digest(proposed['evidence'])})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/budget.py", line 705, in append_execution_task
+    return self._resource_update(None, timeout_seconds=timeout_seconds,
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 append_records=(proposed, proposed_json, event_json, proposed_identity),
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 started=started)
+                                 ^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/budget.py", line 744, in _resource_update
+    raise TimeoutError('CP-26 ledger accounting lock did not progress')
+TimeoutError: CP-26 ledger accounting lock did not progress

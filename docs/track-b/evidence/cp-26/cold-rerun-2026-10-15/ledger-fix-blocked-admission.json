@@ -1,0 +1,917 @@
+{
+ "actual_ceiling_hours": 485,
+ "admission": "BLOCKED",
+ "analysis_basis": {
+  "algorithms": "Statistical bytes unchanged; analysis differs only in two path substitutions.",
+  "sha256": "e376508b7ed88a7f47a12773ae722cc69efdaa0b0b5d5c260453243b0f02e5f1",
+  "source": "reports/rebaseline/continuation-v21-r14-accounting-3/fixture-benchmark.json"
+ },
+ "code_sha256": {
+  "scripts/cp26_cold_run.py": "8d3bf73482525e66f233a8e830866dc9d96a1522734d630a84b5cd39d0d15234",
+  "scripts/cp26_rebaseline.py": "68ec3d29c33bec06e3d0d1637667d6a7469de62349d13336b135ca538903b05e",
+  "scripts/cp26_repair_manifest.py": "a8ced00baa246e87c51747b3e2e545b190642f3ed544252d8139d941d6b68053",
+  "scripts/cp26_search_support.py": "4c8e5e7485495abae5e6f0a4fde233dc3777ac5e045ad4a5c8ebe86050817a0d",
+  "src/cp26/__init__.py": "80b5d7a61f997842f8ccf7b2fd007ea5601d63e7a5c90d301008473a395a245d",
+  "src/cp26/analysis.py": "4f70eab9216666b7c685da10a6cc882820fd98af23c105a62604494fe8193684",
+  "src/cp26/budget.py": "16a327fede44603dd037266d6f7a8436ea6ffdff3428998c6cbe7a11a97077dc",
+  "src/cp26/costing.py": "3ccda9b20219933f94cab2c039bfd5b22d32485615f02c27188bb19bdddee820",
+  "src/cp26/diagnostics.py": "37e076c67fc01d4324cca96b5dde2c2a957d061b57c07adb9a1ac57fd0d18fb9",
+  "src/cp26/execution.py": "3b8de55d4967fa5826c92b95007092fe29c4663dbb113d9e6b4fb44d6e2d5d37",
+  "src/cp26/fits.py": "2605abe74736ca1d28a8bf64e5a9be1e7f00f538ce07515a6fa649099dd5d9f8",
+  "src/cp26/gates.py": "292cb15e5aeb240af93a9e3b8d07c45682c755a27d57b21f82d8af67e9036bd9",
+  "src/cp26/harness.py": "7c5e3c30d9254650654ef79d7c1aa04012684ff3065e468cc3c49da816cdd537",
+  "src/cp26/inference.py": "2acb53725bc4131a66e1ead5e87c3cf22fd2a38f3e503551a8cfe90f324da7e1",
+  "src/cp26/members.py": "56fcf1ba6fad564d1a5b2ac181dedc6cb223956e4467ff99bd32254cdeb668a7",
+  "src/cp26/parity.py": "8a73ff522d0b6958fb751f1f5c7b5b43a2a38ce7ccae4c9111857ecf123cf231",
+  "src/cp26/replay.py": "e7b27f247c142b4254506355b8c26e695a795c20e756ce84d7c196f7517e9c78",
+  "src/cp26/reporting.py": "cd1d6f9d9661183fdde40c791e1a9bec9e0d611036b902774ce179cbbd630ca7",
+  "src/cp26/scoring.py": "9e776a1724aad7337e046ac4d6a8c9ddaf7fb2456e309ccb3bcb9a052a105736",
+  "src/cp26/search.py": "a8bda41a22693f5e0a894618bd6043400138a396129929338ef37458444e4680",
+  "src/cp26/state.py": "8c031249c24431d7c145ab81f239a07a7641f97cc8ea45c67394c505d5be9e77",
+  "src/cp26/supervisor.py": "94e57bec49bd44f3921e710f5326ca956ec7262d0ec78c67b2f818e4951a75a0",
+  "tests/test_cp26_accounting.py": "83afebe1094f561c0f5d72322ba913892232cc189da0aab88120bd36e03c79db",
+  "tests/test_cp26_analysis.py": "09e035d8f9261965a9bb3c4f07e61187509c4a122fc5c494c0726bd79e750abc",
+  "tests/test_cp26_analysis_inventory.py": "2f9eac9af83b4166e1feeccd4b48965d9338dc12a628fc8bd0d2731b704b517f",
+  "tests/test_cp26_costing.py": "34b071a3fbc89515859a912bf860840d4e2b6796b24fe2363802576eacbacf13",
+  "tests/test_cp26_diagnostic_cells.py": "48accc2b67e92eacafe73b1006b39c98a7e205f44355253cd9ed22a672352a55",
+  "tests/test_cp26_execution.py": "d12245ee064a552eef5c3aa705016172d059da80778f34b429555f104832b8de",
+  "tests/test_cp26_gates.py": "e307b2e5d71a1e0ee681b478415bad4efdaf2ca2a231a4da62619327ff706977",
+  "tests/test_cp26_harness.py": "b36138d01f5e990e532a0718361c85a57b2afc56744c681f7e012d4f96b5a136",
+  "tests/test_cp26_inference.py": "a4a83c255b35afa7393a9f8e56c673aa921ea5de58d6a02adf26a4e0a5a67f74",
+  "tests/test_cp26_inference_rng.py": "1b7569b8b02bc92708848492ac9831d49e7cd455971f538e380d9072d861fbd3",
+  "tests/test_cp26_ledger_liveness.py": "2510066d45a972e8e4437ccb9983fb135a7f94b2d537dd6ba279f27393f0be42",
+  "tests/test_cp26_monitor.py": "db1dd2357e407824414b1b3771619462c93a4d7353ebf7accce39f03bebb2215",
+  "tests/test_cp26_parity.py": "0957f9d1c883410cab9ef1013812e8797a614fc18bee4787ed576aad9752ef55",
+  "tests/test_cp26_repair_contract.py": "3a3a2ed0ca8f81bcf90fdad839db1f2b86e73b927d950b132adc44e421eb227e",
+  "tests/test_cp26_replay.py": "a2869171b36d1361201c4860209781d761c3bfb8d3cb11c485277394759b2e5a",
+  "tests/test_cp26_reporting.py": "1fb56a888580efd8cbc3cd4e48b5938d93c974d93f4b48caa62f1263af0f1db3",
+  "tests/test_cp26_run_accounting.py": "f21feee7846638eba3f844d6dd9b42838e56c761bbb1afa0c12bc00c3da9b47f",
+  "tests/test_cp26_scoring.py": "68f94826dc52b61b521133962f000d80b10c83d5b689df97d4a7f6d591ee8f00",
+  "tests/test_cp26_search.py": "f07ba6e57553f34111896ec65e9ea09023b27e49040430766833f9259f105c04",
+  "tests/test_cp26_state.py": "3fcc97aee90204395098808d91313ea603d010762b345590d957ef70cef26a91",
+  "tests/test_cp26_supervision.py": "b1ca6a1fe4a98b1dd04e710f09d753678e572908e3dfc25e87059e5c042e161a"
+ },
+ "cold_searches": [
+  {
+   "expected_fit_records": 128,
+   "fit_records": 128,
+   "k": 0,
+   "projected_seconds": 374.98012061136484,
+   "route": "gfs6",
+   "sha256": "34d1ef8f595cde47c6b3099a8f35bdd670f7d2b349209432cb6c446a499ab465",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k00.json"
+  },
+  {
+   "expected_fit_records": 641,
+   "fit_records": 641,
+   "k": 1,
+   "projected_seconds": 2045.66793518237,
+   "route": "gfs6",
+   "sha256": "f0f0c79e5d9543458964f448fb2709b47ba93b474f773d33a69fbc2d32fbb865",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k01.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 2,
+   "projected_seconds": 3549.6896147688676,
+   "route": "gfs6",
+   "sha256": "6becb71edd45d7839662e5099e5d5e0580bdacfc139554a47734e0c9fcfd55f8",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k02.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 3,
+   "projected_seconds": 4319.453893697727,
+   "route": "gfs6",
+   "sha256": "8b35ac6c0d02d95d949979b4ce7c80152fa80533bfa94e34b784e12d66f07eb0",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k03.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 4,
+   "projected_seconds": 4446.007580726536,
+   "route": "gfs6",
+   "sha256": "a73c181ba9df0a87d12a7a182ed6c3c562fe5183789d3491f7f1b0d9de31a63f",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k04.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 5,
+   "projected_seconds": 3315.061180804895,
+   "route": "gfs6",
+   "sha256": "fdb7fb46612b6da469cf017fd0f0bb703e260755385a33c55420d45f089790e8",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k05.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 6,
+   "projected_seconds": 3558.172697422756,
+   "route": "gfs6",
+   "sha256": "070de86776c09be8ef3dc13aacaa48f4053785772849870aba3858495d1eec17",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k06.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 7,
+   "projected_seconds": 4999.453056661811,
+   "route": "gfs6",
+   "sha256": "502d208a897530575a6b0b2559c6344a9c5a190254ac66ddaa6f5c866aa0ef6f",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k07.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 8,
+   "projected_seconds": 3462.605667719137,
+   "route": "gfs6",
+   "sha256": "fa1e2718f2517a3a4314c73f621d215efd8ad288b3ba2300681d0c732f498247",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k08.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 9,
+   "projected_seconds": 4526.879307202355,
+   "route": "gfs6",
+   "sha256": "13399999b9a70a5c8636030cfe5a549683076d418ae73182734675128837f932",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k09.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 10,
+   "projected_seconds": 3681.0248149977265,
+   "route": "gfs6",
+   "sha256": "99cc845f4f1c5472782b2c3f4772e7fcbd9ee0e63eae87c41102a1c1fb1e843f",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k10.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 11,
+   "projected_seconds": 4371.43149401346,
+   "route": "gfs6",
+   "sha256": "39e3e1de3032e759b36faecdaadc9aa6839f1e91e982cfbba527a0f14838e63a",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k11.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 12,
+   "projected_seconds": 4507.754593964908,
+   "route": "gfs6",
+   "sha256": "8494b13de9b2eb6dbcd5f66181b76f4937403d0229c6dd5baab2ba6fe008f09b",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k12.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 13,
+   "projected_seconds": 5032.284838767072,
+   "route": "gfs6",
+   "sha256": "bc62cfc41a36b5d3550acf0a8a83f3448fb4e59b12678e3fecb66b58090d86c3",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/gfs6/k13.json"
+  },
+  {
+   "expected_fit_records": 128,
+   "fit_records": 128,
+   "k": 0,
+   "projected_seconds": 383.27495316472454,
+   "route": "noload",
+   "sha256": "3ceef02473025fe932c2cd84d6d3b0fff328c659badfdd9a81ceab8d2477a334",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k00.json"
+  },
+  {
+   "expected_fit_records": 641,
+   "fit_records": 641,
+   "k": 1,
+   "projected_seconds": 2043.2613344806412,
+   "route": "noload",
+   "sha256": "f8c28807e0daf490f415b478e163f5342668024f3c9797aa39371cd0baa70114",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k01.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 2,
+   "projected_seconds": 3589.1656057466134,
+   "route": "noload",
+   "sha256": "352ba6b57e7e8ba4fac9755764b5281d6062b9eb4575e7f6534f53afdcb82ad0",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k02.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 3,
+   "projected_seconds": 4900.831409197706,
+   "route": "noload",
+   "sha256": "7f9183dd04714d4bde7de8f122497706be860ddbf9380f8e62f3df26bc5c40e2",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k03.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 4,
+   "projected_seconds": 4421.799778829179,
+   "route": "noload",
+   "sha256": "9b2d5ad1007ee62f6edd8ec9ed2e873fadbeefce22c8145a3c81b963692f9229",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k04.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 5,
+   "projected_seconds": 3516.316509979256,
+   "route": "noload",
+   "sha256": "78c45a7ea96ab32c8741a171b70e747b2cd2d788f141a8898628a36e4b51de9d",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k05.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 6,
+   "projected_seconds": 3815.02513382544,
+   "route": "noload",
+   "sha256": "c0c100ec0d09c396b6b046b25428735730a2af023b29429a2854b5a9692957bb",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k06.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 7,
+   "projected_seconds": 4585.021056339577,
+   "route": "noload",
+   "sha256": "d3c4ab2bdf86a27bf5088a78d9d841a5e090cf33cd5698fd2422f0a3cc42d8de",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k07.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 8,
+   "projected_seconds": 3273.7472029222145,
+   "route": "noload",
+   "sha256": "2c61d303a509bbbb925cba4abb63e350b671ea0a4b57e8c009e94772d25c40bb",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k08.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 9,
+   "projected_seconds": 4177.85429288417,
+   "route": "noload",
+   "sha256": "b22391f825c90be63da35a11e45705ea0f9c9bafecb1e2c39d7ff58043a51ea9",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k09.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 10,
+   "projected_seconds": 3723.7427115774544,
+   "route": "noload",
+   "sha256": "054a619edb357bf669fb6dd9891e22171975102c98bc0699ae24c91301592adf",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k10.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 11,
+   "projected_seconds": 4880.438693659175,
+   "route": "noload",
+   "sha256": "58aad2588178a38b65e4fccd504cf464c1861d20213114718628d03c255356e6",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k11.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 12,
+   "projected_seconds": 4635.262169223253,
+   "route": "noload",
+   "sha256": "bfeceafd8ad9455ffb126e12b58bd33157c43c08a79f0f2dcdbec8548ad2c61e",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k12.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 13,
+   "projected_seconds": 5054.442232298229,
+   "route": "noload",
+   "sha256": "2b1ad7243d2fe946c233eee5691714df7a006313a2674debbf0abeeb0a468afd",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/noload/k13.json"
+  },
+  {
+   "expected_fit_records": 128,
+   "fit_records": 128,
+   "k": 0,
+   "projected_seconds": 363.2346861157317,
+   "route": "nominal",
+   "sha256": "476d4572df5ef064af3cd3ae7bcc6afcda6499cb4366949730e6a81d2f97b5d4",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k00.json"
+  },
+  {
+   "expected_fit_records": 641,
+   "fit_records": 641,
+   "k": 1,
+   "projected_seconds": 2045.4033863469192,
+   "route": "nominal",
+   "sha256": "278901ce4b92bc64f2325e5344b1d9c85e2f24526fe5d78404dedeeaab10041b",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k01.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 2,
+   "projected_seconds": 3691.651213776659,
+   "route": "nominal",
+   "sha256": "feaf63460cc4b0f9c565e817402577b547188e23cf905804556d4b82c42e02e8",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k02.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 3,
+   "projected_seconds": 4896.409281173705,
+   "route": "nominal",
+   "sha256": "f7af5473721b077918092d48113969f1d1649ed833b25aa9cae73e95f282b677",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k03.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 4,
+   "projected_seconds": 4371.033115838761,
+   "route": "nominal",
+   "sha256": "bf5dfee52cd035f2a452ad0e9ce6c8a975edd1648da5022cfdb8b21ca01c4f16",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k04.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 5,
+   "projected_seconds": 3620.835187695932,
+   "route": "nominal",
+   "sha256": "86a48b9c1a87f74494e49909d4cb77fc5cf8cd8c480ee5066d84cef2b7ce0270",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k05.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 6,
+   "projected_seconds": 3879.2308500549993,
+   "route": "nominal",
+   "sha256": "da420c482bd37a528823d5f79effb59b6f0e8a48f18028b403f32ee4f5ffd53c",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k06.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 7,
+   "projected_seconds": 4829.942296954661,
+   "route": "nominal",
+   "sha256": "4800d0614f6eec99ded9f1a38365cd383d33f6b8ee7ca71c70b9c5c04b6071ef",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k07.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 8,
+   "projected_seconds": 3376.3338125918463,
+   "route": "nominal",
+   "sha256": "8b50871700a7edd24439b254003e4fd7cde4abaef0e247f67822a5ba7d2e3b8e",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k08.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 9,
+   "projected_seconds": 4233.062921713525,
+   "route": "nominal",
+   "sha256": "d11181dbca12515ce1aca522a56cc595ea28ac9052c02367f1e82d80e732b2aa",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k09.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 10,
+   "projected_seconds": 3813.781549497919,
+   "route": "nominal",
+   "sha256": "b8fd3e3cd954dc5ce7ae3b749078d3772452f3e85a9ef91a91bb031943bfcd70",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k10.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 11,
+   "projected_seconds": 4812.186458395223,
+   "route": "nominal",
+   "sha256": "c4b7033342125474731e08bf62b75f34e7304d1bbd578332414922ceaaab2284",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k11.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 12,
+   "projected_seconds": 4404.570437651716,
+   "route": "nominal",
+   "sha256": "22ac1420a84fdea94b8837291f6969e3dc581c54f7246c796ad2edb346c40ab2",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k12.json"
+  },
+  {
+   "expected_fit_records": 813,
+   "fit_records": 813,
+   "k": 13,
+   "projected_seconds": 5079.068465325451,
+   "route": "nominal",
+   "sha256": "68727b570961c5931f6ea0feaadf9eef5fb0ecf5d28bad6cf6d68e6c8fc34393",
+   "source": "reports/rebaseline/continuation-v21-r14-accounting-3/search-results/nominal/k13.json"
+  }
+ ],
+ "complete_conservative_cumulative_hours": null,
+ "complete_forecast_entry_point": {
+  "executed": false,
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fixed-forecast.py",
+  "reason": "Required complete pilot and successful single-worker receipt are absent."
+ },
+ "complete_new_run_estimate_hours": null,
+ "contingency_basis": "10percent of all priced future components; current historical/pilot/failure actuals and2826-second retained reserve already occur once in current balance. The observed actual refresh timeout remains unpriced.",
+ "current_cumulative": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 234509.86396451315,
+  "headroom_hours": 418.5211290242886,
+  "machine_hours": 66.4788709757114,
+  "measured_seconds": 235876.0881195059,
+  "pilot_stop_hours": 388.0,
+  "post_repair_seconds": 234605.19607539012,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 621.8473930551493,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.4788709757114,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.3167463355884474,
+    "measured_seconds": 4219.802393618505,
+    "reported_seconds": 520.4844144999049,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 4740.286808118411
+   }
+  },
+  "total_seconds": 239323.93551256106,
+  "unreconciled_reserves": []
+ },
+ "current_new_run": {
+  "cumulative_machine_hours": 66.4788709757114,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 1.3167463355884474,
+  "measured_seconds": 4219.802393618505,
+  "reported_seconds": 520.4844144999049,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 4740.286808118411
+ },
+ "daily_basis": {
+  "coverage": "All14 sealed historical origins plus each complete fresh route/origin; only timing reused, no old forecast, ensemble, fit cache or H/learning object imported.",
+  "margin": 1.25,
+  "maximum_complete_origin_seconds": {
+   "gfs6": 71.37272041803226,
+   "noload": 71.11722383188317,
+   "nominal": 101.41685787413735
+  },
+  "origins": 2441
+ },
+ "expected_completion_wall_hours": null,
+ "fresh_old_search_probe_slowdowns": [
+  {
+   "k": 0,
+   "ratio": 1.2643261688689362,
+   "route": "nominal"
+  },
+  {
+   "k": 0,
+   "ratio": 1.111081113566516,
+   "route": "noload"
+  },
+  {
+   "k": 0,
+   "ratio": 0.9969777267219462,
+   "route": "gfs6"
+  },
+  {
+   "k": 1,
+   "ratio": 1.0500472068451212,
+   "route": "nominal"
+  },
+  {
+   "k": 1,
+   "ratio": 1.0311176840705507,
+   "route": "noload"
+  },
+  {
+   "k": 1,
+   "ratio": 1.034267636266786,
+   "route": "gfs6"
+  },
+  {
+   "k": 2,
+   "ratio": 1.0284340934869975,
+   "route": "nominal"
+  },
+  {
+   "k": 2,
+   "ratio": 1.1183635031867567,
+   "route": "noload"
+  },
+  {
+   "k": 2,
+   "ratio": 1.0195847009701196,
+   "route": "gfs6"
+  },
+  {
+   "k": 3,
+   "ratio": 1.0085426662184813,
+   "route": "nominal"
+  },
+  {
+   "k": 3,
+   "ratio": 1.0555455578469326,
+   "route": "noload"
+  },
+  {
+   "k": 3,
+   "ratio": 1.023462476153724,
+   "route": "gfs6"
+  },
+  {
+   "k": 4,
+   "ratio": 1.0505271470494963,
+   "route": "nominal"
+  },
+  {
+   "k": 4,
+   "ratio": 1.0005027999902218,
+   "route": "noload"
+  },
+  {
+   "k": 4,
+   "ratio": 0.9952234731588616,
+   "route": "gfs6"
+  },
+  {
+   "k": 5,
+   "ratio": 1.0419624488541124,
+   "route": "nominal"
+  },
+  {
+   "k": 5,
+   "ratio": 1.002150501976736,
+   "route": "noload"
+  },
+  {
+   "k": 5,
+   "ratio": 0.9971158396326535,
+   "route": "gfs6"
+  },
+  {
+   "k": 6,
+   "ratio": 1.0261218304188955,
+   "route": "nominal"
+  },
+  {
+   "k": 6,
+   "ratio": 1.0050081966073177,
+   "route": "noload"
+  },
+  {
+   "k": 6,
+   "ratio": 0.871409862571426,
+   "route": "gfs6"
+  },
+  {
+   "k": 7,
+   "ratio": 1.017726013790525,
+   "route": "nominal"
+  },
+  {
+   "k": 7,
+   "ratio": 0.8292458985300215,
+   "route": "noload"
+  },
+  {
+   "k": 7,
+   "ratio": 0.9672653633390521,
+   "route": "gfs6"
+  },
+  {
+   "k": 8,
+   "ratio": 1.0414663499913128,
+   "route": "nominal"
+  },
+  {
+   "k": 8,
+   "ratio": 0.9467238971185655,
+   "route": "noload"
+  },
+  {
+   "k": 8,
+   "ratio": 1.0502721534347386,
+   "route": "gfs6"
+  },
+  {
+   "k": 9,
+   "ratio": 1.0003644719578035,
+   "route": "nominal"
+  },
+  {
+   "k": 9,
+   "ratio": 1.0324024197369908,
+   "route": "noload"
+  },
+  {
+   "k": 9,
+   "ratio": 1.069217190328937,
+   "route": "gfs6"
+  },
+  {
+   "k": 10,
+   "ratio": 1.0441022565332514,
+   "route": "nominal"
+  },
+  {
+   "k": 10,
+   "ratio": 1.045928861547803,
+   "route": "noload"
+  },
+  {
+   "k": 10,
+   "ratio": 1.0454555546414335,
+   "route": "gfs6"
+  },
+  {
+   "k": 11,
+   "ratio": 0.8861452532334735,
+   "route": "nominal"
+  },
+  {
+   "k": 11,
+   "ratio": 1.0159884081902861,
+   "route": "noload"
+  },
+  {
+   "k": 11,
+   "ratio": 0.931843202953678,
+   "route": "gfs6"
+  },
+  {
+   "k": 12,
+   "ratio": 0.9962594319187733,
+   "route": "nominal"
+  },
+  {
+   "k": 12,
+   "ratio": 0.9781348321689611,
+   "route": "noload"
+  },
+  {
+   "k": 12,
+   "ratio": 1.0585651758670631,
+   "route": "gfs6"
+  },
+  {
+   "k": 13,
+   "ratio": 1.1503780961579935,
+   "route": "noload"
+  }
+ ],
+ "fresh_pilot": {
+  "complete_route_search_pairs": [
+   [
+    "nominal",
+    0
+   ],
+   [
+    "noload",
+    0
+   ],
+   [
+    "gfs6",
+    0
+   ],
+   [
+    "nominal",
+    1
+   ],
+   [
+    "noload",
+    1
+   ],
+   [
+    "gfs6",
+    1
+   ],
+   [
+    "nominal",
+    2
+   ],
+   [
+    "noload",
+    2
+   ],
+   [
+    "gfs6",
+    2
+   ],
+   [
+    "nominal",
+    3
+   ],
+   [
+    "noload",
+    3
+   ],
+   [
+    "gfs6",
+    3
+   ],
+   [
+    "nominal",
+    4
+   ],
+   [
+    "noload",
+    4
+   ],
+   [
+    "gfs6",
+    4
+   ],
+   [
+    "nominal",
+    5
+   ],
+   [
+    "noload",
+    5
+   ],
+   [
+    "gfs6",
+    5
+   ],
+   [
+    "nominal",
+    6
+   ],
+   [
+    "noload",
+    6
+   ],
+   [
+    "gfs6",
+    6
+   ],
+   [
+    "nominal",
+    7
+   ],
+   [
+    "noload",
+    7
+   ],
+   [
+    "gfs6",
+    7
+   ],
+   [
+    "nominal",
+    8
+   ],
+   [
+    "noload",
+    8
+   ],
+   [
+    "gfs6",
+    8
+   ],
+   [
+    "nominal",
+    9
+   ],
+   [
+    "noload",
+    9
+   ],
+   [
+    "gfs6",
+    9
+   ],
+   [
+    "nominal",
+    10
+   ],
+   [
+    "noload",
+    10
+   ],
+   [
+    "gfs6",
+    10
+   ],
+   [
+    "nominal",
+    11
+   ],
+   [
+    "noload",
+    11
+   ],
+   [
+    "gfs6",
+    11
+   ],
+   [
+    "nominal",
+    12
+   ],
+   [
+    "noload",
+    12
+   ],
+   [
+    "gfs6",
+    12
+   ],
+   [
+    "noload",
+    13
+   ]
+  ],
+  "missing_probes": 51,
+  "probes": 1013,
+  "required_pairs": 42,
+  "required_probes": 1064
+ },
+ "full_scientific_workload_started": false,
+ "historical_baseline_hours": 65.16212464012295,
+ "new_forecast_origins": 0,
+ "new_serving_searches": 0,
+ "observed_epoch": 1792103014.32064,
+ "persistence_basis": {
+  "byte_growth_margin": 1.5,
+  "encoding_traversals_per_day": 4,
+  "initialization_sha256": "286404552252d3f369d055e07d628adeea33f5a15912032a1dc3c85238423a47",
+  "initialization_source": "docs/track-b/evidence/cp-26/continuation-v21-r14/recovery3-preparation/continuation-accounting-3-recovery3-initialization-1.json",
+  "sha256": "df2094793d80975107b5e1a5e2f18ad9156f352cf23454a6a5d1d9c8aff670ea",
+  "source": "reports/rebaseline/cold-rerun-2026-10-15/persistence-timing.json"
+ },
+ "previous_rejected_record": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/admission.json",
+  "sha256": "b0c8e03c55e07132ef6314678405499738bec5a171b4a080ca7d2222648d2640"
+ },
+ "priced_components_seconds": {
+  "all2441_daily_origins_all3_routes": 744220.629981016,
+  "all42_cold_searches": 158607.39354380168,
+  "bootstrap": 18195.411295034923,
+  "chronological_replay_persistence_exports": 29596.145801228515,
+  "diagnostics": 123107.70906967577,
+  "ordinary_failure_allowance": 107994.43719589271,
+  "parity": 1055.8484568339773,
+  "scoring_report_draft_packet_review_closure": 3600.0,
+  "tests": 1561.2338113361038
+ },
+ "priced_cumulative_subtotal_hours": 396.46187351871686,
+ "priced_new_run_subtotal_hours": 331.2997488785939,
+ "priced_part_wall_hours_at_one_worker": 329.98300254300545,
+ "priced_remaining_hours": 329.98300254300545,
+ "projection_gate_hours": 388,
+ "protocol": {
+  "authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "cp28_protocol_sha256": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+  "document": "docs/track-b/evidence/cp-26/continuation-v21-r14/execution-protocol.json",
+  "document_sha256": "e7811fd363563fba6129ee20097f6953273d0723a0ffa7547a4de2454fa1c527",
+  "research_sha256": "3be866bd10af02cc2b0b956ed91be660dca29a62c0b23b00997bf0b415d100c5",
+  "run_authority_document": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/registration.json",
+  "run_authority_sha256": "024ea8162aa6b46178122e8ac60113fc45c6179d66b9f766b201dc7b9f6f330e",
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "schema": "cp26-execution-protocol-v21-r14"
+ },
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-ledger-fix-blocked-cost-forecast-v1",
+ "search_basis": {
+  "all_historical_search_attempt_hours": 17.423355777384778,
+  "complete_historical_fit_hours": 16.939314686789405,
+  "coverage_sha256": "8934894db20c6221a845f6e7988dbb13287b7e1db483773fd11b0a8e6fe0970a",
+  "future_cold_margin": 2.0,
+  "historical_charges_added_again": false,
+  "observed_slowdown_floor1": 1.2643261688689362,
+  "overhead_ratio": 1.0285750102377438
+ },
+ "unpriced_material_component": "Reliable ledger refresh cost remains unsupported. The patched single-worker pilot stopped at1013/1064 probes; supervisor actual transaction0.5312975411070511s exceeded0.5s after2cold-refresh conflicts. No conflict-count cutoff remains.51probes are missing; no finite recovery allowance has been validated."
+}

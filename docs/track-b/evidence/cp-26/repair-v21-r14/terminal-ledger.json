@@ -1,0 +1,1860 @@
+{
+  "accounting": {
+    "measured_seconds": 1795.4874371709302,
+    "reported_seconds": 97.252,
+    "reserved_seconds": 2826.0
+  },
+  "caps": {
+    "cloud_jobs": 0,
+    "cost_usd": 0,
+    "data_download_bytes": 0,
+    "gpu_jobs": 0,
+    "machine_seconds": 1746000,
+    "remote_writes": 0,
+    "rss_bytes": 12000000000,
+    "workers": 4
+  },
+  "charges": [
+    {
+      "already_in_legacy_total": true,
+      "id": "pre-monitor-tests-already-in-legacy",
+      "kind": "reported",
+      "seconds": 6.125,
+      "source": {
+        "durations": [
+          4.13,
+          1.995
+        ],
+        "event": "builder_lightweight_tests_before_monitor"
+      }
+    },
+    {
+      "id": "independent-audit-successful-tests",
+      "kind": "reported",
+      "seconds": 90.127,
+      "source": {
+        "audit_received_epoch": 1791908653.442842,
+        "audit_turn_completed_epoch": 1791908415,
+        "audit_turn_started_epoch": 1791907417,
+        "durations": [
+          29.958,
+          17.646,
+          21.423,
+          21.1
+        ],
+        "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+        "parity_ended_epoch": 1791905827.8090382,
+        "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b"
+      }
+    },
+    {
+      "id": "independent-audit-failed-test",
+      "kind": "reserved",
+      "seconds": 2826.0,
+      "source": {
+        "audit_received_epoch": 1791908653.442842,
+        "audit_turn_completed_epoch": 1791908415,
+        "audit_turn_started_epoch": 1791907417,
+        "enclosing_window_seconds": 2825.633803844452,
+        "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+        "exact_runtime_recovered": false,
+        "failed_test_lower_bound_seconds": 15.01,
+        "parity_ended_epoch": 1791905827.8090382,
+        "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b"
+      },
+      "status": "authorized"
+    },
+    {
+      "id": "repair-initial-preservation",
+      "kind": "measured",
+      "seconds": 0.05587495904183015,
+      "source": {
+        "operation": "Owner-brief state preservation"
+      }
+    },
+    {
+      "epoch": 1791911407.5502121,
+      "id": "repair-r14-document-generation-duration.json",
+      "kind": "measured",
+      "seconds": 0.0005445830174721777,
+      "source": {
+        "path": "docs/track-b/evidence/cp-26/repair-v21-r14/document-generation-duration.json",
+        "sha256": "c58c9d79412635a2628ab78cd5c4fec0d7085e68009c3486e70323ddd81c8380"
+      }
+    },
+    {
+      "epoch": 1791911407.550718,
+      "id": "repair-r14-pin-generation-duration.json",
+      "kind": "measured",
+      "seconds": 0.0014833330060355365,
+      "source": {
+        "path": "docs/track-b/evidence/cp-26/repair-v21-r14/pin-generation-duration.json",
+        "sha256": "5b2f5de3f0c0b8ca1d1ea70a9a898aa54d5a49f2baa8f079ebbe3cf224ebdd82"
+      }
+    },
+    {
+      "epoch": 1791911407.5509791,
+      "id": "repair-r14-reconcile-maintenance",
+      "kind": "measured",
+      "seconds": 0.0023328750394284725,
+      "source": {
+        "activity": "idempotent historical reconciliation and maintenance receipt import"
+      }
+    },
+    {
+      "epoch": 1791915181.3303869,
+      "id": "repair-r14-terminal-copy-and-import-failure-batch-v1",
+      "kind": "reported",
+      "seconds": 1.0,
+      "source": {
+        "actions": [
+          "copy review, metadata and two reproduction scripts",
+          "remove clean created review snapshot",
+          "first finalizer exited 1 at ModuleNotFoundError before any writes/charge"
+        ],
+        "all_commands_terminal": true,
+        "classification": "tool-reported administrative batch elapsed; rounded, not isolated model runtime",
+        "no_model_fits": true,
+        "source": "functions.exec tool result: Script completed; Wall time 1.0 seconds"
+      }
+    },
+    {
+      "epoch": 1791915181.660089,
+      "id": "repair-r14-terminal-bookkeeping-v1",
+      "kind": "measured",
+      "seconds": 0.39432520896662027,
+      "source": {
+        "classification": "measured administrative evidence IO body",
+        "command": [
+          "/Users/djourno/Downloads/PJM/.venv/bin/python",
+          "-B",
+          "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/docs/track-b/evidence/cp-26/repair-v21-r14/finalize_handover.py",
+          "--lead",
+          "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+          "--candidate",
+          "68d5db593e968c8dcff31c35ecccc355799ddd8e"
+        ],
+        "no_model_fits": true,
+        "source_sha256": "0813b520838fb32e6a258591404b0c1de6f44233fc9e39aabaaf48d389897cf3"
+      }
+    }
+  ],
+  "counts": {
+    "machine_seconds": 4718.739437170931
+  },
+  "created_epoch": 1791904855.48523,
+  "events": [
+    {
+      "epoch": 1791905287.7587771,
+      "event": "builder_lightweight_tests_before_monitor",
+      "fitting": false,
+      "observed_wall_seconds": [
+        4.13,
+        1.995
+      ],
+      "scoring": false,
+      "workers": 1
+    },
+    {
+      "epoch": 1791911407.549393,
+      "event": "repair-v21-r14-historical-reconciliation",
+      "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+      "legacy_total_seconds": 547.5647564170067,
+      "preservation_seconds": 0.05587495904183015
+    },
+    {
+      "candidate_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e",
+      "cp26_status": "INCOMPLETE",
+      "epoch": 1791915181.6608582,
+      "event": "repair-v21-r14-terminal-evidence-ready",
+      "experiment_resume_authorized": false
+    }
+  ],
+  "jobs": [
+    {
+      "abort_reason": null,
+      "child_pid": 76318,
+      "ended_epoch": 1791904857.445838,
+      "exit_code": 0,
+      "last_charge_epoch": 1791904857.445399,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/verify-inputs.log",
+      "monitor_pid": 76316,
+      "name": "verify-inputs",
+      "peak_rss_bytes": 346374144,
+      "running": false,
+      "started_epoch": 1791904856.3927412,
+      "wall_seconds": 1.0526051670312881,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "child_pid": 76529,
+      "ended_epoch": 1791904959.104299,
+      "exit_code": 0,
+      "last_charge_epoch": 1791904959.102727,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/harness-tests.log",
+      "monitor_pid": 76527,
+      "name": "harness-tests",
+      "peak_rss_bytes": 393576448,
+      "running": false,
+      "started_epoch": 1791904957.52643,
+      "wall_seconds": 1.5769325000001118,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "child_pid": 76568,
+      "ended_epoch": 1791904992.564234,
+      "exit_code": 0,
+      "last_charge_epoch": 1791904992.563749,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/search-sufficiency.log",
+      "monitor_pid": 76566,
+      "name": "search-sufficiency",
+      "peak_rss_bytes": 696057856,
+      "running": false,
+      "started_epoch": 1791904987.432812,
+      "wall_seconds": 5.130863707978278,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "child_pid": 76962,
+      "ended_epoch": 1791905132.864803,
+      "exit_code": 0,
+      "last_charge_epoch": 1791905132.8638148,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/core-tests.log",
+      "monitor_pid": 76960,
+      "name": "core-tests",
+      "peak_rss_bytes": 459653120,
+      "running": false,
+      "started_epoch": 1791905130.773906,
+      "wall_seconds": 2.090190958988387,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "child_pid": 77804,
+      "ended_epoch": 1791905245.483844,
+      "exit_code": 0,
+      "last_charge_epoch": 1791905245.4826949,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/core-tests-final.log",
+      "monitor_pid": 77802,
+      "name": "core-tests-final",
+      "peak_rss_bytes": 457949184,
+      "running": false,
+      "started_epoch": 1791905243.3847392,
+      "wall_seconds": 2.0982064999989234,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "child_pid": 77948,
+      "ended_epoch": 1791905827.8090382,
+      "exit_code": 0,
+      "last_charge_epoch": 1791905827.80839,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/parity.log",
+      "monitor_pid": 77946,
+      "name": "parity",
+      "peak_rss_bytes": 1105936384,
+      "running": false,
+      "started_epoch": 1791905299.912173,
+      "wall_seconds": 527.9242284169886,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.566729166021105,
+      "child_pid": 82401,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/monitor-tests.6.clock.json",
+      "ended_epoch": 1791905726.9544718,
+      "exit_code": 0,
+      "job_index": 6,
+      "last_charge_epoch": 1791905726.953769,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/monitor-tests.log",
+      "monitor_create_time": 1791905724.252453,
+      "monitor_pid": 82398,
+      "name": "monitor-tests",
+      "peak_rss_bytes": 384368640,
+      "running": false,
+      "started_epoch": 1791905725.386868,
+      "wall_seconds": 1.566729166021105,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 27.989632125012577,
+      "child_identity": {
+        "create_time": 1791911418.271076,
+        "pid": 45078
+      },
+      "child_pid": 45078,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911445.519521,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "34c32ab5dbf44cf8a4e4094c62e935c4",
+      "job_index": 7,
+      "last_charge_epoch": 1791911445.510274,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-core-tests.log",
+      "monitor_create_time": 1791911416.435092,
+      "monitor_identity": {
+        "create_time": 1791911416.435092,
+        "pid": 45000
+      },
+      "monitor_pid": 45000,
+      "name": "repair-r14-core-tests",
+      "peak_rss_bytes": 926253056,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.request.json",
+      "request_sha256": "85fa303dbc185c1b4cf68656a6ff987b078be2550f8e5d6219e423b1a58a08e8",
+      "running": false,
+      "started_epoch": 1791911417.498497,
+      "supervisor_identity": {
+        "create_time": 1791911417.499641,
+        "pid": 45076
+      },
+      "supervisor_pid": 45076,
+      "wall_seconds": 27.989632125012577,
+      "worker_identities": [
+        {
+          "create_time": 1791911418.271076,
+          "pid": 45078
+        },
+        {
+          "create_time": 1791911419.387325,
+          "pid": 45082
+        },
+        {
+          "create_time": 1791911419.619733,
+          "pid": 45092
+        }
+      ],
+      "worker_pgid": 45078,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 120.70058624999365,
+      "child_identity": {
+        "create_time": 1791911467.406587,
+        "pid": 45447
+      },
+      "child_pid": 45447,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911587.242732,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "24cf1c1467294c73956a48fd1813010d",
+      "job_index": 8,
+      "last_charge_epoch": 1791911587.234447,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-support.log",
+      "monitor_create_time": 1791911465.289279,
+      "monitor_identity": {
+        "create_time": 1791911465.289279,
+        "pid": 45368
+      },
+      "monitor_pid": 45368,
+      "name": "repair-r14-support",
+      "peak_rss_bytes": 1415888896,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.request.json",
+      "request_sha256": "f91a1c265a9cbd5c133e8d6d26ac3018c05206e3624c7c3f9a7f2fc7df0efa48",
+      "running": false,
+      "started_epoch": 1791911466.509291,
+      "supervisor_identity": {
+        "create_time": 1791911466.510757,
+        "pid": 45444
+      },
+      "supervisor_pid": 45444,
+      "wall_seconds": 120.70058624999365,
+      "worker_identities": [
+        {
+          "create_time": 1791911467.406587,
+          "pid": 45447
+        },
+        {
+          "create_time": 1791911468.724627,
+          "pid": 45451
+        }
+      ],
+      "worker_pgid": 45447,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 11.155033624963835,
+      "child_identity": {
+        "create_time": 1791911608.429377,
+        "pid": 46345
+      },
+      "child_pid": 46345,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911618.7005088,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "326d7f5bfa384e5fb7e5ff86ef09a600",
+      "job_index": 9,
+      "last_charge_epoch": 1791911618.6892679,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-monitor-tests.log",
+      "monitor_create_time": 1791911605.97341,
+      "monitor_identity": {
+        "create_time": 1791911605.97341,
+        "pid": 46266
+      },
+      "monitor_pid": 46266,
+      "name": "repair-r14-monitor-tests",
+      "peak_rss_bytes": 1052229632,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.request.json",
+      "request_sha256": "cdb68bdccb4e791e3b5c014083502ecb42508499c5b40403f6e4d5b83778422a",
+      "running": false,
+      "started_epoch": 1791911607.509739,
+      "supervisor_identity": {
+        "create_time": 1791911607.511245,
+        "pid": 46343
+      },
+      "supervisor_pid": 46343,
+      "wall_seconds": 11.155033624963835,
+      "worker_identities": [
+        {
+          "create_time": 1791911608.429377,
+          "pid": 46345
+        },
+        {
+          "create_time": 1791911609.671309,
+          "pid": 46346
+        },
+        {
+          "create_time": 1791911610.66491,
+          "pid": 46347
+        },
+        {
+          "create_time": 1791911611.541251,
+          "pid": 46348
+        },
+        {
+          "create_time": 1791911611.545821,
+          "pid": 46349
+        },
+        {
+          "create_time": 1791911612.768205,
+          "pid": 46350
+        },
+        {
+          "create_time": 1791911613.776524,
+          "pid": 46352
+        },
+        {
+          "create_time": 1791911615.209388,
+          "pid": 46355
+        },
+        {
+          "create_time": 1791911616.08748,
+          "pid": 46356
+        },
+        {
+          "create_time": 1791911616.951619,
+          "pid": 46357
+        },
+        {
+          "create_time": 1791911616.955263,
+          "pid": 46358
+        },
+        {
+          "create_time": 1791911616.974889,
+          "pid": 46359
+        }
+      ],
+      "worker_pgid": 46345,
+      "workers": 2,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 37.697050165967084,
+      "child_identity": {
+        "create_time": 1791911731.634608,
+        "pid": 46911
+      },
+      "child_pid": 46911,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911768.3838599,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "5badb56a25fe48b787ed6da155a9d1e5",
+      "job_index": 10,
+      "last_charge_epoch": 1791911768.37625,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-final-tests.log",
+      "monitor_create_time": 1791911729.05589,
+      "monitor_identity": {
+        "create_time": 1791911729.05589,
+        "pid": 46831
+      },
+      "monitor_pid": 46831,
+      "name": "repair-r14-final-tests",
+      "peak_rss_bytes": 1640333312,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.request.json",
+      "request_sha256": "f63d3f730a75fe7c94d947e5a340c10f49b303e4ad5e77944e894cc70e124b33",
+      "running": false,
+      "started_epoch": 1791911730.653908,
+      "supervisor_identity": {
+        "create_time": 1791911730.655884,
+        "pid": 46907
+      },
+      "supervisor_pid": 46907,
+      "wall_seconds": 37.697050165967084,
+      "worker_identities": [
+        {
+          "create_time": 1791911731.634608,
+          "pid": 46911
+        },
+        {
+          "create_time": 1791911732.981157,
+          "pid": 46913
+        },
+        {
+          "create_time": 1791911733.204284,
+          "pid": 46921
+        },
+        {
+          "create_time": 1791911759.515013,
+          "pid": 46982
+        },
+        {
+          "create_time": 1791911760.586283,
+          "pid": 46983
+        },
+        {
+          "create_time": 1791911761.483379,
+          "pid": 46984
+        },
+        {
+          "create_time": 1791911761.488034,
+          "pid": 46985
+        },
+        {
+          "create_time": 1791911762.671732,
+          "pid": 46987
+        },
+        {
+          "create_time": 1791911763.532925,
+          "pid": 46990
+        },
+        {
+          "create_time": 1791911764.401315,
+          "pid": 46997
+        },
+        {
+          "create_time": 1791911764.738894,
+          "pid": 47013
+        },
+        {
+          "create_time": 1791911765.625571,
+          "pid": 47015
+        },
+        {
+          "create_time": 1791911766.476642,
+          "pid": 47018
+        },
+        {
+          "create_time": 1791911766.481382,
+          "pid": 47019
+        },
+        {
+          "create_time": 1791911766.503074,
+          "pid": 47020
+        },
+        {
+          "create_time": 1791911767.912925,
+          "pid": 47024
+        }
+      ],
+      "worker_pgid": 46911,
+      "workers": 2,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.0801898749778047,
+      "child_identity": {
+        "create_time": 1791911860.901537,
+        "pid": 47594
+      },
+      "child_pid": 47594,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911861.1553001,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "acb210826f7a4a388c644db13944f008",
+      "job_index": 11,
+      "last_charge_epoch": 1791911861.144037,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-doc-manifest.log",
+      "monitor_create_time": 1791911858.237178,
+      "monitor_identity": {
+        "create_time": 1791911858.237178,
+        "pid": 47509
+      },
+      "monitor_pid": 47509,
+      "name": "repair-r14-doc-manifest",
+      "peak_rss_bytes": 403161088,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.request.json",
+      "request_sha256": "c0e23fe512783eaaba169c9f4ac51adc70c97135d213ce897ac6f5e5fd3a982f",
+      "running": false,
+      "started_epoch": 1791911860.0466409,
+      "supervisor_identity": {
+        "create_time": 1791911860.048367,
+        "pid": 47592
+      },
+      "supervisor_pid": 47592,
+      "wall_seconds": 1.0801898749778047,
+      "worker_identities": [
+        {
+          "create_time": 1791911860.901537,
+          "pid": 47594
+        }
+      ],
+      "worker_pgid": 47594,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 37.624251917004585,
+      "child_identity": {
+        "create_time": 1791911899.260537,
+        "pid": 47928
+      },
+      "child_pid": 47928,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911936.053764,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "ee488dcf6cac4217b7c996eb9234c979",
+      "job_index": 12,
+      "last_charge_epoch": 1791911936.0458,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-stable-tests.log",
+      "monitor_create_time": 1791911896.965849,
+      "monitor_identity": {
+        "create_time": 1791911896.965849,
+        "pid": 47845
+      },
+      "monitor_pid": 47845,
+      "name": "repair-r14-stable-tests",
+      "peak_rss_bytes": 1604845568,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.request.json",
+      "request_sha256": "73f3ca8511a3350771118965506de2d1288afb5d86443ff5656fb7c90d7b1dac",
+      "running": false,
+      "started_epoch": 1791911898.400625,
+      "supervisor_identity": {
+        "create_time": 1791911898.402019,
+        "pid": 47924
+      },
+      "supervisor_pid": 47924,
+      "wall_seconds": 37.624251917004585,
+      "worker_identities": [
+        {
+          "create_time": 1791911899.260537,
+          "pid": 47928
+        },
+        {
+          "create_time": 1791911900.583881,
+          "pid": 47935
+        },
+        {
+          "create_time": 1791911926.65615,
+          "pid": 47950
+        },
+        {
+          "create_time": 1791911927.777373,
+          "pid": 47951
+        },
+        {
+          "create_time": 1791911928.664072,
+          "pid": 47952
+        },
+        {
+          "create_time": 1791911928.667571,
+          "pid": 47953
+        },
+        {
+          "create_time": 1791911929.876901,
+          "pid": 47954
+        },
+        {
+          "create_time": 1791911930.727161,
+          "pid": 47958
+        },
+        {
+          "create_time": 1791911931.93503,
+          "pid": 47964
+        },
+        {
+          "create_time": 1791911932.776577,
+          "pid": 47965
+        },
+        {
+          "create_time": 1791911933.63286,
+          "pid": 47966
+        },
+        {
+          "create_time": 1791911933.636684,
+          "pid": 47967
+        },
+        {
+          "create_time": 1791911933.655701,
+          "pid": 47968
+        },
+        {
+          "create_time": 1791911935.597517,
+          "pid": 47974
+        }
+      ],
+      "worker_pgid": 47928,
+      "workers": 2,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.924069166998379,
+      "child_identity": {
+        "create_time": 1791911945.514688,
+        "pid": 48062
+      },
+      "child_pid": 48062,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791911946.650242,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "2bcf9f217f054345a7b18046dab6f892",
+      "job_index": 13,
+      "last_charge_epoch": 1791911946.639742,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-verify-inputs.log",
+      "monitor_create_time": 1791911943.677162,
+      "monitor_identity": {
+        "create_time": 1791911943.677162,
+        "pid": 47979
+      },
+      "monitor_pid": 47979,
+      "name": "repair-r14-verify-inputs",
+      "peak_rss_bytes": 574160896,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.request.json",
+      "request_sha256": "d20eb4cf3d06d7da47f4ea50f08247efd2ced8fbab6f8701fb58affcf46bb3d6",
+      "running": false,
+      "started_epoch": 1791911944.699836,
+      "supervisor_identity": {
+        "create_time": 1791911944.701234,
+        "pid": 48060
+      },
+      "supervisor_pid": 48060,
+      "wall_seconds": 1.924069166998379,
+      "worker_identities": [
+        {
+          "create_time": 1791911945.514688,
+          "pid": 48062
+        }
+      ],
+      "worker_pgid": 48062,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 501.7054884999525,
+      "child_identity": {
+        "create_time": 1791912153.920823,
+        "pid": 48573
+      },
+      "child_pid": 48573,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791912654.8317912,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "bfee4088e8134155b15f1d63105db5be",
+      "job_index": 14,
+      "last_charge_epoch": 1791912654.82426,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-parity.log",
+      "monitor_create_time": 1791912151.65103,
+      "monitor_identity": {
+        "create_time": 1791912151.65103,
+        "pid": 48491
+      },
+      "monitor_pid": 48491,
+      "name": "repair-r14-parity",
+      "peak_rss_bytes": 1187332096,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.request.json",
+      "request_sha256": "09baff29cb08e26d3cf83400e10534e63fb2200ea6f824494d02542bd22c5c30",
+      "running": false,
+      "started_epoch": 1791912153.1226938,
+      "supervisor_identity": {
+        "create_time": 1791912153.124187,
+        "pid": 48571
+      },
+      "supervisor_pid": 48571,
+      "wall_seconds": 501.7054884999525,
+      "worker_identities": [
+        {
+          "create_time": 1791912153.920823,
+          "pid": 48573
+        },
+        {
+          "create_time": 1791912154.815727,
+          "pid": 48577
+        },
+        {
+          "create_time": 1791912155.033747,
+          "pid": 48586
+        }
+      ],
+      "worker_pgid": 48573,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 136.7017568750307,
+      "child_identity": {
+        "create_time": 1791912384.584564,
+        "pid": 54213
+      },
+      "child_pid": 54213,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791912520.312512,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "0f2380751e014f43b026c2cc20dfae77",
+      "job_index": 15,
+      "last_charge_epoch": 1791912520.302699,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-support-final.log",
+      "monitor_create_time": 1791912382.079497,
+      "monitor_identity": {
+        "create_time": 1791912382.079497,
+        "pid": 53988
+      },
+      "monitor_pid": 53988,
+      "name": "repair-r14-support-final",
+      "peak_rss_bytes": 1514176512,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.request.json",
+      "request_sha256": "a33e4f9b9029d1a09f3a452ced836016b5d96b57945a97a767b3086d686daa38",
+      "running": false,
+      "started_epoch": 1791912383.604939,
+      "supervisor_identity": {
+        "create_time": 1791912383.606667,
+        "pid": 54148
+      },
+      "supervisor_pid": 54148,
+      "wall_seconds": 136.7017568750307,
+      "worker_identities": [
+        {
+          "create_time": 1791912384.584564,
+          "pid": 54213
+        }
+      ],
+      "worker_pgid": 54213,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.065115999954287,
+      "child_identity": {
+        "create_time": 1791912871.093076,
+        "pid": 64979
+      },
+      "child_pid": 64979,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791912871.336403,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "977f8d3c229f4791a9c0926c3cb5d8f8",
+      "job_index": 16,
+      "last_charge_epoch": 1791912871.328809,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-receipts.log",
+      "monitor_create_time": 1791912868.707443,
+      "monitor_identity": {
+        "create_time": 1791912868.707443,
+        "pid": 64818
+      },
+      "monitor_pid": 64818,
+      "name": "repair-r14-receipts",
+      "peak_rss_bytes": 402014208,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.request.json",
+      "request_sha256": "6caeeac4bd09c71b826d404faa0387f5e2563590119cd91abd13514a506afbaf",
+      "running": false,
+      "started_epoch": 1791912870.244381,
+      "supervisor_identity": {
+        "create_time": 1791912870.246198,
+        "pid": 64975
+      },
+      "supervisor_pid": 64975,
+      "wall_seconds": 1.065115999954287,
+      "worker_identities": [
+        {
+          "create_time": 1791912871.093076,
+          "pid": 64979
+        }
+      ],
+      "worker_pgid": 64979,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 36.62892920896411,
+      "child_identity": {
+        "create_time": 1791913258.755885,
+        "pid": 67429
+      },
+      "child_pid": 67429,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791913294.580248,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "0d92aff2ec214cc3a7612360015e40f3",
+      "job_index": 17,
+      "last_charge_epoch": 1791913294.5680902,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-tests.log",
+      "monitor_create_time": 1791913256.546473,
+      "monitor_identity": {
+        "create_time": 1791913256.546473,
+        "pid": 67351
+      },
+      "monitor_pid": 67351,
+      "name": "repair-r14-critic-tests",
+      "peak_rss_bytes": 1778368512,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.request.json",
+      "request_sha256": "5b884e1291e7432b16655523a692ea56ccc4501aaac82950607954f5d66e7fb0",
+      "running": false,
+      "started_epoch": 1791913257.923472,
+      "supervisor_identity": {
+        "create_time": 1791913257.925127,
+        "pid": 67427
+      },
+      "supervisor_pid": 67427,
+      "wall_seconds": 36.62892920896411,
+      "worker_identities": [
+        {
+          "create_time": 1791913258.755885,
+          "pid": 67429
+        },
+        {
+          "create_time": 1791913260.092113,
+          "pid": 67448
+        },
+        {
+          "create_time": 1791913285.482651,
+          "pid": 68004
+        },
+        {
+          "create_time": 1791913286.510566,
+          "pid": 68005
+        },
+        {
+          "create_time": 1791913287.364829,
+          "pid": 68006
+        },
+        {
+          "create_time": 1791913287.368555,
+          "pid": 68007
+        },
+        {
+          "create_time": 1791913288.580522,
+          "pid": 68244
+        },
+        {
+          "create_time": 1791913289.431093,
+          "pid": 68245
+        },
+        {
+          "create_time": 1791913290.72119,
+          "pid": 68248
+        },
+        {
+          "create_time": 1791913291.572576,
+          "pid": 68250
+        },
+        {
+          "create_time": 1791913292.416416,
+          "pid": 68253
+        },
+        {
+          "create_time": 1791913292.42036,
+          "pid": 68254
+        },
+        {
+          "create_time": 1791913292.439479,
+          "pid": 68255
+        },
+        {
+          "create_time": 1791913293.887622,
+          "pid": 68258
+        }
+      ],
+      "worker_pgid": 67429,
+      "workers": 2,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 20.429064584022854,
+      "child_identity": {
+        "create_time": 1791913379.177181,
+        "pid": 69071
+      },
+      "child_pid": 69071,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791913398.819932,
+      "exit_code": 1,
+      "group_empty": true,
+      "job_id": "19024b55e50b4644b6ea0ba9b5c8996f",
+      "job_index": 18,
+      "last_charge_epoch": 1791913398.8126998,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-identities.log",
+      "monitor_create_time": 1791913377.385352,
+      "monitor_identity": {
+        "create_time": 1791913377.385352,
+        "pid": 68993
+      },
+      "monitor_pid": 68993,
+      "name": "repair-r14-critic-identities",
+      "peak_rss_bytes": 1194115072,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.request.json",
+      "request_sha256": "c3ac7c098e5fddefd859f6372ddfdd8b488bad54d3ffa76de51276a52c3fb55d",
+      "running": false,
+      "started_epoch": 1791913378.355457,
+      "supervisor_identity": {
+        "create_time": 1791913378.357186,
+        "pid": 69069
+      },
+      "supervisor_pid": 69069,
+      "wall_seconds": 20.429064584022854,
+      "worker_identities": [
+        {
+          "create_time": 1791913379.177181,
+          "pid": 69071
+        },
+        {
+          "create_time": 1791913380.060323,
+          "pid": 69074
+        },
+        {
+          "create_time": 1791913380.261745,
+          "pid": 69083
+        }
+      ],
+      "worker_pgid": 69071,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.0925957919680513,
+      "child_identity": {
+        "create_time": 1791913384.416462,
+        "pid": 69170
+      },
+      "child_pid": 69170,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791913384.6576698,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "aaab901d31a6431193289a24102793ea",
+      "job_index": 19,
+      "last_charge_epoch": 1791913384.6505358,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-builder-preservation.log",
+      "monitor_create_time": 1791913382.254689,
+      "monitor_identity": {
+        "create_time": 1791913382.254689,
+        "pid": 69092
+      },
+      "monitor_pid": 69092,
+      "name": "repair-r14-builder-preservation",
+      "peak_rss_bytes": 403095552,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.request.json",
+      "request_sha256": "9fa7135e7cc1879a2ff74a139b7cf601e340b8f340a7d803a0bc57adf2976db5",
+      "running": false,
+      "started_epoch": 1791913383.535441,
+      "supervisor_identity": {
+        "create_time": 1791913383.536935,
+        "pid": 69168
+      },
+      "supervisor_pid": 69168,
+      "wall_seconds": 1.0925957919680513,
+      "worker_identities": [
+        {
+          "create_time": 1791913384.416462,
+          "pid": 69170
+        }
+      ],
+      "worker_pgid": 69170,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 22.64554683404276,
+      "child_identity": {
+        "create_time": 1791913456.909009,
+        "pid": 69965
+      },
+      "child_pid": 69965,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791913478.776192,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "fe30bf6e1c7c40969c82b5d374deb8db",
+      "job_index": 20,
+      "last_charge_epoch": 1791913478.764649,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-identities-corrected.log",
+      "monitor_create_time": 1791913455.15439,
+      "monitor_identity": {
+        "create_time": 1791913455.15439,
+        "pid": 69887
+      },
+      "monitor_pid": 69887,
+      "name": "repair-r14-critic-identities-corrected",
+      "peak_rss_bytes": 1225392128,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.request.json",
+      "request_sha256": "92aacef11365c5441c8c6929d1db436e88d472186ad1d3e4a2c23fbcd829d948",
+      "running": false,
+      "started_epoch": 1791913456.103776,
+      "supervisor_identity": {
+        "create_time": 1791913456.105432,
+        "pid": 69963
+      },
+      "supervisor_pid": 69963,
+      "wall_seconds": 22.64554683404276,
+      "worker_identities": [
+        {
+          "create_time": 1791913456.909009,
+          "pid": 69965
+        },
+        {
+          "create_time": 1791913457.808081,
+          "pid": 69968
+        },
+        {
+          "create_time": 1791913458.013764,
+          "pid": 69979
+        },
+        {
+          "create_time": 1791913458.036743,
+          "pid": 69980
+        }
+      ],
+      "worker_pgid": 69965,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.9519169589621015,
+      "child_identity": {
+        "create_time": 1791913481.545581,
+        "pid": 70075
+      },
+      "child_pid": 70075,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791913482.6992698,
+      "exit_code": 1,
+      "group_empty": true,
+      "job_id": "3cf363e1923f4fada6e774f76aa926a8",
+      "job_index": 21,
+      "last_charge_epoch": 1791913482.687167,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-pgid-reuse.log",
+      "monitor_create_time": 1791913479.729629,
+      "monitor_identity": {
+        "create_time": 1791913479.729629,
+        "pid": 69997
+      },
+      "monitor_pid": 69997,
+      "name": "repair-r14-critic-pgid-reuse",
+      "peak_rss_bytes": 573603840,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.request.json",
+      "request_sha256": "ee3f5201cfcc82933cd316491290a39befc7a193691d6937e85eb36b7578e31d",
+      "running": false,
+      "started_epoch": 1791913480.719796,
+      "supervisor_identity": {
+        "create_time": 1791913480.721302,
+        "pid": 70073
+      },
+      "supervisor_pid": 70073,
+      "wall_seconds": 1.9519169589621015,
+      "worker_identities": [
+        {
+          "create_time": 1791913481.545581,
+          "pid": 70075
+        }
+      ],
+      "worker_pgid": 70075,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.9352504170383327,
+      "child_identity": {
+        "create_time": 1791913514.530874,
+        "pid": 70240
+      },
+      "child_pid": 70240,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791913515.668243,
+      "exit_code": 1,
+      "group_empty": true,
+      "job_id": "0ddc2666180140d08b23dce8d334c971",
+      "job_index": 22,
+      "last_charge_epoch": 1791913515.655333,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-pgid-reuse-confirmed.log",
+      "monitor_create_time": 1791913512.750516,
+      "monitor_identity": {
+        "create_time": 1791913512.750516,
+        "pid": 70162
+      },
+      "monitor_pid": 70162,
+      "name": "repair-r14-critic-pgid-reuse-confirmed",
+      "peak_rss_bytes": 573440000,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.request.json",
+      "request_sha256": "27da63609cd63aedc4fe9d53ccedad5413327c38aef95f15f14250939670219d",
+      "running": false,
+      "started_epoch": 1791913513.705181,
+      "supervisor_identity": {
+        "create_time": 1791913513.706797,
+        "pid": 70238
+      },
+      "supervisor_pid": 70238,
+      "wall_seconds": 1.9352504170383327,
+      "worker_identities": [
+        {
+          "create_time": 1791913514.530874,
+          "pid": 70240
+        }
+      ],
+      "worker_pgid": 70240,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 39.1304549589986,
+      "child_identity": {
+        "create_time": 1791914149.660187,
+        "pid": 71482
+      },
+      "child_pid": 71482,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914188.007872,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "ec2f7fe75b544beb9dda24c82c3a986c",
+      "job_index": 23,
+      "last_charge_epoch": 1791914187.98779,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-pgid-fix-tests.log",
+      "monitor_create_time": 1791914147.787406,
+      "monitor_identity": {
+        "create_time": 1791914147.787406,
+        "pid": 71395
+      },
+      "monitor_pid": 71395,
+      "name": "repair-r14-pgid-fix-tests",
+      "peak_rss_bytes": 1790230528,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.request.json",
+      "request_sha256": "c7d5a3ff34f0f263d529e0a4715ff3c9e195592404920c1e19b2c15bd9dc4666",
+      "running": false,
+      "started_epoch": 1791914148.85005,
+      "supervisor_identity": {
+        "create_time": 1791914148.851853,
+        "pid": 71479
+      },
+      "supervisor_pid": 71479,
+      "wall_seconds": 39.1304549589986,
+      "worker_identities": [
+        {
+          "create_time": 1791914149.660187,
+          "pid": 71482
+        },
+        {
+          "create_time": 1791914150.790355,
+          "pid": 71483
+        },
+        {
+          "create_time": 1791914151.011205,
+          "pid": 71491
+        },
+        {
+          "create_time": 1791914175.917148,
+          "pid": 71504
+        },
+        {
+          "create_time": 1791914176.957023,
+          "pid": 71505
+        },
+        {
+          "create_time": 1791914177.803552,
+          "pid": 71506
+        },
+        {
+          "create_time": 1791914177.807437,
+          "pid": 71507
+        },
+        {
+          "create_time": 1791914179.004853,
+          "pid": 71508
+        },
+        {
+          "create_time": 1791914179.855986,
+          "pid": 71511
+        },
+        {
+          "create_time": 1791914181.068985,
+          "pid": 71514
+        },
+        {
+          "create_time": 1791914181.911883,
+          "pid": 71515
+        },
+        {
+          "create_time": 1791914182.752959,
+          "pid": 71518
+        },
+        {
+          "create_time": 1791914182.756348,
+          "pid": 71519
+        },
+        {
+          "create_time": 1791914182.774166,
+          "pid": 71520
+        },
+        {
+          "create_time": 1791914184.194648,
+          "pid": 71521
+        },
+        {
+          "create_time": 1791914185.029955,
+          "pid": 71523
+        },
+        {
+          "create_time": 1791914185.86361,
+          "pid": 71524
+        },
+        {
+          "create_time": 1791914185.867158,
+          "pid": 71525
+        },
+        {
+          "create_time": 1791914185.886187,
+          "pid": 71526
+        }
+      ],
+      "worker_pgid": 71482,
+      "workers": 2,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.0240827920497395,
+      "child_identity": {
+        "create_time": 1791914373.17774,
+        "pid": 72752
+      },
+      "child_pid": 72752,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914373.441629,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "26578b1c275a4b85804258b75a86e7e7",
+      "job_index": 24,
+      "last_charge_epoch": 1791914373.422513,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-builder-packets-final.log",
+      "monitor_create_time": 1791914370.927999,
+      "monitor_identity": {
+        "create_time": 1791914370.927999,
+        "pid": 72673
+      },
+      "monitor_pid": 72673,
+      "name": "repair-r14-builder-packets-final",
+      "peak_rss_bytes": 404865024,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.request.json",
+      "request_sha256": "d290cd2935195ffa3e335b3d1a86fea5fa22ee17751ffac1d89b8b2c5be472ea",
+      "running": false,
+      "started_epoch": 1791914372.3908281,
+      "supervisor_identity": {
+        "create_time": 1791914372.393163,
+        "pid": 72749
+      },
+      "supervisor_pid": 72749,
+      "wall_seconds": 1.0240827920497395,
+      "worker_identities": [
+        {
+          "create_time": 1791914373.17774,
+          "pid": 72752
+        }
+      ],
+      "worker_pgid": 72752,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.0339779580244794,
+      "child_identity": {
+        "create_time": 1791914388.897003,
+        "pid": 73384
+      },
+      "child_pid": 73384,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914389.1686761,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "7a028588ecd5471eba216ca79b446c60",
+      "job_index": 25,
+      "last_charge_epoch": 1791914389.146663,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-package-candidate-2.log",
+      "monitor_create_time": 1791914387.181293,
+      "monitor_identity": {
+        "create_time": 1791914387.181293,
+        "pid": 73306
+      },
+      "monitor_pid": 73306,
+      "name": "repair-r14-package-candidate-2",
+      "peak_rss_bytes": 404783104,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.request.json",
+      "request_sha256": "1c4782347030539087c154ca818ac364efe37f33860968565db151c8b9d16216",
+      "running": false,
+      "started_epoch": 1791914388.1071382,
+      "supervisor_identity": {
+        "create_time": 1791914388.108675,
+        "pid": 73382
+      },
+      "supervisor_pid": 73382,
+      "wall_seconds": 1.0339779580244794,
+      "worker_identities": [
+        {
+          "create_time": 1791914388.897003,
+          "pid": 73384
+        }
+      ],
+      "worker_pgid": 73384,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 40.33212904102402,
+      "child_identity": {
+        "create_time": 1791914506.645938,
+        "pid": 75274
+      },
+      "child_pid": 75274,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914546.149921,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "3d7ba9521adf43779b6ab407007336b9",
+      "job_index": 26,
+      "last_charge_epoch": 1791914546.1258922,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-fresh-critic-tests.log",
+      "monitor_create_time": 1791914504.234116,
+      "monitor_identity": {
+        "create_time": 1791914504.234116,
+        "pid": 75269
+      },
+      "monitor_pid": 75269,
+      "name": "repair-r14-fresh-critic-tests",
+      "peak_rss_bytes": 1578385408,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.request.json",
+      "request_sha256": "17cded49797cf90adfd5e25323825b43fdd68e3c24f433e8326063e24bb2f8c9",
+      "running": false,
+      "started_epoch": 1791914505.788165,
+      "supervisor_identity": {
+        "create_time": 1791914505.789945,
+        "pid": 75272
+      },
+      "supervisor_pid": 75272,
+      "wall_seconds": 40.33212904102402,
+      "worker_identities": [
+        {
+          "create_time": 1791914506.645938,
+          "pid": 75274
+        },
+        {
+          "create_time": 1791914508.004639,
+          "pid": 75278
+        },
+        {
+          "create_time": 1791914508.206888,
+          "pid": 75287
+        },
+        {
+          "create_time": 1791914533.389185,
+          "pid": 75923
+        },
+        {
+          "create_time": 1791914534.420831,
+          "pid": 75924
+        },
+        {
+          "create_time": 1791914535.320267,
+          "pid": 75925
+        },
+        {
+          "create_time": 1791914535.325107,
+          "pid": 75926
+        },
+        {
+          "create_time": 1791914536.535261,
+          "pid": 75930
+        },
+        {
+          "create_time": 1791914537.533139,
+          "pid": 76011
+        },
+        {
+          "create_time": 1791914538.764152,
+          "pid": 76014
+        },
+        {
+          "create_time": 1791914539.683283,
+          "pid": 76015
+        },
+        {
+          "create_time": 1791914540.539546,
+          "pid": 76016
+        },
+        {
+          "create_time": 1791914540.543916,
+          "pid": 76017
+        },
+        {
+          "create_time": 1791914540.563242,
+          "pid": 76018
+        },
+        {
+          "create_time": 1791914542.070212,
+          "pid": 76019
+        },
+        {
+          "create_time": 1791914543.012282,
+          "pid": 76020
+        },
+        {
+          "create_time": 1791914543.900316,
+          "pid": 76021
+        },
+        {
+          "create_time": 1791914543.904836,
+          "pid": 76022
+        },
+        {
+          "create_time": 1791914543.923613,
+          "pid": 76023
+        },
+        {
+          "create_time": 1791914545.428568,
+          "pid": 76105
+        }
+      ],
+      "worker_pgid": 75274,
+      "workers": 2,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 1.6086416250327602,
+      "child_identity": {
+        "create_time": 1791914590.566945,
+        "pid": 76593
+      },
+      "child_pid": 76593,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914591.2893,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "3095caa5f14c4739be622bd6c0052ce0",
+      "job_index": 27,
+      "last_charge_epoch": 1791914591.267978,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-handover-preparation.log",
+      "monitor_create_time": 1791914588.119289,
+      "monitor_identity": {
+        "create_time": 1791914588.119289,
+        "pid": 76515
+      },
+      "monitor_pid": 76515,
+      "name": "repair-r14-handover-preparation",
+      "peak_rss_bytes": 511508480,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.request.json",
+      "request_sha256": "c55abca78076fe829ca8b84463092e2a9e923c5f93b8a7f1bad97801a64dcbad",
+      "running": false,
+      "started_epoch": 1791914589.650451,
+      "supervisor_identity": {
+        "create_time": 1791914589.652403,
+        "pid": 76591
+      },
+      "supervisor_pid": 76591,
+      "wall_seconds": 1.6086416250327602,
+      "worker_identities": [
+        {
+          "create_time": 1791914590.566945,
+          "pid": 76593
+        },
+        {
+          "create_time": 1791914590.625916,
+          "pid": 76596
+        },
+        {
+          "create_time": 1791914590.983149,
+          "pid": 76599
+        }
+      ],
+      "worker_pgid": 76593,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 2.372314499982167,
+      "child_identity": {
+        "create_time": 1791914706.827018,
+        "pid": 77085
+      },
+      "child_pid": 77085,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914708.432715,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "cb32c094d1dd477d98d303d827dcdc49",
+      "job_index": 28,
+      "last_charge_epoch": 1791914708.414111,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-fresh-critic-metadata.log",
+      "monitor_create_time": 1791914704.756003,
+      "monitor_identity": {
+        "create_time": 1791914704.756003,
+        "pid": 77082
+      },
+      "monitor_pid": 77082,
+      "name": "repair-r14-fresh-critic-metadata",
+      "peak_rss_bytes": 708427776,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.request.json",
+      "request_sha256": "74f776ce3a5d86563d8df0bf647dec22104213fee5fa39d814d30993eeb018fc",
+      "running": false,
+      "started_epoch": 1791914706.031081,
+      "supervisor_identity": {
+        "create_time": 1791914706.032911,
+        "pid": 77083
+      },
+      "supervisor_pid": 77083,
+      "wall_seconds": 2.372314499982167,
+      "worker_identities": [
+        {
+          "create_time": 1791914706.827018,
+          "pid": 77085
+        },
+        {
+          "create_time": 1791914707.733489,
+          "pid": 77090
+        },
+        {
+          "create_time": 1791914707.935655,
+          "pid": 77100
+        },
+        {
+          "create_time": 1791914708.180641,
+          "pid": 77110
+        }
+      ],
+      "worker_pgid": 77085,
+      "workers": 1,
+      "workers_stopped": true
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 3.197191707964521,
+      "child_identity": {
+        "create_time": 1791914739.360219,
+        "pid": 77203
+      },
+      "child_pid": 77203,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.clock.json",
+      "completion_schema": "cp26-completion-v2",
+      "ended_epoch": 1791914741.442317,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "e3c4a2009b3b49dbb32867823da49b55",
+      "job_index": 29,
+      "last_charge_epoch": 1791914741.4234161,
+      "live_rss_bytes": 0,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-fresh-critic-metadata-bounded.log",
+      "monitor_create_time": 1791914737.360415,
+      "monitor_identity": {
+        "create_time": 1791914737.360415,
+        "pid": 77198
+      },
+      "monitor_pid": 77198,
+      "name": "repair-r14-fresh-critic-metadata-bounded",
+      "peak_rss_bytes": 622624768,
+      "phase": "closing",
+      "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.progress.json",
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.request.json",
+      "request_sha256": "90fd3250c97476d7019784b2b823c6dee6d68dba1e45fe099ef63fcd47420768",
+      "running": false,
+      "started_epoch": 1791914738.2195861,
+      "supervisor_identity": {
+        "create_time": 1791914738.221037,
+        "pid": 77201
+      },
+      "supervisor_pid": 77201,
+      "wall_seconds": 3.197191707964521,
+      "worker_identities": [
+        {
+          "create_time": 1791914739.360219,
+          "pid": 77203
+        },
+        {
+          "create_time": 1791914740.492613,
+          "pid": 77205
+        },
+        {
+          "create_time": 1791914740.690531,
+          "pid": 77214
+        },
+        {
+          "create_time": 1791914740.946105,
+          "pid": 77222
+        },
+        {
+          "create_time": 1791914740.970338,
+          "pid": 77223
+        }
+      ],
+      "worker_pgid": 77203,
+      "workers": 1,
+      "workers_stopped": true
+    }
+  ],
+  "peaks": {
+    "rss_bytes": 2362785792,
+    "workers": 2
+  },
+  "repair_scope": {
+    "active": false,
+    "baseline_seconds": 3463.6917564170067,
+    "id": "repair-v21-r14",
+    "limit_seconds": 36000,
+    "opened_epoch": 1791911407.54939,
+    "terminal_candidate_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e"
+  },
+  "reserves": [
+    {
+      "id": "independent-audit-failed-test",
+      "kind": "reserved",
+      "seconds": 2826.0,
+      "source": {
+        "audit_received_epoch": 1791908653.442842,
+        "audit_turn_completed_epoch": 1791908415,
+        "audit_turn_started_epoch": 1791907417,
+        "enclosing_window_seconds": 2825.633803844452,
+        "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+        "exact_runtime_recovered": false,
+        "failed_test_lower_bound_seconds": 15.01,
+        "parity_ended_epoch": 1791905827.8090382,
+        "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b"
+      },
+      "status": "authorized"
+    }
+  ],
+  "rule": "total = measured + reported + authorized reserves; supervised worker wall seconds x allocated workers, plus separately timed maintenance bodies; idle restart gaps excluded",
+  "schema": "cp26-ledger-v2"
+}

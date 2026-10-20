@@ -1,0 +1,81 @@
+{
+ "evidence": [
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-authority.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "473081905acef0712d2a6610cf0ce2d1ab65a2e1e1bb92fb8586f47b88f4cf26"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocked-admission.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "a4e20f996050f996f1be573fd5cb7a4d7d11ecb736cd9e80e7de010a9ad77461"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocked-forecast.py",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "5441bc415f27f0f856064736fa4bd6c72d2a5cfb5d737082aa225990b5e91696"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocker.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "81db4a3b58df85cc5e38ec52e08e7aafa9c00c44293b68dcdccdde70c6ffa08a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-checks.py",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "df674b85d0d606db73ded17296d87776b398b41913ee0d630631f8ac203eac6f"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-preserve-terminal.py",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "f6b05357a161c69c08668125b8747aa9cf56fa51598e9efba65cedfbb18c3e61"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-provenance.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "37d3091d6733cd138a22102cec8f1d59d027e722e6b5bf066beac1e4dc535bf8"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-resources.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "555a0baa45136ec1a360259a73046d280fcd6efc06e94d2a03e198c5ebf0e49c"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-terminal-custody.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "9ae69b68fb70f0f2585f63ee6c476d630a649bea7ad1c2d45dd702e003b6a368"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-tests.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "8082fbe16e5538029faa667b2e0c866f6c02604ecb51b2a765ce0ff76d5980e2"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix.patch",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "fd49bd29e43b421919563853fb7bce8eed6a51fe8d284b526136723716e92ede"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fixed-concurrency-observation.json",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "f371c6c27089b8656586d8846717c6f77fe3c8524fdb4cfef8d38cebe6b563e4"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fixed-forecast.py",
+   "reason": "Ledger retry fix, continuation authority/provenance, actual timeout custody or blocked cost/return evidence.",
+   "sha256": "a931f83dc46dbc8a54ff42962d034fde65f71bda6108651033d5de77fb7945a7"
+  }
+ ],
+ "generated_paths": {
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/": "Detached launch identities and the failed pre-worker reservation log.",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/": "Six new registered job endings and logs; earlier17receipts left unchanged.",
+  "reports/rebaseline/cold-rerun-2026-10-15/ledger-fix-cost-forecast-blocked.json": "Updated covered cost subtotal; complete total explicitly unsupported.",
+  "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/": "67newregistered timing probes; all946prior bytes preserved."
+ },
+ "source_base": "c1685ee735072a03861838d5e6960aff9a04e10e",
+ "source_paths": {
+  "reports/rebaseline/cold-rerun-2026-10-15/preparation-tests.json": "Bind21newaffectedchecks and65reused applicable checks to the operational code identity.",
+  "src/cp26/budget.py": "Remove premature cold-refresh retry exhaustion while preserving the absolute deadline.",
+  "tests/test_cp26_ledger_liveness.py": "Verify five valid conflicts, actual timeout and exactly-once task/counter behavior."
+ }
+}

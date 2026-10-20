@@ -1,0 +1,32 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "-m",
+  "pytest",
+  "tests/test_cp26_harness.py",
+  "tests/test_cp26_parity.py",
+  "tests/test_cp26_search.py",
+  "tests/test_cp26_state.py",
+  "tests/test_cp26_replay.py",
+  "tests/test_cp26_monitor.py",
+  "tests/test_cp26_repair_contract.py",
+  "-q",
+  "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-stable-tests"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "ee488dcf6cac4217b7c996eb9234c979",
+ "job_index": 12,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-stable-tests.log",
+ "monitor_identity": {
+  "create_time": 1791911896.965849,
+  "pid": 47845
+ },
+ "name": "repair-r14-stable-tests",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791911898.400625,
+ "workers": 2
+}

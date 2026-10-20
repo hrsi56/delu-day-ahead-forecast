@@ -1,0 +1,35 @@
+{
+ "allocation": "Fit-only phase. No source/cache identity changes; existing entries validated and only missing members fitted.",
+ "clock_sha256": "2769e1ef759f5bb446ce19d4fa45696710445b0c25f48797acaacdfaeca8c887",
+ "job": {
+  "abort_reason": null,
+  "charged_wall_seconds": 3092.114279625006,
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g01-gfs6-2.381.b0f7738a8a834988a210569804bc4848.clock.json",
+  "exit_code": 0,
+  "job_id": "b0f7738a8a834988a210569804bc4848",
+  "peak_rss_bytes": 1694908416,
+  "workers": 1
+ },
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 2,
+  "body_seconds": 0.0013082500081509352,
+  "canonical_input": true,
+  "conflicts": 1,
+  "hold_seconds": 0.03530325007159263,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.2605684999143705,
+  "peak_wait_seconds": 0.6323924160096794,
+  "read_bytes": 9763049,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.8501921249553561,
+  "transactions": 6717,
+  "wait_seconds": 0.030879040947183967,
+  "written": true,
+  "written_bytes": 9763048
+ },
+ "prior_guard_attempt": "cold-r16-fit-g01-gfs6-1 remains preserved and fully charged.",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "status": "245_NATIVE_GFS6_DATES_READY"
+}

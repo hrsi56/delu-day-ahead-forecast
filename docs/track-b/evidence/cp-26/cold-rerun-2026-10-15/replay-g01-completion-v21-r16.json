@@ -1,0 +1,39 @@
+{
+ "cache_only": true,
+ "clock_sha256": "557bf131aa9ec3e9e0b71a068cc2245e21e2f876d1e890775f9d951f695c2f5d",
+ "job": {
+  "abort_reason": null,
+  "charged_wall_seconds": 316.9869660829427,
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-replay-g01-1.384.3b84d854fc524217acb78529e20bc825.clock.json",
+  "exit_code": 0,
+  "job_id": "3b84d854fc524217acb78529e20bc825",
+  "peak_rss_bytes": 4401643520,
+  "workers": 1
+ },
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.00039725005626678467,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.010979416081681848,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.26464629103429615,
+  "peak_wait_seconds": 0.1285104580456391,
+  "read_bytes": 10146445,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.04620258300565183,
+  "transactions": 972,
+  "wait_seconds": 0.03522066690493375,
+  "written": true,
+  "written_bytes": 10146443
+ },
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/replay-cached-23b04e0c1162992aae5005b47bffd855e4d5de257f4fc29dc29c84c109363d1d.json",
+ "phase_sha256": "2ff19bb0707eae621574e568f4fb25e619b337369bc13616f25550c750d80ed7",
+ "prior178_issuance_hashes_unchanged": true,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scores_computed": false,
+ "status": "245_FORECAST_ORIGINS_COMPLETE",
+ "through": "2020-09-01"
+}

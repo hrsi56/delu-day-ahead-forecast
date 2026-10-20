@@ -1,0 +1,25 @@
+{
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Prospective execution order within the already registered disjoint native windows. This is a finite queue description, not a new scheduler or scientific protocol.",
+ "native_worker_ceiling": 3,
+ "total_registered_worker_ceiling": 4,
+ "scientific_entry_point_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+ "operational_wrapper_sha256": "492631281ae4b1b623c0d20588df3eef8728c6832342e266a57ee85a6159b1b5",
+ "current_jobs": ["cold-r16-fit-g06-nominal-2", "cold-r16-fit-g05g06-gfs6-3", "cold-r16-fit-g05g06-noload-3"],
+ "next_permitted_tasks": [
+  {"name": "cold-r16-fit-g07-nominal-1", "route": "nominal", "first": "2024-01-10", "through": "2024-09-10"},
+  {"name": "cold-r16-fit-g07g08-noload-1", "route": "noload", "first": "2024-01-10", "through": "2025-05-13"},
+  {"name": "cold-r16-fit-g07g08-gfs6-1", "route": "gfs6", "first": "2024-01-10", "through": "2025-05-13"},
+  {"name": "cold-r16-fit-g08-nominal-1", "route": "nominal", "first": "2024-09-11", "through": "2025-05-13"}
+ ],
+ "dispatch": "Take the next registered independent window when a native slot closes with verified ending and live admission/memory headroom. No saved success or terminal failure is refit. Three native workers leave one slot for correctly declared accounting work.",
+ "drain_boundary": "All native routes through1960 origins, ending2025-05-13. Do not launch groups9or10 before the chronological replay below.",
+ "exclusive_replay_prefixes_after_all_native_jobs_close": [
+  {"origins": 1225, "through": "2023-05-09"},
+  {"origins": 1470, "through": "2024-01-09"},
+  {"origins": 1715, "through": "2024-09-10"},
+  {"origins": 1960, "through": "2025-05-13"}
+ ],
+ "scientific_invariants": "Every existing date/member/configuration/seed and fit cadence remains fixed. Independent native fits consume no H/learning state. All forecast emission, feedback consumption and H/CQR updates remain chronological in the existing cache-only replay owner; scores stay sealed until2441 origins.",
+ "cost_basis": "The live complete projection remains required before every dispatch. Existing conservative remaining fit/replay/failure/operational allowances and the bounded closing allowance are retained. No throughput speedup is needed for admission. Additional operational resumptions remain within the retained failed-job/resume and operating allowances."
+}

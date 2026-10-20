@@ -1,0 +1,15 @@
+{
+ "calibration_job_id": "e12a94c2e2c54c0185accafae3d15c7c",
+ "full_run_admission": "pending missing51probes and complete supported forecast",
+ "heartbeat_basis": "Two complete3sledger intervals plus0.4spoll jitter and1.6sprocess/observer slack.",
+ "heartbeat_timeout_seconds": 8.0,
+ "historical_reserve_added_again": false,
+ "independent_enforcement": "Per-observer I/O thread retains normal once-only tick; caller continues direct ownership,RSS and uncharged elapsed hard-cap checks at0.2swaits without acquiring the ledger lock.",
+ "ledger_margin_over_observed_tail": 4.648337754586766,
+ "ledger_timeout_seconds": 3.0,
+ "maximum_stop_exposure_seconds_per_reserved_slot": 38.4,
+ "measured_largest_tail_seconds": 0.6453919999767095,
+ "poll_seconds": 0.2,
+ "startup_basis": "14s covers concurrent observer binding and both initial charged samples before worker exec.",
+ "startup_grace_seconds": 14.0
+}

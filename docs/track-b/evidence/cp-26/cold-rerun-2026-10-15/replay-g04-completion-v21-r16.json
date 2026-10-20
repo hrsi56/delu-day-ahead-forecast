@@ -1,0 +1,42 @@
+{
+ "abort_reason": null,
+ "cache_only": true,
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "clock_sha256": "52eee683c5f52ee2b8dbaa29205dab006b05191de064d5b69f880b9767ec644e",
+ "exit_code": 0,
+ "group_empty": true,
+ "issued_origins": 980,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-replay-g04-1.396.03e0ca7335be428a84ec96b11dee0623.clock.json",
+  "job_id": "03e0ca7335be428a84ec96b11dee0623",
+  "job_index": 396,
+  "name": "cold-r16-replay-g04-1"
+ },
+ "ledger_timeouts": 0,
+ "new_origins": 245,
+ "peak_rss_bytes": 4629938176,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/replay-cached-9cf112fda742d357daa53a7ef7e49a9e9c96fb225cfcaea7f89a8ecd1d9a77a5.json",
+ "phase_sha256": "d01da2e1afb4f684cb0158103d4be42eaac933523f1fd3ddf48cbf15a7df86cf",
+ "prior735_issuance_hashes_unchanged": true,
+ "prior735_phase_sha256": "7440bbda6ada0df7b8cc8545ea3c24235306efcec1ec66f50652fd4a9f500d48",
+ "replay_state_content_sha256": "f5dad9eb1cb307435caffb15dc8d1858282af3c585ae04e913685d25353c8541",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scores_computed": false,
+ "through": "2022-09-06",
+ "validation_status": "PASS",
+ "wall_seconds": 2109.229161959025,
+ "workers_stopped": true,
+ "zero_key_boundary_retained": {
+  "day": "2022-02-22",
+  "day_content_sha256": "1a145c1df5074b909d04fe49889dfb05279257779a83b0005e7f9b89e306ba58",
+  "native_central_valid": false,
+  "native_keys": 0,
+  "output_source": "missing",
+  "own_error_eligible": false,
+  "policies_verified": 13,
+  "scoring_keys": 0
+ }
+}

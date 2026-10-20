@@ -1,0 +1,58 @@
+{
+  "checkpoint": "cp-26",
+  "checkpoint_status": "INCOMPLETE",
+  "documents": [
+    {
+      "commit": "332baeb861cec5a58516c58a29a1a3afe1eec909",
+      "path": "capstone_v21.md",
+      "reason": "Owner-approved repair contract: search support, native-error recovery, eligibility/state and CP28 consequences",
+      "sha256": "3be866bd10af02cc2b0b956ed91be660dca29a62c0b23b00997bf0b415d100c5",
+      "status": "pending_owner_ratification",
+      "supersedes": {
+        "commit": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+        "sha256": "173799d818387b9d82db16b9ccd7195afaebbea8e11259809e4a8b704bd525a8",
+        "version": "v21-r13"
+      },
+      "version": "v21-r14 candidate"
+    },
+    {
+      "path": "docs/track-b/capstone_v21-r13-to-v21-r14-amendments.md",
+      "sha256": "554a3aa4bf81f3fc1cc2319e624295570f919ff1fd4a6d9e2c9f56f8dcf6b79a",
+      "status": "active_repair_record",
+      "supersedes": null,
+      "version": "r13-to-r14 repair candidate"
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/issued-repair-brief-v21-r14.md",
+      "reason": "This repair scope replaces stale Jan1/support and blanket fallback-intake execution assumptions; no experiment resumption",
+      "sha256": "5b6a0cdfad870da6b59a03ff29576ff6ec98891e941d56986516e6f3f743ff84",
+      "status": "active_repair_only",
+      "supersedes": {
+        "path": "docs/track-b/evidence/cp-26/issued-brief.md",
+        "sha256": "5e16a134a9dd798733b0393f4f8e2570d03bf251471503d9292966e67e05214b"
+      },
+      "version": "Owner repair brief v21-r14"
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md",
+      "reason": "Continuous native-central H warm-up/recovery and separate three-member learning eligibility; seven-arm decision rules unchanged",
+      "sha256": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+      "status": "frozen_registration_candidate",
+      "supersedes": {
+        "path": "docs/track-b/evidence/cp-26/cp28-frozen-protocol.md",
+        "sha256": "f2ebee6ec207047bb1db7a311d7fbf437627ad7c395f1e07c92417c7f5a623cc",
+        "version": "cp28-stored-forecasts-v1"
+      },
+      "version": "cp28-stored-forecasts-v21-r14"
+    }
+  ],
+  "freeze_rule": "commit these documents before any new search/pilot; Owner ratification and continuation brief required",
+  "historical_documents_unchanged": [
+    "docs/track-b/evidence/cp-26/issued-brief.md",
+    "docs/track-b/evidence/cp-26/cp28-frozen-protocol.md"
+  ],
+  "landed_code_base": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "repair_experiment_authorized": false,
+  "schema": "cp26-repair-active-documents-v1",
+  "self_identity": "this manifest has no self hash or self commit; its identity is recorded externally"
+}

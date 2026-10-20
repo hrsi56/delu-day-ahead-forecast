@@ -1,0 +1,87 @@
+diff --git a/src/cp26/budget.py b/src/cp26/budget.py
+index 24696fd..a62afb5 100644
+--- a/src/cp26/budget.py
++++ b/src/cp26/budget.py
+@@ -675 +675,2 @@ class Budget:
+-        before retrying, at most twice and within the same acquisition deadline.
++        before retrying within the same absolute acquisition deadline. A valid
++        refresh does not exhaust a separate retry-count allowance.
+@@ -737 +738 @@ class Budget:
+-                    if conflicts > 2 or time.monotonic() >= deadline:
++                    if time.monotonic() >= deadline:
+@@ -739 +740,2 @@ class Budget:
+-                        raise TimeoutError('CP-26 ledger accounting lock did not progress')
++                        raise TimeoutError('CP-26 ledger accounting lock did not progress: '
++                                           'absolute deadline expired before cold-history refresh')
+diff --git a/tests/test_cp26_ledger_liveness.py b/tests/test_cp26_ledger_liveness.py
+index f618251..b6eeef3 100644
+--- a/tests/test_cp26_ledger_liveness.py
++++ b/tests/test_cp26_ledger_liveness.py
+@@ -1205,0 +1206 @@ def test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler(t
++            time.sleep(0.12)
+@@ -1212 +1213,2 @@ def test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler(t
+-    with pytest.raises(TimeoutError, match='ledger accounting lock did not progress'):
++    started = time.monotonic()
++    with pytest.raises(TimeoutError, match='absolute deadline expired before cold-history refresh'):
+@@ -1213,0 +1216 @@ def test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler(t
++    elapsed = time.monotonic() - started
+@@ -1215 +1218,2 @@ def test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler(t
+-    assert calls == [] and len(peers) == 3
++    assert S.LEDGER_TIMEOUT_SECONDS <= elapsed < S.HEARTBEAT_TIMEOUT_SECONDS
++    assert calls == [] and len(peers) > 3
+@@ -1217 +1221 @@ def test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler(t
+-        {'event': 'cold-peer', 'sequence': number} for number in range(1, 4)]
++        {'event': 'cold-peer', 'sequence': number} for number in range(1, len(peers) + 1)]
+@@ -1220 +1224,51 @@ def test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler(t
+-    assert budget.last_transaction['attempts'] == budget.last_transaction['conflicts'] == 3
++    assert budget.last_transaction['attempts'] == budget.last_transaction['conflicts'] == len(peers)
++    assert budget.last_transaction['outcome'] == 'timeout'
++
++
++@pytest.mark.parametrize('mutation', ['resource', 'task'])
++def test_five_valid_cold_refreshes_finish_before_deadline_exactly_once(tmp_path, monkeypatch, mutation):
++    budget = B.Budget(tmp_path / 'budget.json')
++    before = history_ledger(budget, days=2, closed_jobs=1)
++    budget._task_index_needed = True
++    budget.resource_read()
++    original_flock = B.fcntl.flock
++    peers, calls = [], []
++
++    def inject(lock, operation):
++        if operation == (B.fcntl.LOCK_EX | B.fcntl.LOCK_NB) and len(peers) < 5:
++            state = budget.read()
++            state['events'].append({'event': 'cold-peer', 'sequence': len(peers) + 1})
++            with budget.path.with_suffix('.lock').open('a') as peer_lock:
++                original_flock(peer_lock, B.fcntl.LOCK_EX)
++                B._write_ledger(budget.path, B._ledger_json(state))
++            peers.append(budget.path.read_bytes())
++        return original_flock(lock, operation)
++
++    def sample(state):
++        calls.append(1)
++        B.add_seconds(state, 7.0)
++        state['counts']['resource_merge'] = state['counts'].get('resource_merge', 0) + 1
++
++    monkeypatch.setattr(B.fcntl, 'flock', inject)
++    if mutation == 'resource':
++        budget.resource_update(sample)
++    else:
++        from cp26.execution import record_evidence_once
++        assert record_evidence_once(budget, 'five-refresh-task', {'sha256': 'f' * 64}, {'new_task': 1})
++    metrics = budget.last_transaction.copy()
++    after = budget.read()
++    assert metrics['total_seconds'] < S.LEDGER_TIMEOUT_SECONDS
++    assert metrics['attempts'] == 6 and metrics['conflicts'] == len(peers) == 5
++    assert metrics['outcome'] == 'committed' and metrics['written']
++    assert after['events'][:len(before['events']) + 5] == before['events'] + [
++        {'event': 'cold-peer', 'sequence': n} for n in range(1, 6)]
++    if mutation == 'resource':
++        assert calls == [1] and after['counts']['resource_merge'] == 1
++        assert B.total_seconds(after) == B.total_seconds(before) + 7.0
++        assert after['execution_tasks'] == before['execution_tasks']
++    else:
++        assert calls == [] and after['counts']['new_task'] == 1
++        assert B.total_seconds(after) == B.total_seconds(before)
++        assert len(after['execution_tasks']) == len(before['execution_tasks']) + 1
++        assert not record_evidence_once(budget, 'five-refresh-task', {'sha256': 'f' * 64}, {'new_task': 1})
++        assert budget.read() == after

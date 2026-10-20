@@ -1,0 +1,32 @@
+{
+ "abort_reason": null,
+ "cache_only": true,
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "clock_sha256": "6fd7bc71bfd81a4daea09fecf18a0db32c238418f8fc2b02bbe6559d996fdf34",
+ "exit_code": 0,
+ "group_empty": true,
+ "issued_origins": 735,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-replay-g03-1.395.7f15d28d779c41b1bc4350246bae2fb3.clock.json",
+  "job_id": "7f15d28d779c41b1bc4350246bae2fb3",
+  "job_index": 395,
+  "name": "cold-r16-replay-g03-1"
+ },
+ "ledger_timeouts": 0,
+ "new_origins": 245,
+ "peak_rss_bytes": 4379623424,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/replay-cached-0559687c68b72c4f454eac4a7119426856ac2ba88805f6236261681fe0223464.json",
+ "phase_sha256": "7440bbda6ada0df7b8cc8545ea3c24235306efcec1ec66f50652fd4a9f500d48",
+ "prior490_issuance_hashes_unchanged": true,
+ "prior490_phase_sha256": "888d7036c296806f26853809b3ae306f6a24464cfde87d4499fb617edf732001",
+ "replay_state_content_sha256": "2ba354fade41fd96e8fc5b5c3f4fc5023053c6534eb4643bd149c1df9673453c",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scores_computed": false,
+ "through": "2022-01-04",
+ "validation_status": "PASS",
+ "wall_seconds": 1709.803306167014,
+ "workers_stopped": true
+}

@@ -1,0 +1,373 @@
+{
+  "schema": "cp26-repair-run-receipts-v1",
+  "completed_runs": [
+    {
+      "name": "repair-r14-core-tests",
+      "workers": 1,
+      "wall_seconds": 27.989632125012577,
+      "machine_seconds": 27.989632125012577,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.log": "b3e86335981ad2dc09de10857a185664797df216de5d4403381a5d00fd1b5896",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.json": "1b06543ca4cb0e7f980fbaec146a10aca6ce4e08915a1af9312082c7398123ec",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.request.json": "85fa303dbc185c1b4cf68656a6ff987b078be2550f8e5d6219e423b1a58a08e8",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.progress.json": "3834bc5d6c08fca1e6953da3f16ad33a3a708929058d62e25b358c40468d4fae",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-core-tests/repair-r14-core-tests.7.34c32ab5dbf44cf8a4e4094c62e935c4.clock.json": "6831688a36c6ddf98e704d6fc91266e810f603c16b56fb99d89018c499ac427c"
+      }
+    },
+    {
+      "name": "repair-r14-support",
+      "workers": 1,
+      "wall_seconds": 120.70058624999365,
+      "machine_seconds": 120.70058624999365,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.log": "412f6c8627862080b013e11feff02772a3ea9d3892046f0b1bcb41323122c824",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.json": "16f12a96ca7909a8927b5641ca7e4724e0bd63457ef85d51b41d3f3f4d8dfb10",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.request.json": "f91a1c265a9cbd5c133e8d6d26ac3018c05206e3624c7c3f9a7f2fc7df0efa48",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.progress.json": "e7dd6d0bf13b1ee6e26539b2635f2238be3708f78f22b4da64db46dc48fb354a",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support/repair-r14-support.8.24cf1c1467294c73956a48fd1813010d.clock.json": "1f628aa596f9117c5748f5054f97545ec8d353b24fe0dda3db1b769945f1dcdd"
+      }
+    },
+    {
+      "name": "repair-r14-monitor-tests",
+      "workers": 2,
+      "wall_seconds": 11.155033624963835,
+      "machine_seconds": 22.31006724992767,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.log": "46d917dd96974f64be3f3bb9d46eb7ea2ae093f56f45e5ba0c929b866a02af7b",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.json": "795fbffb0833b215ee9950662205b18ed61afebc2aa3acc3df8ddfdb37f0c83e",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.request.json": "cdb68bdccb4e791e3b5c014083502ecb42508499c5b40403f6e4d5b83778422a",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.progress.json": "3e16a382b584082373af4a9a526ad76b9539e286aa270fb2df93d72beeb4d080",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-monitor-tests/repair-r14-monitor-tests.9.326d7f5bfa384e5fb7e5ff86ef09a600.clock.json": "55b95150e6af0ba16da2306314479a6d71a1e6b0de2ae0c6cd67e73f1ef7ee67"
+      }
+    },
+    {
+      "name": "repair-r14-final-tests",
+      "workers": 2,
+      "wall_seconds": 37.697050165967084,
+      "machine_seconds": 75.39410033193417,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.log": "92fa6cd154c4e8bbf8906e92d62198ff47fb31840d46312232d2f05ac11274fd",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.json": "45b31afb4bcd2584b9f06b99d6ed1524c229ce217507e5dd3962680e5c514a23",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.request.json": "f63d3f730a75fe7c94d947e5a340c10f49b303e4ad5e77944e894cc70e124b33",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.progress.json": "fdbf3d6ec752227fd1c00c35cb132003654cd705c7bc46cff22c12c5f1eb4c09",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-final-tests/repair-r14-final-tests.10.5badb56a25fe48b787ed6da155a9d1e5.clock.json": "0dd055e2c5a5b46f5b9e1377ca38e3f06be608e4691beeebb728b06a7160dfa4"
+      }
+    },
+    {
+      "name": "repair-r14-doc-manifest",
+      "workers": 1,
+      "wall_seconds": 1.0801898749778047,
+      "machine_seconds": 1.0801898749778047,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.log": "fe41c8e3bfaf3ac8325e5ae5c68a04cb2509f9871ee7aaa3000c6268a253351e",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.json": "b5cbeee26ac97e58a86a8c8133ddf5ceac18b3ae596af485b65c00656c11f764",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.request.json": "c0e23fe512783eaaba169c9f4ac51adc70c97135d213ce897ac6f5e5fd3a982f",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.progress.json": "141b5b2bec67c877a5aca45c280b1e91e241b14cdab5e27cb8437619dcddcce9",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-doc-manifest/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.clock.json": "6b44bf3e79e1be79704319ab5832760b101325ec37a517e0fb32a24724828a8b"
+      }
+    },
+    {
+      "name": "repair-r14-stable-tests",
+      "workers": 2,
+      "wall_seconds": 37.624251917004585,
+      "machine_seconds": 75.24850383400917,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.log": "9ddf3bb89c3190455ad736a31bc2d1f7d00d57608084f91ce10dfba0a621679f",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.json": "ba4bb564ae8396eea74231547564a1ea33a1abbbdf76d176c2d65cc990eaf404",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.request.json": "73f3ca8511a3350771118965506de2d1288afb5d86443ff5656fb7c90d7b1dac",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.progress.json": "a8d6c0551a9b54ab5717d7e1bdb22c4ae583f5b8a6c630520c40993a1fa8a208",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-stable-tests/repair-r14-stable-tests.12.ee488dcf6cac4217b7c996eb9234c979.clock.json": "66c52b5cdd4f03514ca8979581c630e741cb41ec6e8b6686e958f6d88083fe55"
+      }
+    },
+    {
+      "name": "repair-r14-verify-inputs",
+      "workers": 1,
+      "wall_seconds": 1.924069166998379,
+      "machine_seconds": 1.924069166998379,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.log": "81e9e8fe26768765035aa0529970bcdec2735289dc80f8193293d827852d39c4",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.json": "c0bd2ab02a6311423faee0ed8860d913c59fd03bbf0f1050f4e08aa1c502f227",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.request.json": "d20eb4cf3d06d7da47f4ea50f08247efd2ced8fbab6f8701fb58affcf46bb3d6",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.progress.json": "2bdd80f3410040ced99236ed6999abb2f5be0637c17111ced15d1f2a04b2488b",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-verify-inputs/repair-r14-verify-inputs.13.2bcf9f217f054345a7b18046dab6f892.clock.json": "c76eec30e8c111020ba188a05605e8034bd0a05f44e81a10b2aa13c0ae10579e"
+      }
+    },
+    {
+      "name": "repair-r14-parity",
+      "workers": 1,
+      "wall_seconds": 501.7054884999525,
+      "machine_seconds": 501.7054884999525,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.log": "fd4bf1ad7c6efe790a52b633f375518acfa9c68a3570cec2d1121caa6bf3d422",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.json": "4972a94c0ce5c987e72f5079642094d1f1ef1b03979b280ec72053248e7793c6",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.request.json": "09baff29cb08e26d3cf83400e10534e63fb2200ea6f824494d02542bd22c5c30",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.progress.json": "eb869f48f394095a134641255a6f7122e4af889e811eccc1d00d5485ec33e160",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-parity/repair-r14-parity.14.bfee4088e8134155b15f1d63105db5be.clock.json": "cbd42d928931787f25733b68f569fe60bb712da7394b7590ad1b72c2b7b7da99"
+      }
+    },
+    {
+      "name": "repair-r14-support-final",
+      "workers": 1,
+      "wall_seconds": 136.7017568750307,
+      "machine_seconds": 136.7017568750307,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.log": "6eac90846ebdee8f96bc2df3f3a39c3b708c7d236f748759578d66e3db75370c",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.json": "7b3c80a6f945702c00f17d511614c5739c8fc26b48bc74cb398a2b4c78745392",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.request.json": "a33e4f9b9029d1a09f3a452ced836016b5d96b57945a97a767b3086d686daa38",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.progress.json": "99f9d0a54d1a7038e6e3a4679b69c9c14564a6024ea43e7a601964e3b50ddd12",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-support-final/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.clock.json": "bad4f5b1d33949b1d457686ea9b5422b1ad1794a77e14920744166eb04b959b8"
+      }
+    },
+    {
+      "name": "repair-r14-receipts",
+      "workers": 1,
+      "wall_seconds": 1.065115999954287,
+      "machine_seconds": 1.065115999954287,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.log": "f7ae7b2f1fb081083131397019e1c072d7309be13b57884ec670e5cbb89e5390",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.json": "e630650d0b07e37e9844b4b84003e6296a0df6511615fea2956577e5108f0c52",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.request.json": "6caeeac4bd09c71b826d404faa0387f5e2563590119cd91abd13514a506afbaf",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.progress.json": "5c5341a9f2ec2a3c928562d7c5a1d4d1bb73626e033fee323dcaed0095424cff",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-receipts/repair-r14-receipts.16.977f8d3c229f4791a9c0926c3cb5d8f8.clock.json": "3740d3fc438f996d16b5664bed46a49683a7f4344030c3b2fd514a1805e4c635"
+      }
+    },
+    {
+      "name": "repair-r14-critic-tests",
+      "workers": 2,
+      "wall_seconds": 36.62892920896411,
+      "machine_seconds": 73.25785841792822,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.log": "cd554ffbdc2929b727285600a21d20e907a67025981272d878041b646ae452ef",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.json": "e83bef3ec6f160b23c8faccb39ced08cfc0922ed7a8bc6c0229c7dcbb321a761",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.request.json": "5b884e1291e7432b16655523a692ea56ccc4501aaac82950607954f5d66e7fb0",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.progress.json": "65112fbdaea385236a2218bbba8ed26fef020d535e1a221f1a2c6cff209757b9",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-tests/repair-r14-critic-tests.17.0d92aff2ec214cc3a7612360015e40f3.clock.json": "9d1eb75cc0d0bef1a33ab77e564642267dc2c66ebdd0622a655cf29ff72f4357"
+      }
+    },
+    {
+      "name": "repair-r14-critic-identities",
+      "workers": 1,
+      "wall_seconds": 20.429064584022854,
+      "machine_seconds": 20.429064584022854,
+      "exit_code": 1,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.log": "061589ee94fe1f4decab206949ee70e192c08ea502f071cb39332af1ffc2e508",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.json": "6c1a4b6d59a95288857e91b31cf142f2e1f9cde473ab3660f21953b6be327797",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.request.json": "c3ac7c098e5fddefd859f6372ddfdd8b488bad54d3ffa76de51276a52c3fb55d",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.progress.json": "3c00d62da4a6c8c9b8f612354c281242f6aa75ffeb857ec9576d16cf4b93db9d",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.clock.json": "b5fe1d7669b2959b233fbd3a825ee72d58dfdeb9092cbfc1e1f6e7c530ff6e11"
+      }
+    },
+    {
+      "name": "repair-r14-builder-preservation",
+      "workers": 1,
+      "wall_seconds": 1.0925957919680513,
+      "machine_seconds": 1.0925957919680513,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.log": "9736b5caa4685e5fa53a0b31090fa2f399ab16b8b119c9fa4a21a7ef71219095",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.json": "67a83d75745833aa52f35dae17c217f135e87485124523ab0bbf0b41d2cdddd2",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.request.json": "9fa7135e7cc1879a2ff74a139b7cf601e340b8f340a7d803a0bc57adf2976db5",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.progress.json": "d7bf5b811401a2e5528b36e6441eb753891733f5a5d04cc171d91b4e314cbc6b",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-preservation/repair-r14-builder-preservation.19.aaab901d31a6431193289a24102793ea.clock.json": "943ae8cdd5c592b8a89d76a46072390ce5af8febfafcab9e09fb5c2e372d525e"
+      }
+    },
+    {
+      "name": "repair-r14-critic-identities-corrected",
+      "workers": 1,
+      "wall_seconds": 22.64554683404276,
+      "machine_seconds": 22.64554683404276,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.log": "20c1306f98ea86dc8608cbe9964f46990a7494425b59693a7be8f477925fea5a",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.json": "5d5f323d2f2c800dc240a3f8c59faae8650066a242d366abfdd9963f0e8ee93e",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.request.json": "92aacef11365c5441c8c6929d1db436e88d472186ad1d3e4a2c23fbcd829d948",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.progress.json": "fd9a66b6226e5a915257b1e151245946f3c645d8d097da8d3dae58431663902d",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-identities-corrected/repair-r14-critic-identities-corrected.20.fe30bf6e1c7c40969c82b5d374deb8db.clock.json": "85f161764fd63bf358f82fb4f8f949a6c3700974520969e97c92dc1f225966a4"
+      }
+    },
+    {
+      "name": "repair-r14-critic-pgid-reuse",
+      "workers": 1,
+      "wall_seconds": 1.9519169589621015,
+      "machine_seconds": 1.9519169589621015,
+      "exit_code": 1,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.log": "d3aa3f69263bd90b2ad6b26bffca0f95eb62cda08979ee4f2969366e6eac54ba",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.json": "fa61f174a4f399a542934f389be422c7abb41bb5b6a2342c9594313e9d020d29",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.request.json": "ee3f5201cfcc82933cd316491290a39befc7a193691d6937e85eb36b7578e31d",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.progress.json": "15e3bc0fc25f7f493b4f8f19affa4799af8055238b6d38c713ecd18bd0566d61",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.clock.json": "9c4d42fb585e1256fdae9c099793168aff909e6197cd117c48c0d413a17aa393"
+      }
+    },
+    {
+      "name": "repair-r14-critic-pgid-reuse-confirmed",
+      "workers": 1,
+      "wall_seconds": 1.9352504170383327,
+      "machine_seconds": 1.9352504170383327,
+      "exit_code": 1,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.log": "ebf40413effce86fe1d2eabb300368c98388bad8d419c3f17aa7cc59764d13f4",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.json": "68621e7790b9e761aef4491179fa15d9f3e9887662b92c7fa98c3fd078dcee06",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.request.json": "27da63609cd63aedc4fe9d53ccedad5413327c38aef95f15f14250939670219d",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.progress.json": "45d58aebf177550d7f94fa8e469b42365cccde136978e811cf96f726b07163cc",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-critic-pgid-reuse-confirmed/repair-r14-critic-pgid-reuse-confirmed.22.0ddc2666180140d08b23dce8d334c971.clock.json": "55e849ff7ab2ad74087b883ca7235cd861eab5284a1a2785f88e6a5e38aaf6bf"
+      }
+    },
+    {
+      "name": "repair-r14-pgid-fix-tests",
+      "workers": 2,
+      "wall_seconds": 39.1304549589986,
+      "machine_seconds": 78.2609099179972,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.log": "2292e57103537f28ff9f827ee07a7bf04b924f04ea596610c57bc3659750c1c7",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.json": "b0e643f440d8a6887d2e04adb5ae9b30deb1163b2276a868106a805354bb56e5",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.request.json": "c7d5a3ff34f0f263d529e0a4715ff3c9e195592404920c1e19b2c15bd9dc4666",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.progress.json": "8d6c13c4eb395c95c736079368ca4ebdf916b714722629683b515ca16c3627b5",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-pgid-fix-tests/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.clock.json": "f0e55ee9367a6bc481a5227989729efa39411c4c575a96b24974b52c216d32e2"
+      }
+    },
+    {
+      "name": "repair-r14-builder-packets-final",
+      "workers": 1,
+      "wall_seconds": 1.0240827920497395,
+      "machine_seconds": 1.0240827920497395,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.log": "92eda610eacafc190d37fa2f404a462a7b65054375627a25639b98969c2ab670",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.json": "aea818a8248c07f582935d5a3661b7c2aa454624eefb91332e0a9f21f8f1b513",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.request.json": "d290cd2935195ffa3e335b3d1a86fea5fa22ee17751ffac1d89b8b2c5be472ea",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.progress.json": "115169aa64da548da166ba07c540011e8544ca9a4dd9e248dd5e17afe294784a",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-builder-packets-final/repair-r14-builder-packets-final.24.26578b1c275a4b85804258b75a86e7e7.clock.json": "da6ac27e2e1264b9698203dbb02c15326eb9fd251e8171cff331a95a31713ce0"
+      }
+    },
+    {
+      "name": "repair-r14-package-candidate-2",
+      "workers": 1,
+      "wall_seconds": 1.0339779580244794,
+      "machine_seconds": 1.0339779580244794,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.log": "01501bc633df56e13b84ae2b9a52011498ece562d7aa26df535495fc7492aeb6",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.json": "7206dc66bf9a5fe88ed0bd113e07633f1a79909e6d876389c35d7558552d5247",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.request.json": "1c4782347030539087c154ca818ac364efe37f33860968565db151c8b9d16216",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.progress.json": "c2ca0159e4d48e971055c7a9bfb0980811289a598b6d88d9e17a52eb93eb94c0",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-package-candidate-2/repair-r14-package-candidate-2.25.7a028588ecd5471eba216ca79b446c60.clock.json": "a631265ad31a035db0fbe5f1a822824184e66dd1a23f0c15dd9c17220e1c44d9"
+      }
+    },
+    {
+      "name": "repair-r14-fresh-critic-tests",
+      "workers": 2,
+      "wall_seconds": 40.33212904102402,
+      "machine_seconds": 80.66425808204804,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.log": "8671f2d7bc8bd11f00bd1b343c1eefb8aee0011d9b4d1b465e7429daf13b3e46",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.json": "e4276b6abfbd2c82c3d87b96e006b1aa5df661d62df666187f786bc5cda08568",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.request.json": "17cded49797cf90adfd5e25323825b43fdd68e3c24f433e8326063e24bb2f8c9",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.progress.json": "bd63189d8fbadae8136c0a740c6d0bd298132548e73e3609829dd22cca156532",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-tests/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.clock.json": "df62554ced764ed435c7577687054c56e1d73687b0d463b5226e6c64630de3fb"
+      }
+    },
+    {
+      "name": "repair-r14-handover-preparation",
+      "workers": 1,
+      "wall_seconds": 1.6086416250327602,
+      "machine_seconds": 1.6086416250327602,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.log": "870f36017bf3050d6f6b509166a27c6f6b48c8062470f060973fefc27349c7d1",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.json": "4b28a04c475cd93454d72380f0fa17ef29612457280e79adb10024b306da9890",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.request.json": "c55abca78076fe829ca8b84463092e2a9e923c5f93b8a7f1bad97801a64dcbad",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.progress.json": "ad7b74571484de58c8cbf90d4c1327c4b6a30db9e05931f91fdc2bc6113eede0",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-handover-preparation/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.clock.json": "f89dddbdb498fb203d64ec1995cca56e0e9d56cf08c8ce193939f4b38d4a481e"
+      }
+    },
+    {
+      "name": "repair-r14-fresh-critic-metadata",
+      "workers": 1,
+      "wall_seconds": 2.372314499982167,
+      "machine_seconds": 2.372314499982167,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.log": "96a576ff54015ff192a3ac49cecfc7bee06232966b02496556d36e63f74d3765",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.json": "babc7a42c2608f88e4cb7d9d10d8998fef0007aa36681ab475c2181d3e7ae38f",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.request.json": "74f776ce3a5d86563d8df0bf647dec22104213fee5fa39d814d30993eeb018fc",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.progress.json": "3e2c1fc19c92ebfa5a7578a0fa7de87b0686faa68e0e47de2d8360f4d703783a",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata/repair-r14-fresh-critic-metadata.28.cb32c094d1dd477d98d303d827dcdc49.clock.json": "f6b79eccf3a1d30288b0368f159aeac91cbee61fb229a7ceab66fa4db8ff4bfe"
+      }
+    },
+    {
+      "name": "repair-r14-fresh-critic-metadata-bounded",
+      "workers": 1,
+      "wall_seconds": 3.197191707964521,
+      "machine_seconds": 3.197191707964521,
+      "exit_code": 0,
+      "abort_reason": null,
+      "files_sha256": {
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.log": "13884c6950f631e7ea4eca4fff725269327a5c4cb4344f95cd58780eb9c29e36",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.json": "2d8bee9e7f955f129d930034f06ac3b326b92fed8d3050ec3123cda25da0659f",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.request.json": "90fd3250c97476d7019784b2b823c6dee6d68dba1e45fe099ef63fcd47420768",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.progress.json": "5d89f215cafe76a571984ca577861e4e1593aceaba7d2a4a435274224ffd525a",
+        "docs/track-b/evidence/cp-26/repair-v21-r14/runs/repair-r14-fresh-critic-metadata-bounded/repair-r14-fresh-critic-metadata-bounded.29.e3c4a2009b3b49dbb32867823da49b55.clock.json": "a38ebb780594ebb2108f1940b621f46cf75c545e551ca0726c665858a9ce84fb"
+      }
+    }
+  ],
+  "original_outputs_preserved": {
+    "capstone_v21.md": {
+      "preserved_path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/capstone_v21.md",
+      "sha256": "173799d818387b9d82db16b9ccd7195afaebbea8e11259809e4a8b704bd525a8"
+    },
+    "reports/rebaseline/parity.json": {
+      "preserved_path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/reports/rebaseline/parity.json",
+      "sha256": "5c2229b2299d5469b1b734393a3d12a9d35557cdc0862c9904396fa3a1960d01"
+    },
+    "reports/rebaseline/harness-log.json": {
+      "preserved_path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/reports/rebaseline/harness-log.json",
+      "sha256": "6835e0bcbc6a211cfb8e4bb04cf0b8bcd49c6207e06de5eea7e99fa180cda48d"
+    },
+    "scripts/cp26_rebaseline.py": {
+      "preserved_path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/scripts/cp26_rebaseline.py",
+      "sha256": "844f6dcec59732dd3fe512f2b7d67bd9bf336930a26b2834d6a01ae4871c822d"
+    },
+    "tests/test_cp26_monitor.py": {
+      "preserved_path": "docs/track-b/evidence/cp-26/repair-v21-r14/preserved-r13/tests/test_cp26_monitor.py",
+      "sha256": "ef0f0fb800f6111719d85f315548ee0090c44dca9bc8726d7fe27a3e065ff513"
+    }
+  },
+  "rule": "all ended repair jobs preserved, including failed checks; terminal administrative IO is a separate measured charge in terminal-ledger.json"
+}

@@ -1,0 +1,88 @@
+{
+ "abort_reason": "TimeoutError: CP-26 ledger accounting lock did not progress",
+ "child_identity": {
+  "create_time": 1792079672.439737,
+  "pid": 49885
+ },
+ "completion_issuer": "supervisor",
+ "completion_issuer_identity": {
+  "create_time": 1792079670.148209,
+  "pid": 49879
+ },
+ "ended_epoch": 1792080094.027276,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "a625c2aaba9643e3a3087b98c45d21a7",
+ "job_index": 346,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 1,
+  "hold_seconds": 0.0017806669929996133,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.15234291600063443,
+  "peak_wait_seconds": 0.16520520905032754,
+  "read_bytes": 8184071,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 0.6856834579957649,
+  "transactions": 1633,
+  "wait_seconds": 0.027845666045323014,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 2390573056,
+ "request_sha256": "bc03f5c6daccdbb4456a1073da298584cde6c8df227da5d77597c4cc6716a81f",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792079669.689708,
+ "supervisor_identity": {
+  "create_time": 1792079670.148209,
+  "pid": 49879
+ },
+ "wall_seconds": 423.8406382499961,
+ "watchdog_identity": {
+  "create_time": 1792079671.2652,
+  "pid": 49881
+ },
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1792079672.439737,
+   "pid": 49885
+  },
+  {
+   "create_time": 1792079674.550298,
+   "pid": 49899
+  },
+  {
+   "create_time": 1792079674.786421,
+   "pid": 49910
+  },
+  {
+   "create_time": 1792079675.008858,
+   "pid": 49925
+  },
+  {
+   "create_time": 1792079675.124273,
+   "pid": 49935
+  },
+  {
+   "create_time": 1792079675.251137,
+   "pid": 49947
+  },
+  {
+   "create_time": 1792079734.423972,
+   "pid": 49992
+  },
+  {
+   "create_time": 1792079734.547268,
+   "pid": 49995
+  }
+ ],
+ "worker_pgid": 49885,
+ "workers": 1,
+ "workers_stopped": true
+}

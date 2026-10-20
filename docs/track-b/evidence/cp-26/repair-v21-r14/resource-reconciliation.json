@@ -1,0 +1,294 @@
+{
+  "summary": {
+    "measured_seconds": 541.4999921671115,
+    "reported_seconds": 96.252,
+    "reserved_seconds": 2826.0,
+    "total_seconds": 3463.7519921671114,
+    "machine_hours": 0.962153331157531,
+    "headroom_hours": 484.03784666884246,
+    "pilot_stop_hours": 388.0,
+    "unreconciled_reserves": [],
+    "repair_seconds_used": 0.06023575010476634,
+    "repair_seconds_remaining": 35999.939764249895,
+    "repair_scope_active": true
+  },
+  "journal": {
+    "accounting": {
+      "measured_seconds": 541.4999921671115,
+      "reported_seconds": 96.252,
+      "reserved_seconds": 2826.0
+    },
+    "caps": {
+      "cloud_jobs": 0,
+      "cost_usd": 0,
+      "data_download_bytes": 0,
+      "gpu_jobs": 0,
+      "machine_seconds": 1746000,
+      "remote_writes": 0,
+      "rss_bytes": 12000000000,
+      "workers": 4
+    },
+    "charges": [
+      {
+        "already_in_legacy_total": true,
+        "id": "pre-monitor-tests-already-in-legacy",
+        "kind": "reported",
+        "seconds": 6.125,
+        "source": {
+          "durations": [
+            4.13,
+            1.995
+          ],
+          "event": "builder_lightweight_tests_before_monitor"
+        }
+      },
+      {
+        "id": "independent-audit-successful-tests",
+        "kind": "reported",
+        "seconds": 90.127,
+        "source": {
+          "audit_received_epoch": 1791908653.442842,
+          "audit_turn_completed_epoch": 1791908415,
+          "audit_turn_started_epoch": 1791907417,
+          "durations": [
+            29.958,
+            17.646,
+            21.423,
+            21.1
+          ],
+          "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+          "parity_ended_epoch": 1791905827.8090382,
+          "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b"
+        }
+      },
+      {
+        "id": "independent-audit-failed-test",
+        "kind": "reserved",
+        "seconds": 2826.0,
+        "source": {
+          "audit_received_epoch": 1791908653.442842,
+          "audit_turn_completed_epoch": 1791908415,
+          "audit_turn_started_epoch": 1791907417,
+          "enclosing_window_seconds": 2825.633803844452,
+          "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+          "exact_runtime_recovered": false,
+          "failed_test_lower_bound_seconds": 15.01,
+          "parity_ended_epoch": 1791905827.8090382,
+          "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b"
+        },
+        "status": "authorized"
+      },
+      {
+        "id": "repair-initial-preservation",
+        "kind": "measured",
+        "seconds": 0.05587495904183015,
+        "source": {
+          "operation": "Owner-brief state preservation"
+        }
+      },
+      {
+        "epoch": 1791911407.5502121,
+        "id": "repair-r14-document-generation-duration.json",
+        "kind": "measured",
+        "seconds": 0.0005445830174721777,
+        "source": {
+          "path": "docs/track-b/evidence/cp-26/repair-v21-r14/document-generation-duration.json",
+          "sha256": "c58c9d79412635a2628ab78cd5c4fec0d7085e68009c3486e70323ddd81c8380"
+        }
+      },
+      {
+        "epoch": 1791911407.550718,
+        "id": "repair-r14-pin-generation-duration.json",
+        "kind": "measured",
+        "seconds": 0.0014833330060355365,
+        "source": {
+          "path": "docs/track-b/evidence/cp-26/repair-v21-r14/pin-generation-duration.json",
+          "sha256": "5b2f5de3f0c0b8ca1d1ea70a9a898aa54d5a49f2baa8f079ebbe3cf224ebdd82"
+        }
+      },
+      {
+        "epoch": 1791911407.5509791,
+        "id": "repair-r14-reconcile-maintenance",
+        "kind": "measured",
+        "seconds": 0.0023328750394284725,
+        "source": {
+          "activity": "idempotent historical reconciliation and maintenance receipt import"
+        }
+      }
+    ],
+    "counts": {
+      "machine_seconds": 3463.7519921671114
+    },
+    "created_epoch": 1791904855.48523,
+    "events": [
+      {
+        "epoch": 1791905287.7587771,
+        "event": "builder_lightweight_tests_before_monitor",
+        "fitting": false,
+        "observed_wall_seconds": [
+          4.13,
+          1.995
+        ],
+        "scoring": false,
+        "workers": 1
+      },
+      {
+        "epoch": 1791911407.549393,
+        "event": "repair-v21-r14-historical-reconciliation",
+        "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+        "legacy_total_seconds": 547.5647564170067,
+        "preservation_seconds": 0.05587495904183015
+      }
+    ],
+    "jobs": [
+      {
+        "abort_reason": null,
+        "child_pid": 76318,
+        "ended_epoch": 1791904857.445838,
+        "exit_code": 0,
+        "last_charge_epoch": 1791904857.445399,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/verify-inputs.log",
+        "monitor_pid": 76316,
+        "name": "verify-inputs",
+        "peak_rss_bytes": 346374144,
+        "running": false,
+        "started_epoch": 1791904856.3927412,
+        "wall_seconds": 1.0526051670312881,
+        "workers": 1
+      },
+      {
+        "abort_reason": null,
+        "child_pid": 76529,
+        "ended_epoch": 1791904959.104299,
+        "exit_code": 0,
+        "last_charge_epoch": 1791904959.102727,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/harness-tests.log",
+        "monitor_pid": 76527,
+        "name": "harness-tests",
+        "peak_rss_bytes": 393576448,
+        "running": false,
+        "started_epoch": 1791904957.52643,
+        "wall_seconds": 1.5769325000001118,
+        "workers": 1
+      },
+      {
+        "abort_reason": null,
+        "child_pid": 76568,
+        "ended_epoch": 1791904992.564234,
+        "exit_code": 0,
+        "last_charge_epoch": 1791904992.563749,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/search-sufficiency.log",
+        "monitor_pid": 76566,
+        "name": "search-sufficiency",
+        "peak_rss_bytes": 696057856,
+        "running": false,
+        "started_epoch": 1791904987.432812,
+        "wall_seconds": 5.130863707978278,
+        "workers": 1
+      },
+      {
+        "abort_reason": null,
+        "child_pid": 76962,
+        "ended_epoch": 1791905132.864803,
+        "exit_code": 0,
+        "last_charge_epoch": 1791905132.8638148,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/core-tests.log",
+        "monitor_pid": 76960,
+        "name": "core-tests",
+        "peak_rss_bytes": 459653120,
+        "running": false,
+        "started_epoch": 1791905130.773906,
+        "wall_seconds": 2.090190958988387,
+        "workers": 1
+      },
+      {
+        "abort_reason": null,
+        "child_pid": 77804,
+        "ended_epoch": 1791905245.483844,
+        "exit_code": 0,
+        "last_charge_epoch": 1791905245.4826949,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/core-tests-final.log",
+        "monitor_pid": 77802,
+        "name": "core-tests-final",
+        "peak_rss_bytes": 457949184,
+        "running": false,
+        "started_epoch": 1791905243.3847392,
+        "wall_seconds": 2.0982064999989234,
+        "workers": 1
+      },
+      {
+        "abort_reason": null,
+        "child_pid": 77948,
+        "ended_epoch": 1791905827.8090382,
+        "exit_code": 0,
+        "last_charge_epoch": 1791905827.80839,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/parity.log",
+        "monitor_pid": 77946,
+        "name": "parity",
+        "peak_rss_bytes": 1105936384,
+        "running": false,
+        "started_epoch": 1791905299.912173,
+        "wall_seconds": 527.9242284169886,
+        "workers": 1
+      },
+      {
+        "abort_reason": null,
+        "charged_wall_seconds": 1.566729166021105,
+        "child_pid": 82401,
+        "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/monitor-tests.6.clock.json",
+        "ended_epoch": 1791905726.9544718,
+        "exit_code": 0,
+        "job_index": 6,
+        "last_charge_epoch": 1791905726.953769,
+        "live_rss_bytes": 0,
+        "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/monitor-tests.log",
+        "monitor_create_time": 1791905724.252453,
+        "monitor_pid": 82398,
+        "name": "monitor-tests",
+        "peak_rss_bytes": 384368640,
+        "running": false,
+        "started_epoch": 1791905725.386868,
+        "wall_seconds": 1.566729166021105,
+        "workers": 1
+      }
+    ],
+    "peaks": {
+      "rss_bytes": 1267269632,
+      "workers": 2
+    },
+    "repair_scope": {
+      "active": true,
+      "baseline_seconds": 3463.6917564170067,
+      "id": "repair-v21-r14",
+      "limit_seconds": 36000,
+      "opened_epoch": 1791911407.54939
+    },
+    "reserves": [
+      {
+        "id": "independent-audit-failed-test",
+        "kind": "reserved",
+        "seconds": 2826.0,
+        "source": {
+          "audit_received_epoch": 1791908653.442842,
+          "audit_turn_completed_epoch": 1791908415,
+          "audit_turn_started_epoch": 1791907417,
+          "enclosing_window_seconds": 2825.633803844452,
+          "evidence_sha256": "502dd7cb160f94f4df5b904a561fc4fe82b736518b3e7fc3e128145124b9295f",
+          "exact_runtime_recovered": false,
+          "failed_test_lower_bound_seconds": 15.01,
+          "parity_ended_epoch": 1791905827.8090382,
+          "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b"
+        },
+        "status": "authorized"
+      }
+    ],
+    "rule": "machine_seconds = sum over jobs of wall-clock seconds x declared workers, charged every tick by the monitor (CP-24 ledger definition)",
+    "schema": "cp26-ledger-v2"
+  }
+}

@@ -1,0 +1,553 @@
+{
+ "content_sha256": "3927988209547c76bb2728cde3af148cffab8f00c28395ca66863521e055e984",
+ "current_future_monitor_allowance_seconds_per_call": 2.5,
+ "disposition": {
+  "future_accounting": "Account each outer-monitor prelude once using its bound kernel monitor/supervisor births plus the documented0.1second interpreter-start allowance. Do not add the first module-mode supervisor bootstrap as a separate charge.",
+  "future_forecast": "The retained64-monitor allowance of2.5seconds per call already exceeds the observed maximum2.201296901702881seconds. Every prior cost margin and resource guard remains unchanged.",
+  "prior_receipts_and_charges": "Preserve unchanged. Their small reported startup amounts are retained as credits toward pre-supervisor monitor overhead, rather than charged again as measured supervisor bootstrap. The supervisor bootstrap is already included by the existing BEGAN clock.",
+  "scope": "Narrow supplemental operational accounting for the28 raw-clock-era monitors; no source/dependency/cache/protocol identity, historical charge or scientific result is modified.",
+  "supplemental_reported_charge_batch": "cold-r16-observation-batch56",
+  "supplemental_reported_seconds": 38.28268714523875
+ },
+ "future_allowance_covers_observed_preludes": true,
+ "jobs": [
+  {
+   "additional_reported_seconds": 1.1705187218263746,
+   "job_id": "6f253788a7d2460092d1e24359634418",
+   "job_index": 427,
+   "monitor_identity": {
+    "create_time": 1792235665.254532,
+    "pid": 83523
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.0814228057861328,
+   "name": "cold-r16-raw-kernel-birth-check-1",
+   "outer_bootstrap_setup_seconds": 0.00997645896859467,
+   "pre_supervisor_reported_bound_seconds": 1.181422805786133,
+   "prior_reported_setup_allowance_seconds": 0.010904083959758282,
+   "request_sha256": "f16b910795d62694274439615708a731b624b2f9bd0d4dcd43b437b4a7eeef33",
+   "supervisor_identity": {
+    "create_time": 1792235666.335955,
+    "pid": 83524
+   }
+  },
+  {
+   "additional_reported_seconds": 1.7271066347835586,
+   "job_id": "122ce5ad60644b8ea9a5371de6667326",
+   "job_index": 428,
+   "monitor_identity": {
+    "create_time": 1792235671.002906,
+    "pid": 83531
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.6388938426971436,
+   "name": "cold-r16-raw-clock-stop-probe-1",
+   "outer_bootstrap_setup_seconds": 0.01147937506902963,
+   "pre_supervisor_reported_bound_seconds": 1.7388938426971436,
+   "prior_reported_setup_allowance_seconds": 0.011787207913585007,
+   "request_sha256": "1501199cd7bb313dc78c18daaff01aac3c444636b24aecceac51a3fdc36ea87c",
+   "supervisor_identity": {
+    "create_time": 1792235672.6418,
+    "pid": 83532
+   }
+  },
+  {
+   "additional_reported_seconds": 1.1564952350687236,
+   "job_id": "b857d371a2ad422391b5e8dab5085e8a",
+   "job_index": 429,
+   "monitor_identity": {
+    "create_time": 1792236066.848812,
+    "pid": 83653
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.067417860031128,
+   "name": "cold-r16-price-raw-kernel-birth-1",
+   "outer_bootstrap_setup_seconds": 0.009603000013157725,
+   "pre_supervisor_reported_bound_seconds": 1.167417860031128,
+   "prior_reported_setup_allowance_seconds": 0.01092262496240437,
+   "request_sha256": "d872ed42bf8b18fcd10f23a9c2308247c852b2c104ea3835212cbce005bbe569",
+   "supervisor_identity": {
+    "create_time": 1792236067.91623,
+    "pid": 83654
+   }
+  },
+  {
+   "additional_reported_seconds": 1.146056634048,
+   "job_id": "96b607b699c8441bb0bbc54d92509aa3",
+   "job_index": 430,
+   "monitor_identity": {
+    "create_time": 1792236361.293185,
+    "pid": 83761
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.0561120510101318,
+   "name": "cold-r16-fit-g08-nominal-2",
+   "outer_bootstrap_setup_seconds": 0.01238437497522682,
+   "pre_supervisor_reported_bound_seconds": 1.156112051010132,
+   "prior_reported_setup_allowance_seconds": 0.010055416962131858,
+   "request_sha256": "28462391b7569ed8ae4f8a99550634e6d0da86388494d48c39e04c56992c9e4c",
+   "supervisor_identity": {
+    "create_time": 1792236362.349297,
+    "pid": 83765
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2746878594858573,
+   "job_id": "e0323d5ab00349b4bc4412c5b63ca960",
+   "job_index": 431,
+   "monitor_identity": {
+    "create_time": 1792236416.006409,
+    "pid": 84015
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1857590675354004,
+   "name": "cold-r16-fit-g07g08-noload-2",
+   "outer_bootstrap_setup_seconds": 0.011536416015587747,
+   "pre_supervisor_reported_bound_seconds": 1.2857590675354005,
+   "prior_reported_setup_allowance_seconds": 0.011071208049543202,
+   "request_sha256": "6a26d7f3a937819609c05ad9d23162129ed55d51ea9b9e485309050677cd30c5",
+   "supervisor_identity": {
+    "create_time": 1792236417.192168,
+    "pid": 84016
+   }
+  },
+  {
+   "additional_reported_seconds": 1.5814043631777168,
+   "job_id": "754dc785db4d40ebaf773a5d63da780d",
+   "job_index": 432,
+   "monitor_identity": {
+    "create_time": 1792236498.43237,
+    "pid": 84643
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.4948999881744385,
+   "name": "cold-r16-fit-g07g08-gfs6-2",
+   "outer_bootstrap_setup_seconds": 0.012973499950021505,
+   "pre_supervisor_reported_bound_seconds": 1.5948999881744386,
+   "prior_reported_setup_allowance_seconds": 0.013495624996721745,
+   "request_sha256": "a9d857b8b4220c4f348cfffabdc15c0ce1f98b59ae8a8e390d51dfdb299030da",
+   "supervisor_identity": {
+    "create_time": 1792236499.92727,
+    "pid": 84672
+   }
+  },
+  {
+   "additional_reported_seconds": 2.1875804437091575,
+   "job_id": "7935ebfb40fe44a4a9b1d90ce5278806",
+   "job_index": 433,
+   "monitor_identity": {
+    "create_time": 1792240522.850517,
+    "pid": 98784
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 2.101296901702881,
+   "name": "cold-r16-observation-import-48",
+   "outer_bootstrap_setup_seconds": 0.020905334036797285,
+   "pre_supervisor_reported_bound_seconds": 2.201296901702881,
+   "prior_reported_setup_allowance_seconds": 0.013716457993723452,
+   "request_sha256": "e72d43bec561953fb40c7ee08b0bceab4a07771690abd3543717586cda4c2577",
+   "supervisor_identity": {
+    "create_time": 1792240524.951814,
+    "pid": 98789
+   }
+  },
+  {
+   "additional_reported_seconds": 1.7165002107154579,
+   "job_id": "36d11bae461c4116bf6210bd8fc7c42f",
+   "job_index": 434,
+   "monitor_identity": {
+    "create_time": 1792240665.800924,
+    "pid": 98957
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.630180835723877,
+   "name": "cold-r16-fit-g09g10-noload-1",
+   "outer_bootstrap_setup_seconds": 0.016903707990422845,
+   "pre_supervisor_reported_bound_seconds": 1.730180835723877,
+   "prior_reported_setup_allowance_seconds": 0.013680625008419156,
+   "request_sha256": "674aba5231a15d09fd18e145926fd55b5f064da939c319b6892ebd8dad3a2d12",
+   "supervisor_identity": {
+    "create_time": 1792240667.431105,
+    "pid": 98961
+   }
+  },
+  {
+   "additional_reported_seconds": 1.3773110064445064,
+   "job_id": "b944832a39aa4ae8ab2d5b3d25c88a86",
+   "job_index": 435,
+   "monitor_identity": {
+    "create_time": 1792254916.083805,
+    "pid": 22888
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.2890889644622803,
+   "name": "cold-r16-two-native-pricing-1",
+   "outer_bootstrap_setup_seconds": 0.015380749944597483,
+   "pre_supervisor_reported_bound_seconds": 1.3890889644622804,
+   "prior_reported_setup_allowance_seconds": 0.011777958017773926,
+   "request_sha256": "f63cc2b27af5ab3967dda4121ba5a5e544068682311e8cc0cf1cc83fd63d78d2",
+   "supervisor_identity": {
+    "create_time": 1792254917.372894,
+    "pid": 22892
+   }
+  },
+  {
+   "additional_reported_seconds": 1.293562755943276,
+   "job_id": "eb4ed9fae76a4d26af6d472251455471",
+   "job_index": 436,
+   "monitor_identity": {
+    "create_time": 1792255125.880874,
+    "pid": 23131
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.2048850059509277,
+   "name": "cold-r16-fit-g07g08-gfs6-3",
+   "outer_bootstrap_setup_seconds": 0.01242362498305738,
+   "pre_supervisor_reported_bound_seconds": 1.3048850059509278,
+   "prior_reported_setup_allowance_seconds": 0.011322250007651746,
+   "request_sha256": "9d5e20c1b4a440343644e84d5565661f1bcd7c1f3d5f814afac7b0175f8f8294",
+   "supervisor_identity": {
+    "create_time": 1792255127.085759,
+    "pid": 23135
+   }
+  },
+  {
+   "additional_reported_seconds": 1.3811624156311155,
+   "job_id": "5ea043775d7348aabb69b592ed6edd3e",
+   "job_index": 437,
+   "monitor_identity": {
+    "create_time": 1792260278.16122,
+    "pid": 35157
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.292551040649414,
+   "name": "cold-r16-observation-import-50",
+   "outer_bootstrap_setup_seconds": 0.017104499973356724,
+   "pre_supervisor_reported_bound_seconds": 1.3925510406494142,
+   "prior_reported_setup_allowance_seconds": 0.011388625018298626,
+   "request_sha256": "918afaf57f57480ce58d8f0d9ae56c681173e7370f7e0957bab2f4020e02eedb",
+   "supervisor_identity": {
+    "create_time": 1792260279.453771,
+    "pid": 35161
+   }
+  },
+  {
+   "additional_reported_seconds": 1.1811405730200932,
+   "job_id": "c4bfd875040d4b60a767c8ffbb2df362",
+   "job_index": 438,
+   "monitor_identity": {
+    "create_time": 1792260988.979793,
+    "pid": 35739
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.0918288230895996,
+   "name": "cold-r16-replay-g05-1",
+   "outer_bootstrap_setup_seconds": 0.011318875011056662,
+   "pre_supervisor_reported_bound_seconds": 1.1918288230895997,
+   "prior_reported_setup_allowance_seconds": 0.010688250069506466,
+   "request_sha256": "e0bf75659c7d7913501f4815d16d153c85ea91eefa74554e66e0990edbf21740",
+   "supervisor_identity": {
+    "create_time": 1792260990.071622,
+    "pid": 35740
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2055880868807436,
+   "job_id": "18b2717712b24581a2c33adf3d181576",
+   "job_index": 439,
+   "monitor_identity": {
+    "create_time": 1792263753.567375,
+    "pid": 50392
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.116387128829956,
+   "name": "cold-r16-checkpoint-g05-commit-1",
+   "outer_bootstrap_setup_seconds": 0.013157792040146887,
+   "pre_supervisor_reported_bound_seconds": 1.2163871288299561,
+   "prior_reported_setup_allowance_seconds": 0.010799041949212551,
+   "request_sha256": "6b2c5ddd4b850ddeaa852c3bdf0f888c5f52dd16dea223c639069817d9603e14",
+   "supervisor_identity": {
+    "create_time": 1792263754.683762,
+    "pid": 50396
+   }
+  },
+  {
+   "additional_reported_seconds": 1.1729241301305593,
+   "job_id": "b72c7bbd1f0041be9e7c8cef2886cd97",
+   "job_index": 440,
+   "monitor_identity": {
+    "create_time": 1792263943.834329,
+    "pid": 50474
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.0828640460968018,
+   "name": "cold-r16-observation-import-51",
+   "outer_bootstrap_setup_seconds": 0.012837041052989662,
+   "pre_supervisor_reported_bound_seconds": 1.1828640460968018,
+   "prior_reported_setup_allowance_seconds": 0.009939915966242552,
+   "request_sha256": "bff1467f4be4565582e8645a272605b8f3370505569fd34cc32f07e98dd5d541",
+   "supervisor_identity": {
+    "create_time": 1792263944.917193,
+    "pid": 50478
+   }
+  },
+  {
+   "additional_reported_seconds": 1.1779026484815405,
+   "job_id": "430f4a9a17cf4638aa8760827ca2c6be",
+   "job_index": 441,
+   "monitor_identity": {
+    "create_time": 1792263984.950091,
+    "pid": 50504
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.088233232498169,
+   "name": "cold-r16-replay-g06-1",
+   "outer_bootstrap_setup_seconds": 0.012048042030073702,
+   "pre_supervisor_reported_bound_seconds": 1.188233232498169,
+   "prior_reported_setup_allowance_seconds": 0.010330584016628563,
+   "request_sha256": "ecee78c2b0bbbd2c9efe45a2dcb1bbc9e089aa4c9d5f9868d0309e258fe89066",
+   "supervisor_identity": {
+    "create_time": 1792263986.038324,
+    "pid": 50508
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2373033320996911,
+   "job_id": "8cfcaee7eef247fe8086d5528d3e9c00",
+   "job_index": 442,
+   "monitor_identity": {
+    "create_time": 1792267026.546554,
+    "pid": 65874
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.147716999053955,
+   "name": "cold-r16-checkpoint-g06-commit-1",
+   "outer_bootstrap_setup_seconds": 0.01249858399387449,
+   "pre_supervisor_reported_bound_seconds": 1.2477169990539552,
+   "prior_reported_setup_allowance_seconds": 0.010413666954264045,
+   "request_sha256": "7ab823a6b1e2f7c8ed866e000c8d733323a8733b0f59049f8379fa6186f350cf",
+   "supervisor_identity": {
+    "create_time": 1792267027.694271,
+    "pid": 65878
+   }
+  },
+  {
+   "additional_reported_seconds": 1.7875027334317566,
+   "job_id": "a0d2a46ed83a4e628906b15019c874a2",
+   "job_index": 443,
+   "monitor_identity": {
+    "create_time": 1792267080.020427,
+    "pid": 65944
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.698254108428955,
+   "name": "cold-r16-observation-import-52",
+   "outer_bootstrap_setup_seconds": 0.011317500029690564,
+   "pre_supervisor_reported_bound_seconds": 1.7982541084289552,
+   "prior_reported_setup_allowance_seconds": 0.010751374997198582,
+   "request_sha256": "649a94e6d8a9debe768bfe336f09ffeb321d15bc1b2ddc8deb8d8b5aaf5320ee",
+   "supervisor_identity": {
+    "create_time": 1792267081.718681,
+    "pid": 65945
+   }
+  },
+  {
+   "additional_reported_seconds": 1.1987732085632161,
+   "job_id": "c9209dfaba704330a06a3db683b50770",
+   "job_index": 444,
+   "monitor_identity": {
+    "create_time": 1792267114.838434,
+    "pid": 65976
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1094539165496826,
+   "name": "cold-r16-replay-g07-1",
+   "outer_bootstrap_setup_seconds": 0.012195084011182189,
+   "pre_supervisor_reported_bound_seconds": 1.2094539165496827,
+   "prior_reported_setup_allowance_seconds": 0.010680707986466587,
+   "request_sha256": "789fc6bfe446da733dbd4e147abf00d54dbb378a0ecd66a0bcc046c737d7d97f",
+   "supervisor_identity": {
+    "create_time": 1792267115.947888,
+    "pid": 65980
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2770863896235825,
+   "job_id": "ac9d5c664aab454ebb8c2c94ccf2d084",
+   "job_index": 445,
+   "monitor_identity": {
+    "create_time": 1792270496.568244,
+    "pid": 81146
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1888189315795898,
+   "name": "cold-r16-checkpoint-g07-commit-1",
+   "outer_bootstrap_setup_seconds": 0.01211954199243337,
+   "pre_supervisor_reported_bound_seconds": 1.28881893157959,
+   "prior_reported_setup_allowance_seconds": 0.01173254195600748,
+   "request_sha256": "db53aa8dde6747064f2c5a33f6e61208ae1898725f52a38b7906c2b26a946e41",
+   "supervisor_identity": {
+    "create_time": 1792270497.757063,
+    "pid": 81152
+   }
+  },
+  {
+   "additional_reported_seconds": 1.241590666025877,
+   "job_id": "8b6fbed3042344368c49b9f6dae5002e",
+   "job_index": 446,
+   "monitor_identity": {
+    "create_time": 1792270535.205151,
+    "pid": 81203
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1520538330078125,
+   "name": "cold-r16-observation-import-53",
+   "outer_bootstrap_setup_seconds": 0.012332542100921273,
+   "pre_supervisor_reported_bound_seconds": 1.2520538330078126,
+   "prior_reported_setup_allowance_seconds": 0.010463166981935501,
+   "request_sha256": "976cd743a20d2a37fa1869673a3f976a40f1e0d2edeb58d0537bdace96b32a01",
+   "supervisor_identity": {
+    "create_time": 1792270536.357205,
+    "pid": 81207
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2240862396080048,
+   "job_id": "8df9fc39a29449c897ffdaa7b9091200",
+   "job_index": 447,
+   "monitor_identity": {
+    "create_time": 1792270565.697278,
+    "pid": 81230
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.134577989578247,
+   "name": "cold-r16-replay-g08-1",
+   "outer_bootstrap_setup_seconds": 0.012566208024509251,
+   "pre_supervisor_reported_bound_seconds": 1.2345779895782472,
+   "prior_reported_setup_allowance_seconds": 0.010491749970242381,
+   "request_sha256": "a88462d0f4529e57ea4de5d2cce12f39fd41a7709d26b5d50c7a4cb25a81cacd",
+   "supervisor_identity": {
+    "create_time": 1792270566.831856,
+    "pid": 81234
+   }
+  },
+  {
+   "additional_reported_seconds": 1.256353167956695,
+   "job_id": "fd6ccef9ff8e47d7929c32ac3b6a77e0",
+   "job_index": 448,
+   "monitor_identity": {
+    "create_time": 1792274419.079573,
+    "pid": 97655
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1670260429382324,
+   "name": "cold-r16-checkpoint-g08-commit-1",
+   "outer_bootstrap_setup_seconds": 0.01291579194366932,
+   "pre_supervisor_reported_bound_seconds": 1.2670260429382325,
+   "prior_reported_setup_allowance_seconds": 0.010672874981537461,
+   "request_sha256": "0e3b93fed8b4c50d9502e70c91a7e4a8832ad7d04e564e8206d9335f8f0642e3",
+   "supervisor_identity": {
+    "create_time": 1792274420.246599,
+    "pid": 97656
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2623293845914305,
+   "job_id": "2ded6d9a5cb44437abaf7d1410796985",
+   "job_index": 449,
+   "monitor_identity": {
+    "create_time": 1792274494.843826,
+    "pid": 97754
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1736769676208496,
+   "name": "cold-r16-reprice-g07g08-raw-two-1",
+   "outer_bootstrap_setup_seconds": 0.012416207930073142,
+   "pre_supervisor_reported_bound_seconds": 1.2736769676208497,
+   "prior_reported_setup_allowance_seconds": 0.011347583029419184,
+   "request_sha256": "f57ab4636247d4f9941f309aaf47f4e551590c50d68c56342b566d1f20946a8c",
+   "supervisor_identity": {
+    "create_time": 1792274496.017503,
+    "pid": 97758
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2108170778024943,
+   "job_id": "90e92c8051c249b49075329a4e853443",
+   "job_index": 450,
+   "monitor_identity": {
+    "create_time": 1792274643.147319,
+    "pid": 97991
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1208219528198242,
+   "name": "cold-r16-pricing-g07g08-validate-1",
+   "outer_bootstrap_setup_seconds": 0.011959332972764969,
+   "pre_supervisor_reported_bound_seconds": 1.2208219528198243,
+   "prior_reported_setup_allowance_seconds": 0.01000487501733005,
+   "request_sha256": "1a26357b58e43b40dc640295667ddf58d5f99a666986afc6b0969b7c0aa7b4f5",
+   "supervisor_identity": {
+    "create_time": 1792274644.268141,
+    "pid": 97995
+   }
+  },
+  {
+   "additional_reported_seconds": 1.2284159019123764,
+   "job_id": "9a208edef54f4bfebcdb69a500047122",
+   "job_index": 451,
+   "monitor_identity": {
+    "create_time": 1792274754.680464,
+    "pid": 98026
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1390118598937988,
+   "name": "cold-r16-reprice-g07g08-commit-1",
+   "outer_bootstrap_setup_seconds": 0.014657999970950186,
+   "pre_supervisor_reported_bound_seconds": 1.239011859893799,
+   "prior_reported_setup_allowance_seconds": 0.010595957981422544,
+   "request_sha256": "cbdbd3b9d65c48c4c1e86d5e9537c4bbed593d7efa984d4d90a9863e88bebb2a",
+   "supervisor_identity": {
+    "create_time": 1792274755.819476,
+    "pid": 98030
+   }
+  },
+  {
+   "additional_reported_seconds": 1.202183256763965,
+   "job_id": "8eab406eb20642cc87c0df2565feb389",
+   "job_index": 452,
+   "monitor_identity": {
+    "create_time": 1792274939.627704,
+    "pid": 98113
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.1135101318359375,
+   "name": "cold-r16-fit-g09-nominal-1",
+   "outer_bootstrap_setup_seconds": 0.011277916026301682,
+   "pre_supervisor_reported_bound_seconds": 1.2135101318359376,
+   "prior_reported_setup_allowance_seconds": 0.011326875071972609,
+   "request_sha256": "a9833c5d74c1691571de4e0cd08c4769458c1927b151dd6f7edb70ec40c89e15",
+   "supervisor_identity": {
+    "create_time": 1792274940.741214,
+    "pid": 98114
+   }
+  },
+  {
+   "additional_reported_seconds": 1.3935172049328686,
+   "job_id": "eba65f6cfdcb4b1e9c0d1d0868a72acc",
+   "job_index": 453,
+   "monitor_identity": {
+    "create_time": 1792274974.706661,
+    "pid": 98178
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.3213770389556885,
+   "name": "cold-r16-observation-import-55",
+   "outer_bootstrap_setup_seconds": 0.01580454094801098,
+   "pre_supervisor_reported_bound_seconds": 1.4213770389556886,
+   "prior_reported_setup_allowance_seconds": 0.027859834022819996,
+   "request_sha256": "55323911f73e2546f1aa7d454255ad9e56f0ee53366d66122d5f1fc7027d2e8e",
+   "supervisor_identity": {
+    "create_time": 1792274976.028038,
+    "pid": 98182
+   }
+  },
+  {
+   "additional_reported_seconds": 2.0127868625801058,
+   "job_id": "02e78abc705141c396f9de920ba71be4",
+   "job_index": 454,
+   "monitor_identity": {
+    "create_time": 1792275021.957581,
+    "pid": 98395
+   },
+   "monitor_to_supervisor_kernel_birth_seconds": 1.923788070678711,
+   "name": "cold-r16-fit-g09g10-gfs6-1",
+   "outer_bootstrap_setup_seconds": 0.01310191594529897,
+   "pre_supervisor_reported_bound_seconds": 2.023788070678711,
+   "prior_reported_setup_allowance_seconds": 0.011001208098605275,
+   "request_sha256": "072b1af7df5ad45c0efb9d6089b50853a04f8c9dbc34ecf79de9270be93a9e8b",
+   "supervisor_identity": {
+    "create_time": 1792275023.881369,
+    "pid": 98399
+   }
+  }
+ ],
+ "maximum_monitor_to_supervisor_seconds": 2.101296901702881,
+ "maximum_prelude_bound_seconds": 2.201296901702881,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-pre-supervisor-accounting-observation-v1",
+ "source_basis": "The existing measured interval starts at the supervisor raw bootstrap BEGAN and includes that bootstrap. Kernel birth differences bind the preceding outer monitor interval under the same raw Darwin clock. Retain prior reported amounts as credits toward this prelude, and add only each positive deficit plus the stated0.1second interpreter-start allowance. No prior charge, reserve, receipt or code identity is changed.",
+ "total_additional_reported_seconds": 38.28268714523875
+}

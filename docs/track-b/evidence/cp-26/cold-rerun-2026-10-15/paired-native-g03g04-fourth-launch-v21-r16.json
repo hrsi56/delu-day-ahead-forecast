@@ -1,0 +1,65 @@
+{
+ "allocation": "Fourth independent one-worker native fit on the next disjoint nominal window. No computing coordinator, no replay overlap, no seed/recipe/cadence/state changes.",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-fit-g04-nominal-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g04-nominal-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-fit-only.py",
+  "fit-route",
+  "nominal",
+  "2022-01-05",
+  "2022-09-06"
+ ],
+ "complete_growth_projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g03g04.json",
+ "complete_growth_projection_sha256": "1fe51e8001514438c29ab299a689eea2627a408d06968c437d6e79fcd7f4b487",
+ "launched_epoch": 1792165874.811702,
+ "live_admission": {
+  "admission_h": 440.0,
+  "cumulative_actual_h": 112.88298171398901,
+  "hard_actual_h": 500.0,
+  "new_run_actual": {
+   "cumulative_machine_hours": 112.88298171398901,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 47.72085707386605,
+   "measured_seconds": 170640.38339245366,
+   "reported_seconds": 1154.7020734641014,
+   "reserved_seconds": 0.0,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 171795.08546591777
+  },
+  "projected_cumulative_completion_h": 379.3054379102096,
+  "projected_new_run_completion_h": 314.14331327008665,
+  "status": "PASS"
+ },
+ "memory_admission": {
+  "available_bytes": 3668148224,
+  "fourth_prior_peak_bytes": 2144157696,
+  "live_worker_rss_bytes": 2134654976,
+  "observed_epoch": 1792165874.802072,
+  "pressure_level": "1",
+  "pressure_query_exit_code": 0,
+  "soft_margin_bytes": 750000000,
+  "swap_out_bytes": 13774766080
+ },
+ "pid": 21416,
+ "registered_workers_before": 3,
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "window": {
+  "first": "2022-01-05",
+  "group": 4,
+  "origins": 245,
+  "route": "nominal",
+  "through": "2022-09-06"
+ }
+}

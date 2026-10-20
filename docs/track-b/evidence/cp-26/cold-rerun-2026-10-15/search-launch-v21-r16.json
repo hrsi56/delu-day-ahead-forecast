@@ -1,0 +1,111 @@
+{
+ "admission_live": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 235312.03077364058,
+  "headroom_hours": 433.29830491064206,
+  "live_shutdown_exposure_seconds": 0.0,
+  "machine_hours": 66.70169508935791,
+  "measured_seconds": 236585.9536720073,
+  "pilot_stop_hours": 440.0,
+  "pilot_stop_seconds": 1584000.0,
+  "post_repair_seconds": 235407.36288451756,
+  "projected_total_hours": 439.82106901318497,
+  "projected_total_seconds": 1583355.8484474658,
+  "remaining_other_seconds": 1049639.6911044605,
+  "remaining_search_seconds": 293590.05502131674,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 714.1486496811788,
+  "reserved_seconds": 2826.0,
+  "run_admission_hours": {
+   "cp26-cold-rerun-2026-10-15-01": 440.0
+  },
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.70169508935791,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.5395704492349567,
+    "measured_seconds": 4929.667946119909,
+    "reported_seconds": 612.7856711259344,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 5542.453617245844
+   }
+  },
+  "searches_priced": 42,
+  "total_seconds": 240126.1023216885,
+  "unreconciled_reserves": [],
+  "within_pilot_stop": true
+ },
+ "launches": [
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-search-nominal-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-search-nominal-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/route-search-v21-r15.py",
+    "nominal"
+   ],
+   "launched_epoch": 1792113974.753866,
+   "pid": 1208,
+   "route": "nominal"
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-search-noload-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-search-noload-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/route-search-v21-r15.py",
+    "noload"
+   ],
+   "launched_epoch": 1792113974.7562199,
+   "pid": 1209,
+   "route": "noload"
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-search-gfs6-1",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-search-gfs6-1.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/route-search-v21-r15.py",
+    "gfs6"
+   ],
+   "launched_epoch": 1792113974.758707,
+   "pid": 1210,
+   "route": "gfs6"
+  }
+ ],
+ "reason": "Three independent route owners; bounded memory headroom, no computing coordinator.",
+ "workers": 3
+}

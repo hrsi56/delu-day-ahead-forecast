@@ -1,0 +1,104 @@
+{
+ "abort_reason": null,
+ "child_identity": {
+  "create_time": 1791914149.660187,
+  "pid": 71482
+ },
+ "ended_epoch": 1791914188.007872,
+ "ending_error": null,
+ "exit_code": 0,
+ "group_empty": true,
+ "job_id": "ec2f7fe75b544beb9dda24c82c3a986c",
+ "job_index": 23,
+ "peak_rss_bytes": 1790230528,
+ "request_sha256": "c7d5a3ff34f0f263d529e0a4715ff3c9e195592404920c1e19b2c15bd9dc4666",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1791914148.85005,
+ "supervisor_identity": {
+  "create_time": 1791914148.851853,
+  "pid": 71479
+ },
+ "wall_seconds": 39.1304549589986,
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1791914149.660187,
+   "pid": 71482
+  },
+  {
+   "create_time": 1791914150.790355,
+   "pid": 71483
+  },
+  {
+   "create_time": 1791914151.011205,
+   "pid": 71491
+  },
+  {
+   "create_time": 1791914175.917148,
+   "pid": 71504
+  },
+  {
+   "create_time": 1791914176.957023,
+   "pid": 71505
+  },
+  {
+   "create_time": 1791914177.803552,
+   "pid": 71506
+  },
+  {
+   "create_time": 1791914177.807437,
+   "pid": 71507
+  },
+  {
+   "create_time": 1791914179.004853,
+   "pid": 71508
+  },
+  {
+   "create_time": 1791914179.855986,
+   "pid": 71511
+  },
+  {
+   "create_time": 1791914181.068985,
+   "pid": 71514
+  },
+  {
+   "create_time": 1791914181.911883,
+   "pid": 71515
+  },
+  {
+   "create_time": 1791914182.752959,
+   "pid": 71518
+  },
+  {
+   "create_time": 1791914182.756348,
+   "pid": 71519
+  },
+  {
+   "create_time": 1791914182.774166,
+   "pid": 71520
+  },
+  {
+   "create_time": 1791914184.194648,
+   "pid": 71521
+  },
+  {
+   "create_time": 1791914185.029955,
+   "pid": 71523
+  },
+  {
+   "create_time": 1791914185.86361,
+   "pid": 71524
+  },
+  {
+   "create_time": 1791914185.867158,
+   "pid": 71525
+  },
+  {
+   "create_time": 1791914185.886187,
+   "pid": 71526
+  }
+ ],
+ "worker_pgid": 71482,
+ "workers": 2,
+ "workers_stopped": true
+}

@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "repair-r14-parity",
+ "job_id": "bfee4088e8134155b15f1d63105db5be",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-parity.log",
+ "machine_hours_cumulative": 1.2296684406597078,
+ "peak_rss_bytes": 1187332096,
+ "resources": {
+  "headroom_hours": 483.7703315593403,
+  "machine_hours": 1.2296684406597078,
+  "measured_seconds": 1504.554386374948,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 35036.88537004206,
+  "repair_seconds_used": 963.1146299579418,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4426.8063863749485,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 501.7054884999525
+}

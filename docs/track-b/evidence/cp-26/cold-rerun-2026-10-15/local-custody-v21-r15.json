@@ -1,0 +1,68 @@
+{
+ "disposable_calibration_fixtures_removed": [
+  {
+   "bytes": 117,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/ledger-3.format.json",
+   "sha256": "a913f6671fb98135eced4506cc36dbdc831cc74813137f7783ad475976df71a1"
+  },
+  {
+   "bytes": 8628346,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/ledger-3.json",
+   "sha256": "64d7337eafecf817c0e35b957247af71f6c6ac91a65a04d8cfff921e60dfb75a"
+  },
+  {
+   "bytes": 0,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/ledger-3.lock",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "bytes": 117,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/ledger-4.format.json",
+   "sha256": "21e76249727d9be7550b30b4c065f76557fa8419d7466ce217d314425a1af00d"
+  },
+  {
+   "bytes": 8629350,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/ledger-4.json",
+   "sha256": "68020586efa445d8ab33b4cdd0adfe7bf9bd267a11b401942ce9b673b26387e6"
+  },
+  {
+   "bytes": 0,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/ledger-4.lock",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "bytes": 7714,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/phase-3-worker-0.json",
+   "sha256": "233513986365827b7657eea32b24b09aea51182ae85f41e7860932fadc5082b2"
+  },
+  {
+   "bytes": 7725,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/phase-3-worker-1.json",
+   "sha256": "e84de5658a845f1487cb0259c72c9f42b6230b00d81a74b766d2fcbc7edcab87"
+  },
+  {
+   "bytes": 7715,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/phase-4-worker-0.json",
+   "sha256": "fbe04ffb40b86d114fd059d8fb897a2a845ac795f1bd4b23a76324c4dac1fba9"
+  },
+  {
+   "bytes": 7726,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/phase-4-worker-1.json",
+   "sha256": "59d904c0ffa351e690e5f779627e2575864c3ff978fd327fdce99077d2bb1f4b"
+  },
+  {
+   "bytes": 7732,
+   "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/phase-4-worker-2.json",
+   "sha256": "936d03003939e1439de935e606a80958bf87371d875afa8f8eff7b9ab389c5f5"
+  }
+ ],
+ "disposable_pytest_fixtures_removed": [
+  "pytest",
+  "pytest-followup"
+ ],
+ "original_historical_and_cold_scientific_artifacts_retained": true,
+ "required_measurements": "calibration-v21-r15.json embeds all worker measurement rows",
+ "required_negative_receipts": "calibration-failure-fixtures-v21-r15/",
+ "retained_local": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15",
+ "retained_material": "Original detached launch logs and receipts,source metadata and runtime launcher JSON; durable copies committed under cold evidence."
+}

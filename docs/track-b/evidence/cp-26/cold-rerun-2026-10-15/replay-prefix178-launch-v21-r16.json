@@ -1,0 +1,57 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-replay-prefix178-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-replay-prefix178-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+  "replay-cached",
+  "2020-06-26"
+ ],
+ "cost_coverage": {
+  "basis": "All3 search jobs already closed; the unchanged remaining startup/supervision allowance has not been discounted.10 original daily groups plus analysis/closure plus this early prefix remain within its12group bound.",
+  "full_history_exports": "One extra178date prefix export, below the retained1.5x linear-growth/four-traversal persistence bound. All original component margins and both counters retained.",
+  "future_groups_including_this_prefix": 12,
+  "original_remaining_operational_groups": 12,
+  "original_remaining_shutdown_allocations": 48,
+  "remaining_active_and_future_allocations_including_extra_prefix": 44
+ },
+ "execution_order": "One additional early cache-only prefix fills the freed search slot. Keep all10 original chronological group boundaries; subsequent replay restores this normal checkpoint and emits only later dates. No cache miss may fit; no own-error/learning reset. Native-route locks and frozen numeric recipes unchanged.",
+ "launched_epoch": 1792143222.527308,
+ "pid": 68276,
+ "prerequisites": {
+  "gfs6": {
+   "job_id": "7980864741f449eeb8127930477d87b0",
+   "job_still_running": true,
+   "ready_dates_sha256": "d39b425da7b680d07e2b139e2327659f732501cdc63d848725bf4d20378026a2",
+   "ready_native_dates": 178,
+   "through": "2020-06-26"
+  },
+  "noload": {
+   "job_id": "6799dd095e124094ba5cef32cc65bc4e",
+   "job_still_running": false,
+   "ready_dates_sha256": "d39b425da7b680d07e2b139e2327659f732501cdc63d848725bf4d20378026a2",
+   "ready_native_dates": 178,
+   "through": "2020-06-26"
+  },
+  "nominal": {
+   "job_id": "708d172cadd94f769e1ba5e33b0014c4",
+   "job_still_running": false,
+   "ready_dates_sha256": "d39b425da7b680d07e2b139e2327659f732501cdc63d848725bf4d20378026a2",
+   "ready_native_dates": 178,
+   "through": "2020-06-26"
+  }
+ },
+ "registered_workers_before": 3,
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

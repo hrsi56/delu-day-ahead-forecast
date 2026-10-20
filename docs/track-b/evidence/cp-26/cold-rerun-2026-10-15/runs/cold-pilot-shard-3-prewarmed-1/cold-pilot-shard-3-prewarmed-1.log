@@ -1,0 +1,37 @@
+# CP-26 supervised job cold-pilot-shard-3-prewarmed-1; workers=1
+2026/10/15 19:02:02 INFO mlflow.agent.hint: Load the `instrumenting-with-mlflow-tracing` skill at /Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/mlflow/assistant/skills/instrumenting-with-mlflow-tracing/SKILL.md before writing any tracing code; it ships with this MLflow install. Set MLFLOW_DISABLE_AGENT_HINT=1 to silence this.
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in add
+  v += (1.0 - self.beta2) * g * g
+Traceback (most recent call last):
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-prewarmed.py", line 32, in <module>
+    result = E.timing_pilot(ROOT, protocol_identity(ROOT), gate=ExecutionGate(ROOT),
+                            pairs=pairs, budget=budget)
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/execution.py", line 315, in timing_pilot
+    probes.append(_probe(paths, key, daily, budget))
+                  ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/execution.py", line 231, in _probe
+    record_evidence_once(budget, f"pilot/{digest(key)}", {'probe_sha256': result['content_sha256']},
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         {'completed_timing_probes': 1, 'failed_timing_probes': int(result['status'] == 'failed')})
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/execution.py", line 115, in record_evidence_once
+    return budget.append_execution_task(proposed, {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+        'event': 'cp26_execution_task_terminal', 'task_id': task_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'evidence_sha256': digest(proposed['evidence'])})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/budget.py", line 705, in append_execution_task
+    return self._resource_update(None, timeout_seconds=timeout_seconds,
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 append_records=(proposed, proposed_json, event_json, proposed_identity),
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 started=started)
+                                 ^^^^^^^^^^^^^^^^
+  File "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp26/budget.py", line 744, in _resource_update
+    raise TimeoutError('CP-26 ledger accounting lock did not progress')
+TimeoutError: CP-26 ledger accounting lock did not progress

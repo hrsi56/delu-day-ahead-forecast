@@ -1,0 +1,85 @@
+{
+ "abort_reason": "supervisor_identity_lost",
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "clock_sha256": "43af7b1082b0b16db94c732883ab5206a47172819046a3e6818de7781768ed80",
+ "ending_accounting_verified": true,
+ "exit_code": 70,
+ "finding": "Primary supervisor logged completion receipt omits recorded workers after the signed COMPLETE phase. Source inspection and the one identity absent from its last progress support a late peer descendant-observation race during closing. The watchdog issued the valid immutable receipt covering every recorded identity and a stopped empty group. Runtime is known; exit70 remains unchanged.",
+ "first": "2022-09-07",
+ "fit_identity_sha256": "195857d79c60b5573ae2238989be1f3042d71a67df9831fc36471a81e9736f3b",
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g05-nominal-2.403.3553d99e1d3a47dbbe5eb6cd8e8e51ac.clock.json",
+  "job_id": "3553d99e1d3a47dbbe5eb6cd8e8e51ac",
+  "job_index": 403,
+  "name": "cold-r16-fit-g05-nominal-2"
+ },
+ "last_supervisor_progress_identity_count": 1135,
+ "late_worker_identities_after_last_supervisor_progress": [
+  [
+   32730,
+   1792212995.998877
+  ]
+ ],
+ "ledger_telemetry": {
+  "supervisor_ledger_lock_telemetry": {
+   "acquired": true,
+   "attempts": 1,
+   "body_seconds": 0.001421416993252933,
+   "canonical_input": true,
+   "conflicts": 0,
+   "hold_seconds": 0.11149712500628084,
+   "outcome": "committed",
+   "peak_hold_seconds": 0.6712280410574749,
+   "peak_wait_seconds": 1.6556540420278907,
+   "read_bytes": 13750198,
+   "serialized_fallback": false,
+   "timeouts": 0,
+   "total_seconds": 0.15181970805861056,
+   "transactions": 20980,
+   "wait_seconds": 0.04031979094725102,
+   "written": true,
+   "written_bytes": 13750194
+  },
+  "watchdog_ledger_lock_telemetry": {
+   "acquired": true,
+   "attempts": 2,
+   "body_seconds": 0.0006051670061424375,
+   "canonical_input": true,
+   "conflicts": 1,
+   "hold_seconds": 0.02843125001527369,
+   "outcome": "committed",
+   "peak_hold_seconds": 0.48109125008340925,
+   "peak_wait_seconds": 1.7097686250926927,
+   "read_bytes": 13750770,
+   "serialized_fallback": false,
+   "timeouts": 0,
+   "total_seconds": 1.4629915839759633,
+   "transactions": 21279,
+   "wait_seconds": 0.510668333969079,
+   "written": true,
+   "written_bytes": 13750812
+  }
+ },
+ "ledger_timeouts": 0,
+ "native_member_cache_payloads_verified": 2205,
+ "native_origins": 245,
+ "original_saved_raw_files_unchanged": 569,
+ "peak_rss_bytes": 2301935616,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-3a98e3125283ad0ceef9e5a249d11f81f3b6046c34f4071fa646c9f4fa9b496f.json",
+ "phase_sha256": "3f58a855ea02927697d66e2337e8464658bbf91c723f9a1ba2abc898c2815d86",
+ "preserved_forecast_origins": 980,
+ "receipt_omissions": 0,
+ "recorded_worker_identity_count": 1136,
+ "route": "nominal",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scientific_work_will_not_be_reexecuted": true,
+ "status": "NATIVE_PHASE_VERIFIED_PRIMARY_CLOSING_FAILED",
+ "through": "2023-05-09",
+ "wall_seconds": 12157.268981416011,
+ "watchdog_receipt_identity_count": 1136,
+ "workers_stopped": true
+}

@@ -1,0 +1,771 @@
+{
+ "candidate": "3944efca2233205e39c4c67812f0b6b947104998",
+ "files": [
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/admission-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "d6875764261fa31da9541daf7acc51eb646ced296ce4facfe17b1431e5d6372e"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/admission-verification-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "3df729b0f967d0655712bdd31b1facf3311010799602e22afe924f2045e1f2ab"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/authority-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "a07d1b1b32976052da0756ef47a17fa30a9af7ae9ad6ff477305d1a9b09381c4"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/blocker-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "443310d8903edd41a0319f237af0867008e8789dd1f2b0d3f0323ee4fd2774fc"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest-followup/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.6852016d26ee4ff18040895c4596e194.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "2ab8eaf7041ed090036cc0dc10ba140987096674f5d6a21d06b50d3e158ed9ed"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest-followup/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/ledger/budget.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "1d23a50054ff1494843cd6017292d7e2a825900d74ddd2a7acbaa2cedd8c4c9a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.6aefb8e3ee2848909d5825e735d2650f.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "4ee90a19ef2f8ac20f7421154d0c4a4bef25e896e666ce52cae0f0407a20eae8"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_0/.local/artifacts/cp-26/ledger/budget.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "699127923ada8dc62326c2e948dfcbe4fb378b8911c87eb1f576d8e8a07092f1"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_1/.local/artifacts/cp-26/jobs/synthetic-monitor.0.3db161834ab5434badcd8134f2700397.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "1a7e787081ede67460e83c31225dbb413a764d2fcf03dd97022311dcd3ed7f7a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_1/.local/artifacts/cp-26/ledger/budget.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "dc1b333bf5a7d0ce9d7e26e923aee892b606357470dbf52df727bc742bfa45fb"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.d58df38555814c81a730420baf4bf7b2.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "5e64fb8e9af725f37161d2e0a6e2b3b3e353c1e3f88e8575f68077f32883d48a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/ledger/budget.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "90f8559d66c369774a0cd22f531b296d44643fbb1ec19fd3855d39a624b2b227"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_supervisor_stopped_inside0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.9e7c327e467f4ac49908ae41aab2585a.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "eeac0b513348ee9968bf41231e31bc392b32a3f5caa7a09ee6356b52499137dc"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_supervisor_stopped_inside0/.local/artifacts/cp-26/ledger/budget.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "bd9a2b82f3e9b3094a24bd523d3477d4919a7c480047cebb5389a97a390aaa6a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "0aefa299443f7fb06f33340532ef534efb001eb696eb5d200149dff79d88c9a3"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/checks-v21-r15-followup.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "40269ef2573709248115e0b1f535b717b347f552cb4f6936429c28b598a53141"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/checks-v21-r15-followup.py",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "94a621512c1040304906aafb8a4ff9ba7614ffc3e6604409ee90934d36dd1dbf"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/checks-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "bf6ef9d73e98e7117445b61860b751f806b8122734faa90850bb35aac053155c"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/checks-v21-r15.py",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "d27ab5d39200ec0126c914d943a37029fe9e608bb05932702cfc099784a09114"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/code-changes-v21-r15.patch",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "e5e368335b7701544c2715f0da070a94f823efa28dc51a9f143622b7d69f3edc"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/complete-bar-v21-r15.md",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "e1618f5f8f4d6e0ad7cd4a789107d2f72125e182b4ca51c2654ce34d6144e3b3"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/forecast-v21-r15.py",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "9f6d7fbde1dd40ac32615fe7f1aa7939df1693987cf5c8f160c0e8507bd18fb5"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-affected-checks-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "21cc3a1e3b52017cea9460aea6f01923563f507a70b5d8177f8687c470e15120"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-affected-checks-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "76754b43146457ed2ee927bad6ceadd3830fd1fbc658b95d54259217baa505d6"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-affected-checks-followup-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "9eeb6a3fdff6ae9a627d6421d961642e4ace4b2bd898a49facbb15ae40e3a7fb"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-affected-checks-followup-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "c20063b96191d910505431b134a941ee4590113a6a181a81a369e8f2dfeac594"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-calibration-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "024cdca73d4fa777dbefe6bd8c48c6094cdc6487d37802f51999b9a6de4e87ea"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-calibration-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "fe66cc5507a76aa38af61c30bfb8db6681818ed17f4c7df2a80a8709f6128c6b"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-complete-forecast-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "5522a3ab89c0c2cf5ccf1b9e03aca7407f31cad7230c77668725edcd7e738833"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-complete-forecast-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "00eac9ce12a332df1ac9334507d25104d6249077f7709098933308c3618510aa"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-pilot-assembly-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "aa39c706b7da578070e785328c3fe565d00278ee85eb95dfc466300ea6997799"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-pilot-assembly-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "98af58fb4134da415f7c9678ba149f2b4710b536f5af6f577637a150b9869897"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-pilot-gfs6-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "4c1aaef7d2151b2d5056cee6d5df1c87fb231e43c706e012094ac4274553abaf"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-pilot-gfs6-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "37504548c22138136c0dd45cf62b5cf32507b8ba4c148f17a65e92617e8a2bc9"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-pilot-nominal-1.launch.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "0169902900d49318ff7f5b4b4d40bf55ab514982606a7a6d5eadf05c4223bf35"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/launchers-v21-r15/cold-r15-pilot-nominal-1.launcher.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "e929b384245de9452d9d0d90e76aab9c2385687165b84e2b1dc88f236c7cdc7d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/local-custody-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "e0ade6a1ba0fcb2b0329e53fabcf8e830d3d52bd6f2ea9726cc47fa24c915ad6"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-assembly-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "aaa5a5a2b19a25aed1b79bdc170133f24322d897d094afdbccd56fd8c387eb11"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-completion-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "23b5c0268754a1773b81c86613ebaff40d254b3bec018fa3a3d5ed64b4c38068"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-completion-v21-r15.py",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "185fe72fb7773bdfb7621d6d079fcc83d79cc3c6a9f6fe743f16b8bca280d820"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/preserve-v21-r15.py",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "4abf3050702c95a150b69d6a5402a19a09d033b9148913311c74ab70257691a7"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/resources-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "cc74e7d58440e39a692adbdf80da7e9df9c7ee6746b4f85697b9e95f095da663"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/route-search-v21-r15.py",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "68eb8b3bb129e708e75854372fa99817eded089c2ddf89f4ab2a3b6e2d3dcb03"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-1/cold-r15-affected-checks-1.360.66a3c669d4394cbfb0b22cdcb0990820.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "20864263eb7fd5d77979dd1c7b55a5146838c004b81c7dc30bfb2f7d83125901"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-1/cold-r15-affected-checks-1.360.66a3c669d4394cbfb0b22cdcb0990820.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "5c4593f1006c9429669053cfe9c6403590168ca3249a47a605ed3cbdb44ff578"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-1/cold-r15-affected-checks-1.360.66a3c669d4394cbfb0b22cdcb0990820.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "518628ac78e40240286140d7a1b37292f234cb5f260d58be8ae928627ad2c993"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-1/cold-r15-affected-checks-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "fb352be58fa558c97ca0d3c4addc85f6b883397d48229be823b8efda9a83d37c"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-1/cold-r15-affected-checks-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "a249382f942ac5a2ec7b8e318f68490bf4c815b032cafc1471d70573c05b7b19"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-followup-1/cold-r15-affected-checks-followup-1.361.1ae3571adeb34441aa8053856855af52.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "9ba928ad9b50bf85aa0a212ee24e3743578492aef211241b744b01a2772158ba"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-followup-1/cold-r15-affected-checks-followup-1.361.1ae3571adeb34441aa8053856855af52.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "0d8fa789a52a638a26e746673c5dc718a11a51a977a82d264a3d3e1351e115d9"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-followup-1/cold-r15-affected-checks-followup-1.361.1ae3571adeb34441aa8053856855af52.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "20b9a157e710c5f32371ea1a54440847eee07e82facafed9e89dd34fef00b7d9"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-followup-1/cold-r15-affected-checks-followup-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "692bcddb239faef4c8a04693c316f276142f6acb722bea32b1ce43fd35e1b80f"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-affected-checks-followup-1/cold-r15-affected-checks-followup-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "9ba38314ffd913f02e8823363d50ab7cd5150f2942d70be6843ca9f9a4593735"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-calibration-1/cold-r15-calibration-1.359.e12a94c2e2c54c0185accafae3d15c7c.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "7593a31b9886845b6c4e7280632f31e974e47d9e68fcc01d19573040fdb526b8"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-calibration-1/cold-r15-calibration-1.359.e12a94c2e2c54c0185accafae3d15c7c.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "d60977d5ae64f3de93c7ba018526c2952076f9809aa1d30b94e1df6362d4bd0b"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-calibration-1/cold-r15-calibration-1.359.e12a94c2e2c54c0185accafae3d15c7c.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "779d07d99217cd38d12e16e6d9446198840143e37083b3c83d731a66b1cf1007"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-calibration-1/cold-r15-calibration-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "1d8e645f4562094d69ac1e3dcebb2cbb540084bbb58cf0240aaad0247fe66b9f"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-calibration-1/cold-r15-calibration-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "b0e3b143a72563319c6de19593d6402693d4990a9b530b78d2d605cbb3d17f76"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-complete-forecast-1/cold-r15-complete-forecast-1.365.ab8769fda6a94bd18a5e9dd623c531cf.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "e9063eb833b503293ddf9b8446c64783f161a3a876c902481570cee81ebe77fd"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-complete-forecast-1/cold-r15-complete-forecast-1.365.ab8769fda6a94bd18a5e9dd623c531cf.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "13421d8ae78df618553384c9f1c5e3747aac0b9e10cbd1b7f74c06f5722bc531"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-complete-forecast-1/cold-r15-complete-forecast-1.365.ab8769fda6a94bd18a5e9dd623c531cf.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "5fc169bd8dce214283bce353439d9d347fdce6c381e87713ecdd65304a9b298e"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-complete-forecast-1/cold-r15-complete-forecast-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "755cda01d82f61efd4403c827d8f64758c8e43806b63ad6cbe7f994a424bd75d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-complete-forecast-1/cold-r15-complete-forecast-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "32a88c02f0f47e370aa88f211e7a821e887078ffcfb9ab4bf46b341a42f8d2fa"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-assembly-1/cold-r15-pilot-assembly-1.364.7fe8b34385cd4271b18a6cf630273611.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "581680c5ac501e836c8e6bf9b959be2bfca1ce50b8275c9efcf95aaa05e55ec1"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-assembly-1/cold-r15-pilot-assembly-1.364.7fe8b34385cd4271b18a6cf630273611.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "a4f836f7e7d219f1035a4ada3fd3c84706a502ec2eb7f1aabe11dea15db63a44"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-assembly-1/cold-r15-pilot-assembly-1.364.7fe8b34385cd4271b18a6cf630273611.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "97dd608cc96f1c94c6de832be32308f7a2b475926e6d29367e07acbce85d434a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-assembly-1/cold-r15-pilot-assembly-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "b84fa0eb947c4451136c3e370c10981886e76c9a84cf8fa0c0176c8c4bdfbce5"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-assembly-1/cold-r15-pilot-assembly-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "40609bd74851a8bf46e4fe06f62adef44976620a5b0d1aeed1215b349e4e3db1"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-gfs6-1/cold-r15-pilot-gfs6-1.363.a0bdad132100478cbdb1679b3e627d90.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "10f6ed67932d2349414041d0c43fcd8d0b653b5ae938a0900d4a875e315f3534"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-gfs6-1/cold-r15-pilot-gfs6-1.363.a0bdad132100478cbdb1679b3e627d90.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "34133ac513f56970615429352945aa77a955153ade0ed18ff215aa45eee3fda4"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-gfs6-1/cold-r15-pilot-gfs6-1.363.a0bdad132100478cbdb1679b3e627d90.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "1cdf1c256d5ab9f07375429383df2f3debfd842310e5c4f96f8b038d61e3e39d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-gfs6-1/cold-r15-pilot-gfs6-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "5eb53860f6f741d075613d5997af75be8c18f8ef4e409bae0e68475a545b4be0"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-gfs6-1/cold-r15-pilot-gfs6-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "c8ffa3c3cd61eed065d24a8359ff0bbc04fc16d68378b37050097c5b41734d44"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-nominal-1/cold-r15-pilot-nominal-1.362.398ecd47e7dc4c4db31cf3021880e69c.clock.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "c876d54bfd2ee37c5af7902aa3a82d22810eee403d419669f6df2b1543a948a8"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-nominal-1/cold-r15-pilot-nominal-1.362.398ecd47e7dc4c4db31cf3021880e69c.progress.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "18bfee3c06b8550a2d098d4024556729deeb62d6bfddd67f8f99820e077c9aa2"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-nominal-1/cold-r15-pilot-nominal-1.362.398ecd47e7dc4c4db31cf3021880e69c.request.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "9283456ca2cc545024c3fa3a757b66cd1d694e5d2f40351751482c36de0d7104"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-nominal-1/cold-r15-pilot-nominal-1.json",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "9da4f384db676124fe2a6cdaac972d3ca5f08f83fb9894158ee1ad02fde55499"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-r15-pilot-nominal-1/cold-r15-pilot-nominal-1.log",
+   "reason": "Preserve an exact bound request,ending receipt,negative-case fixture or launch/log.",
+   "sha256_at_candidate": "ed663b78116fbc5959c167df726e7e8a26b1e2a901f579708b2fbd5e28da2791"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runtime-code-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "fa35d409c3e64336c42ec074a84c482d556247d574a4d98ddd8676cc9c496e28"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/selected-limits-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "6dba1ca52ac9cd3cd8fae32d87317a501b6b8cb9c97e00f8e779741efd081a04"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/terminal-custody-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "dd40fd16df04556ac1a40c11c018927d3b018714ab84c475a6e31fda786dc445"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/admission-v21-r15.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "d6875764261fa31da9541daf7acc51eb646ced296ce4facfe17b1431e5d6372e"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "1e14b87790c396538f5a30fd6d97023dfbbd18079678b0cb431658cc37f5124c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/preparation-tests.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "14b0fc8e3ec322e90b7a7d02ca3ee7179ab05d175cd1dce375458f7507d632fc"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot.json",
+   "reason": "Preserve active authority,calibration/validation,complete pilot,cost admission,provenance or custody.",
+   "sha256_at_candidate": "b0c3a2b95932da22d83eec1405566fbb9d5cde19ca7e29c1769b318186dc2006"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-A1_w.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "c3abc3804311e37d94a4db3233a7024c000d6314f6b0fd1f31d7bcdf8ab29dd2"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-B2_w.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "51b4eba3779bfc7ebd7c9ef950127ef44b0bc252f2e6500ffb0a4c2d69afe436"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r1-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "664075d52bb0d0d5fbb182042d17a7755654a70c3c9633e0fc17917534790cda"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r1-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "1c50e96a33f0379d8f0faa9215a1daca650543a5826a1e874637739c0b6f498f"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r2-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "debc4c3b6406ff415b2376a8d46fb13abd7c47c67d0772514f41f9f8e04262eb"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r2-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "e3a6e1aa0ba5e77d248230312db2f1e3620b14f0535b3ef6dd6e46b9c5e719f7"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r3-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "ec6e0a76272461a6c1bae3346bb4649059a6440ee8886020f67d929285db9368"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r3-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "8e866f71cd79d2d3d1ea48d89be8bf69eb0a32b5b2ca82ceb57f1efcd815d0f2"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r4-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "2134a5c09222d243056ac44582c2c36d972f17b5ad39e27c16fef788200b8787"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-D2-r4-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "608011e6f9fb3c49242c68cd3393e586f324f352320c9d7696dac3e5fe5486e5"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-L-N.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "33c46dd95b608279b3d38ffa04647936aa87d98ea8ab87dda56a09a3db1c228d"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/daily-L-R.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "54f27a16f8adf6d1df9179d8289e1d3f2bc0c6ffb02136aa63cfaac295731d8c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t000-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "c9a8e50a9b881180795ef7850683e98e9c33a22f3b03d531843c11e6e71360b3"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t001-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "6a68a07be715d6f91cafcc165161d15c4dfac94e208409bcd1854a2c9c1fc54c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t002-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "f08f69f7621feef8eee10da00b842a3393b2a65bc7b5862bdc14ee31d2f9b124"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t003-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "951efc8c5faf23395b072a1e30a5e66e21cba88d7cbc4ed42286a9d746f770b7"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t004-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "22c35d08cec52c8268b880a111a22b504ffd4f3269d5f163104a1bccd83c7b1d"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t005-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "41a4e4d2ea9b5db8e93a5ae0b7a4b4289f77c3ffd1ccb62a7c192defe9ff07a4"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t006-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "236e54e47330519bd1d7422081c38f50da6000ca0a1d8138e7c6c25a06ddf594"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t007-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "77597599d44f82ef06a82628b32f340799361c41d67ac951880a558441c05e7d"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t008-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "2f7ac3fc34ef4cdcac46371f26c32b4b5ef426f2b4f3f2fafb79b0fa63e4ecbd"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t009-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "0e0cd4f702cdf45f38405fca324773618768dac2a39ec753b09ddd89c1226573"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t010-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "61a6e54c1fee4ee9310504f1638d0c085471fb3ef4c835fc1aa97b7e8d270c54"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k13/search-t011-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "ddcd671cd27096f7e1f829b32f006ac486311fbdb5d9fb8581ada97c5447b5a9"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-A1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "9261376e43ffe87ae17e2720130a19676ca0e9dea57c840a5f955224ad3f84ed"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-A1_w.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "de977762da455bc2865528fbd2e9ebfeb8a1da2a52fa75c5c8eb4511ed12337e"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-B2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "fc0415481a1f2c81fc53eed57600aa86f6c78203dec171bdd5ff007a98823517"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-B2_w.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "57ed2676c77fcef4bf4842dcb18af60a14c834c754cd05d574afe0b89be38562"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r1-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "5f5ebf320fd63e85bc5fb1a7c391b955b419f893d02c58d3f24c4643f1135128"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r1-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "c1de0e265d9de8f70436cd4d6762c4727509b960128919738b19f211cbf69885"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r2-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "0623709f1b71232762b2e1febdb590c250d4ff308b5293fe137691c31139b807"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r2-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "b6d4341cd3a47e70ba223b9d3a49782951c311776b3cdd2ee042efde566aea4f"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r3-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "fc0d39f48221cccede20434f5cb5cc7df45b3484e6939b839cf6bc1cee2c5096"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r3-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "10cf61f5af84c5c5cc30bc3bf9d08bde0101c9be87df48e425f3bb9fd18ecc6b"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r4-s1.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "c86736316377a4ea781aed8ba7c1b6b94cacd2411576f2833774d6e2097d1aa7"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-D2-r4-s2.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "898e909080e711ae0a01c1e1f6fb856dfc1598bab95a9696ec332b5f65c418e7"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-L-N.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "2fa4d1e611cb2eda199b018a52f7d03b1e61571c3efacdedb52248569981b68b"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-L-R.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "dfcafac979b447a717ffabcf707cde1c3959927f21174fe84b9ce14fb8bde03c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-v1-R.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "5b38e38f75ac3f82186045d6ffcb6c2d76ae3db340efb62c7bf5212853cd83d4"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t000-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "3f4cee1c95ff30091b6e4f44f00cace6422451a2f2cba1be960aff8bb5b4511a"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t001-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "2d1113dfd2e613fa4bce21c805faa5cf428b3587dab161c789b3487afc7dc12f"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t002-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "71f9cafba5be52ff4853ff973282f779101576aebf02f1775963bf169791e551"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t003-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "545ba89be4fc6ed01695eb453e025ff208334aa2845fe71365419f0ec743033b"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t004-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "c15235a3e65c604183478bede254a5c0bc27ad3b77fe8c98cce4d5eb3b05fb3a"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t005-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "9cafbbcc4a39fdafc566418aca12566bf73df0949cba3a6a1268a38ed1eebc33"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t006-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "99296987ad9c22aefa1f766ad19709727f2196ea7f51afd2eaf82a2f477b32f6"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t007-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "e94be27fb889a370794746adaf32bf433fb3716ee23bccd03a6f6518758f31be"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t008-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "b3aff945edc002f810c4734a7153367201b09f265c6b1c5d4876fc309f1e339b"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t009-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "b0ac36bb5a06d9c7953356fb65b32b1ba469bcb929aa7e8920722776b1cc1df5"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t010-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "d870e1e3dd804ab664673483a1e1b66f50d96b9f1a470c57f3e42d9a9e5cea45"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/search-t011-b00.json",
+   "reason": "One of51new terminal registered timing probes; original1013files untouched.",
+   "sha256_at_candidate": "65996739d415c8e87696b939333aaed264d5a1c1245f7498e94efc29aba057f2"
+  },
+  {
+   "path": "scripts/cp26_calibrate.py",
+   "reason": "Existing supervised driver follows new gate/headroom,or short resource-only calibration entry point.",
+   "sha256_at_candidate": "65c0e2882321ab57fa835bb6bdd61beaf71fb54ad64f6de63f23b6062f8c8a93"
+  },
+  {
+   "path": "scripts/cp26_rebaseline.py",
+   "reason": "Existing supervised driver follows new gate/headroom,or short resource-only calibration entry point.",
+   "sha256_at_candidate": "5ee56b28501036155e72bef990646e3c68cd798ea9946bbff1d55567a10fcafc"
+  },
+  {
+   "path": "src/cp26/budget.py",
+   "reason": "436.5hgate,finite transaction defaults and early shutdown headroom.",
+   "sha256_at_candidate": "d7ed696a9cd58ec6e061942acda1babae7990d4c6ac3060dc18c7386c16119a1"
+  },
+  {
+   "path": "src/cp26/costing.py",
+   "reason": "Active r15gate and explicitly bounded original recipe identity compatibility.",
+   "sha256_at_candidate": "5c7cd734ea7cccd19cfde36e309dd3b8d19dfccbce9424c3a3d1eaa4837015bf"
+  },
+  {
+   "path": "src/cp26/execution.py",
+   "reason": "Current operational provenance in new probes/forecast records.",
+   "sha256_at_candidate": "9b91d8afff93bf14a85b6003debed8186479035b516d3aeeac08edd3fc862374"
+  },
+  {
+   "path": "src/cp26/gates.py",
+   "reason": "Current r15authority with original scientific protocol and calibrated resource checks.",
+   "sha256_at_candidate": "38076d3ae4a37a32c24433f79d80622cb9a6ef5c9ea40185aef937b9cfd0c234"
+  },
+  {
+   "path": "src/cp26/harness.py",
+   "reason": "Verify active r15grant/anchor while preserving original scientific lineage; actual current source hashes remain explicit.",
+   "sha256_at_candidate": "a113e21573ba952a6201e4653809d2fcabd6d28fc378665689eec43d30da8763"
+  },
+  {
+   "path": "src/cp26/limits.py",
+   "reason": "Document3sledger,8sheartbeat,14sstartup,0.2spoll and38.4ssingle-slot stop exposure.",
+   "sha256_at_candidate": "d1b3143809d3d2edae73c528bf9f98cb23ab774478ebe299da0c0e3cb7f3de0e"
+  },
+  {
+   "path": "src/cp26/parity.py",
+   "reason": "Permit explicitly validated operational-only lineage without rewriting old bitwise evidence.",
+   "sha256_at_candidate": "9f91940318eb00695fa76d2150590af6ef453bf16d0ddfef1a2637e0d655a521"
+  },
+  {
+   "path": "src/cp26/search.py",
+   "reason": "Preserve signed scientific plans and record actual executed operational code.",
+   "sha256_at_candidate": "941f9b3fb694c856689740a3675af4ea36e60250d6f39cfd1702e9eb9ae44d84"
+  },
+  {
+   "path": "src/cp26/supervisor.py",
+   "reason": "Keep direct ownership,time/RSS checks active while a finite ledger transaction waits.",
+   "sha256_at_candidate": "e624b3cc06b0ec8e4dca9ecf51e7580e1fb7877703f08b153d2e8a5b860c3ad9"
+  },
+  {
+   "path": "tests/test_cp26_costing.py",
+   "reason": "Affected admission/provenance/observer checks or updated synthetic fixture; no numerical recipe change.",
+   "sha256_at_candidate": "e6a2cc0d56b846a3d63a0398ac56a6dc207702bc75d5e5d9e071407e587116cc"
+  },
+  {
+   "path": "tests/test_cp26_execution.py",
+   "reason": "Affected admission/provenance/observer checks or updated synthetic fixture; no numerical recipe change.",
+   "sha256_at_candidate": "25ebc451cc21322b2db809445a3712afa185cab573df06f4e517ab924adde878"
+  },
+  {
+   "path": "tests/test_cp26_gates.py",
+   "reason": "Affected admission/provenance/observer checks or updated synthetic fixture; no numerical recipe change.",
+   "sha256_at_candidate": "3b67858e3486966503fcbd577cc58828ab823904cd151034d3f33d763348c8c6"
+  },
+  {
+   "path": "tests/test_cp26_monitor.py",
+   "reason": "Affected admission/provenance/observer checks or updated synthetic fixture; no numerical recipe change.",
+   "sha256_at_candidate": "7ddddfd576db79011703e9160c84925b9e30380e62b9e376d4a4bfdca02039f0"
+  },
+  {
+   "path": "tests/test_cp26_r15.py",
+   "reason": "Affected admission/provenance/observer checks or updated synthetic fixture; no numerical recipe change.",
+   "sha256_at_candidate": "68e7f6af977e56e065463e71fbf44bc87e20de5132cd2b8896375da0f9266b47"
+  },
+  {
+   "path": "tests/test_cp26_supervision.py",
+   "reason": "Affected admission/provenance/observer checks or updated synthetic fixture; no numerical recipe change.",
+   "sha256_at_candidate": "59ee4a2e68e75914ba34ceb08a1d7276584a45cbc0892a168ba99a45a0613dfb"
+  }
+ ],
+ "source_base": "6208e4fe21dcbb883c6606ce1f9dc4b5915e1194"
+}

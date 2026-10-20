@@ -1,0 +1,38 @@
+{
+ "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+ "exit_code": 70,
+ "job": "cold-prepare-plans-1",
+ "job_id": "9107b0b8ce4f4bb59459a22cfac00302",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/cold-prepare-plans-1.log",
+ "machine_hours_cumulative": 65.20273433924321,
+ "peak_rss_bytes": 1216954368,
+ "resources": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 229915.77207322765,
+  "headroom_hours": 419.79726566075675,
+  "machine_hours": 65.20273433924321,
+  "measured_seconds": 231800.1806427203,
+  "pilot_stop_hours": 388.0,
+  "post_repair_seconds": 230011.10418410462,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 103.66297855524425,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 65.20273433924321,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 0.040609699120253535,
+    "measured_seconds": 143.8949168329127,
+    "reported_seconds": 2.3,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 146.19491683291272
+   }
+  },
+  "total_seconds": 234729.84362127556,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 62.78220675000921
+}

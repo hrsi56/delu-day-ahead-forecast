@@ -1,0 +1,393 @@
+........................................................................ [ 32%]
+..............................FFF....................................... [ 64%]
+.............................F...................................F.F.... [ 96%]
+.....F.                                                                  [100%]
+=================================== FAILURES ===================================
+_______ test_three_jobs_keep_fresh_supervision_with_full_future_history ________
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_three_jobs_keep_fresh_sup0')
+
+    def test_three_jobs_keep_fresh_supervision_with_full_future_history(tmp_path):
+        budget = B.Budget(tmp_path / '.local/artifacts/cp-26/ledger/budget.json')
+        before = history_ledger(budget)
+        day_tasks = before['execution_tasks'][:2441 * 2]
+        phase_tasks = before['execution_tasks'][2441 * 2:]
+        assert len(day_tasks) == 2441 * 2
+        assert len(phase_tasks) == ((2441 + 27) // 28) * 3
+        assert all('members' not in task['evidence'] for task in phase_tasks)
+        assert all(task['evidence']['phase'] == 'fit-route' for task in phase_tasks)
+        assert {task['evidence']['route'] for task in phase_tasks} == {'nominal', 'noload', 'gfs6'}
+        assert all(len(task['evidence']['members']) == 19
+                   for task in day_tasks[::2])
+        assert all(set(task['evidence']['fit_identity_sha256']) == {'nominal', 'noload', 'gfs6'}
+                   for task in day_tasks[::2])
+        assert len(before['events']) == len(before['execution_tasks'])
+        assert all(len(job['worker_identities']) == 20 for job in before['jobs'])
+        assert S.SUPERVISION_POLICY == {'startup_grace_seconds': 10.0,
+                                        'heartbeat_timeout_seconds': 2.0,
+                                        'poll_seconds': 0.2, 'ledger_timeout_seconds': 0.5}
+        assert B.CAPS == {'machine_seconds': 485 * 3600, 'workers': 4, 'rss_bytes': 12 * 10**9,
+                          'data_download_bytes': 0, 'remote_writes': 0, 'cost_usd': 0,
+                          'gpu_jobs': 0, 'cloud_jobs': 0}
+        release = tmp_path / 'workers.release'
+        ready = [tmp_path / f'worker-{index}.ready' for index in range(3)]
+        commands = []
+        for marker in ready:
+            code = ('import time; from pathlib import Path; '
+                    f'Path({str(marker)!r}).write_text("ready"); release=Path({str(release)!r}); '
+                    'deadline=time.monotonic()+30; '
+                    '\nwhile not release.exists() and time.monotonic()<deadline: time.sleep(0.025)\n'
+                    'assert release.exists()\ntime.sleep(8)\n')
+            commands.append([sys.executable, '-B', '-c', code])
+        with three_real_monitors(tmp_path, budget, commands) as processes:
+>           wait_until(lambda: all(marker.exists() for marker in ready), timeout=20)
+
+tests/test_cp26_ledger_liveness.py:888: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+predicate = <function test_three_jobs_keep_fresh_supervision_with_full_future_history.<locals>.<lambda> at 0x119b44860>
+timeout = 20
+
+    def wait_until(predicate, timeout=12):
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            result = predicate()
+            if result:
+                return result
+            time.sleep(0.025)
+>       raise AssertionError('monitored test process did not reach its expected state')
+E       AssertionError: monitored test process did not reach its expected state
+
+tests/test_cp26_monitor.py:251: AssertionError
+______ test_wedged_supervisor_lock_still_gets_independent_ending_receipt _______
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_wedged_supervisor_lock_st0')
+
+    def test_wedged_supervisor_lock_still_gets_independent_ending_receipt(tmp_path):
+        executed = tmp_path / 'worker.executed'
+        wedged = tmp_path / 'supervisor.wedged'
+        worker = ('import time; from pathlib import Path; '
+                  f'Path({str(executed)!r}).write_text("executed"); time.sleep(30)')
+        patch = (
+            'import sys, time; from pathlib import Path; from cp26 import supervisor as S; '
+            f'executed=Path({str(executed)!r}); wedged=Path({str(wedged)!r}); original=S.tick\n'
+            'def tick(budget, *args, **kwargs):\n'
+            '    result=original(budget, *args, **kwargs)\n'
+            '    if executed.exists():\n'
+            '        with budget.transaction(timeout_seconds=S.LEDGER_TIMEOUT_SECONDS):\n'
+            '            wedged.write_text("lock held")\n'
+            '            time.sleep(30)\n'
+            '    return result\n'
+            'S.tick=tick\n'
+            'raise SystemExit(S.run(Path(sys.argv[1])))\n')
+        # real_monitor patches only its created supervisor; the detached watchdog
+        # independently imports unmodified production code and keeps the 0.5s timeout.
+        with real_monitor(tmp_path, [sys.executable, '-B', '-c', worker],
+                          workers=1, supervisor_code=patch) as (process, budget):
+>           wait_until(wedged.exists, timeout=12)
+
+tests/test_cp26_ledger_liveness.py:949: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+predicate = <bound method PathBase.exists of PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_wedged_supervisor_lock_st0/supervisor.wedged')>
+timeout = 12
+
+    def wait_until(predicate, timeout=12):
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            result = predicate()
+            if result:
+                return result
+            time.sleep(0.025)
+>       raise AssertionError('monitored test process did not reach its expected state')
+E       AssertionError: monitored test process did not reach its expected state
+
+tests/test_cp26_monitor.py:251: AssertionError
+______ test_supervisor_startup_accounting_wait_uses_declared_poll_cadence ______
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_supervisor_startup_accoun0')
+
+    def test_supervisor_startup_accounting_wait_uses_declared_poll_cadence(tmp_path):
+        marker = tmp_path / 'startup-sleep.json'
+        patch = (
+            'import json, sys; from pathlib import Path; from cp26 import supervisor as S; '
+            f'marker=Path({str(marker)!r}); original_sleep=S.time.sleep; original_fresh=S.freshness_reason; '
+            'probe={"forced":False,"pending":False}\n'
+            'def fresh(job, role, **kwargs):\n'
+            '    result=original_fresh(job, role, **kwargs)\n'
+            '    if role == "watchdog" and job.get("child_identity") is None and not probe["forced"]:\n'
+            '        probe.update(forced=True, pending=True)\n'
+            '        return "startup_probe_pending"\n'
+            '    return result\n'
+            'def sleep(seconds):\n'
+            '    if probe["pending"]:\n'
+            '        marker.write_text(json.dumps({"seconds":seconds,"policy":S.POLL_SECONDS}))\n'
+            '        probe["pending"]=False\n'
+            '    original_sleep(seconds)\n'
+            'S.freshness_reason=fresh; S.time.sleep=sleep\n'
+            'raise SystemExit(S.run(Path(sys.argv[1])))\n')
+        command = [sys.executable, '-B', '-c', 'import time; time.sleep(0.2)']
+        with real_monitor(tmp_path, command, workers=1, supervisor_code=patch) as (process, budget):
+            stdout, stderr = process.communicate(timeout=15)
+>           assert process.returncode == 0, (stdout, stderr)
+E           AssertionError: ('', 'Traceback (most recent call last):
+E               File "<string>", line 6, in <module>
+E                 driver.subprocess.Popen=spawn; s...CP26_RUN_ID must name a registered scientific run\')
+E             ValueError: CP26_RUN_ID must name a registered scientific run
+E             ')
+E           assert 1 == 0
+E            +  where 1 = <Popen: returncode: 1 args: ['/Users/djourno/Downloads/PJM/.venv/bin/python'...>.returncode
+
+tests/test_cp26_ledger_liveness.py:992: AssertionError
+_ test_duplicate_live_request_refuses_before_spawn_and_preserves_original_clock_and_receipt _
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_duplicate_live_request_re0')
+
+    def test_duplicate_live_request_refuses_before_spawn_and_preserves_original_clock_and_receipt(tmp_path):
+        root = Path(__file__).resolve().parents[1]
+        ready = tmp_path / 'original-worker.ready'
+        release = tmp_path / 'original-worker.release'
+        rejected = tmp_path / 'replay.rejected.json'
+        worker = (
+            'import time; from pathlib import Path; '
+            f'Path({str(ready)!r}).write_text("ready"); release=Path({str(release)!r}); '
+            'deadline=time.monotonic()+30\n'
+            'while not release.exists() and time.monotonic()<deadline: time.sleep(0.025)\n'
+            'assert release.exists()\n')
+        with real_monitor(tmp_path, [sys.executable, '-B', '-c', worker], workers=1) as (process, budget):
+>           wait_until(ready.exists, timeout=12)
+
+tests/test_cp26_ledger_liveness.py:1514: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+predicate = <bound method PathBase.exists of PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_duplicate_live_request_re0/original-worker.ready')>
+timeout = 12
+
+    def wait_until(predicate, timeout=12):
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            result = predicate()
+            if result:
+                return result
+            time.sleep(0.025)
+>       raise AssertionError('monitored test process did not reach its expected state')
+E       AssertionError: monitored test process did not reach its expected state
+
+tests/test_cp26_monitor.py:251: AssertionError
+_ test_fast_terminal_job_allows_read_only_late_launcher_binding_and_same_receipt _
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_fast_terminal_job_allows_0')
+
+    def test_fast_terminal_job_allows_read_only_late_launcher_binding_and_same_receipt(tmp_path):
+        root = Path(__file__).resolve().parents[1]
+        # Delay only the launcher's captured-identity return until the dedicated
+        # unmodified supervisor/watchdog have durably completed the fast child.
+        marker = tmp_path / 'late-binding-observed-closed.json'
+        launcher_patch = (
+            'import importlib.util, json, sys, time; from pathlib import Path; '
+            f'spec=importlib.util.spec_from_file_location("driver",{str(root / "scripts/cp26_rebaseline.py")!r}); '
+            'driver=importlib.util.module_from_spec(spec); spec.loader.exec_module(driver); '
+            f'marker=Path({str(marker)!r}); original=driver.process_identity\n'
+            'def identity(pid=None):\n'
+            '    captured=original(pid)\n'
+            '    if pid is not None:\n'
+            '        budget=driver.Budget(); deadline=time.monotonic()+10\n'
+            '        while time.monotonic()<deadline:\n'
+            '            job=budget.resource_read()["jobs"][-1]\n'
+            '            if not job["running"]:\n'
+            '                marker.write_text(json.dumps({"closed":True,"identity_matches":job["supervisor_identity"]==captured}))\n'
+            '                break\n'
+            '            time.sleep(0.025)\n'
+            '        else: raise AssertionError("dedicated fast job did not finish before late bind")\n'
+            '    return captured\n'
+            'driver.process_identity=identity\n'
+            'raise SystemExit(driver.monitor(driver.argparse.Namespace('
+            'name="late-bind",workers=1,log=None,command=[sys.executable,"-B","-c","pass"])))\n')
+        budget = B.Budget(tmp_path / '.local/artifacts/cp-26/ledger/budget.json')
+        budget.initialise()
+        child_env = os.environ.copy()
+        child_env.update(CP26_PROJECT_ROOT=str(tmp_path), CP26_LEDGER=str(budget.path),
+                         PYTHONPATH=str(root / 'src'), PYTHONDONTWRITEBYTECODE='1')
+        launcher = subprocess.Popen([sys.executable, '-B', '-c', launcher_patch], cwd=root, env=child_env,
+                                    stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    text=True, start_new_session=True)
+        try:
+            stdout, stderr = launcher.communicate(timeout=15)
+>           assert launcher.returncode == 0, (stdout, stderr)
+E           AssertionError: ('', 'Traceback (most recent call last):
+E               File "<string>", line 15, in <module>
+E                 raise SystemExit(driver.monitor...CP26_RUN_ID must name a registered scientific run\')
+E             ValueError: CP26_RUN_ID must name a registered scientific run
+E             ')
+E           assert 1 == 0
+E            +  where 1 = <Popen: returncode: 1 args: ['/Users/djourno/Downloads/PJM/.venv/bin/python'...>.returncode
+
+tests/test_cp26_ledger_liveness.py:1967: AssertionError
+_ test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history _
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_rich_closed_jobs_three_bu0')
+
+    def test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history(tmp_path):
+        """Four compute slots; controller blocks during the four-inner-job overlap."""
+        budget = B.Budget(tmp_path / '.local/artifacts/cp-26/ledger/budget.json')
+        before = rich_closed_ledger(budget)
+        assert len(before['jobs']) == 160
+        assert len(before['execution_tasks']) == 2441 * 2 + ((2441 + 27) // 28) * 3
+        assert all('supervisor_ledger_lock_telemetry' in job and 'watchdog_ledger_lock_telemetry' in job
+                   for job in before['jobs'])
+        assert S.SUPERVISION_POLICY == {'startup_grace_seconds': 10.0,
+                                        'heartbeat_timeout_seconds': 2.0,
+                                        'poll_seconds': 0.2, 'ledger_timeout_seconds': 0.5}
+        assert B.CAPS == {'machine_seconds': 485 * 3600, 'workers': 4, 'rss_bytes': 12 * 10**9,
+                          'data_download_bytes': 0, 'remote_writes': 0, 'cost_usd': 0,
+                          'gpu_jobs': 0, 'cloud_jobs': 0}
+        busy = tmp_path / 'owners.busy'
+        stop = tmp_path / 'owners.stop'
+        admin_report = tmp_path / 'admin.report.json'
+        ready = [tmp_path / f'busy-owner-{index}.ready' for index in range(3)]
+        commands = []
+        for marker in ready:
+            worker = (
+                'import time; from pathlib import Path; '
+                f'Path({str(marker)!r}).write_text("ready"); busy=Path({str(busy)!r}); stop=Path({str(stop)!r}); '
+                'deadline=time.monotonic()+30\n'
+                'while not busy.exists() and time.monotonic()<deadline: time.sleep(0.025)\n'
+                'assert busy.exists(); value=1\n'
+                'while not stop.exists() and time.monotonic()<deadline:\n'
+                '    for index in range(20000): value=(value*17+index)%10000019\n'
+                'assert stop.exists()\n')
+            commands.append([sys.executable, '-B', '-c', worker])
+        admin = (
+            'import json, os, time; from pathlib import Path; '
+            'from cp26.budget import Budget, _execution_evidence_sha256; from cp26 import supervisor as S; '
+            f'budget=Budget({str(budget.path)!r}); report=Path({str(admin_report)!r}); observations=[]\n'
+            'proposed={"id":"arrival/admin-terminal","evidence":{"synthetic":True,"basis":"fourth-owner admin arrival"},'
+            '"counts":{"admin_terminal_tasks":1}}\n'
+            'event={"event":"cp26_execution_task_terminal","task_id":proposed["id"],'
+            '"evidence_sha256":_execution_evidence_sha256(proposed["evidence"])}\n'
+            'assert budget.append_execution_task(proposed,event)\n'
+            'deadline=time.monotonic()+2.0\n'
+            'while time.monotonic()<deadline:\n'
+            '    budget.count(ddnn2_search_fits=1); budget.count(ddnn2_epochs=2)\n'
+            '    state=budget.resource_read(); now=time.monotonic()\n'
+            '    owners=[job for job in state["jobs"] if job.get("name") in '
+            '("ledger-liveness-0","ledger-liveness-1","ledger-liveness-2")]\n'
+            '    assert len(owners)==3 and all(job["running"] for job in owners)\n'
+            '    assert sum(job["workers"] for job in state["jobs"] if job["running"])==4\n'
+            '    sample=[]\n'
+            '    for job in owners:\n'
+            '        for role in ("supervisor","watchdog"):\n'
+            '            assert S.freshness_reason(job,role,now=now) is None\n'
+            '            telemetry=job[role+"_ledger_lock_telemetry"]\n'
+            '            assert telemetry["timeouts"]==0 and telemetry["peak_hold_seconds"]<0.5\n'
+            '            assert telemetry["peak_wait_seconds"]<0.5\n'
+            '            sample.append({"job_id":job["job_id"],"role":role,'
+            '"sequence":job[role+"_sample_sequence"]})\n'
+            '    observations.append(sample); time.sleep(S.POLL_SECONDS)\n'
+            'assert len(observations)>=3\n'
+            'budget.event("ddnn2_search_terminal",synthetic=True,observations=len(observations))\n'
+            'report.write_text(json.dumps({"observations":observations,"private_peak_workers":state["peaks"]["workers"]},'
+            'sort_keys=True,allow_nan=False))\n')
+        with three_real_monitors(tmp_path, budget, commands) as owners:
+>           wait_until(lambda: all(marker.exists() for marker in ready), timeout=20)
+
+tests/test_cp26_ledger_liveness.py:2094: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+predicate = <function test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history.<locals>.<lambda> at 0x119e68360>
+timeout = 20
+
+    def wait_until(predicate, timeout=12):
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            result = predicate()
+            if result:
+                return result
+            time.sleep(0.025)
+>       raise AssertionError('monitored test process did not reach its expected state')
+E       AssertionError: monitored test process did not reach its expected state
+
+tests/test_cp26_monitor.py:251: AssertionError
+_ test_actual_search_accounting_timeout_aborts_without_fit_or_failed_trial_cache _
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_actual_search_accounting_0')
+
+    def test_actual_search_accounting_timeout_aborts_without_fit_or_failed_trial_cache(tmp_path):
+        root = Path(__file__).resolve().parents[1]
+        cache_root = tmp_path / 'trial-cache'
+        holder_ready = tmp_path / 'counter-holder.ready'
+        aborted = tmp_path / 'accounting-aborted.json'
+        fit_attempt = tmp_path / 'fit-attempted'
+        fault_ledger = tmp_path / 'counter-fault/budget.json'
+        # The direct holder is a dedicated descendant of the search child. Both are
+        # conservatively declared in its two-worker allocation; no model fit occurs.
+        worker = (
+            'import json, subprocess, sys, time; from pathlib import Path; '
+            f'sys.path.insert(0,{str(root / "tests")!r}); '
+            'from test_cp26_search import plan; from cp26 import search as Search; '
+            'from cp26.budget import Budget, AccountingAbort; '
+            f'cache=Search.TrialCache(Path({str(cache_root)!r}),plan(k=0)); '
+            f'ready=Path({str(holder_ready)!r}); aborted=Path({str(aborted)!r}); fit=Path({str(fit_attempt)!r}); '
+            f'budget=Budget(Path({str(fault_ledger)!r})); budget.initialise(); lock_path=budget.path.with_suffix(".lock")\n'
+            'holder_code="import fcntl,time;from pathlib import Path;lock=Path("+repr(str(lock_path))'
+            '+").open(\\"a\\");fcntl.flock(lock,fcntl.LOCK_EX);Path("+repr(str(ready))'
+            '+").write_text(\\"held\\");time.sleep(30)"\n'
+            'holder=subprocess.Popen([sys.executable,"-B","-c",holder_code],stdin=subprocess.DEVNULL,'
+            'stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)\n'
+            'deadline=time.monotonic()+5\n'
+            'while not ready.exists() and time.monotonic()<deadline: time.sleep(0.025)\n'
+            'assert ready.exists()\n'
+            'def evaluate(*args):\n'
+            '    budget.count(ddnn2_search_fits=1)\n'
+            '    fit.write_text("fit attempted")\n'
+            '    raise AssertionError("fit must not run after accounting failure")\n'
+            'try:\n'
+            '    Search.run_search(cache.plan,evaluate,cache=cache)\n'
+            'except AccountingAbort as exc:\n'
+            '    aborted.write_text(json.dumps({"cause_type":type(exc.cause).__name__,'
+            '"noncacheable":not isinstance(exc,Exception),"cache_files":len(list(cache.root.rglob("*.json")))}))\n'
+            '    raise\n'
+            'finally:\n'
+            '    if holder.poll() is None: holder.terminate()\n'
+            '    holder.wait(timeout=5)\n')
+        with real_monitor(tmp_path, [sys.executable, '-B', '-c', worker], workers=2) as (process, budget):
+            stdout, stderr = process.communicate(timeout=20)
+            assert process.returncode != 0, (stdout, stderr)
+>           evidence = json.loads(aborted.read_text())
+                                  ^^^^^^^^^^^^^^^^^^^
+
+tests/test_cp26_ledger_liveness.py:2315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_actual_search_accounting_0/accounting-aborted.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/pytest-tmp/test_actual_search_accounting_0/accounting-aborted.json'
+
+/Users/djourno/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_cp26_ledger_liveness.py::test_three_jobs_keep_fresh_supervision_with_full_future_history
+FAILED tests/test_cp26_ledger_liveness.py::test_wedged_supervisor_lock_still_gets_independent_ending_receipt
+FAILED tests/test_cp26_ledger_liveness.py::test_supervisor_startup_accounting_wait_uses_declared_poll_cadence
+FAILED tests/test_cp26_ledger_liveness.py::test_duplicate_live_request_refuses_before_spawn_and_preserves_original_clock_and_receipt
+FAILED tests/test_cp26_ledger_liveness.py::test_fast_terminal_job_allows_read_only_late_launcher_binding_and_same_receipt
+FAILED tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history
+FAILED tests/test_cp26_ledger_liveness.py::test_actual_search_accounting_timeout_aborts_without_fit_or_failed_trial_cache
+7 failed, 216 passed in 101.35s (0:01:41)

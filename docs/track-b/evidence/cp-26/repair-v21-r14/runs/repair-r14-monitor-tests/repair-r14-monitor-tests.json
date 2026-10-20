@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "repair-r14-monitor-tests",
+ "job_id": "326d7f5bfa384e5fb7e5ff86ef09a600",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-monitor-tests.log",
+ "machine_hours_cumulative": 1.0096534104977903,
+ "peak_rss_bytes": 1052229632,
+ "resources": {
+  "headroom_hours": 483.9903465895022,
+  "machine_hours": 1.0096534104977903,
+  "measured_seconds": 712.5002777920454,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 35828.93947862496,
+  "repair_seconds_used": 171.06052137503866,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 3634.7522777920453,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 11.155033624963835
+}

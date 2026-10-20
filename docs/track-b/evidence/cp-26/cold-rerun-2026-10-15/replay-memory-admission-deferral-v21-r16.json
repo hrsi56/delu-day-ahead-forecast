@@ -1,0 +1,83 @@
+{
+ "aggregate_worker_hard_rss_bytes": 12000000000,
+ "budget_admission": "PASS",
+ "content_sha256": "eac92dcbf6ed8e8b8671057d091325299567913b0a20e4f11e765e1592647846",
+ "created_utc": "2026-10-18T08:40:18.611158+00:00",
+ "cumulative_h": 210.73643210234073,
+ "diagnostics": {
+  "detailed_deferral": {
+   "memory": {
+    "available_bytes": 5668061184,
+    "launcher_rss_bytes": 308396032,
+    "launcher_unique_bytes": 255639552,
+    "planning_peak_bytes": 5332511948,
+    "pressure_level": "1",
+    "prior_successful_replay_peak_bytes": 4636966912,
+    "required_available_bytes": 6082511948,
+    "soft_margin_bytes": 750000000
+   },
+   "process_seconds": 2.4645410000812262,
+   "status": "DEFERRED_SOFT_MEMORY"
+  },
+  "final_host_observation": {
+   "available_bytes": 5750308864,
+   "pressure_level": "1",
+   "process_seconds": 0.002395167015492916
+  },
+  "first_deferral": {
+   "memory": {
+    "available_bytes": 5799624704,
+    "planning_peak_bytes": 5332511948,
+    "pressure_level": "1",
+    "prior_successful_replay_peak_bytes": 4636966912,
+    "required_available_bytes": 6082511948,
+    "soft_margin_bytes": 750000000
+   },
+   "process_seconds": 2.797090749954805,
+   "status": "DEFERRED_SOFT_MEMORY"
+  },
+  "noninteractive_cache_flush": {
+   "action": "noninteractive system disk-cache flush",
+   "available_after_bytes": 5766397952,
+   "available_before_bytes": 5742739456,
+   "process_seconds": 0.038935584016144276,
+   "returncode": 1,
+   "stderr": "sudo: a password is required\n",
+   "stdout": ""
+  },
+  "nonprivileged_cache_flush": {
+   "action": "macOS disk-buffer-cache flush",
+   "available_after_bytes": 5816500224,
+   "available_before_bytes": 5813174272,
+   "process_seconds": 0.003388790995813906,
+   "returncode": 1,
+   "stderr": "Unable to purge disk buffers: Operation not permitted\n",
+   "stdout": ""
+  }
+ },
+ "measured_prior_replay_peak_bytes": 4636966912,
+ "native_coverage_sha256": "a132231e55cb98ae2115741facd6e031ea65b1f5ef2252556c645ce855a33e6d",
+ "new_run": {
+  "cumulative_machine_hours": 210.73643210234073,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 145.57430746221777,
+  "measured_seconds": 517496.7609082066,
+  "reported_seconds": 2029.0005786934132,
+  "reserved_seconds": 4541.7453770840075,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 524067.506863984
+ },
+ "planning_peak_bytes": 5332511948,
+ "projected_cumulative_h": 337.34522027057477,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g07g08-close-raw-birth-two-native.json",
+ "projection_sha256": "2706707b4dccd5dab4db9ea3e5cead1676d191e5c32f18092c564d5ed57154bb",
+ "registered_compute_jobs_running": 0,
+ "registered_replay_task": "cold-r16-replay-g09-1",
+ "required_available_bytes": 6082511948,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-replay-memory-admission-v1",
+ "scope": "No replay job or forecast was dispatched by either soft-memory deferral. No memory margin, resource guard, scientific input/recipe or dependency was changed. Native results, original receipts, old run, counters and reserves remain preserved. The built-in cache flush was refused without local administrator authentication; no password was requested or inspected.",
+ "status": "DEFERRED_FOR_EXISTING_MEMORY_HEADROOM_CHECK",
+ "unchanged_peak_factor": 1.15,
+ "unchanged_soft_margin_bytes": 750000000
+}

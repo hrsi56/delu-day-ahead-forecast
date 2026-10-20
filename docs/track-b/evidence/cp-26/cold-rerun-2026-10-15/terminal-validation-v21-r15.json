@@ -1,0 +1,27 @@
+{
+ "all_cold_owned_processes_gone_or_reused": true,
+ "all_deltas_evidence_only": true,
+ "all_owned_jobs_stopped": true,
+ "all_probe_tasks_once_only": true,
+ "candidate": "3944efca2233205e39c4c67812f0b6b947104998",
+ "closing_commit_only_adds": [
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/terminal-resources-v21-r15.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/terminal-admission-recheck-v21-r15.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/terminal-validation-v21-r15.json"
+ ],
+ "current_code_identity_matches_signed_projection": true,
+ "initial1013_unchanged": true,
+ "inspected_evidence_tip": "e66155d81f117010e1a59855b202499d931bff82",
+ "integration_review": "not run; full baseline absent",
+ "main_clean_and_unchanged": true,
+ "owned_temporary_fixtures_and_commit_messages_removed": true,
+ "pilot_probes": 1064,
+ "status": "BLOCKED",
+ "verified_delta": [
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/changed-files-v21-r15.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/checklist-v21-r15.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/diff-stat-v21-r15.txt",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/return-v21-r15.md",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/validation-v21-r15.json"
+ ]
+}

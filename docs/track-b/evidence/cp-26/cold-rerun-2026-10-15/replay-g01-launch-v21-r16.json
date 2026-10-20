@@ -1,0 +1,27 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-replay-g01-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-replay-g01-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+  "replay-cached",
+  "2020-09-01"
+ ],
+ "launched_epoch": 1792163305.731613,
+ "native_prerequisite": "native-first490-completion-v21-r16.json",
+ "pid": 2959,
+ "registered_workers_before": 0,
+ "requested_workers": 1,
+ "resume": "Same verified178-origin normal checkpoint; no model fits or state reset.",
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

@@ -1,0 +1,58 @@
+{
+ "child_identity": {
+  "create_time": 1792079672.155907,
+  "pid": 49883
+ },
+ "job_id": "30ac07b73f304beb8e4c47e2273e360b",
+ "job_index": 345,
+ "observed_epoch": 1792079735.868203,
+ "observed_monotonic": 545142.924767708,
+ "request_sha256": "af57ce52959e2b8356022834a08bef998b9f8eccb2a83721e8b8146261306c64",
+ "rss_bytes": 1658683392,
+ "sample_sequence": 269,
+ "schema": "cp26-progress-v3",
+ "supervisor_identity": {
+  "create_time": 1792079669.868634,
+  "pid": 49878
+ },
+ "wall_seconds": 65.73441800009459,
+ "worker_identities": [
+  {
+   "create_time": 1792079672.155907,
+   "pid": 49883
+  },
+  {
+   "create_time": 1792079674.228941,
+   "pid": 49886
+  },
+  {
+   "create_time": 1792079674.723414,
+   "pid": 49908
+  },
+  {
+   "create_time": 1792079674.798759,
+   "pid": 49911
+  },
+  {
+   "create_time": 1792079674.958443,
+   "pid": 49922
+  },
+  {
+   "create_time": 1792079675.030225,
+   "pid": 49927
+  },
+  {
+   "create_time": 1792079675.206018,
+   "pid": 49943
+  },
+  {
+   "create_time": 1792079734.547261,
+   "pid": 49994
+  },
+  {
+   "create_time": 1792079734.585775,
+   "pid": 49997
+  }
+ ],
+ "worker_pgid": 49883
+}

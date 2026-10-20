@@ -1,0 +1,32 @@
+{
+ "actual_cumulative_ceiling_h": 500,
+ "admission_sha256": "71484d9fc927c60bb99cadb320040c586ffb46e670dfb1cb935e047dbe25f598",
+ "clock_sha256": "e08eee65feb4524bb7f14251e51e4b9365ebfcd1d49ee1fb5474c09739ac342b",
+ "content_sha256": "4701b42febc88cd2386aafba6bbee558698227e84a4afe7d7b299e1afdcad8d1",
+ "cumulative_h": 171.57569927643527,
+ "job_id": "b857d371a2ad422391b5e8dab5085e8a",
+ "job_index": 429,
+ "monitor_setup_reported_next": true,
+ "named_run_admission_h": 440,
+ "new_run": {
+  "cumulative_machine_hours": 171.57569927643527,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 106.41357463631235,
+  "measured_seconds": 376832.19336037466,
+  "reported_seconds": 1714.929953265734,
+  "reserved_seconds": 4541.7453770840075,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 383088.8686907244
+ },
+ "peak_rss_bytes": 1717944320,
+ "pre_reservation_monitor_setup_seconds": 0.009603000013157725,
+ "projected_cumulative_h": 393.5626558000395,
+ "projected_new_run_completion_h": 328.40053115991657,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close-raw-birth.json",
+ "projection_sha256": "442cdaac303b483bb9de646e0892e2ed7cf7953934536e3bf87c4fe47c157d80",
+ "remaining_h": 221.98695652360422,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Every historical charge/reserve and current preparation/check actual appears once. Existing complete remaining prices/margins retained, plus160seconds future monitor bootstrap allowance. All1064 successful timing probes and42 completed fresh searches retained. No new scientific run, counter reset, cache relabelling or model rerun.",
+ "status": "PASS_COMPLETE_PROJECTION_AND_NORMAL_PRICING_ENDING",
+ "wall_seconds": 8.67615295900032
+}

@@ -1,0 +1,22 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_repair_manifest.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "acb210826f7a4a388c644db13944f008",
+ "job_index": 11,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-doc-manifest.log",
+ "monitor_identity": {
+  "create_time": 1791911858.237178,
+  "pid": 47509
+ },
+ "name": "repair-r14-doc-manifest",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-doc-manifest.11.acb210826f7a4a388c644db13944f008.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791911860.0466409,
+ "workers": 1
+}

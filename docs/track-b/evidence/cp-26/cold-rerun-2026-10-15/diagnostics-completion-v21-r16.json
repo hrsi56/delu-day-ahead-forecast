@@ -1,0 +1,52 @@
+{
+  "all_code_sources_verified": true,
+  "all_numeric_artifact_hashes_verified": true,
+  "analysis_code_sha256": "a25741dc20427ef09cb1b2532f2344558b617d522e6441493ae72d74300b33f3",
+  "cell_inventory_sha256": "37230c3c23841d457b593abf8a5a871c93d6d2c34c52f274bf25a88d77397f65",
+  "content_sha256": "5e53231d310a4240875c423367892f748df78089d55ded1d142906c09c522d77",
+  "diagnostics_manifest_file_sha256": "123c603083b8a5c7585e7a5dac144d9f477ac4428594b350c467a54a3c31d2fc",
+  "diagnostics_manifest_sha256": "e6a0435203a2690c2926e6c23d2b6e9ed1dcd5b21ffe215ac569c690fd7fb6aa",
+  "events": [
+    {
+      "same_run_continuation_after_job_index": 472,
+      "stage": "diagnostics",
+      "status": "SERIAL_ANALYSIS_STAGE_BEGIN"
+    },
+    {
+      "manifest": "reports/rebaseline/cold-rerun-2026-10-15/diagnostics-manifest.json",
+      "status": "DIAGNOSTICS_COMPLETE"
+    },
+    {
+      "stage": "diagnostics",
+      "status": "SERIAL_ANALYSIS_STAGE_COMPLETE",
+      "wall_seconds": 83952.790513792
+    },
+    {
+      "same_run_continuation_after_job_index": 472,
+      "stage": "report",
+      "status": "SERIAL_ANALYSIS_STAGE_BEGIN"
+    },
+    {
+      "stage": "report",
+      "status": "SERIAL_ANALYSIS_STAGE_COMPLETE",
+      "wall_seconds": 163.62444041699928
+    }
+  ],
+  "job_id": "27d21f60fc2541178851bb83fc36eb01",
+  "job_index": 474,
+  "moment_replicates": 100000,
+  "moment_seed": 20261013,
+  "npz_bytes_verified": 21754419823,
+  "numeric_pairs_verified": 936,
+  "observed_epoch": 1792425698.494147,
+  "original_complete_files_preserved": 38,
+  "protocol_sha256": "e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85",
+  "registered_cells": 936,
+  "request_sha256": "f869a925be821fee2ffa084538daa0a856b71622ce59f7228413f841f3f75d80",
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "schema": "cp26-diagnostics-completion-verification-v1",
+  "scope": "Diagnostics completion only. Reporting and fresh final Integration review remain required. No checkpoint PASS.",
+  "source_inference_sha256": "74033296ff098f023ae8eaf1fb3883efd9cfdbd8591157565aba9ce95f481590",
+  "source_scores_sha256": "86abda54558fa965d41f44768f5142611e59c40fc521439913cf3c98de392b49",
+  "status": "DIAGNOSTICS_COMPLETE_VERIFIED"
+}

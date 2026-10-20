@@ -1,0 +1,23 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "-c",
+  "import json, signal\nfrom unittest.mock import patch\nfrom cp26 import supervisor as S\nold = {\"pid\": 10001, \"create_time\": 1.0}\nreplacement = {\"pid\": 10001, \"create_time\": 2.0}\nknown = {}\nwith patch.object(S, \"group_members\", return_value=[replacement]), patch.object(S, \"identity_status\", side_effect=lambda item: \"reused\" if item == old else \"same\"):\n    observed = S.worker_members(10001, old, known)\nsignals = []\nwith patch.object(S, \"group_members\", side_effect=[[replacement], [], []]), patch.object(S.os, \"killpg\", side_effect=lambda pgid, sig: signals.append([pgid, int(sig)])):\n    S.terminate_group(10001)\nunsafe = replacement in observed and bool(signals)\nprint(json.dumps({\"old_identity\": old, \"replacement_identity\": replacement, \"unrelated_replacement_adopted\": replacement in observed, \"mocked_group_signals\": signals, \"real_signals_sent\": 0, \"acceptance_satisfied\": not unsafe}, sort_keys=True))\nraise SystemExit(1 if unsafe else 0)\n"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-c1e46",
+ "job_id": "3cf363e1923f4fada6e774f76aa926a8",
+ "job_index": 21,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-pgid-reuse.log",
+ "monitor_identity": {
+  "create_time": 1791913479.729629,
+  "pid": 69997
+ },
+ "name": "repair-r14-critic-pgid-reuse",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-pgid-reuse.21.3cf363e1923f4fada6e774f76aa926a8.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791913480.719796,
+ "workers": 1
+}

@@ -1,0 +1,108 @@
+{
+ "abort_reason": null,
+ "child_identity": {
+  "create_time": 1792107301.006141,
+  "pid": 91409
+ },
+ "completion_issuer": "supervisor",
+ "completion_issuer_identity": {
+  "create_time": 1792107298.881701,
+  "pid": 91406
+ },
+ "ended_epoch": 1792107304.253247,
+ "ending_error": null,
+ "exit_code": 0,
+ "group_empty": true,
+ "job_id": "ab8769fda6a94bd18a5e9dd623c531cf",
+ "job_index": 365,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.00014783302322030067,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.009116500033997,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.010693249991163611,
+  "peak_wait_seconds": 0.007965209078975022,
+  "read_bytes": 8677964,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.010495041962713003,
+  "transactions": 23,
+  "wait_seconds": 0.00137608393561095,
+  "written": true,
+  "written_bytes": 8677967
+ },
+ "peak_rss_bytes": 1289453568,
+ "request_sha256": "5fc169bd8dce214283bce353439d9d347fdce6c381e87713ecdd65304a9b298e",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792107298.7077382,
+ "supervisor_identity": {
+  "create_time": 1792107298.881701,
+  "pid": 91406
+ },
+ "wall_seconds": 5.339067124994472,
+ "watchdog_identity": {
+  "create_time": 1792107299.865265,
+  "pid": 91407
+ },
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1792107301.006141,
+   "pid": 91409
+  },
+  {
+   "create_time": 1792107302.90943,
+   "pid": 91410
+  },
+  {
+   "create_time": 1792107303.131676,
+   "pid": 91431
+  },
+  {
+   "create_time": 1792107303.154193,
+   "pid": 91433
+  },
+  {
+   "create_time": 1792107302.925061,
+   "pid": 91411
+  },
+  {
+   "create_time": 1792107302.939122,
+   "pid": 91412
+  },
+  {
+   "create_time": 1792107303.16593,
+   "pid": 91434
+  },
+  {
+   "create_time": 1792107303.387718,
+   "pid": 91453
+  },
+  {
+   "create_time": 1792107303.414905,
+   "pid": 91455
+  },
+  {
+   "create_time": 1792107303.193416,
+   "pid": 91436
+  },
+  {
+   "create_time": 1792107303.427382,
+   "pid": 91456
+  },
+  {
+   "create_time": 1792107303.648255,
+   "pid": 91461
+  },
+  {
+   "create_time": 1792107303.454674,
+   "pid": 91458
+  }
+ ],
+ "worker_pgid": 91409,
+ "workers": 1,
+ "workers_stopped": true
+}

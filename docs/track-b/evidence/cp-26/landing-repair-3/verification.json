@@ -1,0 +1,1651 @@
+{
+  "candidate": "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+  "started_utc": "2026-10-20T17:00:34Z",
+  "commands": [
+    {
+      "label": "burners-start",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "burners",
+        "start",
+        "--record",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/burners.json"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 0.037,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/burners-start-outer.log",
+      "monitored": false
+    },
+    {
+      "label": "stress-four",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-stress-four",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "stress",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-stress312",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "stress-four",
+        "--emulation",
+        "four-burners",
+        "--runs",
+        "5"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 190.846,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/stress-four-outer.log",
+      "monitored": true
+    },
+    {
+      "label": "cp26-four",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-cp26-four",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "pytest",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-stress312",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "cp26-four",
+        "--emulation",
+        "four-burners",
+        "tests/test_cp26_*.py",
+        "tests/test_rebaseline_disclosures.py"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 362.955,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/cp26-four-outer.log",
+      "monitored": true
+    },
+    {
+      "label": "burners-stop",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "burners",
+        "stop",
+        "--record",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/burners.json"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 0.25,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/burners-stop-outer.log",
+      "monitored": false
+    },
+    {
+      "label": "stress-quiet",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-stress-quiet",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "stress",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-stress312",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "stress-quiet",
+        "--emulation",
+        "quiet",
+        "--runs",
+        "5"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 104.026,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/stress-quiet-outer.log",
+      "monitored": true
+    },
+    {
+      "label": "ci3.12",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-ci3.12",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "ci",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.12",
+        "--python",
+        "3.12",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "ci3.12"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 1,
+      "wall_seconds": 627.973,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/ci3.12-outer.log",
+      "monitored": true
+    },
+    {
+      "label": "hook-boundary",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-hook-boundary",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "pytest",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.12",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "hook-boundary",
+        "--emulation",
+        "quiet",
+        "tests/test_47_session_start_hook.py"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 7.435,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/hook-boundary-outer.log",
+      "monitored": true,
+      "path_prepend": null
+    },
+    {
+      "label": "ci3.12-rerun",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-ci3.12-rerun",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "ci",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.12-rerun",
+        "--python",
+        "3.12",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "ci3.12-rerun"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 649.851,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/ci3.12-rerun-outer.log",
+      "monitored": true,
+      "path_prepend": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.12-rerun/bin"
+    },
+    {
+      "label": "ci3.13",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-ci3.13",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "ci",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy313",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.13",
+        "--python",
+        "3.13",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "ci3.13"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 1,
+      "wall_seconds": 6.936,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/ci3.13-outer.log",
+      "monitored": true,
+      "path_prepend": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.13/bin"
+    },
+    {
+      "label": "sync313",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-sync313",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/sync313.py"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 14.69,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/sync313-outer.log",
+      "monitored": true,
+      "path_prepend": null
+    },
+    {
+      "label": "ci3.13-rerun",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-ci3.13-rerun",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+        "ci",
+        "--copy",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy313",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.13-rerun",
+        "--python",
+        "3.13",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results",
+        "--label",
+        "ci3.13-rerun"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 639.752,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/ci3.13-rerun-outer.log",
+      "monitored": true,
+      "path_prepend": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.13-rerun/bin"
+    },
+    {
+      "label": "curated-suite",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-curated-suite",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-3/check.py",
+        "suite",
+        "--candidate",
+        "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+        "--tree",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/curated",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-curated",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/curated-suite"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 626.373,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/curated-suite-outer.log",
+      "monitored": true,
+      "path_prepend": null
+    },
+    {
+      "label": "full-suite",
+      "command": [
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "-B",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/scripts/cp26_rebaseline.py",
+        "monitor",
+        "--name",
+        "landing-repair-3-full-suite",
+        "--workers",
+        "4",
+        "--",
+        "/Users/djourno/Downloads/PJM/.venv/bin/python",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check/docs/track-b/evidence/cp-26/landing-repair-3/check.py",
+        "suite",
+        "--candidate",
+        "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+        "--tree",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+        "--env",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-full",
+        "--out",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/full-suite"
+      ],
+      "cwd": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check",
+      "exit_code": 0,
+      "wall_seconds": 625.111,
+      "outer_log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/full-suite-outer.log",
+      "monitored": true,
+      "path_prepend": null
+    }
+  ],
+  "ledger_before": {
+    "jobs": 524,
+    "total_seconds": 894020.9192264826,
+    "running": []
+  },
+  "ledger_after": {
+    "jobs": 535,
+    "total_seconds": 909334.4524419905,
+    "running": []
+  },
+  "temp_discovery_correction": {
+    "initial_failure": "tests/test_47_session_start_hook.py::test_the_hook_never_fails_outside_a_repository",
+    "cause": "Project-contained TMPDIR exposed the outer PJM Git repository; the fixture strips all GIT_* ceiling settings.",
+    "barrier": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/tmp/.git",
+    "contents": "gitdir: /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/tmp/absent-git-discovery-boundary\n",
+    "semantics": "No discoverable valid repository. Hook error handling is exercised via an invalid gitdir rather than the usual filesystem-root not-a-repository error. Valid nested test repositories find their own .git first.",
+    "source_and_test_changes": false
+  },
+  "green": true,
+  "finished_utc": "2026-10-20T18:08:04Z",
+  "ledger_jobs": [
+    {
+      "name": "landing-repair-3-stress-four",
+      "job_index": 524,
+      "workers": 4,
+      "wall_seconds": 188.23067612497834,
+      "charged_wall_seconds": 188.23067612497834,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-stress-four.524.df5603253a454d80846fbcb37293ae9f.clock.json"
+    },
+    {
+      "name": "landing-repair-3-cp26-four",
+      "job_index": 525,
+      "workers": 4,
+      "wall_seconds": 359.94553825000185,
+      "charged_wall_seconds": 359.94553825000185,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-cp26-four.525.eb9195079a854e1fac55a0e3dbf56c2c.clock.json"
+    },
+    {
+      "name": "landing-repair-3-stress-quiet",
+      "job_index": 526,
+      "workers": 4,
+      "wall_seconds": 101.46746508401702,
+      "charged_wall_seconds": 101.46746508401702,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-stress-quiet.526.76b60b43d3224c03861568bbb8a09270.clock.json"
+    },
+    {
+      "name": "landing-repair-3-ci3.12",
+      "job_index": 527,
+      "workers": 4,
+      "wall_seconds": 625.3007976670051,
+      "charged_wall_seconds": 625.3007976670051,
+      "exit_code": 1,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-ci3.12.527.5351b6ee152a4937970e6f52bb9236f0.clock.json"
+    },
+    {
+      "name": "landing-repair-3-hook-boundary",
+      "job_index": 528,
+      "workers": 4,
+      "wall_seconds": 5.235600249987328,
+      "charged_wall_seconds": 5.235600249987328,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-hook-boundary.528.c200a27dd52a491ea462ee526f333e1c.clock.json"
+    },
+    {
+      "name": "landing-repair-3-ci3.12-rerun",
+      "job_index": 529,
+      "workers": 4,
+      "wall_seconds": 647.5619894580159,
+      "charged_wall_seconds": 647.5619894580159,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-ci3.12-rerun.529.cb5abe42eff94b98a584e60f46546aa9.clock.json"
+    },
+    {
+      "name": "landing-repair-3-ci3.13",
+      "job_index": 530,
+      "workers": 4,
+      "wall_seconds": 4.414886166981887,
+      "charged_wall_seconds": 4.414886166981887,
+      "exit_code": 1,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-ci3.13.530.fd18b1328253419ba8ca8a932fcaaa2c.clock.json"
+    },
+    {
+      "name": "landing-repair-3-sync313",
+      "job_index": 531,
+      "workers": 4,
+      "wall_seconds": 12.471274084004108,
+      "charged_wall_seconds": 12.471274084004108,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-sync313.531.c2f5b2d059184f56a4dd5d8595117457.clock.json"
+    },
+    {
+      "name": "landing-repair-3-ci3.13-rerun",
+      "job_index": 532,
+      "workers": 4,
+      "wall_seconds": 637.264294749999,
+      "charged_wall_seconds": 637.264294749999,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-ci3.13-rerun.532.b66351f9e1af4bc98f2a67c45dfc6eac.clock.json"
+    },
+    {
+      "name": "landing-repair-3-curated-suite",
+      "job_index": 533,
+      "workers": 4,
+      "wall_seconds": 623.8379404589941,
+      "charged_wall_seconds": 623.8379404589941,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-curated-suite.533.ef0dd50c000a4706944474ca8120ea8d.clock.json"
+    },
+    {
+      "name": "landing-repair-3-full-suite",
+      "job_index": 534,
+      "workers": 4,
+      "wall_seconds": 622.6528415829816,
+      "charged_wall_seconds": 622.6528415829816,
+      "exit_code": 0,
+      "abort_reason": null,
+      "running": false,
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/landing-repair-3-full-suite.534.61ca1cc5ae774ca4bb4d63037e3abadb.clock.json"
+    }
+  ],
+  "ledger_delta_seconds": 15313.533215507865,
+  "burners": {
+    "pids": [
+      60137,
+      60138,
+      60139,
+      60140
+    ],
+    "count": 4,
+    "started_epoch": 1792515635.11678,
+    "started_utc": "2026-10-20T17:00:35Z",
+    "stopped_epoch": 1792516189.1738062,
+    "stopped_utc": "2026-10-20T17:09:49Z",
+    "alive_after_stop": [],
+    "wall_seconds": 554.06,
+    "burner_seconds": 2216.24
+  },
+  "historical_monitor_overhead_cores": 0.6,
+  "monitor_overhead_provenance": "Round 2 measurement; not remeasured in round 3. Four burners plus this independently enforced monitor.",
+  "candidate_checkout_clean_after": true,
+  "candidate_checkout_detached_after": true,
+  "candidate_checkout_head_after": "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+  "worktree_receipt_before_cleanup": "worktree /Users/djourno/Downloads/PJM\nHEAD 647d6eb81b2cf6e0cfaf4152f659d689ff973578\nbranch refs/heads/main\n\nworktree /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check\nHEAD c7829b3687ed7e295f1aeac3738e4d1a257a81aa\ndetached\n\nworktree /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/curated\nHEAD 647d6eb81b2cf6e0cfaf4152f659d689ff973578\ndetached\n\nworktree /Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead\nHEAD c7829b3687ed7e295f1aeac3738e4d1a257a81aa\nbranch refs/heads/gauntlet/cp-26\n\n",
+  "history_free": {
+    "candidate": "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+    "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+    "tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+    "tree_files": 2411,
+    "curated_paths": 860,
+    "excluded_paths": 9419,
+    "curated_paths_sha256": "757c8f947f889feff915c15c62672a6c2cdf26743c281aed30215cdcd221637b",
+    "copies": [
+      {
+        "path": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy312",
+        "tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+        "commits": 1,
+        "clean": true,
+        "hooks": "/Users/djourno/Downloads/PJM/.githooks"
+      },
+      {
+        "path": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/copy313",
+        "tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+        "commits": 1,
+        "clean": true,
+        "hooks": "/Users/djourno/Downloads/PJM/.githooks"
+      }
+    ],
+    "curated_worktree": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/curated"
+  },
+  "checks": {
+    "stress-four": {
+      "schema": "cp26-landing-repair-2-stress-v1",
+      "label": "stress-four",
+      "node": "tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history",
+      "python": "3.12",
+      "copy_head": "a2806ee2706df01c64bf3039ce2e6412cc48d939",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "emulation": "four-burners",
+      "started_utc": "2026-10-20T17:00:41Z",
+      "sync": {
+        "command": [
+          "uv",
+          "sync",
+          "--locked",
+          "--dev"
+        ],
+        "exit_code": 0,
+        "seconds": 2.03,
+        "summary": " + zipp==4.1.0",
+        "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-sync.log",
+        "failed": [],
+        "timeout_lines": []
+      },
+      "runs": [
+        {
+          "exit_code": 0,
+          "seconds": 72.6,
+          "summary": "1 passed in 54.39s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-0.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 0,
+          "test_seconds": 27.518,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.26,
+            "controller_wait_lower": 16.504,
+            "admin_observations": 8,
+            "controller_wait_upper": 18.286,
+            "owner_span_max": 18.66,
+            "admin_job_wall": 14.626,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.579,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.4248,
+            "owner_lock_peak_hold_max": 0.1478,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-0-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 26.76,
+          "summary": "1 passed in 26.05s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-1.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 1,
+          "test_seconds": 25.27,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.498,
+            "controller_wait_lower": 14.609,
+            "admin_observations": 7,
+            "controller_wait_upper": 16.307,
+            "owner_span_max": 16.981,
+            "admin_job_wall": 12.947,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.346,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.5461,
+            "owner_lock_peak_hold_max": 0.2667,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-1-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 26.42,
+          "summary": "1 passed in 25.71s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-2.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 2,
+          "test_seconds": 24.924,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.154,
+            "controller_wait_lower": 14.202,
+            "admin_observations": 8,
+            "controller_wait_upper": 15.853,
+            "owner_span_max": 16.148,
+            "admin_job_wall": 12.527,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.562,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.4654,
+            "owner_lock_peak_hold_max": 0.1593,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-2-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 27.28,
+          "summary": "1 passed in 26.55s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-3.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 3,
+          "test_seconds": 25.79,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.806,
+            "controller_wait_lower": 14.712,
+            "admin_observations": 8,
+            "controller_wait_upper": 16.54,
+            "owner_span_max": 17.46,
+            "admin_job_wall": 13.232,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.204,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.4284,
+            "owner_lock_peak_hold_max": 0.2499,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-3-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 27.93,
+          "summary": "1 passed in 27.19s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-4.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 4,
+          "test_seconds": 26.341,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.596,
+            "controller_wait_lower": 15.13,
+            "admin_observations": 8,
+            "controller_wait_upper": 16.842,
+            "owner_span_max": 17.584,
+            "admin_job_wall": 13.662,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.186,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.3714,
+            "owner_lock_peak_hold_max": 0.1301,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-four-4-inner-logs"
+        }
+      ],
+      "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "passed": 5,
+      "finished_utc": "2026-10-20T17:03:44Z"
+    },
+    "stress-quiet": {
+      "schema": "cp26-landing-repair-2-stress-v1",
+      "label": "stress-quiet",
+      "node": "tests/test_cp26_ledger_liveness.py::test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history",
+      "python": "3.12",
+      "copy_head": "a2806ee2706df01c64bf3039ce2e6412cc48d939",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "emulation": "quiet",
+      "started_utc": "2026-10-20T17:09:54Z",
+      "sync": {
+        "command": [
+          "uv",
+          "sync",
+          "--locked",
+          "--dev"
+        ],
+        "exit_code": 0,
+        "seconds": 0.04,
+        "summary": "Checked 117 packages in 21ms",
+        "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-sync.log",
+        "failed": [],
+        "timeout_lines": []
+      },
+      "runs": [
+        {
+          "exit_code": 0,
+          "seconds": 19.6,
+          "summary": "1 passed in 19.05s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-0.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 0,
+          "test_seconds": 18.385,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.35,
+            "controller_wait_lower": 9.564,
+            "admin_observations": 8,
+            "controller_wait_upper": 11.312,
+            "owner_span_max": 11.818,
+            "admin_job_wall": 8.599,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.301,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.3868,
+            "owner_lock_peak_hold_max": 0.1592,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-0-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 19.18,
+          "summary": "1 passed in 18.57s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-1.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 1,
+          "test_seconds": 17.902,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.509,
+            "controller_wait_lower": 9.505,
+            "admin_observations": 7,
+            "controller_wait_upper": 11.155,
+            "owner_span_max": 11.802,
+            "admin_job_wall": 8.801,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.425,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.3302,
+            "owner_lock_peak_hold_max": 0.118,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-1-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 20.09,
+          "summary": "1 passed in 19.53s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-2.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 2,
+          "test_seconds": 18.618,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.269,
+            "controller_wait_lower": 10.621,
+            "admin_observations": 8,
+            "controller_wait_upper": 11.986,
+            "owner_span_max": 12.384,
+            "admin_job_wall": 9.777,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.397,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.5587,
+            "owner_lock_peak_hold_max": 0.1002,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-2-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 18.81,
+          "summary": "1 passed in 18.22s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-3.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 3,
+          "test_seconds": 17.558,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.346,
+            "controller_wait_lower": 9.516,
+            "admin_observations": 7,
+            "controller_wait_upper": 10.797,
+            "owner_span_max": 11.267,
+            "admin_job_wall": 8.534,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.39,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.4499,
+            "owner_lock_peak_hold_max": 0.0895,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-3-inner-logs"
+        },
+        {
+          "exit_code": 0,
+          "seconds": 19.43,
+          "summary": "1 passed in 18.85s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-4.log",
+          "failed": [],
+          "timeout_lines": [],
+          "index": 4,
+          "test_seconds": 18.197,
+          "timing": {
+            "found": true,
+            "ready_spread": 0.505,
+            "controller_wait_lower": 9.995,
+            "admin_observations": 7,
+            "controller_wait_upper": 11.576,
+            "owner_span_max": 12.2,
+            "admin_job_wall": 9.238,
+            "admin_exit_code": 0,
+            "admin_abort_reason": null,
+            "owner_exit_after_stop": 0.352,
+            "owner_abort_reasons": [
+              null,
+              null,
+              null
+            ],
+            "owner_lock_peak_wait_max": 0.3383,
+            "owner_lock_peak_hold_max": 0.2048,
+            "owner_lock_timeouts": 0
+          },
+          "inner_logs": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/stress-quiet-4-inner-logs"
+        }
+      ],
+      "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "passed": 5,
+      "finished_utc": "2026-10-20T17:11:31Z"
+    },
+    "cp26-four": {
+      "schema": "cp26-landing-repair-2-pytest-v1",
+      "label": "cp26-four",
+      "python": "3.12",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "emulation": "four-burners",
+      "files": 24,
+      "started_utc": "2026-10-20T17:03:52Z",
+      "sync": {
+        "command": [
+          "uv",
+          "sync",
+          "--locked",
+          "--dev"
+        ],
+        "exit_code": 0,
+        "seconds": 0.04,
+        "summary": "Checked 117 packages in 13ms",
+        "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/cp26-four-sync.log",
+        "failed": [],
+        "timeout_lines": []
+      },
+      "run": {
+        "command": [
+          "uv",
+          "run",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "<24 files>"
+        ],
+        "exit_code": 0,
+        "seconds": 355.16,
+        "summary": "452 passed in 354.24s (0:05:54)",
+        "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/cp26-four.log",
+        "failed": [],
+        "timeout_lines": []
+      },
+      "finished_utc": "2026-10-20T17:09:47Z",
+      "expanded_selection": [
+        "tests/test_cp26_accounting.py",
+        "tests/test_cp26_analysis.py",
+        "tests/test_cp26_analysis_inventory.py",
+        "tests/test_cp26_costing.py",
+        "tests/test_cp26_diagnostic_cells.py",
+        "tests/test_cp26_execution.py",
+        "tests/test_cp26_gates.py",
+        "tests/test_cp26_harness.py",
+        "tests/test_cp26_inference.py",
+        "tests/test_cp26_inference_rng.py",
+        "tests/test_cp26_ledger_liveness.py",
+        "tests/test_cp26_monitor.py",
+        "tests/test_cp26_parity.py",
+        "tests/test_cp26_r15.py",
+        "tests/test_cp26_r16.py",
+        "tests/test_cp26_repair_contract.py",
+        "tests/test_cp26_replay.py",
+        "tests/test_cp26_reporting.py",
+        "tests/test_cp26_run_accounting.py",
+        "tests/test_cp26_scoring.py",
+        "tests/test_cp26_search.py",
+        "tests/test_cp26_state.py",
+        "tests/test_cp26_supervision.py",
+        "tests/test_rebaseline_disclosures.py"
+      ],
+      "exact_pytest_command": [
+        "uv",
+        "run",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "-rfE",
+        "tests/test_cp26_accounting.py",
+        "tests/test_cp26_analysis.py",
+        "tests/test_cp26_analysis_inventory.py",
+        "tests/test_cp26_costing.py",
+        "tests/test_cp26_diagnostic_cells.py",
+        "tests/test_cp26_execution.py",
+        "tests/test_cp26_gates.py",
+        "tests/test_cp26_harness.py",
+        "tests/test_cp26_inference.py",
+        "tests/test_cp26_inference_rng.py",
+        "tests/test_cp26_ledger_liveness.py",
+        "tests/test_cp26_monitor.py",
+        "tests/test_cp26_parity.py",
+        "tests/test_cp26_r15.py",
+        "tests/test_cp26_r16.py",
+        "tests/test_cp26_repair_contract.py",
+        "tests/test_cp26_replay.py",
+        "tests/test_cp26_reporting.py",
+        "tests/test_cp26_run_accounting.py",
+        "tests/test_cp26_scoring.py",
+        "tests/test_cp26_search.py",
+        "tests/test_cp26_state.py",
+        "tests/test_cp26_supervision.py",
+        "tests/test_rebaseline_disclosures.py"
+      ]
+    },
+    "ci3.12": {
+      "schema": "cp26-landing-repair-2-ci-v1",
+      "label": "ci3.12-rerun",
+      "python": "3.12",
+      "copy_head": "a2806ee2706df01c64bf3039ce2e6412cc48d939",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "started_utc": "2026-10-20T17:24:40Z",
+      "steps": [
+        {
+          "command": [
+            "uv",
+            "sync",
+            "--locked",
+            "--dev"
+          ],
+          "exit_code": 0,
+          "seconds": 1.26,
+          "summary": " + zipp==4.1.0",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-sync.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "sync",
+          "tracked_changes_after": [],
+          "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/build_wasm_payload.py"
+          ],
+          "exit_code": 0,
+          "seconds": 84.72,
+          "summary": "2026/10/20 20:25:34 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-payload.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "payload",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "-q"
+          ],
+          "exit_code": 0,
+          "seconds": 553.31,
+          "summary": "2205 passed, 16 skipped in 551.36s (0:09:11)",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-suite.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "suite",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "tests/test_10_cqr_order_statistic.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "seconds": 0.49,
+          "summary": "8 passed in 0.02s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-cqr.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "cqr",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/verify_release.py"
+          ],
+          "exit_code": 0,
+          "seconds": 1.18,
+          "summary": "PASS \u2014 every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-verify-release.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "verify-release",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "tests/test_22_wasm_equivalence.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "seconds": 2.27,
+          "summary": "15 passed in 1.76s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-wasm.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "wasm",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/publication_guard.py",
+            "tree"
+          ],
+          "exit_code": 0,
+          "seconds": 0.03,
+          "summary": "publication-guard: the tree carries no placeholder and a final build record",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-rerun-publication-guard.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "publication-guard",
+          "tracked_changes_after": []
+        }
+      ],
+      "green": true,
+      "finished_utc": "2026-10-20T17:35:24Z"
+    },
+    "ci3.13": {
+      "schema": "cp26-landing-repair-2-ci-v1",
+      "label": "ci3.13-rerun",
+      "python": "3.13",
+      "copy_head": "81582b2b7bebc69241949d81ab7d9cb5f9006b81",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "started_utc": "2026-10-20T17:36:38Z",
+      "steps": [
+        {
+          "command": [
+            "uv",
+            "sync",
+            "--locked",
+            "--dev"
+          ],
+          "exit_code": 0,
+          "seconds": 0.95,
+          "summary": " + zipp==4.1.0",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-sync.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "sync",
+          "tracked_changes_after": [],
+          "interpreter": "3.13.15 (main, Aug 25 2026, 13:50:12) [Clang 22.1.3 ]"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/build_wasm_payload.py"
+          ],
+          "exit_code": 0,
+          "seconds": 89.37,
+          "summary": "2026/10/20 20:37:06 INFO mlflow.agent.hint: Load the `instrumenting-with-mlflow-tracing` skill at /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.13-rerun/lib/python3.13/site-packages/mlflow/assistant/skills/instrumenting-with-mlflow-tracing/SKILL.md before writing any tracing code; it ships with this MLflow install. Set MLFLOW_DISABLE_AGENT_HINT=1 to silence this.",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-payload.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "payload",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "-q"
+          ],
+          "exit_code": 0,
+          "seconds": 538.44,
+          "summary": "2205 passed, 16 skipped in 536.18s (0:08:56)",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-suite.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "suite",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "tests/test_10_cqr_order_statistic.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "seconds": 0.48,
+          "summary": "8 passed in 0.02s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-cqr.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "cqr",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/verify_release.py"
+          ],
+          "exit_code": 0,
+          "seconds": 1.17,
+          "summary": "PASS \u2014 every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-verify-release.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "verify-release",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "tests/test_22_wasm_equivalence.py",
+            "-q"
+          ],
+          "exit_code": 0,
+          "seconds": 2.23,
+          "summary": "15 passed in 1.74s",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-wasm.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "wasm",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "python3",
+            "scripts/publication_guard.py",
+            "tree"
+          ],
+          "exit_code": 0,
+          "seconds": 0.03,
+          "summary": "publication-guard: the tree carries no placeholder and a final build record",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-rerun-publication-guard.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "publication-guard",
+          "tracked_changes_after": []
+        }
+      ],
+      "green": true,
+      "finished_utc": "2026-10-20T17:47:11Z"
+    },
+    "initial_ci3.13_sync_failure": {
+      "schema": "cp26-landing-repair-2-ci-v1",
+      "label": "ci3.13",
+      "python": "3.13",
+      "copy_head": "81582b2b7bebc69241949d81ab7d9cb5f9006b81",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "started_utc": "2026-10-20T17:35:31Z",
+      "steps": [
+        {
+          "command": [
+            "uv",
+            "sync",
+            "--locked",
+            "--dev"
+          ],
+          "exit_code": 1,
+          "seconds": 0.05,
+          "summary": "hint: `llvmlite` (v0.49.0) was included because `delu-price-forecast` (v0.1.0) depends on `shap` (v0.52.0) which depends on `llvmlite`",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.13-sync.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "sync",
+          "tracked_changes_after": [],
+          "interpreter": ""
+        }
+      ],
+      "green": false,
+      "finished_utc": "2026-10-20T17:35:31Z"
+    },
+    "sync313": {
+      "command": [
+        "uv",
+        "sync",
+        "--locked",
+        "--dev"
+      ],
+      "exit_code": 0,
+      "seconds": 8.12,
+      "summary": " + zipp==4.1.0",
+      "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/sync313.log",
+      "failed": [],
+      "timeout_lines": [],
+      "network_scope": "uv sync --locked --dev only; Python downloads disabled; cache inside project"
+    },
+    "initial_ci3.12_failure": {
+      "schema": "cp26-landing-repair-2-ci-v1",
+      "label": "ci3.12",
+      "python": "3.12",
+      "copy_head": "a2806ee2706df01c64bf3039ce2e6412cc48d939",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "started_utc": "2026-10-20T17:11:38Z",
+      "steps": [
+        {
+          "command": [
+            "uv",
+            "sync",
+            "--locked",
+            "--dev"
+          ],
+          "exit_code": 0,
+          "seconds": 1.06,
+          "summary": " + zipp==4.1.0",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-sync.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "sync",
+          "tracked_changes_after": [],
+          "interpreter": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/build_wasm_payload.py"
+          ],
+          "exit_code": 0,
+          "seconds": 85.13,
+          "summary": "2026/10/20 20:12:32 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-payload.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "payload",
+          "tracked_changes_after": []
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "-q"
+          ],
+          "exit_code": 1,
+          "seconds": 534.66,
+          "summary": "1 failed, 2204 passed, 16 skipped in 532.72s (0:08:52)",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/ci3.12-suite.log",
+          "failed": [
+            "FAILED tests/test_47_session_start_hook.py::test_the_hook_never_fails_outside_a_repository"
+          ],
+          "timeout_lines": [],
+          "step": "suite",
+          "tracked_changes_after": []
+        }
+      ],
+      "green": false,
+      "finished_utc": "2026-10-20T17:21:59Z"
+    },
+    "hook-boundary": {
+      "schema": "cp26-landing-repair-2-pytest-v1",
+      "label": "hook-boundary",
+      "python": "3.12",
+      "copy_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "emulation": "quiet",
+      "files": 1,
+      "started_utc": "2026-10-20T17:24:33Z",
+      "sync": {
+        "command": [
+          "uv",
+          "sync",
+          "--locked",
+          "--dev"
+        ],
+        "exit_code": 0,
+        "seconds": 0.04,
+        "summary": "Checked 117 packages in 21ms",
+        "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/hook-boundary-sync.log",
+        "failed": [],
+        "timeout_lines": []
+      },
+      "run": {
+        "command": [
+          "uv",
+          "run",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "<1 files>"
+        ],
+        "exit_code": 0,
+        "seconds": 0.98,
+        "summary": "4 passed in 0.54s",
+        "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/results/hook-boundary.log",
+        "failed": [],
+        "timeout_lines": []
+      },
+      "finished_utc": "2026-10-20T17:24:34Z",
+      "expanded_selection": [
+        "tests/test_47_session_start_hook.py"
+      ],
+      "exact_pytest_command": [
+        "uv",
+        "run",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "-rfE",
+        "tests/test_47_session_start_hook.py"
+      ]
+    },
+    "curated": {
+      "candidate": "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+      "tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "head": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+      "steps": [
+        {
+          "command": [
+            "uv",
+            "sync",
+            "--locked",
+            "--dev"
+          ],
+          "exit_code": 0,
+          "seconds": 1.43,
+          "summary": " + zipp==4.1.0",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/curated-suite/sync.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "sync"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/build_wasm_payload.py"
+          ],
+          "exit_code": 0,
+          "seconds": 81.27,
+          "summary": "2026/10/20 20:48:08 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/curated-suite/payload.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "payload"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 0,
+          "seconds": 536.83,
+          "summary": "2213 passed, 8 skipped in 535.12s (0:08:55)",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/curated-suite/suite.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "suite"
+        }
+      ],
+      "green": true
+    },
+    "full": {
+      "candidate": "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+      "tree": "7a4e12f62c3a004edebe4779d9e804f11db2af3b",
+      "head": "c7829b3687ed7e295f1aeac3738e4d1a257a81aa",
+      "steps": [
+        {
+          "command": [
+            "uv",
+            "sync",
+            "--locked",
+            "--dev"
+          ],
+          "exit_code": 0,
+          "seconds": 1.31,
+          "summary": " + zipp==4.1.0",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/full-suite/sync.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "sync"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "python",
+            "scripts/build_wasm_payload.py"
+          ],
+          "exit_code": 0,
+          "seconds": 81.63,
+          "summary": "2026/10/20 20:58:33 WARNING mlflow.pyfunc: The version of Python that the model was saved in, `Python 3.13.15`, differs from the version of Python that is currently running, `Python 3.12.14`, and may be incompatible",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/full-suite/payload.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "payload"
+        },
+        {
+          "command": [
+            "uv",
+            "run",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider"
+          ],
+          "exit_code": 0,
+          "seconds": 535.54,
+          "summary": "2213 passed, 8 skipped in 533.54s (0:08:53)",
+          "log": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/full-suite/suite.log",
+          "failed": [],
+          "timeout_lines": [],
+          "step": "suite"
+        }
+      ],
+      "green": true
+    }
+  },
+  "preservation": {
+    "6f57feb:reports/": [],
+    "5671423:reports/,data/,src/,AGENTS.md,CLAUDE.md,engineering-role.md,orchestrator-role.md,notebooklm-role.md,docs/track-b/gauntlet-templates.md,capstone_v21.md,pyproject.toml,uv.lock,docs/track-b/exposure-ledger.md": [],
+    "04f00ea_allowed_delta": [
+      "docs/track-b/evidence/cp-26/integration.md",
+      "docs/track-b/evidence/cp-26/landing-repair-2-brief.md",
+      "docs/track-b/evidence/cp-26/landing-repair-2/checkpoint-return.md",
+      "docs/track-b/evidence/cp-26/landing-repair-2/patience-measurement.json",
+      "docs/track-b/evidence/cp-26/landing-repair-2/stress_check.py",
+      "docs/track-b/evidence/cp-26/landing-repair-2/verification.json",
+      "docs/track-b/evidence/cp-26/landing-repair-3-brief.md",
+      "docs/track-b/evidence/cp-26/landing-repair-3/check.py",
+      "docs/track-b/evidence/cp-26/landing-repair/checkpoint-return.md",
+      "docs/track-b/evidence/cp-26/landing-repair/ci_bytecode_experiment.py",
+      "docs/track-b/evidence/cp-26/landing-repair/ci_check.py",
+      "docs/track-b/evidence/cp-26/landing-repair/cold_experiment.py",
+      "docs/track-b/evidence/cp-26/landing-repair/critic-assignment.md",
+      "docs/track-b/evidence/cp-26/landing-repair/integration-PASS.md",
+      "docs/track-b/evidence/cp-26/landing-repair/verification.json",
+      "tests/test_cp26_ledger_liveness.py"
+    ],
+    "round3_delta": [
+      "A\tdocs/track-b/evidence/cp-26/landing-repair-3-brief.md",
+      "A\tdocs/track-b/evidence/cp-26/landing-repair-3/check.py",
+      "M\ttests/test_cp26_ledger_liveness.py"
+    ],
+    "anchor_sha256": "3124451da84c3cd99fae728c371207aace6ae537474f7769d0ff6333ee53e4fc",
+    "section247_sha256": "d5079dad269d321b3373cc2757a0cf28ce6e7f0637a2b18c53c06ef1fed1efae",
+    "preserved_verdicts": {
+      "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md": {
+        "blob": "647e0486ff34f655f63d1568b1286c19f77aefc2",
+        "sha256": "32fc2af7eef6c030d4a0763c0d2cf3c55d8ed0cc4f4b2428192e9e638f413725"
+      },
+      "docs/track-b/evidence/cp-26/gfs-v21-r17/integration-r17-PASS.md": {
+        "blob": "74eb6d6065e7b8584c422f99ad65dd5b70ac3325",
+        "sha256": "dcde05541851efa5dc9f38ba208ded5bb3c52f150f33650899a8a2087e44c6e8"
+      },
+      "docs/track-b/evidence/cp-26/integration.md": {
+        "blob": "a65044d493bf1dc585093f9bef8319745aa7c06f",
+        "sha256": "240378b707b822e9722ba0662eff60d0203ac16f1a333c0e47e090c76a55d36f"
+      },
+      "docs/track-b/evidence/cp-26/landing-repair/integration-PASS.md": {
+        "blob": "a65044d493bf1dc585093f9bef8319745aa7c06f",
+        "sha256": "240378b707b822e9722ba0662eff60d0203ac16f1a333c0e47e090c76a55d36f"
+      }
+    },
+    "untracked_preservation": {
+      "files": 33925,
+      "bytes": 32324813196,
+      "manifest_sha256": "b5a3307efe134826c45740aab7c9c1c044aa889182e985b4c09882a5783d0154",
+      "all_sha256_and_sizes_unchanged": true,
+      "groups": [
+        "?? docs/track-b/evidence/cp-26/landing-repair-3/curate.py",
+        "?? reports/rebaseline/cold-rerun-2026-10-15/diagnostics/",
+        "?? reports/rebaseline/cold-rerun-2026-10-15/inference/",
+        "?? reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.json",
+        "?? reports/rebaseline/cold-rerun-2026-10-15/report.json",
+        "?? reports/rebaseline/cold-rerun-2026-10-15/scores/hourly.parquet",
+        "?? reports/rebaseline/continuation-v21-r14-accounting-3/learning-ledger.json",
+        "?? reports/rebaseline/continuation-v21-r14-accounting-3/replay-state.json"
+      ]
+    },
+    "curated_worktree_after": {
+      "index_tree": "b6ea459a8458572c102d6f8e3d4354c1258450d9",
+      "unstaged_changes": []
+    }
+  },
+  "scratch_branch_heads": {
+    "copy312/main": "a2806ee2706df01c64bf3039ce2e6412cc48d939",
+    "copy313/main": "81582b2b7bebc69241949d81ab7d9cb5f9006b81"
+  },
+  "section247_hashes": {
+    "6f57febe3659b1f902c17f3db31ba41e41136178": "d5079dad269d321b3373cc2757a0cf28ce6e7f0637a2b18c53c06ef1fed1efae",
+    "f014e5b2f09dc7defa103b3c4ec5796d199c262d": "d5079dad269d321b3373cc2757a0cf28ce6e7f0637a2b18c53c06ef1fed1efae",
+    "04f00eac5506c550ed4c775b84dc65a41f86c007": "d5079dad269d321b3373cc2757a0cf28ce6e7f0637a2b18c53c06ef1fed1efae",
+    "c7829b3687ed7e295f1aeac3738e4d1a257a81aa": "d5079dad269d321b3373cc2757a0cf28ce6e7f0637a2b18c53c06ef1fed1efae"
+  }
+}

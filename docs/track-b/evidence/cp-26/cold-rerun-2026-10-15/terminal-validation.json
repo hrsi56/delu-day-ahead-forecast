@@ -1,0 +1,38 @@
+{
+ "bar_command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/bar.py",
+  "check",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/complete-bar.md",
+  "--source",
+  "capstone_v21.md@332baeb861cec5a58516c58a29a1a3afe1eec909"
+ ],
+ "bar_exit_code": 0,
+ "bar_output": "ok: lines 1\u2013245 (14787 bytes) appear in capstone_v21.md@332baeb861ce\n",
+ "candidate": "aff3e274f5670649aaeb359f49aad18d53f9e274",
+ "candidate_reachable": true,
+ "delta": [
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/acceptance-checklist.json",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/checkpoint-return.md"
+ ],
+ "delta_outside_evidence": [],
+ "expected_non_pass_problems": [
+  "PROBLEM: no docs/track-b/evidence/cp-26/integration.md at the evidence tip"
+ ],
+ "gauntlet_full_output": "gauntlet-return.txt.gz",
+ "gauntlet_return_command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/gauntlet.py",
+  "return",
+  "cp-26",
+  "aff3e274f5670649aaeb359f49aad18d53f9e274",
+  "79e04dbec1bf255cc32f70a710a62e2c84ada972"
+ ],
+ "gauntlet_return_exit_code": 1,
+ "interpretation": "Structural evidence closure for a BLOCKED return; no Integration PASS and no checkpoint PASS.",
+ "main_unchanged_and_clean": true,
+ "running_jobs": [],
+ "validated_evidence_tip": "79e04dbec1bf255cc32f70a710a62e2c84ada972"
+}

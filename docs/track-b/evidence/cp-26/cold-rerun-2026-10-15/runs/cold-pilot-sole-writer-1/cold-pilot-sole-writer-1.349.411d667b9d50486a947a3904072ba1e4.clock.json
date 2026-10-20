@@ -1,0 +1,87 @@
+{
+ "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+ "child_identity": {
+  "create_time": 1792080387.600457,
+  "pid": 52264
+ },
+ "completion_issuer": "watchdog",
+ "completion_issuer_identity": {
+  "create_time": 1792080386.437936,
+  "pid": 52262
+ },
+ "ended_epoch": 1792082360.22018,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "411d667b9d50486a947a3904072ba1e4",
+ "job_index": 349,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 3,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 3,
+  "hold_seconds": 0.0030510000651702285,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.27166787500027567,
+  "peak_wait_seconds": 0.07552924996707588,
+  "read_bytes": 8553097,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 0.4527857908979058,
+  "transactions": 7558,
+  "wait_seconds": 0.00034499994944781065,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 3248242688,
+ "request_sha256": "ce515eb5cf6771d27a224c789c8f5b5ad2f464bdcede4cf39023779e5c9c9582",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792080385.258118,
+ "supervisor_identity": {
+  "create_time": 1792080385.432459,
+  "pid": 52261
+ },
+ "wall_seconds": 1974.772537416895,
+ "watchdog_identity": {
+  "create_time": 1792080386.437936,
+  "pid": 52262
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792080387.600457,
+   "pid": 52264
+  },
+  {
+   "create_time": 1792080389.546161,
+   "pid": 52266
+  },
+  {
+   "create_time": 1792080390.270637,
+   "pid": 52282
+  },
+  {
+   "create_time": 1792080390.333058,
+   "pid": 52284
+  },
+  {
+   "create_time": 1792080390.50302,
+   "pid": 52290
+  },
+  {
+   "create_time": 1792080390.57893,
+   "pid": 52294
+  },
+  {
+   "create_time": 1792080446.676812,
+   "pid": 52477
+  },
+  {
+   "create_time": 1792080607.520816,
+   "pid": 52726
+  }
+ ],
+ "worker_pgid": 52264,
+ "workers": 1,
+ "workers_stopped": true
+}

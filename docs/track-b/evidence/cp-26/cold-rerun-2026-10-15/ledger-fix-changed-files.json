@@ -1,0 +1,656 @@
+{
+ "candidate": "80f12d09690aa34813c9b715b5cf5edc3a351037",
+ "files": [
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/issued-ledger-fix-addendum.md",
+   "reason": "Preserve the exact direct Owner addendum before new compute.",
+   "sha256_at_candidate": "d22b4926ce20e0b06796f329462664ab577853d98acc06fe9d887e553dc96b6f"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-authority.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "473081905acef0712d2a6610cf0ce2d1ab65a2e1e1bb92fb8586f47b88f4cf26"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocked-admission.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "a4e20f996050f996f1be573fd5cb7a4d7d11ecb736cd9e80e7de010a9ad77461"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocked-forecast.py",
+   "reason": "Bounded targeted-check, costing or custody entry point; no additional scientific protocol.",
+   "sha256_at_candidate": "5441bc415f27f0f856064736fa4bd6c72d2a5cfb5d737082aa225990b5e91696"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-blocker.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "81db4a3b58df85cc5e38ec52e08e7aafa9c00c44293b68dcdccdde70c6ffa08a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-checks.py",
+   "reason": "Bounded targeted-check, costing or custody entry point; no additional scientific protocol.",
+   "sha256_at_candidate": "df674b85d0d606db73ded17296d87776b398b41913ee0d630631f8ac203eac6f"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-file-reasons.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "4e6515e09dd42e235b9ab85cd4cd223aa0e2b9fd909a556f391d4a5ba84cbd46"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/checks.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "35ca97a467d3e0c451800d4f79786f297529d2c78c767a086061cf7bed6e67ac"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/checks.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "95f65060283c7d3fb3742dd21497924211aa218a4fca1be2a2106a5ef7046379"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fix-blocked-pricing-1.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "8ff3f783ee37dec6d7cfd3041647a40d479757c4ecf03847c73c549c489f6b0d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fix-blocked-pricing-1.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "7b7f637a5c5598d83029a02eccbde02003a2de3fd308b9bd8b2b0a399eadadff"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-0-1.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "afdca4bb387f4e8c5b73310216dcb98e955a1ddd2b86875377593b8c4409cf10"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-0-1.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "696e4d65e24bc876c89d8f0d5301dcb36f32435192f8a6b3791b73c969497801"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-1-1.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "42a85077fd1ff6abcebeec8b4fe13e336bbb80af1fc0e3b4ecc43c5d077926d7"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-1-1.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "9484657bfc3c5ee64bc0f22db99fd657efaaaa97a5adf0da633c17e27a76079b"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-1-2.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "e68f827568c0a2fc32c05a4a395a454aa7ca7182e1e7106347fc1b2db3c8c827"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-1-2.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "619ce94508a622f76d64fabf05091cb213bc9ca3cc7d5129b0bea7d2d2bda232"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-2-1.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "c22c527b7426d9f8a3683a17938260100fe8ef0b36a088714f1a0e61cd9516f6"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-shard-2-1.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "5f141a740f4d4398cf012531026d3f60800823d3421591fc95c6b54da4a4a9ee"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-single-1.launch.json",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "a8c84f77b4a408e7d72d4f737ba0e2c9632dec781037740e58ea6897f6a5075c"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-launchers/cold-ledger-fixed-pilot-single-1.launcher.log",
+   "reason": "Preserve detached launch provenance or the pre-worker reservation failure.",
+   "sha256_at_candidate": "fa818b07b95727290e8e7d958bf5a3ee047d87e504118a89700a6ecd4f1663b0"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-preserve-terminal.py",
+   "reason": "Bounded targeted-check, costing or custody entry point; no additional scientific protocol.",
+   "sha256_at_candidate": "f6b05357a161c69c08668125b8747aa9cf56fa51598e9efba65cedfbb18c3e61"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-provenance.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "37d3091d6733cd138a22102cec8f1d59d027e722e6b5bf066beac1e4dc535bf8"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-resources.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "555a0baa45136ec1a360259a73046d280fcd6efc06e94d2a03e198c5ebf0e49c"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-terminal-custody.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "9ae69b68fb70f0f2585f63ee6c476d630a649bea7ad1c2d45dd702e003b6a368"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix-tests.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "8082fbe16e5538029faa667b2e0c866f6c02604ecb51b2a765ce0ff76d5980e2"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fix.patch",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "fd49bd29e43b421919563853fb7bce8eed6a51fe8d284b526136723716e92ede"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fixed-concurrency-observation.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "f371c6c27089b8656586d8846717c6f77fe3c8524fdb4cfef8d38cebe6b563e4"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/ledger-fixed-forecast.py",
+   "reason": "Bounded targeted-check, costing or custody entry point; no additional scientific protocol.",
+   "sha256_at_candidate": "a931f83dc46dbc8a54ff42962d034fde65f71bda6108651033d5de77fb7945a7"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-blocked-pricing-1/cold-ledger-fix-blocked-pricing-1.358.42232a4bc1684b12ad5abf16cf5b0489.clock.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "180767b20785a4f04dcfab1ecbec9aa48d933b637c02e14540f1a920a768848d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-blocked-pricing-1/cold-ledger-fix-blocked-pricing-1.358.42232a4bc1684b12ad5abf16cf5b0489.progress.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "045768ff950ed2f75cda9fcdc44ebaf72e2c23742dda5e47895d8cf1f49a8455"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-blocked-pricing-1/cold-ledger-fix-blocked-pricing-1.358.42232a4bc1684b12ad5abf16cf5b0489.request.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "3b267abab35ef72f298e9bd4c41da2af7a2a5249c2cad69281e9056c56cbccc4"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-blocked-pricing-1/cold-ledger-fix-blocked-pricing-1.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "98da05e0686a1002262436c4b0f7c7a156e9dfc805138ab00eb1dd7a96b7a9e1"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-blocked-pricing-1/cold-ledger-fix-blocked-pricing-1.log",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "81e1bc055927760b40941c3928ac6626de8b9955e129da72ed23692185d32c1f"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-checks-1/checks.log",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "88f6ac8bd51177a0774aa032709590c9c5c8aace1a13786234300c1322e53dbc"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-checks-1/cold-ledger-fix-checks-1.353.b2b0d9dbf8324275bfe0215133b4f772.clock.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "797115b1c3a1d4252916d5ee7b97606bd4a889064af868242c055c0e059c1444"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-checks-1/cold-ledger-fix-checks-1.353.b2b0d9dbf8324275bfe0215133b4f772.progress.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "458945e36858297c0c6174f25a12d27bb4ec0ec38e045a8fd6290c5a59afa68e"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-checks-1/cold-ledger-fix-checks-1.353.b2b0d9dbf8324275bfe0215133b4f772.request.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "f4d649d3e189e9258daf774fcf046fa66a89518969f0c53da6bef5ea2ddc022d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fix-checks-1/cold-ledger-fix-checks-1.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "f2739b84854164cd8375edb84129bb0b5ee6a8ae14df1294ef1f3ef210fe431a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-0-1/cold-ledger-fixed-pilot-shard-0-1.355.55e8b49804ca4b3295adf80115c5226d.clock.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "247e5d22a401ec7b9299491763ac1480d9f56209c1bba97a51667fe70d5427df"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-0-1/cold-ledger-fixed-pilot-shard-0-1.355.55e8b49804ca4b3295adf80115c5226d.progress.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "f4c58a1ae42ba49f004b8e45c9e1dc7a60d7729b75b2d42f0eb3503a11417aaa"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-0-1/cold-ledger-fixed-pilot-shard-0-1.355.55e8b49804ca4b3295adf80115c5226d.request.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "dfb1ae2ae122cc4052c76ad065165526bc711da7a09bd725ed04537838d08c64"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-0-1/cold-ledger-fixed-pilot-shard-0-1.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "10640a7e2b741f0468c5993edb840dfb5b978bd62286e585f061004800d7c38d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-0-1/cold-ledger-fixed-pilot-shard-0-1.log",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "18712c1d046b961a1949d050325aff86be18a0707e6bdaf47c6cb4c6e53bb0f9"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-1-2/cold-ledger-fixed-pilot-shard-1-2.356.9747bf23cd5d47e79d4c359944b24074.clock.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "4d7d63efc741c08425b51831ae0b0a3c06b284c886b6d0cb7056d72b2d36a0fb"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-1-2/cold-ledger-fixed-pilot-shard-1-2.356.9747bf23cd5d47e79d4c359944b24074.progress.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "d94f65fdf3b445c24a6959d88f99c5e23cafc75d3b68e58c7aea4c0d7f28f53e"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-1-2/cold-ledger-fixed-pilot-shard-1-2.356.9747bf23cd5d47e79d4c359944b24074.request.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "5456ae1fc999f278f310d59250307afeeb594415aca6cb217ab1011e537d5edc"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-1-2/cold-ledger-fixed-pilot-shard-1-2.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "4367b0e136d7c7ad6b9b6b3d7aaef44b7646c62f5f3b4f1ad266999766529cc9"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-1-2/cold-ledger-fixed-pilot-shard-1-2.log",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "bd6f3bdcd4da18bcd63acb666c5b8ebfad948c29104aad060b85df5504c3ac22"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-2-1/cold-ledger-fixed-pilot-shard-2-1.354.af3d3082048f4222a30d8849b7e21009.clock.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "2066784d577c34c595289e1a9a83709a0522ab4424139b2cbd1edbce674993d0"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-2-1/cold-ledger-fixed-pilot-shard-2-1.354.af3d3082048f4222a30d8849b7e21009.progress.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "a4cb16fa9b1edcbcfde43681e77453d86615d2d657986cbe7c08882f000a198d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-2-1/cold-ledger-fixed-pilot-shard-2-1.354.af3d3082048f4222a30d8849b7e21009.request.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "249cf9cf15a5c41d4dfb96c83294231b0eeba0bfc03de9f9afdca202f8c9de5c"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-2-1/cold-ledger-fixed-pilot-shard-2-1.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "51bd72839ef28d39aa75e119ff223623af77538a400e785d0872baa9622f8f14"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-shard-2-1/cold-ledger-fixed-pilot-shard-2-1.log",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "9a682b41180194496d5dbe8973439a7bde26537238e143714c67a7d5c56f7377"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-single-1/cold-ledger-fixed-pilot-single-1.357.a8aeaa986f934caa982d9b8ad2f40226.clock.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "bff8b9e7c2a49526ed4067648a777aaf75783a0287353c2d1f76912c376ce524"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-single-1/cold-ledger-fixed-pilot-single-1.357.a8aeaa986f934caa982d9b8ad2f40226.progress.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "e099ab59f4cb06b21092ddda5635ecfef01d11f4dfa0a805d7088831270e75c9"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-single-1/cold-ledger-fixed-pilot-single-1.357.a8aeaa986f934caa982d9b8ad2f40226.request.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "e1f961d130f6b148c23bd4c311bd974274ab262974c75a77660a1a799620db0d"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-single-1/cold-ledger-fixed-pilot-single-1.json",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "2b96cf4246481798903c14c7b0eea07211ce91cd8efc17ee3c3ddf790812fae0"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/runs/cold-ledger-fixed-pilot-single-1/cold-ledger-fixed-pilot-single-1.log",
+   "reason": "Preserve the exact monitored job request, ending receipt, progress snapshot or log.",
+   "sha256_at_candidate": "57cbb03d80b1b978c0d9d7a4c5d068c9bbd44007a7e9ab5bc8ae8d5193ba2aae"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/ledger-fix-cost-forecast-blocked.json",
+   "reason": "Preserve task authority, operational provenance, resource snapshot, actual blocker or rejected admission.",
+   "sha256_at_candidate": "a4e20f996050f996f1be573fd5cb7a4d7d11ecb736cd9e80e7de010a9ad77461"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/preparation-tests.json",
+   "reason": "Bind targeted checks to the current operational patch and retain prior applicable validation.",
+   "sha256_at_candidate": "6a3a8447e6209c4239ca5cf90d050b8dccce0a8a30fd379647109f4602fb952e"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-A1_w.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "8763ab79179018211ae6f34e71d5f888b60f70617783586d888ce09682aef53c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-B2_w.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "06482849bcc281e2960d12ed881b7887f9a51fb7ca11f8774374dc3de221ee22"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r1-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "7d6416fbe39edb804b0324fa6b25adbcc3c27630c07221f81a1b7e29fdaa6414"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r1-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "03793f7e78a6915aff4311a1f1c5eff8266198c9d4d1560a43cb552545299bd5"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r2-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "ed59f0e86ec3d022b6c83961f87f47e23b9ca2c4c994cfdcb6b142c7c01b9da7"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r2-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "085761787acb59fb9e7a59637a92d7d993a92b21a709d23ae361fa1a34392b22"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r3-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "f4a9b560f73fcd56fd32e8d9eae4a813aeed45bbf6bbe65c914d2c31dbb4e83b"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r3-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "a976c8e94cd96fe2753ddf93b3349fa7acf123ea96058925efa065a1a22a8ca4"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r4-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "8ba44978d0c2b27210c5ca872faff99e7cd64f6f861fcacede14fd3b3e16d7a8"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-D2-r4-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "c0d1b78708fdd4dc73afacc253701a4edbb7486e73a7ccb9ae97a2312f391f92"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-L-N.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "3897633a9e43d88063b522690d5d4321b4f8c8f96dc53fcb4616af9acb4d7e8f"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/daily-L-R.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "427d48d1232889f68f08e4e2563873c1bf0d110ef8eab9eb7af78f1a75320489"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t000-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "eb1a801fa410a68bfa421403c29e789d28df4370446b88947c049bf2f27161f1"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t001-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "3b9d96bd24815b2bb4b60d73ff7edba625a96c9378912cea2c5112b41ac58944"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t002-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "bda09dc3e2877880b37bb8fe4cb685942db6c94905f7e46ef0c27bb4a907a419"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t003-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "6fedbeb9bffc11f0efa8d559ae5cf7cc2beae9eba3ca116966ba146b532ff020"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t004-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "e4afd478d8e064773d26ebeb41776f75cc2f185425f05d09ea5f44d1f7752f7d"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t005-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "66f8d7c5ca5abefbeea3327042fdca37ada8802c11762ff7a7205e442c3ffd5b"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t006-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "a6985e5cc69745fc0c832892e2e9ac22bb028ec5407278a809d19b7488c08951"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t007-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "672d8f3762a75059025cab85eaebbff950c8be2a1d2d2964fcf1ebfdd3946d99"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t008-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "6eea65d49245fd648fa9bc010181b873169255c6976e795d3b26cbc395bcdff5"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t009-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "915c781923987cd5226253184b402377c2e169cf3de3e53888c728e13ba67de4"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t010-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "17bf386d5327d1b4d6d42af2d461544edafe4245bef9be45ba5b815ec305ad7d"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/gfs6/k12/search-t011-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "84b621df6488eb1982fc16206fa2d532268ee65f236fafa017b82f444154fb27"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/daily-D2-r2-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "9310ccdad5a23cc5a47fc5a3c54a9b38d567ec8cb120582f286bf4cafb2eec55"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/daily-D2-r2-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "35a6cfd40675274f58d4d35cf47f23815ad200d897093ab306be1af442301227"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/daily-D2-r3-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "9180f447a1ba2df3e4a79745bb930bf0a151c8d365a8e6de4c59525505162c32"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/daily-D2-r3-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "88fba41beae3b768eff256d6bc9a9f9a155aaca9b8f43f9787696bed3a52edae"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/daily-D2-r4-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "3c2650d4fdb5fb1ded2ef597b4ddfec694a5651440767048c0fe1a435e08689c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/daily-D2-r4-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "4919689df681df724b8c30896f38c4aa390b75deba4e7f4ff3e67849894a975f"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t000-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "5cad40b92a74490b62a611349aa33abe6740d315ed91ab671163d63fbd27563e"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t001-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "cc8b3728de6d8741dfee6bd547dc2d11206387e350c6b436af4ebc997264c6cd"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t002-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "134a844f3854877235a9ff87430161ed42175439b552e887def41f095a239d91"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t003-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "fec72199fe73b202cc3ef296436d5b1144859102204cdcc18830d3aad400abb5"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t004-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "6f56aa6f5ff1efff5f496cd103df278265decba21ee67ff14e97d6f3bef88223"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t005-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "86c57474a512bb9104c06e6a5fa815401ade314d2b779ec8b33a652f0e7b1608"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t006-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "6831e691af79d19fbf2f274a0908f25c707563f101f011a5de746bfd0fe25e65"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t007-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "fae0c9f4ed105fa481199c287919f80d23d82b3cc9cde301c0755634d84dfa43"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t008-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "36e5a38b35761d0d36b69396cfa04b8d803b27612ec49f206c6d81790eaf9842"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t009-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "b33a092fded3e29a2b4a7748e648fa0b42db28ee63ca907e574bd53813407efe"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t010-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "97d682111ab26991988cd0925493be287cd3690fd97b94bb3648d784c1489274"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k12/search-t011-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "d2add106d7272b7f873020650f3394fad834a5919bbc46ab934920cabba3e3c4"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-A1_w.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "d48d7a382f63271ab64ab2bc1d26c3366deeea69112d8864abca4a4b7d1aa14a"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-B2_w.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "4093d2c388883f9015095c2436d96104f27c6cf3736bd8aea64b04170b11c624"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r1-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "7b28b98c9eb2906409033395b020a5bfbb851b1a703ac23a0766de1861f88715"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r1-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "b9ec0a83e6cc635121820db2256b8395911417b7c5313ebe4ec648a481ab6c56"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r2-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "5b28999891175111454eced17328401c6d154ed1ddfc7d39f0e6c10f6745e06d"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r2-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "56d5620b6cd7aed83aaa0e829a66416ae06ab44466d5d361a814cdaf81920302"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r3-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "6d311907907225831b416d586567989eec1b32836d624a83271e0fce835ec4e8"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r3-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "51451165ec16d3f510a935e1d57cc77b819f3722b3a3f7991a4a699d111beba9"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r4-s1.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "d08a6ca1eae97eba502eabae387df668ed2c1bd0870a9ff3827fe944227e0879"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-D2-r4-s2.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "03fd22c23359aceced6671141fcb356d55ed8f4b2d17a9b36f02dedcc851c217"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-L-N.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "e5bb0d88174a20b07ee0feb23ba9fa7e822364ee0f3f57aa0e7c0ce9b30060ce"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/daily-L-R.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "271be7dc6fe794436d73979e606ae702018123dba1b63c43af3d6c3606096d01"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t000-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "82e3121d5ea81856dd402f305c105945b707586b4487545c2702975e756cdc0e"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t001-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "cf91e1cae02654c52494dc0596a9aa564d7fb39fe160e61911c25bc36ad0b2b6"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t002-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "3338e5663715cd9e8a4e40f1c0afd3eca8dc08edad76198b8f6f161a9e10d0ea"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t003-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "8deda8a9df59a2a16e7ba2bfd2387ed4cd14cafaaf3e481bbacc884f641f4f82"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t004-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "d919393e42515ab3f7eafc36d0d0a6d69f3109cb187a4d1c894fbcdf1b457941"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t005-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "8eba1af9296d7fa907bbe417dd0895177cbb9320f439deea36c2a88ee12e9762"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t006-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "25599318a2813dc6bc4504b939476e2ba375090a5e1ce67cff150c1adfe77fc2"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t007-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "98e9997087703435334537e39fb681796fe3f02210c36d28f5f274397201d3c8"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t008-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "4569a4e676b58db7a3562e42acd90fd554e61c9a5fb51573adf409f297fc5376"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t009-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "1ee5dc9dd4d0c6b8edae2eb168d67153dab13f53a138e34d127094a8bef60459"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t010-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "0081d6b15b1a87d2e4e160c1e8c88668ddbc779cb19e6520597fae786cc545a6"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/noload/k13/search-t011-b00.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "8b9833d632991f8f7e210d917cf2d8830232f210203446019bb9483d050666a6"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/timing-pilot/nominal/k13/daily-B0.json",
+   "reason": "Preserve one new terminal registered timing probe; no old probe changed.",
+   "sha256_at_candidate": "c3d4c8f873e82ac6df64bdd8edce96cee21f396f2070aa53d5220d930eda6797"
+  },
+  {
+   "path": "src/cp26/budget.py",
+   "reason": "Remove premature fixed conflict exhaustion; keep the absolute deadline and locking.",
+   "sha256_at_candidate": "16a327fede44603dd037266d6f7a8436ea6ffdff3428998c6cbe7a11a97077dc"
+  },
+  {
+   "path": "tests/test_cp26_ledger_liveness.py",
+   "reason": "Verify five-conflict success, actual deadline failure and exactly-once updates.",
+   "sha256_at_candidate": "2510066d45a972e8e4437ccb9983fb135a7f94b2d537dd6ba279f27393f0be42"
+  }
+ ],
+ "source_base": "c1685ee735072a03861838d5e6960aff9a04e10e"
+}

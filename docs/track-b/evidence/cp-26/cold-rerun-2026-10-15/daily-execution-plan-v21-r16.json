@@ -1,0 +1,62 @@
+{
+ "schema": "cp26-physical-execution-order-v21-r16",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "original_caller": "docs/track-b/evidence/cp-26/continuation-v21-r14/runners/daily_execution.py",
+ "original_caller_sha256": "28260edc40abdc434bf7350304f2a476bf5e9902a6cbd46a99a1ddfca65411eb",
+ "change": "Existing lease namespace plus daily guard cadence: full forecast admission at bounded phase startup, existing prepare resource/ownership/current-source guard once per route/origin. This matches existing run_forecasts full admission at phase startup; supervisor time/RSS/ownership/budget guards stay continuous.",
+ "groups": [
+  {
+   "first": "2020-01-01",
+   "through": "2020-09-01",
+   "origins": 245
+  },
+  {
+   "first": "2020-09-02",
+   "through": "2021-05-04",
+   "origins": 245
+  },
+  {
+   "first": "2021-05-05",
+   "through": "2022-01-04",
+   "origins": 245
+  },
+  {
+   "first": "2022-01-05",
+   "through": "2022-09-06",
+   "origins": 245
+  },
+  {
+   "first": "2022-09-07",
+   "through": "2023-05-09",
+   "origins": 245
+  },
+  {
+   "first": "2023-05-10",
+   "through": "2024-01-09",
+   "origins": 245
+  },
+  {
+   "first": "2024-01-10",
+   "through": "2024-09-10",
+   "origins": 245
+  },
+  {
+   "first": "2024-09-11",
+   "through": "2025-05-13",
+   "origins": 245
+  },
+  {
+   "first": "2025-05-14",
+   "through": "2026-01-13",
+   "origins": 245
+  },
+  {
+   "first": "2026-01-14",
+   "through": "2026-09-06",
+   "origins": 236
+  }
+ ],
+ "policy": "Three independent one-worker route-fit jobs per group; one existing cache-only chronological replay through its completed group. A computing/reserved coordinator is not added. Jobs run immediately when prerequisites/slots permit; four is maximum, memory pressure controls admission. No prefit issuance discount.",
+ "cost_coverage": "10 bounded fit/replay groups, one search group, one analysis/closure group: existing12groups startup337.31s and4slots tail38.4s allowances retained. All fits/searches and serialization retain original complete forecast margins. No successful fit/probe rerun.",
+ "state_continuity": "One identity-bound replay state advances through all10 groups without reset. Native cache is reused under same run. Full-history exports only at existing slice boundaries."
+}

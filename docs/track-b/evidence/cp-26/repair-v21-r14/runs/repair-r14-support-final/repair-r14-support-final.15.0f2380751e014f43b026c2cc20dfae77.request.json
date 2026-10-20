@@ -1,0 +1,26 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_search_support.py",
+  "--lead",
+  "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+  "--output",
+  "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/reports/rebaseline/repair-v21-r14/search-support.json"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "0f2380751e014f43b026c2cc20dfae77",
+ "job_index": 15,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-support-final.log",
+ "monitor_identity": {
+  "create_time": 1791912382.079497,
+  "pid": 53988
+ },
+ "name": "repair-r14-support-final",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-support-final.15.0f2380751e014f43b026c2cc20dfae77.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791912383.604939,
+ "workers": 1
+}

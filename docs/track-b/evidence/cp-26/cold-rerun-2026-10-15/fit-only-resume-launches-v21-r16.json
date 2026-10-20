@@ -1,0 +1,89 @@
+{
+ "launches": [
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g01-gfs6-2",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g01-gfs6-2.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+    "fit-route",
+    "gfs6",
+    "2020-01-01",
+    "2020-09-01"
+   ],
+   "launched_epoch": 1792144161.1017542,
+   "name": "cold-r16-fit-g01-gfs6-2",
+   "pid": 78213,
+   "requested_workers": 1,
+   "resumes_job": "cold-r16-fit-g01-gfs6-1"
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g02-nominal-2",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g02-nominal-2.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+    "fit-route",
+    "nominal",
+    "2020-09-02",
+    "2021-05-04"
+   ],
+   "launched_epoch": 1792144161.104392,
+   "name": "cold-r16-fit-g02-nominal-2",
+   "pid": 78214,
+   "requested_workers": 1,
+   "resumes_job": "cold-r16-fit-g02-nominal-1"
+  },
+  {
+   "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-r16-fit-g02-noload-2",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-fit-g02-noload-2.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16.py",
+    "fit-route",
+    "noload",
+    "2020-09-02",
+    "2021-05-04"
+   ],
+   "launched_epoch": 1792144161.106814,
+   "name": "cold-r16-fit-g02-noload-2",
+   "pid": 78215,
+   "requested_workers": 1,
+   "resumes_job": "cold-r16-fit-g02-noload-1"
+  }
+ ],
+ "maximum_registered_workers": 3,
+ "policy": "Fit-only phase; no chronological replay concurrently. Existing frozen FitCache validates every saved successful or failed member and fits only missing entries. After GFS6 group1 finishes, admit GFS6 group2 while the two group2 fit jobs continue. Keep the group2 barrier, then cache-only replay through the original group1 and group2 boundaries, in order. No successful fits or forecasts rerun; no state reset.",
+ "replay_prerequisite": "0a96389d0ff14b3ac16e91213e2b3b69d345e0108a069b534ca9a42ea85cadab",
+ "run_id": "cp26-cold-rerun-2026-10-15-01"
+}

@@ -1,0 +1,95 @@
+{
+ "abort_reason": "monitor_failsafe:supervisor_identity_lost,watchdog_heartbeat_stale",
+ "child_identity": {
+  "create_time": 1792080171.397451,
+  "pid": 51386
+ },
+ "completion_issuer": "monitor",
+ "completion_issuer_identity": {
+  "create_time": 1792080166.644596,
+  "pid": 51375
+ },
+ "ended_epoch": 1792080258.508996,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "cb0ec1c0adc7497793ba949c57d953f4",
+ "job_index": 348,
+ "ledger_lock_telemetry": {
+  "acquired": false,
+  "attempts": 0,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 0,
+  "hold_seconds": 0.0,
+  "outcome": "not_started",
+  "peak_hold_seconds": 0.0,
+  "peak_wait_seconds": 0.0,
+  "read_bytes": 0,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.0,
+  "transactions": 0,
+  "wait_seconds": 0.0,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 1777467392,
+ "request_sha256": "224f5030bb83bd90b9c91a94d153388e564198e7209d22fbd1a41e4a1cdf0a4d",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792080167.98651,
+ "supervisor_identity": {
+  "create_time": 1792080168.187064,
+  "pid": 51381
+ },
+ "wall_seconds": 90.27178670896683,
+ "watchdog_identity": {
+  "create_time": 1792080170.217028,
+  "pid": 51384
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792080171.397451,
+   "pid": 51386
+  },
+  {
+   "create_time": 1792080174.029902,
+   "pid": 51394
+  },
+  {
+   "create_time": 1792080174.151376,
+   "pid": 51398
+  },
+  {
+   "create_time": 1792080174.617219,
+   "pid": 51406
+  },
+  {
+   "create_time": 1792080174.636794,
+   "pid": 51407
+  },
+  {
+   "create_time": 1792080174.770418,
+   "pid": 51411
+  },
+  {
+   "create_time": 1792080174.861347,
+   "pid": 51413
+  },
+  {
+   "create_time": 1792080175.031218,
+   "pid": 51419
+  },
+  {
+   "create_time": 1792080175.109594,
+   "pid": 51423
+  },
+  {
+   "create_time": 1792080239.975035,
+   "pid": 51502
+  }
+ ],
+ "worker_pgid": 51386,
+ "workers": 1,
+ "workers_stopped": true
+}

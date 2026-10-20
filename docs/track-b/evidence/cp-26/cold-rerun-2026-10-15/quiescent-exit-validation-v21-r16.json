@@ -1,0 +1,40 @@
+{
+ "abort_reason": null,
+ "checks": {
+  "altered_observation_writes": 0,
+  "deadline_seconds_observed": 14.150731582893059,
+  "disagreement_rejected": true,
+  "note": "The outer wrapper next performs the real successful closing handshake. Its supervised terminal receipt is checked separately.",
+  "original_entry_point_sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed",
+  "scientific_source_files_unchanged": 19,
+  "status": "CHECKS_PASSED_AWAITING_REAL_OUTER_CLOSE"
+ },
+ "clock_sha256": "b7b27fd567108351f5293ef3c212f8baff7c3e21e88af06bcdc59bfc59782af2",
+ "core_source_or_limits_changed": false,
+ "exit_code": 0,
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-check-quiescent-exit-1.410.422d42b444914a7d8d56eeb238f529ef.clock.json",
+  "job_id": "422d42b444914a7d8d56eeb238f529ef",
+  "job_index": 410,
+  "name": "cold-r16-check-quiescent-exit-1"
+ },
+ "next_specific_check": "Required pricing job will also observe one real finite metadata descendant, then exercise this same closing handshake. No fit or successful scientific pilot probe is repeated.",
+ "peak_rss_bytes": 1176059904,
+ "real_closing_proof": {
+  "entry_point": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/check-quiescent-exit-v21-r16.py",
+  "entry_point_sha256": "b85531bf02821f281044155f934621fb4ae034f41cad424be1c17329dd9c8b0a",
+  "job_id": "422d42b444914a7d8d56eeb238f529ef",
+  "job_index": 410,
+  "maximum_wait_with_read_and_poll_seconds": 17.2,
+  "quiet_seconds": 4.15796366694849,
+  "status": "CLOSING_OBSERVERS_SETTLED",
+  "wall_seconds": 4.514286624966189,
+  "worker_identity_count": 1,
+  "wrapper_sha256": "492631281ae4b1b623c0d20588df3eef8728c6832342e266a57ee85a6159b1b5"
+ },
+ "scientific_entry_point_changed": false,
+ "status": "PASS_AFFECTED_CLOSING_CHECKS",
+ "wall_seconds": 26.131515457993373,
+ "workers_stopped": true
+}

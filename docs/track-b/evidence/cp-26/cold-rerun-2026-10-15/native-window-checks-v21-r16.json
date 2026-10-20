@@ -1,0 +1,16 @@
+{
+ "caller_sha256": "d1c3af6608108e8f75156ff1ae9219979a000edb2cf37b7fecbf1d69aaf492e3",
+ "checks": 7,
+ "job_id": "fc82ddee77f14bc7b37a1ff4aeec1c88",
+ "job_index": 383,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Exact1951date coverage per route; finite disjoint windows; duplicate exclusion; shared-native/exclusive-original interlock in both directions; replay exclusion before data access and release; invalid ranges/routes; execution-plan pin; original fit/replay/cache routines unchanged.",
+ "status": "PASS",
+ "unchanged_scientific_routines": [
+  "GuardedCache",
+  "_setup",
+  "_phase",
+  "_fit_route_owned",
+  "_replay_owned"
+ ]
+}

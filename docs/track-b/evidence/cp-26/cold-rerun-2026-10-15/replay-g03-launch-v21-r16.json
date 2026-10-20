@@ -1,0 +1,60 @@
+{
+ "allocation": "One cache-only chronological replay owner, zero native fits or other registered jobs. All route locks held exclusively; no cache miss may fit. Original causal-state/native/scoring semantics unchanged.",
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-replay-g03-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-replay-g03-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "replay-cached",
+  "2022-01-04"
+ ],
+ "complete_growth_projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g03g04.json",
+ "complete_growth_projection_sha256": "1fe51e8001514438c29ab299a689eea2627a408d06968c437d6e79fcd7f4b487",
+ "expected_total_origins": 735,
+ "launched_epoch": 1792191009.064001,
+ "live_admission": {
+  "admission_h": 440.0,
+  "cumulative_actual_h": 137.25190233254423,
+  "hard_actual_h": 500.0,
+  "new_run_actual": {
+   "cumulative_machine_hours": 137.25190233254423,
+   "historical_baseline_hours": 65.16212464012295,
+   "machine_hours": 72.08977769242128,
+   "measured_seconds": 258170.06487437082,
+   "reported_seconds": 1353.1348183457942,
+   "reserved_seconds": 0.0,
+   "run_id": "cp26-cold-rerun-2026-10-15-01",
+   "total_seconds": 259523.19969271662
+  },
+  "projected_cumulative_completion_h": 403.67435852876486,
+  "status": "PASS"
+ },
+ "memory": {
+  "available_bytes": 6929039360,
+  "pressure_level": "1",
+  "previous_replay_peak_bytes": 4508286976,
+  "soft_margin_bytes": 750000000
+ },
+ "name": "cold-r16-replay-g03-1",
+ "native_prefix_all_routes": 980,
+ "pid": 70745,
+ "preserved_prefix_origins": 490,
+ "preserved_prefix_phase_sha256": "888d7036c296806f26853809b3ae306f6a24464cfde87d4499fb617edf732001",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "through": "2022-01-04",
+ "workers": 1
+}

@@ -1,0 +1,47 @@
+{
+ "abort_reason": "TimeoutError: CP-26 ledger accounting lock did not progress",
+ "causality_note": "The Owner reports that the computer froze and that the condition has been corrected. The receipt proves an acquisition deadline violation; it does not independently establish the system freeze as its cause. No scientific source or supervision limit is changed. A fresh healthy supervised operational closure precedes any same-run continuation.",
+ "clock_sha256": "b68a54820e469f7ab1a858dbb44ed0cf9d4d320c81860fc5a511bd35b984aa8c",
+ "completed_stages": [
+  "scores",
+  "inference"
+ ],
+ "content_sha256": "eba2b1412c94f7b1cec5e38c46aa05af2281b81b9da48df3ac83db5a315f9911",
+ "exit_code": 70,
+ "group_empty": true,
+ "interrupted_stage": "diagnostics",
+ "job_id": "1d6293f330b64ad58cd91ceaf54a610e",
+ "job_index": 472,
+ "ledger_lock_telemetry": {
+  "acquired": false,
+  "attempts": 1,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 0,
+  "hold_seconds": 0.0,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.3499679160013329,
+  "peak_wait_seconds": 3.00127354200049,
+  "read_bytes": 0,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 3.0012861670002167,
+  "transactions": 16950,
+  "wait_seconds": 3.00127354200049,
+  "written": false,
+  "written_bytes": 0
+ },
+ "owner_report": {
+  "no_restart_requested": true,
+  "observed_epoch": 1792336623.16705,
+  "owner_report": "Computer froze; Owner reports having fixed it and asks to continue from the stop point"
+ },
+ "peak_rss_bytes": 6455541760,
+ "pending_stage": "report",
+ "raw_bound_identities_verified_gone": 133,
+ "request_sha256": "31ae26ce3b888db90a0c9a7c6a3abeaae68bdbe485c6d6955bddf78145ca4a60",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-analysis-interruption-v1",
+ "wall_seconds": 4757.689541083,
+ "workers_stopped": true
+}

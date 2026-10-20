@@ -1,0 +1,31 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-prewarmed.py",
+  "--shard",
+  "2"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-ledger-fixed-pilot-shard-2-1.354.af3d3082048f4222a30d8849b7e21009.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "af3d3082048f4222a30d8849b7e21009",
+ "job_index": 354,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/ledger-fix/cold-ledger-fixed-pilot-shard-2-1.log",
+ "monitor_identity": {
+  "create_time": 1792102574.54549,
+  "pid": 79573
+ },
+ "name": "cold-ledger-fixed-pilot-shard-2-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-ledger-fixed-pilot-shard-2-1.354.af3d3082048f4222a30d8849b7e21009.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792102575.534971,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 2.0,
+  "ledger_timeout_seconds": 0.5,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 10.0
+ },
+ "workers": 1
+}

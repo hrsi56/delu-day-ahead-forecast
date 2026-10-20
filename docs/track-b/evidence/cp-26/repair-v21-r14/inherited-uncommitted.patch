@@ -1,0 +1,86 @@
+diff --git a/scripts/cp26_rebaseline.py b/scripts/cp26_rebaseline.py
+index 39bebc2..e7d604d 100644
+--- a/scripts/cp26_rebaseline.py
++++ b/scripts/cp26_rebaseline.py
+@@ -47,6 +47,27 @@ def local_path(path: Path) -> Path:
+     return path
+ 
+ 
++def reconciled_tail(job: dict) -> float:
++    """Only an evidenced monotonic completion duration can reconcile a dead monitor.
++
++    Time since its last tick may include hours with no worker alive. Never charge that idle
++    gap as measured computation. Without a completion clock, leave the measured ledger
++    intact and refuse new compute until the uncertain job has been reconciled explicitly.
++    """
++    clock = local_path(Path(job.get('completion_clock', art() / 'jobs' / 'missing-clock.json')))
++    if not clock.exists():
++        raise RuntimeError('dead CP-26 monitor has no completion clock: worker runtime is uncertain; '
++                           'new compute is stopped, and restart idle time is not charged')
++    receipt = json.loads(clock.read_text())
++    if receipt.get('job_index') != job.get('job_index') or receipt.get('started_epoch') != job['started_epoch']:
++        raise RuntimeError('completion clock does not identify the interrupted CP-26 job')
++    wall = receipt.get('wall_seconds')
++    charged = job.get('charged_wall_seconds')
++    if not isinstance(wall, (float, int)) or not isinstance(charged, (float, int)) or not 0 <= charged <= wall:
++        raise RuntimeError('completion clock does not bound the already measured worker duration')
++    return (wall - charged) * job['workers']
++
++
+ def monitor(args) -> int:
+     """Charge all declared worker wall time, including failed jobs, before any later job starts."""
+     import psutil
+@@ -62,12 +83,16 @@ def monitor(args) -> int:
+     with budget.transaction() as state:
+         # A dead monitor cannot silently discard time or leave live unaccounted workers.
+         for job in state['jobs']:
+-            if not job['running'] or psutil.pid_exists(job['monitor_pid']):
++            if not job['running']:
+                 continue
++            if psutil.pid_exists(job['monitor_pid']):
++                expected = job.get('monitor_create_time')
++                if expected is None or psutil.Process(job['monitor_pid']).create_time() == expected:
++                    continue
+             child = job.get('child_pid')
+             if child and psutil.pid_exists(child):
+                 raise RuntimeError('orphaned CP-26 worker remains alive; reconcile its monitor before continuing')
+-            tail = max(0, now - job['last_charge_epoch']) * job['workers']
++            tail = reconciled_tail(job)
+             state['counts']['machine_seconds'] = state['counts'].get('machine_seconds', 0) + tail
+             job.update(running=False, live_rss_bytes=0, abort_reason='dead_monitor',
+                        exit_code=None, reconciled_epoch=now)
+@@ -78,8 +103,11 @@ def monitor(args) -> int:
+         if state['counts'].get('machine_seconds', 0) >= CAPS['machine_seconds']:
+             raise RuntimeError('CP-26 machine-hour ceiling exhausted')
+         index = len(state['jobs'])
++        clock = art() / 'jobs' / f'{args.name}.{index}.clock.json'
+         state['jobs'].append({'name': args.name, 'workers': args.workers, 'running': True,
+                               'monitor_pid': os.getpid(), 'child_pid': None, 'started_epoch': now,
++                              'monitor_create_time': psutil.Process().create_time(),
++                              'job_index': index, 'completion_clock': str(clock), 'charged_wall_seconds': 0.0,
+                               'last_charge_epoch': now, 'live_rss_bytes': 0, 'log': str(log_path)})
+         state['peaks']['workers'] = max(workers, state['peaks'].get('workers', 0))
+     env = os.environ.copy()
+@@ -111,6 +139,7 @@ def monitor(args) -> int:
+                 with budget.transaction() as state:
+                     counts = state['counts']
+                     counts['machine_seconds'] = counts.get('machine_seconds', 0) + (tick - last) * args.workers
++                    state['jobs'][index]['charged_wall_seconds'] += tick - last
+                     state['jobs'][index].update(last_charge_epoch=time.time(), live_rss_bytes=rss)
+                     aggregate = sum(j['live_rss_bytes'] for j in state['jobs'] if j['running'])
+                     state['peaks']['rss_bytes'] = max(aggregate, state['peaks'].get('rss_bytes', 0))
+@@ -142,11 +171,13 @@ def monitor(args) -> int:
+         code = 70
+     finally:
+         ended = time.monotonic()
++        atomic(clock, {'job_index': index, 'started_epoch': now, 'wall_seconds': ended-began,
++                       'exit_code': locals().get('code', 70), 'abort_reason': reason})
+         with budget.transaction() as state:
+             state['counts']['machine_seconds'] = state['counts'].get('machine_seconds', 0) + (ended - last) * args.workers
+             state['jobs'][index].update(running=False, live_rss_bytes=0, exit_code=locals().get('code', 70),
+                                        abort_reason=reason, ended_epoch=time.time(),
+-                                       wall_seconds=ended-began, peak_rss_bytes=peak)
++                                       wall_seconds=ended-began, charged_wall_seconds=ended-began, peak_rss_bytes=peak)
+             total = machine_hours(state)
+         caffeinate.terminate()
+         caffeinate.wait()

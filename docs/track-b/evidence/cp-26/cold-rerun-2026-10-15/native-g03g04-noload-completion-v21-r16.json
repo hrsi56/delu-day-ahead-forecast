@@ -1,0 +1,32 @@
+{
+ "abort_reason": null,
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "clock_sha256": "b567ae2bdae3c2b3bb9851baa1bb429ca18585a4a694438b96f26403c9ae92b5",
+ "daily_issuances_claimed": false,
+ "earlier_native_origins": 490,
+ "exit_code": 0,
+ "first": "2021-05-05",
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g03g04-noload-2.393.ef69adb6cf39407886b5a0dac0bca952.clock.json",
+  "job_id": "ef69adb6cf39407886b5a0dac0bca952",
+  "job_index": 393,
+  "name": "cold-r16-fit-g03g04-noload-2"
+ },
+ "ledger_timeouts": 0,
+ "native_origins": 490,
+ "peak_rss_bytes": 1648902144,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-1bf59e969382f196d53265f9e2b1610eb556e64ceda69f0c2f217f3f6f11e30d.json",
+ "phase_sha256": "6a08836497a2bc6195f9c449d0d594a8d0b74f9d65c570e7b7e15c1cbf7d054d",
+ "route": "noload",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Exact complete490-date native window, including all zero-key dates and each of five registered members. Actual closed job and signed native phase verified; no forecast or score claimed before chronological replay.",
+ "through": "2022-09-06",
+ "total_native_origins": 980,
+ "validation_status": "PASS",
+ "wall_seconds": 9073.874738250044,
+ "workers_stopped": true
+}

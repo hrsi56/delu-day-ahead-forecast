@@ -1,0 +1,119 @@
+{
+ "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+ "child_identity": {
+  "create_time": 1792102578.426726,
+  "pid": 79579
+ },
+ "completion_issuer": "watchdog",
+ "completion_issuer_identity": {
+  "create_time": 1792102577.046896,
+  "pid": 79576
+ },
+ "ended_epoch": 1792102655.077546,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "af3d3082048f4222a30d8849b7e21009",
+ "job_index": 354,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 1,
+  "hold_seconds": 0.001928625046275556,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.05893808393739164,
+  "peak_wait_seconds": 0.11735087493434548,
+  "read_bytes": 8583023,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 0.6453919999767095,
+  "transactions": 300,
+  "wait_seconds": 0.03013154200743884,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 1228488704,
+ "request_sha256": "249cf9cf15a5c41d4dfb96c83294231b0eeba0bfc03de9f9afdca202f8c9de5c",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792102575.534971,
+ "supervisor_identity": {
+  "create_time": 1792102575.724848,
+  "pid": 79574
+ },
+ "wall_seconds": 79.30360104097053,
+ "watchdog_identity": {
+  "create_time": 1792102577.046896,
+  "pid": 79576
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792102578.426726,
+   "pid": 79579
+  },
+  {
+   "create_time": 1792102581.289022,
+   "pid": 79600
+  },
+  {
+   "create_time": 1792102581.267338,
+   "pid": 79599
+  },
+  {
+   "create_time": 1792102581.553872,
+   "pid": 79612
+  },
+  {
+   "create_time": 1792102581.520239,
+   "pid": 79609
+  },
+  {
+   "create_time": 1792102581.775321,
+   "pid": 79627
+  },
+  {
+   "create_time": 1792102581.814822,
+   "pid": 79629
+  },
+  {
+   "create_time": 1792102648.354098,
+   "pid": 80221
+  },
+  {
+   "create_time": 1792102650.032137,
+   "pid": 80236
+  },
+  {
+   "create_time": 1792102651.054742,
+   "pid": 80260
+  },
+  {
+   "create_time": 1792102651.288017,
+   "pid": 80267
+  },
+  {
+   "create_time": 1792102651.310446,
+   "pid": 80268
+  },
+  {
+   "create_time": 1792102652.27997,
+   "pid": 80290
+  },
+  {
+   "create_time": 1792102652.233665,
+   "pid": 80288
+  },
+  {
+   "create_time": 1792102652.537537,
+   "pid": 80294
+  },
+  {
+   "create_time": 1792102652.487872,
+   "pid": 80292
+  }
+ ],
+ "worker_pgid": 79579,
+ "workers": 1,
+ "workers_stopped": true
+}

@@ -1,0 +1,29 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/record-blocked-forecast.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-record-blocked-forecast-1.352.b911aca10cb04dafbea8a9e2e8736fbc.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "b911aca10cb04dafbea8a9e2e8736fbc",
+ "job_index": 352,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/cold-record-blocked-forecast-1.log",
+ "monitor_identity": {
+  "create_time": 1792082866.402711,
+  "pid": 56948
+ },
+ "name": "cold-record-blocked-forecast-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-record-blocked-forecast-1.352.b911aca10cb04dafbea8a9e2e8736fbc.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792082867.846415,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 2.0,
+  "ledger_timeout_seconds": 0.5,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 10.0
+ },
+ "workers": 1
+}

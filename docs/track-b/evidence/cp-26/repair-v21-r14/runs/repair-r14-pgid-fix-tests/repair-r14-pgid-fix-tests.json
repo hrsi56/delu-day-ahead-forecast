@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "repair-r14-pgid-fix-tests",
+ "job_id": "ec2f7fe75b544beb9dda24c82c3a986c",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-pgid-fix-tests.log",
+ "machine_hours_cumulative": 1.2854012903602394,
+ "peak_rss_bytes": 1790230528,
+ "resources": {
+  "headroom_hours": 483.7145987096398,
+  "machine_hours": 1.2854012903602394,
+  "measured_seconds": 1705.1926452968619,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 34836.247111120145,
+  "repair_seconds_used": 1163.7528888798556,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4627.444645296862,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 39.1304549589986
+}

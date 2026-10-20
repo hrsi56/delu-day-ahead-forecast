@@ -1,0 +1,18 @@
+{
+ "actual_hard_ceiling_hours": 485,
+ "admission": "BLOCKED",
+ "complete_cumulative_forecast_hours": 439.79845920803433,
+ "forecast_origins": 0,
+ "full_searches": 0,
+ "full_training_started": false,
+ "gate_hours": 436.5,
+ "owner_decision_needed": "A complete supported completion forecast within436.5hours remains required. No margins/components were cut and no new admission or policy change is inferred.",
+ "pilot_probes": 1064,
+ "price_recipe": "max per search of registered maximum12probe\u00d7frozen fit count\u00d71.5 and retained2\u00d7historical covered-cost/overhead/slowdown floor; all daily/analysis/operational/failure costs retained.",
+ "remaining_operational_timeout_blocker": null,
+ "required_pilot_probes": 1064,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "running_jobs": [],
+ "shortfall_hours": 3.2984592080343305,
+ "status": "BLOCKED"
+}

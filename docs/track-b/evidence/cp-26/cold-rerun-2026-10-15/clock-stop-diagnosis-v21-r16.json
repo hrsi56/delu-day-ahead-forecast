@@ -1,0 +1,267 @@
+{
+ "core_scientific_source_change": false,
+ "dependency_file_change": false,
+ "diagnosis": "All three supervised native jobs stopped immediately after the logged2026-10-17 13:45:59 local settimeofday adjustment of-0.074050546seconds. Public psutil create_time uses adjust_proc_create_time, which depends on boot_time and may alter an existing process birth timestamp. This is a clock-sensitive ownership mechanism; correlation supports the trigger, while a targeted in-process clock-adjustment reproducer remains required before scientific resumption. No source/anchor change, fourth accounting job, or sleep event was observed at this stop.",
+ "ending_observations": [
+  {
+   "identity_status_counts": {
+    "gone": 1961
+   },
+   "job_id": "190ee23d827149708a4bb2fd4cc91062",
+   "later_read_only_ending_observation": {
+    "ending_error": null,
+    "group_empty": true,
+    "workers_stopped": true
+   },
+   "name": "cold-r16-fit-g07g08-noload-1",
+   "remaining_known_identities": [],
+   "role_statuses": {
+    "child": "gone",
+    "monitor": "gone",
+    "supervisor": "gone",
+    "watchdog": "gone"
+   },
+   "worker_identity_count": 1961,
+   "worker_role_intersections": [
+    {
+     "identity": {
+      "create_time": 1792220018.197701,
+      "pid": 56797
+     },
+     "recorded_role": [
+      "cold-r16-fit-g07g08-noload-1",
+      "child"
+     ]
+    }
+   ]
+  },
+  {
+   "identity_status_counts": {
+    "gone": 284
+   },
+   "job_id": "34c0d7c5f9f8455e9a1c788fc731b3ce",
+   "later_read_only_ending_observation": {
+    "ending_error": null,
+    "group_empty": true,
+    "workers_stopped": true
+   },
+   "name": "cold-r16-fit-g07g08-gfs6-1",
+   "remaining_known_identities": [],
+   "role_statuses": {
+    "child": "gone",
+    "monitor": "gone",
+    "supervisor": "gone",
+    "watchdog": "gone"
+   },
+   "worker_identity_count": 284,
+   "worker_role_intersections": [
+    {
+     "identity": {
+      "create_time": 1792231809.90246,
+      "pid": 78640
+     },
+     "recorded_role": [
+      "cold-r16-fit-g07g08-gfs6-1",
+      "child"
+     ]
+    }
+   ]
+  },
+  {
+   "identity_status_counts": {
+    "gone": 71
+   },
+   "job_id": "622ad72156ee4092951ed20c8e84a127",
+   "later_read_only_ending_observation": {
+    "ending_error": null,
+    "group_empty": true,
+    "workers_stopped": true
+   },
+   "name": "cold-r16-fit-g08-nominal-1",
+   "remaining_known_identities": [],
+   "role_statuses": {
+    "child": "gone",
+    "monitor": "gone",
+    "supervisor": "gone",
+    "watchdog": "gone"
+   },
+   "worker_identity_count": 71,
+   "worker_role_intersections": [
+    {
+     "identity": {
+      "create_time": 1792233563.033064,
+      "pid": 81954
+     },
+     "recorded_role": [
+      "cold-r16-fit-g08-nominal-1",
+      "child"
+     ]
+    }
+   ]
+  }
+ ],
+ "gates": "Preserve and reconcile original negative endings with separately labelled later observations and conservative retained shutdown reserves. Charge all work in the same two ledger views. Require focused clock/PID-reuse tests and one real stopped-observer enforcement check. Reuse existing scientifically compatible caches and prior applicable checks.",
+ "installed_psutil_basis": {
+  "internal_identity_birth": 1792234982.68143,
+  "process_seconds": 0.0003152090357616544,
+  "psutil_version": "7.2.2",
+  "public_birth": 1792234982.68143,
+  "raw_kernel_birth": 1792234982.68143,
+  "source_hashes": {
+   "/Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/psutil/__init__.py": "d138a5786b163b56ba86ea0b2d5589dfca37e1bcdf8de1057fe1e933d6ab808a",
+   "/Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/psutil/_psosx.py": "89f0ea0e9c1fe38f224b612792bf31d07c8880d79281806e5379c00514f6b3f2"
+  }
+ },
+ "kind": "observed-clock-stop-diagnosis-and-prospective-narrow-fix",
+ "operational_source_hashes": {
+  "raw-kernel-ctime-v21-r16.py": "76b64ab46a8e129177bb0ab250891646dc0cbe251f2864b31f93b98a905ad30f",
+  "reconcile-clock-stop-endings-v21-r16.py": "52dadd462d332b8b1b69602bb9a6b06ffd441875a5c003cda4448f593d9787ae"
+ },
+ "os_clock_change": false,
+ "power_observation": {
+  "lid": [
+   "|   \"AppleClamshellState\" = No"
+  ],
+  "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22085731)\t100%; charged; 0:00 remaining present: true",
+  "power_events": [],
+  "process_seconds": 2.1264022920513526,
+  "stop_epoch_utc": "2026-10-17T10:46:00+00:00"
+ },
+ "prospective_fix": "Only new CP26 process trees will use the raw Darwin kernel birth timestamp, the same value already used by installed psutil._get_ident for its internal PID-reuse guard. A small hash-bound bootstrap routes the existing monitor/supervisor/watchdog/worker hierarchy; scientific/core sources and the installed dependencies remain byte-identical. No PID-only matching, timestamp tolerance, identity remapping of historical receipts, clock/power changes, new scheduler, numerical recipe change, or new scientific run.",
+ "recorded_epoch": 1792235181.5925992,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "stop_receipts": [
+  {
+   "clock_sha256": "db5bfd875beca684b9815cf061659eb781050fba09f461d9800cb14a51b4af29",
+   "job_id": "190ee23d827149708a4bb2fd4cc91062",
+   "job_index": 418,
+   "name": "cold-r16-fit-g07g08-noload-1",
+   "receipt": {
+    "abort_reason": "watchdog_RuntimeError: CP-26 worker ending is not evidenced; compute is stopped",
+    "completion_issuer": "watchdog",
+    "ended_epoch": 1792233961.17745,
+    "ending_error": "CP-26 worker ending is not evidenced; compute is stopped",
+    "exit_code": 70,
+    "group_empty": false,
+    "ledger_lock_telemetry": {
+     "acquired": true,
+     "attempts": 1,
+     "body_seconds": 0.0008976669050753117,
+     "canonical_input": true,
+     "conflicts": 0,
+     "hold_seconds": 0.10346162493806332,
+     "outcome": "committed",
+     "peak_hold_seconds": 0.6498762079281732,
+     "peak_wait_seconds": 1.4037102920701727,
+     "read_bytes": 14239595,
+     "serialized_fallback": false,
+     "timeouts": 0,
+     "total_seconds": 1.275049832998775,
+     "transactions": 28051,
+     "wait_seconds": 1.1715680831111968,
+     "written": true,
+     "written_bytes": 14239604
+    },
+    "peak_rss_bytes": 2216902656,
+    "started_epoch": 1792220014.189548,
+    "wall_seconds": 13946.459223332931,
+    "workers_stopped": false
+   }
+  },
+  {
+   "clock_sha256": "038496e48dc9bbf7002e497f37574b67094cad53b8386474074303e60cb6c931",
+   "job_id": "34c0d7c5f9f8455e9a1c788fc731b3ce",
+   "job_index": 424,
+   "name": "cold-r16-fit-g07g08-gfs6-1",
+   "receipt": {
+    "abort_reason": "watchdog_RuntimeError: CP-26 worker ending is not evidenced; compute is stopped",
+    "completion_issuer": "watchdog",
+    "ended_epoch": 1792233960.203509,
+    "ending_error": "CP-26 worker ending is not evidenced; compute is stopped",
+    "exit_code": 70,
+    "group_empty": false,
+    "ledger_lock_telemetry": {
+     "acquired": true,
+     "attempts": 1,
+     "body_seconds": 0.0008601250592619181,
+     "canonical_input": true,
+     "conflicts": 0,
+     "hold_seconds": 1.0884290840476751,
+     "outcome": "committed",
+     "peak_hold_seconds": 1.0884290840476751,
+     "peak_wait_seconds": 1.4431059160269797,
+     "read_bytes": 14239601,
+     "serialized_fallback": false,
+     "timeouts": 0,
+     "total_seconds": 1.2063327910145745,
+     "transactions": 4529,
+     "wait_seconds": 0.11789158300962299,
+     "written": true,
+     "written_bytes": 14239601
+    },
+    "peak_rss_bytes": 2017918976,
+    "started_epoch": 1792231804.7795498,
+    "wall_seconds": 2154.883045249968,
+    "workers_stopped": false
+   }
+  },
+  {
+   "clock_sha256": "4090c2a88de3e85d7a46a1241f0d63b346dc9893165fe76223b21064a1e128c1",
+   "job_id": "622ad72156ee4092951ed20c8e84a127",
+   "job_index": 426,
+   "name": "cold-r16-fit-g08-nominal-1",
+   "receipt": {
+    "abort_reason": "watchdog_RuntimeError: CP-26 worker ending is not evidenced; compute is stopped",
+    "completion_issuer": "watchdog",
+    "ended_epoch": 1792233959.984266,
+    "ending_error": "CP-26 worker ending is not evidenced; compute is stopped",
+    "exit_code": 70,
+    "group_empty": false,
+    "ledger_lock_telemetry": {
+     "acquired": true,
+     "attempts": 1,
+     "body_seconds": 0.0006299170199781656,
+     "canonical_input": true,
+     "conflicts": 0,
+     "hold_seconds": 0.029639750020578504,
+     "outcome": "committed",
+     "peak_hold_seconds": 0.589951082947664,
+     "peak_wait_seconds": 1.2437034590402618,
+     "read_bytes": 14239596,
+     "serialized_fallback": false,
+     "timeouts": 0,
+     "total_seconds": 1.2733527079690248,
+     "transactions": 870,
+     "wait_seconds": 1.2437034590402618,
+     "written": true,
+     "written_bytes": 14239595
+    },
+    "peak_rss_bytes": 1957773312,
+    "started_epoch": 1792233558.61257,
+    "wall_seconds": 401.00910020794254,
+    "workers_stopped": false
+   }
+  }
+ ],
+ "timed_daemon_observation": {
+  "process_seconds": 1.8277622089954093,
+  "returncode": 0,
+  "stderr_summary": "",
+  "timed_events": [
+   "2026-10-17 13:29:59.038 Df timed[367:266b5a8] [com.apple.timed:data] TDTF,SynthesizedClock,rtc,2898658.186788,utc,813925799.080604,utcUnc,0.034643,sf,1.00001608,sfUnc,0.00001087,utcSfCov,0.00049860,logNoise,-13.555955,timeRtc,2898658.186788",
+   "2026-10-17 13:29:59.039 Df timed[367:2682066] [com.apple.timed:data] cmd,ntp_adjtime:in,modes,2017,offset_us,8035421,freq_scaled,1053700,maxerror_us,34643",
+   "2026-10-17 13:29:59.039 Df timed[367:2682066] [com.apple.timed:data] cmd,ntp_adjtime:out,modes,2017,offset_us,8035421,freq_scaled,1053700,maxerror_us,34643",
+   "2026-10-17 13:29:59.039 Df timed[367:2682066] [com.apple.timed:data] cmd,apply,src,adjtime,rtc_s,2898658.187128458,rtc_unc_s,0.000500001,t_s,813925799.080944419,unc_s,0.034643419,mach,16761740088961,adjust,0.008035421,success,1,after_m,1676",
+   "2026-10-17 13:29:59.039 Df timed[367:2682066] [com.apple.timed:data] cmd,rtc_offset,set,1789334340893815961,was,1789334340871948000,now,1789334340893798000,success,1",
+   "2026-10-17 13:45:59.145 Df timed[367:2682066] [com.apple.timed:data] TDTF,SynthesizedClock,rtc,2899618.293119,utc,813926759.128344,utcUnc,0.036878,sf,1.00000061,sfUnc,0.00001122,utcSfCov,0.00053303,logNoise,-13.555955,timeRtc,2899618.293119",
+   "2026-10-17 13:45:59.139 Df timed[367:268e2d0] [com.apple.settimeofday:] settimeofday({0x6ad351e7,0x20a3b}) == 0",
+   "2026-10-17 13:45:59.153 Df timed[367:268e2d0] [com.apple.timed:text] Setting system time to Sat Oct 17 13:45:59 2026 from TMTimeSynthesizer",
+   "2026-10-17 13:45:59.175 Df timed[367:268e2d0] [com.apple.timed:data] cmd,apply,src,settimeofday,rtc_s,2899618.297648958,rtc_unc_s,0.000500009,t_s,813926759.132874489,unc_s,0.036878285,mach,16784782742037,adjust,-0.074050546,success,1,after_",
+   "2026-10-17 13:45:59.181 Df timed[367:268e2d0] [com.apple.timed:data] cmd,rtc_offset,set,1789334340835225531,was,1789334340835144000,now,1789334340835205000,success,1",
+   "2026-10-17 13:45:59.185 Df timed[367:268e2d0] [com.apple.timed:data] cmd,ntp_adjtime:in,modes,2017,offset_us,1907,freq_scaled,40172,maxerror_us,36878",
+   "2026-10-17 13:45:59.185 Df timed[367:268e2d0] [com.apple.timed:data] cmd,ntp_adjtime:out,modes,2017,offset_us,1907,freq_scaled,40172,maxerror_us,36878",
+   "2026-10-17 13:45:59.188 Df timed[367:268e2d0] [com.apple.timed:data] cmd,apply,src,adjtime,rtc_s,2899618.347864417,rtc_unc_s,0.000500002,t_s,813926759.183089852,unc_s,0.036878646,mach,16784783947291,adjust,0.000001907,success,1,after_m,1678",
+   "2026-10-17 13:45:59.189 Df timed[367:268e2d0] [com.apple.timed:data] cmd,rtc_offset,set,1789334340835225435,was,1789334340835205000,now,1789334340835205000,success,1"
+  ]
+ }
+}

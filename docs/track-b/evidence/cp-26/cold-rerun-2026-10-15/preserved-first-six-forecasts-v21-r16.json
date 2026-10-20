@@ -1,0 +1,30 @@
+{
+ "forecasts": [
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/2020-01-01.json",
+   "sha256": "ef24343140f6c8bf5fba9fc745b45bffefcad3aae827eadaf6b936417dfe5c19"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/2020-01-02.json",
+   "sha256": "fa4648f3e1027178de8057ee340f44383a2bb9adc7652c8ef1510960c05a7c64"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/2020-01-03.json",
+   "sha256": "6537cdc844ff8c013e55f241709da8b82d1caa49f1183cda7dc192d576dde971"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/2020-01-04.json",
+   "sha256": "8f66e64be14d0009cffd19cfb588e454ab9aeb846d46589165018b5b2fe1a97c"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/2020-01-05.json",
+   "sha256": "6270d34603525ba8f65757b465bcc9655698b56cf2e1af2257b7cdb62cf6fe8f"
+  },
+  {
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/forecast-ledger/2020-01-06.json",
+   "sha256": "1d9fb141950f0c8b96e5a281e6f12b503f40eee1447ebcd22b91a14cb96a09da"
+  }
+ ],
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "First six immutable forecasts preceding the operational guard stop"
+}

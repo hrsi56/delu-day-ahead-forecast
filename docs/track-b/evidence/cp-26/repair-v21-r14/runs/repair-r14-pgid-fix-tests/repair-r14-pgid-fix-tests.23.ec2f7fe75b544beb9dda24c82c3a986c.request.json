@@ -1,0 +1,32 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "-m",
+  "pytest",
+  "tests/test_cp26_harness.py",
+  "tests/test_cp26_parity.py",
+  "tests/test_cp26_search.py",
+  "tests/test_cp26_state.py",
+  "tests/test_cp26_replay.py",
+  "tests/test_cp26_monitor.py",
+  "tests/test_cp26_repair_contract.py",
+  "-q",
+  "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-pgid-fix-tests"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "ec2f7fe75b544beb9dda24c82c3a986c",
+ "job_index": 23,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-pgid-fix-tests.log",
+ "monitor_identity": {
+  "create_time": 1791914147.787406,
+  "pid": 71395
+ },
+ "name": "repair-r14-pgid-fix-tests",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-pgid-fix-tests.23.ec2f7fe75b544beb9dda24c82c3a986c.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791914148.85005,
+ "workers": 2
+}

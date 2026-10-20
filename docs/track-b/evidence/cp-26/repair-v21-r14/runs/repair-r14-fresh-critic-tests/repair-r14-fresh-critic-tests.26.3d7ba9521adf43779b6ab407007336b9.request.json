@@ -1,0 +1,32 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "-m",
+  "pytest",
+  "tests/test_cp26_harness.py",
+  "tests/test_cp26_parity.py",
+  "tests/test_cp26_search.py",
+  "tests/test_cp26_state.py",
+  "tests/test_cp26_replay.py",
+  "tests/test_cp26_monitor.py",
+  "tests/test_cp26_repair_contract.py",
+  "-q",
+  "--basetemp=/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-fresh-critic-tests"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-68d5db5",
+ "job_id": "3d7ba9521adf43779b6ab407007336b9",
+ "job_index": 26,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-fresh-critic-tests.log",
+ "monitor_identity": {
+  "create_time": 1791914504.234116,
+  "pid": 75269
+ },
+ "name": "repair-r14-fresh-critic-tests",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-fresh-critic-tests.26.3d7ba9521adf43779b6ab407007336b9.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791914505.788165,
+ "workers": 2
+}

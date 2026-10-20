@@ -1,0 +1,16 @@
+{
+ "charge_id": "cold-r16-observation-batch-48",
+ "import_job_id": "7935ebfb40fe44a4a9b1d90ce5278806",
+ "import_job_index": 433,
+ "seconds": 21.82347629009745,
+ "source": {
+  "basis": "Measured external metadata after batch47: its pricing receipt/live complete forecast verification and cost-record commit; three clock-stable preserved-window launches, light clock references and launch commit; one initial plus69 looped progress/RSS/memory observations; the normal490-date no-load phase/2010-original-file verification; finite registered final no-load execution-order verification and completion/queue commit. Includes pre-reservation monitor bootstrap setup for listed new job IDs once. All worker/observer/pricing runtime and historical/new reserves are separately charged and excluded; idle waits excluded.",
+  "bootstrap_monitor_setup_job_ids": [
+   "b857d371a2ad422391b5e8dab5085e8a",
+   "96b607b699c8441bb0bbc54d92509aa3",
+   "e0323d5ab00349b4bc4412c5b63ca960",
+   "754dc785db4d40ebaf773a5d63da780d"
+  ],
+  "run_id": "cp26-cold-rerun-2026-10-15-01"
+ }
+}

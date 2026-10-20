@@ -1,0 +1,64 @@
+{
+ "additional_retained_reserve_seconds": 1347.8967762090033,
+ "authority": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/issued-continuation-v21-r16.md",
+  "scope": "Existing ordinary operational-ledger and failed-job accounting grant; no new Owner decision or Integration PASS.",
+  "sha256": "4fe30292467596ad65d9391829d6849401ede1cc6be3b7bc9789c47dece60107"
+ },
+ "content_sha256": "b6bdc0ffee86690792b5049c9541f8637e59e564fa77c4c151e3962e24db25f1",
+ "elapsed_wall_upper_bound_seconds": 15292.798361666966,
+ "ending_observation": {
+  "ending_error": null,
+  "group_empty": true,
+  "workers_stopped": true
+ },
+ "issuer": "Lead later ending observation; not a supervisor completion",
+ "job_binding": {
+  "accounting_began_monotonic": 685421.532926333,
+  "child_identity": {
+   "create_time": 1792220018.197701,
+   "pid": 56797
+  },
+  "job_id": "190ee23d827149708a4bb2fd4cc91062",
+  "job_index": 418,
+  "monitor_identity": {
+   "create_time": 1792220013.06548,
+   "pid": 56789
+  },
+  "request_sha256": "87622e7d0b5313b49753a3b392736b711813f86d2ea5d37656c245cdd4d39542",
+  "started_epoch": 1792220014.189548,
+  "supervisor_identity": {
+   "create_time": 1792220014.611907,
+   "pid": 56793
+  },
+  "watchdog_identity": {
+   "create_time": 1792220016.289041,
+   "pid": 56794
+  },
+  "worker_pgid": 56797,
+  "workers": 1
+ },
+ "measured_wall_seconds_preserved": 13944.901585457963,
+ "observed_epoch": 1792235307.4898171,
+ "observed_monotonic": 700714.331288,
+ "observer_identity": {
+  "create_time": 1792235306.536344,
+  "pid": 83414
+ },
+ "original_clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g07g08-noload-1.418.190ee23d827149708a4bb2fd4cc91062.clock.json",
+ "original_clock_sha256": "db5bfd875beca684b9815cf061659eb781050fba09f461d9800cb14a51b4af29",
+ "recorded_worker_identities_sha256": "6b5d4b61ef18370a5391ae57ad753eafe13e74f3541a05b1c9e178f83f5ea243",
+ "recorded_worker_identity_count": 1961,
+ "reserve_basis": "Entire unmeasured interval through this verified empty-group observation, including idle time, retained conservatively; never labelled measured runtime.",
+ "role_statuses": {
+  "child": "gone",
+  "monitor": "gone",
+  "supervisor": "gone",
+  "watchdog": "gone"
+ },
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-one-job-ending-supplement-v1",
+ "worker_statuses": {
+  "gone": 1961
+ }
+}

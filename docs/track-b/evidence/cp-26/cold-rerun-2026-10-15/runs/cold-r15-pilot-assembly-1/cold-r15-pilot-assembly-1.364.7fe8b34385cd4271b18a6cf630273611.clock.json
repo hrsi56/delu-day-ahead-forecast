@@ -1,0 +1,308 @@
+{
+ "abort_reason": null,
+ "child_identity": {
+  "create_time": 1792107175.696192,
+  "pid": 90760
+ },
+ "completion_issuer": "supervisor",
+ "completion_issuer_identity": {
+  "create_time": 1792107173.566806,
+  "pid": 90757
+ },
+ "ended_epoch": 1792107242.1162539,
+ "ending_error": null,
+ "exit_code": 0,
+ "group_empty": true,
+ "job_id": "7fe8b34385cd4271b18a6cf630273611",
+ "job_index": 364,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.00013758300337940454,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.00839587498921901,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.035759042017161846,
+  "peak_wait_seconds": 0.09879179194103926,
+  "read_bytes": 8673628,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.008476583054289222,
+  "transactions": 257,
+  "wait_seconds": 7.866695523262024e-05,
+  "written": true,
+  "written_bytes": 8673627
+ },
+ "peak_rss_bytes": 2945810432,
+ "request_sha256": "97dd608cc96f1c94c6de832be32308f7a2b475926e6d29367e07acbce85d434a",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792107173.393354,
+ "supervisor_identity": {
+  "create_time": 1792107173.566806,
+  "pid": 90757
+ },
+ "wall_seconds": 68.51368137495592,
+ "watchdog_identity": {
+  "create_time": 1792107174.554565,
+  "pid": 90758
+ },
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1792107175.696192,
+   "pid": 90760
+  },
+  {
+   "create_time": 1792107178.144474,
+   "pid": 90776
+  },
+  {
+   "create_time": 1792107178.177468,
+   "pid": 90778
+  },
+  {
+   "create_time": 1792107178.16347,
+   "pid": 90777
+  },
+  {
+   "create_time": 1792107178.421752,
+   "pid": 90788
+  },
+  {
+   "create_time": 1792107178.438445,
+   "pid": 90789
+  },
+  {
+   "create_time": 1792107178.192046,
+   "pid": 90779
+  },
+  {
+   "create_time": 1792107178.692559,
+   "pid": 90802
+  },
+  {
+   "create_time": 1792107178.705969,
+   "pid": 90803
+  },
+  {
+   "create_time": 1792107233.99422,
+   "pid": 90891
+  },
+  {
+   "create_time": 1792107234.246608,
+   "pid": 90900
+  },
+  {
+   "create_time": 1792107234.021262,
+   "pid": 90892
+  },
+  {
+   "create_time": 1792107234.035674,
+   "pid": 90893
+  },
+  {
+   "create_time": 1792107234.781652,
+   "pid": 90911
+  },
+  {
+   "create_time": 1792107234.828545,
+   "pid": 90914
+  },
+  {
+   "create_time": 1792107234.849219,
+   "pid": 90915
+  },
+  {
+   "create_time": 1792107235.151174,
+   "pid": 90924
+  },
+  {
+   "create_time": 1792107235.320618,
+   "pid": 90926
+  },
+  {
+   "create_time": 1792107235.352481,
+   "pid": 90928
+  },
+  {
+   "create_time": 1792107235.1707,
+   "pid": 90925
+  },
+  {
+   "create_time": 1792107235.584925,
+   "pid": 90935
+  },
+  {
+   "create_time": 1792107235.686182,
+   "pid": 90936
+  },
+  {
+   "create_time": 1792107235.918373,
+   "pid": 90944
+  },
+  {
+   "create_time": 1792107235.702985,
+   "pid": 90937
+  },
+  {
+   "create_time": 1792107235.937645,
+   "pid": 90945
+  },
+  {
+   "create_time": 1792107236.246647,
+   "pid": 90951
+  },
+  {
+   "create_time": 1792107236.803933,
+   "pid": 90966
+  },
+  {
+   "create_time": 1792107236.836604,
+   "pid": 90968
+  },
+  {
+   "create_time": 1792107236.820575,
+   "pid": 90967
+  },
+  {
+   "create_time": 1792107236.85342,
+   "pid": 90969
+  },
+  {
+   "create_time": 1792107237.393093,
+   "pid": 90985
+  },
+  {
+   "create_time": 1792107237.372892,
+   "pid": 90984
+  },
+  {
+   "create_time": 1792107237.726924,
+   "pid": 90992
+  },
+  {
+   "create_time": 1792107237.780598,
+   "pid": 90995
+  },
+  {
+   "create_time": 1792107238.099058,
+   "pid": 91003
+  },
+  {
+   "create_time": 1792107238.298938,
+   "pid": 91008
+  },
+  {
+   "create_time": 1792107238.314027,
+   "pid": 91009
+  },
+  {
+   "create_time": 1792107238.132729,
+   "pid": 91005
+  },
+  {
+   "create_time": 1792107238.831214,
+   "pid": 91023
+  },
+  {
+   "create_time": 1792107238.846569,
+   "pid": 91024
+  },
+  {
+   "create_time": 1792107238.867737,
+   "pid": 91025
+  },
+  {
+   "create_time": 1792107239.023831,
+   "pid": 91027
+  },
+  {
+   "create_time": 1792107239.037044,
+   "pid": 91028
+  },
+  {
+   "create_time": 1792107239.051784,
+   "pid": 91029
+  },
+  {
+   "create_time": 1792107239.649878,
+   "pid": 91044
+  },
+  {
+   "create_time": 1792107239.668907,
+   "pid": 91045
+  },
+  {
+   "create_time": 1792107239.84009,
+   "pid": 91049
+  },
+  {
+   "create_time": 1792107239.999387,
+   "pid": 91053
+  },
+  {
+   "create_time": 1792107240.015297,
+   "pid": 91054
+  },
+  {
+   "create_time": 1792107240.035307,
+   "pid": 91055
+  },
+  {
+   "create_time": 1792107239.860967,
+   "pid": 91050
+  },
+  {
+   "create_time": 1792107240.19784,
+   "pid": 91058
+  },
+  {
+   "create_time": 1792107240.213142,
+   "pid": 91059
+  },
+  {
+   "create_time": 1792107240.602935,
+   "pid": 91070
+  },
+  {
+   "create_time": 1792107240.758868,
+   "pid": 91071
+  },
+  {
+   "create_time": 1792107240.95152,
+   "pid": 91076
+  },
+  {
+   "create_time": 1792107240.77576,
+   "pid": 91072
+  },
+  {
+   "create_time": 1792107241.018222,
+   "pid": 91080
+  },
+  {
+   "create_time": 1792107241.348426,
+   "pid": 91089
+  },
+  {
+   "create_time": 1792107241.369379,
+   "pid": 91090
+  },
+  {
+   "create_time": 1792107241.695556,
+   "pid": 91096
+  },
+  {
+   "create_time": 1792107241.763872,
+   "pid": 91100
+  },
+  {
+   "create_time": 1792107241.712151,
+   "pid": 91097
+  }
+ ],
+ "worker_pgid": 90760,
+ "workers": 1,
+ "workers_stopped": true
+}

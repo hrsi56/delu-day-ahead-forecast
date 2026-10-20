@@ -1,0 +1,35 @@
+{
+ "abort_reason": null,
+ "active": [
+  "cold-r16-fit-g06-nominal-2",
+  "cold-r16-fit-g07g08-noload-1"
+ ],
+ "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-observation-import-42.420.225ccfcea1524a119591b98fd7fea92e.clock.json",
+ "clock_sha256": "ccaecf6b928a0d5b1846a89f7c02439f5770064459a8d4aba7c59ee44bf0ca18",
+ "closed_old_repair_scope": true,
+ "cumulative_h": 167.21394459055338,
+ "exit_code": 0,
+ "job_id": "225ccfcea1524a119591b98fd7fea92e",
+ "job_index": 420,
+ "new_run": {
+  "cumulative_machine_hours": 167.21394459055338,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 102.05181995043044,
+  "measured_seconds": 365230.1599174158,
+  "reported_seconds": 1659.3955387587507,
+  "reserved_seconds": 496.9963653750019,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 367386.5518215496
+ },
+ "peak_rss_bytes": 1137311744,
+ "preserved_historical_and_new_reserved_seconds": 3322.996365375002,
+ "projected_cumulative_h": 389.1564566697132,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close.json",
+ "projection_sha256": "186012b016f920c3b647ef09e87ec8520714eb7dd8f810ce738528a40c27afc8",
+ "reported_charge_occurrences": 1,
+ "request_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-observation-import-42.420.225ccfcea1524a119591b98fd7fea92e.request.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Measured external metadata only. This registered importer, native fits and their supervision are measured separately once. Idle waits excluded. The run and cumulative totals are two views of the same charges.",
+ "status": "PASS_EXACTLY_ONCE_ACCOUNTING_IMPORT",
+ "wall_seconds": 10.968126542051323
+}

@@ -1,0 +1,41 @@
+{
+ "active": [
+  "cold-r16-fit-g06-nominal-2",
+  "cold-r16-fit-g07-nominal-1",
+  "cold-r16-fit-g07g08-noload-1"
+ ],
+ "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-observation-import-41.419.59845c4c4eb74629aa9f9d1f55d84f41.clock.json",
+ "clock_sha256": "f904f270947cf1d0958d19eca2ae2b76612bbeb14a311ce046db79e4518121be",
+ "cumulative_h": 164.10823942731187,
+ "historical_reserve_and_new_run_reserve_seconds": 3322.996365375002,
+ "job_id": "59845c4c4eb74629aa9f9d1f55d84f41",
+ "job_index": 419,
+ "new_run": {
+  "cumulative_machine_hours": 164.10823942731187,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 98.9461147871889,
+  "measured_seconds": 354062.72004274884,
+  "reported_seconds": 1646.2968257561872,
+  "reserved_seconds": 496.9963653750019,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 356206.01323388005
+ },
+ "peak_rss_bytes": 1158004736,
+ "preserved_repair_scope_flags": {
+  "active": false,
+  "baseline_seconds": 3463.6917564170067,
+  "id": "repair-v21-r14",
+  "limit_seconds": 36000,
+  "opened_epoch": 1791911407.54939,
+  "terminal_candidate_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e"
+ },
+ "projected_cumulative_h": 386.0507515064716,
+ "projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close.json",
+ "projection_sha256": "186012b016f920c3b647ef09e87ec8520714eb7dd8f810ce738528a40c27afc8",
+ "reported_charge_occurrences": 1,
+ "request_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-observation-import-41.419.59845c4c4eb74629aa9f9d1f55d84f41.request.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Only measured external metadata overhead is reported; this importer, native workers and supervision retain their own measured charges. The counters are two views of the same charges. Idle waits excluded.",
+ "status": "PASS_EXACTLY_ONCE_ACCOUNTING_IMPORT",
+ "wall_seconds": 11.557563000009395
+}

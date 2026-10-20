@@ -1,0 +1,23 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "-c",
+  "from pathlib import Path\nimport hashlib, json\nfrom cp26 import harness as H, parity as P, search as S\nfrom cp24 import design as G\nroot = Path.cwd()\npins = H.identities(root)\nlanded = H.landed_code(root)\nparity = P.require_pass(root)\nassert len(parity[\"checks\"]) == 96\nsupport_path = root / \"reports/rebaseline/repair-v21-r14/search-support.json\"\nsupport = json.loads(support_path.read_text())\nassert support[\"content_sha256\"] == S.digest(support)\nassert support[\"inputs_sha256\"] == pins\nassert all(H.sha(root / name) == value for name, value in support[\"code_sha256\"].items())\nreport_sha = hashlib.sha256(support_path.read_bytes()).hexdigest()\nassert report_sha in support_path.with_suffix(\".md\").read_text()\nassert len(support[\"searches\"]) == 42\ndata = H.load(root, H.NEW, before=S.search_day(13))\nseen = set()\nfor route in S.ROUTES:\n    dd = G.build(data, H.weather_design(root, H.GFS6 if route == \"gfs6\" else H.NEW))\n    for k in range(14):\n        row = next(r for r in support[\"searches\"] if r[\"route\"] == route and r[\"k\"] == k)\n        computed = S.batch_support(dd, k)\n        assert all(row[name] == value for name, value in computed.items())\n        assert row[\"support_freeze_sha256\"] == computed[\"content_sha256\"]\n        assert (route, k) not in seen\n        seen.add((route, k))\n        if k == 0:\n            b = row[\"batches\"][0]\n            assert (b[\"first\"], b[\"last\"], b[\"minimum_possible_train_days\"], b[\"minimum_possible_hold_days\"]) == (\"2019-12-18\", \"2020-01-14\", 251, 46)\nassert all(v == [1, 7] + [11] * 12 for v in support[\"B_by_route\"].values())\nassert support[\"search_count_for_future_pilot_cost\"] == 42\nassert sum(support[\"search_fit_counts_at_full_success\"].values()) == 31575\nprint(json.dumps({\"pins\": len(pins), \"landed_modules\": len(landed), \"parity_checks\": len(parity[\"checks\"]), \"parity_require_pass\": True, \"support_rows_recomputed\": len(seen), \"report_sha256\": report_sha, \"signed_digest\": support[\"content_sha256\"], \"B\": [1, 7] + [11] * 12, \"first_minima\": [251, 46], \"model_fits\": 0, \"experiment_scores\": 0}, sort_keys=True))\n"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-c1e46",
+ "job_id": "19024b55e50b4644b6ea0ba9b5c8996f",
+ "job_index": 18,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-identities.log",
+ "monitor_identity": {
+  "create_time": 1791913377.385352,
+  "pid": 68993
+ },
+ "name": "repair-r14-critic-identities",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-critic-identities.18.19024b55e50b4644b6ea0ba9b5c8996f.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791913378.355457,
+ "workers": 1
+}

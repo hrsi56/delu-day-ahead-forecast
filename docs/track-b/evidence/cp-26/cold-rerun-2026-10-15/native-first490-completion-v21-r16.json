@@ -1,0 +1,80 @@
+{
+ "distinction": "Native readiness is not an issuance or a premature discount to the forecast obligation.",
+ "forecast_origins_before_replay": 178,
+ "last_nominal_clock_sha256": "ee3588fd803df4bfa4e2b8fd38249993cb0329ce1c5b201db6b9e4146012f885",
+ "last_nominal_job": {
+  "abort_reason": null,
+  "charged_wall_seconds": 19095.157451707986,
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g02-nominal-2.380.c6836806112444e3bd8c1db65a982283.clock.json",
+  "exit_code": 0,
+  "job_id": "c6836806112444e3bd8c1db65a982283",
+  "peak_rss_bytes": 2144157696,
+  "workers": 1
+ },
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.0004566670395433903,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.018563374993391335,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.5284569580107927,
+  "peak_wait_seconds": 0.8953305840259418,
+  "read_bytes": 9881367,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.048774832976050675,
+  "transactions": 48338,
+  "wait_seconds": 0.030208833049982786,
+  "written": true,
+  "written_bytes": 9881368
+ },
+ "origins_per_route": 490,
+ "phases": [
+  {
+   "content_sha256": "8a5ee809cad4ae5ca1937d1b1c8f2a037b7d83b81b12a22b850a15b74362d9a3",
+   "group": 1,
+   "origins": 245,
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-c06e1797474c4133cb7532f99d524b920f9b33100a87a8665fcfb9c0ae3b5310.json",
+   "route": "noload"
+  },
+  {
+   "content_sha256": "3db5b880bd99378f80e70a4eaa6f0905482b54157fe77591e9ab8443f16c0d6b",
+   "group": 2,
+   "origins": 245,
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-e10ca33bf6788126ae782675049a135c3d1d59fe5f67050bbf695c77a0228444.json",
+   "route": "gfs6"
+  },
+  {
+   "content_sha256": "1a320da5802d0d16cfbc6f04c9eb658767a3a69314c3e1de5205d999f30e04ff",
+   "group": 2,
+   "origins": 245,
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-51281b7e59d75fa03cda9ac14bc88e7ea79e1adf4176ce701c46b373e0c1a9b9.json",
+   "route": "noload"
+  },
+  {
+   "content_sha256": "ee6e18fd59f87d7158b5c928755a5caf86b5a9661c8d5d4e4e55e4f4d9a9886e",
+   "group": 1,
+   "origins": 245,
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-d17c43677a3a58ced962341bd29c5534aa5b9da85d98062b9c1e2fca446514cf.json",
+   "route": "gfs6"
+  },
+  {
+   "content_sha256": "21c57346dacd9fa0c8e581ea448c6d64655e966ba27eb5d66fad598287358fb7",
+   "group": 1,
+   "origins": 245,
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-a23b1923edfc89205975b5827919aaba4a1bb0a72900b2e9f509ce426ea86b54.json",
+   "route": "nominal"
+  },
+  {
+   "content_sha256": "b390c68e9c21afb277a185a534f383f4b1e8f3a2fcb7ff2a85f815c2ca341d43",
+   "group": 2,
+   "origins": 245,
+   "path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-61ef1cf42a7e073f4ae67a957e4eaa870f3d927509f117244aace4518c2e6c59.json",
+   "route": "nominal"
+  }
+ ],
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "status": "NATIVE_FIRST490_READY"
+}

@@ -1,0 +1,22 @@
+{
+ "allocation": "Three independent native workers plus one registered accounting/check worker.",
+ "caller_sha256": "43b0ed90af9c078d52eb900b487aad1c2d1297943ccdfb83c6bb31dc862dd580",
+ "canonical_rewrite_seconds": 0.7127143749967217,
+ "duplicate_charge_imported": false,
+ "duplicate_task_imported": false,
+ "heartbeat_limit_seconds": 8.0,
+ "job_id": "daf5e9f1919e438ba7b1cbfecba4d70c",
+ "job_index": 405,
+ "ledger_bytes": 13592871,
+ "ledger_limit_seconds": 3.0,
+ "native_job_ids": [
+  "7c245a27b8894a13b9ea59d159e46707",
+  "3553d99e1d3a47dbbe5eb6cd8e8e51ac",
+  "36aff953240c45c78e9c82629dc92f31"
+ ],
+ "native_observer_timeouts": 0,
+ "operational_counter_value": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Real full canonical rewrite and cold evidence append,20seconds of fresh native clocks, exactly-once charge/task/counter; no model fits in this checker, source change, timeout increase or synthetic ledger.",
+ "validation_status": "PASS"
+}

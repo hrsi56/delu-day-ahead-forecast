@@ -1,0 +1,288 @@
+{
+ "anchor_commit": "c9d5ab98d590ac9b1958e0ec9efe61a78ffcde7c",
+ "bar": "complete-bar-v21-r15.md",
+ "rows": [
+  {
+   "evidence": "issued-admission-calibration-v21-r15.md,authority-v21-r15.json; actual starting tip6208e4f verified, same run/branch reused.",
+   "evidence_kind": "P",
+   "id": 1,
+   "requirement": "Authority and checkpoint continuity",
+   "source_sections": "24.7 Outputs/gates; continuation Target/Owner grant",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "r15changes only operational admission/deadlines; original scientific protocol/CP28 registration unchanged. No new exposure or score.",
+   "evidence_kind": "P",
+   "id": 2,
+   "requirement": "Prospective registration and exposure assessment",
+   "source_sections": "24.2;24.7 CP28 protocol; continuation preparation",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "terminal-custody-v21-r15.json verifies47historical hashes and all1013original pilot bytes; landed numeric source/dependencies/inputs unchanged; zero retrieval/remote writes.",
+   "evidence_kind": "P/R",
+   "id": 3,
+   "requirement": "Boundary, immutable inputs and local-only scope",
+   "source_sections": "24.2;24.4;24.5; continuation constraints",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "calibration-v21-r15.json and selected-limits-v21-r15.json:3sledger/8sheartbeat/14sstartup/0.2spoll; direct enforcement during I/O wait; actual stopped-observer/held-lock checks passed; all30cold jobs ended.",
+   "evidence_kind": "P",
+   "id": 4,
+   "requirement": "Fresh supervision and owned-process enforcement",
+   "source_sections": "continuation preparation finding1",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "resources-v21-r15.json plus live ledger preserve original65.16212464012295h baseline,both views,2826sreserve and closed1255.047680753924srepair scope; no reset.",
+   "evidence_kind": "P/R",
+   "id": 5,
+   "requirement": "Closed repair accounting and cumulative charges",
+   "source_sections": "continuation preparation finding2/constraints",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "Normal pilot checkpoints reused; all51missing probes completed.49affectedchecks pass; full production forecasts not admitted.",
+   "evidence_kind": "P",
+   "id": 6,
+   "requirement": "Production pipeline and restart fixtures",
+   "source_sections": "continuation preparation",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "Original96bitwise parity checks remain valid: current require_pass validates unchanged input/recipe identity and explicit r15operational provenance; numeric-function AST checks passed.",
+   "evidence_kind": "P",
+   "id": 7,
+   "requirement": "Harness scope and current bitwise parity",
+   "source_sections": "24.7 Harness/parity;24.5 variant parity",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "Current49affected gate/cost/synthetic execution/accounting/observer checks passed. Existing causal/DST/model algorithms unchanged; no full scientific calendar run.",
+   "evidence_kind": "P",
+   "id": 8,
+   "requirement": "Causal controls and DST identity",
+   "source_sections": "2;24.4;14.3;23.10 inherited controls",
+   "status": "PARTIAL / REUSED"
+  },
+  {
+   "evidence": "2068 eligible measurement days,2078 calendar days,49596 frozen keys;363 warm-up dates;2441 total origins; masks755/358/152 separately registered.",
+   "evidence_kind": "P/E",
+   "id": 9,
+   "requirement": "Exact calendar and four frozen masks",
+   "source_sections": "24.7 Days; continuation preparation",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "Nominal/no-load/GFS+6 routes and CP-25 rulings retained; no new route results.",
+   "evidence_kind": "P/E",
+   "id": 10,
+   "requirement": "Tier rulings, routes and missing inputs",
+   "source_sections": "24.5;15.3; Owner tier rulings",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "timing-pilot.json:1064signed raw probes,42complete route/search pairs at all14origins; initial1013bytes unchanged; no successful probe rerun, replacement seed or serving ensemble.",
+   "evidence_kind": "E",
+   "id": 11,
+   "requirement": "Sealed fourteen-origin training-only timing pilot",
+   "source_sections": "24.7 Ceilings; continuation constraints",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "admission-v21-r15.json: complete439.79845920803433hcumulative forecast vs436.5hgate,shortfall3.29845920803433h. Signed live recheck also rejects.485actual cap and shutdown headroom remain enforced.",
+   "evidence_kind": "P/E/R",
+   "id": 12,
+   "requirement": "Projection and enforced cumulative resource gates",
+   "source_sections": "24.7 Ceilings; continuation constraints",
+   "status": "BLOCKED"
+  },
+  {
+   "evidence": "All42signed cold-run support/sampler plans remain unchanged and were committed before fitting; original search/model seed identities retained.",
+   "evidence_kind": "P/E",
+   "id": 13,
+   "requirement": "Forty-two signed support-only search plans",
+   "source_sections": "24.7 DDNN2 dates/batches",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "Sampler128trials,halving,ranking,seed domains and effective identity unchanged; original scientific source identity plus actual current operational source hashes are recorded separately.",
+   "evidence_kind": "P/E",
+   "id": 14,
+   "requirement": "Registered sampler, seeds, halving and ranking",
+   "source_sections": "24.7 search;23.4",
+   "status": "EVIDENCED"
+  },
+  {
+   "evidence": "Zero new terminal serving searches; old42 results retained unused as scientific state.",
+   "evidence_kind": "E",
+   "id": 15,
+   "requirement": "All forty-two searches reach terminal outcomes",
+   "source_sections": "24.7 search fit/service rules",
+   "status": "NOT RUN"
+  },
+  {
+   "evidence": "No new serving ensembles; pilot first-four-configuration fits are timing only.",
+   "evidence_kind": "P/E",
+   "id": 16,
+   "requirement": "Exact eight-member ensembles and search failures",
+   "source_sections": "24.7 search ensemble/failure rules",
+   "status": "NOT RUN"
+  },
+  {
+   "evidence": "Zero cold forecast origins;2441 remain. Pilot member fits do not satisfy daily production.",
+   "evidence_kind": "E",
+   "id": 17,
+   "requirement": "Fresh daily fits and strict target availability",
+   "source_sections": "24.7 Training/information;2;16.2;24.4",
+   "status": "NOT RUN"
+  },
+  {
+   "evidence": "B0/v1-R implementation and relevant parity retained; no new full-calendar or released-v1 descriptive score rows.",
+   "evidence_kind": "P/E",
+   "id": 18,
+   "requirement": "B0, v1-R and released-v1 reference fidelity",
+   "source_sections": "24.7 Policies/Failures",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "Fixed landed model/blend recipes unchanged; no new complete forecast vectors.",
+   "evidence_kind": "P/E",
+   "id": 19,
+   "requirement": "Landed v2-v5 composition and member recipes",
+   "source_sections": "24.7 Policies;14.1-2;15.1-3;17.2-3;23.5",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "Training-only DDNN-2 probes retained, including numerical failures; no production D2 ensemble/issuance.",
+   "evidence_kind": "P/E",
+   "id": 20,
+   "requirement": "DDNN2 landed training and emission",
+   "source_sections": "23.3-4;23.10;24.7 Policies",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "No new forecast ledger.",
+   "evidence_kind": "E",
+   "id": 21,
+   "requirement": "Complete durable forecast provenance",
+   "source_sections": "24.7 Ledger;16.2",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No new H state; old state not imported.",
+   "evidence_kind": "P/E",
+   "id": 22,
+   "requirement": "Landed H construction and original issuance scales",
+   "source_sections": "14.2;17.2;23.5;24.7 Failures/Ledger",
+   "status": "NOT RUN"
+  },
+  {
+   "evidence": "No new issued own errors or CQR-scored calendar.",
+   "evidence_kind": "P/E",
+   "id": 23,
+   "requirement": "Own-error admission and B0/CQR special rules",
+   "source_sections": "24.7 Failures;2",
+   "status": "NOT RUN"
+  },
+  {
+   "evidence": "No new replay/learning ledger; old575-origin exports remain untracked and hash-preserved.",
+   "evidence_kind": "P/E",
+   "id": 24,
+   "requirement": "Three predicates, persistent buffers and learning ledger",
+   "source_sections": "24.7 Ledger;24.8 ledger rule",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No new scored fallbacks or full-calendar1percent report.",
+   "evidence_kind": "E/R",
+   "id": 25,
+   "requirement": "Failure scoring, calendar retention and threshold disclosure",
+   "source_sections": "24.7 Failures",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No new primary score tables on any mask.",
+   "evidence_kind": "E",
+   "id": 26,
+   "requirement": "Primary scores on all four masks",
+   "source_sections": "24.7 Scores primary",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No new secondary/year/season/hour/day-type/state or realized-outcome score breakdowns.",
+   "evidence_kind": "E",
+   "id": 27,
+   "requirement": "Secondary estimands and registered breakdowns",
+   "source_sections": "24.7 Scores secondary/breakdowns",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No experimental bootstrap results/replicates; full registered algorithm timing reused only.",
+   "evidence_kind": "E",
+   "id": 28,
+   "requirement": "Bootstrap uncertainty and stored replicates",
+   "source_sections": "24.7 Inference bootstrap/sensitivities;Outputs",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No experimental DM/GW/MCS output.",
+   "evidence_kind": "E",
+   "id": 29,
+   "requirement": "Secondary DM/GW/MCS inference",
+   "source_sections": "24.7 Inference secondary tests",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No experimental calibration/Christoffersen/moment family output.",
+   "evidence_kind": "E",
+   "id": 30,
+   "requirement": "Calibration and complete moment diagnostics",
+   "source_sections": "24.7 Scores calibration",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "No v2\u2192v3\u2192v4\u2192v5, no-load bound or GFS fragility result; no adoption/demotion decision.",
+   "evidence_kind": "E/R",
+   "id": 31,
+   "requirement": "Control audit, load bound and GFS fragility",
+   "source_sections": "24.7 Claims;24.5; continuation outcome",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "Frozen CP-28 protocol retained unchanged; no arm executed and no new learning state.",
+   "evidence_kind": "P/R",
+   "id": 32,
+   "requirement": "Complete frozen CP28 protocol and state readiness",
+   "source_sections": "24.7 CP28 protocol;24.8-9; continuation extract",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "Complete pilot,operational tests,30bound cold job endings and complete conservative forecast preserved; full scientific report absent.",
+   "evidence_kind": "E/R",
+   "id": 33,
+   "requirement": "Final artifact integrity and truthful report",
+   "source_sections": "24.7 Outputs/Ledger; continuation outcome",
+   "status": "PARTIAL"
+  },
+  {
+   "evidence": "No result publication packet or MLflow export generated; public surfaces unchanged.",
+   "evidence_kind": "R",
+   "id": 34,
+   "requirement": "Local draft publication packet and MLflow export",
+   "source_sections": "24.7 Outputs; PUBLISH_RULES1.5 section11",
+   "status": "NOT PRODUCED"
+  },
+  {
+   "evidence": "Complete r15bar and35rowreturn mapped. No final Integration review because baseline ledger/results absent; no checkpoint PASS or fabricated verdict.",
+   "evidence_kind": "R",
+   "id": 35,
+   "requirement": "Fresh binding Integration review and complete terminal return",
+   "source_sections": "engineering role; continuation Stop/return/Timebox",
+   "status": "NOT RUN"
+  }
+ ],
+ "source": "capstone_v21.md",
+ "version": "v21-r15"
+}

@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "repair-r14-handover-preparation",
+ "job_id": "3095caa5f14c4739be622bd6c0052ce0",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-handover-preparation.log",
+ "machine_hours_cumulative": 1.3088265571538937,
+ "peak_rss_bytes": 511508480,
+ "resources": {
+  "headroom_hours": 483.6911734428461,
+  "machine_hours": 1.3088265571538937,
+  "measured_seconds": 1789.523605754017,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 34751.91615066299,
+  "repair_seconds_used": 1248.0838493370106,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4711.775605754017,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 1.6086416250327602
+}

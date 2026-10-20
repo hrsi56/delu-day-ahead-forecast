@@ -1,0 +1,27 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-price-quiescent-close-g05g06-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-price-quiescent-close-g05g06-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/quiescent-exit-v21-r16.py",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/price-quiescent-close-v21-r16.py",
+  "g05g06"
+ ],
+ "entry_sha256": "4d7fd229005d9f506f66e372864ad7882aabf8be5399ded010523ffc1240f8b0",
+ "launched_epoch": 1792213758.335423,
+ "monitor_pid": 33870,
+ "name": "cold-r16-price-quiescent-close-g05g06-1",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "One supported completion-price update plus one finite noncomputing metadata descendant observed by existing supervision. No model fit, scientific pilot or existing native work repeated.",
+ "wrapper_sha256": "492631281ae4b1b623c0d20588df3eef8728c6832342e266a57ee85a6159b1b5"
+}

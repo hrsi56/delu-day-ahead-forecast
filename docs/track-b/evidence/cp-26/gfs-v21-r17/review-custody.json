@@ -1,0 +1,25 @@
+{
+  "schema": "cp26-gfs-r17-review-custody-v1",
+  "final_candidate_sha": "f014e5b2f09dc7defa103b3c4ec5796d199c262d",
+  "baseline_scientific_candidate_sha": "6f57febe3659b1f902c17f3db31ba41e41136178",
+  "prior_evidence_tip_sha": "252725e0431826b6d32f1fc8200cfa3baf3750f6",
+  "result": "PASS",
+  "clause_count": 111,
+  "verdict_path": "docs/track-b/evidence/cp-26/integration.md",
+  "imported_files": {
+    "docs/track-b/evidence/cp-26/integration.md": "dcde05541851efa5dc9f38ba208ded5bb3c52f150f33650899a8a2087e44c6e8",
+    "docs/track-b/evidence/cp-26/gfs-v21-r17/critic-preservation.py": "08257ac4ee2a5825c5b5acca26cbc32d990bebfc0e50e2ecb503dddb06954a7a",
+    "docs/track-b/evidence/cp-26/gfs-v21-r17/critic-preservation-result.json": "32170b49ab7a2440044f8ccf526d127ee6c774f718f7c0bf6a95f85e0f0f7ed4",
+    "docs/track-b/evidence/cp-26/gfs-v21-r17/critic-evidence-map.py": "a001901775561591e073469da5d5949a9310345bc48b2a90f4ed04d56dd24f35",
+    "docs/track-b/evidence/cp-26/gfs-v21-r17/critic-evidence-map-result.json": "a2cf9292d0eb248cedc9106bfff4e805dff4bce42383a10c6af2c33f44d63de6",
+    "docs/track-b/evidence/cp-26/gfs-v21-r17/critic-command-records.json": "ac132d971d514f69cd7e1a1f4727ad065fe94c3342d1e708de97261549e05360",
+    "docs/track-b/evidence/cp-26/gfs-v21-r17/critic-document-commands.md": "f1906f96168b24b1be00384d5cd20da5d489fc8537aeafa3d2b8d31825d868b5"
+  },
+  "cooperative_read_only": true,
+  "new_clean_detached_worktree_created_and_removed": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/critic-gfs-r17",
+  "main_unchanged": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "scientific_reexecution": false,
+  "supplemental_analysis_executed": false,
+  "large_payloads_retained": true,
+  "independent_large_payload_backup_created": false
+}

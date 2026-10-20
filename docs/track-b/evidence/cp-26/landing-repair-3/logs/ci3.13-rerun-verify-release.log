@@ -1,0 +1,66 @@
+## Item 5 — cross-surface agreement
+
+| Claim | README | Space card | Static Space card | Pages export | MLflow record |
+|---|---|---|---|---|---|
+| `snapshot_cutoff` | yes | yes | yes | yes | yes |
+| `raw_model_fit_cutoff` | yes | yes | yes | yes | yes |
+| `final_calibration_window` | yes | yes | yes | yes | yes |
+| `holdout_window` | yes | yes | yes | yes | yes |
+| `selected_catalog` | yes | yes | yes | yes | yes |
+| `catalog_base_loss` | yes | yes | yes | yes | yes |
+| `catalog_augmented_loss` | yes | yes | yes | yes | yes |
+| `catalog_pct` | yes | yes | yes | yes | yes |
+| `holdout_mae_champion` | yes | yes | yes | yes | yes |
+| `holdout_mae_naive` | yes | yes | yes | yes | yes |
+| `holdout_mae_pct` | yes | yes | yes | yes | yes |
+| `holdout_pinball_champion` | yes | yes | yes | yes | yes |
+| `holdout_pinball_naive` | yes | yes | yes | yes | yes |
+| `holdout_pinball_pct` | yes | yes | yes | yes | yes |
+| `holdout_coverage_50` | yes | yes | yes | yes | yes |
+| `holdout_coverage_80` | yes | yes | yes | yes | yes |
+| `holdout_coverage_95` | yes | yes | yes | yes | yes |
+| `holdout_dm_statistic` | yes | yes | yes | yes | yes |
+| `holdout_dm_p_value` | yes | yes | yes | yes | yes |
+| `holdout_dm_effect_size` | yes | yes | yes | yes | yes |
+| `development_evidence_class` | yes | yes | yes | yes | yes |
+| `development_dm_point_p_value` | yes | yes | yes | yes | yes |
+| `benchmark_strict_loss` | yes | yes | yes | yes | yes |
+| `benchmark_a69_loss` | yes | yes | yes | yes | yes |
+| `benchmark_pct` | yes | yes | yes | yes | yes |
+| `benchmark_limitation` | yes | yes | yes | yes | yes |
+| `champion_fingerprint` | yes | yes | yes | yes | yes |
+| `snapshot_sha256` | yes | yes | yes | yes | yes |
+| `holdout_dm_label` | yes | yes | yes | yes | yes |
+| `shipped_is_evaluated` | yes | yes | yes | yes | yes |
+
+### The four cutoffs, separately
+
+| Cutoff | README | Space card | Static Space card | Pages export | MLflow record |
+|---|---|---|---|---|---|
+| `snapshot_cutoff` | yes | yes | yes | yes | yes |
+| `raw_model_fit_cutoff` | yes | yes | yes | yes | yes |
+| `final_calibration_window` | yes | yes | yes | yes | yes |
+| `holdout_window` | yes | yes | yes | yes | yes |
+
+- `snapshot_cutoff` = `2026-09-06`
+- `raw_model_fit_cutoff` = `2026-04-07`
+- `final_calibration_window` = `2026-04-09..2026-06-07`
+- `holdout_window` = `2026-06-09..2026-09-06`
+
+disagreements: none
+
+## Item 3 — zero runtime calls
+
+scanned docs/index.html (1,996,267 bytes)
+fetching references to an external origin: 0
+
+## Link discipline
+
+gated DagsHub UI links on any surface: none
+tracking URI used everywhere: https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow
+
+## Cross-surface parity (Publication Standard v1 §8)
+
+headline block, names and statuses on page, README, Static Space card, Space card, MLflow export: agree
+
+PASS — every bound claim agrees on every surface; the static page fetches nothing; the headline, names and statuses agree across surfaces

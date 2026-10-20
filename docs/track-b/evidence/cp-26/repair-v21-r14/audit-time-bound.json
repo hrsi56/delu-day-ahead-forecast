@@ -1,0 +1,17 @@
+{
+  "schema": "cp26-audit-time-bound-v1",
+  "thread_id": "01a13600-fa0a-78f2-87a2-a402e2132b8b",
+  "thread_title": "בחן היתכנות CP-26",
+  "thread_created_epoch": 1791907396,
+  "turn_started_epoch": 1791907417,
+  "turn_completed_epoch": 1791908415,
+  "failed_commands": [],
+  "failed_test_association": {
+  "turn_id": "01a13601-4b54-78c0-aeca-c2695ff4c50e",
+  "final_item_id": "msg_0fc5b90c12b1b731016ace5980134087d2a94db8a83221efd9",
+  "statement": "בדיקה מוקדמת נעצרה בגלל ההנחה השגויה שיום כשיר חייב להיות יום תחזיות מלא; משכה המלא לא נרשם, ו־15.01 שניות המתנת כלי הן גבול תחתון בלבד. זו מגבלת חשבונאות מפורשת. יומן CP-26 לא שונה, ולא נוצרו קבצים זמניים.\n\n2. *",
+  "audit_attachment_sha256": "e53636c68dca3c0a12a6bd8d75c10ecc0ac8b653d648caf20d35aac6605118ba",
+  "parity_ended_epoch": 1791905827.8090382,
+  "attachment_received_epoch": 1791908653.442842
+}
+}

@@ -1,0 +1,23 @@
+{
+ "abort_reason": null,
+ "exit_code": 1,
+ "job": "repair-r14-critic-identities",
+ "job_id": "19024b55e50b4644b6ea0ba9b5c8996f",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-critic-identities.log",
+ "machine_hours_cumulative": 1.2562919503246728,
+ "peak_rss_bytes": 1194115072,
+ "resources": {
+  "headroom_hours": 483.7437080496753,
+  "machine_hours": 1.2562919503246728,
+  "measured_seconds": 1600.3990211688215,
+  "pilot_stop_hours": 388.0,
+  "repair_scope_active": true,
+  "repair_seconds_remaining": 34941.040735248185,
+  "repair_seconds_used": 1058.9592647518152,
+  "reported_seconds": 96.252,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 4522.651021168822,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 20.429064584022854
+}

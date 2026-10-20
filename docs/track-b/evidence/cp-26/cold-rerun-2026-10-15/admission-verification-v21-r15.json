@@ -1,0 +1,82 @@
+{
+ "actual_resources": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 235231.43753047354,
+  "headroom_hours": 418.32069192263293,
+  "live_shutdown_exposure_seconds": 0.0,
+  "machine_hours": 66.67930807736707,
+  "measured_seconds": 236568.52397529932,
+  "pilot_stop_hours": 436.5,
+  "post_repair_seconds": 235326.76964135052,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 650.9851032221279,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.67930807736707,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.5171834372441129,
+    "measured_seconds": 4912.238249411923,
+    "reported_seconds": 549.6221246668836,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 5461.860374078807
+   }
+  },
+  "total_seconds": 240045.50907852146,
+  "unreconciled_reserves": []
+ },
+ "complete_pilot_probes": 1064,
+ "forecast_code_identity_matches": true,
+ "gate_exception": "CP-26 projection 439.798682 hours exceeds the 436.5-hour cumulative admission line; Owner resource/protocol decision required",
+ "negative_fixture_receipts": [
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.6aefb8e3ee2848909d5825e735d2650f.clock.json",
+   "sha256": "4ee90a19ef2f8ac20f7421154d0c4a4bef25e896e666ce52cae0f0407a20eae8"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_0/.local/artifacts/cp-26/ledger/budget.json",
+   "sha256": "699127923ada8dc62326c2e948dfcbe4fb378b8911c87eb1f576d8e8a07092f1"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_1/.local/artifacts/cp-26/jobs/synthetic-monitor.0.3db161834ab5434badcd8134f2700397.clock.json",
+   "sha256": "1a7e787081ede67460e83c31225dbb413a764d2fcf03dd97022311dcd3ed7f7a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_sigstop_supervisor_stops_1/.local/artifacts/cp-26/ledger/budget.json",
+   "sha256": "dc1b333bf5a7d0ce9d7e26e923aee892b606357470dbf52df727bc742bfa45fb"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.d58df38555814c81a730420baf4bf7b2.clock.json",
+   "sha256": "5e64fb8e9af725f37161d2e0a6e2b3b3e353c1e3f88e8575f68077f32883d48a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/ledger/budget.json",
+   "sha256": "90f8559d66c369774a0cd22f531b296d44643fbb1ec19fd3855d39a624b2b227"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_supervisor_stopped_inside0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.9e7c327e467f4ac49908ae41aab2585a.clock.json",
+   "sha256": "eeac0b513348ee9968bf41231e31bc392b32a3f5caa7a09ee6356b52499137dc"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest/test_supervisor_stopped_inside0/.local/artifacts/cp-26/ledger/budget.json",
+   "sha256": "bd9a2b82f3e9b3094a24bd523d3477d4919a7c480047cebb5389a97a390aaa6a"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest-followup/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/jobs/synthetic-monitor.0.6852016d26ee4ff18040895c4596e194.clock.json",
+   "sha256": "2ab8eaf7041ed090036cc0dc10ba140987096674f5d6a21d06b50d3e158ed9ed"
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/calibration-failure-fixtures-v21-r15/pytest-followup/test_stopped_watchdog_is_detec0/.local/artifacts/cp-26/ledger/budget.json",
+   "sha256": "1d23a50054ff1494843cd6017292d7e2a825900d74ddd2a7acbaa2cedd8c4c9a"
+  }
+ ],
+ "new_forecasts": 0,
+ "new_full_searches": 0,
+ "result": "BLOCKED",
+ "running_jobs": [],
+ "search_rows": 42,
+ "signed_projection_verified": true
+}

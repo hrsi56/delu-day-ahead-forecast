@@ -1,0 +1,198 @@
+{
+ "batches": [
+  {
+   "groups": [
+    3,
+    4
+   ],
+   "native_jobs": [
+    {
+     "first": "2021-05-05",
+     "group": 3,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2022-01-04"
+    },
+    {
+     "first": "2022-01-05",
+     "group": 4,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2022-09-06"
+    },
+    {
+     "first": "2021-05-05",
+     "groups": [
+      3,
+      4
+     ],
+     "origins": 490,
+     "route": "noload",
+     "through": "2022-09-06"
+    },
+    {
+     "first": "2021-05-05",
+     "groups": [
+      3,
+      4
+     ],
+     "origins": 490,
+     "route": "gfs6",
+     "through": "2022-09-06"
+    }
+   ],
+   "replay_boundaries": [
+    "2022-01-04",
+    "2022-09-06"
+   ]
+  },
+  {
+   "groups": [
+    5,
+    6
+   ],
+   "native_jobs": [
+    {
+     "first": "2022-09-07",
+     "group": 5,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2023-05-09"
+    },
+    {
+     "first": "2023-05-10",
+     "group": 6,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2024-01-09"
+    },
+    {
+     "first": "2022-09-07",
+     "groups": [
+      5,
+      6
+     ],
+     "origins": 490,
+     "route": "noload",
+     "through": "2024-01-09"
+    },
+    {
+     "first": "2022-09-07",
+     "groups": [
+      5,
+      6
+     ],
+     "origins": 490,
+     "route": "gfs6",
+     "through": "2024-01-09"
+    }
+   ],
+   "replay_boundaries": [
+    "2023-05-09",
+    "2024-01-09"
+   ]
+  },
+  {
+   "groups": [
+    7,
+    8
+   ],
+   "native_jobs": [
+    {
+     "first": "2024-01-10",
+     "group": 7,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2024-09-10"
+    },
+    {
+     "first": "2024-09-11",
+     "group": 8,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2025-05-13"
+    },
+    {
+     "first": "2024-01-10",
+     "groups": [
+      7,
+      8
+     ],
+     "origins": 490,
+     "route": "noload",
+     "through": "2025-05-13"
+    },
+    {
+     "first": "2024-01-10",
+     "groups": [
+      7,
+      8
+     ],
+     "origins": 490,
+     "route": "gfs6",
+     "through": "2025-05-13"
+    }
+   ],
+   "replay_boundaries": [
+    "2024-09-10",
+    "2025-05-13"
+   ]
+  },
+  {
+   "groups": [
+    9,
+    10
+   ],
+   "native_jobs": [
+    {
+     "first": "2025-05-14",
+     "group": 9,
+     "origins": 245,
+     "route": "nominal",
+     "through": "2026-01-13"
+    },
+    {
+     "first": "2026-01-14",
+     "group": 10,
+     "origins": 236,
+     "route": "nominal",
+     "through": "2026-09-06"
+    },
+    {
+     "first": "2025-05-14",
+     "groups": [
+      9,
+      10
+     ],
+     "origins": 481,
+     "route": "noload",
+     "through": "2026-09-06"
+    },
+    {
+     "first": "2025-05-14",
+     "groups": [
+      9,
+      10
+     ],
+     "origins": 481,
+     "route": "gfs6",
+     "through": "2026-09-06"
+    }
+   ],
+   "replay_boundaries": [
+    "2026-01-13",
+    "2026-09-06"
+   ]
+  }
+ ],
+ "caller": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-fit-only.py",
+ "cost_coverage": "No added fits/searches/origins. Future native Context/job count falls from24to16. Keep every original timing estimate and margin, including the conservative200.214hour wall forecast,12group operational allowance and48allocation shutdown allowance. No speedup is required for admission. Fewer context initializations, no new scheduler or accounting mechanism.",
+ "effective_after": "Complete existing group2 fit jobs and original group1/group2 cache-only replay boundaries first. No running caller or prior receipt is changed.",
+ "native_worker_allocation": "Four independent one-worker jobs: nominal on each of two disjoint original groups, plus each control on both groups in one context. No computing/reserved coordinator. At most four slots; BLAS1; existing memory/time/ownership/hard-budget guards unchanged.",
+ "replay_allocation": "One cache-only replay worker after all four native jobs close successfully. Replay takes all three route locks exclusively and advances the two original boundaries in chronological order. H/learning/pending state is never reset.",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-static-native-pairs-v21-r16",
+ "science": "Same Context, FitCache, fit_members_cached, serving searches, per-origin seeds, training/availability rules, member order within each date, native statuses and numerical routines. Physical independent fits can complete out of date order; all feedback and forecast emission remain chronological.",
+ "source_plan": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-plan-v21-r16.json",
+ "source_plan_sha256": "32bbcbff3c7c760b04f06ff175b8f526129c880dcfd7c4edee55e12fda6addc4"
+}

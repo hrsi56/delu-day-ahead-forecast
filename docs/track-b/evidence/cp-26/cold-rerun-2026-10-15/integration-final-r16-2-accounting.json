@@ -1,0 +1,140 @@
+{
+  "accounting": {
+    "measured_seconds": 847289.1148617963,
+    "reported_seconds": 2408.833773621209,
+    "reserved_seconds": 7367.7453770840075
+  },
+  "all_jobs_stopped": true,
+  "canonical_ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+  "final_checkout_checks": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "6f57febe3659b1f902c17f3db31ba41e41136178\n"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "exit_code": 1,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--stat"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "jobs": [
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 162.86458291600866,
+      "clock_sha256": "d6437cc6f41cb8bad5b456245cfa0150dd2be3e7064de13d5dc78f043c12496f",
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-4.484.ccc23a69b3704fd6b059f0beb0ebfc77.clock.json",
+      "ended_epoch": 1792431003.80386,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "ccc23a69b3704fd6b059f0beb0ebfc77",
+      "job_index": 484,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-integration-review-4.log",
+      "name": "cold-r16-integration-review-4",
+      "peak_rss_bytes": 2330279936,
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-4.484.ccc23a69b3704fd6b059f0beb0ebfc77.request.json",
+      "request_sha256": "75169f5b56fc5ed3b9cb8225a0ead9574bcd80366169ab7a0b454af8d392a7df",
+      "started_epoch": 1792430840.563926,
+      "supervision_policy": {
+        "heartbeat_timeout_seconds": 8.0,
+        "ledger_timeout_seconds": 3.0,
+        "poll_seconds": 0.2,
+        "startup_grace_seconds": 14.0
+      },
+      "wall_seconds": 162.86458291600866,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 69.37901674999739,
+      "clock_sha256": "06d39ad0ed764c6add886f5815f63dd9c59dea074fe46023573e05f52cf565d2",
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-5.485.b729adfeda464357a774d3e61c3d7b00.clock.json",
+      "ended_epoch": 1792431194.538055,
+      "exit_code": 1,
+      "group_empty": true,
+      "job_id": "b729adfeda464357a774d3e61c3d7b00",
+      "job_index": 485,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-integration-review-5.log",
+      "name": "cold-r16-integration-review-5",
+      "peak_rss_bytes": 2793783296,
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-5.485.b729adfeda464357a774d3e61c3d7b00.request.json",
+      "request_sha256": "324d249b7489c15a933d0545fb0d533fca8b6a778e0ba81f874f4f635a360228",
+      "started_epoch": 1792431124.781992,
+      "supervision_policy": {
+        "heartbeat_timeout_seconds": 8.0,
+        "ledger_timeout_seconds": 3.0,
+        "poll_seconds": 0.2,
+        "startup_grace_seconds": 14.0
+      },
+      "wall_seconds": 69.37901674999739,
+      "workers": 1
+    },
+    {
+      "abort_reason": null,
+      "charged_wall_seconds": 14.236897125010728,
+      "clock_sha256": "6351826d8738a84019ab4e195caba200f25d596e777234c9fdb6245838147030",
+      "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-6.486.8245a6aa004a474aad4da460bf03c09b.clock.json",
+      "ended_epoch": 1792431296.206948,
+      "exit_code": 0,
+      "group_empty": true,
+      "job_id": "8245a6aa004a474aad4da460bf03c09b",
+      "job_index": 486,
+      "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-integration-review-6.log",
+      "name": "cold-r16-integration-review-6",
+      "peak_rss_bytes": 2419195904,
+      "request": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-integration-review-6.486.8245a6aa004a474aad4da460bf03c09b.request.json",
+      "request_sha256": "5192b18eacc34a67087df9f140407ea2c12a182a01013941f8e616db260b9a7f",
+      "started_epoch": 1792431281.5963469,
+      "supervision_policy": {
+        "heartbeat_timeout_seconds": 8.0,
+        "ledger_timeout_seconds": 3.0,
+        "poll_seconds": 0.2,
+        "startup_grace_seconds": 14.0
+      },
+      "wall_seconds": 14.236897125010728,
+      "workers": 1
+    }
+  ],
+  "launcher_accounting": "Reported separately for Lead import if not already charged; never counted as worker time twice.",
+  "launcher_seconds": [
+    0.8809306249895599,
+    1.2500748330057831,
+    1.0359750410134438
+  ],
+  "launcher_seconds_total": 3.166980499008787,
+  "ledger_sha256_at_terminal_observation": "615dc7b76ca79a0641384001e22abdfe2220c73d59bb10d2994028996c6ccfbd",
+  "observed_epoch": 1792431368.393198,
+  "total_hours": 238.07380389236152,
+  "worker_seconds": 246.48049679101678
+}

@@ -1,0 +1,283 @@
+{
+ "live_resources_after_validation": {
+  "cumulative_machine_hours": 98.83278862953078,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 33.67066398940782,
+  "measured_seconds": 120207.25976499473,
+  "reported_seconds": 1007.130596873429,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 121214.39036186815
+ },
+ "routes": [
+  {
+   "clock_sha256": "5378f5abe170fd5fd529e1c078a022e15be7bcb1f95a7dedc69afe4dd703e7a3",
+   "job": {
+    "abort_reason": null,
+    "charged_wall_seconds": 29128.880702624912,
+    "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-search-nominal-1.368.b42fea7809db4e699f3b8a98be011213.clock.json",
+    "exit_code": 0,
+    "job_id": "b42fea7809db4e699f3b8a98be011213",
+    "job_index": 368,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "running": false,
+    "workers": 1
+   },
+   "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/route-search-completion/nominal.json",
+   "phase_sha256": "c5369f785c79646e6357e040bb2d15e1bb3f78b5d69147dcbc63a0fb4a908fc4",
+   "results": [
+    {
+     "content_sha256": "043b023c517bca20a13074bd8761c0e09174d4c180bceda1c76d37ae3fee5d7d",
+     "k": 0,
+     "status": "available"
+    },
+    {
+     "content_sha256": "ad2e1b729e4c97f3904af13f40426f5065a724729e73ad2fd52d51880c1a051e",
+     "k": 1,
+     "status": "available"
+    },
+    {
+     "content_sha256": "2d02e1f5a1d82b0cc619c392de0c3a0982862d7da765df067cdefafb979ffd16",
+     "k": 2,
+     "status": "available"
+    },
+    {
+     "content_sha256": "7a39211c7f8cddd8ed4cee8334cd61c6ea113222bc963337aacd09c1d02951d0",
+     "k": 3,
+     "status": "available"
+    },
+    {
+     "content_sha256": "f67ef35ea71ca517d923729908d7aca8e48ee52142aaf40a7a01e87ea6820f6b",
+     "k": 4,
+     "status": "available"
+    },
+    {
+     "content_sha256": "87b10b856be6d030609b9949ffe18952ba1768d12e5c17aba41bc058417ce902",
+     "k": 5,
+     "status": "available"
+    },
+    {
+     "content_sha256": "c3f7df385eb92021ca99e1a406fb8d4570e4584eef2524666b80daf2be05852c",
+     "k": 6,
+     "status": "available"
+    },
+    {
+     "content_sha256": "90d45a627455a6c58c9ca1f5a1884ecbfe3e3ec551eb519a3f641c69a35fb34a",
+     "k": 7,
+     "status": "available"
+    },
+    {
+     "content_sha256": "acc572e2645711af0ad14c9d158dc7aae3760b377aefce41ab2282fb889cc07a",
+     "k": 8,
+     "status": "available"
+    },
+    {
+     "content_sha256": "8a17b29e6d879e2771967ff6af286ed2a05ada1872a8c8edd5065ef4027198ab",
+     "k": 9,
+     "status": "available"
+    },
+    {
+     "content_sha256": "15294264a93845e7ff1d86802a20c8673a5a6ac6f95b83d765f0b438a0eabd14",
+     "k": 10,
+     "status": "available"
+    },
+    {
+     "content_sha256": "2f3f020cf39b758198da64d4eb0eeb145d14f4f149bcf8e3dcb9b8ca9aaffff5",
+     "k": 11,
+     "status": "available"
+    },
+    {
+     "content_sha256": "ed1f2788142d43c7d86bee28c269dd23d97349b8cee0d5b642d0b30171edf023",
+     "k": 12,
+     "status": "available"
+    },
+    {
+     "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+     "k": 13,
+     "status": "available"
+    }
+   ],
+   "route": "nominal"
+  },
+  {
+   "clock_sha256": "01f197ab7fa9b01bf5b3493eb7baa4b0f9ddfb2f8995648898e9824e4a55b760",
+   "job": {
+    "abort_reason": null,
+    "charged_wall_seconds": 28852.501346041914,
+    "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-search-noload-1.369.74c69fcc69524bd2ac796bc55e485de9.clock.json",
+    "exit_code": 0,
+    "job_id": "74c69fcc69524bd2ac796bc55e485de9",
+    "job_index": 369,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "running": false,
+    "workers": 1
+   },
+   "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/route-search-completion/noload.json",
+   "phase_sha256": "81cb7d0a15f223e86c67d97909eea8905b4f222cf759a499a4df8201a1fe46a1",
+   "results": [
+    {
+     "content_sha256": "bc1ada46f0363f07f51724c148d0a0aa7fcdb8d2a65a58be59e84dbf4397d689",
+     "k": 0,
+     "status": "available"
+    },
+    {
+     "content_sha256": "96f2d64d384b6be1f182bcb583ee00cba3cf197471375f479e0a862656199cb7",
+     "k": 1,
+     "status": "available"
+    },
+    {
+     "content_sha256": "690058190934b7808aee1a17826f546ae4e0e3fc353abfe87f7ef8f9e6c28f4e",
+     "k": 2,
+     "status": "available"
+    },
+    {
+     "content_sha256": "a8250ef0c8245414dece5d3ba6b3c492b2d186c522035a3f8af5d8404b48051a",
+     "k": 3,
+     "status": "available"
+    },
+    {
+     "content_sha256": "0ad96c7326911c66aa17bdff5e70a1bd054b35257af44d50be73a2dab62d5316",
+     "k": 4,
+     "status": "available"
+    },
+    {
+     "content_sha256": "bb91e781305a8d4008c694532b123937c36b96ba3b7ef933c549196ce2236dc7",
+     "k": 5,
+     "status": "available"
+    },
+    {
+     "content_sha256": "5288f8712c083c37cf361318691552eb1d5a4676f8b2b6ad61726dc2fb3f3797",
+     "k": 6,
+     "status": "available"
+    },
+    {
+     "content_sha256": "5a3cedced8d705077c8c5bc5f3c88e75ba8868a8e17229aef1a8085807ef5f28",
+     "k": 7,
+     "status": "available"
+    },
+    {
+     "content_sha256": "d4dcd4ec388d5f16575136ca51c2b431484ece5a8a9cd97a96128fb3f2421c1e",
+     "k": 8,
+     "status": "available"
+    },
+    {
+     "content_sha256": "4ed214f8a479a64f949005ce1599c565f395ecca3ed8ab36827fb496010d79cb",
+     "k": 9,
+     "status": "available"
+    },
+    {
+     "content_sha256": "ea25327c767911fd3c04b4b9c6b0c2b100585b0fee2ae90e015a97275f9bf2d9",
+     "k": 10,
+     "status": "available"
+    },
+    {
+     "content_sha256": "174d7247aa6c57123e092a8ffd77716dce4351300e6e2a4c030338585834733f",
+     "k": 11,
+     "status": "available"
+    },
+    {
+     "content_sha256": "10d958120eddac14190db5711f02ec328995394f6895443f76f3c7bce28f0f80",
+     "k": 12,
+     "status": "available"
+    },
+    {
+     "content_sha256": "b332a35cb58322b7c9838aaed963bd31e81c71060e66525507685dd65d65362b",
+     "k": 13,
+     "status": "available"
+    }
+   ],
+   "route": "noload"
+  },
+  {
+   "clock_sha256": "6fc1eacd8de2284d8e41c8a18aab51006be908e67a5f6d54107df55f4a48e6ee",
+   "job": {
+    "abort_reason": null,
+    "charged_wall_seconds": 28498.644584083,
+    "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-search-gfs6-1.370.189cd7601dd84f1689af3bec9f1ebac6.clock.json",
+    "exit_code": 0,
+    "job_id": "189cd7601dd84f1689af3bec9f1ebac6",
+    "job_index": 370,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "running": false,
+    "workers": 1
+   },
+   "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/route-search-completion/gfs6.json",
+   "phase_sha256": "3ec560cde03e10f2eca861a180af0166cb04c2d5b043ed73ca18c73956b6131f",
+   "results": [
+    {
+     "content_sha256": "061a89f8ecf9bd2620c72da8a7017596d3f972f04b81a85ee04565d301ebd241",
+     "k": 0,
+     "status": "available"
+    },
+    {
+     "content_sha256": "9f72053fccdf303d1d7252c128e446534728363400bc442bf72e199c9bf208ac",
+     "k": 1,
+     "status": "available"
+    },
+    {
+     "content_sha256": "0b0a7d9f53b710adf04fc05807bfcde30179cc67f5f9e2485490828b73032e7e",
+     "k": 2,
+     "status": "available"
+    },
+    {
+     "content_sha256": "2242a0e8f0d9d7c08aea74f1f60d96fe0f92ee47060c70e75c13b2ee063e6ac9",
+     "k": 3,
+     "status": "available"
+    },
+    {
+     "content_sha256": "d358b1764d068fc680075fcab4140ce351bc1521f35030e4d1a44631dba650ec",
+     "k": 4,
+     "status": "available"
+    },
+    {
+     "content_sha256": "a99c1b3edf89cf592b9aabac8679b0818c54a7fd38d5df394d4a2beb0cdbfd37",
+     "k": 5,
+     "status": "available"
+    },
+    {
+     "content_sha256": "f80b7085cf409c41d4c46d50d53b07cf94aed89a78b93474a3d31f5e768af119",
+     "k": 6,
+     "status": "available"
+    },
+    {
+     "content_sha256": "124a2bf8ee50f1fa9e0c7aa862cd8b3cb7cbc448e35fff3b80c7cbd37b7c8c1f",
+     "k": 7,
+     "status": "available"
+    },
+    {
+     "content_sha256": "f526be4c83615a33648baa7691708f5f08070ddc3247ff54b3df3d38d7ca9278",
+     "k": 8,
+     "status": "available"
+    },
+    {
+     "content_sha256": "5a52ab95ae1eb67e5a536515394bf7d677722d320b9214686919a43933139233",
+     "k": 9,
+     "status": "available"
+    },
+    {
+     "content_sha256": "82fcef285092d3425c2fce27681571bdcfb0ef34743e34d7066fd75ea467f9db",
+     "k": 10,
+     "status": "available"
+    },
+    {
+     "content_sha256": "2e05b26ac9d7e2e296ae3f35195cd8c5f8bf79387877cc5567fb33e574f324b0",
+     "k": 11,
+     "status": "available"
+    },
+    {
+     "content_sha256": "3816ae439fead7549a55a3a27dabd6db5600ee979406ad32080f1181cd7c017c",
+     "k": 12,
+     "status": "available"
+    },
+    {
+     "content_sha256": "b3b8bcf49fb290693fad82b9da3955f14477c83d8912b5adb14911d448ee2553",
+     "k": 13,
+     "status": "available"
+    }
+   ],
+   "route": "gfs6"
+  }
+ ],
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "searches": 42
+}

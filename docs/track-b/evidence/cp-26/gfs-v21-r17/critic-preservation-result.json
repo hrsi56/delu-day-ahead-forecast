@@ -1,0 +1,195 @@
+{
+  "candidate": "f014e5b2f09dc7defa103b3c4ec5796d199c262d",
+  "base": "252725e0431826b6d32f1fc8200cfa3baf3750f6",
+  "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "all_prior_tracked_blobs_unchanged_except_anchor": 11794,
+  "complete_bar_lines": 251,
+  "complete_bar_sha256": "d5079dad269d321b3373cc2757a0cf28ce6e7f0637a2b18c53c06ef1fed1efae",
+  "complete_bar_brief_exact": true,
+  "clause_count": 111,
+  "document_hashes": {
+    "capstone_v21.md": "3124451da84c3cd99fae728c371207aace6ae537474f7769d0ff6333ee53e4fc",
+    "docs/track-b/capstone_v21-r16-to-v21-r17-amendments.md": "97df9fb5e0fa89cd7290659a5be4722e723111103955af069c412ea2d411ad7f",
+    "docs/track-b/cp-26-gfs-ruling-2026-10-19.md": "3b97ff6abdf9a30ddd8c950cf3c459301d757aa1af08f6d8121bc73f92ba2373",
+    "docs/track-b/evidence/cp-26/cp28-gfs-postresults-addendum-v21-r17.md": "39f322afa9717c5cfb0b626a1a8430fa9f5fcc0dfdd159123b9d4b48e7db03b4"
+  },
+  "prior_verdict_sha256": "32fc2af7eef6c030d4a0763c0d2cf3c55d8ed0cc4f4b2428192e9e638f413725",
+  "inventories": {
+    "final-analysis-artifact-index-v21-r16.json": {
+      "root": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/final-analysis-inputs",
+      "index_raw_sha256": "7495b0808bccf1f972c52c175a4df46805093e2032fb68b58b6c89b2edd717e2",
+      "content_sha256": "ed20bf51c8e61e294b5893982c30b4a973c3ed57d7a5bd956fcbe2c0f126bef3",
+      "file_count": 33943,
+      "bytes": 32151027114,
+      "missing": [],
+      "wrong_sizes": [],
+      "prefix_counts": {
+        "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/diagnostics-manifest.json": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/diagnostics": 1872,
+        "reports/rebaseline/cold-rerun-2026-10-15/inference-manifest.json": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/inference": 32048,
+        "reports/rebaseline/cold-rerun-2026-10-15/publication-packet.json": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/publication-packet.md": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/report.json": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/report.md": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json": 1,
+        "reports/rebaseline/cold-rerun-2026-10-15/scores": 15
+      },
+      "freshly_hashed_files": [
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json",
+          "bytes": 71768,
+          "sha256": "e85db7056b62c6e8a349c4eec41b315c0112695085795cdfbcb1c904a03ac1f8"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/diagnostics-manifest.json",
+          "bytes": 1479135,
+          "sha256": "123c603083b8a5c7585e7a5dac144d9f477ac4428594b350c467a54a3c31d2fc"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/inference-manifest.json",
+          "bytes": 30279879,
+          "sha256": "1e6b8f11632a7a1079b2715ad10ef515f5ecfc71405f1a9f7fdde060fc6d8379"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/publication-packet.json",
+          "bytes": 2838153,
+          "sha256": "4684882b7554c819c71334789b75284ae42e196580ff0ca37e3d1e9254224d24"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/publication-packet.md",
+          "bytes": 5311,
+          "sha256": "fc7a5f62550fd64356963aac37c373418b5f1b1cb6beb94d12bb7171a16bd4c9"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/report.md",
+          "bytes": 331160,
+          "sha256": "9b069382db7cb63430a077bcebd1d99375188c411a6bf4ab48673b94953b47c7"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json",
+          "bytes": 719878,
+          "sha256": "b9f10917ab471177eda1b5f8ef735ddca5a651fa2e9bb47844497f3a6deaf84d"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/christoffersen.parquet",
+          "bytes": 32195,
+          "sha256": "238c8f523fa795bd33d394e2b1d33d949a59dd80c737a1d446d9a3c4bd76f753"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/coverage.parquet",
+          "bytes": 1391202,
+          "sha256": "95a911fabb49a8a4894e3296835bc6e9d3d93e1d72c257677fa6ea2a43b9ecf3"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/daily.parquet",
+          "bytes": 2374980,
+          "sha256": "fcbcb24f59b4624d4b2c9f778b157078aad6f7cae553446c3c64df00c44c2a50"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/fallbacks.parquet",
+          "bytes": 7446,
+          "sha256": "1b1e135aacd4779a3c2653dd0e0ffe6bbe33f9eaf77a3d43154dbe165cb3b8d2"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/fallbacks_by_mask.parquet",
+          "bytes": 10794,
+          "sha256": "d199d123f49c9dc07e414eda34b1da49f0be4b0dd24ca11ef78020c8504c1bfe"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/histogram.parquet",
+          "bytes": 2420837,
+          "sha256": "d55665a5f74d6a1c8e0d22236f799d461d086eb9ff20657301322076bf544482"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/known_price_states.parquet",
+          "bytes": 261196,
+          "sha256": "ab041f73405e1870d6940e01745121127bc48cdabd342d26985476d18fb4eb79"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/local_hour_summaries.parquet",
+          "bytes": 232349,
+          "sha256": "d1a89c7db94a94419f1b73d81c02747d77bbc22b58d35319208a8df64ae842ee"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/moment_holm.parquet",
+          "bytes": 93673,
+          "sha256": "afe8e0dc3d86c0582f40aaecb70cc73c31d684d0f0a09a8ee5db83ab8f8ba2ac"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/quantile_hits.parquet",
+          "bytes": 2284121,
+          "sha256": "18506e0882d5eded1fdc7c0039f2e42387be3c31a8d6259587fe6fdcab7770f6"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/realized_slices.parquet",
+          "bytes": 23812,
+          "sha256": "a84fbc8c2df080685ef2a4bf416208c926df5fa1add499957c4bf0cfada2a089"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/realized_thresholds.parquet",
+          "bytes": 6610,
+          "sha256": "ad5e051eae97db409bccb285058d990d212db9d2461226f3524f6aa4cb2dcbec"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/secondary_summaries.parquet",
+          "bytes": 35585,
+          "sha256": "8fba2f9968be94e5a4b16296d75413313bc7809db2357dac0b7ce35c1ecbc29a"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/scores/summaries.parquet",
+          "bytes": 457995,
+          "sha256": "25b2d975a18485df354912fab9725e87eb75033b92b94ae2e7672fa00a727223"
+        }
+      ]
+    },
+    "presentation-correction-v21-r16.json": {
+      "root": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/presentation-inputs",
+      "index_raw_sha256": "221888837817cee0a88650e261daf8d38e8b2e7feb8e70edc8ea1c87f469e774",
+      "content_sha256": "c43cbd88f1cf46de6ab0ef7c55d576a5161338e03de82a5a8fa8053720bf008f",
+      "file_count": 6,
+      "bytes": 136954280,
+      "missing": [],
+      "wrong_sizes": [],
+      "prefix_counts": {
+        "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16": 6
+      },
+      "freshly_hashed_files": [
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/MLflow-export.json",
+          "bytes": 74829,
+          "sha256": "4a920ae3c31f4f635fa81d37e3c9a143b1c5ae71b8fb97c0c36dac594cdedc20"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/presentation-manifest.json",
+          "bytes": 2853,
+          "sha256": "1bf595fc7365c46fd4d9248de894f04ab6858940464ab5e8dfa27372c359fd88"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json",
+          "bytes": 2842418,
+          "sha256": "d679dd73885c27495821a3050b728c7403024a1556e3c4c99237e243a130173e"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.md",
+          "bytes": 6493,
+          "sha256": "d0c4cd72855bd05f9a9d219ffc027cac842d17eec9fef9a12898b0bddb5b2012"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.json",
+          "bytes": 133695345,
+          "sha256": "01d6a58c08463ba81544edb0f6638e6a24433f435bc7be00f2cd0a84dbdd2f2b"
+        },
+        {
+          "path": "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md",
+          "bytes": 332342,
+          "sha256": "a2b61751a1f86038ad1dae91acb9da5f9832b00c0c4bdd8ddb763a5f942f76d2"
+        }
+      ]
+    }
+  },
+  "payload_wide_rehash": false,
+  "scientific_regeneration": false,
+  "tests_rerun": false
+}

@@ -1,0 +1,131 @@
+{
+ "basis": "All8 warm/resource observers were healthy during fit-only work. The replay introduced rapid per-date execution-task appends; all4 stopped samples show4or5 cold-refresh conflicts,3.10to3.94seconds elapsed,0.004to0.036second latest lock hold. Serial replay removes concurrent fit CPU and reduces independent observer pairs from4to1. The original forecast already prices fit-route makespans plus serial replay, so no wall-time speedup or cost-margin reduction is assumed.",
+ "decision": "Use existing cache-only replay alone, followed by fit-only phases with at most3 independent route workers and no concurrent chronological replay. No source, numerical recipe, identity, time limit or successful cache is changed. This is one materially changed allocation following the real guard stop, not a repeated same-configuration retry. A further unresolved failure stops compute.",
+ "event": "cold-history-refresh-deadline-stop",
+ "forecast_origins_materialized": 6,
+ "limits_unchanged": {
+  "heartbeat_seconds": 8.0,
+  "ledger_seconds": 3.0,
+  "poll_seconds": 0.2,
+  "startup_seconds": 14.0
+ },
+ "no_running_jobs_verified": true,
+ "preservation": "42 searches and all terminal native fit entries retained; six issued origins remain immutable. Resume uses the same protocol-bound normal ReplayState checkpoint. No successful fit or issuance is recomputed.",
+ "resources_after_stop": {
+  "cumulative_machine_hours": 98.94289841800355,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 33.7807737778806,
+  "measured_seconds": 120590.88191274577,
+  "reported_seconds": 1019.9036876243874,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 121610.78560037016
+ },
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "stopped_jobs": [
+  {
+   "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+   "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g01-gfs6-1.374.7980864741f449eeb8127930477d87b0.clock.json",
+   "clock_sha256": "29dba65a13c29171c52b556a70fa95b153eb88bb36f1d928eca92775433435cd",
+   "ledger_lock_telemetry": {
+    "acquired": true,
+    "attempts": 4,
+    "body_seconds": 0.0,
+    "canonical_input": false,
+    "conflicts": 4,
+    "hold_seconds": 0.03601749998051673,
+    "outcome": "timeout",
+    "peak_hold_seconds": 0.29936325002927333,
+    "peak_wait_seconds": 1.4652659160783514,
+    "read_bytes": 9007456,
+    "serialized_fallback": false,
+    "timeouts": 1,
+    "total_seconds": 3.7556379169691354,
+    "transactions": 12916,
+    "wait_seconds": 0.026794541045092046,
+    "written": false,
+    "written_bytes": 0
+   },
+   "name": "cold-r16-fit-g01-gfs6-1",
+   "wall_seconds": 6701.233345082961
+  },
+  {
+   "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+   "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g02-nominal-1.375.3222e636687c46f9952df7794762da31.clock.json",
+   "clock_sha256": "9df90be5548e6b183fd854d5bfdc741421529b0d0fa37a8e945df5a6e839782a",
+   "ledger_lock_telemetry": {
+    "acquired": true,
+    "attempts": 5,
+    "body_seconds": 0.0,
+    "canonical_input": false,
+    "conflicts": 5,
+    "hold_seconds": 0.004075124976225197,
+    "outcome": "timeout",
+    "peak_hold_seconds": 0.3851957500446588,
+    "peak_wait_seconds": 0.7597910000476986,
+    "read_bytes": 9011505,
+    "serialized_fallback": false,
+    "timeouts": 1,
+    "total_seconds": 3.102198167005554,
+    "transactions": 1816,
+    "wait_seconds": 0.20454675110522658,
+    "written": false,
+    "written_bytes": 0
+   },
+   "name": "cold-r16-fit-g02-nominal-1",
+   "wall_seconds": 851.3983414169634
+  },
+  {
+   "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+   "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g02-noload-1.376.b220ac5045044691aab6f42bd394bb83.clock.json",
+   "clock_sha256": "778caa29d23d72701062aca07aa010640d690f23aef8251e005c5538f013c453",
+   "ledger_lock_telemetry": {
+    "acquired": true,
+    "attempts": 4,
+    "body_seconds": 0.0,
+    "canonical_input": false,
+    "conflicts": 4,
+    "hold_seconds": 0.013288750080391765,
+    "outcome": "timeout",
+    "peak_hold_seconds": 0.1617222090717405,
+    "peak_wait_seconds": 0.6792099169688299,
+    "read_bytes": 9007456,
+    "serialized_fallback": false,
+    "timeouts": 1,
+    "total_seconds": 3.8839826250914484,
+    "transactions": 1110,
+    "wait_seconds": 0.218765084980987,
+    "written": false,
+    "written_bytes": 0
+   },
+   "name": "cold-r16-fit-g02-noload-1",
+   "wall_seconds": 509.3741644170368
+  },
+  {
+   "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+   "clock_path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-replay-prefix178-1.377.05c2b05f52374ffebca29f65b92a850d.clock.json",
+   "clock_sha256": "225e8eea4b246a47058558fd6c0e817d1c4d1c1576d0190b3df6ce15f20d5bc1",
+   "ledger_lock_telemetry": {
+    "acquired": true,
+    "attempts": 4,
+    "body_seconds": 0.0,
+    "canonical_input": false,
+    "conflicts": 4,
+    "hold_seconds": 0.01326512498781085,
+    "outcome": "timeout",
+    "peak_hold_seconds": 0.11492566706147045,
+    "peak_wait_seconds": 0.5642506669973955,
+    "read_bytes": 9007456,
+    "serialized_fallback": false,
+    "timeouts": 1,
+    "total_seconds": 3.941087582963519,
+    "transactions": 316,
+    "wait_seconds": 0.12985841697081923,
+    "written": false,
+    "written_bytes": 0
+   },
+   "name": "cold-r16-replay-prefix178-1",
+   "wall_seconds": 151.70530808297917
+  }
+ ]
+}

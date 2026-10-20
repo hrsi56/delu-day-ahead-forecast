@@ -1,0 +1,24 @@
+{
+  "repair_candidate_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e",
+  "initial_head": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+  "landed_code_base": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "artifacts": {
+    "reports/rebaseline/repair-v21-r14/repair-candidate-full.diff": {
+      "sha256": "c8e2dd0f3eb908f05a724ddf4ad4eefbc4eaf964be3ab171bbec0303f71f2fb3",
+      "bytes": 26440759
+    },
+    "reports/rebaseline/repair-v21-r14/repair-candidate-source.diff": {
+      "sha256": "324cd7e763f30b620641af0476598bb41e6df83a7a2ea8ed62a1044cd8f22df6",
+      "bytes": 276046
+    },
+    "reports/rebaseline/repair-v21-r14/repair-candidate-stat.txt": {
+      "sha256": "0daaf9f6a80e8673563ababf85756d4148754359384e17e2f52c2659fd904572",
+      "bytes": 8337
+    },
+    "reports/rebaseline/repair-v21-r14/main-to-candidate-stat.txt": {
+      "sha256": "f8ed9485883ba8eb2344aef1977ffc754600d9f844b6d306882d6dd486730c81",
+      "bytes": 8834
+    }
+  },
+  "terminal_rule": "candidate is reviewed; later changes are evidence only. Full terminal diff is git diff --binary INITIAL FINAL, supplied in local handover and reproducible from retained commits."
+}

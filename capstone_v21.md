@@ -1,4 +1,122 @@
-# Capstone v21-r13 — the programme after CP-24: the short path, the issue time, the fresh-test window, CP-25, CP-26 and CP-28 (ratified)
+# Capstone v21-r17 — GFS fragility ruling and a separate post-results supplement
+
+**Owner-approved scope amendment, 2026-10-19.** After CP-26's completed report, the Owner
+accepted the proposed existing-data GFS analysis and planning scenarios, and explicitly
+suspended Lockdown for the necessary protocol/anchor documentation and consistency edits.
+The suspension ends at this amendment task's terminal return. It grants no publication or
+mainline mutation authority.
+
+The scientific baseline remains the completed v21-r16 artifact: candidate
+`6f57febe3659b1f902c17f3db31ba41e41136178`, Integration PASS and evidence tip
+`252725e0431826b6d32f1fc8200cfa3baf3750f6`. This amendment changes no scientific output,
+completed-run identity or resource account. The earlier notices below describe historical
+authorization states; their then-INCOMPLETE wording is not the present completion status.
+
+The Owner accepts **GFS+6 as a material, disclosed operational risk for research continuation**,
+retaining its **fragile** classification and **nominal v5** as CP-28's control. The ruling is
+`docs/track-b/cp-26-gfs-ruling-2026-10-19.md`. It establishes neither operational robustness nor
+permission to publish, deploy, open fresh data or execute CP-28. CP-26 LAND, the Owner's
+subsequent CP-28 confirmation and its issued brief remain required.
+
+The approved additional work is specified in
+`docs/track-b/evidence/cp-26/cp28-gfs-postresults-addendum-v21-r17.md`. It is an explicitly
+**post-results, descriptive supplement** using only preserved CP-26 outputs and availability
+records. It authorizes no new member/search training, forecast replay, combiner fitting,
+interval recalibration, bootstrap, source retrieval or new scored decision policy. Missing
+evidence is reported as a limitation. The supplement is reported before CP-28 execution;
+neither a favorable result nor another broad repair phase is a prerequisite.
+
+CP-28's original outcome-blind registration remains byte-identical at
+`docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md`, SHA-256
+`2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8`.
+Its seven arms, nominal-only members/control, inputs, chronology, one-look rule, twenty
+endpoints, four Holm families, selection and thresholds do not change. This supplement
+neither supplies a member nor adds an endpoint or adoption gate. A later availability-aware
+decision policy would need a separate prospective registration and Owner authorization;
+it is not an eighth CP-28 arm. CP-28's already registered combiner fits are not performed by
+this amendment or its no-training supplement.
+
+The full prior r16 anchor bytes remain at
+`252725e0431826b6d32f1fc8200cfa3baf3750f6:capstone_v21.md`, SHA-256
+`27bdc6046117a543d4bfcaa439651e7bf2a8fa4d0c58af9631b606a358c10fd1`.
+All prior reviews and provenance pins retain their original meanings; do not re-pin frozen
+scientific records merely because this later policy notice exists.
+
+# Historical Capstone v21-r16 — CP-26 same-run admission exception and cumulative ceiling
+
+**Owner-approved policy amendment, 2026-10-16.** The Owner explicitly approved a
+**440-machine-hour cumulative admission exception** for the existing run
+`cp26-cold-rerun-2026-10-15-01` and raised CP-26's **actual cumulative hard ceiling from
+485 to 500 machine-hours**. These are absolute limits: this decision does not create a
+450-hour admission line by recalculating 90% of 500. The general admission line remains
+436.5 hours outside this named-run exception; no additional run is authorized.
+
+All historical charges, reported time and retained reserves remain included exactly once;
+neither the cumulative account nor the separate current-run counter resets. Preserve the
+completed 1,064-probe pilot and continue the same run. Before full training, verify a complete,
+supported conservative cumulative completion forecast at or below 440 hours, including current
+charges and remaining startup, execution and closure costs. Update ordinary runtime enforcement
+and authority pins before compute. This amendment itself launches no job and grants no admission
+PASS; the live check remains required.
+
+The approved Lockdown suspension covers this anchor and
+`docs/track-b/capstone_v21-r15-to-v21-r16-amendments.md` for this policy-and-handoff task,
+including directly necessary consistency text, and ends at its terminal return. It does not
+transfer to the executor. Scientific requirements, hardware limits and final Integration review
+are unchanged. CP-26 remains INCOMPLETE. No main change, publication, CP-28 execution or new
+scientific run is authorized.
+
+The prior r15 bytes are preserved at
+`607e7985e58e07ce9398daedd9d6d7592a6f15e4:capstone_v21.md`, SHA-256
+`490aea3bef90887af1fc3e0776c21eff53b2a155142c4dcf54c0977a27842521`.
+Earlier authority notices below are historical. This notice and §24.7's resource paragraph
+prospectively supersede their prior admission/ceiling statements only; scientific text is unchanged.
+
+# Historical Capstone v21-r15 — CP-26 cumulative admission gate
+
+**Owner-approved policy amendment, 2026-10-16.** The Owner approved raising CP-26's
+cumulative admission gate from 80% (388 machine-hours) to 90% (436.5 machine-hours),
+while retaining the actual cumulative hard ceiling of 485 machine-hours and all historical
+charges and reserves. Admission requires a complete, supported conservative forecast of
+cumulative completion cost at or below 436.5 hours; an incomplete subtotal is not admission.
+This prospectively supersedes only the former CP-26 admission fraction/stop line in §24.7,
+the CP-25 ruling and earlier execution briefs. Their historical records remain unchanged.
+
+The Owner's approval also authorizes a narrow operational calibration of ledger and heartbeat
+deadlines, preserving independent elapsed-time, ownership, RSS and hard-budget enforcement,
+and continuation of the existing cold run after admission. It changes no research requirement.
+CP-26 remains INCOMPLETE, without Integration PASS. No CP-28 execution, LAND or publication
+is authorized. The task-scoped Lockdown suspension covers this anchor and
+`docs/track-b/capstone_v21-r14-to-v21-r15-amendments.md` only, and ends at this task's return.
+
+The prior r14 bytes are preserved at
+`1e7eb029f1cbbec6483aea4a7dda0754fd7adf0b:capstone_v21.md`, SHA-256
+`3be866bd10af02cc2b0b956ed91be660dca29a62c0b23b00997bf0b415d100c5`.
+The earlier r14 authority notice below is historical; it does not replace this approval or
+subsequent issued continuation authority. Apart from this notice and §24.7's admission
+fraction/stop line, r14's research text is unchanged.
+
+# Historical Capstone v21-r14 — CP-26 search support and continuous native-error state (repair candidate)
+
+**Status: candidate for Owner review and ratification, 2026-10-13.** The Owner authorized
+this repair contract and temporarily suspended Governance Lockdown only for this anchor and
+`docs/track-b/capstone_v21-r13-to-v21-r14-amendments.md`. Authorization to produce these bytes
+is not ratification of bytes not yet reviewed. CP-26 remains INCOMPLETE. This repair does not
+resume the experiment, authorize CP-28, LAND, publication, or any change to resource ceilings.
+
+The changes are confined to CP-26's DDNN-2 search phase/support, fixed seeds, native-central
+warm-up/recovery, distinct eligibility and continuous state, and their CP-28/operational-search
+consequences in §§24.7–24.9. The amendment sheet records their source and limits. The first
+search has only one winter validation block: structural support is not numerical success,
+seasonal validation, or proof of cost. The frozen calendar, masks, issue time, development
+boundary 2026-09-06, scoring and inference remain unchanged. Earlier results remain historical.
+
+The r13 bytes are preserved on `gauntlet/cp-26` at
+`5cc3cc083c4340fd8d792eeaf6551a007987a877:capstone_v21.md`, SHA-256
+`173799d818387b9d82db16b9ccd7195afaebbea8e11259809e4a8b704bd525a8`.
+The historical r13 authority record follows; its ratification statements apply to r13 only.
+
+# Historical Capstone v21-r13 — the programme after CP-24 (ratified)
 
 **Ratified by the Owner on 2026-10-12.** After CP-24 and PRES-4, the Owner
 approved a programme plan on 2026-10-11, and on PRES-4's closure that day chose a conditional
@@ -3881,7 +3999,7 @@ header's authority). The grant covers:
 | D11 | Weather coverage | Orchestrator, under the delegation | Pre-fold fits leave out the days without a frozen weather record (2022-09-29..2023-03-24); no retrieval (§23.6) |
 | D12 | Publication | Orchestrator, under the delegation | None in CP-24; the Owner decides after the LAND |
 
-## 24. The programme after CP-24: the short path, the issue time, the fresh-test window, CP-25, CP-26 and CP-28 (v21-r13)
+## 24. The programme after CP-24: the short path, the issue time, the fresh-test window, CP-25, CP-26 and CP-28 (v21-r14 repair candidate)
 
 ### 24.1 What this section decides, and what it replaces
 
@@ -4124,6 +4242,12 @@ schedules, so a uniform shift either changes nothing on a day or removes the inp
   - for the load forecast and prices, the inherited rule in the landed code, which CP-25 states with
     its file and line.
 
+**Post-report ruling (2026-10-19, v21-r17).** The Owner accepts CP-26's fragile GFS+6 result
+as a disclosed research-continuation risk, keeping nominal v5 as control. The recorded ruling
+and the separate existing-output descriptive supplement are named in the r17 authority notice.
+The missing-weather rule, original nominal-only CP-28 experiment and planned CP-18 live
+availability measurement remain unchanged. This ruling does not itself launch CP-28.
+
 **Licences:** every input has a recorded licence. `DATA-LICENSE.md` is unchanged.
 
 ### 24.6 CP-25: our own data gaps (stage 5)
@@ -4278,16 +4402,36 @@ forecasts for CP-28 and 4.7T.
 
 #### DDNN-2's training-only search, for CP-26
 
-- **Search dates:** S_k = 2020-01-01 + 182k days, for k = 0 to 13. Search k serves the origins from
-  S_k up to the day before S_(k+1).
+- **Search dates:** S_k = 2020-01-15 + 182k days, for k = 0 to 13. Search k serves only the origins
+  from S_k up to the day before S_(k+1). Before S_0 there is no native D2 forecast.
 - **The batches:** consecutive 28-day blocks, tiling backward from S_k − 1.
-  - Only blocks starting on or after 2019-07-01 are kept.
-  - B_k = min(11, the blocks kept), so B_0 = 6.
+  - Among blocks starting on or after 2019-07-01, keep up to the 11 newest eligible blocks.
+  - Use exactly the landed DDNN-2 support mask, complete-calendar-week pool and 20% holdout-week
+    count, retaining its exclusion of the most recent seven days. Let N be the supported window
+    days and m the fixed held-out week count. Minimum training support is N minus the sum of the
+    m largest week supports; minimum holdout support is the sum of the m smallest. Accept only
+    minima at least 250 and 14 respectively. Eligibility must hold for every possible split.
+  - Lists depend only on support, are shared by every configuration in a search and are signed
+    before fitting. No seed, loss or convergence filters them. B is computed, never hard-coded:
+    the expected reproduction is [1,7,11,…,11], with first block 2019-12-18..2020-01-14 and minima
+    251/46. The algorithm and frozen inputs govern if a reported count disagrees.
   - There is no fold skip rule: every block lies before the search's first origin.
 - **One fit per trial and batch,** on `[max(2019-01-01, b − 728), b)`.
 - **The sampler:** seeded with `SeedSequence([26, k, 0x5A3])`, with 128 trials. Successive halving,
   the ranking metric and the tie rule follow §23.4.
-- **The ensemble:** the four best distinct configurations, with two seeds each.
+- **Frozen fit seeds:** trial/batch seed = `26_000_000 + k*100_000 + trial*100 + batch`,
+  trial=0..127 and retained batch=0..10, newest first. Ensemble member seed =
+  `26_000_000 + k*100_000 + 90_000 + 10*rank + repeat`, rank=1..4 and repeat=1..2.
+  These disjoint domains are fixed before fitting and shared across the three routes; no retries
+  with replacement seeds. Sampling space/priors remain the landed permitted space.
+- **The ensemble:** four best distinct effective configurations, two seeds each, exactly eight
+  members. Effective identity excludes trial id; in the no-load variant it also excludes removed
+  load flags. Duplicates consume trials; no extra sampling compensates for them. A configuration
+  failing a required batch cannot rank over all batches.
+- **Search failure:** zero eligible blocks or fewer than four valid effective configurations is
+  recorded. D2 is unavailable throughout that search's service period; the next search remains
+  on schedule. Never extend an earlier ensemble or relax a threshold. One failed daily member
+  invalidates D2 for that date: no median of a successful subset.
 - **CP-24's ensembles are never reused** for a CP-26 forecast.
 
 #### Training and information
@@ -4347,8 +4491,21 @@ forecasts for CP-28 and 4.7T.
   Fallback days are counted and reported by policy.
 - **If B0's own inputs are also unavailable,** the policy fails that day. The failure is counted,
   and the day is scored as missing in every paired comparison involving that policy.
-- **Nothing enters a policy's or an arm's interval-layer buffer** on a fallback or failed day, so the
-  buffer spans more calendar days. That is disclosed.
+- **Separate four statuses on every date:** native-central validity, interval readiness, source
+  of the emitted/scored output, and eligibility of the issuance for a complete-day own error.
+  A valid native central and required issuance scale may be stored before its outcome even
+  when fewer than 28 complete released own-error dates force a scored fallback. Its own error
+  may enter once, after complete D−2 release. This applies in warm-up and recovery in measurement.
+  The emitted fallback remains scored and counted as fallback; never revise it retrospectively.
+- **This exception is only for insufficient interval history.** Member, solver, identity, required
+  scale or numerical H-construction failure admits no own error. Copied fallback errors, another
+  policy's errors and forecasts constructed after the outcome never enter. v2–v5 and variants
+  retain their landed H recipe and blend weights; gaps lengthen the represented calendar span.
+- **B0 retains raw own errors**, with no A1-scale requirement. Warm-up may issue central only.
+  In measurement, if its own valid quantiles are unavailable, B0 has no fallback to itself:
+  retain a missing output under paired-comparison rules while a valid pre-outcome native central
+  continues warming its own raw-error buffer. v1-R retains nine heads, embargoes and CQR;
+  it never substitutes an issued-error H buffer for CQR.
 - **If a main policy's fallback days exceed 1% of the calendar,** the Lead reports before CP-28.
   Every main policy counts, including a tier-3 variant. Delay runs and the revision-contaminated
   as-landed policies are reported separately.
@@ -4366,6 +4523,8 @@ forecasts for CP-28 and 4.7T.
 
 - **Author and timing:** the CP-26 Lead writes it from §24.8, without inspecting any outcome, and
   commits it on `gauntlet/cp-26` before CP-26 computes its first score.
+  The versioned r14 repair protocol is committed before any new search or training pilot;
+  the prior protocol remains historical, with hash-bound supersession recorded.
 - **Review:** CP-26's Integration Critic reviews it.
 - **Custody:** it lands with CP-26. If CP-26 is discarded, the protocol goes with it.
 - **The Owner's later confirmation** decides only whether CP-28 runs, never what it tests.
@@ -4374,6 +4533,15 @@ forecasts for CP-28 and 4.7T.
 
 Every forecast is stored with its issue instant, training-target cutoff, input vintages, seeds and
 code identity.
+
+Scoring keys permitted by CP-25, a complete canonical day eligible for an own-error buffer,
+and a complete three-native-member day eligible for CP-28 learning are separate predicates.
+A partially eligible day stays measured on its frozen keys, without an invented hour, but a
+partial issuance cannot supply a complete-day error. Full 23/24/25-hour DST dates can.
+Keep pending issuances, once-only consumption, latest released errors and original issuance
+scales continuously across warm-up/measurement, search boundaries, failures and restart.
+Each policy and route owns separate buffers and identity-bound caches. Report buffer counts,
+oldest/latest dates, span and age. No search transition resets this state.
 
 #### Ceilings, proposed
 
@@ -4388,8 +4556,20 @@ code identity.
   - Under §24.5's margin table, delay runs are expected to be few or none.
   - **A tier ruling that adds a variant also sets the ceiling it needs:** each variant costs about
     70–85 machine-hours, and the ruling records the new ceiling.
-- **A timing pilot comes first:** 14 origins, training only, with scores sealed. If it projects
-  more than 80% of the ceiling, the Lead stops and reports before the full run.
+- **A timing pilot comes first:** 14 origins, training only, with scores sealed. The general
+  cumulative admission line is an absolute 436.5 machine-hours. For the existing run
+  `cp26-cold-rerun-2026-10-15-01` only, the Owner-approved exception is **440 machine-hours**.
+  The actual cumulative hard ceiling is **500 machine-hours**. Admission is not recalculated
+  as a fraction of that ceiling. Above the applicable admission line, the Lead stops and reports
+  before the full run. A continuation pilot must price
+  all 42 searches across nominal/no-load/GFS+6, as well as daily fits, parity, tests, failed jobs,
+  bootstrap and diagnostics. Compare total projected expense including historical measured
+  time, reported time and retained reserves with the applicable absolute admission line;
+  14 daily origins alone do not price searches.
+  Do not reset the ledger. Unreconciled worker duration or surviving orphan blocks new compute;
+  restart idle time is not measured worker time. The earlier repair-only scope (10 new
+  machine-hours within its then-485-hour ceiling, excluding real search/pilot/replay/scores)
+  remains closed; it is not reopened or extended by this continuation.
 
 #### Outputs, gates and publication
 
@@ -4424,6 +4604,10 @@ the control** (§24.5): in its weights, its forecast, the gates' L_v5, and the d
 - Weights apply to the members' central forecasts.
 - Each combined arm's quantiles come from HG's H layer, re-estimated on that arm's own issued
   central errors.
+- Each combined arm stores its pre-outcome native central with that issuance's causal weights
+  and scale. Insufficient H history permits central warm-up and D−2 own-error release even on
+  a scored fallback date. Missing members or solver failures create no native arm central.
+  Copied fallback errors never populate the arm's H buffer, and emitted fallback scores stay fixed.
 - The learned arms minimize mean daily central MAE.
 - A1 keeps DDNN-2's own Johnson SU quantiles.
 
@@ -4433,6 +4617,10 @@ the control** (§24.5): in its weights, its forecast, the gates' L_v5, and the d
   released under §2. Its forecast was made without its outcome.
 - D's combined forecast is produced before D's outcome enters the ledger.
 - CP-26's warm-up supplies the first ledger days.
+- The latest 728 complete released learning days (minimum 364/728) are separate from H's latest
+  28 own-error days. A complete day with all three native members can be a learning row even
+  when v5's measured output was fallback solely for H warm-up. Partial keys never create a
+  complete learning row. Actual support, not a promised date, determines learning startup.
 
 **The arms (Owner, 2026-10-12):**
 
@@ -4499,8 +4687,10 @@ the control** (§24.5): in its weights, its forecast, the gates' L_v5, and the d
 
 **Disclosed in advance:**
 
-- A4 equals A3 until 728 ledger days exist, roughly through 2021. Its 2021 cell therefore tests
-  A3's weights.
+- A4 equals A3 until 728 complete released ledger days exist. All learned arms start according
+  to actual support; member/search failures and incomplete days may delay it. Report the observed
+  startup and calendar span, with no guarantee of a fixed activation date. A4's early cells test
+  A3's weights to that extent.
 - The learned arms equal v5 until their minimum history exists.
 - **A6 and A7 are unshrunk** (Owner, 2026-10-12). They can place any weight on DDNN-2, up to 100%,
   and are the arms most exposed to overfitting and to lag at regime changes. The gates, the
@@ -4523,6 +4713,13 @@ the control** (§24.5): in its weights, its forecast, the gates' L_v5, and the d
 - **Evidence class:** `development_post_selection`; 4.7T carries the protection.
 - **Gates:** CP-26's LAND, the Owner's confirmation, the issued brief, and the LAND.
 
+**Separate post-results supplement (v21-r17).** Before execution, report the approved
+existing-output GFS differential and planning-scenario analysis under
+`docs/track-b/evidence/cp-26/cp28-gfs-postresults-addendum-v21-r17.md`. It is outside the seven-arm
+experiment and its multiplicity/selection family; it changes none of the frozen rules above.
+An unfavorable or unsupported descriptive result is reported without tuning an arm, changing
+the control or inventing an additional statistical or operational acceptance gate.
+
 ### 24.9 CP-17 and 4.7T
 
 **CP-17 freezes one candidate,** CP-28's selection or the control (§24.5), together with:
@@ -4530,7 +4727,8 @@ the control** (§24.5): in its weights, its forecast, the gates' L_v5, and the d
 - its daily retraining rule (§16.2), the issue time, and its inputs and their tiers;
 - its DDNN-2 search state and its combiner state at the freeze;
 - **DDNN-2's search schedule in operation:** the 182-day searches continue, the next being
-  S_14 = 2026-12-23, under the same rules, as part of the frozen refit schedule;
+  S_14 = 2027-01-06, after S_13 = 2026-07-08, under the same phase and rules, as part of the
+  frozen refit schedule. These are protocol dates only, never permission to read future data;
 - the tier and margin rulings (§24.5);
 - its fallback and failure rules;
 - §19.5's definitions;

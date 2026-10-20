@@ -1,0 +1,136 @@
+{
+ "abort_reason": "TimeoutError: CP-26 ledger accounting lock did not progress",
+ "child_identity": {
+  "create_time": 1792078948.328163,
+  "pid": 46837
+ },
+ "completion_issuer": "supervisor",
+ "completion_issuer_identity": {
+  "create_time": 1792078946.197366,
+  "pid": 46834
+ },
+ "ended_epoch": 1792079226.932586,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "6c1b7ca4d72047b6b239d2b856db84b5",
+ "job_index": 340,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.0,
+  "canonical_input": false,
+  "conflicts": 1,
+  "hold_seconds": 0.0018869590712711215,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.1311038340209052,
+  "peak_wait_seconds": 0.2002847909461707,
+  "read_bytes": 8102447,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 0.5544552090577781,
+  "transactions": 1185,
+  "wait_seconds": 0.2002847909461707,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 1867677696,
+ "request_sha256": "503157917e4b03a46779a22a4bf2acd987d864c2ea9abee2961bad03707296b4",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792078946.026189,
+ "supervisor_identity": {
+  "create_time": 1792078946.197366,
+  "pid": 46834
+ },
+ "wall_seconds": 280.7010303749703,
+ "watchdog_identity": {
+  "create_time": 1792078947.191241,
+  "pid": 46835
+ },
+ "worker_ceiling_error": null,
+ "worker_identities": [
+  {
+   "create_time": 1792078948.328163,
+   "pid": 46837
+  },
+  {
+   "create_time": 1792078950.235112,
+   "pid": 46839
+  },
+  {
+   "create_time": 1792078950.27951,
+   "pid": 46842
+  },
+  {
+   "create_time": 1792078950.508323,
+   "pid": 46847
+  },
+  {
+   "create_time": 1792078955.856241,
+   "pid": 46921
+  },
+  {
+   "create_time": 1792078955.877739,
+   "pid": 46922
+  },
+  {
+   "create_time": 1792078962.685136,
+   "pid": 46934
+  },
+  {
+   "create_time": 1792078980.545001,
+   "pid": 47030
+  },
+  {
+   "create_time": 1792079040.753237,
+   "pid": 47319
+  },
+  {
+   "create_time": 1792079059.466155,
+   "pid": 47338
+  },
+  {
+   "create_time": 1792079063.423376,
+   "pid": 47345
+  },
+  {
+   "create_time": 1792079066.469532,
+   "pid": 47353
+  },
+  {
+   "create_time": 1792079133.892482,
+   "pid": 47780
+  },
+  {
+   "create_time": 1792079150.954245,
+   "pid": 47840
+  },
+  {
+   "create_time": 1792079171.134957,
+   "pid": 47943
+  },
+  {
+   "create_time": 1792079175.098732,
+   "pid": 47950
+  },
+  {
+   "create_time": 1792079178.111127,
+   "pid": 47957
+  },
+  {
+   "create_time": 1792079178.142797,
+   "pid": 47959
+  },
+  {
+   "create_time": 1792079192.875493,
+   "pid": 48117
+  },
+  {
+   "create_time": 1792079208.846523,
+   "pid": 48137
+  }
+ ],
+ "worker_pgid": 46837,
+ "workers": 1,
+ "workers_stopped": true
+}

@@ -1,0 +1,9 @@
+Using CPython 3.13.15
+Creating virtual environment at: /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-ci3.13
+Resolved 129 packages in 4ms
+  × Failed to download `llvmlite==0.49.0`
+  ╰─▶ Network connectivity is disabled, but the
+      requested data wasn't found in the cache for:
+      `https://files.pythonhosted.org/packages/7d/85/0b536a3c59f2636d9dd51dda832b6c1d0ffec37608429dedf128664918f1/llvmlite-0.49.0-cp313-cp313-macosx_12_0_arm64.whl`
+
+hint: `llvmlite` (v0.49.0) was included because `delu-price-forecast` (v0.1.0) depends on `shap` (v0.52.0) which depends on `llvmlite`

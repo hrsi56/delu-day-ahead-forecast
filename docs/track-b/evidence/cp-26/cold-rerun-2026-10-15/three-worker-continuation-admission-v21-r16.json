@@ -1,0 +1,25 @@
+{
+ "actual_hard_ceiling_hours": 500.0,
+ "admission_hours": 440.0,
+ "allocation": "Three native workers; fourth slot available for registered accounting/check work. Fourth nominal window queued for the first valid native completion boundary.",
+ "cumulative_actual_hours": 143.9179308912247,
+ "new_run_actual": {
+  "cumulative_machine_hours": 143.9179308912247,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 78.75580625110175,
+  "measured_seconds": 282055.6918561219,
+  "reported_seconds": 1465.210647844424,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 283520.9025039663
+ },
+ "next_gate": "Run one real canonical-refresh/exactly-once check in the fourth registered slot while the three useful native jobs progress. No repeated four-worker fault campaign or unchanged-allocation retry.",
+ "projected_cumulative_completion_hours": 365.7457763037179,
+ "projected_new_run_completion_hours": 300.58365166359494,
+ "projection_sha256": "73a4267f518005381a4d8fad8e1c916ff9693e2a62f04d7a14d5b16a364b97b2",
+ "reason": "Observed real13502904byte cold-ledger refresh timeout under four active native fits plus the external canonical accounting write. Keep existing3second ledger/8second heartbeat/.2second polling and all independent guards; select the already priced three-worker fallback. No core code, scientific recipe, protocol, cache identity, pilot or run-counter changes.",
+ "remaining_wall_hours_bound": 149.54388411071312,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "status": "PASS",
+ "wall_basis": "Existing full remaining three-worker pilot-maxima fallback, conservatively retained without discounting saved-but-unissued prefits. Additional measured setup/check time is charged in the same ledger; all original contingency/margins retained."
+}

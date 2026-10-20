@@ -1,0 +1,29 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-completion-v21-r15.py"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r15-pilot-assembly-1.364.7fe8b34385cd4271b18a6cf630273611.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "7fe8b34385cd4271b18a6cf630273611",
+ "job_index": 364,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/cold-r15-pilot-assembly-1.log",
+ "monitor_identity": {
+  "create_time": 1792107172.574591,
+  "pid": 90753
+ },
+ "name": "cold-r15-pilot-assembly-1",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r15-pilot-assembly-1.364.7fe8b34385cd4271b18a6cf630273611.progress.json",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1792107173.393354,
+ "supervision_policy": {
+  "heartbeat_timeout_seconds": 8.0,
+  "ledger_timeout_seconds": 3.0,
+  "poll_seconds": 0.2,
+  "startup_grace_seconds": 14.0
+ },
+ "workers": 1
+}

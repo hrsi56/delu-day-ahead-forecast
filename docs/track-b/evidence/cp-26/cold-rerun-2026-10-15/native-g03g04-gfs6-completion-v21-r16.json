@@ -1,0 +1,32 @@
+{
+ "abort_reason": null,
+ "caller": {
+  "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/daily-execution-v21-r16-empty-keys.py",
+  "sha256": "98b6945682bc05ebf4b993779949f181ef85931cf102ccf0b256460274b404ed"
+ },
+ "clock_sha256": "3aca1873e11b00eb587dfa70c26e7f32f0bdb8132cba40ef8ce1c39cf2bdd892",
+ "daily_issuances_claimed": false,
+ "earlier_native_origins": 490,
+ "exit_code": 0,
+ "first": "2021-05-05",
+ "group_empty": true,
+ "job": {
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g03g04-gfs6-2.394.9d28623f9c9044c0ae37072e7369123f.clock.json",
+  "job_id": "9d28623f9c9044c0ae37072e7369123f",
+  "job_index": 394,
+  "name": "cold-r16-fit-g03g04-gfs6-2"
+ },
+ "ledger_timeouts": 0,
+ "native_origins": 490,
+ "peak_rss_bytes": 1970716672,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/fit-route-298edb67800172c502f395819a0ed44b2fa6347dcd523e3a51d2d26db3709e5a.json",
+ "phase_sha256": "102c3270f07b508acfe04be2a80ea350e046ea8e194fa045c7c1b3553a6265f6",
+ "route": "gfs6",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scope": "Exact complete490-date GFS+6 native window, including zero-key dates and all five registered members. Signed phase and closed supervised job verified. All three routes now have complete980-origin native prefixes; forecast issuance remains490 until chronological replay.",
+ "through": "2022-09-06",
+ "total_native_origins": 980,
+ "validation_status": "PASS",
+ "wall_seconds": 8805.773285791976,
+ "workers_stopped": true
+}

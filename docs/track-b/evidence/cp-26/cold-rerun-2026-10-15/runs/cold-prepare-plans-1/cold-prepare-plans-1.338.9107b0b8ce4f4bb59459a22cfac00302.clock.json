@@ -1,0 +1,91 @@
+{
+ "abort_reason": "watchdog_TimeoutError: CP-26 ledger accounting lock did not progress",
+ "child_identity": {
+  "create_time": 1792078735.298451,
+  "pid": 45691
+ },
+ "completion_issuer": "watchdog",
+ "completion_issuer_identity": {
+  "create_time": 1792078734.04434,
+  "pid": 45689
+ },
+ "ended_epoch": 1792078795.58729,
+ "ending_error": null,
+ "exit_code": 70,
+ "group_empty": true,
+ "job_id": "9107b0b8ce4f4bb59459a22cfac00302",
+ "job_index": 338,
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 1,
+  "body_seconds": 0.001901125069707632,
+  "canonical_input": true,
+  "conflicts": 0,
+  "hold_seconds": 0.1636773330392316,
+  "outcome": "timeout",
+  "peak_hold_seconds": 0.1636773330392316,
+  "peak_wait_seconds": 0.34024495899211615,
+  "read_bytes": 8086018,
+  "serialized_fallback": false,
+  "timeouts": 1,
+  "total_seconds": 0.5039289159467444,
+  "transactions": 244,
+  "wait_seconds": 0.34024495899211615,
+  "written": false,
+  "written_bytes": 0
+ },
+ "peak_rss_bytes": 1216954368,
+ "request_sha256": "00cc854fc5600f69cc0693045b8096c813d84238f89eaa1969552c62001d7612",
+ "schema": "cp26-completion-v2",
+ "started_epoch": 1792078732.574281,
+ "supervisor_identity": {
+  "create_time": 1792078732.765069,
+  "pid": 45672
+ },
+ "wall_seconds": 62.78220675000921,
+ "watchdog_identity": {
+  "create_time": 1792078734.04434,
+  "pid": 45689
+ },
+ "worker_identities": [
+  {
+   "create_time": 1792078735.298451,
+   "pid": 45691
+  },
+  {
+   "create_time": 1792078737.512689,
+   "pid": 45697
+  },
+  {
+   "create_time": 1792078737.599516,
+   "pid": 45698
+  },
+  {
+   "create_time": 1792078741.691485,
+   "pid": 45715
+  },
+  {
+   "create_time": 1792078744.219731,
+   "pid": 45722
+  },
+  {
+   "create_time": 1792078780.87894,
+   "pid": 45958
+  },
+  {
+   "create_time": 1792078780.924139,
+   "pid": 45959
+  },
+  {
+   "create_time": 1792078793.521171,
+   "pid": 45979
+  },
+  {
+   "create_time": 1792078793.540328,
+   "pid": 45980
+  }
+ ],
+ "worker_pgid": 45691,
+ "workers": 1,
+ "workers_stopped": true
+}

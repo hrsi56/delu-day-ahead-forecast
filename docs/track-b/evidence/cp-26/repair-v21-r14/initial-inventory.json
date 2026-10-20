@@ -1,0 +1,78 @@
+{
+  "schema": "cp26-repair-initial-inventory-v1",
+  "lead_head": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+  "base_commit": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "status": " M scripts/cp26_rebaseline.py\n?? reports/rebaseline/parity.json\n?? tests/test_cp26_monitor.py\n",
+  "files": [
+    {
+      "path": "capstone_v21.md",
+      "sha256": "173799d818387b9d82db16b9ccd7195afaebbea8e11259809e4a8b704bd525a8",
+      "bytes": 278890,
+      "mtime": 1791830466.1104248
+    },
+    {
+      "path": "scripts/cp26_rebaseline.py",
+      "sha256": "844f6dcec59732dd3fe512f2b7d67bd9bf336930a26b2834d6a01ae4871c822d",
+      "bytes": 11641,
+      "mtime": 1791905724.2478719
+    },
+    {
+      "path": "tests/test_cp26_monitor.py",
+      "sha256": "ef0f0fb800f6111719d85f315548ee0090c44dca9bc8726d7fe27a3e065ff513",
+      "bytes": 2097,
+      "mtime": 1791905724.2482212
+    },
+    {
+      "path": "reports/rebaseline/parity.json",
+      "sha256": "5c2229b2299d5469b1b734393a3d12a9d35557cdc0862c9904396fa3a1960d01",
+      "bytes": 1324027,
+      "mtime": 1791905827.594554
+    },
+    {
+      "path": "reports/rebaseline/search-support.json",
+      "sha256": "301a17e551118d36673be8813f980e94a341de5bbd80e59590ab54bd3dbeb4a3",
+      "bytes": 34656,
+      "mtime": 1791905129.772841
+    },
+    {
+      "path": "reports/rebaseline/search-support.md",
+      "sha256": "836aa11ed4a803696258b24b6684071bc9d1d6210cb6f75a2c7dd8a8a7b82246",
+      "bytes": 4064,
+      "mtime": 1791905242.1674526
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/issued-brief.md",
+      "sha256": "5e16a134a9dd798733b0393f4f8e2570d03bf251471503d9292966e67e05214b",
+      "bytes": 23451,
+      "mtime": 1791830483.3561292
+    },
+    {
+      "path": "docs/track-b/evidence/cp-26/cp28-frozen-protocol.md",
+      "sha256": "f2ebee6ec207047bb1db7a311d7fbf437627ad7c395f1e07c92417c7f5a623cc",
+      "bytes": 26025,
+      "mtime": 1791905242.1381485
+    },
+    {
+      "path": ".local/artifacts/cp-26/ledger/budget.json",
+      "sha256": "1ed13d6ff0c29aa4a1bdcfc9d4b343469d8e5f9e1725d7dbfad090d1f2c90f5d",
+      "mtime": 1791905827.8091795
+    },
+    {
+      "path": ".local/artifacts/cp-26/issued-brief.md",
+      "sha256": "5e16a134a9dd798733b0393f4f8e2570d03bf251471503d9292966e67e05214b",
+      "mtime": 1791820661.2303472
+    },
+    {
+      "path": ".local/artifacts/cp-26/jobs/parity.json",
+      "sha256": "ab138019db5b1e74e11df3c7f5f22a9eef629e694fda635560b9fbc6ebc769fa",
+      "mtime": 1791905827.809995
+    },
+    {
+      "path": "/Users/djourno/.codex/attachments/d0845d59-e609-412a-b5c6-54c120080fef/Pasted text.txt",
+      "sha256": "e53636c68dca3c0a12a6bd8d75c10ecc0ac8b653d648caf20d35aac6605118ba",
+      "mtime": 1791908653.442842,
+      "ctime": 1791908653.442842
+    }
+  ],
+  "preservation_seconds": 0.05587495904183015
+}

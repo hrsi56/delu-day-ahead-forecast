@@ -1,0 +1,42 @@
+{
+ "cache_only": true,
+ "clock_sha256": "eb16d273236b351e1349c57dfbdf0a9697be8aa9951721ef397cfa88aed33bac",
+ "first_six_raw_hashes_unchanged": true,
+ "job": {
+  "abort_reason": null,
+  "charged_wall_seconds": 1237.7893575830385,
+  "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-replay-g02-1.385.1e36a92364a542f5a05bdf16131ca701.clock.json",
+  "exit_code": 0,
+  "job_id": "1e36a92364a542f5a05bdf16131ca701",
+  "peak_rss_bytes": 3959848960,
+  "workers": 1
+ },
+ "ledger_lock_telemetry": {
+  "acquired": true,
+  "attempts": 2,
+  "body_seconds": 0.0007406249642372131,
+  "canonical_input": true,
+  "conflicts": 1,
+  "hold_seconds": 0.05365425010677427,
+  "outcome": "committed",
+  "peak_hold_seconds": 0.3578899590065703,
+  "peak_wait_seconds": 0.2144734999164939,
+  "read_bytes": 11084523,
+  "serialized_fallback": false,
+  "timeouts": 0,
+  "total_seconds": 0.40204741596244276,
+  "transactions": 3245,
+  "wait_seconds": 0.05198166589252651,
+  "written": true,
+  "written_bytes": 11084526
+ },
+ "measurement_calendar_origins": 127,
+ "phase_path": "reports/rebaseline/cold-rerun-2026-10-15/daily-physical-completion/replay-cached-78d815c5b9c3b90a647a0b5a98c85dfaf5a846d5b27764089c299972664d9439.json",
+ "phase_sha256": "888d7036c296806f26853809b3ae306f6a24464cfde87d4499fb617edf732001",
+ "prior245_issuance_hashes_unchanged": true,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "scores_computed": false,
+ "status": "490_FORECAST_ORIGINS_COMPLETE",
+ "through": "2021-05-04",
+ "warmup_origins": 363
+}

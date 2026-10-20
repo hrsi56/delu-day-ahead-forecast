@@ -1,0 +1,34 @@
+{
+ "content_sha256": "2fd513f7861a2c8bd0cafa678528310b3e440a778798d7645f0a73ffbb7f9d82",
+ "job_id": "27d21f60fc2541178851bb83fc36eb01",
+ "job_index": 474,
+ "new_saved_cells": 9,
+ "observed_epoch": 1792344190.407295,
+ "original_complete_files_unchanged": true,
+ "original_saved_cells": 19,
+ "registered_total_cells": 936,
+ "request_sha256": "f869a925be821fee2ffa084538daa0a856b71622ce59f7228413f841f3f75d80",
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "schema": "cp26-diagnostics-progress-v1",
+ "scientific_restart": false,
+ "scope": "Verified durable diagnostic progress beyond19; no diagnostics-completion or checkpoint-PASS claim.",
+ "supervision": {
+  "charged_wall_seconds": 2679.6904175,
+  "running": true,
+  "supervisor_timeouts": 0,
+  "watchdog_timeouts": 0
+ },
+ "verified_new_cell": {
+  "analysis_code_sha256": "a25741dc20427ef09cb1b2532f2344558b617d522e6441493ae72d74300b33f3",
+  "arrays_path": "reports/rebaseline/cold-rerun-2026-10-15/diagnostics/283e35f79e4d493f5de164334bfba74c22127f78d9a0b27d8217359dda364d44.npz",
+  "arrays_sha256": "0be39666c3a6b396c5696a67b90ea425d2b8055e4f93a9211992d1230ad44e77",
+  "endpoint_id": "283e35f79e4d493f5de164334bfba74c22127f78d9a0b27d8217359dda364d44",
+  "identity": "gfs6/v3/hour06/interval80",
+  "metadata_path": "reports/rebaseline/cold-rerun-2026-10-15/diagnostics/283e35f79e4d493f5de164334bfba74c22127f78d9a0b27d8217359dda364d44.json",
+  "metadata_sha256": "4aae9aea3a028393d75c91e580512645e2ccbfa9a8b9190c6722ce08cbe51f34",
+  "protocol_sha256": "e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85",
+  "schema": "cp26-numeric-artifact-v1",
+  "source_scores_sha256": "86abda54558fa965d41f44768f5142611e59c40fc521439913cf3c98de392b49"
+ },
+ "verified_saved_cells": 28
+}

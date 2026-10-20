@@ -1,0 +1,60 @@
+{
+ "authoritative_ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "cumulative_cp26": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 234520.9807574722,
+  "headroom_hours": 418.5180410262444,
+  "machine_hours": 66.48195897375558,
+  "measured_seconds": 235884.06720229797,
+  "pilot_stop_hours": 388.0,
+  "post_repair_seconds": 234616.31286834917,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 624.9851032221279,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.48195897375558,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.3198343336326264,
+    "measured_seconds": 4227.7814764105715,
+    "reported_seconds": 523.6221246668836,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 4751.403601077455
+   }
+  },
+  "total_seconds": 239335.0523055201,
+  "unreconciled_reserves": []
+ },
+ "historical_baseline": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 229769.57715639472,
+  "headroom_hours": 419.83787535987705,
+  "machine_hours": 65.16212464012295,
+  "measured_seconds": 231656.2857258874,
+  "pilot_stop_hours": 388.0,
+  "post_repair_seconds": 229864.9092672717,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 101.36297855524425,
+  "reserved_seconds": 2826.0,
+  "total_seconds": 234583.64870444263,
+  "unreconciled_reserves": []
+ },
+ "ledger_sha256_at_snapshot": "878353f7a0466894721723264a84b797130b1a60c73b5cf9ad19b413296d42d9",
+ "new_run": {
+  "cumulative_machine_hours": 66.48195897375558,
+  "historical_baseline_hours": 65.16212464012295,
+  "machine_hours": 1.3198343336326264,
+  "measured_seconds": 4227.7814764105715,
+  "reported_seconds": 523.6221246668836,
+  "reserved_seconds": 0.0,
+  "run_id": "cp26-cold-rerun-2026-10-15-01",
+  "total_seconds": 4751.403601077455
+ },
+ "running_jobs": [],
+ "snapshot_is_not_a_second_account": true
+}

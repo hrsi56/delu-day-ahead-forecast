@@ -1,0 +1,95 @@
+{
+ "allocation_rule": "Keep the two healthy native jobs running. Do not admit a third native. Perform monitored canonical accounting/pricing and heavy verification only with at most one native fit. No new job until the stopped job has positive bounded ending evidence and the full two-native cost projection is recorded. Ordinary guards and compact observer updates remain active.",
+ "authority": "Existing Owner continuous-baseline and safe-concurrency grant; no new consent or scientific protocol.",
+ "canonical_accounting_max_native_workers": 1,
+ "content_sha256": "ee48e153e53b7db5cff3bc45ef51270c7bfdc1d2f6925a16f35298bce6c40c95",
+ "cost": {
+  "additional_future_restart_validation_seconds": 5400.0,
+  "basis": "Entire prior3049.3918679169146second nominal job with209 cached dates and36 new dates, scaled to358 saved/partial dates, is below5400seconds. Treat all prior fresh fitting time as validation overhead for a conservative envelope. Same980-origin H/learning prefix and unchanged strict cache code. The control has five cached members per date versus nine in that reference. Formal complete forecast must be recorded at the next safe boundary, before resumption.",
+  "existing_margins_retained": true,
+  "price_helper": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/price-two-native-v21-r16.py",
+  "price_helper_sha256": "bac6e35209713e4688149544db607e46b96153f95568d14b2a6659a92fe89ee3",
+  "reference_completion_sha256": "92e1c60293534848630023ae619f8ac6160756f9fd387ebcfe5f9cc551300e55",
+  "source_projection_path": "reports/rebaseline/cold-rerun-2026-10-15/cost-projection-state-growth-v21-r16-g05g06-close-raw-birth.json",
+  "source_projection_sha256": "442cdaac303b483bb9de646e0892e2ed7cf7953934536e3bf87c4fe47c157d80"
+ },
+ "failure_rule": "A genuine guard still stops the affected job. Do not repeat the failed three-native allocation, retry unresolved failures indefinitely, rerun cached successful or failed fits, replace seeds, weaken a deadline, bypass a lock or reset a resource view. Any further failure requires its actual bounded receipt and a specific supported disposition before new admission.",
+ "kind": "prospective_operational_allocation",
+ "maximum_registered_workers": 4,
+ "native_workers": 2,
+ "next_actions": [
+  "At the first healthy native completion, import pending short operator metadata once and run committed price-two-native-v21-r16.py under existing monitored clock-stable execution.",
+  "After supported admission PASS and memory headroom, resume only missing members of cold-r16-fit-g07g08-gfs6-3, same2024-01-10..2025-05-13 window; load all1788 existing files through the unchanged strict cache validator.",
+  "Drain current nominal group8, final no-load window and resumed GFS6 groups7/8 before exclusive original chronological replay prefixes1225,1470,1715,1960.",
+  "After the1960-origin replay, run nominal group9 and final GFS6 groups9/10 as two independent one-worker jobs, then nominal group10 at the first permitted free slot. Drain before final chronological replay prefixes2205 and2441.",
+  "Run the existing scores,inference,diagnostics,report stages serially, then the required fresh final Integration review."
+ ],
+ "preservation": {
+  "historical_260_files_unchanged": true,
+  "missing_dates": 133,
+  "new_reserve_seconds": 0,
+  "old_clock_and_charges_unchanged": true,
+  "partial_members": 3,
+  "raw_files": 1788,
+  "ready_dates": 357,
+  "scientific_source_and_cache_identity_unchanged": true
+ },
+ "reason": {
+  "clock_sha256": "4d98ccfc1daef478d232b5ea2b4ac21bae667fdc2410115c5cf8ffd536f9bfe9",
+  "failure": "The watchdog could not acquire the accounting lock within3.000329792seconds during three ordinary native jobs, without an external accounting worker. Zero refresh conflicts; no successful lock acquisition in the failed transaction. Three native workers are therefore no longer admitted under this observed state.",
+  "stop_evidence_sha256": "12b45b0964e0c1eaa3c58b6bba1b850997c48be4f5a5268dc008fec54e6ccfce",
+  "stopped_job": {
+   "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/cold-r16-fit-g07g08-gfs6-2.432.754dc785db4d40ebaf773a5d63da780d.clock.json",
+   "job_id": "754dc785db4d40ebaf773a5d63da780d",
+   "job_index": 432,
+   "name": "cold-r16-fit-g07g08-gfs6-2"
+  },
+  "telemetry": {
+   "acquired": false,
+   "attempts": 1,
+   "body_seconds": 0.0,
+   "canonical_input": false,
+   "conflicts": 0,
+   "hold_seconds": 0.0,
+   "outcome": "timeout",
+   "peak_hold_seconds": 0.7929747919552028,
+   "peak_wait_seconds": 3.000325334025547,
+   "read_bytes": 0,
+   "serialized_fallback": false,
+   "timeouts": 1,
+   "total_seconds": 3.000329792033881,
+   "transactions": 29756,
+   "wait_seconds": 3.000325334025547,
+   "written": false,
+   "written_bytes": 0
+  }
+ },
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "supersedes": [
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/native-accounting-boundaries-v21-r16.json",
+   "raw_sha256": "2e2a1f030d436d5af8467f6e5c78ca7f45ead0ba581b28cbfa6b9200844b5af8",
+   "scope": "Only prospective native-worker ceiling3 to2 and monitored-accounting native ceiling2 to1. Historical evidence unchanged."
+  },
+  {
+   "path": "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/filled-native-queue-final-noload-v21-r16.json",
+   "raw_sha256": "aae27ec7a48fd13429e06d2818e6d73e6b7f665e34f4b1431e68179640679d37",
+   "scope": "Prospective concurrency and placement of the pending same-window GFS resumption. Original calendar, registered windows, replay prefixes, controls, requirements and source hashes unchanged."
+  }
+ ],
+ "unchanged": {
+  "admission_hours": 440.0,
+  "aggregate_rss_bytes": 12000000000,
+  "all_scientific_recipes_frozen": true,
+  "allocated_worker_ending_exposure_seconds": 38.4,
+  "blas_threads": 1,
+  "cpu_only": true,
+  "cumulative_hard_hours": 500.0,
+  "heartbeat_seconds": 8.0,
+  "ledger_seconds": 3.0,
+  "no_native_replay_overlap": true,
+  "poll_seconds": 0.2,
+  "run_id_and_historical_baseline_unchanged": true,
+  "startup_seconds": 14.0
+ }
+}

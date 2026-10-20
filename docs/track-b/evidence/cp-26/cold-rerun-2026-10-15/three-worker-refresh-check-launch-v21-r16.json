@@ -1,0 +1,33 @@
+{
+ "caller_sha256": "43b0ed90af9c078d52eb900b487aad1c2d1297943ccdfb83c6bb31dc862dd580",
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "scripts/cp26_rebaseline.py",
+  "monitor",
+  "--name",
+  "cold-r16-check-three-worker-refresh-1",
+  "--workers",
+  "1",
+  "--log",
+  "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/cold-r16-check-three-worker-refresh-1.log",
+  "--",
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/check-three-worker-refresh-v21-r16.py"
+ ],
+ "launched_epoch": 1792201254.560716,
+ "memory": {
+  "accounting_worker_prior_peak_bytes": 1916878848,
+  "available_bytes": 4656971776,
+  "pressure_level": "1",
+  "soft_margin_bytes": 750000000
+ },
+ "name": "cold-r16-check-three-worker-refresh-1",
+ "native_workers": 3,
+ "pid": 13826,
+ "purpose": "One real canonical rewrite, one cold evidence append and exact duplicate rejection while all three native workers have passed their preserved caches and are doing fresh work. All checker duration is supervised; zero-duration marker charges none of it again.",
+ "requested_workers": 1,
+ "run_id": "cp26-cold-rerun-2026-10-15-01",
+ "total_registered_slots": 4
+}

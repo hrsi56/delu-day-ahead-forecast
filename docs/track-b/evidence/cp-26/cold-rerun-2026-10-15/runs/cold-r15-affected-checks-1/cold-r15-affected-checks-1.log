@@ -1,0 +1,105 @@
+# CP-26 supervised job cold-r15-affected-checks-1; workers=4
+....................................F.F......F...                        [100%]
+=================================== FAILURES ===================================
+_ test_prepare_admission_reconciles_through_resource_api_without_history_lock __
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/pytest/test_prepare_admission_reconci0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x119b807d0>
+
+    def test_prepare_admission_reconciles_through_resource_api_without_history_lock(tmp_path, monkeypatch):
+        budget = B.Budget(tmp_path / 'admission-ledger.json')
+        budget.initialise()
+        authority = G.H.PINS[G.H.AUTHORITY_PATH]
+        with budget.transaction() as state:
+            state['continuation_scope'] = {'authority_sha256': authority}
+            state['execution_tasks'] = [{'id': 'preserved/history', 'evidence': {'value': 1}}]
+        original = budget.path.read_bytes()
+        monkeypatch.setenv('CP26_MONITORED_JOB', 'synthetic-admission')
+        monkeypatch.setattr(G.H, 'continuation_authority', lambda root: {})
+        monkeypatch.setattr(G.H, 'check_blas', lambda: None)
+        monkeypatch.setattr(G, 'protocol_identity', lambda root: {})
+    
+        def forbidden_history_transaction(**kwargs):
+            raise AssertionError('admission may not lock and serialize task history')
+    
+        monkeypatch.setattr(budget, 'transaction', forbidden_history_transaction)
+>       G.ExecutionGate(tmp_path, budget=budget)('prepare')
+
+tests/test_cp26_gates.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cp26.gates.ExecutionGate object at 0x119c8e7b0>, stage = 'prepare'
+
+    def __call__(self, stage: str) -> None:
+        if stage not in ('prepare', 'pilot', 'search', 'forecast', 'score', 'report'):
+            raise ValueError('unregistered CP-26 execution stage')
+        H.continuation_authority(self.root)
+        H.check_blas()
+        if os.environ.get('CP26_RUN_ID') != RUN_ID:
+>           raise RuntimeError('cold execution requires its registered CP26_RUN_ID')
+E           RuntimeError: cold execution requires its registered CP26_RUN_ID
+
+src/cp26/gates.py:76: RuntimeError
+________ test_cli_project_persists_refused_estimate_and_stops_execution ________
+
+driver = <module 'cp26_continuation_cli' from '/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/scripts/cp26_rebaseline.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1198675b0>
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/pytest/test_cli_project_persists_refu0')
+capsys = <_pytest.capture.CaptureFixture object at 0x119c8ea50>
+
+    def test_cli_project_persists_refused_estimate_and_stops_execution(driver, monkeypatch, tmp_path, capsys):
+        state = {'counts': {'machine_seconds': 130}, 'accounting': {
+            'measured_seconds': 100, 'reported_seconds': 10, 'reserved_seconds': 20}, 'reserves': []}
+        searches = [{'run': r, 'k': k, 'machine_seconds': 10, 'classification': 'conservative',
+                     'basis': 'identity-bound fixture cost'} for r in ('nominal', 'noload', 'gfs6') for k in range(14)]
+        searches[0]['machine_seconds'] = 388 * B.HOUR
+        remaining = {n: {'machine_seconds': 1, 'classification': 'conservative', 'basis': 'fixture cost'}
+                     for n in ('daily_fits', 'parity', 'tests', 'bootstrap', 'diagnostics', 'failed_jobs_and_resume')}
+        projection = C._signed({'schema': C.SCHEMA, 'ledger_seconds_at_pricing': 130,
+                                'searches': searches, 'remaining': remaining,
+                                **B.projected_cost(state, searches, remaining)})
+        shared, code = {'authority_sha256': 'a' * 64}, {'fixture.py': 'b' * 64}
+        monkeypatch.setenv('CP26_MONITORED_JOB', 'fixture-no-physical-compute')
+        monkeypatch.setattr(driver, 'ROOT', tmp_path)
+        monkeypatch.setattr(driver, 'Budget', lambda: type('FixtureBudget', (), {'read': lambda self: state})())
+        monkeypatch.setattr(G, 'authorize_consuming_process', lambda root: shared)
+        monkeypatch.setattr(G, 'ExecutionGate', lambda root: lambda stage: None)
+        monkeypatch.setattr(G, 'protocol_identity', lambda root: shared)
+        monkeypatch.setattr(G, 'code_identity', lambda root: code)
+        monkeypatch.setattr(E, 'manifest_for', lambda *args: {'schema': 'fixture'})
+        monkeypatch.setattr(E, '_read', lambda path: {'code_sha256': code, 'additional_costs': remaining}
+                            if path.name == 'fixture-benchmark.json' else {'schema': 'fixture'})
+        monkeypatch.setattr(C, 'price_pilot', lambda *args, **kwargs: projection)
+        (tmp_path / G.PROTOCOL).parent.mkdir(parents=True)
+        (tmp_path / G.PROTOCOL).write_bytes(b'fixture protocol, physical reads stubbed')
+>       with pytest.raises(B.CapExceeded, match='388-hour stop line'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE CapExceeded
+
+tests/test_cp26_gates.py:77: Failed
+----------------------------- Captured stdout call -----------------------------
+{"status": "COST_PROJECTION", "hours": 388.15166666666664, "stop_hours": 436.5, "searches_priced": 42, "within_pilot_stop": true}
+_______________ test_stopped_watchdog_is_detected_by_supervisor ________________
+
+tmp_path = PosixPath('/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/pytest/test_stopped_watchdog_is_detec0')
+
+    def test_stopped_watchdog_is_detected_by_supervisor(tmp_path):
+        marker = tmp_path / 'active.marker'
+        with real_monitor(tmp_path, long_worker(marker)) as (proc, budget):
+            job = wait_until(lambda: active_child(budget) if marker.exists() else None)
+            assert S.signal_identity(job['watchdog_identity'], signal.SIGSTOP)
+            proc.wait(timeout=12)
+            terminal = budget.read()['jobs'][-1]
+            assert not terminal['running'] and terminal['workers_stopped']
+>           assert terminal['abort_reason'] == 'watchdog_heartbeat_stale'
+E           AssertionError: assert 'monitor_fail...artbeat_stale' == 'watchdog_heartbeat_stale'
+E             
+E             - watchdog_heartbeat_stale
+E             + monitor_failsafe:supervisor_heartbeat_stale,watchdog_heartbeat_stale
+
+tests/test_cp26_supervision.py:161: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_cp26_gates.py::test_prepare_admission_reconciles_through_resource_api_without_history_lock
+FAILED tests/test_cp26_gates.py::test_cli_project_persists_refused_estimate_and_stops_execution
+FAILED tests/test_cp26_supervision.py::test_stopped_watchdog_is_detected_by_supervisor
+3 failed, 46 passed in 66.87s (0:01:06)

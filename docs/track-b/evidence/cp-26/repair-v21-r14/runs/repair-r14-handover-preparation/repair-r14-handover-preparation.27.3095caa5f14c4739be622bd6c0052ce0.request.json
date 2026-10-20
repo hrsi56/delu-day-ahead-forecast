@@ -1,0 +1,26 @@
+{
+ "command": [
+  "/Users/djourno/Downloads/PJM/.venv/bin/python",
+  "-B",
+  "docs/track-b/evidence/cp-26/repair-v21-r14/build_handover.py",
+  "--lead",
+  "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+  "--candidate",
+  "68d5db593e968c8dcff31c35ecccc355799ddd8e"
+ ],
+ "completion_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.clock.json",
+ "cwd": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead",
+ "job_id": "3095caa5f14c4739be622bd6c0052ce0",
+ "job_index": 27,
+ "ledger": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/ledger/budget.json",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/logs/repair-r14-handover-preparation.log",
+ "monitor_identity": {
+  "create_time": 1791914588.119289,
+  "pid": 76515
+ },
+ "name": "repair-r14-handover-preparation",
+ "progress_clock": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/jobs/repair-r14-handover-preparation.27.3095caa5f14c4739be622bd6c0052ce0.progress.json",
+ "schema": "cp26-request-v2",
+ "started_epoch": 1791914589.650451,
+ "workers": 1
+}

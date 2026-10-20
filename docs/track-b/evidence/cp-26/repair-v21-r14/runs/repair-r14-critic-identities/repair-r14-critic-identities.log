@@ -1,0 +1,6 @@
+# CP-26 supervised job repair-r14-critic-identities; workers=1
+Traceback (most recent call last):
+  File "<string>", line 25, in <module>
+    assert all(row[name] == value for name, value in computed.items())
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

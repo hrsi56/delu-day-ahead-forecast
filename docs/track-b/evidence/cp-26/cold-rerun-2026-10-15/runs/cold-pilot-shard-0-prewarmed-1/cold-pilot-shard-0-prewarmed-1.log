@@ -1,0 +1,6 @@
+# CP-26 supervised job cold-pilot-shard-0-prewarmed-1; workers=1
+2026/10/15 19:04:01 INFO mlflow.agent.hint: Load the `instrumenting-with-mlflow-tracing` skill at /Users/djourno/Downloads/PJM/.venv/lib/python3.13/site-packages/mlflow/assistant/skills/instrumenting-with-mlflow-tracing/SKILL.md before writing any tracing code; it ships with this MLflow install. Set MLFLOW_DISABLE_AGENT_HINT=1 to silence this.
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g
+/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead/src/cp24/ddnn2.py:290: RuntimeWarning: overflow encountered in multiply
+  v += (1.0 - self.beta2) * g * g

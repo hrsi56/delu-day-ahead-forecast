@@ -1,0 +1,128 @@
+{
+  "schema": "cp26-repair-local-lifecycle-v1",
+  "created_worktrees": [
+    {
+      "path": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-search",
+      "seed_sha": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+      "purpose": "repair-search",
+      "files": {
+        "src/cp26/search.py": {
+          "builder_sha256": "10ff19b8e86da4782f5a1b1d4c9922d0195f6c51632112b10f2aa58456ad77c7",
+          "lead_sha256": "9bb9bdd1749a109617bb5fc914b0bb96bb488860023d1b95317f325bae349f8b"
+        },
+        "scripts/cp26_search_support.py": {
+          "builder_sha256": "4c8e5e7485495abae5e6f0a4fde233dc3777ac5e045ad4a5c8ebe86050817a0d",
+          "lead_sha256": "4c8e5e7485495abae5e6f0a4fde233dc3777ac5e045ad4a5c8ebe86050817a0d"
+        },
+        "tests/test_cp26_search.py": {
+          "builder_sha256": "b0b16247c338f39767ef66c04415348489b009673bcb3805459e0804c535df06",
+          "lead_sha256": "f07ba6e57553f34111896ec65e9ea09023b27e49040430766833f9259f105c04"
+        }
+      },
+      "status_before_removal": " M scripts/cp26_search_support.py\n?? src/cp26/search.py\n?? tests/test_cp26_search.py\n",
+      "recovery_packet": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/repair-v21-r14/builders/repair-search",
+      "terminal_state": "allowed paths imported; recovery packet retained; created worktree removed"
+    },
+    {
+      "path": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-state",
+      "seed_sha": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+      "purpose": "repair-state",
+      "files": {
+        "src/cp26/state.py": {
+          "builder_sha256": "971e49e3959f07ae4715b922c0ab1e72d7146363b408244ba9ae4b707de7c017",
+          "lead_sha256": "971e49e3959f07ae4715b922c0ab1e72d7146363b408244ba9ae4b707de7c017"
+        },
+        "src/cp26/replay.py": {
+          "builder_sha256": "e7b27f247c142b4254506355b8c26e695a795c20e756ce84d7c196f7517e9c78",
+          "lead_sha256": "e7b27f247c142b4254506355b8c26e695a795c20e756ce84d7c196f7517e9c78"
+        },
+        "src/cp26/fits.py": {
+          "builder_sha256": "eefc32557b52a5248106046c93c9c8792f43e5a783e911ae52312a0189455cd7",
+          "lead_sha256": "2605abe74736ca1d28a8bf64e5a9be1e7f00f538ce07515a6fa649099dd5d9f8"
+        },
+        "tests/test_cp26_state.py": {
+          "builder_sha256": "2a442e387948a4604c3f4c9483492ca3439373b922b5385f450ee5a36e6d203c",
+          "lead_sha256": "2a442e387948a4604c3f4c9483492ca3439373b922b5385f450ee5a36e6d203c"
+        },
+        "tests/test_cp26_replay.py": {
+          "builder_sha256": "f15f7ac694493e1bee964854c607c067795d8112fb4d5e2e7ce466db579d8fd3",
+          "lead_sha256": "a2869171b36d1361201c4860209781d761c3bfb8d3cb11c485277394759b2e5a"
+        }
+      },
+      "status_before_removal": "?? src/cp26/fits.py\n?? src/cp26/replay.py\n?? src/cp26/state.py\n?? tests/test_cp26_replay.py\n?? tests/test_cp26_state.py\n",
+      "recovery_packet": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/repair-v21-r14/builders/repair-state",
+      "terminal_state": "allowed paths imported; recovery packet retained; created worktree removed"
+    },
+    {
+      "path": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-budget",
+      "seed_sha": "5cc3cc083c4340fd8d792eeaf6551a007987a877",
+      "purpose": "repair-budget",
+      "files": {
+        "src/cp26/budget.py": {
+          "builder_sha256": "e6ff4da373128b68fff702e99da25b3259adee7eb4b450a90a3b22ac73915217",
+          "lead_sha256": "e6ff4da373128b68fff702e99da25b3259adee7eb4b450a90a3b22ac73915217"
+        },
+        "src/cp26/supervisor.py": {
+          "builder_sha256": "de1d6cb710feddc77e3ca9ff069d80dc2461b783a09c51f4d83f4c01258dfd48",
+          "lead_sha256": "de1d6cb710feddc77e3ca9ff069d80dc2461b783a09c51f4d83f4c01258dfd48"
+        },
+        "scripts/cp26_rebaseline.py": {
+          "builder_sha256": "af6f07d98b33fc17ead7afe8b30ea674ee9a10c7cf22ebd7afe92bf2b0caf0e5",
+          "lead_sha256": "af6f07d98b33fc17ead7afe8b30ea674ee9a10c7cf22ebd7afe92bf2b0caf0e5"
+        },
+        "tests/test_cp26_monitor.py": {
+          "builder_sha256": "9ca98ad09cd60f83f2e153d58fd680fd636f95fc41f3783a5d29a2ebabb43bfb",
+          "lead_sha256": "9ca98ad09cd60f83f2e153d58fd680fd636f95fc41f3783a5d29a2ebabb43bfb"
+        }
+      },
+      "status_before_removal": " M scripts/cp26_rebaseline.py\n M src/cp26/budget.py\n?? src/cp26/supervisor.py\n?? tests/test_cp26_monitor.py\n",
+      "recovery_packet": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/repair-v21-r14/builders/repair-budget",
+      "terminal_state": "allowed paths imported; recovery packet retained; created worktree removed"
+    },
+    {
+      "path": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-c1e46",
+      "seed_sha": "c1e46c41bd83e7e91082fd4f9c626aed1de72a03",
+      "purpose": "clean detached bounded repair review",
+      "terminal_state": "review preserved; created snapshot removed; no source/Git change"
+    },
+    {
+      "path": "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/repair-review-68d5db5",
+      "seed_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e",
+      "purpose": "clean detached bounded repair review",
+      "terminal_state": "review preserved; created snapshot removed; no source/Git change"
+    }
+  ],
+  "created_branches": [],
+  "created_tags": [],
+  "removed_refs": [],
+  "retained_branch": {
+    "name": "gauntlet/cp-26",
+    "owner": "existing CP-26 Owner/Lead",
+    "purpose": "repair candidate and reviewable evidence chain",
+    "repair_candidate_sha": "68d5db593e968c8dcff31c35ecccc355799ddd8e",
+    "ahead_behind_main_at_candidate": "7 ahead, 0 behind",
+    "disposition": "leave open for Owner/main agent review; no LAND/discard/ref reclamation authorized"
+  },
+  "retained_worktrees": [
+    "/Users/djourno/Downloads/PJM",
+    "/Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead"
+  ],
+  "removed_disposable_test_directories": [
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-core-tests",
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-monitor-tests",
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-final-tests",
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-stable-tests",
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-pgid-fix-tests",
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-critic-tests",
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-26/repair-fresh-critic-tests"
+  ],
+  "retained_recovery": [
+    ".local/artifacts/cp-26/repair-v21-r14/initial/",
+    ".local/artifacts/cp-26/repair-v21-r14/builders/",
+    ".local/artifacts/cp-26/ledger/",
+    ".local/artifacts/cp-26/jobs/",
+    ".local/artifacts/cp-26/logs/",
+    ".local/tmp/cp-26/repair-*-message.txt and packaging/reproduction scripts"
+  ],
+  "rule": "only worktrees and disposable test directories created for this repair were removed; main and Lead remain. Clock receipts are retained under jobs/, verified in the terminal path inventory."
+}

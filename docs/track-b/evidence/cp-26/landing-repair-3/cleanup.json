@@ -1,0 +1,71 @@
+{
+  "started_utc": "2026-10-20T18:10:55Z",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "--no-pager",
+        "worktree",
+        "remove",
+        "--force",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "path_exists_after": false
+    },
+    {
+      "command": [
+        "git",
+        "--no-pager",
+        "worktree",
+        "remove",
+        "--force",
+        "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/curated"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "path_exists_after": false
+    }
+  ],
+  "worktrees_before": "worktree /Users/djourno/Downloads/PJM\nHEAD 647d6eb81b2cf6e0cfaf4152f659d689ff973578\nbranch refs/heads/main\n\nworktree /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/final-check\nHEAD c7829b3687ed7e295f1aeac3738e4d1a257a81aa\ndetached\n\nworktree /Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/prepared/curated\nHEAD 647d6eb81b2cf6e0cfaf4152f659d689ff973578\ndetached\n\nworktree /Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead\nHEAD c7829b3687ed7e295f1aeac3738e4d1a257a81aa\nbranch refs/heads/gauntlet/cp-26\n\n",
+  "complete": true,
+  "lead_preflight_tracked_status": [],
+  "barrier_removed": true,
+  "barrier_path": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/tmp/.git",
+  "temporary_entries_removed": [
+    "curated-suite",
+    "env-ci3.12",
+    "env-ci3.12-rerun",
+    "env-ci3.13",
+    "env-ci3.13-rerun",
+    "env-curated",
+    "env-full",
+    "env-stress312",
+    "env-sync313",
+    "full-suite",
+    "prepared",
+    "results",
+    "tmp"
+  ],
+  "initial_cleanup_error": {
+    "type": "OSError",
+    "errno": 66,
+    "reason": "Directory not empty",
+    "path": "/Users/djourno/Downloads/PJM/.local/tmp/cp-26-landing-repair-3/env-full/lib/python3.12/site-packages",
+    "observed_remaining_entry": ".DS_Store",
+    "verification_processes_remaining": false
+  },
+  "temporary_root_removed": true,
+  "worktrees_after": "worktree /Users/djourno/Downloads/PJM\nHEAD 647d6eb81b2cf6e0cfaf4152f659d689ff973578\nbranch refs/heads/main\n\nworktree /Users/djourno/Downloads/PJM/.local/worktrees/cp-26/lead\nHEAD c7829b3687ed7e295f1aeac3738e4d1a257a81aa\nbranch refs/heads/gauntlet/cp-26\n\n",
+  "main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "origin_main": "647d6eb81b2cf6e0cfaf4152f659d689ff973578",
+  "main_index": [],
+  "main_worktree_status": [],
+  "lead_tracked_status": [],
+  "secret_hooks_path": "/Users/djourno/Downloads/PJM/.githooks",
+  "retained_recovery": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26-landing-repair-3",
+  "finished_utc": "2026-10-20T18:12:22Z"
+}

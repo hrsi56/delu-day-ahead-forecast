@@ -1,0 +1,39 @@
+{
+ "abort_reason": null,
+ "exit_code": 0,
+ "job": "cold-r15-pilot-gfs6-1",
+ "job_id": "a0bdad132100478cbdb1679b3e627d90",
+ "log": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/calibration-r15/cold-r15-pilot-gfs6-1.log",
+ "machine_hours_cumulative": 66.65163719361708,
+ "peak_rss_bytes": 2105966592,
+ "resources": {
+  "continuation_authority_sha256": "6d00862075102c9c9ea40dc024650a07c0c199d7c78e9c10c38cbdfa68d591db",
+  "continuation_seconds_used": 235131.82234897357,
+  "headroom_hours": 418.34836280638297,
+  "live_shutdown_exposure_seconds": 38.4,
+  "machine_hours": 66.65163719361708,
+  "measured_seconds": 236476.90879379935,
+  "pilot_stop_hours": 436.5,
+  "post_repair_seconds": 235227.15445985054,
+  "repair_scope_active": false,
+  "repair_seconds_remaining": 34744.95231924608,
+  "repair_seconds_used": 1255.047680753924,
+  "reported_seconds": 642.9851032221279,
+  "reserved_seconds": 2826.0,
+  "scientific_runs": {
+   "cp26-cold-rerun-2026-10-15-01": {
+    "cumulative_machine_hours": 66.65163719361708,
+    "historical_baseline_hours": 65.16212464012295,
+    "machine_hours": 1.4895125534941196,
+    "measured_seconds": 4820.623067911947,
+    "reported_seconds": 541.6221246668836,
+    "reserved_seconds": 0.0,
+    "run_id": "cp26-cold-rerun-2026-10-15-01",
+    "total_seconds": 5362.245192578831
+   }
+  },
+  "total_seconds": 239945.89389702148,
+  "unreconciled_reserves": []
+ },
+ "wall_seconds": 83.86260520899668
+}

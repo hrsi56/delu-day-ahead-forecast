@@ -1,0 +1,23 @@
+{
+  "pid": 79926,
+  "command": [
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "scripts/cp26_rebaseline.py",
+    "monitor",
+    "--name",
+    "cold-ledger-fixed-pilot-shard-1-2",
+    "--workers",
+    "1",
+    "--log",
+    "/Users/djourno/Downloads/PJM/.local/artifacts/cp-26/cold-rerun-2026-10-15/ledger-fix/cold-ledger-fixed-pilot-shard-1-2.log",
+    "--",
+    "/Users/djourno/Downloads/PJM/.venv/bin/python",
+    "-B",
+    "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/pilot-prewarmed.py",
+    "--shard",
+    "1"
+  ],
+  "launched_epoch": 1792102615.24056,
+  "retry_basis": "Previous attempt failed bounded reservation before any worker/job receipt. This launch follows established startup of the two healthy jobs; no fit or seed is retried."
+}
