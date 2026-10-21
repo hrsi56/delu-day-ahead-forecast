@@ -88,8 +88,29 @@ private copy.
 
 ### Items that exist only on the drive
 
-None yet. Every item above is also on the Owner's machine. The cleanup that follows this snapshot
-lists here whatever it deletes locally.
+The cleanup of 2026-10-21, approved by the Owner, deleted these locally. They now exist only in this
+snapshot:
+
+| Item | Snapshot path | Size | What still holds the same information locally |
+|---|---|---:|---|
+| CP-26's stored bootstrap outputs | `local/artifacts/cp-26/cold-rerun-2026-10-15/r16/final-analysis-inputs/reports/rebaseline/cold-rerun-2026-10-15/inference/` | 10.1 GB | `report.json`'s `inference_endpoints` (16,024 endpoints) and `inference-manifest.json`, which lists each file's hash |
+| CP-26's stored diagnostics | `.../cold-rerun-2026-10-15/diagnostics/`, beside `inference/` | 21.8 GB | `report.json`'s `diagnostic_tables` and `diagnostics-manifest.json` |
+
+CP-28, its no-training supplement and 4.7T read the summaries, which stay local. Copy these two
+folders back from the drive only to rebuild CP-26's report from its stored inputs, or to audit the
+inference. They never need recomputing.
+
+**Deleted locally and in no snapshot,** because they can be rebuilt or are no longer needed (the
+moves are listed in `.local/artifacts/backup-2026-10-21/cleanup-moves.tsv`):
+
+- the abandoned r14 run's local outputs (`.local/artifacts/cp-26/continuation-v21-r14/`). Its
+  committed outputs are in `evidence/cp-26`;
+- test temporaries;
+- ten Git diffs, which can be rebuilt from tags on GitHub or from the CP-26 bundle;
+- the compressed replay-state copy;
+- the local Space build `dist/`;
+- `.local/tmp/`, except 176 files (about 100 MB) that committed records cite by hash. Those stay in
+  place, are not in this snapshot, and go into the next one.
 
 ## How to restore
 
