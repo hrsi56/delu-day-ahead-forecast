@@ -305,6 +305,7 @@ def active_child(budget):
     return jobs[-1] if jobs and jobs[-1].get('child_identity') and jobs[-1]['charged_wall_seconds'] > 0 else None
 
 
+@pytest.mark.stress
 def test_outer_monitor_hard_death_retains_independent_failed_job_receipt(tmp_path):
     command = [sys.executable, '-B', '-c', 'import time; time.sleep(1.0); raise SystemExit(7)']
     with real_monitor(tmp_path, command, workers=2) as (proc, budget):
@@ -324,6 +325,7 @@ def test_outer_monitor_hard_death_retains_independent_failed_job_receipt(tmp_pat
         assert B.total_seconds(state) == before
 
 
+@pytest.mark.stress
 def test_supervisor_hard_death_gets_independent_bound_ending_receipt(tmp_path, monkeypatch):
     command = [sys.executable, '-B', '-c', 'import time; time.sleep(30)']
     with real_monitor(tmp_path, command) as (proc, budget):
@@ -347,6 +349,7 @@ def test_supervisor_hard_death_gets_independent_bound_ending_receipt(tmp_path, m
         assert proc.returncode == 70
 
 
+@pytest.mark.stress
 def test_registered_detached_worker_is_not_lost_when_parent_exits(tmp_path):
     marker = tmp_path / 'registered-worker.ready'
     worker = ('from cp26.supervisor import register_worker; from pathlib import Path; import time; '

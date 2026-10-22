@@ -8,6 +8,7 @@ import hashlib
 import json
 
 from cp26 import harness as H
+from cp26_ledger_snapshot import identity_path
 
 ROOT = Path(__file__).resolve().parents[1]
 INITIAL = '5cc3cc083c4340fd8d792eeaf6551a007987a877'
@@ -50,7 +51,7 @@ def test_anchor_commit_and_landed_base_are_distinct_and_explicit():
     assert authority['cumulative_before']['continuation_authority_sha256'] == H.PINS[H.SCIENTIFIC_AUTHORITY_PATH]
     for name, expected in H.PINS.items():
         if name not in ('capstone_v21.md', H.SCIENTIFIC_AUTHORITY_PATH):
-            assert sha256(ROOT / name) == expected, name
+            assert sha256(identity_path(ROOT, name)) == expected, name
     cp25 = json.loads((ROOT / 'reports/development-inputs/manifest.json').read_text())['outputs_sha256']
     assert all(sha256(ROOT / name) == cp25[name] for name in H.CP25_READ)
     cp15 = json.loads((ROOT / 'reports/cp15/artifact-manifest.json').read_text())['artifact_sha256']

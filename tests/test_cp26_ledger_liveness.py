@@ -869,6 +869,7 @@ def three_real_monitors(tmp_path, budget, commands):
             process.communicate(timeout=5)
 
 
+@pytest.mark.stress
 def test_three_jobs_keep_fresh_supervision_with_full_future_history(tmp_path):
     budget = B.Budget(tmp_path / '.local/artifacts/cp-26/ledger/budget.json')
     before = history_ledger(budget)
@@ -940,6 +941,7 @@ def test_three_jobs_keep_fresh_supervision_with_full_future_history(tmp_path):
             B.total_seconds(before) + sum(job['wall_seconds'] * job['workers'] for job in completed))
 
 
+@pytest.mark.stress
 def test_wedged_supervisor_lock_still_gets_independent_ending_receipt(tmp_path):
     executed = tmp_path / 'worker.executed'
     wedged = tmp_path / 'supervisor.wedged'
@@ -982,6 +984,7 @@ def test_wedged_supervisor_lock_still_gets_independent_ending_receipt(tmp_path):
         assert S.identity_status(job['supervisor_identity']) in ('gone', 'reused')
 
 
+@pytest.mark.stress
 def test_supervisor_startup_accounting_wait_uses_declared_poll_cadence(tmp_path):
     marker = tmp_path / 'startup-sleep.json'
     patch = (
@@ -1568,6 +1571,7 @@ def test_supervisor_start_guard_requires_evidenced_pid_create_time_and_origin(ow
     assert job == before
 
 
+@pytest.mark.stress
 def test_duplicate_live_request_refuses_before_spawn_and_preserves_original_clock_and_receipt(tmp_path):
     root = Path(__file__).resolve().parents[1]
     ready = tmp_path / 'original-worker.ready'
@@ -1998,6 +2002,7 @@ def test_execution_append_rejects_invalid_counter_or_event_binding_without_chang
     assert budget.path.read_bytes() == raw
 
 
+@pytest.mark.stress
 def test_fast_terminal_job_allows_read_only_late_launcher_binding_and_same_receipt(tmp_path):
     root = Path(__file__).resolve().parents[1]
     # Delay only the launcher's captured-identity return until the dedicated
@@ -2111,6 +2116,7 @@ RICH_ADMIN_WAIT_SECONDS = 160
 RICH_ADMIN_OWNER_DEADLINE_SECONDS = RICH_ADMIN_READY_SECONDS + RICH_ADMIN_WAIT_SECONDS + 20
 
 
+@pytest.mark.stress
 def test_rich_closed_jobs_three_busy_owners_accept_fourth_admin_with_full_future_history(tmp_path):
     """Four compute slots; controller blocks during the four-inner-job overlap."""
     budget = B.Budget(tmp_path / '.local/artifacts/cp-26/ledger/budget.json')
@@ -2353,6 +2359,7 @@ def test_actual_search_corrupt_stored_counter_is_noncacheable_operational_abort(
     assert budget.path.read_bytes() == before
 
 
+@pytest.mark.stress
 def test_actual_search_accounting_timeout_aborts_without_fit_or_failed_trial_cache(tmp_path):
     root = Path(__file__).resolve().parents[1]
     cache_root = tmp_path / 'trial-cache'
