@@ -79,9 +79,12 @@ equals `<candidate>^{tree}`. Use a fresh `UV_PROJECT_ENVIRONMENT` for each copy/
 `UV_PYTHON=3.12` or `3.13`, unset `PYTHONDONTWRITEBYTECODE`, and export
 `MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1`. No credentials are needed. Keep temporary files,
 caches and pytest temporary roots inside this project.
-Set `GIT_CEILING_DIRECTORIES=<copy>/.local/tmp` at the temporary-root boundary: otherwise the
-existing session-hook test's intentionally non-repository directory discovers the enclosing
-scratch repository. Git repositories explicitly created by other fixtures still work normally.
+Place an invalid `.git` sentinel file at `<copy>/.local/tmp/.git` to stop parent-repository
+discovery from the temporary root. Otherwise the existing session-hook test's intentionally
+non-repository directory discovers the enclosing scratch repository. That fixture strips all
+`GIT_*` environment variables, so an environment ceiling alone is insufficient. Repositories
+explicitly created by other fixtures still work normally. The sentinel is ignored scratch
+material, never part of the candidate tree, and is removed with the copy.
 
 1. `CI=true`, Python 3.12 and 3.13 separately: run all seven issued workflow commands in order.
    Expect 16 additional skips, each carrying the supervision-stress reason.
