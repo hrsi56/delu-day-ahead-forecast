@@ -172,7 +172,15 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   supervision stress tests off GitHub's runner and froze CP-26's exposure ledger as evidence, so
   the live ledger can grow.
 
-**Next: CP-28, 4.8** (v21-r17 §24.8). The Owner
+**Active Track B work: CP-28, 4.8** (v21-r17 §24.8). Issued 2026-10-24.
+- **The brief:** `57cb6d53…`, canonical copy `.local/artifacts/cp-28/issued-brief.md`, launch
+  envelope `.local/artifacts/cp-28/launch-envelope.md`.
+- **It runs** in the Owner's Lead session on `gauntlet/cp-28`, with a 40-machine-hour ceiling.
+- **First the r17 GFS note** (no training), then the seven arms on CP-26's stored ledger, which
+  is read from the local-only `evidence/cp-26`.
+- **On its return:** the receipt, the LAND, then CP-17.
+
+The Owner
 confirmed CP-28 on 2026-10-19. Its brief opens with r17's no-training GFS supplement, and its arms
 read CP-26's stored forecasts from `evidence/cp-26`. The Owner's order from there is in the
 [programme plan](docs/track-b/programme-plan-2026-10-11.md): PRES-5, CP-17, 4.7T (not before
@@ -958,6 +966,19 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-28 issued, 2026-10-24.**
+  - **The bar:** the brief (`57cb6d53…`) cites v21-r17 §24.8 verbatim, checked with
+    `scripts/bar.py check` at `a9be03a`.
+  - **Bound by hash:** the frozen protocol (`2b9286b0…`), the r17 supplement (`39f322af…`), the GFS
+    ruling and the CP-25 rulings.
+  - **The inputs:** CP-26's stored ledger, from the local-only tag, and CP-26's local `report.json`
+    and hourly scores.
+  - **Landing readiness:**
+    - every committed file under 50 MB, so the evidence tag can be pushed;
+    - the history-free `CI=true` suite green;
+    - no pinned file edited;
+    - a whole-suite Critic.
 
 - **CP-26-CI received, landed and closed, 2026-10-24.**
   - **The return:** PASS on `9b6a0c3`, with one focused Critic.
