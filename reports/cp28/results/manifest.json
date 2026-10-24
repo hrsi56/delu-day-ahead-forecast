@@ -1,0 +1,59 @@
+{
+  "code_sha256": {
+    "src/cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+    "src/cp16/residuals.py": "f442714ee867310bf3b820cf12dc6055d57b53d7630a751275c6311aa4f71580",
+    "src/cp25/guard.py": "3648d56261869455cbaddbb9a97cb3533256f61b191924d4645f2ba9614bf48c",
+    "src/cp28/__init__.py": "45e88a5021a7e623823bdee5afc2b1b15018453c31aba9e537b278d49d481d6e",
+    "src/cp28/engine.py": "efa12913c1aeac42fde49083e89cf8b5066332404b72c161294b7620bedd5a24",
+    "src/cp28/grid.py": "5d7cb2eeca839bb53dc171f85c2de0558b0feb57ba1268c36ff89860f52b4ce0",
+    "src/cp28/inference.py": "e4f6f3101bc12b7dccbd5ec5155d0d7cb5ca80d5b5cc32cff3418547d134c03f",
+    "src/cp28/meta.py": "bb0d69b0717cd0fbed370558084fbdadec4b9947f6ad506b88088be3aee7fcf5",
+    "src/cp28/pipeline.py": "2fd9a5967464fafd47fc02ad023f40f6419f10fdd1a32e87b4e85580ee7ea71d",
+    "src/cp28/reader.py": "1f4fc444176469c576cddb6c8239748fa45b68a2a9b54880230b3bdd03c898e2",
+    "src/cp28/scoring.py": "3b282f6c3075ffa523c45a40a9f5e42122f276a451fc77b4d7ad27743c838de1",
+    "src/cp28/states.py": "f654b3af7612ebf65c10c9b48f4a7c8948e591d5587d0cb38681a8e02e2f9c59"
+  },
+  "files": [
+    {
+      "bytes": 5531,
+      "path": "reports/cp28/results/bulk-manifest.json",
+      "sha256": "9f7cacf30f1a7e59760ad0aabb24430f9a0189648cf87c8edcc87fc17fa3402c"
+    },
+    {
+      "bytes": 1021,
+      "path": "reports/cp28/results/compound.json",
+      "sha256": "f66b7126a347b11c071cd03ba126a937af57119ee46979f38373856af6003d10"
+    },
+    {
+      "bytes": 858917,
+      "path": "reports/cp28/results/daily-losses.parquet",
+      "sha256": "7e9c972f24a99627fd7e9ed8fc80ecffbf4b50be55426805d5b574a6ede9b85d"
+    },
+    {
+      "bytes": 56130,
+      "path": "reports/cp28/results/descriptive.json",
+      "sha256": "a2a66b77db2a0b623ff5b4518eda96c7a41d12e981748f0cf7cd06a0c5bef01f"
+    },
+    {
+      "bytes": 16767,
+      "path": "reports/cp28/results/endpoints.parquet",
+      "sha256": "b124eefc8cd72a613bfbe53042499e019f7398fa2ba5ed72bb1461b7dd255055"
+    },
+    {
+      "bytes": 2270,
+      "path": "reports/cp28/results/holm.csv",
+      "sha256": "23826e33b2d461757dd015a15f33c6ac03b7d6a954eadc103bea9fbc3ca011ed"
+    },
+    {
+      "bytes": 1639,
+      "path": "reports/cp28/results/selection.json",
+      "sha256": "22a3dacfc06303a42db132ae3ba8ee8fc7e82606a886585fc40d02b82ae930b0"
+    }
+  ],
+  "finished_utc": "2026-10-24T19:23:07+00:00",
+  "forecast_manifest_sha256": "f092140ed028d18a973bfad11ad9aa0397ad3e492223c4da683bc8e775cf3ce8",
+  "schema": "cp28-results-manifest-v1",
+  "stage": "score",
+  "started_utc": "2026-10-24T19:20:54+00:00",
+  "wall_seconds": 133.3
+}
