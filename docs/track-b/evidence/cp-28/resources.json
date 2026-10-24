@@ -1,0 +1,209 @@
+{
+  "accounting": "each job is one worker; machine seconds are its wall seconds (/usr/bin/time); the history-free CI job counts its pytest worker once; the Integration Critic's own runs are outside this ledger",
+  "blas_threads": 1,
+  "ceiling_machine_hours": 40,
+  "cloud": false,
+  "cpu_only": true,
+  "gpu": false,
+  "jobs": 17,
+  "ledger": ".local/artifacts/cp-28/resource-ledger.jsonl",
+  "machine_hours": 0.7009,
+  "machine_seconds": 2523.103,
+  "max_concurrent_workers": 2,
+  "not_metered": "interactive inspection reads and short ad-hoc checks by the Lead",
+  "peak_rss_bytes": 1214840832,
+  "peak_rss_gb": 1.131,
+  "rows": [
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T18:48:36Z",
+      "exit_code": 0,
+      "job": "entry-identity",
+      "machine_seconds": 19.269,
+      "max_rss_bytes": 128319488,
+      "start_utc": "2026-10-24T18:48:16Z",
+      "wall_seconds": 19.269,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T18:50:56Z",
+      "exit_code": 0,
+      "job": "gfs-note",
+      "machine_seconds": 2.326,
+      "max_rss_bytes": 1076707328,
+      "start_utc": "2026-10-24T18:50:54Z",
+      "wall_seconds": 2.326,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T18:51:43Z",
+      "exit_code": 0,
+      "job": "gfs-note-2",
+      "machine_seconds": 2.6,
+      "max_rss_bytes": 1044299776,
+      "start_utc": "2026-10-24T18:51:40Z",
+      "wall_seconds": 2.6,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:12:01Z",
+      "exit_code": 0,
+      "job": "validate-scoring",
+      "machine_seconds": 8.584,
+      "max_rss_bytes": 251183104,
+      "start_utc": "2026-10-24T19:11:53Z",
+      "wall_seconds": 8.584,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:13:01Z",
+      "exit_code": 0,
+      "job": "causal-controls",
+      "machine_seconds": 54.772,
+      "max_rss_bytes": 1211432960,
+      "start_utc": "2026-10-24T19:12:06Z",
+      "wall_seconds": 54.772,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:14:33Z",
+      "exit_code": 0,
+      "job": "causal-controls-2",
+      "machine_seconds": 59.774,
+      "max_rss_bytes": 1203634176,
+      "start_utc": "2026-10-24T19:13:33Z",
+      "wall_seconds": 59.774,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:20:25Z",
+      "exit_code": 0,
+      "job": "forecast",
+      "machine_seconds": 339.267,
+      "max_rss_bytes": 985251840,
+      "start_utc": "2026-10-24T19:14:46Z",
+      "wall_seconds": 339.267,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:23:07Z",
+      "exit_code": 0,
+      "job": "score",
+      "machine_seconds": 134.493,
+      "max_rss_bytes": 1214840832,
+      "start_utc": "2026-10-24T19:20:53Z",
+      "wall_seconds": 134.493,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:33:32Z",
+      "exit_code": 0,
+      "job": "report",
+      "machine_seconds": 1.27,
+      "max_rss_bytes": 253739008,
+      "start_utc": "2026-10-24T19:33:31Z",
+      "wall_seconds": 1.27,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:33:53Z",
+      "exit_code": 0,
+      "job": "report-2",
+      "machine_seconds": 1.112,
+      "max_rss_bytes": 265109504,
+      "start_utc": "2026-10-24T19:33:52Z",
+      "wall_seconds": 1.112,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:34:12Z",
+      "exit_code": 0,
+      "job": "tests-results",
+      "machine_seconds": 5.738,
+      "max_rss_bytes": 479412224,
+      "start_utc": "2026-10-24T19:34:06Z",
+      "wall_seconds": 5.738,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:43:02Z",
+      "exit_code": 0,
+      "job": "lead-repro",
+      "machine_seconds": 503.059,
+      "max_rss_bytes": 1149992960,
+      "start_utc": "2026-10-24T19:34:39Z",
+      "wall_seconds": 503.059,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:43:51Z",
+      "exit_code": 1,
+      "job": "lead-ci312",
+      "machine_seconds": 550.906,
+      "max_rss_bytes": 1144078336,
+      "start_utc": "2026-10-24T19:34:40Z",
+      "wall_seconds": 550.906,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:45:39Z",
+      "exit_code": 0,
+      "job": "tests-cp28-final",
+      "machine_seconds": 75.122,
+      "max_rss_bytes": 1183170560,
+      "start_utc": "2026-10-24T19:44:23Z",
+      "wall_seconds": 75.122,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:45:58Z",
+      "exit_code": 1,
+      "job": "lead-ci312-2",
+      "machine_seconds": 0.108,
+      "max_rss_bytes": 13516800,
+      "start_utc": "2026-10-24T19:45:58Z",
+      "wall_seconds": 0.108,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:55:40Z",
+      "exit_code": 1,
+      "job": "lead-ci312-3",
+      "machine_seconds": 554.772,
+      "max_rss_bytes": 1161920512,
+      "start_utc": "2026-10-24T19:46:25Z",
+      "wall_seconds": 554.772,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T19:59:44Z",
+      "exit_code": 0,
+      "job": "lead-stress",
+      "machine_seconds": 209.931,
+      "max_rss_bytes": 1173045248,
+      "start_utc": "2026-10-24T19:56:14Z",
+      "wall_seconds": 209.931,
+      "workers": 1
+    }
+  ],
+  "supplement_note_jobs": [
+    "gfs-note",
+    "gfs-note-2"
+  ]
+}
