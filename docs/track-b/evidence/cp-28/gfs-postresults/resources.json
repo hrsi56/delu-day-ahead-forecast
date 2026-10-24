@@ -1,0 +1,36 @@
+{
+  "blas_threads": 1,
+  "cp28_cumulative_machine_seconds_at_note": 24.195,
+  "cpu_only": true,
+  "excluded": "interactive inspection reads by the Lead are not separately metered",
+  "identity": "cp28-gfs-postresults-v21-r17",
+  "jobs": [
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T18:50:56Z",
+      "exit_code": 0,
+      "job": "gfs-note",
+      "machine_seconds": 2.326,
+      "max_rss_bytes": 1076707328,
+      "start_utc": "2026-10-24T18:50:54Z",
+      "wall_seconds": 2.326,
+      "workers": 1
+    },
+    {
+      "blas_threads": 1,
+      "end_utc": "2026-10-24T18:51:43Z",
+      "exit_code": 0,
+      "job": "gfs-note-2",
+      "machine_seconds": 2.6,
+      "max_rss_bytes": 1044299776,
+      "start_utc": "2026-10-24T18:51:40Z",
+      "wall_seconds": 2.6,
+      "workers": 1
+    }
+  ],
+  "ledger": ".local/artifacts/cp-28/resource-ledger.jsonl (CP-28 ceiling: 40 machine-hours; not reset)",
+  "note_machine_seconds": 4.926,
+  "note_peak_rss_bytes": 1076707328,
+  "supplement_timebox": "about one hour; used well under it",
+  "workers": 1
+}
