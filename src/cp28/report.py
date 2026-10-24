@@ -194,9 +194,12 @@ def render(d) -> str:
         f = desc['fallbacks'][arm]
         L.append(f'| {arm} | {f["scored_dates"]} | {f["fallback_dates"]} | {f["by_source"]} | {f["by_reason"]} |')
     fallback_days = sorted(set(d['records'][d['records'].fallback & d['records'].scored].day))
-    cp26 = reader.read_table(d['root'], None, 'daily')
-    v5 = cp26[cp26.stream == 'nominal/v5'].set_index('delivery_date')
-    own = v5.loc[[pd.Timestamp(x).date() for x in fallback_days], 'output_source'].value_counts().to_dict() if fallback_days else {}
+    if (d['root'] / reader.RUN / 'scores/daily.parquet').exists():
+        cp26 = reader.read_table(d['root'], None, 'daily')
+        v5 = cp26[cp26.stream == 'nominal/v5'].set_index('delivery_date')
+        own = v5.loc[[pd.Timestamp(x).date() for x in fallback_days], 'output_source'].value_counts().to_dict() if fallback_days else {}
+    else:
+        own = 'unavailable: CP-26\'s committed daily table is absent from this tree'
     L += ['', f'On the {len(fallback_days)} fallback dates ({fallback_days[0] if fallback_days else "—"} … {fallback_days[-1] if fallback_days else "—"}), '
           f'the control\'s own emitted forecast, as CP-26 scored it, was: {own} (CP-26 `scores/daily.parquet`). The copies are scored as emitted.']
     L += ['', 'A missing member makes every arm use the control\'s complete forecast that day (then B0\'s); a solver failure uses A2\'s '
