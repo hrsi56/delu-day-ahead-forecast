@@ -93,3 +93,15 @@ def test_the_first_endpoint_rederives_from_a_fresh_registered_rng():
     result = inference.test_endpoint(d, days, block_days=14, stratified=True, rng=np.random.default_rng(inference.SEED),
                                      required_cell=False)
     assert result['status'] == stored.status and result['p'] == stored.p and result['n'] == stored.n
+
+
+def test_report_packet_and_owner_summary_regenerate_from_committed_records():
+    from cp28 import report
+    d = report.load(ROOT)
+    out = ROOT / pipeline.OUT
+    assert report.render(d) == (out / 'report.md').read_text(encoding='utf-8')
+    md, value = report.packet(d)
+    assert md == (out / 'publication-packet.md').read_text(encoding='utf-8')
+    assert json.loads((out / 'publication-packet.json').read_text()) == json.loads(json.dumps(pipeline.plain(value)))
+    assert json.loads((out / 'owner-summary.json').read_text()) == json.loads(json.dumps(pipeline.plain(report.summary(d))))
+    assert json.loads((out / 'MLflow-export-draft.json').read_text()) == json.loads(json.dumps(pipeline.plain(report.mlflow_export(d))))

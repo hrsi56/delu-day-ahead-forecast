@@ -45,14 +45,13 @@ def load(root: Path):
         for entry in manifest['files']:
             if reader.sha256(root / entry['path']) != entry['sha256']:
                 raise SystemExit(f'{entry["path"]} differs from its manifest')
-    return {'forecast_manifest': r(f'{FORECAST}/manifest.json'), 'results_manifest': r(f'{RESULTS}/manifest.json'),
+    return {'root': root, 'forecast_manifest': r(f'{FORECAST}/manifest.json'), 'results_manifest': r(f'{RESULTS}/manifest.json'),
             'cross': r(f'{FORECAST}/cross-checks.json'), 'records': pd.read_parquet(root / FORECAST / 'arm-days.parquet'),
             'fits': pd.read_parquet(root / FORECAST / 'fits.parquet'), 'selection': r(f'{RESULTS}/selection.json'),
             'compound': r(f'{RESULTS}/compound.json'), 'holm': pd.read_csv(root / RESULTS / 'holm.csv'),
             'endpoints': pd.read_parquet(root / RESULTS / 'endpoints.parquet'), 'descriptive': r(f'{RESULTS}/descriptive.json'),
             'bulk': r(f'{RESULTS}/bulk-manifest.json'), 'daily': pd.read_parquet(root / RESULTS / 'daily-losses.parquet'),
-            'gfs': pd.read_csv(root / 'docs/track-b/evidence/cp-28/gfs-postresults/table.csv'),
-            'resources': r('docs/track-b/evidence/cp-28/resources.json') if (root / 'docs/track-b/evidence/cp-28/resources.json').exists() else None}
+            'gfs': pd.read_csv(root / 'docs/track-b/evidence/cp-28/gfs-postresults/table.csv')}
 
 
 def pct(ratio):
@@ -194,6 +193,12 @@ def render(d) -> str:
     for arm in inference.ARMS:
         f = desc['fallbacks'][arm]
         L.append(f'| {arm} | {f["scored_dates"]} | {f["fallback_dates"]} | {f["by_source"]} | {f["by_reason"]} |')
+    fallback_days = sorted(set(d['records'][d['records'].fallback & d['records'].scored].day))
+    cp26 = reader.read_table(d['root'], None, 'daily')
+    v5 = cp26[cp26.stream == 'nominal/v5'].set_index('delivery_date')
+    own = v5.loc[[pd.Timestamp(x).date() for x in fallback_days], 'output_source'].value_counts().to_dict() if fallback_days else {}
+    L += ['', f'On the {len(fallback_days)} fallback dates ({fallback_days[0] if fallback_days else "—"} … {fallback_days[-1] if fallback_days else "—"}), '
+          f'the control\'s own emitted forecast, as CP-26 scored it, was: {own} (CP-26 `scores/daily.parquet`). The copies are scored as emitted.']
     L += ['', 'A missing member makes every arm use the control\'s complete forecast that day (then B0\'s); a solver failure uses A2\'s '
           'complete forecast; an H-history shortage, missing scale or failed H construction uses the control, then B0. Copied '
           'forecasts are scored as emitted and never enter an H buffer or the learning ledger.', '']
@@ -249,10 +254,8 @@ def render(d) -> str:
           '`reports/cp28/results/bulk-manifest.json` (every computable endpoint\'s block starts and replicate statistics; the descriptive ratio pivots).',
           '- Origin-level weights, shared-fit identifiers, window dates, scaler statistics and parameters, feature support, issue-time '
           'states, native centrals, emitted quantiles, statuses and H-buffer provenance are in `reports/cp28/forecast/`.', '']
-    if d['resources']:
-        res = d['resources']
-        L += ['## Resources', '', f'{res["machine_hours"]:.2f} machine-hours of the 40-hour ceiling ({res["jobs"]} ledgered jobs, one worker each, '
-              f'BLAS 1, CPU only, peak RSS {res["peak_rss_gb"]:.2f} GB).', '']
+    L += ['## Resources', '', 'Machine time, peak memory and every ledgered job are in `docs/track-b/evidence/cp-28/resources.json` '
+          '(CP-28\'s 40-machine-hour ceiling; one worker per job, BLAS 1, CPU only, no cloud or GPU).', '']
     return '\n'.join(L)
 
 
