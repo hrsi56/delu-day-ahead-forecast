@@ -1,0 +1,47 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.15, pytest-9.1.1, pluggy-1.6.0 -- /Users/djourno/Downloads/PJM/.venv/bin/python
+rootdir: /Users/djourno/Downloads/PJM/.local/worktrees/cp-28/lead
+configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
+plugins: anyio-4.15.1
+collecting ... collected 38 items
+
+tests/cp28/test_cp28_causal_controls.py::test_target_day_masking_produces_zero_change_and_a_released_change_follows PASSED [  2%]
+tests/cp28/test_cp28_causal_controls.py::test_truth_is_never_requested_beyond_d_minus_2 PASSED [  5%]
+tests/cp28/test_cp28_causal_controls.py::test_available_past_input_mutation_changes_the_forecast PASSED [  7%]
+tests/cp28/test_cp28_causal_controls.py::test_d_minus_1_error_mutation_produces_zero_change PASSED [ 10%]
+tests/cp28/test_cp28_causal_controls.py::test_d_minus_2_released_error_can_change_learning PASSED [ 13%]
+tests/cp28/test_cp28_causal_controls.py::test_d_minus_1_price_is_a_predictor_not_feedback PASSED [ 15%]
+tests/cp28/test_cp28_causal_controls.py::test_duplicate_release_changes_no_buffer PASSED [ 18%]
+tests/cp28/test_cp28_causal_controls.py::test_future_rows_change_no_training_or_scaler_feature PASSED [ 21%]
+tests/cp28/test_cp28_causal_controls.py::test_copied_fallback_errors_never_enter_member_or_arm_history PASSED [ 23%]
+tests/cp28/test_cp28_causal_controls.py::test_valid_native_central_on_h_shortage_dates_enters_once_after_d_minus_2 PASSED [ 26%]
+tests/cp28/test_cp28_causal_controls.py::test_hard_central_failures_never_enter PASSED [ 28%]
+tests/cp28/test_cp28_causal_controls.py::test_dst_canonical_keys_survive PASSED [ 31%]
+tests/cp28/test_cp28_causal_controls.py::test_shared_unshrunk_fits_and_deployment_rules PASSED [ 34%]
+tests/cp28/test_cp28_causal_controls.py::test_startup_learned_arm_is_native_not_a_fallback PASSED [ 36%]
+tests/cp28/test_cp28_gfs_note.py::test_break_even_cases PASSED           [ 39%]
+tests/cp28/test_cp28_gfs_note.py::test_mixture_reproduces_endpoints_and_break_even PASSED [ 42%]
+tests/cp28/test_cp28_gfs_note.py::test_summary_pairs_only_complete_dates_and_uses_ratio_of_means PASSED [ 44%]
+tests/cp28/test_cp28_gfs_note.py::test_blocks_partition_the_local_day PASSED [ 47%]
+tests/cp28/test_cp28_gfs_note.py::test_note_regenerates_byte_for_byte PASSED [ 50%]
+tests/cp28/test_cp28_pipeline.py::test_forecast_files_losses_and_analysis_on_a_synthetic_ledger PASSED [ 52%]
+tests/cp28/test_cp28_pipeline.py::test_permuted_outcomes_cannot_move_calendar_masks PASSED [ 55%]
+tests/cp28/test_cp28_units.py::test_grid_enumeration_order_and_size PASSED [ 57%]
+tests/cp28/test_cp28_units.py::test_grid_tie_breaks_by_integer_distance_then_lowest_index PASSED [ 60%]
+tests/cp28/test_cp28_units.py::test_each_date_weighs_equally_including_dst_lengths PASSED [ 63%]
+tests/cp28/test_cp28_units.py::test_weighted_central_uses_the_grid_arithmetic PASSED [ 65%]
+tests/cp28/test_cp28_units.py::test_seed_and_initialization_are_the_registered_draws PASSED [ 68%]
+tests/cp28/test_cp28_units.py::test_gradient_matches_finite_differences_including_the_l2_term PASSED [ 71%]
+tests/cp28/test_cp28_units.py::test_adam_update_rule_and_deterministic_fit PASSED [ 73%]
+tests/cp28/test_cp28_units.py::test_scaler_uses_row_weights_and_zero_sd_scale_one PASSED [ 76%]
+tests/cp28/test_cp28_units.py::test_meta_loss_is_mean_daily_mae PASSED   [ 78%]
+tests/cp28/test_cp28_units.py::test_wis_matches_the_registered_formula PASSED [ 81%]
+tests/cp28/test_cp28_units.py::test_runs_split_at_gaps_and_years_and_join_2020_to_2021 PASSED [ 84%]
+tests/cp28/test_cp28_units.py::test_draw_plan_and_hac_match_cp26_reference PASSED [ 86%]
+tests/cp28/test_cp28_units.py::test_one_sided_boundary_and_degenerate_endpoints PASSED [ 89%]
+tests/cp28/test_cp28_units.py::test_twenty_endpoints_and_the_compound_maximum PASSED [ 92%]
+tests/cp28/test_cp28_units.py::test_holm_step_down_and_adjusted_p PASSED [ 94%]
+tests/cp28/test_cp28_units.py::test_sensitivity_variants_and_pass_rule PASSED [ 97%]
+tests/cp28/test_cp28_units.py::test_selection_ties_and_simplicity_order PASSED [100%]
+
+============================= 38 passed in 58.87s ==============================
