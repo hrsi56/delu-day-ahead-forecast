@@ -8,7 +8,10 @@ import numpy as np
 import pandas as pd
 
 import cp28_synthetic as S
+from pathlib import Path
 from cp28 import inference, pipeline, scoring, states
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_forecast_files_losses_and_analysis_on_a_synthetic_ledger(tmp_path):
@@ -64,3 +67,37 @@ def test_permuted_outcomes_cannot_move_calendar_masks(tmp_path):
     a, _, _ = pipeline.arm_losses(tmp_path / 'forecast', prices)
     b, _, _ = pipeline.arm_losses(tmp_path / 'forecast', permuted)
     assert a['A2'] != b['A2']
+
+
+def test_report_and_packet_render_from_synthetic_results(tmp_path):
+    import shutil
+    from cp28 import report
+    root = tmp_path
+    first = date(2020, 9, 1)
+    prices = S.price_series(first, date(2021, 3, 31))
+    days = S.ledger(first, 180, prices, scored_from=date(2020, 12, 29))
+    result = S.run(days, prices, minimum=20, full=40)
+    forecast = root / pipeline.FORECAST
+    pipeline.write_forecast(forecast, result, states.issue_states(prices, [d.day for d in days]))
+    pipeline.write_json(forecast / 'cross-checks.json', {'learning_rows': 'synthetic', 'issue_states': 'synthetic'})
+    pipeline.write_json(forecast / 'manifest.json', {'origins': len(days), 'issues': len(result.issues), 'wall_seconds': 0,
+                                                     'files': [pipeline.file_entry(p, root) for p in sorted(forecast.iterdir())]})
+    losses, daily, records = pipeline.arm_losses(forecast, prices)
+    losses.update(pipeline.stored_losses(days, prices))
+    flags = pd.DataFrame({'all_eligible': True, 'never_scored': False, 'old_fold_2_5': False, 'newly_opened': False,
+                          'year': [d.day.year for d in days], 'season': [states.season(d.day) for d in days]},
+                         index=[d.day for d in days])
+    results = root / pipeline.RESULTS
+    pipeline.analyze(losses, records, flags, results, tmp_path / 'bulk', replicates=99)
+    daily.to_parquet(results / 'daily-losses.parquet', index=False)
+    pipeline.write_json(results / 'manifest.json', {'wall_seconds': 0,
+                                                    'files': [pipeline.file_entry(p, root) for p in sorted(results.iterdir())]})
+    gfs = root / 'docs/track-b/evidence/cp-28/gfs-postresults'
+    gfs.mkdir(parents=True)
+    shutil.copy(ROOT / 'docs/track-b/evidence/cp-28/gfs-postresults/table.csv', gfs / 'table.csv')
+    report.main([str(root)])
+    text = (root / pipeline.OUT / 'report.md').read_text()
+    assert 'No arm passes. The control' in text and '| A7 |' in text
+    packet = json.loads((root / pipeline.OUT / 'publication-packet.json').read_text())
+    assert packet['status'] == 'DRAFT_LOCAL' and len(packet['registry']) == 9
+    assert json.loads((root / pipeline.OUT / 'owner-summary.json').read_text())['selected'] == 'control'
