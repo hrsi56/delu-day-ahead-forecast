@@ -163,7 +163,16 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   generation's publication needs a compaction or budget decision first (A-PRES4-5). The other
   advisories are in the closure record.
 
-**Next: the off-device backup and the cleanup, then CP-28, 4.8** (v21-r17 §24.8). The Owner
+**Since CP-26 (2026-10-21 to 2026-10-24):**
+- **The off-device backup is done.** Snapshot 2026-10-21 (41.3 GB) is checked on the Owner's
+  drive, and the new locked anchor
+  [`docs/track-b/backup-register.md`](docs/track-b/backup-register.md) records it.
+- **The local cleanup** took the folder from 61 GB to 16.5 GB.
+- **CP-26-CI** ([landing record](docs/track-b/cp-26-ci-landing-2026-10-24.md)) took CP-26's
+  supervision stress tests off GitHub's runner and froze CP-26's exposure ledger as evidence, so
+  the live ledger can grow.
+
+**Next: CP-28, 4.8** (v21-r17 §24.8). The Owner
 confirmed CP-28 on 2026-10-19. Its brief opens with r17's no-training GFS supplement, and its arms
 read CP-26's stored forecasts from `evidence/cp-26`. The Owner's order from there is in the
 [programme plan](docs/track-b/programme-plan-2026-10-11.md): PRES-5, CP-17, 4.7T (not before
@@ -949,6 +958,32 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-26-CI received, landed and closed, 2026-10-24.**
+  - **The return:** PASS on `9b6a0c3`, with one focused Critic.
+  - **The receipt:**
+    - CI=true on a history-free copy: seven steps green, 2,190 passed and 32 skipped (16 of them
+      stress cases);
+    - the stress cases pass locally;
+    - the ledger controls behave as intended.
+  - **The LAND:** the Orchestrator executed it on the Owner's instruction from his phone. CI passed
+    on the temporary branch (run 40111714100). `main` = `land/cp-26-ci` = `e4a02df`, and
+    `evidence/cp-26-ci` = `644ac1a` was pushed.
+  - **The reclaim:** a verified bundle.
+
+- **Backup, register and cleanup, 2026-10-21.**
+  - **The snapshot:** 145,949 files, 41.3 GB, checked on the Owner's drive (`ALL OK`). The CP-26
+    bundle was restore-tested from it.
+  - **The register** is a new locked anchor (`ec9b9e1`), and `AGENTS.md` lists it.
+  - **The cleanup:** the Owner approved items 1–7 and 9, and they were moved to the Trash for him
+    to empty.
+  - **Drive-only now:** CP-26's inference (10.1 GB) and diagnostics (21.8 GB), recorded at
+    `2a9e4fd`.
+  - **A red CI on `main`:** `2abd63b` edited the exposure ledger, which CP-26 pins.
+    - `c1c4647` restored it.
+    - CP-26's rich-admin stress test then flaked once on GitHub at `2a9e4fd`, and passed on
+      re-run.
+    - That led to CP-26-CI.
 
 - **CP-26 received, landed and closed, 2026-10-19 to 2026-10-21.**
   - **The return:** PASS on `6f57feb`, plus the Owner's GFS ruling and r17. The PASS on `f014e5b`
