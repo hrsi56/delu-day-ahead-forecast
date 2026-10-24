@@ -1,11 +1,35 @@
 from __future__ import annotations
 
 from datetime import date
+import os
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from delu_forecast.ingest import BERLIN
+
+
+STRESS_SKIP_REASON = (
+    "CP-26 supervision stress test, run locally because a 4-vCPU CI runner cannot host it "
+    "reliably, RUN_STRESS=1 forces it."
+)
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "stress: CP-26 real-process supervision timing tests")
+    if os.environ.get("CI") == "true" and os.environ.get("RUN_STRESS") != "1":
+        # Keep the reason visible in the workflow's unmodified `pytest -q` output.
+        if "s" not in config.option.reportchars:
+            config.option.reportchars += "s"
+
+
+def pytest_collection_modifyitems(items):
+    if os.environ.get("CI") == "true" and os.environ.get("RUN_STRESS") != "1":
+        skip = pytest.mark.skip(reason=STRESS_SKIP_REASON)
+        for item in items:
+            if item.get_closest_marker("stress"):
+                item.add_marker(skip)
 
 
 def synthetic_snapshot(start: date, end_exclusive: date) -> pd.DataFrame:

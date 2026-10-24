@@ -86,6 +86,7 @@ def long_worker(marker):
 
 
 @pytest.mark.parametrize('lose_launcher', [False, True])
+@pytest.mark.stress
 def test_sigstop_supervisor_stops_verified_worker_even_after_launcher_loss(tmp_path, monkeypatch, lose_launcher):
     marker = tmp_path / 'active.marker'
     with real_monitor(tmp_path, long_worker(marker)) as (proc, budget):
@@ -118,6 +119,7 @@ def test_sigstop_supervisor_stops_verified_worker_even_after_launcher_loss(tmp_p
             assert proc.returncode == 70
 
 
+@pytest.mark.stress
 def test_supervisor_stopped_inside_ledger_lock_is_killed_before_receipt(tmp_path):
     marker = tmp_path / 'worker.marker'
     lock_marker = tmp_path / 'supervisor-lock.marker'
@@ -150,6 +152,7 @@ def test_supervisor_stopped_inside_ledger_lock_is_killed_before_receipt(tmp_path
         assert proc.returncode == 70
 
 
+@pytest.mark.stress
 def test_stopped_watchdog_is_detected_by_supervisor(tmp_path):
     marker = tmp_path / 'active.marker'
     with real_monitor(tmp_path, long_worker(marker)) as (proc, budget):
@@ -173,6 +176,7 @@ def test_stopped_watchdog_is_detected_by_supervisor(tmp_path):
         assert proc.returncode == 70
 
 
+@pytest.mark.stress
 def test_launcher_shutdown_receipts_workers_and_watchdog(tmp_path):
     marker = tmp_path / 'active.marker'
     with real_monitor(tmp_path, long_worker(marker)) as (proc, budget):
@@ -240,6 +244,7 @@ def test_serialized_sampler_ticks_do_not_regress_or_double_charge(tmp_path):
     assert B.total_seconds(budget.read()) == 8.0
 
 
+@pytest.mark.stress
 def test_launcher_enforces_when_both_accounting_loops_are_stopped(tmp_path):
     marker = tmp_path / 'active.marker'
     with real_monitor(tmp_path, long_worker(marker)) as (proc, budget):
