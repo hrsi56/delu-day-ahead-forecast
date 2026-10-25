@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-10-24T19:12:01+00:00",
+  "claim": "the CP-28 scorer reproduces CP-26 stored v5 and B0 daily losses; no CP-28 arm exists yet and none is scored here",
+  "streams": {
+    "B0": {
+      "cp26_dates": 2068,
+      "extra_here": 0,
+      "max_relative_difference": 3.2146082616338564e-16,
+      "missing_here": 0
+    },
+    "v5": {
+      "cp26_dates": 2068,
+      "extra_here": 0,
+      "max_relative_difference": 3.4340431899136514e-16,
+      "missing_here": 0
+    }
+  }
+}

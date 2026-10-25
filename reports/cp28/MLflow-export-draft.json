@@ -1,0 +1,154 @@
+{
+  "experiment": "cp-28-stored-forecasts",
+  "runs": [
+    {
+      "metrics": {
+        "MAE_arm": 17.18690839935313,
+        "MAE_ratio_to_B0": 0.49741114775496587,
+        "MAE_ratio_to_control": 0.93104781357463,
+        "WIS_arm": 9.682532615295441,
+        "WIS_ratio_to_B0": 0.4579770082975788,
+        "WIS_ratio_to_control": 0.8906970179035324
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "DDNN-2 alone, with its own Johnson SU quantiles"
+      },
+      "run_key": "cp-28/A1",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "True"
+      }
+    },
+    {
+      "metrics": {
+        "MAE_arm": 17.569446870209454,
+        "MAE_ratio_to_B0": 0.5084823011833647,
+        "MAE_ratio_to_control": 0.9517706567191463,
+        "WIS_arm": 10.364086910046503,
+        "WIS_ratio_to_B0": 0.4902140488843957,
+        "WIS_ratio_to_control": 0.9533932567899523
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "equal weights (1/3, 1/3, 1/3), its own H layer"
+      },
+      "run_key": "cp-28/A2",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "False"
+      }
+    },
+    {
+      "metrics": {
+        "MAE_arm": 17.434914090963,
+        "MAE_ratio_to_B0": 0.5045887501978854,
+        "MAE_ratio_to_control": 0.9444827578684,
+        "WIS_arm": 10.308612951388104,
+        "WIS_ratio_to_B0": 0.4875901695096272,
+        "WIS_ratio_to_control": 0.9482902025053445
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "global simplex-grid MAE fit on the latest \u2264728 dates (min 364), deployed 0.5\u00b7fit + 0.5\u00b7w0"
+      },
+      "run_key": "cp-28/A3",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "False"
+      }
+    },
+    {
+      "metrics": {
+        "MAE_arm": 17.274135187668048,
+        "MAE_ratio_to_B0": 0.49993560275772464,
+        "MAE_ratio_to_control": 0.9357730561056717,
+        "WIS_arm": 10.231349531310398,
+        "WIS_ratio_to_B0": 0.48393566387727543,
+        "WIS_ratio_to_control": 0.9411827337685463
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "per-block grid fits (min 728), deployed 0.25\u00b7block + 0.75\u00b7A3 deployed; before 728 = A3"
+      },
+      "run_key": "cp-28/A4",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "False"
+      }
+    },
+    {
+      "metrics": {
+        "MAE_arm": 17.51902456771338,
+        "MAE_ratio_to_B0": 0.5070230151515636,
+        "MAE_ratio_to_control": 0.9490391838210807,
+        "WIS_arm": 10.382390606933981,
+        "WIS_ratio_to_B0": 0.49107980092204656,
+        "WIS_ratio_to_control": 0.955077015459511
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "NumPy 16\u21928\u21923 meta-learner (min 364), deployed 0.5\u00b7network + 0.5\u00b7w0"
+      },
+      "run_key": "cp-28/A5",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "False"
+      }
+    },
+    {
+      "metrics": {
+        "MAE_arm": 17.10048915897446,
+        "MAE_ratio_to_B0": 0.4949100642240568,
+        "MAE_ratio_to_control": 0.926366317465163,
+        "WIS_arm": 10.129356652838439,
+        "WIS_ratio_to_B0": 0.47911147219043737,
+        "WIS_ratio_to_control": 0.9318004000019794
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "A3's fit unshrunk (min 364)"
+      },
+      "run_key": "cp-28/A6",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "False"
+      }
+    },
+    {
+      "metrics": {
+        "MAE_arm": 17.275907797759547,
+        "MAE_ratio_to_B0": 0.499986904364718,
+        "MAE_ratio_to_control": 0.9358690817963697,
+        "WIS_arm": 10.294043652189552,
+        "WIS_ratio_to_B0": 0.4869010518660259,
+        "WIS_ratio_to_control": 0.9469499714041762
+      },
+      "params": {
+        "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+        "rule": "A5's network unshrunk (min 364)"
+      },
+      "run_key": "cp-28/A7",
+      "tags": {
+        "checkpoint": "CP-28",
+        "evidence_class": "development_post_selection",
+        "passes_all_four": "True",
+        "selected": "False"
+      }
+    }
+  ],
+  "schema": "cp28-mlflow-export-draft-v1",
+  "status": "local draft, never uploaded"
+}

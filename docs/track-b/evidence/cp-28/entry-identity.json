@@ -1,0 +1,30 @@
+{
+  "all_member_valid_days": 2354,
+  "bytes": 1090684123,
+  "extraction": "git -C <primary> archive evidence/cp-26 <paths> | tar -x -C .local/artifacts/cp-28/inputs",
+  "file_hashes_sha256": "e99ec38f41dd2a91e31f9e02bbab83c967ed5826e507d1448c2953f81093776a",
+  "files": 2441,
+  "first_day": "2020-01-01",
+  "git_tag_checked": "evidence/cp-26",
+  "identity_failures": [],
+  "last_day": "2026-09-06",
+  "local_inputs": {
+    "learning-ledger.json": "6025242201c79573db85e515e259c5b2f1a854793973d96e4a5193a77b5dd42d",
+    "report.json": "1b1aa805a066cda2da142cb9039fe63dd7a02c9b859f8129bd29b943ec1756d8",
+    "scores/hourly.parquet": "f465d5e780bddaa799bef754ae86ebc3d0928cf3397c354aa23a656fd48be709"
+  },
+  "manifest": "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json",
+  "manifest_sha256": "b9f10917ab471177eda1b5f8ef735ddca5a651fa2e9bb47844497f3a6deaf84d",
+  "parsed_days": 2441,
+  "recorded_utc": "2026-10-24T18:48:36Z",
+  "scored_days": 2078,
+  "tag": {
+    "evidence/cp-26": "ca2033120288c6a396fec8c01404f0220523d695"
+  },
+  "tag_blobs": {
+    "inference-manifest.json": "396fa17b03e90e8094ab9881f0c43e99ed459d8d",
+    "learning-ledger.json": "37265ac1626afeac46799705a3ac36dc357e4dd3",
+    "replay-state.json": "00481aa34f21006f69829b79c0f1df3fd56cf461"
+  },
+  "tag_blobs_checked": "git hash-object of the extracted file equals git ls-tree evidence/cp-26"
+}

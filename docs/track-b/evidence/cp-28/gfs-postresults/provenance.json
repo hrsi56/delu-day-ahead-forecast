@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "hours_match_scoring_hours": true,
+    "max_relative_difference": {
+      "MAE": 4.316192114720736e-16,
+      "WIS": 4.2054966492059303e-16
+    },
+    "rows_checked": 10340
+  },
+  "identity": "cp28-gfs-postresults-v21-r17",
+  "sources": {
+    "docs/track-b/cp-26-gfs-ruling-2026-10-19.md": "3b97ff6abdf9a30ddd8c950cf3c459301d757aa1af08f6d8121bc73f92ba2373",
+    "docs/track-b/evidence/cp-26/cp28-gfs-postresults-addendum-v21-r17.md": "39f322afa9717c5cfb0b626a1a8430fa9f5fcc0dfdd159123b9d4b48e7db03b4",
+    "reports/development-inputs/margin-days.csv (bound by CP-25 manifest f3e8ca15e446\u2026)": "4c7d4c8038643c1d012bd4116ab14b085298d68bf2f95d5711ab5f14a34d13e3",
+    "reports/rebaseline/cold-rerun-2026-10-15/report.json (local only; inference_endpoints, gfs6)": "1b1aa805a066cda2da142cb9039fe63dd7a02c9b859f8129bd29b943ec1756d8",
+    "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json": "b9f10917ab471177eda1b5f8ef735ddca5a651fa2e9bb47844497f3a6deaf84d",
+    "reports/rebaseline/cold-rerun-2026-10-15/scores/daily.parquet": "fcbcb24f59b4624d4b2c9f778b157078aad6f7cae553446c3c64df00c44c2a50",
+    "reports/rebaseline/cold-rerun-2026-10-15/scores/hourly.parquet (local only, `.local/artifacts/cp-26/cold-rerun-2026-10-15/r16/final-analysis-inputs/\u2026`)": "f465d5e780bddaa799bef754ae86ebc3d0928cf3397c354aa23a656fd48be709",
+    "reports/rebaseline/cold-rerun-2026-10-15/scores/known_price_states.parquet": "ab041f73405e1870d6940e01745121127bc48cdabd342d26985476d18fb4eb79"
+  }
+}

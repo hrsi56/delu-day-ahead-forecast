@@ -1,0 +1,344 @@
+{
+  "candidate_scores": {
+    "MAE": {
+      "B0": 34.5527205751724,
+      "arm": 17.18690839935313,
+      "control": 18.45974841331334,
+      "ratio_to_B0": 0.49741114775496587,
+      "ratio_to_B0_ci95": {
+        "ci95": [
+          0.4774882242806334,
+          0.5279923872386156
+        ],
+        "ratio": 0.49741114775496587,
+        "status": "computable"
+      },
+      "ratio_to_control": 0.93104781357463,
+      "ratio_to_control_ci95": {
+        "ci95": [
+          0.9093041209707775,
+          0.9486463946818527
+        ],
+        "ratio": 0.93104781357463,
+        "status": "computable"
+      }
+    },
+    "WIS": {
+      "B0": 21.141962237990867,
+      "arm": 9.682532615295441,
+      "control": 10.870736536297818,
+      "ratio_to_B0": 0.4579770082975788,
+      "ratio_to_B0_ci95": {
+        "ci95": [
+          0.4395690092492712,
+          0.4874787188065062
+        ],
+        "ratio": 0.4579770082975788,
+        "status": "computable"
+      },
+      "ratio_to_control": 0.8906970179035324,
+      "ratio_to_control_ci95": {
+        "ci95": [
+          0.8714889397303999,
+          0.9104268905423618
+        ],
+        "ratio": 0.8906970179035324,
+        "status": "computable"
+      }
+    }
+  },
+  "control_scores_on_A1_pairs": {
+    "MAE": {
+      "B0": 34.5527205751724,
+      "control": 18.45974841331334,
+      "control_over_B0": 0.5342487684335182,
+      "paired_dates": 2068
+    },
+    "WIS": {
+      "B0": 21.141962237990867,
+      "control": 10.870736536297818,
+      "control_over_B0": 0.5141782212042618,
+      "paired_dates": 2068
+    }
+  },
+  "fallbacks": {
+    "A1": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    },
+    "A2": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    },
+    "A3": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    },
+    "A4": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    },
+    "A5": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    },
+    "A6": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    },
+    "A7": {
+      "by_source": {
+        "native": 2050,
+        "v5": 18
+      },
+      "fallback_dates": 18,
+      "scored_dates": 2068
+    }
+  },
+  "gfs_note_headline": {
+    "MAE": {
+      "change_percent": 13.9851418,
+      "ci95_ratio": [
+        1.103418634,
+        1.161098348
+      ],
+      "gfs6": 21.0413704,
+      "n": 2068,
+      "nominal": 18.45974841
+    },
+    "WIS": {
+      "change_percent": 15.45877162,
+      "ci95_ratio": [
+        1.120818316,
+        1.175758001
+      ],
+      "gfs6": 12.55121887,
+      "n": 2068,
+      "nominal": 10.87073654
+    }
+  },
+  "holm": {
+    "primary14": {
+      "A1": {
+        "adjusted_p": 0.0041995800419958,
+        "compound_p": 0.0041995800419958,
+        "rejected": true
+      },
+      "A2": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A3": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A4": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A5": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A6": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A7": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 0.0001999800019998,
+        "rejected": true
+      }
+    },
+    "sensitivity28": {
+      "A1": {
+        "adjusted_p": 0.0021997800219978,
+        "compound_p": 0.0021997800219978,
+        "rejected": true
+      },
+      "A2": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A3": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A4": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A5": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A6": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A7": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      }
+    },
+    "sensitivity7": {
+      "A1": {
+        "adjusted_p": 0.0068993100689931,
+        "compound_p": 0.0068993100689931,
+        "rejected": true
+      },
+      "A2": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A3": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A4": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A5": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A6": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A7": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 0.0002999700029997,
+        "rejected": true
+      }
+    },
+    "unstratified14": {
+      "A1": {
+        "adjusted_p": 0.0052994700529947,
+        "compound_p": 0.0052994700529947,
+        "rejected": true
+      },
+      "A2": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A3": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A4": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A5": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A6": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 9.999000099990002e-05,
+        "rejected": true
+      },
+      "A7": {
+        "adjusted_p": 0.0006999300069993,
+        "compound_p": 0.0001999800019998,
+        "rejected": true
+      }
+    }
+  },
+  "inconclusive": [],
+  "passes_all_four": {
+    "A1": true,
+    "A2": true,
+    "A3": true,
+    "A4": true,
+    "A5": true,
+    "A6": true,
+    "A7": true
+  },
+  "primary_rejections": {
+    "A1": true,
+    "A2": true,
+    "A3": true,
+    "A4": true,
+    "A5": true,
+    "A6": true,
+    "A7": true
+  },
+  "selected": "A1",
+  "selection": {
+    "best_arm": "A1",
+    "best_wis": 9.682532615295441,
+    "reason": "lowest WIS",
+    "tie_set": [
+      "A1"
+    ]
+  },
+  "startup": {
+    "final_window": {
+      "calendar_span_days": 741,
+      "dates": 728,
+      "latest": "2026-09-04",
+      "oldest": "2024-08-25",
+      "origin": "2026-09-06"
+    },
+    "first_learning_date": "2020-02-29",
+    "full_728": {
+      "calendar_span_days": 741,
+      "first_origin": "2022-03-12",
+      "learning_latest": "2022-03-10",
+      "learning_oldest": "2020-02-29"
+    },
+    "minimum_364": {
+      "calendar_span_days": 370,
+      "first_origin": "2021-03-06",
+      "learning_latest": "2021-03-04",
+      "learning_oldest": "2020-02-29"
+    }
+  }
+}
