@@ -47,6 +47,36 @@ order from here:
 be decided only after all of the planned pre-4.7T work, and before CP-17 registers 4.7T's terms.
 Either choice needs an anchor amendment, and the red line holds until then.
 
+**Before CP-17: the Owner's decisions** (the Orchestrator's list and recommendations, 2026-10-25).
+CP-28 selected A1, DDNN-2 alone ([landing record](cp-28-landing-2026-10-25.md)). §24.9 freezes it
+together with these terms, all fixed before 4.7T opens:
+
+1. **The candidate:** A1, as CP-28's pre-registered rule selected it. *Recommendation:* confirm.
+   Until CP-19, v1 stays the product.
+2. **What to do when GFS is late or missing at the issue time,** among the fallback and failure
+   rules. CP-26 measured two options:
+   - a route trained on 6-hour-older GFS runs, about 14–16% worse than on time;
+   - v2, which uses no weather. On the affected dates it is within about 1% of the delayed route.
+
+   *Recommendation:* choose between these two in CP-17's brief. Open no new switching experiment,
+   as the r17 note advises. The fixed chain for a missing member (v5, then B0) stays.
+3. **The lock-price idea.** *Recommendation:* do not adopt it in the freeze. Keep 4.7T a pure
+   forecast test, and register the idea separately for the live stage, where quotes can be
+   collected.
+4. **4.7T's window.** *Recommendation:* keep the 90 days, 2026-09-07 to 2026-12-05.
+5. **4.7T's registered terms:**
+   - the comparators: the control v5 and B0, with v3, v4 and v1 descriptive;
+   - the pass conditions and margins;
+   - a dependence treatment suited to 90 days;
+   - the failure rules.
+
+   *Recommendation:* mirror CP-28's gates against v5 and B0, with 7-day blocks.
+6. **The publication (PRES-5).** *Recommendation:* publish CP-26 and CP-28 as development results
+   while CP-17 is prepared. It first needs the page-budget decision (A-PRES4-5) and a completed
+   packet.
+7. **The CP-18 preparation:** security hardening, the daily pipeline and the Space, run dry on data
+   to 2026-09-06 only. *Recommendation:* start it now, alongside.
+
 **The windows move, Owner, 2026-10-12.** While drafting the anchor amendment, the Orchestrator found
 that `data/snapshot.parquet` already holds prices to 2026-09-06. v1 used 2026-04-09 to 2026-06-07
 for its calibration and 2026-06-09 to 2026-09-06 for its published one-shot holdout
@@ -89,7 +119,7 @@ to it, to forecast days that have not happened yet.
 | 5 | ✅ Collect our own data gaps and check the issue time (CP-25): landed 2026-10-12 | Checkpoint | done | — |
 | 6 | ✅ Re-baseline v1–v5 on the existing features, as the control arm (CP-26): landed 2026-10-21 | Checkpoint | done | — |
 | 7 | ~~Admission tests for the new sources (CP-27)~~: dropped by the short path, 2026-10-12 | — | — | — |
-| 8 | 4.8: choose the winner on stored forecasts (CP-28; confirmed by the Owner 2026-10-19) | Checkpoint | 6 | — |
+| 8 | ✅ 4.8: choose the winner on stored forecasts (CP-28): landed 2026-10-25, A1 (DDNN-2 alone) selected | Checkpoint | done | — |
 | 8a | Publish the winner and the comparison (PRES-5), pending 4.7T | Publication | 8 | 9's freeze work |
 | 9 | Freeze one candidate (CP-17) and run 4.7T on 2026-09-07 to 2026-12-05 | Checkpoint and test | 8 | security hardening (11a) |
 | 10 | ~~Replay daily retraining~~: withdrawn 2026-10-12 | — | — | — |

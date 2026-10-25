@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`). Next: the backup, then CP-28's brief |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**. Next: CP-17 |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -172,13 +172,17 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   supervision stress tests off GitHub's runner and froze CP-26's exposure ledger as evidence, so
   the live ledger can grow.
 
-**Active Track B work: CP-28, 4.8** (v21-r17 §24.8). Issued 2026-10-24.
-- **The brief:** `57cb6d53…`, canonical copy `.local/artifacts/cp-28/issued-brief.md`, launch
-  envelope `.local/artifacts/cp-28/launch-envelope.md`.
-- **It runs** in the Owner's Lead session on `gauntlet/cp-28`, with a 40-machine-hour ceiling.
-- **First the r17 GFS note** (no training), then the seven arms on CP-26's stored ledger, which
-  is read from the local-only `evidence/cp-26`.
-- **On its return:** the receipt, the LAND, then CP-17.
+**CP-28 closed on 2026-10-25** ([landing record](docs/track-b/cp-28-landing-2026-10-25.md)).
+**A1, DDNN-2 alone, is the CP-17 freeze candidate.**
+- **The identities:** `land/cp-28` = `35e841b`, `evidence/cp-28` = `1a86c54`, both pushed.
+- **The gates:** all seven arms passed against nominal v5, under Holm in all four analyses. A1 has
+  the lowest WIS.
+- **The scores on 2,068 days:** A1 WIS 9.683 against 10.871 (−10.9%), and MAE 17.187 against
+  18.460 (−6.9%). A1 is better in every year and season cell.
+- **The GFS note:** a 6-hour GFS delay worsens v5 by +14–16%, and no switching experiment is
+  recommended.
+- **The next stage is CP-17,** after the Owner's pre-freeze decisions. They are listed in the
+  programme plan.
 
 The Owner
 confirmed CP-28 on 2026-10-19. Its brief opens with r17's no-training GFS supplement, and its arms
@@ -966,6 +970,22 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-28 received, landed and closed, 2026-10-25.**
+  - **The return:** PASS on `36ed724`.
+    - The order held: the GFS note came before any arm, the causal controls before the one look,
+      and the results were written once.
+    - 0.70 of 40 machine-hours.
+  - **The receipt:**
+    - all 53 files are new;
+    - the largest blob in the branch is 30.8 MB, so the tag can be pushed;
+    - the history-free `CI=true` run on 3.12 is green (2,234 passed, 33 skipped), and stress is 16/16.
+  - **The LAND:** the Orchestrator executed it on the Owner's instruction. GitHub CI passed on the
+    temporary branch (run 40145129638). `main` = `land/cp-28` = `35e841b`, and `evidence/cp-28`
+    was pushed.
+  - **The reclaim:** a verified bundle.
+  - **The result:** A1 (DDNN-2 alone) is selected. All seven arms passed against v5 under Holm in
+    all four analyses.
 
 - **CP-28 issued, 2026-10-24.**
   - **The bar:** the brief (`57cb6d53…`) cites v21-r17 §24.8 verbatim, checked with
