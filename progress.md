@@ -189,7 +189,15 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   - 4.7T keeps 90 days and mirrors CP-28's gates;
   - PRES-5 runs alongside, after a page compaction;
   - CP-18's preparation starts.
-- **Next:** CP-17's brief.
+- **The percentage tolerance:** τ = 10 EUR/MWh (the Owner, 2026-10-25).
+- **Active Track B work: CP-17, the freeze.** Issued 2026-10-25, brief `64758101…`, canonical copy
+  `.local/artifacts/cp-17/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
+  - the A1 GFS check;
+  - the freeze record and the frozen runner, with parity on nine past origins;
+  - §19.5's definitions;
+  - 4.7T's protocol, written blind.
+
+  The anchor amendment r18 follows, before 4.7T opens.
 
 The Owner
 confirmed CP-28 on 2026-10-19. Its brief opens with r17's no-training GFS supplement, and its arms
@@ -977,6 +985,13 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17 issued, 2026-10-25.**
+  - **The bar:** the brief (`64758101…`) cites v21-r17 §24.9 and §19.5 verbatim, checked with
+    `scripts/bar.py check` at `b4feb35`, and binds the Owner's decisions record (`22341d75…`,
+    with τ = 10).
+  - **The bounds:** blind, so the boundary stays at 2026-09-06. Every committed file is under
+    50 MB, and the suite is CI-ready history-free.
 
 - **The Owner's decisions before CP-17, and the second snapshot, 2026-10-25.**
   - **The decisions:** the Owner accepted all seven recommendations (decisions record).

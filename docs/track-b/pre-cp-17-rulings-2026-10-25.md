@@ -39,3 +39,7 @@ conditions and failure rules enter the anchor by amendment, under the Owner's su
 7. **CP-18's preparation starts alongside:** security hardening, the daily pipeline and the
    final-product Space, with dry runs on data to 2026-09-06 only. Nothing downloads or reads data
    after the red line before 4.7T opens.
+8. **The percentage measure's tolerance, τ = 10 EUR/MWh** (§19.5, which leaves the tolerance to the
+   Owner). The Owner, 2026-10-25: "τ = 10, תכתוב את הבריף ל־CP-17". The measure is the share of
+   scored hours whose p50 lies within ±10 EUR/MWh of the published price. It was set before any 4.7T
+   outcome exists, and is never tuned on one.
