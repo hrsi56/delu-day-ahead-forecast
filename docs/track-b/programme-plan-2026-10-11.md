@@ -48,6 +48,8 @@ be decided only after all of the planned pre-4.7T work, and before CP-17 registe
 Either choice needs an anchor amendment, and the red line holds until then.
 
 **Before CP-17: the Owner's decisions** (the Orchestrator's list and recommendations, 2026-10-25).
+**Decided the same day:** the Owner accepted every recommendation
+([decisions record](pre-cp-17-rulings-2026-10-25.md)).
 CP-28 selected A1, DDNN-2 alone ([landing record](cp-28-landing-2026-10-25.md)). §24.9 freezes it
 together with these terms, all fixed before 4.7T opens:
 

@@ -7,7 +7,8 @@ restore each item to its original place.
 **Authority.** The Owner, 2026-10-20: "אתה מתכנן גיבוי במדויק וכותב לעוגנים קטע שמגדיר את זה
 שגיבינו בתור עוגן, ככה שאם איי פעם נצטרך משהו מתוך מה שגיבינו תדע איפה זה בדיוק ואיך לשחזר
 למקום הנכון. ואז אתה עושה גיבוי אל ״/Volumes/Samsung/delu-day-ahead-forecast״ (יש לך אישור
-והשעיית נעילה לצורך זה)". Each later snapshot, or change to this file, needs the Owner's suspension.
+והשעיית נעילה לצורך זה)". Each later snapshot, or change to this file, needs the Owner's suspension. Snapshot 2026-10-25's
+section: the Owner, 2026-10-25, "מאשר השעיה לעדכון המרשם".
 
 ## Why it exists
 
@@ -111,6 +112,47 @@ moves are listed in `.local/artifacts/backup-2026-10-21/cleanup-moves.tsv`):
 - the local Space build `dist/`;
 - `.local/tmp/`, except 176 files (about 100 MB) that committed records cite by hash. Those stay in
   place, are not in this snapshot, and go into the next one.
+
+## Snapshot 2026-10-25 — after CP-28's closure (incremental)
+
+- **Folder:** `/Volumes/Samsung/delu-day-ahead-forecast/snapshot-2026-10-25/`. The manifest also has a
+  local copy, `.local/artifacts/backup-2026-10-25/`.
+- **It adds to snapshot 2026-10-21** and holds only what that snapshot does not already hold with the
+  same bytes. A full restore applies 2026-10-21 first, then this one.
+- **Contents:** 503 files, 635,033,971 bytes.
+- **Manifest identities (SHA-256):**
+
+  | File | SHA-256 |
+  |---|---|
+  | `MANIFEST/files.tsv` | `9c25168106bdf16d7e437ce65ad258a55b5e7155629bc92c11746ef87dd460ef` |
+  | `MANIFEST/SHA256SUMS` | `af0e9ec86373858484e727fdc2b78c97d97e8db40c4c1db7982c9c951e43b635` |
+  | `MANIFEST/summary.json` | `fbf6fcd400961a0f69193941ff36bd968be244fd501a08c72078632946b99f60` |
+  | `MANIFEST/make_manifest.py` | `f11270aba3893f14ef86790a12d1e3c64924ee90defd533018ddb872c06b8f25` |
+  | `MANIFEST/verify_snapshot.py` | `47e6b7cf90e513b843b9755d881880bb3e1b5a8bca0ca79950ed95a59e43f0ee` |
+- **The rule:** snapshot 2026-10-21's rule, plus two exclusions and one addition.
+  - **Excluded:**
+    - `.local/artifacts/cp-28/inputs/`, the extracted copies of CP-26's ledger, which snapshot
+      2026-10-21's bundle already holds;
+    - the manifest's own folder.
+  - **Added:** the 185 files in `.local/tmp/` that committed records cite by hash and that exist
+    nowhere in Git. They include the 176 that snapshot 2026-10-21 left for this one.
+- **Status on 2026-10-25:** built and checked, all 503 files against the manifest, `ALL OK`. It is
+  not on the drive yet, and this line changes when it is. Until then, everything below exists only
+  on the Owner's machine.
+
+| Item | Path | Size | Needed for | If both copies were lost |
+|---|---|---:|---|---|
+| CP-28's stored bootstrap draws | `.local/artifacts/cp-28/bulk/` (listed in `reports/cp28/results/bulk-manifest.json`) | 0.43 GB | protocol §10's retention; re-checking CP-28's inference | recomputable from CP-26's ledger without training, in about one machine-hour |
+| CP-28's and CP-26-CI's records | `.local/artifacts/cp-28/` (the rest), `.local/artifacts/cp-26-ci/` | 0.02 GB | the briefs, the Critic assignments, the entry identity, the logs and the resource ledgers | the citations could no longer be checked |
+| The reclamation bundles | `.local/artifacts/cp-28-reclaim-20261025/`, `.local/artifacts/cp-26-ci-reclaim-20261024/` | 0.03 GB | a second copy; both evidence tags are on GitHub | none |
+| Snapshot 2026-10-21's manifest folder | `.local/artifacts/backup-2026-10-21/`, including `cleanup-moves.tsv` | 0.06 GB | the record of the first snapshot and of the cleanup | the record |
+| The cited temporary files | 185 files under `.local/tmp/` | 0.10 GB | committed records cite them by hash | the citations could no longer be checked |
+
+**Items that exist only on the drive:** none from this snapshot. Every item above stays on the
+Owner's machine.
+
+**Restore:** the commands of the 2026-10-21 section, with
+`S=/Volumes/Samsung/delu-day-ahead-forecast/snapshot-2026-10-25`.
 
 ## How to restore
 

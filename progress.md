@@ -181,8 +181,15 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   18.460 (−6.9%). A1 is better in every year and season cell.
 - **The GFS note:** a 6-hour GFS delay worsens v5 by +14–16%, and no switching experiment is
   recommended.
-- **The next stage is CP-17,** after the Owner's pre-freeze decisions. They are listed in the
-  programme plan.
+- **The Owner's pre-freeze decisions,** taken 2026-10-25, accept every recommendation
+  ([decisions record](docs/track-b/pre-cp-17-rulings-2026-10-25.md)):
+  - the candidate is A1;
+  - the GFS fallback is v2, after a descriptive check on A1;
+  - the lock-price idea is not in the freeze;
+  - 4.7T keeps 90 days and mirrors CP-28's gates;
+  - PRES-5 runs alongside, after a page compaction;
+  - CP-18's preparation starts.
+- **Next:** CP-17's brief.
 
 The Owner
 confirmed CP-28 on 2026-10-19. Its brief opens with r17's no-training GFS supplement, and its arms
@@ -970,6 +977,16 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **The Owner's decisions before CP-17, and the second snapshot, 2026-10-25.**
+  - **The decisions:** the Owner accepted all seven recommendations (decisions record).
+  - **The snapshot:** 2026-10-25 is incremental, 503 files and 635 MB: CP-28's bootstrap draws,
+    the 185 cited temp files and the new records. It is built and checked, and is not on the drive
+    yet.
+  - **The register:** its section was added under the Owner's suspension ("מאשר השעיה לעדכון
+    המרשם").
+  - **The cleanup:** temp files and CP-28's extracted inputs were moved to the Trash, and the
+    folder is now 17.0 GB.
 
 - **CP-28 received, landed and closed, 2026-10-25.**
   - **The return:** PASS on `36ed724`.

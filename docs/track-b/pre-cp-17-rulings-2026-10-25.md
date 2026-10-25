@@ -1,0 +1,41 @@
+# The Owner's decisions before CP-17 — 2026-10-25
+
+**Authority.** The Owner, 2026-10-25, on the Orchestrator's list of decisions before CP-17 (programme
+plan, "Before CP-17"): "אני מקבל את כל ההחלטות שלך". He accepted every recommendation below.
+
+CP-28 selected A1, DDNN-2 alone with its own Johnson SU quantiles
+([CP-28 landing record](cp-28-landing-2026-10-25.md)). Research v21-r17 §24.9 freezes it, together
+with terms registered before 4.7T opens. These decisions set those terms. The comparators, pass
+conditions and failure rules enter the anchor by amendment, under the Owner's suspension, before
+4.7T opens. Until then they bind the programme as decisions.
+
+1. **The candidate is A1, DDNN-2 alone,** as CP-28's pre-registered rule selected it. v1 stays the
+   product until CP-19.
+2. **When GFS is late or missing at the issue time,** the fallback is v2, which uses no weather.
+   - **The measured options** (CP-26 and r17's note, measured on v5):
+     - a route trained on 6-hour-older GFS runs, about 14–16% worse than on time;
+     - v2, which on the affected dates is within about 1% of the delayed route.
+   - **The rule is fixed only after a check.** Before it is fixed, CP-17 checks the same comparison
+     for A1 itself, descriptively, from CP-26's stored forecasts and without training.
+   - **No new switching experiment.** The fixed chain for a missing member (v5, then B0) stays.
+3. **The lock-price idea is not adopted in the freeze.** 4.7T stays a pure forecast-accuracy test.
+   The idea is registered separately for the live stage, where quotes can be collected
+   (`docs/track-b/final-product-lock-price-notes-2026-10-11.md`).
+4. **4.7T keeps its 90-day window,** 2026-09-07 to 2026-12-05. It opens no earlier than 2026-12-04.
+5. **4.7T's terms mirror CP-28's gates:**
+   - **A1 against the control,** nominal v5: an improvement of more than 0.5% on both MAE and WIS;
+   - **A1 against B0:** better on both;
+   - **descriptive references:** v3, v4 and v1's released artifact;
+   - **the dependence treatment:** 7-day blocks;
+   - **on failure,** no runner-up moves up, the window is spent, and v1 stays the product.
+
+   The exact endpoints and tests are written in the amendment.
+6. **CP-26's and CP-28's results are published (PRES-5)** while CP-17 is prepared, labelled
+   "development, post-selection, pending 4.7T", under PUBLISH_RULES 1.5's invariant 10.
+   - **Still open:** the page has 3,733 bytes left under its 2.0 MB budget (A-PRES4-5), so PRES-5
+     needs a compaction or a budget change first.
+   - **The Orchestrator's recommendation is a compaction,** which stays within PUBLISH_RULES 1.5. A
+     budget change would amend a publication anchor.
+7. **CP-18's preparation starts alongside:** security hardening, the daily pipeline and the
+   final-product Space, with dry runs on data to 2026-09-06 only. Nothing downloads or reads data
+   after the red line before 4.7T opens.
