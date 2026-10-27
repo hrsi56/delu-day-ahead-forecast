@@ -43,3 +43,20 @@ conditions and failure rules enter the anchor by amendment, under the Owner's su
    Owner). The Owner, 2026-10-25: "τ = 10, תכתוב את הבריף ל־CP-17". The measure is the share of
    scored hours whose p50 lies within ±10 EUR/MWh of the published price. It was set before any 4.7T
    outcome exists, and is never tuned on one.
+9. **The equality tolerance, τ_eq = 0.01 EUR/MWh** (§19.3 item 2, which leaves it to the Owner).
+   The Owner, 2026-10-28, on CP-17-probe's measurement
+   ([landing record](cp-17-probe-landing-2026-10-27.md)): "τ_eq = 0.01".
+   - **The status a visitor's retrain reports:**
+     - "identical bit for bit" when every emitted quantile is IEEE-754 equal to the issued one;
+     - "within ±0.01 EUR/MWh" when every data-driven selection matched and every emitted quantile
+       is within τ_eq;
+     - "different" otherwise, with the numbers.
+   - **The measurement it rests on:** the largest deviation was 6.3e-7 EUR/MWh, from rounding
+     only, with every selection matched.
+10. **The official daily fit is issued under the pinned Pyodide runtime in Node.js,** the same
+    WebAssembly runtime the browser runs (Space plan §8). The Owner, 2026-10-28: "Node מאושר".
+    - **Why:** Chromium, WebKit and Node.js gave bit-identical results on every probed fit, so a
+      visitor's retrain can report "identical bit for bit".
+    - **The cost:** about 70 s per A1 fit instead of 15 s natively.
+    - **The issued values differ from CP-26's native arithmetic by rounding.** The freeze records
+      this, and keeps the native parity with CP-26 as the check of code identity.

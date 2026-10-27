@@ -202,9 +202,27 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     187–215 MiB of WebAssembly memory and a 44.6 MB payload loaded on request.
   - **Agreement:** every selection matched the native fit, and the quantiles differ by rounding
     only (at most 6.3e-7 EUR/MWh). The §19.3 blocker is not triggered.
-- **Next:** the Owner sets τ_eq from the probe's measurement, and then CP-17 is reissued.
+- **The Owner's decisions of 2026-10-28** (decisions record, items 9 and 10):
+  - τ_eq = 0.01 EUR/MWh, with the three-status rule;
+  - the official daily fit is issued under the pinned Pyodide runtime in Node.js.
+- **Active Track B work: CP-17, the freeze, reissued 2026-10-28.**
+  - **The brief:** `9e522b9a…`, canonical copy `.local/artifacts/cp-17/issued-brief.md`. The
+    Orchestrator delivers it to the Lead session under the Owner's delegation.
+  - **The bar:** §24.9, with §16.2, §19.2, §19.3, §19.5 and §19.7.
+  - **It covers:**
+    1. the A1 GFS check;
+    2. one code path in `src/cp17/`;
+    3. native parity with CP-26 at nine origins, and issuing-host parity under Pyodide in Node.js;
+    4. the freeze record, with the product's failure policy and the definition of a successful
+       daily fit;
+    5. §19.5's definitions;
+    6. the retrain status rule and the §19.7 attributions;
+    7. the payload schema and manifest;
+    8. 4.7T's protocol, written blind.
+  - **The ceiling:** 15 machine-hours.
+  - **Then r18** ratifies the terms before 4.7T opens.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
-  `.local/artifacts/cp-17/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
+  `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
   - the freeze record and the frozen runner, with parity on nine past origins;
   - §19.5's definitions;
@@ -998,6 +1016,20 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17 reissued, 2026-10-28.**
+  - **The Owner's decisions:** "τ_eq = 0.01, Node מאושר, תכתוב את הבריף ל־CP-17". They are recorded
+    as items 9 and 10 of the decisions record (`d9821845…`).
+  - **The bar:** the brief cites §24.9, §16.2, §19.2, §19.3, §19.5 and §19.7 verbatim, checked with
+    `scripts/bar.py check` at `146dcd7`.
+  - **What the reissue adds** to the withdrawn brief:
+    - one code path;
+    - the issuing host, with native and issuing-host parity;
+    - the success definition §16.2 asks the brief to fix;
+    - the product's failure-policy rule;
+    - τ_eq's status rule and the attributions;
+    - the payload schema and manifest.
+  - **Moved:** the withdrawn brief, to `.local/artifacts/cp-17/withdrawn-64758101/`.
 
 - **CP-17-probe received, landed and closed, 2026-10-27,** under the Owner's delegation of that day.
   - **The delivery:** the Orchestrator sent the brief to the Lead session directly. The Owner
