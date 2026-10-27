@@ -1,0 +1,1295 @@
+{
+ "browser_host": {
+  "cpu_count": 8,
+  "machine": "arm64",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "playwright": "1.63.0"
+ },
+ "native_runtime": {
+  "blas_threads": {
+   "OMP_NUM_THREADS": "1",
+   "OPENBLAS_NUM_THREADS": "1",
+   "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "machine": "arm64",
+  "numpy": "2.4.6",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.15"
+ },
+ "native_status": "PASS",
+ "node_pyodide": {
+  "A1-2026-03-29": {
+   "browsers_bitwise_equal_to_node": [
+    "chromium",
+    "webkit"
+   ],
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "b5ca894f8f99128fc69ed1b6c6afdaea3fa5d7e05052ae90e70eedd01022cc05",
+    "max_abs_eur": 6.27698966582102e-07,
+    "max_abs_eur_by_level": {
+     "p025": 3.0111785775943645e-07,
+     "p10": 2.0162776337429023e-07,
+     "p25": 3.0177760379501706e-07,
+     "p50": 2.3198408882763033e-07,
+     "p75": 4.6974999179383303e-07,
+     "p90": 6.27698966582102e-07,
+     "p975": 8.38702902683508e-08
+    },
+    "mean_abs_eur": 3.2674357706718244e-08,
+    "native_sha256": "67ef0f36783947f4d79f1b67995fe4ee586e8d465184ab5ccbbc88be3c41145a",
+    "shape_equal": true
+   },
+   "fit_seconds": 72.720968875,
+   "host": "node v26.7.0",
+   "pyodide": "0.28.0",
+   "selections": {
+    "all_match": true,
+    "crossed_rows_match": true,
+    "diagnostics": [
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 0
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "preprocessor"
+      ],
+      "member": 1
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 2
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 3
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 4
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 5
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 6
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 7
+     }
+    ],
+    "members": [
+     {
+      "differences": [],
+      "member": 0,
+      "seed": 27290011
+     },
+     {
+      "differences": [],
+      "member": 1,
+      "seed": 27290012
+     },
+     {
+      "differences": [],
+      "member": 2,
+      "seed": 27290021
+     },
+     {
+      "differences": [],
+      "member": 3,
+      "seed": 27290022
+     },
+     {
+      "differences": [],
+      "member": 4,
+      "seed": 27290031
+     },
+     {
+      "differences": [],
+      "member": 5,
+      "seed": 27290032
+     },
+     {
+      "differences": [],
+      "member": 6,
+      "seed": 27290041
+     },
+     {
+      "differences": [],
+      "member": 7,
+      "seed": 27290042
+     }
+    ]
+   },
+   "wasm_linear_memory_peak": 196214784
+  },
+  "A1-2026-09-06": {
+   "browsers_bitwise_equal_to_node": [
+    "chromium",
+    "webkit"
+   ],
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "max_abs_eur": 9.379164112033322e-13,
+    "max_abs_eur_by_level": {
+     "p025": 9.379164112033322e-13,
+     "p10": 7.247535904753022e-13,
+     "p25": 6.465938895416912e-13,
+     "p50": 2.4158453015843406e-13,
+     "p75": 5.044853423896711e-13,
+     "p90": 3.979039320256561e-13,
+     "p975": 6.252776074688882e-13
+    },
+    "mean_abs_eur": 1.0662370457447694e-13,
+    "native_sha256": "b1fc7350321a2b57c591dc5b117587f86694ac4681710bc28817b5eca6e65d44",
+    "shape_equal": true
+   },
+   "fit_seconds": 66.849886875,
+   "host": "node v26.7.0",
+   "pyodide": "0.28.0",
+   "selections": {
+    "all_match": true,
+    "crossed_rows_match": true,
+    "diagnostics": [
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 0
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 1
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 2
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 3
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 4
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 5
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 6
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 7
+     }
+    ],
+    "members": [
+     {
+      "differences": [],
+      "member": 0,
+      "seed": 27390011
+     },
+     {
+      "differences": [],
+      "member": 1,
+      "seed": 27390012
+     },
+     {
+      "differences": [],
+      "member": 2,
+      "seed": 27390021
+     },
+     {
+      "differences": [],
+      "member": 3,
+      "seed": 27390022
+     },
+     {
+      "differences": [],
+      "member": 4,
+      "seed": 27390031
+     },
+     {
+      "differences": [],
+      "member": 5,
+      "seed": 27390032
+     },
+     {
+      "differences": [],
+      "member": 6,
+      "seed": 27390041
+     },
+     {
+      "differences": [],
+      "member": 7,
+      "seed": 27390042
+     }
+    ]
+   },
+   "wasm_linear_memory_peak": 237764608
+  },
+  "v2-2026-09-06": {
+   "browsers_bitwise_equal_to_node": [
+    "chromium",
+    "webkit"
+   ],
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "82a5afcf1ff8778f8a0d1670645ec60ff6f19b88d7e618cc91d6917fd18a9f83",
+    "max_abs_eur": 5.115907697472721e-13,
+    "max_abs_eur_by_level": {
+     "p025": 5.115907697472721e-13,
+     "p10": 5.115907697472721e-13,
+     "p25": 5.115907697472721e-13,
+     "p50": 5.115907697472721e-13,
+     "p75": 5.115907697472721e-13,
+     "p90": 5.115907697472721e-13,
+     "p975": 5.115907697472721e-13
+    },
+    "mean_abs_eur": 1.0577782036523873e-13,
+    "native_sha256": "363ca856a612b2b1a6ffbdf9b95e13675bc775e4fe069645b51718c79887a2a3",
+    "shape_equal": true
+   },
+   "fit_seconds": 44.640170417,
+   "host": "node v26.7.0",
+   "pyodide": "0.28.0",
+   "selections": {
+    "all_match": true,
+    "alpha_differences_by_hour": {
+     "A1": [],
+     "B2": []
+    },
+    "diagnostics": {
+     "A1": [
+      "model_sha256",
+      "n_iter_by_alpha",
+      "validation_mae_by_alpha"
+     ],
+     "B2": [
+      "model_sha256",
+      "n_iter_by_alpha",
+      "validation_mae_by_alpha"
+     ]
+    },
+    "h_layer_match": true,
+    "train_rows_match": true
+   },
+   "wasm_linear_memory_peak": 287178752
+  }
+ },
+ "runs": [
+  {
+   "attribution": {
+    "browser_efficiency_max_abs": 1.4210854715202004e-13,
+    "browser_issued_gap_max_abs": 0,
+    "coalitions": 1024,
+    "phi_max_abs_eur": 1.0680345496894006e-13,
+    "players_equal": true
+   },
+   "blocked_non_local_requests": [],
+   "browser": "chromium",
+   "browser_version": "153.0.8010.12",
+   "day": "2026-09-06",
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "max_abs_eur": 9.379164112033322e-13,
+    "max_abs_eur_by_level": {
+     "p025": 9.379164112033322e-13,
+     "p10": 7.247535904753022e-13,
+     "p25": 6.465938895416912e-13,
+     "p50": 2.4158453015843406e-13,
+     "p75": 5.044853423896711e-13,
+     "p90": 3.979039320256561e-13,
+     "p975": 6.252776074688882e-13
+    },
+    "mean_abs_eur": 1.0662370457447694e-13,
+    "native_sha256": "b1fc7350321a2b57c591dc5b117587f86694ac4681710bc28817b5eca6e65d44",
+    "shape_equal": true
+   },
+   "errors": [],
+   "memory_bytes": {
+    "browser_processes_rss_peak": 1716011008,
+    "page_js_heap_used": 1267696,
+    "wasm_linear_memory_peak": 225247232
+   },
+   "payload": {
+    "first_visit_bytes": 3189,
+    "gzip_bytes": {
+     "code": 49491,
+     "data": 533576,
+     "packages": 31213266,
+     "page": 1582,
+     "runtime": 5446388
+    },
+    "note": "first visit = the page alone, with the runtime loaded only when the visitor asks to retrain; training payload = runtime + packages + code + the day's data",
+    "raw_bytes": {
+     "code": 51600,
+     "data": 539285,
+     "packages": 31727367,
+     "page": 3189,
+     "runtime": 12259068
+    },
+    "training_payload_bytes": 44577320,
+    "training_payload_gzip_bytes": 37242721
+   },
+   "payload_sha256_equal": true,
+   "policy": "A1",
+   "runtime": {
+    "numpy": "2.2.5",
+    "pandas": "2.3.0",
+    "platform": "Emscripten-4.0.9-wasm32-32bit",
+    "pyodide": "0.28.0",
+    "python": "3.13.2"
+   },
+   "selections": {
+    "all_match": true,
+    "crossed_rows_match": true,
+    "diagnostics": [
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 0
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 1
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 2
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 3
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 4
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 5
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 6
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 7
+     }
+    ],
+    "members": [
+     {
+      "differences": [],
+      "member": 0,
+      "seed": 27390011
+     },
+     {
+      "differences": [],
+      "member": 1,
+      "seed": 27390012
+     },
+     {
+      "differences": [],
+      "member": 2,
+      "seed": 27390021
+     },
+     {
+      "differences": [],
+      "member": 3,
+      "seed": 27390022
+     },
+     {
+      "differences": [],
+      "member": 4,
+      "seed": 27390031
+     },
+     {
+      "differences": [],
+      "member": 5,
+      "seed": 27390032
+     },
+     {
+      "differences": [],
+      "member": 6,
+      "seed": 27390041
+     },
+     {
+      "differences": [],
+      "member": 7,
+      "seed": 27390042
+     }
+    ]
+   },
+   "source_files": 17,
+   "source_identical_to_checkout": true,
+   "status": "different",
+   "stem": "A1-2026-09-06",
+   "stubs_engaged": [
+    "resource",
+    "holidays"
+   ],
+   "time_seconds": {
+    "attribution": 0.33899999999999864,
+    "browser_over_native": 4.463784334747123,
+    "fit": 65.84379999999999,
+    "native_attribution": 0.10918087499885587,
+    "native_fit": 14.75066783299917,
+    "packages_ready": 2.0184000000022353,
+    "payload_ready": 2.029900000002235,
+    "runtime_ready": 0.7198000000007451,
+    "total_in_worker": 71.42930000000075
+   }
+  },
+  {
+   "attribution": {
+    "browser_efficiency_max_abs": 2.842170943040401e-14,
+    "browser_issued_gap_max_abs": 0,
+    "coalitions": 512,
+    "phi_max_abs_eur": 2.0646327758555572e-07,
+    "players_equal": true
+   },
+   "blocked_non_local_requests": [],
+   "browser": "chromium",
+   "browser_version": "153.0.8010.12",
+   "day": "2026-03-29",
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "b5ca894f8f99128fc69ed1b6c6afdaea3fa5d7e05052ae90e70eedd01022cc05",
+    "max_abs_eur": 6.27698966582102e-07,
+    "max_abs_eur_by_level": {
+     "p025": 3.0111785775943645e-07,
+     "p10": 2.0162776337429023e-07,
+     "p25": 3.0177760379501706e-07,
+     "p50": 2.3198408882763033e-07,
+     "p75": 4.6974999179383303e-07,
+     "p90": 6.27698966582102e-07,
+     "p975": 8.38702902683508e-08
+    },
+    "mean_abs_eur": 3.2674357706718244e-08,
+    "native_sha256": "67ef0f36783947f4d79f1b67995fe4ee586e8d465184ab5ccbbc88be3c41145a",
+    "shape_equal": true
+   },
+   "errors": [],
+   "memory_bytes": {
+    "browser_processes_rss_peak": 1705246720,
+    "page_js_heap_used": 1265984,
+    "wasm_linear_memory_peak": 196214784
+   },
+   "payload": {
+    "first_visit_bytes": 3189,
+    "gzip_bytes": {
+     "code": 49491,
+     "data": 525328,
+     "packages": 31213266,
+     "page": 1582,
+     "runtime": 5446388
+    },
+    "note": "first visit = the page alone, with the runtime loaded only when the visitor asks to retrain; training payload = runtime + packages + code + the day's data",
+    "raw_bytes": {
+     "code": 51600,
+     "data": 531903,
+     "packages": 31727367,
+     "page": 3189,
+     "runtime": 12259068
+    },
+    "training_payload_bytes": 44569938,
+    "training_payload_gzip_bytes": 37234473
+   },
+   "payload_sha256_equal": true,
+   "policy": "A1",
+   "runtime": {
+    "numpy": "2.2.5",
+    "pandas": "2.3.0",
+    "platform": "Emscripten-4.0.9-wasm32-32bit",
+    "pyodide": "0.28.0",
+    "python": "3.13.2"
+   },
+   "selections": {
+    "all_match": true,
+    "crossed_rows_match": true,
+    "diagnostics": [
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 0
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "preprocessor"
+      ],
+      "member": 1
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 2
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 3
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 4
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 5
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 6
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 7
+     }
+    ],
+    "members": [
+     {
+      "differences": [],
+      "member": 0,
+      "seed": 27290011
+     },
+     {
+      "differences": [],
+      "member": 1,
+      "seed": 27290012
+     },
+     {
+      "differences": [],
+      "member": 2,
+      "seed": 27290021
+     },
+     {
+      "differences": [],
+      "member": 3,
+      "seed": 27290022
+     },
+     {
+      "differences": [],
+      "member": 4,
+      "seed": 27290031
+     },
+     {
+      "differences": [],
+      "member": 5,
+      "seed": 27290032
+     },
+     {
+      "differences": [],
+      "member": 6,
+      "seed": 27290041
+     },
+     {
+      "differences": [],
+      "member": 7,
+      "seed": 27290042
+     }
+    ]
+   },
+   "source_files": 17,
+   "source_identical_to_checkout": true,
+   "status": "different",
+   "stem": "A1-2026-03-29",
+   "stubs_engaged": [
+    "resource",
+    "holidays"
+   ],
+   "time_seconds": {
+    "attribution": 0.21869999999999834,
+    "browser_over_native": 4.691562809567933,
+    "fit": 73.2667,
+    "native_attribution": 0.08193799999935436,
+    "native_fit": 15.616693833999307,
+    "packages_ready": 2.0362000000029803,
+    "payload_ready": 2.0449000000022353,
+    "runtime_ready": 0.7202000000029802,
+    "total_in_worker": 78.74260000000149
+   }
+  },
+  {
+   "attribution": null,
+   "blocked_non_local_requests": [],
+   "browser": "chromium",
+   "browser_version": "153.0.8010.12",
+   "day": "2026-09-06",
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "82a5afcf1ff8778f8a0d1670645ec60ff6f19b88d7e618cc91d6917fd18a9f83",
+    "max_abs_eur": 5.115907697472721e-13,
+    "max_abs_eur_by_level": {
+     "p025": 5.115907697472721e-13,
+     "p10": 5.115907697472721e-13,
+     "p25": 5.115907697472721e-13,
+     "p50": 5.115907697472721e-13,
+     "p75": 5.115907697472721e-13,
+     "p90": 5.115907697472721e-13,
+     "p975": 5.115907697472721e-13
+    },
+    "mean_abs_eur": 1.0577782036523873e-13,
+    "native_sha256": "363ca856a612b2b1a6ffbdf9b95e13675bc775e4fe069645b51718c79887a2a3",
+    "shape_equal": true
+   },
+   "errors": [],
+   "memory_bytes": {
+    "browser_processes_rss_peak": 1824063488,
+    "page_js_heap_used": 1247789,
+    "wasm_linear_memory_peak": 270336000
+   },
+   "payload": {
+    "first_visit_bytes": 3189,
+    "gzip_bytes": {
+     "code": 49491,
+     "data": 1212815,
+     "packages": 32156585,
+     "page": 1582,
+     "runtime": 5446388
+    },
+    "note": "first visit = the page alone, with the runtime loaded only when the visitor asks to retrain; training payload = runtime + packages + code + the day's data",
+    "raw_bytes": {
+     "code": 51600,
+     "data": 1506934,
+     "packages": 32687456,
+     "page": 3189,
+     "runtime": 12259068
+    },
+    "training_payload_bytes": 46505058,
+    "training_payload_gzip_bytes": 38865279
+   },
+   "payload_sha256_equal": true,
+   "policy": "v2",
+   "runtime": {
+    "numpy": "2.2.5",
+    "pandas": "2.3.0",
+    "platform": "Emscripten-4.0.9-wasm32-32bit",
+    "pyodide": "0.28.0",
+    "python": "3.13.2"
+   },
+   "selections": {
+    "all_match": true,
+    "alpha_differences_by_hour": {
+     "A1": [],
+     "B2": []
+    },
+    "diagnostics": {
+     "A1": [
+      "model_sha256",
+      "n_iter_by_alpha",
+      "validation_mae_by_alpha"
+     ],
+     "B2": [
+      "model_sha256",
+      "n_iter_by_alpha",
+      "validation_mae_by_alpha"
+     ]
+    },
+    "h_layer_match": true,
+    "train_rows_match": true
+   },
+   "source_files": 17,
+   "source_identical_to_checkout": true,
+   "status": "different",
+   "stem": "v2-2026-09-06",
+   "stubs_engaged": [
+    "resource",
+    "holidays"
+   ],
+   "time_seconds": {
+    "attribution": null,
+    "browser_over_native": 1.8159800474136751,
+    "fit": 44.4198,
+    "native_attribution": null,
+    "native_fit": 24.460511041001155,
+    "packages_ready": 2.04639999999851,
+    "payload_ready": 2.057300000000745,
+    "runtime_ready": 0.7098999999985098,
+    "total_in_worker": 49.83960000000149
+   }
+  },
+  {
+   "attribution": {
+    "browser_efficiency_max_abs": 1.4210854715202004e-13,
+    "browser_issued_gap_max_abs": 0,
+    "coalitions": 1024,
+    "phi_max_abs_eur": 1.0680345496894006e-13,
+    "players_equal": true
+   },
+   "blocked_non_local_requests": [],
+   "browser": "webkit",
+   "browser_version": "26.6",
+   "day": "2026-09-06",
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "max_abs_eur": 9.379164112033322e-13,
+    "max_abs_eur_by_level": {
+     "p025": 9.379164112033322e-13,
+     "p10": 7.247535904753022e-13,
+     "p25": 6.465938895416912e-13,
+     "p50": 2.4158453015843406e-13,
+     "p75": 5.044853423896711e-13,
+     "p90": 3.979039320256561e-13,
+     "p975": 6.252776074688882e-13
+    },
+    "mean_abs_eur": 1.0662370457447694e-13,
+    "native_sha256": "b1fc7350321a2b57c591dc5b117587f86694ac4681710bc28817b5eca6e65d44",
+    "shape_equal": true
+   },
+   "errors": [],
+   "memory_bytes": {
+    "browser_processes_rss_peak": 1433288704,
+    "page_js_heap_used": null,
+    "wasm_linear_memory_peak": 225247232
+   },
+   "payload": {
+    "first_visit_bytes": 3189,
+    "gzip_bytes": {
+     "code": 49491,
+     "data": 533576,
+     "packages": 31213266,
+     "page": 1582,
+     "runtime": 5446388
+    },
+    "note": "first visit = the page alone, with the runtime loaded only when the visitor asks to retrain; training payload = runtime + packages + code + the day's data",
+    "raw_bytes": {
+     "code": 51600,
+     "data": 539285,
+     "packages": 31727367,
+     "page": 3189,
+     "runtime": 12259068
+    },
+    "training_payload_bytes": 44577320,
+    "training_payload_gzip_bytes": 37242721
+   },
+   "payload_sha256_equal": true,
+   "policy": "A1",
+   "runtime": {
+    "numpy": "2.2.5",
+    "pandas": "2.3.0",
+    "platform": "Emscripten-4.0.9-wasm32-32bit",
+    "pyodide": "0.28.0",
+    "python": "3.13.2"
+   },
+   "selections": {
+    "all_match": true,
+    "crossed_rows_match": true,
+    "diagnostics": [
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 0
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 1
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 2
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 3
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 4
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 5
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 6
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 7
+     }
+    ],
+    "members": [
+     {
+      "differences": [],
+      "member": 0,
+      "seed": 27390011
+     },
+     {
+      "differences": [],
+      "member": 1,
+      "seed": 27390012
+     },
+     {
+      "differences": [],
+      "member": 2,
+      "seed": 27390021
+     },
+     {
+      "differences": [],
+      "member": 3,
+      "seed": 27390022
+     },
+     {
+      "differences": [],
+      "member": 4,
+      "seed": 27390031
+     },
+     {
+      "differences": [],
+      "member": 5,
+      "seed": 27390032
+     },
+     {
+      "differences": [],
+      "member": 6,
+      "seed": 27390041
+     },
+     {
+      "differences": [],
+      "member": 7,
+      "seed": 27390042
+     }
+    ]
+   },
+   "source_files": 17,
+   "source_identical_to_checkout": true,
+   "status": "different",
+   "stem": "A1-2026-09-06",
+   "stubs_engaged": [
+    "resource",
+    "holidays"
+   ],
+   "time_seconds": {
+    "attribution": 0.3190000000000026,
+    "browser_over_native": 4.202250413457838,
+    "fit": 61.986,
+    "native_attribution": 0.10918087499885587,
+    "native_fit": 14.75066783299917,
+    "packages_ready": 1.761,
+    "payload_ready": 1.777,
+    "runtime_ready": 0.719,
+    "total_in_worker": 66.591
+   }
+  },
+  {
+   "attribution": {
+    "browser_efficiency_max_abs": 2.842170943040401e-14,
+    "browser_issued_gap_max_abs": 0,
+    "coalitions": 512,
+    "phi_max_abs_eur": 2.0646327758555572e-07,
+    "players_equal": true
+   },
+   "blocked_non_local_requests": [],
+   "browser": "webkit",
+   "browser_version": "26.6",
+   "day": "2026-03-29",
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "b5ca894f8f99128fc69ed1b6c6afdaea3fa5d7e05052ae90e70eedd01022cc05",
+    "max_abs_eur": 6.27698966582102e-07,
+    "max_abs_eur_by_level": {
+     "p025": 3.0111785775943645e-07,
+     "p10": 2.0162776337429023e-07,
+     "p25": 3.0177760379501706e-07,
+     "p50": 2.3198408882763033e-07,
+     "p75": 4.6974999179383303e-07,
+     "p90": 6.27698966582102e-07,
+     "p975": 8.38702902683508e-08
+    },
+    "mean_abs_eur": 3.2674357706718244e-08,
+    "native_sha256": "67ef0f36783947f4d79f1b67995fe4ee586e8d465184ab5ccbbc88be3c41145a",
+    "shape_equal": true
+   },
+   "errors": [],
+   "memory_bytes": {
+    "browser_processes_rss_peak": 1429078016,
+    "page_js_heap_used": null,
+    "wasm_linear_memory_peak": 225247232
+   },
+   "payload": {
+    "first_visit_bytes": 3189,
+    "gzip_bytes": {
+     "code": 49491,
+     "data": 525328,
+     "packages": 31213266,
+     "page": 1582,
+     "runtime": 5446388
+    },
+    "note": "first visit = the page alone, with the runtime loaded only when the visitor asks to retrain; training payload = runtime + packages + code + the day's data",
+    "raw_bytes": {
+     "code": 51600,
+     "data": 531903,
+     "packages": 31727367,
+     "page": 3189,
+     "runtime": 12259068
+    },
+    "training_payload_bytes": 44569938,
+    "training_payload_gzip_bytes": 37234473
+   },
+   "payload_sha256_equal": true,
+   "policy": "A1",
+   "runtime": {
+    "numpy": "2.2.5",
+    "pandas": "2.3.0",
+    "platform": "Emscripten-4.0.9-wasm32-32bit",
+    "pyodide": "0.28.0",
+    "python": "3.13.2"
+   },
+   "selections": {
+    "all_match": true,
+    "crossed_rows_match": true,
+    "diagnostics": [
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur",
+       "preprocessor"
+      ],
+      "member": 0
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "preprocessor"
+      ],
+      "member": 1
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 2
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 3
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 4
+     },
+     {
+      "differences": [
+       "params_sha256"
+      ],
+      "member": 5
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 6
+     },
+     {
+      "differences": [
+       "params_sha256",
+       "best_stopping_metric_eur"
+      ],
+      "member": 7
+     }
+    ],
+    "members": [
+     {
+      "differences": [],
+      "member": 0,
+      "seed": 27290011
+     },
+     {
+      "differences": [],
+      "member": 1,
+      "seed": 27290012
+     },
+     {
+      "differences": [],
+      "member": 2,
+      "seed": 27290021
+     },
+     {
+      "differences": [],
+      "member": 3,
+      "seed": 27290022
+     },
+     {
+      "differences": [],
+      "member": 4,
+      "seed": 27290031
+     },
+     {
+      "differences": [],
+      "member": 5,
+      "seed": 27290032
+     },
+     {
+      "differences": [],
+      "member": 6,
+      "seed": 27290041
+     },
+     {
+      "differences": [],
+      "member": 7,
+      "seed": 27290042
+     }
+    ]
+   },
+   "source_files": 17,
+   "source_identical_to_checkout": true,
+   "status": "different",
+   "stem": "A1-2026-03-29",
+   "stubs_engaged": [
+    "resource",
+    "holidays"
+   ],
+   "time_seconds": {
+    "attribution": 0.20199999999999818,
+    "browser_over_native": 4.494485244193661,
+    "fit": 70.18900000000001,
+    "native_attribution": 0.08193799999935436,
+    "native_fit": 15.616693833999307,
+    "packages_ready": 1.728,
+    "payload_ready": 1.743,
+    "runtime_ready": 0.687,
+    "total_in_worker": 74.631
+   }
+  },
+  {
+   "attribution": null,
+   "blocked_non_local_requests": [],
+   "browser": "webkit",
+   "browser_version": "26.6",
+   "day": "2026-09-06",
+   "deviation": {
+    "bitwise_equal": false,
+    "browser_sha256": "82a5afcf1ff8778f8a0d1670645ec60ff6f19b88d7e618cc91d6917fd18a9f83",
+    "max_abs_eur": 5.115907697472721e-13,
+    "max_abs_eur_by_level": {
+     "p025": 5.115907697472721e-13,
+     "p10": 5.115907697472721e-13,
+     "p25": 5.115907697472721e-13,
+     "p50": 5.115907697472721e-13,
+     "p75": 5.115907697472721e-13,
+     "p90": 5.115907697472721e-13,
+     "p975": 5.115907697472721e-13
+    },
+    "mean_abs_eur": 1.0577782036523873e-13,
+    "native_sha256": "363ca856a612b2b1a6ffbdf9b95e13675bc775e4fe069645b51718c79887a2a3",
+    "shape_equal": true
+   },
+   "errors": [],
+   "memory_bytes": {
+    "browser_processes_rss_peak": 1522614272,
+    "page_js_heap_used": null,
+    "wasm_linear_memory_peak": 270336000
+   },
+   "payload": {
+    "first_visit_bytes": 3189,
+    "gzip_bytes": {
+     "code": 49491,
+     "data": 1212815,
+     "packages": 32156585,
+     "page": 1582,
+     "runtime": 5446388
+    },
+    "note": "first visit = the page alone, with the runtime loaded only when the visitor asks to retrain; training payload = runtime + packages + code + the day's data",
+    "raw_bytes": {
+     "code": 51600,
+     "data": 1506934,
+     "packages": 32687456,
+     "page": 3189,
+     "runtime": 12259068
+    },
+    "training_payload_bytes": 46505058,
+    "training_payload_gzip_bytes": 38865279
+   },
+   "payload_sha256_equal": true,
+   "policy": "v2",
+   "runtime": {
+    "numpy": "2.2.5",
+    "pandas": "2.3.0",
+    "platform": "Emscripten-4.0.9-wasm32-32bit",
+    "pyodide": "0.28.0",
+    "python": "3.13.2"
+   },
+   "selections": {
+    "all_match": true,
+    "alpha_differences_by_hour": {
+     "A1": [],
+     "B2": []
+    },
+    "diagnostics": {
+     "A1": [
+      "model_sha256",
+      "n_iter_by_alpha",
+      "validation_mae_by_alpha"
+     ],
+     "B2": [
+      "model_sha256",
+      "n_iter_by_alpha",
+      "validation_mae_by_alpha"
+     ]
+    },
+    "h_layer_match": true,
+    "train_rows_match": true
+   },
+   "source_files": 17,
+   "source_identical_to_checkout": true,
+   "status": "different",
+   "stem": "v2-2026-09-06",
+   "stubs_engaged": [
+    "resource",
+    "holidays"
+   ],
+   "time_seconds": {
+    "attribution": null,
+    "browser_over_native": 1.7685239661382575,
+    "fit": 43.259,
+    "native_attribution": null,
+    "native_fit": 24.460511041001155,
+    "packages_ready": 1.794,
+    "payload_ready": 1.811,
+    "runtime_ready": 0.695,
+    "total_in_worker": 47.901
+   }
+  }
+ ],
+ "schema": "cp17-probe-measurements-v1",
+ "tau_eq": null
+}

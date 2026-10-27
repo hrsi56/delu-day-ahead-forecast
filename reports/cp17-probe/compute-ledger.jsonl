@@ -1,0 +1,11 @@
+{"job": "native-reference-1", "workers": 1, "start": 1793114184.236768, "end": 1793114261.394054, "wall_seconds": 77.2, "exit": 0}
+{"job": "browser-smoke-chromium-A1", "workers": 1, "start": 1793114337.310453, "end": 1793114413.51612, "wall_seconds": 76.2, "exit": 0}
+{"job": "browser-measurement-1", "workers": 1, "start": 1793114421.9070249, "end": 1793114642.80025, "wall_seconds": 220.9, "exit": 1}
+{"job": "attribution-native-check", "workers": 1, "start": 1793114629.764149, "end": 1793114648.1422458, "wall_seconds": 18.4, "exit": 0}
+{"job": "browser-webkit-diagnose", "workers": 1, "start": 1793114668.700592, "end": 1793114736.7438982, "wall_seconds": 68.0, "exit": 0}
+{"job": "browser-webkit-repro", "workers": 1, "start": 1793114751.575773, "end": 1793114755.591548, "wall_seconds": 4.0, "exit": 1}
+{"job": "tests-real-inputs-1", "workers": 1, "start": 1793114875.328814, "end": 1793114910.076671, "wall_seconds": 34.7, "exit": 1}
+{"job": "tests-real-inputs-2", "workers": 1, "start": 1793114920.934121, "end": 1793114955.738868, "wall_seconds": 34.8, "exit": 0}
+{"job": "node-pyodide-A1", "workers": 1, "start": 1793115023.0115972, "end": 1793115025.233068, "wall_seconds": 2.2, "exit": 1}
+{"job": "node-pyodide-A1-2", "workers": 1, "start": 1793115032.330847, "end": 1793115102.376572, "wall_seconds": 70.0, "exit": 0}
+{"job": "final-reproduction", "workers": 1, "start": 1793115144.125568, "end": 1793115820.3395011, "wall_seconds": 676.2, "exit": 0}

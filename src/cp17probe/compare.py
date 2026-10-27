@@ -11,7 +11,7 @@ and held-out day sets (their counts and index hashes); the input count; the wins
 on the training, held-out and forecast rows; early stopping's best epoch, epochs run and stop reason;
 the cap's activations on the forecast; the guard events. Across members: the crossing restorations of
 the ensemble median. **v2's**: LEAR's selected relative alpha for every local hour of A1 and B2, and the
-H layer's buffer identity. Weight hashes and solver iteration counts are reported beside them as
+H layer's buffer identity (its released days, their errors' hash and the issuing scale). Weight hashes and solver iteration counts are reported beside them as
 bitwise diagnostics, not as selections.
 """
 from __future__ import annotations
@@ -30,6 +30,7 @@ A1_SELECTIONS = ('held_out_weeks', 'week_pool', 'n_days', 'n_train_days', 'n_hel
                  'holdout_days_sha256', 'n_inputs', 'winsor_train', 'winsor_hold', 'winsor_forecast', 'best_epoch',
                  'epochs_run', 'stop_reason', 'cap_forecast_slot_levels', 'events')
 A1_DIAGNOSTICS = ('params_sha256', 'best_stopping_metric_eur', 'cap_z', 'preprocessor')
+H_SELECTION = ('buffer_start', 'buffer_end', 'buffer_days', 'buffer_hours', 'buffer_sha256', 'scale_sha256')
 V2_DIAGNOSTICS = ('alpha', 'final_n_iter', 'final_solver_passes', 'n_iter_by_alpha', 'solver_passes_by_alpha',
                   'model_sha256', 'validation_mae_by_alpha')
 
@@ -64,7 +65,9 @@ def v2_selections(native: dict, browser: dict) -> dict:
         if len(n_sel) != len(b_sel):
             rows[member].append('hour count')
         diagnostics[member] = sorted({f for n, b in zip(n_sel, b_sel) for f in V2_DIAGNOSTICS if n.get(f) != b.get(f)})
-    h = native['h_layer'] == browser['h_layer']
+    # The H layer's selection is its buffer: which released days, their errors and the issuing scale. The hash of
+    # the central it is applied to is a value, reported with the deviation, not a selection.
+    h = all(native['h_layer'][k] == browser['h_layer'][k] for k in H_SELECTION)
     rows_ok = native['train_rows_sha256'] == browser['train_rows_sha256']
     ok = h and rows_ok and not any(rows.values())
     return {'all_match': ok, 'alpha_differences_by_hour': rows, 'h_layer_match': h, 'train_rows_match': rows_ok,

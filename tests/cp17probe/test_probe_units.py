@@ -86,7 +86,8 @@ def test_a1_selections_separate_selections_from_bitwise_diagnostics():
 
 def test_v2_selections_name_the_hour_whose_alpha_differs():
     hours = [{'local_hour': h, 'selected_relative_alpha': 0.01, 'final_n_iter': 5} for h in range(24)]
-    native = {'selections': {'A1': hours, 'B2': hours}, 'h_layer': {'buffer_sha256': 'x'},
+    h_layer = {k: 'x' for k in compare.H_SELECTION}
+    native = {'selections': {'A1': hours, 'B2': hours}, 'h_layer': dict(h_layer, central_sha256='c'),
               'train_rows_sha256': {'A1': 'a', 'B2': 'b'}}
     other = json.loads(json.dumps(native))
     other['selections']['B2'][7]['selected_relative_alpha'] = 0.02
@@ -95,6 +96,10 @@ def test_v2_selections_name_the_hour_whose_alpha_differs():
     assert not out['all_match'] and out['alpha_differences_by_hour'] == {'A1': [], 'B2': [7]}
     assert out['diagnostics']['A1'] == ['final_n_iter']
     assert compare.v2_selections(native, json.loads(json.dumps(native)))['all_match']
+    # The central's hash is a value, not a selection; the buffer is a selection.
+    assert compare.v2_selections(native, dict(native, h_layer=dict(h_layer, central_sha256='d')))['all_match']
+    assert not compare.v2_selections(native, dict(native, h_layer=dict(h_layer, buffer_sha256='y',
+                                                                          central_sha256='c')))['all_match']
 
 
 def test_every_ddnn2_column_has_one_attribution_group():
