@@ -1,0 +1,90 @@
+{
+ "entry_modules": [
+  "cp17probe.dailyfit",
+  "cp17probe.attribution",
+  "cp24.design",
+  "cp24.ddnn2",
+  "cp24.member",
+  "cp15.data",
+  "cp15.models",
+  "cp21.lgbm",
+  "cp16.residuals"
+ ],
+ "files_sha256": {
+  "cp15/__init__.py": "51729f693956953e59a18758f88755165cc0f5b5dad9194517599128181504c7",
+  "cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+  "cp15/models.py": "49d9ce2dadbe92265c36d946362c08f1819a87501469975575b794984a23f67c",
+  "cp16/__init__.py": "527054074035bff88c3907ae548d6f745c532c79a18eee2f7206e05f3df32519",
+  "cp16/residuals.py": "f442714ee867310bf3b820cf12dc6055d57b53d7630a751275c6311aa4f71580",
+  "cp17probe/__init__.py": "adbb53f2290610061c0fb6c214c6c09261c36d2e2f536240c930df0868cb445c",
+  "cp17probe/attribution.py": "2eec0d4d5782d53f95bb956ad2ee97d084a9d19e055227dc443c627946161bc1",
+  "cp17probe/dailyfit.py": "82db551b16c6ce94852080114fea86538c699bbbdae127088fd682ff38dbcc5a",
+  "cp17probe/stubs/absent/holidays.py": "fe9c5e66dffb29d3a5ade0797c81b9a9df27ab473ead3c207a4b266a8563804e",
+  "cp17probe/stubs/fallback/resource.py": "2d081f55ba3817b16431dca94941947de815ecba21295e443653ec48d4c3a16d",
+  "cp21/__init__.py": "053f203c227fd8a08e7f6a5458fc3cdfb2d95efaeefc2f1c6450e20ed38cff3c",
+  "cp21/lgbm.py": "f35ba557c708aee9f6c83c3f974dcaad09d2c25fc81fcfd4105a70adedf038ad",
+  "cp24/__init__.py": "01e59a51ef166fcf206bdaad67703ee440c569be04d16800f4db4ed0f25c33e4",
+  "cp24/ddnn2.py": "a70cbea6e9533ffb0c4030a8c40b7c6978f9a218f17213c30fbb5c6850827067",
+  "cp24/design.py": "585b0673846e0e459eb700be24d12a46554172ee2c52600d86947645a0d03190",
+  "cp24/member.py": "d5df1ef4f81a3ce5fe01349588259aa32ce6fd32064581f1c5947822431538ec",
+  "delu_forecast/__init__.py": "c39e1809e51a396dd0c88f8af8ef31ee3cb125637e8edccad76486be4b089fa7",
+  "delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+  "delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+  "delu_forecast/folds.py": "71743a4f677507afea215902ee82a8e9f990fc128f4456afc47c3f4e0bd11078",
+  "delu_forecast/ingest.py": "e7a1cd415733eccd4460a49ba3d3ea465a90259e92ae657436b1baf3bd0ce04c",
+  "delu_forecast/partitions.py": "9633b4cce7a6538bb726ead77b140db37d2c503b727896214d54bb47b80d4f89"
+ },
+ "packages": {
+  "A1": [
+   "numpy",
+   "pandas",
+   "scikit-learn",
+   "requests",
+   "tzdata"
+  ],
+  "v2": [
+   "numpy",
+   "pandas",
+   "scikit-learn",
+   "requests",
+   "tzdata",
+   "lightgbm"
+  ]
+ },
+ "schema": "cp17-probe-bundle-v1",
+ "stubs": [
+  "cp17probe/stubs/absent/holidays.py",
+  "cp17probe/stubs/fallback/resource.py"
+ ],
+ "third_party_imported_natively": [
+  "81d243bd2c585b0f4821__mypyc",
+  "_csparsetools",
+  "_cyutility",
+  "_distutils_hack",
+  "_moduleTNC",
+  "_ni_label",
+  "_virtualenv",
+  "certifi",
+  "charset_normalizer",
+  "cloudpickle",
+  "dateutil",
+  "holidays",
+  "idna",
+  "joblib",
+  "lightgbm",
+  "narwhals",
+  "numpy",
+  "pandas",
+  "psutil",
+  "pyarrow",
+  "pytz",
+  "requests",
+  "scipy",
+  "six",
+  "sklearn",
+  "threadpoolctl",
+  "urllib3"
+ ],
+ "zip_bytes": 50009,
+ "zip_sha256": "d132571acf0f0f5896e01c62c945e763a6eb725e0d96e3cb48fe6c9c36a88fea"
+}
