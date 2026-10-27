@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**. Next: CP-17 |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**. Next: τ_eq, then CP-17 |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -193,9 +193,16 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
 - **CP-17's first brief (`64758101…`) is withdrawn.** On 2026-10-27 the Lead validated it, found it
   missing §19's freeze fields (§19.3's feasibility probe, τ_eq, the reference runtime, and §19.7's
   neural attribution method), and stopped before any repository work.
-- **Active Track B work: CP-17-probe,** the in-browser feasibility probe for A1. It is issued
-  2026-10-27, brief `2afc610e…`, and authorizes only pinned software retrieval (Pyodide, Playwright
-  Chromium). The Owner sets τ_eq from its measurement, and then CP-17 is reissued.
+- **CP-17-probe closed on 2026-10-27**
+  ([landing record](docs/track-b/cp-17-probe-landing-2026-10-27.md)). It was the in-browser
+  feasibility probe for A1, brief `2afc610e…`.
+  - **The identities:** `land/cp-17-probe` = `42e27c7`, `evidence/cp-17-probe` = `07da82a`, both
+    pushed.
+  - **The result:** A1 retrains in Chromium and WebKit under Pyodide 0.28.0 in 62–73 s, with
+    187–215 MiB of WebAssembly memory and a 44.6 MB payload loaded on request.
+  - **Agreement:** every selection matched the native fit, and the quantiles differ by rounding
+    only (at most 6.3e-7 EUR/MWh). The §19.3 blocker is not triggered.
+- **Next:** the Owner sets τ_eq from the probe's measurement, and then CP-17 is reissued.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -991,6 +998,25 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17-probe received, landed and closed, 2026-10-27,** under the Owner's delegation of that day.
+  - **The delivery:** the Orchestrator sent the brief to the Lead session directly. The Owner
+    confirmed the two software retrievals in that session.
+  - **The return:** PASS on `b4f2342`, after two Integration FAILs on the report's wording. No
+    measurement changed. About 2.0 of 5 machine-hours.
+  - **The receipt:**
+    - all 36 files are new;
+    - the largest blob is 414 KB;
+    - the secret and red-line scans are clean;
+    - the history-free `CI=true` run on 3.12 is green (2,260 passed, 34 skipped), and stress passes
+      17 with one collection skip.
+  - **The LAND:** GitHub CI passed on the temporary branch (run 40554314243). `main` =
+    `land/cp-17-probe` = `42e27c7`, and `evidence/cp-17-probe` was pushed.
+  - **The reclaim:** a verified bundle.
+  - **Carried to the Owner:**
+    - τ_eq (proposed 0.01 EUR/MWh, with every selection matched);
+    - the issuing host (proposed: Pyodide in Node.js, so a visitor's retrain is identical bit for
+      bit).
 
 - **CP-17-probe issued, 2026-10-27, after CP-17's brief was returned unexecuted.**
   - **Why:** the Lead found that the CP-17 brief omitted §19's obligations, which bind the CP-17
