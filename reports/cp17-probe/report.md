@@ -51,7 +51,7 @@ seconds from the probe's local server.
 | Runtime: Pyodide core | 12.26 MB | 5.45 MB |
 | Packages, A1 (numpy, pandas, scikit-learn, scipy, openblas, requests and their dependencies, tzdata) | 31.73 MB | 31.21 MB |
 | Packages, v2 (the same, plus LightGBM) | 32.69 MB | 32.16 MB |
-| Code: the landed files and the probe's module (zip), and the driver | 52 KB | 49 KB |
+| Code: the landed files and the probe's modules (zip), and the driver | 52 KB | 49 KB |
 | Data: A1's day table, D−735 to D | 0.53–0.54 MB | 0.53 MB |
 | Data: v2's rows | 1.51 MB | 1.21 MB |
 | **Training payload, A1** | **44.6 MB** | **37.2 MB** |
@@ -79,7 +79,8 @@ pinball loss only after warm-up, κ = 0), carried the difference to 1.8e-6 and 6
 median that is 6.3e-7 on the DST day, against 9.4e-13 on 2026-09-06. Even for `t096`, the best epoch,
 epochs run and stop reason were the same as natively. Why that configuration amplifies rounding more
 than the other seven was not investigated. **The eight configurations measured do not bound the
-deviation:** each 182-day search brings new ones, the next at S_14 = 2027-01-06.
+deviation:** each 182-day search brings new ones, the next at S_14 = 2027-01-06 (a protocol date in
+§24.9's refit schedule, not data).
 
 ### Selections
 
@@ -113,8 +114,9 @@ differ wherever the arithmetic does.
   - A1 ships the DDNN-2 day table from D−735 (the 728-day window plus the D−7 lags) to D, the day's keys,
     and the eight frozen members of the serving search.
   - v2 ships CP-15's rows from LEAR's history start, the LEAR recipe, and the 28 released H days.
-  - **D's price row, slot targets and mask (A1), and D's hourly targets (v2), are blanked.** The tests
-    prove that a payload is unchanged when D's outcome changes, and changed when a window value changes.
+  - **D's price row, slot targets and mask (A1), and D's hourly targets (v2), are blanked.** For A1, the
+    tests prove that the payload is unchanged when D's outcome changes, and changed when a window value
+    changes; for v2, that D's targets are blank and that an H day later than D−2 is refused.
 - **One module, every host** (`dailyfit.py`).
   - Under native CPython and under Pyodide alike, it calls the landed `cp24.member.fit_member`,
     `cp24.member.emit_rows`, `cp24.ddnn2.ensemble_median`, `cp15.models.fit_day`, `cp21.lgbm.hg_central`
@@ -139,7 +141,7 @@ differ wherever the arithmetic does.
   - the real-input embargo and parity tests skip without CP-26's local state;
   - the browser rerun is marked `stress` and skips without the local runtimes.
 
-## Three things that went wrong, and what was done
+## Four things that went wrong, and what was done
 
 1. **The first WebKit runs failed after 3 seconds. I caused it.** While the first full measurement was
    running, I edited the served `worker.js` to pass `attribution=`. WebKit, which ran after Chromium,
@@ -158,6 +160,11 @@ differ wherever the arithmetic does.
    - The comparison now follows its documented definition: the buffer identity is the selection.
    - The tests hold both cases: a different central hash still matches, and a different buffer does not.
    - The raw results were not rerun or changed.
+4. **The independent reviews caught two errors in this report.** The first Integration review found
+   that I had attributed the deviation to training length, misquoted `t096`'s epochs, and claimed that
+   no day trained near the 1,000-epoch maximum. The second found that I had counted 24 DDNN-2 members
+   where the records hold 16. Both are corrected above against the committed records; no measurement
+   changed. The two verdicts are kept in `docs/track-b/evidence/cp-17-probe/`.
 
 ## Proposals for the Owner and for CP-17
 
@@ -173,9 +180,10 @@ data-driven selection matched.** The status rule:
 The reasoning:
 
 - **What was measured.** Rounding reached 6.3e-7 EUR/MWh in the ensemble and 1.8e-6 in one member. Its
-  size depends on the member's configuration, and only two of 24 members (one configuration of eight)
-  went beyond 2e-11 (above). 1e-6, the first value I considered, would leave almost no margin over a
-  configuration like `t096`, and new configurations arrive with every search.
+  size depends on the member's configuration, and only two of the 16 member fits (both members of one
+  of the eight configurations) went beyond 2e-11 (above). 1e-6, the first value I considered, would
+  leave almost no margin over a configuration like `t096`, and new configurations arrive with every
+  search.
 - **Where 0.01 sits.** It is about four orders of magnitude above the largest observed deviation, and
   equal to the cent a display shows. A reader can understand "within one cent per MWh".
 - **Why selections are required on top.** A different selection, such as another best epoch, another
@@ -193,7 +201,7 @@ The reasoning:
 - **Runtime: Pyodide 0.28.0.**
   - Python 3.13.2, NumPy 2.2.5, pandas 2.3.0, SciPy 1.14.1, scikit-learn 1.7.0, LightGBM 4.6.0, built with
     Emscripten 4.0.9.
-  - Every file is pinned in `retrieval-manifest.json`, and every wheel equals the release's own
+  - Every file is pinned in `retrieval-manifest.json`, and every package file equals the release's own
     `pyodide-lock.json`.
 - **Reference browsers:**
   - Chromium 153.0.8010.12: Chrome for Testing, through Playwright 1.63.0;
@@ -210,14 +218,15 @@ The reasoning:
 **Proposal: exact baseline Shapley over DDNN-2's input groups, on the issued p50, with each member's
 training-row mean as the baseline** (`src/cp17probe/attribution.py`).
 
-- **Players:** the input groups the eight members use:
+- **Players:** the input groups that the day's eight members use, out of DDNN-2's eleven:
   - `price_d1`, `price_d2`, `price_d3`, `price_d7`;
   - `load_d0`, `load_d1`, `load_d7`;
   - `gfs`, with its missing indicators;
   - `stats`, `weekday`, `calendar`.
 
   These are groups, not 300 single columns, because a reader sees a 24-value curve as one input, and
-  because exactness needs few players. On 2026-09-06 there were 10 groups; on 2026-03-29, 9.
+  because exactness needs few players. On 2026-09-06 there were 10 players (all but `calendar`); on
+  2026-03-29, 9 (all but `price_d2` and `calendar`). No member used `calendar` on either day.
 - **Baseline:** "an average training day". That is each member's training-row mean, which is zero after
   the member's own preprocessor.
 - **Value:** the issued p50 of each local-hour slot, computed by the landed forward pass, cap and
@@ -229,8 +238,7 @@ training-row mean as the baseline** (`src/cp17probe/attribution.py`).
 - **Cost:** 0.08–0.11 s natively and 0.20–0.34 s in the browser per day.
   - The browser values equal the native values within 2.1e-7 EUR/MWh.
   - Every WebAssembly host gives the same bits.
-  - The full coalition reproduces the issued p50 exactly in the browsers, and within 4.3e-14 natively,
-    where the batched forward pass sums in another order.
+  - The full coalition reproduces the issued p50 exactly in the browsers, and within 4.3e-14 natively.
 - **Alternatives set aside:**
   - integrated gradients: path-dependent, and it needs input gradients that the landed code does not
     compute;
@@ -271,8 +279,8 @@ it, and it is shipped to the Space byte for byte.
 **Proposed issuing host: the official daily fit runs under the pinned Pyodide in Node.js.** A visitor's
 retrain is then *identical bit for bit* (measured), not merely within τ_eq.
 
-- **The cost** is time: about 67 s per A1 fit against 15 s natively, which is well inside a daily
-  schedule.
+- **The cost** is time: 67–73 s per A1 fit under Node.js against 15–16 s natively, which is well inside
+  a daily schedule.
 - **It adds** a runtime dependency.
 - **The development evidence stays native.** The issued values would differ from CP-26's native
   arithmetic by rounding (≤ 6.3e-7 EUR/MWh measured), and the freeze records that.
@@ -291,7 +299,8 @@ retrain is then *identical bit for bit* (measured), not merely within τ_eq.
 
 ## Limits of this measurement
 
-- **Scale.** It covers one machine, two browsers, three fits: 24 DDNN-2 members and 48 LEAR hours.
+- **Scale.** It covers one machine, two browsers and three fits: 16 DDNN-2 member fits (eight on each A1
+  day, four configurations per day, eight in all) and 48 LEAR hour models (24 for each of v2's A1 and B2).
   Firefox, mobile browsers and slower machines were not measured.
 - **Deviation is not bounded by these configurations.** It depends on the member's configuration: one
   of the eight measured (k12's `t096`) reached 1.8e-6 while the others stayed below 2e-11,
@@ -309,7 +318,7 @@ retrain is then *identical bit for bit* (measured), not merely within τ_eq.
 
 - **Software retrieved:**
   - Pyodide 0.28.0: 23 files, 44,962,352 bytes, from `cdn.jsdelivr.net/pyodide/v0.28.0/full/`. The 17
-    wheels were checked against the release lock.
+    package files (16 wheels and OpenBLAS's archive) were checked against the release lock.
   - Chrome for Testing 153.0.8010.12: 190,970,181 bytes, from `cdn.playwright.dev`, through Playwright
     1.63.0's installer. The installer deletes its archive, so the installed tree is fingerprinted instead.
     FFmpeg was already installed and was not fetched.
