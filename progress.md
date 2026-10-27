@@ -190,7 +190,13 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   - PRES-5 runs alongside, after a page compaction;
   - CP-18's preparation starts.
 - **The percentage tolerance:** τ = 10 EUR/MWh (the Owner, 2026-10-25).
-- **Active Track B work: CP-17, the freeze.** Issued 2026-10-25, brief `64758101…`, canonical copy
+- **CP-17's first brief (`64758101…`) is withdrawn.** On 2026-10-27 the Lead validated it, found it
+  missing §19's freeze fields (§19.3's feasibility probe, τ_eq, the reference runtime, and §19.7's
+  neural attribution method), and stopped before any repository work.
+- **Active Track B work: CP-17-probe,** the in-browser feasibility probe for A1. It is issued
+  2026-10-27, brief `2afc610e…`, and authorizes only pinned software retrieval (Pyodide, Playwright
+  Chromium). The Owner sets τ_eq from its measurement, and then CP-17 is reissued.
+- *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
   - the freeze record and the frozen runner, with parity on nine past origins;
@@ -985,6 +991,18 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17-probe issued, 2026-10-27, after CP-17's brief was returned unexecuted.**
+  - **Why:** the Lead found that the CP-17 brief omitted §19's obligations, which bind the CP-17
+    brief and which §24.1 keeps:
+    - §19.3's probe before the freeze, with τ_eq and the reference runtime from its measurement;
+    - §19.7's neural attribution method;
+    - §19.2's one code path;
+    - the Space plan's payload schema.
+  - **The probe brief** (`2afc610e…`) cites §19.2 and §19.3 verbatim. It authorizes only pinned
+    Pyodide and Playwright-Chromium retrieval, with no data.
+  - **Next:** CP-17 is reissued after the Owner sets τ_eq. It will add the payload schema and
+    manifest, and a definition of a successful daily fit.
 
 - **CP-17 issued, 2026-10-25.**
   - **The bar:** the brief (`64758101…`) cites v21-r17 §24.9 and §19.5 verbatim, checked with
