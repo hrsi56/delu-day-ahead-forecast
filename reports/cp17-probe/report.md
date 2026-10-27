@@ -9,7 +9,7 @@ alone); brief `2afc610e…`. Development data only: every day measured is on or 
 for two development days, 2026-09-06 and the DST day 2026-03-29. Each fit used its shipped training
 window and the landed code, seeds and selection rules:
 
-- it took about 62–73 seconds, with 187–215 MB of WebAssembly memory;
+- it took about 62–73 seconds, with 187–215 MiB of WebAssembly memory;
 - it downloaded 44.6 MB, or 37.2 MB compressed, once and on request;
 - **every data-driven selection matched the native fit**;
 - the emitted quantiles differ from the native fit by at most 6.3e-7 EUR/MWh;
@@ -27,17 +27,18 @@ outcome is blanked.
 
 Status "different" means not bit-identical; no τ_eq exists yet. Selections: see
 [§ Selections](#selections). Time is the fit in the worker, with the attribution beside it. Memory is the
-WebAssembly linear memory's peak, and beside it the summed resident memory of the browser's processes.
+WebAssembly linear memory's peak (MiB, 2^20 bytes), and beside it the summed resident memory of the
+browser's processes (GiB, 2^30 bytes). Payload sizes below are decimal (MB, 10^6 bytes).
 
 | Browser | Day | Status | Max abs diff (EUR/MWh) | Selections | Fit | Attribution | Native fit | WebAssembly memory | Browser processes |
 |---|---|---|---|---|---|---|---|---|---|
-| Chromium 153.0.8010.12 | A1 2026-09-06 | different | 9.4e-13 | all match | 65.8 s | 0.34 s | 14.8 s | 215 MB | 1.64 GB |
-| Chromium | A1 2026-03-29 (DST) | different | 6.3e-7 | all match | 73.3 s | 0.22 s | 15.6 s | 187 MB | 1.63 GB |
-| Chromium | v2 2026-09-06 | different | 5.1e-13 | all match | 44.4 s | — | 24.5 s | 258 MB | 1.74 GB |
-| WebKit 26.6 | A1 2026-09-06 | different | 9.4e-13 | all match | 62.0 s | 0.32 s | 14.8 s | 215 MB | 1.37 GB |
-| WebKit | A1 2026-03-29 (DST) | different | 6.3e-7 | all match | 70.2 s | 0.20 s | 15.6 s | 215 MB | 1.36 GB |
-| WebKit | v2 2026-09-06 | different | 5.1e-13 | all match | 43.3 s | — | 24.5 s | 258 MB | 1.45 GB |
-| Node.js v26.7.0 (Pyodide) | each of the three | bitwise equal to both browsers | as above | all match | 66.8 / 72.7 / 44.6 s | — | — | 187–273 MB | — |
+| Chromium 153.0.8010.12 | A1 2026-09-06 | different | 9.4e-13 | all match | 65.8 s | 0.34 s | 14.8 s | 214.8 MiB | 1.60 GiB |
+| Chromium | A1 2026-03-29 (DST) | different | 6.3e-7 | all match | 73.3 s | 0.22 s | 15.6 s | 187.1 MiB | 1.59 GiB |
+| Chromium | v2 2026-09-06 | different | 5.1e-13 | all match | 44.4 s | — | 24.5 s | 257.8 MiB | 1.70 GiB |
+| WebKit 26.6 | A1 2026-09-06 | different | 9.4e-13 | all match | 62.0 s | 0.32 s | 14.8 s | 214.8 MiB | 1.33 GiB |
+| WebKit | A1 2026-03-29 (DST) | different | 6.3e-7 | all match | 70.2 s | 0.20 s | 15.6 s | 214.8 MiB | 1.33 GiB |
+| WebKit | v2 2026-09-06 | different | 5.1e-13 | all match | 43.3 s | — | 24.5 s | 257.8 MiB | 1.42 GiB |
+| Node.js v26.7.0 (Pyodide) | each of the three | bitwise equal to both browsers | as above | all match | 66.8 / 72.7 / 44.6 s | — | — | 187.1–273.9 MiB | — |
 
 **Startup.** Before the fit, loading the runtime, the packages, the code and the day's data took 1.7–2.1
 seconds from the probe's local server.
@@ -56,11 +57,29 @@ seconds from the probe's local server.
 | **Training payload, A1** | **44.6 MB** | **37.2 MB** |
 
 The deviation is **rounding**: the same float64 operations in a different order, through Accelerate's
-BLAS natively and Pyodide's own kernels in WebAssembly. Training amplifies it. On 2026-09-06 it stays
-near 1e-12. On 2026-03-29, one configuration (k12's `t096`, members 6 and 7, trained for 250–440
-epochs) carried it to 1.8e-6 per member and 6.3e-7 in the ensemble median. Even there, its best epoch,
-epochs run and stop reason were the same. **The deviation is not bounded by a constant:** it grows with
-training length.
+BLAS natively and Pyodide's own kernels in WebAssembly. Training carries it forward, and **how far it
+grows depends on the member's configuration, not on how long the member trained.** Per member, as
+the largest absolute difference over its emitted quantiles (`native-reference.json` against
+`browser-results.json`; both browsers agree bit for bit):
+
+| Day | Member | Configuration | Epochs run (best) | Browser − native |
+|---|---|---|---|---|
+| 2026-09-06 | 0, 1 | k13 `t040` | 145 (95), 259 (209) | 8.5e-13, 4.5e-13 |
+| 2026-09-06 | 2, 3 | k13 `t094` | 147 (97), 86 (36) | 1.5e-11, 2.8e-13 |
+| 2026-09-06 | 4, 5 | k13 `t030` | 92 (42), 119 (69) | 4.5e-13, 4.5e-13 |
+| 2026-09-06 | 6, 7 | k13 `t005` | 939 (889), 768 (718) | 2.3e-13, 2.0e-13 |
+| 2026-03-29 | 0, 1 | k12 `t041` | 94 (44), 92 (42) | 2.4e-13, 2.3e-13 |
+| 2026-03-29 | 2, 3 | k12 `t083` | 73 (23), 86 (36) | 6.0e-13, 2.1e-12 |
+| 2026-03-29 | 4, 5 | k12 `t108` | 441 (391), 334 (284) | 2.6e-13, 5.4e-13 |
+| 2026-03-29 | 6, 7 | k12 `t096` | 338 (288), 300 (250) | **1.8e-6, 6.0e-7** |
+
+The longest-trained members (k13's `t005`, 939 and 768 epochs) stay at about 2e-13. One configuration,
+k12's `t096` (one softplus layer of 140 units, the `z-s4` target, batch 32, learning rate 1.5e-4,
+pinball loss only after warm-up, κ = 0), carried the difference to 1.8e-6 and 6.0e-7. In the ensemble
+median that is 6.3e-7 on the DST day, against 9.4e-13 on 2026-09-06. Even for `t096`, the best epoch,
+epochs run and stop reason were the same as natively. Why that configuration amplifies rounding more
+than the other seven was not investigated. **The eight configurations measured do not bound the
+deviation:** each 182-day search brings new ones, the next at S_14 = 2027-01-06.
 
 ### Selections
 
@@ -108,7 +127,8 @@ differ wherever the arithmetic does.
     server that counts bytes. Any request elsewhere is blocked and recorded; there were none.
   - Each run uses a fresh browser context, so the cache is empty. Pyodide runs in a Web Worker.
   - The worker hashes the source files it executed. They equal the checkout's (`bundle-manifest.json`):
-    21 landed files byte for byte, the probe's module, and two stand-ins:
+    17 landed files byte for byte, the probe's 3 modules (`__init__`, `dailyfit`, `attribution`), and two
+    stand-ins:
     - **`holidays`**, which Pyodide 0.28.0 does not ship. `delu_forecast.features` imports it at module
       level and never uses it in a fit; any use raises.
     - **the POSIX `resource` module**, which Pyodide lacks. `cp24.member` and `cp21.lgbm` read
@@ -152,8 +172,10 @@ data-driven selection matched.** The status rule:
 
 The reasoning:
 
-- **What was measured.** Rounding reached 6.3e-7 EUR/MWh in the ensemble and 1.8e-6 in one member, and
-  it grows with training length (above). 1e-6, the first value I considered, would leave almost no margin.
+- **What was measured.** Rounding reached 6.3e-7 EUR/MWh in the ensemble and 1.8e-6 in one member. Its
+  size depends on the member's configuration, and only two of 24 members (one configuration of eight)
+  went beyond 2e-11 (above). 1e-6, the first value I considered, would leave almost no margin over a
+  configuration like `t096`, and new configurations arrive with every search.
 - **Where 0.01 sits.** It is about four orders of magnitude above the largest observed deviation, and
   equal to the cent a display shows. A reader can understand "within one cent per MWh".
 - **Why selections are required on top.** A different selection, such as another best epoch, another
@@ -271,8 +293,10 @@ retrain is then *identical bit for bit* (measured), not merely within τ_eq.
 
 - **Scale.** It covers one machine, two browsers, three fits: 24 DDNN-2 members and 48 LEAR hours.
   Firefox, mobile browsers and slower machines were not measured.
-- **Deviation is not bounded by these days.** It grows with training length, and no day here trained
-  near DDNN-2's 1,000-epoch maximum.
+- **Deviation is not bounded by these configurations.** It depends on the member's configuration: one
+  of the eight measured (k12's `t096`) reached 1.8e-6 while the others stayed below 2e-11,
+  including members trained for 939 and 768 epochs. Other configurations, including those of future
+  searches, may amplify rounding more.
 - **Selection agreement could fail on some other day.** A near-tie in early stopping, a winsorisation
   bound or a Lasso penalty could flip on another day. The status rule then says "different", which is
   the honest outcome.
