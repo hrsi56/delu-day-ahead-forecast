@@ -1,0 +1,256 @@
+{
+ "2022-12-04-gfs1": {
+  "artifact_arrays_sha256": null,
+  "artifact_file_sha256": "07fd72f7f5e23175b59e6f13c29390d28522d7bae39ef6222a9e553c4d9c155e",
+  "artifact_sha256": "3dfd3863c0473f1c40535e4596ce672c9805f046607bd94244993f30059557f4",
+  "artifact_verifies": true,
+  "attempts": [
+   {
+    "cause": "training: FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)",
+    "policy": "A1",
+    "seconds": 7.790412624999999,
+    "status": "failed"
+   },
+   {
+    "cause": null,
+    "policy": "v4",
+    "seconds": 57.640123875,
+    "status": "ok"
+   }
+  ],
+  "comparison": {
+   "causes": {
+    "A1": "training: FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)"
+   },
+   "host_display": "failed fit; fallback v4 issued",
+   "host_path": [
+    [
+     "A1",
+     "failed"
+    ],
+    [
+     "v4",
+     "ok"
+    ]
+   ],
+   "issued_policy": "v4",
+   "max_abs_eur_vs_native": 5.115907697472721e-13,
+   "native_causes": {
+    "A1": "training: FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)"
+   },
+   "native_display": "failed fit; fallback v4 issued",
+   "native_path": [
+    [
+     "A1",
+     "failed"
+    ],
+    [
+     "v4",
+     "ok"
+    ]
+   ],
+   "same_issued_policy": true,
+   "same_path": true,
+   "selections_match_native": true,
+   "status_vs_native": "within \u00b10.01 EUR/MWh"
+  },
+  "day": "2022-12-04",
+  "display": "failed fit; fallback v4 issued",
+  "executed_files_sha256": "d72716d3fe586916d6b9af535e6a023d2a4ee93afe94347a9751f73be8603153",
+  "gfs_available": true,
+  "host": {
+   "blocked_non_local_requests": [],
+   "memory": {
+    "rss_peak": 935247872,
+    "wasm_heap": 410910720
+   },
+   "node": {
+    "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+    "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+    "version": "v26.7.0"
+   },
+   "process_rss_peak_bytes": 935247872,
+   "pyodide": "0.28.0",
+   "stubs": [
+    "resource",
+    "holidays"
+   ],
+   "total_seconds": 67.87479674999999,
+   "wasm_memory_bytes": 410910720
+  },
+  "issued_policy": "v4",
+  "native_seconds": 34.63664762499684,
+  "resource_check": [],
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 935247872,
+   "wall_seconds": 65.484408375
+  }
+ },
+ "2026-09-06-gfs0": {
+  "artifact_arrays_sha256": null,
+  "artifact_file_sha256": "edabdad3a78c1c93a402299175958e524f0605dd0c8777886354c3654c34bf98",
+  "artifact_sha256": "bc3e113f6fd0abc0fc1392d3b60b0cdb713d9a9df06c6c04ac4fc3ba21f379d2",
+  "artifact_verifies": true,
+  "attempts": [
+   {
+    "cause": "GFS late or missing at the issue time",
+    "policy": "A1",
+    "status": "skipped"
+   },
+   {
+    "cause": null,
+    "policy": "v2",
+    "seconds": 58.684990834,
+    "status": "ok"
+   }
+  ],
+  "comparison": {
+   "causes": {
+    "A1": "GFS late or missing at the issue time"
+   },
+   "host_display": "skipped fit (GFS late or missing); fallback v2 issued",
+   "host_path": [
+    [
+     "A1",
+     "skipped"
+    ],
+    [
+     "v2",
+     "ok"
+    ]
+   ],
+   "issued_policy": "v2",
+   "max_abs_eur_vs_native": 5.115907697472721e-13,
+   "native_causes": {
+    "A1": "GFS late or missing at the issue time"
+   },
+   "native_display": "skipped fit (GFS late or missing); fallback v2 issued",
+   "native_path": [
+    [
+     "A1",
+     "skipped"
+    ],
+    [
+     "v2",
+     "ok"
+    ]
+   ],
+   "same_issued_policy": true,
+   "same_path": true,
+   "selections_match_native": true,
+   "status_vs_native": "within \u00b10.01 EUR/MWh"
+  },
+  "day": "2026-09-06",
+  "display": "skipped fit (GFS late or missing); fallback v2 issued",
+  "executed_files_sha256": "b7fe78df73bf786c3ad8edf794df4a1f2403eb6ea84aa1dde6e7d548bef4a9ba",
+  "gfs_available": false,
+  "host": {
+   "blocked_non_local_requests": [],
+   "memory": {
+    "rss_peak": 967557120,
+    "wasm_heap": 339148800
+   },
+   "node": {
+    "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+    "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+    "version": "v26.7.0"
+   },
+   "process_rss_peak_bytes": 967557120,
+   "pyodide": "0.28.0",
+   "stubs": [
+    "resource",
+    "holidays"
+   ],
+   "total_seconds": 61.125587083,
+   "wasm_memory_bytes": 339148800
+  },
+  "issued_policy": "v2",
+  "native_seconds": 30.514600958005758,
+  "resource_check": [],
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 967557120,
+   "wall_seconds": 58.723268125
+  }
+ },
+ "2026-09-06-gfs1": {
+  "artifact_arrays_sha256": "15bf7731c43bd9be164d2bab83e9c5afc30cf4ad412150e5a549d27c3f295fce",
+  "artifact_file_sha256": "ea3d0a3e59e3c625bbf647e385053430166e22b359037b889c84701e5cd059ce",
+  "artifact_sha256": "8b881354e1b47b36f600f9d1a540e1da784749bca479a188051bd2091c76f8db",
+  "artifact_verifies": true,
+  "attempts": [
+   {
+    "cause": null,
+    "policy": "A1",
+    "seconds": 67.697004458,
+    "status": "ok"
+   }
+  ],
+  "comparison": {
+   "causes": {},
+   "host_display": "successful daily fit",
+   "host_path": [
+    [
+     "A1",
+     "ok"
+    ]
+   ],
+   "issued_policy": "A1",
+   "max_abs_eur_vs_native": 9.379164112033322e-13,
+   "native_causes": {},
+   "native_display": "successful daily fit",
+   "native_path": [
+    [
+     "A1",
+     "ok"
+    ]
+   ],
+   "same_issued_policy": true,
+   "same_path": true,
+   "selections_match_native": true,
+   "status_vs_native": "within \u00b10.01 EUR/MWh"
+  },
+  "day": "2026-09-06",
+  "display": "successful daily fit",
+  "executed_files_sha256": "f07711833fcb358afb67eb45db8a264a52362eb0214249d9db2bf5ebc6c21166",
+  "gfs_available": true,
+  "host": {
+   "blocked_non_local_requests": [],
+   "memory": {
+    "rss_peak": 871727104,
+    "wasm_heap": 235470848
+   },
+   "node": {
+    "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+    "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+    "version": "v26.7.0"
+   },
+   "process_rss_peak_bytes": 874184704,
+   "pyodide": "0.28.0",
+   "stubs": [
+    "resource",
+    "holidays"
+   ],
+   "total_seconds": 70.136840834,
+   "wasm_memory_bytes": 235470848
+  },
+  "issued_policy": "A1",
+  "native_seconds": 14.839379625002039,
+  "resource_check": [],
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 871727104,
+   "wall_seconds": 67.706196166
+  }
+ }
+}

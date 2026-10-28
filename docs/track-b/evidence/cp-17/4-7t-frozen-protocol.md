@@ -171,13 +171,14 @@ CP-17 recorded no exposure.
   - then the comparators run, then the scoring, then the analysis (§5–7);
   - then the report.
 - **The product run under the issuing host:**
-  - measured at CP-17: about 80 s per A1 fit, about 65 s per v4 fit and about 45 s per v2 fit;
-  - with the proposed shadow issuances, about 3.5 minutes per origin, so about **5.5 machine-hours** for 90
+  - measured at CP-17: about 70 s per A1 fit (146 s at an origin whose ensemble has a member at the
+    1,000-epoch cap), about 55 s per v4 fit and about 45 s per v2 fit;
+  - with the proposed shadow issuances, about 3 minutes per origin, so about **4.5 machine-hours** for 90
     origins on one worker.
 - **The comparators natively:** about 45 s per origin for v5's members and D2, about 1.2 machine-hours.
 - **The proposed ceiling is 20 machine-hours,** CPU only: at most 4 workers, BLAS at one thread, peak memory
   12 GB, no cloud.
-- **Daily operation (CP-18):** about 3.5 minutes on the issuing host per delivery day, within the success
+- **Daily operation (CP-18):** about 3 minutes on the issuing host per delivery day, within the success
   definition's 15-minute ceiling, issued at 11:00 local, before the 12:00 gate. CP-18 fixes the deadline and
   the late-forecast rule (§24.4).
 

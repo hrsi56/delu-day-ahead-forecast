@@ -1,11 +1,11 @@
 # CP-17's freeze record: A1 as a complete daily policy on one code path
 
 **The machine-readable freeze** is [`freeze-manifest.json`](freeze-manifest.json). It holds:
-- **the policy identity:** SHA-256 `⟨policy-identity⟩`. Every issued artifact cites it.
+- **the policy identity:** SHA-256 `a4624978b60a8227475a8502d1309c913f4f840daba980a0bbd0b8ddf1356a94`. Every issued artifact cites it.
 - **the initial artifact and state** at the freeze origin.
 - **the reference bundle's manifest.**
 
-Its content digest is `⟨freeze-manifest⟩`.
+Its content digest is `c48d82a51575cd9c5a15088a966977a2a9e3471405c9c821d9f1d2411519bceb`.
 
 **Verifying it.** `python -m cp17.tools.freeze verify docs/track-b/evidence/cp-17/freeze-manifest.json`
 recomputes every recorded file hash from the files themselves. It refuses an altered or missing file, a wrong
@@ -41,8 +41,8 @@ policy, and is not a change to it.
   - the host driver;
   - the landed model code they import;
   - two import-only stand-ins (`holidays`, `resource`).
-- **The package:** 33 files, SHA-256 of the file list `f0a11c0f68385f00e15e66e28bd091f9c36f78d8c2907b217d6f1abccbece5e1`.
-  - Its deterministic zip is 86,299 bytes, `420d559d…`.
+- **The package:** 33 files, SHA-256 of the file list `54212d2cb0862453bee72ff56f0c0821cb6ba0e3751aa05f478ad6547d233e6c`.
+  - Its deterministic zip is 86,816 bytes, `1d4e3c7e…`.
   - The import closure is measured, not declared (`cp17.tools.bundle`). The native-only drivers in
     `cp17.tools` never ship.
 - **Dependencies:**
@@ -106,10 +106,11 @@ See conflict C1 in §11.
 **The freeze origin** is the issuance for delivery 2026-09-06 at 2026-09-05 09:00 UTC.
 
 **The initial artifact** is the issuing host's A1 artifact:
-- `⟨artifact⟩`, kept in [`artifact-2026-09-06.json`](artifact-2026-09-06.json), with its arrays in the
+- ``8b881354e1b47b36f600f9d1a540e1da784749bca479a188051bd2091c76f8db``, kept in [`artifact-2026-09-06.json`](artifact-2026-09-06.json), with its arrays in the
   reference bundle;
 - displayed as "successful daily fit";
-- ⟨artifact-resources⟩.
+- issued in 67.7 s of wall time and 831 MiB of peak memory,
+  within the 15-minute and 4 GB ceilings.
 
 **The initial state** is the fallbacks' and the control's interval states at the freeze origin: v4's, v2's
 and v5's H buffers and B0's raw-error buffer, each 28 released days, 2026-08-08 to 2026-09-04.
@@ -190,9 +191,9 @@ rules.
 
 | Case | Path | Display | Issued forecast vs native |
 |---|---|---|---|
-| 2026-09-06, GFS available | A1 ok | successful daily fit | ⟨i1⟩ |
-| 2026-09-06, GFS declared unavailable | A1 skipped → v2 ok | skipped fit (GFS late or missing); fallback v2 issued | ⟨i2⟩ |
-| 2022-12-04 (a real A1 failure) | A1 failed (member 2, seed 26590021, `nonfinite_loss` at epoch 21, in both runtimes) → v4 ok | failed fit; fallback v4 issued | ⟨i3⟩ |
+| 2026-09-06, GFS available | A1 ok | successful daily fit | within ±0.01 EUR/MWh (largest 9.4e-13 EUR/MWh) |
+| 2026-09-06, GFS declared unavailable | A1 skipped → v2 ok | skipped fit (GFS late or missing); fallback v2 issued | within ±0.01 EUR/MWh (largest 5.1e-13 EUR/MWh) |
+| 2022-12-04 (a real A1 failure) | A1 failed (member 2, seed 26590021, `nonfinite_loss` at epoch 21, in both runtimes) → v4 ok | failed fit; fallback v4 issued | within ±0.01 EUR/MWh (largest 5.1e-13 EUR/MWh) |
 
 Record: `reports/cp17/issuance.json`.
 
@@ -207,8 +208,8 @@ Each proposal was written without any 4.7T outcome. None changes landed code.
   - **Proposed.** The daily pipeline fits the chain's policies (v4, v2, B0) every day under the issuing host,
     as **shadow issuances**: their central and scale are stored before the outcome, and they are never
     published as the product's forecast. This keeps their own buffers current, exactly as CP-26 did. The
-    cost measured here is about 65 s (v4), about 45 s (v2) and under 1 s (B0) per day, within the 15-minute
-    ceiling.
+    cost measured here is about 55 s (v4), about 45 s (v2) and under 1 s (B0) per day on the issuing host,
+    within the 15-minute ceiling.
   - **The initial states** are CP-26's at the freeze origin (§6). Errors from native and from issuing-host
     issuances differ by rounding only (about 1e-12 here).
 - **C1: "labels ≤ D−2" against the landed training targets.**
@@ -241,8 +242,9 @@ Each proposal was written without any 4.7T outcome. None changes landed code.
 - **F1: an issuing-host parity miss, reported and not tuned (brief item 3).**
   - **The miss.** At the 25-hour DST origin 2025-10-26, A1 under the issuing host differs from the native fit
     by up to 0.028 EUR/MWh (p50), above τ_eq = 0.01, with every data-driven selection identical.
-  - **The cause** is one member: `cp26-k11-t032`, seed 27190032, which trains to the 1,000-epoch cap with its
-    best epoch the last. Its own quantiles differ by 0.77 EUR/MWh. The other seven agree to about 1e-12.
+  - **The cause** is one configuration, `cp26-k11-t032`, whose two members both train to the 1,000-epoch cap.
+    Member 5 (seed 27190032), whose best epoch is the last, differs by 0.77 EUR/MWh in its own quantiles, and
+    member 4 (seed 27190031) by 3.6e-05. The other six agree to about 1e-12.
   - **What it means.** τ_eq, set from CP-17-probe's two origins (largest 6.3e-7), is not a bound on rounding
     between native CPython and WebAssembly for long-trained DDNN-2 members. It remains the visitor's tolerance
     against the issued artifact, which the same WebAssembly runtime produces. That comparison is bit for bit
@@ -267,7 +269,7 @@ Each proposal was written without any 4.7T outcome. None changes landed code.
 For 4.7T: [`4-7t-frozen-protocol.md`](4-7t-frozen-protocol.md) §11.
 
 For daily operation (CP-18):
-- about 3.5 minutes on the issuing host per delivery day, including the proposed shadow issuances, issued at
+- about 3 minutes on the issuing host per delivery day, including the proposed shadow issuances, issued at
   11:00 local;
 - within the 15-minute and 4 GB ceilings of the success definition.
 

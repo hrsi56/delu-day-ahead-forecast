@@ -1,0 +1,10 @@
+{"utc": "2026-10-28T00:12Z", "job": "extract evidence/cp-26 inputs (git archive | tar)", "workers": 1, "wall_seconds": 5}
+{"utc": "2026-10-28T00:13Z", "job": "verify extract against the tag tree and scores manifest", "workers": 1, "wall_seconds": 25}
+{"utc": "2026-10-28T00:14Z", "job": "gfs_check runs (4) and cross-check (1)", "workers": 1, "wall_seconds": 185}
+{"utc": "2026-10-28T00:20Z", "job": "pytest tests/cp17 (4 runs, 2 with the ledger rebuild)", "workers": 1, "wall_seconds": 110}
+{"utc": "2026-10-28T00:22Z", "job": "total so far", "machine_hours": 0.09, "ceiling_machine_hours": 15}
+{"utc": "2026-10-28T01:11:33Z", "job": "native parity smoke, 2026-09-06", "workers": 1, "wall_seconds": 106}
+{"utc": "2026-10-28T01:34:41Z", "job": "smoke runs (native nine origins, host A1/v4, issuances x3, scoring) before the official run", "workers": 2, "wall_seconds": 1300}
+{"utc": "2026-10-28T02:03:07Z", "job": "official reproduction attempt 1 (stopped at the controls step)", "workers": 2, "wall_seconds": 1595, "worker_seconds_estimate": 2400}
+{"utc": "2026-10-28T04:49:02Z", "job": "official reproduction attempt 2 (stopped at the freeze step), plus freeze and browser smoke runs", "workers": 2, "wall_seconds": 2100, "worker_seconds_estimate": 2900}
+{"utc": "2026-10-28T05:21:18Z", "job": "official reproduction (final, af4c20c): native nine origins, host 15 fits (2 workers), issuances x3, controls, scoring check, freeze, browsers x4", "workers": 2, "wall_seconds": 1917, "worker_seconds_estimate": 2330}
