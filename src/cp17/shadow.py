@@ -44,15 +44,17 @@ class ShadowStates:
         self.h, self.b0 = h, b0
 
     @classmethod
-    def from_buffers(cls, origin: date, buffers: dict):
-        """States whose released buffers are `buffers[policy]` (CP-26's list of {'day', 'errors'}) at `origin`,
-        with no pending issuance."""
+    def from_buffers(cls, origin: date, buffers: dict, pending: dict | None = None):
+        """States at `origin`, after its release: the released buffers `buffers[policy]` (CP-26's list of
+        {'day', 'errors'}) and the issuances registered but not yet released, `pending[policy]` (a list of
+        {'day', 'index', 'central'[, 'scale']}, the central as registered)."""
         from cp16.residuals import SharedResidualState
         from cp26.state import RawResidualState
+        pending = pending or {}
         h = {p: SharedResidualState.from_dict({'schema': 'cp16-shared-residuals-v1', 'last_origin': str(origin),
-                                               'pending': [], 'consumed': [b['day'] for b in buffers[p]],
+                                               'pending': pending.get(p, []), 'consumed': [b['day'] for b in buffers[p]],
                                                'buffer': buffers[p], 'trace': []}) for p in H_POLICIES}
-        b0 = RawResidualState.from_dict({'last_origin': str(origin), 'pending': [], 'trace': [],
+        b0 = RawResidualState.from_dict({'last_origin': str(origin), 'pending': pending.get('B0', []), 'trace': [],
                                          'consumed': [b['day'] for b in buffers['B0']], 'buffer': buffers['B0']})
         return cls(h, b0)
 

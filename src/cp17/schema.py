@@ -1,4 +1,10 @@
-"""The payload schema and manifest (Space plan §4.12 and §7 step 3), frozen at CP-17.
+"""The payload schema and manifest (Space plan §4.12 and §7 step 3), frozen at CP-17 and re-frozen at CP-17b.
+
+CP-17b changes two kinds and nothing else: `issued_forecasts` v2 admits a partial day (its forecastable hours
+only, with the missing hours named; the Owner's decision 13), and `fitted_artifact` v2 takes one of two forms,
+issued (keys, quantiles, the partial record and its fit's own resource measurement within the ceiling) or a
+failed issuance (none of them), so the schema itself refuses an issued artifact without a measurement (CP-17's
+review, N2).
 
 Seven payload kinds make up a dated bundle. Each JSON file has a JSON Schema (draft 2020-12, the subset
 `validate` implements); each NumPy file declares its arrays in its JSON companion:
@@ -37,13 +43,24 @@ POLICY = {'enum': ['A1', 'v4', 'v2', 'B0']}
 QUANTILES = {'type': 'array', 'minItems': 1, 'maxItems': 25,
              'items': {'type': 'array', 'minItems': 7, 'maxItems': 7, 'items': {'type': 'number'}}}
 KEYS = {'type': 'array', 'minItems': 1, 'maxItems': 25, 'items': UTC}
-#: An issued fit's own resource measurement (N2); a failed issuance has none.
+#: An issued fit's own resource measurement on the issuing host, within the success definition's ceiling (N2);
+#: a failed issuance has none.
 MEASUREMENT = {'type': 'object', 'required': ['wall_seconds', 'peak_bytes', 'limits'],
-               'properties': {'wall_seconds': {'type': 'number', 'minimum': 0}, 'peak_bytes': {'type': 'integer', 'minimum': 0},
-                              'limits': {'type': 'object', 'required': ['wall_seconds', 'peak_bytes']}}}
+               'properties': {'wall_seconds': {'type': 'number', 'minimum': 0, 'maximum': 900},
+                              'peak_bytes': {'type': 'integer', 'minimum': 0, 'maximum': 4 * 1024 ** 3},
+                              'limits': {'type': 'object', 'required': ['wall_seconds', 'peak_bytes'], 'additionalProperties': False,
+                                         'properties': {'wall_seconds': {'const': 900}, 'peak_bytes': {'const': 4 * 1024 ** 3}}}}}
 PARTIAL = {'type': 'object', 'required': ['issued_hours', 'canonical_hours', 'missing_hours'], 'additionalProperties': False,
            'properties': {'issued_hours': {'type': 'integer', 'minimum': 1}, 'canonical_hours': {'type': 'integer'},
                           'missing_hours': {'type': 'array', 'minItems': 1, 'items': {'type': 'string'}}}}
+#: The two forms of an issued artifact: a policy issued (keys, quantiles and its fit's measurement), or a failed
+#: issuance (none of them). The schema itself refuses an issued artifact without a measurement (N2).
+ISSUED_FORM = {'properties': {'issued_policy': POLICY, 'keys': KEYS, 'quantiles': QUANTILES, 'quantiles_sha256': SHA,
+                              'resources': MEASUREMENT, 'partial': {'anyOf': [PARTIAL, {'type': 'null'}]}}}
+FAILED_FORM = {'properties': {'issued_policy': {'type': 'null'}, 'keys': {'type': 'null'}, 'quantiles': {'type': 'null'},
+                              'quantiles_sha256': {'type': 'null'}, 'resources': {'type': 'null'}, 'partial': {'type': 'null'}}}
+ARTIFACT_SCHEMA = 'cp17b-issued-artifact-v2'
+ISSUED_FORECASTS_SCHEMA = 'cp17b-issued-forecasts-v2'
 KINDS = ('manifest', 'issued_forecasts', 'outcomes', 'evaluation', 'fitted_artifact', 'training_window', 'series')
 
 SCHEMAS = {
@@ -78,15 +95,15 @@ SCHEMAS = {
                 'properties': {'path': {'type': 'string', 'pattern': r'^[A-Za-z0-9._-]+$'}, 'sha256': SHA,
                                'bytes': {'type': 'integer', 'minimum': 0}, 'kind': {'enum': list(KINDS[1:])}}}}}},
     'issued_forecasts': {
-        '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'cp17-issued-forecasts-v1', 'type': 'object',
+        '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': ISSUED_FORECASTS_SCHEMA, 'type': 'object',
         'required': ['schema', 'levels', 'days'], 'additionalProperties': False,
         'properties': {
-            'schema': {'const': 'cp17-issued-forecasts-v1'},
+            'schema': {'const': ISSUED_FORECASTS_SCHEMA},
             'levels': {'const': [0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975]},
             'days': {'type': 'array', 'items': {
                 'type': 'object', 'additionalProperties': False,
                 'required': ['delivery_day', 'issue_utc', 'issuing_artifact_sha256', 'issued_policy', 'display', 'keys',
-                             'quantiles'],
+                             'quantiles', 'partial'],
                 'properties': {'delivery_day': DAY, 'issue_utc': UTC, 'issuing_artifact_sha256': SHA,
                                'issued_policy': POLICY, 'display': {'type': 'string'}, 'keys': KEYS,
                                'quantiles': QUANTILES, 'partial': {'anyOf': [PARTIAL, {'type': 'null'}]}}}}}},
@@ -115,11 +132,12 @@ SCHEMAS = {
                                           'properties': {'schema': {'const': 'cp17-evaluation-v1'},
                                                          'tau_eur': {'const': 10.0}, 'rolling_days': {'const': 28}}}}}}}},
     'fitted_artifact': {
-        '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'cp17b-issued-artifact-v2', 'type': 'object',
+        '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': ARTIFACT_SCHEMA, 'type': 'object',
         'required': ['schema', 'product', 'designated_policy', 'delivery_day', 'issue_utc', 'issued_policy', 'route',
                      'display', 'attempts', 'keys', 'quantiles', 'quantiles_sha256', 'times', 'lineage', 'resources',
                      'partial', 'artifact_sha256'],
-        'properties': {'schema': {'const': 'cp17b-issued-artifact-v2'}, 'product': {'const': 'delu-day-ahead-policy'},
+        'anyOf': [ISSUED_FORM, FAILED_FORM],
+        'properties': {'schema': {'const': ARTIFACT_SCHEMA}, 'product': {'const': 'delu-day-ahead-policy'},
                        'designated_policy': {'const': 'A1'}, 'delivery_day': DAY, 'issue_utc': UTC,
                        'issued_policy': {'anyOf': [POLICY, {'type': 'null'}]},
                        'route': {'enum': ['designated', 'gfs_unavailable', 'a1_failed']},
@@ -167,7 +185,7 @@ def _is(value, name: str) -> bool:
 
 def validate(value, schema: dict, path: str = '$') -> list[str]:
     """The JSON Schema subset these schemas use: type, const, enum, anyOf, required, properties,
-    additionalProperties, items, minItems, maxItems, pattern, minimum. Returns every violation."""
+    additionalProperties, items, minItems, maxItems, pattern, minimum, maximum. Returns every violation."""
     errors = []
     if 'type' in schema:
         names = schema['type'] if isinstance(schema['type'], list) else [schema['type']]
@@ -204,6 +222,8 @@ def validate(value, schema: dict, path: str = '$') -> list[str]:
         errors.append(f'{path}: does not match {schema["pattern"]}')
     if _is(value, 'number') and 'minimum' in schema and value < schema['minimum']:
         errors.append(f'{path}: below {schema["minimum"]}')
+    if _is(value, 'number') and 'maximum' in schema and value > schema['maximum']:
+        errors.append(f'{path}: above {schema["maximum"]}')
     return errors
 
 
@@ -290,6 +310,10 @@ def verify_bundle(files: dict[str, bytes]) -> list[str]:
                 errors.append(f'{npz}: not readable ({type(exc).__name__})')
                 continue
         errors += check_training_window(loaded[path], arrays)
+    from .issue import partial
+    for i, d in enumerate(loaded.get('issued-forecasts.json', {}).get('days', [])):
+        if d.get('partial') != partial(date.fromisoformat(d['delivery_day']), d['keys']):
+            errors.append(f'issued-forecasts.json: day {i} does not name exactly its missing hours (decision 13)')
     artifact = loaded.get('artifact.json')
     if artifact is not None:
         errors += [f'artifact.json: {e}' for e in verify_artifact(artifact)]

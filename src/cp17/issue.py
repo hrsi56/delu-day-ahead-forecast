@@ -52,6 +52,7 @@ WALL_LIMIT_SECONDS = 15 * 60
 MEMORY_LIMIT_BYTES = 4 * 1024 ** 3
 SCHEMA = 'cp17b-issued-artifact-v2'
 COMPARISON = 'not judged: the native comparison path, which can never issue'
+NO_FORECASTABLE_HOUR = 'no hour of the day is forecastable by the frozen design'
 
 
 def issue_utc(day: date) -> str:
@@ -68,15 +69,18 @@ def canonical_hours(day: date) -> list[str]:
 
 
 def forecastable_keys(policy: str, arrays: dict, meta: dict) -> list[str]:
-    """The hours of D the frozen design can forecast, as the payload carries them (decision 13): A1's forecast
-    keys, v4's and v2's rows of D whose inputs are valid, B0's keys."""
+    """The hours of D the frozen design can forecast, as the payload carries them (decision 13). The landed rule
+    decides: a row of D is a forecast key when its inputs are valid (`cp15.data.Inputs.rows`, `feature_valid`).
+    v2's and v4's payloads carry the rows, so the rule is applied to them here; A1's keys are the day table's
+    (`cp24.member.Keys.from_data`, the same rows) and B0's are those rows' timestamps, both written by the
+    payload builder from the same rule."""
     import pandas as pd
     day = date.fromisoformat(meta['day'])
     if policy == 'A1':
         ns = arrays['key_ts']
     elif policy in ('v2', 'v4'):
-        on_day = (arrays['dates'] == (day - date(1970, 1, 1)).days) & arrays['feature_valid'].astype(bool)
-        ns = arrays['index_ns'][on_day]
+        from .dailyfit import rows_inputs
+        ns = arrays['index_ns'][rows_inputs(arrays, meta).rows(day)]
     elif policy == 'B0':
         ns = arrays['key_ns']
     else:
@@ -92,7 +96,7 @@ def check_inputs(policy: str, arrays: dict, meta: dict) -> list[str]:
     if meta.get('payload_sha256') != payload_digest(arrays, {k: v for k, v in meta.items() if k != 'payload_sha256'}):
         return ['the payload differs from its recorded identity']
     if not forecastable_keys(policy, arrays, meta):
-        return [f'no hour of {day} is forecastable by the frozen design']
+        return [NO_FORECASTABLE_HOUR]
     if policy == 'A1':
         if np.isfinite(arrays['price'][-1]).any() or np.isfinite(arrays['y'][-1]).any() or arrays['mask'][-1].any():
             problems.append("the target day's outcome is present in the day table")
@@ -194,8 +198,9 @@ def decide(day: date, gfs_available: bool, attempts, finalize=None) -> dict:
     policies the chain reaches, in order, so the chain fits A1 alone on a normal day.
 
     `finalize(decision)` builds the artifact a successful attempt would issue; criterion 4 is judged there, inside
-    the chain (N3): if the artifact does not verify, that fit fails and the chain moves on. Without `finalize`
-    (the native comparison, the unit tests) no artifact is built."""
+    the chain (N3): if the artifact does not verify, that fit fails and the chain moves on. A failed issuance is
+    written too, and must verify, because failures remain in the record (§16.2). Without `finalize` (the native
+    comparison, the unit tests) no artifact is built."""
     record = []
 
     def accept(item, policy, route, display):
@@ -233,7 +238,17 @@ def decide(day: date, gfs_available: bool, attempts, finalize=None) -> dict:
             done = accept(item, policy, reason, f'{head}; fallback {policy} issued')
             if done is not None:
                 return done
-    return {'day': str(day), 'issued_policy': None, 'route': reason, 'attempts': record, 'display': 'failed issuance'}
+    display = 'failed issuance'
+    if all(a['status'] == 'skipped' or (a.get('cause') or '').endswith(NO_FORECASTABLE_HOUR) for a in record):
+        display += f' ({NO_FORECASTABLE_HOUR})'
+    decision = {'day': str(day), 'issued_policy': None, 'route': reason, 'attempts': record, 'display': display}
+    if finalize is not None:
+        built = finalize(decision)
+        problems = verify_artifact(built)
+        if problems:
+            raise ValueError('the failed issuance\'s record does not verify: ' + '; '.join(problems))
+        decision['artifact'] = built
+    return decision
 
 
 def resources_ok(wall_seconds: float, peak_bytes: int) -> list[str]:
@@ -308,6 +323,12 @@ def verify_artifact(item: dict) -> list[str]:
             problems.append('an issued artifact without its fit\'s resource measurement')
         elif resources_ok(item['resources']['wall_seconds'], item['resources']['peak_bytes']):
             problems.append('an issued fit over the resource ceiling')
+        day = date.fromisoformat(item['delivery_day'])
+        full = canonical_hours(day)
+        if not item['keys'] or item['keys'] != [k for k in full if k in set(item['keys'])]:
+            problems.append(f'the keys are not ordered, distinct hours of {day}')
+        elif item.get('partial') != partial(day, item['keys']):
+            problems.append('the partial-day record does not name exactly the missing hours')
     if item.get('issue_utc') != issue_utc(date.fromisoformat(item['delivery_day'])):
         problems.append('the issue time is not D-1 11:00 Europe/Berlin')
     return problems

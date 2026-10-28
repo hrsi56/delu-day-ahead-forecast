@@ -52,7 +52,9 @@ def prices(root: Path, first: date, last: date) -> list[tuple[str, str, float | 
     return out
 
 
-def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, identity: dict, out: Path) -> dict:
+def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, identity: dict, out: Path,
+          arrays: Path | None = None) -> dict:
+    """`arrays` is the issued fit's exported arrays; by default CP-17's driver's path in `artifact_dir`."""
     from .freeze import digest
     out.mkdir(parents=True, exist_ok=True)
     for old in out.iterdir():
@@ -60,14 +62,16 @@ def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, ide
     artifact = issuance['artifact']
     day = artifact['delivery_day']
     _dump(out / 'artifact.json', artifact)
-    arrays = artifact_dir / f"node-attempt-{artifact['issued_policy']}-{day}-arrays.npz"
+    if arrays is None:
+        arrays = artifact_dir / f"node-attempt-{artifact['issued_policy']}-{day}-arrays.npz"
     shutil.copyfile(arrays, out / 'artifact-arrays.npz')
     for ext in ('json', 'npz'):
         shutil.copyfile(payload_dir / f"{artifact['issued_policy']}-{day}.{ext}", out / f"{artifact['issued_policy']}-{day}.{ext}")
-    forecasts = {'schema': 'cp17-issued-forecasts-v1', 'levels': list(scoring.LEVELS),
+    forecasts = {'schema': schema.ISSUED_FORECASTS_SCHEMA, 'levels': list(scoring.LEVELS),
                  'days': [{'delivery_day': day, 'issue_utc': artifact['issue_utc'],
                            'issuing_artifact_sha256': artifact['artifact_sha256'], 'issued_policy': artifact['issued_policy'],
-                           'display': artifact['display'], 'keys': artifact['keys'], 'quantiles': artifact['quantiles']}]}
+                           'display': artifact['display'], 'keys': artifact['keys'], 'quantiles': artifact['quantiles'],
+                           'partial': artifact['partial']}]}
     _dump(out / 'issued-forecasts.json', forecasts)
     rows = prices(root, DAY, DAY)
     outcomes = {'schema': 'cp17-outcomes-v1', 'unit': 'EUR/MWh',
