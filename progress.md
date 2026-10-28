@@ -205,32 +205,23 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
 - **The Owner's decisions of 2026-10-28** (decisions record, items 9 and 10):
   - τ_eq = 0.01 EUR/MWh, with the three-status rule;
   - the official daily fit is issued under the pinned Pyodide runtime in Node.js.
-- **Active Track B work: CP-17, the freeze, reissued 2026-10-28.**
-  - **The brief:** amended on 2026-10-28, `9f235cf8…`, canonical copy
-    `.local/artifacts/cp-17/issued-brief.md`. The Orchestrator delivers it to the Lead session under
-    the Owner's delegation. The second brief, `9e522b9a…`, is kept beside it as
-    `issued-brief-v1-9e522b9a.md`.
-  - **Item 1 stopped CP-17 on its rule,** at `2d570e0` on `gauntlet/cp-17`. On the affected dates,
-    v2 is +2.27% MAE and +6.68% WIS against A1's GFS +6 h route.
+- **CP-17 closed on 2026-10-28** ([landing record](docs/track-b/cp-17-landing-2026-10-28.md)). **A1 is
+  frozen as the product's daily policy, pending 4.7T,** on one code path (`src/cp17/`). It is issued
+  under Pyodide in Node.js.
+  - **The identities:** `land/cp-17` = `d7619ea` and `evidence/cp-17` = `3876bcd`, both pushed.
+    Policy identity `b304d647…`.
+  - **The briefs:** the amended brief `9f235cf8…`, and the second brief `9e522b9a…` beside it.
+  - **Item 1 stopped CP-17 on its rule,** at `2d570e0`. On the affected dates, v2 is +2.27% MAE and
+    +6.68% WIS against A1's GFS +6 h route.
   - **The Owner ruled on 2026-10-28** (decisions 11 and 12):
-    - GFS late → v2 → B0, with the excess disclosed;
+    - GFS late → v2 → B0;
     - A1's own fit failed with the weather available → v4 → v2 → B0.
-
-    The amendment adds v4 to the one code path and the parity checks. CP-17 resumes from
-    `2d570e0`.
-  - **The bar:** §24.9, with §16.2, §19.2, §19.3, §19.5 and §19.7.
-  - **It covers:**
-    1. the A1 GFS check;
-    2. one code path in `src/cp17/`;
-    3. native parity with CP-26 at nine origins, and issuing-host parity under Pyodide in Node.js;
-    4. the freeze record, with the product's failure policy and the definition of a successful
-       daily fit;
-    5. §19.5's definitions;
-    6. the retrain status rule and the §19.7 attributions;
-    7. the payload schema and manifest;
-    8. 4.7T's protocol, written blind.
-  - **The ceiling:** 15 machine-hours.
-  - **Then r18** ratifies the terms before 4.7T opens.
+  - **Parity:**
+    - native, bit for bit with CP-26, for five policies at nine origins;
+    - browsers, bit-identical to the issuing host;
+    - one issuing-host τ_eq miss (F1), reported.
+  - **Open for the Owner and r18:** G1 (shadow issuances), C1 (the labels wording), C2 (partial
+    days), G2, F1, and the review notes N1–N7.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1027,6 +1018,23 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **CP-17 received, landed and closed, 2026-10-28,** under the Owner's delegation.
+  - **The return:** PASS on `ca874204`, after one Integration FAIL: the resource ceiling had been
+    applied after A1 was chosen. About 6 of 15 machine-hours.
+  - **The receipt:**
+    - all 69 files are new;
+    - the largest blob is 309 KB;
+    - the secret and red-line scans are clean;
+    - the history-free `CI=true` run on 3.12 is green (2,310 passed, 41 skipped);
+    - stress passes 17, with three stated skips, and the two host tests pass on the local runtimes.
+  - **The LAND:** GitHub CI passed on the temporary branch (run 40655744060). `main` = `land/cp-17`
+    = `d7619ea`, and `evidence/cp-17` was pushed.
+  - **The reclaim:** a verified bundle. The live citations of the branch were repointed.
+  - **Next:**
+    - the Owner's rulings on G1, C1, C2, G2 and F1;
+    - a short re-freeze round if a ruling changes frozen code;
+    - then r18.
+
 - **CP-17 stopped at item 1, and the Owner ruled on the fallbacks, 2026-10-28.**
   - **The stop:** the GFS check met the rule set in decision 2. v2 is +2.27% MAE and +6.68% WIS
     against A1's GFS +6 h route on 1,354 paired affected dates. The Orchestrator reproduced the
@@ -1037,7 +1045,7 @@ Session Log.
     - 11: GFS late → v2 → B0;
     - 12: A1's fit failed with the weather available → v4 → v2 → B0. This was the Owner's own
       split of the two causes.
-  - **The brief:** amended (`9f235cf8…`), and CP-17 resumes on `gauntlet/cp-17` from `2d570e0`.
+  - **The brief:** amended (`9f235cf8…`), and CP-17 resumed from `2d570e0`.
 
 - **CP-17 reissued, 2026-10-28.**
   - **The Owner's decisions:** "τ_eq = 0.01, Node מאושר, תכתוב את הבריף ל־CP-17". They are recorded

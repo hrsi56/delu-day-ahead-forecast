@@ -61,7 +61,7 @@ conditions and failure rules enter the anchor by amendment, under the Owner's su
     - **The issued values differ from CP-26's native arithmetic by rounding.** The freeze records
       this, and keeps the native parity with CP-26 as the check of code identity.
 11. **When GFS is late or missing at the issue time, the product issues v2,** then B0.
-    - **The check.** CP-17's item 1 (`reports/cp17/gfs-check.md`, on `gauntlet/cp-17` at `2d570e0`)
+    - **The check.** CP-17's item 1 (`reports/cp17/gfs-check.md`, commit `2d570e0`, kept by `evidence/cp-17`)
       met the stop rule of decision 2 above. On CP-25's 1,354 paired GFS +6 h affected dates, v2 is
       +2.27% on MAE and +6.68% on WIS against A1's GFS +6 h route.
     - **The Owner kept v2 on 2026-10-28,** approving the Orchestrator's recommendation ("מאושר"). The
