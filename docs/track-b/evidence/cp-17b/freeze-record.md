@@ -28,9 +28,15 @@ manifest's verifier checks that they do:
 - CP-17's landing record `docs/track-b/cp-17-landing-2026-10-28.md`, `7f90cb87c8d64ec3faecb0b8a45ab2d5e027ace3cc1824785bcbffa5f1ff267b`
   (cited here; it is a governance record, not pinned).
 
-CP-17's own verifier, `cp17.tools.freeze`, stays as landed. Against this tree it reports exactly the two CP-17
-package files this round changed, `src/cp17/issue.py` and `src/cp17/schema.py`, and nothing else
-(`tests/cp17/test_records.py::test_freeze_manifest_verifies`).
+CP-17's own verifier, `cp17.tools.freeze`, stays as landed. CP-17's manifest pins governance documents live (the
+anchor, CP-17's brief, decisions 1–12 and the two rulings), so its check is run on a view whose governance documents
+are this freeze's frozen copies and whose computational inputs, code and artifact are live
+(`cp17.tools.refreeze.cp17_view`). There it reports exactly the two CP-17 package files this round changed,
+`src/cp17/issue.py` and `src/cp17/schema.py`, and nothing else (`tests/cp17/test_records.py::test_freeze_manifest_verifies`).
+An amendment of the anchor or a new decisions record leaves it green; a changed input or code file still fails it
+(`tests/cp17b/test_refreeze.py`). The first Integration review found this check reading the governance documents live,
+which r18 would have turned red; that is fixed here
+([`integration-attempt-1.md`](integration-attempt-1.md)).
 
 **Authority:**
 - `capstone_v21.md` v21-r17 (`3124451d…`; frozen copy `pinned/anchor-capstone-v21-r17.md`): §24.9's "its fallback and

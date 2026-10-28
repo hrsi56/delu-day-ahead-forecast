@@ -159,6 +159,11 @@ Every open item, for the Owner and r18 (N5). None was resolved by looking at a 4
 - **4.7T's protocol revision** for partial days and shadows (item 7).
 
 **Disclosed by this round:**
+- **The first Integration review failed** (`docs/track-b/evidence/cp-17b/integration-attempt-1.md`): the superseded
+  CP-17 freeze test still ran CP-17's verifier on the live anchor and decisions records, so r18 would have turned CI
+  red. It now runs on a view whose governance documents are the frozen copies (`cp17.tools.refreeze.cp17_view`), and a
+  simulated r18 leaves the whole workflow green (`tests/cp17b/test_refreeze.py`, and a history-free CI run with the
+  anchor amended).
 - **A partial day's shadow enters no buffer** (CP-26's intake rule takes only a complete canonical issuance), so
   after a clock change a buffer keeps its older complete days a little longer. CP-26 ran so; the buffers stay 28
   complete days.

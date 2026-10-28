@@ -178,3 +178,46 @@ def test_the_manifest_states_how_each_hash_is_checked(manifest):
     assert set(identity['governance']) == set(refreeze.GOVERNANCE)
     assert {g['sha256'] for g in identity['governance'].values()} == {v[2] for v in refreeze.GOVERNANCE.values()}
     assert identity['supersedes']['policy_identity_sha256'] == refreeze.CP17_POLICY_IDENTITY
+
+
+# ------------------------------------------------------------------ r18, simulated, against both verifiers
+@pytest.fixture()
+def amended(tree):
+    """The tree with r18 simulated: the anchor amended, two decisions records edited, a new one added; and CP-17's
+    superseded manifest and its freeze-origin artifact, which CP-17's own check reads."""
+    shutil.copyfile(ROOT / 'docs/track-b/evidence/cp-17/artifact-2026-09-06.json',
+                    tree / 'docs/track-b/evidence/cp-17/artifact-2026-09-06.json')
+    (tree / 'capstone_v21.md').write_text((ROOT / 'capstone_v21.md').read_text() + '\n## r18 (a simulated amendment)\n')
+    for rel in ('docs/track-b/pre-cp-17-rulings-2026-10-25.md', 'docs/track-b/cp-17-owner-decisions-2026-10-28.md',
+                'docs/track-b/cp-25-rulings-2026-10-12.md'):
+        (tree / rel).parent.mkdir(parents=True, exist_ok=True)
+        (tree / rel).write_text((ROOT / rel).read_text() + '\namended\n')
+    (tree / 'docs/track-b/cp-17b-owner-decisions-new.md').write_text('20. a new decision\n')
+    return tree
+
+
+def _cp17_check(root: Path, tmp: Path) -> list[str]:
+    cp17 = json.loads((root / refreeze.CP17['freeze_manifest'][0]).read_text())
+    return sorted(freeze.verify(cp17, refreeze.cp17_view(root, tmp)))
+
+
+REFROZEN = ['src/cp17/issue.py: missing or altered', 'src/cp17/schema.py: missing or altered']
+
+
+def test_cp17s_governance_pins_all_have_frozen_copies():
+    sources = {source for source, _, _ in refreeze.GOVERNANCE.values()}
+    assert refreeze.cp17_governance_live(ROOT) and set(refreeze.cp17_governance_live(ROOT)) <= sources
+
+
+def test_an_amendment_leaves_both_verifiers_green(manifest, amended, tmp_path):
+    """The first Integration review's acceptance case: r18 changes the anchor and adds a decisions record."""
+    assert _verify(manifest, amended)['problems'] == []
+    assert _cp17_check(amended, tmp_path / 'view') == REFROZEN        # tests/cp17's superseded check holds
+
+
+@pytest.mark.parametrize('rel', ['reports/development-inputs/tier-register.json', 'data/snapshot.parquet',
+                                 'src/cp17/dailyfit.py', 'src/cp17/retrain.py', 'src/cp24/member.py'])
+def test_a_real_change_still_fails_both_verifiers(manifest, amended, tmp_path, rel):
+    _append(amended / rel, '\n# changed\n' if rel.endswith('.py') else '\n')
+    assert f'{rel}: missing or altered' in _verify(manifest, amended, rebuild=False)['problems']
+    assert any(p in (f'{rel}: altered', f'{rel}: missing or altered') for p in _cp17_check(amended, tmp_path / 'view'))

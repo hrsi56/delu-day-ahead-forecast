@@ -16,8 +16,9 @@
   On the issuing machine (one holding the project's pinned Pyodide or the extract) every one is required; elsewhere
   (CI) an absent one is reported as unchecked, never passed silently.
 - **CP-17's freeze is superseded, not edited:** its evidence files are checked unchanged, by the hashes the brief
-  cites. CP-17's own verifier (`cp17.tools.freeze`) stays as landed; against this tree it reports exactly the
-  package files CP-17b changed (`tests/cp17/test_records.py`).
+  cites. CP-17's own verifier (`cp17.tools.freeze`) stays as landed. It pins governance documents live, so it is run
+  on `cp17_view`, whose governance documents are CP-17b's frozen copies; there it reports exactly the package files
+  CP-17b changed (`tests/cp17/test_records.py`), and an amendment leaves it green.
 
 `COVERAGE` states how each hash the manifest records is checked.
 
@@ -32,6 +33,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import zlib
 
@@ -219,6 +221,36 @@ def manifest(identity: dict, issuance: dict, bundle_manifest_path: Path | None, 
     out['verification'] = COVERAGE
     out['content_sha256'] = freeze.digest({k: v for k, v in out.items() if k != 'content_sha256'})
     return out
+
+
+def cp17_view(root: Path, dest: Path) -> Path:
+    """CP-17's superseded freeze as its own verifier (`cp17.tools.freeze.verify`) can still read it after an amendment.
+
+    CP-17's manifest pins governance documents live: the anchor, CP-17's brief, decisions 1-12 and the CP-25 and
+    CP-26 rulings. Decision 19 binds them by frozen copies instead. This view holds every file CP-17's manifest
+    records, with those documents taken from CP-17b's frozen copies and everything else (computational inputs, code,
+    runners, the freeze-origin artifact) taken live, so that an amendment such as r18 leaves CP-17's check green and a
+    changed input or code file still fails it. A file absent from `root` is absent from the view."""
+    root, dest = Path(root), Path(dest)
+    manifest = json.loads((root / CP17['freeze_manifest'][0]).read_text())
+    identity = manifest['policy_identity']
+    copies = {source: f'{PINNED}/{name}' for source, name, _ in GOVERNANCE.values()}
+    rels = [item['path'] for item in identity['pinned_files'].values()] + list(identity['contracts_sha256'])
+    rels += [f'src/{rel}' for rel in {**identity['code']['files_sha256'], **identity['code']['runner_files_sha256']}]
+    rels.append(manifest['freeze_origin']['artifact_path'])
+    for rel in rels:
+        source = root / copies.get(rel, rel)
+        if source.exists():
+            (dest / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, dest / rel)
+    return dest
+
+
+def cp17_governance_live(root: Path) -> list[str]:
+    """The documents CP-17's manifest pins that are governance, not computation: each must have a frozen copy."""
+    identity = json.loads((Path(root) / CP17['freeze_manifest'][0]).read_text())['policy_identity']
+    return sorted(p for p in [i['path'] for i in identity['pinned_files'].values()] + list(identity['contracts_sha256'])
+                  if p.endswith('.md'))
 
 
 def _local(project: Path, identity: dict) -> dict[str, str]:
