@@ -33,9 +33,17 @@ DAY = {'type': 'string', 'pattern': r'^\d{4}-\d{2}-\d{2}$'}
 UTC = {'type': 'string', 'pattern': r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?\+00:00$'}
 UTC_OR_EMPTY = {'type': 'string', 'pattern': r'^(|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?\+00:00)$'}
 POLICY = {'enum': ['A1', 'v4', 'v2', 'B0']}
-QUANTILES = {'type': 'array', 'minItems': 23, 'maxItems': 25,
+#: One to 25 hours: a partial day issues its forecastable hours only (decision 13).
+QUANTILES = {'type': 'array', 'minItems': 1, 'maxItems': 25,
              'items': {'type': 'array', 'minItems': 7, 'maxItems': 7, 'items': {'type': 'number'}}}
-KEYS = {'type': 'array', 'minItems': 23, 'maxItems': 25, 'items': UTC}
+KEYS = {'type': 'array', 'minItems': 1, 'maxItems': 25, 'items': UTC}
+#: An issued fit's own resource measurement (N2); a failed issuance has none.
+MEASUREMENT = {'type': 'object', 'required': ['wall_seconds', 'peak_bytes', 'limits'],
+               'properties': {'wall_seconds': {'type': 'number', 'minimum': 0}, 'peak_bytes': {'type': 'integer', 'minimum': 0},
+                              'limits': {'type': 'object', 'required': ['wall_seconds', 'peak_bytes']}}}
+PARTIAL = {'type': 'object', 'required': ['issued_hours', 'canonical_hours', 'missing_hours'], 'additionalProperties': False,
+           'properties': {'issued_hours': {'type': 'integer', 'minimum': 1}, 'canonical_hours': {'type': 'integer'},
+                          'missing_hours': {'type': 'array', 'minItems': 1, 'items': {'type': 'string'}}}}
 KINDS = ('manifest', 'issued_forecasts', 'outcomes', 'evaluation', 'fitted_artifact', 'training_window', 'series')
 
 SCHEMAS = {
@@ -81,7 +89,7 @@ SCHEMAS = {
                              'quantiles'],
                 'properties': {'delivery_day': DAY, 'issue_utc': UTC, 'issuing_artifact_sha256': SHA,
                                'issued_policy': POLICY, 'display': {'type': 'string'}, 'keys': KEYS,
-                               'quantiles': QUANTILES}}}}},
+                               'quantiles': QUANTILES, 'partial': {'anyOf': [PARTIAL, {'type': 'null'}]}}}}}},
     'outcomes': {
         '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'cp17-outcomes-v1', 'type': 'object',
         'required': ['schema', 'unit', 'prices'], 'additionalProperties': False,
@@ -107,17 +115,20 @@ SCHEMAS = {
                                           'properties': {'schema': {'const': 'cp17-evaluation-v1'},
                                                          'tau_eur': {'const': 10.0}, 'rolling_days': {'const': 28}}}}}}}},
     'fitted_artifact': {
-        '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'cp17-issued-artifact-v1', 'type': 'object',
+        '$schema': 'https://json-schema.org/draft/2020-12/schema', '$id': 'cp17b-issued-artifact-v2', 'type': 'object',
         'required': ['schema', 'product', 'designated_policy', 'delivery_day', 'issue_utc', 'issued_policy', 'route',
                      'display', 'attempts', 'keys', 'quantiles', 'quantiles_sha256', 'times', 'lineage', 'resources',
-                     'artifact_sha256'],
-        'properties': {'schema': {'const': 'cp17-issued-artifact-v1'}, 'product': {'const': 'delu-day-ahead-policy'},
+                     'partial', 'artifact_sha256'],
+        'properties': {'schema': {'const': 'cp17b-issued-artifact-v2'}, 'product': {'const': 'delu-day-ahead-policy'},
                        'designated_policy': {'const': 'A1'}, 'delivery_day': DAY, 'issue_utc': UTC,
                        'issued_policy': {'anyOf': [POLICY, {'type': 'null'}]},
                        'route': {'enum': ['designated', 'gfs_unavailable', 'a1_failed']},
                        'attempts': {'type': 'array', 'minItems': 1, 'items': {
                            'type': 'object', 'required': ['policy', 'status'],
                            'properties': {'policy': POLICY, 'status': {'enum': ['ok', 'failed', 'skipped']}}}},
+                       'keys': {'anyOf': [KEYS, {'type': 'null'}]}, 'quantiles': {'anyOf': [QUANTILES, {'type': 'null'}]},
+                       'resources': {'anyOf': [MEASUREMENT, {'type': 'null'}]},
+                       'partial': {'anyOf': [PARTIAL, {'type': 'null'}]},
                        'artifact_sha256': SHA,
                        'lineage': {'type': 'object', 'required': ['parent_artifact_sha256', 'policy_identity_sha256',
                                                                   'code_sha256', 'host', 'inputs', 'training', 'state']}}},
