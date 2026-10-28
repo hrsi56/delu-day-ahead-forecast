@@ -1029,7 +1029,12 @@ Session Log.
     - stress passes 17, with three stated skips, and the two host tests pass on the local runtimes.
   - **The LAND:** GitHub CI passed on the temporary branch (run 40655744060). `main` = `land/cp-17`
     = `d7619ea`, and `evidence/cp-17` was pushed.
-  - **The reclaim:** a verified bundle. The live citations of the branch were repointed.
+  - **The reclaim:** a verified bundle. Progress's citations of the branch are repointed.
+  - **A slip, repaired:** the first closure commit (`eb842a95`) also repointed a citation in the
+    decisions record.
+    - The freeze pins that record, so `freeze.verify` failed in the local CI, and the commit was
+      pushed before that result was read.
+    - The repair restores the pinned bytes. Later Owner decisions go in a new record.
   - **Next:**
     - the Owner's rulings on G1, C1, C2, G2 and F1;
     - a short re-freeze round if a ruling changes frozen code;
