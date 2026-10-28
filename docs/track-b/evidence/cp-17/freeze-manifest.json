@@ -1,13 +1,15 @@
 {
- "content_sha256": "c48d82a51575cd9c5a15088a966977a2a9e3471405c9c821d9f1d2411519bceb",
+ "content_sha256": "a775e5ce3ffb9db472e3da0935a3dc8d8e60852859b223b6ab542b509148c8d6",
  "freeze_origin": {
   "artifact_arrays_sha256": "15bf7731c43bd9be164d2bab83e9c5afc30cf4ad412150e5a549d27c3f295fce",
-  "artifact_file_sha256": "ea3d0a3e59e3c625bbf647e385053430166e22b359037b889c84701e5cd059ce",
-  "artifact_sha256": "8b881354e1b47b36f600f9d1a540e1da784749bca479a188051bd2091c76f8db",
+  "artifact_file_sha256": "d38a12476b6bd61c6f496b13c905df0c1810efdad3c6a8a1ecb033ed7a257052",
+  "artifact_path": "docs/track-b/evidence/cp-17/artifact-2026-09-06.json",
+  "artifact_sha256": "a0bec8580d43cf6dca3d47e44b39221bd37a272199a1b186c59637997213a524",
   "delivery_day": "2026-09-06",
   "display": "successful daily fit",
   "host": {
    "node": "v26.7.0",
+   "process": "one fresh process per attempt",
    "pyodide": "0.28.0",
    "runtime": "pyodide"
   },
@@ -82,10 +84,10 @@
     "cp17/__init__.py": "6d590a0a1f4c1c63bfad9bfadf08855082aa969290d55587d9237d1ab5ba90c2",
     "cp17/attribution.py": "ec21364a8e16445fa097cd903e5953aa48d91b8b2e934cb883b2b54b1b3d54de",
     "cp17/dailyfit.py": "65b36b86fbd5b096f6dc9657086928f8592db9e4616ad97be6a6cafd5926522f",
-    "cp17/host/driver.py": "5b8deddf720009538986ab46c915a2632fe935a5155a97e506474a98270b5661",
-    "cp17/issue.py": "38eec1a7d1dc49fa25faa7d8208b3bb8d23619f51281c9e53c9f0148277c10e8",
+    "cp17/host/driver.py": "b22f4db0d03e98122350faf164a111a48a5fed296816b62569ea325fbe630a68",
+    "cp17/issue.py": "d16146a2ceb0b449580c1aea24adcb0d36dddba479002628a86af676a910c4f4",
     "cp17/retrain.py": "d7ac77e2b1dd81725abf66eb3bbf024ea9c6a7c7d68dcb8b1be2e9dc30f380b1",
-    "cp17/schema.py": "8267f58d8a679c581247ed70ce334a15d1ed23922a55178f3f21eed25780f298",
+    "cp17/schema.py": "e8e6627200c59329fba2abe4e2172b359cf4688b34c201d1eb452332ddab268a",
     "cp17/scoring.py": "d95fc6192b5f68f5c888c12722faafc096c0dc4ba5d5bcf80e94e54b0226738b",
     "cp17/stubs/absent/holidays.py": "252bd4f757d5926a5a61940beb783eaabdb7eaaff5c2c847f8e1a64da53b2559",
     "cp17/stubs/fallback/resource.py": "4ff3227ba5afeec42b99cbec0c78f669512a72a733806c7757699f9223929581",
@@ -108,7 +110,7 @@
     "delu_forecast/ingest.py": "e7a1cd415733eccd4460a49ba3d3ea465a90259e92ae657436b1baf3bd0ce04c",
     "delu_forecast/partitions.py": "9633b4cce7a6538bb726ead77b140db37d2c503b727896214d54bb47b80d4f89"
    },
-   "package_sha256": "54212d2cb0862453bee72ff56f0c0821cb6ba0e3751aa05f478ad6547d233e6c",
+   "package_sha256": "ac45f033f5e20fc0e8faa54e1abe273aaffffb95858dc28c47fbf6e62d3fbfdc",
    "pyodide_packages": [
     "numpy",
     "pandas",
@@ -117,7 +119,12 @@
     "requests",
     "tzdata"
    ],
-   "zip_sha256": "1d4e3c7ee6f38db9d4e7443dadc702f48ecaf7ea1de042bbd7eddf0e3a9d22cd"
+   "runner_files_sha256": {
+    "cp17/browser/index.html": "e821c7479917825f188acfdc0167998cc99622b861e59b549842535e5f351334",
+    "cp17/browser/worker.js": "7b93b7dcd0be7b5ca3930ea12e03ca0c47b1181f4a7a26ea19a692eae26159de",
+    "cp17/host/node_run.mjs": "5286284964072f7549e28edabe5c6463209b2502c4ef20f436a22386d4528a90"
+   },
+   "zip_sha256": "0aa2aed8ffbe7e82cdf5636af227fab147e6fc7a7c5a7d2826bf9ab4540e1bc3"
   },
   "contracts_sha256": {
    "docs/track-b/cp-25-rulings-2026-10-12.md": "c7af67f88157277aafd8dd2b1b49e12a1d9ff4b747ca5bdf178fac664fba53c1",
@@ -392,7 +399,7 @@
    "training_targets": "delivery days < D published strictly before the issue time (D-1 is published on D-2)"
   }
  },
- "policy_identity_sha256": "a4624978b60a8227475a8502d1309c913f4f840daba980a0bbd0b8ddf1356a94",
- "reference_bundle_manifest_sha256": "7d4ed1b9453156a911cfd5a243e72eecb8c520758456e93535ebdc6565eac15c",
+ "policy_identity_sha256": "b304d6479a8628a26014422c6682f1e6543bd0d9ff656ad34b2d87b163bc254e",
+ "reference_bundle_manifest_sha256": "45ecd6e499e47cefe9236a413465f3ea8b34fd6b27cc995acd623708c8573889",
  "schema": "cp17-freeze-manifest-v1"
 }

@@ -32,10 +32,10 @@
   "cp17/__init__.py": "6d590a0a1f4c1c63bfad9bfadf08855082aa969290d55587d9237d1ab5ba90c2",
   "cp17/attribution.py": "ec21364a8e16445fa097cd903e5953aa48d91b8b2e934cb883b2b54b1b3d54de",
   "cp17/dailyfit.py": "65b36b86fbd5b096f6dc9657086928f8592db9e4616ad97be6a6cafd5926522f",
-  "cp17/host/driver.py": "5b8deddf720009538986ab46c915a2632fe935a5155a97e506474a98270b5661",
-  "cp17/issue.py": "38eec1a7d1dc49fa25faa7d8208b3bb8d23619f51281c9e53c9f0148277c10e8",
+  "cp17/host/driver.py": "b22f4db0d03e98122350faf164a111a48a5fed296816b62569ea325fbe630a68",
+  "cp17/issue.py": "d16146a2ceb0b449580c1aea24adcb0d36dddba479002628a86af676a910c4f4",
   "cp17/retrain.py": "d7ac77e2b1dd81725abf66eb3bbf024ea9c6a7c7d68dcb8b1be2e9dc30f380b1",
-  "cp17/schema.py": "8267f58d8a679c581247ed70ce334a15d1ed23922a55178f3f21eed25780f298",
+  "cp17/schema.py": "e8e6627200c59329fba2abe4e2172b359cf4688b34c201d1eb452332ddab268a",
   "cp17/scoring.py": "d95fc6192b5f68f5c888c12722faafc096c0dc4ba5d5bcf80e94e54b0226738b",
   "cp17/stubs/absent/holidays.py": "252bd4f757d5926a5a61940beb783eaabdb7eaaff5c2c847f8e1a64da53b2559",
   "cp17/stubs/fallback/resource.py": "4ff3227ba5afeec42b99cbec0c78f669512a72a733806c7757699f9223929581",
@@ -58,7 +58,7 @@
   "delu_forecast/ingest.py": "e7a1cd415733eccd4460a49ba3d3ea465a90259e92ae657436b1baf3bd0ce04c",
   "delu_forecast/partitions.py": "9633b4cce7a6538bb726ead77b140db37d2c503b727896214d54bb47b80d4f89"
  },
- "package_sha256": "54212d2cb0862453bee72ff56f0c0821cb6ba0e3751aa05f478ad6547d233e6c",
+ "package_sha256": "ac45f033f5e20fc0e8faa54e1abe273aaffffb95858dc28c47fbf6e62d3fbfdc",
  "pyodide_packages": [
   "numpy",
   "pandas",
@@ -67,6 +67,11 @@
   "requests",
   "tzdata"
  ],
+ "runner_files_sha256": {
+  "cp17/browser/index.html": "e821c7479917825f188acfdc0167998cc99622b861e59b549842535e5f351334",
+  "cp17/browser/worker.js": "7b93b7dcd0be7b5ca3930ea12e03ca0c47b1181f4a7a26ea19a692eae26159de",
+  "cp17/host/node_run.mjs": "5286284964072f7549e28edabe5c6463209b2502c4ef20f436a22386d4528a90"
+ },
  "schema": "cp17-bundle-v1",
  "third_party_imported_natively": [
   "81d243bd2c585b0f4821__mypyc",
@@ -97,6 +102,6 @@
   "threadpoolctl",
   "urllib3"
  ],
- "zip_bytes": 86816,
- "zip_sha256": "1d4e3c7ee6f38db9d4e7443dadc702f48ecaf7ea1de042bbd7eddf0e3a9d22cd"
+ "zip_bytes": 86707,
+ "zip_sha256": "0aa2aed8ffbe7e82cdf5636af227fab147e6fc7a7c5a7d2826bf9ab4540e1bc3"
 }

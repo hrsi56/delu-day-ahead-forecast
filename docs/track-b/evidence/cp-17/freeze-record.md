@@ -1,11 +1,11 @@
 # CP-17's freeze record: A1 as a complete daily policy on one code path
 
 **The machine-readable freeze** is [`freeze-manifest.json`](freeze-manifest.json). It holds:
-- **the policy identity:** SHA-256 `a4624978b60a8227475a8502d1309c913f4f840daba980a0bbd0b8ddf1356a94`. Every issued artifact cites it.
+- **the policy identity:** SHA-256 `b304d6479a8628a26014422c6682f1e6543bd0d9ff656ad34b2d87b163bc254e`. Every issued artifact cites it.
 - **the initial artifact and state** at the freeze origin.
 - **the reference bundle's manifest.**
 
-Its content digest is `c48d82a51575cd9c5a15088a966977a2a9e3471405c9c821d9f1d2411519bceb`.
+Its content digest is `a775e5ce3ffb9db472e3da0935a3dc8d8e60852859b223b6ab542b509148c8d6`.
 
 **Verifying it.** `python -m cp17.tools.freeze verify docs/track-b/evidence/cp-17/freeze-manifest.json`
 recomputes every recorded file hash from the files themselves. It refuses an altered or missing file, a wrong
@@ -41,8 +41,8 @@ policy, and is not a change to it.
   - the host driver;
   - the landed model code they import;
   - two import-only stand-ins (`holidays`, `resource`).
-- **The package:** 33 files, SHA-256 of the file list `54212d2cb0862453bee72ff56f0c0821cb6ba0e3751aa05f478ad6547d233e6c`.
-  - Its deterministic zip is 86,816 bytes, `1d4e3c7e…`.
+- **The package:** 33 files, SHA-256 of the file list `ac45f033f5e20fc0e8faa54e1abe273aaffffb95858dc28c47fbf6e62d3fbfdc`.
+  - Its deterministic zip is 86,707 bytes, `0aa2aed8…`.
   - The import closure is measured, not declared (`cp17.tools.bundle`). The native-only drivers in
     `cp17.tools` never ship.
 - **Dependencies:**
@@ -106,10 +106,10 @@ See conflict C1 in §11.
 **The freeze origin** is the issuance for delivery 2026-09-06 at 2026-09-05 09:00 UTC.
 
 **The initial artifact** is the issuing host's A1 artifact:
-- ``8b881354e1b47b36f600f9d1a540e1da784749bca479a188051bd2091c76f8db``, kept in [`artifact-2026-09-06.json`](artifact-2026-09-06.json), with its arrays in the
+- ``a0bec8580d43cf6dca3d47e44b39221bd37a272199a1b186c59637997213a524``, kept in [`artifact-2026-09-06.json`](artifact-2026-09-06.json), with its arrays in the
   reference bundle;
 - displayed as "successful daily fit";
-- issued in 67.7 s of wall time and 831 MiB of peak memory,
+- issued in 69.8 s of wall time and 802 MiB of peak memory (its own process),
   within the 15-minute and 4 GB ceilings.
 
 **The initial state** is the fallbacks' and the control's interval states at the freeze origin: v4's, v2's
