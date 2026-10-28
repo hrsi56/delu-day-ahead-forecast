@@ -26,9 +26,22 @@
    - five policies at nine origins: the last seven development origins and the two DST days;
    - every member's central and every recorded selection;
    - the interval layers' buffers, rebuilt from the ledger and checked against CP-26's own consumption hashes.
-4. **Issuing-host parity (item 3).** Every issuing-host fit is within τ_eq of the native fit, with every
-   selection matched. A1 runs at nine origins, v4 and v2 at two. The deviations come from rounding only, in
-   the LEAR solver and in DDNN-2's arithmetic. LightGBM's members are bit-identical across runtimes.
+4. **Issuing-host parity (item 3).** Every issuing-host fit matched every data-driven selection of the native
+   fit: A1 at nine origins, v4 and v2 at two. Every one is within τ_eq of the native fit except A1 at the
+   25-hour DST origin 2025-10-26, which **misses τ_eq**.
+   - **The miss:** its largest deviation is 0.028 EUR/MWh at the p50, so the status is "different".
+   - **The cause** is one member: `cp26-k11-t032`, seed 27190032.
+     - It trains to the 1,000-epoch cap with no early stop, and its best epoch is the last.
+     - Rounding accumulates over that long run to 0.77 EUR/MWh in that member's own quantiles.
+     - The other seven members agree to about 1e-12, and the eight-member median carries 0.028 of it.
+   - **Every selection is identical:** epochs run, best epoch and stop reason.
+   - **This is reported, not tuned** (brief item 3).
+   - **What it bounds, and what it does not.**
+     - It bounds rounding between native CPython and WebAssembly.
+     - It does not affect a visitor's retrain: the visitor's result is compared with the issued artifact,
+       which the same WebAssembly runtime produced, and that comparison is bit for bit (item 5 below).
+   - **Elsewhere,** the deviations come from rounding only, in the LEAR solver and in DDNN-2's arithmetic.
+     LightGBM's members are bit-identical across runtimes.
 5. **Browser identity (item 3).** A1 retrained in Chromium and in WebKit is bit-identical to the issuing
    host's artifact. v4 runs in both browsers.
 6. **The failure policy** runs on the issuing host, on real payloads, exactly as natively:
@@ -40,6 +53,104 @@
    control is refused.
 
 <!-- generated tables: begin -->
+
+### Native parity (the code-identity check)
+
+| Origin (delivery) | A1 | v5 | v4 | v2 | B0 | A1 fit (s) | v4 fit (s) |
+|---|---|---|---|---|---|---:|---:|
+| 2025-10-26 | bitwise | bitwise | bitwise | bitwise | bitwise | 29.1 | 23.2 |
+| 2026-03-29 | bitwise | bitwise | bitwise | bitwise | bitwise | 17.5 | 28.0 |
+| 2026-08-31 | bitwise | bitwise | bitwise | bitwise | bitwise | 18.8 | 32.4 |
+| 2026-09-01 | bitwise | bitwise | bitwise | bitwise | bitwise | 15.5 | 29.6 |
+| 2026-09-02 | bitwise | bitwise | bitwise | bitwise | bitwise | 14.2 | 31.0 |
+| 2026-09-03 | bitwise | bitwise | bitwise | bitwise | bitwise | 15.8 | 29.4 |
+| 2026-09-04 | bitwise | bitwise | bitwise | bitwise | bitwise | 15.3 | 28.4 |
+| 2026-09-05 | bitwise | bitwise | bitwise | bitwise | bitwise | 17.8 | 28.5 |
+| 2026-09-06 | bitwise | bitwise | bitwise | bitwise | bitwise | 15.9 | 30.6 |
+
+Status PASS; BLAS threads ['1']; interval-state days checked against CP-26's consumption trace: {'B0': 428, 'v2': 428, 'v4': 428, 'v5': 428}.
+
+### Issuing-host parity (Pyodide 0.28.0 in Node.js)
+
+| Run | Status vs native | Largest deviation (EUR/MWh) | Selections matched | Fit (s) | Native fit (s) | Wasm heap (MiB) | Peak RSS (MiB) |
+|---|---|---:|---|---:|---:|---:|---:|
+| A1-2025-10-26 | different | 2.8e-02 | yes | 153.1 | 29.1 | 189 | 738 |
+| A1-2026-03-29 | within ±0.01 EUR/MWh | 6.3e-07 | yes | 77.7 | 17.5 | 187 | 743 |
+| A1-2026-08-31 | within ±0.01 EUR/MWh | 9.4e-09 | yes | 74.0 | 18.8 | 189 | 664 |
+| A1-2026-09-01 | within ±0.01 EUR/MWh | 8.2e-10 | yes | 72.1 | 15.5 | 189 | 781 |
+| A1-2026-09-02 | within ±0.01 EUR/MWh | 1.3e-11 | yes | 64.0 | 14.2 | 187 | 719 |
+| A1-2026-09-03 | within ±0.01 EUR/MWh | 1.6e-09 | yes | 69.2 | 15.8 | 187 | 672 |
+| A1-2026-09-04 | within ±0.01 EUR/MWh | 3.0e-11 | yes | 66.4 | 15.3 | 187 | 684 |
+| A1-2026-09-05 | within ±0.01 EUR/MWh | 7.5e-10 | yes | 79.2 | 17.8 | 187 | 733 |
+| A1-2026-09-06 | within ±0.01 EUR/MWh | 9.4e-13 | yes | 66.4 | 15.9 | 227 | 723 |
+| v4-2026-03-29 | within ±0.01 EUR/MWh | 3.3e-13 | yes | 53.1 | 28.0 | 323 | 873 |
+| v4-2026-09-06 | within ±0.01 EUR/MWh | 4.3e-13 | yes | 54.4 | 30.6 | 323 | 889 |
+| v2-2026-03-29 | within ±0.01 EUR/MWh | 5.4e-13 | yes | 37.0 | 18.0 | 270 | 790 |
+| v2-2026-09-06 | within ±0.01 EUR/MWh | 5.1e-13 | yes | 45.9 | 23.4 | 270 | 888 |
+| B0-2026-03-29 | identical bit for bit | 0 | yes | 0.0 | 0.0 | 187 | 786 |
+| B0-2026-09-06 | identical bit for bit | 0 | yes | 0.0 | 0.0 | 189 | 790 |
+
+| Run | Member deviations, issuing host vs native (EUR/MWh) |
+|---|---|
+| A1-2025-10-26 | largest: member 5 (cp26-k11-t032, seed 27190032, 1000 epochs, max_epochs) 7.7e-01; the other seven at most 3.6e-05 |
+| A1-2026-03-29 | largest: member 6 (cp26-k12-t096, seed 27290041, 338 epochs, patience) 1.8e-06; the other seven at most 6.0e-07 |
+| A1-2026-08-31 | largest: member 3 (cp26-k13-t094, seed 27390022, 262 epochs, patience) 3.8e-08; the other seven at most 1.6e-12 |
+| A1-2026-09-01 | largest: member 2 (cp26-k13-t094, seed 27390021, 210 epochs, patience) 1.9e-09; the other seven at most 2.3e-12 |
+| A1-2026-09-02 | largest: member 2 (cp26-k13-t094, seed 27390021, 177 epochs, patience) 2.5e-11; the other seven at most 2.8e-13 |
+| A1-2026-09-03 | largest: member 2 (cp26-k13-t094, seed 27390021, 226 epochs, patience) 3.7e-09; the other seven at most 1.7e-12 |
+| A1-2026-09-04 | largest: member 3 (cp26-k13-t094, seed 27390022, 127 epochs, patience) 2.4e-10; the other seven at most 1.5e-11 |
+| A1-2026-09-05 | largest: member 3 (cp26-k13-t094, seed 27390022, 230 epochs, patience) 1.6e-08; the other seven at most 4.7e-10 |
+| A1-2026-09-06 | largest: member 2 (cp26-k13-t094, seed 27390021, 147 epochs, patience) 1.5e-11; the other seven at most 8.5e-13 |
+| v4-2026-03-29 | A1_w 5.4e-13, B2_w 1.0e-12, L-N 0, L-R 0 |
+| v4-2026-09-06 | A1_w 9.0e-13, B2_w 5.1e-13, L-N 0, L-R 0 |
+| v2-2026-03-29 | A1 1.1e-12, B2 1.1e-12 |
+| v2-2026-09-06 | A1 3.0e-13, B2 1.1e-12 |
+
+Issuing host: Node.js v26.7.0 (SHA-256 1ef99ea25fe7…), Pyodide 0.28.0; τ_eq = 0.01 EUR/MWh. Non-local requests: 0. Executed files equal the package: yes. Attribution was computed at 2026-09-06 and 2026-03-29.
+
+### Browser identity and v4 in the browser
+
+| Browser | Run | vs the issuing host | vs native (largest, EUR/MWh) | Selections matched | Fit (s) | Wasm heap (MiB) | Browser RSS peak (MiB) | Training payload (MB, gzip) | First visit (KB) |
+|---|---|---|---|---|---:|---:|---:|---:|---:|
+| chromium 153.0.8010.12 | A1-2026-09-06 | identical bit for bit | within ±0.01 EUR/MWh (9.4e-13) | yes | 65.6 | 215 | 1,455 | 45.6 (38.2) | 3.5 |
+| chromium 153.0.8010.12 | v4-2026-09-06 | identical bit for bit | within ±0.01 EUR/MWh (4.3e-13) | yes | 54.2 | 323 | 1,751 | 48.6 (40.8) | 3.5 |
+| webkit 26.6 | A1-2026-09-06 | identical bit for bit | within ±0.01 EUR/MWh (9.4e-13) | yes | 61.7 | 215 | 1,261 | 45.6 (38.2) | 3.5 |
+| webkit 26.6 | v4-2026-09-06 | identical bit for bit | within ±0.01 EUR/MWh (4.3e-13) | yes | 57.8 | 309 | 1,500 | 48.6 (40.8) | 3.5 |
+
+### What the browser loaded
+
+| Browser | Run | Runtime (MB) | Packages (MB) | Code (KB) | Data (MB) | Ready to fit (s) | Attribution (s) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| chromium | A1-2026-09-06 | 12.3 | 32.7 | 86.6 | 0.5 | 2.3 | 0.3 |
+| chromium | v4-2026-09-06 | 12.3 | 32.7 | 86.6 | 3.5 | 2.1 | 14.9 |
+| webkit | A1-2026-09-06 | 12.3 | 32.7 | 86.6 | 0.5 | 1.9 | 0.3 |
+| webkit | v4-2026-09-06 | 12.3 | 32.7 | 86.6 | 3.5 | 1.8 | 15.9 |
+
+### The failure policy, exercised under the issuing host
+
+| Case | Path (issuing host) | Same path natively | Display | Issued vs native | Wall (s) | Peak (MiB) |
+|---|---|---|---|---|---:|---:|
+| 2026-09-06, GFS available | A1 ok | yes | successful daily fit | within ±0.01 EUR/MWh (9.4e-13) | 70.4 | 748 |
+| 2026-09-06, GFS declared unavailable | A1 skipped → v2 ok | yes | skipped fit (GFS late or missing); fallback v2 issued | within ±0.01 EUR/MWh (5.1e-13) | 62.2 | 843 |
+| 2022-12-04, GFS available | A1 failed → v4 ok | yes | failed fit; fallback v4 issued | within ±0.01 EUR/MWh (5.1e-13) | 70.2 | 762 |
+
+### Retrain negative controls
+
+| Control | Change | Status | Quantiles and selections alone | Largest deviation (EUR/MWh) | Expected |
+|---|---|---|---|---:|---|
+| Changed seed | member 0 seed 27390011 -> 27390012 | different | different | 2.4e+01 | different |
+| Changed training-window value | price of 2026-08-20 slot 12 +1 EUR/MWh | different | within ±0.01 EUR/MWh | 9.1e-03 | different |
+| Changed target-day outcome | every price of 2026-09-06 +50 EUR/MWh | payloads unchanged: A1, v2, v4, B0 | — | — | unchanged |
+
+### §19.5 records, native against the issuing host
+
+| Window / stream | Days | Hours | Partial days | Negative-price hours | Items compared | Native = issuing host |
+|---|---:|---:|---:|---:|---:|---|
+| autumn-2025/A1 | 61 | 1,462 | 3 | 51 | 2,536 | bit for bit |
+| autumn-2025/B0 | 61 | 1,462 | 3 | 51 | 2,536 | bit for bit |
+| spring-summer-2026/A1 | 190 | 4,556 | 3 | 438 | 7,696 | bit for bit |
+| spring-summer-2026/B0 | 190 | 4,556 | 3 | 438 | 7,696 | bit for bit |
+
 <!-- generated tables: end -->
 
 ## Reading the tables

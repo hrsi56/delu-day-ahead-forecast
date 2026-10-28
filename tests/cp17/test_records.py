@@ -136,7 +136,9 @@ def test_reference_bundle_and_schemas():
         assert load(EVIDENCE / 'schemas' / f'{kind}.schema.json') == json.loads(json.dumps(value)), kind
 
 
-DATE = re.compile(r'(20\d\d)-(\d\d)-(\d\d)')
+#: A date that stands as a value (a JSON string, an ISO instant, a CSV cell), not one inside a file or folder
+#: name such as CP-26's `cold-rerun-2026-10-15`.
+DATE = re.compile(r'(?<![A-Za-z0-9/_.-])(20\d\d)-(\d\d)-(\d\d)')
 
 
 def test_no_committed_record_holds_a_date_after_the_boundary():

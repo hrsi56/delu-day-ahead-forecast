@@ -63,10 +63,16 @@ def host_table(root: Path) -> str:
                      f"{_mib(x['process_rss_peak_bytes'])} |")
     blocked = sum(len(x['blocked_non_local_requests']) for x in rows.values())
     files = all(x['executed_files_match_package'] for x in rows.values())
-    lines += ['', '| Run | Largest member deviation, issuing host vs native (EUR/MWh) |', '|---|---|']
+    lines += ['', '| Run | Member deviations, issuing host vs native (EUR/MWh) |', '|---|---|']
     for stem in stems:
         members = rows[stem].get('members_max_abs_eur')
-        if members:
+        if not members:
+            continue
+        if stem.startswith('A1-'):
+            worst = max(members, key=members.get)
+            rest = max(v for k, v in members.items() if k != worst)
+            lines.append(f"| {stem} | largest: {worst} {_e(members[worst])}; the other seven at most {_e(rest)} |")
+        else:
             lines.append(f"| {stem} | {', '.join(f'{k} {_e(v)}' for k, v in members.items())} |")
     lines.append('')
     lines.append(f"Issuing host: Node.js {r['issuing_host']['version']} (SHA-256 {r['issuing_host']['sha256'][:12]}…), "

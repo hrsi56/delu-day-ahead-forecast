@@ -238,6 +238,17 @@ Each proposal was written without any 4.7T outcome. None changes landed code.
     (`uncovered_fails=True`), so the A1-failure chain applies. v4 checks its weather rows too and fails, so v2
     issues.
   - **Proposed.** Record this explicitly, as the implementation does.
+- **F1: an issuing-host parity miss, reported and not tuned (brief item 3).**
+  - **The miss.** At the 25-hour DST origin 2025-10-26, A1 under the issuing host differs from the native fit
+    by up to 0.028 EUR/MWh (p50), above τ_eq = 0.01, with every data-driven selection identical.
+  - **The cause** is one member: `cp26-k11-t032`, seed 27190032, which trains to the 1,000-epoch cap with its
+    best epoch the last. Its own quantiles differ by 0.77 EUR/MWh. The other seven agree to about 1e-12.
+  - **What it means.** τ_eq, set from CP-17-probe's two origins (largest 6.3e-7), is not a bound on rounding
+    between native CPython and WebAssembly for long-trained DDNN-2 members. It remains the visitor's tolerance
+    against the issued artifact, which the same WebAssembly runtime produces. That comparison is bit for bit
+    in Chromium and WebKit.
+  - **For r18:** record that the issued values can differ from native arithmetic by this much, and that the
+    native parity with CP-26 stays the code-identity check. Nothing is changed.
 - **None needs a §19.3 exception.** Every product component runs under Pyodide within the measured limits.
 
 ## 12. The registry identities (§9, the tracking spec)

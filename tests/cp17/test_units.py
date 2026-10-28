@@ -229,3 +229,45 @@ def test_payload_identity_binds_arrays_and_meta():
 def test_index_hash_is_int64_in_every_runtime():
     ix32, ix64 = np.array([1, 5, 9], dtype=np.int32), np.array([11, 15, 19], dtype=np.int64)
     assert dailyfit.index_hash(ix32, 10) == dailyfit.index_hash(ix64, 0) == dailyfit.array_hash(ix64)
+
+
+def _bundle():
+    """A minimal verified bundle: a manifest and one B0 training window (synthetic values)."""
+    import hashlib
+    import io
+    day = date(2026, 9, 6)
+    keys = np.array([np.datetime64(k.replace('+00:00', '')).astype('datetime64[ns]').astype(np.int64)
+                     for k in keys_for(day)], dtype=np.int64)
+    arrays = {'price_ns': keys, 'price': np.full(24, np.nan), 'key_ns': keys}
+    meta = {'schema': dailyfit.SCHEMAS['B0'], 'policy': 'B0', 'day': str(day), 'embargo': 'synthetic', 'b0_buffer': [],
+            'array_sha256': {k: dailyfit.array_hash(v) for k, v in sorted(arrays.items())}}
+    meta['payload_sha256'] = dailyfit.payload_digest(arrays, meta)
+    buf = io.BytesIO()
+    np.savez(buf, **arrays)
+    files = {f'B0-{day}.json': json.dumps(meta).encode(), f'B0-{day}.npz': buf.getvalue()}
+    manifest = {'schema': 'cp17-manifest-v1',
+                'product': {'name': 'delu-day-ahead-policy', 'designated_policy': 'A1', 'evidence_label': 'synthetic'},
+                'policy': {'policy_identity_sha256': '1' * 64, 'package_sha256': '2' * 64, 'issuing_host': 'test'},
+                'artifact': {'artifact_sha256': '3' * 64, 'delivery_day': str(day), 'issued_policy': 'B0', 'display': 'x'},
+                'times': {'last_training_utc': '2026-09-05T09:00:00+00:00', 'data_refresh_utc': '',
+                          'issuance_utc': '2026-09-05T09:00:00+00:00'},
+                'freshness': {'state': 'fresh', 'as_of_day': str(day), 'latest_issued_day': str(day)},
+                'files': [{'path': p, 'sha256': hashlib.sha256(b).hexdigest(), 'bytes': len(b), 'kind': 'training_window'}
+                          for p, b in sorted(files.items())]}
+    files['manifest.json'] = json.dumps(manifest).encode()
+    return files
+
+
+def test_bundle_verifies_and_refuses_tampering_without_crashing():
+    files = _bundle()
+    assert schema.verify_bundle(files) == []
+    npz = next(k for k in files if k.endswith('.npz'))
+    flipped = dict(files)
+    blob = bytearray(flipped[npz])
+    blob[len(blob) // 2] ^= 0x01
+    flipped[npz] = bytes(blob)
+    errors = schema.verify_bundle(flipped)                 # a refusal, not a BadZipFile
+    assert errors and 'SHA-256' in errors[0]
+    leaked = {**files}
+    meta = json.loads(leaked['B0-2026-09-06.json'])
+    assert schema.check_training_window(meta, {'price_ns': np.zeros(1), 'price': np.ones(1), 'key_ns': np.zeros(1)})

@@ -96,8 +96,13 @@ def host_row(native: dict, node: dict, manifest: dict) -> dict:
 
 
 def _members(native: dict, hosted: dict) -> dict | None:
-    """Each blend member's largest central deviation (v4: A1_w, B2_w, L-N, L-R; v2: A1, B2)."""
+    """Each member's largest deviation: a blend's member centrals (v4: A1_w, B2_w, L-N, L-R; v2: A1, B2), or
+    A1's eight DDNN-2 members' quantiles, keyed by member, configuration, seed and epochs run."""
     import numpy as np
+    if native.get('policy') == 'A1':
+        return {f"member {a['member']} ({a['config']}, seed {a['seed']}, {a['epochs_run']} epochs, {a['stop_reason']})":
+                float(np.abs(np.asarray(a['quantiles'], float) - np.asarray(b['quantiles'], float)).max())
+                for a, b in zip(native['members'], hosted['members'])}
     if 'members_central' not in native:
         return None
     return {k: float(np.abs(np.asarray(v, float) - np.asarray(hosted['members_central'][k], float)).max())

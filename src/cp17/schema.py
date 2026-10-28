@@ -239,7 +239,7 @@ def verify_bundle(files: dict[str, bytes]) -> list[str]:
     listed = {f['path']: f for f in manifest['files']}
     for path in sorted(set(files) - set(listed) - {'manifest.json'}):
         errors.append(f'{path}: served but not listed in the manifest')
-    loaded = {}
+    loaded, verified = {}, set()
     for path, item in listed.items():
         if path not in files:
             errors.append(f'{path}: listed but absent')
@@ -251,16 +251,27 @@ def verify_bundle(files: dict[str, bytes]) -> list[str]:
         if kind != item['kind']:
             errors.append(f'{path}: listed as {item["kind"]}, expected {kind}')
             continue
+        verified.add(path)
         if path.endswith('.json'):
-            value = json.loads(files[path])
+            try:
+                value = json.loads(files[path])
+            except ValueError as exc:
+                errors.append(f'{path}: not readable JSON ({exc})')
+                continue
             errors += validate(value, SCHEMAS[kind], path)
             loaded[path] = value
     for path in [p for p in listed if TRAINING_FILE.match(p) and p.endswith('.json') and p in loaded]:
         npz = path[:-5] + '.npz'
         arrays = {}
-        if npz in files:
-            with np.load(io.BytesIO(files[npz]), allow_pickle=False) as z:
-                arrays = {k: z[k] for k in z.files}
+        if npz in listed and npz not in verified:
+            continue          # already refused by its hash; a file that failed it is never opened
+        if npz in verified:
+            try:
+                with np.load(io.BytesIO(files[npz]), allow_pickle=False) as z:
+                    arrays = {k: z[k] for k in z.files}
+            except Exception as exc:   # an unreadable archive is a refusal, never a crash
+                errors.append(f'{npz}: not readable ({type(exc).__name__})')
+                continue
         errors += check_training_window(loaded[path], arrays)
     artifact = loaded.get('artifact.json')
     if artifact is not None:
