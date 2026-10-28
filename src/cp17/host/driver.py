@@ -1,17 +1,16 @@
 """The Python every Pyodide host executes: the issuing host (Node.js) and the browser load this file as text
 from the unpacked package, so its hash is in the package manifest like every other shipped file.
 
-Globals set by the host: MODE ('fit' or 'issue'), STEM or DAY, POLICY, ATTRIBUTION, GFS_AVAILABLE, and
-MEASURE (a host function returning the process's peak resident memory and the WebAssembly heap, in bytes).
-The payload files are at /home/pyodide/<policy>-<day>.npz and .json. The last expression is the run as JSON.
+Globals set by the host: MODE ('fit' or 'score'), STEM, POLICY, ATTRIBUTION and EXPORT. The payload files are at
+/home/pyodide/<policy>-<day>.npz and .json. The last expression is the run as JSON.
 
-- **fit**: one policy's daily fit from its payload, as `cp17.dailyfit.run` (the parity and browser checks).
-- **issue**: the product's issuance at DAY under the frozen failure policy (`cp17.issue.decide`), fitting only
-  the policies the chain reaches, then the issued artifact with the measured wall time and peak memory.
+- **fit**: one policy's daily fit from its payload, as `cp17.dailyfit.run`. The issuing host runs each attempt of
+  an issuance in its own fresh process in this mode, so that each fit's wall time and peak memory are its own
+  (the success definition's criterion 5); `cp17.issue` then judges the attempts and walks the chain. With EXPORT,
+  the fitted arrays (A1's members' parameters) are written to /home/pyodide/fit-arrays.npz for the artifact.
 - **score**: §19.5's evaluation record (`cp17.scoring.evaluate`) of /home/pyodide/score-input.json, as the
   Space recomputes it.
 """
-from datetime import date
 import hashlib, json, os, sys, time
 SRC = '/home/pyodide/src'
 sys.path.insert(0, SRC)
@@ -32,43 +31,14 @@ def _paths(stem):
     return (npz if os.path.exists(npz) else None), f'/home/pyodide/{stem}.json'
 
 
-def _measure():
-    m = MEASURE().to_py() if hasattr(MEASURE, 'to_py') else MEASURE()
-    return {k: int(v) for k, v in dict(m).items()}
-
-
 started = time.perf_counter()
 if MODE == 'fit':
     npz, meta = _paths(STEM)
-    out = {'result': dailyfit.run(POLICY, npz, meta, attribution=bool(ATTRIBUTION))}
-elif MODE == 'issue':
-    from cp17 import issue
-    day = date.fromisoformat(DAY)
-    payloads = {}
-
-    def attempts(policy):
-        npz, meta = _paths(f'{policy}-{DAY}')
-        arrays, meta_value = dailyfit.load(npz, meta)
-        payloads[policy] = {'payload_sha256': meta_value.get('payload_sha256')}
-        return issue.attempt(policy, lambda: dailyfit.run(policy, npz, meta, attribution=True, export=True), day,
-                             arrays, meta_value)
-
-    decision = issue.decide(day, bool(GFS_AVAILABLE), attempts)
-    wall = time.perf_counter() - started
-    memory = _measure()
-    exported = {}
-    for a in decision['attempts']:
-        if 'result' in a:
-            fitted = a['result'].pop('_arrays', None)
-            if a['policy'] == decision['issued_policy'] and fitted:
-                exported = fitted
-    if exported:
-        dailyfit.save_npz('/home/pyodide/artifact-arrays.npz', exported)
-    identity = json.loads(IDENTITY) if 'IDENTITY' in globals() else {}
-    out = {'decision': decision, 'artifact': issue.artifact(
-        decision, identity=identity, payloads=payloads, parent_sha256=None, data_refresh_utc=DATA_REFRESH_UTC,
-        host=json.loads(HOST), wall_seconds=wall, peak_bytes=max(memory.values())), 'memory': memory,
-        'exported_arrays': sorted(exported)}
+    result = dailyfit.run(POLICY, npz, meta, attribution=bool(ATTRIBUTION), export=bool(globals().get('EXPORT')))
+    fitted = result.pop('_arrays', None)
+    if fitted:
+        dailyfit.save_npz('/home/pyodide/fit-arrays.npz', fitted)
+    out = {'result': result, 'exported_arrays': sorted(fitted or {})}
 elif MODE == 'score':
     from cp17 import scoring
     with open('/home/pyodide/score-input.json', encoding='utf-8') as handle:

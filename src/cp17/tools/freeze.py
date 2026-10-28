@@ -48,6 +48,7 @@ RUNTIME_DIR = '.local/tools/pyodide-0.28.0'
 PROBE_RETRIEVAL = 'reports/cp17-probe/retrieval-manifest.json'
 SEARCH = 'reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json'
 FREEZE_ORIGIN = date(2026, 9, 6)
+ARTIFACT_PATH = 'docs/track-b/evidence/cp-17/artifact-2026-09-06.json'
 SEARCH_START, SEARCH_SPACING = date(2020, 1, 15), 182
 
 
@@ -102,6 +103,7 @@ def policy_identity(root: Path, bundle_manifest: dict, protocol: dict) -> dict:
         'pinned_files': pinned, 'contracts_sha256': contracts,
         'code': {'package_sha256': bundle_manifest['package_sha256'], 'zip_sha256': bundle_manifest['zip_sha256'],
                  'files_sha256': bundle_manifest['files_sha256'], 'entry_modules': bundle_manifest['entry_modules'],
+                 'runner_files_sha256': bundle_manifest['runner_files_sha256'],
                  'pyodide_packages': bundle_manifest['pyodide_packages']},
         'issuing_host': {'runtime': 'Pyodide in Node.js (decision 10)', 'pyodide': _pyodide(root), 'node': node_identity(),
                          'workers': 1},
@@ -156,6 +158,7 @@ def freeze_manifest(identity: dict, issuance: dict, bundle_manifest_path: Path |
                              'artifact_sha256': issuance['artifact']['artifact_sha256'],
                              'issued_policy': issuance['artifact']['issued_policy'],
                              'display': issuance['artifact']['display'],
+                             'artifact_path': ARTIFACT_PATH,
                              'artifact_file_sha256': issuance.get('artifact_file_sha256'),
                              'artifact_arrays_sha256': issuance.get('artifact_arrays_sha256'),
                              'payloads': issuance['artifact']['lineage']['inputs'],
@@ -188,10 +191,22 @@ def verify(manifest: dict, root: Path) -> list[str]:
     for path, expected in identity.get('contracts_sha256', {}).items():
         if not (root / path).exists() or sha256_file(root / path) != expected:
             problems.append(f'{path}: missing or altered')
-    for rel, expected in identity.get('code', {}).get('files_sha256', {}).items():
+    code = identity.get('code', {})
+    for rel, expected in {**code.get('files_sha256', {}), **code.get('runner_files_sha256', {})}.items():
         path = root / 'src' / rel
         if not path.exists() or sha256_file(path) != expected:
             problems.append(f'src/{rel}: missing or altered')
+    if not code.get('runner_files_sha256'):
+        problems.append('the runners that load the package are not frozen')
+    origin = manifest.get('freeze_origin', {})
+    path = root / origin.get('artifact_path', ARTIFACT_PATH)
+    if not path.exists() or sha256_file(path) != origin.get('artifact_file_sha256'):
+        problems.append(f'{origin.get("artifact_path", ARTIFACT_PATH)}: the freeze-origin artifact is missing or altered')
+    else:
+        art = json.loads(path.read_text())
+        if art.get('artifact_sha256') != origin.get('artifact_sha256') or issue.verify_artifact(art) \
+                or art.get('lineage', {}).get('policy_identity_sha256') != manifest.get('policy_identity_sha256'):
+            problems.append('the freeze-origin artifact does not verify against the manifest')
     return problems
 
 

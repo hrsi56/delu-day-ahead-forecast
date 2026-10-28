@@ -28,7 +28,6 @@ self.onmessage = async (event) => {
     py.globals.set('STEM', stem);
     py.globals.set('POLICY', stem.split('-')[0]);
     py.globals.set('ATTRIBUTION', attribution === '1');
-    py.globals.set('MEASURE', () => ({wasm_heap: py._module.HEAP8.buffer.byteLength}));
     const driver = py.FS.readFile('/home/pyodide/src/cp17/host/driver.py', {encoding: 'utf8'});
     const text = await py.runPythonAsync(driver);
     out.marks.fit_done_ms = performance.now() - t0;

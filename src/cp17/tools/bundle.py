@@ -25,6 +25,9 @@ EXTRA = ('cp17/host/driver.py', 'cp17/stubs/absent/holidays.py', 'cp17/stubs/fal
 #: The pinned Pyodide 0.28.0 packages the closure needs (the lock adds their dependencies).
 PACKAGES = ('numpy', 'pandas', 'scikit-learn', 'lightgbm', 'requests', 'tzdata')
 FIXED_TIME = (2026, 9, 6, 0, 0, 0)
+#: The runners that load the package: the issuing host's Node.js script and the browser page and worker. They
+#: run outside Pyodide, so they are not in the zip; their hashes are frozen with it.
+RUNNERS = ('cp17/host/node_run.mjs', 'cp17/browser/worker.js', 'cp17/browser/index.html')
 
 PROBE = """
 import importlib, json, sys
@@ -62,6 +65,7 @@ def build(src: Path, out: Path) -> dict:
     manifest = {'schema': 'cp17-bundle-v1', 'entry_modules': list(ENTRY), 'extra_files': list(EXTRA),
                 'third_party_imported_natively': found['third_party'], 'pyodide_packages': list(PACKAGES),
                 'files_sha256': files, 'package_sha256': hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest(),
+                'runner_files_sha256': {n: hashlib.sha256((src / n).read_bytes()).hexdigest() for n in RUNNERS},
                 'zip_bytes': out.stat().st_size, 'zip_sha256': hashlib.sha256(out.read_bytes()).hexdigest()}
     out.with_suffix('.json').write_text(json.dumps(manifest, indent=1, sort_keys=True) + '\n')
     return manifest

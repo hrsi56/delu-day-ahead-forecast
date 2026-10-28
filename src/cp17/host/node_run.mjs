@@ -5,16 +5,19 @@
 // Everything is read from local files. Any network call is refused and recorded: fetch, http(s) and raw
 // sockets are replaced before Pyodide loads, and only file paths and file: URLs pass.
 //
+// An issuance runs each attempt in its own fresh process in fit mode, so that its wall time and peak memory
+// (the success definition's criterion 5) are its own; `cp17.issue` then judges the attempts.
+//
 //   node node_run.mjs fit   <pyodide dir> <package zip> <payload dir> <stem> <attribution 0|1> <packages> <out.json>
-//   node node_run.mjs issue <pyodide dir> <package zip> <payload dir> <day> <gfs 0|1> <packages> <out.json> <identity.json>
 //   node node_run.mjs score <pyodide dir> <package zip> <input dir> <input.json> 0 <packages> <out.json>
+// CP17_EXPORT=1 makes fit mode write the fitted arrays to <out>-arrays.npz.
 import {readFileSync, readdirSync, writeFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {join, resolve} from 'node:path';
 import {performance} from 'node:perf_hooks';
 
 const require = createRequire(import.meta.url);
-const [mode, pyodideDir, packageZip, payloadDir, target, flag, packages, outPath, identityPath] = process.argv.slice(2);
+const [mode, pyodideDir, packageZip, payloadDir, target, flag, packages, outPath] = process.argv.slice(2);
 const blocked = [];
 const originalFetch = globalThis.fetch;
 globalThis.fetch = async (input, init) => {
@@ -45,7 +48,7 @@ try {
   if (mode === 'score') {
     py.FS.writeFile('/home/pyodide/score-input.json', new Uint8Array(readFileSync(join(payloadDir, target))));
   } else {
-    const day = mode === 'issue' ? target : target.split('-').slice(1).join('-');
+    const day = target.split('-').slice(1).join('-');
     for (const name of readdirSync(payloadDir)) {
       if (name.endsWith(`-${day}.npz`) || name.endsWith(`-${day}.json`)) {
         py.FS.writeFile(`/home/pyodide/${name}`, new Uint8Array(readFileSync(join(payloadDir, name))));
@@ -54,24 +57,17 @@ try {
   }
   out.marks.payload_ms = performance.now() - t0;
   py.globals.set('MODE', mode);
-  py.globals.set('MEASURE', () => ({rss_peak: process.resourceUsage().maxRSS * 1024,
-                                    wasm_heap: py._module.HEAP8.buffer.byteLength}));
   if (mode === 'fit') {
     py.globals.set('STEM', target);
     py.globals.set('POLICY', target.split('-')[0]);
     py.globals.set('ATTRIBUTION', flag === '1');
-  } else {
-    py.globals.set('DAY', target);
-    py.globals.set('GFS_AVAILABLE', flag === '1');
-    py.globals.set('IDENTITY', identityPath ? readFileSync(identityPath, 'utf8') : '{}');
-    py.globals.set('DATA_REFRESH_UTC', process.env.CP17_DATA_REFRESH_UTC || '');
-    py.globals.set('HOST', JSON.stringify({runtime: 'pyodide', pyodide: py.version, node: process.version}));
+    py.globals.set('EXPORT', process.env.CP17_EXPORT === '1');
   }
   const driver = py.FS.readFile('/home/pyodide/src/cp17/host/driver.py', {encoding: 'utf8'});
   out.python = JSON.parse(await py.runPythonAsync(driver));
   out.marks.done_ms = performance.now() - t0;
-  if (mode === 'issue' && py.FS.analyzePath('/home/pyodide/artifact-arrays.npz').exists) {
-    writeFileSync(outPath.replace(/\.json$/, '') + '-artifact-arrays.npz', py.FS.readFile('/home/pyodide/artifact-arrays.npz'));
+  if (mode === 'fit' && py.FS.analyzePath('/home/pyodide/fit-arrays.npz').exists) {
+    writeFileSync(outPath.replace(/\.json$/, '') + '-arrays.npz', py.FS.readFile('/home/pyodide/fit-arrays.npz'));
   }
   out.wasm_memory_bytes = py._module.HEAP8.buffer.byteLength;
 } catch (error) {

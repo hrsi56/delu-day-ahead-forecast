@@ -1,8 +1,8 @@
 """Item 7's reference bundle: one dated bundle for the freeze origin (delivery 2026-09-06), built from
 development data by `src/cp17`, validated against the frozen schemas, and checked to refuse a tampered file.
 
-Its files stay in `.local/artifacts/cp-17/reference-bundle/`; the committed record is its manifest and the
-validation result (`reports/cp17/reference-bundle.json`). Building the daily pipeline that publishes bundles
+Its files stay under `.local/` (the reproduction's `reference-bundle/`; the record names the folder); the committed
+record is its manifest and the validation result (`reports/cp17/reference-bundle.json`). Building the daily pipeline that publishes bundles
 is CP-18's.
 
 - the fitted artifact: the issuing host's artifact for 2026-09-06 and its exported arrays (A1's members'
@@ -60,7 +60,7 @@ def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, ide
     artifact = issuance['artifact']
     day = artifact['delivery_day']
     _dump(out / 'artifact.json', artifact)
-    arrays = artifact_dir / f'node-issue-{day}-gfs1-artifact-arrays.npz'
+    arrays = artifact_dir / f"node-attempt-{artifact['issued_policy']}-{day}-arrays.npz"
     shutil.copyfile(arrays, out / 'artifact-arrays.npz')
     for ext in ('json', 'npz'):
         shutil.copyfile(payload_dir / f"{artifact['issued_policy']}-{day}.{ext}", out / f"{artifact['issued_policy']}-{day}.{ext}")
@@ -146,7 +146,9 @@ def main(argv=None) -> int:
     files = read(args.out)
     errors = schema.verify_bundle(files)
     controls = tamper_controls(files)
-    record = {'schema': 'cp17-reference-bundle-record-v1', 'location': '.local/artifacts/cp-17/reference-bundle/',
+    parts = args.out.resolve().parts
+    location = '/'.join(parts[parts.index('.local'):]) if '.local' in parts else str(args.out)
+    record = {'schema': 'cp17-reference-bundle-record-v1', 'location': location + '/',
               'manifest': manifest, 'manifest_sha256': hashlib.sha256(files['manifest.json']).hexdigest(),
               'validation_errors': errors, 'valid': not errors, 'negative_controls': controls,
               'all_controls_refused': all(c['refused'] for c in controls.values())}

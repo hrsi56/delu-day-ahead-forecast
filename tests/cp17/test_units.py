@@ -179,30 +179,85 @@ def test_issue_time_and_resources():
     assert len(issue.resources_ok(901, 4 * 1024 ** 3 + 1)) == 2
 
 
-def _artifact():
-    day = date(2026, 9, 6)
-    decision = {'day': str(day), 'issued_policy': 'A1', 'route': 'designated', 'display': 'successful daily fit',
-                'attempts': [{'policy': 'A1', 'status': 'ok', 'cause': None, 'seconds': 1.0,
-                              'result': {'policy': 'A1', 'index': keys_for(day), 'quantiles': flat(24),
-                                         'quantiles_sha256': dailyfit.array_hash(np.asarray(flat(24), float)),
-                                         'search': 13, 'ensemble_content_sha256': '0' * 64, 'members': []}}]}
+def _result(policy, day, base):
+    q = flat(len(keys_for(day)), base)
+    return {'policy': policy, 'day': str(day), 'index': keys_for(day), 'quantiles': q,
+            'quantiles_sha256': dailyfit.array_hash(np.asarray(q, float)), 'search': 13,
+            'ensemble_content_sha256': '0' * 64, 'members': [], 'train_rows': {}, 'source_day': '2026-08-30'}
+
+
+def _decide(day, gfs, measured):
+    """`measured[policy]` = (wall seconds, peak bytes) of that policy's own attempt; each policy's quantiles sit
+    around its own level, so the issued forecast shows whose fit it is."""
+    bases = {'A1': 10.0, 'v4': 20.0, 'v2': 30.0, 'B0': 40.0}
+
+    def attempts(policy):
+        wall, peak = measured[policy]
+        return issue.attempt(policy, lambda: _result(policy, day, bases[policy]), day,
+                             resources=lambda: {'wall_seconds': wall, 'peak_bytes': peak})
+    return issue.decide(day, gfs, attempts)
+
+
+def _artifact(decision):
     return issue.artifact(decision, identity={'policy_identity_sha256': '1' * 64, 'package_sha256': '2' * 64},
-                          payloads={'A1': {'payload_sha256': '3' * 64}}, parent_sha256=None, data_refresh_utc='',
-                          host={'runtime': 'pyodide'}, wall_seconds=80.0, peak_bytes=10 ** 9)
+                          payloads={p['policy']: {'payload_sha256': '3' * 64} for p in decision['attempts']},
+                          parent_sha256=None, data_refresh_utc='', host={'runtime': 'pyodide'})
+
+
+FIT, OVER_TIME, OVER_MEMORY = (80.0, 10 ** 9), (900.5, 10 ** 9), (80.0, 4 * 1024 ** 3 + 1)
 
 
 def test_artifact_verifies_and_detects_tampering():
-    item = _artifact()
+    day = date(2026, 9, 6)
+    item = _artifact(_decide(day, True, {'A1': FIT}))
     assert issue.verify_artifact(item) == [] and item['display'] == 'successful daily fit'
+    assert item['resources']['wall_seconds'] == 80.0 and item['resources']['limits']['wall_seconds'] == 900
     assert schema.validate(json.loads(json.dumps(item)), schema.SCHEMAS['fitted_artifact']) == []
     tampered = json.loads(json.dumps(item))
     tampered['quantiles'][0][3] += 0.5
     assert issue.verify_artifact(tampered)
-    heavy = issue.artifact({**item, 'attempts': [{'policy': 'A1', 'status': 'ok', 'result': {
-        'policy': 'A1', 'index': item['keys'], 'quantiles': item['quantiles'], 'quantiles_sha256': item['quantiles_sha256'],
-        'search': 13, 'ensemble_content_sha256': '0' * 64, 'members': []}}], 'day': item['delivery_day']},
-        identity={}, payloads={}, parent_sha256=None, data_refresh_utc='', host={}, wall_seconds=1000.0, peak_bytes=1)
-    assert heavy['display'] == 'failed fit (resources)' and heavy['resource_check']
+
+
+@pytest.mark.parametrize('measured, path, issued, display', [
+    ({'A1': OVER_TIME, 'v4': FIT}, ['A1 failed', 'v4 ok'], 'v4', 'failed fit; fallback v4 issued'),
+    ({'A1': OVER_MEMORY, 'v4': FIT}, ['A1 failed', 'v4 ok'], 'v4', 'failed fit; fallback v4 issued'),
+    ({'A1': OVER_TIME, 'v4': OVER_MEMORY, 'v2': FIT}, ['A1 failed', 'v4 failed', 'v2 ok'], 'v2', 'failed fit; fallback v2 issued'),
+    ({'A1': OVER_TIME, 'v4': OVER_TIME, 'v2': OVER_MEMORY, 'B0': FIT}, ['A1 failed', 'v4 failed', 'v2 failed', 'B0 ok'], 'B0',
+     'failed fit; fallback B0 issued'),
+    ({'A1': OVER_TIME, 'v4': OVER_TIME, 'v2': OVER_TIME, 'B0': OVER_TIME}, ['A1 failed', 'v4 failed', 'v2 failed', 'B0 failed'],
+     None, 'failed issuance'),
+])
+def test_a_fit_over_the_resource_ceiling_fails_and_the_chain_moves_on(measured, path, issued, display):
+    """Criterion 5: a fit over 15 minutes or 4 GiB is a failed fit; its forecast is never issued."""
+    day = date(2026, 9, 6)
+    decision = _decide(day, True, measured)
+    assert [f"{a['policy']} {a['status']}" for a in decision['attempts']] == path
+    assert decision['issued_policy'] == issued and decision['display'] == display
+    for a in decision['attempts']:
+        if measured[a['policy']] != FIT:
+            assert a['status'] == 'failed' and a['cause'].startswith('resources:') and 'result' not in a
+    item = _artifact(decision)
+    assert issue.verify_artifact(item) == []
+    if issued is None:
+        assert item['quantiles'] is None
+    else:
+        level = {'v4': 20.0, 'v2': 30.0, 'B0': 40.0}[issued]
+        assert all(row[3] == level for row in item['quantiles'])          # the issued fit's own forecast, not A1's
+        assert item['resources']['wall_seconds'] <= issue.WALL_LIMIT_SECONDS
+
+
+def test_the_gfs_late_chain_also_applies_the_ceiling():
+    decision = _decide(date(2026, 9, 6), False, {'v2': OVER_MEMORY, 'B0': FIT})
+    assert [(a['policy'], a['status']) for a in decision['attempts']] == [('A1', 'skipped'), ('v2', 'failed'), ('B0', 'ok')]
+    assert decision['issued_policy'] == 'B0'
+
+
+def test_resources_at_the_limit_pass_and_unmeasured_resources_are_not_judged():
+    day = date(2026, 9, 6)
+    edge = _decide(day, True, {'A1': (900.0, 4 * 1024 ** 3)})
+    assert edge['issued_policy'] == 'A1'
+    native = issue.attempt('A1', lambda: _result('A1', day, 10.0), day)
+    assert native['status'] == 'ok' and native['resources'].startswith('not judged')
 
 
 # ------------------------------------------------------------------ the schema and its validator
@@ -260,14 +315,15 @@ def _bundle():
 
 def test_bundle_verifies_and_refuses_tampering_without_crashing():
     files = _bundle()
-    assert schema.verify_bundle(files) == []
+    base = schema.verify_bundle(files)
+    assert sorted(base) == sorted(f'{p}: required, but not listed in the manifest' for p in schema.REQUIRED)
     npz = next(k for k in files if k.endswith('.npz'))
     flipped = dict(files)
     blob = bytearray(flipped[npz])
     blob[len(blob) // 2] ^= 0x01
     flipped[npz] = bytes(blob)
     errors = schema.verify_bundle(flipped)                 # a refusal, not a BadZipFile
-    assert errors and 'SHA-256' in errors[0]
+    assert any('SHA-256' in e and npz in e for e in errors) and len(errors) == len(base) + 1
     leaked = {**files}
     meta = json.loads(leaked['B0-2026-09-06.json'])
     assert schema.check_training_window(meta, {'price_ns': np.zeros(1), 'price': np.ones(1), 'key_ns': np.zeros(1)})

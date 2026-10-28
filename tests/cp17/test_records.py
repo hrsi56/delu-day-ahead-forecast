@@ -55,6 +55,12 @@ def test_freeze_manifest_refuses_alterations(manifest, tmp_path):
     moved = copy.deepcopy(manifest)
     moved['freeze_origin']['artifact_sha256'] = 'f' * 64
     assert any('content digest' in p for p in freeze.verify(moved, ROOT))
+    swapped = copy.deepcopy(manifest)
+    swapped['freeze_origin']['artifact_file_sha256'] = '0' * 64
+    assert any('freeze-origin artifact is missing or altered' in p for p in freeze.verify(swapped, ROOT))
+    runner = copy.deepcopy(manifest)
+    runner['policy_identity']['code']['runner_files_sha256']['cp17/host/node_run.mjs'] = '0' * 64
+    assert 'src/cp17/host/node_run.mjs: missing or altered' in freeze.verify(runner, ROOT)
     # a file on disk that differs from its recorded hash
     fake = tmp_path / 'root'
     (fake / 'src').mkdir(parents=True)
@@ -115,7 +121,11 @@ def test_issuances_walk_the_frozen_chains():
     assert record['2022-12-04-gfs1']['comparison']['host_path'] == [['A1', 'failed'], ['v4', 'ok']]
     for key, item in record.items():
         assert item['artifact_verifies'] and item['comparison']['same_path'], key
-        assert item['resource_check'] == [] and item['host']['blocked_non_local_requests'] == []
+        assert item['host']['blocked_non_local_requests'] == [] and item['host_errors'] in ({}, {'A1': item['host_errors'].get('A1')})
+        assert item['resources']['wall_seconds'] <= 900 and item['resources']['peak_bytes'] <= 4 * 1024 ** 3
+        for attempt in item['attempts']:
+            if attempt['status'] == 'ok':
+                assert isinstance(attempt['resources'], dict) and attempt['resources']['wall_seconds'] <= 900
     assert record['2022-12-04-gfs1']['display'] == 'failed fit; fallback v4 issued'
 
 

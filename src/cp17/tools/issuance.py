@@ -5,11 +5,15 @@
   issues), and 2022-12-04, one of the 18 development dates on which a DDNN-2 member stopped with a nonfinite
   loss (A1 fails, v4 issues).
 
-The issuing host runs `cp17.issue.decide` in Pyodide under Node.js (`host/driver.py`, MODE 'issue'). The
-same decision is taken natively from the same payloads, and the two are compared: the chain walked, each
-attempt's status, the issued policy, and the issued quantiles by `cp17.retrain.compare`.
+**Under the issuing host,** each attempt the chain reaches runs in its own fresh Node.js process (Pyodide, the
+package's `host/driver.py` in fit mode), so that its wall time (the whole process, runtime load included) and
+its peak resident memory are its own. The package's `cp17.issue` then judges every attempt on the success
+definition's five criteria, criterion 5 on those measurements, and walks the frozen chain (`decide`); the
+issued artifact is `cp17.issue.artifact`. **Natively,** the same chain is taken from the same payloads with the
+fits run in-process and criterion 5 not judged. The two paths are compared: the chain walked, each attempt's
+status, the issued policy, and the issued quantiles by `cp17.retrain.compare`.
 
-    OPENBLAS_NUM_THREADS=1 ... PYTHONPATH=src python -m cp17.tools.issuance --day 2026-09-06 --gfs 1 \\
+    OPENBLAS_NUM_THREADS=1 ... PYTHONPATH=src python -m cp17.tools.issuance --day 2026-09-06 --gfs 1 \
         --payloads <dir> --bundle <src.zip> --identity <policy-identity.json> --out <dir>
 """
 from __future__ import annotations
@@ -48,16 +52,33 @@ def native_issuance(folder: Path, day: date, gfs: bool) -> dict:
     return decision
 
 
-def host_issuance(pyodide: Path, bundle: Path, folder: Path, day: date, gfs: bool, identity: Path, out: Path) -> dict:
+def host_fit(pyodide: Path, bundle: Path, folder: Path, stem: str, out: Path) -> dict:
+    """One attempt's fit in a fresh issuing-host process, with attribution and the fitted arrays exported."""
     import os
-    target = out / f'node-issue-{day}-gfs{int(gfs)}.json'
-    # Development replay: the data are as available at the issue instant, which is the refresh time recorded.
-    env = {**os.environ, 'CP17_DATA_REFRESH_UTC': issue.issue_utc(day)}
-    proc = subprocess.run([NODE, str(RUNNER), 'issue', str(pyodide), str(bundle), str(folder), str(day), '1' if gfs else '0',
-                           ','.join(PACKAGES), str(target), str(identity)], capture_output=True, text=True, env=env)
-    run = json.loads(target.read_text())
-    run['returncode'] = proc.returncode
-    return run
+    target = out / f'node-attempt-{stem}.json'
+    env = {**os.environ, 'CP17_EXPORT': '1'}
+    subprocess.run([NODE, str(RUNNER), 'fit', str(pyodide), str(bundle), str(folder), stem, '1', ','.join(PACKAGES),
+                    str(target)], capture_output=True, text=True, env=env)
+    return json.loads(target.read_text())
+
+
+def host_issuance(pyodide: Path, bundle: Path, folder: Path, day: date, gfs: bool, out: Path) -> tuple[dict, dict]:
+    runs = {}
+
+    def attempts(policy):
+        stem = f'{policy}-{day}'
+        npz, meta = folder / f'{stem}.npz', folder / f'{stem}.json'
+        arrays, value = dailyfit.load(npz, meta)
+        run = runs[policy] = host_fit(pyodide, bundle, folder, stem, out)
+
+        def fit():
+            if run.get('errors'):
+                raise dailyfit.FitFailure(run['errors'][0][-2000:])
+            return run['python']['result']
+        return issue.attempt(policy, fit, day, arrays, value,
+                             resources=lambda: {'wall_seconds': run['total_ms'] / 1000,
+                                                'peak_bytes': int(run['process_rss_peak_bytes'])})
+    return issue.decide(day, gfs, attempts), runs
 
 
 def compare(native: dict, hosted: dict) -> dict:
@@ -99,31 +120,35 @@ def main(argv=None) -> int:
     short.write_text(json.dumps({'policy_identity_sha256': digest(identity),
                                  'package_sha256': identity['code']['package_sha256']}, sort_keys=True))
     native = native_issuance(args.payloads, day, gfs)
-    run = host_issuance(args.pyodide, args.bundle, args.payloads, day, gfs, short, args.out)
-    if run.get('errors'):
-        record = {'day': str(day), 'gfs_available': gfs, 'errors': run['errors']}
-    else:
-        hosted = run['python']['decision']
-        artifact = run['python']['artifact']
-        art_path = args.out / f'artifact-{day}-gfs{int(gfs)}.json'
-        art_path.write_text(json.dumps(artifact, sort_keys=True, allow_nan=False) + '\n')
-        arrays = args.out / f'node-issue-{day}-gfs{int(gfs)}-artifact-arrays.npz'
-        record = {'day': str(day), 'gfs_available': gfs, 'built_payloads': built is not None,
-                  'artifact': artifact, 'artifact_file_sha256': hashlib.sha256(art_path.read_bytes()).hexdigest(),
-                  'artifact_arrays_sha256': hashlib.sha256(arrays.read_bytes()).hexdigest() if arrays.exists() else None,
-                  'artifact_verifies': issue.verify_artifact(artifact) == [], 'comparison': compare(native, hosted),
-                  'host': {'node': node_identity(), 'pyodide': run.get('pyodide_version'),
-                           'total_seconds': run['total_ms'] / 1000, 'wasm_memory_bytes': run['wasm_memory_bytes'],
-                           'process_rss_peak_bytes': run['process_rss_peak_bytes'], 'memory': run['python']['memory'],
-                           'blocked_non_local_requests': run['blocked_non_local_requests'],
-                           'executed_files': run['python']['source_sha256'], 'stubs': run['python']['stubs']},
-                  'native_seconds': native['seconds']}
+    hosted, runs = host_issuance(args.pyodide, args.bundle, args.payloads, day, gfs, args.out)
+    failed_runs = {p: r['errors'] for p, r in runs.items() if r.get('errors')}
+    payloads_used = {p: {'payload_sha256': json.loads((args.payloads / f'{p}-{day}.json').read_text())['payload_sha256']}
+                     for p in runs}
+    artifact = issue.artifact(hosted, identity=json.loads(short.read_text()), payloads=payloads_used, parent_sha256=None,
+                              data_refresh_utc=issue.issue_utc(day),
+                              host={'runtime': 'pyodide', 'pyodide': next(iter(runs.values())).get('pyodide_version'),
+                                    'node': next(iter(runs.values()))['node'], 'process': 'one fresh process per attempt'})
+    art_path = args.out / f'artifact-{day}-gfs{int(gfs)}.json'
+    art_path.write_text(json.dumps(artifact, sort_keys=True, allow_nan=False) + '\n')
+    arrays = args.out / f"node-attempt-{hosted['issued_policy']}-{day}-arrays.npz" if hosted['issued_policy'] else None
+    record = {'day': str(day), 'gfs_available': gfs, 'built_payloads': built is not None,
+              'artifact': artifact, 'artifact_file_sha256': hashlib.sha256(art_path.read_bytes()).hexdigest(),
+              'artifact_arrays_sha256': hashlib.sha256(arrays.read_bytes()).hexdigest() if arrays and arrays.exists() else None,
+              'artifact_verifies': issue.verify_artifact(artifact) == [], 'comparison': compare(native, hosted),
+              'host_errors': failed_runs,
+              'host': {'node': node_identity(), 'pyodide': next(iter(runs.values())).get('pyodide_version'),
+                       'attempts': {p: {'total_seconds': r['total_ms'] / 1000, 'wasm_memory_bytes': r.get('wasm_memory_bytes'),
+                                        'process_rss_peak_bytes': r['process_rss_peak_bytes'],
+                                        'blocked_non_local_requests': r['blocked_non_local_requests'],
+                                        'executed_files': (r.get('python') or {}).get('source_sha256'),
+                                        'stubs': (r.get('python') or {}).get('stubs')} for p, r in runs.items()},
+                       'blocked_non_local_requests': sorted({u for r in runs.values() for u in r['blocked_non_local_requests']})},
+              'native_seconds': native['seconds']}
     path = args.out / f'issuance-{day}-gfs{int(gfs)}.json'
     path.write_text(json.dumps(record, indent=1, sort_keys=True, allow_nan=False) + '\n')
     c = record.get('comparison', {})
-    print(day, 'gfs' if gfs else 'no-gfs', record.get('errors') or (c.get('host_path'), c.get('host_display'),
-                                                                     c.get('status_vs_native')))
-    return 0 if not record.get('errors') else 1
+    print(day, 'gfs' if gfs else 'no-gfs', (c.get('host_path'), c.get('host_display'), c.get('status_vs_native')))
+    return 0 if record['artifact_verifies'] else 1
 
 
 if __name__ == '__main__':

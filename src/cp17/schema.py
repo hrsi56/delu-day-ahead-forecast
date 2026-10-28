@@ -18,7 +18,8 @@ Seven payload kinds make up a dated bundle. Each JSON file has a JSON Schema (dr
 
 `verify_bundle` checks a bundle as the Space does at start: the manifest validates, every listed file exists
 and hashes as listed, no unlisted file is served, every JSON file validates against its kind's schema, and
-the cross-references hold. Any failure is listed; a tampered file fails.
+the cross-references hold, and the required kinds (issued forecasts, outcomes, evaluation records and the
+artifact the manifest names) are all served. Any failure is listed, never raised; a tampered file fails.
 """
 from __future__ import annotations
 
@@ -138,6 +139,8 @@ FILE_KIND = {'manifest.json': 'manifest', 'issued-forecasts.json': 'issued_forec
              'evaluation.json': 'evaluation', 'artifact.json': 'fitted_artifact', 'artifact-arrays.npz': 'fitted_artifact',
              'series.json': 'series'}
 TRAINING_FILE = re.compile(r'^(A1|v4|v2|B0)-(\d{4}-\d{2}-\d{2})\.(json|npz)$')
+#: What every bundle serves: the files the Space loads at start, and the artifact the manifest names.
+REQUIRED = ('issued-forecasts.json', 'outcomes.json', 'evaluation.json', 'artifact.json')
 
 _TYPES = {'object': dict, 'array': list, 'string': str, 'boolean': bool, 'null': type(None)}
 
@@ -237,6 +240,9 @@ def verify_bundle(files: dict[str, bytes]) -> list[str]:
     if errors:
         return errors
     listed = {f['path']: f for f in manifest['files']}
+    for path in REQUIRED:
+        if path not in listed:
+            errors.append(f'{path}: required, but not listed in the manifest')
     for path in sorted(set(files) - set(listed) - {'manifest.json'}):
         errors.append(f'{path}: served but not listed in the manifest')
     loaded, verified = {}, set()

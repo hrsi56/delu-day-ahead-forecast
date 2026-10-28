@@ -11,7 +11,7 @@
   the embargo check and `verify_bundle`. The tests require the files in `schemas/` to equal its `SCHEMAS`.
 
 **The reference bundle:** built for the freeze origin by `src/cp17/tools/refbundle.py`. It stays in
-`.local/artifacts/cp-17/reference-bundle/`. Its manifest and validation are committed in
+`.local/artifacts/cp-17/final/reference-bundle/`. Its manifest and validation are committed in
 `reports/cp17/reference-bundle.json`.
 
 Building the daily pipeline that publishes bundles is CP-18's.
@@ -33,7 +33,9 @@ Building the daily pipeline that publishes bundles is CP-18's.
 These are what `verify_bundle` checks; the reference bundle is tested against them.
 
 1. **The manifest validates** against its schema.
-2. **Every file listed exists,** and its SHA-256 and size are the manifest's.
+2. **Every file listed exists,** and its SHA-256 and size are the manifest's. The issued forecasts, the
+   outcomes, the evaluation records and the artifact the manifest names are always served. A file that fails
+   its hash is never opened, and an unreadable file is a refusal, never a crash.
 3. **No file is served unlisted.**
 4. **Every file is the kind it is listed as,** and every JSON file validates against its kind's schema.
 5. **A training window's identity holds:** its arrays have their declared hashes, and the payload digest

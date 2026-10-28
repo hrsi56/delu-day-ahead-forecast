@@ -183,11 +183,21 @@ Europe/Berlin:
 4. **The artifact:** written with its training window, labels, seeds, timestamps and parent, input and state
    hashes, and it verifies.
 5. **Resources:** under the issuing host, one worker, ≤ 15 minutes of wall time and ≤ 4 GB peak memory.
+   - **Each attempt is measured on its own.** It runs in its own fresh issuing-host process, and is judged on
+     that process's wall time (runtime load included) and peak resident memory.
+   - **This is judged inside `cp17.issue.attempt`, before the chain moves on,** for A1 and for every
+     fallback alike.
 
-Anything else is a failed fit. v4 and v2 are judged by the same five criteria, with their own frozen training
-rules.
+Anything else is a failed fit:
+- **its forecast is never issued, and the chain moves on.** A1 over the ceiling → v4; v4 over it → v2; v2
+  over it → B0; B0 over it → a failed issuance;
+- **v4 and v2 are judged by the same five criteria,** with their own frozen training rules;
+- **natively** (the comparison path), criterion 5 is not judged, and the record says so;
+- **the tests** are `tests/cp17/test_units.py::test_a_fit_over_the_resource_ceiling_fails_and_the_chain_moves_on`
+  and its neighbours.
 
-**Exercised under the issuing host on real development payloads,** each path the same natively:
+**Exercised under the issuing host on real development payloads,** one fresh process per attempt, each path
+the same natively:
 
 | Case | Path | Display | Issued forecast vs native |
 |---|---|---|---|

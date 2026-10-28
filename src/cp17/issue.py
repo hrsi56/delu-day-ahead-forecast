@@ -20,9 +20,11 @@ Europe/Berlin, is one that passes all of:
 3. *emission*: all seven quantiles for every delivery hour of D (23, 24 or 25), finite and ordered;
 4. *the artifact*: written with its training window, labels, seeds, timestamps and parent, input and state
    hashes, and its manifest verifies (`artifact`, `verify_artifact`);
-5. *resources*: on the issuing host, one worker, within 15 minutes of wall time and 4 GB of peak memory.
+5. *resources*: on the issuing host, one worker, within 15 minutes of wall time and 4 GB of peak memory, each
+   attempt measured in its own fresh process (`attempt`'s `resources`).
 
-Anything else is a failed fit. A fallback forecast never counts as a successful A1 fit.
+Anything else is a failed fit, and the chain moves on: a fit over the ceiling is never issued. A fallback forecast
+never counts as a successful A1 fit.
 """
 from __future__ import annotations
 
@@ -95,8 +97,14 @@ def check_emission(result: dict, day: date) -> list[str]:
     return problems
 
 
-def attempt(policy: str, fit, day: date, arrays: dict | None = None, meta: dict | None = None) -> dict:
-    """One policy's fit at the day, judged by criteria 1-3; `fit()` returns the `dailyfit` result."""
+def attempt(policy: str, fit, day: date, arrays: dict | None = None, meta: dict | None = None,
+            resources=None) -> dict:
+    """One policy's fit at the day, judged by criteria 1-3 and 5; `fit()` returns the `dailyfit` result.
+
+    `resources()` returns this fit's own measured {'wall_seconds', 'peak_bytes'} on the issuing host, where each
+    attempt runs in its own fresh process, so the peak is the fit's own. A fit over the ceiling is a failed fit:
+    its quantiles are never issued, and the chain moves on. With `resources=None` (a native comparison) criterion
+    5 is not judged, and the record says so."""
     started = time.perf_counter()
     item = {'policy': policy, 'status': 'failed', 'cause': None}
     try:
@@ -109,8 +117,16 @@ def attempt(policy: str, fit, day: date, arrays: dict | None = None, meta: dict 
         problems = check_emission(result, day)
         if problems:
             item['cause'] = 'emission: ' + '; '.join(problems)
-            item['result'] = result
             return item
+        if resources is not None:
+            measured = resources()
+            item['resources'] = {**measured, 'limits': {'wall_seconds': WALL_LIMIT_SECONDS, 'peak_bytes': MEMORY_LIMIT_BYTES}}
+            problems = resources_ok(measured['wall_seconds'], measured['peak_bytes'])
+            if problems:
+                item['cause'] = 'resources: ' + '; '.join(problems)
+                return item
+        else:
+            item['resources'] = 'not judged: criterion 5 is measured on the issuing host'
         item.update(status='ok', result=result)
     except Exception as exc:     # a failed fit is recorded with its cause, never retried with other settings
         item['cause'] = f'training: {type(exc).__name__}: {exc}'
@@ -154,19 +170,17 @@ def resources_ok(wall_seconds: float, peak_bytes: int) -> list[str]:
 
 
 def artifact(decision: dict, *, identity: dict, payloads: dict, parent_sha256: str | None, data_refresh_utc: str,
-             host: dict, wall_seconds: float, peak_bytes: int) -> dict:
-    """The issued artifact (criterion 4), with criterion 5 applied: over the ceiling, the designated fit fails."""
+             host: dict) -> dict:
+    """The issued artifact (criterion 4). Criterion 5 was judged per attempt (`attempt`), so the issued policy is
+    the first in its chain whose fit met every criterion; its own measured resources are recorded."""
     day = date.fromisoformat(decision['day'])
     issued = next((a for a in decision['attempts'] if a.get('policy') == decision['issued_policy']), None)
-    over = resources_ok(wall_seconds, peak_bytes)
-    if over and decision['issued_policy'] == 'A1':
-        decision = {**decision, 'display': 'failed fit (resources)', 'resource_failure': over}
     result = issued['result'] if issued else None
     attempts = [{k: v for k, v in a.items() if k not in ('result', 'traceback')} for a in decision['attempts']]
     body = {
         'schema': SCHEMA, 'product': PRODUCT, 'designated_policy': DESIGNATED, 'delivery_day': str(day),
         'issue_utc': issue_utc(day), 'issued_policy': decision['issued_policy'], 'route': decision['route'],
-        'display': decision['display'], 'attempts': attempts, 'resource_check': over,
+        'display': decision['display'], 'attempts': attempts,
         'keys': result['index'] if result else None, 'quantiles': result['quantiles'] if result else None,
         'quantiles_sha256': result['quantiles_sha256'] if result else None,
         'times': {'last_training_utc': issue_utc(day), 'data_refresh_utc': data_refresh_utc, 'issuance_utc': issue_utc(day)},
@@ -175,8 +189,7 @@ def artifact(decision: dict, *, identity: dict, payloads: dict, parent_sha256: s
                     'inputs': {p: payloads[p].get('payload_sha256') for p in payloads},
                     'training': _training(result) if result else None,
                     'state': _state(result) if result else None},
-        'resources': {'wall_seconds': wall_seconds, 'peak_bytes': peak_bytes, 'limits': {
-            'wall_seconds': WALL_LIMIT_SECONDS, 'peak_bytes': MEMORY_LIMIT_BYTES}}}
+        'resources': issued.get('resources') if issued else None}
     body['artifact_sha256'] = hashlib.sha256(canonical(body)).hexdigest()
     return body
 

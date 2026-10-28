@@ -57,9 +57,13 @@ def issuance(run: Path) -> dict:
             'artifact_sha256': art['artifact_sha256'], 'artifact_file_sha256': item['artifact_file_sha256'],
             'artifact_arrays_sha256': item['artifact_arrays_sha256'], 'artifact_verifies': item['artifact_verifies'],
             'issued_policy': art['issued_policy'], 'display': art['display'], 'attempts': art['attempts'],
-            'resources': art['resources'], 'resource_check': art['resource_check'],
-            'host': {k: v for k, v in item['host'].items() if k != 'executed_files'},
-            'executed_files_sha256': hashlib.sha256(json.dumps(item['host']['executed_files'], sort_keys=True).encode()).hexdigest(),
+            'resources': art['resources'], 'host_errors': item['host_errors'],
+            'host': {'node': item['host']['node'], 'pyodide': item['host']['pyodide'],
+                     'blocked_non_local_requests': item['host']['blocked_non_local_requests'],
+                     'attempts': {p: {k: v for k, v in a.items() if k != 'executed_files'}
+                                  for p, a in item['host']['attempts'].items()},
+                     'executed_files_sha256': {p: hashlib.sha256(json.dumps(a['executed_files'], sort_keys=True).encode()).hexdigest()
+                                               for p, a in item['host']['attempts'].items()}},
             'native_seconds': item['native_seconds']}
     return out
 
