@@ -206,8 +206,18 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   - τ_eq = 0.01 EUR/MWh, with the three-status rule;
   - the official daily fit is issued under the pinned Pyodide runtime in Node.js.
 - **Active Track B work: CP-17, the freeze, reissued 2026-10-28.**
-  - **The brief:** `9e522b9a…`, canonical copy `.local/artifacts/cp-17/issued-brief.md`. The
-    Orchestrator delivers it to the Lead session under the Owner's delegation.
+  - **The brief:** amended on 2026-10-28, `9f235cf8…`, canonical copy
+    `.local/artifacts/cp-17/issued-brief.md`. The Orchestrator delivers it to the Lead session under
+    the Owner's delegation. The second brief, `9e522b9a…`, is kept beside it as
+    `issued-brief-v1-9e522b9a.md`.
+  - **Item 1 stopped CP-17 on its rule,** at `2d570e0` on `gauntlet/cp-17`. On the affected dates,
+    v2 is +2.27% MAE and +6.68% WIS against A1's GFS +6 h route.
+  - **The Owner ruled on 2026-10-28** (decisions 11 and 12):
+    - GFS late → v2 → B0, with the excess disclosed;
+    - A1's own fit failed with the weather available → v4 → v2 → B0.
+
+    The amendment adds v4 to the one code path and the parity checks. CP-17 resumes from
+    `2d570e0`.
   - **The bar:** §24.9, with §16.2, §19.2, §19.3, §19.5 and §19.7.
   - **It covers:**
     1. the A1 GFS check;
@@ -1016,6 +1026,18 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17 stopped at item 1, and the Owner ruled on the fallbacks, 2026-10-28.**
+  - **The stop:** the GFS check met the rule set in decision 2. v2 is +2.27% MAE and +6.68% WIS
+    against A1's GFS +6 h route on 1,354 paired affected dates. The Orchestrator reproduced the
+    table from the daily rows.
+  - **A finding on the 18 dates when D2 failed to train:** v5 contains D2, so the old chain issued
+    B0 there (MAE 58.56). v2 would have scored 27.69 and v4 26.90.
+  - **The rulings:**
+    - 11: GFS late → v2 → B0;
+    - 12: A1's fit failed with the weather available → v4 → v2 → B0. This was the Owner's own
+      split of the two causes.
+  - **The brief:** amended (`9f235cf8…`), and CP-17 resumes on `gauntlet/cp-17` from `2d570e0`.
 
 - **CP-17 reissued, 2026-10-28.**
   - **The Owner's decisions:** "τ_eq = 0.01, Node מאושר, תכתוב את הבריף ל־CP-17". They are recorded
