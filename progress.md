@@ -222,6 +222,19 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     - one issuing-host τ_eq miss (F1), reported.
   - **Open for the Owner and r18:** G1 (shadow issuances), C1 (the labels wording), C2 (partial
     days), G2, F1, and the review notes N1–N7.
+- **The Owner's decisions after CP-17, 2026-10-28** ([record](docs/track-b/cp-17-owner-decisions-2026-10-28.md),
+  items 13–19):
+  - "אני מאשר את כל ההמלצות שלך": partial days succeed on their forecastable hours, and v4 and v2
+    issue as daily shadows;
+  - C1, G2 and F1 as proposed;
+  - the fallback chains stay. Each second fallback guards a live cause: the load forecast for B0,
+    and missing training-window weather for v2;
+  - CP-17b, then r18, under his suspension: "יש לך אישור מלא עם כל ההשעיות וכל מה שאתה צריך".
+- **Active Track B work: CP-17b, the re-freeze before r18,** issued 2026-10-28.
+  - **The brief:** `b9aeeee4…`, canonical copy `.local/artifacts/cp-17b/issued-brief.md`.
+  - **It covers:** partial days, shadow issuances, the review's notes N1–N7, and governance pins
+    held as frozen copies, so that r18 can amend the anchor.
+  - **The ceiling:** 8 machine-hours.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1017,6 +1030,16 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17b issued, 2026-10-28.**
+  - **The Owner's decisions 13–19** are in a new record. CP-17's freeze pins the old one.
+  - **The Owner's question on the second fallbacks:** were they ever needed? In 2,078 development
+    days, never. They stay anyway:
+    - B0 guards a late load forecast, which A1, v4 and v2 all need;
+    - v2 guards missing weather in the training window;
+    - removing them would not shorten the shadows.
+  - **The brief:** `b9aeeee4…`. It cites §16.2's failure paragraph and §19.2 verbatim, checked with
+    `scripts/bar.py check` at `ee0ea9d2`.
 
 - **CP-17 received, landed and closed, 2026-10-28,** under the Owner's delegation.
   - **The return:** PASS on `ca874204`, after one Integration FAIL: the resource ceiling had been
