@@ -1,0 +1,166 @@
+{
+ "crosscheck": {
+  "A1_nominal:cp26_nominal/D2:MAE": {
+   "bitwise_equal": 2050,
+   "dates_compared": 2050,
+   "max_abs_difference": 0.0
+  },
+  "A1_nominal:cp26_nominal/D2:WIS": {
+   "bitwise_equal": 1995,
+   "dates_compared": 2050,
+   "max_abs_difference": 1.4210854715202004e-14
+  },
+  "A1_nominal:cp28_A1:MAE": {
+   "bitwise_equal": 2050,
+   "dates_compared": 2050,
+   "max_abs_difference": 0.0
+  },
+  "A1_nominal:cp28_A1:WIS": {
+   "bitwise_equal": 2050,
+   "dates_compared": 2050,
+   "max_abs_difference": 0.0
+  },
+  "v2_nominal:cp26_nominal/v2:MAE": {
+   "bitwise_equal": 2068,
+   "dates_compared": 2068,
+   "max_abs_difference": 0.0
+  },
+  "v2_nominal:cp26_nominal/v2:WIS": {
+   "bitwise_equal": 2004,
+   "dates_compared": 2068,
+   "max_abs_difference": 1.4210854715202004e-14
+  }
+ },
+ "daily_rows": "reports/cp17/gfs-check-daily.csv",
+ "daily_rows_sha256": "5c47f6f9f153e0db970ec2c3d2d5532eb8c3c56b3e91e0f4ab09fe4b376f95a7",
+ "evidence_class": "development_post_selection",
+ "inputs": {
+  "first_day": "2020-12-29",
+  "last_day": "2026-09-06",
+  "ledger_days_read": 2068,
+  "margin_days": "reports/development-inputs/margin-days.csv",
+  "margin_days_sha256": "4c7d4c8038643c1d012bd4116ab14b085298d68bf2f95d5711ab5f14a34d13e3",
+  "scores_manifest": "reports/rebaseline/cold-rerun-2026-10-15/scores-manifest.json",
+  "scores_manifest_sha256": "b9f10917ab471177eda1b5f8ef735ddca5a651fa2e9bb47844497f3a6deaf84d",
+  "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00"
+ },
+ "population": "paired: eligible scored dates where all three streams have valid native quantiles",
+ "rule": {
+  "blocked": true,
+  "more_than_2pct_worse": {
+   "MAE": true,
+   "WIS": true
+  },
+  "outcome": "BLOCKED",
+  "statement": "BLOCKED if v2 is more than 2% worse than A1's GFS +6 h route on the affected dates on both MAE and WIS; otherwise the fallback is v2, as the Owner decided",
+  "v2_excess_over_A1_gfs6": {
+   "MAE": 0.02270720735470033,
+   "WIS": 0.06683811993513378
+  }
+ },
+ "schema": "cp17-gfs-check-v1",
+ "scores": "cp28.scoring.daily: p50 MAE and seven-quantile WIS on CP-25 eligible keys; hours within a date, dates equally",
+ "sensitivity_unpaired_affected": {
+  "MAE": 0.022986421509286314,
+  "WIS": 0.06705030976588078,
+  "dates": 1358
+ },
+ "streams": {
+  "A1_gfs6": "members.gfs6.D2.quantiles",
+  "A1_nominal": "members.nominal.D2.quantiles",
+  "v2_nominal": "policies.nominal/v2.native_quantiles"
+ },
+ "summary": {
+  "affected": {
+   "MAE": {
+    "mean_daily_loss_eur": {
+     "A1_gfs6": 21.70734460780028,
+     "A1_nominal": 16.808637282091627,
+     "v2_nominal": 22.200257782929537
+    },
+    "ratio_A1_gfs6_to_A1_nominal": 1.2914398855478824,
+    "ratio_v2_to_A1_gfs6": 1.0227072073547003,
+    "ratio_v2_to_A1_nominal": 1.3207648788151485
+   },
+   "WIS": {
+    "mean_daily_loss_eur": {
+     "A1_gfs6": 12.501417312026549,
+     "A1_nominal": 9.511660371273791,
+     "v2_nominal": 13.336988541686937
+    },
+    "ratio_A1_gfs6_to_A1_nominal": 1.3143254515039389,
+    "ratio_v2_to_A1_gfs6": 1.0668381199351338,
+    "ratio_v2_to_A1_nominal": 1.4021724936653581
+   },
+   "dates_eligible": 1358,
+   "dates_missing_by_stream": {
+    "A1_gfs6": 0,
+    "A1_nominal": 4,
+    "v2_nominal": 0
+   },
+   "dates_paired": 1354,
+   "hours_paired": 32478
+  },
+  "all_eligible": {
+   "MAE": {
+    "mean_daily_loss_eur": {
+     "A1_gfs6": 20.18889656469802,
+     "A1_nominal": 16.82362678204663,
+     "v2_nominal": 22.53953862287405
+    },
+    "ratio_A1_gfs6_to_A1_nominal": 1.2000323608131063,
+    "ratio_v2_to_A1_gfs6": 1.1164324187130825,
+    "ratio_v2_to_A1_nominal": 1.3397550311165467
+   },
+   "WIS": {
+    "mean_daily_loss_eur": {
+     "A1_gfs6": 11.536479004384733,
+     "A1_nominal": 9.472279139768883,
+     "v2_nominal": 13.403231618373013
+    },
+    "ratio_A1_gfs6_to_A1_nominal": 1.2179200838739446,
+    "ratio_v2_to_A1_gfs6": 1.1618130291988373,
+    "ratio_v2_to_A1_nominal": 1.4149954219676895
+   },
+   "dates_eligible": 2068,
+   "dates_missing_by_stream": {
+    "A1_gfs6": 0,
+    "A1_nominal": 18,
+    "v2_nominal": 0
+   },
+   "dates_paired": 2050,
+   "hours_paired": 49164
+  },
+  "unaffected": {
+   "MAE": {
+    "mean_daily_loss_eur": {
+     "A1_gfs6": 17.23490425096172,
+     "A1_nominal": 16.85278738971773,
+     "v2_nominal": 23.19957634885806
+    },
+    "ratio_A1_gfs6_to_A1_nominal": 1.0226738077451287,
+    "ratio_v2_to_A1_gfs6": 1.3460809535720808,
+    "ratio_v2_to_A1_nominal": 1.3766017343227537
+   },
+   "WIS": {
+    "mean_daily_loss_eur": {
+     "A1_gfs6": 9.659285802449359,
+     "A1_nominal": 9.395666801467671,
+     "v2_nominal": 13.532101052041034
+    },
+    "ratio_A1_gfs6_to_A1_nominal": 1.0280575084825814,
+    "ratio_v2_to_A1_gfs6": 1.4009421947748584,
+    "ratio_v2_to_A1_nominal": 1.44024914228836
+   },
+   "dates_eligible": 710,
+   "dates_missing_by_stream": {
+    "A1_gfs6": 0,
+    "A1_nominal": 14,
+    "v2_nominal": 0
+   },
+   "dates_paired": 696,
+   "hours_paired": 16686
+  }
+ },
+ "what": "descriptive; CP-26 stored forecasts only; nothing trained"
+}
