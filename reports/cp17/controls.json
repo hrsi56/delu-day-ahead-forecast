@@ -1,0 +1,42 @@
+{
+ "all_pass": true,
+ "issued_quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+ "schema": "cp17-retrain-controls-v1",
+ "seed": {
+  "change": "member 0 seed 27390011 -> 27390012",
+  "max_abs_eur": 23.54345149118592,
+  "measured_status": "different",
+  "reports_different": true,
+  "selections_match": false,
+  "status": "different"
+ },
+ "target_day_outcome": {
+  "A1": {
+   "file_bytes_equal": true,
+   "payload_sha256_equal": true
+  },
+  "B0": {
+   "file_bytes_equal": true,
+   "payload_sha256_equal": true
+  },
+  "target_day_changed": "every price of 2026-09-06 +50 EUR/MWh",
+  "unchanged": true,
+  "v2": {
+   "file_bytes_equal": true,
+   "payload_sha256_equal": true
+  },
+  "v4": {
+   "file_bytes_equal": true,
+   "payload_sha256_equal": true
+  }
+ },
+ "training_window": {
+  "change": "price of 2026-08-20 slot 12 +1 EUR/MWh",
+  "max_abs_eur": 0.009093034937990296,
+  "measured_status": "within \u00b10.01 EUR/MWh",
+  "payload_sha256_equal": false,
+  "reports_different": true,
+  "selections_match": true,
+  "status": "different"
+ }
+}

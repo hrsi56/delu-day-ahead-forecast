@@ -1,0 +1,301 @@
+{
+ "2022-12-04-gfs1": {
+  "artifact_arrays_sha256": null,
+  "artifact_file_sha256": "3728d0177c0fca93d50692eb5c6e61a502e17a909db51fe2ab0616ca0b9e3cec",
+  "artifact_sha256": "2a880ccda573f8a0c077cfe5699521ba54484f7bb8f7ff475f62b924c3216083",
+  "artifact_verifies": true,
+  "attempts": [
+   {
+    "cause": "training: FitFailure: Traceback (most recent call last):\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 124, in fit_a1\n    fit = fit_member(dd, day, m['config'], m['seed'], di, exclude_uncovered=False, charge=charge)\n  File \"/home/pyodide/src/cp24/member.py\", line 88, in fit_member\n    member = M.train(x_tr, t_tr, mask_tr, weight, x_ho, np.where(dd.mask[hold_ix], dd.y[hold_ix], 0.0), dd.mask[hold_ix],\n                     dd.centre[stat][hold_ix], dd.scale[stat][hold_ix], config, seed, cap, **s)\n  File \"/home/pyodide/src/cp24/ddnn2.py\", line 437, in train\n    raise TrainingFailure(f'no kept epoch ({stop_reason} at epoch {epoch})')\ncp24.ddnn2.TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 597, in eval_code_async\n    await CodeRunner(\n    ...<9 lines>...\n    .run_async(globals, locals)\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 411, in run_async\n    coroutine = eval(self.code, globals, locals)\n  File \"<exec>\", line 37, in <module>\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 409, in run\n    result = fit_a1(arrays, meta, attribution=attribution, export=export)\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 126, in fit_a1\n    raise FitFailure(f'member {j} (seed {m[\"seed\"]}): {type(exc).__name__}: {exc}') from exc\ncp17.dailyfit.FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)\n",
+    "policy": "A1",
+    "seconds": 0.0010406249930383638,
+    "status": "failed"
+   },
+   {
+    "cause": null,
+    "policy": "v4",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 929873920,
+     "wall_seconds": 61.971514041
+    },
+    "seconds": 0.0229210000106832,
+    "status": "ok"
+   }
+  ],
+  "comparison": {
+   "causes": {
+    "A1": "training: FitFailure: Traceback (most recent call last):\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 124, in fit_a1\n    fit = fit_member(dd, day, m['config'], m['seed'], di, exclude_uncovered=False, charge=charge)\n  File \"/home/pyodide/src/cp24/member.py\", line 88, in fit_member\n    member = M.train(x_tr, t_tr, mask_tr, weight, x_ho, np.where(dd.mask[hold_ix], dd.y[hold_ix], 0.0), dd.mask[hold_ix],\n                     dd.centre[stat][hold_ix], dd.scale[stat][hold_ix], config, seed, cap, **s)\n  File \"/home/pyodide/src/cp24/ddnn2.py\", line 437, in train\n    raise TrainingFailure(f'no kept epoch ({stop_reason} at epoch {epoch})')\ncp24.ddnn2.TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 597, in eval_code_async\n    await CodeRunner(\n    ...<9 lines>...\n    .run_async(globals, locals)\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 411, in run_async\n    coroutine = eval(self.code, globals, locals)\n  File \"<exec>\", line 37, in <module>\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 409, in run\n    result = fit_a1(arrays, meta, attribution=attribution, export=export)\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 126, in fit_a1\n    raise FitFailure(f'member {j} (seed {m[\"seed\"]}): {type(exc).__name__}: {exc}') from exc\ncp17.dailyfit.FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)\n"
+   },
+   "host_display": "failed fit; fallback v4 issued",
+   "host_path": [
+    [
+     "A1",
+     "failed"
+    ],
+    [
+     "v4",
+     "ok"
+    ]
+   ],
+   "issued_policy": "v4",
+   "max_abs_eur_vs_native": 5.115907697472721e-13,
+   "native_causes": {
+    "A1": "training: FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)"
+   },
+   "native_display": "failed fit; fallback v4 issued",
+   "native_path": [
+    [
+     "A1",
+     "failed"
+    ],
+    [
+     "v4",
+     "ok"
+    ]
+   ],
+   "same_issued_policy": true,
+   "same_path": true,
+   "selections_match_native": true,
+   "status_vs_native": "within \u00b10.01 EUR/MWh"
+  },
+  "day": "2022-12-04",
+  "display": "failed fit; fallback v4 issued",
+  "gfs_available": true,
+  "host": {
+   "attempts": {
+    "A1": {
+     "blocked_non_local_requests": [],
+     "process_rss_peak_bytes": 829014016,
+     "stubs": null,
+     "total_seconds": 10.260667541,
+     "wasm_memory_bytes": null
+    },
+    "v4": {
+     "blocked_non_local_requests": [],
+     "process_rss_peak_bytes": 929873920,
+     "stubs": [
+      "resource",
+      "holidays"
+     ],
+     "total_seconds": 61.971514041,
+     "wasm_memory_bytes": 339148800
+    }
+   },
+   "blocked_non_local_requests": [],
+   "executed_files_sha256": {
+    "A1": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "v4": "a62c7f1b0805f1f937db47641e421848ff411fbf6aeb531d446d4116bc862f90"
+   },
+   "node": {
+    "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+    "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+    "version": "v26.7.0"
+   },
+   "pyodide": "0.28.0"
+  },
+  "host_errors": {
+   "A1": [
+    "Traceback (most recent call last):\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 124, in fit_a1\n    fit = fit_member(dd, day, m['config'], m['seed'], di, exclude_uncovered=False, charge=charge)\n  File \"/home/pyodide/src/cp24/member.py\", line 88, in fit_member\n    member = M.train(x_tr, t_tr, mask_tr, weight, x_ho, np.where(dd.mask[hold_ix], dd.y[hold_ix], 0.0), dd.mask[hold_ix],\n                     dd.centre[stat][hold_ix], dd.scale[stat][hold_ix], config, seed, cap, **s)\n  File \"/home/pyodide/src/cp24/ddnn2.py\", line 437, in train\n    raise TrainingFailure(f'no kept epoch ({stop_reason} at epoch {epoch})')\ncp24.ddnn2.TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 597, in eval_code_async\n    await CodeRunner(\n    ...<9 lines>...\n    .run_async(globals, locals)\n  File \"/lib/python313.zip/_pyodide/_base.py\", line 411, in run_async\n    coroutine = eval(self.code, globals, locals)\n  File \"<exec>\", line 37, in <module>\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 409, in run\n    result = fit_a1(arrays, meta, attribution=attribution, export=export)\n  File \"/home/pyodide/src/cp17/dailyfit.py\", line 126, in fit_a1\n    raise FitFailure(f'member {j} (seed {m[\"seed\"]}): {type(exc).__name__}: {exc}') from exc\ncp17.dailyfit.FitFailure: member 2 (seed 26590021): TrainingFailure: no kept epoch (nonfinite_loss at epoch 21)\n"
+   ]
+  },
+  "issued_policy": "v4",
+  "native_seconds": 34.91433949999919,
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 929873920,
+   "wall_seconds": 61.971514041
+  }
+ },
+ "2026-09-06-gfs0": {
+  "artifact_arrays_sha256": null,
+  "artifact_file_sha256": "50f6209aa07010b753eed7552c50c8d3449314a5b2bf5646f63631866f68d2cf",
+  "artifact_sha256": "c7cacca4c1a1e88185d868872ff5e893b08ab4ece39f8b80e0a8081b9ddd3cc7",
+  "artifact_verifies": true,
+  "attempts": [
+   {
+    "cause": "GFS late or missing at the issue time",
+    "policy": "A1",
+    "status": "skipped"
+   },
+   {
+    "cause": null,
+    "policy": "v2",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 909983744,
+     "wall_seconds": 60.971770916000004
+    },
+    "seconds": 0.019996292001451366,
+    "status": "ok"
+   }
+  ],
+  "comparison": {
+   "causes": {
+    "A1": "GFS late or missing at the issue time"
+   },
+   "host_display": "skipped fit (GFS late or missing); fallback v2 issued",
+   "host_path": [
+    [
+     "A1",
+     "skipped"
+    ],
+    [
+     "v2",
+     "ok"
+    ]
+   ],
+   "issued_policy": "v2",
+   "max_abs_eur_vs_native": 5.115907697472721e-13,
+   "native_causes": {
+    "A1": "GFS late or missing at the issue time"
+   },
+   "native_display": "skipped fit (GFS late or missing); fallback v2 issued",
+   "native_path": [
+    [
+     "A1",
+     "skipped"
+    ],
+    [
+     "v2",
+     "ok"
+    ]
+   ],
+   "same_issued_policy": true,
+   "same_path": true,
+   "selections_match_native": true,
+   "status_vs_native": "within \u00b10.01 EUR/MWh"
+  },
+  "day": "2026-09-06",
+  "display": "skipped fit (GFS late or missing); fallback v2 issued",
+  "gfs_available": false,
+  "host": {
+   "attempts": {
+    "v2": {
+     "blocked_non_local_requests": [],
+     "process_rss_peak_bytes": 909983744,
+     "stubs": [
+      "resource",
+      "holidays"
+     ],
+     "total_seconds": 60.971770916000004,
+     "wasm_memory_bytes": 286851072
+    }
+   },
+   "blocked_non_local_requests": [],
+   "executed_files_sha256": {
+    "v2": "a62c7f1b0805f1f937db47641e421848ff411fbf6aeb531d446d4116bc862f90"
+   },
+   "node": {
+    "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+    "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+    "version": "v26.7.0"
+   },
+   "pyodide": "0.28.0"
+  },
+  "host_errors": {},
+  "issued_policy": "v2",
+  "native_seconds": 31.403587875000085,
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 909983744,
+   "wall_seconds": 60.971770916000004
+  }
+ },
+ "2026-09-06-gfs1": {
+  "artifact_arrays_sha256": "15bf7731c43bd9be164d2bab83e9c5afc30cf4ad412150e5a549d27c3f295fce",
+  "artifact_file_sha256": "d38a12476b6bd61c6f496b13c905df0c1810efdad3c6a8a1ecb033ed7a257052",
+  "artifact_sha256": "a0bec8580d43cf6dca3d47e44b39221bd37a272199a1b186c59637997213a524",
+  "artifact_verifies": true,
+  "attempts": [
+   {
+    "cause": null,
+    "policy": "A1",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 840499200,
+     "wall_seconds": 69.83989625000001
+    },
+    "seconds": 0.001085791998775676,
+    "status": "ok"
+   }
+  ],
+  "comparison": {
+   "causes": {},
+   "host_display": "successful daily fit",
+   "host_path": [
+    [
+     "A1",
+     "ok"
+    ]
+   ],
+   "issued_policy": "A1",
+   "max_abs_eur_vs_native": 9.379164112033322e-13,
+   "native_causes": {},
+   "native_display": "successful daily fit",
+   "native_path": [
+    [
+     "A1",
+     "ok"
+    ]
+   ],
+   "same_issued_policy": true,
+   "same_path": true,
+   "selections_match_native": true,
+   "status_vs_native": "within \u00b10.01 EUR/MWh"
+  },
+  "day": "2026-09-06",
+  "display": "successful daily fit",
+  "gfs_available": true,
+  "host": {
+   "attempts": {
+    "A1": {
+     "blocked_non_local_requests": [],
+     "process_rss_peak_bytes": 840499200,
+     "stubs": [
+      "resource",
+      "holidays"
+     ],
+     "total_seconds": 69.83989625000001,
+     "wasm_memory_bytes": 237764608
+    }
+   },
+   "blocked_non_local_requests": [],
+   "executed_files_sha256": {
+    "A1": "ec20b70f7f712bf61274d31ec9af7c981994798ce14e240ef5a5b19dd498318d"
+   },
+   "node": {
+    "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+    "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+    "version": "v26.7.0"
+   },
+   "pyodide": "0.28.0"
+  },
+  "host_errors": {},
+  "issued_policy": "A1",
+  "native_seconds": 14.934400792000815,
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 840499200,
+   "wall_seconds": 69.83989625000001
+  }
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "schema": "cp17-retrieval-v1",
+ "data_bytes_retrieved": 0,
+ "software_bytes_retrieved": 0,
+ "remote_writes": 0,
+ "statement": "CP-17 retrieved nothing: no data, no software, no package installation, no git fetch or ls-remote, no network probe. Every Node.js and browser run refused and recorded non-local requests (none was made).",
+ "runtimes_used": {
+  "pyodide": ".local/tools/pyodide-0.28.0 (23 files; reports/cp17-probe/retrieval-manifest.json, retrieved under CP-17-probe)",
+  "browsers": ".local/tools/ms-playwright (chromium-1243, webkit-2359) through .local/tools/playwright (Playwright 1.63.0), retrieved under CP-17-probe",
+  "node": "/opt/homebrew/Cellar/node/26.7.0/bin/node, SHA-256 1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040, already installed"
+ },
+ "inputs": "the local-only tag evidence/cp-26, extracted with git archive into .local/artifacts/cp-17/inputs/ and verified file by file against the tag tree"
+}

@@ -1,0 +1,141 @@
+{
+ "all_match": true,
+ "bitwise_equal": {
+  "autumn-2025/A1": true,
+  "autumn-2025/B0": true,
+  "spring-summer-2026/A1": true,
+  "spring-summer-2026/B0": true
+ },
+ "evidence_class": "development_post_selection",
+ "host": {
+  "blocked_non_local_requests": [],
+  "executed_files": {
+   "cp17/__init__.py": "6d590a0a1f4c1c63bfad9bfadf08855082aa969290d55587d9237d1ab5ba90c2",
+   "cp17/dailyfit.py": "65b36b86fbd5b096f6dc9657086928f8592db9e4616ad97be6a6cafd5926522f",
+   "cp17/host/driver.py": "b22f4db0d03e98122350faf164a111a48a5fed296816b62569ea325fbe630a68",
+   "cp17/scoring.py": "d95fc6192b5f68f5c888c12722faafc096c0dc4ba5d5bcf80e94e54b0226738b",
+   "cp17/stubs/fallback/resource.py": "4ff3227ba5afeec42b99cbec0c78f669512a72a733806c7757699f9223929581",
+   "cp28/__init__.py": "45e88a5021a7e623823bdee5afc2b1b15018453c31aba9e537b278d49d481d6e",
+   "cp28/scoring.py": "3b282f6c3075ffa523c45a40a9f5e42122f276a451fc77b4d7ad27743c838de1"
+  },
+  "node": {
+   "path": "/opt/homebrew/Cellar/node/26.7.0/bin/node",
+   "sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+   "version": "v26.7.0"
+  },
+  "pyodide": "0.28.0",
+  "seconds": 3.426719834
+ },
+ "recompute_checks": {
+  "autumn-2025/A1": {
+   "compared": 2536,
+   "match": true,
+   "mismatches": []
+  },
+  "autumn-2025/B0": {
+   "compared": 2536,
+   "match": true,
+   "mismatches": []
+  },
+  "spring-summer-2026/A1": {
+   "compared": 7696,
+   "match": true,
+   "mismatches": []
+  },
+  "spring-summer-2026/B0": {
+   "compared": 7696,
+   "match": true,
+   "mismatches": []
+  }
+ },
+ "schema": "cp17-scoring-check-v1",
+ "summary": {
+  "autumn-2025/A1": {
+   "canonical_hours_seen": [
+    24,
+    25
+   ],
+   "coverage": {
+    "50": 0.5143638850889193,
+    "80": 0.786593707250342,
+    "95": 0.948016415868673
+   },
+   "days": 61,
+   "hours": 1462,
+   "mae_eur": 14.379557847150313,
+   "negative_price_hours": 51,
+   "partial_days": 3,
+   "percentage": 0.5485636114911081,
+   "wis_eur": 8.228468249400834,
+   "zero_price_hours": 0
+  },
+  "autumn-2025/B0": {
+   "canonical_hours_seen": [
+    24,
+    25
+   ],
+   "coverage": {
+    "50": 0.4952120383036936,
+    "80": 0.8160054719562243,
+    "95": 0.9309165526675787
+   },
+   "days": 61,
+   "hours": 1462,
+   "mae_eur": 36.20487642551675,
+   "negative_price_hours": 51,
+   "partial_days": 3,
+   "percentage": 0.27906976744186046,
+   "wis_eur": 22.356764178312627,
+   "zero_price_hours": 0
+  },
+  "spring-summer-2026/A1": {
+   "canonical_hours_seen": [
+    23,
+    24
+   ],
+   "coverage": {
+    "50": 0.5177787532923617,
+    "80": 0.8230904302019315,
+    "95": 0.9514925373134329
+   },
+   "days": 190,
+   "hours": 4556,
+   "mae_eur": 16.186837764367677,
+   "negative_price_hours": 438,
+   "partial_days": 3,
+   "percentage": 0.48617208077260754,
+   "wis_eur": 9.188466400403039,
+   "zero_price_hours": 11
+  },
+  "spring-summer-2026/B0": {
+   "canonical_hours_seen": [
+    23,
+    24
+   ],
+   "coverage": {
+    "50": 0.46773485513608426,
+    "80": 0.7473661106233538,
+    "95": 0.9143985952589991
+   },
+   "days": 190,
+   "hours": 4556,
+   "mae_eur": 32.53254853165523,
+   "negative_price_hours": 438,
+   "partial_days": 3,
+   "percentage": 0.3013608428446005,
+   "wis_eur": 20.247568616139535,
+   "zero_price_hours": 11
+  }
+ },
+ "what": "\u00a719.5 records computed natively and recomputed under the issuing host; descriptive",
+ "windows": {
+  "autumn-2025": [
+   "2025-10-01",
+   "2025-11-30"
+  ],
+  "spring-summer-2026": [
+   "2026-03-01",
+   "2026-09-06"
+  ]
+ }
+}

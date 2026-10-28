@@ -1,0 +1,108 @@
+{
+ "$id": "cp17-issued-artifact-v1",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "properties": {
+  "artifact_sha256": {
+   "pattern": "^[0-9a-f]{64}$",
+   "type": "string"
+  },
+  "attempts": {
+   "items": {
+    "properties": {
+     "policy": {
+      "enum": [
+       "A1",
+       "v4",
+       "v2",
+       "B0"
+      ]
+     },
+     "status": {
+      "enum": [
+       "ok",
+       "failed",
+       "skipped"
+      ]
+     }
+    },
+    "required": [
+     "policy",
+     "status"
+    ],
+    "type": "object"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
+  "delivery_day": {
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+   "type": "string"
+  },
+  "designated_policy": {
+   "const": "A1"
+  },
+  "issue_utc": {
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?\\+00:00$",
+   "type": "string"
+  },
+  "issued_policy": {
+   "anyOf": [
+    {
+     "enum": [
+      "A1",
+      "v4",
+      "v2",
+      "B0"
+     ]
+    },
+    {
+     "type": "null"
+    }
+   ]
+  },
+  "lineage": {
+   "required": [
+    "parent_artifact_sha256",
+    "policy_identity_sha256",
+    "code_sha256",
+    "host",
+    "inputs",
+    "training",
+    "state"
+   ],
+   "type": "object"
+  },
+  "product": {
+   "const": "delu-day-ahead-policy"
+  },
+  "route": {
+   "enum": [
+    "designated",
+    "gfs_unavailable",
+    "a1_failed"
+   ]
+  },
+  "schema": {
+   "const": "cp17-issued-artifact-v1"
+  }
+ },
+ "required": [
+  "schema",
+  "product",
+  "designated_policy",
+  "delivery_day",
+  "issue_utc",
+  "issued_policy",
+  "route",
+  "display",
+  "attempts",
+  "keys",
+  "quantiles",
+  "quantiles_sha256",
+  "times",
+  "lineage",
+  "resources",
+  "artifact_sha256"
+ ],
+ "type": "object"
+}
