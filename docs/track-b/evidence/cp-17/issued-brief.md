@@ -5,6 +5,11 @@
 any repository work, because it left out §19's freeze fields. CP-17-probe then supplied §19.3's
 measurement.*
 
+*Amended on 2026-10-28, after item 1's stop. The second brief (`9e522b9a…`) stopped at item 1, as
+its rule required, and returned BLOCKED. The Owner then ruled on the product's fallbacks (decisions
+11 and 12). This amendment carries those rulings into items 1–4, adds v4 to the one code path and
+the parity checks, and resumes CP-17 on `gauntlet/cp-17` from `2d570e0`. Nothing else changes.*
+
 ## Target
 - Repository: DE-LU day-ahead forecasting, `/Users/djourno/Downloads/PJM` (origin
   `hrsi56/delu-day-ahead-forecast`). The checkpoint runs locally, in the Lead's own worktree.
@@ -31,7 +36,7 @@ measurement.*
     - §24.5: the tiers and margins;
     - §24.8: CP-28's selection.
   - **The Owner's decisions before CP-17:** `docs/track-b/pre-cp-17-rulings-2026-10-25.md`, SHA-256
-    `d9821845005933f0be527ecd744ac1ceebe6181282d640b8d1dca28ddecf181a`. In summary:
+    `d29b0abc6a17dcb6bca2cbd464c1dcc5858c50e2b653a42e646d3dc66ea8f6b0`. In summary:
     1. the candidate is A1;
     2. the GFS fallback is v2, after this checkpoint's check;
     3. no lock-price policy in the freeze;
@@ -41,7 +46,10 @@ measurement.*
     7. CP-18's preparation runs alongside;
     8. τ = 10 EUR/MWh;
     9. **τ_eq = 0.01 EUR/MWh,** with the three-status rule;
-    10. **the official daily fit is issued under the pinned Pyodide runtime in Node.js.**
+    10. **the official daily fit is issued under the pinned Pyodide runtime in Node.js;**
+    11. **GFS late or missing → v2, then B0,** with item 1's measured excess disclosed;
+    12. **A1's own fit failed while the weather is available → v4, then v2, then B0.** A1 issues
+        whenever its own fit succeeds.
   - **CP-28's selection:** `docs/track-b/cp-28-landing-2026-10-25.md`
     (`7c2eecf23bb3928fa08b0331c42345c4468f89c633cbd4afeae8bf113413f8d8`),
     `reports/cp28/results/selection.json`
@@ -69,15 +77,18 @@ measurement.*
     final-candidate test" trigger, which you draft for the Owner. CP-17 publishes nothing.
 
 ## Orchestrator-reported expected state
-- **Branch / commit:** `main` = `origin/main` at the commit that records this brief's issue.
-  - It is a direct child of `146dcd721a229aa1a8fc19280ab1ca366ef88386`, and changes only
-    `progress.md` and the decisions record (adding items 9 and 10).
+- **Branch / commit:** `main` = `origin/main` at the commit that records this amendment.
+  - It is a direct child of `be504ab` (the second brief's issue record), and changes only
+    `progress.md` and the decisions record (adding items 11 and 12).
   - **Tags:**
     - `land/cp-17-probe` = `42e27c7` and `evidence/cp-17-probe` = `07da82a`, both pushed;
     - `land/cp-28` = `35e841b` and `evidence/cp-28` = `1a86c54`, both pushed;
     - `land/cp-26` = `61658c7`;
     - `evidence/cp-26` = `ca20331`, which is **local-only and never pushed**.
-  - **Branches and worktrees:** none besides `main` and the primary checkout.
+  - **Branches and worktrees:** `gauntlet/cp-17` at `2d570e06f0e6cd4a2a2950f2bc31ec3361377b2d`,
+    a child of `be504ab` by two commits: the packaged second brief (`b990688`) and item 1
+    (`2d570e0`). Its worktree is `.local/worktrees/cp-17/lead`, clean. There are no other branches or
+    worktrees besides `main` and the primary checkout.
 - **Working tree:** the primary checkout `/Users/djourno/Downloads/PJM` is on `main` and clean
   apart from ignored material.
   - **The Orchestrator uses it during CP-17.** Never switch its branch, and never write a tracked
@@ -85,9 +96,14 @@ measurement.*
     - `.local/artifacts/cp-17/`;
     - `.local/tmp/cp-17/`;
     - the worktrees under `.local/worktrees/cp-17/`.
-  - **The canonical brief** is `.local/artifacts/cp-17/issued-brief.md`. Package that file byte for
-    byte, not the pasted text. The withdrawn first brief is kept in
-    `.local/artifacts/cp-17/withdrawn-64758101/`; it binds nothing.
+  - **The canonical brief** is `.local/artifacts/cp-17/issued-brief.md`, this amended brief.
+    Package that file byte for byte, not the pasted text.
+    - The second brief is kept as `.local/artifacts/cp-17/issued-brief-v1-9e522b9a.md`.
+    - The withdrawn first brief is kept in `.local/artifacts/cp-17/withdrawn-64758101/`. It binds
+      nothing.
+  - **Your local material from item 1:** the verified `evidence/cp-26` extract in
+    `.local/artifacts/cp-17/inputs/` (2.2 GB), `start.json`, `compute-ledger.jsonl` and
+    `return-blocked.md`. Continue the same ledger.
   - **`.local/tmp/cp-17/`** already holds two section extracts from your validation of the first
     brief (`s195.txt`, `s249.txt`). They are yours to keep or delete.
 - **What already exists:**
@@ -139,24 +155,27 @@ measurement.*
 
 ## Observable outcome
 CP-17 closes with the following, bound by one fresh Integration-Critic PASS. Items 1 to 8 are built
-in this order where one depends on another; item 1 is committed before item 4 fixes the fallback.
+in this order where one depends on another.
 
-1. **First, the A1 GFS check.** It is descriptive, uses CP-26's stored forecasts, and trains
-   nothing.
-   - **What it compares,** for MAE and WIS, with paired counts:
+1. **The A1 GFS check: done, at `2d570e0`.** It is descriptive, uses CP-26's stored forecasts, and
+   trains nothing.
+   - **What it compared,** for MAE and WIS, with paired counts:
      - A1 on nominal weather;
      - A1's GFS +6 h route (D2 in CP-26's `gfs6` ledger);
      - v2 on nominal inputs.
    - **Where:** on CP-25's GFS +6 h affected dates, on the unaffected dates, and on every eligible
      date.
-   - **The rule:** the fallback is v2, as the Owner decided. If v2 is more than 2% worse than A1's
-     GFS +6 h route on the affected dates on *both* MAE and WIS, stop and return BLOCKED with the
-     table, for the Owner's decision.
+   - **The rule:** if v2 is more than 2% worse than A1's GFS +6 h route on the affected dates on
+     *both* MAE and WIS, stop and return BLOCKED for the Owner's decision.
+   - **The result:** the rule was met (+2.27% MAE, +6.68% WIS on 1,354 paired dates), and CP-17
+     stopped as it required.
+   - **The Owner's ruling** (decision 11): the GFS-late fallback stays v2, with the excess disclosed.
+     The record stays as committed. The Integration Critic reviews it with the rest.
 2. **One code path, `src/cp17/`** (§19.2). One browser-safe daily-fit package that the issuing
    pipeline imports and that the Space will run byte for byte.
    - **Its scope:** the daily fit, issuance and scoring of every policy that can issue the product's
-     forecast under item 4's failure policy (A1, v2, and the complete fallbacks), §19.5's metrics and
-     the recomputation check, the §19.7 attributions, and the retrain comparison of item 6.
+     forecast under item 4's failure policy (A1, v4, v2 and B0), §19.5's metrics and the
+     recomputation check, the §19.7 attributions, and the retrain comparison of item 6.
    - **Its imports:** the standard library, NumPy and pandas, plus the landed model modules it calls.
      The two stand-ins (`holidays`, `resource`) are frozen with the package if they are kept. Do not
      edit landed code to trim the import chain; the 44.6 MB training payload, loaded on request, is
@@ -168,17 +187,24 @@ in this order where one depends on another; item 1 is committed before item 4 fi
    - **The issuing host** is Pyodide 0.28.0 under Node.js v26.7.0, pinned by the file hashes above.
      The freeze-origin artifact and every 4.7T forecast of the product policy are issued there.
    - **Native parity, the code-identity check.** The same package, run natively with BLAS at one
-     thread, reproduces CP-26's stored nominal forecasts for A1, v5, v2 and B0 at the last seven
+     thread, reproduces CP-26's stored nominal forecasts for A1, v5, v4, v2 and B0 at the last seven
      development origins (deliveries 2026-08-31 to 2026-09-06) and at two DST origins (deliveries
      2025-10-26 and 2026-03-29). The standard is CP-26's recorded parity: bitwise where CP-26 was
      bitwise, otherwise within its recorded tolerance.
    - **Issuing-host parity:**
-     - A1 at all nine origins and v2 at two of them, one a DST origin, under the issuing host;
+     - A1 at all nine origins, and v4 and v2 at two of them, one a DST origin, under the issuing
+       host;
      - every data-driven selection matches the native fit, and every emitted quantile is within
        τ_eq = 0.01 EUR/MWh of it;
      - record the largest deviation per origin. It is reported, never tuned.
    - **Browser identity:** A1 at one origin, retrained in Chromium and in WebKit, is bit-identical to
      the issuing host's artifact.
+   - **v4 in the browser** (§19.3, for a fallback that can issue). v4 is retrained once, at one
+     origin, in Chromium and in WebKit.
+     - Record its time, memory, payload, deviation and selection agreement, as CP-17-probe recorded
+       them for A1 and v2.
+     - If v4 cannot run under Pyodide, or not within limits a visitor can meet, report it under §19.3's
+       exception route with the numbers, for the Owner. Do not drop it from the chain yourself.
    - **A miss is a finding, not a failure to repair.** An origin that misses issuing-host parity or
      browser identity is reported with its numbers and selections, for the Owner and r18. Nothing is
      tuned to make it pass.
@@ -186,8 +212,8 @@ in this order where one depends on another; item 1 is committed before item 4 fi
 4. **The freeze record,** `docs/track-b/evidence/cp-17/freeze-record.md`, plus a machine-readable
    `freeze-manifest.json`.
    - **What it covers:** every item of §16.2's freeze list and §16.4's CP-17 row, for A1 and for each
-     policy that 4.7T runs: the control v5, B0, the fallback v2, and v3, v4 and v1's released artifact
-     as descriptive references.
+     policy that 4.7T runs: the control v5, B0, the fallbacks v4 and v2, and v3 and v1's released
+     artifact as descriptive references. v4 is also a descriptive reference.
    - **What it records:**
      - code and dependency identities: the package's file hashes, the `uv.lock` hash, and the
        issuing host's identity (the Pyodide file hashes and the Node.js binary);
@@ -198,16 +224,21 @@ in this order where one depends on another; item 1 is committed before item 4 fi
      - the initial artifacts and state at the freeze origin, issued under the issuing host;
      - randomness and seeds;
      - the refit schedule: daily, with the next search at S_14 = 2027-01-06, a protocol date only;
-     - the uncertainty layer: DDNN-2's own quantiles for A1, and v5's H layer;
-     - **the failure policy:**
-       - GFS late or missing at the issue time → v2;
-       - otherwise the hierarchy of CP-28's frozen protocol §7: a missing or invalid member → the
-         complete v5 forecast → the complete B0 forecast → a failed issuance;
-       - **state precisely which members' validity triggers it for the product.** CP-28 applied a
-         common-member check across all arms, as a comparison device, and v5 itself contains D2, so
-         a failed D2 fit leaves v5 incomplete. Propose the product's rule with its reason, written
-         without any 4.7T outcome, for r18;
-       - a failed fit → the frozen fallback, displayed as a failed fit (§16.2);
+     - the uncertainty layers: DDNN-2's own quantiles for A1, v4's and v2's interval layers as
+       fallbacks, and v5's H layer for the control;
+     - **the failure policy,** as the Owner ruled it (decisions 11 and 12):
+       - **GFS late or missing at the issue time** → v2 → B0 → a failed issuance;
+       - **A1's own fit fails** (the success definition below) **while the weather is available** →
+         v4 → v2 → B0 → a failed issuance;
+       - **a fallback whose own fit fails** passes to the next one in its chain;
+       - A1 issues whenever its own fit succeeds. The validity of other policies' members does not
+         trigger a fallback. CP-28's common-member check was a comparison device, and v5 is not in
+         the product's chain;
+       - every fallback is complete: never renormalize a subset or manufacture quantiles;
+       - a failed or skipped fit is displayed as such, even when a fallback issues (§16.2);
+       - the disclosure of item 1's measured excess for the GFS-late route;
+       - **any gap you find,** for example a cause that the two rulings do not cover. Propose its
+         rule with the reason, written without any 4.7T outcome, for r18;
      - **the definition of a successful daily fit,** exactly as this brief fixes it (below);
      - the registry identities, which are local names and versions under the tracking spec;
      - the resource and calendar plan for 4.7T's run and for daily operation.
@@ -246,7 +277,8 @@ in this order where one depends on another; item 1 is committed before item 4 fi
        defines it, at most 2,048 coalitions;
      - **v2:** the linear rule, coefficient times the centered, standardized input; its H layer is
        explained in words;
-     - **any blend that can issue:** each component's weight times its forecast;
+     - **v4:** each component's weight times its forecast, then the linear rule for its linear
+       components and TreeSHAP for its tree components. Its interval layer is explained in words;
      - **the wording:** attribution within one fitted artifact, relative to its stated baseline, never
        causality or incremental value.
    - **The reference runtime:** Pyodide 0.28.0; Chromium 153.0.8010.12 and WebKit 26.6; Node.js
@@ -311,8 +343,8 @@ origin D−1 11:00 Europe/Berlin:
    measured about 70 s and 0.25 GB.
 6. **Anything else is a failed fit.** The frozen fallback then issues, and the day is displayed as
    a failed fit. A fallback forecast never counts as a successful A1 fit. On a GFS-late day, A1's fit
-   is recorded as skipped for an unavailable input. v2's fit is judged by the same five criteria,
-   with v2's own frozen training rules in item 2.
+   is recorded as skipped for an unavailable input. A v4 or v2 fallback fit is judged by the same
+   five criteria, with that policy's own frozen training rules in item 2.
 
 If the landed code's own rules conflict with this definition, for example on a partial ensemble,
 report the conflict with its file and line and propose the resolution for r18. Do not change landed
@@ -320,10 +352,10 @@ code.
 
 **The return carries the Owner's summary for the anchor amendment (r18),** which ratifies these
 terms before 4.7T opens:
-- the GFS check's result;
+- the GFS check's result, and the Owner's rulings 11 and 12;
 - the freeze identities, including the issuing host;
-- the parity results, native and issuing-host;
-- the product's failure-policy rule and the success definition;
+- the parity results, native and issuing-host, and v4's browser measurement;
+- the product's failure policy and the success definition;
 - the protocol's key choices;
 - every open item, and any §19.3 exception the Owner must decide.
 
@@ -496,12 +528,12 @@ resource and calendar plan".
    check that no earlier evidence binds its bytes. That includes `src/cp26/harness.py`'s `PINS`.
 5. **The Integration Critic runs the whole suite,** with the history-free `CI=true` Python 3.12
    sequence plus `pytest -m stress`. It also reruns the GFS check, one native parity origin, one
-   issuing-host parity origin, and one browser identity run.
+   issuing-host parity origin, one browser identity run, and v4's browser run in one browser.
 
 ## Task-specific supporting extract
-- **The ceiling is 15 machine-hours,** summed over workers' wall time. That covers the native parity
-  refits (nine origins, four policies), the issuing-host fits (about 70 s per A1 fit), the browser
-  runs and the tests.
+- **The ceiling is 15 machine-hours,** summed over workers' wall time, including item 1's charge.
+  That covers the native parity refits (nine origins, five policies), the issuing-host fits (about
+  70 s per A1 fit), the browser runs and the tests.
   - At most 4 concurrent workers, BLAS 1 for native fits, CPU only, peak memory 12 GB, no cloud and
     no GPU.
   - Keep a ledger, and stop before the ceiling.
@@ -549,8 +581,8 @@ resource and calendar plan".
   `git commit -F <file>`.
 
 ## Timebox
-About 30 active hours from orientation to the terminal return. Unattended computation within the
-15-machine-hour ceiling runs alongside.
+About 30 active hours from the second brief's orientation to the terminal return, including the
+hour item 1 took. Unattended computation within the 15-machine-hour ceiling runs alongside.
 
 ## Owner-only actions already authorized
 - **CP-17's execution** under v21-r17 §24.9, §16, §19, the decisions record and this brief. The
@@ -562,8 +594,10 @@ About 30 active hours from orientation to the terminal return. Unattended comput
   publication or remote write, no MLflow upload, and no anchor or governance edit.
 
 ## Stop and return
-- **First commit.** The first commit on `gauntlet/cp-17` copies the canonical brief byte for byte to
-  `docs/track-b/evidence/cp-17/issued-brief.md`.
+- **The resumption's first commit** on `gauntlet/cp-17`, after `2d570e0`:
+  - moves the packaged second brief to `docs/track-b/evidence/cp-17/issued-brief-v1-9e522b9a.md`,
+    unchanged;
+  - copies this amended canonical brief byte for byte to `docs/track-b/evidence/cp-17/issued-brief.md`.
 - **Questions.** If the brief is unclear or wrong, ask the Orchestrator before repository work, or
   stop at the conflict. A conflict between this brief and the anchor is resolved by the anchor.
 - **The return.** Return exactly one of PASS / BLOCKED / INCOMPLETE, using templates §3. It carries
