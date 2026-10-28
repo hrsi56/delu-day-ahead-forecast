@@ -70,8 +70,9 @@ B0 has no fallback; a missing B0 is missing.
   1/2, divided by 3.5 (`cp28.scoring.daily`).
 - **Daily losses:**
   - a date's loss is the mean over its scored keys;
-  - the scored keys of a paired comparison are the canonical hours (23, 24 or 25, with CP-26's DST rules)
-    that both policies emitted and that have a published price;
+  - the scored keys of a paired comparison are CP-26's keys: the canonical hours (23, 24 or 25, with CP-26's
+    DST rules) that CP-25's eligibility rules admit, applied to the window's days unchanged (a published price,
+    and the frozen exclusion rules), intersected with the hours both policies emitted;
   - the mean daily loss weighs dates equally.
 - **The product's loss is its emitted forecast's.** That is A1 on a successful fit, the frozen fallback
   otherwise. A failed issuance is missing in every pairing that involves it.

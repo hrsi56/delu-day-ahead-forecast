@@ -40,8 +40,9 @@ def window_days(window=WINDOW) -> list[date]:
 
 
 def daily_losses(issued: dict, outcomes: dict, a: str, b: str, window=WINDOW) -> dict:
-    """Paired daily (MAE, WIS) of two policies: on each date, the canonical keys both emitted and that have a
-    published price. `issued[policy][day] = (keys, quantiles)`; a policy without that day is missing."""
+    """Paired daily (MAE, WIS) of two policies: on each date, the keys both emitted that have a published,
+    eligible price. `outcomes` holds only CP-25-eligible keys (an excluded or unpublished key is absent or NaN);
+    `issued[policy][day] = (keys, quantiles)`; a policy without that day is missing."""
     from cp28.scoring import daily
     out = {}
     for day in window_days(window):

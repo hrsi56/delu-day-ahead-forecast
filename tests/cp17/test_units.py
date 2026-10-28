@@ -105,8 +105,8 @@ def test_recomputation_check_counts_exactly_and_reals_within_1e9():
 
 
 # ------------------------------------------------------------------ §19.3's status rule
-def _a1(q, epochs=10):
-    return {'day': '2026-09-06', 'index': ['k'], 'quantiles': q, 'crossed_rows': 0,
+def _a1(q, epochs=10, payload='p' * 64):
+    return {'day': '2026-09-06', 'index': ['k'], 'quantiles': q, 'crossed_rows': 0, 'payload_sha256': payload,
             'members': [{**{f: 0 for f in retrain.A1_SELECTIONS}, **{f: 0 for f in retrain.A1_DIAGNOSTICS},
                          'member': j, 'seed': j, 'best_epoch': epochs} for j in range(8)]}
 
@@ -123,6 +123,9 @@ def test_status_rule():
     assert moved['status'] == 'different' and not moved['selections_match']   # a selection differs: never "within"
     signed = retrain.compare('A1', _a1([[0.0] * 7]), _a1([[-0.0] + [0.0] * 6]))
     assert signed['status'] == 'within ±0.01 EUR/MWh'                          # equal values, different bits
+    other = retrain.compare('A1', _a1(q), _a1([list(r) for r in q], payload='q' * 64))
+    assert other['status'] == 'different' and other['measured_status'] == 'identical bit for bit'   # another window
+    assert retrain.compare('A1', _a1(q, payload=None), _a1(q, payload=None))['status'] == 'different'
 
 
 # ------------------------------------------------------------------ the frozen failure policy

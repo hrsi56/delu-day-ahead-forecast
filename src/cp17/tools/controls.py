@@ -3,7 +3,10 @@
 1. **A changed seed reports "different".** A1's payload with member 0's seed changed, refitted natively and
    compared with the issued artifact's result by `cp17.retrain.compare`.
 2. **A changed training-window value reports "different".** A1's payload with one training day's price
-   changed (2026-08-20 hour 12, +1 EUR/MWh), refitted and compared.
+   changed (2026-08-20 hour 12, +1 EUR/MWh), refitted and compared. The record keeps `measured_status`, what the
+   quantiles and selections alone say: CP-17's first run found it "within ±0.01 EUR/MWh" (the change moved the
+   quantiles by under 0.01 with every selection matched), which is why the comparison binds the training window's
+   identity first.
 3. **A changed outcome of the target day leaves the payload unchanged.** The A1, v2, v4 and B0 payloads are
    rebuilt from inputs whose target-day prices are all changed (+50 EUR/MWh); every payload digest and every
    file byte must equal the original's (the embargo).
@@ -41,7 +44,7 @@ def seed_control(arrays: dict, meta: dict, issued: dict) -> dict:
     result = refit(arrays, changed)
     cmp = retrain.compare('A1', issued, result)
     return {'change': f"member 0 seed {meta['members'][0]['seed']} -> {changed['members'][0]['seed']}",
-            'status': cmp['status'], 'selections_match': cmp['selections_match'],
+            'status': cmp['status'], 'measured_status': cmp['measured_status'], 'selections_match': cmp['selections_match'],
             'max_abs_eur': cmp['deviation'].get('max_abs_eur'), 'reports_different': cmp['status'] == 'different'}
 
 
@@ -54,6 +57,7 @@ def window_control(arrays: dict, meta: dict, issued: dict) -> dict:
     result = refit(changed, meta)
     cmp = retrain.compare('A1', issued, result)
     return {'change': f'price of {CHANGED_DAY} slot 12 +1 EUR/MWh', 'status': cmp['status'],
+            'measured_status': cmp['measured_status'], 'payload_sha256_equal': cmp['payload_sha256_equal'],
             'selections_match': cmp['selections_match'], 'max_abs_eur': cmp['deviation'].get('max_abs_eur'),
             'reports_different': cmp['status'] == 'different'}
 

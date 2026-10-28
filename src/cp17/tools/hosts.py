@@ -91,7 +91,17 @@ def host_row(native: dict, node: dict, manifest: dict) -> dict:
             'executed_files_match_package': _source_ok(node['python'], manifest), 'stubs': node['python']['stubs'],
             'runtime': {'pyodide': node.get('pyodide_version'), 'node': node['node'], 'python': node['python']['python'],
                         'numpy': node['python']['numpy']},
-            'attribution': _attribution_row(native.get('attribution'), b.get('attribution'))}
+            'attribution': _attribution_row(native.get('attribution'), b.get('attribution')),
+            'members_max_abs_eur': _members(native, b)}
+
+
+def _members(native: dict, hosted: dict) -> dict | None:
+    """Each blend member's largest central deviation (v4: A1_w, B2_w, L-N, L-R; v2: A1, B2)."""
+    import numpy as np
+    if 'members_central' not in native:
+        return None
+    return {k: float(np.abs(np.asarray(v, float) - np.asarray(hosted['members_central'][k], float)).max())
+            for k, v in native['members_central'].items()}
 
 
 def _attribution_row(native, hosted):

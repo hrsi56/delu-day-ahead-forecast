@@ -6,6 +6,11 @@
 - "within ±0.01 EUR/MWh" when every data-driven selection matched and every emitted quantile is within τ_eq;
 - "different" otherwise, with the numbers.
 
+**The training window is bound first.** A retrain is of the issued fit only if it ran on that fit's shipped
+training window (§19.3 item 1), so its payload identity must equal the issued artifact's; otherwise the status
+is "different". (CP-17's first run of the training-window control showed why: a +1 EUR/MWh change to one
+training hour moved the quantiles by under 0.01 EUR/MWh with every selection matched.)
+
 The report also states whether every data-driven selection matched and the largest absolute difference per
 emitted quantile level, in EUR/MWh (§19.3 item 2). It never replaces, rescores or relabels an issued forecast
 (item 3): it reads two results and returns a comparison.
@@ -134,13 +139,23 @@ def status(dev: dict, selections_match: bool, tau_eq: float = TAU_EQ) -> str:
 
 
 def compare(policy: str, issued: dict, retrained: dict, tau_eq: float = TAU_EQ) -> dict:
-    """The full §19.3 item 2 report for one retrain."""
+    """The full §19.3 item 2 report for one retrain.
+
+    A retrain is of the issued fit only if it ran on that fit's shipped training window (§19.3 item 1): its
+    payload identity must equal the issued result's. Otherwise the status is "different", whatever the quantiles
+    and selections show; `measured_status` keeps what they alone would say."""
     if issued['day'] != retrained['day'] or issued.get('index') != retrained.get('index'):
         dev = {'shape_equal': False, 'reason': 'different delivery day or keys'}
         return {'policy': policy, 'day': issued['day'], 'status': STATUS[2], 'deviation': dev,
-                'selections': {'all_match': False}, 'tau_eq_eur': tau_eq}
+                'selections': {'all_match': False}, 'selections_match': False, 'tau_eq_eur': tau_eq,
+                'payload_sha256_equal': False, 'measured_status': STATUS[2]}
     dev = deviation(issued['quantiles'], retrained['quantiles'])
     sel = selections(policy, issued, retrained)
-    return {'policy': policy, 'day': issued['day'], 'status': status(dev, sel['all_match'], tau_eq), 'deviation': dev,
-            'selections': sel, 'selections_match': sel['all_match'], 'tau_eq_eur': tau_eq,
-            'payload_sha256_equal': issued.get('payload_sha256') == retrained.get('payload_sha256')}
+    window = issued.get('payload_sha256') is not None and issued.get('payload_sha256') == retrained.get('payload_sha256')
+    measured = status(dev, sel['all_match'], tau_eq)
+    out = {'policy': policy, 'day': issued['day'], 'status': measured if window else STATUS[2], 'deviation': dev,
+           'selections': sel, 'selections_match': sel['all_match'], 'tau_eq_eur': tau_eq,
+           'payload_sha256_equal': window, 'measured_status': measured}
+    if not window:
+        out['reason'] = "the retrain did not run on the issued fit's shipped training window"
+    return out

@@ -147,3 +147,16 @@ def test_no_committed_record_holds_a_date_after_the_boundary():
             continue
         late = sorted({m.group(0) for m in DATE.finditer(path.read_text()) if m.group(0) > '2026-09-06'})
         assert not late, f'{path.name}: {late[:5]}'
+
+
+def test_report_tables_are_the_records():
+    from cp17.tools import report
+    text = (REPORTS / 'report.md').read_text()
+    a, b = text.index(report.BEGIN), text.index(report.END) + len(report.END)
+    assert text[a:b] == report.render(ROOT)
+
+
+def test_nothing_was_retrieved():
+    record = load(REPORTS / 'retrieval-manifest.json')
+    assert record['data_bytes_retrieved'] == 0 and record['software_bytes_retrieved'] == 0
+    assert record['remote_writes'] == 0
