@@ -30,8 +30,14 @@ def manifest():
     return load(EVIDENCE / 'freeze-manifest.json')
 
 
+#: Superseded at CP-17b, whose re-freeze changes these package files of CP-17's (and adds `cp17/shadow.py`, which
+#: CP-17's manifest does not list). CP-17's freeze is superseded, not edited: its manifest must still verify against
+#: this tree in everything else (`docs/track-b/evidence/cp-17b/freeze-record.md`).
+CP17B_REFROZEN = ('src/cp17/issue.py', 'src/cp17/schema.py')
+
+
 def test_freeze_manifest_verifies(manifest):
-    assert freeze.verify(manifest, ROOT) == []
+    assert sorted(freeze.verify(manifest, ROOT)) == [f'{p}: missing or altered' for p in CP17B_REFROZEN]
     identity = manifest['policy_identity']
     assert manifest['policy_identity_sha256'] == freeze.digest(identity)
     assert identity['designated_policy'] == 'A1' and identity['registry']['version'] == 1
@@ -143,6 +149,10 @@ def test_reference_bundle_and_schemas():
     assert schema.validate(record['manifest'], schema.SCHEMAS['manifest']) == []
     assert {f['kind'] for f in record['manifest']['files']} == set(schema.KINDS[1:])
     for kind, value in schema.SCHEMAS.items():
+        # Superseded at CP-17b for the two kinds it re-froze (issued forecasts v2, the fitted artifact v2), whose
+        # schema files are CP-17b's (tests/cp17b/test_records.py); the other five are unchanged.
+        if kind in ('issued_forecasts', 'fitted_artifact'):
+            continue
         assert load(EVIDENCE / 'schemas' / f'{kind}.schema.json') == json.loads(json.dumps(value)), kind
 
 

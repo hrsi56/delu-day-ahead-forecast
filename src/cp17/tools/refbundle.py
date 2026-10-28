@@ -132,6 +132,18 @@ def tamper_controls(files: dict[str, bytes]) -> dict:
     blob[len(blob) // 2] ^= 0x01
     flipped[npz] = bytes(blob)
     out['training_window_byte_flipped'] = schema.verify_bundle(flipped)
+    # decision 13: a partial record that does not name exactly the missing hours, with the manifest re-hashed so
+    # that only the partial check can refuse it
+    forecasts = json.loads(files['issued-forecasts.json'])
+    forecasts['days'][0]['partial'] = {'issued_hours': 23, 'canonical_hours': 24, 'missing_hours': ['00:00 Europe/Berlin']}
+    renamed = dict(files)
+    renamed['issued-forecasts.json'] = json.dumps(forecasts, sort_keys=True).encode()
+    manifest = json.loads(files['manifest.json'])
+    for f in manifest['files']:
+        if f['path'] == 'issued-forecasts.json':
+            f.update(sha256=hashlib.sha256(renamed['issued-forecasts.json']).hexdigest(), bytes=len(renamed['issued-forecasts.json']))
+    renamed['manifest.json'] = json.dumps(manifest, sort_keys=True).encode()
+    out['partial_record_wrong'] = schema.verify_bundle(renamed)
     return {k: {'refused': bool(v), 'errors': v[:3]} for k, v in out.items()}
 
 
@@ -144,15 +156,16 @@ def main(argv=None) -> int:
     ap.add_argument('--identity', required=True, type=Path)
     ap.add_argument('--out', required=True, type=Path)
     ap.add_argument('--record', required=True, type=Path)
+    ap.add_argument('--arrays', type=Path, help="the issued fit's exported arrays (default: CP-17's driver's path)")
     args = ap.parse_args(argv)
     manifest = build(args.root, json.loads(args.issuance.read_text()), args.artifact_dir, args.payloads,
-                     json.loads(args.identity.read_text()), args.out)
+                     json.loads(args.identity.read_text()), args.out, args.arrays)
     files = read(args.out)
     errors = schema.verify_bundle(files)
     controls = tamper_controls(files)
     parts = args.out.resolve().parts
     location = '/'.join(parts[parts.index('.local'):]) if '.local' in parts else str(args.out)
-    record = {'schema': 'cp17-reference-bundle-record-v1', 'location': location + '/',
+    record = {'schema': 'cp17-reference-bundle-record-v1', 'issued_forecasts_schema': schema.ISSUED_FORECASTS_SCHEMA, 'location': location + '/',
               'manifest': manifest, 'manifest_sha256': hashlib.sha256(files['manifest.json']).hexdigest(),
               'validation_errors': errors, 'valid': not errors, 'negative_controls': controls,
               'all_controls_refused': all(c['refused'] for c in controls.values())}
