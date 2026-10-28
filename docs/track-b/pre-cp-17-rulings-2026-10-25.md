@@ -60,3 +60,34 @@ conditions and failure rules enter the anchor by amendment, under the Owner's su
     - **The cost:** about 70 s per A1 fit instead of 15 s natively.
     - **The issued values differ from CP-26's native arithmetic by rounding.** The freeze records
       this, and keeps the native parity with CP-26 as the check of code identity.
+11. **When GFS is late or missing at the issue time, the product issues v2,** then B0.
+    - **The check.** CP-17's item 1 (`reports/cp17/gfs-check.md`, on `gauntlet/cp-17` at `2d570e0`)
+      met the stop rule of decision 2 above. On CP-25's 1,354 paired GFS +6 h affected dates, v2 is
+      +2.27% on MAE and +6.68% on WIS against A1's GFS +6 h route.
+    - **The Owner kept v2 on 2026-10-28,** approving the Orchestrator's recommendation ("מאושר"). The
+      excess is disclosed.
+      - v2 needs neither weather nor DDNN-2.
+      - The measured route is a separately searched DDNN-2. Adopting it would add a second daily
+        model.
+      - A1 with weather missing was not measured.
+12. **When A1's own daily fit fails and the weather is available, the product issues v4,** then v2,
+    then B0. The Owner, 2026-10-28: "מאושר", on his own proposal to split the two causes.
+    - **The reason.** v5 contains DDNN-2, so CP-28's chain for a missing member (v5, then B0) ended
+      at B0 whenever D2 failed.
+    - **What happened on the 18 development dates** between 2022-12-04 and 2023-06-20 when a D2
+      member failed to train (`nonfinite_loss`):
+
+      | | MAE | WIS |
+      |---|---:|---:|
+      | B0, the forecast issued | 58.56 | 33.63 |
+      | v2 | 27.69 | 16.36 |
+      | v4 | 26.90 | 15.33 |
+
+      v4 was native on all 18.
+    - **v4 is v5 without DDNN-2,** and the best policy without it on every eligible date (MAE
+      18.58, against v2's 22.58). It uses weather, so it is not the GFS-late route.
+    - **The product's chain replaces decision 2's** "v5, then B0" for the product. v5 stays the
+      control in 4.7T. A1 issues whenever its own fit succeeds. The validity of other policies'
+      members does not trigger a fallback; CP-28's common-member check was a comparison device.
+    - **v4 joins the one code path** (§19.2). If it cannot run under Pyodide within a visitor's
+      limits, CP-17 reports it under §19.3's exception route, for the Owner.
