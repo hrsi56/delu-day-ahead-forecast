@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21); one factual correction to the public wording awaits his confirmation. Next: 4.7T's brief (not before 2026-12-04) |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. Next: 4.7T's brief (not before 2026-12-04) |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -258,10 +258,10 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   on r18's two open items: "Approve both".
   - **20:** PUBLISH_RULES §14's "before final-candidate test" items, as CP-17's protocol §12 proposes
     them, with the badge dated "registered 2026-10-28, revised 2026-10-29".
-    - **One factual correction awaits his confirmation.** The proposal's badge and wording say A1 was
+    - **A factual correction, confirmed the same day.** The proposal's badge and wording say A1 was
       registered "before any of these 90 days existed". That is false: 52 window days had taken place
       by 2026-10-28. The correction reads "before any of the window's data was opened".
-    - Until he confirms, neither version may be published.
+    - The original phrases are never published.
   - **21:** A1 replaces v1 as the product at CP-18's activation, after a passed 4.7T. v1 then stays as
     labelled history, and CP-19 completes the prospective evaluation.
 - **Next Track B work: 4.7T's brief.**
@@ -1072,6 +1072,12 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Decision 20's wording correction confirmed, 2026-10-29.** The Orchestrator asked "Do you confirm
+  the corrected 4.7T badge and wording?", and the Owner answered "Confirm correction".
+  - **The record** (`docs/track-b/owner-decisions-2026-10-29.md`) now marks the correction confirmed.
+    The corrected badge and wording replace §12's two false phrases, which are never published.
+  - **The blocker is closed.** Publishing the text still follows PUBLISH_RULES and its own checkpoint.
 
 - **The Owner's decisions 20–21 recorded, 2026-10-29.** He approved both recommended rulings
   ("Approve both").
@@ -2008,15 +2014,6 @@ Session Log.
 ---
 
 ## 6. Blockers / Open Questions
-
-- **Decision 20's wording correction awaits the Owner's confirmation (2026-10-29).** It does not
-  block 4.7T's preparation, only publication.
-  - **The problem.** CP-17's protocol §12, approved as decision 20, says A1 was registered "before
-    the data existed" and "before any of these 90 days existed". Both are false: 52 window days had
-    taken place by 2026-10-28.
-  - **The correction:** "before any of the window's data was opened", in the badge and the wording
-    ([record](docs/track-b/owner-decisions-2026-10-29.md)).
-  - Until he confirms, neither version is published.
 
 - **Publishing v5 (PRES-4): the Owner's decisions are made (2026-10-11); the brief is next.**
   v5 is adopted in research, but no public surface shows it yet. The decisions:

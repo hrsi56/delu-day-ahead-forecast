@@ -41,21 +41,25 @@ any 4.7T outcome, since none exists.
       - development results stay labelled "development, post-selection", and are never pooled with
         4.7T;
       - v1's holdout keeps its own label, "confirmatory-style, not power-qualified".
-    - **A factual correction, awaiting the Owner's confirmation.** The Orchestrator found it after the
-      approval. Two phrases of the proposal state that the registration came before the window's days
-      existed:
+    - **A factual correction, confirmed by the Owner on 2026-10-29.** The Orchestrator found it after
+      the approval. Two phrases of the proposal state that the registration came before the window's
+      days existed:
       - the badge: "registered 2026-10-28 before the data existed";
       - the wording: "A1 was frozen and its test registered before any of these 90 days existed."
 
       **That is not true.** The window is 2026-09-07 to 2026-12-05. By the registration, 52 of its
-      delivery days, 2026-09-07 to 2026-10-28, had already taken place. What holds is narrower, and the §24.2 audit checks it: no data from the window was
-      downloaded, read or used before 4.7T opens. **The proposed correction:**
+      delivery days, 2026-09-07 to 2026-10-28, had already taken place. What holds is narrower, and
+      the §24.2 audit checks it: no data from the window was downloaded, read or used before 4.7T
+      opens. **The correction, which replaces both phrases:**
       - the badge: "One-shot fresh-data test (4.7T) · delivery days 2026-09-07 to 2026-12-05 · 90 days ·
         registered 2026-10-28, revised 2026-10-29, before any of the window's data was opened";
       - the wording: "A1 was frozen and its test registered before any data from these 90 days was
         opened. It was tested once, against the control (v5) and the similar-day naive."
 
-      Until the Owner confirms, neither the original phrases nor the correction may be published.
+      **The Owner's confirmation,** answering "Do you confirm the corrected 4.7T badge and wording?":
+      "Confirm correction". The original phrases are never published. The corrected badge and wording
+      are decision 20's text, and 4.7T's brief cites them. Publishing them still follows
+      PUBLISH_RULES and its own checkpoint.
 21. **A1 replaces v1 as the product at CP-18's activation, after a passed 4.7T.**
     - **Until then, v1 stays the released product.** A1 stays selected and pending.
     - **On a failed or inconclusive 4.7T,** v1 stays the product (CP-17's protocol §8).
