@@ -230,11 +230,23 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   - the fallback chains stay. Each second fallback guards a live cause: the load forecast for B0,
     and missing training-window weather for v2;
   - CP-17b, then r18, under his suspension: "יש לך אישור מלא עם כל ההשעיות וכל מה שאתה צריך".
-- **Active Track B work: CP-17b, the re-freeze before r18,** issued 2026-10-28.
-  - **The brief:** `b9aeeee4…`, canonical copy `.local/artifacts/cp-17b/issued-brief.md`.
-  - **It covers:** partial days, shadow issuances, the review's notes N1–N7, and governance pins
-    held as frozen copies, so that r18 can amend the anchor.
-  - **The ceiling:** 8 machine-hours.
+- **CP-17b closed on 2026-10-29** ([landing record](docs/track-b/cp-17b-landing-2026-10-29.md)).
+  **A1 is re-frozen before r18.** CP-17's freeze is superseded, not edited.
+  - **The identities:** `land/cp-17b` = `095578c`, `evidence/cp-17b` = `9b89774`. The new policy
+    identity is `439115fb…`.
+  - **What it adds:**
+    - partial days succeed on their forecastable hours;
+    - v4, v2 **and B0** shadow-issue daily. B0's buffer cannot be rebuilt from prices alone;
+    - N1–N7 are fixed;
+    - governance is pinned by frozen copies, so r18 can amend the anchor.
+  - **The fit is unchanged:** full native and issuing-host parity equal CP-17's records.
+  - **The Lead was handed over mid-checkpoint,** on the Owner's instruction.
+- **Next Track B work: r18,** the anchor amendment that ratifies the re-freeze's terms. It goes under
+  the Owner's suspension, with a plan critic, before 4.7T (no earlier than 2026-12-04). It must:
+  - state F1 as 0.082 EUR/MWh, not 0.028;
+  - ratify B0's shadow;
+  - stay appended or §24-only, or first deal with `tests/test_cp26_repair_contract.py`, which
+    hashes the anchor's §§1–23.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1030,6 +1042,25 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17b received, landed and closed, 2026-10-29,** under the Owner's delegation and his "Yes, run
+  the LAND".
+  - **The handover.** The first Lead session stopped at 17:44 on 2026-10-28, and its Orchestrator
+    session was lost. On the Owner's instruction, a new Orchestrator started a new Lead on the same
+    branch, from the handover `.local/artifacts/cp-17b/handover-2026-10-28.md`.
+  - **The return:** PASS on `2366ea64`, after one Integration FAIL. CP-17's superseded check read the
+    live anchor, so r18 would have broken CI.
+    - About 3.5 active hours of about 12, and 6.93 of 8 machine-hours.
+  - **The receipt:**
+    - the delta is the verdict only;
+    - 53 files, all inside the brief's paths;
+    - the largest blob is 294 KB;
+    - the red-line dates are protocol and calendar dates only;
+    - the history-free CI is green on the squash commit. Details are in the record.
+  - **One open item was missing from the return:** a malformed issued-forecasts day raises instead of
+    being listed. It fails closed. The record now carries it, for CP-18.
+  - **Q&A 70–73** filed.
+  - **Next:** r18.
 
 - **CP-17b issued, 2026-10-28.**
   - **The Owner's decisions 13–19** are in a new record. CP-17's freeze pins the old one.
