@@ -1,0 +1,121 @@
+{
+ "all_controls_refused": true,
+ "issued_forecasts_schema": "cp17b-issued-forecasts-v2",
+ "location": ".local/artifacts/cp-17b/reference-bundle/",
+ "manifest": {
+  "artifact": {
+   "artifact_sha256": "91e00fea32af466127c0e2bd41404259f4652d26acfe9f9aa9f423cb9bc12cd2",
+   "delivery_day": "2026-09-06",
+   "display": "successful daily fit",
+   "issued_policy": "A1"
+  },
+  "files": [
+   {
+    "bytes": 4545,
+    "kind": "training_window",
+    "path": "A1-2026-09-06.json",
+    "sha256": "32a6ee385871de88a36148ec539b418dda64190f52f2a941e232b5a395d173e6"
+   },
+   {
+    "bytes": 534442,
+    "kind": "training_window",
+    "path": "A1-2026-09-06.npz",
+    "sha256": "1f353c2de5a236966387ab74e8d40902a086dbadb0674c3665a7df8e7c0a2449"
+   },
+   {
+    "bytes": 2134314,
+    "kind": "fitted_artifact",
+    "path": "artifact-arrays.npz",
+    "sha256": "15bf7731c43bd9be164d2bab83e9c5afc30cf4ad412150e5a549d27c3f295fce"
+   },
+   {
+    "bytes": 7981,
+    "kind": "fitted_artifact",
+    "path": "artifact.json",
+    "sha256": "711d3f2eead9d07447ecb2d3b35a3924e73e880e362fd4852d07bcd58a3fa191"
+   },
+   {
+    "bytes": 2594,
+    "kind": "evaluation",
+    "path": "evaluation.json",
+    "sha256": "83dbe85c8e86fca4a9322ae12264332a333bd99e588d90a013d4a0065992666f"
+   },
+   {
+    "bytes": 4185,
+    "kind": "issued_forecasts",
+    "path": "issued-forecasts.json",
+    "sha256": "b51b3226387639be8259c3db95a9520523c6154ea149a6c9189f2a2bb6c2e1d8"
+   },
+   {
+    "bytes": 5032,
+    "kind": "outcomes",
+    "path": "outcomes.json",
+    "sha256": "14d9d403b18afc207e0e9703abd12f290fefb2f9580c25a293cd87edf96c0bc4"
+   },
+   {
+    "bytes": 27979,
+    "kind": "series",
+    "path": "series.json",
+    "sha256": "72f2793d0d9f15820e33680f914b79ae7b10baeb063a9e1670785c4949c25724"
+   }
+  ],
+  "freshness": {
+   "as_of_day": "2026-09-06",
+   "latest_issued_day": "2026-09-06",
+   "state": "fresh"
+  },
+  "policy": {
+   "issuing_host": "Pyodide 0.28.0 in Node.js v26.7.0",
+   "package_sha256": "682c5833fce8fdb5390a49794d83e11a515cb2b89db24d9e9945fcbad714642e",
+   "policy_identity_sha256": "439115fb984359c0c68f79b77a6da4b85a5e75677cfbeb24e043876793ca9893"
+  },
+  "product": {
+   "designated_policy": "A1",
+   "evidence_label": "reference bundle for the freeze origin; development data; not a result",
+   "name": "delu-day-ahead-policy"
+  },
+  "schema": "cp17-manifest-v1",
+  "times": {
+   "data_refresh_utc": "2026-09-05T09:00:00+00:00",
+   "issuance_utc": "2026-09-05T09:00:00+00:00",
+   "last_training_utc": "2026-09-05T09:00:00+00:00"
+  }
+ },
+ "manifest_sha256": "abb65542fa3a868869995635f1ccb18c8303e79d0f92b9d6ca13672277612cfb",
+ "negative_controls": {
+  "issued_forecasts_byte_changed": {
+   "errors": [
+    "issued-forecasts.json: its SHA-256 or size differs from the manifest",
+    "the issued forecast of the artifact's day is not the artifact's"
+   ],
+   "refused": true
+  },
+  "listed_file_missing": {
+   "errors": [
+    "outcomes.json: listed but absent"
+   ],
+   "refused": true
+  },
+  "partial_record_wrong": {
+   "errors": [
+    "issued-forecasts.json: day 0 does not name exactly its missing hours (decision 13)"
+   ],
+   "refused": true
+  },
+  "training_window_byte_flipped": {
+   "errors": [
+    "A1-2026-09-06.npz: its SHA-256 or size differs from the manifest"
+   ],
+   "refused": true
+  },
+  "unlisted_file_served": {
+   "errors": [
+    "unlisted.json: served but not listed in the manifest"
+   ],
+   "refused": true
+  }
+ },
+ "schema": "cp17-reference-bundle-record-v1",
+ "valid": true,
+ "validation_errors": []
+}

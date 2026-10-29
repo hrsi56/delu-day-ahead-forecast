@@ -1,0 +1,119 @@
+{
+ "a1_errors": [
+  "the issuing-host process exceeded the 15.0 s timeout and was killed"
+ ],
+ "a1_folder": "A1-2026-09-06-yqxl8w1m",
+ "artifact": {
+  "artifact_sha256": "6ca395cf43a7771a254bdaf308e97ca51cbbae921341c89b0b44a398a78d007c",
+  "attempts": [
+   {
+    "cause": "training: FitFailure: the issuing-host process exceeded the 15.0 s timeout and was killed",
+    "policy": "A1",
+    "seconds": 15.040895625003031,
+    "status": "failed"
+   },
+   {
+    "cause": null,
+    "partial": null,
+    "policy": "v4",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 935067648,
+     "wall_seconds": 78.13985975
+    },
+    "seconds": 78.27685725000629,
+    "status": "ok"
+   }
+  ],
+  "display": "failed fit; fallback v4 issued",
+  "issued_policy": "v4",
+  "resources": {
+   "limits": {
+    "peak_bytes": 4294967296,
+    "wall_seconds": 900
+   },
+   "peak_bytes": 935067648,
+   "wall_seconds": 78.13985975
+  }
+ },
+ "artifact_verifies": true,
+ "causes": {
+  "A1": "training: FitFailure: the issuing-host process exceeded the 15.0 s timeout and was killed"
+ },
+ "day": "2026-09-06",
+ "display": "failed fit; fallback v4 issued",
+ "issued_policy": "v4",
+ "kill_after_seconds": 15.0,
+ "pass": true,
+ "path": [
+  [
+   "A1",
+   "failed"
+  ],
+  [
+   "v4",
+   "ok"
+  ]
+ ],
+ "process_seconds": {
+  "A1": 15.038285332993837,
+  "B0": 5.591878375,
+  "v2": 68.34535033300001,
+  "v4": 78.13985975
+ },
+ "schema": "cp17b-killed-process-control-v1",
+ "shadows": {
+  "B0": {
+   "cause": null,
+   "central_sha256": "986411f1477728eb043d2deed58486462bd8d749cee3bc4df2f61be72d4db0f1",
+   "fitted_by": "shadow",
+   "keys": 24,
+   "peak_bytes": 795574272,
+   "quantiles_sha256": "b12a9972211be165760b440bde5b175ef150ebe04057997e741bcd89c7a0846f",
+   "role": "shadow: never published, displayed or scored as the product's forecast",
+   "scale_sha256": null,
+   "status": "ok",
+   "wall_seconds": 5.591878375
+  },
+  "v2": {
+   "cause": null,
+   "central_sha256": "be10d020adfbbff72dd6a6eaf38fa1315918011930639af03ade2fcdcc8700fa",
+   "fitted_by": "shadow",
+   "keys": 24,
+   "peak_bytes": 888750080,
+   "quantiles_sha256": "82a5afcf1ff8778f8a0d1670645ec60ff6f19b88d7e618cc91d6917fd18a9f83",
+   "role": "shadow: never published, displayed or scored as the product's forecast",
+   "scale_sha256": "e560a9539a25bc26156d49173cbc305d7ebd8f3cafc437977ab593ab0ebe5e36",
+   "status": "ok",
+   "wall_seconds": 68.34535033300001
+  },
+  "v4": {
+   "cause": null,
+   "central_sha256": "28605a165b42b4b4e036e4d0442706291b214e432b62389cc153500736f6bb7b",
+   "fitted_by": "chain",
+   "keys": 24,
+   "peak_bytes": 935067648,
+   "quantiles_sha256": "76599de78c2114cb3d2d13e5a84fda81d76d1a56813e916268f106f77474d3c9",
+   "role": "shadow: never published, displayed or scored as the product's forecast",
+   "scale_sha256": "e560a9539a25bc26156d49173cbc305d7ebd8f3cafc437977ab593ab0ebe5e36",
+   "status": "ok",
+   "wall_seconds": 78.13985975
+  }
+ },
+ "source": {
+  "path": ".local/artifacts/cp-17b/runs/control/control-2026-09-06.json",
+  "sha256": "e46ec71f5f0339053895ad9b2fd099c2aa4332ec63497c8aac1708e1453baaa3"
+ },
+ "stale_record": {
+  "its_quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+  "planted": [
+   "node-attempt-A1-2026-09-06.json",
+   "node-A1-2026-09-06.json",
+   "run.json"
+  ],
+  "source": "node-A1-2026-09-06.json"
+ }
+}

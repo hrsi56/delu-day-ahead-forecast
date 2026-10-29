@@ -18,16 +18,18 @@ import subprocess
 import sys
 import zipfile
 
-ENTRY = ('cp17.dailyfit', 'cp17.attribution', 'cp17.retrain', 'cp17.scoring', 'cp17.issue', 'cp17.schema',
+ENTRY = ('cp17.dailyfit', 'cp17.attribution', 'cp17.retrain', 'cp17.scoring', 'cp17.issue', 'cp17.schema', 'cp17.shadow',
          'cp24.design', 'cp24.ddnn2', 'cp24.member', 'cp15.data', 'cp15.models', 'cp21.lgbm', 'cp16.residuals',
          'cp26.state', 'cp25.guard', 'cp28.scoring', 'delu_forecast.baselines')
 EXTRA = ('cp17/host/driver.py', 'cp17/stubs/absent/holidays.py', 'cp17/stubs/fallback/resource.py')
-#: The pinned Pyodide 0.28.0 packages the closure needs (the lock adds their dependencies).
-PACKAGES = ('numpy', 'pandas', 'scikit-learn', 'lightgbm', 'requests', 'tzdata')
+from ..daily import PACKAGES  # noqa: E402  (the pinned Pyodide packages the closure needs)
 FIXED_TIME = (2026, 9, 6, 0, 0, 0)
 #: The runners that load the package: the issuing host's Node.js script and the browser page and worker. They
 #: run outside Pyodide, so they are not in the zip; their hashes are frozen with it.
 RUNNERS = ('cp17/host/node_run.mjs', 'cp17/browser/worker.js', 'cp17/browser/index.html')
+#: The native pipeline modules that start the issuing host (CP-17's review, N1): frozen with the package, never
+#: shipped to the browser.
+PIPELINE = ('cp17/daily.py',)
 
 PROBE = """
 import importlib, json, sys
@@ -66,6 +68,7 @@ def build(src: Path, out: Path) -> dict:
                 'third_party_imported_natively': found['third_party'], 'pyodide_packages': list(PACKAGES),
                 'files_sha256': files, 'package_sha256': hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest(),
                 'runner_files_sha256': {n: hashlib.sha256((src / n).read_bytes()).hexdigest() for n in RUNNERS},
+                'pipeline_files_sha256': {n: hashlib.sha256((src / n).read_bytes()).hexdigest() for n in PIPELINE},
                 'zip_bytes': out.stat().st_size, 'zip_sha256': hashlib.sha256(out.read_bytes()).hexdigest()}
     out.with_suffix('.json').write_text(json.dumps(manifest, indent=1, sort_keys=True) + '\n')
     return manifest

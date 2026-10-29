@@ -52,7 +52,9 @@ def prices(root: Path, first: date, last: date) -> list[tuple[str, str, float | 
     return out
 
 
-def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, identity: dict, out: Path) -> dict:
+def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, identity: dict, out: Path,
+          arrays: Path | None = None) -> dict:
+    """`arrays` is the issued fit's exported arrays; by default CP-17's driver's path in `artifact_dir`."""
     from .freeze import digest
     out.mkdir(parents=True, exist_ok=True)
     for old in out.iterdir():
@@ -60,14 +62,16 @@ def build(root: Path, issuance: dict, artifact_dir: Path, payload_dir: Path, ide
     artifact = issuance['artifact']
     day = artifact['delivery_day']
     _dump(out / 'artifact.json', artifact)
-    arrays = artifact_dir / f"node-attempt-{artifact['issued_policy']}-{day}-arrays.npz"
+    if arrays is None:
+        arrays = artifact_dir / f"node-attempt-{artifact['issued_policy']}-{day}-arrays.npz"
     shutil.copyfile(arrays, out / 'artifact-arrays.npz')
     for ext in ('json', 'npz'):
         shutil.copyfile(payload_dir / f"{artifact['issued_policy']}-{day}.{ext}", out / f"{artifact['issued_policy']}-{day}.{ext}")
-    forecasts = {'schema': 'cp17-issued-forecasts-v1', 'levels': list(scoring.LEVELS),
+    forecasts = {'schema': schema.ISSUED_FORECASTS_SCHEMA, 'levels': list(scoring.LEVELS),
                  'days': [{'delivery_day': day, 'issue_utc': artifact['issue_utc'],
                            'issuing_artifact_sha256': artifact['artifact_sha256'], 'issued_policy': artifact['issued_policy'],
-                           'display': artifact['display'], 'keys': artifact['keys'], 'quantiles': artifact['quantiles']}]}
+                           'display': artifact['display'], 'keys': artifact['keys'], 'quantiles': artifact['quantiles'],
+                           'partial': artifact['partial']}]}
     _dump(out / 'issued-forecasts.json', forecasts)
     rows = prices(root, DAY, DAY)
     outcomes = {'schema': 'cp17-outcomes-v1', 'unit': 'EUR/MWh',
@@ -128,6 +132,18 @@ def tamper_controls(files: dict[str, bytes]) -> dict:
     blob[len(blob) // 2] ^= 0x01
     flipped[npz] = bytes(blob)
     out['training_window_byte_flipped'] = schema.verify_bundle(flipped)
+    # decision 13: a partial record that does not name exactly the missing hours, with the manifest re-hashed so
+    # that only the partial check can refuse it
+    forecasts = json.loads(files['issued-forecasts.json'])
+    forecasts['days'][0]['partial'] = {'issued_hours': 23, 'canonical_hours': 24, 'missing_hours': ['00:00 Europe/Berlin']}
+    renamed = dict(files)
+    renamed['issued-forecasts.json'] = json.dumps(forecasts, sort_keys=True).encode()
+    manifest = json.loads(files['manifest.json'])
+    for f in manifest['files']:
+        if f['path'] == 'issued-forecasts.json':
+            f.update(sha256=hashlib.sha256(renamed['issued-forecasts.json']).hexdigest(), bytes=len(renamed['issued-forecasts.json']))
+    renamed['manifest.json'] = json.dumps(manifest, sort_keys=True).encode()
+    out['partial_record_wrong'] = schema.verify_bundle(renamed)
     return {k: {'refused': bool(v), 'errors': v[:3]} for k, v in out.items()}
 
 
@@ -140,15 +156,16 @@ def main(argv=None) -> int:
     ap.add_argument('--identity', required=True, type=Path)
     ap.add_argument('--out', required=True, type=Path)
     ap.add_argument('--record', required=True, type=Path)
+    ap.add_argument('--arrays', type=Path, help="the issued fit's exported arrays (default: CP-17's driver's path)")
     args = ap.parse_args(argv)
     manifest = build(args.root, json.loads(args.issuance.read_text()), args.artifact_dir, args.payloads,
-                     json.loads(args.identity.read_text()), args.out)
+                     json.loads(args.identity.read_text()), args.out, args.arrays)
     files = read(args.out)
     errors = schema.verify_bundle(files)
     controls = tamper_controls(files)
     parts = args.out.resolve().parts
     location = '/'.join(parts[parts.index('.local'):]) if '.local' in parts else str(args.out)
-    record = {'schema': 'cp17-reference-bundle-record-v1', 'location': location + '/',
+    record = {'schema': 'cp17-reference-bundle-record-v1', 'issued_forecasts_schema': schema.ISSUED_FORECASTS_SCHEMA, 'location': location + '/',
               'manifest': manifest, 'manifest_sha256': hashlib.sha256(files['manifest.json']).hexdigest(),
               'validation_errors': errors, 'valid': not errors, 'negative_controls': controls,
               'all_controls_refused': all(c['refused'] for c in controls.values())}

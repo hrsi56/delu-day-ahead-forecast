@@ -1,0 +1,30 @@
+{
+ "day": "2026-03-30",
+ "max_abs_eur": 0.08228660447685954,
+ "max_abs_eur_by_level": {
+  "p025": 0.08228660447685954,
+  "p10": 0.03322738192147057,
+  "p25": 0.02936018135886087,
+  "p50": 0.027819260434654325,
+  "p75": 0.027164761736756304,
+  "p90": 0.02867552929772188,
+  "p975": 0.03953950244184057
+ },
+ "members_max_abs_eur": {
+  "member 0 (cp26-k12-t041, seed 27290011, 105 epochs, patience)": 3.126388037344441e-13,
+  "member 1 (cp26-k12-t041, seed 27290012, 122 epochs, patience)": 2.2737367544323206e-13,
+  "member 2 (cp26-k12-t083, seed 27290021, 76 epochs, patience)": 6.963318810448982e-13,
+  "member 3 (cp26-k12-t083, seed 27290022, 104 epochs, patience)": 4.3017678308387985e-10,
+  "member 4 (cp26-k12-t108, seed 27290031, 581 epochs, patience)": 1.6484591469634324e-12,
+  "member 5 (cp26-k12-t108, seed 27290032, 296 epochs, patience)": 2.2737367544323206e-13,
+  "member 6 (cp26-k12-t096, seed 27290041, 356 epochs, patience)": 5.342669453511917e-07,
+  "member 7 (cp26-k12-t096, seed 27290042, 351 epochs, patience)": 0.2029026675354828
+ },
+ "search": 12,
+ "selections_match": true,
+ "source": {
+  "path": ".local/artifacts/cp-17b/runs/partial/f1-2026-03-30.json",
+  "sha256": "def56acd3236c9bf2986dab2c382f2f81529d142760b4392cf02195d25add2a9"
+ },
+ "status": "different"
+}
