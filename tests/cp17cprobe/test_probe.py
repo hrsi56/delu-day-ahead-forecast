@@ -116,6 +116,15 @@ def test_inputs_ship_the_frozen_files_by_their_frozen_hashes(inputs):
     assert sum(1 for k in inputs['files'] if k.startswith('pyodide/')) == 23
 
 
+def test_the_committed_harness_and_workflow_are_the_ones_that_ran(inputs):
+    """The scratch repository received these files; a later edit here would leave its runs unexplained."""
+    for rel in ('src/cp17cprobe/__init__.py', 'src/cp17cprobe/run.py'):
+        assert inputs['files'][rel]['sha256'] == sha(ROOT / rel), rel
+    assert inputs['files']['.github/workflows/probe.yml']['sha256'] == sha(WORKFLOW)
+    assert inputs['files']['pyproject.toml']['sha256'] == sha(ROOT / 'pyproject.toml')
+    assert inputs['files']['uv.lock']['sha256'] == sha(ROOT / 'uv.lock')
+
+
 def test_no_shipped_input_reaches_past_the_development_boundary(inputs):
     for rel in inputs['files']:
         for found in re.findall(r'(\d{4}-\d{2}-\d{2})\.(?:json|npz)$', rel):
