@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**. Next: τ_eq, then CP-17 |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. Next: the Owner's two rulings (PUBLISH_RULES §14's items; when A1 replaces v1), then 4.7T's brief (not before 2026-12-04) |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -241,12 +241,31 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     - governance is pinned by frozen copies, so r18 can amend the anchor.
   - **The fit is unchanged:** full native and issuing-host parity equal CP-17's records.
   - **The Lead was handed over mid-checkpoint,** on the Owner's instruction.
-- **Next Track B work: r18,** the anchor amendment that ratifies the re-freeze's terms. It goes under
-  the Owner's suspension, with a plan critic, before 4.7T (no earlier than 2026-12-04). It must:
-  - state F1 as 0.082 EUR/MWh, not 0.028;
-  - ratify B0's shadow;
-  - stay appended or §24-only, or first deal with `tests/test_cp26_repair_contract.py`, which
-    hashes the anchor's §§1–23.
+- **v21-r18 ratified on 2026-10-29** ([amendment record](docs/track-b/capstone_v21-r17-to-v21-r18-amendments.md)),
+  under the Owner's suspension of 2026-10-28 and his "Yes, start r18". The new §24.12 ratifies A1's
+  freeze and 4.7T's registered terms:
+  - A1 under CP-17b's freeze, policy identity `439115fb…`, with decisions 1–19;
+  - the success definition, the chains, partial days, the shadows (B0's included) and the driver;
+  - τ = 10 and τ_eq = 0.01 EUR/MWh, with the training window bound first;
+  - F1 recorded at 0.082 EUR/MWh, an observation and not a bound;
+  - 4.7T's protocol (`337a102d…` as revised by `04aac76a…`), a 20-machine-hour ceiling, and the
+    Owner's declaration covering every recorded decision;
+  - the fail-safe `schema.py` defect accepted for the frozen policy's life (R7).
+
+  §§1–23 and §§24.1–24.11 are unchanged, so CP-26's §§1–23 test holds. An independent plan critic
+  reviewed it: READY WITH FIXES, 0 blocking, 6 major and 12 minor, all applied, then a check.
+- **Next Track B work: the Owner's two rulings, then 4.7T's brief.**
+  - **For the Owner, before 4.7T opens:** PUBLISH_RULES §14's "before final-candidate test" items
+    (the badge, the wording, the fresh headline window and the hero-switch rule), as CP-17's protocol
+    §12 proposes them.
+  - **For the Owner, before CP-18's activation:** when A1 replaces v1 as the product. Decision 1 says
+    "until CP-19"; the protocol's §8 and §12 say at CP-18's activation, after a passed 4.7T.
+  - **4.7T's brief** (the window opens no earlier than 2026-12-04) carries r18 §24.12's list:
+    - the §24.2 audit, the Owner's declaration and the retrieval approval;
+    - `refreeze verify` with no problem and no unchecked file, as a precondition;
+    - the code that builds the window's payloads and GFS flags. The only builder refuses days after
+      2026-09-06.
+  - **Alongside:** PRES-5 (it needs a compaction first) and CP-18's preparation.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -566,7 +585,13 @@ decision remains a boundary, not an active workstream.
 
 ## 3. Strategic Anchors
 
-- **Current anchors (on `main` since CP-26's LAND, 2026-10-21):** research **v21-r17**,
+- **Current anchors (on `main` since 2026-10-29):** research **v21-r18**, `capstone_v21.md` SHA-256
+  `9caf83393a08df6851f7e829722583a142ebc2354ee99a3bbaa015d929f3d401`; publication **PUBLISH_RULES
+  1.5** (unchanged, below).
+  - r18 ratifies A1's freeze and 4.7T's terms (§24.12), under the Owner's suspension of 2026-10-28.
+    Its authority, scope, review and dispositions are in the
+    [r17 → r18 record](docs/track-b/capstone_v21-r17-to-v21-r18-amendments.md).
+- **Previous anchors (on `main` since CP-26's LAND, 2026-10-21):** research **v21-r17**,
   `capstone_v21.md` SHA-256 `3124451da84c3cd99fae728c371207aace6ae537474f7769d0ff6333ee53e4fc`;
   publication **PUBLISH_RULES 1.5** (unchanged, below).
   - The revisions r14–r17 were approved by the Owner in turn, under scoped suspensions. Their
@@ -1042,6 +1067,31 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **v21-r18 drafted, reviewed and ratified, 2026-10-29,** under the Owner's suspension of 2026-10-28
+  ("יש לך אישור מלא עם כל ההשעיות וכל מה שאתה צריך"). He started it in the session: "Yes, start r18".
+  - **What it is.** A new notice and a new §24.12 that ratify A1's freeze and 4.7T's terms. Nothing
+    above §24.12 changes except r17's title. Anchor SHA-256 `9caf8339…`, record `4213ee5b…`.
+  - **The plan critic** (a fresh agent, read-only, with `progress.md` withheld) reviewed the
+    candidate `cafe1828…`. The brief is `c63ce6ce…`.
+    - **The review** (`.local/artifacts/r18/plan-critic-review.md`, `cb983c77…`): READY WITH FIXES,
+      with 0 blocking, 6 major and 12 minor findings. It found no hash, identity or figure wrong,
+      nothing that leaks, and no CI step at risk.
+    - **The main catches:**
+      - M1: when A1 replaces v1, read two ways. It is now open for the Owner;
+      - M3: τ_eq's training-window binding was missing;
+      - M4: `refreeze verify` exits 0 with the runtime unchecked. It is now a precondition for 4.7T;
+      - M5: the window's payload builder is outside the freeze and refuses the window. It is now
+        named for 4.7T's brief;
+      - M6: the `schema.py` defect had no owner. R7 now accepts it for the frozen policy's life.
+    - **All 18 were applied,** one with a corrected figure (9.4e-9 across the S_13 origins).
+    - **The check** (`plan-critic-check.md`, `2b04cd92…`): all 18 resolved, with three minor
+      wording points, applied.
+  - **CI.** The history-free CI on the first candidate passed: 2,427 passed, 42 skipped, the same as
+    unamended. The final tree's run is in `.local/artifacts/r18/final-validation/ci312/`.
+  - **Left for the Owner:** PUBLISH_RULES §14's items, before 4.7T opens; when A1 replaces v1,
+    before CP-18's activation.
+  - **Next:** his two rulings, then 4.7T's brief.
 
 - **CP-17b received, landed and closed, 2026-10-29,** under the Owner's delegation and his "Yes, run
   the LAND".
@@ -1941,6 +1991,17 @@ Session Log.
 ---
 
 ## 6. Blockers / Open Questions
+
+- **Two Owner rulings that r18 leaves open (2026-10-29).** Neither blocks preparation.
+  - **Before 4.7T opens: PUBLISH_RULES §14's "before final-candidate test" items.** These are the
+    badge, the wording, the fresh headline window and the hero-switch rule, as CP-17's protocol §12
+    proposes them (`docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md`). 4.7T's brief cites the
+    ruling.
+  - **Before CP-18's activation: when A1 replaces v1 as the product.**
+    - Decision 1 reads "v1 stays the product until CP-19".
+    - The protocol's §8 and its hero-switch rule have A1 go live at CP-18's activation, after a
+      passed 4.7T.
+    - §16.1 requires one identity at completed rollout.
 
 - **Publishing v5 (PRES-4): the Owner's decisions are made (2026-10-11); the brief is next.**
   v5 is adopted in research, but no public surface shows it yet. The decisions:

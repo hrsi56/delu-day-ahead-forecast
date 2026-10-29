@@ -1,4 +1,57 @@
-# Capstone v21-r17 — GFS fragility ruling and a separate post-results supplement
+# Capstone v21-r18 — A1's freeze and 4.7T's terms ratified
+
+**Ratified on 2026-10-29, under the Owner's suspension of 2026-10-28.** On CP-17's return the Owner
+wrote "אני מאשר את כל ההמלצות שלך" ("I approve all your recommendations") and "יש לך אישור מלא עם כל
+ההשעיות וכל מה שאתה צריך" ("you have full approval, with every suspension and everything you need").
+His decision 19 (`docs/track-b/cp-17-owner-decisions-2026-10-28.md`) sets the order:
+- CP-17b re-freezes A1;
+- then this revision ratifies the terms with CP-17b's freeze identity, under that suspension and after
+  an independent plan review, before 2026-12-04.
+
+CP-17b landed on 2026-10-29, and the Owner then started this revision: "Yes, start r18".
+
+**What this revision adds, as additions only:**
+- **§24.12** ratifies the frozen product policy and 4.7T's registered terms, which CP-17 froze and
+  CP-17b re-froze:
+  - A1 under CP-17b's freeze, policy identity `439115fb…`, with the Owner's decisions 1–19;
+  - the success definition and the failure chains;
+  - partial days, and the shadow issuances, B0's included;
+  - F1's disclosure, with its larger observed figure;
+  - 4.7T's protocol, as CP-17 registered it and CP-17b revised it.
+- **This notice** is new, and r17's title below gains "Historical".
+
+Nothing else changes. Below this notice, apart from r17's title line and a separating rule, the
+historical headers, §§1–23 and §§24.1–24.11 stay byte for byte.
+
+**What it does not do:**
+- **It opens no checkpoint** (§24.10). 4.7T still needs five things: its issued brief, the §24.2
+  audit, the Owner's declaration, his retrieval approval, and his ruling on PUBLISH_RULES §14's items.
+  It opens no earlier than 2026-12-04.
+- **It changes no code, record, verdict or freeze.**
+- **It decides no publication.**
+
+**The previous revision.** v21-r17 is preserved at `61658c7:capstone_v21.md`, SHA-256
+`3124451da84c3cd99fae728c371207aace6ae537474f7769d0ff6333ee53e4fc`, and as CP-17b's frozen copy
+`docs/track-b/evidence/cp-17b/pinned/anchor-capstone-v21-r17.md`.
+
+**The record of this amendment** is `docs/track-b/capstone_v21-r17-to-v21-r18-amendments.md`.
+
+**Who wrote it.** The Orchestrator drafted this text, under the Owner's delegation, from three
+sources:
+- the Owner's decisions;
+- CP-17's and CP-17b's records;
+- an independent plan critic's review.
+
+§24.12's decisions table attributes every term this revision ratifies:
+- the Owner's decisions 1–19;
+- the protocol's and the freeze's own terms (rows P and F);
+- the Orchestrator's choices R1–R7.
+
+This is not a claim that the Owner reviewed every sentence.
+
+---
+
+# Historical Capstone v21-r17 — GFS fragility ruling and a separate post-results supplement
 
 **Owner-approved scope amendment, 2026-10-19.** After CP-26's completed report, the Owner
 accepted the proposed existing-data GFS analysis and planning scenarios, and explicitly
@@ -4795,3 +4848,272 @@ final freeze. With 4.7T opening no earlier than 2026-12-04, CP-19 cannot finish 
 | O12 | The harness and the parity gate | Orchestrator (first review, M6) |
 | O13 | Publication of pre-4.7T results through 2026-09-06 (invariant 10) | Orchestrator, following D4 (first review, M9) |
 | M | Every other numeric value in §24.7 and §24.8 | The stage 4 memo, adopted |
+
+### 24.12 A1's freeze and 4.7T's registered terms (v21-r18)
+
+**What this section does.** §24.9 requires CP-17 to freeze one candidate, and requires 4.7T's terms to
+be registered before 4.7T opens.
+- **CP-17 froze A1** on 2026-10-28.
+- **CP-17b re-froze it** on 2026-10-29, under the Owner's decisions 13–19.
+
+This section ratifies the result. It completes §24.9 and governs where the two differ. Every term
+below was set on development data only, without any 4.7T outcome, since none exists.
+
+#### The frozen policy
+
+| Item | Value |
+|---|---|
+| The candidate | **A1:** DDNN-2 alone, CP-26's nominal D2 with its own Johnson SU quantiles, as CP-28's pre-registered rule selected it. It is designated the final version pending 4.7T (§16.1; decision 1). It stays selected and pending, and v1 stays the product, until A1 replaces it. When that happens is open for the Owner (below) |
+| The freeze | **CP-17b's.** `docs/track-b/evidence/cp-17b/freeze-manifest.json`, SHA-256 `1fe07bddda14035ff44e9a8e6571c12bd58320d501395cbacc185d902f855502`, policy identity `439115fb984359c0c68f79b77a6da4b85a5e75677cfbeb24e043876793ca9893`; its freeze record `freeze-record.md`, SHA-256 `aaaa93047dece943db8f5d19f78927ac2f1dfb2da94136425570506e3da1eaca`, complete on its own. It supersedes CP-17's freeze (policy identity `b304d6479a8628a26014422c6682f1e6543bd0d9ff656ad34b2d87b163bc254e`), whose records stay as committed |
+| Where it landed | `land/cp-17b` = `095578cb9b1b372a56e6c2f0f0ba9dc50fb0f57c`; `evidence/cp-17b` = `9b89774b3486946be4d711d12dd9fbfbb623ae81`. CP-17: `land/cp-17` = `d7619eaf4a3862f29a7bd9967f0c66451984cca7`, `evidence/cp-17` = `3876bcdc3fceb70ef4f95160173c97633546c60a` |
+| The code (§19.2) | one code path: the package `src/cp17/`, 34 files, file-list SHA-256 `682c5833fce8fdb5390a49794d83e11a515cb2b89db24d9e9945fcbad714642e`. Its issuance driver `cp17.daily`, SHA-256 `18e1589307e26336ed9eb05561b0b17485a065eda9c7da1d75f2940c4dc473be`, is frozen with it and never ships. The driver holds no fit, judgement or scoring of its own. No component needs §19.3's exception route |
+| The issuing host | Pyodide 0.28.0, by its 23 pinned file hashes, in the pinned Node.js v26.7.0 binary (`1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040`), one worker (decision 10). The chain's judgement and the shadow states run in CPython inside `cp17.daily`, from the package's own files, in the environment `uv.lock` pins |
+| The reference runtime (§19.3) | the issuing host, plus Chromium 153.0.8010.12 and WebKit 26.6 through Playwright 1.63.0, on the Apple M3 machine class (8 cores, 16 GB, macOS 26.5.2) |
+| The freeze origin | the issuance for delivery 2026-09-06 at 2026-09-05 09:00 UTC, artifact `91e00fea32af466127c0e2bd41404259f4652d26acfe9f9aa9f423cb9bc12cd2` |
+| The initial state | CP-17's freeze-origin state, carried by reference: CP-26's final replay state for v4, v2 and B0, and v5's, the 4.7T control's. A1 holds no interval state. Its state is S_13's search state (below) |
+| The rest of the freeze (§16.2; §16.4's CP-17 row; §24.9) | carried from CP-17's freeze record by CP-17b's §10: the designation and its prerequisites (§1); the features, source availability and the tier, margin and GFS rulings (§3); A1's search state S_13 (`k13.json`, content digest `6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f`) and the fixed blends (§4); the seeds (§7); the refit schedule, with the next search S_14 = 2027-01-06, a protocol date (§8); the uncertainty layers (§9); the registry identities, `delu-day-ahead-policy` version 1 and `delu-live`, local names only (§12); §19.5, §19.3 and §19.7 (§14) |
+| The check that survives amendment | `python -m cp17.tools.refreeze verify docs/track-b/evidence/cp-17b/freeze-manifest.json`. It reads the governance documents from their frozen copies (`docs/track-b/evidence/cp-17b/pinned/`), so this revision leaves it green. CP-17's own `freeze verify`, run by hand on the raw tree, reports the anchor as altered, beside the two package files CP-17b re-froze, by design |
+
+**"Frozen"** keeps §16.2's meaning. Any change to the policy, its code, its runtime or its state needs
+a new freeze and a new evaluation. Daily fitting changes weights and state within the frozen policy,
+and is not a change to it.
+
+**The lock-price idea is not adopted** (decision 3). 4.7T stays a pure test of forecast accuracy.
+
+#### Daily operation, as frozen
+
+These are the freeze record's §§4–6, and they meet §16.2's "exact meaning of a successful daily fit".
+
+**The issue time:** D−1 11:00 Europe/Berlin, strictly before (§24.4).
+
+**The label rules (decision 16):**
+- **released errors** in every interval buffer come from complete delivery days ≤ D−2, and each is
+  consumed once;
+- **training targets** are the delivery days before D whose prices were published strictly before the
+  issue time. D−1's prices are published on D−2, so D−1 is a training target.
+
+**A successful daily fit** passes all five of the freeze record's §4 criteria. They are summarized
+here, and the freeze record's text governs:
+1. **Inputs.** The payload verifies, and D's outcome is absent. At least one hour of D is forecastable
+   by the frozen design, where a forecastable hour is a row whose inputs are valid.
+2. **Training.** The members train under the frozen rules, with no guard refusal and no non-finite
+   value. One failed DDNN-2 member fails A1.
+3. **Emission.** Seven finite, ordered quantiles for every forecastable hour of D, and only those.
+4. **The artifact.** It is written and verified inside the chain, before the chain moves on (N3).
+5. **Resources.** One worker under the issuing host, at most 15 minutes of wall time and 4 GB of peak
+   memory, measured in the attempt's own process. An issued artifact always carries its measurement
+   (N2).
+
+Anything else is a failed fit. Its forecast is never issued, and the chain moves on. v4, v2 and B0 are
+judged by the same criteria, under their own frozen training rules.
+
+**Partial days (decision 13):**
+- A fit that emits every forecastable hour succeeds on those hours. When those are fewer than the
+  day's 23, 24 or 25 hours, it is issued and displayed as partial, with the missing hours named, for
+  example "successful daily fit (partial: 23 of 24 hours; missing 02:00 Europe/Berlin)".
+- A day with no forecastable hour is a failed issuance for every policy, B0 included.
+
+**The failure chains (decisions 11, 12 and 15):**
+
+| Cause | Chain |
+|---|---|
+| GFS late or missing at the issue time | A1 recorded as skipped for an unavailable input → v2 → B0 → failed issuance |
+| A1's own fit fails while the weather is available | v4 → v2 → B0 → failed issuance |
+| A fallback's own fit fails | the next policy in its chain |
+
+- **G2 (decision 17).** GFS missing in A1's training window, but not at the issue time, fails A1's fit,
+  so the second chain applies. v4 fails for the same reason, and v2 issues.
+- **The rules of the chain** stand as frozen:
+  - A1 issues whenever its own fit succeeds;
+  - every fallback is complete, with no subset renormalized and no quantile manufactured;
+  - a failed or skipped fit is displayed as such, even when a fallback issues;
+  - a fallback forecast never counts as a successful A1 fit (§16.2).
+- **The driver (N1).** Each attempt runs in its own fresh issuing-host process, with a fresh output path
+  and a 900 s timeout. Any of these is a failed fit, and the chain moves on:
+  - a killed, timed-out or non-zero process;
+  - a missing, unreadable or foreign record.
+
+  A failed issuance is written and verified too.
+- **The GFS-late route's measured excess stays disclosed** (decision 11): on CP-25's 1,354 paired GFS
+  +6 h affected development dates, v2 is +2.27% on MAE and +6.68% on WIS against A1's GFS +6 h route.
+
+**The shadow issuances (decision 14, as frozen):**
+- **Every delivery day, whether or not A1 succeeds,** v4, v2 and B0 are fitted under the issuing host
+  as shadow issuances. Each runs in its own process, as an attempt does.
+- **A shadow is never published, displayed or scored as the product's forecast.**
+- **Registration and release.** A shadow's central and scale are registered before the outcome. Each
+  policy's own errors from complete delivery days enter its own buffer once, at the first origin after
+  D−2's release.
+- **CP-26's intake rule applies,** on CP-26's own state classes. Only a complete canonical issuance
+  (23, 24 or 25 keys) enters a buffer, with a finite central and, for v4 and v2, a scale floored at 1
+  and the single-central identity. So a partial day's shadow enters none, and a failed shadow enters
+  none.
+- **A fallback the chain fitted is the same fit as its shadow,** fitted once.
+- **On a day whose GFS is late or missing at the issue time,** v4's shadow is skipped, because its
+  inputs are unavailable.
+- **B0 is shadow-issued too, which decision 14 did not foresee.**
+  - Decision 14 expected B0's raw-error buffer to come from published prices.
+  - A rebuild from prices alone does not equal CP-26's state: it also takes in 36 days that CP-26
+    never took in, so the 28-day buffer differs at 524 of 2,381 origins (`reports/cp17b/b0-rebuild.json`).
+  - So B0 is shadow-issued, as CP-17b's brief prescribed for that case. It costs a few seconds a day.
+- **The measured cost.** On 14 consecutive development days under the issuing host, A1 plus the three
+  shadows took a median of 255 s per delivery day, and at most 288 s (`reports/cp17b/shadow-run.json`).
+  Jobs ran concurrently, so these figures are conservative.
+
+#### The definitions, τ and τ_eq
+
+- **§19.5's definitions** are CP-17's (`docs/track-b/evidence/cp-17/definitions.md`, SHA-256
+  `77a017665adc1815ef977a9756e05bbbdab0fb0df509305632058a32560ce36d`), carried by CP-17b's freeze
+  record §10.
+- **The percentage measure's tolerance** is τ = 10 EUR/MWh (decision 8): the share of scored hours whose
+  p50 lies within ±10 EUR/MWh of the published price.
+- **The equality tolerance** is τ_eq = 0.01 EUR/MWh (decision 9). It is a visitor's tolerance against
+  the issued artifact (§19.3).
+  - **The training window is bound first** (CP-17's freeze record §14). A retrain is of the issued fit
+    only if it ran on that fit's shipped training window: its payload identity must equal the issued
+    artifact's, or the status is "different".
+  - A visitor's retrain then reports one of three statuses:
+    - "identical bit for bit", when every emitted quantile is IEEE-754 equal to the issued one;
+    - "within ±0.01 EUR/MWh", when every data-driven selection matched and every emitted quantile is
+      within τ_eq;
+    - "different" otherwise, with the numbers.
+- **§19.7's method for the neural component** is the one CP-17 froze, carried by CP-17b's freeze record
+  §10.
+
+#### F1: the issuing host against native arithmetic (decision 18)
+
+- **The two paths.** The product's forecasts are the issuing host's. CP-26's and CP-28's development
+  evidence is native arithmetic. Both run the same code, and every data-driven selection matched. They
+  differ by floating-point rounding, which training can amplify.
+- **The largest difference observed is 0.082 EUR/MWh,** at A1's p2.5 on 2026-03-30 (0.028 at its
+  p50).
+  - The source is one member of S_12's ensemble, which stopped by patience at 351 epochs, not at the
+    epoch cap (`reports/cp17b/f1-2026-03-30.json`).
+  - At the DST origin 2025-10-26 the difference was 0.028 EUR/MWh.
+  - At the seven origins from 2026-08-31 to 2026-09-06, which use the frozen S_13 ensemble, it was at
+    most 9.4e-9 EUR/MWh (`reports/cp17b/host-parity.json`).
+  - These are observed figures, not a bound.
+- **The disclosure this revision records** is the largest observed figure, 0.082 EUR/MWh, stated as an
+  observation and not a bound. Its public wording is the Owner's publication decision. The freeze
+  manifest's own F1 text records CP-17's 0.028 figure. That manifest is frozen, so this section, not
+  the manifest, records the disclosure.
+- **τ_eq is unchanged.** It governs a visitor's retrain against the issued artifact. Chromium and
+  WebKit reproduced the issuing host bit for bit wherever they were run: A1 and v4 at 2026-09-06, and
+  CP-17-probe's fits. No browser run covers the F1 origins.
+- **Native parity with CP-26 stays the check of code identity.** It is bit for bit for A1, v5, v4, v2
+  and B0 at nine origins, and CP-17b reran it in full.
+- **4.7T scores the issued forecasts,** so it tests the product as issued.
+
+#### 4.7T's registered terms
+
+§24.9's list of terms registered before 4.7T opens is answered by **4.7T's protocol**. It consists of
+two documents, read together:
+- **CP-17's protocol:** `docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md`, SHA-256
+  `337a102d6bbbf6d9335fe6ed701a4c80ea1b9172344ffc0f63909b155b567c58`;
+- **CP-17b's revision:** `docs/track-b/evidence/cp-17b/4-7t-frozen-protocol.md`, SHA-256
+  `04aac76a1fc1166a367eb212c19f802abf2b2ba46f7e63345ed72e46508ae22a`. It replaces CP-17's §3 and §11,
+  and adds to its §4 and §7.
+
+| §24.9's item | The protocol's answer |
+|---|---|
+| The comparators | **A1 against the control,** nominal v5, and **against B0.** Both are registered gates. "A1" in every endpoint is the product's emitted forecast: A1 on a successful fit, the frozen fallback otherwise (§1, §4). v3, v4 and v1's released artifact are descriptive references, never tested. A failed comparator fit is scored with B0's forecast and counted, and a missing B0 is missing (§2) |
+| The primary scores and their aggregation | **p50 MAE and §24.7's seven-quantile WIS.** A date's loss is the mean over its scored keys: CP-26's keys, intersected with the hours both policies emitted. Dates are weighted equally. A partial day is scored on its emitted hours, and a failed issuance is missing in every pairing that involves it (§4 and its revision) |
+| The pass conditions and margins | **Four one-sided endpoints:** A1 against 0.995 × v5, and A1 against B0, each on MAE and on WIS. 4.7T passes when the compound p-value, the largest of the four, is ≤ 0.05. There is one candidate, so there is no Holm (§5) |
+| The dependence treatment | **CP-26's paired, non-circular, moving-block studentized bootstrap,** with 7-day blocks, 10,000 replicates, Bartlett HAC at lag 14 and seed 20261204 (§6) |
+| The minimum support | **At least 60 of the 90 dates** paired and scored per comparison. A partial date counts while one scored key remains, and a failed issuance does not. Below 60, the result is inconclusive and the window is spent (§7 and its revision) |
+| The failure rules | **No runner-up moves up.** The window is spent whatever the result, and v1 stays the product (§8). When A1 would replace v1 after a pass is open (below) |
+| The window's generation and counting | the frozen policy above, under the issuing host, with the shadows. Each day is counted once, by class and cause (the revision's §3) |
+| PUBLISH_RULES §14's "before final-candidate test" trigger | **Open for the Owner,** below |
+
+The protocol also fixes:
+- **the §24.2 audit** (§9);
+- **the retrieval plan,** prepared and not run (§10);
+- **the calendar** (the revision's §11).
+
+**Its executable form** is `src/cp17/tools/fresh_test.py`. The boundary guard refuses the real window
+until the gate moves it.
+
+**Two additions, made here:**
+- **The ceiling.** 4.7T's ceiling is the protocol's proposed **20 machine-hours**, CPU only: at most 4
+  workers, BLAS at one thread, 12 GB of peak memory, and no cloud. The measured estimate is about 6.4
+  machine-hours for the product run with its shadows, and about 1.2 for the comparators. 4.7T's brief
+  carries the ceiling.
+- **The Owner's declaration (§24.2) covers every Owner decision recorded before 4.7T opens.** That
+  includes:
+  - decisions 1–19;
+  - his authority for this revision: the suspension of 2026-10-28, and "Yes, start r18";
+  - any later decision.
+
+  CP-17's protocol §9 names decisions 8 to 12, and its list is completed here, not replaced. The
+  Orchestrator's choices R1–R7 below are registrations under §24.2's test, which the audit checks.
+  4.7T's brief shows the Owner this scope when he declares.
+
+#### Open, for the Owner and for later checkpoints
+
+None of these is decided here, except the `schema.py` defect, which R7 accepts:
+- **For the Owner, before 4.7T opens: PUBLISH_RULES §14's "before final-candidate test" items.** These
+  are the badge, the wording, the fresh headline window and the hero-switch rule, and CP-17's protocol
+  §12 proposes them.
+  - They are publication rules, which the Owner ratifies (PUBLISH_RULES §14).
+  - 4.7T's brief cites his ruling.
+- **For the Owner, before CP-18's activation: when A1 replaces v1 as the product.**
+  - Decision 1 reads "v1 stays the product until CP-19".
+  - CP-17's protocol §8 says the same, then adds: "It also stays if 4.7T passes, until CP-18's
+    activation (§16.1)." Its proposed hero-switch rule (§12) reads: "It switches to 'live' only at
+    CP-18's activation, which requires a passed 4.7T."
+  - §16.1 and §19.1 require one identity for the panel, the demo and the daily policy at completed
+    rollout.
+
+  Neither reading governs CP-18's activation until he rules. His ruling can go with the §14 items.
+- **For 4.7T's brief:**
+  - **the §24.2 audit, the Owner's declaration and the retrieval approval;**
+  - **the runtime check, as a precondition.** A window issuance runs only where `refreeze verify`
+    reports no problem and no unchecked file. The command exits 0 in both cases, so the brief reads its
+    output. On CI it reports the issuing host's local files as unchecked, never as passed.
+  - **the window's inputs and payloads.**
+    - `cp17.daily` takes each day's payloads and GFS-availability flag from its caller.
+    - The only payload builder, `cp17.tools.payloads`, is outside the policy identity and refuses days
+      after 2026-09-06.
+    - 4.7T's brief names the code that turns the retrieved data into the frozen payload kinds. That
+      code sets each day's GFS flag under the tier register and the Owner's tier, margin and GFS
+      rulings.
+    - The brief also names how that code is shown equal to the development builder, for example by
+      byte-identical payloads at the nine parity origins, and how the comparators' native runs read the
+      window.
+
+    None of this changes a frozen rule.
+- **For CP-18:**
+  - the unattended pipeline, which calls `cp17.daily` once per delivery day, with its schedule,
+    deadline and late-forecast rule (§24.4);
+  - **where the pipeline runs.** The issuing host is the pinned files above. Any other binary or
+    machine is a runtime change, which needs a new freeze and a new evaluation (§16.2);
+  - publication authority, the MLflow registration of the local names and versions, and the Space's
+    activation;
+  - §19.3's visitor wording, proposed in CP-17's report for the Owner's publication decision. It states
+    F1 as recorded above.
+- **A fail-safe defect in the frozen package, accepted (R7).**
+  - **The defect.** A structurally malformed day in an issued-forecasts record that was also re-hashed
+    in the manifest makes `src/cp17/schema.py` raise an error instead of listing the fault.
+  - **Why it is accepted.** The record is refused either way, so nothing is issued or served from it.
+    A fix changes the package, so it needs a new freeze and a new evaluation (§16.2). Made after 4.7T,
+    a fix would leave 4.7T's result covering a superseded identity.
+  - **What follows.** It is accepted for the frozen policy's life, and fixed at the next freeze. CP-18's
+    pipeline, and the Space wherever it runs `verify_bundle`, treat a raised error as a refused record.
+    The Owner may instead order a re-freeze before 4.7T opens. CP-17b's landing record had listed the
+    defect for CP-18.
+
+#### Decisions recorded (v21-r18)
+
+| # | Decision | Who |
+|---|---|---|
+| 1–12 | The candidate; the GFS check; no lock price; the window; 4.7T's gates; PRES-5 (recorded only: a publication decision under PUBLISH_RULES, outside this ratification, §24.10); CP-18's preparation; τ; τ_eq; the issuing host; the two chains | Owner, 2026-10-25 and 2026-10-28 (`docs/track-b/pre-cp-17-rulings-2026-10-25.md`, SHA-256 `d29b0abc6a17dcb6bca2cbd464c1dcc5858c50e2b653a42e646d3dc66ea8f6b0`) |
+| 13–19 | Partial days; the shadow issuances; the chains kept; C1's wording; G2; F1 disclosed with τ_eq unchanged; CP-17b, then r18 | Owner, 2026-10-28 (`docs/track-b/cp-17-owner-decisions-2026-10-28.md`, SHA-256 `4d049770e51a37a806c52a4ae681f70aae62ac1847a67c7c0c3109385da3ac37`) |
+| P | 4.7T's protocol terms beyond decisions 4, 5 and 8–14: the endpoints' form (0.995 × v5), the compound p-value, the bootstrap's replicates, HAC lag, stratum and seed, the minimum support of 60 dates, the 14-day sensitivity, and the comparators' failure rule | CP-17's Lead under CP-17's brief item 8, registered outcome-blind (`337a102d…`), and revised by CP-17b (`04aac76a…`). They were summarized in CP-17's landing record before the Owner's approval of 2026-10-28, and are ratified here |
+| F | The freeze's terms beyond decisions 1–19: the success definition's ceilings, the driver's process and timeout rules, the shadow intake rule, the windows, the seeds and the refit schedule | CP-17's and CP-17b's briefs (Orchestrator) and their freezes; ratified here |
+| R1 | B0 shadow-issued, because its price-only rebuild differs from CP-26's state | Orchestrator, in CP-17b's brief, applying decision 14; ratified here |
+| R2 | v4's shadow skipped on a GFS-late day | CP-17b's freeze, from the shadows' input checks; ratified here |
+| R3 | F1 recorded at its largest observed figure, 0.082 EUR/MWh, as an observation and not a bound. The public wording stays the Owner's | Orchestrator, applying decision 18 to CP-17b's measurement |
+| R4 | 4.7T's ceiling, 20 machine-hours | Orchestrator, from the measured costs in the protocol's §11 |
+| R5 | The Owner's declaration covers every decision recorded before 4.7T opens | Orchestrator, applying §24.2 |
+| R6 | PUBLISH_RULES §14's items, and when A1 replaces v1, left to the Owner | Orchestrator, following PUBLISH_RULES §14 and decision 1 |
+| R7 | The fail-safe `schema.py` defect accepted for the frozen policy's life | Orchestrator, under the Owner's delegation; the Owner may instead order a re-freeze before 4.7T opens |
