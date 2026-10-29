@@ -368,6 +368,8 @@ def main(argv=None) -> int:
         print(json.dumps({k: value['machine'].get(k) for k in ('cpu_model', 'cpu_count', 'memory_bytes', 'os_version')}),
               value['node']['sha256'], value['pyodide'].get('equal_to_freeze_manifest'))
         return 0 if value['pyodide'].get('equal_to_freeze_manifest', True) else 1
+    # Absolute, because the host's fresh run folders are (`tempfile.mkdtemp`) and the records cite them relative to it.
+    args.out = args.out.resolve()
     args.out.mkdir(parents=True, exist_ok=True)
     return parity(args) if args.cmd == 'parity' else shadow(args)
 
