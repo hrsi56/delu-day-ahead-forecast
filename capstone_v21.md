@@ -1,4 +1,63 @@
-# Capstone v21-r18 — A1's freeze and 4.7T's terms ratified
+# Capstone v21-r19 — the issuing host on a GitHub runner, and a publication time that is not a claim
+
+**Ratified on 2026-10-30, under the Owner's grant of 2026-10-30.** His decisions 22–25
+(`docs/track-b/owner-decisions-2026-10-30.md`) set the road to the live product.
+- **Decision 25's grant.** His authority covers "the Lockdown suspensions each named step needs", among
+  them "`capstone_v21.md` and its amendment record for r19". The Orchestrator runs these steps "without
+  asking again".
+- **His words:** "רוץ באופן עצמאי כל עוד אין בעיות חדשות שצצות החלטות משמעותיות אני מאשר לך לפעול
+  עצמאית לחלוטין" ("Run independently. Unless new problems or significant decisions come up, I authorize
+  you to act fully on your own.").
+- **The host choice.** CP-17c-probe landed on 2026-10-30, and the Orchestrator chose the host under
+  decision 24.
+
+**What this revision adds, as additions only:**
+- **§24.13** records five things:
+  - the new issuing host, chosen under decision 24. It is the official Node.js v26.7.0 darwin-arm64
+    binary, on a GitHub-hosted `macos-26` runner for the daily product and on the Owner's Mac for 4.7T
+    and local runs. It takes effect at CP-17c's landing;
+  - decision 22's publication time. It replaces §24.4's 12:00 deadline and late rule, and §16.4's
+    "timely" count for CP-19;
+  - decision 23's bounded catch-up;
+  - what CP-17c re-freezes, and what 4.7T then tests;
+  - where S_14 runs.
+- **This notice** is new, and r18's title below gains "Historical".
+
+Nothing else changes. Below this notice, apart from r18's title line and a separating rule, the
+historical headers, §§1–23 and §§24.1–24.12 stay byte for byte.
+
+**What it does not do:**
+- **It opens no checkpoint** (§24.10). 4.7T still needs five things:
+  - CP-17c's landing;
+  - its issued brief;
+  - the §24.2 audit;
+  - the Owner's declaration;
+  - his retrieval approval.
+
+  His ruling on PUBLISH_RULES §14's items, r18's fifth precondition, was given as decision 20
+  (`docs/track-b/owner-decisions-2026-10-29.md`). 4.7T opens no earlier than 2026-12-04.
+- **It changes no code, record, verdict or freeze.** CP-17c makes the re-freeze.
+- **It decides no publication.**
+- **It changes no 4.7T term in its text.** The protocol's references to the frozen identity and the
+  issuing host resolve to CP-17c's from its landing (§24.13).
+
+**The previous revision.** v21-r18 is preserved at `e9423ea5:capstone_v21.md`, SHA-256
+`9caf83393a08df6851f7e829722583a142ebc2354ee99a3bbaa015d929f3d401`.
+
+**The record of this amendment** is `docs/track-b/capstone_v21-r18-to-v21-r19-amendments.md`.
+
+**Who wrote it.** The Orchestrator drafted this text, under the Owner's delegation, from three
+sources:
+- the Owner's decisions;
+- CP-17c-probe's records;
+- an independent plan critic's review.
+
+§24.13's decisions table attributes every term this revision adds: the Owner's decisions 22–25, and the
+Orchestrator's choices H1–H4. This is not a claim that the Owner reviewed every sentence.
+
+---
+
+# Historical Capstone v21-r18 — A1's freeze and 4.7T's terms ratified
 
 **Ratified on 2026-10-29, under the Owner's suspension of 2026-10-28.** On CP-17's return the Owner
 wrote "אני מאשר את כל ההמלצות שלך" ("I approve all your recommendations") and "יש לך אישור מלא עם כל
@@ -5117,3 +5176,310 @@ None of these is decided here, except the `schema.py` defect, which R7 accepts:
 | R5 | The Owner's declaration covers every decision recorded before 4.7T opens | Orchestrator, applying §24.2 |
 | R6 | PUBLISH_RULES §14's items, and when A1 replaces v1, left to the Owner | Orchestrator, following PUBLISH_RULES §14 and decision 1 |
 | R7 | The fail-safe `schema.py` defect accepted for the frozen policy's life | Orchestrator, under the Owner's delegation; the Owner may instead order a re-freeze before 4.7T opens |
+
+### 24.13 The issuing host, the publication time and the catch-up (v21-r19)
+
+**What this section does.** It applies the Owner's decisions 22–25 of 2026-10-30
+(`docs/track-b/owner-decisions-2026-10-30.md`, SHA-256
+`1286548362b5618e3fb01c616d673c0af83dd79effeaf102bb9727ac219aabab`) and CP-17c-probe's result.
+- It governs where it differs from §16, §19, §24.4, §24.9 or §24.12, and from the frozen records it
+  names below.
+- Every term below was set on development data only, without any 4.7T outcome, since none exists.
+
+#### CP-17c-probe's result
+
+**CP-17c-probe** landed on 2026-10-30:
+- `land/cp-17c-probe` = `a92e05253210a4db2ba1d1c2b6272c2ce5f155fb`;
+- `evidence/cp-17c-probe` = `909f552e3a815786b8140d2ddbe2cdfaccec8066`;
+- its landing record `docs/track-b/cp-17c-probe-landing-2026-10-30.md`, SHA-256
+  `350ff44cc1f72f7f1c18873d8d0cc5a4e4df70ccf9cf3b7881911f10ce15aeff`.
+
+Its Integration PASS binds `3bba29495db26de28a45a20ab05f09a1d3bcb313`.
+
+**What ran.** It ran CP-17b's own reference fits through the frozen chain `cp17.daily`, unchanged. Each
+used the frozen package, Pyodide 0.28.0's 23 pinned files and the official Node.js v26.7.0 binary for its
+platform. The fits were:
+- A1 at the nine parity origins, and v4, v2 and B0 at two of them;
+- all four policies on F1's day, 2026-03-30;
+- the 14 shadow days, 2026-08-24 to 2026-09-06, with the shadow states carried on the runner.
+
+| Where | Fits bit-identical to the frozen host | Shadow buffers | Slowest attempt | Largest peak |
+|---|---|---|---|---|
+| GitHub-hosted `ubuntu-24.04` (x64) | 75 of 75 | equal at all 14 origins and in the final state | 284.6 s | 844 MiB |
+| GitHub-hosted `macos-26` (Apple silicon), two runner images | 75 of 75 | equal at all 14 origins and in the final state | 228.9 s | 917 MiB |
+| The Owner's M3, with the official darwin-arm64 binary (parity origins and F1's day only) | 19 of 19, twice | not run | 153.3 s | 894 MiB |
+
+No selection differed and no quantile moved. τ_eq and F1 stand as §24.12 records them. The figures are
+in `reports/cp17c-probe/measurement.json` and `report.md`.
+
+#### The issuing host (decision 24; H1)
+
+**From CP-17c's landing on,** the issuing host is the following.
+
+| Item | Value |
+|---|---|
+| The runtime | Pyodide 0.28.0, by its 23 pinned file hashes, in the official Node.js v26.7.0 darwin-arm64 binary, one worker. The tarball is `node-v26.7.0-darwin-arm64.tar.gz` from `https://nodejs.org/dist/v26.7.0/`, 57,622,243 bytes, SHA-256 `7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4`. Its `bin/node` is 145,238,560 bytes, SHA-256 `a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df`. The chain's judgement and the shadow states run in CPython inside `cp17.daily`, in the environment `uv.lock` pins, under one CPython patch version that CP-17c pins |
+| The machines | **The daily product:** a GitHub-hosted standard runner, label `macos-26` (Apple silicon), in the product's repository, `hrsi56/delu-day-ahead-forecast`, which is public. **4.7T and any local run:** the Owner's Apple-silicon Mac. The runner's image version and CPU model are recorded, and are not pinned |
+| The reference runtime (§19.3) | the issuing host above, plus Chromium 153.0.8010.12 and WebKit 26.6 through Playwright 1.63.0, on the Apple M3 machine class, as §24.12 records |
+| Resources | unchanged: criterion 5's one worker, 15 minutes of wall time and 4 GB of peak memory |
+
+**What this supersedes in §24.12, from CP-17c's landing:**
+- **its "The issuing host" row,** and the issuing-host part of its "reference runtime" row;
+- **in its list "For CP-18":**
+  - the first item's "deadline and late-forecast rule (§24.4)". The publication time below governs;
+  - the item "where the pipeline runs". The issuing host is the binary and runtime pinned above.
+    - **A machine that passes the checks below (H2) is not a runtime change.** That covers any
+      `macos-26` runner VM, image version or CPU model, and the Owner's Apple-silicon Mac.
+    - **Any other binary, runtime file, operating system or architecture is a runtime change** (§16.2).
+
+**Until CP-17c lands,** §24.12's issuing host stays the frozen host. That is the Homebrew binary
+`1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040`, and Homebrew's `node` stays pinned
+on the Owner's Mac.
+
+**Why macOS and not Linux (H1).** Both runners passed cleanly, and decision 24 leaves the choice to the
+Orchestrator. CP-17c-probe proposed Linux.
+- **One binary for the whole product.**
+  - 4.7T runs on the Owner's Mac with no cloud (§24.12).
+  - With the macOS runner, the daily product, 4.7T and any local run all use the same binary,
+    `a9bd0630…`, on the same architecture. So 4.7T tests the binary and runtime the product issues
+    with. The probe found the arithmetic identical on every machine it measured, and the canary checks
+    it on every run.
+  - Linux's binary, `ad19784f…`, cannot run on the Owner's Mac. 4.7T would then have tested another
+    binary, or moved to the cloud against its registered terms.
+- **The machine moved no bit.** The same binary reproduced every fit on the runners' M2 Pro, across two
+  runner images, and the parity and F1 fits on the M3.
+- **The cost is the same.** The product's repository is public, where standard runners cost nothing on
+  either OS, by GitHub's published terms. The probe's ten-times macOS rate is a private repository's.
+- **What Linux would have given:**
+  - reproduction on two runner CPU generations, one of them from the cancelled run's records. macOS
+    showed two Apple generations, the M2 Pro and the M3;
+  - more plentiful runners. Decisions 22 and 23 already absorb a delayed or dropped run.
+
+**The runner class.** The probe measured a private repository's `macos-26` class, and the public
+repository's class may differ.
+- **The arithmetic** did not change across machines. The canary checks it on every run.
+- **The timing** did change. Each fit's ceiling is enforced in its own process, so a slower class fails
+  closed, never silently.
+- **So CP-17c measures on a private repository's `macos-26`.** CP-18 measures the public class's timing
+  in the product's repository, on development days, before the first live issuance.
+- **Why not a public scratch repository.** Its runs would need A1's search state and CP-17c's material.
+  That would publish them before decision 25's one complete publication.
+
+**The checks before each run's first issuance (H2).**
+- They run once per run, on either machine, in the order below. They run again whenever the machine or
+  the runtime changes within a run.
+- **Any failure means nothing in that run is issued,** and each of its days is not issued.
+- **For 4.7T,** they run once before the window's first issuance, as part of §24.12's runtime
+  precondition. A failure there is not a day's outcome: no window issuance runs, nothing is counted, and
+  4.7T's brief returns it as a blocker.
+
+The checks:
+1. **The pins.** `refreeze verify` against CP-17c's manifest must report no problem and no unchecked
+   item. It exits 0 in both cases, so the run reads its output, as §24.12 requires for 4.7T.
+2. **The binary.** The tarball and `bin/node` must match the hashes above.
+3. **The machine.** It must be macOS on ARM64. On the runner, `ImageOS` must be `macos26`, and the image
+   version is recorded.
+4. **A canary fit.** A1 at the freeze origin, 2026-09-06, is reissued under the host. Its quantiles must
+   reproduce the frozen SHA-256 that CP-17c records for the freeze origin.
+   - The probe found CP-17b's value,
+     `4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5` (`reports/cp17b/host-parity.json`),
+     and CP-17c shows it unchanged.
+   - It took 98.8 s on `macos-26`.
+
+#### What CP-17c re-freezes, and what 4.7T then tests
+
+**A new runtime is a change under §16.2,** so CP-17c re-freezes A1 before 4.7T opens. 4.7T is the new
+evaluation. CP-17c records a new policy identity, and 4.7T tests that identity under the host above.
+CP-17c's brief is the Orchestrator's, under decision 25.
+
+**What CP-17c changes:**
+- **the issuing host** above, by its hashes;
+- **how a run gets the binary.** The tarball (57,622,243 bytes) is over the project's 50 MB limit for a
+  committed file, and `bin/node` (145,238,560 bytes) is over GitHub's 100 MB limit, by GitHub's published
+  terms. So each run retrieves
+  the tarball and checks both by hash. A failed retrieval or a failed hash means the run issues nothing;
+- **the binary's path.** The frozen defaults `cp17.daily.NODE` and `cp17.tools.hosts.NODE` name
+  Homebrew's path;
+- **the Pyodide folder** (`cp17.tools.freeze.RUNTIME_DIR`, now `.local/tools/pyodide-0.28.0`), and how
+  the 23 files reach the runner. The probe proposed committing them;
+- **`refreeze verify`'s zip check.** It must report no unchecked item on the runner and on the Owner's
+  Mac. The zip is compared only where the zlib runtime equals the one the manifest records. CP-17b's is
+  `1.2.12`, and CP-17c records its own, so the check must pass on both machines;
+- **where `refreeze verify` runs:** on the runner and on the Owner's Mac, before the first fit;
+- **how the states reach the runner and persist between runs:**
+  - A1's search state `k13.json`, now only in the local `evidence/cp-26` extract;
+  - the freeze-origin states of v4, v2 and B0;
+  - the shadows' buffers;
+  - the issued records;
+  - the canary's payload;
+- **the CPython patch version,** pinned without changing the root `uv.lock` or `pyproject.toml`, which
+  CP-26's tests pin;
+- **where the image version and CPU model are recorded:** in the artifact's lineage, or in CP-18's
+  records;
+- **the checks above** (H2);
+- **R7's `schema.py` defect, fixed (H3).** §24.12's R7 fixes it "at the next freeze". CP-17c is that
+  freeze, and it comes before 4.7T, so 4.7T's result covers the fixed identity.
+  - **The fix changes only that error path.** Every fit, quantile and artifact field stays
+    bit-identical, and CP-17c's parity shows it.
+  - **R7's acceptance and its instruction end at CP-17c's landing.**
+  - **If the fix cannot be that narrow,** R7 stands unchanged, and the Owner is told.
+
+**What CP-17c shows.**
+- **On a GitHub-hosted `macos-26` runner in a private repository, and on the Owner's M3:**
+  - `refreeze verify` with no problem and no unchecked item;
+  - the issuing host's parity at the nine origins, bit for bit;
+  - the shadows' buffers over the 14 days, as CP-17b did;
+  - the timing.
+- **On the Owner's M3 only:**
+  - native parity with CP-26, which is the check of code identity (§24.12);
+  - Chromium's and WebKit's parity at the freeze origin, if the package's zip changed. The reference
+    runtime's machine class is the M3's.
+
+**What it keeps.** Every other term of CP-17b's freeze, as §24.12 ratifies it:
+- the candidate;
+- the success definition and the two chains;
+- partial days and the shadows;
+- τ and τ_eq, and F1's disclosure;
+- the seeds and the refit schedule.
+
+**4.7T's registered terms do not change in their text.**
+- **Its protocol** (`337a102d…` as revised by `04aac76a…`) names CP-17b's freeze manifest and freeze
+  identity, in the revision's preamble and §3, and the issuing host.
+  - From CP-17c's landing, these read as CP-17c's freeze manifest, its policy identity and the issuing
+    host above.
+  - So do §24.12's rows "The freeze", "Where it landed", "The code", "The freeze origin" and "The check
+    that survives amendment".
+  - **CP-17c's landing record states each value,** and 4.7T's brief cites them from it. No further
+    anchor revision is needed for them.
+- **4.7T still runs on the Owner's Mac,** with no cloud, within 20 machine-hours. The official binary ran
+  the probe's local control at 0.90 times the Homebrew binary's time.
+- **Decision 20's badge and wording stay true under CP-17c.** The protocol's text is unchanged, and the
+  re-freeze also comes before any of the window's data is opened. Any change to them stays the Owner's.
+- **Two frozen sentences on daily operation** are superseded for CP-18 by the publication time below.
+  Neither is one of 4.7T's terms:
+  - the protocol's "It is issued at 11:00 local, before the 12:00 gate. CP-18 fixes the deadline and the
+    late-forecast rule (§24.4).";
+  - CP-17b's freeze record §11, "issued at 11:00 local".
+
+**If CP-17c cannot land before 4.7T opens,** including when its parity fails on the product's runner
+class or on the Owner's Mac:
+- the frozen host and CP-17b's identity stay;
+- 4.7T does not open under either until the Owner decides. Decision 24 reads: "Any other outcome is a
+  new decision, brought to the Owner."
+
+#### The publication time (decision 22)
+
+- **The information cutoff is unchanged:** D−1 11:00 Europe/Berlin, strictly before (§24.4).
+  - A run may happen at any time after the cutoff.
+  - Its payload holds only inputs published before the cutoff. So a later run issues the same forecast,
+    under the condition below.
+- **"Before the outcome"** in the frozen rules means without access to D's outcome, under the target-day
+  embargo (§24.4). It does not mean wall-clock time.
+- **Availability is judged by publication time against D's own cutoff, never by the run time.** The
+  tier register and the Owner's tier, margin and GFS rulings (§24.5) apply unchanged. This covers each
+  input and the GFS-availability flag (§24.12, decision 11).
+  - **For the live pipeline, CP-18 makes this verifiable** in one of three ways:
+    - each day's inputs are retrieved and archived by the cutoff;
+    - each input is taken from a source that preserves its vintage;
+    - for an input the tier register admits with reconstructed availability (tier 2), its documented
+      schedule.
+  - **A live day whose inputs cannot be shown this way is not issued,** and its cause is recorded.
+  - **4.7T's window keeps its registered vintage terms** (the protocol's §3, "Vintages").
+- **A delivery day is issued or not issued.** There is no "late" status and no "late" label.
+- **What stays recorded:**
+  - each issuance's actual run time, in its lineage (§16.2);
+  - the date of the last training, which the product's panel states.
+- **No public wording claims** that a forecast was published before the auction, or before its outcome.
+- **What this supersedes:**
+  - **§24.4's sentence** "The live product publishes its forecast before 12:00 local. CP-18 fixes the
+    schedule, its deadline and its failure rule; a late forecast is recorded as late." CP-18 fixes the
+    schedule and the failure rule. There is no deadline.
+  - **§16.2's "numeric origin/deadlines".** CP-18's brief fixes the origin and the cutoff, and no
+    deadline.
+  - **§16.4's CP-19 row,** where "count real timely forecasts and failures" becomes "count issued and
+    not-issued delivery days". CP-19's at least 90 consecutive delivery days count every day, issued or
+    not issued.
+- **§16.2's rule stands:** "Do not ... backfill a late forecast as timely". No forecast is labelled timely.
+  A catch-up issuance carries its own run time and relabels nothing.
+- **`AGENTS.md`'s daily-update exception needs no change.** It reads: "A failed or late day is published
+  as failed or stale, never skipped silently or backfilled as timely." Under this section:
+  - a day that is not issued is shown as not issued;
+  - the panel shows the date of its last training;
+  - nothing is labelled timely.
+
+#### The catch-up (decision 23)
+
+- **Each run** issues, in chronological order:
+  - the missed delivery days within a lookback of three days before the current target day;
+  - then the current target day.
+- **At most four issuances run in one run.**
+- **A day older than the lookback is never issued.** It stays not issued, so the backlog never exceeds
+  three days and every run reaches the current day.
+- **Each catch-up** uses only inputs published before that day's own cutoff, as judged above, and never
+  replaces an issued forecast.
+- **The bound in time.**
+  - Each fit keeps its 15-minute ceiling.
+  - Decision 23's record says "a run takes at most about an hour". That counts one fit per issuance.
+  - With A1 and three shadows per issuance, the ceilings bound a four-issuance run, with its canary, at
+    about 4¼ hours. That is inside GitHub's 6-hour job limit, by GitHub's published terms.
+  - Measured on `macos-26`, one issuance took 270–284 s, and four with the canary about 21 minutes.
+- **CP-18 may shorten the lookback** after measuring the runtime. It may not remove the bound.
+
+#### Where S_14 runs (H4)
+
+- **S_14 = 2027-01-06 runs natively on the Owner's M3, the machine that ran S_13.**
+  - It runs in the environment `uv.lock` pins, under the same phase and rules (§24.9) and the freeze's
+    seeds.
+  - It counts as part of the live pipeline for §24.2's guard.
+  - S_13's fits took 5,079 s of native fit time there, on one worker. With CP-26's 2× margin, S_14 is
+    estimated at about 3 hours.
+  - Its state reaches the runner by the route CP-17c fixes for `k13.json`.
+  - A delivery day that S_14 serves is not issued until that state is in place. Decision 23's catch-up
+    then applies.
+  - If that machine is unavailable, where S_14 runs is a new decision for the Owner.
+- **Why.** A native search on another machine is not the same arithmetic, and none was measured.
+- **CP-18 schedules S_14.** It falls after 4.7T's window, so 4.7T is not affected.
+
+#### For CP-18
+
+These add to §24.12's list "For CP-18", as amended above:
+- **the unattended pipeline on the `macos-26` runner.** It calls `cp17.daily` once per issuance, with the
+  checks above and decision 23's catch-up. It has a schedule and a failure rule, and no deadline;
+- **the public runner class's timing,** measured in the product's repository on development days before
+  the first live issuance, against criterion 5's ceilings;
+- **the cause of each day that is not issued,** in the record. The causes are:
+  - a failed issuance by the chain;
+  - a failed H2 check;
+  - a live day's inputs that cannot be shown to precede its cutoff;
+  - no run within the lookback;
+  - S_14's state not in place;
+- **one issuance per delivery day across the runner and the local fallback.** The issued record is the
+  single source, and no issued forecast is replaced;
+- **how the states are carried** from 4.7T's last window day to the first live day;
+- **a live day's input availability,** made verifiable as the publication time above requires;
+- **the credentials as GitHub secrets.** The Owner enters them himself (decision 25), and agents never
+  handle their values;
+- **`AGENTS.md`'s conditions on the runner:**
+  - the secret guard and the pre-push guards run on the runner's own commits and pushes;
+  - credentials are used only as stored variables inside the consuming process;
+- **public run logs.** The repository is public, so its run logs are public. Credentials, and any value
+  derived from them, are never printed;
+- **GitHub's rule that disables a scheduled workflow** after a period without repository activity. CP-18
+  shows how the pipeline stays enabled;
+- **a local fallback on the Owner's Mac,** with the same binary and the same checks;
+- **the red line on the runner.** Until CP-18's brief retires the boundary guard after 4.7T (§24.2), the
+  runner's pipeline runs only on development data through 2026-09-06 (decision 7). No scheduled run
+  retrieves later data.
+
+#### Decisions recorded (v21-r19)
+
+| # | Decision | Who |
+|---|---|---|
+| 22–25 | The publication time is not part of the claim; the bounded catch-up; the host may move to a GitHub-hosted runner, after a probe; the road to the live product, run by the Orchestrator | Owner, 2026-10-30 (`docs/track-b/owner-decisions-2026-10-30.md`, SHA-256 `1286548362b5618e3fb01c616d673c0af83dd79effeaf102bb9727ac219aabab`) |
+| H1 | The issuing host: the official darwin-arm64 binary on the `macos-26` runner and on the Owner's Mac | Orchestrator, under decision 24, from CP-17c-probe's measurement |
+| H2 | The checks before each run's first issuance, including the canary | Orchestrator, from CP-17c-probe's proposal 2; CP-17c freezes them |
+| H3 | R7's `schema.py` defect fixed at CP-17c, on its error path only | Orchestrator, applying §24.12's R7 |
+| H4 | S_14 run natively on the Owner's M3 | Orchestrator, under decision 25 |
+
+**The Owner's declaration (§24.2)** covers decisions 22–25 and his grant for this revision, under
+§24.12's R5. H1–H4 are registrations under §24.2's test, which the audit checks, as R1–R7 are.
