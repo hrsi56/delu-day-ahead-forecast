@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). Next: CP-17c-probe, then r19 and CP-17c before 4.7T (not before 2026-12-04) |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** Next: r19 and CP-17c before 4.7T (not before 2026-12-04) |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -270,16 +270,29 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   - **23:** missed days are caught up in order within a three-day lookback, at most four issuances
     per run; older days stay not issued.
   - **24:** the issuing host may move to a GitHub-hosted runner, if CP-17c-probe shows bit-for-bit
-    reproduction within the frozen ceilings. The Orchestrator then chooses Linux or macOS.
+    reproduction within the frozen ceilings. The Orchestrator then chooses Linux or macOS. **Chosen,
+    2026-10-30: `macos-26`** (below).
   - **25:** the Orchestrator runs the road to the live product on its own: CP-17c-probe → host
     choice → r19 → CP-17c → CP-18's preparation → 4.7T → CP-18's activation → one complete
     publication, which replaces PRES-5 as a separate step. Back to the Owner only for new problems,
     significant decisions, his 4.7T declaration, GitHub secrets, or a 4.7T that does not pass.
-- **Next Track B work: CP-17c-probe,** the GitHub-hosted issuing-host probe (decision 24). Issued
-  2026-10-30, brief `e0528d5c…` (canonical copy `.local/artifacts/cp-17c-probe/issued-brief.md`),
-  about 6 active hours, 3 local machine-hours and at most 1,500 GitHub minutes in the private
-  scratch repository `hrsi56/delu-host-probe`.
-  - **Then:** r19 and CP-17c, before 4.7T opens (not before 2026-12-04).
+- **CP-17c-probe closed on 2026-10-30** ([landing record](docs/track-b/cp-17c-probe-landing-2026-10-30.md)).
+  - **Both GitHub-hosted runners reproduce the frozen issuing host bit for bit:** `ubuntu-24.04` and
+    `macos-26`, 75 of 75 fits each. They covered the parity origins, F1's day and the 14 shadow days,
+    with the buffers equal. A local control with the official darwin-arm64 binary gave 19 of 19.
+  - **Every fit was inside the ceilings.** The slowest was 228.9 s on macOS and 284.6 s on Linux, with
+    peaks under 0.92 GiB. τ_eq and F1 are untouched.
+  - **The host chosen by the Orchestrator (decision 24): `macos-26`,** with the official Node.js v26.7.0
+    darwin-arm64 binary `a9bd0630…`. It is one binary for the daily runner, for 4.7T on the Owner's Mac
+    (no cloud, as registered) and for local fallback. In a public repository the cost is nil on either OS.
+  - The private scratch repository `hrsi56/delu-host-probe` is left in place. Deleting it is the Owner's
+    decision.
+- **Next Track B work: r19,** the anchor amendment. Under the Owner's grant in decision 25 it covers:
+  - pinning the macOS host;
+  - decision 22's changes to §24.4's 12:00 and late sentence, and to §16.4's "timely" count;
+  - where S_14 runs.
+
+  **CP-17c, the short re-freeze, follows it.** Both come before 4.7T opens, no earlier than 2026-12-04.
   - **4.7T's brief** carries r18 §24.12's list:
     - the §24.2 audit, the Owner's declaration and the retrieval approval;
     - `refreeze verify` with no problem and no unchecked file, as a precondition;
@@ -1087,6 +1100,20 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17c-probe landed and closed, 2026-10-30** (`land/cp-17c-probe` `a92e0525`, evidence tip
+  `909f552e`; [landing record](docs/track-b/cp-17c-probe-landing-2026-10-30.md)).
+  - **The Lead returned PASS.** The second Integration review passed `3bba2949`; the first, a FAIL on the
+    report's macOS host identity, is preserved.
+  - **The result:** 75 of 75 fits bit-identical on each runner, 19 of 19 locally, all inside the
+    ceilings. The probe used 863 of 1,500 GitHub minutes and 1.8 of 3 machine-hours.
+  - **The host choice is `macos-26`,** against the probe's proposal of Linux. The reason: one darwin-arm64
+    binary for the product, 4.7T's local run and fallback, so 4.7T tests the product as issued without
+    changing its "no cloud" term.
+  - **The receipt, the CI and the push.** `gauntlet.py receipt` found 0 problems. The history-free CI on
+    `a92e0525` passed, with 2,446 passed and 46 skipped. The LAND and both tags were pushed. The branch
+    was reclaimed to a verified bundle, and has no live citation.
+  - **Next:** r19, already drafted and with an independent plan critic, then CP-17c's brief.
 
 - **The Owner's decisions 22–25 recorded, 2026-10-30** (`docs/track-b/owner-decisions-2026-10-30.md`).
   - **What led to them.** He asked what CP-18 holds and where the daily fit runs. The Orchestrator
