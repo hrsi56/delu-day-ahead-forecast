@@ -354,8 +354,9 @@ def cp17b_superseded(root: Path, project: Path | None = None) -> list[str]:
 
 #: What CP-17b's verifier reports on CP-17c's tree, by design (`tests/cp17c/test_refreeze17c.py`).
 CP17B_EXPECTED = ['src/cp17/schema.py: missing or altered', 'src/cp17/daily.py: missing or altered',
+                  "the rebuilt package's files differ from the recorded ones",
                   "the rebuilt package's identity differs from the recorded one",
-                  "the rebuilt package's files differ from the recorded ones"]
+                  "the rebuilt package's zip differs from the recorded one"]
 
 
 def main(argv=None) -> int:
