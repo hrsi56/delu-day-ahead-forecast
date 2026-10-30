@@ -315,6 +315,16 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     candidate `548bd069`. The new policy identity is `720fc581…`. The resume is one prepared run
     (about 14 minutes, at most 180 counted) when the quota resets on 2026-11-01 (GitHub's email:
     2,000 of 2,000 minutes used), then a new candidate, a fresh Critic and LAND.
+  - **Owner decision 26, 2026-10-30: the scratch repository goes public.** His words: "לא אכפת לי
+    שיהיה פאבליק על הגיט האב מה אכפת לי. תעשה פאבליק, תנסה לאמן ותמשיך עצמאית זה לא פרסום זה רק
+    גיט בלי gh pages".
+    - **The scan before the switch.** A value-based scan of the whole history (5 commits) found no
+      credential value. Neither did the 4 runs' logs or the 5 artifacts.
+    - **The switch.** `hrsi56/delu-host-refreeze` went public at 14:21 UTC. Its contents are now
+      public: A1's search state, the freeze-origin state, the canary payload, the stores, the data
+      snapshot through 2026-09-06, and the shadow payloads. It has no Pages.
+    - **The resume.** It runs on the public class, which is uncounted. This departs from r19
+      §24.13's runner-class reason by his ruling. CP-17c's freeze record and return disclose it.
   - **Ceilings:** about 12 active hours and 8 local machine-hours, plus at most 1,000 GitHub minutes
     (macOS at ten times) in the new private scratch repository `hrsi56/delu-host-refreeze`.
   - **It records the values 4.7T's brief cites.** If CP-17c cannot land, 4.7T waits for the Owner.
@@ -1125,6 +1135,11 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Owner decision 26, 2026-10-30: `hrsi56/delu-host-refreeze` made public,** after a value-based
+  secret scan of its history, logs and artifacts found nothing. It is not a publication: it has no
+  Pages. The CP-17c Lead was told to dispatch the resume run now on the public class, then finish
+  with a new candidate and a fresh Critic.
 
 - **CP-17c returned BLOCKED, 2026-10-30** (`.local/artifacts/cp-17c/return.md`; evidence tip
   `c860d986`, Integration verdict `3108f972…` on candidate `548bd069`).
