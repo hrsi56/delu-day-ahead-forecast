@@ -1,0 +1,40 @@
+{
+ "cpu_count": 8,
+ "equal_to_cp17b_browser_record": {
+  "chromium": true,
+  "webkit": true
+ },
+ "equal_to_issuing_host": {
+  "chromium": true,
+  "webkit": true
+ },
+ "machine": "arm64",
+ "package_zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94",
+ "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+ "playwright": "1.63.0",
+ "runs": [
+  {
+   "browser": "chromium",
+   "browser_version": "153.0.8010.12",
+   "errors": [],
+   "executed_files_match_package": true,
+   "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+   "seconds": 78.7865,
+   "stem": "A1-2026-09-06"
+  },
+  {
+   "browser": "webkit",
+   "browser_version": "26.6",
+   "errors": [],
+   "executed_files_match_package": true,
+   "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+   "seconds": 74.829,
+   "stem": "A1-2026-09-06"
+  }
+ ],
+ "schema": "cp17c-browser-v1",
+ "source": {
+  "path": ".local/artifacts/cp-17c/runs/browser-results.json",
+  "sha256": "b4193ad6c0373a70ed35610123239460b2b53709b7e7daf64789e1da4b4dba8a"
+ }
+}
