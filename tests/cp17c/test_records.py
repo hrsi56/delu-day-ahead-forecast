@@ -10,7 +10,7 @@ import re
 
 import pytest
 
-from cp17 import hostcheck
+from cp17 import hostcheck, runtime
 from cp17.tools import refreeze17c
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -125,3 +125,23 @@ def test_the_measurement_holds_on_both_machines():
     assert runner['kind'] == 'GitHub-hosted runner' and runner['image_os'] == 'macos26' and runner['image_version']
     assert m['runner']['host']['checks']['cpython']['version'] == '3.13.15'
     assert m['minutes']['counted_total'] <= 1000
+
+
+@pytest.mark.skipif(not (REPORTS / 'measurement.json').exists(), reason='the measurement is written after the runs')
+def test_the_report_is_rendered_from_the_records():
+    from cp17c import report
+    assert (REPORTS / 'report.md').read_text() == report.render(REPORTS, ROOT)
+
+
+PROJECT = runtime.project_root(ROOT)
+LOCAL, TREE = PROJECT / '.local/artifacts/cp-17c', PROJECT / '.local/tmp/cp-17c/scratch2'
+
+
+@pytest.mark.skipif(not (REPORTS / 'measurement.json').exists() or not (LOCAL / 'downloads').exists()
+                    or not (LOCAL / 'local').exists() or not TREE.exists(),
+                    reason="the runner's downloaded results, the M3's results or the scratch tree are absent (local only)")
+def test_the_measurement_recomputes_from_the_downloaded_results(monkeypatch):
+    from cp17c import compare
+    monkeypatch.chdir(ROOT)
+    value = compare.compare(REPORTS / 'inputs.json', REPORTS / 'artifacts.json', LOCAL / 'downloads', LOCAL / 'local', TREE)
+    assert json.loads(json.dumps(value, default=str)) == load('measurement.json')

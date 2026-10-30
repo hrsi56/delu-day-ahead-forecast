@@ -123,6 +123,27 @@ def counted_minutes(artifacts: dict) -> dict:
                     'a job cancelled while queued never had a runner and counts nothing'}
 
 
+def repository(repo: str) -> dict:
+    """The scratch repository's state, read with `gh api` (read-only)."""
+    meta = json.loads(_gh('api', f'repos/{repo}'))
+    perms = json.loads(_gh('api', f'repos/{repo}/actions/permissions/workflow'))
+    secrets = json.loads(_gh('api', f'repos/{repo}/actions/secrets'))
+    variables = json.loads(_gh('api', f'repos/{repo}/actions/variables'))
+    commits = json.loads(_gh('api', f'repos/{repo}/commits?per_page=100'))
+    runs = json.loads(_gh('api', f'repos/{repo}/actions/runs?per_page=100'))['workflow_runs']
+    branches = json.loads(_gh('api', f'repos/{repo}/branches'))
+    return {'schema': 'cp17c-scratch-repository-v1', 'repository': repo, 'url': meta['html_url'], 'private': meta['private'],
+            'visibility': meta['visibility'], 'default_branch': meta['default_branch'], 'created_at': meta['created_at'],
+            'default_workflow_permissions': perms['default_workflow_permissions'],
+            'actions_secrets': secrets['total_count'], 'actions_variables': variables['total_count'],
+            'branches': [b['name'] for b in branches],
+            'commits': [{'sha': c['sha'], 'message': c['commit']['message'].splitlines()[0]} for c in commits],
+            'workflow_runs': [{'id': r['id'], 'head_sha': r['head_sha'], 'created_at': r['created_at'],
+                               'conclusion': r['conclusion']} for r in runs],
+            'note': 'read with gh api (read-only) by the Lead after the last run; the repository is left in place, and '
+                    "deleting it is the Owner's decision"}
+
+
 # --- compare ------------------------------------------------------------------------------------------------------
 
 HIDDEN_EXCLUDED = 'forced/project/.local/'
@@ -355,6 +376,9 @@ def main(argv=None) -> int:
     f.add_argument('--run', required=True)
     f.add_argument('--dest', required=True, type=Path)
     f.add_argument('--record', required=True, type=Path)
+    g = sub.add_parser('repository')
+    g.add_argument('--repo', required=True)
+    g.add_argument('--out', required=True, type=Path)
     c = sub.add_parser('compare')
     c.add_argument('--inputs', required=True, type=Path)
     c.add_argument('--artifacts', type=Path)
@@ -366,6 +390,11 @@ def main(argv=None) -> int:
     if args.cmd == 'fetch':
         value = fetch(args.repo, args.run, args.dest, args.record)
         print(len(value['runs'][args.run]['artifacts']), 'artifacts', value['runs'][args.run]['conclusion'])
+        return 0
+    if args.cmd == 'repository':
+        value = repository(args.repo)
+        dump(args.out, value)
+        print(value['repository'], value['visibility'], value['actions_secrets'], value['actions_variables'])
         return 0
     value = compare(args.inputs, args.artifacts, args.downloads, args.local, args.tree)
     dump(args.out, value)
