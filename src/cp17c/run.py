@@ -17,6 +17,9 @@ checks are `cp17.hostcheck`'s; the states are `cp17.shadow.ShadowStates`, carrie
   sequential cost.
 - **day:** one delivery day in its own process: load and check the store, release D-2, check the buffers against the
   ones the day's payloads carry, issue the day, register the shadows, append to the store.
+- **resume:** the H2 gate, then each given block's remaining days, one block after the other, each from the store an
+  earlier run left (carried here by the repository, checked by its chain before any day runs): the states' route
+  between runs, exercised.
 
     OPENBLAS_NUM_THREADS=1 ... PYTHONPATH=src python -m cp17c.run checks --out <dir>
 """
@@ -361,6 +364,45 @@ def shadow(args) -> int:
     return status
 
 
+def resume(args) -> int:
+    """One gate, then each block's days from its carried store, one after another."""
+    check_blas()
+    from .store import Store
+    root, out = Path(args.root).resolve(), Path(args.out).resolve()
+    gate = gate_or_stop(root, out)
+    status = 0 if gate['passed'] else 1
+    for spec in args.block:
+        name, carried, first, last = spec.split(':')
+        first, last = date.fromisoformat(first), date.fromisoformat(last)
+        folder = out / f'shadow-{name}'
+        record = {'schema': 'cp17c-shadow-resume-v1', 'first': str(first), 'last': str(last), 'gate_passed': gate['passed'],
+                  'truth_sha256': sha256_file(args.truth), 'days': {}}
+        store_dir = folder / 'store'
+        shutil.copytree(carried, store_dir)
+        head = Store(store_dir).verify()                  # a carried store that does not verify issues nothing
+        record['resumed_from'] = {'store': str(carried), 'head': head}
+        if head['last_day'] != str(first - timedelta(days=1)):
+            raise SystemExit(f'{carried}: its last day is {head["last_day"]}, not the day before {first}')
+        if gate['passed']:
+            for d in [first + timedelta(days=i) for i in range((last - first).days + 1)]:
+                started = time.perf_counter()
+                done = subprocess.run([sys.executable, '-m', 'cp17c.run', '--root', str(root), 'day', '--store', str(store_dir),
+                                       '--day', str(d), '--payloads', str(args.payloads), '--truth', str(args.truth),
+                                       '--out', str(folder)], text=True, capture_output=True)
+                sys.stdout.write(done.stdout)
+                sys.stdout.flush()
+                record['days'][str(d)] = {'exit': done.returncode, 'process_seconds': time.perf_counter() - started,
+                                          'stderr_tail': done.stderr[-1500:] if done.returncode else ''}
+                if done.returncode:
+                    status = 1
+                    break
+        _, final = Store(store_dir).state()
+        record['final'] = {'head': final, 'ledger_sha256': sha256_file(store_dir / 'ledger.jsonl')}
+        dump(folder / 'shadow.json', record)
+        shutil.copyfile(out / 'checks.json', folder / 'checks.json')
+    return status
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--root', default='.', type=Path)
@@ -389,12 +431,18 @@ def main(argv=None) -> int:
         else:
             s.add_argument('--day', required=True)
             s.add_argument('--store', required=True, type=Path)
+    r = sub.add_parser('resume')
+    r.add_argument('--payloads', required=True, type=Path)
+    r.add_argument('--truth', required=True, type=Path)
+    r.add_argument('--out', required=True, type=Path)
+    r.add_argument('--block', action='append', required=True, help='name:carried store:first day:last day')
     args = ap.parse_args(argv)
     if hasattr(args, 'out'):
         args.out = Path(args.out).resolve()
         if args.cmd not in ('node', 'package'):
             args.out.mkdir(parents=True, exist_ok=True)
-    return {'node': node, 'package': package, 'checks': checks, 'parity': parity, 'shadow': shadow, 'day': day}[args.cmd](args)
+    return {'node': node, 'package': package, 'checks': checks, 'parity': parity, 'shadow': shadow, 'day': day,
+            'resume': resume}[args.cmd](args)
 
 
 if __name__ == '__main__':

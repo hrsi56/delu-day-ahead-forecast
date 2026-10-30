@@ -10,6 +10,8 @@
 #   shadows   the two blocks of shadow days at once, each one process per day through its own store, each day's four
 #             issuances one after another: 2026-08-31 to 2026-09-06 from CP-17b's host state there, and 2026-08-24 to
 #             2026-08-30 from CP-26's state at 2026-08-24. Each block runs its own H2 gate before its first issuance.
+#   resume    each block's remaining days, one block after the other, from the store an earlier run left
+#             (`states/store-<block>/`, carried by this repository and checked by its chain), after one H2 gate.
 # The runner class measured here (Apple M1, virtual, 3 cores) is slower than the probe's, so the two blocks share one
 # job rather than run one after another: two single-threaded issuing hosts on three cores, as CP-17b and the probe
 # measured two at once. A private repository counts macOS at ten times; each job's limit bounds its minutes.
@@ -117,6 +119,10 @@ jobs:
               wait $early || status=1
               cat results/shadow-late.log results/shadow-early.log
               exit $status ;;
+            resume)
+              .venv/bin/python -m cp17c.run resume --payloads payloads/shadow --truth states/truth.json \
+                  --block early:states/store-early:2026-08-30:2026-08-30 \
+                  --block late:states/store-late:2026-09-06:2026-09-06 --out results ;;
           esac
       - name: The results' own hashes
         if: always()

@@ -15,6 +15,8 @@ so `refreeze verify` and the H2 checks read the same files on the runner and on 
 - **the shadow blocks' start states** at 2026-08-24 (CP-26's, rebuilt as CP-17b's shadow run started) and before
   2026-08-31's release (by a dry replay of CP-17b's host registrations, which must give CP-17b's buffers at every
   origin), and the published prices the releases read (2026-08-22 to 2026-09-04);
+- **with `--stores`,** the state stores an earlier run's shadow blocks left, from its downloaded artifact, each file
+  checked against that job's `results-sha256.txt`, at `states/store-<block>/`: the states' route between runs;
 - the workflow at `.github/workflows/refreeze.yml`, a README, and `inputs-files.json` (every file's SHA-256).
 
 Nothing dated after 2026-09-06 is shipped: every payload's day, every price, and the rows of the snapshot and the
@@ -112,7 +114,29 @@ def payloads(project: Path, kind: str, stems: list[str], tree: Path, files: dict
                 _copy(path, tree, f'payloads/{kind}/{path.name}', files, source=f'{PAYLOADS[kind]}/{path.name}')
 
 
-def build(root: Path, project: Path, tree: Path) -> dict:
+def carried_stores(artifact: Path, tree: Path, files: dict) -> dict:
+    """Each block's store from a downloaded `shadows` artifact, every file against the job's own hashes."""
+    listed = {}
+    for line in (artifact / 'results-sha256.txt').read_text().splitlines():
+        digest, rel = line.split(None, 1)
+        listed[rel.strip().removeprefix('./')] = digest
+    out = {}
+    for block in ('late', 'early'):
+        prefix = f'shadow-{block}/store/'
+        names = sorted(rel for rel in listed if rel.startswith(prefix))
+        if not names:
+            raise ValueError(f'{artifact}: no store for the {block} block')
+        for rel in names:
+            if sha256_file(artifact / rel) != listed[rel]:
+                raise ValueError(f'{artifact / rel}: not the file its job hashed')
+            _copy(artifact / rel, tree, f'states/store-{block}/{rel.removeprefix(prefix)}', files,
+                  source=f'{artifact.parent.name}/{artifact.name}/{rel}')
+        from .store import Store
+        out[block] = Store(tree / f'states/store-{block}').verify()
+    return out
+
+
+def build(root: Path, project: Path, tree: Path, stores: Path | None = None) -> dict:
     check_blas()
     from cp17 import runtime
     from cp17.shadow import ShadowStates
@@ -155,6 +179,7 @@ def build(root: Path, project: Path, tree: Path) -> dict:
     dump(tree / 'states' / f'start-{SPLIT}.json', split_value)
     for name in ('truth.json', f'start-{FIRST}.json', f'start-{SPLIT}.json'):
         files[f'states/{name}'] = {'sha256': sha256_file(tree / 'states' / name), 'bytes': (tree / 'states' / name).stat().st_size}
+    carried = carried_stores(stores, tree, files) if stores is not None else None
     _copy(root / WORKFLOW, tree, '.github/workflows/refreeze.yml', files, source=WORKFLOW)
     (tree / 'README.md').write_text(README)
     files['README.md'] = {'sha256': sha256_file(tree / 'README.md'), 'bytes': (tree / 'README.md').stat().st_size}
@@ -164,7 +189,7 @@ def build(root: Path, project: Path, tree: Path) -> dict:
                       str(SPLIT): {'state_file_sha256': files[f'states/start-{SPLIT}.json']['sha256'],
                                    'digest': ShadowStates.from_dict(split_value).digest(),
                                    'source': "CP-17b's host state before 2026-08-31's release, by the dry replay"}},
-            'dry_replay_buffers_equal_reference': checks, 'boundary': record_boundary,
+            'dry_replay_buffers_equal_reference': checks, 'boundary': record_boundary, 'carried_stores': carried,
             'inputs_files_sha256': sha256_file(tree / 'inputs-files.json'),
             'bytes': sum(v['bytes'] for v in files.values()), 'largest_file_bytes': max(v['bytes'] for v in files.values())}
 
@@ -183,6 +208,7 @@ def main(argv=None) -> int:
     b = sub.add_parser('build')
     b.add_argument('--out', required=True, type=Path)
     b.add_argument('--record', required=True, type=Path)
+    b.add_argument('--stores', type=Path, help="a downloaded `shadows` artifact whose stores the next run resumes")
     v = sub.add_parser('verify')
     v.add_argument('--out', required=True, type=Path)
     args = ap.parse_args(argv)
@@ -192,7 +218,7 @@ def main(argv=None) -> int:
         print(value['files'], 'inputs', 'verified' if value['verified'] else f"NOT verified: {value['problems'][:5]}")
         return 0 if value['verified'] else 1
     from cp17.tools import ledger
-    value = build(args.root.resolve(), ledger.project_root(args.root), args.out)
+    value = build(args.root.resolve(), ledger.project_root(args.root), args.out, args.stores)
     dump(args.record, value)
     print(len(value['files']), 'files', value['bytes'], 'bytes; largest', value['largest_file_bytes'],
           '; dry replay', all(value['dry_replay_buffers_equal_reference'].values()))
