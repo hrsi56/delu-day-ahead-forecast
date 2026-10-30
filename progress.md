@@ -1126,6 +1126,22 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **CP-18a issued, 2026-10-30** (brief `0c805a71…`; canonical copy
+  `.local/artifacts/cp-18a/issued-brief.md`). It is CP-18's preparation, part 1, on development data
+  only:
+  - the daily pipeline `src/cp18/` around the frozen package: H2, decision 23's catch-up, the five
+    not-issued causes, one issuance per day by a claim on `main`, and R7 and the red line in code;
+  - the live-input payload builder, shown byte-identical to the development builder on recorded data;
+  - the state store, its public data-only paths and the carry from 4.7T to the first live day;
+  - `.github/workflows/daily.yml` (dispatch only), the local fallback with a `launchd` file not
+    installed, and the public class's timing in the new public scratch repository
+    `hrsi56/delu-pipeline-dryrun`;
+  - §22's security items: P0-2's value-free leak scan, P0-3's environment lint and redaction, and P0-7's
+    rulesets as files.
+
+  Ceilings: about 16 active hours, 10 local machine-hours and 15 job-hours on public runners. CP-18b,
+  the bundle and the Space, follows under its own brief.
+
 - **CP-17c landed and closed, 2026-10-30** (`land/cp-17c` `1622e187`, evidence tip `26288046`;
   [landing record](docs/track-b/cp-17c-landing-2026-10-30.md)).
   - **The Lead returned PASS.** Run 6 resumed the runner's last two shadow days on the public class,
