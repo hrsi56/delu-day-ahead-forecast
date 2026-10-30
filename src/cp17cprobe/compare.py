@@ -279,14 +279,16 @@ def runner(inputs: dict, folder: Path, executed_ok, local: bool = False) -> dict
         'parity': _summary(list(out['parity'].values())), 'f1': _summary(list(out['f1'].values())),
         'shadow_fits': _summary([f for d in days.values() for f in d['fits'].values()]),
         'all': _summary(fits),
-        'shadow_days': len(days),
-        'shadow_buffers_all_equal_reference': bool(days) and all(all(d['buffers_equal_reference'].values()) for d in days.values()),
-        'shadow_buffers_all_equal_payload': bool(days) and all(all(d['buffers_equal_payload'].values()) for d in days.values()),
-        'shadow_all_issued_a1': bool(days) and all(d['issued_policy'] == 'A1' and d['path'] == [['A1', 'ok']] for d in days.values()),
-        'shadow_all_registered': bool(days) and all(set(d['intake'].values()) == {'registered'} for d in days.values()),
-        'shadow_all_artifacts_verify': bool(days) and all(d['artifact_verifies'] for d in days.values()),
-        'shadow_day_seconds_sum_max': max((d['day_seconds_sum'] for d in days.values()), default=None),
-        'shadow_day_seconds_sum_median': statistics.median([d['day_seconds_sum'] for d in days.values()]) if days else None}
+        'shadow_days': len(days)}
+    if days:     # a runner with no shadow day has these unmeasured, not false
+        out['summary'].update({
+            'shadow_buffers_all_equal_reference': all(all(d['buffers_equal_reference'].values()) for d in days.values()),
+            'shadow_buffers_all_equal_payload': all(all(d['buffers_equal_payload'].values()) for d in days.values()),
+            'shadow_all_issued_a1': all(d['issued_policy'] == 'A1' and d['path'] == [['A1', 'ok']] for d in days.values()),
+            'shadow_all_registered': all(set(d['intake'].values()) == {'registered'} for d in days.values()),
+            'shadow_all_artifacts_verify': all(d['artifact_verifies'] for d in days.values()),
+            'shadow_day_seconds_sum_max': max(d['day_seconds_sum'] for d in days.values()),
+            'shadow_day_seconds_sum_median': statistics.median([d['day_seconds_sum'] for d in days.values()])})
     late, early = out['shadow'].get('late'), out['shadow'].get('early')
     if late and early:
         out['summary']['stitch_early_final_equals_late_start'] = early['final_state_sha256'] == late['start_state_sha256']
@@ -356,7 +358,8 @@ def main(argv=None) -> int:
     for label, r in {**value['runners'], **({'local-control': value['local_control']} if 'local_control' in value else {})}.items():
         s = r['summary']
         print(label, 'fits', s['all']['fits'], 'bit-identical', s['all']['bit_identical'], 'ceilings', s['all']['all_within_ceilings'],
-              'buffers', s.get('shadow_buffers_all_equal_reference'), 'max wall', s['all']['wall_seconds_max'])
+              'shadow days', s['shadow_days'], 'buffers', s.get('shadow_buffers_all_equal_reference'),
+              'max wall', s['all']['wall_seconds_max'])
     return 0
 
 

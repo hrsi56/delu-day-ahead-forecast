@@ -1,0 +1,166 @@
+"""CP-17c-probe's report: every table rendered from `reports/cp17c-probe/measurement.json`, so a figure in the
+report is the measurement's (a test renders it again and compares).
+
+    PYTHONPATH=src python -m cp17cprobe.report --measurement reports/cp17c-probe/measurement.json \\
+        --proposals reports/cp17c-probe/proposals.md --out reports/cp17c-probe/report.md
+"""
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+MIB = 1024 ** 2
+KINDS = (('parity', 'The issuing-host parity origins (`reports/cp17b/host-parity.json`)'),
+         ('f1', "F1's day, 2026-03-30 (`reports/cp17b/partial-days.json`)"))
+
+
+def _yes(value) -> str:
+    return 'yes' if value else ('**no**' if value is not None else '—')
+
+
+def _eur(value) -> str:
+    if value is None:
+        return '—'
+    return '0' if value == 0 else f'{value:.3g}'
+
+
+def _s(value) -> str:
+    return '—' if value is None else f'{value:.1f}'
+
+
+def _mib(value) -> str:
+    return '—' if value is None else f'{value / MIB:.0f}'
+
+
+def host_table(runners: dict) -> list[str]:
+    rows = ['| | ' + ' | '.join(runners) + ' |', '|---|' + '---|' * len(runners)]
+
+    def row(label, get):
+        values = []
+        for r in runners.values():
+            try:
+                values.append(str(get(r)))
+            except (KeyError, TypeError):
+                values.append('—')
+        rows.append(f'| {label} | ' + ' | '.join(values) + ' |')
+    row('Image label', lambda r: r['host']['label'])
+    row('Image', lambda r: f"{r['host']['machine']['runner_env']['ImageOS']} {r['host']['machine']['runner_env']['ImageVersion']}")
+    row('OS', lambda r: r['host']['machine']['os_version'])
+    row('CPU (per job)', lambda r: '; '.join(sorted({j['host']['machine']['cpu_model'] for j in r['jobs'].values() if j.get('host')})))
+    row('Logical cores', lambda r: r['host']['machine']['cpu_count'])
+    row('Memory', lambda r: f"{r['host']['machine']['memory_bytes'] / 1024 ** 3:.1f} GiB")
+    row('Node.js binary (SHA-256)', lambda r: f"`{r['host']['node']['sha256'][:16]}…`")
+    row('Node.js / V8', lambda r: f"{r['host']['node']['version']} / {r['host']['node']['v8']}")
+    row('Pyodide files equal to the freeze manifest', lambda r: _yes(r['host']['pyodide'].get('equal_to_freeze_manifest')))
+    row('CPython (the chain\'s side)', lambda r: r['host']['python'])
+    return rows
+
+
+def fit_table(rows: dict) -> list[str]:
+    out = ['| Fit | Bit-identical | Status (frozen comparison) | Largest difference, EUR/MWh | Selections | Payload | '
+           'Wall s (reference) | Peak MiB (reference) | Within 15 min and 4 GiB |',
+           '|---|---|---|---|---|---|---|---|---|']
+    for stem, f in rows.items():
+        out.append(f"| {stem} | {_yes(f['bit_identical'])} | {f.get('status', '—')} | {_eur(f.get('max_abs_eur'))} | "
+                   f"{_yes(f.get('selections_match'))} | {_yes(f['payload_identity_equal'])} | "
+                   f"{_s(f.get('wall_seconds'))} ({_s(f['reference_wall_seconds'])}) | "
+                   f"{_mib(f.get('peak_bytes'))} ({_mib(f['reference_peak_bytes'])}) | {_yes(f.get('within_ceilings'))} |")
+    return out
+
+
+def shadow_table(shadow: dict) -> list[str]:
+    out = ['| Day | Path | A1 | v4 | v2 | B0 | Buffers = reference (v4, v2, B0) | Buffers = payload | Intake | '
+           'Day\'s processes, s | Largest peak, MiB |',
+           '|---|---|---|---|---|---|---|---|---|---|---|']
+    days = {d: v for s in shadow.values() for d, v in s['days'].items()}
+    for day, d in sorted(days.items()):
+        fits = d['fits']
+        cell = lambda p: 'bit-identical' if fits.get(p, {}).get('bit_identical') else (   # noqa: E731
+            f"{fits[p].get('status')} ({_eur(fits[p].get('max_abs_eur'))})" if p in fits else '—')
+        path = ', '.join(f'{p} {s}' for p, s in d['path'])
+        buffers = ', '.join(_yes(d['buffers_equal_reference'].get(p)) for p in ('v4', 'v2', 'B0'))
+        payload = ', '.join(_yes(d['buffers_equal_payload'].get(p)) for p in ('v4', 'v2', 'B0'))
+        intake = 'all registered' if set(d['intake'].values()) == {'registered'} else json.dumps(d['intake'])
+        peak = max((f['peak_bytes'] or 0) for f in fits.values()) if fits else None
+        out.append(f"| {day} | {path} | {cell('A1')} | {cell('v4')} | {cell('v2')} | {cell('B0')} | {buffers} | {payload} | "
+                   f"{intake} | {_s(d['day_seconds_sum'])} | {_mib(peak)} |")
+    return out
+
+
+def summary_table(runners: dict) -> list[str]:
+    out = ['| | ' + ' | '.join(runners) + ' |', '|---|' + '---|' * len(runners)]
+
+    def row(label, get):
+        values = []
+        for r in runners.values():
+            try:
+                values.append(str(get(r['summary'])))
+            except (KeyError, TypeError):
+                values.append('—')
+        out.append(f'| {label} | ' + ' | '.join(values) + ' |')
+    row('Fits measured', lambda s: s['all']['fits'])
+    row('Bit-identical to the frozen host', lambda s: f"{s['all']['bit_identical']} of {s['all']['fits']}")
+    row('Every data-driven selection matched', lambda s: _yes(s['all']['all_selections_match']))
+    row('Every payload identity equal', lambda s: _yes(s['all']['all_payload_identities_equal']))
+    row('Executed files = the frozen package', lambda s: _yes(s['all']['all_executed_files_match_package']))
+    row('Network requests refused', lambda s: len(s['all']['blocked_non_local_requests']))
+    row('Every fit within 15 min and 4 GiB', lambda s: _yes(s['all']['all_within_ceilings']))
+    row('Longest fit, s', lambda s: _s(s['all']['wall_seconds_max']))
+    row('Largest peak, MiB', lambda s: _mib(s['all']['peak_bytes_max']))
+    row('Wall time / the frozen host\'s, median (max)',
+        lambda s: f"{s['all']['wall_ratio_to_reference_median']:.2f} ({s['all']['wall_ratio_to_reference_max']:.2f})")
+    row('Shadow days', lambda s: s['shadow_days'])
+    row('Buffers = the reference\'s at every origin', lambda s: _yes(s['shadow_buffers_all_equal_reference']))
+    row('A1 issued every day; every shadow registered',
+        lambda s: _yes(s['shadow_all_issued_a1'] and s['shadow_all_registered']))
+    row('Artifacts verify', lambda s: _yes(s['shadow_all_artifacts_verify']))
+    row('A day\'s four processes, s: median (max)',
+        lambda s: f"{_s(s['shadow_day_seconds_sum_median'])} ({_s(s['shadow_day_seconds_sum_max'])})")
+    row('The two shadow jobs stitch', lambda s: _yes(s.get('stitch_early_final_equals_late_start')))
+    row('Final state = the reference\'s', lambda s: _yes(s.get('late_final_equals_reference_final')))
+    return out
+
+
+def minutes_table(minutes: dict) -> list[str]:
+    out = ['| Run | Job | OS | Seconds | Counted minutes |', '|---|---|---|---|---|']
+    for run_id, run in sorted(minutes['runs'].items()):
+        for name, job in sorted(run['jobs'].items()):
+            out.append(f"| {run_id} | {name} | {job['os']} | {job['seconds']:.0f} | {job['counted']} |")
+    out.append(f"| **Total** | | | | **{minutes['counted_total']}** |")
+    return out
+
+
+def render(m: dict, proposals: str) -> str:
+    runners = m['runners']
+    parts = ['# CP-17c-probe — can a GitHub-hosted runner be the issuing host?', '',
+             '*Generated by `cp17cprobe.report` from `measurement.json`; the proposals are `proposals.md`.*', '',
+             proposals.strip(), '', '## The hosts', '', *host_table({**runners, 'local control': m['local_control']}), '',
+             '## Summary', '', *summary_table({**runners, 'local control': m['local_control']}), '']
+    for label, r in {**runners, 'local control': m['local_control']}.items():
+        parts += [f'## {label}', '']
+        for kind, title in KINDS:
+            if r[kind]:
+                parts += [f'### {title}', '', *fit_table(r[kind]), '']
+        if r['shadow']:
+            parts += ['### The 14 shadow days (`reports/cp17b/shadow-run.json`), A1 and the three shadows', '',
+                      *shadow_table(r['shadow']), '']
+    if 'minutes' in m:
+        parts += ['## GitHub minutes', '', 'As GitHub\'s usage report counts them for a private repository: each job '
+                  'rounded up to the minute, macOS at ten times.', '', *minutes_table(m['minutes']), '']
+    return '\n'.join(parts).rstrip() + '\n'
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--measurement', required=True, type=Path)
+    ap.add_argument('--proposals', required=True, type=Path)
+    ap.add_argument('--out', required=True, type=Path)
+    args = ap.parse_args(argv)
+    args.out.write_text(render(json.loads(args.measurement.read_text()), args.proposals.read_text()))
+    print(args.out)
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

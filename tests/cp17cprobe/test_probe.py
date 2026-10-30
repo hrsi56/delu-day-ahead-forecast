@@ -260,3 +260,32 @@ def test_measurement_recomputes_from_the_downloaded_results():
     need_reference()
     value = compare.compare(REPORTS / 'inputs.json', REPORTS / 'artifacts.json', downloads, local)
     assert value == load(REPORTS / 'measurement.json')
+
+
+def test_report_is_the_render_of_the_committed_measurement():
+    """Every table in the report is the measurement's: rendering it again gives the committed report."""
+    from cp17cprobe import report
+    if not (REPORTS / 'measurement.json').exists():
+        pytest.skip('no measurement committed yet')
+    rendered = report.render(load(REPORTS / 'measurement.json'), (REPORTS / 'proposals.md').read_text())
+    assert rendered == (REPORTS / 'report.md').read_text()
+
+
+def test_measurement_answers_every_recorded_item():
+    """Per runner, day and policy: the identity, the frozen comparison, the measurement and the payload identity."""
+    if not (REPORTS / 'measurement.json').exists():
+        pytest.skip('no measurement committed yet')
+    m = load(REPORTS / 'measurement.json')
+    assert {'ubuntu-24.04', 'macos-26'} <= set(m['runners'])
+    for label, r in {**m['runners'], 'local control': m['local_control']}.items():
+        fits = list(r['parity'].values()) + list(r['f1'].values()) + [
+            f for s in r['shadow'].values() for d in s['days'].values() for f in d['fits'].values()]
+        assert fits, label
+        for f in fits:
+            assert f['bit_identical'] == (f['quantiles_sha256'] == f['reference_quantiles_sha256'])
+            assert 'status' in f and 'max_abs_eur_by_level' in f and 'selections_match' in f
+            assert f['wall_seconds'] is not None and f['peak_bytes'] is not None
+            assert f['payload_identity_equal'] is not None
+        assert r['host']['node']['version'] == '26.7.0'
+    assert m['local_control']['host']['node']['sha256'] != m['reference']['node']['sha256']
+    assert m['minutes']['counted_total'] <= 1500
