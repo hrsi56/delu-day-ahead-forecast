@@ -27,6 +27,12 @@
   - This is the same binary the `macos-26` jobs ran. Neither the binary nor the machine moved a single bit.
 - **The supplementary records.** Run 1's harness failed after each fit, but the 14 records it left are the frozen
   runner's own. All 14 are bit-identical too, including 10 on a different Linux CPU (AMD EPYC 9V45).
+- **More than one image.** The macOS fits were bit-identical across two runner images: `macos26 20261013.0424.1`
+  (the parity job, CPython 3.13.16) and `macos26 20261026.0455.2` (both shadow jobs, CPython 3.13.17). All three Linux
+  jobs ran `ubuntu24 20261026.354.1` with CPython 3.13.17.
+- **How the references are bound.** Seven reference fits, A1 on 2026-08-24 to 08-30, are bound to CP-17b by their
+  payload identity and executed files only: no committed record carries their quantile hash. The other 68 per runner
+  are bound by a committed quantile hash.
 - **What it means.** No selection differed and no quantile moved, so τ_eq and F1 are untouched: every retrain
   status reads "identical bit for bit".
 - **Cost of the probe.** It used **863 GitHub minutes** as a private repository counts them (macOS at ten times),
@@ -48,15 +54,15 @@ Both pass cleanly, so the choice is the Orchestrator's (decision 24). I propose 
   - Linux's speed depends on the CPU it lands on. A1 at 2025-10-26 took 146.8 s on an EPYC 9V45 and 284.6 s on an
     EPYC 7763.
 - **Memory.** It is no constraint on either runner: the largest peak was under 0.92 GiB, against 4 GiB.
-- **Cost and capacity.**
-  - A private repository counts macOS minutes at ten times.
-  - Linux's standard fleet is GitHub's largest.
-  - In a public repository, standard runners cost nothing on either OS.
+- **Cost.** This report counts macOS minutes at ten times, the rate a private repository is charged.
+- **GitHub's published terms, not measured or recorded by this probe:**
+  - standard runners cost nothing in a public repository, on either OS;
+  - a public repository's standard Linux runner is a different hardware class from the private one measured here.
 - **What I do not know.**
-  - The probe measured the runner classes of a private repository (2 vCPU and 7.7 GiB on Linux).
-  - A public repository's standard Linux runner is a different class. Its timing, not its arithmetic, would need
-    the re-freeze's own measurement.
-  - One image version per OS was observed: `ubuntu24 20261026.354.1` and `macos26 20261013.0424.1`.
+  - The probe measured the runner classes of a private repository: 2 vCPU and 7.7 GiB on Linux, 5 cores and
+    14 GiB on macOS.
+  - On another class, the timing, not the arithmetic, would need the re-freeze's own measurement.
+  - The image versions observed are those above: one Linux image, two macOS images.
 
 **If the Orchestrator chooses macOS instead,** everything below holds with the darwin-arm64 binary. It is the
 local control's binary, and the one the `macos-26` jobs ran.
@@ -72,18 +78,19 @@ local control's binary, and the one the `macos-26` jobs ran.
   - The macOS alternative is `node-v26.7.0-darwin-arm64.tar.gz` (57,622,243 bytes, `7ee659a7…`), with `bin/node`
     `a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df`.
 - **How the binary is retrieved.**
-  - The tarball is over the 50 MB limit for a committed file, so each run retrieves it. Retrieval took 0.5 s here.
-    A cache keyed by the tarball's hash would also work.
+  - The tarball is over the 50 MB limit for a committed file, so each run retrieves it. Retrieving it with
+    `SHASUMS256.txt` took 0.34–0.87 s per job here. A cache keyed by the tarball's hash would also work.
   - The run verifies the tarball and the binary by those hashes before any fit. The hashes are the pin, not the URL.
   - If retrieval or a hash fails, nothing is fitted and the day is not issued.
-- **Pyodide 0.28.0's 23 files** keep their frozen hashes. They total 43 MB, and the largest file is 13 MB, so they
-  can live in the repository, as they did in the scratch repository.
+- **Pyodide 0.28.0's 23 files** keep their frozen hashes. They total 44,962,352 bytes, and the largest is 13,258,840
+  bytes, so they can live in the repository, as they did in the scratch repository.
 - **The host's identity, as the freeze records it.**
   - The runner: GitHub-hosted standard runner, label `ubuntu-24.04` (`ImageOS` `ubuntu24`, x64).
   - The runtime: the binary above, the 23 Pyodide files, the package zip, and CPython with the environment
     `uv.lock` pins.
-  - **Pin CPython's patch version.** The probe's runners got 3.13.17 (Linux) and 3.13.16 (macOS), against the frozen
-    host's 3.13.15, and the chain's CPython side matched all the same. The freeze should still name one version.
+  - **Pin CPython's patch version.** The probe's jobs got 3.13.17 (every Linux job and both macOS shadow jobs) and
+    3.13.16 (the macOS parity job), against the frozen host's 3.13.15, and the chain's CPython side matched all the
+    same. The freeze should still name one version.
   - The image version and the CPU model are GitHub's to change weekly. Record them in each issuance's lineage; do
     not pin them.
 - **Where `refreeze verify` runs: on the runner, in the issuing job, after the runtimes are in place and before the
@@ -110,7 +117,7 @@ local control's binary, and the one the `macos-26` jobs ran.
 ## Proposal 3 — the daily cost on that runner
 
 These figures are measured, from the tables below. One issuance is A1 plus the three shadows, which decision 14 runs
-every day. A job's setup before the chain took 19–30 s.
+every day. A job's setup before the chain took 17–30 s in the measured runs.
 
 | | Linux (`ubuntu-24.04`) | macOS (`macos-26`) |
 |---|---|---|
@@ -128,8 +135,8 @@ every day. A job's setup before the chain took 19–30 s.
     sum was within 900 s.
   - Two at once would bring decision 23's four issuances to about 21 job-minutes on Linux.
 - **The run stays inside decision 23's own time bound** of about an hour.
-- **In a public repository,** standard GitHub-hosted runners cost nothing. Where the pipeline runs is CP-18's
-  decision.
+- **In a public repository,** by GitHub's published terms and not by any record here, standard runners cost
+  nothing. Where the pipeline runs is CP-18's decision.
 
 ## Proposal 4 — an estimate, not a run: DDNN-2's next search, S_14 on 2027-01-06
 
@@ -140,7 +147,8 @@ every day. A job's setup before the chain took 19–30 s.
   - Under Pyodide, A1's fits took 3.3–5.6 times their native time, median 4.6 (`reports/cp17b/host-parity.json`).
 - **Scaling.** The runners' measured speed against this M3 is the proxy for the search's own: the parity fits' median
   is 1.69 times on Linux and 1.20 times on macOS.
-- **The job limit** is GitHub's documented 6 hours per job on hosted runners. It was not tested here.
+- **The job limit** is 6 hours per job on hosted runners. This is GitHub's published limit, not a record of this
+  probe, and it was not tested here.
 
 | S_14 runs… | Linux, one worker | Linux, two workers, with the 2× margin | macOS, one worker | macOS, four workers, with the 2× margin |
 |---|---|---|---|---|
@@ -159,18 +167,15 @@ every day. A job's setup before the chain took 19–30 s.
 
 ## The hosts
 
-| | macos-26 | ubuntu-24.04 | local control |
-|---|---|---|---|
-| Image label | macos-26 | ubuntu-24.04 | local-m3 |
-| Image | macos26 20261013.0424.1 | ubuntu24 20261026.354.1 | — (this Mac) |
-| OS | 26.6.2 | Ubuntu 24.04.5 LTS | 26.5.2 |
-| CPU (per job) | Apple M2 Pro (Virtual) | AMD EPYC 7763 64-Core Processor | Apple M3 |
-| Logical cores | 5 | 2 | 8 |
-| Memory | 14.0 GiB | 7.7 GiB | 16.0 GiB |
-| Node.js binary (SHA-256) | `a9bd0630891c2dcd…` | `ad19784f7e90ba78…` | `a9bd0630891c2dcd…` |
-| Node.js / V8 | 26.7.0 / 14.6.202.34-node.28 | 26.7.0 / 14.6.202.34-node.28 | 26.7.0 / 14.6.202.34-node.28 |
-| Pyodide's 23 files = the freeze manifest's (every job) | yes | yes | yes |
-| CPython (the chain's side) | 3.13.16 | 3.13.17 | 3.13.15 |
+| Runner | Job | Image | OS | CPU | Logical cores | Memory | Node.js binary (SHA-256) | Node.js / V8 | Pyodide's 23 files = the freeze manifest's | CPython (the chain's side) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| macos-26 | macos-26-parity | macos26 20261013.0424.1 | 26.6.2 | Apple M2 Pro (Virtual) | 5 | 14.0 GiB | `a9bd0630891c2dcd…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.16 |
+| macos-26 | macos-26-shadow-early | macos26 20261026.0455.2 | 26.6.2 | Apple M2 Pro (Virtual) | 5 | 14.0 GiB | `a9bd0630891c2dcd…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.17 |
+| macos-26 | macos-26-shadow-late | macos26 20261026.0455.2 | 26.6.2 | Apple M2 Pro (Virtual) | 5 | 14.0 GiB | `a9bd0630891c2dcd…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.17 |
+| ubuntu-24.04 | ubuntu-24.04-parity | ubuntu24 20261026.354.1 | Ubuntu 24.04.5 LTS | AMD EPYC 7763 64-Core Processor | 2 | 7.7 GiB | `ad19784f7e90ba78…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.17 |
+| ubuntu-24.04 | ubuntu-24.04-shadow-early | ubuntu24 20261026.354.1 | Ubuntu 24.04.5 LTS | AMD EPYC 7763 64-Core Processor | 2 | 7.7 GiB | `ad19784f7e90ba78…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.17 |
+| ubuntu-24.04 | ubuntu-24.04-shadow-late | ubuntu24 20261026.354.1 | Ubuntu 24.04.5 LTS | AMD EPYC 7763 64-Core Processor | 2 | 7.7 GiB | `ad19784f7e90ba78…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.17 |
+| local control | local-control | — (this Mac) | 26.5.2 | Apple M3 | 8 | 16.0 GiB | `a9bd0630891c2dcd…` | 26.7.0 / 14.6.202.34-node.28 | yes | 3.13.15 |
 
 ## Summary
 

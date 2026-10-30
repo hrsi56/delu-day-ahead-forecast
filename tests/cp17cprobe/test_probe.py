@@ -304,3 +304,35 @@ def test_scratch_repository_is_private_secret_free_and_ran_the_recorded_inputs()
     assert measured and {run['head_sha'] for run in measured.values()} == {repo['commits'][0]['sha']}
     superseded = {run['head_sha'] for run in artifacts['runs'].values() if all(a.get('superseded') for a in run['artifacts'])}
     assert superseded == {repo['commits'][-1]['sha']}
+
+
+def test_hosts_table_names_every_job_with_its_own_image_and_cpython():
+    """A runner label can land on more than one image (the first review found two macOS images): the report gives
+    every job its own row, with its own image version, CPU and CPython, as the measurement records them."""
+    from cp17cprobe import report
+    if not (REPORTS / 'measurement.json').exists():
+        pytest.skip('no measurement committed yet')
+    m = load(REPORTS / 'measurement.json')
+    rows = report.host_table({**m['runners'], 'local control': m['local_control']})
+    jobs = [(label, name, job['host']) for label, r in {**m['runners'], 'local control': m['local_control']}.items()
+            for name, job in r['jobs'].items() if job.get('host')]
+    assert len(rows) == 2 + len(jobs)
+    for label, name, host in jobs:
+        row = next(r for r in rows if r.startswith(f'| {label} | {name} |'))
+        env = host['machine']['runner_env']
+        if env.get('ImageOS'):
+            assert f"{env['ImageOS']} {env['ImageVersion']}" in row
+        assert row.rstrip(' |').endswith(host['python']) and host['machine']['cpu_model'] in row
+    macos = {job['host']['machine']['runner_env']['ImageVersion'] for job in m['runners']['macos-26']['jobs'].values()}
+    assert len(macos) == 2      # the case the first review caught
+
+
+def test_hosts_table_would_catch_a_missing_job():
+    """The negative control: a measurement with a job dropped renders one row fewer."""
+    from cp17cprobe import report
+    if not (REPORTS / 'measurement.json').exists():
+        pytest.skip('no measurement committed yet')
+    m = load(REPORTS / 'measurement.json')
+    full = report.host_table(m['runners'])
+    m['runners']['macos-26']['jobs'].pop('macos-26-shadow-late')
+    assert len(report.host_table(m['runners'])) == len(full) - 1

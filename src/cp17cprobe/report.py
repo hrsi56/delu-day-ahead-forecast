@@ -34,31 +34,23 @@ def _mib(value) -> str:
 
 
 def host_table(runners: dict) -> list[str]:
-    rows = ['| | ' + ' | '.join(runners) + ' |', '|---|' + '---|' * len(runners)]
-
-    def row(label, get):
-        values = []
-        for r in runners.values():
-            try:
-                values.append(str(get(r)))
-            except (KeyError, TypeError):
-                values.append('—')
-        rows.append(f'| {label} | ' + ' | '.join(values) + ' |')
-    row('Image label', lambda r: r['host']['label'])
-    def image(r):
-        env = r['host']['machine']['runner_env']
-        return f"{env['ImageOS']} {env['ImageVersion']}" if env.get('ImageOS') else '— (this Mac)'
-    row('Image', image)
-    row('OS', lambda r: r['host']['machine']['os_version'])
-    row('CPU (per job)', lambda r: '; '.join(sorted({j['host']['machine']['cpu_model'] for j in r['jobs'].values() if j.get('host')})))
-    row('Logical cores', lambda r: r['host']['machine']['cpu_count'])
-    row('Memory', lambda r: f"{r['host']['machine']['memory_bytes'] / 1024 ** 3:.1f} GiB")
-    row('Node.js binary (SHA-256)', lambda r: f"`{r['host']['node']['sha256'][:16]}…`")
-    row('Node.js / V8', lambda r: f"{r['host']['node']['version']} / {r['host']['node']['v8']}")
-    row('Pyodide\'s 23 files = the freeze manifest\'s (every job)',
-        lambda r: _yes(all(j['host']['pyodide']['files_equal_freeze_manifest'] for j in r['jobs'].values() if j.get('host'))))
-    row('CPython (the chain\'s side)', lambda r: r['host']['python'])
-    return rows
+    """One row per job: each job is its own machine, so its image, CPU and CPython are its own (a runner label can
+    land on more than one image version or CPU)."""
+    out = ['| Runner | Job | Image | OS | CPU | Logical cores | Memory | Node.js binary (SHA-256) | Node.js / V8 | '
+           'Pyodide\'s 23 files = the freeze manifest\'s | CPython (the chain\'s side) |',
+           '|---|---|---|---|---|---|---|---|---|---|---|']
+    for label, r in runners.items():
+        for name, job in sorted(r['jobs'].items()):
+            host = job.get('host')
+            if not host:
+                continue
+            m, env = host['machine'], host['machine']['runner_env']
+            image = f"{env['ImageOS']} {env['ImageVersion']}" if env.get('ImageOS') else '— (this Mac)'
+            out.append(f"| {label} | {name} | {image} | {m.get('os_version')} | {m.get('cpu_model')} | {m.get('cpu_count')} | "
+                       f"{m.get('memory_bytes', 0) / 1024 ** 3:.1f} GiB | `{host['node']['sha256'][:16]}…` | "
+                       f"{host['node']['version']} / {host['node']['v8']} | "
+                       f"{_yes(host['pyodide'].get('files_equal_freeze_manifest'))} | {host['python']} |")
+    return out
 
 
 def fit_table(rows: dict) -> list[str]:

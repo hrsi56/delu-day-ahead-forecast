@@ -3,3 +3,6 @@
 {"item": "the inputs and the dry replay (cp17cprobe.inputs), three builds", "note": "about 30 s each, timed by /usr/bin/time on the first; peak 1.4 GB", "seconds": 90.0, "workers": 1}
 {"item": "stand-in harness runs and the probe tests", "note": "estimate", "seconds": 120.0, "workers": 1}
 {"item": "the early history-free CI run (2770303f)", "seconds": 604.4, "workers": 1}
+{"item": "a history-free CI run at b18cf4bd, stopped after its first steps for a newer candidate", "note": "estimate: sync and the WASM payload step", "seconds": 80.0, "workers": 1}
+{"item": "the history-free CI run at 7ee1cf07", "seconds": 595.4, "workers": 1}
+{"item": "the first Integration Critic (critic-1, at 7ee1cf07), as its verdict reports", "note": "about 0.24 machine-hours, at most 2 workers, 1.32 GB peak", "seconds": 864.0, "workers": 1}
