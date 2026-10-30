@@ -308,6 +308,10 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     decision.
 - **Next Track B work: CP-17c,** the short re-freeze of A1 under the `macos-26` host, by r19 §24.13's
   list. It comes before 4.7T opens, no earlier than 2026-12-04.
+  - **Issued 2026-10-30,** brief `5f34f3ab…` (canonical copy `.local/artifacts/cp-17c/issued-brief.md`).
+  - **Ceilings:** about 12 active hours and 8 local machine-hours, plus at most 1,000 GitHub minutes
+    (macOS at ten times) in the new private scratch repository `hrsi56/delu-host-refreeze`.
+  - **It records the values 4.7T's brief cites.** If CP-17c cannot land, 4.7T waits for the Owner.
   - **4.7T's brief** carries r18 §24.12's list:
     - the §24.2 audit, the Owner's declaration and the retrieval approval;
     - `refreeze verify` with no problem and no unchecked file, as a precondition;
@@ -1115,6 +1119,16 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17c issued, 2026-10-30** (brief `5f34f3ab…`). It re-freezes A1 under r19 §24.13's host:
+  - the official darwin-arm64 binary;
+  - the H2 checks with the canary;
+  - the states' route;
+  - R7's fix on its error path only;
+  - parity on a private `macos-26` runner and on the M3, with native and browser parity on the M3 only.
+
+  GitHub minutes are capped at 1,000 counted, in priority order, because CP-17c-probe used 863 this
+  month.
 
 - **v21-r19 ratified, 2026-10-30** ([amendment record](docs/track-b/capstone_v21-r18-to-v21-r19-amendments.md)),
   under the Owner's grant in decision 25.
