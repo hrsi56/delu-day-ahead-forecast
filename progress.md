@@ -309,6 +309,12 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
 - **Next Track B work: CP-17c,** the short re-freeze of A1 under the `macos-26` host, by r19 §24.13's
   list. It comes before 4.7T opens, no earlier than 2026-12-04.
   - **Issued 2026-10-30,** brief `5f34f3ab…` (canonical copy `.local/artifacts/cp-17c/issued-brief.md`).
+  - **Returned BLOCKED, 2026-10-30.** GitHub refused the runner's fourth job for billing ("recent
+    account payments have failed or your spending limit needs to be increased"), at 12 of 14 shadow
+    days. Every other item passes, and the evidence tip `c860d986` holds the verdict (`3108f972…`) on
+    candidate `548bd069`. The new policy identity is `720fc581…`. The resume is one prepared run
+    (about 14 minutes, at most 180 counted) when the quota resets on 2026-11-01 (GitHub's email:
+    2,000 of 2,000 minutes used), then a new candidate, a fresh Critic and LAND.
   - **Ceilings:** about 12 active hours and 8 local machine-hours, plus at most 1,000 GitHub minutes
     (macOS at ten times) in the new private scratch repository `hrsi56/delu-host-refreeze`.
   - **It records the values 4.7T's brief cites.** If CP-17c cannot land, 4.7T waits for the Owner.
@@ -1119,6 +1125,28 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17c returned BLOCKED, 2026-10-30** (`.local/artifacts/cp-17c/return.md`; evidence tip
+  `c860d986`, Integration verdict `3108f972…` on candidate `548bd069`).
+  - **The block.** GitHub refused the fourth job in `hrsi56/delu-host-refreeze` before any step ran.
+    The job's annotation reads "recent account payments have failed or your spending limit needs to
+    be increased". The brief returns BLOCKED at a quota stop, and the Orchestrator resumes after the
+    reset.
+  - **What the runner measured.** `refreeze verify` read `verified`. The H2 gate passed, with its five
+    forced failures as expected. A1's parity was 9 of 9 origins, and 50 of 50 fits were bit-identical.
+    Shadow days were 12 of 14, with 2026-08-30 and 2026-09-06 not run.
+  - **The M3.** 58 of 58 fits and 14 of 14 days. Native and browser parity pass.
+  - **The new identity.** `720fc581…`, which supersedes `439115fb…`.
+  - **Cost and cause.** About 660 counted minutes by the Lead's count, against 863 for CP-17c-probe.
+    GitHub's own count is higher: its email to the Owner reads "2,000 min used / 2,000 min included",
+    with usage resetting on 2026-11-01. The cause is the free plan's quota under a $0 budget, and no
+    payment failed. The Orchestrator dispatches the resume after the reset, and no paid usage is
+    needed.
+  - **For CP-18.**
+    - Fix the state store's head binding (Critic F1).
+    - The state route: `k13.json`, the freeze-origin states and the canary payload cannot sit in the
+      public repository before the publication. CP-18 sequences them with it, or reads a private
+      repository with a token, which is the Owner's secret.
 
 - **CP-17c issued, 2026-10-30** (brief `5f34f3ab…`). It re-freezes A1 under r19 §24.13's host:
   - the official darwin-arm64 binary;
