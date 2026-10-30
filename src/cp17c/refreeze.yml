@@ -9,8 +9,9 @@
 #                 and A1's parity at 2025-10-26 and 2026-03-29 (the other seven origins are the late block's A1);
 #   shadow-late   2026-08-31 to 2026-09-06, from CP-17b's host state there, one process per day through the store;
 #   shadow-early  2026-08-24 to 2026-08-30, from CP-26's state at 2026-08-24.
-# Each job runs its own H2 gate before its first issuance. The job limits sum to 99 minutes, so the run cannot pass
-# 990 minutes as a private repository counts macOS (ten times), under the brief's 1,000.
+# Each job runs its own H2 gate before its first issuance. The job limits sum to 95 minutes, so this run cannot pass
+# 950 minutes as a private repository counts macOS (ten times); with the first run's 40 at most, under the brief's
+# 1,000.
 #
 # Retrieval is software only: GitHub's own actions (pinned by commit SHA), uv and the Python packages uv.lock pins,
 # the pinned CPython (uv's build of 3.13.15), and the Node.js tarball with its SHASUMS256.txt, checked by hash. No
@@ -47,9 +48,9 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          - {kind: checks, minutes: 18}
-          - {kind: shadow-late, minutes: 41}
-          - {kind: shadow-early, minutes: 40}
+          - {kind: checks, minutes: 17}
+          - {kind: shadow-late, minutes: 40}
+          - {kind: shadow-early, minutes: 38}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
