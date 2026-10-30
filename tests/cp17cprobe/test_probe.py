@@ -258,7 +258,8 @@ def test_measurement_recomputes_from_the_downloaded_results():
     if not downloads.exists() or not local.exists():
         pytest.skip('the downloaded runner results and the local control are local material, absent on CI')
     need_reference()
-    value = compare.compare(REPORTS / 'inputs.json', REPORTS / 'artifacts.json', downloads, local)
+    value = compare.compare(REPORTS / 'inputs.json', REPORTS / 'artifacts.json', downloads, local,
+                            REPORTS / 'retrieval-local.json')
     assert value == load(REPORTS / 'measurement.json')
 
 

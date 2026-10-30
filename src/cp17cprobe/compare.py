@@ -17,7 +17,7 @@ The output has no clock in it: the same downloads give the same bytes.
 
     PYTHONPATH=src python -m cp17cprobe.compare fetch --repo hrsi56/delu-host-probe --run <id> --dest <dir> --record <artifacts.json>
     PYTHONPATH=src python -m cp17cprobe.compare compare --inputs <inputs.json> --artifacts <artifacts.json> \\
-        --downloads <dir> --local <local control dir> --out <measurement.json>
+        --downloads <dir> --local <local control dir> --retrieval <retrieval-local.json> --out <measurement.json>
 """
 from __future__ import annotations
 
@@ -330,7 +330,18 @@ def supplementary(inputs: dict, artifacts: dict, downloads: Path) -> list[dict]:
     return rows
 
 
-def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path, local: Path | None) -> dict:
+def local_retrieval(path: Path) -> dict:
+    """This Mac's retrieval record, its files rehashed where they are present (local material)."""
+    value = json.loads(path.read_text())
+    for key in ('shasums', 'tarball', 'binary'):
+        target = project() / value[key]['path']
+        if target.exists() and sha256_file(target) != value[key]['sha256']:
+            raise SystemExit(f'{target}: not the file the retrieval record names')
+    return value
+
+
+def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path, local: Path | None,
+            retrieval: Path | None = None) -> dict:
     inputs = json.loads(inputs_path.read_text())
     freeze = json.loads((ROOT / 'docs/track-b/evidence/cp-17b/freeze-manifest.json').read_text())
     executed_ok = _executed_check(freeze['policy_identity']['code']['files_sha256'])
@@ -365,6 +376,8 @@ def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path, loc
         out['supplementary'] = supplementary(inputs, artifacts, downloads)
     if local is not None:
         out['local_control'] = runner(inputs, local, executed_ok, local=True)
+    if retrieval is not None:
+        out['local_retrieval'] = local_retrieval(retrieval)
     pinned = freeze['policy_identity']['issuing_host']['pyodide']['files_sha256']
     for r in [*out['runners'].values(), out.get('local_control')]:
         for job in (r or {}).get('jobs', {}).values():
@@ -386,13 +399,14 @@ def main(argv=None) -> int:
     c.add_argument('--artifacts', type=Path)
     c.add_argument('--downloads', type=Path)
     c.add_argument('--local', type=Path)
+    c.add_argument('--retrieval', type=Path, help="this Mac's retrieval record (retrieval-local.json)")
     c.add_argument('--out', required=True, type=Path)
     args = ap.parse_args(argv)
     if args.cmd == 'fetch':
         value = fetch(args.repo, args.run, args.dest, args.record)
         print(args.run, [a['name'] for a in value['runs'][args.run]['artifacts']])
         return 0
-    value = compare(args.inputs, args.artifacts, args.downloads, args.local)
+    value = compare(args.inputs, args.artifacts, args.downloads, args.local, args.retrieval)
     dump(args.out, value)
     for label, r in {**value['runners'], **({'local-control': value['local_control']} if 'local_control' in value else {})}.items():
         s = r['summary']

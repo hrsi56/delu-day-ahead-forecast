@@ -147,6 +147,29 @@ def issuance_table(runners: dict) -> list[str]:
     return out
 
 
+def retrieval_table(m: dict, local: dict | None) -> list[str]:
+    """Every retrieval: the Node.js tarball and binary, `uv`, and the lock its packages came from, per job."""
+    out = ['| Where | What | URL | Bytes | SHA-256 |', '|---|---|---|---|---|']
+    if local:
+        out.append(f"| this Mac | `SHASUMS256.txt` | {local['shasums']['url']} | {local['shasums']['bytes']:,} | `{local['shasums']['sha256']}` |")
+        out.append(f"| this Mac | Node.js {local['version']} tarball | {local['tarball']['url']} | {local['tarball']['bytes']:,} | "
+                   f"`{local['tarball']['sha256']}` |")
+        out.append(f"| this Mac | its `bin/node` | — | {local['binary']['bytes']:,} | `{local['binary']['sha256']}` |")
+    for label, r in m['runners'].items():
+        for name, job in sorted(r['jobs'].items()):
+            node, uv = job.get('node-retrieval'), job.get('uv-retrieval')
+            if node:
+                out.append(f"| {name} | Node.js {node['version']} tarball | {node['tarball']['url']} | {node['tarball']['bytes']:,} | "
+                           f"`{node['tarball']['sha256']}` |")
+                out.append(f"| {name} | its `bin/node` | — | {node['binary']['bytes']:,} | `{node['binary']['sha256']}` |")
+            if uv:
+                out.append(f"| {name} | `{uv['file']}` ({uv['version']}) | {uv['url']} | {uv['bytes']:,} | `{uv['sha256']}` |")
+            if job.get('project_sha256'):
+                out.append(f"| {name} | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | "
+                           f"`{job['project_sha256'][0]}` |")
+    return out
+
+
 def minutes_table(minutes: dict) -> list[str]:
     out = ['| Run | Job | OS | Seconds | Setup before the chain, s | Counted minutes |', '|---|---|---|---|---|---|']
     for run_id, run in sorted(minutes['runs'].items()):
@@ -182,6 +205,11 @@ def render(m: dict, proposals: str) -> str:
             parts.append(f"| {row['artifact']} | {row['cpu_model']} | {row['stem']} | {_yes(row['bit_identical'])} | "
                          f"{_yes(row['payload_identity_equal'])} | {_s(row['wall_seconds'])} | {_mib(row['peak_bytes'])} |")
         parts.append('')
+    if m['runners'] or m.get('local_retrieval'):
+        parts += ['## Retrievals', '', 'Software only. Each Node.js tarball was checked against the release\'s '
+                  '`SHASUMS256.txt` (itself pinned by its SHA-256) before use; Pyodide\'s files came from the scratch '
+                  'repository, checked against the freeze manifest; GitHub\'s own actions are pinned by commit SHA in the '
+                  'workflow.', '', *retrieval_table(m, m.get('local_retrieval')), '']
     if 'minutes' in m:
         zero = all(run['counted_from_billable'] == 0 for run in m['minutes']['runs'].values())
         note = (' GitHub\'s run-timing API reported 0 billable milliseconds for every job, so the count is taken from the '

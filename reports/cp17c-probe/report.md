@@ -352,6 +352,40 @@ Run 1's harness failed after each fit and the run was cancelled; these records a
 | ubuntu-24.04-shadow-early | AMD EPYC 7763 64-Core Processor | A1-2026-08-24 | yes | yes | 219.4 | 730 |
 | ubuntu-24.04-shadow-early | AMD EPYC 7763 64-Core Processor | A1-2026-08-25 | yes | yes | 239.7 | 745 |
 
+## Retrievals
+
+Software only. Each Node.js tarball was checked against the release's `SHASUMS256.txt` (itself pinned by its SHA-256) before use; Pyodide's files came from the scratch repository, checked against the freeze manifest; GitHub's own actions are pinned by commit SHA in the workflow.
+
+| Where | What | URL | Bytes | SHA-256 |
+|---|---|---|---|---|
+| this Mac | `SHASUMS256.txt` | https://nodejs.org/dist/v26.7.0/SHASUMS256.txt | 2,943 | `4533f0a43b9ba7f78a48230a0511b9dd5c931f20c3b3cac281ff9b7a2080fb2e` |
+| this Mac | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz | 57,622,243 | `7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4` |
+| this Mac | its `bin/node` | — | 145,238,560 | `a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df` |
+| macos-26-parity | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz | 57,622,243 | `7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4` |
+| macos-26-parity | its `bin/node` | — | 145,238,560 | `a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df` |
+| macos-26-parity | `uv-0.12.6-py3-none-macosx_11_0_arm64.whl` (uv 0.12.6 (7938ca5d5 2026-08-25 aarch64-apple-darwin)) | https://files.pythonhosted.org/packages/ef/5d/4c41b08b4e09729dd50f08b55238d5248a7bfb1a9f7cfba1c162046cfa1c/uv-0.12.6-py3-none-macosx_11_0_arm64.whl | 18,115,315 | `55bc16b317b2d6044c402e3b1f2c6a8daa031407e9efa7ecbf5348ac0a1c0df5` |
+| macos-26-parity | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | `5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94` |
+| macos-26-shadow-early | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz | 57,622,243 | `7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4` |
+| macos-26-shadow-early | its `bin/node` | — | 145,238,560 | `a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df` |
+| macos-26-shadow-early | `uv-0.12.6-py3-none-macosx_11_0_arm64.whl` (uv 0.12.6 (7938ca5d5 2026-08-25 aarch64-apple-darwin)) | https://files.pythonhosted.org/packages/ef/5d/4c41b08b4e09729dd50f08b55238d5248a7bfb1a9f7cfba1c162046cfa1c/uv-0.12.6-py3-none-macosx_11_0_arm64.whl | 18,115,315 | `55bc16b317b2d6044c402e3b1f2c6a8daa031407e9efa7ecbf5348ac0a1c0df5` |
+| macos-26-shadow-early | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | `5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94` |
+| macos-26-shadow-late | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz | 57,622,243 | `7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4` |
+| macos-26-shadow-late | its `bin/node` | — | 145,238,560 | `a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df` |
+| macos-26-shadow-late | `uv-0.12.6-py3-none-macosx_11_0_arm64.whl` (uv 0.12.6 (7938ca5d5 2026-08-25 aarch64-apple-darwin)) | https://files.pythonhosted.org/packages/ef/5d/4c41b08b4e09729dd50f08b55238d5248a7bfb1a9f7cfba1c162046cfa1c/uv-0.12.6-py3-none-macosx_11_0_arm64.whl | 18,115,315 | `55bc16b317b2d6044c402e3b1f2c6a8daa031407e9efa7ecbf5348ac0a1c0df5` |
+| macos-26-shadow-late | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | `5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94` |
+| ubuntu-24.04-parity | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-linux-x64.tar.gz | 62,014,253 | `bd6b6c31e377bad9ad579bed72e5bc11f4c879ac9452ad51d30e646ea3d828df` |
+| ubuntu-24.04-parity | its `bin/node` | — | 147,870,928 | `ad19784f7e90ba789a099eccba77ede8dc90a778c424f1c10a70fed3ff903fdc` |
+| ubuntu-24.04-parity | `uv-0.12.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl` (uv 0.12.6 (x86_64-unknown-linux-gnu)) | https://files.pythonhosted.org/packages/f6/6b/dbcffa319e640b3f38fc8764b99031773d4449725ca21854309e436c08f9/uv-0.12.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl | 20,927,695 | `8cb1c4af10a1037d2e875ac86da32ea0df20a9623e11769d33515d14158cd3c2` |
+| ubuntu-24.04-parity | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | `5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94` |
+| ubuntu-24.04-shadow-early | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-linux-x64.tar.gz | 62,014,253 | `bd6b6c31e377bad9ad579bed72e5bc11f4c879ac9452ad51d30e646ea3d828df` |
+| ubuntu-24.04-shadow-early | its `bin/node` | — | 147,870,928 | `ad19784f7e90ba789a099eccba77ede8dc90a778c424f1c10a70fed3ff903fdc` |
+| ubuntu-24.04-shadow-early | `uv-0.12.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl` (uv 0.12.6 (x86_64-unknown-linux-gnu)) | https://files.pythonhosted.org/packages/f6/6b/dbcffa319e640b3f38fc8764b99031773d4449725ca21854309e436c08f9/uv-0.12.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl | 20,927,695 | `8cb1c4af10a1037d2e875ac86da32ea0df20a9623e11769d33515d14158cd3c2` |
+| ubuntu-24.04-shadow-early | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | `5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94` |
+| ubuntu-24.04-shadow-late | Node.js v26.7.0 tarball | https://nodejs.org/dist/v26.7.0/node-v26.7.0-linux-x64.tar.gz | 62,014,253 | `bd6b6c31e377bad9ad579bed72e5bc11f4c879ac9452ad51d30e646ea3d828df` |
+| ubuntu-24.04-shadow-late | its `bin/node` | — | 147,870,928 | `ad19784f7e90ba789a099eccba77ede8dc90a778c424f1c10a70fed3ff903fdc` |
+| ubuntu-24.04-shadow-late | `uv-0.12.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl` (uv 0.12.6 (x86_64-unknown-linux-gnu)) | https://files.pythonhosted.org/packages/f6/6b/dbcffa319e640b3f38fc8764b99031773d4449725ca21854309e436c08f9/uv-0.12.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl | 20,927,695 | `8cb1c4af10a1037d2e875ac86da32ea0df20a9623e11769d33515d14158cd3c2` |
+| ubuntu-24.04-shadow-late | the Python packages `uv.lock` pins (`uv sync --locked`); the lock | — | — | `5d2aecc3d173fef6191cb2bb9d14cd008c0e9cc764700f1352b81d1924465a94` |
+
 ## GitHub minutes
 
 As GitHub's usage report counts them for a private repository: each job rounded up to the minute, macOS at ten times. GitHub's run-timing API reported 0 billable milliseconds for every job, so the count is taken from the jobs' own start and end times.
