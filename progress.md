@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** **v21-r19 ratified 2026-10-30.** Next: CP-17c, the re-freeze, before 4.7T (not before 2026-12-04) |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** **v21-r19 ratified 2026-10-30.** **CP-17c landed 2026-10-30: A1 re-frozen under the `macos-26` issuing host (policy identity `720fc581…`), 58 of 58 fits bit-identical on the runner and the M3.** Next: CP-18's preparation (CP-18a, the daily pipeline; then CP-18b, the bundle and the Space), then 4.7T (not before 2026-12-04) |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -306,34 +306,24 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     (no cloud, as registered) and for local fallback. In a public repository the cost is nil on either OS.
   - The private scratch repository `hrsi56/delu-host-probe` is left in place. Deleting it is the Owner's
     decision.
-- **Next Track B work: CP-17c,** the short re-freeze of A1 under the `macos-26` host, by r19 §24.13's
-  list. It comes before 4.7T opens, no earlier than 2026-12-04.
-  - **Issued 2026-10-30,** brief `5f34f3ab…` (canonical copy `.local/artifacts/cp-17c/issued-brief.md`).
-  - **Returned BLOCKED, 2026-10-30.** GitHub refused the runner's fourth job for billing ("recent
-    account payments have failed or your spending limit needs to be increased"), at 12 of 14 shadow
-    days. Every other item passes, and the evidence tip `c860d986` holds the verdict (`3108f972…`) on
-    candidate `548bd069`. The new policy identity is `720fc581…`. The resume is one prepared run
-    (about 14 minutes, at most 180 counted) when the quota resets on 2026-11-01 (GitHub's email:
-    2,000 of 2,000 minutes used), then a new candidate, a fresh Critic and LAND.
-  - **Owner decision 26, 2026-10-30: the scratch repository goes public.** His words: "לא אכפת לי
-    שיהיה פאבליק על הגיט האב מה אכפת לי. תעשה פאבליק, תנסה לאמן ותמשיך עצמאית זה לא פרסום זה רק
-    גיט בלי gh pages".
-    - **The scan before the switch.** A value-based scan of the whole history (5 commits) found no
-      credential value. Neither did the 4 runs' logs or the 5 artifacts.
-    - **The switch.** `hrsi56/delu-host-refreeze` went public at 14:21 UTC. Its contents are now
-      public: A1's search state, the freeze-origin state, the canary payload, the stores, the data
-      snapshot through 2026-09-06, and the shadow payloads. It has no Pages.
-    - **The resume.** It runs on the public class, which is uncounted. This departs from r19
-      §24.13's runner-class reason by his ruling. CP-17c's freeze record and return disclose it.
-  - **Ceilings:** about 12 active hours and 8 local machine-hours, plus at most 1,000 GitHub minutes
-    (macOS at ten times) in the new private scratch repository `hrsi56/delu-host-refreeze`.
-  - **It records the values 4.7T's brief cites.** If CP-17c cannot land, 4.7T waits for the Owner.
-  - **4.7T's brief** carries r18 §24.12's list:
-    - the §24.2 audit, the Owner's declaration and the retrieval approval;
-    - `refreeze verify` with no problem and no unchecked file, as a precondition;
-    - the code that builds the window's payloads and GFS flags. The only builder refuses days after
-      2026-09-06.
-  - **Alongside:** CP-18's preparation.
+- **The Owner's decisions 26–27, 2026-10-30** (Session Log): the CP-17c scratch repository goes
+  public, which is not a publication; then the whole road to the complete publication runs on the
+  Orchestrator's own decisions, logged in `.local/artifacts/owner-ratification/decisions.md` for his
+  ratification after the fact.
+- **CP-17c closed on 2026-10-30** ([landing record](docs/track-b/cp-17c-landing-2026-10-30.md)).
+  - **A1 is re-frozen under r19 §24.13's issuing host.** The new policy identity is `720fc581…`,
+    superseding CP-17b's `439115fb…`. The freeze record and manifest are in
+    `docs/track-b/evidence/cp-17c/`.
+  - **Bit for bit on both machines.** A `macos-26` runner and the M3 each gave 58 of 58 fits and 14 of 14
+    shadow days. The runner covered two image versions and the switch to the public class.
+  - **The H2 checks run before each run's first issuance:** the pins, the binary, the machine and the
+    canary. Each forced failure stopped at its own check. R7 is fixed on its error path only.
+  - **Its landing record holds the values 4.7T's brief cites.**
+  - **The state route for CP-18,** ruled by the Orchestrator under decisions 26 and 27: the states may sit
+    in the public product repository's Git history.
+- **Next Track B work: CP-18's preparation,** split by the Orchestrator into CP-18a (the daily pipeline,
+  its states, the runner workflow, the local fallback and the security items) and CP-18b (the daily bundle
+  and the Space). Then 4.7T, no earlier than 2026-12-04.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1135,6 +1125,18 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-17c landed and closed, 2026-10-30** (`land/cp-17c` `1622e187`, evidence tip `26288046`;
+  [landing record](docs/track-b/cp-17c-landing-2026-10-30.md)).
+  - **The Lead returned PASS.** Run 6 resumed the runner's last two shadow days on the public class,
+    from the stores the first run left. The second Integration review passed `a2484555`. The first,
+    BLOCKED at `548bd069` by the quota, is preserved.
+  - **The result:** 58 of 58 fits and 14 of 14 shadow days bit-identical on the `macos-26` runner and on
+    the M3. The policy identity is `720fc581…`.
+  - **The Orchestrator landed it** under decisions 25 and 27. The receipt had 0 problems. The
+    history-free CI on `1622e187` passed: 2,550 passed and 48 skipped, every step exiting 0.
+  - **Cost:** 660 counted GitHub minutes plus 18 uncounted, about 4.6 local machine-hours, and about 5.5
+    active hours.
 
 - **Owner decision 27, 2026-10-30: the whole road, on the Orchestrator's own decisions.** His words:
   "באופן מלא ועצמאי עד לפרסום קומפלט, עם מוצר חי ועם כל מה שעשינו עד כה ולא פורסם. וקח חופש לקבל
