@@ -1,5 +1,5 @@
 {
- "artifacts_sha256": "91f2db4ed86b7337eeb03c47518506da90ee5a36290f03c9cffe800d56e5dbed",
+ "artifacts_sha256": "4b426a3456ded7268b346761a9017079051a3e0dfed748bbaf461be8f893edc7",
  "ceilings": {
   "peak_bytes": 4294967296,
   "wall_seconds": 900
@@ -1044,6 +1044,16 @@
     "gate_seconds": 79.97684741698322,
     "gates": [
      {
+      "machine": {
+       "cpu_count": 8,
+       "cpu_model": "Apple M3",
+       "hardware_model": "Mac15,3",
+       "image_os": null,
+       "image_version": null,
+       "kind": "local Mac",
+       "memory_bytes": 17179869184,
+       "os_version": "26.5.2"
+      },
       "passed": true,
       "seconds": 79.97684741698322
      }
@@ -1738,6 +1748,16 @@
     "gate_seconds": 79.9904477079981,
     "gates": [
      {
+      "machine": {
+       "cpu_count": 8,
+       "cpu_model": "Apple M3",
+       "hardware_model": "Mac15,3",
+       "image_os": null,
+       "image_version": null,
+       "kind": "local Mac",
+       "memory_bytes": 17179869184,
+       "os_version": "26.5.2"
+      },
       "passed": true,
       "seconds": 79.9904477079981
      }
@@ -1804,7 +1824,8 @@
  },
  "minutes": {
   "counted_total": 660,
-  "rule": "per job that ran, rounded up to the minute; macOS x10 (the larger of the two counts per run); a job cancelled while queued never had a runner and counts nothing",
+  "public_job_minutes_uncounted": 18,
+  "rule": "per job that ran, rounded up to the minute; macOS x10 (the larger of the two counts per run); a job cancelled while queued never had a runner and counts nothing; a run on the public repository (decision 26, from 2026-10-30T14:21:00Z) counts nothing, its job minutes recorded",
   "runs": {
    "41030551242": {
     "counted_from_billable": 0,
@@ -1834,7 +1855,8 @@
       "seconds": 44.0,
       "setup_seconds": 39.0
      }
-    }
+    },
+    "repository": "private"
    },
    "41031373014": {
     "counted_from_billable": 0,
@@ -1864,7 +1886,8 @@
       "seconds": 110.0,
       "setup_seconds": 26.0
      }
-    }
+    },
+    "repository": "private"
    },
    "41033064719": {
     "counted_from_billable": 0,
@@ -1877,7 +1900,8 @@
       "seconds": 3016.0,
       "setup_seconds": 42.0
      }
-    }
+    },
+    "repository": "private"
    },
    "41040116539": {
     "counted_from_billable": 0,
@@ -1893,7 +1917,38 @@
       "seconds": 0.0,
       "setup_seconds": 0.0
      }
-    }
+    },
+    "repository": "private"
+   },
+   "41071149787": {
+    "counted_from_billable": 0,
+    "counted_from_job_times": 0,
+    "jobs": {
+     "macos-26 resume": {
+      "counted": 0,
+      "counted_if_private": 10,
+      "minutes": 1,
+      "os": "MACOS",
+      "seconds": 33.0,
+      "setup_seconds": 28.0
+     }
+    },
+    "repository": "public (decision 26)"
+   },
+   "41071696187": {
+    "counted_from_billable": 0,
+    "counted_from_job_times": 0,
+    "jobs": {
+     "macos-26 resume": {
+      "counted": 0,
+      "counted_if_private": 170,
+      "minutes": 17,
+      "os": "MACOS",
+      "seconds": 970.0,
+      "setup_seconds": 49.0
+     }
+    },
+    "repository": "public (decision 26)"
    }
   },
   "upper_bound_if_queued_time_were_billed": 820
@@ -1914,6 +1969,10 @@
    "checks": {
     "path": "41031373014/checks",
     "run": "41031373014"
+   },
+   "resume": {
+    "path": "41071696187/resume",
+    "run": "41071696187"
    },
    "shadows": {
     "path": "41033064719/shadows",
@@ -2091,6 +2150,62 @@
       "bytes": 57622243,
       "listed_sha256": "7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4",
       "seconds": 0.38006733399998893,
+      "sha256": "7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4",
+      "url": "https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz"
+     },
+     "version": "v26.7.0"
+    },
+    "package": {
+     "equal_to_manifest": true,
+     "package_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+     "zip_bytes": 91835,
+     "zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94"
+    },
+    "uv-retrieval": {
+     "bytes": 18115315,
+     "file": "uv-0.12.6-py3-none-macosx_11_0_arm64.whl",
+     "python": "3.13.16",
+     "sha256": "55bc16b317b2d6044c402e3b1f2c6a8daa031407e9efa7ecbf5348ac0a1c0df5",
+     "sha256_as_installed": "55bc16b317b2d6044c402e3b1f2c6a8daa031407e9efa7ecbf5348ac0a1c0df5",
+     "url": "https://files.pythonhosted.org/packages/ef/5d/4c41b08b4e09729dd50f08b55238d5248a7bfb1a9f7cfba1c162046cfa1c/uv-0.12.6-py3-none-macosx_11_0_arm64.whl",
+     "version": "uv 0.12.6 (7938ca5d5 2026-08-25 aarch64-apple-darwin)"
+    }
+   },
+   "resume": {
+    "cpython": {
+     "base_prefix": "/Users/runner/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none",
+     "build": [
+      "main",
+      "Aug 25 2026 13:50:12"
+     ],
+     "compiler": "Clang 22.1.3 ",
+     "executable": "/Users/runner/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/bin/python3.13",
+     "executable_sha256": "7710b0490e6af648676d7ad163fa1d54bffb75d8505162609a1c3c9b76e1929d",
+     "version": "3.13.15",
+     "zlib_runtime": "1.2.12"
+    },
+    "inputs-verified": {
+     "files": 505,
+     "problems": [],
+     "verified": true
+    },
+    "node-retrieval": {
+     "binary": {
+      "bytes": 145238560,
+      "path": ".local/tools/node-v26.7.0-official/node-v26.7.0-darwin-arm64/bin/node",
+      "sha256": "a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df"
+     },
+     "machine": "arm64",
+     "shasums": {
+      "bytes": 2943,
+      "seconds": 0.32129645800000617,
+      "sha256": "4533f0a43b9ba7f78a48230a0511b9dd5c931f20c3b3cac281ff9b7a2080fb2e",
+      "url": "https://nodejs.org/dist/v26.7.0/SHASUMS256.txt"
+     },
+     "tarball": {
+      "bytes": 57622243,
+      "listed_sha256": "7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4",
+      "seconds": 0.4283288330000232,
       "sha256": "7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4",
       "url": "https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz"
      },
@@ -2364,30 +2479,30 @@
     "bit_identical": true,
     "blocked_non_local_requests": [],
     "executed_files_match_package": true,
-    "from": "the checks run's canary (A1 at the freeze origin, the parity payload)",
+    "from": "the late block's issuance of 2026-09-06",
     "node": "v26.7.0",
     "payload_equal": true,
-    "peak_bytes": 870924288,
+    "peak_bytes": 865976320,
     "pyodide": "0.28.0",
     "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
     "reference_quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
-    "reference_wall_seconds": 78.59960983299999,
+    "reference_wall_seconds": 84.65307287499999,
     "resources": {
      "limits": {
       "peak_bytes": 4294967296,
       "wall_seconds": 900
      },
-     "peak_bytes": 870924288,
-     "wall_seconds": 118.337774292
+     "peak_bytes": 865976320,
+     "wall_seconds": 127.192306708
     },
-    "wall_ratio_to_reference": 1.5055771211006188,
-    "wall_seconds": 118.337774292,
+    "wall_ratio_to_reference": 1.502512577373465,
+    "wall_seconds": 127.192306708,
     "within_ceilings": true
    }
   },
   "shadow": {
    "early": {
-    "carried_store_equal_to_the_first_runs": null,
+    "carried_store_equal_to_the_first_runs": true,
     "days": {
      "2026-08-24": {
       "all_bit_identical": true,
@@ -2964,30 +3079,148 @@
        ]
       ],
       "run_part": 0
+     },
+     "2026-08-30": {
+      "all_bit_identical": true,
+      "all_registered": true,
+      "artifact_verifies": true,
+      "buffers_equal_payload": true,
+      "buffers_equal_reference": true,
+      "day_process_seconds": 395.64736633399997,
+      "day_seconds_sum": 390.985005125,
+      "fits": {
+       "A1": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 853000192,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "2704016b71ac6409f2847ff88eb231a322b16e458ac6e5e5e2ac6a6d05fc110e",
+        "reference_quantiles_sha256": "2704016b71ac6409f2847ff88eb231a322b16e458ac6e5e5e2ac6a6d05fc110e",
+        "reference_wall_seconds": 91.786528209,
+        "resources": {
+         "limits": {
+          "peak_bytes": 4294967296,
+          "wall_seconds": 900
+         },
+         "peak_bytes": 853000192,
+         "wall_seconds": 145.329957125
+        },
+        "wall_ratio_to_reference": 1.5833473600186772,
+        "wall_seconds": 145.329957125,
+        "within_ceilings": true
+       },
+       "B0": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 846544896,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "2792d581e951f21df7b3fc9614ca0d678f8a4f98dedba1f15643b1f7cc5d52d8",
+        "reference_quantiles_sha256": "2792d581e951f21df7b3fc9614ca0d678f8a4f98dedba1f15643b1f7cc5d52d8",
+        "reference_wall_seconds": 6.486281125,
+        "resources": null,
+        "wall_ratio_to_reference": 1.5250579738015904,
+        "wall_seconds": 9.89195475,
+        "within_ceilings": true
+       },
+       "v2": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 950059008,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "d1f564607769247ca8682d7ceb2550ef38e88510f0acf912217b2b8357d63799",
+        "reference_quantiles_sha256": "d1f564607769247ca8682d7ceb2550ef38e88510f0acf912217b2b8357d63799",
+        "reference_wall_seconds": 65.352585041,
+        "resources": null,
+        "wall_ratio_to_reference": 1.5528709833946475,
+        "wall_seconds": 101.484133,
+        "within_ceilings": true
+       },
+       "v4": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 944979968,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "ae24209a4b2185d601cc63a8b4205a0c6b45f470d19b08a60428eebfa5d2c645",
+        "reference_quantiles_sha256": "ae24209a4b2185d601cc63a8b4205a0c6b45f470d19b08a60428eebfa5d2c645",
+        "reference_wall_seconds": 80.61363420800001,
+        "resources": null,
+        "wall_ratio_to_reference": 1.6657102929205778,
+        "wall_seconds": 134.27896025,
+        "within_ceilings": true
+       }
+      },
+      "intake": {
+       "B0": "registered",
+       "v2": "registered",
+       "v4": "registered"
+      },
+      "issue_day_seconds": 392.22579333299996,
+      "issued_policy": "A1",
+      "path": [
+       [
+        "A1",
+        "ok"
+       ]
+      ],
+      "run_part": 1
      }
     },
-    "entries": 7,
+    "entries": 8,
     "final_digest": {
-     "B0": "f2511efaeaba172fc53d82b71534698bbc3c6f495c034b185e135af2cb06c9d4",
-     "v2": "42110ee834af533c0ee76f534551d0fe87d899240a8a2bd4da570bee6180d90b",
-     "v4": "3eac659f5a6f4a9007fd42b4c925e1aa7e5c3fc71a97677f2ee4a5b93d08193a"
+     "B0": "79725edc144bbecd2bc46b64cc3ca6667963a91aebafa7fa1016e72fd1582ff8",
+     "v2": "8097916296376982234d5fa49427bd2ba43c44c6e0cc5f5ab82331c08312df84",
+     "v4": "2899c177d9f39e602cb6fd69cdad40fc96fa6f0bf49fa8fc4f54d272aa936ccb"
     },
     "gate_passed": true,
     "gate_seconds": 174.20757466599997,
     "gates": [
      {
+      "machine": {
+       "cpu_count": 3,
+       "cpu_model": "Apple M1 (Virtual)",
+       "hardware_model": "VirtualMac2,1",
+       "image_os": "macos26",
+       "image_version": "20261021.0445.8",
+       "kind": "GitHub-hosted runner",
+       "memory_bytes": 7516192768,
+       "os_version": "26.6.2"
+      },
       "passed": true,
       "seconds": 174.20757466599997
+     },
+     {
+      "machine": {
+       "cpu_count": 3,
+       "cpu_model": "Apple M1 (Virtual)",
+       "hardware_model": "VirtualMac2,1",
+       "image_os": "macos26",
+       "image_version": "20261013.0424.1",
+       "kind": "GitHub-hosted runner",
+       "memory_bytes": 7516192768,
+       "os_version": "26.6.2"
+      },
+      "passed": true,
+      "seconds": 143.93716716700004
      }
     ],
-    "missing_days": [
-     "2026-08-30"
-    ],
-    "parts": 1,
+    "missing_days": [],
+    "parts": 2,
     "store_verifies": true
    },
    "late": {
-    "carried_store_equal_to_the_first_runs": null,
+    "carried_store_equal_to_the_first_runs": true,
     "days": {
      "2026-08-31": {
       "all_bit_identical": true,
@@ -3564,26 +3797,144 @@
        ]
       ],
       "run_part": 0
+     },
+     "2026-09-06": {
+      "all_bit_identical": true,
+      "all_registered": true,
+      "artifact_verifies": true,
+      "buffers_equal_payload": true,
+      "buffers_equal_reference": true,
+      "day_process_seconds": 369.81367354199995,
+      "day_seconds_sum": 367.047998833,
+      "fits": {
+       "A1": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 865976320,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+        "reference_quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+        "reference_wall_seconds": 84.65307287499999,
+        "resources": {
+         "limits": {
+          "peak_bytes": 4294967296,
+          "wall_seconds": 900
+         },
+         "peak_bytes": 865976320,
+         "wall_seconds": 127.192306708
+        },
+        "wall_ratio_to_reference": 1.502512577373465,
+        "wall_seconds": 127.192306708,
+        "within_ceilings": true
+       },
+       "B0": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 826064896,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "b12a9972211be165760b440bde5b175ef150ebe04057997e741bcd89c7a0846f",
+        "reference_quantiles_sha256": "b12a9972211be165760b440bde5b175ef150ebe04057997e741bcd89c7a0846f",
+        "reference_wall_seconds": 4.9487657920000006,
+        "resources": null,
+        "wall_ratio_to_reference": 2.007969293285965,
+        "wall_seconds": 9.93696975,
+        "within_ceilings": true
+       },
+       "v2": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 929087488,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "24248c423db82f140e1417ef3c65047417ff535b9c810da7763cf47a16c628c0",
+        "reference_quantiles_sha256": "24248c423db82f140e1417ef3c65047417ff535b9c810da7763cf47a16c628c0",
+        "reference_wall_seconds": 63.634407167,
+        "resources": null,
+        "wall_ratio_to_reference": 1.5513033844871431,
+        "wall_seconds": 98.71627120800001,
+        "within_ceilings": true
+       },
+       "v4": {
+        "bit_identical": true,
+        "blocked_non_local_requests": [],
+        "executed_files_match_package": true,
+        "node": "v26.7.0",
+        "payload_equal": true,
+        "peak_bytes": 945111040,
+        "pyodide": "0.28.0",
+        "quantiles_sha256": "c0fe7fc4eadfa675b58dd314f9bc41e030375adbb01149175616b18ee040ab80",
+        "reference_quantiles_sha256": "c0fe7fc4eadfa675b58dd314f9bc41e030375adbb01149175616b18ee040ab80",
+        "reference_wall_seconds": 83.23051929100001,
+        "resources": null,
+        "wall_ratio_to_reference": 1.5763742949659494,
+        "wall_seconds": 131.202451167,
+        "within_ceilings": true
+       }
+      },
+      "intake": {
+       "B0": "registered",
+       "v2": "registered",
+       "v4": "registered"
+      },
+      "issue_day_seconds": 367.73397416700004,
+      "issued_policy": "A1",
+      "path": [
+       [
+        "A1",
+        "ok"
+       ]
+      ],
+      "run_part": 1
      }
     },
-    "entries": 7,
+    "entries": 8,
     "final_digest": {
-     "B0": "41cdc9c8e4de3cc37911d997998f761546214d1a7b830966a735577f343b5099",
-     "v2": "600a771473e5e62ff0af3bf4a5ab12211cbb0e7b496dfce7e7224f4010f03a9a",
-     "v4": "8693ecdd77a4fea3dfd774c893bf93d1b32820e0fd395f04c41b9ef54511a733"
+     "B0": "cb08e92c715ecc372198c324ea2206a6274f06cd0929551367117d7527a4f28f",
+     "v2": "d2def77ccb4d2291fdda8d03467c10091ffea6fa0e6afdd8fccc51d0c1c85299",
+     "v4": "0f79714e5e108285b3284ea6afe214c523844a27a111c3ef1dd036920c218b30"
     },
     "gate_passed": true,
     "gate_seconds": 173.531733001,
     "gates": [
      {
+      "machine": {
+       "cpu_count": 3,
+       "cpu_model": "Apple M1 (Virtual)",
+       "hardware_model": "VirtualMac2,1",
+       "image_os": "macos26",
+       "image_version": "20261021.0445.8",
+       "kind": "GitHub-hosted runner",
+       "memory_bytes": 7516192768,
+       "os_version": "26.6.2"
+      },
       "passed": true,
       "seconds": 173.531733001
+     },
+     {
+      "machine": {
+       "cpu_count": 3,
+       "cpu_model": "Apple M1 (Virtual)",
+       "hardware_model": "VirtualMac2,1",
+       "image_os": "macos26",
+       "image_version": "20261013.0424.1",
+       "kind": "GitHub-hosted runner",
+       "memory_bytes": 7516192768,
+       "os_version": "26.6.2"
+      },
+      "passed": true,
+      "seconds": 143.93716716700004
      }
     ],
-    "missing_days": [
-     "2026-09-06"
-    ],
-    "parts": 1,
+    "missing_days": [],
+    "parts": 2,
     "store_verifies": true
    }
   },
@@ -3600,7 +3951,12 @@
      "min": 1849.0137287059997,
      "n": 6
     },
-    "one_issuance_seconds_alone": null,
+    "one_issuance_seconds_alone": {
+     "max": 395.64736633399997,
+     "median": 382.73051993799993,
+     "min": 369.81367354199995,
+     "n": 2
+    },
     "one_issuance_seconds_beside_the_other_block": {
      "max": 489.33362791700006,
      "median": 431.814356458,
@@ -3608,13 +3964,14 @@
      "n": 12
     }
    },
-   "fits": 50,
-   "fits_bit_identical": 50,
+   "fits": 58,
+   "fits_bit_identical": 58,
    "gates_passed": {
     "checks": true,
     "early": true,
     "late": true
    },
+   "late_final_equals_reference_final": true,
    "parity_all_bit_identical": true,
    "parity_origins": [
     "A1-2025-10-26",
@@ -3634,12 +3991,10 @@
    "shadow_all_fits_bit_identical": true,
    "shadow_all_issued_a1": true,
    "shadow_all_registered": true,
-   "shadow_days": 12,
-   "shadow_missing_days": [
-    "2026-08-30",
-    "2026-09-06"
-   ],
-   "wall_ratio_to_reference_median": 1.6868612510172212,
+   "shadow_days": 14,
+   "shadow_missing_days": [],
+   "stitch_early_final_equals_late_start": true,
+   "wall_ratio_to_reference_median": 1.6644634222312074,
    "wall_seconds_max": 231.90084975000002
   }
  },

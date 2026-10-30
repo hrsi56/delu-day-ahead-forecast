@@ -243,17 +243,28 @@ The identity's own fields for all of these equal CP-17b's (`tests/cp17c/test_ref
   CP-17b's record (`reports/cp17c/native-parity.json`).
 - **Chromium and WebKit,** A1 at 2026-09-06 on CP-17c's zip, reproduce the issuing host's `4e6abb02…` bit for bit, as
   CP-17b's browsers did (`reports/cp17c/browser.json`).
-- **On the Owner's M3 and on a GitHub-hosted `macos-26` runner** in the private repository `hrsi56/delu-host-refreeze`
-  (an Apple M1, virtual, 3 cores, image `macos26 20261013.0424.1`):
+- **On the Owner's M3 and on a GitHub-hosted `macos-26` runner** in the scratch repository `hrsi56/delu-host-refreeze`
+  (an Apple M1, virtual, 3 cores, 7 GiB, in every run that reached its checks; images `macos26 20261013.0424.1` for the
+  checks run and the resume, and `20261021.0445.8` for the first shadow run, with no bit moved between them):
   - `refreeze verify` printed `verified` on both;
   - the H2 checks passed on both, with one forced failure of each;
   - A1's parity at the nine origins was bit for bit against `reports/cp17b/host-parity.json` on both;
-  - the shadow days, carried by the store, matched `reports/cp17b/shadow-run.json` at every origin that ran:
-    - all 14, 2026-08-24 to 2026-09-06, on the M3, with its final state and the stitch between the two blocks;
-    - 12 on the runner. 2026-08-30 and 2026-09-06 did not run there: GitHub refused the run that resumes them from
-      the stores the first run left, for the account's billing, and the brief stops the runs there. That run is
-      ready in the scratch repository;
-  - every fit that ran was within 15 minutes and 4 GB.
+  - all 14 shadow days, 2026-08-24 to 2026-09-06, carried by the store, matched `reports/cp17b/shadow-run.json` on
+    both, with the final state and the stitch between the two blocks;
+    - on the runner, 2026-08-30 and 2026-09-06 ran in a later run, which resumed each block from the store the first
+      run left, carried by the repository and equal to it;
+  - every fit was within 15 minutes and 4 GB.
+- **The runner class, and the Owner's decision 26** (`owner-decision-26-as-relayed.md`).
+  - The checks run and the first shadow run ran on the private repository's class, as r19 §24.13 asks.
+  - Before the resume, the Owner made the scratch repository public: "תעשה פאבליק, תנסה לאמן ותמשיך עצמאית". So the
+    resume ran on the public repository's class. That departs from §24.13's reason for a private class: its runs
+    hold A1's search state and CP-17c's material, which are now public in that repository.
+  - The resume's machine was the same class as the private runs: the same CPU, cores and memory, and the checks run's
+    image version.
+  - Its two issuances, one at a time, are a first measurement on the public repository's class. They are not
+    CP-18's measurement, which §24.13 keeps for the product's repository.
+  - The first resume after the switch failed at checkout, with a transient "Repository … is disabled" 403 while GitHub
+    processed the change. It spent no compute.
 
   The figures are in `reports/cp17c/measurement.json` and [`report.md`](../../../../reports/cp17c/report.md).
 

@@ -337,7 +337,7 @@ def test_one_issuance_per_day_and_days_go_forward(tmp_path, day):
         store.record_day(day, _State(9), _artifact(day, None), {}, {'v4': '3'})
 
 
-@pytest.mark.parametrize('tamper', ['state', 'artifact', 'entry', 'head', 'drop'])
+@pytest.mark.parametrize('tamper', ['state', 'artifact', 'entry', 'head', 'drop', 'repointed_head'])
 def test_a_tampered_store_is_refused(tmp_path, tamper):
     store = _store(tmp_path)
     folder = store.folder
@@ -354,6 +354,10 @@ def test_a_tampered_store_is_refused(tmp_path, tamper):
     elif tamper == 'head':
         head = json.loads((folder / 'head.json').read_text())
         head['entries'] = 2
+        (folder / 'head.json').write_text(json.dumps(head))
+    elif tamper == 'repointed_head':         # the Critic's F1: an intact earlier state and artifact, named by the head
+        head = json.loads((folder / 'head.json').read_text())
+        head.update(state_file='states/2026-08-24.json', last_day='2026-08-24', last_artifact_sha256=sha(b'2026-08-24'))
         (folder / 'head.json').write_text(json.dumps(head))
     else:
         lines = (folder / 'ledger.jsonl').read_text().splitlines()
@@ -392,3 +396,19 @@ def test_the_closure_is_the_same_where_lightgbms_native_library_cannot_load(tmp_
     built, frozen = bundle.build(fake, tmp_path / 'a.zip'), bundle.build(src, tmp_path / 'b.zip')
     assert (built['files_sha256'], built['package_sha256'], built['zip_sha256']) == \
         (frozen['files_sha256'], frozen['package_sha256'], frozen['zip_sha256'])
+
+
+# ------------------------------------------------------------------ minutes, by repository class (decision 26)
+def test_a_public_repositorys_runs_are_recorded_and_not_counted():
+    from cp17c import compare
+
+    def job(seconds, start='2026-10-30T09:00:00Z'):
+        return {'name': 'macos-26 x', 'seconds': seconds, 'runner_name': 'r', 'labels': ['macos-26'],
+                'steps': [{'name': 'The run (x)', 'seconds': seconds}]}
+    artifacts = {'runs': {'1': {'created_at': '2026-10-30T09:00:00Z', 'jobs': [job(61)], 'billable': {}},
+                          '2': {'created_at': compare.PUBLIC_FROM, 'jobs': [job(600)], 'billable': {}}}}
+    counted = compare.counted_minutes(artifacts)
+    assert counted['runs']['1']['counted_from_job_times'] == 20 and counted['runs']['1']['repository'] == 'private'
+    assert counted['runs']['2']['counted_from_job_times'] == 0 and counted['runs']['2']['repository'] != 'private'
+    assert counted['counted_total'] == 20 and counted['public_job_minutes_uncounted'] == 10
+    assert counted['runs']['2']['jobs']['macos-26 x']['counted_if_private'] == 100

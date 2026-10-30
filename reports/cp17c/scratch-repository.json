@@ -30,12 +30,24 @@
  "default_branch": "main",
  "default_workflow_permissions": "read",
  "note": "read with gh api (read-only) by the Lead after the last run; the repository is left in place, and deleting it is the Owner's decision",
- "private": true,
+ "private": false,
  "repository": "hrsi56/delu-host-refreeze",
  "schema": "cp17c-scratch-repository-v1",
  "url": "https://github.com/hrsi56/delu-host-refreeze",
- "visibility": "private",
+ "visibility": "public",
  "workflow_runs": [
+  {
+   "conclusion": "success",
+   "created_at": "2026-10-30T14:27:53Z",
+   "head_sha": "32fce09974968acf4a5325d072334b4c9af013a8",
+   "id": 41071696187
+  },
+  {
+   "conclusion": "failure",
+   "created_at": "2026-10-30T14:21:57Z",
+   "head_sha": "32fce09974968acf4a5325d072334b4c9af013a8",
+   "id": 41071149787
+  },
   {
    "conclusion": "failure",
    "created_at": "2026-10-30T10:21:15Z",

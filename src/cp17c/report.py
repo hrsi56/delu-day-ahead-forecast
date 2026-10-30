@@ -45,9 +45,10 @@ def render(folder: Path, root: Path) -> str:
             f"nine parity origins on both, and all four policies on {r['shadow_days']} shadow days on the runner and "
             f"{l['shadow_days']} on the M3.",
             f"- **The shadows' buffers** equal CP-17b's host shadow run at every origin that ran: {r['shadow_days']} on the "
-            f"runner and {l['shadow_days']} on the M3. On the M3 the final state equals CP-17b's "
-            f"({_yes(l.get('late_final_equals_reference_final'))}), and the early block ends in the state the late block "
-            f"started from ({_yes(l.get('stitch_early_final_equals_late_start'))}).",
+            f"runner and {l['shadow_days']} on the M3. " + ' '.join(
+                f"On {where}, the final state equals CP-17b's ({_yes(x.get('late_final_equals_reference_final'))}) and the "
+                f"early block ends in the state the late block started from ({_yes(x.get('stitch_early_final_equals_late_start'))})."
+                for where, x in (('the runner', r), ('the M3', l)) if 'late_final_equals_reference_final' in x),
             *([f"- **Not run on the runner:** {', '.join(missing)}. GitHub refused the run that would have resumed them "
                'from the stores the blocks left: "The job was not started because recent account payments have failed '
                'or your spending limit needs to be increased." The brief stops the runs at a quota or billing refusal.']
@@ -63,7 +64,9 @@ def render(folder: Path, root: Path) -> str:
             f"{_yes(all(browser['equal_to_issuing_host'].values()))}.",
             f"- **R7** is fixed: CP-17c lists all six malformed-day controls ({_yes(r7['all_listed_by_cp17c'])}), and "
             f"CP-17b's `schema.py` raises on all six ({_yes(r7['all_raised_by_cp17b'])}).",
-            f"- **GitHub minutes:** {m['minutes']['counted_total']} as a private repository counts them, of the 1,000 allowed.",
+            f"- **GitHub minutes:** {m['minutes']['counted_total']} as a private repository counts them, of the 1,000 allowed; "
+            f"{m['minutes'].get('public_job_minutes_uncounted', 0)} more job-minutes on the public repository (decision 26), "
+            'which GitHub does not count.',
             '']
     out += ['## The machines', '', '| | Kind | Image | CPU | Cores | Memory | OS |', '|---|---|---|---|---|---|---|']
     for key, label in machines.items():
@@ -71,6 +74,25 @@ def render(folder: Path, root: Path) -> str:
         out.append(f"| {label} | {mc['kind']} | {mc.get('image_os') or '-'} {mc.get('image_version') or ''} | "
                    f"{mc.get('cpu_model')} | {mc.get('cpu_count')} | {(mc.get('memory_bytes') or 0) / 1024 ** 3:.1f} GiB | "
                    f"macOS {mc.get('os_version')} |")
+    runs = m['minutes']['runs']
+    arts = m['runner'].get('artifacts', {})
+    rows = [('checks', arts.get('checks', {}).get('run'), m['runner']['checks']['machine'])]
+    for name, part in (('shadows', 0), ('resume', 1)):
+        block = m['runner']['shadow'].get('late') or {}
+        gates = block.get('gates') or []
+        if name in arts and len(gates) > part:
+            rows.append((name, arts[name]['run'], gates[part].get('machine') or {}))
+    out += ['', '**The runner, run by run.** Each run records its machine in its checks; image version, CPU and memory '
+            'are recorded, never pinned.', '', '| Job | Run | Repository | Image | CPU | Cores | Memory |',
+            '|---|---|---|---|---|---|---|']
+    for name, run_id, mc in rows:
+        repo = (runs.get(run_id) or {}).get('repository', 'private')
+        out.append(f"| {name} | {run_id} | {repo} | {mc.get('image_os') or '-'} {mc.get('image_version') or ''} | "
+                   f"{mc.get('cpu_model')} | {mc.get('cpu_count')} | {(mc.get('memory_bytes') or 0) / 1024 ** 3:.1f} GiB |")
+    if any((runs.get(r) or {}).get('repository', 'private') != 'private' for _, r, _ in rows):
+        out += ['', "The scratch repository was made public at 2026-10-30 14:21 UTC by the Owner's decision 26 "
+                '(`docs/track-b/evidence/cp-17c/owner-decision-26-as-relayed.md`), so its later runs ran on the public '
+                "repository's runner class, against r19 §24.13's reason for a private one."]
     host = m['runner']['host']['checks']
     out += ['', f"The runner's CPython was {host['cpython']['version']} (`{host['cpython']['executable_sha256'][:16]}…`, zlib "
             f"{host['cpython']['zlib_runtime']}); its binary was retrieved from `{host['node-retrieval']['tarball']['url']}` "
@@ -128,6 +150,9 @@ def render(folder: Path, root: Path) -> str:
                           ('four_issuances_with_canary_seconds_beside_the_other_block', "Decision 23's four issuances "
                            'with the canary (the gate and four consecutive days), beside the other block')):
             v = cost[key]
+            resumed = runs.get(arts.get('resume', {}).get('run')) or {}
+            if k == 'runner' and key == 'one_issuance_seconds_alone' and v and resumed.get('repository', 'private') != 'private':
+                text += " (the resumed days, on the public repository's class: a first measurement there, not CP-18's)"
             out.append(f"| {text} | {label} | " + (f"{v['n']} | {_s(v['min'])} | {_s(v['median'])} | {_s(v['max'])} |"
                                                     if v else 'not measured | - | - | - |'))
     out += ['',
@@ -152,8 +177,10 @@ def render(folder: Path, root: Path) -> str:
     out += ['## GitHub minutes', '', '| Run | Job | Seconds | Counted |', '|---|---|---|---|']
     for run_id, run in sorted(m['minutes']['runs'].items()):
         for name, j in run['jobs'].items():
-            out.append(f"| {run_id} | {name} | {j['seconds']:.0f} | {j['counted']} |")
-    out += ['', f"Total: **{m['minutes']['counted_total']}** counted minutes ({m['minutes']['rule']}).", '']
+            out.append(f"| {run_id} | {name} | {j['seconds']:.0f} | {j['counted']}"
+                       + (' (public)' if run.get('repository', 'private') != 'private' else '') + ' |')
+    out += ['', f"Total: **{m['minutes']['counted_total']}** counted minutes ({m['minutes']['rule']}); "
+            f"{m['minutes'].get('public_job_minutes_uncounted', 0)} job-minutes on the public repository, not counted.", '']
     return '\n'.join(out) + '\n'
 
 

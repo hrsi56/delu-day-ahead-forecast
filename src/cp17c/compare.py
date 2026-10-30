@@ -39,6 +39,9 @@ NINE = ('A1-2025-10-26', 'A1-2026-03-29') + tuple(f'A1-{SPLIT + timedelta(days=i
 POLICIES = ('A1', 'v4', 'v2', 'B0')
 WALL, PEAK = 900, 4 * 1024 ** 3
 MULTIPLIER = {'MACOS': 10, 'UBUNTU': 1}
+#: The Owner's decision 26 (2026-10-30): the scratch repository was made public at this time. A run created from then
+#: on ran on the public repository's runner class, whose standard runners GitHub does not count against the quota.
+PUBLIC_FROM = '2026-10-30T14:21:00Z'
 BLOCKS = {'late': (SPLIT, LAST), 'early': (FIRST, SPLIT - timedelta(days=1))}
 
 
@@ -79,6 +82,8 @@ def fetch(repo: str, run_id: str, dest: Path, record: Path) -> dict:
         'run_attempt': run.get('run_attempt'), 'head_sha': run.get('head_sha'), 'status': run.get('status'),
         'conclusion': run.get('conclusion'), 'created_at': run.get('created_at'), 'updated_at': run.get('updated_at'),
         'jobs': [{'id': j['id'], 'name': j['name'], 'labels': j.get('labels'), 'runner_name': j.get('runner_name'),
+                  'annotations': [a.get('message') for a in json.loads(_gh('api', f"repos/{repo}/check-runs/{j['id']}/annotations"))
+                                  if a.get('annotation_level') in ('failure', 'warning')] if j['conclusion'] != 'success' else [],
                   'status': j['status'], 'conclusion': j['conclusion'], 'started_at': j.get('started_at'),
                   'completed_at': j.get('completed_at'), 'seconds': _seconds(j.get('started_at'), j.get('completed_at')),
                   'steps': [{'name': s['name'], 'conclusion': s['conclusion'],
@@ -114,13 +119,21 @@ def counted_minutes(artifacts: dict) -> dict:
                                 'counted': math.ceil(job['seconds'] / 60) * MULTIPLIER[os_name]}
         billable = sum(math.ceil(j['duration_ms'] / 60000) * MULTIPLIER[o]
                        for o, item in (run.get('billable') or {}).items() for j in item.get('job_runs', []))
-        out[run_id] = {'jobs': own, 'counted_from_job_times': sum(v['counted'] for v in own.values()),
-                       'counted_from_billable': billable}
+        public = run['created_at'] >= PUBLIC_FROM
+        if public:      # decision 26: a public repository's standard runners are not counted; the minutes are recorded
+            for job in own.values():
+                job['counted_if_private'], job['counted'] = job['counted'], 0
+            billable = 0
+        out[run_id] = {'jobs': own, 'repository': 'public (decision 26)' if public else 'private',
+                       'counted_from_job_times': sum(v['counted'] for v in own.values()), 'counted_from_billable': billable}
         total += max(billable, out[run_id]['counted_from_job_times'])
     bound = total + sum(j.get('counted_if_queued_time_were_billed', 0) for r in out.values() for j in r['jobs'].values())
+    public_minutes = sum(j['minutes'] for r in out.values() if r['repository'] != 'private' for j in r['jobs'].values())
     return {'runs': out, 'counted_total': total, 'upper_bound_if_queued_time_were_billed': bound,
+            'public_job_minutes_uncounted': public_minutes,
             'rule': 'per job that ran, rounded up to the minute; macOS x10 (the larger of the two counts per run); '
-                    'a job cancelled while queued never had a runner and counts nothing'}
+                    'a job cancelled while queued never had a runner and counts nothing; a run on the public repository '
+                    '(decision 26, from ' + PUBLIC_FROM + ') counts nothing, its job minutes recorded'}
 
 
 def repository(repo: str) -> dict:
@@ -241,7 +254,13 @@ def machine_part(checks_folder: Path, checks_listed: dict | None, blocks: dict, 
         for i, (folder, listed) in enumerate(parts):
             record = _load(folder, 'shadow.json', listed)
             gate = _load(folder, 'checks.json', listed)
-            part_gates.append({'passed': gate['passed'], 'seconds': sum(c.get('seconds', 0) for c in gate['checks'])})
+            machine = next((c for c in gate['checks'] if c['check'] == 'machine'), {})
+            described = machine.get('described') or {}
+            part_gates.append({'passed': gate['passed'], 'seconds': sum(c.get('seconds', 0) for c in gate['checks']),
+                               'machine': {'kind': machine.get('kind'), 'image_version': machine.get('image_version'),
+                                           'image_os': (described.get('runner_env') or {}).get('ImageOS'),
+                                           **{k: described.get(k) for k in ('cpu_model', 'cpu_count', 'memory_bytes',
+                                                                            'os_version', 'hardware_model')}}})
             for d, v in record['days'].items():
                 merged[d], part_of[d] = v, i
         gates[block] = all(g['passed'] for g in part_gates)

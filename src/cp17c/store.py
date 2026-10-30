@@ -93,13 +93,22 @@ class Store:
         head = json.loads((self.folder / 'head.json').read_text())
         if head.get('schema') != SCHEMA or head.get('entry_sha256') != previous or head.get('entries') != len(entries):
             raise StoreRefused('head.json does not name the ledger\'s last entry')
+        last, issued = entries[-1], [e for e in entries if e['kind'] == 'issuance']
+        named = {'state_file': last['state_file'], 'state_sha256': last['state_sha256'],
+                 'last_day': issued[-1]['day'] if issued else None,
+                 'last_artifact_sha256': issued[-1]['artifact_sha256'] if issued else None}
+        if any(head.get(k) != v for k, v in named.items()):
+            raise StoreRefused('head.json names another state, day or artifact than the ledger\'s last entry')
         return head
 
     def state(self):
         """The current shadow states, after verifying the store."""
         from cp17.shadow import ShadowStates
         head = self.verify()
-        return ShadowStates.from_dict(json.loads((self.folder / head['state_file']).read_text())), head
+        state = ShadowStates.from_dict(json.loads((self.folder / head['state_file']).read_text()))
+        if state.digest() != head['state_sha256']:
+            raise StoreRefused(f"{head['state_file']}: its buffers are not the recorded state")
+        return state, head
 
     # ---- writing ---------------------------------------------------------------------------------------------
     def _append(self, entry: dict, head_extra: dict) -> dict:

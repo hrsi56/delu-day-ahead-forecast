@@ -94,39 +94,32 @@ def test_no_committed_record_holds_a_date_after_the_boundary():
     """The red line: no CP-17c record carries a delivery day, instant or value dated after 2026-09-06."""
     for path in sorted(REPORTS.glob('*')):
         # The compute ledger's, GitHub's and the retrieval's dates are when jobs ran or software was retrieved
-        # (October 2026), not delivery days or data.
+        # (October 2026), not delivery days or data; the measurement and the report carry decision 26's switch time.
         if path.suffix not in ('.json', '.csv', '.jsonl', '.md') or path.name in (
-                'compute-ledger.jsonl', 'artifacts.json', 'scratch-repository.json', 'retrieval-local.json'):
+                'compute-ledger.jsonl', 'artifacts.json', 'scratch-repository.json', 'retrieval-local.json',
+                'measurement.json', 'report.md'):
             continue
         late = sorted({m.group(0) for m in DATE.finditer(path.read_text()) if m.group(0) > '2026-09-06'} - CALENDAR)
         assert not late, f'{path.name}: {late[:5]}'
 
 
-#: The runner's shadow days GitHub's billing refusal left unrun (the resume run was not started).
-RUNNER_MISSING = ['2026-08-30', '2026-09-06']
 NINE = sorted(['A1-2025-10-26', 'A1-2026-03-29'] + [f'A1-2026-0{d}' for d in
                                                     ('8-31', '9-01', '9-02', '9-03', '9-04', '9-05', '9-06')])
 
 
 @pytest.mark.skipif(not (REPORTS / 'measurement.json').exists(), reason='the measurement is written after the runs')
 @pytest.mark.parametrize('machine', ['runner', 'local'])
-def test_the_measurement_holds_where_it_ran(machine):
+def test_the_measurement_holds_on_both_machines(machine):
     m = load('measurement.json')
     s = m[machine]['summary']
     assert s['parity_all_bit_identical'] and s['parity_origins'] == NINE
-    assert s['fits'] == s['fits_bit_identical'] and s['all_payloads_equal'] and s['all_executed_files_match_package']
+    assert not any('canary' in (row.get('from') or '') for row in m[machine]['parity'].values())
+    assert s['fits'] == s['fits_bit_identical'] == 58 and s['all_payloads_equal'] and s['all_executed_files_match_package']
     assert s['all_within_ceilings'] and s['peak_bytes_max'] <= 4 * 1024 ** 3 and s['wall_seconds_max'] <= 900
-    assert s['shadow_all_buffers_equal_reference'] and s['shadow_all_registered'] and s['shadow_all_issued_a1']
-    assert s['shadow_all_artifacts_verify'] and s['shadow_all_fits_bit_identical'] and all(s['gates_passed'].values())
-    assert s['blocked_non_local_requests'] == []
-    if machine == 'local':
-        assert s['shadow_days'] == 14 and s['shadow_missing_days'] == [] and s['fits'] == 58
-        assert s['late_final_equals_reference_final'] and s['stitch_early_final_equals_late_start']
-    else:
-        # missing days are recorded as missing, never passed; the final state and the stitch are not claimed
-        assert s['shadow_days'] == 12 and s['shadow_missing_days'] == RUNNER_MISSING and s['fits'] == 50
-        assert 'late_final_equals_reference_final' not in s and 'stitch_early_final_equals_late_start' not in s
-        assert 'canary' in m['runner']['parity']['A1-2026-09-06']['from']
+    assert s['shadow_days'] == 14 and s['shadow_missing_days'] == [] and s['shadow_all_buffers_equal_reference']
+    assert s['shadow_all_registered'] and s['shadow_all_issued_a1'] and s['shadow_all_artifacts_verify']
+    assert s['shadow_all_fits_bit_identical'] and all(s['gates_passed'].values()) and s['blocked_non_local_requests'] == []
+    assert s['late_final_equals_reference_final'] and s['stitch_early_final_equals_late_start']
     c = m[machine]['checks']
     assert c['gate_passed'] and c['pins_output'] == ['verified'] and c['all_forced_as_expected']
     assert {k: v['failed_at'] for k, v in c['forced'].items()} == {
@@ -136,18 +129,32 @@ def test_the_measurement_holds_where_it_ran(machine):
 
 
 @pytest.mark.skipif(not (REPORTS / 'measurement.json').exists(), reason='the measurement is written after the runs')
+def test_the_runner_carried_its_stores_between_runs():
+    """The states' route between runs: run 3's stores, carried by the repository, resumed in a later run."""
+    m = load('measurement.json')
+    for block in ('late', 'early'):
+        b = m['runner']['shadow'][block]
+        assert b['parts'] == 2 and b['carried_store_equal_to_the_first_runs'] and all(g['passed'] for g in b['gates'])
+        assert [d for d, v in b['days'].items() if v['run_part'] == 1] == [{'late': '2026-09-06', 'early': '2026-08-30'}[block]]
+    assert m['runner']['summary']['cost']['one_issuance_seconds_alone']['n'] == 2
+
+
+@pytest.mark.skipif(not (REPORTS / 'measurement.json').exists(), reason='the measurement is written after the runs')
 def test_the_runner_and_the_minutes():
     m = load('measurement.json')
     runner = m['runner']['checks']['machine']
     assert runner['kind'] == 'GitHub-hosted runner' and runner['image_os'] == 'macos26' and runner['image_version']
-    host = m['runner']['host']
-    assert host['checks']['cpython']['version'] == '3.13.15' and host['checks']['cpython']['zlib_runtime'] == '1.2.12'
-    assert host['checks']['node-retrieval']['binary']['sha256'] == runtime.BINARY['sha256']
-    assert host['checks']['package']['equal_to_manifest']
+    host = m['runner']['host']['checks']
+    assert host['cpython']['version'] == '3.13.15' and host['cpython']['zlib_runtime'] == '1.2.12'
+    assert host['node-retrieval']['binary']['sha256'] == runtime.BINARY['sha256']
+    assert host['package']['equal_to_manifest']
     assert m['minutes']['counted_total'] <= 1000
+    public = [r for r in m['minutes']['runs'].values() if r['repository'] != 'private']
+    assert public and all(r['counted_from_job_times'] == 0 for r in public)       # decision 26: not counted
     repo = load('scratch-repository.json')
-    assert repo['private'] and repo['visibility'] == 'private' and repo['actions_secrets'] == 0
-    assert repo['actions_variables'] == 0 and repo['default_workflow_permissions'] == 'read'
+    assert repo['visibility'] == 'public' and not repo['private']                 # decision 26
+    assert (EVIDENCE / 'owner-decision-26-as-relayed.md').exists()
+    assert repo['actions_secrets'] == 0 and repo['actions_variables'] == 0 and repo['default_workflow_permissions'] == 'read'
 
 
 @pytest.mark.skipif(not (REPORTS / 'measurement.json').exists(), reason='the measurement is written after the runs')

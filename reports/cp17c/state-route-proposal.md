@@ -33,7 +33,7 @@ A store is one folder:
 - **Days go forward.** A gap is allowed, for decision 23's catch-up.
 - **The genesis entry names where the states started.**
 
-**On the Owner's M3 (all 14 shadow days) and on the runner (12 of them),** each day ran in its own process, which:
+**On the Owner's M3 and on the runner, all 14 shadow days,** each day ran in its own process, which:
 1. loaded and checked the store;
 2. released D−2;
 3. checked the buffers against the ones the day's payloads carry;
@@ -41,15 +41,17 @@ A store is one folder:
 5. registered them;
 6. appended to the store.
 
-Every day's buffers equalled CP-17b's host shadow run. On the M3 the early block's last state equalled the late
-block's starting state, so the two blocks join without a seam (`reports/cp17c/measurement.json`).
+Every day's buffers equalled CP-17b's host shadow run. On both machines the early block's last state equalled the
+late block's starting state, so the two blocks join without a seam (`reports/cp17c/measurement.json`).
 
 **Between runs, the route is carried by the repository.**
 - The runner's first shadow run reached its job limit after six days in each block, and uploaded each block's store.
 - Those stores, checked file by file against the job's own hashes, are committed in the scratch repository at
   `states/store-<block>/` (`cp17c.inputs --stores`).
-- A `resume` run loads each one, checks its chain, and continues from its last day. On the M3 it resumed the runner's
-  early-block store and issued 2026-08-30, equal to CP-17b's buffers. On the runner, GitHub refused to start it.
+- A `resume` run loads each one, checks its chain, and continues from its last day.
+  - On the runner, run 6 resumed both blocks and issued 2026-08-30 and 2026-09-06. Each carried store was equal to
+    the first run's, and the days were bit-identical to CP-17b's.
+  - On the M3, a rehearsal resumed the runner's early-block store, across machines, with the same result.
 
 ## The form proposed for CP-18
 
@@ -63,10 +65,12 @@ block's starting state, so the two blocks join without a seam (`reports/cp17c/me
    - The next run checks out `main`, loads and checks the store, and continues.
    - Nothing is ever rewritten. The chain makes a replaced or dropped record visible, and the store refuses it.
 3. **The search state and the freeze-origin states** reach the runner at their pinned paths, by hash.
-   - **The constraint for CP-18:** they are A1's state and CP-26's. They cannot sit in the public product repository
-     before decision 25's one complete publication.
-   - So CP-18's brief must sequence their publication with that publication, or keep them in a private companion
-     repository that the runner reads. Reading another repository needs a token, which is a secret and the Owner's
+   - **The constraint for CP-18:** they are A1's state and CP-26's. Before decision 26 they could not sit in a public
+     repository before decision 25's one complete publication.
+   - **Decision 26 changed that for the scratch repository:** it is public, and these files are in it. Whether the
+     product repository may hold them before that publication is the Owner's to rule for CP-18.
+   - Unless he rules that it may, CP-18's brief must sequence their publication with that publication, or keep them
+     in a private companion repository that the runner reads. Reading another repository needs a token, which is a secret and the Owner's
      (decision 25).
    - The same holds for the canary's payload.
 4. **Pyodide's 23 files** can be committed in the product repository at a path CP-18 names, as the scratch
