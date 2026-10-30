@@ -17,8 +17,8 @@ so `refreeze verify` and the H2 checks read the same files on the runner and on 
   origin), and the published prices the releases read (2026-08-22 to 2026-09-04);
 - the workflow at `.github/workflows/refreeze.yml`, a README, and `inputs-files.json` (every file's SHA-256).
 
-Nothing dated after 2026-09-06 is shipped: every payload's day, every price and the snapshot's rows pass the boundary
-guard (`cp25.guard`), which fails closed.
+Nothing dated after 2026-09-06 is shipped: every payload's day, every price, and the rows of the snapshot and the
+weather features pass the boundary guard (`cp25.guard`), which fails closed.
 
     OPENBLAS_NUM_THREADS=1 ... PYTHONPATH=src python -m cp17c.inputs --out <scratch tree> --record <inputs.json>
 """
@@ -78,16 +78,13 @@ def boundary(root: Path, truth: dict) -> dict:
     """The red line on what is shipped: the snapshot's rows, the prices and every payload day pass the guard."""
     import pandas as pd
     from cp25 import guard
-    snapshot = pd.read_parquet(root / 'data/snapshot.parquet')
-    index = snapshot.index if isinstance(snapshot.index, pd.DatetimeIndex) else None
-    if index is None:
-        raise SystemExit('the snapshot has no time index to check against the boundary')
     try:
-        rows = guard.admit_rows(index)
+        rows = {rel: guard.admit_rows(pd.DatetimeIndex(pd.read_parquet(root / rel, columns=['timestamp_utc'])['timestamp_utc']))
+                for rel in ('data/snapshot.parquet', 'reports/weather-ablation/weather-features.parquet')}
         prices = guard.admit_rows(pd.to_datetime(truth['keys'], utc=True))
     except guard.BoundaryRefused:
         raise SystemExit('the boundary guard refused a shipped row; nothing is built') from None
-    return {'snapshot_rows_admitted': rows, 'price_rows_admitted': prices, 'boundary': str(guard.BOUNDARY)}
+    return {'rows_admitted': rows, 'price_rows_admitted': prices, 'boundary': str(guard.BOUNDARY)}
 
 
 def _copy(origin: Path, tree: Path, rel: str, files: dict, **provenance) -> None:
