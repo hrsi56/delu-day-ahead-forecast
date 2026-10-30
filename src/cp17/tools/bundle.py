@@ -27,9 +27,9 @@ FIXED_TIME = (2026, 9, 6, 0, 0, 0)
 #: The runners that load the package: the issuing host's Node.js script and the browser page and worker. They
 #: run outside Pyodide, so they are not in the zip; their hashes are frozen with it.
 RUNNERS = ('cp17/host/node_run.mjs', 'cp17/browser/worker.js', 'cp17/browser/index.html')
-#: The native pipeline modules that start the issuing host (CP-17's review, N1): frozen with the package, never
-#: shipped to the browser.
-PIPELINE = ('cp17/daily.py',)
+#: The native pipeline modules that start the issuing host (CP-17's review, N1), its pins and the checks before a
+#: run's first issuance (CP-17c, r19 §24.13): frozen with the package, never shipped to the browser.
+PIPELINE = ('cp17/daily.py', 'cp17/runtime.py', 'cp17/hostcheck.py')
 
 PROBE = """
 import importlib, json, sys

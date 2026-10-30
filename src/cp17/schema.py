@@ -6,6 +6,10 @@ issued (keys, quantiles, the partial record and its fit's own resource measureme
 failed issuance (none of them), so the schema itself refuses an issued artifact without a measurement (CP-17's
 review, N2).
 
+CP-17c changes one error path and nothing else (r19 §24.13, H3, fixing §24.12's R7): `verify_bundle` lists a
+structurally malformed day of a re-hashed `issued-forecasts.json` as a fault and reads no further into it, where it
+used to raise. A record that verifies is judged exactly as before.
+
 Seven payload kinds make up a dated bundle. Each JSON file has a JSON Schema (draft 2020-12, the subset
 `validate` implements); each NumPy file declares its arrays in its JSON companion:
 
@@ -164,6 +168,8 @@ SCHEMAS = {
                        'last_day': DAY, 'timestamp_utc': {'type': 'array', 'items': UTC},
                        'price': {'type': 'array', 'items': {'type': ['number', 'null']}}}},
 }
+#: One issued day, as `issued_forecasts` lists it; `verify_bundle` reads no further into a day that fails it (R7).
+DAY_ITEM = SCHEMAS['issued_forecasts']['properties']['days']['items']
 FILE_KIND = {'manifest.json': 'manifest', 'issued-forecasts.json': 'issued_forecasts', 'outcomes.json': 'outcomes',
              'evaluation.json': 'evaluation', 'artifact.json': 'fitted_artifact', 'artifact-arrays.npz': 'fitted_artifact',
              'series.json': 'series'}
@@ -311,15 +317,25 @@ def verify_bundle(files: dict[str, bytes]) -> list[str]:
                 continue
         errors += check_training_window(loaded[path], arrays)
     from .issue import partial
-    for i, d in enumerate(loaded.get('issued-forecasts.json', {}).get('days', [])):
-        if d.get('partial') != partial(date.fromisoformat(d['delivery_day']), d['keys']):
+    issued = loaded.get('issued-forecasts.json', {})
+    forecasts = []           # the well-formed days; a malformed one is listed and never read further (R7)
+    for i, d in enumerate(issued.get('days', []) if isinstance(issued, dict) and isinstance(issued.get('days'), list)
+                          else []):
+        try:
+            if validate(d, DAY_ITEM):
+                raise ValueError('not a well-formed day')
+            expected = partial(date.fromisoformat(d['delivery_day']), d['keys'])
+        except (ValueError, TypeError, KeyError, AttributeError):
+            errors.append(f'issued-forecasts.json: day {i} is malformed, so it is listed and not read (R7)')
+            continue
+        forecasts.append(d)
+        if d.get('partial') != expected:
             errors.append(f'issued-forecasts.json: day {i} does not name exactly its missing hours (decision 13)')
     artifact = loaded.get('artifact.json')
     if artifact is not None:
         errors += [f'artifact.json: {e}' for e in verify_artifact(artifact)]
         if artifact['artifact_sha256'] != manifest['artifact']['artifact_sha256']:
             errors.append('the manifest names another artifact')
-        forecasts = loaded.get('issued-forecasts.json', {}).get('days', [])
         same = [d for d in forecasts if d['delivery_day'] == artifact['delivery_day']]
         if artifact['issued_policy'] and (len(same) != 1 or same[0]['issuing_artifact_sha256'] != artifact['artifact_sha256']
                                           or same[0]['quantiles'] != artifact['quantiles']):

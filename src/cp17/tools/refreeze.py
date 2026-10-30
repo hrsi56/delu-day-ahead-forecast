@@ -27,6 +27,9 @@
         --browser <browser-results.json> --out <policy-identity.json>
     PYTHONPATH=src python -m cp17.tools.refreeze manifest --identity ... --issuance ... --bundle ... --states ... --out ...
     PYTHONPATH=src python -m cp17.tools.refreeze verify docs/track-b/evidence/cp-17b/freeze-manifest.json
+
+`verify` dispatches on the manifest's schema: CP-17c's manifest, which supersedes CP-17b's, is verified by
+`cp17.tools.refreeze17c`, with the same output.
 """
 from __future__ import annotations
 
@@ -395,7 +398,12 @@ def main(argv=None) -> int:
         args.out.write_text(json.dumps(value, indent=1, sort_keys=True) + '\n')
         print('freeze manifest', value['content_sha256'])
     else:
-        result = verify(json.loads(args.manifest.read_text()), args.root)
+        value = json.loads(args.manifest.read_text())
+        if value.get('schema') == 'cp17c-freeze-manifest-v1':     # CP-17c's re-freeze, which supersedes this one
+            from . import refreeze17c
+            result = refreeze17c.verify(value, args.root)
+        else:
+            result = verify(value, args.root)
         if result['problems']:
             print('\n'.join(result['problems']))
         elif result['unchecked']:
