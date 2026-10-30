@@ -1,0 +1,136 @@
+{
+ "all_listed_by_cp17c": true,
+ "all_raised_by_cp17b": true,
+ "bundle": {
+  "location": ".local/artifacts/cp-17c/reference-bundle/",
+  "manifest_sha256": "84ca760b2c5b838742ff8f93e1df746b628e1d133e25b54dc78fb307c7e80071"
+ },
+ "malformed_day": {
+  "day_not_an_object": {
+   "cp17b": {
+    "listed": [],
+    "raised": "AttributeError: 'str' object has no attribute 'get'",
+    "refused": null
+   },
+   "cp17c": {
+    "listed": [
+     "issued-forecasts.json: day 0 is malformed, so it is listed and not read (R7)"
+    ],
+    "raised": null,
+    "refused": true
+   }
+  },
+  "days_not_a_list": {
+   "cp17b": {
+    "listed": [],
+    "raised": "AttributeError: 'str' object has no attribute 'get'",
+    "refused": null
+   },
+   "cp17c": {
+    "listed": [],
+    "raised": null,
+    "refused": true
+   }
+  },
+  "delivery_day_absent": {
+   "cp17b": {
+    "listed": [],
+    "raised": "KeyError: 'delivery_day'",
+    "refused": null
+   },
+   "cp17c": {
+    "listed": [
+     "issued-forecasts.json: day 0 is malformed, so it is listed and not read (R7)"
+    ],
+    "raised": null,
+    "refused": true
+   }
+  },
+  "impossible_date": {
+   "cp17b": {
+    "listed": [],
+    "raised": "ValueError: month must be in 1..12",
+    "refused": null
+   },
+   "cp17c": {
+    "listed": [
+     "issued-forecasts.json: day 0 is malformed, so it is listed and not read (R7)"
+    ],
+    "raised": null,
+    "refused": true
+   }
+  },
+  "keys_absent": {
+   "cp17b": {
+    "listed": [],
+    "raised": "KeyError: 'keys'",
+    "refused": null
+   },
+   "cp17c": {
+    "listed": [
+     "issued-forecasts.json: day 0 is malformed, so it is listed and not read (R7)"
+    ],
+    "raised": null,
+    "refused": true
+   }
+  },
+  "keys_not_a_list": {
+   "cp17b": {
+    "listed": [],
+    "raised": "TypeError: 'int' object is not iterable",
+    "refused": null
+   },
+   "cp17c": {
+    "listed": [
+     "issued-forecasts.json: day 0 is malformed, so it is listed and not read (R7)"
+    ],
+    "raised": null,
+    "refused": true
+   }
+  }
+ },
+ "negative_controls": {
+  "issued_forecasts_byte_changed": {
+   "errors": [
+    "issued-forecasts.json: its SHA-256 or size differs from the manifest",
+    "the issued forecast of the artifact's day is not the artifact's"
+   ],
+   "refused": true
+  },
+  "listed_file_missing": {
+   "errors": [
+    "outcomes.json: listed but absent"
+   ],
+   "refused": true
+  },
+  "partial_record_wrong": {
+   "errors": [
+    "issued-forecasts.json: day 0 does not name exactly its missing hours (decision 13)"
+   ],
+   "refused": true
+  },
+  "training_window_byte_flipped": {
+   "errors": [
+    "A1-2026-09-06.npz: its SHA-256 or size differs from the manifest"
+   ],
+   "refused": true
+  },
+  "unlisted_file_served": {
+   "errors": [
+    "unlisted.json: served but not listed in the manifest"
+   ],
+   "refused": true
+  }
+ },
+ "negative_controls_all_refused": true,
+ "negative_controls_equal": true,
+ "schema": "cp17c-r7-controls-v1",
+ "schema_py_sha256": {
+  "cp17b": "a53006e077e8e17e3a954d0f82ddcfb91a6175d5c0503fdf8e4e63548c0f6a4f",
+  "cp17c": "c1829465a9ca8e7862531154a3159c3b6d152f24ec79225e15f1cad6f60f9825"
+ },
+ "valid": {
+  "cp17b": true,
+  "cp17c": true
+ }
+}

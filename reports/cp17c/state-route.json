@@ -1,0 +1,62 @@
+{
+ "canary_payload": {
+  "equal_to_cp17b_freeze_origin_input": true,
+  "files_sha256": {
+   "A1-2026-09-06.json": "32a6ee385871de88a36148ec539b418dda64190f52f2a941e232b5a395d173e6",
+   "A1-2026-09-06.npz": "1f353c2de5a236966387ab74e8d40902a086dbadb0674c3665a7df8e7c0a2449"
+  },
+  "path": ".local/artifacts/cp-17c/state/canary",
+  "payload_sha256": "63ce7f452987d453cd55635b5739dfc579ade191c67b31e888fcc3884dd043a4",
+  "source": ".local/artifacts/cp-17b/runs/native-parity/payloads"
+ },
+ "freeze_origin_state": {
+  "buffers_sha256": {
+   "B0": "cb08e92c715ecc372198c324ea2206a6274f06cd0929551367117d7527a4f28f",
+   "v2": "3eb4770d6040a282fbcd5f6410dc0576d3763cb035ce71a76629f194b06ed80b",
+   "v4": "511f4334ca48b6a4e5f2fbcf40d02c42dc0baccd2213af003a93fcb932606caf"
+  },
+  "compared": "buffers, pending registrations and last origin (consumed and trace are history)",
+  "equal_to_cp17_recorded": true,
+  "equal_to_cp17b_native_shadow_run_final_state": true,
+  "file_sha256": "1388d74d7f3b7ec75992b37641b4b8a17f6f0f0d2e2d2cf08d85e51b90fdcfba",
+  "path": ".local/artifacts/cp-17c/state/freeze-origin-state.json",
+  "pending": {
+   "B0": [
+    "2026-09-05",
+    "2026-09-06"
+   ],
+   "v2": [
+    "2026-09-05",
+    "2026-09-06"
+   ],
+   "v4": [
+    "2026-09-05",
+    "2026-09-06"
+   ]
+  },
+  "source": "CP-26's nominal ledger (cp17.tools.exercise.start at 2026-09-06, and 2026-09-06's registration)",
+  "start": {
+   "buffers_sha256": {
+    "B0": "cb08e92c715ecc372198c324ea2206a6274f06cd0929551367117d7527a4f28f",
+    "v2": "3eb4770d6040a282fbcd5f6410dc0576d3763cb035ce71a76629f194b06ed80b",
+    "v4": "511f4334ca48b6a4e5f2fbcf40d02c42dc0baccd2213af003a93fcb932606caf"
+   },
+   "pending": {
+    "B0": [
+     "2026-09-05"
+    ],
+    "v2": [
+     "2026-09-05"
+    ],
+    "v4": [
+     "2026-09-05"
+    ]
+   }
+  }
+ },
+ "k13": {
+  "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+  "path": ".local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json"
+ },
+ "schema": "cp17c-state-route-v1"
+}

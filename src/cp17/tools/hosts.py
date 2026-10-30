@@ -24,11 +24,13 @@ from pathlib import Path
 import subprocess
 import time
 
-from .. import retrain
+from .. import retrain, runtime
 from .bundle import PACKAGES
 
-NODE = '/opt/homebrew/Cellar/node/26.7.0/bin/node'
-NODE_SHA256 = '1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040'
+#: The official Node.js v26.7.0 darwin-arm64 binary (CP-17c, r19 §24.13), in place of Homebrew's
+#: `/opt/homebrew/Cellar/node/26.7.0/bin/node` (`1ef99ea2…d040`).
+NODE = str(runtime.node_path())
+NODE_SHA256 = runtime.BINARY['sha256']
 RUNNER = Path(__file__).resolve().parents[1] / 'host' / 'node_run.mjs'
 
 

@@ -9,6 +9,11 @@ The positive and negative controls run on a copy of exactly the files `verify` r
 
 Local runtimes are absent on CI, so `verify` reports them unchecked there; a project root holding altered runtime
 files shows that a changed runtime file fails it wherever runtimes are present.
+
+**Superseded by CP-17c** (r19 §24.13). CP-17c re-froze `src/cp17/schema.py` (R7) and `src/cp17/daily.py` (the
+binary's default), so CP-17b's verifier on the live tree reports exactly those two files and the rebuilt package that
+follows from them (`SUPERSEDED`), and nothing else: governance changes still leave that set unchanged, and every other
+change still adds to it. CP-17c's own verifier is `cp17.tools.refreeze17c` (`tests/cp17c/`).
 """
 from __future__ import annotations
 
@@ -54,13 +59,23 @@ def _verify(m, root, **kw):
     return refreeze.verify(m, root, project=root.parent / 'no-local-runtimes', **kw)
 
 
+def superseded(rebuild: bool = True) -> list[str]:
+    """What CP-17b's verifier reports on CP-17c's tree, by design: the zip where zlib is the freeze's."""
+    from cp17.tools import refreeze17c
+    import zlib
+    out = list(refreeze17c.CP17B_EXPECTED if rebuild else refreeze17c.CP17B_EXPECTED[:2])
+    if rebuild and zlib.ZLIB_RUNTIME_VERSION != '1.2.12':
+        out.remove("the rebuilt package's zip differs from the recorded one")
+    return out
+
+
 def _append(path: Path, text: str = '\n# changed\n') -> None:
     path.write_bytes(path.read_bytes() + text.encode())
 
 
 def test_the_committed_manifest_verifies_here(manifest):
     result = refreeze.verify(manifest, ROOT)
-    assert result['problems'] == []
+    assert result['problems'] == superseded()                     # superseded by CP-17c
     # CI: no local runtime here, so they are reported, never passed; and the zip where zlib is not the freeze's
     assert all(p.endswith(': absent') or p.startswith('the package zip: zlib') for p in result['unchecked'])
 
@@ -68,7 +83,7 @@ def test_the_committed_manifest_verifies_here(manifest):
 def test_the_copy_verifies_with_its_local_runtimes_unchecked(manifest, tree):
     result = _verify(manifest, tree)
     names = set(manifest['policy_identity']['issuing_host']['pyodide']['files_sha256'])
-    assert result['problems'] == []
+    assert result['problems'] == superseded()                     # superseded by CP-17c
     absent = [p for p in result['unchecked'] if p.endswith(': absent')]
     assert {Path(p.removesuffix(': absent')).name for p in absent} >= names | {'k13.json'}
     assert len(absent) in (24, 25)                       # Node.js too, where it is not installed
@@ -82,7 +97,7 @@ def test_a_changed_live_anchor_or_a_new_decisions_record_leaves_it_green(manifes
     (decisions / 'cp-17-owner-decisions-2026-10-28.md').write_text('amended\n')
     (decisions / 'pre-cp-17-rulings-2026-10-25.md').write_text('amended\n')
     (decisions / 'cp-17b-owner-decisions-new.md').write_text('20. a new decision\n')
-    assert _verify(manifest, tree)['problems'] == []
+    assert _verify(manifest, tree)['problems'] == superseded()    # superseded by CP-17c: the same set, nothing more
 
 
 @pytest.mark.parametrize('rel', ['data/snapshot.parquet', 'reports/development-inputs/tier-register.json',
@@ -124,14 +139,14 @@ def test_a_changed_runtime_file_fails_it(manifest, tree, tmp_path):
                     or not ledger.available(ROOT), reason='the pinned Pyodide runtime or the evidence/cp-26 extract is absent')
 def test_the_real_runtimes_verify_and_one_altered_file_fails(manifest, tree, tmp_path):
     real = ledger.project_root(ROOT)
-    assert refreeze.verify(manifest, tree, project=real, rebuild=False)['problems'] == []
+    assert refreeze.verify(manifest, tree, project=real, rebuild=False)['problems'] == superseded(False)
     project = tmp_path / 'project'
     shutil.copytree(real / freeze.RUNTIME_DIR, project / freeze.RUNTIME_DIR)
     (project / '.local' / 'artifacts').mkdir(parents=True)
     (project / '.local' / 'artifacts' / 'cp-17').symlink_to(real / '.local' / 'artifacts' / 'cp-17')
-    assert refreeze.verify(manifest, tree, project=project, rebuild=False)['problems'] == []
+    assert refreeze.verify(manifest, tree, project=project, rebuild=False)['problems'] == superseded(False)
     _append(project / freeze.RUNTIME_DIR / 'pyodide.mjs', '\n// changed\n')
-    assert refreeze.verify(manifest, tree, project=project, rebuild=False)['problems'] == [
+    assert refreeze.verify(manifest, tree, project=project, rebuild=False)['problems'] == superseded(False) + [
         f"{project / freeze.RUNTIME_DIR / 'pyodide.mjs'}: altered"]
 
 
@@ -211,7 +226,7 @@ def test_cp17s_governance_pins_all_have_frozen_copies():
 
 def test_an_amendment_leaves_both_verifiers_green(manifest, amended, tmp_path):
     """The first Integration review's acceptance case: r18 changes the anchor and adds a decisions record."""
-    assert _verify(manifest, amended)['problems'] == []
+    assert _verify(manifest, amended)['problems'] == superseded()     # superseded by CP-17c: the same set
     assert _cp17_check(amended, tmp_path / 'view') == REFROZEN        # tests/cp17's superseded check holds
 
 

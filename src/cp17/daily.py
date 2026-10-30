@@ -5,7 +5,7 @@ are built. It runs natively, because it starts the issuing host, and it is part 
 (CP-17's review, N1): its hash is frozen beside the package's (`cp17.tools.bundle.PIPELINE`).
 
 - **Each attempt** runs the package's own fit (`host/driver.py`, fit mode) in a fresh Pyodide process under the
-  pinned Node.js (decision 10), with a fresh output path, so no earlier record can be read as its result, and a
+  pinned Node.js, with a fresh output path, so no earlier record can be read as its result, and a
   timeout equal to the success definition's wall-time ceiling. A process that is killed, times out, exits
   non-zero, dies without a record, or leaves an unreadable record or one of another run is a failed fit, and the
   chain moves on. The process's own wall time and peak resident memory judge criterion 5 (`cp17.issue.attempt`).
@@ -19,6 +19,11 @@ are built. It runs natively, because it starts the issuing host, and it is part 
   rule. A shadow is never published, displayed or scored as the product's forecast.
 - **The native comparison** (`comparison_day`) runs the same chain in-process, with criterion 5 not judged. It is
   labelled as the comparison and can never issue (N2).
+
+**The binary (CP-17c, r19 §24.13).** The default is the official Node.js v26.7.0 darwin-arm64 binary at its
+project-relative path (`cp17.runtime.NODE_RELATIVE`), resolved against the project root when a `Host` is made, in
+place of Homebrew's. A run retrieves it and checks it by hash (`cp17.runtime.retrieve`), and checks the host before
+its first issuance (`cp17.hostcheck`).
 """
 from __future__ import annotations
 
@@ -32,10 +37,10 @@ import time
 
 import numpy as np
 
-from . import dailyfit, issue
+from . import dailyfit, issue, runtime
 from .shadow import POLICIES as SHADOW_POLICIES
 
-NODE = '/opt/homebrew/Cellar/node/26.7.0/bin/node'
+NODE = runtime.NODE_RELATIVE
 RUNNER = Path(__file__).resolve().parent / 'host' / 'node_run.mjs'
 #: The pinned Pyodide 0.28.0 packages the package's import closure needs (the lock adds their dependencies).
 PACKAGES = ('numpy', 'pandas', 'scikit-learn', 'lightgbm', 'requests', 'tzdata')
@@ -54,7 +59,8 @@ class Host:
 
     def __init__(self, pyodide: Path, package_zip: Path, node: str = NODE, timeout: float = TIMEOUT_SECONDS,
                  runner: Path = RUNNER):
-        self.pyodide, self.package_zip, self.node = Path(pyodide), Path(package_zip), node
+        self.pyodide, self.package_zip = Path(pyodide), Path(package_zip)
+        self.node = node if Path(node).is_absolute() else str(runtime.project_root() / node)
         self.timeout, self.runner = timeout, Path(runner)
 
     def command(self, payloads: Path, stem: str, target: Path) -> list[str]:

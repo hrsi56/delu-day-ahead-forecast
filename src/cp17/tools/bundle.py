@@ -27,22 +27,39 @@ FIXED_TIME = (2026, 9, 6, 0, 0, 0)
 #: The runners that load the package: the issuing host's Node.js script and the browser page and worker. They
 #: run outside Pyodide, so they are not in the zip; their hashes are frozen with it.
 RUNNERS = ('cp17/host/node_run.mjs', 'cp17/browser/worker.js', 'cp17/browser/index.html')
-#: The native pipeline modules that start the issuing host (CP-17's review, N1): frozen with the package, never
-#: shipped to the browser.
-PIPELINE = ('cp17/daily.py',)
+#: The native pipeline modules that start the issuing host (CP-17's review, N1), its pins and the checks before a
+#: run's first issuance (CP-17c, r19 §24.13): frozen with the package, never shipped to the browser.
+PIPELINE = ('cp17/daily.py', 'cp17/runtime.py', 'cp17/hostcheck.py')
 
+#: The closure is measured by importing the entry modules natively. LightGBM's native library needs Homebrew's
+#: libomp, which a GitHub-hosted macos-26 runner lacks (CP-17c). Where it cannot load, a placeholder stands in for
+#: its names, and the measurement says so (`stubbed`): the closure is the set of `src/` files the entry modules
+#: import, which LightGBM's internals never change, and `refreeze verify` still compares the rebuilt files, package
+#: identity and zip with the frozen ones, bit for bit.
 PROBE = """
-import importlib, json, sys
+import importlib, json, sys, types
 from pathlib import Path
 src = Path(sys.argv[1]).resolve()
 sys.path.insert(0, str(src))
+stubbed = []
+try:
+    import lightgbm
+except OSError:
+    stub = types.ModuleType('lightgbm')
+    def placeholder(name):
+        if name.startswith('__'):
+            raise AttributeError(name)
+        return type(name, (), {})
+    stub.__getattr__ = placeholder
+    sys.modules['lightgbm'] = stub
+    stubbed.append('lightgbm')
 for name in sys.argv[2:]:
     importlib.import_module(name)
 files = sorted({str(Path(m.__file__).resolve().relative_to(src)) for m in list(sys.modules.values())
                 if getattr(m, '__file__', None) and Path(m.__file__).resolve().is_relative_to(src)})
 third = sorted({n.split('.')[0] for n, m in sys.modules.items() if getattr(m, '__file__', None)
                 and 'site-packages' in str(m.__file__)})
-print(json.dumps({'files': files, 'third_party': third}))
+print(json.dumps({'files': files, 'third_party': third, 'stubbed': stubbed}))
 """
 
 
@@ -66,6 +83,7 @@ def build(src: Path, out: Path) -> dict:
     files = {n: hashlib.sha256((src / n).read_bytes()).hexdigest() for n in names}
     manifest = {'schema': 'cp17-bundle-v1', 'entry_modules': list(ENTRY), 'extra_files': list(EXTRA),
                 'third_party_imported_natively': found['third_party'], 'pyodide_packages': list(PACKAGES),
+                'third_party_stubbed': found.get('stubbed', []),
                 'files_sha256': files, 'package_sha256': hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest(),
                 'runner_files_sha256': {n: hashlib.sha256((src / n).read_bytes()).hexdigest() for n in RUNNERS},
                 'pipeline_files_sha256': {n: hashlib.sha256((src / n).read_bytes()).hexdigest() for n in PIPELINE},

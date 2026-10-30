@@ -24,6 +24,9 @@ SHADOW_DAYS = [str(date(2026, 8, 24) + timedelta(days=i)) for i in range(14)]
 #: Item 6: the package files CP-17b changed or added, against CP-17's frozen package.
 CHANGED = {'cp17/issue.py': 'decision 13, N2, N3, N7', 'cp17/schema.py': 'N2 (the artifact v2 forms) and decision 13 '
            '(issued forecasts v2)', 'cp17/shadow.py': 'decision 14 (new: the shadow states)'}
+#: Superseded by CP-17c (r19 §24.13): the package and pipeline files its re-freeze changed. CP-17b's identity still
+#: records their CP-17b bytes; the live tree holds CP-17c's (`cp17.tools.refreeze17c`).
+REFROZEN_BY_CP17C = {'cp17/schema.py', 'cp17/daily.py'}
 
 
 def load(path: Path):
@@ -54,7 +57,9 @@ def test_the_identity_holds_the_re_frozen_terms(manifest):
     assert (runtime['chromium'], runtime['webkit'], runtime['playwright']) == ('153.0.8010.12', '26.6', '1.63.0')
     assert runtime['machine_class'] and runtime['measured']['browsers'] == {'chromium': '153.0.8010.12', 'webkit': '26.6'}
     assert identity['supersedes']['policy_identity_sha256'] == 'b304d6479a8628a26014422c6682f1e6543bd0d9ff656ad34b2d87b163bc254e'
-    assert identity['code']['pipeline_files_sha256'] == {'cp17/daily.py': sha(ROOT / 'src/cp17/daily.py')}    # N1
+    # N1. Superseded by CP-17c: CP-17b's driver is frozen by its recorded hash; the live driver is CP-17c's.
+    assert identity['code']['pipeline_files_sha256'] == {
+        'cp17/daily.py': '18e1589307e26336ed9eb05561b0b17485a065eda9c7da1d75f2940c4dc473be'}
     assert len(identity['issuing_host']['pyodide']['files_sha256']) == 23
     assert identity['issuing_host']['node']['sha256'] == '1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040'
 
@@ -63,7 +68,8 @@ def test_the_package_is_the_checkouts_and_its_changes_are_declared(manifest):
     bundle = load(REPORTS / 'bundle-manifest.json')
     code = manifest['policy_identity']['code']
     assert code['files_sha256'] == bundle['files_sha256'] and code['package_sha256'] == bundle['package_sha256']
-    assert all(sha(ROOT / 'src' / rel) == h for rel, h in bundle['files_sha256'].items())
+    # Superseded by CP-17c for the files it re-froze; every other package file is still CP-17b's.
+    assert {rel for rel, h in bundle['files_sha256'].items() if sha(ROOT / 'src' / rel) != h} == REFROZEN_BY_CP17C - {'cp17/daily.py'}
     cp17 = load(CP17_REPORTS / 'bundle-manifest.json')
     changed = {k for k in set(bundle['files_sha256']) | set(cp17['files_sha256'])
                if bundle['files_sha256'].get(k) != cp17['files_sha256'].get(k)}
