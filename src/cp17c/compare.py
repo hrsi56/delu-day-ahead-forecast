@@ -199,7 +199,8 @@ def checks_part(folder: Path, listed: dict | None) -> dict:
     canary = next(c for c in gate['checks'] if c['check'] == 'canary')
     pins = next(c for c in gate['checks'] if c['check'] == 'pins')
     return {'gate_passed': gate['passed'], 'pins_output': pins['output'], 'pins_seconds': pins['seconds'],
-            'canary': {k: canary.get(k) for k in ('quantiles_sha256', 'expected_quantiles_sha256', 'seconds', 'payload_sha256')}
+            'canary': {k: canary.get(k) for k in ('quantiles_sha256', 'expected_quantiles_sha256', 'seconds', 'payload_sha256',
+                                                  'executed_files', 'node', 'pyodide')}
             | {'resources': canary['attempt'].get('resources')},
             'gate_seconds': sum(c['seconds'] for c in gate['checks']),
             'machine': {'kind': machine['kind'], 'image_version': machine['image_version'],
@@ -214,30 +215,52 @@ def checks_part(folder: Path, listed: dict | None) -> dict:
             'freeze_origin_store': run['freeze_origin_store']}
 
 
-def machine_part(root_folder: Path, inputs: dict, executed_ok, listed_by: dict) -> dict:
-    """One machine: its checks run and its two shadow blocks."""
+def _store_hashes(folder: Path, listed: dict | None) -> dict:
+    """A store's files by SHA-256: from the job's hash list where there is one, else computed."""
+    if listed is not None:
+        return {rel.removeprefix('store/'): h for rel, h in listed.items() if rel.startswith('store/')}
+    return {str(p.relative_to(folder / 'store')): sha256_file(p) for p in sorted((folder / 'store').rglob('*')) if p.is_file()}
+
+
+def machine_part(checks_folder: Path, checks_listed: dict | None, blocks: dict, inputs: dict, executed_ok) -> dict:
+    """One machine: its checks run and its two shadow blocks. `blocks[name]` is a list of (folder, hashes), one per run
+    that carried the block: the first run's days, then any run that resumed it from the store the one before left."""
     from .store import Store
     refs = inputs['references']
-    out = {'checks': checks_part(root_folder / 'checks', listed_by.get('checks')), 'parity': {}, 'shadow': {}}
-    parity = _load(root_folder / 'checks', 'parity.json', listed_by.get('checks'))
+    out = {'checks': checks_part(checks_folder, checks_listed), 'parity': {}, 'shadow': {}}
+    parity = _load(checks_folder, 'parity.json', checks_listed)
     for row in parity['stems']:
         out['parity'][row['stem']] = _fit(refs['runs']['parity'][row['stem']], row['attempt'].get('resources'), row, executed_ok)
     gates = {'checks': out['checks']['gate_passed']}
     for block, (first, last) in BLOCKS.items():
-        folder = root_folder / f'shadow-{block}'
-        if not (folder / 'shadow' / 'shadow.json').exists() and not (folder / 'shadow.json').exists():
+        parts = blocks.get(block) or []
+        if not parts:
             out['shadow'][block] = None
             continue
-        base = folder / 'shadow' if (folder / 'shadow' / 'shadow.json').exists() else folder
-        listed = listed_by.get(f'shadow-{block}')
-        prefix = 'shadow/' if base != folder else ''
-        record = _load(folder, f'{prefix}shadow.json', listed)
-        gate = _load(folder, f'{prefix}checks.json', listed)
-        gates[block] = gate['passed']
-        head = Store(base / 'store').verify()
-        days = {}
+        merged, part_of, part_gates = {}, {}, []
+        for i, (folder, listed) in enumerate(parts):
+            record = _load(folder, 'shadow.json', listed)
+            gate = _load(folder, 'checks.json', listed)
+            part_gates.append({'passed': gate['passed'], 'seconds': sum(c.get('seconds', 0) for c in gate['checks'])})
+            for d, v in record['days'].items():
+                merged[d], part_of[d] = v, i
+        gates[block] = all(g['passed'] for g in part_gates)
+        folder, listed = parts[-1]
+        head = Store(folder / 'store').verify()
+        carried = None
+        if len(parts) > 1:
+            before, after = _store_hashes(*parts[0]), _store_hashes(*parts[-1])
+            grown = {'head.json', 'ledger.jsonl'}
+            carried = all(after.get(rel) == h for rel, h in before.items() if rel not in grown)
+            lines = (folder / 'store' / 'ledger.jsonl').read_text().splitlines()
+            first_lines = (parts[0][0] / 'store' / 'ledger.jsonl').read_text().splitlines()
+            carried = carried and lines[:len(first_lines)] == first_lines
+        days, missing = {}, []
         for d in [first + timedelta(days=i) for i in range((last - first).days + 1)]:
-            day_rec = _load(folder, f'{prefix}store/issued/{d}/record.json', listed)
+            if str(d) not in head_days(folder):
+                missing.append(str(d))                  # never run: recorded as missing, never passed
+                continue
+            day_rec = _load(folder, f'store/issued/{d}/record.json', listed)
             fits = {p: _fit(refs['runs']['shadow'][f'{p}-{d}'], day_rec['resources'].get(p) if p == 'A1' else None,
                             day_rec['runs'][p], executed_ok) for p in POLICIES}
             days[str(d)] = {
@@ -247,19 +270,37 @@ def machine_part(root_folder: Path, inputs: dict, executed_ok, listed_by: dict) 
                 'intake': day_rec['intake'], 'all_registered': all(v == 'registered' for v in day_rec['intake'].values()),
                 'fits': fits, 'all_bit_identical': all(f['bit_identical'] for f in fits.values()),
                 'day_seconds_sum': day_rec['process_seconds_sum'], 'issue_day_seconds': day_rec['issue_day_seconds'],
-                'day_process_seconds': record['days'][str(d)]['process_seconds']}
+                'day_process_seconds': merged[str(d)]['process_seconds'], 'run_part': part_of[str(d)]}
             if d >= SPLIT:
                 out['parity'][f'A1-{d}'] = fits['A1'] | {'from': f'the late block\'s issuance of {d}'}
-        final_state = json.loads((base / 'store' / head['state_file']).read_text())
+        final_state = json.loads((folder / 'store' / head['state_file']).read_text())
         from cp17.shadow import ShadowStates
-        out['shadow'][block] = {'days': days, 'gate_passed': gate['passed'], 'gate_seconds': sum(c['seconds'] for c in gate['checks']),
-                                'store_verifies': True, 'entries': head['entries'],
-                                'final_digest': ShadowStates.from_dict(final_state).digest(), 'final_state': final_state}
+        out['shadow'][block] = {'days': days, 'missing_days': missing, 'gates': part_gates, 'gate_passed': gates[block],
+                                'gate_seconds': part_gates[0]['seconds'], 'parts': len(parts),
+                                'carried_store_equal_to_the_first_runs': carried, 'store_verifies': True,
+                                'entries': head['entries'], 'final_digest': ShadowStates.from_dict(final_state).digest(),
+                                'final_state': final_state}
+    canary = out['checks']['canary']
+    if f'A1-{LAST}' not in out['parity'] and canary['quantiles_sha256']:
+        # the freeze origin's parity fit is the run's canary: A1 at 2026-09-06, the same payload, judged as an attempt
+        ref = refs['runs']['parity'][f'A1-{LAST}']
+        resources = canary['resources'] or {}
+        wall, peak = resources.get('wall_seconds', 0), resources.get('peak_bytes', 0)
+        out['parity'][f'A1-{LAST}'] = {
+            'quantiles_sha256': canary['quantiles_sha256'], 'reference_quantiles_sha256': ref['quantiles_sha256'],
+            'bit_identical': canary['quantiles_sha256'] == ref['quantiles_sha256'],
+            'payload_equal': canary['payload_sha256'] == ref['payload_sha256'],
+            'executed_files_match_package': executed_ok(canary.get('executed_files')),
+            'wall_seconds': wall, 'peak_bytes': peak, 'within_ceilings': 0 < wall <= WALL and 0 < peak <= PEAK,
+            'reference_wall_seconds': ref['total_ms'] / 1000, 'wall_ratio_to_reference': wall / (ref['total_ms'] / 1000),
+            'node': canary.get('node'), 'pyodide': canary.get('pyodide'), 'blocked_non_local_requests': [],
+            'resources': resources, 'from': "the checks run's canary (A1 at the freeze origin, the parity payload)"}
     late, early = out['shadow'].get('late'), out['shadow'].get('early')
     summary = {'gates_passed': gates}
-    if late:
+    summary['shadow_missing_days'] = sorted(d for b in out['shadow'].values() if b for d in b['missing_days'])
+    if late and not late['missing_days']:
         summary['late_final_equals_reference_final'] = late['final_digest'] == refs['shadow_final_sha256']
-    if late and early:
+    if late and early and not early['missing_days']:
         from .state import _carried
         start = json.loads((Path(inputs['tree']) / 'states' / f'start-{SPLIT}.json').read_text()) if inputs.get('tree') else None
         summary['stitch_early_final_equals_late_start'] = (start is not None and _carried(early['final_state']) == _carried(start))
@@ -291,21 +332,32 @@ def machine_part(root_folder: Path, inputs: dict, executed_ok, listed_by: dict) 
     return out
 
 
+def head_days(folder: Path) -> set:
+    """The days a store has issued, from its ledger (the store itself is verified separately)."""
+    lines = (folder / 'store' / 'ledger.jsonl').read_text().splitlines()
+    return {json.loads(line)['day'] for line in lines if line.strip() and json.loads(line).get('kind') == 'issuance'}
+
+
+def _spread(values: list) -> dict | None:
+    return {'n': len(values), 'min': min(values), 'median': statistics.median(values), 'max': max(values)} if values else None
+
+
 def cost(part: dict) -> dict:
-    """One issuance (A1 and the three shadows, one after another), and decision 23's four issuances with the
-    canary: the gate (the four checks) plus four consecutive days, from the sequential issuances."""
-    one = [d['day_process_seconds'] for b in part['shadow'].values() if b for d in b['days'].values()]
-    fours = []
+    """One issuance (A1 and the three shadows, one after another), and decision 23's four issuances with the canary
+    (the run's gate, the four checks, plus four consecutive days of a block), from the sequential issuances. A block's
+    first run ran beside the other block (two at once); a resumed day ran alone."""
+    beside, alone, fours = [], [], []
     for b in part['shadow'].values():
         if not b:
             continue
-        seq = [d['day_process_seconds'] for d in b['days'].values()]
-        fours += [b['gate_seconds'] + sum(seq[i:i + 4]) for i in range(len(seq) - 3)]
-    return {'one_issuance_seconds': {'min': min(one), 'median': statistics.median(one), 'max': max(one)},
-            'four_issuances_with_canary_seconds': {'min': min(fours), 'median': statistics.median(fours), 'max': max(fours)}
-            if fours else None,
-            'basis': 'each day\'s own process (load and check the store, release, issue A1 and three shadows, append), '
-                     'one after another; the gate is the run\'s four checks, the canary included'}
+        first = [d['day_process_seconds'] for d in b['days'].values() if d['run_part'] == 0]
+        beside += first
+        alone += [d['day_process_seconds'] for d in b['days'].values() if d['run_part'] > 0]
+        fours += [b['gate_seconds'] + sum(first[i:i + 4]) for i in range(len(first) - 3)]
+    return {'one_issuance_seconds_beside_the_other_block': _spread(beside), 'one_issuance_seconds_alone': _spread(alone),
+            'four_issuances_with_canary_seconds_beside_the_other_block': _spread(fours),
+            'basis': "each day's own process (load and check the store, release D-2, issue A1 and three shadows one after "
+                     "another, append); the gate is the run's four checks, the canary included"}
 
 
 def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path | None, local: Path | None, tree: Path | None) -> dict:
@@ -325,22 +377,31 @@ def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path | No
         chosen = _chosen(artifacts)
         listed = {name: _hashes(downloads / path) for name, (run_id, path) in chosen.items()}
         mapping = {name: downloads / path for name, (run_id, path) in chosen.items()}
-        out['runner'] = machine_part_from(mapping, inputs, executed_ok, listed)
+        blocks = {}
+        for block in ('late', 'early'):
+            for name in ('shadows', 'resume'):
+                if name in mapping and (mapping[name] / f'shadow-{block}').is_dir():
+                    blocks.setdefault(block, []).append((mapping[name] / f'shadow-{block}', _under(listed[name], f'shadow-{block}/')))
+        out['runner'] = machine_part(mapping['checks'] / 'checks', _under(listed['checks'], 'checks/'), blocks, inputs, executed_ok)
         out['runner']['artifacts'] = {name: {'run': run_id, 'path': path} for name, (run_id, path) in chosen.items()}
         out['runner']['host'] = {name: _host_files(mapping[name], listed[name]) for name in listed}
     if local is not None:
-        out['local'] = machine_part(local, inputs, executed_ok, {})
+        out['local'] = machine_part(local / 'checks', None, {b: [(local / f'shadow-{b}', None)] for b in ('late', 'early')
+                                                             if (local / f'shadow-{b}' / 'shadow.json').exists()},
+                                    inputs, executed_ok)
     return out
 
 
 def _chosen(artifacts: dict) -> dict:
-    """The artifact each part of the comparison reads: `checks` from the last run whose checks job succeeded, and
-    `shadows` from the last run whose shadows job succeeded. Earlier runs' artifacts stay recorded, unread."""
+    """The artifact each part of the comparison reads: `checks` from the last run whose checks job succeeded;
+    `shadows` from the last run that uploaded it (its job may have reached its limit: the days it completed are read,
+    each by its store's ledger, and a day it did not reach is recorded as missing); and `resume`, where a later run
+    carried a block's store on. Earlier runs' artifacts stay recorded, unread."""
     out = {}
     for run_id, run in sorted(artifacts['runs'].items(), key=lambda kv: kv[1]['created_at']):
         ok = {j['name'].removeprefix('macos-26 ') for j in run['jobs'] if j['conclusion'] == 'success'}
         for item in run['artifacts']:
-            if item['name'] in ok and item['name'] in ('checks', 'shadows'):
+            if item['name'] in ok | {'shadows'} and item['name'] in ('checks', 'shadows', 'resume'):
                 out[item['name']] = (run_id, item['path'])
     return out
 
@@ -353,19 +414,8 @@ def _host_files(folder: Path, listed: dict) -> dict:
     return out
 
 
-def machine_part_from(mapping: dict, inputs: dict, executed_ok, listed: dict) -> dict:
-    """The runner's artifacts: `checks` holds `results/checks/`, and `shadows` holds `results/shadow-late/` and
-    `results/shadow-early/`; each file is checked against its job's `results-sha256.txt`."""
-    import tempfile
-    with tempfile.TemporaryDirectory() as tmp:
-        tmp = Path(tmp)
-        (tmp / 'checks').symlink_to(mapping['checks'] / 'checks')
-        hashes = {'checks': {r.removeprefix('checks/'): h for r, h in listed['checks'].items() if r.startswith('checks/')}}
-        if 'shadows' in mapping:
-            for block in ('shadow-late', 'shadow-early'):
-                (tmp / block).symlink_to(mapping['shadows'] / block)
-                hashes[block] = {r.removeprefix(f'{block}/'): h for r, h in listed['shadows'].items() if r.startswith(f'{block}/')}
-        return machine_part(tmp, inputs, executed_ok, hashes)
+def _under(listed: dict, prefix: str) -> dict:
+    return {rel.removeprefix(prefix): h for rel, h in listed.items() if rel.startswith(prefix)}
 
 
 def main(argv=None) -> int:

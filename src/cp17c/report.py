@@ -37,13 +37,21 @@ def render(folder: Path, root: Path) -> str:
            '*Rendered from the records in this folder by `cp17c.report`; every figure is in a record.*', '',
            '## The result', '']
     r, l = m['runner']['summary'], m['local']['summary']
+    missing = r['shadow_missing_days']
     out += [f"- **The policy identity** is `{manifest['policy_identity_sha256']}`, in "
             '`docs/track-b/evidence/cp-17c/freeze-manifest.json`, with its freeze record beside it.',
-            f"- **On both machines, every fit is bit-identical to CP-17b's records:** {r['fits_bit_identical']} of "
+            f"- **Every fit that ran is bit-identical to CP-17b's records:** {r['fits_bit_identical']} of "
             f"{r['fits']} on the runner and {l['fits_bit_identical']} of {l['fits']} on the M3. That covers A1 at the "
-            'nine parity origins and all four policies on the 14 shadow days.',
-            "- **The shadows' buffers** equal CP-17b's host shadow run at all 14 origins on both machines, and so do the "
-            'final states. The early block ends in the state the late block started from.',
+            f"nine parity origins on both, and all four policies on {r['shadow_days']} shadow days on the runner and "
+            f"{l['shadow_days']} on the M3.",
+            f"- **The shadows' buffers** equal CP-17b's host shadow run at every origin that ran: {r['shadow_days']} on the "
+            f"runner and {l['shadow_days']} on the M3. On the M3 the final state equals CP-17b's "
+            f"({_yes(l.get('late_final_equals_reference_final'))}), and the early block ends in the state the late block "
+            f"started from ({_yes(l.get('stitch_early_final_equals_late_start'))}).",
+            *([f"- **Not run on the runner:** {', '.join(missing)}. GitHub refused the run that would have resumed them "
+               'from the stores the blocks left: "The job was not started because recent account payments have failed '
+               'or your spending limit needs to be increased." The brief stops the runs at a quota or billing refusal.']
+              if missing else []),
             '- **The checks before each run\'s first issuance (H2)** passed in every run, and one forced failure of each '
             'stopped at its own check with nothing issued.',
             f"- **The ceilings held:** the slowest fit took {_s(r['wall_seconds_max'])} on the runner and "
@@ -88,28 +96,41 @@ def render(folder: Path, root: Path) -> str:
         a, b = m['runner']['parity'][stem], m['local']['parity'][stem]
         out.append(f"| {stem} | {_yes(a['bit_identical'])} | {_s(a['wall_seconds'])} | {_yes(b['bit_identical'])} | "
                    f"{_s(b['wall_seconds'])} | `{a['reference_quantiles_sha256'][:12]}…` |")
-    out += ['', 'The first two ran in the checks run; the other seven are the late shadow block\'s A1 issuances, whose '
-            'payloads are the parity payloads (each checked by its identity).', '']
+    for k, label in machines.items():
+        rows = m[k]['parity'].values()
+        late = sum('late block' in (row.get('from') or '') for row in rows)
+        canary = [s for s, row in m[k]['parity'].items() if 'canary' in (row.get('from') or '')]
+        out.append(f"- {label}: {sum(not row.get('from') for row in rows)} in the checks run as parity fits, {late} from the "
+                   "late shadow block's A1 issuances" + (f", and {', '.join(canary)} from the checks run's canary, A1 at the "
+                                                         'freeze origin on the parity payload' if canary else '') + '.')
+    out += ['', 'Every payload is the parity payload of its origin, checked by its identity.', '']
     out += ['## The 14 shadow days, carried by the state store', '',
             '| Day | Buffers = CP-17b (runner) | Fits bit-identical (runner) | Day (runner) | Buffers = CP-17b (M3) | '
             'Fits bit-identical (M3) | Day (M3) |', '|---|---|---|---|---|---|---|']
-    days = sorted({d for k in machines for b in m[k]['shadow'].values() if b for d in b['days']})
+    days = sorted({d for k in machines for b in m[k]['shadow'].values() if b for d in [*b['days'], *b['missing_days']]})
     for d in days:
         row = [d]
         for k in machines:
-            day = next(b['days'][d] for b in m[k]['shadow'].values() if b and d in b['days'])
-            row += [_yes(day['buffers_equal_reference']), _yes(day['all_bit_identical']), _s(day['day_process_seconds'])]
+            day = next((b['days'][d] for b in m[k]['shadow'].values() if b and d in b['days']), None)
+            row += ([_yes(day['buffers_equal_reference']), _yes(day['all_bit_identical']), _s(day['day_process_seconds'])]
+                    if day else ['not run', 'not run', '-'])
         out.append('| ' + ' | '.join(row) + ' |')
     out += ['', 'Each day ran in its own process: load and check the store, release D-2, check the buffers against the '
             "day's payloads, issue A1 and the three shadows one after another, register them, append to the store. "
-            'On the M3 the two blocks ran at once, so its figures are conservative.', '']
-    cost = m['runner']['summary']['cost']
-    out += ['## The cost on the runner (item 7)', '', '| | Min | Median | Max |', '|---|---|---|---|',
-            f"| One issuance (A1 and three shadows, one after another) | {_s(cost['one_issuance_seconds']['min'])} | "
-            f"{_s(cost['one_issuance_seconds']['median'])} | {_s(cost['one_issuance_seconds']['max'])} |",
-            f"| Decision 23's four issuances with the canary (the gate and four consecutive days) | "
-            f"{_s(cost['four_issuances_with_canary_seconds']['min'])} | {_s(cost['four_issuances_with_canary_seconds']['median'])} | "
-            f"{_s(cost['four_issuances_with_canary_seconds']['max'])} |", '',
+            'On both machines the two blocks ran at once, each its days one after another, so the day figures are '
+            'conservative.', '']
+    out += ['## The cost (item 7)', '', '| | Machine | n | Min | Median | Max |', '|---|---|---|---|---|---|']
+    for k, label in machines.items():
+        cost = m[k]['summary']['cost']
+        for key, text in (('one_issuance_seconds_beside_the_other_block', 'One issuance (A1 and three shadows, one after '
+                           'another), beside the other block'),
+                          ('one_issuance_seconds_alone', 'One issuance, alone'),
+                          ('four_issuances_with_canary_seconds_beside_the_other_block', "Decision 23's four issuances "
+                           'with the canary (the gate and four consecutive days), beside the other block')):
+            v = cost[key]
+            out.append(f"| {text} | {label} | " + (f"{v['n']} | {_s(v['min'])} | {_s(v['median'])} | {_s(v['max'])} |"
+                                                    if v else 'not measured | - | - | - |'))
+    out += ['',
             "A job's setup before its run (checkout, uv, CPython, the environment, the inputs, the binary and the package) "
             'took ' + ', '.join(f"{j['setup_seconds']:.0f} s" for run in m['minutes']['runs'].values()
                                 for j in run['jobs'].values() if j['seconds'] > 120) + '. The public runner class is CP-18\'s to time (§24.13).', '']

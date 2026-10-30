@@ -1,0 +1,39 @@
+{
+ "buffers_equal_payload": true,
+ "buffers_equal_reference": true,
+ "carried_files_unchanged": true,
+ "day": "2026-08-30",
+ "entries": 8,
+ "fits_bit_identical": {
+  "A1": true,
+  "B0": true,
+  "v2": true,
+  "v4": true
+ },
+ "gate_passed": true,
+ "intake": {
+  "B0": "registered",
+  "v2": "registered",
+  "v4": "registered"
+ },
+ "issued_policy": "A1",
+ "resumed_from": {
+  "entries": 7,
+  "entry_sha256": "6d505c7a82f6a3ce870f1d3c6a06779bf060a3cdcd91052ff7132a3750f576ce",
+  "last_artifact_sha256": "9a4ea904a1fe3ddfe5f721906dacfea8c050a6005832bd49987eab346d7d0f30",
+  "last_day": "2026-08-29",
+  "schema": "cp17c-state-store-v1",
+  "state_file": "states/2026-08-29.json",
+  "state_sha256": {
+   "B0": "f2511efaeaba172fc53d82b71534698bbc3c6f495c034b185e135af2cb06c9d4",
+   "v2": "42110ee834af533c0ee76f534551d0fe87d899240a8a2bd4da570bee6180d90b",
+   "v4": "3eac659f5a6f4a9007fd42b4c925e1aa7e5c3fc71a97677f2ee4a5b93d08193a"
+  }
+ },
+ "schema": "cp17c-resume-rehearsal-v1",
+ "source": {
+  "path": ".local/artifacts/cp-17c/local-resume-rehearsal/shadow-early/shadow.json",
+  "sha256": "1432707e59bb7e18631da786210f0aa3f0ce7d6a4d58344fc274d60095a0d9b7"
+ },
+ "store_verifies": true
+}

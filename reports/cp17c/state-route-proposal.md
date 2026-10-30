@@ -33,7 +33,7 @@ A store is one folder:
 - **Days go forward.** A gap is allowed, for decision 23's catch-up.
 - **The genesis entry names where the states started.**
 
-**On the runner and on the Owner's M3,** each of the 14 shadow days ran in its own process, which:
+**On the Owner's M3 (all 14 shadow days) and on the runner (12 of them),** each day ran in its own process, which:
 1. loaded and checked the store;
 2. released D−2;
 3. checked the buffers against the ones the day's payloads carry;
@@ -41,8 +41,15 @@ A store is one folder:
 5. registered them;
 6. appended to the store.
 
-Every day's buffers equalled CP-17b's host shadow run. The early block's last state equalled the late block's
-starting state, so the two blocks join without a seam (`reports/cp17c/measurement.json`).
+Every day's buffers equalled CP-17b's host shadow run. On the M3 the early block's last state equalled the late
+block's starting state, so the two blocks join without a seam (`reports/cp17c/measurement.json`).
+
+**Between runs, the route is carried by the repository.**
+- The runner's first shadow run reached its job limit after six days in each block, and uploaded each block's store.
+- Those stores, checked file by file against the job's own hashes, are committed in the scratch repository at
+  `states/store-<block>/` (`cp17c.inputs --stores`).
+- A `resume` run loads each one, checks its chain, and continues from its last day. On the M3 it resumed the runner's
+  early-block store and issued 2026-08-30, equal to CP-17b's buffers. On the runner, GitHub refused to start it.
 
 ## The form proposed for CP-18
 

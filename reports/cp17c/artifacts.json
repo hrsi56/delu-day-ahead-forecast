@@ -1,0 +1,624 @@
+{
+ "repo": "hrsi56/delu-host-refreeze",
+ "runs": {
+  "41030551242": {
+   "artifacts": [
+    {
+     "digest": "sha256:3f839e195905ff9bfcc9b51c5f308074ef461c1fd51ebd0d560211595888a945",
+     "id": 12965497154,
+     "name": "checks",
+     "path": "41030551242/checks",
+     "size_in_bytes": 8593,
+     "zip_sha256": "3f839e195905ff9bfcc9b51c5f308074ef461c1fd51ebd0d560211595888a945"
+    },
+    {
+     "digest": "sha256:9cfb3d3a44fc0715d124fe6b3a28af1107a6557d15018f5fe314534f861a6776",
+     "id": 12964879871,
+     "name": "shadow-late",
+     "path": "41030551242/shadow-late",
+     "size_in_bytes": 8593,
+     "zip_sha256": "9cfb3d3a44fc0715d124fe6b3a28af1107a6557d15018f5fe314534f861a6776"
+    }
+   ],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123979015633
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123979016092
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123979016197
+      }
+     ],
+     "jobs": 3,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "cancelled",
+   "created_at": "2026-10-30T09:02:43Z",
+   "head_sha": "272804b61872538dafdf1887854633941738104a",
+   "jobs": [
+    {
+     "completed_at": "2026-10-30T09:03:30Z",
+     "conclusion": "failure",
+     "id": 123979015633,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 checks",
+     "runner_name": "GitHub Actions 1000001284",
+     "seconds": 40.0,
+     "started_at": "2026-10-30T09:02:50Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins",
+       "seconds": 14.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, retrieved and checked by hash",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "failure",
+       "name": "The frozen package zip, rebuilt and checked",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "The run (checks)",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T09:04:17Z",
+     "conclusion": "cancelled",
+     "id": 123979016092,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadow-late",
+     "runner_name": "GitHub Actions 1000001285",
+     "seconds": 44.0,
+     "started_at": "2026-10-30T09:03:33Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 15.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins",
+       "seconds": 10.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, retrieved and checked by hash",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "cancelled",
+       "name": "The frozen package zip, rebuilt and checked",
+       "seconds": 6.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "The run (shadow-late)",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T09:04:07Z",
+     "conclusion": "cancelled",
+     "id": 123979016197,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadow-early",
+     "runner_name": "",
+     "seconds": 79.0,
+     "started_at": "2026-10-30T09:02:48Z",
+     "status": "completed",
+     "steps": []
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-30T09:04:18Z"
+  },
+  "41031373014": {
+   "artifacts": [
+    {
+     "digest": "sha256:14eb9b05bcc7c0425911f109ffe17e749e09614cbcd2af8ffb551aa715dca183",
+     "id": 12966816928,
+     "name": "shadow-late",
+     "path": "41031373014/shadow-late",
+     "size_in_bytes": 8916,
+     "zip_sha256": "14eb9b05bcc7c0425911f109ffe17e749e09614cbcd2af8ffb551aa715dca183"
+    },
+    {
+     "digest": "sha256:9a86636081bb7f850123957e53c2b02d2fb7cb93deabce293621a2ffabf1d77c",
+     "id": 12966408396,
+     "name": "checks",
+     "path": "41031373014/checks",
+     "size_in_bytes": 690097,
+     "zip_sha256": "9a86636081bb7f850123957e53c2b02d2fb7cb93deabce293621a2ffabf1d77c"
+    }
+   ],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123981686308
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123981686655
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123981686757
+      }
+     ],
+     "jobs": 3,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "cancelled",
+   "created_at": "2026-10-30T09:09:31Z",
+   "head_sha": "ad3153bb1ed19f2e33e67d7e17be29179bdcabbc",
+   "jobs": [
+    {
+     "completed_at": "2026-10-30T09:20:27Z",
+     "conclusion": "success",
+     "id": 123981686308,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 checks",
+     "runner_name": "GitHub Actions 1000001286",
+     "seconds": 647.0,
+     "started_at": "2026-10-30T09:09:40Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 5.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, retrieved and checked by hash",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen package zip, rebuilt and checked",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The run (checks)",
+       "seconds": 611.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 2.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T09:22:19Z",
+     "conclusion": "cancelled",
+     "id": 123981686655,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadow-late",
+     "runner_name": "GitHub Actions 1000001287",
+     "seconds": 110.0,
+     "started_at": "2026-10-30T09:20:29Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins",
+       "seconds": 8.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, retrieved and checked by hash",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen package zip, rebuilt and checked",
+       "seconds": 5.0
+      },
+      {
+       "conclusion": "cancelled",
+       "name": "The run (shadow-late)",
+       "seconds": 79.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 1.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T09:22:01Z",
+     "conclusion": "cancelled",
+     "id": 123981686757,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadow-early",
+     "runner_name": "",
+     "seconds": 743.0,
+     "started_at": "2026-10-30T09:09:38Z",
+     "status": "completed",
+     "steps": []
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-30T09:22:20Z"
+  },
+  "41033064719": {
+   "artifacts": [
+    {
+     "digest": "sha256:7b123225c92e10b69339a861fb8485b0da5e150d6383057505f969b954f853ac",
+     "id": 12969771307,
+     "name": "shadows",
+     "path": "41033064719/shadows",
+     "size_in_bytes": 1517114,
+     "zip_sha256": "7b123225c92e10b69339a861fb8485b0da5e150d6383057505f969b954f853ac"
+    }
+   ],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123987204899
+      }
+     ],
+     "jobs": 1,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "cancelled",
+   "created_at": "2026-10-30T09:23:25Z",
+   "head_sha": "aad2e5507334e81a7b5ab7bfe9ebb74436d6238d",
+   "jobs": [
+    {
+     "completed_at": "2026-10-30T10:13:45Z",
+     "conclusion": "cancelled",
+     "id": 123987204899,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadows",
+     "runner_name": "GitHub Actions 1000001288",
+     "seconds": 3016.0,
+     "started_at": "2026-10-30T09:23:29Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 6.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins",
+       "seconds": 18.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, retrieved and checked by hash",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen package zip, rebuilt and checked",
+       "seconds": 9.0
+      },
+      {
+       "conclusion": "cancelled",
+       "name": "The run (shadows)",
+       "seconds": 2962.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 6.0
+      }
+     ]
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-30T10:13:46Z"
+  },
+  "41040116539": {
+   "artifacts": [],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 124010564709
+      }
+     ],
+     "jobs": 1,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "failure",
+   "created_at": "2026-10-30T10:21:15Z",
+   "head_sha": "32fce09974968acf4a5325d072334b4c9af013a8",
+   "jobs": [
+    {
+     "completed_at": "2026-10-30T10:21:19Z",
+     "conclusion": "failure",
+     "id": 124010564709,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 resume",
+     "runner_name": "",
+     "seconds": 3.0,
+     "started_at": "2026-10-30T10:21:16Z",
+     "status": "completed",
+     "steps": []
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-30T10:21:20Z"
+  }
+ },
+ "schema": "cp17c-artifacts-v1"
+}

@@ -10,6 +10,7 @@
   (its `schema.py`, checked against CP-17b's frozen hash), on the same bytes.
 - `freeze-origin.json`: the reissue of 2026-09-06 under the official binary, field by field against CP-17b's.
 - `state-route.json`: the freeze-origin states and the canary payload, as built (`cp17c.state`).
+- `resume-rehearsal.json`: the M3 resuming the runner's early-block store and issuing 2026-08-30.
 
     PYTHONPATH=src python -m cp17c.records --local .local/artifacts/cp-17c --old-src <CP-17b's src> --out reports/cp17c
 """
@@ -168,6 +169,30 @@ def freeze_origin(local: Path, root: Path) -> dict:
             'blocked_non_local_requests': value['blocked_non_local_requests'], 'source': _source(path, local)}
 
 
+def resume_rehearsal(local: Path, root: Path) -> dict:
+    """The M3 resumed the runner's early-block store (run 3's artifact) and issued 2026-08-30: its buffers and every
+    fit against CP-17b's references, and the carried part of the store unchanged."""
+    from .store import Store
+    refs = json.loads((root / 'reports/cp17c/inputs.json').read_text())['references']
+    folder = local / 'local-resume-rehearsal' / 'shadow-early'
+    shadow = json.loads((folder / 'shadow.json').read_text())
+    head = Store(folder / 'store').verify()
+    day = json.loads((folder / 'store/issued/2026-08-30/record.json').read_text())
+    carried = folder.parents[1] / 'downloads/41033064719/shadows/shadow-early/store'
+    before = {str(p.relative_to(carried)): sha256_file(p) for p in sorted(carried.rglob('*')) if p.is_file()}
+    after = {str(p.relative_to(folder / 'store')): sha256_file(p) for p in sorted((folder / 'store').rglob('*')) if p.is_file()}
+    return {'schema': 'cp17c-resume-rehearsal-v1', 'resumed_from': shadow['resumed_from']['head'],
+            'gate_passed': shadow['gate_passed'], 'day': '2026-08-30', 'store_verifies': True, 'entries': head['entries'],
+            'carried_files_unchanged': all(after.get(rel) == h for rel, h in before.items()
+                                           if rel not in ('head.json', 'ledger.jsonl')),
+            'buffers_equal_reference': day['buffers_sha256'] == refs['shadow_buffers_sha256']['2026-08-30'],
+            'buffers_equal_payload': all(day['buffers_equal_payload'].values()),
+            'fits_bit_identical': {p: day['runs'][p]['quantiles_sha256'] == refs['runs']['shadow'][f'{p}-2026-08-30']['quantiles_sha256']
+                                   for p in ('A1', 'v4', 'v2', 'B0')},
+            'intake': day['intake'], 'issued_policy': day['issued_policy'],
+            'source': _source(folder / 'shadow.json', local)}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--root', default='.', type=Path)
@@ -179,7 +204,8 @@ def main(argv=None) -> int:
     manifest = json.loads((root / 'docs/track-b/evidence/cp-17c/freeze-manifest.json').read_text())
     made = {'native-parity.json': native_parity(local, root), 'browser.json': browser(local, root, manifest),
             'r7-controls.json': r7(local, root, args.old_src.resolve()), 'freeze-origin.json': freeze_origin(local, root),
-            'state-route.json': json.loads((local / 'records' / 'state-route.json').read_text())}
+            'state-route.json': json.loads((local / 'records' / 'state-route.json').read_text()),
+            'resume-rehearsal.json': resume_rehearsal(local, root)}
     for name, value in made.items():
         dump(args.out / name, value)
     print({k: v.get('all_equal_to_cp17b', v.get('all_listed_by_cp17c', v.get('equal_to_canary', True))) for k, v in made.items()})

@@ -1,0 +1,64 @@
+{
+ "actions_secrets": 0,
+ "actions_variables": 0,
+ "branches": [
+  "main"
+ ],
+ "commits": [
+  {
+   "message": "CP-17c: resume each shadow block's last day from the store run 3 left (states/store-<block>/)",
+   "sha": "32fce09974968acf4a5325d072334b4c9af013a8"
+  },
+  {
+   "message": "CP-17c: the two shadow blocks in one job",
+   "sha": "aad2e5507334e81a7b5ab7bfe9ebb74436d6238d"
+  },
+  {
+   "message": "CP-17c: the job limits sum to 95 minutes",
+   "sha": "ad3153bb1ed19f2e33e67d7e17be29179bdcabbc"
+  },
+  {
+   "message": "CP-17c: the closure is measured where LightGBM's native library cannot load (no libomp on macos-26); an unreadable search state is refused",
+   "sha": "feb186391f76708eb3c919cbc9887146bb4ac32d"
+  },
+  {
+   "message": "CP-17c: the re-frozen package, the harness, the pinned Pyodide files, the states' route and development payloads",
+   "sha": "272804b61872538dafdf1887854633941738104a"
+  }
+ ],
+ "created_at": "2026-10-30T08:54:35Z",
+ "default_branch": "main",
+ "default_workflow_permissions": "read",
+ "note": "read with gh api (read-only) by the Lead after the last run; the repository is left in place, and deleting it is the Owner's decision",
+ "private": true,
+ "repository": "hrsi56/delu-host-refreeze",
+ "schema": "cp17c-scratch-repository-v1",
+ "url": "https://github.com/hrsi56/delu-host-refreeze",
+ "visibility": "private",
+ "workflow_runs": [
+  {
+   "conclusion": "failure",
+   "created_at": "2026-10-30T10:21:15Z",
+   "head_sha": "32fce09974968acf4a5325d072334b4c9af013a8",
+   "id": 41040116539
+  },
+  {
+   "conclusion": "cancelled",
+   "created_at": "2026-10-30T09:23:25Z",
+   "head_sha": "aad2e5507334e81a7b5ab7bfe9ebb74436d6238d",
+   "id": 41033064719
+  },
+  {
+   "conclusion": "cancelled",
+   "created_at": "2026-10-30T09:09:31Z",
+   "head_sha": "ad3153bb1ed19f2e33e67d7e17be29179bdcabbc",
+   "id": 41031373014
+  },
+  {
+   "conclusion": "cancelled",
+   "created_at": "2026-10-30T09:02:43Z",
+   "head_sha": "272804b61872538dafdf1887854633941738104a",
+   "id": 41030551242
+  }
+ ]
+}

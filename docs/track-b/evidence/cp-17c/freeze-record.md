@@ -243,12 +243,17 @@ The identity's own fields for all of these equal CP-17b's (`tests/cp17c/test_ref
   CP-17b's record (`reports/cp17c/native-parity.json`).
 - **Chromium and WebKit,** A1 at 2026-09-06 on CP-17c's zip, reproduce the issuing host's `4e6abb02…` bit for bit, as
   CP-17b's browsers did (`reports/cp17c/browser.json`).
-- **On the Owner's M3 and on a GitHub-hosted `macos-26` runner** in the private repository `hrsi56/delu-host-refreeze`:
-  - `refreeze verify` printed `verified`;
-  - the H2 checks passed, with one forced failure of each;
-  - A1's parity at the nine origins was bit for bit against `reports/cp17b/host-parity.json`;
-  - the 14 shadow days, 2026-08-24 to 2026-09-06, carried by the store, matched `reports/cp17b/shadow-run.json`;
-  - every fit was timed and measured against 15 minutes and 4 GB.
+- **On the Owner's M3 and on a GitHub-hosted `macos-26` runner** in the private repository `hrsi56/delu-host-refreeze`
+  (an Apple M1, virtual, 3 cores, image `macos26 20261013.0424.1`):
+  - `refreeze verify` printed `verified` on both;
+  - the H2 checks passed on both, with one forced failure of each;
+  - A1's parity at the nine origins was bit for bit against `reports/cp17b/host-parity.json` on both;
+  - the shadow days, carried by the store, matched `reports/cp17b/shadow-run.json` at every origin that ran:
+    - all 14, 2026-08-24 to 2026-09-06, on the M3, with its final state and the stitch between the two blocks;
+    - 12 on the runner. 2026-08-30 and 2026-09-06 did not run there: GitHub refused the run that resumes them from
+      the stores the first run left, for the account's billing, and the brief stops the runs there. That run is
+      ready in the scratch repository;
+  - every fit that ran was within 15 minutes and 4 GB.
 
   The figures are in `reports/cp17c/measurement.json` and [`report.md`](../../../../reports/cp17c/report.md).
 
