@@ -344,7 +344,7 @@ def shadow(args) -> int:
     days = [first + timedelta(days=i) for i in range((last - first).days + 1)]
     for d in days:
         started = time.perf_counter()
-        done = subprocess.run([sys.executable, '-m', 'cp17c.run', 'day', '--root', str(root), '--store', str(store_dir),
+        done = subprocess.run([sys.executable, '-m', 'cp17c.run', '--root', str(root), 'day', '--store', str(store_dir),
                                '--day', str(d), '--payloads', str(args.payloads), '--truth', str(args.truth),
                                '--out', str(out)], text=True, capture_output=True)
         sys.stdout.write(done.stdout)
