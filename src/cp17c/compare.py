@@ -97,6 +97,12 @@ def counted_minutes(artifacts: dict) -> dict:
         for job in run['jobs']:
             if job['seconds'] is None:
                 continue
+            if not job.get('runner_name') or not job.get('steps'):
+                # cancelled while queued: it never had a runner, so GitHub counts nothing for it
+                own[job['name']] = {'os': 'MACOS', 'seconds': 0.0, 'queued_seconds': job['seconds'], 'setup_seconds': 0.0,
+                                    'minutes': 0, 'counted': 0, 'never_ran': True,
+                                    'counted_if_queued_time_were_billed': math.ceil(job['seconds'] / 60) * 10}
+                continue
             setup = 0.0
             for step in job.get('steps', []):
                 if step['name'].startswith('The run'):
@@ -111,18 +117,29 @@ def counted_minutes(artifacts: dict) -> dict:
         out[run_id] = {'jobs': own, 'counted_from_job_times': sum(v['counted'] for v in own.values()),
                        'counted_from_billable': billable}
         total += max(billable, out[run_id]['counted_from_job_times'])
-    return {'runs': out, 'counted_total': total,
-            'rule': 'per job, rounded up to the minute; macOS x10 (the larger of the two counts per run)'}
+    bound = total + sum(j.get('counted_if_queued_time_were_billed', 0) for r in out.values() for j in r['jobs'].values())
+    return {'runs': out, 'counted_total': total, 'upper_bound_if_queued_time_were_billed': bound,
+            'rule': 'per job that ran, rounded up to the minute; macOS x10 (the larger of the two counts per run); '
+                    'a job cancelled while queued never had a runner and counts nothing'}
 
 
 # --- compare ------------------------------------------------------------------------------------------------------
 
+HIDDEN_EXCLUDED = 'forced/project/.local/'
+
+
 def _hashes(folder: Path) -> dict:
-    """The job's own results-sha256.txt, every file checked against it."""
+    """The job's own results-sha256.txt, every file checked against it. `upload-artifact` leaves out hidden paths:
+    the only ones are the forced binary check's scaffolding (`forced/project/.local/`, a copy of the tarball and an
+    altered `bin/node`), which are inputs to a forced failure, not results; they are named, never silently passed."""
     listed = {}
     for line in (folder / 'results-sha256.txt').read_text().splitlines():
         digest, rel = line.split(None, 1)
         listed[rel.strip().removeprefix('./')] = digest
+    hidden = [rel for rel in listed if any(part.startswith('.') for part in Path(rel).parts)]
+    if any(HIDDEN_EXCLUDED not in rel for rel in hidden):
+        raise SystemExit(f'{folder}: hidden results other than the forced scaffolding: {hidden[:5]}')
+    listed = {rel: digest for rel, digest in listed.items() if rel not in hidden}
     bad = [rel for rel, digest in listed.items() if sha256_file(folder / rel) != digest]
     if bad:
         raise SystemExit(f'{folder}: files differ from results-sha256.txt: {bad[:5]}')
@@ -284,16 +301,26 @@ def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path | No
         artifacts = json.loads(artifacts_path.read_text())
         out['artifacts_sha256'] = sha256_file(artifacts_path)
         out['minutes'] = counted_minutes(artifacts)
-        run_id, run = max(artifacts['runs'].items(), key=lambda kv: kv[1]['created_at'])
-        folder = downloads / run_id
-        listed = {a['name']: _hashes(folder / a['name']) for a in run['artifacts']}
-        mapping = {name: folder / name for name in listed}
-        stage = downloads / 'by-kind'
+        chosen = _chosen(artifacts)
+        listed = {name: _hashes(downloads / path) for name, (run_id, path) in chosen.items()}
+        mapping = {name: downloads / path for name, (run_id, path) in chosen.items()}
         out['runner'] = machine_part_from(mapping, inputs, executed_ok, listed)
-        out['runner']['run_id'] = run_id
-        out['runner']['host'] = {name: _host_files(folder / name, listed[name]) for name in listed}
+        out['runner']['artifacts'] = {name: {'run': run_id, 'path': path} for name, (run_id, path) in chosen.items()}
+        out['runner']['host'] = {name: _host_files(mapping[name], listed[name]) for name in listed}
     if local is not None:
         out['local'] = machine_part(local, inputs, executed_ok, {})
+    return out
+
+
+def _chosen(artifacts: dict) -> dict:
+    """The artifact each part of the comparison reads: `checks` from the last run whose checks job succeeded, and
+    `shadows` from the last run whose shadows job succeeded. Earlier runs' artifacts stay recorded, unread."""
+    out = {}
+    for run_id, run in sorted(artifacts['runs'].items(), key=lambda kv: kv[1]['created_at']):
+        ok = {j['name'].removeprefix('macos-26 ') for j in run['jobs'] if j['conclusion'] == 'success'}
+        for item in run['artifacts']:
+            if item['name'] in ok and item['name'] in ('checks', 'shadows'):
+                out[item['name']] = (run_id, item['path'])
     return out
 
 
@@ -306,14 +333,18 @@ def _host_files(folder: Path, listed: dict) -> dict:
 
 
 def machine_part_from(mapping: dict, inputs: dict, executed_ok, listed: dict) -> dict:
-    """The runner's artifacts are one folder per job (checks, shadow-late, shadow-early), each with `results/`'s tree."""
+    """The runner's artifacts: `checks` holds `results/checks/`, and `shadows` holds `results/shadow-late/` and
+    `results/shadow-early/`; each file is checked against its job's `results-sha256.txt`."""
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
-        for name, folder in mapping.items():
-            (tmp / name).symlink_to(folder / name if name == 'checks' and (folder / 'checks').is_dir() else folder)
-        return machine_part(tmp, inputs, executed_ok, {k: {r.removeprefix(f'{k}/') if k == 'checks' else r: h
-                                                           for r, h in v.items()} for k, v in listed.items()})
+        (tmp / 'checks').symlink_to(mapping['checks'] / 'checks')
+        hashes = {'checks': {r.removeprefix('checks/'): h for r, h in listed['checks'].items() if r.startswith('checks/')}}
+        if 'shadows' in mapping:
+            for block in ('shadow-late', 'shadow-early'):
+                (tmp / block).symlink_to(mapping['shadows'] / block)
+                hashes[block] = {r.removeprefix(f'{block}/'): h for r, h in listed['shadows'].items() if r.startswith(f'{block}/')}
+        return machine_part(tmp, inputs, executed_ok, hashes)
 
 
 def main(argv=None) -> int:
