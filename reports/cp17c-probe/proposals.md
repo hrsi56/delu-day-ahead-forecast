@@ -27,6 +27,9 @@
   status reads "identical bit for bit".
 - **Cost of the probe.** It used **863 GitHub minutes** as a private repository counts them (macOS at ten times),
   of the 1,500 allowed.
+- **The scratch repository, `hrsi56/delu-host-probe`,** is left in place, and deleting it is the Owner's decision.
+  As `scratch-repository.json` records, it is private, holds no secret or variable, and gives workflow tokens read
+  access by default (its workflow asks for `contents: read` only). Its two commits are the inputs the runs used.
 
 ## Proposal 1 — the runner: `ubuntu-24.04` (Linux x64)
 

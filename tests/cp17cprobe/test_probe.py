@@ -290,3 +290,17 @@ def test_measurement_answers_every_recorded_item():
         assert r['host']['node']['version'] == '26.7.0'
     assert m['local_control']['host']['node']['sha256'] != m['reference']['node']['sha256']
     assert m['minutes']['counted_total'] <= 1500
+
+
+def test_scratch_repository_is_private_secret_free_and_ran_the_recorded_inputs():
+    repo = load(REPORTS / 'scratch-repository.json')
+    assert repo['visibility'] == 'private' and repo['private'] is True
+    assert repo['actions_secrets'] == 0 and repo['actions_variables'] == 0
+    assert repo['default_workflow_permissions'] == 'read'
+    artifacts = load(REPORTS / 'artifacts.json')
+    measured = {run_id: run for run_id, run in artifacts['runs'].items()
+                if not all(a.get('superseded') for a in run['artifacts'])}
+    # The measured runs ran the repository's last commit; the superseded run 1 ran its first.
+    assert measured and {run['head_sha'] for run in measured.values()} == {repo['commits'][0]['sha']}
+    superseded = {run['head_sha'] for run in artifacts['runs'].values() if all(a.get('superseded') for a in run['artifacts'])}
+    assert superseded == {repo['commits'][-1]['sha']}
