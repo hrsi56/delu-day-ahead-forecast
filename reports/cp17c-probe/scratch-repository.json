@@ -1,0 +1,46 @@
+{
+ "actions_secrets": 0,
+ "actions_variables": 0,
+ "branches": [
+  "main"
+ ],
+ "commits": [
+  {
+   "message": "CP-17c-probe: the harness records its host runs relative to an absolute output folder",
+   "sha": "ff458082a61d041fb9f06e684fc15f47b5e68b9a"
+  },
+  {
+   "message": "CP-17c-probe: the frozen chain, the harness, the pinned Pyodide files and development payloads",
+   "sha": "e7b99a45a55ffb9892c9751378ab51152fb26382"
+  }
+ ],
+ "created_at": "2026-10-29T23:40:07Z",
+ "default_branch": "main",
+ "default_workflow_permissions": "read",
+ "note": "read with gh api (read-only) by the Lead after the last run; the repository is left in place, and deleting it is the Owner's decision",
+ "private": true,
+ "repository": "hrsi56/delu-host-probe",
+ "schema": "cp17c-probe-scratch-repository-v1",
+ "url": "https://github.com/hrsi56/delu-host-probe",
+ "visibility": "private",
+ "workflow_runs": [
+  {
+   "conclusion": "success",
+   "created_at": "2026-10-30T00:16:48Z",
+   "head_sha": "ff458082a61d041fb9f06e684fc15f47b5e68b9a",
+   "id": 40978681906
+  },
+  {
+   "conclusion": "success",
+   "created_at": "2026-10-29T23:47:55Z",
+   "head_sha": "ff458082a61d041fb9f06e684fc15f47b5e68b9a",
+   "id": 40975542287
+  },
+  {
+   "conclusion": "cancelled",
+   "created_at": "2026-10-29T23:40:50Z",
+   "head_sha": "e7b99a45a55ffb9892c9751378ab51152fb26382",
+   "id": 40974770649
+  }
+ ]
+}
