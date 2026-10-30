@@ -325,9 +325,13 @@ def verify(manifest_value: dict, root: Path, project: Path | None = None, requir
     if platform.python_version() != cpython:
         (problems if required else unchecked).append(f'CPython {platform.python_version()} here, {cpython} pinned')
     k13 = identity.get('state_route', {}).get('k13', {})
-    if k13 and (project / k13['path']).exists() \
-            and json.loads((project / k13['path']).read_text()).get('content_sha256') != k13.get('content_sha256'):
-        problems.append(f"{k13['path']}: its content digest is not the recorded search state")
+    if k13 and (project / k13['path']).exists():
+        try:
+            content = json.loads((project / k13['path']).read_text()).get('content_sha256')
+        except (ValueError, OSError, AttributeError):       # an unreadable search state is a refusal, never a crash
+            content = None
+        if content != k13.get('content_sha256'):
+            problems.append(f"{k13['path']}: its content digest is not the recorded search state")
     origin = manifest_value.get('freeze_origin', {})
     path = root / origin.get('artifact_path', ARTIFACT_PATH)
     if not path.exists() or freeze.sha256_file(path) != origin.get('artifact_file_sha256'):

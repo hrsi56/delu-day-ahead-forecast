@@ -373,3 +373,22 @@ def test_a_broken_parent_state_is_refused(tmp_path):
     store.record_day(date(2026, 8, 30), _State(5), _artifact(date(2026, 8, 30), None), {}, {'v4': 'not the last state'})
     with pytest.raises(StoreRefused):
         store.verify()
+
+
+# ------------------------------------------------------------------ the package rebuilt where LightGBM cannot load
+def test_the_closure_is_the_same_where_lightgbms_native_library_cannot_load(tmp_path):
+    """A GitHub-hosted macos-26 runner has no libomp, so LightGBM's native library cannot load there. The closure,
+    measured with a placeholder for it, is the same set of src files, so the rebuilt package is the same."""
+    import shutil
+    src = Path(__file__).resolve().parents[2] / 'src'
+    real = bundle.closure(src)
+    assert real['stubbed'] == [] or real['stubbed'] == ['lightgbm']
+    fake = tmp_path / 'src'
+    shutil.copytree(src, fake, ignore=shutil.ignore_patterns('__pycache__'))
+    (fake / 'lightgbm').mkdir()
+    (fake / 'lightgbm' / '__init__.py').write_text("raise OSError('simulated: libomp.dylib not loaded')\n")
+    measured = bundle.closure(fake)
+    assert measured['stubbed'] == ['lightgbm'] and measured['files'] == real['files']
+    built, frozen = bundle.build(fake, tmp_path / 'a.zip'), bundle.build(src, tmp_path / 'b.zip')
+    assert (built['files_sha256'], built['package_sha256'], built['zip_sha256']) == \
+        (frozen['files_sha256'], frozen['package_sha256'], frozen['zip_sha256'])
