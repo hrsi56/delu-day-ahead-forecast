@@ -3,15 +3,16 @@
 # This file is the private scratch repository's workflow, `.github/workflows/refreeze.yml` there. It is kept under
 # `src/cp17c/` in the project, so landing it never triggers a run in the project's own repository.
 #
-# Three jobs, one after another (a matrix with max-parallel 1), in the brief's priority, so that a quota stop leaves
-# the higher priorities done:
-#   checks        refreeze verify and the H2 checks, one forced failure of each, the canary, the freeze-origin store,
-#                 and A1's parity at 2025-10-26 and 2026-03-29 (the other seven origins are the late block's A1);
-#   shadow-late   2026-08-31 to 2026-09-06, from CP-17b's host state there, one process per day through the store;
-#   shadow-early  2026-08-24 to 2026-08-30, from CP-26's state at 2026-08-24.
-# Each job runs its own H2 gate before its first issuance. The job limits sum to 95 minutes, so this run cannot pass
-# 950 minutes as a private repository counts macOS (ten times); with the first run's 40 at most, under the brief's
-# 1,000.
+# The jobs run one after another (a matrix with max-parallel 1), in the brief's priority, so that a quota stop leaves
+# the higher priorities done. The input `jobs` selects them; the default is both:
+#   checks    refreeze verify and the H2 checks, one forced failure of each, the canary, the freeze-origin store, and
+#             A1's parity at 2025-10-26 and 2026-03-29 (the other seven origins are the late block's A1);
+#   shadows   the two blocks of shadow days at once, each one process per day through its own store, each day's four
+#             issuances one after another: 2026-08-31 to 2026-09-06 from CP-17b's host state there, and 2026-08-24 to
+#             2026-08-30 from CP-26's state at 2026-08-24. Each block runs its own H2 gate before its first issuance.
+# The runner class measured here (Apple M1, virtual, 3 cores) is slower than the probe's, so the two blocks share one
+# job rather than run one after another: two single-threaded issuing hosts on three cores, as CP-17b and the probe
+# measured two at once. A private repository counts macOS at ten times; each job's limit bounds its minutes.
 #
 # Retrieval is software only: GitHub's own actions (pinned by commit SHA), uv and the Python packages uv.lock pins,
 # the pinned CPython (uv's build of 3.13.15), and the Node.js tarball with its SHASUMS256.txt, checked by hash. No
@@ -20,6 +21,11 @@ name: refreeze
 
 on:
   workflow_dispatch:
+    inputs:
+      jobs:
+        description: 'The jobs, as a matrix: {"include": [{"kind", "minutes"}, ...]}'
+        required: false
+        default: '{"include": [{"kind": "checks", "minutes": 17}, {"kind": "shadows", "minutes": 50}]}'
 
 permissions:
   contents: read
@@ -46,11 +52,7 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 1
-      matrix:
-        include:
-          - {kind: checks, minutes: 17}
-          - {kind: shadow-late, minutes: 40}
-          - {kind: shadow-early, minutes: 38}
+      matrix: ${{ fromJSON(inputs.jobs) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
@@ -101,12 +103,20 @@ jobs:
             checks)
               .venv/bin/python -m cp17c.run checks --canary-expected --stems "$PARITY_STEMS" --payloads payloads/parity \
                   --out results/checks ;;
-            shadow-late)
+            shadows)
               .venv/bin/python -m cp17c.run shadow --payloads payloads/shadow --truth states/truth.json \
-                  --first 2026-08-31 --last 2026-09-06 --state states/start-2026-08-31.json --out results/shadow ;;
-            shadow-early)
+                  --first 2026-08-31 --last 2026-09-06 --state states/start-2026-08-31.json --out results/shadow-late \
+                  > results/shadow-late.log 2>&1 &
+              late=$!
               .venv/bin/python -m cp17c.run shadow --payloads payloads/shadow --truth states/truth.json \
-                  --first 2026-08-24 --last 2026-08-30 --state states/start-2026-08-24.json --out results/shadow ;;
+                  --first 2026-08-24 --last 2026-08-30 --state states/start-2026-08-24.json --out results/shadow-early \
+                  > results/shadow-early.log 2>&1 &
+              early=$!
+              status=0
+              wait $late || status=1
+              wait $early || status=1
+              cat results/shadow-late.log results/shadow-early.log
+              exit $status ;;
           esac
       - name: The results' own hashes
         if: always()
