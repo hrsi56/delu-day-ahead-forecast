@@ -287,5 +287,4 @@ schemas. Local runtimes and states are verified on the issuing machine (§6).
 |---|---|
 | `tests/cp17b/test_refreeze.py`: `test_the_committed_manifest_verifies_here`, `test_the_copy_verifies_with_its_local_runtimes_unchecked`, `test_a_changed_live_anchor_or_a_new_decisions_record_leaves_it_green`, `test_the_real_runtimes_verify_and_one_altered_file_fails`, `test_an_amendment_leaves_both_verifiers_green` | CP-17b's verifier now reports exactly what CP-17c re-froze; each test asserts that set, and nothing more, where it asserted none |
 | `tests/cp17b/test_records.py`: `test_the_identity_holds_the_re_frozen_terms`, `test_the_package_is_the_checkouts_and_its_changes_are_declared` | they compared CP-17b's recorded `daily.py` and package files with the live tree; they now check the recorded value, and that only `schema.py` differs live |
-
-No test in `tests/cp17/` is superseded.
+| `tests/cp17/test_hosts.py`'s fixture `package` (two `stress` tests) | CP-17b had pointed it at CP-17b's frozen package; it now reads CP-17c's, from this manifest. Its tests still require CP-17's committed issuing-host quantiles, bit for bit |

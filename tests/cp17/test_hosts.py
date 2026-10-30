@@ -37,9 +37,10 @@ pytestmark = [pytest.mark.stress,
 def package(tmp_path_factory):
     out = tmp_path_factory.mktemp('package') / 'src.zip'
     manifest = bundle.build(ROOT / 'src', out)
-    # Superseded at CP-17b: the frozen package is CP-17b's re-frozen one. The fit it runs is unchanged, so the
-    # issued quantiles below must still be CP-17's committed issuing-host record, bit for bit.
-    committed = json.loads((ROOT / 'reports/cp17b/bundle-manifest.json').read_text())
+    # Superseded at CP-17b, and again at CP-17c: the frozen package is CP-17c's re-frozen one (its freeze manifest).
+    # The fit it runs is unchanged, so the issued quantiles below must still be CP-17's committed issuing-host
+    # record, bit for bit.
+    committed = json.loads((ROOT / 'docs/track-b/evidence/cp-17c/freeze-manifest.json').read_text())['policy_identity']['code']
     assert manifest['files_sha256'] == committed['files_sha256'], 'the checkout differs from the frozen package'
     return out, manifest
 
