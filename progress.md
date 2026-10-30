@@ -1136,6 +1136,23 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **Owner decision 27, 2026-10-30: the whole road, on the Orchestrator's own decisions.** His words:
+  "באופן מלא ועצמאי עד לפרסום קומפלט, עם מוצר חי ועם כל מה שעשינו עד כה ולא פורסם. וקח חופש לקבל
+  החלטות שלא עולות לי כסף בעצמך לגמרי גם בפרסום. תרוץ לבד אל תעצור. תמשיך לא משנה מה, גם אם משהו
+  לדעתך דורש אישור שלי תמשיך בכל זאת. אחרי שתסיים תכתוב לי בעברית איזה החלטות קיבלת בשמי ואני אאשר
+  אותן בדיעבד או אחליט על שינויים."
+  - **What it means.** The Orchestrator decides every matter that costs him nothing, publication
+    included, and logs each decision in `.local/artifacts/owner-ratification/decisions.md`. He
+    ratifies them, or changes them, after the complete publication.
+  - **What stays his by its nature:**
+    - entering credential values as GitHub secrets;
+    - anything that costs money;
+    - his own §24.2 declaration;
+    - 4.7T's calendar (no earlier than 2026-12-04).
+  - **The repository's access.** After the switch to public, at about 14:22 UTC, GitHub briefly
+    refused Git reads on the repository ("disabled", 403) and pushes to `origin` (500). By 14:26 UTC
+    both worked again. The CP-17c Lead was told to dispatch the resume again.
+
 - **Owner decision 26, 2026-10-30: `hrsi56/delu-host-refreeze` made public,** after a value-based
   secret scan of its history, logs and artifacts found nothing. It is not a publication: it has no
   Pages. The CP-17c Lead was told to dispatch the resume run now on the public class, then finish
