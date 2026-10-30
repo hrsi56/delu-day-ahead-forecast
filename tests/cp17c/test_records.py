@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[2]
 REPORTS = ROOT / 'reports/cp17c'
 EVIDENCE = ROOT / refreeze17c.EVIDENCE
 CANARY = hostcheck.CANARY_QUANTILES_SHA256
+#: Protocol and calendar dates the identity carries, which §24.2 permits: the CP-26 GFS ruling's date, and S_14.
+CALENDAR = {'2026-10-19', '2027-01-06'}
 #: A date, not one inside a path or name (CP-26's run folder `cold-rerun-2026-10-15` is not a data date).
 DATE = re.compile(r'(?<![A-Za-z0-9/_.-])20\d\d-\d\d-\d\d')
 
@@ -95,7 +97,7 @@ def test_no_committed_record_holds_a_date_after_the_boundary():
         if path.suffix not in ('.json', '.csv', '.jsonl', '.md') or path.name in (
                 'compute-ledger.jsonl', 'artifacts.json', 'scratch-repository.json', 'measurement.json', 'report.md'):
             continue
-        late = sorted({m.group(0) for m in DATE.finditer(path.read_text()) if m.group(0) > '2026-09-06'})
+        late = sorted({m.group(0) for m in DATE.finditer(path.read_text()) if m.group(0) > '2026-09-06'} - CALENDAR)
         assert not late, f'{path.name}: {late[:5]}'
 
 
