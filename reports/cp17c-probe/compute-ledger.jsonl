@@ -1,0 +1,5 @@
+{"item": "the local control, first run (harness before f31441fb)", "seconds": 1232.6, "workers": 1}
+{"item": "the local control of record (harness at f31441fb)", "seconds": 1221.5, "workers": 1}
+{"item": "the inputs and the dry replay (cp17cprobe.inputs), three builds", "note": "about 30 s each, timed by /usr/bin/time on the first; peak 1.4 GB", "seconds": 90.0, "workers": 1}
+{"item": "stand-in harness runs and the probe tests", "note": "estimate", "seconds": 120.0, "workers": 1}
+{"item": "the early history-free CI run (2770303f)", "seconds": 604.4, "workers": 1}

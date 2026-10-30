@@ -1,0 +1,1052 @@
+{
+ "repo": "hrsi56/delu-host-probe",
+ "runs": {
+  "40974770649": {
+   "artifacts": [
+    {
+     "digest": "sha256:9e79d16513713573ffc3e39d11f5e34f0c638b3c57fb26e2903b8e7774782c07",
+     "id": 12942626127,
+     "name": "ubuntu-24.04-shadow-late",
+     "path": "40974770649/ubuntu-24.04-shadow-late",
+     "size_in_bytes": 176206,
+     "superseded": "run 1 failed in the harness after each fit (a relative output folder; fixed in ff45808) and was cancelled",
+     "zip_sha256": "9e79d16513713573ffc3e39d11f5e34f0c638b3c57fb26e2903b8e7774782c07"
+    },
+    {
+     "digest": "sha256:7c2b64c731f3ad2bff15ed456bb0a4636c3d01bc0ed7820b1932fe31e127f82c",
+     "id": 12941839078,
+     "name": "macos-26-parity",
+     "path": "40974770649/macos-26-parity",
+     "size_in_bytes": 61469,
+     "superseded": "run 1 failed in the harness after each fit (a relative output folder; fixed in ff45808) and was cancelled",
+     "zip_sha256": "7c2b64c731f3ad2bff15ed456bb0a4636c3d01bc0ed7820b1932fe31e127f82c"
+    },
+    {
+     "digest": "sha256:60153942ff7c79d402018bfb87987fa7cf29148df186d78511d6f9c0b7da74e7",
+     "id": 12941348548,
+     "name": "ubuntu-24.04-parity",
+     "path": "40974770649/ubuntu-24.04-parity",
+     "size_in_bytes": 61445,
+     "superseded": "run 1 failed in the harness after each fit (a relative output folder; fixed in ff45808) and was cancelled",
+     "zip_sha256": "60153942ff7c79d402018bfb87987fa7cf29148df186d78511d6f9c0b7da74e7"
+    },
+    {
+     "digest": "sha256:fec61ce4430d1e9578fdeb6976e3cd85c57b0c1bed187da5162821cc66e36a16",
+     "id": 12941313969,
+     "name": "ubuntu-24.04-shadow-early",
+     "path": "40974770649/ubuntu-24.04-shadow-early",
+     "size_in_bytes": 61744,
+     "superseded": "run 1 failed in the harness after each fit (a relative output folder; fixed in ff45808) and was cancelled",
+     "zip_sha256": "fec61ce4430d1e9578fdeb6976e3cd85c57b0c1bed187da5162821cc66e36a16"
+    }
+   ],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123799993403
+      }
+     ],
+     "jobs": 1,
+     "total_ms": 0
+    },
+    "UBUNTU": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123799992977
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123799993272
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123799993392
+      }
+     ],
+     "jobs": 3,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "cancelled",
+   "created_at": "2026-10-29T23:40:50Z",
+   "head_sha": "e7b99a45a55ffb9892c9751378ab51152fb26382",
+   "jobs": [
+    {
+     "completed_at": "2026-10-29T23:46:51Z",
+     "conclusion": "cancelled",
+     "id": 123799992977,
+     "labels": [
+      "ubuntu-24.04"
+     ],
+     "name": "ubuntu-24.04 shadow-late",
+     "runner_name": "GitHub Actions 1000001255",
+     "seconds": 355.0,
+     "started_at": "2026-10-29T23:40:56Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 5.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 11.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "cancelled",
+       "name": "The frozen chain (shadow-late)",
+       "seconds": 326.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-29T23:47:03Z",
+     "conclusion": "cancelled",
+     "id": 123799993272,
+     "labels": [
+      "ubuntu-24.04"
+     ],
+     "name": "ubuntu-24.04 shadow-early",
+     "runner_name": "GitHub Actions 1000001256",
+     "seconds": 366.0,
+     "started_at": "2026-10-29T23:40:57Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "cancelled",
+       "name": "The frozen chain (shadow-early)",
+       "seconds": 341.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-29T23:45:26Z",
+     "conclusion": "failure",
+     "id": 123799993392,
+     "labels": [
+      "ubuntu-24.04"
+     ],
+     "name": "ubuntu-24.04 parity",
+     "runner_name": "GitHub Actions 1000001258",
+     "seconds": 269.0,
+     "started_at": "2026-10-29T23:40:57Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 11.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "failure",
+       "name": "The frozen chain (parity)",
+       "seconds": 241.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-29T23:47:03Z",
+     "conclusion": "cancelled",
+     "id": 123799993403,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 parity",
+     "runner_name": "GitHub Actions 1000001257",
+     "seconds": 363.0,
+     "started_at": "2026-10-29T23:41:00Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 6.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "failure",
+       "name": "The frozen chain (parity)",
+       "seconds": 342.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "skipped",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 2.0
+      }
+     ]
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-29T23:47:04Z"
+  },
+  "40975542287": {
+   "artifacts": [
+    {
+     "digest": "sha256:a014f78f7a893e1766b3af7d3bf43d62a2e868e9bde420b6da5037f6152215fa",
+     "id": 12943807010,
+     "name": "macos-26-parity",
+     "path": "40975542287/macos-26-parity",
+     "size_in_bytes": 444779,
+     "zip_sha256": "a014f78f7a893e1766b3af7d3bf43d62a2e868e9bde420b6da5037f6152215fa"
+    },
+    {
+     "digest": "sha256:1d42306be373d3eb6a039ae1527f0ae3cce9d51b3f8ee4b606fa9498b37a5c9e",
+     "id": 12943647871,
+     "name": "ubuntu-24.04-shadow-late",
+     "path": "40975542287/ubuntu-24.04-shadow-late",
+     "size_in_bytes": 734507,
+     "zip_sha256": "1d42306be373d3eb6a039ae1527f0ae3cce9d51b3f8ee4b606fa9498b37a5c9e"
+    },
+    {
+     "digest": "sha256:12543d34732339220cef98ae21524230cd3756cd568fc8a36f94e22426a306c5",
+     "id": 12943572587,
+     "name": "ubuntu-24.04-shadow-early",
+     "path": "40975542287/ubuntu-24.04-shadow-early",
+     "size_in_bytes": 555641,
+     "zip_sha256": "12543d34732339220cef98ae21524230cd3756cd568fc8a36f94e22426a306c5"
+    },
+    {
+     "digest": "sha256:f9ad4d1420e6546e1bd23e7c09cc59b3a2686f0d9c29a6fc31dec01d6959f423",
+     "id": 12943039613,
+     "name": "ubuntu-24.04-parity",
+     "path": "40975542287/ubuntu-24.04-parity",
+     "size_in_bytes": 444641,
+     "zip_sha256": "f9ad4d1420e6546e1bd23e7c09cc59b3a2686f0d9c29a6fc31dec01d6959f423"
+    }
+   ],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123802537432
+      }
+     ],
+     "jobs": 1,
+     "total_ms": 0
+    },
+    "UBUNTU": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123802537628
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123802537658
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123802537669
+      }
+     ],
+     "jobs": 3,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "success",
+   "created_at": "2026-10-29T23:47:55Z",
+   "head_sha": "ff458082a61d041fb9f06e684fc15f47b5e68b9a",
+   "jobs": [
+    {
+     "completed_at": "2026-10-30T00:16:02Z",
+     "conclusion": "success",
+     "id": 123802537432,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 parity",
+     "runner_name": "GitHub Actions 1000001262",
+     "seconds": 1684.0,
+     "started_at": "2026-10-29T23:47:58Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 5.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen chain (parity)",
+       "seconds": 1660.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 2.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T00:25:26Z",
+     "conclusion": "success",
+     "id": 123802537628,
+     "labels": [
+      "ubuntu-24.04"
+     ],
+     "name": "ubuntu-24.04 parity",
+     "runner_name": "GitHub Actions 1000001259",
+     "seconds": 2248.0,
+     "started_at": "2026-10-29T23:47:58Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 5.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen chain (parity)",
+       "seconds": 2220.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T00:16:05Z",
+     "conclusion": "success",
+     "id": 123802537658,
+     "labels": [
+      "ubuntu-24.04"
+     ],
+     "name": "ubuntu-24.04 shadow-early",
+     "runner_name": "GitHub Actions 1000001261",
+     "seconds": 1687.0,
+     "started_at": "2026-10-29T23:47:58Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 15.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen chain (shadow-early)",
+       "seconds": 1649.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T00:25:36Z",
+     "conclusion": "success",
+     "id": 123802537669,
+     "labels": [
+      "ubuntu-24.04"
+     ],
+     "name": "ubuntu-24.04 shadow-late",
+     "runner_name": "GitHub Actions 1000001260",
+     "seconds": 2258.0,
+     "started_at": "2026-10-29T23:47:58Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 6.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 6.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen chain (shadow-late)",
+       "seconds": 2232.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 0.0
+      }
+     ]
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-30T00:25:37Z"
+  },
+  "40978681906": {
+   "artifacts": [
+    {
+     "digest": "sha256:632d1bb3e91f8777362afe2142b17c3aad3e67eee6128b8c98950eef05d85e72",
+     "id": 12944528140,
+     "name": "macos-26-shadow-late",
+     "path": "40978681906/macos-26-shadow-late",
+     "size_in_bytes": 734442,
+     "zip_sha256": "632d1bb3e91f8777362afe2142b17c3aad3e67eee6128b8c98950eef05d85e72"
+    },
+    {
+     "digest": "sha256:f2df2ec8e492d4f5af30d63bf15ba894d143aab35d06b4d68ed13be383ad3730",
+     "id": 12943499039,
+     "name": "macos-26-shadow-early",
+     "path": "40978681906/macos-26-shadow-early",
+     "size_in_bytes": 555740,
+     "zip_sha256": "f2df2ec8e492d4f5af30d63bf15ba894d143aab35d06b4d68ed13be383ad3730"
+    }
+   ],
+   "billable": {
+    "MACOS": {
+     "job_runs": [
+      {
+       "duration_ms": 0,
+       "job_id": 123812963298
+      },
+      {
+       "duration_ms": 0,
+       "job_id": 123812963550
+      }
+     ],
+     "jobs": 2,
+     "total_ms": 0
+    }
+   },
+   "conclusion": "success",
+   "created_at": "2026-10-30T00:16:48Z",
+   "head_sha": "ff458082a61d041fb9f06e684fc15f47b5e68b9a",
+   "jobs": [
+    {
+     "completed_at": "2026-10-30T00:32:24Z",
+     "conclusion": "success",
+     "id": 123812963298,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadow-early",
+     "runner_name": "GitHub Actions 1000001263",
+     "seconds": 929.0,
+     "started_at": "2026-10-30T00:16:55Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 7.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen chain (shadow-early)",
+       "seconds": 906.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 1.0
+      }
+     ]
+    },
+    {
+     "completed_at": "2026-10-30T00:37:56Z",
+     "conclusion": "success",
+     "id": 123812963550,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "macos-26 shadow-late",
+     "runner_name": "GitHub Actions 1000001264",
+     "seconds": 1261.0,
+     "started_at": "2026-10-30T00:16:55Z",
+     "status": "completed",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 4.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded",
+       "seconds": 3.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The environment uv.lock pins",
+       "seconds": 6.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Verify the shipped inputs",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Node.js v26.7.0, official, checked against SHASUMS256.txt",
+       "seconds": 2.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The host",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The frozen chain (shadow-late)",
+       "seconds": 1238.0
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+       "seconds": 0.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+       "seconds": 1.0
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job",
+       "seconds": 1.0
+      }
+     ]
+    }
+   ],
+   "run_attempt": 1,
+   "status": "completed",
+   "updated_at": "2026-10-30T00:37:57Z"
+  }
+ },
+ "schema": "cp17c-probe-artifacts-v1"
+}

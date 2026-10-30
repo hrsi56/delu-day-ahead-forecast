@@ -105,7 +105,12 @@ def counted_minutes(artifacts: dict) -> dict:
         for job in run['jobs']:
             if job['seconds'] is not None:
                 os_name = 'MACOS' if any('macos' in label for label in job.get('labels') or []) else 'UBUNTU'
-                own[job['name']] = {'os': os_name, 'seconds': job['seconds'],
+                setup = 0.0
+                for step in job.get('steps', []):
+                    if step['name'].startswith('The frozen chain'):
+                        break
+                    setup += step['seconds'] or 0.0
+                own[job['name']] = {'os': os_name, 'seconds': job['seconds'], 'setup_seconds': setup,
                                     'counted': math.ceil(job['seconds'] / 60) * MULTIPLIER[os_name]}
         counted = sum(r['counted'] for r in rows)
         out[run_id] = {'billable_jobs': rows, 'counted_from_billable': counted,
@@ -297,6 +302,34 @@ def runner(inputs: dict, folder: Path, executed_ok, local: bool = False) -> dict
     return out
 
 
+def supplementary(inputs: dict, artifacts: dict, downloads: Path) -> list[dict]:
+    """The fit records of superseded jobs, each checked against its job's own hashes and compared with the reference.
+
+    Run 1's harness failed after each fit, but every record it left is the frozen Node.js runner's own, written
+    before the failure. They are not part of the measurement; they add machines (CPU models) to the evidence of
+    bit-for-bit reproduction."""
+    rows = []
+    for run_id, run in sorted(artifacts['runs'].items()):
+        for item in run['artifacts']:
+            if not item.get('superseded'):
+                continue
+            folder = downloads / item['path']
+            listed = _hashes(folder)
+            cpu = json.loads((folder / 'host.json').read_text())['machine']['cpu_model'] if (folder / 'host.json').exists() else None
+            for rel in sorted(r for r in listed if r.endswith('/run.json')):
+                kind = rel.split('/', 1)[0]
+                record = json.loads((folder / rel).read_text())
+                ref_row = inputs['references']['runs'][kind][record['target']]
+                result = (record.get('python') or {}).get('result') or {}
+                rows.append({'run': run_id, 'artifact': item['name'], 'cpu_model': cpu, 'kind': kind, 'stem': record['target'],
+                             'record_sha256': listed[rel], 'errors': record.get('errors'),
+                             'quantiles_sha256': result.get('quantiles_sha256'),
+                             'bit_identical': result.get('quantiles_sha256') == ref_row['quantiles_sha256'],
+                             'payload_identity_equal': result.get('payload_sha256') == ref_row['payload_sha256'],
+                             'wall_seconds': record['total_ms'] / 1000, 'peak_bytes': record.get('process_rss_peak_bytes')})
+    return rows
+
+
 def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path, local: Path | None) -> dict:
     inputs = json.loads(inputs_path.read_text())
     freeze = json.loads((ROOT / 'docs/track-b/evidence/cp-17b/freeze-manifest.json').read_text())
@@ -329,8 +362,14 @@ def compare(inputs_path: Path, artifacts_path: Path | None, downloads: Path, loc
                     link.unlink()
                 link.symlink_to(path.resolve())
             out['runners'][label] = runner(inputs, staging, executed_ok)
+        out['supplementary'] = supplementary(inputs, artifacts, downloads)
     if local is not None:
         out['local_control'] = runner(inputs, local, executed_ok, local=True)
+    pinned = freeze['policy_identity']['issuing_host']['pyodide']['files_sha256']
+    for r in [*out['runners'].values(), out.get('local_control')]:
+        for job in (r or {}).get('jobs', {}).values():
+            if job.get('host'):     # recomputed here, not taken from the runner's own claim
+                job['host']['pyodide']['files_equal_freeze_manifest'] = job['host']['pyodide']['files_sha256'] == pinned
     return out
 
 
