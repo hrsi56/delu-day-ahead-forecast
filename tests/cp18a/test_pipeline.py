@@ -220,10 +220,23 @@ def test_inputs_not_shown_leave_the_day_open_and_a_later_issuance_closes_it(orig
     hidden = Inputs(hidden=[date(2026, 8, 25)])
     record = run(repo, tmp_path, at_noon(date(2026, 8, 25)), inputs=hidden, label='inp')    # plan 08-24 .. 08-26
     assert record['planned'] == ['2026-08-24', '2026-08-25', '2026-08-26']
-    assert record['days']['2026-08-25']['status'] == 'open' and record['days']['2026-08-25']['cause'] == causes.INPUTS
+    assert record['days']['2026-08-25']['status'] == 'not issued' and record['days']['2026-08-25']['cause'] == causes.INPUTS
+    assert record['days']['2026-08-25']['closed'] is True
     assert [c['day'] for c in record['closed']] == ['2026-08-25']            # closed before 08-26 was issued
     days = store_of(origin).days()
     assert days['2026-08-25']['cause'] == causes.INPUTS and days['2026-08-26']['status'] == 'issued'
+
+
+def test_open_days_are_closed_once_before_the_first_later_issuance(origin, tmp_path):
+    repo = origin('a')
+    hidden = Inputs(hidden=[date(2026, 8, 24), date(2026, 8, 25)])
+    record = run(repo, tmp_path, at_noon(date(2026, 8, 26)), inputs=hidden, label='twice')   # plan 08-24 .. 08-27
+    assert record['planned'] == ['2026-08-24', '2026-08-25', '2026-08-26', '2026-08-27']
+    assert [c['day'] for c in record['closed']] == ['2026-08-24', '2026-08-25']
+    assert [record['days'][d]['status'] for d in record['planned']] == ['not issued', 'not issued', 'issued', 'issued']
+    assert record['exit'] == 1 and record['outcome'] == 'done; not issued: 2026-08-24, 2026-08-25'
+    days = store_of(origin).days()
+    assert [days[d]['cause'] for d in ('2026-08-24', '2026-08-25')] == [causes.INPUTS, causes.INPUTS]
 
 
 def test_s14_not_in_place_leaves_the_day_open(origin, tmp_path):

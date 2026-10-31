@@ -122,6 +122,8 @@ def _close(store: LiveStore, day: date, record: dict) -> None:
     store.record_not_issued(day, cause, [a['run_id'] for a in attempts])
     record['closed'].append({'day': str(day), 'cause': cause, 'cause_text': causes.text(cause),
                              'attempts': [a['run_id'] for a in attempts]})
+    if this and this.get('status') == 'open':
+        this.update(status='not issued', closed=True)          # closed once: never closed again in this run
 
 
 def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict | None = None,
