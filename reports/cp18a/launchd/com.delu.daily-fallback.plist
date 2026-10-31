@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  CP-18's local fallback on the Owner's Mac (capstone v21-r19 §24.13): PROPOSED, NOT INSTALLED.
+  Installing it is CP-18's activation: copy it to ~/Library/LaunchAgents/ and `launchctl bootstrap gui/$(id -u) <file>`.
+
+  Once a day at 13:30 Europe/Berlin (after the runner's usual run), it runs the one command of the fallback,
+  `python -m cp18.local run`, in the pipeline's own clone of the product repository, with the same binary
+  (.local/tools/node-v26.7.0-official), the same H2 checks and the same claim rule: when the runner has already issued
+  the day, the fallback finds nothing to issue and records its run. The Mac's clock is in Europe/Berlin
+  (StartCalendarInterval follows the system time zone); if it is not, adjust Hour.
+
+  The credentials the live inputs need (ENTSOE_API_TOKEN) are not here: a LaunchAgent inherits the launchd session's
+  environment, where the Owner's ~/.zshrc exports are already mirrored (AGENTS.md § Credentials). No value is ever
+  written to this file.
+
+  At activation the command's dry-run arguments (- -mode dry-run, - -now, - -inputs) are replaced by the live mode the
+  activation brief names; in CP-18a the pipeline accepts dry runs on development days only.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.delu.daily-fallback</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/djourno/Downloads/PJM/.venv/bin/python</string>
+    <string>-m</string>
+    <string>cp18.local</string>
+    <string>run</string>
+    <string>--clone</string>
+    <string>/Users/djourno/Downloads/PJM/.local/live/clone</string>
+    <string>--url</string>
+    <string>https://github.com/hrsi56/delu-day-ahead-forecast.git</string>
+    <string>--project</string>
+    <string>/Users/djourno/Downloads/PJM</string>
+    <string>--out</string>
+    <string>/Users/djourno/Downloads/PJM/.local/live/runs/latest</string>
+    <string>--mode</string>
+    <string>dry-run</string>
+    <string>--now</string>
+    <string>REPLACED-AT-ACTIVATION</string>
+    <string>--inputs</string>
+    <string>live:/Users/djourno/Downloads/PJM/.local/live/inputs</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONPATH</key>
+    <string>/Users/djourno/Downloads/PJM/.local/live/clone/src</string>
+    <key>CP17_PROJECT_ROOT</key>
+    <string>/Users/djourno/Downloads/PJM</string>
+    <key>OPENBLAS_NUM_THREADS</key>
+    <string>1</string>
+    <key>VECLIB_MAXIMUM_THREADS</key>
+    <string>1</string>
+    <key>OMP_NUM_THREADS</key>
+    <string>1</string>
+    <key>MKL_NUM_THREADS</key>
+    <string>1</string>
+    <key>NUMEXPR_NUM_THREADS</key>
+    <string>1</string>
+    <key>MLFLOW_DISABLE_TELEMETRY</key>
+    <string>true</string>
+    <key>DO_NOT_TRACK</key>
+    <string>1</string>
+    <key>GIT_TERMINAL_PROMPT</key>
+    <string>0</string>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/djourno/Downloads/PJM/.local/live/clone</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>13</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>StandardOutPath</key>
+  <string>/Users/djourno/Downloads/PJM/.local/live/logs/daily-fallback.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/djourno/Downloads/PJM/.local/live/logs/daily-fallback.log</string>
+</dict>
+</plist>

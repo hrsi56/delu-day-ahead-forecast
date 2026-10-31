@@ -364,3 +364,23 @@ def test_a_carry_across_a_gap_resumes_bit_for_bit(origin, tmp_path):
     art = stand_in_issue()(date(2026, 8, 29), True, None, settings=None, parent_sha256=b_store.last_artifact_sha256(),
                            data_refresh_utc='', states=state)['artifact']
     assert art['artifact_sha256'] == a['days']['2026-08-29']['artifact_sha256']
+
+
+# ---- staying enabled: GitHub disables a scheduled workflow after 60 days without repository activity ------------------
+
+def test_every_run_whatever_it_does_pushes_a_commit_to_main(origin, tmp_path):
+    repo = origin('a')
+
+    def tip():
+        return git(repo, 'ls-remote', 'origin', 'refs/heads/main').split()[0]
+    outcomes = {}
+    for label, kwargs, now in (
+            ('h2', {'checks': failing_checks('pins')}, at_noon(FIRST - timedelta(days=1))),
+            ('issued', {}, at_noon(FIRST - timedelta(days=1))),
+            ('nothing', {}, at_noon(FIRST - timedelta(days=1))),
+            ('hidden', {'inputs': Inputs(hidden=[FIRST + timedelta(days=1)])}, at_noon(FIRST))):
+        before = tip()
+        outcomes[label] = run(repo, tmp_path, now, label=label, **kwargs)['outcome']
+        assert tip() != before, f'the {label} run pushed nothing'
+    assert outcomes == {'h2': f'done; not issued: {FIRST}', 'issued': 'done', 'nothing': 'nothing to issue',
+                        'hidden': f'done; not issued: {FIRST + timedelta(days=1)}'}

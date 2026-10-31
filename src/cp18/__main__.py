@@ -1,9 +1,10 @@
 """The pipeline's commands, the same on the runner and on the Owner's Mac (`cp18.local` wraps them in one command).
 
-    PYTHONPATH=src python -m cp18 prepare --root . --project . --retrieve-node --out <file>
+    PYTHONPATH=src python -m cp18 prepare --root . --project . --pinned <folder> --retrieve-pyodide --retrieve-node \
+        --out <file>
+    PYTHONPATH=src python -m cp18 seed-store --root . --genesis <state.json>:<first day> | --carried <store folder>
     PYTHONPATH=src python -m cp18 run --root . --project . --out <dir> --host runner --now <ISO> \
         --inputs prebuilt:<payload folder> | live:<recorded responses> [--remote origin]
-    PYTHONPATH=src python -m cp18 init-store --root . --state <file> --origin <day> --first-day <day> --source <text>
     PYTHONPATH=src python -m cp18 status --root .
 
 **This round runs dry runs only** (`--mode dry-run`, the default and the only mode accepted): development days through
@@ -49,10 +50,11 @@ def make_inputs(spec: str, root: Path, project: Path):
 def cmd_prepare(args) -> int:
     from . import host
     root, project = args.root.resolve(), args.project.resolve()
-    record = {'materialized': host.materialize(root, project) if args.materialize else None,
+    record = {'materialized': host.materialize(root, project, args.pinned) if args.pinned else None,
+              'pyodide': host.pyodide(root, project, args.retrieve_pyodide),
               'node': host.node(project, args.retrieve_node), 'package': host.package(root, project)}
     _dump(args.out, record)
-    print('prepare:', 'pinned files', len(record['materialized'] or {}), '| node',
+    print('prepare:', 'pinned states', len(record['materialized'] or {}), '| pyodide', len(record['pyodide']), '| node',
           (record['node'].get('binary') or {}).get('sha256', 'in place')[:16], '| package',
           'equal' if record['package']['equal_to_manifest'] else 'NOT EQUAL', flush=True)
     return 0 if record['package']['equal_to_manifest'] else 1
@@ -80,13 +82,25 @@ def cmd_run(args) -> int:
     return record['exit']
 
 
-def cmd_init_store(args) -> int:
+def cmd_seed_store(args) -> int:
+    """A dry run's store in this checkout: a new one from a development state, or one an earlier run carried out."""
+    import shutil
     from cp17.shadow import ShadowStates
     from .store import STORE_PATH, LiveStore
-    state = ShadowStates.from_dict(json.loads(args.state.read_text()))
-    store = LiveStore.init(args.root / STORE_PATH, state, date.fromisoformat(args.origin), args.source,
-                           date.fromisoformat(args.first_day))
-    print('store', store.folder, 'head', store.verify()['entry_sha256'][:16])
+    folder = args.root / STORE_PATH
+    if args.genesis:
+        state_file, _, first = args.genesis.rpartition(':')
+        state = ShadowStates.from_dict(json.loads(Path(state_file).read_text()))
+        first_day = date.fromisoformat(first)
+        store = LiveStore.init(folder, state, first_day, args.source or f'development state {Path(state_file).name}',
+                               first_day)
+    else:
+        if folder.exists():
+            raise SystemExit(f'{folder}: a store exists there; a carried store is never copied over one')
+        shutil.copytree(args.carried, folder)
+        store = LiveStore(folder)
+    head = store.verify()
+    print('store', STORE_PATH, 'head', head['entry_sha256'][:16], 'last day', head['last_day'])
     return 0
 
 
@@ -104,7 +118,9 @@ def main(argv=None) -> int:
     p = sub.add_parser('prepare')
     p.add_argument('--root', default=Path('.'), type=Path)
     p.add_argument('--project', default=Path('.'), type=Path)
-    p.add_argument('--materialize', action='store_true', help='copy the committed pinned files into .local/ by hash')
+    p.add_argument('--pinned', help='the committed folder of pinned states to copy into .local/ by hash '
+                                    '(live/pinned in the product; reports/cp18a/dryrun/pinned in a dry run)')
+    p.add_argument('--retrieve-pyodide', action='store_true', help="retrieve Pyodide's 23 files by hash (the runner)")
     p.add_argument('--retrieve-node', action='store_true', help='retrieve the official binary by hash (the runner)')
     p.add_argument('--out', required=True, type=Path)
     r = sub.add_parser('run')
@@ -118,16 +134,16 @@ def main(argv=None) -> int:
     r.add_argument('--remote', default='origin')
     r.add_argument('--branch', default='main')
     r.add_argument('--run-label')
-    i = sub.add_parser('init-store')
+    i = sub.add_parser('seed-store')
     i.add_argument('--root', default=Path('.'), type=Path)
-    i.add_argument('--state', required=True, type=Path)
-    i.add_argument('--origin', required=True)
-    i.add_argument('--first-day', required=True)
-    i.add_argument('--source', required=True)
+    g = i.add_mutually_exclusive_group(required=True)
+    g.add_argument('--genesis', help='<state.json>:<first day>: a new store from a development state')
+    g.add_argument('--carried', type=Path, help='a store folder an earlier run left, copied and verified')
+    i.add_argument('--source')
     s = sub.add_parser('status')
     s.add_argument('--root', default=Path('.'), type=Path)
     args = ap.parse_args(argv)
-    return {'prepare': cmd_prepare, 'run': cmd_run, 'init-store': cmd_init_store, 'status': cmd_status}[args.cmd](args)
+    return {'prepare': cmd_prepare, 'run': cmd_run, 'seed-store': cmd_seed_store, 'status': cmd_status}[args.cmd](args)
 
 
 if __name__ == '__main__':
