@@ -1,0 +1,102 @@
+{
+ "archive": {
+  "features_bitwise_equal_to_committed": true,
+  "gfs_available": true,
+  "judgement": {
+   "admitted": true,
+   "archive_day": "2026-09-06",
+   "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+   "basis_id": "aws_last_modified",
+   "by_exception": false,
+   "cutoff_utc": "2026-09-05T09:00:00Z",
+   "data_day": "2026-09-06",
+   "for_day": "2026-09-06",
+   "input": "gfs",
+   "provenance": "mixed",
+   "publication_utc": "2026-09-05T04:03:41Z",
+   "reason": "published 2026-09-05T04:03:41Z, strictly before the cutoff 2026-09-05T09:00:00Z",
+   "record": "gfs-run-2026-09-05",
+   "sha256": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "tier": 2
+  },
+  "size": {
+   "bytes": 331564,
+   "files": 23
+  },
+  "verify": []
+ },
+ "decode": {
+  "arrays_equal": {
+   "data": true,
+   "fields": true,
+   "lats": true,
+   "leads": true,
+   "lons": true
+  },
+  "data_bitwise_equal": true,
+  "decoder": {
+   "eccodes": "2.49.0",
+   "module": "cp20.gfs.decode",
+   "numpy": "2.5.3",
+   "python": "3.13.15"
+  },
+  "metadata_differences": [],
+  "metadata_equal": true,
+  "npz_file_sha256_equal": true
+ },
+ "delivery_day": "2026-09-06",
+ "message_differences": [],
+ "messages_equal_to_record": true,
+ "messages_retrieved": 50,
+ "pass": true,
+ "recorded": {
+  "npz_sha256": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+  "run_json": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-25/weather/runs/2026-09-05.json"
+ },
+ "rendered_index_sizes": {
+  "f021": {
+   "recorded": 41256,
+   "rendered": 635
+  },
+  "f024": {
+   "recorded": 41253,
+   "rendered": 635
+  },
+  "f027": {
+   "recorded": 41256,
+   "rendered": 635
+  },
+  "f030": {
+   "recorded": 41258,
+   "rendered": 635
+  },
+  "f033": {
+   "recorded": 41258,
+   "rendered": 635
+  },
+  "f036": {
+   "recorded": 41258,
+   "rendered": 635
+  },
+  "f039": {
+   "recorded": 41261,
+   "rendered": 635
+  },
+  "f042": {
+   "recorded": 41261,
+   "rendered": 635
+  },
+  "f045": {
+   "recorded": 41257,
+   "rendered": 635
+  },
+  "f048": {
+   "recorded": 41256,
+   "rendered": 635
+  }
+ },
+ "retrieval_problems": [],
+ "run": "2026-09-05",
+ "schema": "cp18a-live-gfs-client-v1",
+ "seconds": 1.9
+}

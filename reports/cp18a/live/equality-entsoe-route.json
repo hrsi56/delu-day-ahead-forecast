@@ -1,0 +1,260 @@
+{
+ "all_equal": true,
+ "archive": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18a/builder-live/archive-entsoe",
+ "base_lag_days": 8,
+ "days": [
+  {
+   "base_end": "2025-10-18",
+   "by_exception": 8,
+   "cause": null,
+   "day": "2025-10-26",
+   "gfs_available": true,
+   "increment_days": [
+    "2025-10-19",
+    "2025-10-20",
+    "2025-10-21",
+    "2025-10-22",
+    "2025-10-23",
+    "2025-10-24",
+    "2025-10-25",
+    "2025-10-26"
+   ],
+   "problems": [],
+   "search": {
+    "content_sha256": "2f3f020cf39b758198da64d4eb0eeb145d14f4f149bcf8e3dcb9b8ca9aaffff5",
+    "k": 11,
+    "search_day": "2025-07-09"
+   },
+   "set": "parity",
+   "shown": true,
+   "status": "built",
+   "stems": [
+    {
+     "day": "2025-10-26",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "8c09bbd04cd887ffb09030fd7577059a65d518cf505c7648235d5cf19f2056d7",
+      "reference_sha256": "8c09bbd04cd887ffb09030fd7577059a65d518cf505c7648235d5cf19f2056d7"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "a8c3e8d8e2eb39b560d450a4649c46427510e154c1a6b997b74748cb9ad361c1",
+      "reference_sha256": "a8c3e8d8e2eb39b560d450a4649c46427510e154c1a6b997b74748cb9ad361c1"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "1d976650d1aaa00897376fa804180ad9e5392cb054e3c47f71c89c14cea12710",
+      "reference": "1d976650d1aaa00897376fa804180ad9e5392cb054e3c47f71c89c14cea12710"
+     },
+     "policy": "A1",
+     "stem": "A1-2025-10-26"
+    },
+    {
+     "day": "2025-10-26",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "1b24d76b3584fec7ce0c7fc00fa12014d58c181bb9cffec7b893fc8d430d5d50",
+      "reference_sha256": "1b24d76b3584fec7ce0c7fc00fa12014d58c181bb9cffec7b893fc8d430d5d50"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "c032bd047706fb15064227080fbd0c02ba15617d99d75633f684b95f59280c99",
+      "reference_sha256": "c032bd047706fb15064227080fbd0c02ba15617d99d75633f684b95f59280c99"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "2dbdb69c4925b1e5e76e8f804c916188e3210422fc3b45d7575b383e055f7d7f",
+      "reference": "2dbdb69c4925b1e5e76e8f804c916188e3210422fc3b45d7575b383e055f7d7f"
+     },
+     "policy": "v4",
+     "stem": "v4-2025-10-26"
+    },
+    {
+     "day": "2025-10-26",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "4b3d02b41d5d217bb206860e842134b09b837f3e2597565da2c328ed874c6a9c",
+      "reference_sha256": "4b3d02b41d5d217bb206860e842134b09b837f3e2597565da2c328ed874c6a9c"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "d390464af05d551e124cd4fcace7fe7c87d9008abd4819323cdc62bf5f531b8e",
+      "reference_sha256": "d390464af05d551e124cd4fcace7fe7c87d9008abd4819323cdc62bf5f531b8e"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "e68ed27d8a04ed4bba456aeef813cadeffbfbf15890d9626abb70bceff2879cb",
+      "reference": "e68ed27d8a04ed4bba456aeef813cadeffbfbf15890d9626abb70bceff2879cb"
+     },
+     "policy": "v2",
+     "stem": "v2-2025-10-26"
+    },
+    {
+     "day": "2025-10-26",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "e9e67bb05d736d8026536537e2c3858fd4e7f907e840e3dce71e1ceaf1db2284",
+      "reference_sha256": "e9e67bb05d736d8026536537e2c3858fd4e7f907e840e3dce71e1ceaf1db2284"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "d238adffc1c0912c6e9fdaeb0ef382baf4225c4a0805fa87f82e42cbcb6ddbbe",
+      "reference_sha256": "d238adffc1c0912c6e9fdaeb0ef382baf4225c4a0805fa87f82e42cbcb6ddbbe"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "4328159738c4a190a8921d79114da3f5fce1df592143001f651347ae072bffc8",
+      "reference": "4328159738c4a190a8921d79114da3f5fce1df592143001f651347ae072bffc8"
+     },
+     "policy": "B0",
+     "stem": "B0-2025-10-26"
+    }
+   ],
+   "timings": {
+    "context_seconds": 15.125,
+    "history_seconds": 0.637,
+    "total_seconds": 16.716
+   },
+   "wall_seconds": 16.74
+  },
+  {
+   "base_end": "2026-03-21",
+   "by_exception": 8,
+   "cause": null,
+   "day": "2026-03-29",
+   "gfs_available": true,
+   "increment_days": [
+    "2026-03-22",
+    "2026-03-23",
+    "2026-03-24",
+    "2026-03-25",
+    "2026-03-26",
+    "2026-03-27",
+    "2026-03-28",
+    "2026-03-29"
+   ],
+   "problems": [],
+   "search": {
+    "content_sha256": "ed1f2788142d43c7d86bee28c269dd23d97349b8cee0d5b642d0b30171edf023",
+    "k": 12,
+    "search_day": "2026-01-07"
+   },
+   "set": "parity",
+   "shown": true,
+   "status": "built",
+   "stems": [
+    {
+     "day": "2026-03-29",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "ded2d96657a0d069b3c633adf07b9ac94b11f9d92d5c6acf5588efa1953e99e3",
+      "reference_sha256": "ded2d96657a0d069b3c633adf07b9ac94b11f9d92d5c6acf5588efa1953e99e3"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "f60eb79e0be908a0273c786ed225c1cf8b946152aa2a6553eb5513514b32903d",
+      "reference_sha256": "f60eb79e0be908a0273c786ed225c1cf8b946152aa2a6553eb5513514b32903d"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "89e502a4d0a32e262a5d8c6de806dc050ff0b657c439b79eb1fd95bf3155f582",
+      "reference": "89e502a4d0a32e262a5d8c6de806dc050ff0b657c439b79eb1fd95bf3155f582"
+     },
+     "policy": "A1",
+     "stem": "A1-2026-03-29"
+    },
+    {
+     "day": "2026-03-29",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "541281415c0d121ae4c5244178d460fbfbc1d6872fc40b64ffb27d96544bfb32",
+      "reference_sha256": "541281415c0d121ae4c5244178d460fbfbc1d6872fc40b64ffb27d96544bfb32"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "f07b31ff9cd211dd6fd3ef00c600ab2bf2ddbe518ffd1de718dfdaee8bf8e135",
+      "reference_sha256": "f07b31ff9cd211dd6fd3ef00c600ab2bf2ddbe518ffd1de718dfdaee8bf8e135"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "f5ddb99ba3993f9b60c77d4b2cd0ca0ffb35cbd3318a57cde811d6d091617df3",
+      "reference": "f5ddb99ba3993f9b60c77d4b2cd0ca0ffb35cbd3318a57cde811d6d091617df3"
+     },
+     "policy": "v4",
+     "stem": "v4-2026-03-29"
+    },
+    {
+     "day": "2026-03-29",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "08ef46f2644a52363958b534a8164ae71df9eaa0c2f4280b14e4a1a747003c57",
+      "reference_sha256": "08ef46f2644a52363958b534a8164ae71df9eaa0c2f4280b14e4a1a747003c57"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "6a5166b5cbec9a0f0c3136cc58bda9d0eba6fb73a81fca53940d229790d109a2",
+      "reference_sha256": "6a5166b5cbec9a0f0c3136cc58bda9d0eba6fb73a81fca53940d229790d109a2"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "30f7cf11c1933b241e5765e3dbe9e9d75d1a15355f8e3358fe79938e5aa5bdd7",
+      "reference": "30f7cf11c1933b241e5765e3dbe9e9d75d1a15355f8e3358fe79938e5aa5bdd7"
+     },
+     "policy": "v2",
+     "stem": "v2-2026-03-29"
+    },
+    {
+     "day": "2026-03-29",
+     "equal": true,
+     "json": {
+      "equal": true,
+      "live_sha256": "a5c57762f14d461ebcd849511127b6f62cd1b8c7ee925e0e1886fae33e4c9154",
+      "reference_sha256": "a5c57762f14d461ebcd849511127b6f62cd1b8c7ee925e0e1886fae33e4c9154"
+     },
+     "npz": {
+      "equal": true,
+      "live_sha256": "a78eb3fcad5cd90dfea80d34fc3c2b1813e094dfdaee5406916d372392959571",
+      "reference_sha256": "a78eb3fcad5cd90dfea80d34fc3c2b1813e094dfdaee5406916d372392959571"
+     },
+     "payload_sha256": {
+      "equal": true,
+      "live": "497e91b8be5eef61839c243698fee17f921bd2c964e50abd6609d8ad838682ce",
+      "reference": "497e91b8be5eef61839c243698fee17f921bd2c964e50abd6609d8ad838682ce"
+     },
+     "policy": "B0",
+     "stem": "B0-2026-03-29"
+    }
+   ],
+   "timings": {
+    "context_seconds": 16.964,
+    "history_seconds": 0.66,
+    "total_seconds": 18.499
+   },
+   "wall_seconds": 18.52
+  }
+ ],
+ "inputs": "base: data/snapshot.parquet and the committed weather features through D - base_lag; increments D - base_lag + 1 .. D from the archive: SMARD responses rendered from the snapshot (not recorded raw responses), GFS from CP-20/CP-25 recorded decoded runs",
+ "machine": {
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.15"
+ },
+ "reference": {
+  "parity": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17b/runs/native-parity/payloads",
+  "shadow": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17b/runs/shadow-host/payloads"
+ },
+ "schema": "cp18a-live-equality-v1",
+ "search_dir": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal",
+ "stems_compared": 8,
+ "stems_equal": 8,
+ "stems_expected": 8,
+ "wall_seconds": 20.5,
+ "what": "cp18.live.build_day's payloads against the development builder's (cp17.tools.payloads) reference files: .json and .npz byte for byte, and payload_sha256",
+ "workers": 2
+}
