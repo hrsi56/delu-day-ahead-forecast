@@ -36,6 +36,7 @@ CHANGED = ('.githooks/pre-commit', '.githooks/commit-msg', '.githooks/pre-push',
 CALENDAR = {
     '2026-09-07': "4.7T's first window day, a protocol date (the day after the freeze origin)",
     '2026-09-08': 'the snapshot pull (data/README.md), a calendar date',
+    '2026-09-23': "the last dated NCEP production-status capture (CP-25's GFS reconstruction), a calendar date",
     '2026-09-24': 'the credential exposure (docs/track-b/credential-exposure-2026-09-24.md), a calendar date',
     '2026-09-28': 'a document date cited by the issued brief',
     '2026-09-29': 'PUBLISH_RULES 1.0, a document date',
