@@ -76,40 +76,56 @@ def demo(checkout: Path, work: Path, run_id: str) -> dict:
     subprocess.run(['git', 'init', '--quiet', '-b', 'main', str(repo)], check=True, env=clean)
     _git(repo, clean, 'config', 'core.hooksPath', str(checkout / '.githooks'))
     _git(repo, clean, 'remote', 'add', 'origin', str(bare))
-    (repo / 'README.md').write_text('guard demonstration\n')
-    _git(repo, clean, 'add', 'README.md')
-    first = _git(repo, holding, 'commit', '--quiet', '-m', 'a clean first commit')
-    cases = [_case('a clean commit, with fake credentials set', first, False, values)]
-    token = fakes['ENTSOE_API_TOKEN']
-    (repo / 'record.json').write_text(json.dumps({'note': 'a value that must never be committed', 'v': token}) + '\n')
+    # The publication guard checks every commit bound for main: a final page and build record, as on the product.
+    (repo / 'docs').mkdir()
+    (repo / 'docs/index.html').write_text('<!doctype html><title>guard demonstration</title>\n')
+    (repo / 'reports/cp3').mkdir(parents=True)
+    (repo / 'reports/cp3/pages_build.json').write_text('{"final": true}\n')
+    _git(repo, clean, 'add', '-A')
+    cases = [_case('a clean commit, with fake credentials set',
+                   _git(repo, holding, 'commit', '--quiet', '-m', 'a clean first commit'), False, values)]
+    template = repo
+
+    def fresh(name: str) -> Path:
+        """Each case starts from the first commit, in its own clone with the same hooks and remote, nothing staged."""
+        path = work / name
+        subprocess.run(['git', 'clone', '--quiet', str(template), str(path)], check=True, env=clean)
+        _git(path, clean, 'config', 'core.hooksPath', str(checkout / '.githooks'))
+        _git(path, clean, 'remote', 'set-url', 'origin', str(bare))
+        return path
+
+    repo = fresh('staged')
+    (repo / 'record.json').write_text(json.dumps({'note': 'a value that must never be committed',
+                                                  'v': fakes['ENTSOE_API_TOKEN']}) + '\n')
     _git(repo, clean, 'add', 'record.json')
     cases.append(_case('a staged file holding a fake ENTSOE_API_TOKEN', _git(repo, holding, 'commit', '--quiet', '-m', 'x'),
                        True, values))
-    _git(repo, clean, 'reset', '--quiet')
-    (repo / 'record.json').unlink()
+    repo = fresh('message')
     (repo / 'ok.json').write_text('{"day": "2026-09-01"}\n')
     _git(repo, clean, 'add', 'ok.json')
     cases.append(_case('a commit message holding a fake HF_TOKEN',
                        _git(repo, holding, 'commit', '--quiet', '-m', f'note {fakes["HF_TOKEN"]}'), True, values))
+    repo = fresh('dump')
     dump = "environ({'" + 'DAGSHUB_USER_TOKEN' + "': '" + 'x' * 8 + "', 'PATH': '/usr/bin'})\n"
     (repo / 'pytest.log').write_text(dump)
     _git(repo, clean, 'add', 'pytest.log')
-    leak = _git(repo, clean, 'commit', '--quiet', '-m', 'a log')
-    cases.append(_case('a staged environment dump (no value set: the leak scan, by shape)', leak, True, values))
-    _git(repo, clean, 'reset', '--quiet')
-    (repo / 'pytest.log').unlink()
+    cases.append(_case('a staged environment dump (no value set: the leak scan, by its shape)',
+                       _git(repo, clean, 'commit', '--quiet', '-m', 'a log'), True, values))
+    repo = fresh('push')
     (repo / 'late.json').write_text(json.dumps({'v': fakes['DAGSHUB_USER_TOKEN']}) + '\n')
-    _git(repo, clean, 'add', 'ok.json', 'late.json')
+    _git(repo, clean, 'add', 'late.json')
     made = _git(repo, clean, 'commit', '--quiet', '-m', 'made where no value was set')
-    pushed = _git(repo, holding, 'push', '--quiet', 'origin', 'HEAD:refs/heads/main')
-    cases.append({**_case('a push of a commit holding a fake DAGSHUB_USER_TOKEN', pushed, True, values),
+    cases.append({**_case('a push of a commit holding a fake DAGSHUB_USER_TOKEN',
+                          _git(repo, holding, 'push', '--quiet', 'origin', 'HEAD:refs/heads/main'), True, values),
                   'commit_exit': made.returncode})
-    _git(repo, clean, 'reset', '--quiet', '--soft', 'HEAD~1')
-    _git(repo, clean, 'rm', '--quiet', '--cached', 'late.json')
-    (repo / 'late.json').unlink()
-    data = _git(repo, holding, 'commit', '--quiet', '-m', 'live: a data-only record\n\nDelu-Daily: 2026-09-01')
-    cases.append(_case('a data-only commit, with fake credentials set', data, False, values))
-    cases.append(_case('its push', _git(repo, holding, 'push', '--quiet', 'origin', 'HEAD:refs/heads/main'), False, values))
+    repo = fresh('data')
+    (repo / 'ok.json').write_text('{"day": "2026-09-01"}\n')
+    _git(repo, clean, 'add', 'ok.json')
+    cases.append(_case('a data-only commit, with fake credentials set',
+                       _git(repo, holding, 'commit', '--quiet', '-m', 'live: a data-only record\n\nDelu-Daily: 2026-09-01'),
+                       False, values))
+    cases.append(_case('its push, with fake credentials set',
+                       _git(repo, holding, 'push', '--quiet', 'origin', 'HEAD:refs/heads/main'), False, values))
     return {'schema': 'cp18a-guard-demo-v1', 'run_id': run_id, 'hooks': str(checkout / '.githooks'),
             'fake_names': list(NAMES), 'fake_value_rule': f'sha256("{SALT}:<name>:<run id>")[:40]',
             'cases': cases, 'all_as_expected': all(c['as_expected'] and not c['value_in_output'] for c in cases)}

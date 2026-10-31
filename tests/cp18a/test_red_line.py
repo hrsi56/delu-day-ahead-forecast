@@ -56,6 +56,7 @@ CALENDAR = {
     '2026-10-31': "this round's own run date, a calendar date",
     '2026-11-01': "this round's own run date, a calendar date",
     '2026-12-04': "4.7T's window opens no earlier than this, a protocol date",
+    '2027-01-05': "S_13's last service day (k13.json's service_last, the day before S_14), a protocol date",
     '2027-01-06': 'S_14, the scheduled search (H4), a protocol date',
 }
 DAY_KEYS = {'day', 'delivery_day', 'days', 'planned', 'lookback', 'target_day', 'first_day', 'last_day', 'origin',

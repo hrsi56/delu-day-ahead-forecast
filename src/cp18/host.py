@@ -40,7 +40,7 @@ def pinned_files(root) -> dict[str, str]:
     route = identity['state_route']
     files = {route['k13']['path']: route['k13']['file_sha256']}
     files[route['freeze_origin_state']['path']] = route['freeze_origin_state']['file_sha256']
-    files.update({f"{route['canary_payload']['path']}/{name}": sha for name, sha in route['canary_payload']['files_sha256'].items()})
+    files.update(route['canary_payload']['files_sha256'])          # keyed by their runtime paths already
     return dict(sorted(files.items()))
 
 
