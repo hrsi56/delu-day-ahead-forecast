@@ -33,4 +33,137 @@ run within the lookback") once a later day is issued or it leaves the lookback. 
 **R7** (`cp18.r7.verify`): wherever the pipeline verifies a bundle, a raised error is a refused record. No module of the
 pipeline calls `verify_bundle` except through it (a test checks).
 
-<!-- SECTIONS -->
+## 2. The live-input payload builder (`src/cp18/live/`)
+
+The code that turns retrieved source data into the frozen payload kinds `cp17.daily` takes (A1, v4, v2, B0), with
+each day's GFS flag set under the tier register and the Owner's rulings. 4.7T's brief and CP-18's activation brief
+cite it.
+
+- **One red line.** `cp25.guard` is the only boundary on its path. It never calls `cp17.tools.payloads`, whose own
+  `BOUNDARY` constant would be a second, hidden one, nor the CP-26 loaders that bind 2026-09-06 (`H.NEW`, `spec_for`,
+  `load_frame`, `guarded_weather`). It assembles the context from the landed blocks with a cutoff derived from the day
+  being built, and the frame never holds a row after D. Every landed binding found on the path is listed, with how it
+  is avoided, in `.local/artifacts/cp-18a/builders/builder-live-report.md` and below in §8.
+- **Shown equal to the development builder: 92 of 92 files byte-identical** (`reports/cp18a/live-equality.json`):
+  A1, v4, v2 and B0 at the nine parity origins and on the 14 shadow days. Each `.json` and `.npz` is identical byte for
+  byte, as is `payload_sha256`. Each day was built from the committed history cut 8 days before D, plus archive days up
+  to D, using CP-25's and CP-1's recorded data (never a fresh download). The ENTSO-E route gives the same bytes on two
+  origins (`reports/cp18a/live/equality-entsoe-route.json`).
+- **The retrieval clients, exercised only against recorded responses.**
+  - **GFS** is truly recorded. On CP-25's 2026-09-05 run, all 50 messages match the record. CP-20's decoder in its
+    ecCodes environment gives arrays bit-identical to the recorded run, and the converted features equal the committed
+    weather bit for bit. Published 04:03:41Z, before the 09:00Z cutoff, so the flag is True
+    (`reports/cp18a/live/gfs-client-2026-09-05.json`).
+  - **SMARD and ENTSO-E** were never recorded raw, so their responses are rendered from the snapshot's values (pulled
+    2026-09-08) in each source's documented response shape. They are labelled `rendered` in every replay entry and
+    archive record, and never called recorded raw responses. The clients read them back bit-exactly on all 2,806
+    development days and 67,343 hours (`reports/cp18a/live/recorded-parse.json`).
+- **The availability judgement** (`cp18.live.availability`) is by publication time against D's own cutoff, never by
+  the run time, and each archive record holds the input's source, publication time and its basis, retrieval time and
+  SHA-256:
+  - **prices** (tier 2, ruling 2): the documented schedule (P's prices by P−1 13:00 Berlin);
+  - **the load forecast** (tier 3): retrieved before the cutoff, or a document time before it. Ruling 1's recorded
+    exception admits the stored development history only, and is refused for any later day independently of the guard;
+  - **GFS** (tier 2, ruling 4): all 20 AWS objects and indexes with `LastModified` strictly before the cutoff, and a
+    valid vector. Otherwise the flag is False and D's three weather columns are missing (§15.3).
+- **Through the pipeline.** A local dry run with the live builder replaying recorded responses issued 2026-08-31 with
+  A1's quantiles and all three shadows bit-identical to CP-17c's (<!-- R5 -->).
+
+## 3. The state store
+
+- **CP-17c's fix for its first Critic's F1 is kept.** `cp18.store.LiveStore` subclasses `cp17c.store.Store` and calls
+  its `verify()` first, so a repointed head still fails (`tests/cp18a/test_pipeline.py`, three repointed fields).
+- **Where the states live** (decisions 26 and 27, CP-17c's landing record).
+  - **The daily data-only paths** (AGENTS.md's standing exception requires the brief to name them): `live/store/`
+    (`head.json`, `ledger.jsonl`, `states/<day>.json`, `issued/<day>/{artifact,record}.json`, `runs/<run_id>.json`,
+    `search/k<NN>.json`) and `live/inputs/days/<day>/` (the input archive).
+  - **Placed once by CP-18's activation, not daily:** A1's `k13.json`, the freeze-origin states and the canary payload,
+    at `live/pinned/local/<path>`, mirroring their `.local/` runtime paths. `cp18.host.materialize` copies each into
+    place by the freeze manifest's hash before the gate. Pyodide's 23 files and the binary are never committed: each run
+    retrieves them from their official URLs, checked by hash. This round's dry runs use the same files at
+    `reports/cp18a/dryrun/pinned/`.
+- **The carry from 4.7T's last window day to the first live day.** A `carry` entry names both days, and the days
+  between them are recorded as outside both, never issued (`python -m cp18 carry`).
+  - **Rehearsed on development days, across two machines.** Runner run 3's store (2026-08-31 to 2026-09-03) was carried
+    out of the runner, given a carry to 2026-09-05 (a gap at 2026-09-04), and committed in the scratch repository.
+    Runner run 4 resumed from it, and so did the M3.
+  - **Result:** on both, the carried ledger is a byte prefix of the resumed one, and every carried file is unchanged.
+    2026-09-04 is outside. The resumed day's four fits and the state after it are identical on the two machines, and
+    equal to CP-17c's (`reports/cp18a/carry-rehearsal.json`).
+- **S_14 (H4).**
+  - **Where it enters.** `k14.json`, written natively on the Owner's M3, enters through a `search` entry
+    (`python -m cp18 search --k 14 --file <k14.json>`, `LiveStore.record_search`). The entry copies it to `live/store/search/k14.json`, validates it
+    as search 14 (`cp26.search.validate_ensemble`) and binds its file hash and content digest in the ledger.
+  - **While it is absent**, every day it serves stays open with "S_14's state not in place", and decision 23's catch-up
+    then applies.
+
+## 4. The runner workflow (`.github/workflows/daily.yml`)
+
+- **`workflow_dispatch` only.** No `schedule:`: CP-18's activation adds it.
+- **Permissions:** `{}` at the top, and `contents: write` on the one job, for the day's data-only commit at activation.
+  A dry run pushes nothing to GitHub: its claim's origin is a bare repository on the runner.
+- **Pinned retrievals:** actions pinned by commit SHA; uv 0.12.6 and uv's CPython 3.13.15 with the environment
+  `uv.lock` pins; Node.js v26.7.0 and `SHASUMS256.txt` and Pyodide's 23 files from their official URLs, each checked by
+  hash (`prepare: pinned states 4 | pyodide 23 | node a9bd0630891c2dcd | package equal` in every runner log).
+- **The guards on the runner's own commits and pushes.** `core.hooksPath` is `.githooks` (the claim refuses to commit
+  otherwise), so every commit runs the secret guard and the leak scan, and every push runs them with the publication
+  guard. `cp18.guarddemo` shows it on the runner with fake credentials derived from the run id, never printed:
+  - a staged fake `ENTSOE_API_TOKEN`, a message holding a fake `HF_TOKEN`, and a pushed commit holding a fake
+    `DAGSHUB_USER_TOKEN` are blocked by value;
+  - a staged environment dump is blocked by the leak scan, by its shape;
+  - a data-only commit and its push pass;
+  - no output line holds a value.
+- **Credentials** are read only as stored variables inside the consuming process, as `os.environ.get`. The pipeline
+  step gets the three fake values; afterwards, the results and the log were scanned for them by value (§6).
+  - **The secret names** are fixed by the Orchestrator: `ENTSOE_API_TOKEN`, `HF_TOKEN`, `DAGSHUB_USER_TOKEN`. The
+    Owner enters them himself. This round creates and uses none.
+  - **No other credential** is needed by the pipeline. The day's push uses the workflow's own token, and the MLflow URI
+    is public configuration.
+- **GitHub's rule that disables a scheduled workflow** after 60 days without repository activity: every run, whatever
+  it did, pushes its run record to `main`. That covers an issuance, a failed H2 gate, inputs not shown and nothing to
+  issue (`tests/cp18a/test_pipeline.py::test_every_run_whatever_it_does_pushes_a_commit_to_main`). So a schedule that
+  fires keeps the repository active, and the local fallback pushes its own runs too. The one exception is a run
+  refused before any issuance (a store that does not verify), which is an incident for the Owner.
+
+## 5. The local fallback (`python -m cp18.local run`)
+
+- **One command**, in the pipeline's own clone of the product repository, with the same binary
+  (`.local/tools/node-v26.7.0-official/`, checked in place, retrieved by hash only if absent). It rebuilds and checks
+  the package zip, then runs the same H2 gate and the same claim rule.
+- **Tested for real** (`tests/cp18a/test_dry_run.py`, stress). A runner-kind run issues 2026-08-31 bit-identically to
+  CP-17c. The fallback, in its own clone at the same wall clock, then finds the day claimed and issues nothing.
+- **The launchd agent** `reports/cp18a/launchd/com.delu.daily-fallback.plist` is written, not installed (`plutil
+  -lint` OK). It runs daily at 13:30 Berlin, holds no credential, and inherits the launchd session's environment.
+
+## 6. The public runner class's timing (§24.13)
+
+<!-- TIMING -->
+
+## 7. Security hardening (§22; the archived proposal's P0-2, P0-3, P0-7)
+
+- **P0-2, the value-free leak scan** `scripts/leak_scan.py` (standard library only):
+  - **F1:** salted fingerprints from `.githooks/credential-fingerprints.json`, full value and first half. The Owner
+    generates the file on his Mac with `scripts/credential_fingerprints.py write`, which refuses values under 128 bits
+    and prints names only. Until then F1 is skipped with a notice;
+  - **F2:** environment-dump shapes;
+  - **F3:** known token prefixes.
+
+  It runs from `.githooks/` after the secret guard, failing closed, and as the first CI step in `tests.yml`. The
+  proposal's acceptance is on fake fixtures only (`tests/cp18a/test_leak_scan.py`). Four allowlist entries, each with
+  its reason, cover 11 findings on the current tree: the recorded CP-20 exposure itself, frozen evidence and two
+  landed test fixtures.
+- **P0-3, environment-dump prevention:**
+  - the AST lint for bare `os.environ[...]` reads (`tests/cp18a/test_environ_access.py`): 32 allowlist entries over 37
+    landed reads, each with a reason. The frozen `src/cp17/` reads are allowlisted as frozen. `src/cp18/` has no entry,
+    and a new read there fails;
+  - the redaction plugin `tests/environ_redact.py`, registered with `-p environ_redact` in `pytest.ini`.
+    `pytest.ini` is bound by no earlier evidence (checked against `PINS` and every freeze manifest). The registration
+    loads under `python -m pytest`, the `pytest` entry point and `uv run pytest`;
+  - the acceptance: a child pytest whose sanitized environment holds a fake token, and a test reading a missing
+    variable bare. The output lacks the fake with the plugin, and contains it without.
+- **P0-7, the server-side rulesets** `reports/cp18a/rulesets/` hold their exact configuration as JSON (main,
+  preserved tags, never pushed, and secret scanning with push protection), with the apply commands written but not run,
+  and the acceptance as Owner steps. Applying them is outside this round.
+
+<!-- TABLE -->
+

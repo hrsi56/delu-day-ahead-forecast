@@ -397,3 +397,26 @@ def test_every_run_whatever_it_does_pushes_a_commit_to_main(origin, tmp_path):
         assert tip() != before, f'the {label} run pushed nothing'
     assert outcomes == {'h2': f'done; not issued: {FIRST}', 'issued': 'done', 'nothing': 'nothing to issue',
                         'hidden': f'done; not issued: {FIRST + timedelta(days=1)}'}
+
+
+# ---- S_14: a search state enters the store by hash ------------------------------------------------------------------
+
+K13 = Path(__file__).resolve().parents[2] / ('reports/cp18a/dryrun/pinned/local/artifacts/cp-17/inputs/reports/rebaseline/'
+                                             'cold-rerun-2026-10-15/search-results/nominal/k13.json')
+
+
+@pytest.mark.skipif(not K13.is_file(), reason='the dry run\'s pinned k13.json is absent')
+def test_a_search_state_enters_the_store_by_hash_and_is_validated(origin, tmp_path):
+    repo = origin('a')
+    store = LiveStore(repo / STORE_PATH)
+    with pytest.raises(Exception):
+        store.record_search(14, K13, 'k13.json presented as search 14')           # validated as the search it names
+    entry = store.record_search(13, K13, 'the pinned S_13, as S_14 will enter')
+    assert entry['search_file'] == 'search/k13.json' and store.search_file(13) == store.folder / 'search/k13.json'
+    store.verify()
+    with pytest.raises(StoreRefused):
+        store.record_search(13, K13, 'again')                                    # never replaced
+    target = store.folder / 'search/k13.json'
+    target.write_bytes(target.read_bytes()[:-2] + b' }')
+    with pytest.raises(StoreRefused, match='absent or altered'):
+        LiveStore(store.folder).verify()
