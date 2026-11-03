@@ -1,0 +1,64 @@
+{
+ "schema": "cp18a-github-ledger-v1",
+ "repository": "hrsi56/delu-pipeline-dryrun",
+ "visibility": "public (decision 26), no Pages, no secret, no variable",
+ "class": "standard GitHub-hosted macos-26 runners; public-repository minutes are not counted",
+ "ceiling_job_hours": 15,
+ "job_hours": 1.249,
+ "runs": [
+  {
+   "run": "41185415753",
+   "head_sha": "bf31a5dc8e1f02378f25f357967cef950387db77",
+   "conclusion": "failure",
+   "job_started": "2026-10-31T08:38:22Z",
+   "job_completed": "2026-10-31T08:38:52Z",
+   "job_seconds": 30.0,
+   "note": "four issuances with the canary, prebuilt payloads: stopped at the guard demonstration (the leak scan was not yet in the tree)"
+  },
+  {
+   "run": "41185552151",
+   "head_sha": "352752783a3713773ad30b655e26569b11d679fe",
+   "conclusion": "failure",
+   "job_started": "2026-10-31T08:40:26Z",
+   "job_completed": "2026-10-31T08:41:10Z",
+   "job_seconds": 44.0,
+   "note": "the same: stopped at the dry run's origin (a shallow checkout cannot seed an empty bare repository)"
+  },
+  {
+   "run": "41185674168",
+   "head_sha": "9dfb8959e1dc909654f79c939fc5dd02cc741c38",
+   "conclusion": "success",
+   "job_started": "2026-10-31T08:42:15Z",
+   "job_completed": "2026-10-31T09:10:28Z",
+   "job_seconds": 1693.0,
+   "note": "four issuances with the canary (2026-08-31..2026-09-03), prebuilt payloads: the timing run"
+  },
+  {
+   "run": "41204328732",
+   "head_sha": "547313276e5e6cafb911fe339e7376036e03168c",
+   "conclusion": "success",
+   "job_started": "2026-10-31T13:10:06Z",
+   "job_completed": "2026-10-31T13:20:12Z",
+   "job_seconds": 606.0,
+   "note": "one issuance (2026-09-05) from the store carried across a gap: the carry rehearsal and the one-issuance timing"
+  },
+  {
+   "run": "41206393403",
+   "head_sha": "2b4ee87b84c51daa2f8722d3ec303daa067d84fe",
+   "conclusion": "failure",
+   "job_started": "2026-10-31T13:37:19Z",
+   "job_completed": "2026-10-31T13:41:00Z",
+   "job_seconds": 221.0,
+   "note": "four days with the live-input builder: every day not issued, cause recorded (the runner cannot load the native LightGBM; fixed in 99f01705)"
+  },
+  {
+   "run": "41701507248",
+   "head_sha": "0b2fd1bf64734f93a0c3037b1d1e3cf062446156",
+   "conclusion": "success",
+   "job_started": "2026-11-03T19:15:13Z",
+   "job_completed": "2026-11-03T19:46:56Z",
+   "job_seconds": 1903.0,
+   "note": "four issuances with the canary (2026-08-31..2026-09-03), the live-input builder replaying recorded responses"
+  }
+ ]
+}

@@ -5,7 +5,22 @@ builder and the security items, all built and rehearsed on development days thro
 `src/cp17/` or `src/cp17c/` changed: the frozen package is called, never edited, and `refreeze verify` on CP-17c's
 manifest prints `verified` at the candidate.
 
-<!-- RESULTS -->
+## Results
+
+| Item | Result |
+|---|---|
+| The pipeline (item 1) | `src/cp18/`; `tests/cp18a/` holds 293 tests, two of them `stress`. A real dry run through the H2 gate issued 2026-08-31 by A1, bit-identical to CP-17c; the local fallback then found the day claimed |
+| The five causes | Each forced through the real pipeline (`python -m cp18.forced`, `reports/cp18a/forced-causes.json`): 2026-08-31 a failed H2 check; 2026-09-01 no run within the lookback; 2026-09-02 S_14's state not in place; 2026-09-03 inputs not shown to precede the cutoff; 2026-09-04 and 2026-09-05 a failed issuance by the chain |
+| The claim | The push race tested with two clones of one bare origin: the loser discards its own issuance, the winner's record stands, nothing is replaced |
+| The live-input builder (item 2) | 92 of 92 payload files byte-identical to the development builder's (9 parity origins, 14 shadow days); also with the native LightGBM refused and no `.local/` (`tests/cp18a/test_live_runner_env.py`, in CI); on the runner, four issuances built by it equal CP-17c's on all 16 fits |
+| The store (item 3) | CP-17c's F1 head binding kept; carried across a gap and resumed bit for bit on the runner and the M3 (`reports/cp18a/carry-rehearsal.json`) |
+| The workflow (item 4) | Dispatch only; binary and Pyodide by hash on every run; the guards block fake credentials by value on the runner's own commits and pushes; no fake value in any log or artifact (`reports/cp18a/credential-scan.json`) |
+| The local fallback (item 5) | One command; the launchd file written, not installed |
+| Timing (item 6) | One issuance 344–413 s; four with the canary 1,634 s and 1,838 s of pipeline time (28.2 and 31.7 job-minutes); every fit inside 900 s and 4 GiB (`reports/cp18a/runner-timing.json`) |
+| Security (item 7) | Leak scan in the hooks and as CI's first step; environment lint and redaction plugin; three rulesets and push protection written, not applied |
+| GitHub | `hrsi56/delu-pipeline-dryrun`, public, no Pages, no secret, no variable: 6 runs, 1.25 job-hours of 15, uncounted minutes (`reports/cp18a/github-ledger.json`) |
+| Local | About 2 machine-hours of 10, at most 2 workers, BLAS 1 (`reports/cp18a/compute-ledger.json`) |
+
 
 ## 1. One run of the pipeline (`src/cp18/`)
 
@@ -67,7 +82,7 @@ cite it.
   - **GFS** (tier 2, ruling 4): all 20 AWS objects and indexes with `LastModified` strictly before the cutoff, and a
     valid vector. Otherwise the flag is False and D's three weather columns are missing (§15.3).
 - **Through the pipeline.** A local dry run with the live builder replaying recorded responses issued 2026-08-31 with
-  A1's quantiles and all three shadows bit-identical to CP-17c's (<!-- R5 -->).
+  A1's quantiles and all three shadows bit-identical to CP-17c's (and on the runner, run 41701507248: four issuances, all 16 fits equal to CP-17c's).
 
 ## 3. The state store
 
@@ -137,7 +152,31 @@ cite it.
 
 ## 6. The public runner class's timing (§24.13)
 
-<!-- TIMING -->
+Measured on standard GitHub-hosted `macos-26` runners of the public scratch repository, the same class as the
+product repository's, on development days. Each number is recomputed by `python -m cp18.compare timing` from the run's
+downloaded artifact, every file checked against the run's own `results-sha256.txt`
+(`reports/cp18a/runner-timing.json`).
+
+| Run | Image | What | Canary fit | Issuances (A1 and three shadows, one after another) | Pipeline | Job |
+|---|---|---|---|---|---|---|
+| 41185674168 | 20261026.0455.2 | four with the canary, prebuilt payloads | 164.5 s | 413.4, 344.3, 347.7, 351.7 s | 1,634 s | 1,693 s (28.2 min) |
+| 41204328732 | 20261013.0424.1 | one, from the store carried across a gap | 142.7 s | 393.6 s | 545 s | 606 s (10.1 min) |
+| 41701507248 | 20261026.0455.2 | four with the canary, the live-input builder | 158.0 s | 408.7, 374.6, 376.0, 357.9 s | 1,838 s | 1,903 s (31.7 min) |
+
+- **The machine:** Apple M1 (Virtual), 3 cores, 7 GiB, on both image versions.
+- **Criterion 5's ceilings hold on every fit.** The slowest fit took 173.6 s (A1, 2026-08-31, on the run's first
+  issuance), against 900 s. The largest peak was 929 MiB, against 4 GiB.
+- **Every fit equals CP-17c's.** All 36 fits of the nine issuances (A1, v4, v2, B0) match CP-17c's record of the same
+  day, on two image versions.
+- **Decision 23's bound.** A four-issuance run with its canary took about 32 minutes of job time, against GitHub's
+  6-hour limit and r19's ceiling-bound estimate of about 4¼ hours. The live builder adds about 20–60 s per issuance (run
+  41701507248 against 41185674168).
+- **Against CP-17c's one data point** (382.7 s per issuance alone, on the public class), the nine issuances here took
+  344–413 s each.
+- **The lookback is not shortened.** At about 32 minutes for a full catch-up run, the measured runtime gives no reason
+  to shorten it.
+- **Still to come:** the Orchestrator repeats one dispatch in the product repository after the landing.
+
 
 ## 7. Security hardening (§22; the archived proposal's P0-2, P0-3, P0-7)
 
@@ -165,5 +204,84 @@ cite it.
   preserved tags, never pushed, and secret scanning with push protection), with the apply commands written but not run,
   and the acceptance as Owner steps. Applying them is outside this round.
 
-<!-- TABLE -->
+## 8. What CP-18's activation brief and 4.7T's brief cite
 
+| Item | Value |
+|---|---|
+| The pipeline | `src/cp18/` (`cp18.pipeline.run`); one run: `PYTHONPATH=src python -m cp18 run --root <checkout> --project <folder holding .local> --out <dir> --host runner\|local --now <ISO> --inputs live:<recorded>` (this round: `--mode dry-run` only, `--now` required). Exit 0 done, 1 a day not issued, 2 refused or unpublished, 3 the red line |
+| Before the gate | `python -m cp18 prepare --root . --project . --pinned live/pinned --retrieve-pyodide --retrieve-node --out <file>`: the pinned states by the freeze manifest's hashes, Pyodide 0.28.0's 23 files from `https://cdn.jsdelivr.net/pyodide/v0.28.0/full/` and Node.js v26.7.0 from `https://nodejs.org/dist/v26.7.0/`, each by hash; the package zip rebuilt and compared |
+| The H2 gate | `cp17.hostcheck` (pins via `refreeze verify` printing exactly `verified`, binary, machine, canary `4e6abb02…`), once per run before its first issuance |
+| The live-input builder | `src/cp18/live/`; `cp18.live.build.build_day(day, *, archive, base_end, buffers, search_dir, out, root)`, contract in `src/cp18/live/__init__.py`; live `base_end` = 2026-09-06; shown equal to `cp17.tools.payloads` on 92 of 92 files (`reports/cp18a/live-equality.json`); the clients `cp18.live.{smard,entsoe,gfs}` with `cp18.live.transport.HttpTransport`, instantiated by nothing in this round |
+| The red line | `src/cp25/guard.py` `BOUNDARY` (and `GFS_RUN_CUTOFF`): the only boundary on the pipeline's and the builder's paths; retiring it is a one-line, reviewed change. Ruling 1's scope `cp18.live.availability.RULING_1_LAST_DAY` = 2026-09-06 stays after the retirement, by design |
+| The workflow | `.github/workflows/daily.yml`: `workflow_dispatch` only; the activation adds `schedule:` and the live mode, and points the claim's remote at `origin` |
+| The local fallback | `python -m cp18.local run --clone <path> --url https://github.com/hrsi56/delu-day-ahead-forecast.git --project /Users/djourno/Downloads/PJM --out <dir> --now <ISO> --inputs <spec>`; the agent file `reports/cp18a/launchd/com.delu.daily-fallback.plist`, written, not installed |
+| Secret names | `ENTSOE_API_TOKEN`, `HF_TOKEN`, `DAGSHUB_USER_TOKEN`: repository secrets of `hrsi56/delu-day-ahead-forecast`, entered by the Owner, read only inside the consuming process. No other credential is needed: the day's push uses the workflow token (`contents: write`), the MLflow URI is public configuration |
+| The claim rule | The day's issued record on `origin/main` is the claim: fetch and check out `main` before each day; commit the day's records through `.githooks` and fast-forward `main` after it; the loser of a push race discards its own issuance and stops; a guard refusal publishes nothing (`cp18.claim`) |
+| The daily data-only paths | `live/store/` (`head.json`, `ledger.jsonl`, `states/`, `issued/<day>/`, `runs/`, `search/`) and `live/inputs/days/<day>/` |
+| The states, placed once | `live/pinned/local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json`, `live/pinned/local/artifacts/cp-17c/state/freeze-origin-state.json`, `live/pinned/local/artifacts/cp-17c/state/canary/A1-2026-09-06.{json,npz}` (the same blobs as `reports/cp18a/dryrun/pinned/`) |
+| The store's genesis | `python -m cp18 seed-store --genesis live/pinned/local/artifacts/cp-17c/state/freeze-origin-state.json:2026-09-07:2026-09-06`: the freeze-origin states at 2026-09-06, first day 2026-09-07; its state file reproduces the manifest's `1388d74d…` |
+| The carry | `python -m cp18 carry --last-window-day <4.7T's last window day> --first-live-day <the first live day> --reason <text>`; rehearsed across a gap on two machines (`reports/cp18a/carry-rehearsal.json`) |
+| S_14 (H4) | `python -m cp18 search --k 14 --file <k14.json from the M3> --provenance <text>` → `live/store/search/k14.json`; until then each day S_14 serves stays open with "S_14's state not in place" |
+| The timing | Public `macos-26` class: one issuance 344–413 s; four with the canary 1,634–1,838 s of pipeline time, 28–32 job-minutes; slowest fit 173.6 s, largest peak 929 MiB (`reports/cp18a/runner-timing.json`) |
+
+**What the activation needs beyond this round** (named, not done):
+- **Live GFS decoding on the runner** needs an ecCodes environment (`eccodes` 2.48 / `eccodeslib` 2.49, as CP-20's
+  `reports/weather-admission/requirements.freeze.txt` pins them), or the decode moves to the Owner's Mac. This round
+  replays decoded runs.
+- **The load forecast's availability.** It is tier 3, so on a live day the retrieval must run and archive it before the
+  cutoff (published by D−1 10:00 Berlin, cutoff 11:00), or take a document time from a vintage-preserving source. A run
+  after the cutoff can show neither, and the day is not issued with its cause.
+- **Live GFS needs the AWS listing.** CP-25's documented-schedule reconstruction has no dated captures after
+  2026-09-23, so it cannot cover a live day.
+- **A calendar edge for a later brief.** On a live day that is a Monday 31 December (2029, 2035), the landed holiday
+  code gives `is_bridge_day = 0` for D, because the frame stops at D (`src/delu_forecast/features.py:112–113,124`).
+  Fixing it needs a frozen-code change or a frame past D.
+- **The product repository's dispatch.** The Orchestrator's dispatch after landing uses this round's committed
+  material: `reports/cp18a/dryrun/` (states, recorded responses) and the workflow's defaults.
+
+
+
+## 9. The red line, the CI, and what stayed frozen
+
+- **The red line in code.** The pipeline refuses a plan holding any day after 2026-09-06, before anything is
+  synchronized, checked or retrieved, and names no such day (`cp18.plan.admit`, `cp25.guard`). The live builder's only
+  boundary is `cp25.guard`. In this round no market data after 2026-09-06 was downloaded, read or printed, on this
+  machine or on a runner. Every runner run used a simulated wall clock on a development day.
+- **The red-line test** (`tests/cp18a/test_red_line.py`) covers every file this round adds or changes, with no file
+  skipped whole:
+  - JSON is parsed;
+  - NumPy archives are opened, and their instants and days checked;
+  - wheels and archives are opened;
+  - everything else is scanned as bytes.
+
+  Each date after the boundary must be a calendar or protocol date from its reasoned list, or a wall-clock timestamp.
+- **Frozen.** Nothing under `src/cp17/`, `src/cp17c/`, `src/delu_forecast/`, `src/cp15/` to `src/cp28/`,
+  `src/cp17probe/`, `src/cp17cprobe/`, `data/`, `reports/development-inputs/`, `pyproject.toml` or `uv.lock` changed;
+  no anchor or governance file did either. `refreeze verify` on CP-17c's manifest prints `verified` at the candidate.
+- **Allowed paths.** Every changed path is inside the brief's list, plus two that the Orchestrator's amendment of
+  2026-10-31 adds for item 7:
+  - `tests/test_40_publication_guard.py`: its throwaway repository also copies `scripts/leak_scan.py`, which the
+    fail-closed pre-push hook now runs;
+  - `tests/test_48_publication_tools.py`: the expected prerelease order shifts by one for the leak scan, which is
+    `tests.yml`'s first run step.
+- **CI-ready.** The workflow's steps, the leak scan first, are green on a history-free single-commit copy with
+  `CI=true` and Python 3.12, and `pytest -m stress` passes locally (the return gives the logs).
+
+## 10. Disclosures
+
+- **Two usage-limit pauses** interrupted the round. The work is unchanged by them, and both Builders resumed from
+  their own state.
+- **The runner runs, in order** (`reports/cp18a/github-ledger.json`):
+  - runs 41185415753 and 41185552151 stopped early: the leak-scan case of the guard demonstration ran before the scan
+    was in the tree, and a shallow checkout cannot seed an empty bare repository. Both were fixed in the workflow;
+  - run 41206393403 issued nothing. The runner cannot load the native LightGBM (no `libomp`), which the live builder
+    had imported through CP-26's `install_issue_label` and `cp15.models`. Every day was recorded as not issued, with
+    its cause and the build's own error. The builder now imports neither, and a test builds with LightGBM refused.
+- **A pipeline defect, found by the forced causes and fixed.** A run that left two days open and then issued two later
+  days tried to close the open days twice. The store refused the second close, so nothing wrong was written. A unit
+  test now covers it.
+- **Rendered responses.** SMARD and ENTSO-E responses were never recorded raw. The clients are exercised on the
+  snapshot's recorded values rendered in each source's response shape, and say so everywhere; GFS is truly recorded.
+- **One construction difference in the live builder:** `eligible` on D's rows is their feature validity, because the
+  live frame never holds D's price. It equals the development value on every development day, and no frozen fit reads
+  it.

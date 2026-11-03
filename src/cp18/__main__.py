@@ -2,7 +2,7 @@
 
     PYTHONPATH=src python -m cp18 prepare --root . --project . --pinned <folder> --retrieve-pyodide --retrieve-node \
         --out <file>
-    PYTHONPATH=src python -m cp18 seed-store --root . --genesis <state.json>:<first day> | --carried <store folder>
+    PYTHONPATH=src python -m cp18 seed-store --root . --genesis <state.json>:<first day>[:<origin>] | --carried <folder>
     PYTHONPATH=src python -m cp18 run --root . --project . --out <dir> --host runner --now <ISO> \
         --inputs prebuilt:<payload folder> | live:<recorded responses> [--remote origin]
     PYTHONPATH=src python -m cp18 carry --root . --last-window-day <day> --first-live-day <day> --reason <text>
@@ -91,11 +91,11 @@ def cmd_seed_store(args) -> int:
     from .store import STORE_PATH, LiveStore
     folder = args.root / STORE_PATH
     if args.genesis:
-        state_file, _, first = args.genesis.rpartition(':')
+        state_file, *days = args.genesis.split(':')
         state = ShadowStates.from_dict(json.loads(Path(state_file).read_text()))
-        first_day = date.fromisoformat(first)
-        store = LiveStore.init(folder, state, first_day, args.source or f'development state {Path(state_file).name}',
-                               first_day)
+        first_day = date.fromisoformat(days[0])
+        origin = date.fromisoformat(days[1]) if len(days) > 1 else first_day
+        store = LiveStore.init(folder, state, origin, args.source or f'state {Path(state_file).name}', first_day)
     else:
         if folder.exists():
             raise SystemExit(f'{folder}: a store exists there; a carried store is never copied over one')
@@ -160,7 +160,9 @@ def main(argv=None) -> int:
     i = sub.add_parser('seed-store')
     i.add_argument('--root', default=Path('.'), type=Path)
     g = i.add_mutually_exclusive_group(required=True)
-    g.add_argument('--genesis', help='<state.json>:<first day>: a new store from a development state')
+    g.add_argument('--genesis', help='<state.json>:<first day>[:<origin>]: a new store whose states are those of '
+                                    '<origin> (default: the first day); for 4.7T and the live product, the '
+                                    'freeze-origin state at 2026-09-06 and the first day 2026-09-07')
     g.add_argument('--carried', type=Path, help='a store folder an earlier run left, copied and verified')
     i.add_argument('--source')
     c = sub.add_parser('carry')
