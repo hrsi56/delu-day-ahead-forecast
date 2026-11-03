@@ -135,8 +135,9 @@ def test_the_ci_steps_come_from_the_workflow():
 def test_the_plan_runs_in_the_runbook_order(tmp_path):
     checks = PRE.plan("pre-final", tmp_path / "env")
     names = [c["name"] for c in checks]
-    assert names[0] == "Python 3.13, before pytest: Build the browser payload (M3.5 item 2)"
-    assert names[1] == "pytest, Python 3.13" and checks[1]["env"] == {"UV_PYTHON": "3.13"}
+    assert names[0] == "Python 3.13, before pytest: Value-free leak scan (CP-18a item 7)"
+    assert names[1] == "Python 3.13, before pytest: Build the browser payload (M3.5 item 2)"
+    assert names[2] == "pytest, Python 3.13" and checks[2]["env"] == {"UV_PYTHON": "3.13"}
     tail = ["make verify", "make lint-publication", "rebuild the presentation",
             "the tree is unchanged after the rebuild", "links", "publication guard (tree)"]
     assert names[-len(tail):] == tail
