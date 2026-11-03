@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import platform
 import subprocess
 import sys
 
@@ -29,7 +30,9 @@ LOCAL = (PROJECT / runtime.NODE_RELATIVE, PROJECT / runtime.PYODIDE_DIR / 'pyodi
          PROJECT / '.local/artifacts/cp-17c/bundle/src.zip', PROJECT / runtime.K13, PAYLOADS / 'A1-2026-08-31.npz')
 
 pytestmark = [pytest.mark.stress,
-              pytest.mark.skipif(not all(p.exists() for p in LOCAL), reason='the local runtime, states or payloads are absent')]
+              pytest.mark.skipif(not all(p.exists() for p in LOCAL), reason='the local runtime, states or payloads are absent'),
+              pytest.mark.skipif(platform.python_version() != runtime.CPYTHON,
+                                 reason=f'the H2 gate\'s pins check requires the issuing host\'s CPython {runtime.CPYTHON}')]
 
 
 def sh(*args, cwd=None, env=None):

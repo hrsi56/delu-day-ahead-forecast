@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import platform
 
 import pytest
 
@@ -17,7 +18,9 @@ LOCAL = (PROJECT / runtime.NODE_RELATIVE, PROJECT / runtime.PYODIDE_DIR / 'pyodi
          PROJECT / '.local/artifacts/cp-17c/bundle/src.zip', PROJECT / runtime.K13, PROJECT / runtime.CANARY_DIR)
 
 pytestmark = [pytest.mark.stress,
-              pytest.mark.skipif(not all(p.exists() for p in LOCAL), reason='the local runtime or states are absent')]
+              pytest.mark.skipif(not all(p.exists() for p in LOCAL), reason='the local runtime or states are absent'),
+              pytest.mark.skipif(platform.python_version() != runtime.CPYTHON,
+                                 reason=f'the H2 gate\'s pins check requires the issuing host\'s CPython {runtime.CPYTHON}')]
 
 
 def test_each_cause_is_forced_and_recorded(tmp_path, monkeypatch):
