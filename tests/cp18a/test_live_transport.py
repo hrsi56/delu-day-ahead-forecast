@@ -145,7 +145,9 @@ def test_request_keys_ignore_headers_and_credential_names():
 
 #: Dates after the boundary that the package names, none of them a delivery day: the snapshot's pull, the
 #: Owner's rulings and CP-25's retrieval, CP-26's cold rerun (a path), NCEP's last dated capture.
-NOT_DELIVERY_DAYS = {'2026-09-08', '2026-10-12', '2026-10-15', '2026-09-23', '2026-09-24'}   # 2026-09-24: the exposure date
+# Calendar and protocol dates, never delivery days: the snapshot pull, the rulings, CP-26's run folder, the last NCEP
+# capture, the exposure date, and 4.7T's first window day (the live store's first day, in `seed-store`'s help).
+NOT_DELIVERY_DAYS = {'2026-09-08', '2026-10-12', '2026-10-15', '2026-09-23', '2026-09-24', '2026-09-07'}
 
 
 def test_no_bare_environment_subscript_and_no_delivery_day_past_the_boundary():
