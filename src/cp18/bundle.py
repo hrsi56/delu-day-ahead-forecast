@@ -236,15 +236,22 @@ def check_arrays(arrays: bytes, files: dict) -> str:
     return G.rebuild_a1(trial)['reproduced']
 
 
-def refit_arrays(root, project, payload_dir: Path, day: str, out: Path) -> Path:
-    """A1's fit of `day` again under the issuing host with the export on; the fit is deterministic on the host, and
-    `check_arrays` then binds its arrays to the issued artifact."""
+def refit_arrays(root, project, payload_dir: Path, day: str, out: Path, artifact: dict | None = None) -> Path:
+    """A1's fit of `day` again under the issuing host with the export on. The fit is deterministic on the host: with
+    `artifact`, its quantiles and every member's weights' hash must equal the issued artifact's, and `check_arrays`
+    then binds the arrays to it again."""
     from cp17 import daily, runtime
     from .host import PACKAGE_ZIP
     host = daily.Host(Path(project) / runtime.PYODIDE_DIR, Path(project) / PACKAGE_ZIP)
     run = host.run(payload_dir, f'A1-{day}', out)
     if run.get('errors'):
         raise RuntimeError(f'the refit failed: {run["errors"][0][-400:]}')
+    if artifact is not None:
+        result = run['python']['result']
+        members = [m['params_sha256'] for m in artifact['lineage']['training']['members']]
+        if result['quantiles_sha256'] != artifact['quantiles_sha256'] or \
+                [m['params_sha256'] for m in result['members']] != members:
+            raise RuntimeError("the refit does not reproduce the issued artifact's quantiles and weights")
     return Path(run['folder']) / 'run-arrays.npz'
 
 
@@ -455,6 +462,23 @@ def record(live, value: dict, verdict: dict) -> dict:
         as_of_day=as_of, manifest_sha256=value['manifest_sha256'], publishable=verdict['publishable'])
 
 
+def refit_served(root, project, live, now, caches, recorded, work) -> Path:
+    """The served artifact's arrays by a refit under the issuing host, on its own payload (from a cache or rebuilt)."""
+    store = LiveStore(live / 'store')
+    store.verify()
+    entries = issued_days(store)
+    chosen = served_artifact(entries, freshness(store, now))
+    artifact = chosen['artifact']
+    payloads = Payloads(store, entries, caches=caches, root=root, project=project, recorded=recorded,
+                        archive=live / 'inputs')
+    folder = Path(tempfile.mkdtemp(prefix='refit-', dir=work))
+    policy, day = artifact['issued_policy'], artifact['delivery_day']
+    meta, npz = payloads.get(day, policy)
+    (folder / f'{policy}-{day}.json').write_bytes(meta)
+    (folder / f'{policy}-{day}.npz').write_bytes(npz)
+    return refit_arrays(root, project, folder, day, folder / 'runs', artifact)
+
+
 class _NoRetrieval:
     """A transport that retrieves nothing (the pending control): every request is a miss."""
 
@@ -472,7 +496,9 @@ def main(argv=None) -> int:
     ap.add_argument('--recorded', type=Path, help="recorded responses to acquire or rebuild archive days from")
     ap.add_argument('--now', required=True)
     ap.add_argument('--out', required=True, type=Path)
-    ap.add_argument('--arrays', type=Path, help="the served artifact's exported arrays (run-arrays.npz)")
+    ap.add_argument('--arrays', type=Path, help="the served artifact's exported arrays (the issuing attempt's run-arrays.npz)")
+    ap.add_argument('--refit', action='store_true', help="no arrays at hand (a run that issued nothing): refit the served "
+                                                         "artifact's fit under the issuing host, then check it")
     ap.add_argument('--cache', action='append', default=[], type=Path, help='folders holding payloads already built')
     ap.add_argument('--run-id', default='dry-run')
     ap.add_argument('--record', type=Path, help='write the build record and the gate here')
@@ -483,8 +509,11 @@ def main(argv=None) -> int:
     now = plan.parse_now(args.now)
     root = args.root.resolve()
     live = (args.live or root / 'live').resolve()
+    arrays = args.arrays
+    if arrays is None and args.refit:
+        arrays = refit_served(root, args.project.resolve(), live, now, args.cache, args.recorded, args.out.parent)
     value = build(root=root, store_dir=live / 'store', archive=live / 'inputs', outcomes_dir=live / 'outcomes', now=now,
-                  out=args.out, arrays=args.arrays, run_id=args.run_id, caches=args.cache,
+                  out=args.out, arrays=arrays, run_id=args.run_id, caches=args.cache,
                   project=args.project.resolve(), recorded=args.recorded,
                   transport=_NoRetrieval() if args.no_retrieval else None)
     verdict = gate(read(args.out), root)
