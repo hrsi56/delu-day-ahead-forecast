@@ -433,7 +433,7 @@ def gate(files: dict[str, bytes], root=None) -> dict:
     verified = r7.verify(files)
     if not verified['accepted']:
         return {'publishable': False, 'verify': verified, 'recompute': None, 'identity': None,
-                'reason': 'the bundle does not verify (cp17.schema.verify_bundle, R7)'}
+                'reason': 'the bundle does not verify (the frozen verifier through cp18.r7)'}
     identity = identity_problems(files, root)
     if identity:
         return {'publishable': False, 'verify': verified, 'recompute': None, 'identity': identity,

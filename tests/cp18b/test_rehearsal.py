@@ -20,7 +20,10 @@ RUNS = (('run-1', '2026-09-04T12:00:00+02:00'), ('run-2', '2026-09-05T10:00:00+0
 
 
 def tree(folder: Path) -> dict[str, bytes]:
-    return {str(p.relative_to(folder)): p.read_bytes() for p in sorted(folder.rglob('*')) if p.is_file()}
+    """Every file's bytes; an archived body (`.gz`) by its content, since gzip's bytes depend on the zlib version."""
+    import gzip
+    return {str(p.relative_to(folder)): (gzip.decompress(p.read_bytes()) if p.suffix == '.gz' else p.read_bytes())
+            for p in sorted(folder.rglob('*')) if p.is_file()}
 
 
 @issuing_platform

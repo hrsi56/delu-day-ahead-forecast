@@ -1,6 +1,6 @@
 """CP-18b's controls on a built bundle: every verification rule, the gate, and §16.4's positive controls.
 
-**Negative controls** (`verify_controls`): one tampered copy per rule `cp17.schema.verify_bundle` checks (the rules of
+**Negative controls** (`verify_controls`): one tampered copy per rule the frozen bundle verifier checks (the rules of
 `docs/track-b/evidence/cp-17/payload-schema.md`), plus R7's raised error, the frozen-identity and red-line checks and
 the recomputation. Each must be refused by the gate (`cp18.bundle.gate`): refused means nothing is published. Where
 a control must reach a later rule, the tampered file is re-hashed into the manifest, so only that rule can refuse it.
