@@ -7,7 +7,8 @@ this builder only, so there is no hand-written limitation copy and no hand-typed
 
 Two kinds of entry:
 
-- **`values`** (`live_*`): the live product's own claims. Every figure is read from a committed record (the CP-17c
+- **`values`** (`live_*`): the live product's own claims. Bare figures the Space serves in its records (τ, the rolling
+  window's length, τ_eq) are read there, not repeated here. Every figure is read from a committed record (the CP-17c
   freeze manifest, CP-17's frozen protocol and report, `cp17.scoring` and `cp17.attribution`'s frozen labels); the
   sentences around them are fixed here.
 - **`shared`**: record-layer claims that apply unchanged to the live product, rendered verbatim by their record key
@@ -84,8 +85,6 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
         'live_rehearsal_badge': ('development rehearsal · CP-18 dry runs on development days'
                                  + (f' {first} to {last}' if first else '') + ' · not prospective and not 4.7T'),
         'live_percentage_label': scoring.PERCENTAGE_LABEL,
-        'live_tau_eur': f'{scoring.TAU_EUR:g}',
-        'live_rolling_days': str(scoring.ROLLING_DAYS),
         'live_coverage_wording': 'nominal {level}% interval; measured coverage {share} over {window}; mean width {width} EUR/MWh',
         'live_retrained_label': 'your retrained model',
         'live_counterfactual_label': 'counterfactual scenario — not an issued forecast',
@@ -103,7 +102,6 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
                                    f"{pi['reference_runtime']['chromium']} and WebKit {pi['reference_runtime']['webkit']} "
                                    f"through Playwright {pi['reference_runtime']['playwright']}; "
                                    f"{pi['reference_runtime']['machine_class']}"),
-        'live_tau_eq_eur': f"{pi['retrain']['tau_eq_eur']:g}",
         'live_cutoff': 'D−1 11:00 Europe/Berlin, strictly before',
         # the Data view's definition, from the claim layer's sentence (its first clause; the rest is v1's)
         'live_data_floor': record.FLOOR_CHANGE.split(',')[0] + '.',
