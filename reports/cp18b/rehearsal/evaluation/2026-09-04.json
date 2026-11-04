@@ -1,0 +1,818 @@
+{
+ "as_of_day": "2026-09-04",
+ "run_id": "dry-run-run-1",
+ "schema": "cp18b-daily-evaluation-v1",
+ "static_development_sha256": "040ab44e2f25ac4abbd573009c53ceec258bab5f330301e940a86b0abde83d49",
+ "windows": [
+  {
+   "evidence_class": "development rehearsal \u00b7 CP-18 dry runs on development days \u00b7 not prospective and not 4.7T",
+   "policy": "product",
+   "record": {
+    "days": [
+     {
+      "at_or_below": [
+       0,
+       3,
+       8,
+       10,
+       12,
+       16,
+       22
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 4,
+       "80": 13,
+       "95": 22
+      },
+      "day": "2026-08-31",
+      "keys": 24,
+      "mae_eur": 28.625314195874257,
+      "pit_counts": [
+       0,
+       3,
+       5,
+       2,
+       2,
+       4,
+       6,
+       2
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 773.5184514250725,
+       "80": 1518.9682286262853,
+       "95": 2545.923490600815
+      },
+      "wis_eur": 13.92385055709093,
+      "within_tau_hours": 4
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       3,
+       10,
+       17,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 10,
+       "80": 17,
+       "95": 24
+      },
+      "day": "2026-09-01",
+      "keys": 24,
+      "mae_eur": 13.911635124144519,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       3,
+       7,
+       7,
+       7,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 664.8789388236356,
+       "80": 1307.922281220095,
+       "95": 2151.184090580724
+      },
+      "wis_eur": 8.217753447676758,
+      "within_tau_hours": 10
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       4,
+       10,
+       18,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 14,
+       "80": 24,
+       "95": 24
+      },
+      "day": "2026-09-02",
+      "keys": 24,
+      "mae_eur": 9.509327455167892,
+      "pit_counts": [
+       0,
+       0,
+       4,
+       6,
+       8,
+       6,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 515.539361927074,
+       "80": 1019.6823790340087,
+       "95": 1689.9646539635366
+      },
+      "wis_eur": 5.12122062451368,
+      "within_tau_hours": 15
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       3,
+       6,
+       16,
+       18,
+       22
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 13,
+       "80": 18,
+       "95": 22
+      },
+      "day": "2026-09-03",
+      "keys": 24,
+      "mae_eur": 14.48529898680673,
+      "pit_counts": [
+       0,
+       0,
+       3,
+       3,
+       10,
+       2,
+       4,
+       2
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 583.0851333283354,
+       "80": 1182.3182481200581,
+       "95": 1969.430733816979
+      },
+      "wis_eur": 8.203359756422927,
+      "within_tau_hours": 12
+     },
+     {
+      "canonical_hours": 24,
+      "completeness": 0.0,
+      "day": "2026-09-05",
+      "keys": 24,
+      "scored": false,
+      "scored_hours": 0
+     }
+    ],
+    "pooled": {
+     "coverage": {
+      "50": {
+       "covered_hours": 41,
+       "mean_width_eur": 26.42731130733456,
+       "nominal": 0.5,
+       "scored_hours": 96,
+       "share": 0.4270833333333333
+      },
+      "80": {
+       "covered_hours": 72,
+       "mean_width_eur": 52.38428267708799,
+       "nominal": 0.8,
+       "scored_hours": 96,
+       "share": 0.75
+      },
+      "95": {
+       "covered_hours": 92,
+       "mean_width_eur": 87.04690592668807,
+       "nominal": 0.95,
+       "scored_hours": 96,
+       "share": 0.9583333333333334
+      }
+     },
+     "mae_eur": 16.63289394049835,
+     "partial_days": 0,
+     "pending_or_unscored_days": 1,
+     "percentage": {
+      "label": "share of scored hours within \u00b110 EUR/MWh of the published price",
+      "scored_hours": 96,
+      "share": 0.4270833333333333,
+      "tau_eur": 10.0,
+      "within_hours": 41
+     },
+     "pit": [
+      {
+       "band": 0,
+       "count": 0,
+       "nominal_share": 0.025,
+       "share": 0.0
+      },
+      {
+       "band": 1,
+       "count": 3,
+       "nominal_share": 0.075,
+       "share": 0.03125
+      },
+      {
+       "band": 2,
+       "count": 12,
+       "nominal_share": 0.15,
+       "share": 0.125
+      },
+      {
+       "band": 3,
+       "count": 14,
+       "nominal_share": 0.25,
+       "share": 0.14583333333333334
+      },
+      {
+       "band": 4,
+       "count": 27,
+       "nominal_share": 0.25,
+       "share": 0.28125
+      },
+      {
+       "band": 5,
+       "count": 19,
+       "nominal_share": 0.15,
+       "share": 0.19791666666666666
+      },
+      {
+       "band": 6,
+       "count": 17,
+       "nominal_share": 0.075,
+       "share": 0.17708333333333334
+      },
+      {
+       "band": 7,
+       "count": 4,
+       "nominal_share": 0.025,
+       "share": 0.041666666666666664
+      }
+     ],
+     "reliability": [
+      {
+       "at_or_below": 0,
+       "level": 0.025,
+       "name": "p025",
+       "scored_hours": 96,
+       "share": 0.0
+      },
+      {
+       "at_or_below": 3,
+       "level": 0.1,
+       "name": "p10",
+       "scored_hours": 96,
+       "share": 0.03125
+      },
+      {
+       "at_or_below": 15,
+       "level": 0.25,
+       "name": "p25",
+       "scored_hours": 96,
+       "share": 0.15625
+      },
+      {
+       "at_or_below": 29,
+       "level": 0.5,
+       "name": "p50",
+       "scored_hours": 96,
+       "share": 0.3020833333333333
+      },
+      {
+       "at_or_below": 56,
+       "level": 0.75,
+       "name": "p75",
+       "scored_hours": 96,
+       "share": 0.5833333333333334
+      },
+      {
+       "at_or_below": 75,
+       "level": 0.9,
+       "name": "p90",
+       "scored_hours": 96,
+       "share": 0.78125
+      },
+      {
+       "at_or_below": 92,
+       "level": 0.975,
+       "name": "p975",
+       "scored_hours": 96,
+       "share": 0.9583333333333334
+      }
+     ],
+     "scored_days": 4,
+     "scored_hours": 96,
+     "wis_eur": 8.866546096426074
+    },
+    "rolling": [
+     {
+      "coverage50": 0.16666666666666666,
+      "coverage80": 0.5416666666666666,
+      "coverage95": 0.9166666666666666,
+      "day": "2026-08-31",
+      "scored_hours": 24,
+      "width50_eur": 32.22993547604469,
+      "width80_eur": 63.290342859428556,
+      "width95_eur": 106.08014544170062,
+      "window_days": 1,
+      "window_first_day": "2026-08-31"
+     },
+     {
+      "coverage50": 0.2916666666666667,
+      "coverage80": 0.625,
+      "coverage95": 0.9583333333333334,
+      "day": "2026-09-01",
+      "scored_hours": 48,
+      "width50_eur": 29.966612296848087,
+      "width80_eur": 58.89355228846625,
+      "width95_eur": 97.85640794128206,
+      "window_days": 2,
+      "window_first_day": "2026-08-31"
+     },
+     {
+      "coverage50": 0.3888888888888889,
+      "coverage80": 0.75,
+      "coverage95": 0.9722222222222222,
+      "day": "2026-09-02",
+      "scored_hours": 72,
+      "width50_eur": 27.138010446885865,
+      "width80_eur": 53.42462345667207,
+      "width95_eur": 88.70933659923716,
+      "window_days": 3,
+      "window_first_day": "2026-08-31"
+     },
+     {
+      "coverage50": 0.4270833333333333,
+      "coverage80": 0.75,
+      "coverage95": 0.9583333333333334,
+      "day": "2026-09-03",
+      "scored_hours": 96,
+      "width50_eur": 26.42731130733456,
+      "width80_eur": 52.38428267708799,
+      "width95_eur": 87.04690592668807,
+      "window_days": 4,
+      "window_first_day": "2026-08-31"
+     }
+    ],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "development"
+  },
+  {
+   "evidence_class": "development rehearsal \u00b7 CP-18 dry runs on development days \u00b7 not prospective and not 4.7T",
+   "policy": "B0",
+   "record": {
+    "days": [
+     {
+      "at_or_below": [
+       1,
+       8,
+       16,
+       20,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 8,
+       "80": 16,
+       "95": 23
+      },
+      "day": "2026-08-31",
+      "keys": 24,
+      "mae_eur": 34.07500000000001,
+      "pit_counts": [
+       1,
+       7,
+       8,
+       4,
+       4,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 685.7100000000005,
+       "80": 1926.2939999999999,
+       "95": 4087.638
+      },
+      "wis_eur": 19.911178273809522,
+      "within_tau_hours": 6
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       2,
+       4,
+       6,
+       17,
+       22
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 4,
+       "80": 17,
+       "95": 22
+      },
+      "day": "2026-09-01",
+      "keys": 24,
+      "mae_eur": 36.36010416666667,
+      "pit_counts": [
+       0,
+       0,
+       2,
+       2,
+       2,
+       11,
+       5,
+       2
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 683.8800000000001,
+       "80": 1942.7939999999994,
+       "95": 4087.638
+      },
+      "wis_eur": 19.912224404761908,
+      "within_tau_hours": 2
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       3,
+       9,
+       19,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 9,
+       "80": 19,
+       "95": 24
+      },
+      "day": "2026-09-02",
+      "keys": 24,
+      "mae_eur": 22.34791666666666,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       3,
+       6,
+       10,
+       5,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 657.0,
+       "80": 1831.6679999999994,
+       "95": 3895.857000000002
+      },
+      "wis_eur": 13.41765744047619,
+      "within_tau_hours": 8
+     },
+     {
+      "at_or_below": [
+       1,
+       7,
+       18,
+       21,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 6,
+       "80": 17,
+       "95": 23
+      },
+      "day": "2026-09-03",
+      "keys": 24,
+      "mae_eur": 30.934375,
+      "pit_counts": [
+       1,
+       6,
+       11,
+       3,
+       3,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 681.2550000000001,
+       "80": 1881.1919999999993,
+       "95": 4074.108000000002
+      },
+      "wis_eur": 17.048260714285714,
+      "within_tau_hours": 6
+     },
+     {
+      "canonical_hours": 24,
+      "completeness": 0.0,
+      "day": "2026-09-05",
+      "keys": 24,
+      "scored": false,
+      "scored_hours": 0
+     }
+    ],
+    "pooled": {
+     "coverage": {
+      "50": {
+       "covered_hours": 27,
+       "mean_width_eur": 28.206718750000007,
+       "nominal": 0.5,
+       "scored_hours": 96,
+       "share": 0.28125
+      },
+      "80": {
+       "covered_hours": 69,
+       "mean_width_eur": 78.97862499999998,
+       "nominal": 0.8,
+       "scored_hours": 96,
+       "share": 0.71875
+      },
+      "95": {
+       "covered_hours": 92,
+       "mean_width_eur": 168.17959375000004,
+       "nominal": 0.95,
+       "scored_hours": 96,
+       "share": 0.9583333333333334
+      }
+     },
+     "mae_eur": 30.92934895833334,
+     "partial_days": 0,
+     "pending_or_unscored_days": 1,
+     "percentage": {
+      "label": "share of scored hours within \u00b110 EUR/MWh of the published price",
+      "scored_hours": 96,
+      "share": 0.22916666666666666,
+      "tau_eur": 10.0,
+      "within_hours": 22
+     },
+     "pit": [
+      {
+       "band": 0,
+       "count": 2,
+       "nominal_share": 0.025,
+       "share": 0.020833333333333332
+      },
+      {
+       "band": 1,
+       "count": 13,
+       "nominal_share": 0.075,
+       "share": 0.13541666666666666
+      },
+      {
+       "band": 2,
+       "count": 21,
+       "nominal_share": 0.15,
+       "share": 0.21875
+      },
+      {
+       "band": 3,
+       "count": 12,
+       "nominal_share": 0.25,
+       "share": 0.125
+      },
+      {
+       "band": 4,
+       "count": 15,
+       "nominal_share": 0.25,
+       "share": 0.15625
+      },
+      {
+       "band": 5,
+       "count": 21,
+       "nominal_share": 0.15,
+       "share": 0.21875
+      },
+      {
+       "band": 6,
+       "count": 10,
+       "nominal_share": 0.075,
+       "share": 0.10416666666666667
+      },
+      {
+       "band": 7,
+       "count": 2,
+       "nominal_share": 0.025,
+       "share": 0.020833333333333332
+      }
+     ],
+     "reliability": [
+      {
+       "at_or_below": 2,
+       "level": 0.025,
+       "name": "p025",
+       "scored_hours": 96,
+       "share": 0.020833333333333332
+      },
+      {
+       "at_or_below": 15,
+       "level": 0.1,
+       "name": "p10",
+       "scored_hours": 96,
+       "share": 0.15625
+      },
+      {
+       "at_or_below": 36,
+       "level": 0.25,
+       "name": "p25",
+       "scored_hours": 96,
+       "share": 0.375
+      },
+      {
+       "at_or_below": 48,
+       "level": 0.5,
+       "name": "p50",
+       "scored_hours": 96,
+       "share": 0.5
+      },
+      {
+       "at_or_below": 63,
+       "level": 0.75,
+       "name": "p75",
+       "scored_hours": 96,
+       "share": 0.65625
+      },
+      {
+       "at_or_below": 84,
+       "level": 0.9,
+       "name": "p90",
+       "scored_hours": 96,
+       "share": 0.875
+      },
+      {
+       "at_or_below": 94,
+       "level": 0.975,
+       "name": "p975",
+       "scored_hours": 96,
+       "share": 0.9791666666666666
+      }
+     ],
+     "scored_days": 4,
+     "scored_hours": 96,
+     "wis_eur": 17.572330208333334
+    },
+    "rolling": [
+     {
+      "coverage50": 0.3333333333333333,
+      "coverage80": 0.6666666666666666,
+      "coverage95": 0.9583333333333334,
+      "day": "2026-08-31",
+      "scored_hours": 24,
+      "width50_eur": 28.57125000000002,
+      "width80_eur": 80.26225,
+      "width95_eur": 170.31825,
+      "window_days": 1,
+      "window_first_day": "2026-08-31"
+     },
+     {
+      "coverage50": 0.25,
+      "coverage80": 0.6875,
+      "coverage95": 0.9375,
+      "day": "2026-09-01",
+      "scored_hours": 48,
+      "width50_eur": 28.533125000000013,
+      "width80_eur": 80.60599999999998,
+      "width95_eur": 170.31825,
+      "window_days": 2,
+      "window_first_day": "2026-08-31"
+     },
+     {
+      "coverage50": 0.2916666666666667,
+      "coverage80": 0.7222222222222222,
+      "coverage95": 0.9583333333333334,
+      "day": "2026-09-02",
+      "scored_hours": 72,
+      "width50_eur": 28.14708333333334,
+      "width80_eur": 79.17716666666665,
+      "width95_eur": 167.654625,
+      "window_days": 3,
+      "window_first_day": "2026-08-31"
+     },
+     {
+      "coverage50": 0.28125,
+      "coverage80": 0.71875,
+      "coverage95": 0.9583333333333334,
+      "day": "2026-09-03",
+      "scored_hours": 96,
+      "width50_eur": 28.206718750000007,
+      "width80_eur": 78.97862499999998,
+      "width95_eur": 168.17959375000004,
+      "window_days": 4,
+      "window_first_day": "2026-08-31"
+     }
+    ],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "development"
+  },
+  {
+   "evidence_class": "one-shot fresh-data test (4.7T) \u00b7 not yet scored",
+   "policy": "product",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "4.7T"
+  },
+  {
+   "evidence_class": "one-shot fresh-data test (4.7T) \u00b7 not yet scored",
+   "policy": "B0",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "4.7T"
+  },
+  {
+   "evidence_class": "prospective \u00b7 evaluation in progress until CP-19",
+   "policy": "product",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "prospective"
+  },
+  {
+   "evidence_class": "prospective \u00b7 evaluation in progress until CP-19",
+   "policy": "B0",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "prospective"
+  }
+ ]
+}
