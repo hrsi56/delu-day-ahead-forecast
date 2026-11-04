@@ -46,10 +46,11 @@ def _quoted(text: str, after: str) -> str:
     return ' '.join(m.group(1).split())
 
 
-def _f1_figure(root) -> str:
+def _f1(root) -> tuple[str, str, str]:
+    """F1's largest observed figure, its quantile level and its day, from the freeze manifest's disclosure."""
     identity = json.loads(_read(root, MANIFEST))['policy_identity']
-    m = re.search(r'by up to ([0-9.]+) EUR/MWh', identity['disclosures']['F1_largest_observed'])
-    return m.group(1)
+    m = re.search(r'by up to ([0-9.]+) EUR/MWh \((p[0-9.]+), (\d{4}-\d{2}-\d{2})', identity['disclosures']['F1_largest_observed'])
+    return m.group(1), m.group(2), m.group(3)
 
 
 def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tuple[str, ...] = ()) -> dict:
@@ -65,7 +66,8 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
     pi = identity['policy_identity']
     protocol = _read(root, PROTOCOL)
     report = _read(root, CP17_REPORT)
-    f1 = _f1_figure(root)
+    f1, f1_level, f1_day = _f1(root)
+    f1_where = f"A1's {f1_level} on {f1_day}"
     status = {'pending': 'final candidate · pending 4.7T', 'passed': 'live',
               'failed': 'tested candidate · did not pass 4.7T'}[fresh_test]
     first, last = (rehearsal_days[0], rehearsal_days[-1]) if rehearsal_days else ('', '')
@@ -93,8 +95,8 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
         'live_features_wording': 'how much this fitted model relies on each input',
         'live_retrain_wording': (_quoted(report, '**Proposed wording**') + ' The issued values were computed in the same '
                                  'WebAssembly runtime the visitor runs. On development days that runtime\'s results '
-                                 f'differed from native arithmetic by up to {f1} EUR/MWh, the largest difference '
-                                 'observed, not a bound.'),
+                                 f'differed from native arithmetic by up to {f1} EUR/MWh ({f1_where}), the largest '
+                                 'difference observed, not a bound.'),
         'live_policy_identity_sha256': identity['policy_identity_sha256'],
         'live_package_sha256': pi['code']['package_sha256'],
         'live_issuing_host': 'Pyodide 0.28.0 in Node.js v26.7.0',
@@ -118,7 +120,7 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
         'live_limitation_f1': (
             'The issued forecasts come from the frozen package running in WebAssembly (Pyodide), the runtime a '
             'visitor\'s browser runs. On development days its results differed from native arithmetic by up to '
-            f'{f1} EUR/MWh, the largest difference observed and not a bound; a visitor\'s retrain is compared with the '
+            f'{f1} EUR/MWh ({f1_where}), the largest difference observed and not a bound; a visitor\'s retrain is compared with the '
             'issued artifact, not with native arithmetic.'),
         'live_limitation_retrain_selections': (
             '"Train it yourself" compares the data-driven selections the issued artifact records for each of the '

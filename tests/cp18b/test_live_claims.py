@@ -34,8 +34,8 @@ def test_o14_wording_is_cp17s_proposal_plus_f1_at_its_largest_observed_figure(cl
     identity = load(ROOT / 'docs/track-b/evidence/cp-17c/freeze-manifest.json')['policy_identity']
     largest = re.search(r'by up to ([0-9.]+) EUR/MWh', identity['disclosures']['F1_largest_observed']).group(1)
     assert largest == '0.082'
-    assert wording.endswith(f'differed from native arithmetic by up to {largest} EUR/MWh, the largest difference '
-                            'observed, not a bound.')
+    assert wording.endswith(f"differed from native arithmetic by up to {largest} EUR/MWh (A1's p2.5 on 2026-03-30), "
+                            'the largest difference observed, not a bound.')
     anchor = ' '.join((ROOT / 'capstone_v21.md').read_text().split())
     assert 'The largest difference observed is 0.082 EUR/MWh,' in anchor
 
