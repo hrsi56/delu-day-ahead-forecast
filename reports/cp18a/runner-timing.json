@@ -1,0 +1,923 @@
+{
+ "ceilings": {
+  "peak_bytes": 4294967296,
+  "wall_seconds": 900
+ },
+ "downloads": ".local/artifacts/cp-18a/downloads/<run>/ (gh run download <run> -R hrsi56/delu-pipeline-dryrun -n pipeline)",
+ "inputs": {
+  "41185674168": "prebuilt development payloads (cp17.tools.payloads, CP-17b)",
+  "41204328732": "prebuilt development payloads; the store carried across a gap",
+  "41701507248": "the live-input builder replaying reports/cp18a/dryrun/recorded"
+ },
+ "job_limit_seconds": 21600,
+ "runs": {
+  "41185674168": {
+   "all_equal_to_cp17c_where_recorded": true,
+   "all_fits_within_ceilings": true,
+   "canary": {
+    "passed": true,
+    "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 864698368,
+     "wall_seconds": 164.50598516699998
+    },
+    "seconds": 164.772314583
+   },
+   "days": {
+    "2026-08-31": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 805355520,
+       "wall_seconds": 173.61104075
+      },
+      "B0": {
+       "peak_bytes": 860258304,
+       "wall_seconds": 8.820252875
+      },
+      "v2": {
+       "peak_bytes": 955711488,
+       "wall_seconds": 100.23934299999999
+      },
+      "v4": {
+       "peak_bytes": 943996928,
+       "wall_seconds": 130.7008065
+      }
+     },
+     "fits_sha256": {
+      "A1": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+      "B0": "f02ac4e9358ded882e71380848e5293e79cf04b27b7f78f3e8af6a7657b62e0b",
+      "v2": "b7ada794d543b6429ebcb61522608b70a05e53bb3cc66e45d8912cdebfd23d7d",
+      "v4": "bbdaa9d207bceaa5a03150c289f34137a9261a3e34097357c942a61a86c454a9"
+     },
+     "issue_day_seconds": 414.33008637499995,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 173.61104075,
+      "B0": 8.820252875,
+      "v2": 100.23934299999999,
+      "v4": 130.7008065
+     },
+     "process_seconds_sum": 413.371443125,
+     "quantiles_sha256": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+     "status": "issued",
+     "within_ceilings": true
+    },
+    "2026-09-01": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 872562688,
+       "wall_seconds": 118.261800333
+      },
+      "B0": {
+       "peak_bytes": 804306944,
+       "wall_seconds": 8.115195625
+      },
+      "v2": {
+       "peak_bytes": 943996928,
+       "wall_seconds": 97.272682542
+      },
+      "v4": {
+       "peak_bytes": 946094080,
+       "wall_seconds": 120.676030958
+      }
+     },
+     "fits_sha256": {
+      "A1": "a3a092caa60b264af60770a5966e6b6dab78feb05857d4c8f356afcd7f6cfe65",
+      "B0": "a8b530f43644fc27a9326eb734261604830538d752a46fcdbb47b7aca27efedf",
+      "v2": "463caf0b2ced1e5476d90918d0c378b4ebd9efbbef2b29f81d1ee9e097224406",
+      "v4": "b2e41b57646b887bf282019ae6b1513b8595062bcc60c4e369c0becf77461f0b"
+     },
+     "issue_day_seconds": 345.202343834,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 118.261800333,
+      "B0": 8.115195625,
+      "v2": 97.272682542,
+      "v4": 120.676030958
+     },
+     "process_seconds_sum": 344.325709458,
+     "quantiles_sha256": "a3a092caa60b264af60770a5966e6b6dab78feb05857d4c8f356afcd7f6cfe65",
+     "status": "issued",
+     "within_ceilings": true
+    },
+    "2026-09-02": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 872316928,
+       "wall_seconds": 104.79814537499999
+      },
+      "B0": {
+       "peak_bytes": 866893824,
+       "wall_seconds": 8.386353209000001
+      },
+      "v2": {
+       "peak_bytes": 934887424,
+       "wall_seconds": 111.81377487500001
+      },
+      "v4": {
+       "peak_bytes": 957349888,
+       "wall_seconds": 122.72405375
+      }
+     },
+     "fits_sha256": {
+      "A1": "4fe630ec8d403f99b17b2ddc314486837e614972dccc8495feb55879e8bfd216",
+      "B0": "1cf6534d1fe2d477b7cfea4a64344760d662597206994fe7aa0c2a920ac84288",
+      "v2": "d0baa132b9c3cce5bc28a0dae46202b93f2e1784a6c6cd98c10013e1e3d796fd",
+      "v4": "27bb689ceebde06e6462bc98d191e23c506c239469deda317164ef603cd5ed8f"
+     },
+     "issue_day_seconds": 348.47689537500014,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 104.79814537499999,
+      "B0": 8.386353209000001,
+      "v2": 111.81377487500001,
+      "v4": 122.72405375
+     },
+     "process_seconds_sum": 347.722327209,
+     "quantiles_sha256": "4fe630ec8d403f99b17b2ddc314486837e614972dccc8495feb55879e8bfd216",
+     "status": "issued",
+     "within_ceilings": true
+    },
+    "2026-09-03": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 883277824,
+       "wall_seconds": 119.559633208
+      },
+      "B0": {
+       "peak_bytes": 837959680,
+       "wall_seconds": 8.230977375
+      },
+      "v2": {
+       "peak_bytes": 929579008,
+       "wall_seconds": 106.270969209
+      },
+      "v4": {
+       "peak_bytes": 958611456,
+       "wall_seconds": 117.63012762500001
+      }
+     },
+     "fits_sha256": {
+      "A1": "d04d0ba5a68a39ee3b197d254f055cc457d71ad9f9b5f91fd9c629dab9ee5062",
+      "B0": "3810f4a6ba67bce932de2ee143720506b55d699ca69b02fe2460d7a415e26474",
+      "v2": "419153912f016cece8c0306eb2b969482491cc8860c05e4d34cda46347d4a284",
+      "v4": "cc4e13d2fc4c08ec7dfa535bde773cbc4f0d5995b853ea97a2b2a718d3aa226a"
+     },
+     "issue_day_seconds": 352.2983017920001,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 119.559633208,
+      "B0": 8.230977375,
+      "v2": 106.270969209,
+      "v4": 117.63012762500001
+     },
+     "process_seconds_sum": 351.69170741700003,
+     "quantiles_sha256": "d04d0ba5a68a39ee3b197d254f055cc457d71ad9f9b5f91fd9c629dab9ee5062",
+     "status": "issued",
+     "within_ceilings": true
+    }
+   },
+   "fetch": {
+    "class": "public repository, standard macos-26 runner (minutes not counted)",
+    "conclusion": "success",
+    "head_sha": "9dfb8959e1dc909654f79c939fc5dd02cc741c38",
+    "job": {
+     "completed": "2026-10-31T09:10:28Z",
+     "conclusion": "success",
+     "name": "macos-26 daily pipeline (dry run)",
+     "seconds": 1693.0,
+     "started": "2026-10-31T08:42:15Z",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins"
+      },
+      {
+       "conclusion": "success",
+       "name": "The guards on the runner's own commits and pushes (fake credentials, blocked by value)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned states by hash, Pyodide and the official binary retrieved by hash, the package zip rebuilt"
+      },
+      {
+       "conclusion": "success",
+       "name": "The dry run's store and its origin, on the runner"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pipeline (dry run, development days)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The dry run's store, carried out of the runner"
+      },
+      {
+       "conclusion": "success",
+       "name": "No fake credential in any result (by value)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9"
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job"
+      }
+     ]
+    },
+    "repo": "hrsi56/delu-pipeline-dryrun",
+    "results": {
+     "files": 75,
+     "listing_sha256": "9c09668241ef11d3f289f8417f6c656958fde64db0fa17eb1b31eca80de9640f",
+     "problems": []
+    },
+    "run": "41185674168"
+   },
+   "gate_passed": true,
+   "image_version": "20261026.0455.2",
+   "issuance_seconds": [
+    413.371443125,
+    344.325709458,
+    347.722327209,
+    351.69170741700003
+   ],
+   "issuances": 4,
+   "job_seconds": 1693.0,
+   "machine": {
+    "cpu_count": 3,
+    "cpu_model": "Apple M1 (Virtual)",
+    "hardware_model": "VirtualMac2,1",
+    "machine": "arm64",
+    "memory_bytes": 7516192768,
+    "os_version": "26.6.2",
+    "physical_cores": 3,
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "runner_env": {
+     "GITHUB_ACTIONS": "true",
+     "GITHUB_JOB": "pipeline",
+     "GITHUB_REPOSITORY": "hrsi56/delu-pipeline-dryrun",
+     "GITHUB_RUN_ATTEMPT": "1",
+     "GITHUB_RUN_ID": "41185674168",
+     "GITHUB_SHA": "9dfb8959e1dc909654f79c939fc5dd02cc741c38",
+     "ImageOS": "macos26",
+     "ImageVersion": "20261026.0455.2",
+     "RUNNER_ARCH": "ARM64",
+     "RUNNER_ENVIRONMENT": "github-hosted",
+     "RUNNER_NAME": "GitHub Actions 1000001313",
+     "RUNNER_OS": "macOS"
+    },
+    "system": "Darwin"
+   },
+   "outcome": "done",
+   "pipeline_seconds": 1634.424019459,
+   "planned": [
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03"
+   ],
+   "run_id": "gh-41185674168-1",
+   "wall_clock": "2026-09-02T12:00:00+02:00"
+  },
+  "41204328732": {
+   "all_equal_to_cp17c_where_recorded": true,
+   "all_fits_within_ceilings": true,
+   "canary": {
+    "passed": true,
+    "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 859488256,
+     "wall_seconds": 142.683991542
+    },
+    "seconds": 142.90439708300002
+   },
+   "days": {
+    "2026-09-05": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 871383040,
+       "wall_seconds": 161.40815508300003
+      },
+      "B0": {
+       "peak_bytes": 832241664,
+       "wall_seconds": 8.157887458000001
+      },
+      "v2": {
+       "peak_bytes": 914669568,
+       "wall_seconds": 101.344444042
+      },
+      "v4": {
+       "peak_bytes": 953221120,
+       "wall_seconds": 122.714776084
+      }
+     },
+     "fits_sha256": {
+      "A1": "8d5cb5ea35cca594ab6ada988e162c92ca8fa7c9ca0cc410419726a54df1ce58",
+      "B0": "186776f253c97031db26213ad6af0d1c9eda8b8c4ebe13774242a9bca4036e3e",
+      "v2": "63e6016ebff8a055223a5e169e42f3c02447bf0d09ced047ffa7cd2851299188",
+      "v4": "4d6b384b5a3d83834e45d9510a323feab452469839e8bf53303195f41cf36262"
+     },
+     "issue_day_seconds": 394.5888865,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 161.40815508300003,
+      "B0": 8.157887458000001,
+      "v2": 101.344444042,
+      "v4": 122.714776084
+     },
+     "process_seconds_sum": 393.625262667,
+     "quantiles_sha256": "8d5cb5ea35cca594ab6ada988e162c92ca8fa7c9ca0cc410419726a54df1ce58",
+     "status": "issued",
+     "within_ceilings": true
+    }
+   },
+   "fetch": {
+    "class": "public repository, standard macos-26 runner (minutes not counted)",
+    "conclusion": "success",
+    "head_sha": "547313276e5e6cafb911fe339e7376036e03168c",
+    "job": {
+     "completed": "2026-10-31T13:20:12Z",
+     "conclusion": "success",
+     "name": "macos-26 daily pipeline (dry run)",
+     "seconds": 606.0,
+     "started": "2026-10-31T13:10:06Z",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins"
+      },
+      {
+       "conclusion": "success",
+       "name": "The guards on the runner's own commits and pushes (fake credentials, blocked by value)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned states by hash, Pyodide and the official binary retrieved by hash, the package zip rebuilt"
+      },
+      {
+       "conclusion": "success",
+       "name": "The dry run's store and its origin, on the runner"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pipeline (dry run, development days)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The dry run's store, carried out of the runner"
+      },
+      {
+       "conclusion": "success",
+       "name": "No fake credential in any result (by value)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9"
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job"
+      }
+     ]
+    },
+    "repo": "hrsi56/delu-pipeline-dryrun",
+    "results": {
+     "files": 43,
+     "listing_sha256": "feef486e7d645ded2d30bde4d9705e573c60daaa7854f8071ff5804ceeac31ff",
+     "problems": []
+    },
+    "run": "41204328732"
+   },
+   "gate_passed": true,
+   "image_version": "20261013.0424.1",
+   "issuance_seconds": [
+    393.625262667
+   ],
+   "issuances": 1,
+   "job_seconds": 606.0,
+   "machine": {
+    "cpu_count": 3,
+    "cpu_model": "Apple M1 (Virtual)",
+    "hardware_model": "VirtualMac2,1",
+    "machine": "arm64",
+    "memory_bytes": 7516192768,
+    "os_version": "26.6.2",
+    "physical_cores": 3,
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "runner_env": {
+     "GITHUB_ACTIONS": "true",
+     "GITHUB_JOB": "pipeline",
+     "GITHUB_REPOSITORY": "hrsi56/delu-pipeline-dryrun",
+     "GITHUB_RUN_ATTEMPT": "1",
+     "GITHUB_RUN_ID": "41204328732",
+     "GITHUB_SHA": "547313276e5e6cafb911fe339e7376036e03168c",
+     "ImageOS": "macos26",
+     "ImageVersion": "20261013.0424.1",
+     "RUNNER_ARCH": "ARM64",
+     "RUNNER_ENVIRONMENT": "github-hosted",
+     "RUNNER_NAME": "GitHub Actions 1000001314",
+     "RUNNER_OS": "macOS"
+    },
+    "system": "Darwin"
+   },
+   "outcome": "done",
+   "pipeline_seconds": 544.604660583,
+   "planned": [
+    "2026-09-05"
+   ],
+   "run_id": "gh-41204328732-1",
+   "wall_clock": "2026-09-04T12:00:00+02:00"
+  },
+  "41701507248": {
+   "all_equal_to_cp17c_where_recorded": true,
+   "all_fits_within_ceilings": true,
+   "canary": {
+    "passed": true,
+    "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 841285632,
+     "wall_seconds": 158.016189959
+    },
+    "seconds": 158.219636625
+   },
+   "days": {
+    "2026-08-31": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 827916288,
+       "wall_seconds": 149.358210375
+      },
+      "B0": {
+       "peak_bytes": 842219520,
+       "wall_seconds": 13.310366082999998
+      },
+      "v2": {
+       "peak_bytes": 935985152,
+       "wall_seconds": 117.08464525000001
+      },
+      "v4": {
+       "peak_bytes": 943947776,
+       "wall_seconds": 128.92733745799998
+      }
+     },
+     "fits_sha256": {
+      "A1": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+      "B0": "f02ac4e9358ded882e71380848e5293e79cf04b27b7f78f3e8af6a7657b62e0b",
+      "v2": "b7ada794d543b6429ebcb61522608b70a05e53bb3cc66e45d8912cdebfd23d7d",
+      "v4": "bbdaa9d207bceaa5a03150c289f34137a9261a3e34097357c942a61a86c454a9"
+     },
+     "issue_day_seconds": 410.33404508399997,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 149.358210375,
+      "B0": 13.310366082999998,
+      "v2": 117.08464525000001,
+      "v4": 128.92733745799998
+     },
+     "process_seconds_sum": 408.68055916599997,
+     "quantiles_sha256": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+     "status": "issued",
+     "within_ceilings": true
+    },
+    "2026-09-01": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 887685120,
+       "wall_seconds": 127.10153604199999
+      },
+      "B0": {
+       "peak_bytes": 831242240,
+       "wall_seconds": 9.1568755
+      },
+      "v2": {
+       "peak_bytes": 957218816,
+       "wall_seconds": 107.960315042
+      },
+      "v4": {
+       "peak_bytes": 933380096,
+       "wall_seconds": 130.36037116699998
+      }
+     },
+     "fits_sha256": {
+      "A1": "a3a092caa60b264af60770a5966e6b6dab78feb05857d4c8f356afcd7f6cfe65",
+      "B0": "a8b530f43644fc27a9326eb734261604830538d752a46fcdbb47b7aca27efedf",
+      "v2": "463caf0b2ced1e5476d90918d0c378b4ebd9efbbef2b29f81d1ee9e097224406",
+      "v4": "b2e41b57646b887bf282019ae6b1513b8595062bcc60c4e369c0becf77461f0b"
+     },
+     "issue_day_seconds": 375.46484058300007,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 127.10153604199999,
+      "B0": 9.1568755,
+      "v2": 107.960315042,
+      "v4": 130.36037116699998
+     },
+     "process_seconds_sum": 374.579097751,
+     "quantiles_sha256": "a3a092caa60b264af60770a5966e6b6dab78feb05857d4c8f356afcd7f6cfe65",
+     "status": "issued",
+     "within_ceilings": true
+    },
+    "2026-09-02": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 853262336,
+       "wall_seconds": 119.984067583
+      },
+      "B0": {
+       "peak_bytes": 830963712,
+       "wall_seconds": 9.474295458
+      },
+      "v2": {
+       "peak_bytes": 931282944,
+       "wall_seconds": 115.554441167
+      },
+      "v4": {
+       "peak_bytes": 936017920,
+       "wall_seconds": 130.978458208
+      }
+     },
+     "fits_sha256": {
+      "A1": "4fe630ec8d403f99b17b2ddc314486837e614972dccc8495feb55879e8bfd216",
+      "B0": "1cf6534d1fe2d477b7cfea4a64344760d662597206994fe7aa0c2a920ac84288",
+      "v2": "d0baa132b9c3cce5bc28a0dae46202b93f2e1784a6c6cd98c10013e1e3d796fd",
+      "v4": "27bb689ceebde06e6462bc98d191e23c506c239469deda317164ef603cd5ed8f"
+     },
+     "issue_day_seconds": 376.797639333,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 119.984067583,
+      "B0": 9.474295458,
+      "v2": 115.554441167,
+      "v4": 130.978458208
+     },
+     "process_seconds_sum": 375.991262416,
+     "quantiles_sha256": "4fe630ec8d403f99b17b2ddc314486837e614972dccc8495feb55879e8bfd216",
+     "status": "issued",
+     "within_ceilings": true
+    },
+    "2026-09-03": {
+     "cause": null,
+     "equal_to_cp17c": {
+      "A1": true,
+      "B0": true,
+      "v2": true,
+      "v4": true
+     },
+     "fits": {
+      "A1": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 852754432,
+       "wall_seconds": 120.555452791
+      },
+      "B0": {
+       "peak_bytes": 817643520,
+       "wall_seconds": 8.535670750000001
+      },
+      "v2": {
+       "peak_bytes": 921272320,
+       "wall_seconds": 108.72865612500001
+      },
+      "v4": {
+       "peak_bytes": 974864384,
+       "wall_seconds": 120.11857149999999
+      }
+     },
+     "fits_sha256": {
+      "A1": "d04d0ba5a68a39ee3b197d254f055cc457d71ad9f9b5f91fd9c629dab9ee5062",
+      "B0": "3810f4a6ba67bce932de2ee143720506b55d699ca69b02fe2460d7a415e26474",
+      "v2": "419153912f016cece8c0306eb2b969482491cc8860c05e4d34cda46347d4a284",
+      "v4": "cc4e13d2fc4c08ec7dfa535bde773cbc4f0d5995b853ea97a2b2a718d3aa226a"
+     },
+     "issue_day_seconds": 358.63096962500003,
+     "issued_policy": "A1",
+     "process_seconds": {
+      "A1": 120.555452791,
+      "B0": 8.535670750000001,
+      "v2": 108.72865612500001,
+      "v4": 120.11857149999999
+     },
+     "process_seconds_sum": 357.938351166,
+     "quantiles_sha256": "d04d0ba5a68a39ee3b197d254f055cc457d71ad9f9b5f91fd9c629dab9ee5062",
+     "status": "issued",
+     "within_ceilings": true
+    }
+   },
+   "fetch": {
+    "class": "public repository, standard macos-26 runner (minutes not counted)",
+    "conclusion": "success",
+    "head_sha": "0b2fd1bf64734f93a0c3037b1d1e3cf062446156",
+    "job": {
+     "completed": "2026-11-03T19:46:56Z",
+     "conclusion": "success",
+     "name": "macos-26 daily pipeline (dry run)",
+     "seconds": 1903.0,
+     "started": "2026-11-03T19:15:13Z",
+     "steps": [
+      {
+       "conclusion": "success",
+       "name": "Set up job"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+      },
+      {
+       "conclusion": "success",
+       "name": "uv, from PyPI, recorded"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned CPython and the environment uv.lock pins"
+      },
+      {
+       "conclusion": "success",
+       "name": "The guards on the runner's own commits and pushes (fake credentials, blocked by value)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pinned states by hash, Pyodide and the official binary retrieved by hash, the package zip rebuilt"
+      },
+      {
+       "conclusion": "success",
+       "name": "The dry run's store and its origin, on the runner"
+      },
+      {
+       "conclusion": "success",
+       "name": "The pipeline (dry run, development days)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The dry run's store, carried out of the runner"
+      },
+      {
+       "conclusion": "success",
+       "name": "No fake credential in any result (by value)"
+      },
+      {
+       "conclusion": "success",
+       "name": "The results' own hashes"
+      },
+      {
+       "conclusion": "success",
+       "name": "Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9"
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+      },
+      {
+       "conclusion": "success",
+       "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+       "conclusion": "success",
+       "name": "Complete job"
+      }
+     ]
+    },
+    "repo": "hrsi56/delu-pipeline-dryrun",
+    "results": {
+     "files": 75,
+     "listing_sha256": "7596870e96ed3e0590346f935e346e67bf9dac08895b32ed0e25be3cc0d93c77",
+     "problems": []
+    },
+    "run": "41701507248"
+   },
+   "gate_passed": true,
+   "image_version": "20261026.0455.2",
+   "issuance_seconds": [
+    408.68055916599997,
+    374.579097751,
+    375.991262416,
+    357.938351166
+   ],
+   "issuances": 4,
+   "job_seconds": 1903.0,
+   "machine": {
+    "cpu_count": 3,
+    "cpu_model": "Apple M1 (Virtual)",
+    "hardware_model": "VirtualMac2,1",
+    "machine": "arm64",
+    "memory_bytes": 7516192768,
+    "os_version": "26.6.2",
+    "physical_cores": 3,
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "runner_env": {
+     "GITHUB_ACTIONS": "true",
+     "GITHUB_JOB": "pipeline",
+     "GITHUB_REPOSITORY": "hrsi56/delu-pipeline-dryrun",
+     "GITHUB_RUN_ATTEMPT": "1",
+     "GITHUB_RUN_ID": "41701507248",
+     "GITHUB_SHA": "0b2fd1bf64734f93a0c3037b1d1e3cf062446156",
+     "ImageOS": "macos26",
+     "ImageVersion": "20261026.0455.2",
+     "RUNNER_ARCH": "ARM64",
+     "RUNNER_ENVIRONMENT": "github-hosted",
+     "RUNNER_NAME": "GitHub Actions 1000001323",
+     "RUNNER_OS": "macOS"
+    },
+    "system": "Darwin"
+   },
+   "outcome": "done",
+   "pipeline_seconds": 1837.788067416,
+   "planned": [
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03"
+   ],
+   "run_id": "gh-41701507248-1",
+   "wall_clock": "2026-09-02T12:00:00+02:00"
+  }
+ },
+ "schema": "cp18a-runner-timing-v1",
+ "summary": {
+  "all_equal_to_cp17c_where_recorded": true,
+  "all_fits_within_ceilings": true,
+  "four_with_canary_inside_job_limit": true,
+  "four_with_canary_job_seconds": [
+   1693.0,
+   1903.0
+  ],
+  "four_with_canary_pipeline_seconds": [
+   1634.424019459,
+   1837.788067416
+  ],
+  "one_issuance_seconds": [
+   344.325709458,
+   347.722327209,
+   351.69170741700003,
+   357.938351166,
+   374.579097751,
+   375.991262416,
+   393.625262667,
+   408.68055916599997,
+   413.371443125
+  ]
+ },
+ "what": "the public runner class's timing on development days (\u00a724.13), recomputed by `python -m cp18.compare timing` from each run's downloaded `pipeline` artifact, every file checked against the run's own results-sha256.txt; each day's four fits compared with CP-17c's record (reports/cp17c/measurement.json)"
+}

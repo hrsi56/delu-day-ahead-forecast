@@ -1,0 +1,81 @@
+{
+ "schema": "cp18a-compute-ledger-v1",
+ "ceiling": {
+  "machine_hours": 10,
+  "workers": 4,
+  "blas_threads": 1,
+  "peak_gb": 12,
+  "gpu": false
+ },
+ "entries": [
+  {
+   "t": "2026-10-31T08:26Z",
+   "entry": "ledger opened",
+   "machine_hours": 0
+  },
+  {
+   "t": "2026-10-31T08:32Z",
+   "entry": "rehearsal one: H2 gate + 1 issuance (A1 2026-08-31), local M3",
+   "workers": 1,
+   "wall_s": 312,
+   "machine_hours": 0.09
+  },
+  {
+   "t": "2026-10-31T13:15Z",
+   "entry": "lead: cp18a suite incl. stress dry run (sanitized), local M3",
+   "workers": 1,
+   "wall_s": 369,
+   "machine_hours": 0.1
+  },
+  {
+   "t": "2026-10-31T13:28Z",
+   "entry": "lead: live-inputs rehearsal (gate + 1 issuance), M3 carry continuation (gate + 1 issuance)",
+   "workers": 1,
+   "wall_s": 700,
+   "machine_hours": 0.2
+  },
+  {
+   "t": "2026-10-31T08:45Z",
+   "entry": "lead: stress test test_dry_run (gate + 1 issuance, fallback), local M3",
+   "workers": 1,
+   "wall_s": 368,
+   "machine_hours": 0.1
+  },
+  {
+   "t": "2026-10-31T10:45Z",
+   "entry": "builder A (security): its tests, hook demos, tree scans, a full-suite run (by its report)",
+   "workers": 1,
+   "wall_s": 1800,
+   "machine_hours": 0.5
+  },
+  {
+   "t": "2026-10-31T13:00Z",
+   "entry": "builder B (live builder): equality 9+14 twice (2 workers x 247 s), parse checks, archives, tests, GFS client (by its report)",
+   "workers": 2,
+   "wall_s": 700,
+   "machine_hours": 0.4
+  },
+  {
+   "t": "2026-10-31T13:40Z",
+   "entry": "lead: forced causes (gate with canary), first and second attempts",
+   "workers": 1,
+   "wall_s": 330,
+   "machine_hours": 0.1
+  },
+  {
+   "t": "2026-10-31T13:55Z",
+   "entry": "lead: history-free CI reproduction pre1 (ci312: sync, wasm payload, full suite 566 s)",
+   "workers": 1,
+   "wall_s": 700,
+   "machine_hours": 0.2
+  },
+  {
+   "t": "2026-11-03T19:10Z",
+   "entry": "lead: live runner-env test, equality 9+14 re-run (2 workers x 241 s), forced causes re-run, suites",
+   "workers": 2,
+   "wall_s": 900,
+   "machine_hours": 0.35
+  }
+ ],
+ "machine_hours": 2.04
+}

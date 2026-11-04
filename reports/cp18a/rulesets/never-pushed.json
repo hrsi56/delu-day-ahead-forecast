@@ -1,0 +1,15 @@
+{
+  "name": "never pushed",
+  "target": "branch",
+  "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": ["refs/heads/gauntlet/*"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {"type": "creation"}
+  ]
+}

@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # CP-18a item 7 (P0-2): the value-free leak scan runs first, before any dependency is installed, over the
+      # pushed range and then the tree. It completes the shallow checkout from origin itself and fails closed on
+      # an unreadable range; an all-zero or empty `before` (or an unexpanded expression outside GitHub) scans
+      # the tree alone.
+      - name: Value-free leak scan (CP-18a item 7)
+        run: python3 scripts/leak_scan.py ci "${{ github.event.before }}" "${{ github.sha }}"
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true

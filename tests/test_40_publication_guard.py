@@ -49,7 +49,7 @@ def repo(tmp_path):
     path = tmp_path / "repo"
     (path / "scripts").mkdir(parents=True)
     (path / ".githooks").mkdir()
-    for name in ("secret_guard.py", "publication_guard.py"):
+    for name in ("secret_guard.py", "leak_scan.py", "publication_guard.py"):
         shutil.copy2(REPO_ROOT / "scripts" / name, path / "scripts" / name)
     shutil.copy2(REPO_ROOT / ".githooks" / "pre-push", path / ".githooks" / "pre-push")
     subprocess.run(["git", "init", "-q", str(path)], check=True, env=env)

@@ -1,0 +1,82 @@
+{
+ "carried": {
+  "entries": 7,
+  "head_sha256": "ea9f1f5e524d8b3992f028ade51b57b17b911c296f417abe0162fb3cf82c2811",
+  "ledger_sha256": "507b737b2b94a4cc8a83aa44ee9bbacbb36bc62b882e252835e6c5ab3a90a905"
+ },
+ "carried_folder": ".local/artifacts/cp-18a/carried/window (shipped at reports/cp18a/dryrun/carried/window in the scratch repository)",
+ "fits": {
+  "m3": {
+   "2026-09-05": {
+    "B0": "186776f253c97031db26213ad6af0d1c9eda8b8c4ebe13774242a9bca4036e3e",
+    "issued": [
+     "A1",
+     "8d5cb5ea35cca594ab6ada988e162c92ca8fa7c9ca0cc410419726a54df1ce58"
+    ],
+    "state_sha256": {
+     "B0": "41cdc9c8e4de3cc37911d997998f761546214d1a7b830966a735577f343b5099",
+     "v2": "600a771473e5e62ff0af3bf4a5ab12211cbb0e7b496dfce7e7224f4010f03a9a",
+     "v4": "8693ecdd77a4fea3dfd774c893bf93d1b32820e0fd395f04c41b9ef54511a733"
+    },
+    "v2": "63e6016ebff8a055223a5e169e42f3c02447bf0d09ced047ffa7cd2851299188",
+    "v4": "4d6b384b5a3d83834e45d9510a323feab452469839e8bf53303195f41cf36262"
+   }
+  },
+  "runner": {
+   "2026-09-05": {
+    "B0": "186776f253c97031db26213ad6af0d1c9eda8b8c4ebe13774242a9bca4036e3e",
+    "issued": [
+     "A1",
+     "8d5cb5ea35cca594ab6ada988e162c92ca8fa7c9ca0cc410419726a54df1ce58"
+    ],
+    "state_sha256": {
+     "B0": "41cdc9c8e4de3cc37911d997998f761546214d1a7b830966a735577f343b5099",
+     "v2": "600a771473e5e62ff0af3bf4a5ab12211cbb0e7b496dfce7e7224f4010f03a9a",
+     "v4": "8693ecdd77a4fea3dfd774c893bf93d1b32820e0fd395f04c41b9ef54511a733"
+    },
+    "v2": "63e6016ebff8a055223a5e169e42f3c02447bf0d09ced047ffa7cd2851299188",
+    "v4": "4d6b384b5a3d83834e45d9510a323feab452469839e8bf53303195f41cf36262"
+   }
+  }
+ },
+ "resumed": {
+  "m3": {
+   "carried_files_unchanged": true,
+   "days": {
+    "2026-08-31": "issued",
+    "2026-09-01": "issued",
+    "2026-09-02": "issued",
+    "2026-09-03": "issued",
+    "2026-09-04": "outside",
+    "2026-09-05": "issued"
+   },
+   "head": "dc5bf0025e2e7960c275c8a68252a57b2f4e26e84e2da39eff18d23170167825",
+   "ledger_prefix": true,
+   "resumed_days": [
+    "2026-09-05"
+   ]
+  },
+  "runner": {
+   "carried_files_unchanged": true,
+   "days": {
+    "2026-08-31": "issued",
+    "2026-09-01": "issued",
+    "2026-09-02": "issued",
+    "2026-09-03": "issued",
+    "2026-09-04": "outside",
+    "2026-09-05": "issued"
+   },
+   "head": "ddbbc1fd9cef979410014fb105a26dc3c63395439e8bf17300eb57aa7ce3da09",
+   "ledger_prefix": true,
+   "resumed_days": [
+    "2026-09-05"
+   ]
+  }
+ },
+ "resumed_folders": {
+  "m3": ".local/tmp/cp-18a/rehearsal/carry-m3/clone/live/store",
+  "runner": ".local/artifacts/cp-18a/downloads/41204328732/live/store (from the run artifact, hash-checked)"
+ },
+ "same_on_both": true,
+ "what": "runner run 3's store (2026-08-31..2026-09-03), carried out of the runner, given a carry to 2026-09-05 (2026-09-04 outside), committed in the scratch repository; resumed by runner run 41204328732 and by the M3 (a local run from the same carried store, the same wall clock 2026-09-04 12:00 Berlin)"
+}

@@ -1,0 +1,45 @@
+{
+ "bit_exact": true,
+ "days": 2806,
+ "first": "2019-01-01",
+ "last": "2026-09-06",
+ "rendered": "rendered from data/snapshot.parquet (SMARD values pulled 2026-09-08T13:34:33Z) in SMARD chart_data's documented shape; not a recorded raw response; quarter-hour values rendered as four equal quarters (price v, load v/4); meta_data.created is null | rendered from data/snapshot.parquet (SMARD values pulled 2026-09-08T13:34:33Z) in ENTSO-E's documented A44/A65 XML shape; not a recorded raw response (the API was unavailable at the pull); quarter-hour values rendered as four equal quarters (v); createdDateTime is the pull time, not a source document time",
+ "schema": "cp18a-live-recorded-parse-v1",
+ "seconds": 12.3,
+ "sources": {
+  "entsoe": {
+   "bit_exact": true,
+   "days_23h": 8,
+   "days_25h": 7,
+   "hours": 67343,
+   "mismatch_examples": [],
+   "mismatched_hours": {
+    "load_forecast": 0,
+    "price": 0
+   },
+   "null_hours": {
+    "load_forecast": 194,
+    "price": 0
+   },
+   "problems": 0,
+   "quarter_hour_price_days": 341
+  },
+  "smard": {
+   "bit_exact": true,
+   "days_23h": 8,
+   "days_25h": 7,
+   "hours": 67343,
+   "mismatch_examples": [],
+   "mismatched_hours": {
+    "load_forecast": 0,
+    "price": 0
+   },
+   "null_hours": {
+    "load_forecast": 194,
+    "price": 0
+   },
+   "problems": 0,
+   "quarter_hour_price_days": 341
+  }
+ }
+}
