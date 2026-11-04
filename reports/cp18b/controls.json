@@ -1,0 +1,145 @@
+{
+ "all_refused": true,
+ "controls": {
+  "1_manifest_invalid_state_late": {
+   "reasons": [
+    "manifest.freshness.state: 'late' not in ['fresh', 'stale', 'failed']"
+   ],
+   "refused": true
+  },
+  "2_listed_file_missing": {
+   "reasons": [
+    "outcomes.json: listed but absent"
+   ],
+   "refused": true
+  },
+  "2_one_byte_changed_unhashed": {
+   "reasons": [
+    "issued-forecasts.json: its SHA-256 or size differs from the manifest",
+    "the issued forecast of the artifact's day is not the artifact's"
+   ],
+   "refused": true
+  },
+  "2_unreadable_json_rehashed": {
+   "reasons": [
+    "outcomes.json: not readable JSON (Expecting value: line 1 column 12 (char 11))"
+   ],
+   "refused": true
+  },
+  "2_unreadable_npz_rehashed": {
+   "reasons": [
+    "A1-2026-09-05.npz: not readable (BadZipFile)"
+   ],
+   "refused": true
+  },
+  "3_unlisted_file_served": {
+   "reasons": [
+    "unlisted.json: served but not listed in the manifest"
+   ],
+   "refused": true
+  },
+  "4_outcomes_fail_their_schema": {
+   "reasons": [
+    "outcomes.json.prices[0]: unexpected extra"
+   ],
+   "refused": true
+  },
+  "4_wrong_kind": {
+   "reasons": [
+    "artifact-arrays.npz: listed as series, expected fitted_artifact"
+   ],
+   "refused": true
+  },
+  "5_training_window_bit_flipped": {
+   "reasons": [
+    "A1-2026-09-05.npz: not readable (BadZipFile)"
+   ],
+   "refused": true
+  },
+  "5_training_window_meta_changed": {
+   "reasons": [
+    "A1: the payload differs from its recorded identity"
+   ],
+   "refused": true
+  },
+  "6_future_label_leak_target_day_price": {
+   "reasons": [
+    "A1: the target day's outcome is present"
+   ],
+   "refused": true
+  },
+  "6_released_error_after_d_minus_2": {
+   "reasons": [
+    "B0: b0_buffer holds a day not released under D-2"
+   ],
+   "refused": true
+  },
+  "7_artifact_identity_altered": {
+   "reasons": [
+    "artifact.json: artifact identity differs"
+   ],
+   "refused": true
+  },
+  "7_issued_forecast_not_the_artifacts": {
+   "reasons": [
+    "the issued forecast of the artifact's day is not the artifact's"
+   ],
+   "refused": true
+  },
+  "7_manifest_names_another_artifact": {
+   "reasons": [
+    "the manifest names another artifact"
+   ],
+   "refused": true
+  },
+  "identity_package_altered": {
+   "reasons": [
+    "the manifest's package is not the frozen one"
+   ],
+   "refused": true
+  },
+  "identity_policy_altered": {
+   "reasons": [
+    "the manifest's policy identity is not the frozen one"
+   ],
+   "refused": true
+  },
+  "r7_verifier_raises": {
+   "reasons": [
+    "the verifier raised KeyError: the record is refused (R7)"
+   ],
+   "refused": true
+  },
+  "recompute_mismatch": {
+   "reasons": [
+    "the recomputation does not match the committed records: a product failure"
+   ],
+   "refused": true
+  },
+  "red_line_series_past_the_boundary": {
+   "reasons": [
+    "a served delivery day lies after the development boundary (the red line, \u00a724.2)"
+   ],
+   "refused": true
+  }
+ },
+ "served_bundle": true,
+ "variants": {
+  "mismatch": {
+   "publishable": false,
+   "reason": "the recomputation does not match the committed records: a product failure"
+  },
+  "prices": {
+   "publishable": true,
+   "reason": null
+  },
+  "seed": {
+   "publishable": false,
+   "reason": "the served identity is not the frozen one, or the red line is crossed"
+  },
+  "tampered": {
+   "publishable": false,
+   "reason": "the bundle does not verify (cp17.schema.verify_bundle, R7)"
+  }
+ }
+}

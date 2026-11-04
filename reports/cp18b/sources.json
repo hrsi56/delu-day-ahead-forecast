@@ -1,0 +1,53 @@
+{
+ "fitted_arrays": {
+  "params_sha256_equal_for_all_members": true,
+  "quantiles_equal_to_the_artifact": true,
+  "seconds": 82.2,
+  "sha256": "1fa09a0b54ab1020481292795c052cfc13801e4d2604e1d28a81bd8ec6a1d0a6",
+  "what": "artifact-arrays.npz of 2026-09-05's issued A1 fit: the dry run deleted its arrays before upload (daily.yml), so the fit was rerun under the issuing host (Pyodide 0.28.0 in Node.js v26.7.0, CP17_EXPORT=1) on the issued payload, and checked against the issued artifact"
+ },
+ "payloads": {
+  "rebuild_equal_to_the_cached_build_file_by_file": true,
+  "rebuild_peak_rss_bytes": 1879982080,
+  "rebuild_seconds": 96.5,
+  "rebuilt_manifest_sha256": "9d35aaa2d6181cc1cf1ec9b9f18dd34d3330db39e12bf9cf4e5fae0549bfd9a2",
+  "rebuilt_sources": {
+   "A1-2026-09-05": "rebuilt by the live-input builder",
+   "B0-2026-08-31": "rebuilt by the live-input builder",
+   "B0-2026-09-01": "rebuilt by the live-input builder",
+   "B0-2026-09-02": "rebuilt by the live-input builder",
+   "B0-2026-09-03": "rebuilt by the live-input builder",
+   "B0-2026-09-05": "rebuilt by the live-input builder"
+  },
+  "what": "the served training windows (A1 for 2026-09-05, B0 for each issued day): taken from the dry runs' payload folders by the payload hash each day's record holds, and rebuilt once with no cache by the live-input builder (cp18.live_inputs) from the store's states and CP-18a's recorded responses"
+ },
+ "schema": "cp18b-sources-v1",
+ "store": {
+  "equal_to_the_run_results_sha256": true,
+  "files": {
+   "store/head.json": "53e174055ccb3fe4a5acb5b36d52837ab2b6eaf7de3431b195cc418a6369c642",
+   "store/issued/2026-08-31/artifact.json": "363c0bec20c02762d85bb2c0de8907a734e2921260b0c0d216cab2fd7472b836",
+   "store/issued/2026-08-31/record.json": "c5ec88cb3b104f82493b873f6024c5b47598b746c37750bfaa9351542194d43b",
+   "store/issued/2026-09-01/artifact.json": "79d184471d84025cdd2597a93c9c221c15727396e8c12a7588ce5686c4883474",
+   "store/issued/2026-09-01/record.json": "01c66b5ec0a3e2eaf61601a4f5fad64a106c9684f336253a9b3a1c61d189042e",
+   "store/issued/2026-09-02/artifact.json": "0174635e825903d8d036c2e75b6195b995e0017c5a3a9f88c81acfa91bf186fb",
+   "store/issued/2026-09-02/record.json": "c214ed84dbab86457f861d5f428dbc12edb4c5c51aab729b63192f121f39f602",
+   "store/issued/2026-09-03/artifact.json": "7414d56aab9fa9c01acf9ac5564b898570d5151886bd3f2ced6010b1a4edee32",
+   "store/issued/2026-09-03/record.json": "76d1097040c76098bcc74dc71d92a368c2736af5fa2d836e0df197799fbcfb06",
+   "store/issued/2026-09-05/artifact.json": "1ff2f97c1e153f539da241e4cffb0ca9acd262307bacec3fc6467cf36a012e70",
+   "store/issued/2026-09-05/record.json": "9452b70f193271106f09e6f5b1a229995bd5c2679514e44b674a90e762eefbae",
+   "store/ledger.jsonl": "4d3e3523906643a7de78da78f72f56337d3c64472f57bbc19c050c49a8bcfc94",
+   "store/runs/gh-41185674168-1.json": "049bd80f5691846a8c2b8be7fa30bd6d37c60fd965f6f618622c0e59f33003da",
+   "store/runs/gh-41204328732-1.json": "1a3ffefb80753ae36f3666f07cb2b655168caa3ab4bf877f4053fc777492a643",
+   "store/states/2026-08-31.json": "cb571a6cf20a5f1cc0f485d07bcf2ee6de2872dc3ace852a813c7c3794110a92",
+   "store/states/2026-09-01.json": "ddace624a11b5f5735ab0f4d3efb13602d52a25fadc1be89a47116b15663b203",
+   "store/states/2026-09-02.json": "085e603298788d8b10274aa29ace34eae2673a04cb2f970514f93792294ff5ea",
+   "store/states/2026-09-03.json": "866f81197147607b4f9c74fc908a8710c0645d057cc897c4e5cf11cbd5db2977",
+   "store/states/2026-09-05.json": "454e469805d7aec398b26281c109740d0384fdfa5693d7d4fc9e87ea40af669d",
+   "store/states/genesis-2026-08-31.json": "73c6aede9418477f424cde8170ede35993f3668604ef95646aa2cc9180f20282"
+  },
+  "path": "reports/cp18b/dryrun/store",
+  "run_results_sha256_file": "feef486e7d645ded2d30bde4d9705e573c60daaa7854f8071ff5804ceeac31ff",
+  "what": "the dry runs' store carried out of CP-18a's runner run 41204328732 (hrsi56/delu-pipeline-dryrun): issued 2026-08-31 to 2026-09-03 (run 41185674168) and 2026-09-05 after a rehearsed carry over 2026-09-04"
+ }
+}

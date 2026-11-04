@@ -97,6 +97,34 @@ def freshness(store: LiveStore, now: datetime) -> dict:
             'target_cause': (item or {}).get('cause')}
 
 
+def not_issued(store: LiveStore, fresh: dict) -> list[dict]:
+    """Every recorded day that is not issued, within the issued record and up to the target day, with its cause."""
+    from . import causes
+    out = []
+    for day, item in sorted(store.days().items()):
+        if item['status'] == 'issued':
+            continue
+        if item['status'] == 'outside':
+            text = 'outside the issued record (' + item['note'] + ')'
+        elif item.get('cause'):
+            text = causes.text(item['cause'])
+        else:
+            text = 'cause not recorded'
+        out.append({'day': day, 'status': item['status'], 'cause': item.get('cause'), 'text': text})
+    if fresh['state'] == 'stale':
+        out.append({'day': fresh['target_day'], 'status': 'not decided yet', 'cause': None,
+                    'text': 'not issued yet: no run has decided it'})
+    return out
+
+
+def evidence_label(gaps: list[dict]) -> str:
+    """The manifest's evidence label, then each day not issued with its cause: the frozen manifest's one free-text
+    field (a dedicated field would change the frozen schema)."""
+    if not gaps:
+        return EVIDENCE_LABEL
+    return EVIDENCE_LABEL + '; not issued: ' + '; '.join(f"{g['day']}, {g['text']}" for g in gaps)
+
+
 def served_artifact(entries: list[dict], fresh: dict) -> dict:
     """The manifest's artifact: the target day's failed issuance when its chain failed, else the latest issued day's."""
     by_day = {e['day']: e for e in entries}
@@ -256,6 +284,7 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
     store.verify()
     entries = issued_days(store)
     fresh = freshness(store, now)
+    gaps = not_issued(store, fresh)
     chosen = served_artifact(entries, fresh)
     artifact = chosen['artifact']
     out.mkdir(parents=True, exist_ok=True)
@@ -319,7 +348,8 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
         files.append({'path': path.name, 'sha256': sha(path.read_bytes()), 'bytes': path.stat().st_size, 'kind': kind})
     identity = json.loads((root / MANIFEST).read_text())
     manifest = {'schema': 'cp17-manifest-v1',
-                'product': {'name': 'delu-day-ahead-policy', 'designated_policy': 'A1', 'evidence_label': EVIDENCE_LABEL},
+                'product': {'name': 'delu-day-ahead-policy', 'designated_policy': 'A1',
+                            'evidence_label': evidence_label(gaps)},
                 'policy': {'policy_identity_sha256': identity['policy_identity_sha256'],
                            'package_sha256': identity['policy_identity']['code']['package_sha256'],
                            'issuing_host': ISSUING_HOST},
@@ -329,7 +359,7 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
                 'freshness': {k: fresh[k] for k in ('state', 'as_of_day', 'latest_issued_day')}, 'files': files}
     dump(out / 'manifest.json', manifest)
     return {'schema': SCHEMA, 'run_id': run_id, 'now': now.isoformat(), 'out': str(out),
-            'manifest_sha256': sha((out / 'manifest.json').read_bytes()), 'freshness': fresh,
+            'manifest_sha256': sha((out / 'manifest.json').read_bytes()), 'freshness': fresh, 'not_issued': gaps,
             'store_head': store.verify()['entry_sha256'], 'days': store.days(),
             'served_artifact': {'day': artifact['delivery_day'], 'sha256': artifact['artifact_sha256'],
                                 'arrays': arrays_how},
@@ -349,20 +379,65 @@ def size(files: dict[str, bytes]) -> dict:
             'total_bytes': sum(len(v) for v in files.values())}
 
 
-def gate(files: dict[str, bytes]) -> dict:
-    """Before any publication: R7's verification, then the native recomputation check. Fails closed."""
+def identity_problems(files: dict[str, bytes], root=None) -> list[str]:
+    """The served identity against the frozen one (§16.4's altered identities): the manifest's policy identity and
+    package, and the served artifact's lineage, must be CP-17c's; and before the final test no served delivery day lies
+    after the development boundary (§24.2)."""
+    from delu_forecast.claims import REPO_ROOT
+    frozen = json.loads((Path(root or REPO_ROOT) / MANIFEST).read_text())
+    problems = []
+    try:
+        manifest = json.loads(files['manifest.json'])
+        artifact = json.loads(files['artifact.json'])
+        forecasts = json.loads(files['issued-forecasts.json'])
+        outcomes = json.loads(files['outcomes.json'])
+        served = json.loads(files['series.json']) if 'series.json' in files else None
+    except (KeyError, ValueError) as exc:
+        return [f'the identity check could not read the bundle ({type(exc).__name__})']
+    if manifest['policy']['policy_identity_sha256'] != frozen['policy_identity_sha256']:
+        problems.append("the manifest's policy identity is not the frozen one")
+    if manifest['policy']['package_sha256'] != frozen['policy_identity']['code']['package_sha256']:
+        problems.append("the manifest's package is not the frozen one")
+    if manifest['policy']['issuing_host'] != ISSUING_HOST:
+        problems.append("the manifest's issuing host is not the frozen one")
+    lineage = artifact.get('lineage') or {}
+    policy = artifact.get('issued_policy')
+    if policy:
+        stem = f"{policy}-{artifact['delivery_day']}.json"
+        meta = json.loads(files[stem]) if stem in files else {}
+        if meta.get('payload_sha256') != (lineage.get('inputs') or {}).get(policy):
+            problems.append("the served training window is not the issued fit's (its payload identity differs)")
+    if lineage.get('policy_identity_sha256') != frozen['policy_identity_sha256'] or \
+            lineage.get('code_sha256') != frozen['policy_identity']['code']['package_sha256']:
+        problems.append("the served artifact's lineage is not the frozen policy's")
+    days = [d['delivery_day'] for d in forecasts.get('days', [])] + [p['delivery_day'] for p in outcomes.get('prices', [])]
+    days += [manifest['artifact']['delivery_day'], manifest['freshness']['as_of_day'], manifest['freshness']['latest_issued_day']]
+    if served is not None:
+        days.append(served['last_day'])
+    if any(date.fromisoformat(d) > guard.BOUNDARY for d in days):
+        problems.append('a served delivery day lies after the development boundary (the red line, §24.2)')
+    return problems
+
+
+def gate(files: dict[str, bytes], root=None) -> dict:
+    """Before any publication: R7's verification, the frozen identity and the red line, then the native
+    recomputation check. Fails closed."""
     from . import r7
     verified = r7.verify(files)
     if not verified['accepted']:
-        return {'publishable': False, 'verify': verified, 'recompute': None,
+        return {'publishable': False, 'verify': verified, 'recompute': None, 'identity': None,
                 'reason': 'the bundle does not verify (cp17.schema.verify_bundle, R7)'}
+    identity = identity_problems(files, root)
+    if identity:
+        return {'publishable': False, 'verify': verified, 'recompute': None, 'identity': identity,
+                'reason': 'the served identity is not the frozen one, or the red line is crossed'}
     try:
         check = G.recompute(files)
     except Exception as exc:        # a recomputation that cannot run blocks, never passes
         return {'publishable': False, 'verify': verified, 'recompute': {'error': f'{type(exc).__name__}: {exc}'},
-                'reason': 'the recomputation could not run: a product failure'}
+                'identity': [], 'reason': 'the recomputation could not run: a product failure'}
     ok = check['match'] and not check['blocks_publication']
-    return {'publishable': ok, 'verify': verified, 'recompute': check,
+    return {'publishable': ok, 'verify': verified, 'recompute': check, 'identity': [],
             'reason': None if ok else 'the recomputation does not match the committed records: a product failure'}
 
 
@@ -380,6 +455,14 @@ def record(live, value: dict, verdict: dict) -> dict:
         as_of_day=as_of, manifest_sha256=value['manifest_sha256'], publishable=verdict['publishable'])
 
 
+class _NoRetrieval:
+    """A transport that retrieves nothing (the pending control): every request is a miss."""
+
+    def send(self, request):
+        from .live.transport import ReplayMiss
+        raise ReplayMiss('retrieval disabled for this control')
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog='python -m cp18.bundle')
     ap.add_argument('--root', default='.', type=Path, help='the checkout holding the live store and the input archive')
@@ -393,6 +476,8 @@ def main(argv=None) -> int:
     ap.add_argument('--cache', action='append', default=[], type=Path, help='folders holding payloads already built')
     ap.add_argument('--run-id', default='dry-run')
     ap.add_argument('--record', type=Path, help='write the build record and the gate here')
+    ap.add_argument('--no-retrieval', action='store_true', help='reconcile from the archives only (a control: no '
+                                                                     'outcome retrieval, so unarchived days stay pending)')
     ap.add_argument('--commit-records', action='store_true', help='append to live/evaluation and live/bundles')
     args = ap.parse_args(argv)
     now = plan.parse_now(args.now)
@@ -400,8 +485,9 @@ def main(argv=None) -> int:
     live = (args.live or root / 'live').resolve()
     value = build(root=root, store_dir=live / 'store', archive=live / 'inputs', outcomes_dir=live / 'outcomes', now=now,
                   out=args.out, arrays=args.arrays, run_id=args.run_id, caches=args.cache,
-                  project=args.project.resolve(), recorded=args.recorded)
-    verdict = gate(read(args.out))
+                  project=args.project.resolve(), recorded=args.recorded,
+                  transport=_NoRetrieval() if args.no_retrieval else None)
+    verdict = gate(read(args.out), root)
     value['gate'] = {k: v for k, v in verdict.items()}
     if args.commit_records:
         EV.commit_daily(live, date.fromisoformat(value['freshness']['as_of_day']), value['daily_windows'],

@@ -152,6 +152,10 @@ class Outcomes:
         if _utc(price_publication(day)['utc']) > now or self.own.has(day):
             return None
         fetched = smard.fetch(transport, 'price', [day])
+        if not any(ex.role == 'bucket' and ex.response is not None and ex.response.status == 200
+                   for ex in fetched.exchanges):
+            return {'day': str(day), 'records': [], 'problems': fetched.problems or ['nothing retrieved'],
+                    'archived': False}       # a failed retrieval archives nothing, so a later run retries it
         rendered = [ex.response.provenance == 'rendered' for ex in fetched.exchanges if ex.response is not None]
         records = AR.store_market(self.own, day, fetched, development_snapshot=bool(rendered) and all(rendered))
         return {'day': str(day), 'records': [r['id'] for r in records], 'problems': fetched.problems}

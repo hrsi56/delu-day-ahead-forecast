@@ -1,0 +1,196 @@
+{
+ "closed": [],
+ "commits": [
+  {
+   "pushed": "06258dccf4ca00d0c1f08f4b64ae306b1c3f7def"
+  }
+ ],
+ "days": {
+  "2026-09-05": {
+   "artifact_sha256": "c18db6d544bcf4cdbd446082d755107783e650972a4b2069008625e04d47c8ac",
+   "cause": null,
+   "cause_text": null,
+   "display": "successful daily fit",
+   "inputs": {
+    "availability": [
+     {
+      "admitted": true,
+      "basis": "development day built by cp17.tools.payloads from the recorded snapshot (pulled 2026-09-08): admitted under the tier register and the Owner's ruling 1 (the load forecast's recorded exception for the stored development history); development data only",
+      "cutoff_utc": "2026-09-04T09:00:00+00:00",
+      "input": "all"
+     }
+    ],
+    "data_refresh_utc": "",
+    "gfs_available": true,
+    "payload_sha256": {
+     "A1": "d2b4f19c2b875bb2aec01f6f51f4d333e2330fca753899d734582dea1fba7116",
+     "B0": "50d3d2767e91c27742dd19779c5bdb96a6ea15bb59a8404a6ca2d7825689df5e",
+     "v2": "a4be4e0e5e7c5ff54944d82394d91bd077adb1c549ed6c9813a433d959d5581b",
+     "v4": "0f3abcb1700630e919263e5c869cab26cb1c07452821fbc0e77c390522a3de41"
+    },
+    "reasons": [],
+    "search_file": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+    "shown": true,
+    "source": "prebuilt development payloads"
+   },
+   "policy": "A1",
+   "process_seconds_sum": 393.625262667,
+   "seconds": 395.093126916,
+   "started_utc": "2026-10-31T13:13:27+00:00",
+   "status": "issued"
+  }
+ },
+ "exit": 0,
+ "finished_utc": "2026-10-31T13:20:03+00:00",
+ "gate": {
+  "checks": [
+   {
+    "check": "pins",
+    "exit": 0,
+    "manifest": "docs/track-b/evidence/cp-17c/freeze-manifest.json",
+    "output": [
+     "verified"
+    ],
+    "passed": true,
+    "problems": [],
+    "seconds": 5.255355291000001
+   },
+   {
+    "check": "binary",
+    "node": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/tools/node-v26.7.0-official/node-v26.7.0-darwin-arm64/bin/node",
+    "passed": true,
+    "pins": {
+     "binary": {
+      "bytes": 145238560,
+      "sha256": "a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df"
+     },
+     "tarball": {
+      "bytes": 57622243,
+      "name": "node-v26.7.0-darwin-arm64.tar.gz",
+      "sha256": "7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4"
+     }
+    },
+    "problems": [],
+    "seconds": 0.21061900000000833,
+    "tarball": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/tools/node-v26.7.0-official/dl/node-v26.7.0-darwin-arm64.tar.gz"
+   },
+   {
+    "check": "machine",
+    "described": {
+     "cpu_count": 3,
+     "cpu_model": "Apple M1 (Virtual)",
+     "hardware_model": "VirtualMac2,1",
+     "machine": "arm64",
+     "memory_bytes": 7516192768,
+     "os_version": "26.6.2",
+     "physical_cores": 3,
+     "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+     "runner_env": {
+      "GITHUB_ACTIONS": "true",
+      "GITHUB_JOB": "pipeline",
+      "GITHUB_REPOSITORY": "hrsi56/delu-pipeline-dryrun",
+      "GITHUB_RUN_ATTEMPT": "1",
+      "GITHUB_RUN_ID": "41204328732",
+      "GITHUB_SHA": "547313276e5e6cafb911fe339e7376036e03168c",
+      "ImageOS": "macos26",
+      "ImageVersion": "20261013.0424.1",
+      "RUNNER_ARCH": "ARM64",
+      "RUNNER_ENVIRONMENT": "github-hosted",
+      "RUNNER_NAME": "GitHub Actions 1000001314",
+      "RUNNER_OS": "macOS"
+     },
+     "system": "Darwin"
+    },
+    "image_version": "20261013.0424.1",
+    "kind": "GitHub-hosted runner",
+    "passed": true,
+    "problems": [],
+    "seconds": 0.127210166999987
+   },
+   {
+    "attempt": {
+     "cause": null,
+     "partial": null,
+     "policy": "A1",
+     "resources": {
+      "limits": {
+       "peak_bytes": 4294967296,
+       "wall_seconds": 900
+      },
+      "peak_bytes": 859488256,
+      "wall_seconds": 142.683991542
+     },
+     "seconds": 142.88850391699998,
+     "status": "ok"
+    },
+    "check": "canary",
+    "executed_files": {
+     "cp15/__init__.py": "51729f693956953e59a18758f88755165cc0f5b5dad9194517599128181504c7",
+     "cp15/data.py": "c76fb1d78c6bbd17d1a1172ace6548a6f41711d138ce4b055b9c80cf0edabff3",
+     "cp17/__init__.py": "6d590a0a1f4c1c63bfad9bfadf08855082aa969290d55587d9237d1ab5ba90c2",
+     "cp17/attribution.py": "ec21364a8e16445fa097cd903e5953aa48d91b8b2e934cb883b2b54b1b3d54de",
+     "cp17/dailyfit.py": "65b36b86fbd5b096f6dc9657086928f8592db9e4616ad97be6a6cafd5926522f",
+     "cp17/host/driver.py": "b22f4db0d03e98122350faf164a111a48a5fed296816b62569ea325fbe630a68",
+     "cp17/stubs/absent/holidays.py": "252bd4f757d5926a5a61940beb783eaabdb7eaaff5c2c847f8e1a64da53b2559",
+     "cp17/stubs/fallback/resource.py": "4ff3227ba5afeec42b99cbec0c78f669512a72a733806c7757699f9223929581",
+     "cp24/__init__.py": "01e59a51ef166fcf206bdaad67703ee440c569be04d16800f4db4ed0f25c33e4",
+     "cp24/ddnn2.py": "a70cbea6e9533ffb0c4030a8c40b7c6978f9a218f17213c30fbb5c6850827067",
+     "cp24/design.py": "585b0673846e0e459eb700be24d12a46554172ee2c52600d86947645a0d03190",
+     "cp24/member.py": "d5df1ef4f81a3ce5fe01349588259aa32ce6fd32064581f1c5947822431538ec",
+     "delu_forecast/__init__.py": "c39e1809e51a396dd0c88f8af8ef31ee3cb125637e8edccad76486be4b089fa7",
+     "delu_forecast/baselines.py": "4e234cda6d09366b6136b2c2f4635dabdaa8aefe8d85ef0da41d9ad4912eea52",
+     "delu_forecast/features.py": "114cc25c8e93d0ddf2cec56f09674a484038983240d8d22d32bcb0f011a5bb3b",
+     "delu_forecast/folds.py": "71743a4f677507afea215902ee82a8e9f990fc128f4456afc47c3f4e0bd11078",
+     "delu_forecast/ingest.py": "e7a1cd415733eccd4460a49ba3d3ea465a90259e92ae657436b1baf3bd0ce04c",
+     "delu_forecast/partitions.py": "9633b4cce7a6538bb726ead77b140db37d2c503b727896214d54bb47b80d4f89"
+    },
+    "expected_quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "folder": "/Users/runner/work/_temp/results/run/canary/A1-2026-09-06-0m310pw0",
+    "node": "v26.7.0",
+    "node_execpath": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/tools/node-v26.7.0-official/node-v26.7.0-darwin-arm64/bin/node",
+    "passed": true,
+    "payload_sha256": "63ce7f452987d453cd55635b5739dfc579ade191c67b31e888fcc3884dd043a4",
+    "problems": [],
+    "pyodide": "0.28.0",
+    "quantiles_sha256": "4e6abb02fbb02aa8ef202207f21b76bc33b34c37d025a0a93a491135ea43cea5",
+    "seconds": 142.90439708300002
+   }
+  ],
+  "consequence": "the run may issue",
+  "failed": null,
+  "not_run": [],
+  "order": [
+   "pins",
+   "binary",
+   "machine",
+   "canary"
+  ],
+  "passed": true,
+  "python": "3.13.15",
+  "schema": "cp17c-host-checks-v1",
+  "started_utc": "2026-10-31T13:10:58+00:00"
+ },
+ "host_kind": "runner",
+ "lookback": [
+  "2026-09-02",
+  "2026-09-03",
+  "2026-09-04"
+ ],
+ "machine": {
+  "github_run_id": "41204328732",
+  "machine": "arm64",
+  "runner_image": "20261013.0424.1",
+  "system": "Darwin"
+ },
+ "mode": "dry-run",
+ "outcome": "done",
+ "planned": [
+  "2026-09-05"
+ ],
+ "run_id": "gh-41204328732-1",
+ "schema": "cp18a-run-v1",
+ "seconds": 544.604660583,
+ "started_utc": "2026-10-31T13:10:58+00:00",
+ "target_day": "2026-09-05",
+ "wall_clock": "2026-09-04T12:00:00+02:00"
+}
