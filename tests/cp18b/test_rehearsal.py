@@ -13,7 +13,7 @@ from pathlib import Path
 
 from cp18 import bundle as B, evaluation as EV
 from cp18.records import RecordLog
-from cp18b.support18b import BUNDLE, ROOT, build
+from cp18b.support18b import issuing_platform, BUNDLE, ROOT, build
 
 REHEARSAL = ROOT / 'reports/cp18b/rehearsal'
 RUNS = (('run-1', '2026-09-04T12:00:00+02:00'), ('run-2', '2026-09-05T10:00:00+02:00'))
@@ -23,6 +23,7 @@ def tree(folder: Path) -> dict[str, bytes]:
     return {str(p.relative_to(folder)): p.read_bytes() for p in sorted(folder.rglob('*')) if p.is_file()}
 
 
+@issuing_platform
 def test_the_rehearsal_reproduces_its_committed_records(live, tmp_path):
     for run, now in RUNS:
         value = build(live, tmp_path / run, now=datetime.fromisoformat(now), run_id=f'dry-run-{run}')

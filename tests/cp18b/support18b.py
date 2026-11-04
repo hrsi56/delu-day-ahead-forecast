@@ -24,6 +24,16 @@ PROJECT = Path(os.environ.get('CP17_PROJECT_ROOT') or '/Users/djourno/Downloads/
 DOWNLOADS = PROJECT / '.local/artifacts/cp-18a/downloads'
 
 
+import platform
+
+#: Native floating-point results (B0's shadow arithmetic, the committed records' reals) are pinned on the issuing host's
+#: platform; a byte-equality test over them runs there only (CP-18a's CI repair, a1625b1a).
+issuing_platform = pytest.mark.skipif(
+    (platform.system(), platform.machine()) != ('Darwin', 'arm64'),
+    reason='the bytes are pinned on the issuing host platform, darwin-arm64 (the macos-26 runner and the Owner\'s Mac); '
+           'native floating point elsewhere may differ in the last bit, which the recomputation tolerance covers')
+
+
 def local_only(path: Path, what: str):
     return pytest.mark.skipif(not Path(path).exists(), reason=f'{what} is local-only ({path} is absent)')
 

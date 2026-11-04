@@ -14,7 +14,7 @@ import pytest
 
 from cp17.issue import canonical_hours
 from cp18 import bundle as B, controls as C, evaluation as EV, spaceglue as G
-from cp18b.support18b import ROOT, build, load
+from cp18b.support18b import issuing_platform, ROOT, build, load
 
 RULES = ('1_manifest_invalid_state_late', '2_listed_file_missing', '2_one_byte_changed_unhashed',
          '2_unreadable_json_rehashed', '2_unreadable_npz_rehashed', '3_unlisted_file_served', '4_wrong_kind',
@@ -46,6 +46,7 @@ def test_a_mismatched_recomputation_shows_both_values_and_blocks_publication(fil
     assert row['mismatches'][0]['path'] == 'pooled/mae_eur'
 
 
+@issuing_platform
 def test_a_pending_outcome_stays_unscored(live, tmp_path):
     class Nothing:
         def send(self, request):
@@ -61,6 +62,7 @@ def test_a_pending_outcome_stays_unscored(live, tmp_path):
     assert B.gate(B.read(tmp_path / 'b'), ROOT)['publishable']
 
 
+@issuing_platform
 def test_a_stale_and_a_failed_artifact_are_shown_as_such(live, tmp_path):
     from cp18.store import LiveStore
     later = datetime.fromisoformat('2026-09-06T10:00:00+02:00')

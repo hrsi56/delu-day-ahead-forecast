@@ -13,7 +13,7 @@ import pytest
 from cp17.schema import FILE_KIND, KINDS, TRAINING_FILE
 from cp18 import bundle as B, spaceglue as G
 from cp18.store import LiveStore
-from cp18b.support18b import BUNDLE, DOWNLOADS, NOW, ROOT, STORE, build, load, local_only
+from cp18b.support18b import issuing_platform, BUNDLE, DOWNLOADS, NOW, ROOT, STORE, build, load, local_only
 
 
 def test_the_committed_bundle_verifies_and_passes_the_gate(files):
@@ -31,6 +31,7 @@ def test_the_seven_kinds_and_nothing_else(files):
         assert f['kind'] == (FILE_KIND.get(f['path']) or ('training_window' if TRAINING_FILE.match(f['path']) else None))
 
 
+@issuing_platform
 def test_the_build_is_deterministic_and_reproduces_the_committed_bundle(live, tmp_path):
     record = build(live, tmp_path / 'bundle')
     assert B.read(tmp_path / 'bundle') == B.read(BUNDLE)
@@ -59,6 +60,7 @@ def test_every_issued_day_is_served_from_its_own_artifact(files):
         assert d['issuing_artifact_sha256'] == e['artifact']['artifact_sha256'] and d['quantiles'] == e['artifact']['quantiles']
 
 
+@issuing_platform
 def test_freshness_fresh_stale_failed_and_the_not_issued_days(live, tmp_path):
     fresh = build(live, tmp_path / 'fresh')
     assert fresh['freshness']['state'] == 'fresh' and fresh['freshness']['as_of_day'] == '2026-09-05'
@@ -87,6 +89,7 @@ def test_the_size_budget_is_measured_and_disclosed(files):
     assert size['first_visit_bundle_bytes'] < size['training_window_bytes'] < size['on_request_bytes']
 
 
+@issuing_platform
 def test_b0_context_equals_the_issuing_hosts_shadow(files):
     store = LiveStore(STORE)
     shadows = {e['day']: e['record']['shadows']['B0']['quantiles_sha256'] for e in B.issued_days(store)}
