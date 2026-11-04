@@ -38,8 +38,13 @@ def synthetic_state(origin: date) -> ShadowStates:
     return ShadowStates.from_buffers(origin, buffers)
 
 
+IDENTITY = {'GIT_AUTHOR_NAME': 't', 'GIT_AUTHOR_EMAIL': 't@t', 'GIT_COMMITTER_NAME': 't', 'GIT_COMMITTER_EMAIL': 't@t'}
+
+
 def git(repo: Path, *args: str) -> str:
-    return subprocess.run(['git', '-C', str(repo), *args], capture_output=True, text=True, check=True).stdout.strip()
+    # The identity is explicit: a GitHub-hosted runner has no global Git identity (found at CP-18a's landing).
+    return subprocess.run(['git', '-C', str(repo), *args], capture_output=True, text=True, check=True,
+                          env={**__import__('os').environ, **IDENTITY}).stdout.strip()
 
 
 @pytest.fixture
