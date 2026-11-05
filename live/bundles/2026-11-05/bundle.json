@@ -1,0 +1,123 @@
+{
+ "as_of_day": "2026-11-05",
+ "manifest": {
+  "artifact": {
+   "artifact_sha256": "98c1a543c0663c443db5229a1243ed5604c6be1adf131e1ed7c0c001fb8a571e",
+   "delivery_day": "2026-11-06",
+   "display": "successful daily fit",
+   "issued_policy": "A1"
+  },
+  "files": [
+   {
+    "bytes": 4545,
+    "kind": "training_window",
+    "path": "A1-2026-11-06.json",
+    "sha256": "be6af9176a2de7707195656907756b046b6a58bf5f937cdfd576e4239b3573bb"
+   },
+   {
+    "bytes": 542299,
+    "kind": "training_window",
+    "path": "A1-2026-11-06.npz",
+    "sha256": "55e79dded91c9a9a6cfc53100a93f47c2b18eb6e4a7a3a3f69a36b886a25c984"
+   },
+   {
+    "bytes": 13328,
+    "kind": "training_window",
+    "path": "B0-2026-11-06.json",
+    "sha256": "e99b2cb34008d2d74b5c8de5cf4f58bee2c21d423e30d789535a1292616e51a4"
+   },
+   {
+    "bytes": 2450,
+    "kind": "training_window",
+    "path": "B0-2026-11-06.npz",
+    "sha256": "6e854b7f1b73f43f95a84e89774361826f765a89250e5a38e3f18857e3c61a4b"
+   },
+   {
+    "bytes": 2133971,
+    "kind": "fitted_artifact",
+    "path": "artifact-arrays.npz",
+    "sha256": "6fdb3a4322fde90e2cc02bf37ae2ed893b8d3793683d6e1f5a201207d51555e2"
+   },
+   {
+    "bytes": 7976,
+    "kind": "fitted_artifact",
+    "path": "artifact.json",
+    "sha256": "015e84672c65de5a4cc3e1dcf8ab03dc48e7407a74c67ff7558ecd97c518532e"
+   },
+   {
+    "bytes": 340287,
+    "kind": "evaluation",
+    "path": "evaluation.json",
+    "sha256": "c2727a05b039bcb4d0bb3033a68bf34bedb9dd2bc36bb202a75292952ee52ea0"
+   },
+   {
+    "bytes": 4171,
+    "kind": "issued_forecasts",
+    "path": "issued-forecasts.json",
+    "sha256": "eae08edd71d4fb57cd588b17cc5c7c62a597622240e0dc8bcecb3509b34244b1"
+   },
+   {
+    "bytes": 7354,
+    "kind": "outcomes",
+    "path": "outcomes.json",
+    "sha256": "47efb40b49fb4b6ca655529da42b702a247f703b986bc7196b2458639e399b16"
+   },
+   {
+    "bytes": 2324896,
+    "kind": "series",
+    "path": "series.json",
+    "sha256": "95bd574fe9f239269901fd9f7f21d6fcd740f1646358bb314d2a3a55c1b486ab"
+   }
+  ],
+  "freshness": {
+   "as_of_day": "2026-11-05",
+   "latest_issued_day": "2026-11-06",
+   "state": "fresh"
+  },
+  "policy": {
+   "issuing_host": "Pyodide 0.28.0 in Node.js v26.7.0",
+   "package_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+   "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc"
+  },
+  "product": {
+   "designated_policy": "A1",
+   "evidence_label": "A1 \u00b7 final candidate \u00b7 pending 4.7T; the live product's own issued days from 2026-11-03 (the Owner's decision 28), prospective evaluation in progress, never 4.7T's issuance or score; the development-period displays stay on days through 2026-09-06; not issued: 2026-11-03, a live day's inputs that cannot be shown to precede its cutoff; 2026-11-04, a live day's inputs that cannot be shown to precede its cutoff; 2026-11-05, a live day's inputs that cannot be shown to precede its cutoff",
+   "name": "delu-day-ahead-policy"
+  },
+  "schema": "cp17-manifest-v1",
+  "times": {
+   "data_refresh_utc": "2026-11-05T21:46:40+00:00",
+   "issuance_utc": "2026-11-05T10:00:00+00:00",
+   "last_training_utc": "2026-11-05T10:00:00+00:00"
+  }
+ },
+ "manifest_sha256": "bffb9eba9051bf432c278b1f076a7c73e6b6a73ad48d4a1158eb2e09f4f6c8ea",
+ "publishable": true,
+ "recompute_match": true,
+ "run_id": "local-20261105-second-live",
+ "schema": "cp18b-bundle-record-v1",
+ "size": {
+  "first_visit_bundle_bytes": 362479,
+  "first_visit_files": {
+   "artifact.json": 7976,
+   "evaluation.json": 340287,
+   "issued-forecasts.json": 4171,
+   "manifest.json": 2691,
+   "outcomes.json": 7354
+  },
+  "on_request_bytes": 4474645,
+  "on_request_files": {
+   "B0-2026-11-06.json": 13328,
+   "B0-2026-11-06.npz": 2450,
+   "artifact-arrays.npz": 2133971,
+   "series.json": 2324896
+  },
+  "total_bytes": 5383968,
+  "training_window_bytes": 546844,
+  "training_window_files": {
+   "A1-2026-11-06.json": 4545,
+   "A1-2026-11-06.npz": 542299
+  }
+ },
+ "verify_problems": []
+}

@@ -1,0 +1,81 @@
+{
+ "day": "2026-11-06",
+ "records": [
+  {
+   "body": "bodies/d1c06d944509f701e754cb5b7fd0d4d7bb655e35b6a6e7719e03c100d8a407a9.gz",
+   "bytes": 5938,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-05T22:05:51Z",
+   "role": "index",
+   "sha256": "d1c06d944509f701e754cb5b7fd0d4d7bb655e35b6a6e7719e03c100d8a407a9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/a1152167653999a719ebe9594170e46ea764d523d78787ba8cc02b3af0370a7d.gz",
+   "bytes": 15067,
+   "covers": [
+    "2026-11-06"
+   ],
+   "document_time_utc": "2026-11-05T13:08:06Z",
+   "error": null,
+   "id": "price-smard-bucket-01",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-06": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-05T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-02",
+     "2026-11-03",
+     "2026-11-04",
+     "2026-11-05",
+     "2026-11-06",
+     "2026-11-07",
+     "2026-11-08"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1793574000000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-05T22:05:51Z",
+   "role": "bucket",
+   "sha256": "a1152167653999a719ebe9594170e46ea764d523d78787ba8cc02b3af0370a7d",
+   "source": "smard",
+   "status": 200
+  }
+ ],
+ "schema": "cp18-live-archive-day-v1"
+}
