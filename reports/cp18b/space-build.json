@@ -1,0 +1,686 @@
+{
+ "bundle": {
+  "artifact": {
+   "artifact_sha256": "c18db6d544bcf4cdbd446082d755107783e650972a4b2069008625e04d47c8ac",
+   "delivery_day": "2026-09-05",
+   "display": "successful daily fit",
+   "issued_policy": "A1"
+  },
+  "files": 19,
+  "freshness": {
+   "as_of_day": "2026-09-05",
+   "latest_issued_day": "2026-09-05",
+   "state": "fresh"
+  },
+  "manifest_sha256": "9d35aaa2d6181cc1cf1ec9b9f18dd34d3330db39e12bf9cf4e5fae0549bfd9a2",
+  "start_records": [
+   "issued-forecasts.json",
+   "outcomes.json",
+   "evaluation.json",
+   "artifact.json"
+  ]
+ },
+ "claims_rehearsal_days": [
+  "2026-08-31",
+  "2026-09-05"
+ ],
+ "claims_sha256": "73f055dfc349a1c1060fb944a5c4bc595ba5dcc1d80f72f314bda383e82b803f",
+ "files": [
+  {
+   "bytes": 382,
+   "path": ".gitattributes",
+   "sha256": "8f66b3f81007c983c7a7f7afc56439846cadaaf5fcc64ef4eb4252d12f7d70f8"
+  },
+  {
+   "bytes": 4345,
+   "path": "README.md",
+   "sha256": "f0737f74208fd13a59cbf7bb27df1fe110be32732dc28b2e3c38361374233370"
+  },
+  {
+   "bytes": 22259,
+   "path": "app/charts.js",
+   "sha256": "38d382f64adbe1cd04f4661fd690c437cc65d284c4a123be428d810dc96f030f"
+  },
+  {
+   "bytes": 9894,
+   "path": "app/claims.json",
+   "sha256": "73f055dfc349a1c1060fb944a5c4bc595ba5dcc1d80f72f314bda383e82b803f"
+  },
+  {
+   "bytes": 19851,
+   "path": "app/glue/spaceglue.py",
+   "sha256": "97eb6dc22147ce17286e0c2af1b468fa60fe2f581aed8cf76d45cbe03b58200e"
+  },
+  {
+   "bytes": 128623,
+   "path": "app/history-files.json",
+   "sha256": "0f2e09e2a7058572da7f27a74caae114862bcba6af4830c80caea4b395d5d554"
+  },
+  {
+   "bytes": 80678,
+   "path": "app/main.js",
+   "sha256": "ba3bcd7bc8b0754a7a8e49c8d8e418d456a6163101e510fab2213887163241b1"
+  },
+  {
+   "bytes": 5345,
+   "path": "app/product-worker.js",
+   "sha256": "f23782f844387580c818b9138a839a34d11913b3443b4f4bb0319395010f2b93"
+  },
+  {
+   "bytes": 8568,
+   "path": "app/style.css",
+   "sha256": "1a01f9c8eb8d200e58e46e955815edb4d637e28408819b44819374434480f2ba"
+  },
+  {
+   "bytes": 2214,
+   "path": "app/worker.js",
+   "sha256": "7b93b7dcd0be7b5ca3930ea12e03ca0c47b1181f4a7a26ea19a692eae26159de"
+  },
+  {
+   "bytes": 91835,
+   "path": "bundle/src.zip",
+   "sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94"
+  },
+  {
+   "bytes": 2384,
+   "path": "index.html",
+   "sha256": "d01407cc9bb1deb92333d6e1a7d3247b45d46d676b613eb1ea2f5b4ab063b3d3"
+  },
+  {
+   "bytes": 4545,
+   "path": "payloads/A1-2026-09-05.json",
+   "sha256": "405af75c8604db62aefee7b04be550d3dc17679db3a9c792811506dcaf3bfd59"
+  },
+  {
+   "bytes": 534419,
+   "path": "payloads/A1-2026-09-05.npz",
+   "sha256": "dc833ea4be1e51d586578b8c72050137cd8eed28ed017a47d86df7b5ec8f4c6a"
+  },
+  {
+   "bytes": 13420,
+   "path": "payloads/B0-2026-08-31.json",
+   "sha256": "f57bc81ffbf50b36a472c68b7e6f165a5927c982cf09cd10639ca0b20204de0d"
+  },
+  {
+   "bytes": 2497,
+   "path": "payloads/B0-2026-08-31.npz",
+   "sha256": "564bb319ab9135aeecc1c99e63aa920d23c654241bc9782dc004ea424330c11a"
+  },
+  {
+   "bytes": 13427,
+   "path": "payloads/B0-2026-09-01.json",
+   "sha256": "fb97d833f9c8325378a8cc2b7569e9942d1dc75c1068145317ced5058172d3ca"
+  },
+  {
+   "bytes": 2508,
+   "path": "payloads/B0-2026-09-01.npz",
+   "sha256": "5b9c86d2156c6e64429fd88b46e266675210c9ddcdd3f6479ad305bb2c4d62a4"
+  },
+  {
+   "bytes": 13408,
+   "path": "payloads/B0-2026-09-02.json",
+   "sha256": "e9aa838270abdfb9da285aacdf9219949a34f79a0b8bfc017b1350e76640821e"
+  },
+  {
+   "bytes": 2499,
+   "path": "payloads/B0-2026-09-02.npz",
+   "sha256": "9fa6a246562d3b002de791712847a3c07d8112fd537a7011c46f1ab1347768ca"
+  },
+  {
+   "bytes": 13372,
+   "path": "payloads/B0-2026-09-03.json",
+   "sha256": "b945bca628b89526c4e038afe66bb0774d451d6c14904997067b61327cee7719"
+  },
+  {
+   "bytes": 2502,
+   "path": "payloads/B0-2026-09-03.npz",
+   "sha256": "2cba7f09239b1cb33c4745a4f38fce700c11d9a98587eff8d00e8508a639653b"
+  },
+  {
+   "bytes": 13434,
+   "path": "payloads/B0-2026-09-05.json",
+   "sha256": "2af62add97732454dd40cca8c9759f029049e241c0fdb55607020049e8191cc6"
+  },
+  {
+   "bytes": 2503,
+   "path": "payloads/B0-2026-09-05.npz",
+   "sha256": "709219b019ca82e26ce4606f463b3055fc3a0f2e5b5c85367ffa10ce86fc0928"
+  },
+  {
+   "bytes": 2133942,
+   "path": "payloads/artifact-arrays.npz",
+   "sha256": "1fa09a0b54ab1020481292795c052cfc13801e4d2604e1d28a81bd8ec6a1d0a6"
+  },
+  {
+   "bytes": 8061,
+   "path": "payloads/artifact.json",
+   "sha256": "ea3ab08f7ea6c97e16e6586a703d8b4b4cff8a375697591bb89a2aab465df91a"
+  },
+  {
+   "bytes": 345404,
+   "path": "payloads/evaluation.json",
+   "sha256": "4cf264b5ea0c6e89311ad98aa40361c8d9334aaa6912d5302e0192b5e777cc36"
+  },
+  {
+   "bytes": 20605,
+   "path": "payloads/issued-forecasts.json",
+   "sha256": "dd3779117352f48dd5cb05ab7b12646d0aa98b4d731a46fad2dc262cdce0beb7"
+  },
+  {
+   "bytes": 3661,
+   "path": "payloads/manifest.json",
+   "sha256": "9d35aaa2d6181cc1cf1ec9b9f18dd34d3330db39e12bf9cf4e5fae0549bfd9a2"
+  },
+  {
+   "bytes": 28888,
+   "path": "payloads/outcomes.json",
+   "sha256": "c1eff3fa55e32c4de2c45c1c59549715dee39118581da3ddc80572f26161d5e7"
+  },
+  {
+   "bytes": 2324026,
+   "path": "payloads/series.json",
+   "sha256": "f28ce53ff1c873c70e6ec26b732da8ff79c9f23988509df6930ebc399a66c5c0"
+  },
+  {
+   "bytes": 157650,
+   "path": "pyodide/certifi-2025.6.15-py3-none-any.whl",
+   "sha256": "34f344ea116df36539073746484be3f2914f8e47fedcafde80883573b602f658"
+  },
+  {
+   "bytes": 52626,
+   "path": "pyodide/charset_normalizer-3.4.2-py3-none-any.whl",
+   "sha256": "f739b10c6fea56128c644f0a77eb664d3d48150e66c265564455e5f2da11a68e"
+  },
+  {
+   "bytes": 70442,
+   "path": "pyodide/idna-3.10-py3-none-any.whl",
+   "sha256": "f888c1ff570957d24fb2065102bc8f62ba69ede4ef641783385c8e0c2bb56984"
+  },
+  {
+   "bytes": 175432,
+   "path": "pyodide/joblib-1.4.2-py3-none-any.whl",
+   "sha256": "0442695c4d63401b25202dd7db4fb3027085612364ee5ce077a39f3329ca75a9"
+  },
+  {
+   "bytes": 960089,
+   "path": "pyodide/lightgbm-4.6.0-py3-none-pyodide_2025_0_wasm32.whl",
+   "sha256": "3d5f16949ccd99eb6fa9fa91fde7a4297b19a720bb0d6cd413656ab24730ff8e"
+  },
+  {
+   "bytes": 3109648,
+   "path": "pyodide/numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "sha256": "467a88e8c79f9e10c8e7052bcc32dd12d44d51098beb3b8f970e1cfc965c6757"
+  },
+  {
+   "bytes": 1916561,
+   "path": "pyodide/openblas-0.3.26.zip",
+   "sha256": "c0beb80dfe34e9c55f4da8a90bf7479278cc7833c20c4498dd0475a08457369e"
+  },
+  {
+   "bytes": 5291112,
+   "path": "pyodide/pandas-2.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "sha256": "921a819fd1d60b69e46c74b09827d8c2405ade44ea278ba94c02d4d1b854c938"
+  },
+  {
+   "bytes": 108703,
+   "path": "pyodide/pyodide-lock.json",
+   "sha256": "6c6ba6e257a75193fc935a456963b0bfd3f9f4e307c52378b030e25b0b968227"
+  },
+  {
+   "bytes": 1072130,
+   "path": "pyodide/pyodide.asm.js",
+   "sha256": "da195d86c80caece821124dcd4f049e6465a7a73797f1b2b4147283e445d02a2"
+  },
+  {
+   "bytes": 8645010,
+   "path": "pyodide/pyodide.asm.wasm",
+   "sha256": "4ee3dc1deab639b454fdc6683651b4cf6c86fc587072e4f7b6c8eaed777d9db6"
+  },
+  {
+   "bytes": 16811,
+   "path": "pyodide/pyodide.js",
+   "sha256": "564b1acbfeb07eda9ba849ee0a0ed1eb8587aab62d9f18082ed905ed36432384"
+  },
+  {
+   "bytes": 15828,
+   "path": "pyodide/pyodide.mjs",
+   "sha256": "e056e624b55134dd4723130594c4cb0f6cb7ed8d331a5653929a00fe0784469c"
+  },
+  {
+   "bytes": 229892,
+   "path": "pyodide/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+   "sha256": "9792745fdfff19fe681a2d2ccd1b72de71650d4b09151567ff85fb266ca86291"
+  },
+  {
+   "bytes": 2416414,
+   "path": "pyodide/python_stdlib.zip",
+   "sha256": "1cc90fccf52e5145bd1bd3ef3540f5e1dd8bf17c5fc66c3e037802ef06ea62af"
+  },
+  {
+   "bytes": 509225,
+   "path": "pyodide/pytz-2025.2-py2.py3-none-any.whl",
+   "sha256": "4a449e011aa4eacfa58b6c06cd4db6581cf86f62d4caa320b8c30e54f4a1accb"
+  },
+  {
+   "bytes": 64928,
+   "path": "pyodide/requests-2.32.3-py3-none-any.whl",
+   "sha256": "d3a7e98f61896015484938be512e1f88902268727c7687bbd96c0c052a3cc4a6"
+  },
+  {
+   "bytes": 6385309,
+   "path": "pyodide/scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "sha256": "71a6ad732e0d7e52aa4b81cc4ef4f26a1c45917f38a6ca296d5b33737dd56b2e"
+  },
+  {
+   "bytes": 13258840,
+   "path": "pyodide/scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "sha256": "4e1b9bf1d135ab3f81e65653988cdfe6fb05a703938b35d1397ab7b327dc2251"
+  },
+  {
+   "bytes": 11050,
+   "path": "pyodide/six-1.17.0-py2.py3-none-any.whl",
+   "sha256": "f213e36bbaae4640f256c86a6626e9122ce2b02b8b02e88a82053d0e4c50c02a"
+  },
+  {
+   "bytes": 18414,
+   "path": "pyodide/threadpoolctl-3.5.0-py3-none-any.whl",
+   "sha256": "4c7afd9a403c3ac4db535d6aca2090cfde391c0883b15080cbc3c573e4fcae9b"
+  },
+  {
+   "bytes": 347839,
+   "path": "pyodide/tzdata-2025.2-py2.py3-none-any.whl",
+   "sha256": "0701e11f6d1a30d77913de74b915df3cd08ad4590fad6b670d6f6228b5d001d2"
+  },
+  {
+   "bytes": 128399,
+   "path": "pyodide/urllib3-2.3.0-py3-none-any.whl",
+   "sha256": "2b347fd6e69835a1c53f8c2263aca2efb493d5d1d85563b3f2a7499ff7b3944f"
+  }
+ ],
+ "files_note": "every served file but this record itself; history/'s files are listed in app/history-files.json, which is listed here with its SHA-256",
+ "frozen_worker": {
+  "byte_identical_to_source": true,
+  "frozen_sha256": "7b93b7dcd0be7b5ca3930ea12e03ca0c47b1181f4a7a26ea19a692eae26159de",
+  "path": "app/worker.js",
+  "sha256": "7b93b7dcd0be7b5ca3930ea12e03ca0c47b1181f4a7a26ea19a692eae26159de",
+  "source": "src/cp17/browser/worker.js"
+ },
+ "gate": {
+  "gate_problems": [],
+  "publishable": true,
+  "r7_accepted": true,
+  "r7_problems": [],
+  "reason": null,
+  "recompute": {
+   "blocks_publication": false,
+   "error": null,
+   "match": true,
+   "recomputed_windows": 6
+  }
+ },
+ "glue": {
+  "path": "app/glue/spaceglue.py",
+  "sha256": "97eb6dc22147ce17286e0c2af1b468fa60fe2f581aed8cf76d45cbe03b58200e",
+  "source": "src/cp18/spaceglue.py"
+ },
+ "history": {
+  "bytes": 44164911,
+  "files": 805,
+  "index_sha256": "0dc952fc6812536f9bc73c308cb6eceefecdf62e23df19eeb7a3904973463e9d",
+  "listing": "app/history-files.json",
+  "note": "a local rebuild of v1's export for this check; the published History route serves v1's deployed files as they are",
+  "present": true,
+  "skipped": null
+ },
+ "identity": {
+  "package_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+  "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc",
+  "zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94"
+ },
+ "pyodide": {
+  "files": {
+   "certifi-2025.6.15-py3-none-any.whl": {
+    "bytes": 157650,
+    "matches_freeze_manifest": true,
+    "sha256": "34f344ea116df36539073746484be3f2914f8e47fedcafde80883573b602f658"
+   },
+   "charset_normalizer-3.4.2-py3-none-any.whl": {
+    "bytes": 52626,
+    "matches_freeze_manifest": true,
+    "sha256": "f739b10c6fea56128c644f0a77eb664d3d48150e66c265564455e5f2da11a68e"
+   },
+   "idna-3.10-py3-none-any.whl": {
+    "bytes": 70442,
+    "matches_freeze_manifest": true,
+    "sha256": "f888c1ff570957d24fb2065102bc8f62ba69ede4ef641783385c8e0c2bb56984"
+   },
+   "joblib-1.4.2-py3-none-any.whl": {
+    "bytes": 175432,
+    "matches_freeze_manifest": true,
+    "sha256": "0442695c4d63401b25202dd7db4fb3027085612364ee5ce077a39f3329ca75a9"
+   },
+   "lightgbm-4.6.0-py3-none-pyodide_2025_0_wasm32.whl": {
+    "bytes": 960089,
+    "matches_freeze_manifest": true,
+    "sha256": "3d5f16949ccd99eb6fa9fa91fde7a4297b19a720bb0d6cd413656ab24730ff8e"
+   },
+   "numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl": {
+    "bytes": 3109648,
+    "matches_freeze_manifest": true,
+    "sha256": "467a88e8c79f9e10c8e7052bcc32dd12d44d51098beb3b8f970e1cfc965c6757"
+   },
+   "openblas-0.3.26.zip": {
+    "bytes": 1916561,
+    "matches_freeze_manifest": true,
+    "sha256": "c0beb80dfe34e9c55f4da8a90bf7479278cc7833c20c4498dd0475a08457369e"
+   },
+   "pandas-2.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl": {
+    "bytes": 5291112,
+    "matches_freeze_manifest": true,
+    "sha256": "921a819fd1d60b69e46c74b09827d8c2405ade44ea278ba94c02d4d1b854c938"
+   },
+   "pyodide-lock.json": {
+    "bytes": 108703,
+    "matches_freeze_manifest": true,
+    "sha256": "6c6ba6e257a75193fc935a456963b0bfd3f9f4e307c52378b030e25b0b968227"
+   },
+   "pyodide.asm.js": {
+    "bytes": 1072130,
+    "matches_freeze_manifest": true,
+    "sha256": "da195d86c80caece821124dcd4f049e6465a7a73797f1b2b4147283e445d02a2"
+   },
+   "pyodide.asm.wasm": {
+    "bytes": 8645010,
+    "matches_freeze_manifest": true,
+    "sha256": "4ee3dc1deab639b454fdc6683651b4cf6c86fc587072e4f7b6c8eaed777d9db6"
+   },
+   "pyodide.js": {
+    "bytes": 16811,
+    "matches_freeze_manifest": true,
+    "sha256": "564b1acbfeb07eda9ba849ee0a0ed1eb8587aab62d9f18082ed905ed36432384"
+   },
+   "pyodide.mjs": {
+    "bytes": 15828,
+    "matches_freeze_manifest": true,
+    "sha256": "e056e624b55134dd4723130594c4cb0f6cb7ed8d331a5653929a00fe0784469c"
+   },
+   "python_dateutil-2.9.0.post0-py2.py3-none-any.whl": {
+    "bytes": 229892,
+    "matches_freeze_manifest": true,
+    "sha256": "9792745fdfff19fe681a2d2ccd1b72de71650d4b09151567ff85fb266ca86291"
+   },
+   "python_stdlib.zip": {
+    "bytes": 2416414,
+    "matches_freeze_manifest": true,
+    "sha256": "1cc90fccf52e5145bd1bd3ef3540f5e1dd8bf17c5fc66c3e037802ef06ea62af"
+   },
+   "pytz-2025.2-py2.py3-none-any.whl": {
+    "bytes": 509225,
+    "matches_freeze_manifest": true,
+    "sha256": "4a449e011aa4eacfa58b6c06cd4db6581cf86f62d4caa320b8c30e54f4a1accb"
+   },
+   "requests-2.32.3-py3-none-any.whl": {
+    "bytes": 64928,
+    "matches_freeze_manifest": true,
+    "sha256": "d3a7e98f61896015484938be512e1f88902268727c7687bbd96c0c052a3cc4a6"
+   },
+   "scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl": {
+    "bytes": 6385309,
+    "matches_freeze_manifest": true,
+    "sha256": "71a6ad732e0d7e52aa4b81cc4ef4f26a1c45917f38a6ca296d5b33737dd56b2e"
+   },
+   "scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl": {
+    "bytes": 13258840,
+    "matches_freeze_manifest": true,
+    "sha256": "4e1b9bf1d135ab3f81e65653988cdfe6fb05a703938b35d1397ab7b327dc2251"
+   },
+   "six-1.17.0-py2.py3-none-any.whl": {
+    "bytes": 11050,
+    "matches_freeze_manifest": true,
+    "sha256": "f213e36bbaae4640f256c86a6626e9122ce2b02b8b02e88a82053d0e4c50c02a"
+   },
+   "threadpoolctl-3.5.0-py3-none-any.whl": {
+    "bytes": 18414,
+    "matches_freeze_manifest": true,
+    "sha256": "4c7afd9a403c3ac4db535d6aca2090cfde391c0883b15080cbc3c573e4fcae9b"
+   },
+   "tzdata-2025.2-py2.py3-none-any.whl": {
+    "bytes": 347839,
+    "matches_freeze_manifest": true,
+    "sha256": "0701e11f6d1a30d77913de74b915df3cd08ad4590fad6b670d6f6228b5d001d2"
+   },
+   "urllib3-2.3.0-py3-none-any.whl": {
+    "bytes": 128399,
+    "matches_freeze_manifest": true,
+    "sha256": "2b347fd6e69835a1c53f8c2263aca2efb493d5d1d85563b3f2a7499ff7b3944f"
+   }
+  },
+  "package_files": [
+   "certifi-2025.6.15-py3-none-any.whl",
+   "charset_normalizer-3.4.2-py3-none-any.whl",
+   "idna-3.10-py3-none-any.whl",
+   "joblib-1.4.2-py3-none-any.whl",
+   "lightgbm-4.6.0-py3-none-pyodide_2025_0_wasm32.whl",
+   "numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "openblas-0.3.26.zip",
+   "pandas-2.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+   "pytz-2025.2-py2.py3-none-any.whl",
+   "requests-2.32.3-py3-none-any.whl",
+   "scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl",
+   "six-1.17.0-py2.py3-none-any.whl",
+   "threadpoolctl-3.5.0-py3-none-any.whl",
+   "tzdata-2025.2-py2.py3-none-any.whl",
+   "urllib3-2.3.0-py3-none-any.whl"
+  ],
+  "packages": [
+   "numpy",
+   "pandas",
+   "scikit-learn",
+   "lightgbm",
+   "requests",
+   "tzdata"
+  ],
+  "version": "0.28.0"
+ },
+ "reference": {
+  "machine": {
+   "cpu_count": 8,
+   "machine": "arm64",
+   "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+   "playwright": "1.63.0"
+  },
+  "measured_date": "2026-10-28",
+  "measured_date_source": "live_retrain_wording",
+  "runs": [
+   {
+    "browser": "chromium",
+    "browser_version": "153.0.8010.12",
+    "fit_seconds": 65.6214,
+    "payload_bytes_raw": {
+     "code": 86707,
+     "data": 538987,
+     "packages": 32687456,
+     "page": 3448,
+     "runtime": 12259068
+    },
+    "runtime": {
+     "numpy": "2.2.5",
+     "pyodide": "0.28.0",
+     "python": "3.13.2"
+    },
+    "status_vs_issuing_host": "identical bit for bit",
+    "stem": "A1-2026-09-06",
+    "total_in_worker_seconds": 71.282
+   },
+   {
+    "browser": "webkit",
+    "browser_version": "26.6",
+    "fit_seconds": 61.998,
+    "payload_bytes_raw": {
+     "code": 86707,
+     "data": 538987,
+     "packages": 32687456,
+     "page": 3448,
+     "runtime": 12259068
+    },
+    "runtime": {
+     "numpy": "2.2.5",
+     "pyodide": "0.28.0",
+     "python": "3.13.2"
+    },
+    "status_vs_issuing_host": "identical bit for bit",
+    "stem": "A1-2026-09-06",
+    "total_in_worker_seconds": 66.673
+   }
+  ],
+  "source": "reports/cp17/host-parity.json (browser_runs, policy A1)"
+ },
+ "refused": false,
+ "report_url": "https://hrsi56.github.io/delu-day-ahead-forecast/",
+ "schema": "cp18b-space-build-v1",
+ "size": {
+  "actions": {
+   "data_view": {
+    "bytes": 2324026
+   },
+   "explain_data": {
+    "bytes": 2672906
+   },
+   "product_runtime": {
+    "bytes": 45063555,
+    "note": "loaded once per visit, by the first in-browser computation",
+    "parts": {
+     "code": 117031,
+     "packages": 32687456,
+     "runtime": 12259068
+    }
+   },
+   "recompute_data": {
+    "bytes": 79570
+   },
+   "train_it_yourself": {
+    "bytes": 45579537,
+    "parts": {
+     "code": 94049,
+     "packages": 32687456,
+     "runtime": 12259068,
+     "training_window": 538964
+    },
+    "stem": "A1-2026-09-05"
+   }
+  },
+  "first_visit": {
+   "bytes": 551515,
+   "files": {
+    "app/charts.js": 22259,
+    "app/claims.json": 9894,
+    "app/main.js": 80678,
+    "app/space-build.json": 21113,
+    "app/style.css": 8568,
+    "index.html": 2384,
+    "payloads/artifact.json": 8061,
+    "payloads/evaluation.json": 345404,
+    "payloads/issued-forecasts.json": 20605,
+    "payloads/manifest.json": 3661,
+    "payloads/outcomes.json": 28888
+   }
+  },
+  "not_counted": "history/ (v1's demo, outside the product Space's network rule) and its listing app/history-files.json, README.md and .gitattributes",
+  "on_request": {
+   "b0_windows": {
+    "bytes": 79570,
+    "files": {
+     "payloads/B0-2026-08-31.json": 13420,
+     "payloads/B0-2026-08-31.npz": 2497,
+     "payloads/B0-2026-09-01.json": 13427,
+     "payloads/B0-2026-09-01.npz": 2508,
+     "payloads/B0-2026-09-02.json": 13408,
+     "payloads/B0-2026-09-02.npz": 2499,
+     "payloads/B0-2026-09-03.json": 13372,
+     "payloads/B0-2026-09-03.npz": 2502,
+     "payloads/B0-2026-09-05.json": 13434,
+     "payloads/B0-2026-09-05.npz": 2503
+    }
+   },
+   "code_product": {
+    "bytes": 117031,
+    "files": {
+     "app/glue/spaceglue.py": 19851,
+     "app/product-worker.js": 5345,
+     "bundle/src.zip": 91835
+    }
+   },
+   "code_train": {
+    "bytes": 94049,
+    "files": {
+     "app/worker.js": 2214,
+     "bundle/src.zip": 91835
+    }
+   },
+   "fitted_arrays": {
+    "bytes": 2133942,
+    "files": {
+     "payloads/artifact-arrays.npz": 2133942
+    }
+   },
+   "packages": {
+    "bytes": 32687456,
+    "files": {
+     "pyodide/certifi-2025.6.15-py3-none-any.whl": 157650,
+     "pyodide/charset_normalizer-3.4.2-py3-none-any.whl": 52626,
+     "pyodide/idna-3.10-py3-none-any.whl": 70442,
+     "pyodide/joblib-1.4.2-py3-none-any.whl": 175432,
+     "pyodide/lightgbm-4.6.0-py3-none-pyodide_2025_0_wasm32.whl": 960089,
+     "pyodide/numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl": 3109648,
+     "pyodide/openblas-0.3.26.zip": 1916561,
+     "pyodide/pandas-2.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl": 5291112,
+     "pyodide/python_dateutil-2.9.0.post0-py2.py3-none-any.whl": 229892,
+     "pyodide/pytz-2025.2-py2.py3-none-any.whl": 509225,
+     "pyodide/requests-2.32.3-py3-none-any.whl": 64928,
+     "pyodide/scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl": 6385309,
+     "pyodide/scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl": 13258840,
+     "pyodide/six-1.17.0-py2.py3-none-any.whl": 11050,
+     "pyodide/threadpoolctl-3.5.0-py3-none-any.whl": 18414,
+     "pyodide/tzdata-2025.2-py2.py3-none-any.whl": 347839,
+     "pyodide/urllib3-2.3.0-py3-none-any.whl": 128399
+    }
+   },
+   "runtime": {
+    "bytes": 12259068,
+    "files": {
+     "pyodide/pyodide-lock.json": 108703,
+     "pyodide/pyodide.asm.js": 1072130,
+     "pyodide/pyodide.asm.wasm": 8645010,
+     "pyodide/pyodide.js": 16811,
+     "pyodide/python_stdlib.zip": 2416414
+    }
+   },
+   "series": {
+    "bytes": 2324026,
+    "files": {
+     "payloads/series.json": 2324026
+    }
+   },
+   "training_window": {
+    "bytes": 538964,
+    "files": {
+     "payloads/A1-2026-09-05.json": 4545,
+     "payloads/A1-2026-09-05.npz": 534419
+    }
+   }
+  },
+  "on_request_bytes": 50142271,
+  "served_not_loaded": [
+   "pyodide/pyodide.mjs"
+  ],
+  "unit": "bytes, uncompressed, as served"
+ },
+ "zip": {
+  "bytes": 91835,
+  "matches_freeze_manifest": true,
+  "path": "bundle/src.zip",
+  "sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94"
+ }
+}

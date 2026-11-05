@@ -1,0 +1,179 @@
+{
+ "as_of_day": "2026-09-05",
+ "manifest": {
+  "artifact": {
+   "artifact_sha256": "c18db6d544bcf4cdbd446082d755107783e650972a4b2069008625e04d47c8ac",
+   "delivery_day": "2026-09-05",
+   "display": "successful daily fit",
+   "issued_policy": "A1"
+  },
+  "files": [
+   {
+    "bytes": 4545,
+    "kind": "training_window",
+    "path": "A1-2026-09-05.json",
+    "sha256": "405af75c8604db62aefee7b04be550d3dc17679db3a9c792811506dcaf3bfd59"
+   },
+   {
+    "bytes": 534419,
+    "kind": "training_window",
+    "path": "A1-2026-09-05.npz",
+    "sha256": "dc833ea4be1e51d586578b8c72050137cd8eed28ed017a47d86df7b5ec8f4c6a"
+   },
+   {
+    "bytes": 13420,
+    "kind": "training_window",
+    "path": "B0-2026-08-31.json",
+    "sha256": "f57bc81ffbf50b36a472c68b7e6f165a5927c982cf09cd10639ca0b20204de0d"
+   },
+   {
+    "bytes": 2497,
+    "kind": "training_window",
+    "path": "B0-2026-08-31.npz",
+    "sha256": "564bb319ab9135aeecc1c99e63aa920d23c654241bc9782dc004ea424330c11a"
+   },
+   {
+    "bytes": 13427,
+    "kind": "training_window",
+    "path": "B0-2026-09-01.json",
+    "sha256": "fb97d833f9c8325378a8cc2b7569e9942d1dc75c1068145317ced5058172d3ca"
+   },
+   {
+    "bytes": 2508,
+    "kind": "training_window",
+    "path": "B0-2026-09-01.npz",
+    "sha256": "5b9c86d2156c6e64429fd88b46e266675210c9ddcdd3f6479ad305bb2c4d62a4"
+   },
+   {
+    "bytes": 13408,
+    "kind": "training_window",
+    "path": "B0-2026-09-02.json",
+    "sha256": "e9aa838270abdfb9da285aacdf9219949a34f79a0b8bfc017b1350e76640821e"
+   },
+   {
+    "bytes": 2499,
+    "kind": "training_window",
+    "path": "B0-2026-09-02.npz",
+    "sha256": "9fa6a246562d3b002de791712847a3c07d8112fd537a7011c46f1ab1347768ca"
+   },
+   {
+    "bytes": 13372,
+    "kind": "training_window",
+    "path": "B0-2026-09-03.json",
+    "sha256": "b945bca628b89526c4e038afe66bb0774d451d6c14904997067b61327cee7719"
+   },
+   {
+    "bytes": 2502,
+    "kind": "training_window",
+    "path": "B0-2026-09-03.npz",
+    "sha256": "2cba7f09239b1cb33c4745a4f38fce700c11d9a98587eff8d00e8508a639653b"
+   },
+   {
+    "bytes": 13434,
+    "kind": "training_window",
+    "path": "B0-2026-09-05.json",
+    "sha256": "2af62add97732454dd40cca8c9759f029049e241c0fdb55607020049e8191cc6"
+   },
+   {
+    "bytes": 2503,
+    "kind": "training_window",
+    "path": "B0-2026-09-05.npz",
+    "sha256": "709219b019ca82e26ce4606f463b3055fc3a0f2e5b5c85367ffa10ce86fc0928"
+   },
+   {
+    "bytes": 2133942,
+    "kind": "fitted_artifact",
+    "path": "artifact-arrays.npz",
+    "sha256": "1fa09a0b54ab1020481292795c052cfc13801e4d2604e1d28a81bd8ec6a1d0a6"
+   },
+   {
+    "bytes": 8061,
+    "kind": "fitted_artifact",
+    "path": "artifact.json",
+    "sha256": "ea3ab08f7ea6c97e16e6586a703d8b4b4cff8a375697591bb89a2aab465df91a"
+   },
+   {
+    "bytes": 345404,
+    "kind": "evaluation",
+    "path": "evaluation.json",
+    "sha256": "4cf264b5ea0c6e89311ad98aa40361c8d9334aaa6912d5302e0192b5e777cc36"
+   },
+   {
+    "bytes": 20605,
+    "kind": "issued_forecasts",
+    "path": "issued-forecasts.json",
+    "sha256": "dd3779117352f48dd5cb05ab7b12646d0aa98b4d731a46fad2dc262cdce0beb7"
+   },
+   {
+    "bytes": 28888,
+    "kind": "outcomes",
+    "path": "outcomes.json",
+    "sha256": "c1eff3fa55e32c4de2c45c1c59549715dee39118581da3ddc80572f26161d5e7"
+   },
+   {
+    "bytes": 2324026,
+    "kind": "series",
+    "path": "series.json",
+    "sha256": "f28ce53ff1c873c70e6ec26b732da8ff79c9f23988509df6930ebc399a66c5c0"
+   }
+  ],
+  "freshness": {
+   "as_of_day": "2026-09-05",
+   "latest_issued_day": "2026-09-05",
+   "state": "fresh"
+  },
+  "policy": {
+   "issuing_host": "Pyodide 0.28.0 in Node.js v26.7.0",
+   "package_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+   "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc"
+  },
+  "product": {
+   "designated_policy": "A1",
+   "evidence_label": "A1 \u00b7 final candidate \u00b7 pending 4.7T; development data through 2026-09-06 only; the issued days are a development rehearsal (CP-18 dry runs), not prospective and not 4.7T; not issued: 2026-09-04, outside the issued record (rehearsal: the days between 4.7T's last window day and the first live day are outside both, never issued)",
+   "name": "delu-day-ahead-policy"
+  },
+  "schema": "cp17-manifest-v1",
+  "times": {
+   "data_refresh_utc": "",
+   "issuance_utc": "2026-09-04T09:00:00+00:00",
+   "last_training_utc": "2026-09-04T09:00:00+00:00"
+  }
+ },
+ "manifest_sha256": "9d35aaa2d6181cc1cf1ec9b9f18dd34d3330db39e12bf9cf4e5fae0549bfd9a2",
+ "publishable": true,
+ "recompute_match": true,
+ "run_id": "dry-run-run-2",
+ "schema": "cp18b-bundle-record-v1",
+ "size": {
+  "first_visit_bundle_bytes": 406619,
+  "first_visit_files": {
+   "artifact.json": 8061,
+   "evaluation.json": 345404,
+   "issued-forecasts.json": 20605,
+   "manifest.json": 3661,
+   "outcomes.json": 28888
+  },
+  "on_request_bytes": 4537538,
+  "on_request_files": {
+   "B0-2026-08-31.json": 13420,
+   "B0-2026-08-31.npz": 2497,
+   "B0-2026-09-01.json": 13427,
+   "B0-2026-09-01.npz": 2508,
+   "B0-2026-09-02.json": 13408,
+   "B0-2026-09-02.npz": 2499,
+   "B0-2026-09-03.json": 13372,
+   "B0-2026-09-03.npz": 2502,
+   "B0-2026-09-05.json": 13434,
+   "B0-2026-09-05.npz": 2503,
+   "artifact-arrays.npz": 2133942,
+   "series.json": 2324026
+  },
+  "total_bytes": 5483121,
+  "training_window_bytes": 538964,
+  "training_window_files": {
+   "A1-2026-09-05.json": 4545,
+   "A1-2026-09-05.npz": 534419
+  }
+ },
+ "verify_problems": []
+}
