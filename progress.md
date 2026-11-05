@@ -348,8 +348,8 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   and 4.7T tests it exactly as registered. The live product starts now, trained on all the data through
   the present, and replaces the Space's v1 demo. The publication of the research since v5, with A1 in
   the comparison, happens now too.
-- **Next, in parallel:** CP-18c (the activation) and PRES-5 (the publication). Then 4.7T, no earlier than
-  2026-12-04, and the publication of its result.
+- **CP-18c and PRES-5 issued on 2026-11-05, in parallel** (briefs `ed5ddeb1…` and `9eb2a584…`;
+  Session Log). Then 4.7T, no earlier than 2026-12-04, and the publication of its result.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1152,6 +1152,26 @@ Session Log.
 
 ## 5. Session Log — newest first
 
+- **CP-18c and PRES-5 issued, 2026-11-05,** under decision 28 and v21-r20 §24.14. They run in parallel, in
+  separate worktrees, and share no path.
+  - **CP-18c, the activation** (brief `ed5ddeb1…`; canonical copy `.local/artifacts/cp-18c/issued-brief.md`):
+    - the guard retired for the live pipeline only, and all the data downloaded through the present;
+    - the live store seeded at the freeze origin and carried to the first live day;
+    - the first live issuances on the Owner's Mac;
+    - the live bundle and Space, published to Hugging Face after its Integration PASS, with v1 at `/history/`;
+    - the daily operation made ready.
+
+    Ceilings: about 30 active hours, 16 local machine-hours and 6 job-hours in the scratch repository.
+  - **PRES-5, the publication** (brief `9eb2a584…`; canonical copy `.local/artifacts/pres-5/issued-brief.md`):
+    - A1 in v5's comparison, on v5's own 10,747 hours;
+    - CP-26's re-baseline on every development day, and CP-28's selection;
+    - the freeze, with 4.7T's registered terms published as its pre-registration;
+    - the product, on the report, the README and MLflow.
+
+    Ceilings: about 24 active hours and 10 local machine-hours.
+  - **The repository secrets.** At issue, the Owner had entered the three secrets in the `github-pages`
+    environment, where the daily workflow cannot read them. He was asked to enter them as repository secrets.
+
 - **Owner decision 28 recorded and v21-r20 ratified, 2026-11-05**
   ([decision record](docs/track-b/owner-decisions-2026-11-05.md);
   [amendment record](docs/track-b/capstone_v21-r19-to-v21-r20-amendments.md)).
@@ -1162,6 +1182,10 @@ Session Log.
     file; what the product shows; and what stays exactly as registered for 4.7T.
   - **The Orchestrator's registrations P1–P4** are logged for the Owner's ratification. P1 reads "all the
     data" for the published research as every development day, so that 4.7T stays the one test.
+  - **The CI.** The history-free run on `1e3981a9` had 3,019 passed, 63 skipped and 1 failed
+    (`.local/artifacts/r20/ci312.log`, `e3692325…`). The failure was CP-26's timing test
+    `test_continuously_changing_cold_history_is_bounded_and_never_calls_sampler`, whose lock did not progress under
+    load. Its file passed three times in a row on its own (183 passed each time). r20 changes no code.
 
 - **CP-18b landed and closed, 2026-11-05** (`land/cp-18b` `ff382b2b`, evidence tip `1348c970`;
   [landing record](docs/track-b/cp-18b-landing-2026-11-05.md)).
