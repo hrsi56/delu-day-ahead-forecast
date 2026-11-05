@@ -27,8 +27,8 @@ def space_build(folder: Path, bundle_files: dict[str, bytes]) -> Path:
     (folder / 'app' / 'app.js').write_text('// app\n')
     for name, data in bundle_files.items():
         (folder / 'payloads' / name).write_bytes(data)
-    files = {str(p.relative_to(folder)): {'sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'bytes': p.stat().st_size}
-             for p in sorted(folder.rglob('*')) if p.is_file() and not str(p.relative_to(folder)).startswith('payloads/')}
+    files = [{'path': str(p.relative_to(folder)), 'sha256': hashlib.sha256(p.read_bytes()).hexdigest(),
+              'bytes': p.stat().st_size} for p in sorted(folder.rglob('*')) if p.is_file()]
     (folder / 'app' / 'space-build.json').write_text(json.dumps({'files': files}))
     return folder
 
@@ -53,8 +53,7 @@ def test_a_verified_bundle_is_published_and_its_served_identity_checked(tmp_path
     manifest = json.loads((BUNDLE / 'manifest.json').read_text())
     assert value['served']['artifact_sha256'] == manifest['artifact']['artifact_sha256']
     assert value['served']['served_manifest_sha256'] == hashlib.sha256((BUNDLE / 'manifest.json').read_bytes()).hexdigest()
-    listed = json.loads((build / 'app' / 'space-build.json').read_text())['files']
-    assert value['served']['checked'] == 1 + len(manifest['files']) + len(listed)
+    assert value['served']['checked'] == 1 + len(manifest['files']) + len(PB.listed(build))
 
 
 def test_a_refused_bundle_is_never_uploaded(tmp_path):

@@ -95,6 +95,18 @@ class HubTarget:
         return {'target': self.kind, 'commit': getattr(info, 'oid', None)}
 
 
+def listed(build: Path) -> dict[str, dict]:
+    """Every file the Space's build record lists ({path: {'sha256', 'bytes'}}), with History's own listing when the build
+    carries one (`app/history-files.json`, itself listed and so bound by its hash)."""
+    record = json.loads((Path(build) / 'app' / 'space-build.json').read_text())
+    files = record['files']
+    out = {f['path']: f for f in files} if isinstance(files, list) else dict(files)
+    history = Path(build) / 'app' / 'history-files.json'
+    if 'app/history-files.json' in out and history.is_file():
+        out.update({f['path']: f for f in json.loads(history.read_text())['files']})
+    return out
+
+
 # ------------------------------------------------------------------ reading what is served
 def http_fetch(base: str):
     """A visitor's GET of `base`/<path>. In this round only a loopback host is allowed."""
@@ -131,8 +143,7 @@ def verify_served(fetch, build: Path, bundle: Path) -> dict:
         checked += 1
         if data is None or sha(data) != f['sha256'] or len(data) != f['bytes']:
             problems.append(f"payloads/{f['path']}: not served as the manifest lists it")
-    record = json.loads((Path(build) / 'app' / 'space-build.json').read_text())
-    for path, item in sorted(record['files'].items()):
+    for path, item in sorted(listed(build).items()):
         data = fetch(path)
         checked += 1
         if data is None or sha(data) != item['sha256']:
@@ -162,9 +173,8 @@ def publish(build: Path, bundle: Path, target, fetch, root=None) -> dict:
     if carried != {f'payloads/{k}': v for k, v in files.items()}:
         out['stopped'] = 'the Space build does not carry exactly this bundle: nothing was uploaded'
         return out
-    record = json.loads((build / 'app' / 'space-build.json').read_text())
     built = tree(build)
-    if any(sha(built.get(p, b'')) != i['sha256'] for p, i in record['files'].items()):
+    if any(sha(built.get(p, b'')) != i['sha256'] for p, i in listed(build).items()):
         out['stopped'] = 'the Space build differs from its own build record: nothing was uploaded'
         return out
     try:
