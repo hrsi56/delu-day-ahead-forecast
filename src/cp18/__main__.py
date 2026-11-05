@@ -57,6 +57,16 @@ def make_inputs(spec: str, root: Path, project: Path):
     raise SystemExit(f'--inputs {spec!r}: expected prebuilt:<folder>, live:<recorded responses> or live-http')
 
 
+def pin_project(root: Path, project: Path) -> None:
+    """The H2 pins check (`refreeze verify`) finds the issuing host's local files in the project's `.local/`, which it
+    resolves from `$CP17_PROJECT_ROOT` or else from the checkout's own git directory. A pipeline checkout that is not the
+    project (the local fallback's dedicated clone) names the project explicitly; the runner's workflow sets it already.
+    Without it the first live run on the Owner's Mac failed its pins check (CP-18c's disclosure)."""
+    import os
+    if root != project:
+        os.environ.setdefault('CP17_PROJECT_ROOT', str(project))
+
+
 def _mode(args):
     """The run's mode and wall clock: a dry run's simulated clock on development days, or a live run's real one
     inside the live boundary (`cp18.boundary`, r20 §24.14 item 2)."""
@@ -96,6 +106,7 @@ def cmd_run(args) -> int:
     from . import pipeline
     from .claim import Claim
     root, project, out = args.root.resolve(), args.project.resolve(), args.out.resolve()
+    pin_project(root, project)
     now, scope = _mode(args)
     settings = pipeline.Settings(root=root, project=project, out=out, host_kind=args.host, mode=args.mode,
                                  run_label=args.run_label or '')
