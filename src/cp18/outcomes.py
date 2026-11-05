@@ -32,6 +32,8 @@ import numpy as np
 
 from cp25 import guard
 
+from . import boundary
+
 from .records import OUTCOMES_PATH, RecordLog
 
 SCHEMA = 'cp18b-outcomes-reconciliation-v1'
@@ -77,7 +79,7 @@ def observe(archive, day: date, now: datetime, own=None) -> dict:
     """Day `day`'s prices as the archives show them at `now`: the earliest admissible record's values and evidence,
     every later record that disagrees (a revision), or pending."""
     from .live import history as H
-    guard.admit_delivery_day(day)
+    boundary.admit_delivery_day(day)
     keys = canonical_keys(day)
     observed = []
     for where, arch, x, record in _candidates(archive, day, own):
