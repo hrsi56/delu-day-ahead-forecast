@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** **v21-r19 ratified 2026-10-30.** **CP-17c landed 2026-10-30: A1 re-frozen under the `macos-26` issuing host (policy identity `720fc581…`), 58 of 58 fits bit-identical on the runner and the M3.** **CP-18a landed 2026-11-04: the daily pipeline around the frozen A1, rehearsed on development days only.** CP-18b issued 2026-11-04 (the outcomes, the bundle and the Space); then 4.7T (not before 2026-12-04) |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** **v21-r19 ratified 2026-10-30.** **CP-17c landed 2026-10-30: A1 re-frozen under the `macos-26` issuing host (policy identity `720fc581…`), 58 of 58 fits bit-identical on the runner and the M3.** **CP-18a landed 2026-11-04: the daily pipeline around the frozen A1, rehearsed on development days only.** **CP-18b landed 2026-11-05: the outcomes, the dated bundle and the final-product Space, rehearsed on development days only.** Next: 4.7T (not before 2026-12-04), then CP-18's activation |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -333,9 +333,17 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     job-minutes.
   - **Security:** the value-free leak scan runs in the hooks and as CI's first step.
   - **CP-18's activation brief** cites the table in `reports/cp18a/report.md` §8.
-- **CP-18b issued on 2026-11-04** (brief `9d3901b1…`): the outcomes and evaluation records, the daily bundle,
-  and the final-product Space under A9, on development data only (Session Log). Then 4.7T, no earlier than
-  2026-12-04.
+- **CP-18b closed on 2026-11-05** ([landing record](docs/track-b/cp-18b-landing-2026-11-05.md)).
+  - **The outcomes and the evaluation records:** the reconciliation per UTC key, and `cp17.scoring`'s records
+    with the three windows never pooled.
+  - **The dated bundle** in the frozen schema's seven kinds, behind a gate: R7, the frozen identity, the red
+    line, then the native recompute. All 20 negative controls are refused.
+  - **The final-product Space `space-product/` under A9,** built from the bundle only. "Train it yourself"
+    reproduces the issued fit bit for bit in Chromium and WebKit.
+  - **The publication step,** exercised against a local server only. Nothing was uploaded or published.
+  - **CP-18's activation brief** cites the landing record's "What the activation and the publication still
+    need", beside `reports/cp18a/report.md` §8.
+- **Next: 4.7T, no earlier than 2026-12-04,** then CP-18's activation after a passed 4.7T.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1137,6 +1145,24 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-18b landed and closed, 2026-11-05** (`land/cp-18b` `ff382b2b`, evidence tip `1348c970`;
+  [landing record](docs/track-b/cp-18b-landing-2026-11-05.md)).
+  - **The Lead returned PASS** on one Integration review, at `88ff3be7`. The review's nine findings are
+    non-blocking. Two of them, N1 and N7, are for the activation brief (O18).
+  - **The Orchestrator landed it** under decisions 25 and 27 (O15). Its own red-line scan found no market
+    day after 2026-09-05 in the served data. The history-free CI on `ff382b2b`
+    passed: 3,020 passed and 63 skipped, every step exiting 0. GitHub's own CI on the push
+    passed too: 3,007 passed and 76 skipped on `ubuntu-latest`.
+  - **Cost:** 0 of 5 job-hours, about 3.5 of 12 local machine-hours, and about 2.5 active hours. A
+    usage-limit pause stopped the round for about 3.5 hours.
+  - **A brief defect, resolved in the anchor's favour:** O14's F1 sentence states §24.12 R3's 0.082 EUR/MWh,
+    not the brief's 0.028.
+  - **Two frozen-schema gaps, disclosed for the next freeze:** the issued artifact holds 4 of A1's 16
+    per-member selection fields, and the manifest has no not-issued cause field.
+  - **The Orchestrator's rulings O16–O18** (the Space's visual approval, provisional; the Space it replaces,
+    with v1 at `/history/`; the 551 KB first visit; N7 and N1 for the activation) are logged for the
+    Owner's ratification.
 
 - **CP-18b issued, 2026-11-04** (brief `9d3901b1…`; canonical copy
   `.local/artifacts/cp-18b/issued-brief.md`). It is CP-18's preparation, part 2, on development data
