@@ -793,7 +793,7 @@ _ENTRIES: tuple[Entry, ...] = (
         run_keys=("cp26",), style="reference", anchor="#cp26", checkpoint="CP-26", short="CP-26 re-baseline",
     ),
     _cp26_stream("v1-recipe-daily", "nominal", "v1-R", "v1's recipe, refitted daily",
-                 "v1's recipe on a 728-day window, no regime flags", "v1 recipe, daily", kind="reference",
+                 "v1's recipe, a 728-day window, no regime flags", "v1 recipe, daily", kind="reference",
                  comparator="naive"),
     _cp26_stream("v3-weather-late", "gfs6", "v3", "v3 with weather six hours late",
                  "v3 fed the weather run six hours later", "v3, weather late"),

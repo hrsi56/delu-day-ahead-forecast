@@ -10,16 +10,6 @@
   "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20); v4 · three-block LightGBM added (CP-21); Pooled LightGBM member for v4 (CP-22); DDNN member on v4 (CP-23); v5 · DDNN-2 added (CP-24); Daily development re-baseline (CP-26); v6 · DDNN-2 alone (CP-28). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
  },
  "metric_units": {
-  "MAE/B0_ratio": "ratio to the similar-day naive (B0), mean daily loss",
-  "MAE/raw_mean_daily_loss": "EUR/MWh",
-  "MAE_arm": "EUR/MWh",
-  "MAE_ratio_to_B0": "ratio to the similar-day naive (B0), mean daily loss",
-  "MAE_ratio_to_control": "ratio to the control (v5), mean daily loss",
-  "WIS/B0_ratio": "ratio to the similar-day naive (B0), mean daily loss",
-  "WIS/raw_mean_daily_loss": "EUR/MWh",
-  "WIS_arm": "EUR/MWh",
-  "WIS_ratio_to_B0": "ratio to the similar-day naive (B0), mean daily loss",
-  "WIS_ratio_to_control": "ratio to the control (v5), mean daily loss",
   "daily_mae_eur": "EUR/MWh",
   "delta_fold_mae_eur_vs_a_lp": "EUR/MWh, paired mean daily loss difference",
   "delta_fold_mae_eur_vs_a_lp_ci_high": "EUR/MWh, paired mean daily loss difference",
@@ -220,6 +210,9 @@
   "fold_mean_width95_eur": "EUR/MWh",
   "fold_pinball9_eur": "EUR/MWh",
   "fold_wis_eur": "EUR/MWh",
+  "mae_eur": "EUR/MWh",
+  "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+  "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
   "peak_coverage95": "fraction",
   "peak_hits95": "count",
   "peak_mae_eur": "EUR/MWh",
@@ -296,7 +289,10 @@
   "ratio_s_wis_vs_v4_ci_high": "change as a share of the comparator's score",
   "ratio_s_wis_vs_v4_ci_low": "change as a share of the comparator's score",
   "s_mae": "ratio to B0, equal-fold",
-  "s_wis": "ratio to B0, equal-fold"
+  "s_wis": "ratio to B0, equal-fold",
+  "wis_eur": "EUR/MWh",
+  "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+  "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
  },
  "runs": [
   {
@@ -2613,7 +2609,7 @@
   {
    "artifacts": {
     "README.md": "5aef8afde2d871d32ba1ab14ee6a6d015611bd614e47aa5eded8fe3a630efbe0",
-    "summary.json": "0e0e900b3ce08a88b31a75e9a3e96df0f3224efbf7e427d68011fd2f6fce2870"
+    "summary.json": "37724507a11ed681dcb1a613c9863d55d33500b338fb672a2d97dda6165e4e77"
    },
    "file": "cp26.json",
    "inputs": [],
@@ -2622,1000 +2618,1000 @@
    "parent": null,
    "run_key": "cp26",
    "run_name": "Daily development re-baseline (CP-26)",
-   "tags": 15
+   "tags": 16
   },
   {
    "artifacts": {
     "README.md": "662f3cc6d2542f3b2aa992b95996e015e8551c3aa8ff5ae289f1f204f082ae98",
-    "summary.json": "09b0c599f0dd7146654ef38f78e6f002c9fc6f03ea242ebdec09bbe5e38b6899"
+    "summary.json": "11265a4472fede1ee6b4fcbaebc6cfcfea8f09ceee4147c4feb5486151808083"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v3/all_eligible",
    "run_name": "v3 with weather six hours late (gfs6/v3/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "2b5265cd58812166eef5562ec35d9772f7ae5db4cf388973242cf29b0d8916be",
-    "summary.json": "56859f3f44d5d9b5ff35d2637cabed45d827b098db7ede785213aa47b81e3681"
+    "summary.json": "e38ba6389b0ebbb077255eba779a56a47ca1eecd83dd3d45338cd4be3f5b2cf7"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v3/never_scored",
    "run_name": "v3 with weather six hours late (gfs6/v3/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "21664cc4131920f3327e41d7114fca50e52155a2a637134e453ebf2b49f5ef4f",
-    "summary.json": "3ff7849e9e341e4e4d150318ad7cbd99d0c56f632fbc32db1f8d7a35fd33036b"
+    "summary.json": "04de41f1fd514ab0d536039a4f4ffe5f08fdcdb4b35ff6929cf1dedea0e588e6"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v3/old_fold_2_5",
    "run_name": "v3 with weather six hours late (gfs6/v3/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "93c3c99ad832b47d986d3868fd0cfcfeb01fd4917b0c2a785c19783b14518853",
-    "summary.json": "6940f36ef42440f864fd916eb58df0e082f37f963e1e7a2de391b4e86840ef75"
+    "summary.json": "7246d09c94567ea0ebc5f7633d9fe015886836dc85be96fffe50cb0aca4c2060"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v3/newly_opened",
    "run_name": "v3 with weather six hours late (gfs6/v3/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "f5168dd8e2796d4b37f5d178c7b5e88ae88adc05767af7f46726a6e087049309",
-    "summary.json": "b16be1df585ad3776a98227ca0dea7a8b69b3fda46b92730aec9ebbe5917e1bd"
+    "summary.json": "66fedf4b292e72116222b7665dc12df0ee6ff42c0aeb5cccf872edbb9adf329a"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v4/all_eligible",
    "run_name": "v4 with weather six hours late (gfs6/v4/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "f348c23f236e4d16ac09143af71dc8541ddedef7ef711216a866f3728886f31a",
-    "summary.json": "ead1a2855d61f54297e886f601d71f43fd09d963dfba4982d6cefdf276e73eb6"
+    "summary.json": "addd835c454a9387a795007b7cb0366c1e08abeb41ad5cd7b794d88fa3669c2e"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v4/never_scored",
    "run_name": "v4 with weather six hours late (gfs6/v4/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "cd507d0e2fdba759a63b588338bb60cb750a99799bcf4f79307acc92eef85e1a",
-    "summary.json": "ca97f1049f0818afb4159246b5069337f3fcc9f37a1cac08b44b510e0741fa1a"
+    "summary.json": "84a1166a4e25ee81744b9b9e6b9de5db9fa0622ffd5e4f82b9439e0353eb4a94"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v4/old_fold_2_5",
    "run_name": "v4 with weather six hours late (gfs6/v4/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "38e0f71e60917c043bba9c86ef9e6a85b98e86667a2cbbd69865c2961f83ef71",
-    "summary.json": "4ab26dd2163c25ecf4e18308986cffd5778f77aca8c98b427616315821043ebf"
+    "summary.json": "b1349f17aefca3ba4cae618fddf44c991a5f44ecb30b02f9530ec92739d3bdaa"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v4/newly_opened",
    "run_name": "v4 with weather six hours late (gfs6/v4/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "f4d53f597ed800fde0747d77f23a2506a1c1694f1c3e0fd7683fc9c4dfb8fbd7",
-    "summary.json": "890d317b4e4822e39a9e14c3f941b62b918648687fb7348336448857f99fb40b"
+    "summary.json": "2ec8bc4782d233a795724e77d0452ef77b01714f2ebed1040ed5f4fdf4fd0c41"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v5/all_eligible",
    "run_name": "v5 with weather six hours late (gfs6/v5/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "656be364e46c224122d1bc7bc4448a5ea8a80775b75880b488493b7985152164",
-    "summary.json": "1ea4b3e1a080f061babd439dcf43de56ae0c908c83bf1a056d7ff673d460f01a"
+    "summary.json": "6adc66de64ddc26fb41920de62f385d1c0d9335279d4d5b2ace0fc76e086ab26"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v5/never_scored",
    "run_name": "v5 with weather six hours late (gfs6/v5/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "11c3aec7ce43db6dfcbb8ec423668c07c2d91019bbf430b1ca2fe4d11bd09b49",
-    "summary.json": "8effc2bb217abf41e21b3f256f16b8dd02d4ca27549b4a2c1b2371c5219912cb"
+    "summary.json": "c4ca45f0a82f4aca386665824686c976f5be31961c99b289cacdcec56bc59269"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v5/old_fold_2_5",
    "run_name": "v5 with weather six hours late (gfs6/v5/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "0eff9c85ab7d568dc9d15ed1c4bcca241f5f5db3cade23ac17641b3f0f58b8be",
-    "summary.json": "f966cbccb8548421836d6ff88432227908c16cfe86fac6fe32e43eb4143728c4"
+    "summary.json": "3801d164d5a6b2ce56a65536fa7bd888ae6aae2339ea68cd1480855ef34ffce7"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/gfs6/v5/newly_opened",
    "run_name": "v5 with weather six hours late (gfs6/v5/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "eed3855ac08e28ba681f6534cff744e7fc2504afe2556d2d46093e9a4e9649c2",
-    "summary.json": "39de828445de0586ecebd74ba7e7809abdd5643cfe39e7befaef70a8765fd05c"
+    "summary.json": "07495abcdb0b2ae7bbe49444b8f0406468e6e45e09b219967e9f3650f79688c8"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v3/all_eligible",
    "run_name": "v3 without the load forecast (noload/v3/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "2b97aad37294094029eb919a4956854c14d58acc59e39034fe0b2594bca6a167",
-    "summary.json": "13a80266e1f2eaa4bd65fd8ad28e129cb42fb182411712f5f4b2dbbe6dee8d08"
+    "summary.json": "60cebbbd552148648ee07e4f7e6762e0e4f2122ba600ec7c9fd334ebf6adc3f9"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v3/never_scored",
    "run_name": "v3 without the load forecast (noload/v3/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "4dfb12f4cfdf55335b0b9be146fe05eeeb77f0b71c0e1a3e62b26fc7d2a0a00d",
-    "summary.json": "e6ef611caa8930572cdb72c2e493ca6a6ce9c1cf820d28dc67dbfb2adee6e681"
+    "summary.json": "539145c6febc6d8b8da53efd16fb33c12db26ec74beb807c960f3b2aad3c3b51"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v3/old_fold_2_5",
    "run_name": "v3 without the load forecast (noload/v3/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "19b2a6afe05528572fd2114b5a36e09b4849244a4a07f3007b4ff4968d134191",
-    "summary.json": "3144a17c7a30bc205952059ee69a1e0fc16b857faf26e67490b82dcfea92d92a"
+    "summary.json": "d96355d9254d6a17dd05989433e06d5ae14a931e2ddd18c0c2ce8dec902f7102"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v3/newly_opened",
    "run_name": "v3 without the load forecast (noload/v3/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "ffc5ea7ff0440b7460a969ba010ace6ea98d037d2e3457b3a1856d1e1224e5e5",
-    "summary.json": "8bfa3659b8bf3d13511426bd58d472ea9cdc544d030e189a1b6382a0681b91ab"
+    "summary.json": "4f9205a6c9cddb83384d62c23625adf10dc06568464766c8620d5240c6897f1c"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v4/all_eligible",
    "run_name": "v4 without the load forecast (noload/v4/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "35c2265dec74a648f82a42fef375be8835c0fe3af58d7f45d15c70757051c075",
-    "summary.json": "0a09b0c9e829df333563b230c22ab3a6f9ad9e1513e6154c126805d2662fa4e4"
+    "summary.json": "512f91b2c0dceb4d6718c60d42025ba76b6ebfcdc7b1dc45a65a77fcc94af086"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v4/never_scored",
    "run_name": "v4 without the load forecast (noload/v4/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "02e65c7b4179e0728b108f05ff4da1e59ac66352abb2fffb47bdf0de18e24aca",
-    "summary.json": "4cfa179d2e7765d186533f114403e68bc856051a46f54eb75a6f318bc4aca562"
+    "summary.json": "a33d815d88ebb2e39779e7d9c5fb4c831cb6543552bdf543e10bd7d26e5c6c35"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v4/old_fold_2_5",
    "run_name": "v4 without the load forecast (noload/v4/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "b08ab3438004c4748e623b2804d60a88be10d144510ce2ce9d84217b67af0253",
-    "summary.json": "d47dadb5840dd6916dfb4f33980e73a2d736357347da0f93c34403d513dc4441"
+    "summary.json": "3eeda939dc6134d1906bc2cb7f8afaa6528b54bdea2b1f88cba5b52985935b60"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v4/newly_opened",
    "run_name": "v4 without the load forecast (noload/v4/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "745ca52947f763f710f12e973bf84606fba0968839723bdadc30155ac4be8ca1",
-    "summary.json": "9cc143ea4adf4a65a437d5009ada65cfb7979e4dd0a1fd0797a382677996153b"
+    "summary.json": "5bfd630a59708767b80d8df611b4a91d3f9c2ec7e5332226ae94b10ca1bcabfb"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v5/all_eligible",
    "run_name": "v5 without the load forecast (noload/v5/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "d3245b3ad0299244ce39ad3687a2a54e4966bb2857cb9b9a9f7ad6e24fa7efc1",
-    "summary.json": "d84a4c42376ee097c7807cce47f8aa1a58bc8c710d1533cde6476f3705137460"
+    "summary.json": "75b7cbf402297d661db129bcb203f0e79875303d59aa1b170a9592860ec1c4b1"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v5/never_scored",
    "run_name": "v5 without the load forecast (noload/v5/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "60310c0c004962e50f15b8b468a39f2140359d2461a68246f73ddaa79a854cd6",
-    "summary.json": "921a379c4ab11d643ccc5989fd51ec6d4c7450478ca5d6c7c93ff061c9fe32f2"
+    "summary.json": "c332d294df41b2756167df6db64bcbe1473c042202ffa0c6743ce294990ac4d1"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v5/old_fold_2_5",
    "run_name": "v5 without the load forecast (noload/v5/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "5bd8b36521c1401b109ba05ed85849d2af90c45022a9ec633d8099c0fe476689",
-    "summary.json": "b3e4ea462886cbceabe0cee63a1378840388cfe586e6465aed2d3f3f47c0e376"
+    "summary.json": "d3c8a1137a66bc8426dfef8895aedd1fa8e668127975bf629bf0de3a74748243"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/noload/v5/newly_opened",
    "run_name": "v5 without the load forecast (noload/v5/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "e9c404eba3cb399a89fdfed47162c938e834e467c95a0d7127901aa5d90873fb",
-    "summary.json": "4127195d7bc2b5a7ebe0aff20ca2e1e589961d97f713c3cf29d1b7bc18d157fd"
+    "summary.json": "9ace352b56e5fda203239904148780032e5eddfc38667dd114ea3a09823096a6"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/B0/all_eligible",
    "run_name": "Similar-day naive (nominal/B0/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "bf22b281e5fe3d62fcae363e871203909d46598700bcff083e74542824e99808",
-    "summary.json": "d6c2acd68f609528594019f9e759785a922cf2c73a8c24af625c90323a9918a3"
+    "summary.json": "33ed8d22b16da7135a243a97e8462badeb24449c5da0ad59d20822640c99a3ce"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/B0/never_scored",
    "run_name": "Similar-day naive (nominal/B0/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "4a5fc58fda0d241670a66ef7aeac52c1b0995633ab7b873bd4505ea418832065",
-    "summary.json": "b4926e2b0dcefcaa3ae3802a218a2b757a208741db35238cc868f6c23c708eae"
+    "summary.json": "669af096ebcc81ec34744e2c6acf1543bf9c33a49ad21e37428ea7ea7280e123"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/B0/old_fold_2_5",
    "run_name": "Similar-day naive (nominal/B0/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "9e26fc7dfa122ec36281ac05cdb7a15d1257338e0e7f29321243ecdb67949cfc",
-    "summary.json": "025f0fee0438744f711c8335a5ebb12d37736093ea4cba88e18c9219a082ab7a"
+    "summary.json": "5560b003b4963861c2a01ea83cb9c2c0ee7d218d3ad9c50e08bdfb7196dcab51"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/B0/newly_opened",
    "run_name": "Similar-day naive (nominal/B0/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "5ac398b5e2485c816c77a0558312e3d7d298abc4bff4458500bfc028aea48b5b",
-    "summary.json": "9348c5a8390aff88e34e497e7e0e39f3bd2e546fc8cd99c4f7c62bc9130d4a9d"
+    "summary.json": "2d842254ee9b86a7159f3f3dbd7d45a1a8209b44bbd13239bd6f7e25f771d86b"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/all_eligible",
    "run_name": "v6 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "02ee6e5062680c600b974ec3c4ebb0d302551980bbc0824653436171ab81da52",
-    "summary.json": "a6dae107ddecee195e246473d331bbf637fc43ba8ad0fac0b1ed076c2e8e10f3"
+    "summary.json": "d3d53bde37321bf5f5bb36a917b86c266feb6cb44f7da978b818c46beeb29bb3"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/never_scored",
    "run_name": "v6 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "535e0a23c31b73963cb7713cbf0df46ed9bdcfcb0ef6ad6385f4337460b4e870",
-    "summary.json": "c1bc3ffedbc2c61fe1c58beccea5626374469cb9ece26e0ec584a2e4b8b42eef"
+    "summary.json": "a8f22f8c73d8a04a4f906382d04d39bf126b9524f6b6deb9b405675411a53a4e"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/old_fold_2_5",
    "run_name": "v6 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "88a4d7ded9414cbedb345e97d4b21040814898153a3a123586f402e8e68a9ed1",
-    "summary.json": "c87c250c40e14db7aa187c91187243ac7943905eb8d41c7a557f90e07703af12"
+    "summary.json": "6c35054c3463dd5a5c55546ca779edf83a247f29dedd836297ef2f48a73b4b1c"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/newly_opened",
    "run_name": "v6 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "5d3f74484cda9ec44c9de6fdeb60545970760c0ff1310cd37443da78ee8743e1",
-    "summary.json": "4dc40f3d142925444933a2c3780e328b3a68566633e5a07e57f3038c7a9366da"
+    "summary.json": "1f0bbe0b763ad0ea0b964bcb2a46f9e440793e33effe8565ede55e4695daeded"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v1-R/all_eligible",
    "run_name": "v1's recipe, refitted daily (nominal/v1-R/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "429a3405e21c382bb8145528cc227c2fea7ff2c51c1e82a4841c9b75496c8283",
-    "summary.json": "8677d0e7b9ed955ec9718a26e2b44cbeb93e0c0b197af9d03080e14d9283d8b2"
+    "summary.json": "cbea7a6f20322140ce98f39b915347936ecbc0ca1e8c6dcf26108368f6f09378"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v1-R/never_scored",
    "run_name": "v1's recipe, refitted daily (nominal/v1-R/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "6aa634b52a8a435cd8052d81042c2ccb9e1219ad6670c8437349d2b127892d97",
-    "summary.json": "ad3f83d021e7277efc0dfb7cc65cc8d609557bcb784adca858234f8060517caa"
+    "summary.json": "65d6353267e806c25e45fdaee6bfabddc667b455b16d44d492b54fe67fd67fd1"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v1-R/old_fold_2_5",
    "run_name": "v1's recipe, refitted daily (nominal/v1-R/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "f481ddc6f80676e5e0152c029b67feefc10a023227206bb8f4299655a9d4d9fd",
-    "summary.json": "4188b3ea3e1841d469915398285e49313979ada9a9c562e04f1aa92b7aa1bf3d"
+    "summary.json": "cc9f6ba4520f1c1847eeff4ace9681df5126c04fd65a17ece27ecc9f788d9f10"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v1-R/newly_opened",
    "run_name": "v1's recipe, refitted daily (nominal/v1-R/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "fc0042dfb4816774a7ae9f0a001a427343b8e115bbd87c5b4d991e7e293f3bb6",
-    "summary.json": "344661daa4e748b4ea002952d2b3d62029f0ca4fb41b8d1ba6329993dd322cab"
+    "summary.json": "434f2eb639c45e97c9b305b002d91848c0239bd1d95ca9ddfe6774b328d73d43"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v2/all_eligible",
    "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "79a2c944de8d8fd808dad588b59f1c86bcae90989d13630539d447e8e431d453",
-    "summary.json": "02f7e05d243d2abac26741dbaa9314fbf88021391f352c56abf6866ae749bb07"
+    "summary.json": "23c6b4fe0bbb2827876acc1893898425df4a542989f218376625e5352a9c5480"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v2/never_scored",
    "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "8fd661adb9f62fbfdb8b867feab273a30227c900d1fb224c30ce8ab10544a32a",
-    "summary.json": "629be3c0c6ebc60327f866655b2fb631f622821133d3cea8aa70fdf6cdcda856"
+    "summary.json": "b008d3ed50d433199d85f2d47fadd6e3c784d8e3ca5730ddd2b27873b18007c5"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v2/old_fold_2_5",
    "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "4d645861c995ef74baa03d3cd5676e563e75eadb637ca87b05fe27404d57855b",
-    "summary.json": "801d90ffac85d0b7a09d4f10c42bbc9139661a797013b3e3d813477c6e37d5f3"
+    "summary.json": "d2a5d3ca6987768d7675b222db159d562ae3c1a371b0c6af4b406ef5690b38f4"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v2/newly_opened",
    "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "8f727b919e0c3958a889efa3115ab86a4fbf9224ff9e999e35ff0373ed645193",
-    "summary.json": "5789e308915806e6ceec592308739f8b9cbe7b2860fadb700294c186bfe34549"
+    "summary.json": "f242a89595358c04148a0a1f4619e84fcb61ce14b55f78ea59654a615ba7c27d"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v3/all_eligible",
    "run_name": "v3 · weather features (nominal/v3/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "af4a292ba870f91a6f1bef3559698ebef10b7bdfc6fb45e775f340b8faec6796",
-    "summary.json": "3de3ae2d0c65322a45067ef0eb7530dd6fb4113714375f76a21af0e816013749"
+    "summary.json": "cbb5ed08fcb6c9f2847b2a49ae6b8596efbe6dd7cda029df9d1f9ff0f8826a84"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v3/never_scored",
    "run_name": "v3 · weather features (nominal/v3/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "491d35ae95998a352bd0debf4e3a3dc21f72a36ca056fa2988dc774f0862f43e",
-    "summary.json": "4016d834a1d1a6f2d3194efa84ead4ad813267bcdb941b5418db1854848fbb9a"
+    "summary.json": "737a80dc352231ffc84a242c5a266b3734d419294d110afaa3746fdbb6fd3b8b"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v3/old_fold_2_5",
    "run_name": "v3 · weather features (nominal/v3/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "aaa3a58232fd8313e70392a3a40423251a0255535e280b29bda888c16f039983",
-    "summary.json": "5258c2c1e2e24304cc466da08b20877db91e04c59bfee5bd00c8d2f47684dc22"
+    "summary.json": "fcdfe13053d865cb2420f7dc67f8dbc5ab22173b7f158086b2f4e5495175ade3"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v3/newly_opened",
    "run_name": "v3 · weather features (nominal/v3/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "e40e070b3c08e512b72bd9dea11673117e9991991077db288634de81d007c9b7",
-    "summary.json": "df1ac2e9989e8ae207bd8474fafda0e885134400988b638781b9587ff96b96e2"
+    "summary.json": "1d86641f4a6518aaa096ca3cc24a8a62a0e24dfef0e2c040f772ba9fd79e52d2"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v4/all_eligible",
    "run_name": "v4 · three-block LightGBM added (nominal/v4/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "e0253a04dc4552a84cd55fb675397f6638632101bd4ee1bdd5a44ff71e6bb000",
-    "summary.json": "8de80d84a14705ed6eea693e3af514944dda1809f54de91ec756fe8deb919fcf"
+    "summary.json": "8592a77d7afe9732b5bb2a5e5beddca9b05dbf1007dd071a79b6a94f4ebfccea"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v4/never_scored",
    "run_name": "v4 · three-block LightGBM added (nominal/v4/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "6ad710e66d1c8ad42d69f5c9ac70c65672c988158a1c14b0a15105fb5fbb8350",
-    "summary.json": "23e3ed35bdef0db3f59f34df06cd2a6e86c3929474797620126d2f002accd818"
+    "summary.json": "75a9d710f30d7059577df7990b8697805ad52e9f324f45a5e65d11e5c7214dfd"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v4/old_fold_2_5",
    "run_name": "v4 · three-block LightGBM added (nominal/v4/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "1eb34da9a112976d4c394ae94e813257edd8dc1dd0b4bbda61a77ed22d193449",
-    "summary.json": "47feb044737f7323a347544d45020adb0a15f1335e2972244018b9d339365ab6"
+    "summary.json": "2ec84e60381707849acac53a96b82a331582cb4af5fdbbc22581d339662b5e2c"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v4/newly_opened",
    "run_name": "v4 · three-block LightGBM added (nominal/v4/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "29b897cb350f0c8d5fd809584b3ab2e9faba14c9c44c09d856475c55f34f3344",
-    "summary.json": "ccd4f32009952fd004fe876706b3310edaeac7c56df503468f289f043d736fcb"
+    "summary.json": "3ee8bf062912ff35ca3d46e3561b206032b187cc03c782bb7a824d890cbe8c04"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v5/all_eligible",
    "run_name": "v5 · DDNN-2 added (nominal/v5/all_eligible)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "99b4362020a942abd599830fe208adb60c4ecbee1ad447395b2e58d247944bb1",
-    "summary.json": "061417bef707dca5d236006044701462ac6202c92e299675d269458802e65bb2"
+    "summary.json": "ccefb96f9a34162c92925ad592e1cdf99e0cf67c17c0bc5121f7b94fdc8c2da7"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v5/never_scored",
    "run_name": "v5 · DDNN-2 added (nominal/v5/never_scored)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "82b2525e1de7059f8aea64530493828f64e758b8c5305ff934df9e4f8deac83c",
-    "summary.json": "1c6ebfe504ef1806f1208d507e39a729c1e2a31cae14055a33ea860480cde019"
+    "summary.json": "712cd7929a484a0ab11e01a04a783e08e52455fd626d3c39f7d968b892609e8e"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v5/old_fold_2_5",
    "run_name": "v5 · DDNN-2 added (nominal/v5/old_fold_2_5)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "92a31d7ff9f3b3f879b616cf52a6a83b14725e6850e1b2e660de35b5dfde8679",
-    "summary.json": "0b2498e4ce7c5d019906219273ec65459e4c7986803fa72f99dc144a8023b88f"
+    "summary.json": "8eb37cf68af9a7ec23092d22ce8c2b3f7f1469765bd4958ec29718b027bb52c8"
    },
    "file": "cp26.json",
    "inputs": [],
    "metrics": {
-    "MAE/B0_ratio": 1,
-    "MAE/raw_mean_daily_loss": 1,
-    "WIS/B0_ratio": 1,
-    "WIS/raw_mean_daily_loss": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
    },
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/v5/newly_opened",
    "run_name": "v5 · DDNN-2 added (nominal/v5/newly_opened)",
-   "tags": 24
+   "tags": 26
   },
   {
    "artifacts": {
     "README.md": "5f300d23ff7215f41b1ea3b7f003133f13c3c515c179a95086c688362cb18c90",
-    "summary.json": "c4f84ac8092dc127a576e3af524fdd238adcafcd5a4573222075e8938854e3e0"
+    "summary.json": "74d52d106bd6eee03d168e5e20682b7a947b9e814b24d2a30358eb40fa643e11"
    },
    "file": "cp28.json",
    "inputs": [],
@@ -3624,154 +3620,154 @@
    "parent": null,
    "run_key": "cp28",
    "run_name": "v6 · DDNN-2 alone (CP-28)",
-   "tags": 15
+   "tags": 16
   },
   {
    "artifacts": {
     "README.md": "1a8c913d02616238895bb9e85af237aee6101b75136e83721a247da1e5756bcf",
-    "summary.json": "bb0c9cdfc63535e9e4a91656fb3f7c7ba222c899ea5af48d6e1ff6982dfaeda8"
+    "summary.json": "cf176c520f1aa866545b57a6c3738b5c98579bff4dc55e61934325ab22e98005"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A1",
    "run_name": "v6 · DDNN-2 alone (A1, selected)",
-   "tags": 21
+   "tags": 22
   },
   {
    "artifacts": {
     "README.md": "95cb27eda8a2e5e378086faa17f4523c87bc6bc65e1b83c1103f53a957817625",
-    "summary.json": "42914a379f6d2fb96a154979ce6db01522051af38cc7c61ea445123785bbe8cd"
+    "summary.json": "6dd693152b3c57df1006b1ea7ccb4923c401f4c2d6a808976c2a017c908252c4"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A2",
    "run_name": "Equal-weight blend of v5's members (A2)",
-   "tags": 21
+   "tags": 22
   },
   {
    "artifacts": {
     "README.md": "4dc012dd8958c129310811825861a2244adefb8a6e414f5c4566b5c0ef5b9567",
-    "summary.json": "ceab5ec1d588ee00869fafb3f478b8bb76432f8ee60da62b9a70eda8a7ff6254"
+    "summary.json": "9d5f39a08b40e013a8d0b91e7e3320855240deda71cf2f4dd09a263ff151df10"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A3",
    "run_name": "Fitted blend weights, half shrunk (A3)",
-   "tags": 21
+   "tags": 22
   },
   {
    "artifacts": {
     "README.md": "d35277256c7b4615b9411ae5f47f0621ffb2a4bbd3389cd574f3f063f1e7ade1",
-    "summary.json": "b7d2e312e401529f3eae54cd8635ed80c4b88299f36994bfeafff368951eb108"
+    "summary.json": "8000f0558e0d111bd74ef86b1b5befaa9e871e1eb767407297c35499476a1b64"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A4",
    "run_name": "Per-block blend weights (A4)",
-   "tags": 21
+   "tags": 22
   },
   {
    "artifacts": {
     "README.md": "cd9f268a67f19cdc9d8d6ffc68749ed9935b4314af4711ca5ffb107c0c083d29",
-    "summary.json": "2cdb4e541d8759df471148e9860e5701bc574325d56b52f0fe46d5c0e7771fd3"
+    "summary.json": "2ecc8593d0b89b07f41d9fa6f9419b2bf1922e4192a4d670857b5990fd90a6b9"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A5",
    "run_name": "Small-network blend, half shrunk (A5)",
-   "tags": 21
+   "tags": 22
   },
   {
    "artifacts": {
     "README.md": "6abbe6539c99cc1201cb1d1505ad288e996095076250b0f0bfeb91cf79bf7df8",
-    "summary.json": "e2a5762f90aec46b28b6999532a771bdbdc52308262fe1dfe5e5ce720ef0e9f0"
+    "summary.json": "d3f50dda52d2b43048704c7ee07362b14b6de6c1b5e00c955b9ace798f86cf48"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A6",
    "run_name": "Fitted blend weights, unshrunk (A6)",
-   "tags": 21
+   "tags": 22
   },
   {
    "artifacts": {
     "README.md": "1384c70fe156c0c57a5c983e6aa99507682620bbb51e55f13919ee25059c6b85",
-    "summary.json": "8ef29523db3b2a6682afb27323bde8cde6a50bccc3924fe8ea8eb12139463a82"
+    "summary.json": "78bbf9fb154f16aa6aeff36feed56bc9a1c3b62db9b8ae6fd08a2c30657c2c07"
    },
    "file": "cp28.json",
    "inputs": [],
    "metrics": {
-    "MAE_arm": 1,
-    "MAE_ratio_to_B0": 1,
-    "MAE_ratio_to_control": 1,
-    "WIS_arm": 1,
-    "WIS_ratio_to_B0": 1,
-    "WIS_ratio_to_control": 1
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
    },
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A7",
    "run_name": "Small-network blend, unshrunk (A7)",
-   "tags": 21
+   "tags": 22
   }
  ],
  "sources": {

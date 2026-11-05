@@ -774,15 +774,25 @@ PRES5_EXPORTS: dict[str, dict] = {
     },
 }
 
-#: The draft metric keys, kept verbatim, and their units.
-_CP26_FIELDS = (("MAE/raw_mean_daily_loss", "MAE", "raw_mean_daily_loss"), ("MAE/B0_ratio", "MAE", "B0_ratio"),
-                ("WIS/raw_mean_daily_loss", "WIS", "raw_mean_daily_loss"), ("WIS/B0_ratio", "WIS", "B0_ratio"))
-_CP28_FIELDS = (("MAE_arm", "MAE", "arm"), ("MAE_ratio_to_B0", "MAE", "ratio_to_B0"),
-                ("MAE_ratio_to_control", "MAE", "ratio_to_control"), ("WIS_arm", "WIS", "arm"),
-                ("WIS_ratio_to_B0", "WIS", "ratio_to_B0"), ("WIS_ratio_to_control", "WIS", "ratio_to_control"))
-METRIC_UNITS.update({key: (UNIT_EUR if field in ("raw_mean_daily_loss", "arm") else R.UNIT_RATIO_B0_DAILY)
-                     for key, _, field in _CP26_FIELDS + _CP28_FIELDS if not key.endswith("ratio_to_control")})
-METRIC_UNITS.update({"MAE_ratio_to_control": R.UNIT_RATIO_CONTROL, "WIS_ratio_to_control": R.UNIT_RATIO_CONTROL})
+#: (draft key, published key, metric, record field): each draft metric under a name that carries its unit (`_eur` for
+#: EUR/MWh mean daily losses, `_ratio_to_b0` and `_ratio_to_control` for ratios of mean daily losses).
+_CP26_FIELDS = (("MAE/raw_mean_daily_loss", "mae_eur", "MAE", "raw_mean_daily_loss"),
+                ("MAE/B0_ratio", "mae_ratio_to_b0", "MAE", "B0_ratio"),
+                ("WIS/raw_mean_daily_loss", "wis_eur", "WIS", "raw_mean_daily_loss"),
+                ("WIS/B0_ratio", "wis_ratio_to_b0", "WIS", "B0_ratio"))
+_CP28_FIELDS = (("MAE_arm", "mae_eur", "MAE", "arm"), ("MAE_ratio_to_B0", "mae_ratio_to_b0", "MAE", "ratio_to_B0"),
+                ("MAE_ratio_to_control", "mae_ratio_to_control", "MAE", "ratio_to_control"),
+                ("WIS_arm", "wis_eur", "WIS", "arm"), ("WIS_ratio_to_B0", "wis_ratio_to_b0", "WIS", "ratio_to_B0"),
+                ("WIS_ratio_to_control", "wis_ratio_to_control", "WIS", "ratio_to_control"))
+METRIC_UNITS.update({"mae_eur": UNIT_EUR, "wis_eur": UNIT_EUR, "mae_ratio_to_b0": R.UNIT_RATIO_B0_DAILY,
+                     "wis_ratio_to_b0": R.UNIT_RATIO_B0_DAILY, "mae_ratio_to_control": R.UNIT_RATIO_CONTROL,
+                     "wis_ratio_to_control": R.UNIT_RATIO_CONTROL})
+
+
+def _pres5_comparability(population: str) -> str:
+    """A CP-26 population's comparability ID: its registry ID and description, hashed (one per calendar or mask)."""
+    return sha256_text(_canonical({"population_id": population, "description": G.POPULATIONS[population],
+                                   "calendar": "CP-26's scored calendar, capstone_v21.md §24.7"}))
 
 
 def _pres5_draft(key: str) -> dict[str, dict]:
@@ -809,8 +819,8 @@ def _pres5_readme(run_name: str, checkpoint: G.Checkpoint, blobs: dict[str, str]
     return "\n".join(lines) + "\n"
 
 
-def _pres5_record_id(key: str, run_key: str, field: tuple[str, str, str]) -> str:
-    _, metric, name = field
+def _pres5_record_id(key: str, run_key: str, field: tuple[str, str, str, str]) -> str:
+    _, _, metric, name = field
     code = run_key.split("/", 1)[1]
     if key == "cp26":
         route, policy, mask = code.split("/")
@@ -832,7 +842,8 @@ def pres5_runs(key: str) -> list[dict]:
         "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
         "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _status_text(owner),
         "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
-        "delu.population_id": population, "delu.model_code_sha": spec["model_code_sha"],
+        "delu.population_id": population, "delu.comparability_id": _pres5_comparability(population),
+        "delu.model_code_sha": spec["model_code_sha"],
         "delu.evidence_ref": spec["evidence_ref"], "delu.backfilled": "false",
         "delu.original_completed_utc": spec["original_completed_utc"],
         "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
@@ -842,7 +853,8 @@ def pres5_runs(key: str) -> list[dict]:
               "params": {"anchor_version": spec["anchor_version"],
                          "protocol_sha256": hashlib.sha256((ROOT / spec["protocol"]).read_bytes()).hexdigest()},
               "tags": parent_tags, "metrics": {}, "metric_provenance": {}, "metric_units": {}, "inputs": [],
-              "comparability": {"population_id": population, "description": G.POPULATIONS[population],
+              "comparability": {"population_id": population, "comparability_id": _pres5_comparability(population),
+                                "description": G.POPULATIONS[population],
                                 "aggregation": "dates weighted equally; actual hours averaged within each date"}}
     parent["artifacts"] = [
         _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
@@ -858,9 +870,10 @@ def pres5_runs(key: str) -> list[dict]:
             if field[0] not in draft["metrics"]:
                 continue
             record = R.get(_pres5_record_id(key, run_key, field))
-            metrics[field[0]] = [_point(record, 0)]
-            provenance[field[0]] = [f"{record.record_id}#value"]
-        draft_tags = {f"delu.{name}": str(value) for name, value in sorted(draft.get("tags", {}).items())
+            metrics[field[1]] = [_point(record, 0)]
+            provenance[field[1]] = [f"{record.record_id}#value"]
+        # The draft's own tags, kept under their own namespace so none overwrites a registry tag.
+        draft_tags = {f"delu.draft.{name}": str(value) for name, value in sorted(draft.get("tags", {}).items())
                       if name not in ("checkpoint", "evidence_class")}
         population_id = next(c.population for c in entry.codes if c.experiment == checkpoint.code and c.code == code)
         tags = {
@@ -870,6 +883,7 @@ def pres5_runs(key: str) -> list[dict]:
             "delu.comparator": G.get(entry.comparator).name if entry.comparator else "none",
             "delu.role": G.run_role(run_key), "delu.adopted": G.adopted_flag(entry),
             "delu.evidence_class": "development_post_selection", "delu.population_id": population_id,
+            "delu.comparability_id": _pres5_comparability(population_id),
             "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
             "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false",
             "delu.original_completed_utc": spec["original_completed_utc"],
@@ -899,8 +913,10 @@ def pres5_draft_problems(files: dict[str, dict] | None = None) -> list[str]:
             if run_key not in published:
                 problems.append(f"{run_key}: the draft run is not published")
                 continue
+            names = {draft_key: published_key for draft_key, published_key, _, _ in
+                     (_CP26_FIELDS if key == "cp26" else _CP28_FIELDS)}
             for name, value in draft["metrics"].items():
-                got = published[run_key]["metrics"].get(name)
+                got = published[run_key]["metrics"].get(names.get(name, name))
                 if not got or got[0]["value"] != float(value):
                     problems.append(f"{run_key}: {name} is not the draft's {value}")
         extra = sorted(set(published) - set(_pres5_draft(key)) - {G.CHECKPOINTS[PRES5_EXPORTS[key]["checkpoint"]].run_key})

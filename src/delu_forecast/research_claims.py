@@ -141,7 +141,7 @@ BLOCKS: tuple[Block, ...] = (
     # They follow the current generation and its rule: its date, its number of conditions and its decision level.
     _block("terms.adoption_rule", _RULE["claim"] if _RULE else "P51", f"""**Adoption rule:** set on
            {{r:derived.adoption.{_CUR.id}.set_on}}; its {_COUNT_WORDS[len(_RULE["conditions"]) if _RULE else 4]}
-           conditions are in the {{g:{_CUR.id}.version}} chapter.""", PAGE, README),
+           conditions are in the {{g:{_CUR.id}.version}} chapter.""", PAGE),
     # A rule that decided at another level than 95% names it as the rule's (W47), in the wording P53 quotes; the phone
     # placement (A2) keeps this term to two lines.
     _block("terms.differences", _RULE["claim"] if _RULE else "P51", (f"""**Paired difference:**
@@ -149,7 +149,7 @@ BLOCKS: tuple[Block, ...] = (
            {{s:level:{_RULE["level"]}}} interval; below zero favours {{g:{_CUR.id}.version}}.""" if _RULE and
            _RULE["level"] != "95%" else f"""**Paired difference:** {{g:{_CUR.id}.version}}'s error score minus
            {{g:{_CMP.id}.version}}'s on identical hours, with its {{s:level:95%}} confidence interval; below zero favours
-           {{g:{_CUR.id}.version}}."""), PAGE, README),
+           {{g:{_CUR.id}.version}}."""), PAGE),
     _block("terms.class", "P21", """**{g:current.badge}:** development evidence, not a test on new data.""",
            PAGE, README),
     # The model the current generation's name introduces (PRES-4, editorial V1): defined beneath the headline, on one
@@ -856,10 +856,11 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            carry over to every day. {g:v6.version}'s forecasts, {s:name:DDNN-2} alone, have the lowest error on both scores,
            a point comparison: {r:derived.cp26.v6-v5.MAE} and {r:derived.cp26.v6-v5.WIS} against {g:v5.version}.""",
            PAGE, README),
-    _block("everyday.routes", "C605", """Two declared routes of {g:v5.version}: the weather forecast six hours later
-           costs {r:cp28.gfs.MAE.change}% in point error and {r:cp28.gfs.WIS.change}% in interval error, so that timing is
-           fragile; dropping the load forecast moves both by about {r:derived.cp26.noload-v5.WIS} or less.""",
-           PAGE, README),
+    _block("everyday.routes", "C605", """Two declared routes of {g:v5.version}: with the weather run six hours late,
+           its point error changed by {r:derived.cp26.gfs6-v5.MAE} {r:derived.cp26.gfs6-v5.MAE|ci} and its interval
+           error by {r:derived.cp26.gfs6-v5.WIS} {r:derived.cp26.gfs6-v5.WIS|ci}, so that timing is fragile; without the
+           load forecast, its point error rose by less than {s:level:1%} and its interval error changed by
+           {r:derived.cp26.noload-v5.WIS}, point comparisons.""", PAGE, README),
     # ---- the final candidate's chapter (the chapter grammar; outcome 1, 3, 4) ----
     _block("v6.question", "C901", """How does """ + _A1 + """, the policy selected for the final test, compare with
            {g:v5.version} on {g:v5.version}'s own five test periods, scored exactly as {g:v5.version}'s were?""",
@@ -1028,8 +1029,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            price."""),
     _block("v6.product.limits", "C607", """**Its limits.** The results are development evidence after selection, and
            {s:work-item:4.7T} is still to come. On the five test periods its information differs from
-           {g:v5.version}'s. The weather run's timing is fragile: six hours late, it cost {g:v5.version}
-           {r:cp28.gfs.MAE.change}% in point error. The load forecast's historical values are not their original
+           {g:v5.version}'s. The weather run's timing is fragile: six hours late, it changed {g:v5.version}'s point
+           error by {r:derived.cp26.gfs6-v5.MAE}. The load forecast's historical values are not their original
            vintages, and the published prices may still be revised. A failed network member stops the day's fit, and
            the frozen fallback issues. It is frozen: any change needs a new freeze and a new test."""),
     _block("v6.product.run", "P66", """**Check the frozen policy.**

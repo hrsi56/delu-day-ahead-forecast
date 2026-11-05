@@ -159,7 +159,8 @@ def build_glance(target: str = "md") -> str:
              "models were compared and checked."),
         "",
         para(bold(f"Research, {tok('{g:current.name}')}.") + " " + RC.headline(target)) if G.final_candidate() is None
-        else para(bold(f"Final candidate · pending 4.7T, {tok('{g:v6.name}', 'P61')}.") + " " + RC.headline(target)),
+        else para(bold(f"Final candidate · pending {RC.structural('work-item', '4.7T', target)}, "
+                       f"{tok('{g:v6.name}', 'P61')}.") + " " + RC.headline(target)),
         "",
         ("<ul>" + "".join(f"<li>{term}</li>" for term in terms) + "</ul>") if html
         else "\n".join(f"- {term}" for term in terms),
@@ -289,9 +290,9 @@ def final_candidate_section(entry: G.Entry) -> list[str]:
     cp28 = G.CHECKPOINTS["CP-28"]
     row = R.get("pres5.uncertainty.A1-v5.equal_fold.MAE")
     return [
-        f"### {entry.name} · final candidate, pending 4.7T", "",
+        f"### {entry.name}", "",
         f"*{entry.subtitle}; {G.FROZEN_LABELS.get(entry.id, entry.version)} in the frozen records.* "
-        f"{G.status_sentence(entry)}", "",
+        f"{G.status_sentence(entry)} It is pending 4.7T.", "",
         *transition_lines(entry),
         md("v6.question"), "",
         md("v6.change"), "",
@@ -305,10 +306,14 @@ def final_candidate_section(entry: G.Entry) -> list[str]:
         md("v6.fresh.rules"), "",
         md("v6.fresh.meaning"), "",
         "**On every development day, scored separately.** " + md("everyday.finding") + " " + md("everyday.routes"), "",
-        f"Evidence: [v6's rows on v5's population]({GITHUB_URL}/blob/evidence/pres-5/{row.source_path}#L{row.source_line}), "
-        f"[the selection's review verdict]({GITHUB_URL}/blob/{cp28.evidence_tag}/{cp28.verdict}) and "
-        f"[report]({GITHUB_URL}/blob/{cp28.evidence_tag}/{cp28.report}), "
-        f"[the registered test protocol]({GITHUB_URL}/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md).",
+        "Evidence: " + " · ".join(
+            f"[{kind}, frozen {G.EVIDENCE_TAGS[tag][1]}]({GITHUB_URL}/blob/{tag}/{path}{f'#L{line}' if line else ''})"
+            for kind, tag, path, line in (
+                ("The final candidate's raw CSV rows", "evidence/pres-5", row.source_path, row.source_line),
+                ("Review verdict of the selection", cp28.evidence_tag, cp28.verdict, None),
+                ("Selection report", cp28.evidence_tag, cp28.report, None),
+                ("The registered test protocol", "evidence/cp-17", "docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md",
+                 None))),
         "",
     ]
 

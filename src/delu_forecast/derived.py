@@ -665,6 +665,15 @@ def _pres5_records() -> list[DerivedRecord]:
             (ratio_id,), "(ratio of mean daily losses − 1) × 100; its interval the ratio's own, the same way", 0, "P60",
             ci_low=_text((_d(ratio_id, "ci_low") - 1) * hundred), ci_high=_text((_d(ratio_id, "ci_high") - 1) * hundred),
             label="as a share of v5's mean daily loss"))
+    for metric in ("MAE", "WIS"):
+        # The weather route six hours late (CP-28's committed note on CP-26's outputs): its change in percent, and the
+        # interval of its ratio to nominal v5, as a change.
+        change, low, high = (f"cp28.gfs.{metric}.change", f"cp28.gfs.{metric}.ratio_ci", f"cp28.gfs.{metric}.ratio_ci_high")
+        out.append(DerivedRecord(
+            f"derived.cp26.gfs6-v5.{metric}", "control_change", "v5-weather-late", UNIT_RELATIVE, _text(_d(change)),
+            (change, low, high), "the note's change in percent; its interval (ratio interval − 1) × 100", 0, "P60",
+            ci_low=_text((_d(low) - 1) * hundred), ci_high=_text((_d(high) - 1) * hundred),
+            label="as a share of nominal v5's mean daily loss"))
     for key, (numerator, denominator) in POINT_CHANGES.items():
         out.append(DerivedRecord(
             f"derived.{key}", "point_change", key.split(".")[1], UNIT_RELATIVE,
@@ -753,6 +762,13 @@ def validate_all() -> list[str]:
                 low, high = _text(value(ratio_id, "ci_low") * hundred), _text(value(ratio_id, "ci_high") * hundred)
                 if (low, high) != (record.ci_low, record.ci_high):
                     problems.append(f"{record.record_id}: interval no longer follows from its rows")
+            elif record.kind == "control_change" and len(record.inputs) == 3:
+                change, low_id, high_id = record.inputs
+                hundred = Decimal(100)
+                expected = _text(value(change))
+                low, high = _text((value(low_id) - 1) * hundred), _text((value(high_id) - 1) * hundred)
+                if (low, high) != (record.ci_low, record.ci_high):
+                    problems.append(f"{record.record_id}: interval no longer follows from its rows")
             elif record.kind == "control_change":
                 (ratio_id,) = record.inputs
                 hundred = Decimal(100)
@@ -822,9 +838,11 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
         sign = ""
     else:
         sign = R.MINUS if quantized < 0 else ""
-        # PRES-5: an interval that spans zero shows its positive endpoint's sign ("[−1%, +1%]"), so the span reads.
-        if (quantized > 0 and which in ("ci_low", "ci_high") and record.ci_low is not None
-                and Decimal(record.ci_low) < 0 < Decimal(record.ci_high)):
+        # PRES-5: an interval that spans zero shows its positive endpoint's sign ("[−1%, +1%]"), so the span reads; and
+        # the new changes against v5 show a positive value's sign ("+14%"), as the CP-26 and CP-28 reports do.
+        if quantized > 0 and ((which in ("ci_low", "ci_high") and record.ci_low is not None
+                               and Decimal(record.ci_low) < 0 < Decimal(record.ci_high))
+                              or record.kind in ("control_change", "point_change")):
             sign = "+"
     suffix = "%" if record.unit == UNIT_RELATIVE else ""
     return f"{sign}{text}{suffix}"

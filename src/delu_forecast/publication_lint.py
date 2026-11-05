@@ -220,7 +220,10 @@ def code_denylist() -> tuple[str, ...]:
     generation's public version label (CP-24's `v5`, which CP-23 also used for its candidate) is that label on the
     reading path, not an internal code, and stays allowed; every other code stays denied."""
     versions = {entry.version for entry in G.generations()}
-    return tuple(code for code in G.codes() if not re.fullmatch(r"CP-\d+", code) and code not in versions)
+    # PRES-5 (ruling O30): v6's label in the frozen records, "A1", is shown beside it ("A1 in the frozen records").
+    labels = set(G.FROZEN_LABELS.values())
+    return tuple(code for code in G.codes()
+                 if not re.fullmatch(r"CP-\d+", code) and code not in versions and code not in labels)
 
 
 def code_findings(nodes: list[Node]) -> list[str]:
@@ -355,7 +358,9 @@ def percent_findings(nodes: list[Node]) -> list[str]:
         if "%" not in node.text:
             continue
         b = node.bindings
-        derived = b.get("data-derived") in ("share_change", "ratio_change", "distance", "rule_margin")
+        # PRES-5 adds CP-28's and CP-26's changes against v5 (`control_change`, `point_change`), derived the same way.
+        derived = b.get("data-derived") in ("share_change", "ratio_change", "distance", "rule_margin", "control_change",
+                                            "point_change")
         level = b.get("data-structural") == "level"
         exempt = V1_RULES.get(b.get("data-v1", ""), "") == "invariant_4"
         if not (derived or level or exempt):

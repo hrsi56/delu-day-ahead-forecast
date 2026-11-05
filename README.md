@@ -34,9 +34,9 @@
 
 Names and statuses come from the registry. The research results are development evidence after selection, on the same historical hours for every policy; the released model's one-shot holdout is a separate evidence class. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#chapters) has the charts and the values.
 
-### v6 · DDNN-2 alone · final candidate, pending 4.7T
+### v6 · DDNN-2 alone
 
-*DDNN-2 alone, refitted daily, frozen for 4.7T; A1 in the frozen records.* In October 2026, v6 became the final candidate.
+*DDNN-2 alone, refitted daily, frozen for 4.7T; A1 in the frozen records.* In October 2026, v6 became the final candidate. It is pending 4.7T.
 
 **From v5 to v6: DDNN-2 alone.**
 
@@ -69,9 +69,9 @@ On 2026-10-25 the selection rule, set on 2026-10-12, picked arm A1, now v6, amon
 
 **What each result means.** A pass keeps v6 as the product and ends its "pending" status; the record says "It passed the pre-registered test". A fail or an inconclusive result makes v1 the product again, and the record says "It did not pass; the window is spent, and v1 remains the product." Either way the live record stays "prospective evaluation in progress" until at least 90 consecutive days are scored.
 
-**On every development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. v6's forecasts, DDNN-2 alone, have the lowest error on both scores, a point comparison: −7% and −11% against v5. Two declared routes of v5: the weather forecast six hours later costs 14% in point error and 15% in interval error, so that timing is fragile; dropping the load forecast moves both by about 1% or less.
+**On every development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. v6's forecasts, DDNN-2 alone, have the lowest error on both scores, a point comparison: −7% and −11% against v5. Two declared routes of v5: with the weather run six hours late, its point error changed by +14% [+10%, +16%] and its interval error by +15% [+12%, +18%], so that timing is fragile; without the load forecast, its point error rose by less than 1% and its interval error changed by +1%, point comparisons.
 
-Evidence: [v6's rows on v5's population](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22), [the selection's review verdict](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) and [report](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md), [the registered test protocol](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md).
+Evidence: [The final candidate's raw CSV rows, frozen 2026-11-05](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22) · [Review verdict of the selection, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) · [Selection report, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md) · [The registered test protocol, frozen 2026-10-28](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md)
 
 ### v5 · DDNN-2 added
 

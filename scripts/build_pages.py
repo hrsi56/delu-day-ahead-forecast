@@ -2013,7 +2013,7 @@ def comparison_audit() -> tuple[Audit, ...]:
     if final is not None and final in G.comparison_rows():
         # PRES-5: the final candidate's row is this publication's own rows, scored on the same population.
         row = R.get(f"pres5.metrics.{final.code_in('PRES-5')}.equal_fold.S_MAE")
-        audit += (Audit("v6's raw CSV rows on this population", row.source_path, PRES5_TAG, row.source_line),)
+        audit += (Audit("The final candidate's raw CSV rows", row.source_path, PRES5_TAG, row.source_line),)
     return audit
 
 
@@ -2462,8 +2462,8 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-forecast", "Read a forecast: interactive replay", "Read a forecast", ("10",),
               product_replay(payload) + "".join(block(k) for k in ("product.forecast.read", "product.forecast.controls",
                                                                    "product.forecast.demo"))
-              + f'<p><a class="quiet external" href="{attr(history_url(C))}">Try the {ver(released.version)} demo, now '
-                'under the Space\'s History</a></p>'),
+              + f'<p><a class="quiet external" href="{attr(history_url(C))}">Try the {ver(released.version)} demo, under '
+                'the Space\'s History</a></p>'),
         Topic("product-limitations", "Limitations", "Limitations", ("11",),
               block("product.limits.summary") + f'<ul class="limitations">{limitations}</ul>'
               + f'<p><span data-claim="P48" data-v1="floor_change">{esc(C["floor_change"])}</span></p>'),
@@ -2932,7 +2932,7 @@ def a1_slots() -> ChapterSlots:
                 + block("v6.fresh.terms") + block("v6.fresh.rules") + block("v6.fresh.meaning"))
     cp28, cp17c = G.CHECKPOINTS["CP-28"], "docs/track-b/evidence/cp-17c/integration.md"
     row = R.get(_A1_MAE)
-    audit = (Audit("v6's raw CSV rows on v5's population", row.source_path, PRES5_TAG, row.source_line),
+    audit = (Audit("The final candidate's raw CSV rows", row.source_path, PRES5_TAG, row.source_line),
              Audit("Review verdict of the selection", cp28.verdict, cp28.evidence_tag),
              Audit("Selection report", cp28.report, cp28.evidence_tag),
              Audit("Review verdict of the freeze", cp17c, "evidence/cp-17c"),
@@ -2948,8 +2948,8 @@ def a1_slots() -> ChapterSlots:
                              "interval and with its wider 97.5 percent interval, named in the row labels. Each shows "
                              "the estimated difference as a hexagon and its interval as a line; every interval "
                              "lies wholly left of zero, which favours v6.",
-                        subtitle="Difference in error score, v6 − v5 · paired intervals at 95% and at 97.5% · the same "
-                                 "10,747 hours · development, post-selection",
+                        subtitle="Difference in error score, v6 − v5 · paired intervals at 95% and at 97.5% · the hours "
+                                 "of v5's comparison · development, post-selection",
                         label_width=250, wrap_labels=True),
         headline="v6.chart_headline",
         reading="v6.reading",
@@ -3150,7 +3150,7 @@ def v1_chapter(C, archive: str) -> str:
  {block("v1.lesson")}
  <p class="chapter-links"><a class="quiet" href="#product">How the released model works, topic by topic</a>
   <a class="quiet" href="#forecast">The replay in the archived report</a>
-  <a class="quiet external" href="{attr(history_url(C))}">Try the {ver(entry.version)} demo, now under the Space's History</a></p>
+  <a class="quiet external" href="{attr(history_url(C))}">Try the {ver(entry.version)} demo, under the Space's History</a></p>
 {v1_archive_disclosure(archive)}
 </article>"""
 
