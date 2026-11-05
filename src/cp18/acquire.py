@@ -45,7 +45,9 @@ def next_day(now: datetime) -> date:
 
 
 def run(root, *, claim, day: str | None = None, poll_seconds: int = 300, margin_seconds: int = 120,
-        transport=None, clock=None, sleep=time.sleep) -> dict:
+        window_hours: float | None = 3.0, transport=None, clock=None, sleep=time.sleep) -> dict:
+    """One acquisition. With `window_hours`, a run that finds the next cutoff further away than that does nothing
+    (exit 0, "not yet"): a schedule that fires twice a day, for winter and summer time, never polls for a day."""
     from .live import acquire as AQ
     from .live.archive import Archive
     from .live.transport import HttpTransport
@@ -61,6 +63,10 @@ def run(root, *, claim, day: str | None = None, poll_seconds: int = 300, margin_
             boundary.admit_delivery_day(target)
             cutoff = plan.cutoff(target)
             record.update(day=str(target), cutoff_utc=cutoff.strftime('%Y-%m-%dT%H:%M:%SZ'))
+            if day is None and window_hours is not None and cutoff - clock() > timedelta(hours=window_hours):
+                record.update(outcome=f'not yet: {target}\'s cutoff is more than {window_hours:g} h away', exit=0,
+                              finished_utc=utc_now())
+                return record
             archive = Archive(root / INPUTS_PATH)
             transport = transport or HttpTransport()
             while True:

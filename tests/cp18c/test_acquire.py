@@ -112,6 +112,7 @@ def test_a_load_forecast_not_published_before_the_cutoff_is_not_shown(tmp_path):
 def test_a_retrieval_after_the_cutoff_is_archived_but_never_shown(tmp_path):
     record, _, _ = go(tmp_path, datetime(2026, 11, 5, 10, 30, tzinfo=UTC), datetime(2026, 11, 5, 9, 0, tzinfo=UTC))
     assert record['day'] == str(DAY + timedelta(days=1))                         # the next day by default
+    assert record['exit'] == 0 and record['outcome'].startswith('not yet')      # its cutoff is a day away
     record, _, archive = acquire.run(tmp_path / 'b', claim=FakeClaim(), day=str(DAY),
                                      transport=Transport(Clock(datetime(2026, 11, 5, 10, 30, tzinfo=UTC)),
                                                          datetime(2026, 11, 5, 9, 0, tzinfo=UTC)),
@@ -119,6 +120,12 @@ def test_a_retrieval_after_the_cutoff_is_archived_but_never_shown(tmp_path):
                                      sleep=lambda s: None), None, Archive(tmp_path / 'b' / INPUTS_PATH)
     assert record['exit'] == 1 and record['load_forecast']['admitted'] is False
     assert 'not strictly before the cutoff' in record['load_forecast']['reason']
+
+
+def test_far_from_the_cutoff_a_scheduled_acquisition_does_nothing(tmp_path):
+    record, claim, _ = go(tmp_path, datetime(2026, 11, 5, 10, 30, tzinfo=UTC), datetime(2026, 11, 5, 9, 0, tzinfo=UTC))
+    assert record['exit'] == 0 and record['outcome'].startswith('not yet') and not claim.published
+    assert record['attempts'] == []
 
 
 def test_a_refused_claim_is_a_recorded_outcome_never_an_escaped_run(tmp_path):

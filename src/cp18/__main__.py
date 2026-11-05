@@ -119,7 +119,8 @@ def cmd_acquire(args) -> int:
     from .claim import Claim
     root = args.root.resolve()
     record = acquire.run(root, claim=Claim(root, remote=args.remote, branch=args.branch),
-                         day=args.day, poll_seconds=args.poll_seconds, margin_seconds=args.margin_seconds)
+                         day=args.day, poll_seconds=args.poll_seconds, margin_seconds=args.margin_seconds,
+                         window_hours=args.window_hours if args.window_hours > 0 else None)
     _dump(args.out, record)
     print('acquire', record.get('day'), '|', record['outcome'], flush=True)
     return record['exit']
@@ -206,6 +207,8 @@ def main(argv=None) -> int:
     a.add_argument('--branch', default='main')
     a.add_argument('--poll-seconds', type=int, default=300, help='while the load forecast is not yet published')
     a.add_argument('--margin-seconds', type=int, default=120, help='stop polling this long before the cutoff')
+    a.add_argument('--window-hours', type=float, default=3.0, help='do nothing when the next cutoff is further away '
+                                                                   '(0: no window); a given --day ignores it')
     i = sub.add_parser('seed-store')
     i.add_argument('--root', default=Path('.'), type=Path)
     g = i.add_mutually_exclusive_group(required=True)
