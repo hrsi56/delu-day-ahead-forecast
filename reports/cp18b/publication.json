@@ -1,0 +1,26 @@
+{
+ "build": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18b/accept/dist",
+ "bundle": "reports/cp18b/bundle",
+ "gate": {
+  "publishable": true,
+  "reason": null,
+  "recompute_match": true,
+  "verify_problems": []
+ },
+ "published": true,
+ "schema": "cp18b-publication-v1",
+ "served": {
+  "artifact_sha256": "c18db6d544bcf4cdbd446082d755107783e650972a4b2069008625e04d47c8ac",
+  "checked": 878,
+  "intended_manifest_sha256": "9d35aaa2d6181cc1cf1ec9b9f18dd34d3330db39e12bf9cf4e5fae0549bfd9a2",
+  "problems": [],
+  "served_identity_equal": true,
+  "served_manifest_sha256": "9d35aaa2d6181cc1cf1ec9b9f18dd34d3330db39e12bf9cf4e5fae0549bfd9a2"
+ },
+ "served_from": "http://127.0.0.1:61416/",
+ "target": "local static server",
+ "upload": {
+  "files": 860,
+  "target": "local static server"
+ }
+}

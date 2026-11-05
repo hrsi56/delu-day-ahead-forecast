@@ -6,7 +6,7 @@ Runs under the Playwright tool environment (standard library plus `playwright` 1
 logs every path it serves; in every browser context every request whose origin is not that server is blocked and
 recorded. Chromium and WebKit are driven one after the other (never more than one browser process at a time).
 
-    PLAYWRIGHT_BROWSERS_PATH=<.local/tools/ms-playwright> <playwright python> scripts/space_acceptance.py \\
+    PLAYWRIGHT_BROWSERS_PATH=<.local/tools/ms-playwright> <playwright python> tests/cp18b/space_acceptance.py \\
         --dist <built Space> --scratch <folder> [--variants <variant bundles>] [--build-python <project python>] \\
         [--engines chromium,webkit] [--skip-train] [--only main,demo,history,variants]
 
@@ -32,7 +32,7 @@ import sys
 import threading
 import time
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 TYPES = {'.wasm': 'application/wasm', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json',
          '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.zip': 'application/zip',
          '.whl': 'application/zip', '.npz': 'application/octet-stream', '.py': 'text/plain; charset=utf-8',

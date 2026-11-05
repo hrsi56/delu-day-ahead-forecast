@@ -23,7 +23,7 @@ BOUNDARY = date(2026, 9, 6)
 ADDED = ('src/cp18/records.py', 'src/cp18/outcomes.py', 'src/cp18/evaluation.py', 'src/cp18/bundle.py',
          'src/cp18/controls.py', 'src/cp18/publish.py', 'src/cp18/spaceglue.py', 'src/cp18/live_claims.py',
          'tests/cp18b', 'reports/cp18b', 'docs/track-b/evidence/cp-18b', 'space-product',
-         'scripts/build_product_space.py', 'scripts/space_acceptance.py')
+         'scripts/build_product_space.py')
 CHANGED = ('tests/test_24_live_namespace_is_walled_off.py', '.github/workflows/daily.yml')
 #: Dates after the boundary that the round's files may name, each a calendar or protocol date, never a delivery day.
 CALENDAR = {

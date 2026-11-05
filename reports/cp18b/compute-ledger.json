@@ -1,0 +1,17 @@
+{
+ "ceilings": {"github_job_hours": 5, "local_machine_hours": 12, "max_concurrent_workers": 4, "peak_memory_gb": 12},
+ "github": {"job_hours": 0, "note": "no runner was used: daily.yml is unchanged and the round ran locally"},
+ "local": [
+  {"what": "A1's issued fit of 2026-09-05 rerun under the issuing host (export on), twice", "seconds": 170},
+  {"what": "the bundle rebuilt with no payload cache (the live-input builder), twice, once with a refit", "seconds": 300},
+  {"what": "bundle builds, controls and variants (cached payloads)", "seconds": 120},
+  {"what": "the static development records from CP-26's ledger", "seconds": 10},
+  {"what": "the Space Builder's development and its acceptance run (browsers, one at a time)", "seconds": 3600},
+  {"what": "the Lead's acceptance run on the integrated build (Chromium and WebKit, three retrains)", "seconds": 600},
+  {"what": "the early history-free CI rehearsal (Python 3.12) and stress run", "seconds": 1200},
+  {"what": "local test runs while building", "seconds": 900}
+ ],
+ "local_machine_hours_approximate": 1.9,
+ "note": "summed over workers' wall time; BLAS at one thread for native fits; at most 3 concurrent workers; the final CI, stress and the Integration Critic's reruns are recorded in the return",
+ "schema": "cp18b-compute-ledger-v1"
+}
