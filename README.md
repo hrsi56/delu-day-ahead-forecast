@@ -7,17 +7,17 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Final candidate · pending 4.7T, A1 · DDNN-2 alone.** Selected by a rule set before the test: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error; 7 policies tested against the rule. `Development · post-selection`
+**Final candidate · pending 4.7T, v6 · DDNN-2 alone.** Selected by a rule set before the test: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error; 7 policies tested against the rule. `Development · post-selection`
 
 - **Point and interval error:** each day's mean absolute error of the median forecast, and its interval score, averaged over days; lower is better.
-- **Selection rule:** set on 2026-10-12, before any result; its gates and its pick are in the A1 chapter.
-- **Final candidate · pending 4.7T:** frozen for one test on 90 days, registered before any of their data was opened.
+- **Selection rule:** set on 2026-10-12, before any result; its gates and its pick are in the v6 chapter.
+- **Final candidate · pending 4.7T:** v6, A1 in the frozen records, frozen for one test on 90 days, registered before any of their data was opened.
 - **Development · post-selection:** development evidence, not a test on new data.
 - **DDNN-2:** a distributional neural network (DDNN).
 
-**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Space runs A1 · DDNN-2 alone every day, frozen: each forecast is issued before the auction; prospective evaluation in progress. v1 stays the released model until 4.7T is scored; its demo is under the Space's History. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Space runs v6 · DDNN-2 alone every day, frozen: each forecast is issued before the auction; prospective evaluation in progress. v1, the last released generation, is its historical demo under the Space's History, and the product again if 4.7T does not pass. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
 
-**How the product works:** The released model, v1 · released LightGBM, topic by topic: the artifact its one-shot test evaluated and its historical demo computes. The live product on the Space runs the final candidate, A1 · DDNN-2 alone, and documents it in its own views. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
+**How the product works:** The product the Space runs, v6 · DDNN-2 alone, A1 in the frozen records, topic by topic: the frozen policy, its data, how it was selected and tested, its results, its limits and how to run it. v1's documentation, the last released generation, stays in its chapter and its archive. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
 
 **Report:** [the one-page report](https://hrsi56.github.io/delu-day-ahead-forecast/), with every result, its limits and its evidence.
 
@@ -34,13 +34,19 @@
 
 Names and statuses come from the registry. The research results are development evidence after selection, on the same historical hours for every policy; the released model's one-shot holdout is a separate evidence class. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#chapters) has the charts and the values.
 
-### A1 · DDNN-2 alone · final candidate, pending 4.7T
+### v6 · DDNN-2 alone · final candidate, pending 4.7T
 
-*DDNN-2 alone, refitted daily, frozen for 4.7T.* In October 2026, A1 · DDNN-2 alone became the final candidate.
+*DDNN-2 alone, refitted daily, frozen for 4.7T; A1 in the frozen records.* In October 2026, v6 became the final candidate.
 
-How does A1 · DDNN-2 alone, the policy selected for the final test, compare with v5 on v5's own five test periods, scored exactly as v5's were?
+**From v5 to v6: DDNN-2 alone.**
 
-A1 · DDNN-2 alone keeps only v5's distributional neural network, DDNN-2, with its own quantiles: no LEAR forecasts, no LightGBM, no blend. It is refitted every day on the 728 days before the forecast, issued at 11:00 Berlin time the day before delivery, and has been frozen since 2026-10-30 for its one test.
+- **What changed.** v6 keeps only v5's distributional neural network, DDNN-2, with its own quantiles, refitted every day; v5's two LEAR forecasts, its LightGBM and the blend are dropped. It is A1 in the frozen records.
+- **Comparator.** Set in advance: v5 itself, the control of the selection rule, so the comparator is the predecessor; the selection ran on every development day, and the same comparison on v5's five test periods is in v6's chapter.
+- **Result.** On every development day: −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error, descriptive 95% intervals; on the five test periods: −6% [−9%, −2%] on the point-error score and −11% [−15%, −8%] on the interval score, as shares of v5's scores. Development, after selection; not 4.7T.
+
+How does v6 · DDNN-2 alone, the policy selected for the final test, compare with v5 on v5's own five test periods, scored exactly as v5's were?
+
+v6 · DDNN-2 alone keeps only v5's distributional neural network, DDNN-2, with its own quantiles: no LEAR forecasts, no LightGBM, no blend. It is refitted every day on the 728 days before the forecast, issued at 11:00 Berlin time the day before delivery, and has been frozen since 2026-10-30 for its one test.
 
 Against v5, on the same 10,747 hours, the point-error score changed by −6% [−9%, −2%] and the interval score by −11% [−15%, −8%], each as a share of v5's score, with 95% confidence intervals; at 97.5%, the level v5's rule decided at, [−10%, −2%] and [−15%, −8%].
 
@@ -48,24 +54,24 @@ On these five periods both paired differences lie below zero, at 95% and at 97.5
 
 **What this result does not establish:**
 
-- **That the two had the same information.** A1's forecasts were made under the later daily protocol: issued one or two hours earlier, refitted every day, with its own network searches and data identity, and the first period, 2020, lies in that protocol's unscored warm-up. The comparison shares the hours and prices, not the protocol.
-- **Performance on new data.** A1 was selected on every development day, four of these periods among them, after DDNN-2 alone had already scored best there. This is development evidence after selection; 4.7T, on 90 days whose data was opened only after its registration, is its one test.
+- **That the two had the same information.** v6's forecasts were made under the later daily protocol: issued one or two hours earlier, refitted every day, with its own network searches and data identity, and the first period, 2020, lies in that protocol's unscored warm-up. The comparison shares the hours and prices, not the protocol.
+- **Performance on new data.** v6 was selected on every development day, four of these periods among them, after DDNN-2 alone had already scored best there. This is development evidence after selection; 4.7T, on 90 days whose data was opened only after its registration, is its one test.
 
-On 2026-10-25 the selection rule, set on 2026-10-12, picked A1 among 7 arms; it was frozen on 2026-10-28 and re-frozen, unchanged, on 2026-10-30. In October 2026, A1 · DDNN-2 alone became the final candidate. v1 stays the released model until 4.7T is scored, and v5 stays the latest generation adopted in research.
+On 2026-10-25 the selection rule, set on 2026-10-12, picked arm A1, now v6, among 7 arms; it was frozen on 2026-10-28 and re-frozen, unchanged, on 2026-10-30. In October 2026, v6 became the final candidate. It was selected by its own rule, never adopted by v5's. v1 is the last released generation, and the product again if 4.7T does not pass.
 
-**The selection rule**, set on 2026-10-12 and frozen before the re-baseline's first score: seven recombinations of v5's members, A1 among them, each against v5 on every development day. To pass, an arm had to beat v5 by more than half a percent on both scores, lose no more than 2% in any complete year from 2021 to 2025 or any season, and survive Holm's correction across the seven at 5%, in the main analysis and in three sensitivity variants. Among those that passed, the lowest interval error won.
+**The selection rule**, set on 2026-10-12 and frozen before the re-baseline's first score: seven recombinations of v5's members, v6 among them, each against v5 on every development day. To pass, an arm had to beat v5 by more than half a percent on both scores, lose no more than 2% in any complete year from 2021 to 2025 or any season, and survive Holm's correction across the seven at 5%, in the main analysis and in three sensitivity variants. Among those that passed, the lowest interval error won.
 
-**4.7T, registered before the test.** One test of A1, on delivery days 2026-09-07 to 2026-12-05, 90 days, opening no earlier than 2026-12-04, once every price is published. The window is never extended, shortened or rolled.
+**4.7T, registered before the test.** One test of v6, on delivery days 2026-09-07 to 2026-12-05, 90 days, opening no earlier than 2026-12-04, once every price is published. The window is never extended, shortened or rolled.
 
-**Against what, and how.** The control is v5, the reference the similar-day naive, both run under the re-baseline's rules; v3, v4 and v1's released model are reported, never tested. The scores are each day's mean absolute error of the median and its interval score. It passes when the largest of four one-sided p-values is at most 0.05: A1 better than v5 by more than half a percent on both scores, and better than the naive on both. The intervals come from a 7-day block bootstrap with 10,000 draws.
+**Against what, and how.** The control is v5, the reference the similar-day naive, both run under the re-baseline's rules; v3, v4 and v1's released model are reported, never tested. The scores are each day's mean absolute error of the median and its interval score. It passes when the largest of four one-sided p-values is at most 0.05: v6 better than v5 by more than half a percent on both scores, and better than the naive on both. The intervals come from a 7-day block bootstrap with 10,000 draws.
 
 **The failure rules.** At least 60 of the 90 days must be paired and scored, or the test is inconclusive. No runner-up moves up, the window is spent whatever the result, and a null result is valid.
 
-**What each result means.** A pass makes A1 the product, replacing v1, and the record says "It passed the pre-registered test". A fail or an inconclusive result keeps v1 as the product, and the record says "It did not pass; the window is spent, and v1 remains the product." Either way the live record stays "prospective evaluation in progress" until at least 90 consecutive days are scored.
+**What each result means.** A pass keeps v6 as the product and ends its "pending" status; the record says "It passed the pre-registered test". A fail or an inconclusive result makes v1 the product again, and the record says "It did not pass; the window is spent, and v1 remains the product." Either way the live record stays "prospective evaluation in progress" until at least 90 consecutive days are scored.
 
-**On every development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. A1's forecasts, DDNN-2 alone, have the lowest error on both scores, a point comparison: −7% and −11% against v5. Two declared routes of v5: the weather forecast six hours later costs 14% in point error and 15% in interval error, so that timing is fragile; dropping the load forecast moves both by about 1% or less.
+**On every development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. v6's forecasts, DDNN-2 alone, have the lowest error on both scores, a point comparison: −7% and −11% against v5. Two declared routes of v5: the weather forecast six hours later costs 14% in point error and 15% in interval error, so that timing is fragile; dropping the load forecast moves both by about 1% or less.
 
-Evidence: [A1's rows on v5's population](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22), [the selection's review verdict](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) and [report](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md), [the registered test protocol](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md).
+Evidence: [v6's rows on v5's population](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22), [the selection's review verdict](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) and [report](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md), [the registered test protocol](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md).
 
 ### v5 · DDNN-2 added
 
@@ -262,16 +268,6 @@ Does a distributional neural network, added to v4 as a one-third member, improve
 
 Evidence: [Engineering report, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-23/reports/distribution-challenger/report.md) · [Review verdict, frozen 2026-10-04](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-23/docs/track-b/evidence/cp-23/integration.md)
 
-### Experiments not adopted after v5
-
-#### Recombination of v5's members
-
-*Seven registered recombinations, one look, under Holm.* In October 2026, the recombination of v5's members was not adopted.
-
-Does a registered recombination of v5's three members beat v5 on both scores on every development day, without losing more than 2% in any complete year or season? Seven arms, one look. All seven passed. Against v5, the blends changed the interval error by −4% to −7%; DDNN-2 alone, A1, by −11% [−13%, −9%], descriptive 95% interval. Development evidence after selection. No blend was selected: the arm with the lowest interval error, A1, takes DDNN-2 alone and became the final candidate.
-
-Evidence: [Engineering report, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md) · [Review verdict, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md)
-
 ### Reading the comparison
 
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
@@ -283,9 +279,9 @@ The accuracy targets: each error score at least 10% below the strongest benchmar
 
 Every policy was evaluated on the same 10,747 historical hours over 448 days, across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
 
-A1 · DDNN-2 alone against v5, as a share of v5's error scores: −6% [−9%, −2%] on the point-error score and −11% [−15%, −8%] on the interval score, with 95% confidence intervals. Development evidence after selection, not a test on new data. A1's forecasts come from a later, daily protocol; its chapter says how they differ.
+v6 · DDNN-2 alone against v5, as a share of v5's error scores: −6% [−9%, −2%] on the point-error score and −11% [−15%, −8%] on the interval score, with 95% confidence intervals. Development evidence after selection, not a test on new data. v6's forecasts come from a later, daily protocol; its chapter says how they differ.
 
-For scale, as mean absolute error per test period: v5 4.8–14.4 EUR/MWh in the four ordinary periods and 45.5 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
+For scale, as mean absolute error per test period: v6 4.5–13.4 EUR/MWh in the four ordinary periods and 43.2 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
 
 **Why v1 scores 1.052 in the shared development comparison but 28.58% worse in its own report.** Both figures describe the same 448 development days. v1's report compared its daily absolute error with the raw similar-day naive (MAE 32.45 EUR/MWh) and pooled all days, so the 2022 crisis dominates. This comparison gives each of the five folds equal weight, and its naive reference is the forecast's emitted median after the common residual layer (MAE 32.81 EUR/MWh). v1's own error is 41.74 EUR/MWh in both. v1's original nine-quantile pinball is a different score from the seven-quantile interval score used here.
 

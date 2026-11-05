@@ -69,6 +69,7 @@ SOURCES: dict[str, Source] = dict(
         _source("reports/pres5/a1-in-v5/metrics.csv", "evidence/pres-5", "26cadf08b9f93a61e755b34863224834801ee202"),
         _source("reports/pres5/a1-in-v5/uncertainty.csv", "evidence/pres-5", "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972"),
         _source("reports/pres5/a1-in-v5/ratio-intervals.csv", "evidence/pres-5", "4459d6d2a418b02164e2d2faf50ea0b6de8ac1f6"),
+        _source("reports/pres5/a1-in-v5/preview-day.csv", "evidence/pres-5", "350cff3177ebcd41d3a5c6bf667a8919d85e4890"),
         _source("reports/pres5/a1-in-v5/summary.json", "evidence/pres-5", "72a7664c9e515c4663b1815ff45c347d6c58109a"),
         # PRES-5: CP-28's one look (its evidence tag) and CP-26's re-baseline (its landing: the evidence tag is local only)
         _source("reports/cp28/owner-summary.json", "evidence/cp-28", "2b9a884f06a6cede1f11c525ef7eab18755108f6"),
@@ -166,6 +167,7 @@ PRODUCT_SOURCES: dict[str, Source] = dict(
         _source("reports/pres5/a1-in-v5/metrics.csv", "evidence/pres-5", "26cadf08b9f93a61e755b34863224834801ee202"),
         _source("reports/pres5/a1-in-v5/uncertainty.csv", "evidence/pres-5", "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972"),
         _source("reports/pres5/a1-in-v5/ratio-intervals.csv", "evidence/pres-5", "4459d6d2a418b02164e2d2faf50ea0b6de8ac1f6"),
+        _source("reports/pres5/a1-in-v5/preview-day.csv", "evidence/pres-5", "350cff3177ebcd41d3a5c6bf667a8919d85e4890"),
         _source("reports/pres5/a1-in-v5/summary.json", "evidence/pres-5", "72a7664c9e515c4663b1815ff45c347d6c58109a"),
         # PRES-5: CP-28's one look (its evidence tag) and CP-26's re-baseline (its landing: the evidence tag is local only)
         _source("reports/cp28/owner-summary.json", "evidence/cp-28", "2b9a884f06a6cede1f11c525ef7eab18755108f6"),

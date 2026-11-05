@@ -5,16 +5,16 @@
   {
    "artifacts": [
     {
-     "bytes": 1843,
-     "content": "{\"comparability\":{\"aggregation\":\"dates weighted equally; actual hours averaged within each date\",\"description\":\"CP-26's 2,068 eligible development days, 2020-12-29 to 2026-09-06, under one daily protocol\",\"population_id\":\"cp26-every-day\"},\"inputs\":[],\"metric_units\":{},\"metrics\":{},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol_sha256\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\"},\"parent\":null,\"run_key\":\"cp28\",\"run_name\":\"Recombination of v5's members (CP-28)\",\"tags\":{\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.children\":\"cp28/A1,cp28/A2,cp28/A3,cp28/A4,cp28/A5,cp28/A6,cp28/A7\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.kind\":\"branch\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.population_id\":\"cp26-every-day\",\"delu.public_name\":\"Recombination of v5's members\",\"delu.registry_id\":\"recombining-v5s-members\",\"delu.role\":\"checkpoint\",\"delu.run_key\":\"cp28\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Recombination of v5's members: Seven registered recombinations, one look, under Holm. In October 2026, the recombination of v5's members was not adopted. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "bytes": 1769,
+     "content": "{\"comparability\":{\"aggregation\":\"dates weighted equally; actual hours averaged within each date\",\"description\":\"CP-26's 2,068 eligible development days, 2020-12-29 to 2026-09-06, under one daily protocol\",\"population_id\":\"cp26-every-day\"},\"inputs\":[],\"metric_units\":{},\"metrics\":{},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol_sha256\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\"},\"parent\":null,\"run_key\":\"cp28\",\"run_name\":\"v6 · DDNN-2 alone (CP-28)\",\"tags\":{\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.children\":\"cp28/A1,cp28/A2,cp28/A3,cp28/A4,cp28/A5,cp28/A6,cp28/A7\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.kind\":\"generation\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.population_id\":\"cp26-every-day\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"checkpoint\",\"delu.run_key\":\"cp28\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
      "path": "summary.json",
-     "sha256": "8a84bc73ede41f44e3d8f48d3b158b8e0fdc3edc6406ce5d8790d6a25f9086e0"
+     "sha256": "c4f84ac8092dc127a576e3af524fdd238adcafcd5a4573222075e8938854e3e0"
     },
     {
-     "bytes": 915,
-     "content": "# Recombination of v5's members (CP-28)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "bytes": 904,
+     "content": "# v6 · DDNN-2 alone (CP-28)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
      "path": "README.md",
-     "sha256": "a8420d711360ca4c8d820cc36587582545a1f6a853c6d7302171d0bd0855a652"
+     "sha256": "5f300d23ff7215f41b1ea3b7f003133f13c3c515c179a95086c688362cb18c90"
     }
    ],
    "comparability": {
@@ -32,38 +32,38 @@
    },
    "parent": null,
    "run_key": "cp28",
-   "run_name": "Recombination of v5's members (CP-28)",
+   "run_name": "v6 · DDNN-2 alone (CP-28)",
    "tags": {
     "delu.backfilled": "false",
     "delu.checkpoint": "CP-28",
     "delu.children": "cp28/A1,cp28/A2,cp28/A3,cp28/A4,cp28/A5,cp28/A6,cp28/A7",
     "delu.evidence_class": "development_post_selection",
     "delu.evidence_ref": "evidence/cp-28@1a86c54",
-    "delu.kind": "branch",
+    "delu.kind": "generation",
     "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
     "delu.original_completed_utc": "2026-10-24T22:09:25Z",
     "delu.population_id": "cp26-every-day",
-    "delu.public_name": "Recombination of v5's members",
-    "delu.registry_id": "recombining-v5s-members",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
     "delu.role": "checkpoint",
     "delu.run_key": "cp28",
-    "delu.status": "not adopted 2026-10-25",
-    "mlflow.note.content": "Recombination of v5's members: Seven registered recombinations, one look, under Holm. In October 2026, the recombination of v5's members was not adopted. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+    "delu.status": "final candidate 2026-10-30",
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
    }
   },
   {
    "artifacts": [
     {
-     "bytes": 2649,
-     "content": "{\"inputs\":[],\"metric_units\":{\"MAE_arm\":\"EUR/MWh\",\"MAE_ratio_to_B0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"WIS_arm\":\"EUR/MWh\",\"WIS_ratio_to_B0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"MAE_arm\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.18690839935313}],\"MAE_ratio_to_B0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49741114775496587}],\"MAE_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.93104781357463}],\"WIS_arm\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.682532615295441}],\"WIS_ratio_to_B0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4579770082975788}],\"WIS_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.8906970179035324}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"DDNN-2 alone, with its own Johnson SU quantiles\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A1\",\"run_name\":\"A1 · DDNN-2 alone (A1, selected)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.passes_all_four\":\"True\",\"delu.policy_code\":\"A1\",\"delu.population_id\":\"cp26-every-day\",\"delu.public_name\":\"A1 · DDNN-2 alone\",\"delu.registry_id\":\"a1\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A1\",\"delu.selected\":\"True\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code A1; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "bytes": 2632,
+     "content": "{\"inputs\":[],\"metric_units\":{\"MAE_arm\":\"EUR/MWh\",\"MAE_ratio_to_B0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"WIS_arm\":\"EUR/MWh\",\"WIS_ratio_to_B0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"MAE_arm\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.18690839935313}],\"MAE_ratio_to_B0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49741114775496587}],\"MAE_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.93104781357463}],\"WIS_arm\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.682532615295441}],\"WIS_ratio_to_B0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4579770082975788}],\"WIS_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.8906970179035324}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"DDNN-2 alone, with its own Johnson SU quantiles\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A1\",\"run_name\":\"v6 · DDNN-2 alone (A1, selected)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"v6\",\"delu.kind\":\"generation\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.passes_all_four\":\"True\",\"delu.policy_code\":\"A1\",\"delu.population_id\":\"cp26-every-day\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A1\",\"delu.selected\":\"True\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code A1; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
      "path": "summary.json",
-     "sha256": "a200679d7293d2df70ae22e42f7b3c59961eff2d419a4aa361e34815986f1fb2"
+     "sha256": "bb0c9cdfc63535e9e4a91656fb3f7c7ba222c899ea5af48d6e1ff6982dfaeda8"
     },
     {
      "bytes": 911,
-     "content": "# A1 · DDNN-2 alone (A1, selected)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "content": "# v6 · DDNN-2 alone (A1, selected)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
      "path": "README.md",
-     "sha256": "c1068d98cd40f8bbc0440404d33049e838ea1af40a0f4aec84e9a0bfc0b5e59c"
+     "sha256": "1a8c913d02616238895bb9e85af237aee6101b75136e83721a247da1e5756bcf"
     }
    ],
    "inputs": [],
@@ -146,7 +146,7 @@
    },
    "parent": "cp28",
    "run_key": "cp28/A1",
-   "run_name": "A1 · DDNN-2 alone (A1, selected)",
+   "run_name": "v6 · DDNN-2 alone (A1, selected)",
    "tags": {
     "delu.adopted": "true",
     "delu.backfilled": "false",
@@ -154,21 +154,21 @@
     "delu.comparator": "v5 · DDNN-2 added",
     "delu.evidence_class": "development_post_selection",
     "delu.evidence_ref": "evidence/cp-28@1a86c54",
-    "delu.generation": "none",
-    "delu.kind": "study arm",
+    "delu.generation": "v6",
+    "delu.kind": "generation",
     "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
     "delu.original_completed_utc": "2026-10-24T22:09:25Z",
     "delu.passes_all_four": "True",
     "delu.policy_code": "A1",
     "delu.population_id": "cp26-every-day",
-    "delu.public_name": "A1 · DDNN-2 alone",
-    "delu.registry_id": "a1",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
     "delu.role": "candidate",
     "delu.run_key": "cp28/A1",
     "delu.selected": "True",
     "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
     "delu.status": "final candidate 2026-10-30",
-    "mlflow.note.content": "A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code A1; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code A1; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
    }
   },
   {

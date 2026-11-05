@@ -299,13 +299,13 @@ RATIO_CHANGES = {
     "v5": "cp24.ratio.v5-HGL.{metric}",
     # PRES-4: v5's study arm DDNN-2 alone, against its comparator v4 (descriptive, never eligible).
     "ddnn2-alone": "cp24.ratio.D2-HGL.{metric}",
-    # PRES-5: A1, the final candidate, on v5's population against v5 (descriptive; v5's rule is not re-run).
-    "a1": "pres5.ratio.A1-v5.{metric}",
+    # PRES-5: v6 (A1), the final candidate, on v5's population against v5 (descriptive; v5's rule is not re-run).
+    "v6": "pres5.ratio.A1-v5.{metric}",
 }
 
-#: PRES-5: A1 against the similar-day naive on v5's population, from the same draws (the brief's outcome 1).
+#: PRES-5: v6 (A1) against the similar-day naive on v5's population, from the same draws (the brief's outcome 1).
 NAIVE_RATIO_CHANGES = {
-    "a1": "pres5.ratio.A1-B0.{metric}",
+    "v6": "pres5.ratio.A1-B0.{metric}",
 }
 
 #: The same change at a rule's own decision level, where it is not 95% (capstone v21-r11 §23.8-§23.9): v5's rule decided
@@ -313,7 +313,7 @@ NAIVE_RATIO_CHANGES = {
 DECISION_LEVEL_CHANGES = {
     "v5": ("cp24.ratio97_5.v5-HGL.{metric}", "97.5%"),
     # PRES-5: A1 against v5 at the level v5's rule decided at, from the same draws; no rule is applied.
-    "a1": ("pres5.ratio97_5.A1-v5.{metric}", "97.5%"),
+    "v6": ("pres5.ratio97_5.A1-v5.{metric}", "97.5%"),
 }
 
 
@@ -373,7 +373,7 @@ def _change_records() -> list[DerivedRecord]:
 #: Absolute context (§3.3 c): per-period MAE in EUR/MWh for these identities, each from the experiment whose rows it
 #: was published from: v5's from CP-24; the others from CP-21, as v4's chapter and the comparison published them. The
 #: shared rows are byte-identical across the comparison's experiments (`comparison_parity_problems`).
-PERIOD_SOURCES = {"a1": "PRES-5", "v5": "CP-24", "v4": "CP-21", "v3": "CP-21", "v2": "CP-21", "daily-lear": "CP-21", "naive": "CP-21"}
+PERIOD_SOURCES = {"v6": "PRES-5", "v5": "CP-24", "v4": "CP-21", "v3": "CP-21", "v2": "CP-21", "daily-lear": "CP-21", "naive": "CP-21"}
 PERIOD_SUBJECTS = tuple(PERIOD_SOURCES)
 
 
@@ -644,7 +644,7 @@ CONTROL_CHANGES.update({f"cp26.v5-v4.{metric}": f"cp26.audit.v5-v4.{metric}" for
 POINT_CHANGES = {f"cp26.noload-v5.{metric}": (f"cp26.every.noload.v5.all_eligible.{metric}.raw_mean_daily_loss",
                                               f"cp26.every.nominal.v5.all_eligible.{metric}.raw_mean_daily_loss")
                  for metric in ("MAE", "WIS")}
-POINT_CHANGES.update({f"cp26.a1-v5.{metric}": (f"cp26.every.nominal.D2.all_eligible.{metric}.raw_mean_daily_loss",
+POINT_CHANGES.update({f"cp26.v6-v5.{metric}": (f"cp26.every.nominal.D2.all_eligible.{metric}.raw_mean_daily_loss",
                                                f"cp26.every.nominal.v5.all_eligible.{metric}.raw_mean_daily_loss")
                       for metric in ("MAE", "WIS")})
 
@@ -655,7 +655,7 @@ def _cp28_tested(document: dict) -> str:
 
 
 def _pres5_records() -> list[DerivedRecord]:
-    out = [DerivedRecord("derived.cp28.tested", "cp28_tested", "a1", UNIT_COUNT, _cp28_tested(R._json(R.CP28_SELECTION)),
+    out = [DerivedRecord("derived.cp28.tested", "cp28_tested", "v6", UNIT_COUNT, _cp28_tested(R._json(R.CP28_SELECTION)),
                          (), "the number of arms in the one look's selection record", 0, "P60",
                          sources=(R.CP28_SELECTION,))]
     hundred = Decimal(100)

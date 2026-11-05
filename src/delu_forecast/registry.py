@@ -346,7 +346,7 @@ CHECKPOINTS: dict[str, Checkpoint] = {
                             ("noload", "v5"), ("nominal", "B0"), ("nominal", "D2"), ("nominal", "v1-R"),
                             ("nominal", "v2"), ("nominal", "v3"), ("nominal", "v4"), ("nominal", "v5"))
                               for mask in ("all_eligible", "never_scored", "old_fold_2_5", "newly_opened"))),
-    "CP-28": Checkpoint("CP-28", "cp28", "recombining-v5s-members", "evidence/cp-28", "1a86c54", "2026-10-25",
+    "CP-28": Checkpoint("CP-28", "cp28", "v6", "evidence/cp-28", "1a86c54", "2026-10-25",
                         "reports/cp28/report.md", "docs/track-b/evidence/cp-28/integration.md",
                         "docs/track-b/cp-28-landing-2026-10-25.md", ("A1", "A2", "A3", "A4", "A5", "A6", "A7")),
 }
@@ -638,6 +638,24 @@ _ENTRIES: tuple[Entry, ...] = (
         claim_map=_CP24, run_keys=("cp24", "cp24/v5"), style="v5", anchor="#v5", checkpoint="CP-24", short="v5",
         predecessor="v4",
     ),
+    # PRES-5 (the Owner's request of 2026-11-05, ruling O30): CP-28's selection, A1 in the frozen records, as the newest
+    # generation, v6. One identity across three experiments: CP-26 stored its forecasts as the descriptive "nominal D2",
+    # CP-28 tested and selected them as arm A1, and PRES-5 scores them on v5's population. Its status is O13's: the final
+    # candidate, pending 4.7T, dated by the freeze that made it the candidate (CP-17c). It was selected by CP-28's rule,
+    # never adopted by v5's: no "adopted in research" event exists for it.
+    Entry(
+        id="v6", name="v6 · DDNN-2 alone", subtitle="DDNN-2 alone, refitted daily, frozen for 4.7T", kind="generation",
+        codes=(Code("CP-28", "A1", "cp26-every-day", "selected"),
+               Code("PRES-5", "A1", "common-10747h", "on v5's population"),
+               *_cp26("nominal", "D2", "descriptive in CP-26")[0]),
+        statuses=(StatusEvent(FINAL_CANDIDATE, "2026-10-30", "docs/track-b/cp-17c-landing-2026-10-30.md",
+                              "selected by CP-28's rule on 2026-10-25 and frozen for 4.7T; pending 4.7T"),),
+        comparator="v5", population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §24.8 and §24.12 (v21-r17, v21-r18)", rules=("cp28-selection", "fresh-test-4-7t"),
+        sources=_CP28_SOURCES + _A1_SOURCES, claim_map=_PRES5,
+        run_keys=("cp28", "cp28/A1", *_cp26("nominal", "D2")[1]), style="v6", anchor="#v6",
+        checkpoint="CP-28", short="v6", predecessor="v5",
+    ),
     # ---- branches ------------------------------------------------------------------------
     Entry(
         id="calibration", name="Calibration experiment", subtitle="Recalibrating v1 without refitting it",
@@ -692,23 +710,6 @@ _ENTRIES: tuple[Entry, ...] = (
         after="v4", question="Does a distributional neural network, added to v4 as a one-third member, improve on v4 "
                              "jointly in point and interval accuracy?",
         short="DDNN member on v4",
-    ),
-    # PRES-5: CP-28's question, 4.8 on stored forecasts, as a branch after v5: no blend of v5's members was selected.
-    # Its arm A1, DDNN-2 alone, was, and is the final candidate below; the other six are its study arms.
-    Entry(
-        id="recombining-v5s-members", name="Recombination of v5's members",
-        subtitle="Seven registered recombinations, one look, under Holm", kind="branch",
-        codes=(Code("CP-28", "CP-28", "cp26-every-day"),),
-        statuses=(StatusEvent(NOT_ADOPTED, "2026-10-25", _LANDING28,
-                              "all seven arms passed; the selected arm, A1, takes DDNN-2 alone and no blend of "
-                              "v5's members, so no recombination was adopted"),),
-        comparator="v5", population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
-        plan=f"{_PLAN21} §24.8 (v21-r17)", rules=("cp28-selection",), sources=_CP28_SOURCES, claim_map=_PRES5,
-        run_keys=("cp28",), style="branch", anchor="#branch-recombining-v5s-members", checkpoint="CP-28",
-        after="v5", informed="a1",
-        question="Does a registered recombination of v5's three members beat v5 on both scores, on every development "
-                 "day, without losing more than 2% in any complete year or season?",
-        short="Recombination of v5's members",
     ),
     # ---- references ----------------------------------------------------------------------
     _reference("naive", "B0", "Similar-day naive", "The forecast every error score divides by",
@@ -770,23 +771,6 @@ _ENTRIES: tuple[Entry, ...] = (
          "DDNN-2 alone", comparator="v4"),
     _arm("v3-plus-ddnn2", "CP-24", "v3+D2", "v3 plus a DDNN-2 member", "DDNN-2 as v3's third member, in LightGBM's place",
          "v3 + DDNN-2", comparator="v3"),
-    # ---- PRES-5: the final candidate (CP-28's selection, frozen at CP-17c) ------------------------------------
-    # One identity across three experiments: CP-26 stored its forecasts as the descriptive "nominal D2", CP-28 tested
-    # and selected them as arm A1, and PRES-5 scores them on v5's population. Its status is O13's: the final
-    # candidate, pending 4.7T, dated by the freeze that made it the candidate (CP-17c).
-    Entry(
-        id="a1", name="A1 · DDNN-2 alone", subtitle="DDNN-2 alone, refitted daily, frozen for 4.7T", kind="study arm",
-        codes=(Code("CP-28", "A1", "cp26-every-day", "selected"),
-               Code("PRES-5", "A1", "common-10747h", "on v5's population"),
-               *_cp26("nominal", "D2", "descriptive in CP-26")[0]),
-        statuses=(StatusEvent(FINAL_CANDIDATE, "2026-10-30", "docs/track-b/cp-17c-landing-2026-10-30.md",
-                              "selected by CP-28's rule on 2026-10-25 and frozen for 4.7T; pending 4.7T"),),
-        comparator="v5", population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
-        plan=f"{_PLAN21} §24.8 and §24.12 (v21-r17, v21-r18)", rules=("cp28-selection", "fresh-test-4-7t"),
-        sources=_CP28_SOURCES + _A1_SOURCES, claim_map=_PRES5,
-        run_keys=("cp28/A1", *_cp26("nominal", "D2")[1]), style="final", anchor="#final-candidate",
-        checkpoint="CP-28", short="A1",
-    ),
     # ---- PRES-5: CP-28's six other arms; each passed the gates and was not selected ----------------------------
     _cp28_arm("equal-weight-blend", "A2", "Equal-weight blend of v5's members",
               "v5's three members, equal weights, own intervals", "Equal weights"),
@@ -853,8 +837,8 @@ _ENTRIES = tuple(_with_cp26(entry) for entry in _ENTRIES)
 #: The order of the shared comparison's rows (plan §8.2): generations newest first, then the candidates of the branches
 #: tested against v4 and not adopted, as study points (the Owner's decision D2 of 2026-10-11), then the benchmarks and
 #: the study's best challenger by score, v1's development replay, and the naive.
-#: PRES-5 puts the final candidate first: A1 on v5's own population, scored as v5's policies were (the Owner's decision 28).
-COMPARISON_ORDER = ("a1", "v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
+#: PRES-5 puts the newest generation, v6, the final candidate, first: A1 on v5's own population, scored as v5's policies were (the Owner's decision 28).
+COMPARISON_ORDER = ("v6", "v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
                     "ddnn-member-on-v4", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
 #: The shared comparison as PRES-4 published it, the overview the `cp24/v5` MLflow run carries as an artifact (PRES-5
@@ -1100,8 +1084,8 @@ def status_sentence(entry: Entry) -> str:
     if event is None:
         raise RegistryError(f"{entry.id} has no status")
     subject = entry.version or f"the {inline_name(entry)}"  # keeps an acronym's case: "the DDNN member on v4"
-    if event.status == FINAL_CANDIDATE:
-        subject = entry.name  # a public label of its own, like a version: "A1 · DDNN-2 alone became the final candidate"
+    if event.status == FINAL_CANDIDATE and not entry.version:
+        subject = entry.name
     verb = {"adopted in research": "was adopted in research", "not adopted": "was not adopted",
             "released": "was released", "final candidate": "became the final candidate",
             "live": "went live", "retired": "was retired"}[event.status]
@@ -1250,6 +1234,22 @@ def resolve(ident: str) -> Entry:
     return get(ident)
 
 
+def comparator_run_key(entry: Entry) -> str:
+    """The comparator's run on the generation's own population: v6 (PRES-5) is compared on CP-26's every-day calendar,
+    so with v5's CP-26 run, never with v5's five-period run."""
+    comparator = get(entry.comparator)
+    if entry.population != "common-10747h":
+        for code in comparator.codes:
+            if code.population == entry.population:
+                return f"{CHECKPOINTS[code.experiment].run_key}/{code.code}"
+    return common_run_key(comparator)
+
+
+#: A generation whose frozen records name it otherwise: v6 is A1 in CP-17's to CP-28's records (ruling O30). The page
+#: shows "v6 (A1 in the frozen records)" where the identity is shown, so the label is allowed on the reading path.
+FROZEN_LABELS = {"v6": "A1"}
+
+
 def common_run_key(entry: Entry) -> str:
     """An identity's run on the shared population (CP-15/16/20): v2's is CP-16's V2-H, never H0."""
     for key in entry.run_keys:
@@ -1272,7 +1272,7 @@ def expected_routes() -> dict[str, tuple[str, tuple[str, ...]]]:
         if checkpoint is None:
             continue  # v1's runs are its own experiment's, delu-cp2
         runs = tuple(f"{checkpoint.run_key}/{code}" for code in checkpoint.children)
-        routes[f"compare:{entry.id}"] = ("compare", runs + (common_run_key(get(entry.comparator)),))
+        routes[f"compare:{entry.id}"] = ("compare", runs + (comparator_run_key(entry),))
     for entry in branches():
         checkpoint = CHECKPOINTS[entry.checkpoint]
         routes[f"compare:{entry.id}"] = ("compare", tuple(f"{checkpoint.run_key}/{code}" for code in checkpoint.children))
@@ -1298,7 +1298,7 @@ __all__ = [
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
     "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "Transition",
-    "V2_SCORES_ORDER", "V5_COMPARISON_ORDER", "final_candidate", "CP26_MASKS", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
+    "V2_SCORES_ORDER", "V5_COMPARISON_ORDER", "final_candidate", "CP26_MASKS", "FROZEN_LABELS", "comparator_run_key", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
     "transitions",
     "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
     "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",

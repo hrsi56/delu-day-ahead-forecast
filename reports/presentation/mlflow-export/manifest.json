@@ -7,7 +7,7 @@
  "experiment": "delu-generations",
  "experiment_tags": {
   "mlflow.experimentKind": "custom_model_development",
-  "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20); v4 · three-block LightGBM added (CP-21); Pooled LightGBM member for v4 (CP-22); DDNN member on v4 (CP-23); v5 · DDNN-2 added (CP-24); Daily development re-baseline (CP-26); Recombination of v5's members (CP-28). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
+  "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20); v4 · three-block LightGBM added (CP-21); Pooled LightGBM member for v4 (CP-22); DDNN member on v4 (CP-23); v5 · DDNN-2 added (CP-24); Daily development re-baseline (CP-26); v6 · DDNN-2 alone (CP-28). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
  },
  "metric_units": {
   "MAE/B0_ratio": "ratio to the similar-day naive (B0), mean daily loss",
@@ -3158,8 +3158,8 @@
   },
   {
    "artifacts": {
-    "README.md": "e2e9d3df1381b8ad607d863b9417b252aa1a47e291b12a87158c953bc38242fd",
-    "summary.json": "e75aad65dca99f62e8d0b8cf7306512ca04b84e20b32622359d156ff2e7e6335"
+    "README.md": "5ac398b5e2485c816c77a0558312e3d7d298abc4bff4458500bfc028aea48b5b",
+    "summary.json": "9348c5a8390aff88e34e497e7e0e39f3bd2e546fc8cd99c4f7c62bc9130d4a9d"
    },
    "file": "cp26.json",
    "inputs": [],
@@ -3172,13 +3172,13 @@
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/all_eligible",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)",
    "tags": 24
   },
   {
    "artifacts": {
-    "README.md": "a5eac1e612a73ed0de05f688fabf6556b2d8ab055de73efd390699ba53a6da34",
-    "summary.json": "e8b8798fc885cf39504a40ab9327fa59c04e643a62769984b40e00197aae8a5a"
+    "README.md": "02ee6e5062680c600b974ec3c4ebb0d302551980bbc0824653436171ab81da52",
+    "summary.json": "a6dae107ddecee195e246473d331bbf637fc43ba8ad0fac0b1ed076c2e8e10f3"
    },
    "file": "cp26.json",
    "inputs": [],
@@ -3191,13 +3191,13 @@
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/never_scored",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)",
    "tags": 24
   },
   {
    "artifacts": {
-    "README.md": "334ed25c4e10111c642c7eecf5268dad74038e694c8d07abf0c8442350e67ecd",
-    "summary.json": "64e68e311bda92ffc2bdb5593e183f733c141d8fa83562d6da50c7bd97cd3e33"
+    "README.md": "535e0a23c31b73963cb7713cbf0df46ed9bdcfcb0ef6ad6385f4337460b4e870",
+    "summary.json": "c1bc3ffedbc2c61fe1c58beccea5626374469cb9ece26e0ec584a2e4b8b42eef"
    },
    "file": "cp26.json",
    "inputs": [],
@@ -3210,13 +3210,13 @@
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/old_fold_2_5",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)",
    "tags": 24
   },
   {
    "artifacts": {
-    "README.md": "0587e85ed49e60a97cb0b60c480913e5668c7662ddef8f5e5a71264c08322289",
-    "summary.json": "104fa1677d76e45de206e15fb1dedee54efdc3b2c885f1271434a02e52f9af8a"
+    "README.md": "88a4d7ded9414cbedb345e97d4b21040814898153a3a123586f402e8e68a9ed1",
+    "summary.json": "c87c250c40e14db7aa187c91187243ac7943905eb8d41c7a557f90e07703af12"
    },
    "file": "cp26.json",
    "inputs": [],
@@ -3229,7 +3229,7 @@
    "params": 1,
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/newly_opened",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)",
    "tags": 24
   },
   {
@@ -3614,8 +3614,8 @@
   },
   {
    "artifacts": {
-    "README.md": "a8420d711360ca4c8d820cc36587582545a1f6a853c6d7302171d0bd0855a652",
-    "summary.json": "8a84bc73ede41f44e3d8f48d3b158b8e0fdc3edc6406ce5d8790d6a25f9086e0"
+    "README.md": "5f300d23ff7215f41b1ea3b7f003133f13c3c515c179a95086c688362cb18c90",
+    "summary.json": "c4f84ac8092dc127a576e3af524fdd238adcafcd5a4573222075e8938854e3e0"
    },
    "file": "cp28.json",
    "inputs": [],
@@ -3623,13 +3623,13 @@
    "params": 2,
    "parent": null,
    "run_key": "cp28",
-   "run_name": "Recombination of v5's members (CP-28)",
+   "run_name": "v6 · DDNN-2 alone (CP-28)",
    "tags": 15
   },
   {
    "artifacts": {
-    "README.md": "c1068d98cd40f8bbc0440404d33049e838ea1af40a0f4aec84e9a0bfc0b5e59c",
-    "summary.json": "a200679d7293d2df70ae22e42f7b3c59961eff2d419a4aa361e34815986f1fb2"
+    "README.md": "1a8c913d02616238895bb9e85af237aee6101b75136e83721a247da1e5756bcf",
+    "summary.json": "bb0c9cdfc63535e9e4a91656fb3f7c7ba222c899ea5af48d6e1ff6982dfaeda8"
    },
    "file": "cp28.json",
    "inputs": [],
@@ -3644,7 +3644,7 @@
    "params": 3,
    "parent": "cp28",
    "run_key": "cp28/A1",
-   "run_name": "A1 · DDNN-2 alone (A1, selected)",
+   "run_name": "v6 · DDNN-2 alone (A1, selected)",
    "tags": 21
   },
   {
@@ -3961,6 +3961,10 @@
   },
   "reports/pres5/a1-in-v5/metrics.csv": {
    "blob": "26cadf08b9f93a61e755b34863224834801ee202",
+   "tag": "evidence/pres-5"
+  },
+  "reports/pres5/a1-in-v5/preview-day.csv": {
+   "blob": "350cff3177ebcd41d3a5c6bf667a8919d85e4890",
    "tag": "evidence/pres-5"
   },
   "reports/pres5/a1-in-v5/ratio-intervals.csv": {

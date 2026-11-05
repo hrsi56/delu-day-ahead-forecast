@@ -2826,16 +2826,16 @@
   {
    "artifacts": [
     {
-     "bytes": 2653,
-     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49741114775496587}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.18690839935313}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4579770082975788}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.682532615295441}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/all_eligible\",\"run_name\":\"A1 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.mask\":\"all_eligible\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/all_eligible\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"A1 · DDNN-2 alone\",\"delu.registry_id\":\"a1\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/all_eligible\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/all_eligible; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
+     "bytes": 2636,
+     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49741114775496587}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.18690839935313}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4579770082975788}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.682532615295441}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/all_eligible\",\"run_name\":\"v6 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"v6\",\"delu.kind\":\"generation\",\"delu.mask\":\"all_eligible\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/all_eligible\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/all_eligible\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/all_eligible; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
      "path": "summary.json",
-     "sha256": "e75aad65dca99f62e8d0b8cf7306512ca04b84e20b32622359d156ff2e7e6335"
+     "sha256": "9348c5a8390aff88e34e497e7e0e39f3bd2e546fc8cd99c4f7c62bc9130d4a9d"
     },
     {
      "bytes": 1039,
-     "content": "# A1 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
+     "content": "# v6 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
      "path": "README.md",
-     "sha256": "e2e9d3df1381b8ad607d863b9417b252aa1a47e291b12a87158c953bc38242fd"
+     "sha256": "5ac398b5e2485c816c77a0558312e3d7d298abc4bff4458500bfc028aea48b5b"
     }
    ],
    "inputs": [],
@@ -2894,7 +2894,7 @@
    },
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/all_eligible",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)",
    "tags": {
     "delu.adopted": "true",
     "delu.backfilled": "false",
@@ -2903,8 +2903,8 @@
     "delu.comparator": "v5 · DDNN-2 added",
     "delu.evidence_class": "development_post_selection",
     "delu.evidence_ref": "land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)",
-    "delu.generation": "none",
-    "delu.kind": "study arm",
+    "delu.generation": "v6",
+    "delu.kind": "generation",
     "delu.mask": "all_eligible",
     "delu.model_code_sha": "6f57febe3659b1f902c17f3db31ba41e41136178",
     "delu.original_completed_utc": "2026-10-20T18:14:24Z",
@@ -2912,29 +2912,29 @@
     "delu.policy_code": "nominal/D2/all_eligible",
     "delu.population_id": "d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04",
     "delu.protocol_sha256": "e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85",
-    "delu.public_name": "A1 · DDNN-2 alone",
-    "delu.registry_id": "a1",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
     "delu.role": "reference",
     "delu.route": "nominal",
     "delu.run_key": "cp26/nominal/D2/all_eligible",
     "delu.source_blobs": "{\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\":\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\"}",
     "delu.status": "final candidate 2026-10-30",
-    "mlflow.note.content": "A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/all_eligible; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/all_eligible; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
    }
   },
   {
    "artifacts": [
     {
-     "bytes": 2653,
-     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.516280011122395}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":15.928533910005788}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.46819825293731393}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":8.945616273686042}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/never_scored\",\"run_name\":\"A1 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.mask\":\"never_scored\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/never_scored\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"A1 · DDNN-2 alone\",\"delu.registry_id\":\"a1\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/never_scored\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/never_scored; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
+     "bytes": 2636,
+     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.516280011122395}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":15.928533910005788}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.46819825293731393}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":8.945616273686042}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/never_scored\",\"run_name\":\"v6 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"v6\",\"delu.kind\":\"generation\",\"delu.mask\":\"never_scored\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/never_scored\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/never_scored\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/never_scored; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
      "path": "summary.json",
-     "sha256": "e8b8798fc885cf39504a40ab9327fa59c04e643a62769984b40e00197aae8a5a"
+     "sha256": "a6dae107ddecee195e246473d331bbf637fc43ba8ad0fac0b1ed076c2e8e10f3"
     },
     {
      "bytes": 1039,
-     "content": "# A1 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
+     "content": "# v6 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
      "path": "README.md",
-     "sha256": "a5eac1e612a73ed0de05f688fabf6556b2d8ab055de73efd390699ba53a6da34"
+     "sha256": "02ee6e5062680c600b974ec3c4ebb0d302551980bbc0824653436171ab81da52"
     }
    ],
    "inputs": [],
@@ -2993,7 +2993,7 @@
    },
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/never_scored",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)",
    "tags": {
     "delu.adopted": "true",
     "delu.backfilled": "false",
@@ -3002,8 +3002,8 @@
     "delu.comparator": "v5 · DDNN-2 added",
     "delu.evidence_class": "development_post_selection",
     "delu.evidence_ref": "land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)",
-    "delu.generation": "none",
-    "delu.kind": "study arm",
+    "delu.generation": "v6",
+    "delu.kind": "generation",
     "delu.mask": "never_scored",
     "delu.model_code_sha": "6f57febe3659b1f902c17f3db31ba41e41136178",
     "delu.original_completed_utc": "2026-10-20T18:14:24Z",
@@ -3011,29 +3011,29 @@
     "delu.policy_code": "nominal/D2/never_scored",
     "delu.population_id": "d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04",
     "delu.protocol_sha256": "e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85",
-    "delu.public_name": "A1 · DDNN-2 alone",
-    "delu.registry_id": "a1",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
     "delu.role": "reference",
     "delu.route": "nominal",
     "delu.run_key": "cp26/nominal/D2/never_scored",
     "delu.source_blobs": "{\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\":\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\"}",
     "delu.status": "final candidate 2026-10-30",
-    "mlflow.note.content": "A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/never_scored; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/never_scored; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
    }
   },
   {
    "artifacts": [
     {
-     "bytes": 2653,
-     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.48958603522408256}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":19.0463383369436}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.44852676832435223}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.59662476050394}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/old_fold_2_5\",\"run_name\":\"A1 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.mask\":\"old_fold_2_5\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/old_fold_2_5\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"A1 · DDNN-2 alone\",\"delu.registry_id\":\"a1\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/old_fold_2_5\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/old_fold_2_5; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
+     "bytes": 2636,
+     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.48958603522408256}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":19.0463383369436}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.44852676832435223}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.59662476050394}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/old_fold_2_5\",\"run_name\":\"v6 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"v6\",\"delu.kind\":\"generation\",\"delu.mask\":\"old_fold_2_5\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/old_fold_2_5\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/old_fold_2_5\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/old_fold_2_5; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
      "path": "summary.json",
-     "sha256": "64e68e311bda92ffc2bdb5593e183f733c141d8fa83562d6da50c7bd97cd3e33"
+     "sha256": "c1bc3ffedbc2c61fe1c58beccea5626374469cb9ece26e0ec584a2e4b8b42eef"
     },
     {
      "bytes": 1039,
-     "content": "# A1 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
+     "content": "# v6 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
      "path": "README.md",
-     "sha256": "334ed25c4e10111c642c7eecf5268dad74038e694c8d07abf0c8442350e67ecd"
+     "sha256": "535e0a23c31b73963cb7713cbf0df46ed9bdcfcb0ef6ad6385f4337460b4e870"
     }
    ],
    "inputs": [],
@@ -3092,7 +3092,7 @@
    },
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/old_fold_2_5",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)",
    "tags": {
     "delu.adopted": "true",
     "delu.backfilled": "false",
@@ -3101,8 +3101,8 @@
     "delu.comparator": "v5 · DDNN-2 added",
     "delu.evidence_class": "development_post_selection",
     "delu.evidence_ref": "land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)",
-    "delu.generation": "none",
-    "delu.kind": "study arm",
+    "delu.generation": "v6",
+    "delu.kind": "generation",
     "delu.mask": "old_fold_2_5",
     "delu.model_code_sha": "6f57febe3659b1f902c17f3db31ba41e41136178",
     "delu.original_completed_utc": "2026-10-20T18:14:24Z",
@@ -3110,29 +3110,29 @@
     "delu.policy_code": "nominal/D2/old_fold_2_5",
     "delu.population_id": "d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04",
     "delu.protocol_sha256": "e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85",
-    "delu.public_name": "A1 · DDNN-2 alone",
-    "delu.registry_id": "a1",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
     "delu.role": "reference",
     "delu.route": "nominal",
     "delu.run_key": "cp26/nominal/D2/old_fold_2_5",
     "delu.source_blobs": "{\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\":\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\"}",
     "delu.status": "final candidate 2026-10-30",
-    "mlflow.note.content": "A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/old_fold_2_5; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/old_fold_2_5; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
    }
   },
   {
    "artifacts": [
     {
-     "bytes": 2654,
-     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.5469374145194511}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":15.984376751527828}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.47987224936429024}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.095048389383967}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/newly_opened\",\"run_name\":\"A1 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.mask\":\"newly_opened\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/newly_opened\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"A1 · DDNN-2 alone\",\"delu.registry_id\":\"a1\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/newly_opened\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/newly_opened; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
+     "bytes": 2637,
+     "content": "{\"inputs\":[],\"metric_units\":{\"MAE/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"MAE/raw_mean_daily_loss\":\"EUR/MWh\",\"WIS/B0_ratio\":\"ratio to the similar-day naive (B0), mean daily loss\",\"WIS/raw_mean_daily_loss\":\"EUR/MWh\"},\"metrics\":{\"MAE/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.5469374145194511}],\"MAE/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":15.984376751527828}],\"WIS/B0_ratio\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.47987224936429024}],\"WIS/raw_mean_daily_loss\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.095048389383967}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r13 to v21-r17 §24.7\"},\"parent\":\"cp26\",\"run_key\":\"cp26/nominal/D2/newly_opened\",\"run_name\":\"v6 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)\",\"tags\":{\"delu.adopted\":\"true\",\"delu.backfilled\":\"false\",\"delu.candidate_fingerprint\":\"61bffcfddf774f6527074e58d1fc6124b5947d7d298a36ccdf2606599c050ce9\",\"delu.checkpoint\":\"CP-26\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)\",\"delu.generation\":\"v6\",\"delu.kind\":\"generation\",\"delu.mask\":\"newly_opened\",\"delu.model_code_sha\":\"6f57febe3659b1f902c17f3db31ba41e41136178\",\"delu.original_completed_utc\":\"2026-10-20T18:14:24Z\",\"delu.policy\":\"D2\",\"delu.policy_code\":\"nominal/D2/newly_opened\",\"delu.population_id\":\"d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04\",\"delu.protocol_sha256\":\"e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"reference\",\"delu.route\":\"nominal\",\"delu.run_key\":\"cp26/nominal/D2/newly_opened\",\"delu.source_blobs\":\"{\\\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\\\":\\\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/newly_opened; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection.\"}}\n",
      "path": "summary.json",
-     "sha256": "104fa1677d76e45de206e15fb1dedee54efdc3b2c885f1271434a02e52f9af8a"
+     "sha256": "c87c250c40e14db7aa187c91187243ac7943905eb8d41c7a557f90e07703af12"
     },
     {
      "bytes": 1039,
-     "content": "# A1 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
+     "content": "# v6 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)\n\nTracked by CP-26 and published by PRES-5 from its committed evidence (tag `land/cp-26` at commit `61658c7`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-26-landing-2026-10-21.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/land/cp-26/reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json (blob 6b3e442090c5f2a5709b7f2d8e47b80610184fca)\n",
      "path": "README.md",
-     "sha256": "0587e85ed49e60a97cb0b60c480913e5668c7662ddef8f5e5a71264c08322289"
+     "sha256": "88a4d7ded9414cbedb345e97d4b21040814898153a3a123586f402e8e68a9ed1"
     }
    ],
    "inputs": [],
@@ -3191,7 +3191,7 @@
    },
    "parent": "cp26",
    "run_key": "cp26/nominal/D2/newly_opened",
-   "run_name": "A1 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)",
    "tags": {
     "delu.adopted": "true",
     "delu.backfilled": "false",
@@ -3200,8 +3200,8 @@
     "delu.comparator": "v5 · DDNN-2 added",
     "delu.evidence_class": "development_post_selection",
     "delu.evidence_ref": "land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)",
-    "delu.generation": "none",
-    "delu.kind": "study arm",
+    "delu.generation": "v6",
+    "delu.kind": "generation",
     "delu.mask": "newly_opened",
     "delu.model_code_sha": "6f57febe3659b1f902c17f3db31ba41e41136178",
     "delu.original_completed_utc": "2026-10-20T18:14:24Z",
@@ -3209,14 +3209,14 @@
     "delu.policy_code": "nominal/D2/newly_opened",
     "delu.population_id": "d055fb0ba1963e5545e0fcf47ab1fa20e21a431303fc3bdaa639351fafd1bd04",
     "delu.protocol_sha256": "e17f95f72a67b8213d6faa7b5105bf325756b01c14eba071aa82c6c4357f4b85",
-    "delu.public_name": "A1 · DDNN-2 alone",
-    "delu.registry_id": "a1",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
     "delu.role": "reference",
     "delu.route": "nominal",
     "delu.run_key": "cp26/nominal/D2/newly_opened",
     "delu.source_blobs": "{\"reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json\":\"6b3e442090c5f2a5709b7f2d8e47b80610184fca\"}",
     "delu.status": "final candidate 2026-10-30",
-    "mlflow.note.content": "A1 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, A1 · DDNN-2 alone became the final candidate. Code nominal/D2/newly_opened; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code nominal/D2/newly_opened; role reference. CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are reported separately; the old five-fold results stay the historical record. No adoption decision follows. development_post_selection."
    }
   },
   {

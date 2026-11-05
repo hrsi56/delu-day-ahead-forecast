@@ -159,7 +159,7 @@ def build_glance(target: str = "md") -> str:
              "models were compared and checked."),
         "",
         para(bold(f"Research, {tok('{g:current.name}')}.") + " " + RC.headline(target)) if G.final_candidate() is None
-        else para(bold(f"Final candidate · pending 4.7T, {tok('{g:a1.name}', 'P61')}.") + " " + RC.headline(target)),
+        else para(bold(f"Final candidate · pending 4.7T, {tok('{g:v6.name}', 'P61')}.") + " " + RC.headline(target)),
         "",
         ("<ul>" + "".join(f"<li>{term}</li>" for term in terms) + "</ul>") if html
         else "\n".join(f"- {term}" for term in terms),
@@ -209,6 +209,8 @@ def transition_lines(entry: G.Entry) -> list[str]:
 
 def generation_section(entry: G.Entry) -> list[str]:
     head = [f"### {entry.name}", "", f"*{entry.subtitle}.* {G.status_sentence(entry)}", ""]
+    if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
+        return final_candidate_section(entry)
     if entry.id == "v5":
         primary = R.get("cp24.uncertainty.v5-HGL.equal_fold.MAE")
         return head + [
@@ -288,20 +290,22 @@ def final_candidate_section(entry: G.Entry) -> list[str]:
     row = R.get("pres5.uncertainty.A1-v5.equal_fold.MAE")
     return [
         f"### {entry.name} · final candidate, pending 4.7T", "",
-        f"*{entry.subtitle}.* {G.status_sentence(entry)}", "",
-        md("a1.question"), "",
-        md("a1.change"), "",
-        md("a1.chart_headline"), "",
-        md("a1.reading"), "",
-        *not_established(("a1.caveat.information", "a1.caveat.selection")),
-        md("a1.decision"), "",
-        md("a1.rule"), "",
-        md("a1.fresh.window"), "",
-        md("a1.fresh.terms"), "",
-        md("a1.fresh.rules"), "",
-        md("a1.fresh.meaning"), "",
+        f"*{entry.subtitle}; {G.FROZEN_LABELS.get(entry.id, entry.version)} in the frozen records.* "
+        f"{G.status_sentence(entry)}", "",
+        *transition_lines(entry),
+        md("v6.question"), "",
+        md("v6.change"), "",
+        md("v6.chart_headline"), "",
+        md("v6.reading"), "",
+        *not_established(("v6.caveat.information", "v6.caveat.selection")),
+        md("v6.decision"), "",
+        md("v6.rule"), "",
+        md("v6.fresh.window"), "",
+        md("v6.fresh.terms"), "",
+        md("v6.fresh.rules"), "",
+        md("v6.fresh.meaning"), "",
         "**On every development day, scored separately.** " + md("everyday.finding") + " " + md("everyday.routes"), "",
-        f"Evidence: [A1's rows on v5's population]({GITHUB_URL}/blob/evidence/pres-5/{row.source_path}#L{row.source_line}), "
+        f"Evidence: [v6's rows on v5's population]({GITHUB_URL}/blob/evidence/pres-5/{row.source_path}#L{row.source_line}), "
         f"[the selection's review verdict]({GITHUB_URL}/blob/{cp28.evidence_tag}/{cp28.verdict}) and "
         f"[report]({GITHUB_URL}/blob/{cp28.evidence_tag}/{cp28.report}), "
         f"[the registered test protocol]({GITHUB_URL}/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md).",
@@ -330,9 +334,6 @@ def build_block() -> str:
         f"separate evidence class. The [report]({PAGES_URL}#chapters) has the charts and the values.",
         "",
     ]
-    final = G.final_candidate()
-    if final is not None:
-        lines += final_candidate_section(final)
     for entry in G.generations(newest_first=True):
         lines += generation_section(entry)
     # Rejected branches, grouped where they sit in the lineage and headed apart from the adopted transitions (A3).

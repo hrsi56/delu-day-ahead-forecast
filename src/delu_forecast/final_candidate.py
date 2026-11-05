@@ -249,6 +249,26 @@ def summary(result: dict, inputs: dict[str, str], par: dict) -> dict:
     }
 
 
+#: The opening's preview day (PRES-5): the last day of v5's population, the end of the shared development period.
+PREVIEW_DAY = "2026-04-07"
+
+
+def preview_rows(root: Path) -> str:
+    """v6's stored forecast for the preview day beside its observed prices, hour by hour: the opening's labelled
+    development preview. The observed prices are v5's committed rows' (the population's truth)."""
+    v5 = pd.read_parquet(root / "reports/ddnn2/attempt-1/predictions.parquet", filters=[("policy", "==", "v5")])[COLS]
+    v5["timestamp_utc"] = _ts(v5.timestamp_utc)
+    day = v5.loc[pd.to_datetime(v5.delivery_date).dt.strftime("%Y-%m-%d") == PREVIEW_DAY].copy()
+    a1, _ = a1_rows(root, day)
+    a1 = a1.sort_values("timestamp_utc")
+    a1["local_hour"] = a1.timestamp_utc.dt.tz_convert("Europe/Berlin").dt.hour
+    frame = a1[["timestamp_utc", "local_hour", "y_true", "p025", "p10", "p25", "p50", "p75", "p90", "p975"]].copy()
+    frame["timestamp_utc"] = frame.timestamp_utc.dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    buffer = io.StringIO()
+    frame.to_csv(buffer, index=False, lineterminator="\n")
+    return buffer.getvalue()
+
+
 def render(result: dict, inputs: dict[str, str]) -> dict[str, str]:
     """The committed files' exact text."""
     def csv(frame: pd.DataFrame) -> str:
@@ -267,6 +287,7 @@ def render(result: dict, inputs: dict[str, str]) -> dict[str, str]:
         "ratio-intervals.csv": result["ratios"].to_csv(index=False, float_format="%.17g", lineterminator="\n"),
         "parity.json": json.dumps(par, indent=1, sort_keys=True) + "\n",
         "summary.json": json.dumps(summary(result, inputs, par), indent=1, sort_keys=True, default=str) + "\n",
+        "preview-day.csv": preview_rows(ROOT),
     }
     return files
 
