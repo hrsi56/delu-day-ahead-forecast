@@ -1,4 +1,45 @@
-# Capstone v21-r19 — the issuing host on a GitHub runner, and a publication time that is not a claim
+# Capstone v21-r20 — publishing and going live before 4.7T
+
+**Ratified on 2026-11-05, under the Owner's decision 28 of that day** (`docs/track-b/owner-decisions-2026-11-05.md`,
+SHA-256 `4daa5617e51208b0994eac925d51078ea43481e6fb1017aec3576c0936490215`).
+- **His words:** "זה שאנחנו רוצים לבדוק את המצב בעוד חודש לא אומר שאנחנו לא מפרסמים עד אז" ("Wanting to check
+  the result in a month does not mean we don't publish until then"), and "נסגור אותו ולא נגע בו, ואנחנו נבדוק
+  אותו ב4.7T בדיוק כמו שתכננו" ("we close it and don't touch it, and we test it in 4.7T exactly as planned").
+- **The grant.** Decision 28 changes decision 25's order, whose grant covers "the Lockdown suspensions each
+  named step needs". Decision 27 lets the Orchestrator run these steps alone and log what he decides in the
+  Owner's name.
+
+**What this revision adds, as additions only:**
+- **§24.14** records decision 28 and the terms that apply it:
+  - CP-18's activation and a publication now, before 4.7T;
+  - the boundary guard retired for the live pipeline only;
+  - the live product's start from the freeze origin;
+  - what stays exactly as registered for 4.7T.
+- **This notice** is new, and r19's title below gains "Historical".
+
+Nothing else changes. Below this notice, apart from r19's title line and a separating rule, the historical
+headers, §§1–23 and §§24.1–24.13 stay byte for byte.
+
+**What it does not do:**
+- **It changes no 4.7T term:** not its window, its candidate, its comparators, its scores, its margins, its
+  failure rules, its vintage terms, its machine or its calendar.
+- **It changes no code, record, verdict or freeze.** A1's policy identity stays CP-17c's.
+- **It opens no checkpoint by itself** (§24.10). CP-18c and PRES-5 each need their issued brief.
+- **It changes no governance file but this one, its amendment record and decision 28's record.** `AGENTS.md`,
+  `docs/PUBLISH_RULES.md` and the exposure ledger stay as they are (§24.14).
+
+**The previous revision.** v21-r19 is preserved at `5954d8c3:capstone_v21.md`, SHA-256
+`acdeeab18a17ecdb83ade83d369a5031f3180f8fdb618a23af5b37836663996e`.
+
+**The record of this amendment** is `docs/track-b/capstone_v21-r19-to-v21-r20-amendments.md`.
+
+**Who wrote it.** The Orchestrator drafted this text, under the Owner's delegation, from his decision 28 and
+the frozen records it names. §24.14's decisions table attributes every term. This is not a claim that the
+Owner reviewed every sentence.
+
+---
+
+# Historical Capstone v21-r19 — the issuing host on a GitHub runner, and a publication time that is not a claim
 
 **Ratified on 2026-10-30, under the Owner's grant of 2026-10-30.** His decisions 22–25
 (`docs/track-b/owner-decisions-2026-10-30.md`) set the road to the live product.
@@ -5483,3 +5524,119 @@ These add to §24.12's list "For CP-18", as amended above:
 
 **The Owner's declaration (§24.2)** covers decisions 22–25 and his grant for this revision, under
 §24.12's R5. H1–H4 are registrations under §24.2's test, which the audit checks, as R1–R7 are.
+
+### 24.14 Publishing and going live before 4.7T (v21-r20)
+
+**What this section does.** It applies the Owner's decision 28 of 2026-11-05
+(`docs/track-b/owner-decisions-2026-11-05.md`, SHA-256 `4daa5617e51208b0994eac925d51078ea43481e6fb1017aec3576c0936490215`).
+- It governs where it differs from §24.2, §24.9, §24.10, §24.12's list "For CP-18", §24.13's list "For CP-18" and
+  decision 25's order.
+- Every term below was set without any 4.7T outcome, since none exists.
+
+#### What stays exactly as registered
+
+- **A1's freeze.** CP-17c's policy identity `720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc`,
+  its manifest and the frozen package stay unchanged. `refreeze verify` guards them, and the live pipeline
+  calls the package without editing it.
+- **4.7T, in every registered term** (§24.12, §24.13):
+  - the window, delivery days 2026-09-07 to 2026-12-05;
+  - the candidate, the comparators, the scores, the pass conditions, the margins and the failure rules;
+  - the vintage terms (the protocol's §3);
+  - the machine (the Owner's Mac, no cloud) and the H2 checks before its first issuance;
+  - the calendar: it opens no earlier than 2026-12-04, after the price for 2026-12-05 is published;
+  - the audit, the Owner's declaration and his retrieval approval.
+- **4.7T issues its window itself.** Its issuance starts from the freeze-origin state, runs on the Owner's Mac
+  under its terms, and keeps its own store. Nothing the live product issues is 4.7T's issuance or score.
+- **No registered term changes from here until 4.7T is scored.** A proposal to change one returns 4.7T to the
+  Owner as BLOCKED.
+
+#### What changes
+
+**1. The order (decision 25).** CP-18's activation and a publication now come before 4.7T:
+- **CP-18c**, the activation: the live product starts and runs daily;
+- **PRES-5**, the publication: the research since v5, A1 in the comparison, and the live product;
+- **then 4.7T** at its date, and the publication of its result.
+
+Decision 25's "one complete publication" becomes these two publications.
+
+**2. The red line, for the live pipeline only.** §24.2's guard retires for the live pipeline at CP-18c, not
+after 4.7T.
+- **The live pipeline downloads all the data through the present** and trains on it, as §24.2's last
+  paragraph allows ("The live product, once running, trains on all the data available to it").
+- **Every research path keeps the guard.** The development downloaders and builders still refuse any row after
+  2026-09-06, and CP-17c's development builder stays as frozen.
+- **Reading.** The live data is handled by code.
+  - An agent that operates the live pipeline may read its logs and records, only to operate it.
+  - No agent uses data after 2026-09-06 for any research number, chart, choice or registration before 4.7T is
+    scored.
+  - §24.2's rule on reports, news and analyses about market events after 2026-09-06 is unchanged.
+- **The exposure ledger.** Its pinned file `docs/track-b/exposure-ledger.md` stays byte for byte. Later entries
+  go in its continuation, `docs/track-b/exposure-ledger-continued.md`, which the audit reads with it.
+  - CP-18c seeds the continuation with decision 28's entry, dated by the live pipeline's first
+    retrieval.
+  - **Its impact assessment:** nothing 4.7T tests can change after it. Everything 4.7T tests was frozen,
+    registered and pushed to the public repository before decision 28: `land/cp-17c`, 2026-10-30, and the
+    protocol at its freeze. `refreeze verify` checks the freeze on every run.
+
+**3. The audit (§24.2's standard) reads with this.**
+- **The live product's daily fits** are the frozen policy's own operation, not research fits. They sit
+  outside the standard's "fit" and are recorded in the continuation.
+- **The standard's test applies unchanged** to everything 4.7T tests.
+- **The Owner's declaration** covers his decisions before 4.7T opens. Decision 28 used no information after
+  2026-09-06.
+
+**4. The live product's start.**
+- **The live store** is seeded at the freeze origin, 2026-09-06, with CP-18a's genesis command. It is carried
+  to the first live day with CP-18a's `carry`.
+- **The days between** are outside the live record and are never issued by the live product.
+- **The live product's forecasts for window days,** from its first live day to 2026-12-05, are its own. Each
+  carries its actual run time, and none is 4.7T's.
+- **After 4.7T** the live store continues. §24.12's carry "from 4.7T's last window day to the first live day"
+  becomes this carry from the freeze origin.
+
+**5. What the live product shows.**
+- **It shows the live record** under PUBLISH_RULES A7 and A9: the issued forecasts, the outcomes as published,
+  and the issued forecasts' prospective scores.
+- **A1's status** reads "final candidate · pending 4.7T" (O13).
+- **The prospective scores** are labelled "prospective evaluation in progress" (§24.9).
+- **No display presents a live score** as 4.7T's, or as a test result.
+- **The development-period displays** stay on days through 2026-09-06.
+
+**6. The publication (PRES-5).** Decision 28 is the separate decision that §24.10 requires for publishing
+CP-26's and CP-28's results.
+- **It covers:**
+  - A1 in the published comparison, on the same data as v5's comparison;
+  - CP-26's re-baseline on every development day;
+  - CP-28's selection;
+  - the freeze, with 4.7T's registered terms;
+  - the live product.
+- **Its research numbers use development data only.**
+- **It runs under PUBLISH_RULES 1.5.**
+
+**7. The runner and the secrets.**
+- **Until the Owner enters the three repository secrets** (decision 25), the daily runs use the local fallback
+  on the Owner's Mac (§24.13), with the credentials used only inside the consuming process.
+- **The `macos-26` schedule is enabled** once the secrets exist.
+- **The issuing host and the H2 checks are unchanged** on either machine.
+
+**8. What this supersedes:**
+- **§24.2:** "After 4.7T, CP-18's brief retires the guard for the live pipeline only" (item 2);
+- **§24.9:** the order of "Then: CP-18 … and site activation" (item 1);
+- **§24.10:** "No publication" (item 6);
+- **§24.12's list "For CP-18":** the carry from 4.7T's last window day (item 4);
+- **§24.13's list "For CP-18":** the item on the red line on the runner (item 2).
+
+S_14 (§24.13, H4) is unchanged.
+
+#### Decisions recorded (v21-r20)
+
+| # | Decision | Who |
+|---|---|---|
+| 28 | Publish and go live now; A1 frozen and untouched; 4.7T exactly as registered | Owner, 2026-11-05 (`docs/track-b/owner-decisions-2026-11-05.md`, SHA-256 `4daa5617e51208b0994eac925d51078ea43481e6fb1017aec3576c0936490215`) |
+| P1 | "All the data" for the published research means every development day. Research numbers on window days wait for 4.7T, so that it stays the one test | Orchestrator, under decision 27 |
+| P2 | The live start: genesis at the freeze origin, carried to the first live day. The live product's window-day forecasts are its own, never 4.7T's | Orchestrator, under decision 27 |
+| P3 | The guard retires for the live pipeline only. The exposure ledger continues in a new file, because its own file is pinned | Orchestrator, applying decision 28 |
+| P4 | The local fallback runs until the repository secrets exist | Orchestrator, under decision 27 |
+
+**The Owner's declaration (§24.2)** covers decision 28. P1–P4 are registrations under §24.2's test, which the
+audit checks, as R1–R7 and H1–H4 are.
