@@ -36,6 +36,11 @@ LIVE_BASE_END = date(2026, 9, 6)        # the committed history's end: the freez
 LIVE_SOURCE = 'cp18.live (live retrieval through cp18.live.transport.HttpTransport)'
 
 
+def _utc_offset(stamp: str) -> str:
+    """An archive's `...Z` instant in the frozen manifest's notation, `...+00:00` (CP-17's `UTC_OR_EMPTY`)."""
+    return stamp[:-1] + '+00:00' if stamp.endswith('Z') else stamp
+
+
 class LiveInputs:
     """`recorded` is a folder of recorded responses (a dry run, replayed) or None with a `transport` (live: CP-18c,
     inside `cp18.boundary.live()`), which acquires each archive day's missing inputs (`cp18.live.acquire`)."""
@@ -116,7 +121,7 @@ class LiveInputs:
                      'gfs': result.get('gfs'), 'availability': result.get('availability'), 'search': result.get('search'),
                      'history': result.get('history'), 'problems': result.get('problems'), 'timings': result.get('timings'),
                      'payload_sha256': {p: v['payload_sha256'] for p, v in (result.get('payloads') or {}).items()},
-                     'data_refresh_utc': max((r for r in retrieved if r), default=''),
+                     'data_refresh_utc': _utc_offset(max((r for r in retrieved if r), default='')),
                      'archive_days': sorted(str(d) for d in archive.days() if self.base_end < d <= day),
                      'acquired': [a for a in self.acquisitions if a['day'] <= str(day)]}
         out_value['shown'] = status == 'built'

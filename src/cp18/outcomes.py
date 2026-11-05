@@ -38,6 +38,14 @@ from .records import OUTCOMES_PATH, RecordLog
 
 SCHEMA = 'cp18b-outcomes-reconciliation-v1'
 SOURCE = 'SMARD chart_data filter 4169 (day-ahead price, DE-LU), via the input archive'
+SERIES = 'SMARD chart_data filter 4169 (day-ahead price, DE-LU)'
+WHERE = {'input archive': 'live/inputs/days/{x}/', 'outcome retrieval': 'live/outcomes/archive/days/{x}/'}
+
+
+def source_label(observed: dict) -> str:
+    """O18's N1: the archive and the record that served a price, never a generic label."""
+    where = WHERE.get(observed.get('archive'), '{x}').format(x=observed.get('archive_day'))
+    return f"{SERIES}, {observed.get('archive')} {where} record {observed.get('record_id')}"
 UNIT = 'EUR/MWh'
 
 
@@ -113,9 +121,8 @@ def observe(archive, day: date, now: datetime, own=None) -> dict:
                               'keys': [keys[i] for i in changed]})
     missing = [keys[i] for i, v in enumerate(current) if v is None]
     return {'status': 'published' if not missing else 'partial', 'keys': keys, 'prices': current,
-            'revised_utc': revised, 'missing_keys': missing, 'source': SOURCE, 'first': {k: v for k, v in first.items()
-                                                                                       if k != 'prices'},
-            'revisions': revisions}
+            'revised_utc': revised, 'missing_keys': missing, 'source': SOURCE,
+            'first': {k: v for k, v in first.items() if k != 'prices'}, 'revisions': revisions}
 
 
 def _signature(item: dict) -> tuple:
@@ -191,8 +198,21 @@ class Outcomes:
                                reconciled_utc=_iso(now), run_id=run_id, days=sorted(changed))
 
 
-def bundle_outcomes(days: list[date], view: dict[str, dict]) -> dict:
-    """The bundle's `outcomes.json` (cp17-outcomes-v1): every canonical key of every issued day, its price or null."""
+def named_sources(item: dict) -> list[str]:
+    """Per key, the archive and record that served its current price: the first observation, or the revision that
+    changed it (O18's N1)."""
+    names = [source_label(item['first'])] * len(item['keys'])
+    for revision in item.get('revisions') or []:
+        label = source_label(revision)
+        for k in revision.get('keys') or []:
+            names[item['keys'].index(k)] = label
+    return names
+
+
+def bundle_outcomes(days: list[date], view: dict[str, dict], named: bool = False) -> dict:
+    """The bundle's `outcomes.json` (cp17-outcomes-v1): every canonical key of every issued day, its price or null.
+    `named` (the live product, CP-18c): each price names the archive and record that served it (O18's N1); a dry run's
+    bundle keeps CP-18b's label, so its committed records reproduce byte for byte."""
     prices = []
     for day in sorted(days):
         item = view.get(str(day))
@@ -203,8 +223,9 @@ def bundle_outcomes(days: list[date], view: dict[str, dict]) -> dict:
             continue
         if item['keys'] != keys:
             raise ValueError(f'{day}: the reconciled keys are not the canonical hours')
-        for k, v, revised in zip(keys, item['prices'], item['revised_utc']):
-            prices.append({'timestamp_utc': k, 'delivery_day': str(day), 'price': v, 'source': SOURCE,
+        labels = named_sources(item) if named else [SOURCE] * len(keys)
+        for k, v, revised, source in zip(keys, item['prices'], item['revised_utc'], labels):
+            prices.append({'timestamp_utc': k, 'delivery_day': str(day), 'price': v, 'source': source,
                            'published_utc': item['first']['published_utc'] if v is not None else '',
                            'revised_utc': revised if v is not None else ''})
     return {'schema': 'cp17-outcomes-v1', 'unit': UNIT, 'prices': prices}

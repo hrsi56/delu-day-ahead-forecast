@@ -77,7 +77,15 @@ def _stem(files: dict, policy: str = 'A1') -> str:
 
 
 def _rehearsal_index(files: dict) -> int:
+    """The recomputed product window a control alters: the development rehearsal's (a dry run's bundle) or, when it
+    scores no day, the prospective record's (the live product's bundle, CP-18c)."""
     ev = json.loads(files['evaluation.json'])
+    for window in ('rehearsal', 'prospective'):
+        for i, w in enumerate(ev['windows']):
+            hit = (w['evidence_class'].startswith('development rehearsal') if window == 'rehearsal'
+                   else w['window'] == 'prospective')
+            if hit and w['policy'] == 'product' and w['record']['pooled'].get('scored_days'):
+                return i
     return next(i for i, w in enumerate(ev['windows'])
                 if w['evidence_class'].startswith('development rehearsal') and w['policy'] == 'product')
 
