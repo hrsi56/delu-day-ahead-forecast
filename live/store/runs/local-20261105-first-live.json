@@ -1,0 +1,125 @@
+{
+ "boundary": {
+  "horizon": "2026-11-07",
+  "mode": "live",
+  "present_utc": "2026-11-05T21:50:49Z",
+  "rule": "r20 \u00a724.14 item 2: the guard retired for the live pipeline only; each delivery day's own cutoff (cp18.live.availability) through the present"
+ },
+ "closed": [],
+ "days": {
+  "2026-11-03": {
+   "cause": "h2",
+   "cause_text": "a failed H2 check",
+   "check": "pins",
+   "status": "open"
+  },
+  "2026-11-04": {
+   "cause": "h2",
+   "cause_text": "a failed H2 check",
+   "check": "pins",
+   "status": "open"
+  },
+  "2026-11-05": {
+   "cause": "h2",
+   "cause_text": "a failed H2 check",
+   "check": "pins",
+   "status": "open"
+  },
+  "2026-11-06": {
+   "cause": "h2",
+   "cause_text": "a failed H2 check",
+   "check": "pins",
+   "status": "open"
+  }
+ },
+ "exit": 1,
+ "finished_utc": "2026-11-05T21:50:51+00:00",
+ "gate": {
+  "checks": [
+   {
+    "check": "pins",
+    "exit": 0,
+    "manifest": "docs/track-b/evidence/cp-17c/freeze-manifest.json",
+    "output": [
+     "verified, except 28 local runtime or state files absent on this machine (unchecked, not passed):",
+     ".local/tools/pyodide-0.28.0/certifi-2025.6.15-py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/charset_normalizer-3.4.2-py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/idna-3.10-py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/joblib-1.4.2-py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/lightgbm-4.6.0-py3-none-pyodide_2025_0_wasm32.whl: absent",
+     ".local/tools/pyodide-0.28.0/numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl: absent",
+     ".local/tools/pyodide-0.28.0/openblas-0.3.26.zip: absent",
+     ".local/tools/pyodide-0.28.0/pandas-2.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl: absent",
+     ".local/tools/pyodide-0.28.0/pyodide-lock.json: absent",
+     ".local/tools/pyodide-0.28.0/pyodide.asm.js: absent",
+     ".local/tools/pyodide-0.28.0/pyodide.asm.wasm: absent",
+     ".local/tools/pyodide-0.28.0/pyodide.js: absent",
+     ".local/tools/pyodide-0.28.0/pyodide.mjs: absent",
+     ".local/tools/pyodide-0.28.0/python_dateutil-2.9.0.post0-py2.py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/python_stdlib.zip: absent",
+     ".local/tools/pyodide-0.28.0/pytz-2025.2-py2.py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/requests-2.32.3-py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl: absent",
+     ".local/tools/pyodide-0.28.0/scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl: absent",
+     ".local/tools/pyodide-0.28.0/six-1.17.0-py2.py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/threadpoolctl-3.5.0-py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/tzdata-2025.2-py2.py3-none-any.whl: absent",
+     ".local/tools/pyodide-0.28.0/urllib3-2.3.0-py3-none-any.whl: absent",
+     ".local/tools/node-v26.7.0-official/node-v26.7.0-darwin-arm64/bin/node: absent",
+     ".local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json: absent",
+     ".local/artifacts/cp-17c/state/freeze-origin-state.json: absent",
+     ".local/artifacts/cp-17c/state/canary/A1-2026-09-06.json: absent",
+     ".local/artifacts/cp-17c/state/canary/A1-2026-09-06.npz: absent"
+    ],
+    "passed": false,
+    "problems": [
+     "refreeze verify (exit 0) did not report exactly \"verified\": verified, except 28 local runtime or state files absent on this machine (unchecked, not passed): | .local/tools/pyodide-0.28.0/certifi-2025.6.15-py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/charset_normalizer-3.4.2-py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/idna-3.10-py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/joblib-1.4.2-py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/lightgbm-4.6.0-py3-none-pyodide_2025_0_wasm32.whl: absent | .local/tools/pyodide-0.28.0/numpy-2.2.5-cp313-cp313-pyodide_2025_0_wasm32.whl: absent | .local/tools/pyodide-0.28.0/openblas-0.3.26.zip: absent | .local/tools/pyodide-0.28.0/pandas-2.3.0-cp313-cp313-pyodide_2025_0_wasm32.whl: absent | .local/tools/pyodide-0.28.0/pyodide-lock.json: absent | .local/tools/pyodide-0.28.0/pyodide.asm.js: absent | .local/tools/pyodide-0.28.0/pyodide.asm.wasm: absent | .local/tools/pyodide-0.28.0/pyodide.js: absent | .local/tools/pyodide-0.28.0/pyodide.mjs: absent | .local/tools/pyodide-0.28.0/python_dateutil-2.9.0.post0-py2.py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/python_stdlib.zip: absent | .local/tools/pyodide-0.28.0/pytz-2025.2-py2.py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/requests-2.32.3-py3-none-any.whl: absent | .local/tools/pyodide-0.28.0/scikit_learn-1.7.0-cp313-cp313-pyodide_2025_0_wasm32.whl: absent | .local/tools/pyodide-0.28.0/scipy-1.14.1-cp313-cp313-pyodide_2025_0_wasm32.whl: absent"
+    ],
+    "seconds": 1.8779039579967503
+   }
+  ],
+  "consequence": "nothing in this run is issued",
+  "failed": "pins",
+  "not_run": [
+   "binary",
+   "machine",
+   "canary"
+  ],
+  "order": [
+   "pins",
+   "binary",
+   "machine",
+   "canary"
+  ],
+  "passed": false,
+  "python": "3.13.15",
+  "schema": "cp17c-host-checks-v1",
+  "started_utc": "2026-11-05T21:50:50+00:00"
+ },
+ "host_kind": "local",
+ "lookback": [
+  "2026-11-03",
+  "2026-11-04",
+  "2026-11-05"
+ ],
+ "machine": {
+  "github_run_id": null,
+  "machine": "arm64",
+  "runner_image": null,
+  "system": "Darwin"
+ },
+ "mode": "live",
+ "outcome": "done; not issued: 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06",
+ "planned": [
+  "2026-11-03",
+  "2026-11-04",
+  "2026-11-05",
+  "2026-11-06"
+ ],
+ "run_id": "local-20261105-first-live",
+ "schema": "cp18a-run-v1",
+ "seconds": 1.9655574999924283,
+ "started_utc": "2026-11-05T21:50:49+00:00",
+ "target_day": "2026-11-06",
+ "wall_clock": "2026-11-05T21:50:49.222274+00:00"
+}
