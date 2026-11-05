@@ -54,7 +54,7 @@ EXPERIMENT = "delu-generations"
 #: The checkpoints the experiment's description names. It named the four parents published on 2026-09-28 until PRES-4,
 #: whose Owner authority (2026-10-11) covers one write of it naming every parent (A-PRES3-1). A later checkpoint's
 #: upload authority covers its runs only, so naming the next parent waits for an instruction naming that write again.
-EXPERIMENT_NOTE_CHECKPOINTS = ("CP-10", "CP-15", "CP-16", "CP-20", "CP-21", "CP-22", "CP-23", "CP-24")
+EXPERIMENT_NOTE_CHECKPOINTS = ("CP-10", "CP-15", "CP-16", "CP-20", "CP-21", "CP-22", "CP-23", "CP-24", "CP-26", "CP-28")
 EXPERIMENT_TAGS = {
     "mlflow.experimentKind": "custom_model_development",
     "mlflow.note.content": (
@@ -714,6 +714,10 @@ def build_export() -> dict[str, dict]:
     groups = comparability()
     files: dict[str, dict] = {}
     for checkpoint in G.parent_run_keys():
+        if checkpoint in PRES5_EXPORTS:
+            files[checkpoint] = {"experiment": EXPERIMENT, "checkpoint": PRES5_EXPORTS[checkpoint]["checkpoint"],
+                                 "runs": pres5_runs(checkpoint)}
+            continue
         if checkpoint in TRACKED:
             files[checkpoint] = {"experiment": EXPERIMENT, "checkpoint": CHECKPOINTS[checkpoint]["checkpoint"],
                                  "runs": tracked_runs(checkpoint)}
@@ -724,6 +728,185 @@ def build_export() -> dict[str, dict]:
                              "runs": runs}
     files["manifest"] = manifest(files)
     return files
+
+
+# --------------------------------------------------------------------------- PRES-5: CP-26 and CP-28 (2026-11-05)
+#
+# CP-26 and CP-28 each committed a local draft export in its own schema (`MLflow-export.json`, 52 runs of stream and
+# mask; `MLflow-export-draft.json`, seven arm runs without a parent). Their published runs keep each draft run's metrics,
+# parameters and tags, under the registry's names and run keys (`cp-26/…` becomes `cp26/…`, `cp-28/…` becomes `cp28/…`),
+# add one parent per checkpoint, and carry the identities that exist only at landing. Every metric is an evidence record
+# of `delu_forecast.research`, so its value is the committed row's; `pres5_draft_problems()` compares each published run
+# with its draft run, value by value.
+
+PRES5_EXPORTS: dict[str, dict] = {
+    "cp26": {
+        "checkpoint": "CP-26",
+        # The scientific final candidate the Integration PASS binds (the landing record's identities).
+        "model_code_sha": "6f57febe3659b1f902c17f3db31ba41e41136178",
+        # The evidence tag is local only and never pushed; the landing's files are a byte-identical subset of its tree.
+        "evidence_ref": "land/cp-26@61658c7 (evidence/cp-26@ca20331 is local only)",
+        "original_completed_utc": "2026-10-20T18:14:24Z",
+        "protocol": "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json",
+        "anchor_version": "capstone_v21.md v21-r13 to v21-r17 §24.7",
+        "draft": "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json",
+        "note": ("CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every "
+                 "eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 "
+                 "11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two "
+                 "declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are "
+                 "reported separately; the old five-fold results stay the historical record. No adoption decision "
+                 "follows. development_post_selection."),
+    },
+    "cp28": {
+        "checkpoint": "CP-28",
+        "model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+        "evidence_ref": "evidence/cp-28@1a86c54",
+        "original_completed_utc": "2026-10-24T22:09:25Z",
+        "protocol": "docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md",
+        "anchor_version": "capstone_v21.md v21-r17 §24.8",
+        "draft": "reports/cp28/MLflow-export-draft.json",
+        "note": ("CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each "
+                 "against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% "
+                 "on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the "
+                 "compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity "
+                 "variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was "
+                 "selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."),
+    },
+}
+
+#: The draft metric keys, kept verbatim, and their units.
+_CP26_FIELDS = (("MAE/raw_mean_daily_loss", "MAE", "raw_mean_daily_loss"), ("MAE/B0_ratio", "MAE", "B0_ratio"),
+                ("WIS/raw_mean_daily_loss", "WIS", "raw_mean_daily_loss"), ("WIS/B0_ratio", "WIS", "B0_ratio"))
+_CP28_FIELDS = (("MAE_arm", "MAE", "arm"), ("MAE_ratio_to_B0", "MAE", "ratio_to_B0"),
+                ("MAE_ratio_to_control", "MAE", "ratio_to_control"), ("WIS_arm", "WIS", "arm"),
+                ("WIS_ratio_to_B0", "WIS", "ratio_to_B0"), ("WIS_ratio_to_control", "WIS", "ratio_to_control"))
+METRIC_UNITS.update({key: (UNIT_EUR if field in ("raw_mean_daily_loss", "arm") else R.UNIT_RATIO_B0_DAILY)
+                     for key, _, field in _CP26_FIELDS + _CP28_FIELDS if not key.endswith("ratio_to_control")})
+METRIC_UNITS.update({"MAE_ratio_to_control": R.UNIT_RATIO_CONTROL, "WIS_ratio_to_control": R.UNIT_RATIO_CONTROL})
+
+
+def _pres5_draft(key: str) -> dict[str, dict]:
+    """The committed draft's runs, by their published run key."""
+    document = json.loads((ROOT / PRES5_EXPORTS[key]["draft"]).read_text())
+    out = {}
+    for run in document["runs"]:
+        draft_key = run.get("key") or run["run_key"]
+        out[draft_key.replace("cp-26/", "cp26/").replace("cp-28/", "cp28/")] = run
+    return out
+
+
+def _pres5_readme(run_name: str, checkpoint: G.Checkpoint, blobs: dict[str, str]) -> str:
+    tag = checkpoint.evidence_tag
+    lines = [f"# {run_name}", "",
+             f"Tracked by {checkpoint.code} and published by PRES-5 from its committed evidence (tag `{tag}` at commit "
+             f"`{checkpoint.evidence_sha}`). Development evidence after selection; nothing here is a live or "
+             "confirmatory result, and no number describes a delivery day after 2026-09-06.", "",
+             f"- Report: {GITHUB_URL}/blob/{tag}/{checkpoint.report}",
+             f"- Independent Integration review: {GITHUB_URL}/blob/{tag}/{checkpoint.verdict}",
+             f"- Landing record: {GITHUB_URL}/blob/main/{checkpoint.landing}", f"- Presentation: {PAGES_URL}", "",
+             "Source rows at the tag:", ""]
+    lines += [f"- {GITHUB_URL}/blob/{tag}/{path} (blob {blob})" for path, blob in blobs.items()]
+    return "\n".join(lines) + "\n"
+
+
+def _pres5_record_id(key: str, run_key: str, field: tuple[str, str, str]) -> str:
+    _, metric, name = field
+    code = run_key.split("/", 1)[1]
+    if key == "cp26":
+        route, policy, mask = code.split("/")
+        return f"cp26.every.{route}.{policy}.{mask}.{metric}.{name}"
+    return f"cp28.arm.{code}.{metric}.{name}"
+
+
+def pres5_runs(key: str) -> list[dict]:
+    """CP-26's or CP-28's published runs: a parent, then each draft run under the registry's name (PRES-5)."""
+    spec = PRES5_EXPORTS[key]
+    checkpoint = G.CHECKPOINTS[spec["checkpoint"]]
+    owner = G.get(checkpoint.owner)
+    drafts = _pres5_draft(key)
+    fields = _CP26_FIELDS if key == "cp26" else _CP28_FIELDS
+    source = R.CP26_EXPORT if key == "cp26" else R.CP28_PACKET
+    blobs = {source: R.SOURCES[source].blob}
+    population = "cp26-every-day"
+    parent_tags = {
+        "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
+        "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _status_text(owner),
+        "delu.role": "checkpoint", "delu.evidence_class": "development_post_selection",
+        "delu.population_id": population, "delu.model_code_sha": spec["model_code_sha"],
+        "delu.evidence_ref": spec["evidence_ref"], "delu.backfilled": "false",
+        "delu.original_completed_utc": spec["original_completed_utc"],
+        "delu.children": ",".join(f"{checkpoint.run_key}/{code}" for code in checkpoint.children),
+        "mlflow.note.content": _description(owner, spec["note"]),
+    }
+    parent = {"run_key": checkpoint.run_key, "parent": None, "run_name": G.mlflow_run_name(checkpoint.run_key),
+              "params": {"anchor_version": spec["anchor_version"],
+                         "protocol_sha256": hashlib.sha256((ROOT / spec["protocol"]).read_bytes()).hexdigest()},
+              "tags": parent_tags, "metrics": {}, "metric_provenance": {}, "metric_units": {}, "inputs": [],
+              "comparability": {"population_id": population, "description": G.POPULATIONS[population],
+                                "aggregation": "dates weighted equally; actual hours averaged within each date"}}
+    parent["artifacts"] = [
+        _artifact("summary.json", _canonical({k: v for k, v in parent.items() if k != "metric_provenance"}) + "\n"),
+        _artifact("README.md", _pres5_readme(parent["run_name"], checkpoint, blobs)),
+    ]
+    runs = [parent]
+    for code in checkpoint.children:
+        run_key = f"{checkpoint.run_key}/{code}"
+        draft = drafts[run_key]
+        entry = G.entry_for_run_key(run_key)
+        metrics, provenance = {}, {}
+        for field in fields:
+            if field[0] not in draft["metrics"]:
+                continue
+            record = R.get(_pres5_record_id(key, run_key, field))
+            metrics[field[0]] = [_point(record, 0)]
+            provenance[field[0]] = [f"{record.record_id}#value"]
+        draft_tags = {f"delu.{name}": str(value) for name, value in sorted(draft.get("tags", {}).items())
+                      if name not in ("checkpoint", "evidence_class")}
+        population_id = next(c.population for c in entry.codes if c.experiment == checkpoint.code and c.code == code)
+        tags = {
+            "delu.run_key": run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": entry.id,
+            "delu.kind": entry.kind, "delu.generation": entry.version or "none", "delu.policy_code": code,
+            "delu.public_name": entry.name, "delu.status": _status_text(entry),
+            "delu.comparator": G.get(entry.comparator).name if entry.comparator else "none",
+            "delu.role": G.run_role(run_key), "delu.adopted": G.adopted_flag(entry),
+            "delu.evidence_class": "development_post_selection", "delu.population_id": population_id,
+            "delu.model_code_sha": spec["model_code_sha"], "delu.evidence_ref": spec["evidence_ref"],
+            "delu.source_blobs": _canonical(blobs), "delu.backfilled": "false",
+            "delu.original_completed_utc": spec["original_completed_utc"],
+            **draft_tags,
+            "mlflow.note.content": _description(entry, spec["note"], code=code, role=G.run_role(run_key)),
+        }
+        params = {name: str(value) for name, value in sorted(draft.get("params", {}).items())}
+        params["anchor_version"] = spec["anchor_version"]
+        run = {"run_key": run_key, "parent": checkpoint.run_key, "run_name": G.mlflow_run_name(run_key),
+               "params": params, "tags": tags, "metrics": metrics, "metric_provenance": provenance,
+               "metric_units": {name: metric_unit(name) for name in metrics}, "inputs": []}
+        summary = _canonical({k: v for k, v in run.items() if k != "metric_provenance"})
+        run["artifacts"] = [_artifact("summary.json", summary + "\n"),
+                            _artifact("README.md", _pres5_readme(run["run_name"], checkpoint, blobs))]
+        runs.append(run)
+    return runs
+
+
+def pres5_draft_problems(files: dict[str, dict] | None = None) -> list[str]:
+    """Why a published CP-26 or CP-28 run does not mirror its committed draft run: a missing run, or a metric whose value
+    differs. Empty when every draft run and value is published unchanged."""
+    files = files or {key: {"runs": pres5_runs(key)} for key in PRES5_EXPORTS}
+    problems = []
+    for key in PRES5_EXPORTS:
+        published = {run["run_key"]: run for run in files[key]["runs"]}
+        for run_key, draft in _pres5_draft(key).items():
+            if run_key not in published:
+                problems.append(f"{run_key}: the draft run is not published")
+                continue
+            for name, value in draft["metrics"].items():
+                got = published[run_key]["metrics"].get(name)
+                if not got or got[0]["value"] != float(value):
+                    problems.append(f"{run_key}: {name} is not the draft's {value}")
+        extra = sorted(set(published) - set(_pres5_draft(key)) - {G.CHECKPOINTS[PRES5_EXPORTS[key]["checkpoint"]].run_key})
+        if extra:
+            problems.append(f"{key}: runs not in the draft: {extra}")
+    return problems
 
 
 def manifest(files: dict[str, dict]) -> dict:

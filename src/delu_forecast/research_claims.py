@@ -649,8 +649,9 @@ BLOCKS: tuple[Block, ...] = (
            control there is no demonstrated joint preference.""", PAGE),
     # ---- the released product, documented (PUBLISH_RULES 1.0 §5 and A4): the twelve subjects, for the model the
     # registry names as released. Each block states which model, output and rows its evidence describes.
-    _block("product.lede", "P37", """The released model, {g:released.name}, topic by topic: the artifact its one-shot
-           test evaluated and the demo computes.""", PAGE, README),
+    _block("product.lede", "P61", """The released model, {g:released.name}, topic by topic: the artifact its one-shot
+           test evaluated and its historical demo computes. The live product on the Space runs the final candidate,
+           {g:a1.name}, and documents it in its own views.""", PAGE, README),
     _block("product.data.target", "P38", """**What it forecasts.** The German–Luxembourg day-ahead price of each
            hour of the next delivery day, in EUR/MWh: {s:hours:24} values on most days and {s:hours:23} or
            {s:hours:25} on daylight-saving transition days, issued together as one curve before the
@@ -819,13 +820,13 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before any result; its
            gates and its pick are in the {s:name:A1} chapter.""", PAGE, README),
     _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** frozen for one test
-           on {s:count:90} days no model has seen.""", PAGE, README),
+           on {s:count:90} days, registered before any of their data was opened.""", PAGE, README),
     # ---- the opening's product line (decision 28; O13; O17) ----
     _block("product.live", "P61", """The Space runs """ + _A1 + """ every day, frozen: each forecast is issued before
            the auction; prospective evaluation in progress. {g:v1.version} stays the released model until
            {s:work-item:4.7T} is scored; its demo is under the Space's History.""", PAGE, README),
-    _block("product.live.startup", "P61", """It opens with the day's records, about {s:size:0.55} MB measured on
-           development data on {s:date:2026-11-05}; the training window loads only on request.""", PAGE),
+    _block("product.live.startup", "P61", """It opens with the day's records, about {s:size:0.55} MB as measured on
+           development data before publication; the training window loads only on request.""", PAGE),
     # ---- the comparison, with A1 first (the brief's outcome 1) ----
     _block("comparison.finding.a1", "P62", _A1 + """ against {g:v5.version}, as a share of {g:v5.version}'s error
            scores: {r:derived.change.a1.S_MAE} {r:derived.change.a1.S_MAE|ci} on the point-error score and
@@ -836,8 +837,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     _block("terms.a1_row", "P62", """**""" + _A1 + """:** the final candidate, scored on these same hours from its
            stored forecasts; drawn as an open pentagon.""", PAGE),
     # ---- CP-26's every-day results, beside the five periods and never pooled with them (outcome 2) ----
-    _block("everyday.title", "C602", """On every development day, the policies rank as on the five periods, with one
-           exception: {g:v5.version} and {g:v4.version} are level""", PAGE),
+    _block("everyday.title", "C603", """Every development day, scored separately: {g:v5.version} and
+           {g:v4.version} are level there, and {s:name:A1}'s forecasts have the lowest error""", PAGE),
     _block("everyday.sub", "C601", """A separate population: {r:cp28.paired_dates} eligible days from
            {s:date:2020-12-29} to {s:date:2026-09-06}, every policy refitted daily under one protocol · mean daily error,
            EUR/MWh · never pooled with the five periods above · development, post-selection""", PAGE),
@@ -875,8 +876,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            comparison shares the hours and prices, not the protocol.""", PAGE, README),
     _block("a1.caveat.selection", "C905", """**Performance on new data.** {s:name:A1} was selected on every development
            day, four of these periods among them, after {s:name:DDNN-2} alone had already scored best there. This is
-           development evidence after selection; {s:work-item:4.7T}, on {s:count:90} days no model has seen, is its one
-           test.""", PAGE, README),
+           development evidence after selection; {s:work-item:4.7T}, on {s:count:90} days whose data was opened only
+           after its registration, is its one test.""", PAGE, README),
     _block("a1.decision", "C906", """On {s:date:2026-10-25} the selection rule, set on {s:date:2026-10-12}, picked
            {s:name:A1} among {r:derived.cp28.tested} arms; it was frozen on {s:date:2026-10-28} and re-frozen, unchanged, on
            {s:date:2026-10-30}. {g:a1.status} {g:v1.version} stays the released model until {s:work-item:4.7T} is scored,
@@ -902,6 +903,11 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            and {r:derived.periods.a1.stress} EUR/MWh in the {s:date:2022} crisis period; {g:v5.version}
            {r:derived.periods.v5.ordinary_low}–{r:derived.periods.v5.ordinary_high} and
            {r:derived.periods.v5.stress} EUR/MWh.""", PAGE),
+    _block("a1.stress", "C907", """In the {s:date:2022} crisis period, the third test period, {s:name:A1}'s mean
+           absolute error was {r:pres5.metrics.A1.fold_3.MAE} EUR/MWh against {g:v5.version}'s
+           {r:cp24.metrics.v5.fold_3.MAE}; the paired difference in mean daily error is
+           {r:pres5.uncertainty.A1-v5.fold_3.MAE} {r:pres5.uncertainty.A1-v5.fold_3.MAE|ci} EUR/MWh, with its
+           {s:level:95%} interval.""", PAGE),
     _block("a1.coverage", "C908", """Pooled over the five periods, {s:name:A1}'s {s:level:95%} intervals covered a share
            {r:pres5.metrics.A1.pooled.coverage95} of the hours at a mean width of
            {r:pres5.metrics.A1.pooled.mean_width95|p=1} EUR/MWh; {g:v5.version}'s covered
@@ -925,7 +931,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            complete daily policy: one package, run unchanged by the issuing host and by the visitor's browser. It was
            re-frozen on {s:date:2026-10-29} with the Owner's later decisions, and on {s:date:2026-10-30} under the issuing
            host, Pyodide in Node.js on a macOS runner or the Owner's Mac, with every fit identical bit for bit. Its policy
-           identity is <code>720fc581</code>; any change to the policy, its code, runtime or state needs a new freeze and
+           identity begins `720fc581`; any change to the policy, its code, runtime or state needs a new freeze and
            a new test.""", PAGE),
     _block("a1.fresh.window", "C803", """**{s:work-item:4.7T}, registered before the test.** One test of {s:name:A1}, on
            delivery days {s:date:2026-09-07} to {s:date:2026-12-05}, {s:count:90} days, opening no earlier than
@@ -936,7 +942,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            released model are reported, never tested. The scores are each day's mean absolute error of the median and its
            interval score. It passes when the largest of four one-sided p-values is at most {s:level:0.05}:
            {s:name:A1} better than {g:v5.version} by more than half a percent on both scores, and better than the naive on
-           both. The intervals come from a {s:count:7}-day block bootstrap with {s:count:10000} draws.""",
+           both. The intervals come from a {s:count:7}-day block bootstrap with {s:count:10,000} draws.""",
            PAGE, README),
     _block("a1.fresh.rules", "C803", """**The failure rules.** At least {s:count:60} of the {s:count:90} days must be
            paired and scored, or the test is inconclusive. No runner-up moves up, the window is spent whatever the result,

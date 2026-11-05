@@ -41,6 +41,7 @@ from delu_forecast.claims import (  # noqa: E402
     GITHUB_URL,
     HOLDOUT_LIMITATION,
     PAGES_URL,
+    SPACE_APP_URL,
     SPACE_URL,
     build_claims,
     limitation_bullets,
@@ -157,13 +158,16 @@ def build_glance(target: str = "md") -> str:
              "day-ahead electricity price, with prediction intervals, and the record of how successive research "
              "models were compared and checked."),
         "",
-        para(bold(f"Research, {tok('{g:current.name}')}.") + " " + RC.headline(target)),
+        para(bold(f"Research, {tok('{g:current.name}')}.") + " " + RC.headline(target)) if G.final_candidate() is None
+        else para(bold(f"Final candidate · pending 4.7T, {tok('{g:a1.name}', 'P61')}.") + " " + RC.headline(target)),
         "",
         ("<ul>" + "".join(f"<li>{term}</li>" for term in terms) + "</ul>") if html
         else "\n".join(f"- {term}" for term in terms),
         "",
         para(bold(f"Demo, {tok('{g:released.name}')}:") + " " + link(f"try the {tok('{g:released.version}')} demo", SPACE_URL)
-             + ". " + tok("{g:release_rule}", "P22")),
+             + ". " + tok("{g:release_rule}", "P22")) if G.final_candidate() is None
+        else para(bold("Live product:") + " " + link("open it on the Space", SPACE_URL) + ". " + render("product.live")
+                  + " " + link(f"{tok('{g:released.version}')}'s historical demo", SPACE_APP_URL + "history/") + "."),
         "",
         para(bold("How the product works:") + " " + render("product.lede") + " "
              + link("Read it in the report", PAGES_URL + "#product") + ": its data, validation, results, failures, "
@@ -277,6 +281,34 @@ def generation_section(entry: G.Entry) -> list[str]:
     raise MarkerError(f"no README section for the generation {entry.id}")
 
 
+def final_candidate_section(entry: G.Entry) -> list[str]:
+    """The final candidate (PRES-5): A1 in v5's comparison, its selection, the freeze and 4.7T's registered terms, as on
+    the page, and CP-26's every-day finding beside it."""
+    cp28 = G.CHECKPOINTS["CP-28"]
+    row = R.get("pres5.uncertainty.A1-v5.equal_fold.MAE")
+    return [
+        f"### {entry.name} · final candidate, pending 4.7T", "",
+        f"*{entry.subtitle}.* {G.status_sentence(entry)}", "",
+        md("a1.question"), "",
+        md("a1.change"), "",
+        md("a1.chart_headline"), "",
+        md("a1.reading"), "",
+        *not_established(("a1.caveat.information", "a1.caveat.selection")),
+        md("a1.decision"), "",
+        md("a1.rule"), "",
+        md("a1.fresh.window"), "",
+        md("a1.fresh.terms"), "",
+        md("a1.fresh.rules"), "",
+        md("a1.fresh.meaning"), "",
+        "**On every development day, scored separately.** " + md("everyday.finding") + " " + md("everyday.routes"), "",
+        f"Evidence: [A1's rows on v5's population]({GITHUB_URL}/blob/evidence/pres-5/{row.source_path}#L{row.source_line}), "
+        f"[the selection's review verdict]({GITHUB_URL}/blob/{cp28.evidence_tag}/{cp28.verdict}) and "
+        f"[report]({GITHUB_URL}/blob/{cp28.evidence_tag}/{cp28.report}), "
+        f"[the registered test protocol]({GITHUB_URL}/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md).",
+        "",
+    ]
+
+
 def branch_section(entry: G.Entry) -> list[str]:
     return [
         f"#### {entry.name}", "",
@@ -298,6 +330,9 @@ def build_block() -> str:
         f"separate evidence class. The [report]({PAGES_URL}#chapters) has the charts and the values.",
         "",
     ]
+    final = G.final_candidate()
+    if final is not None:
+        lines += final_candidate_section(final)
     for entry in G.generations(newest_first=True):
         lines += generation_section(entry)
     # Rejected branches, grouped where they sit in the lineage and headed apart from the adopted transitions (A3).
@@ -322,13 +357,16 @@ def build_block() -> str:
         *([""] if RC.comparison_terms() else []),
         RC.target_sentence("md", surface=RC.README), "",
         md("overview.fairness.readme"), "",
-        md("comparison.finding") + " " + md("comparison.caveat"), "",
+        (md("comparison.finding.a1") + " " + md("comparison.caveat.a1") if G.final_candidate() is not None
+         else md("comparison.finding") + " " + md("comparison.caveat")), "",
         md("comparison.scale"), "",
         md("overview.f07"), "",
         "### Further reading", "",
         "- The research updates behind each generation: [CP-20](docs/track-b/research-content/cp20-update.md) and "
         "[CP-15 and CP-16](docs/track-b/research-content/cp15-cp16-update.md).",
-        "- The landing records: [CP-24](docs/track-b/cp-24-landing-2026-10-11.md), "
+        "- The landing records: [CP-28](docs/track-b/cp-28-landing-2026-10-25.md), "
+        "[CP-17c](docs/track-b/cp-17c-landing-2026-10-30.md), [CP-26](docs/track-b/cp-26-landing-2026-10-21.md), "
+        "[CP-24](docs/track-b/cp-24-landing-2026-10-11.md), "
         "[CP-23](docs/track-b/cp-23-landing-2026-10-04.md), [CP-22](docs/track-b/cp-22-landing-2026-10-04.md), "
         "[CP-21](docs/track-b/cp-21-landing-2026-09-30.md), "
         "[CP-20](docs/track-b/cp-20-landing-2026-09-24.md), "

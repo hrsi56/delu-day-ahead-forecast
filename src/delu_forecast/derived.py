@@ -822,6 +822,10 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
         sign = ""
     else:
         sign = R.MINUS if quantized < 0 else ""
+        # PRES-5: an interval that spans zero shows its positive endpoint's sign ("[−1%, +1%]"), so the span reads.
+        if (quantized > 0 and which in ("ci_low", "ci_high") and record.ci_low is not None
+                and Decimal(record.ci_low) < 0 < Decimal(record.ci_high)):
+            sign = "+"
     suffix = "%" if record.unit == UNIT_RELATIVE else ""
     return f"{sign}{text}{suffix}"
 

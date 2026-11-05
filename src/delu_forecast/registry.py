@@ -696,7 +696,7 @@ _ENTRIES: tuple[Entry, ...] = (
     # PRES-5: CP-28's question, 4.8 on stored forecasts, as a branch after v5: no blend of v5's members was selected.
     # Its arm A1, DDNN-2 alone, was, and is the final candidate below; the other six are its study arms.
     Entry(
-        id="recombining-v5s-members", name="Recombining v5's members",
+        id="recombining-v5s-members", name="Recombination of v5's members",
         subtitle="Seven registered recombinations, one look, under Holm", kind="branch",
         codes=(Code("CP-28", "CP-28", "cp26-every-day"),),
         statuses=(StatusEvent(NOT_ADOPTED, "2026-10-25", _LANDING28,
@@ -708,7 +708,7 @@ _ENTRIES: tuple[Entry, ...] = (
         after="v5", informed="a1",
         question="Does a registered recombination of v5's three members beat v5 on both scores, on every development "
                  "day, without losing more than 2% in any complete year or season?",
-        short="Recombining v5's members",
+        short="Recombination of v5's members",
     ),
     # ---- references ----------------------------------------------------------------------
     _reference("naive", "B0", "Similar-day naive", "The forecast every error score divides by",
@@ -856,6 +856,11 @@ _ENTRIES = tuple(_with_cp26(entry) for entry in _ENTRIES)
 #: PRES-5 puts the final candidate first: A1 on v5's own population, scored as v5's policies were (the Owner's decision 28).
 COMPARISON_ORDER = ("a1", "v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
                     "ddnn-member-on-v4", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
+
+#: The shared comparison as PRES-4 published it, the overview the `cp24/v5` MLflow run carries as an artifact (PRES-5
+#: pinned it when the live comparison put the final candidate first): a published record never changes.
+V5_COMPARISON_ORDER = ("v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
+                       "ddnn-member-on-v4", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
 #: The shared comparison as v4's chapter published it, from CP-21's rows (PRES-3). It redraws the overview that the
 #: `cp21/HGL` MLflow run carries as an artifact, byte for byte: a published record never changes (§17.9).
@@ -1293,7 +1298,7 @@ __all__ = [
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
     "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "Transition",
-    "V2_SCORES_ORDER", "final_candidate", "CP26_MASKS", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
+    "V2_SCORES_ORDER", "V5_COMPARISON_ORDER", "final_candidate", "CP26_MASKS", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
     "transitions",
     "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
     "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",

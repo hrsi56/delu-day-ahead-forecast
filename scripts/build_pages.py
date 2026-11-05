@@ -994,7 +994,8 @@ def preview_chart(payload: dict) -> str:
 #: The wind and solar item is source-neutral: an external forecast may replace building one.
 PLANNED_WORK = (
     ("The one-shot test of A1, from 2026-12-04", "4.7T", "Final evaluation",
-     "Does A1 beat v5 and the similar-day naive on 90 delivery days no model has seen, 2026-09-07 to 2026-12-05?",
+     "Does A1 beat v5 and the similar-day naive on 90 delivery days, 2026-09-07 to 2026-12-05, whose data was opened "
+     "only after the test was registered?",
      "The test registered before it, run once on or after 2026-12-04, with its pass, fail and inconclusive rules"),
     ("The live trial: prospective evaluation in progress", "live", "Prospective evaluation",
      "How does the frozen A1 do on forecasts issued before their prices exist, day after day?",
@@ -1521,9 +1522,9 @@ def v5_main_chart() -> str:
 #: its chapter published them: `cp20/HG`'s overview is v3's, pinned, and `cp21/HGL` carries v4's.
 #: The run charts no longer drawn on the live page: the comparison as v3's chapter published it (seven rows), and as v4's
 #: did (eight rows, from CP-21's rows; PRES-4 pinned it when the live comparison moved to v5).
-PINNED_CHARTS = frozenset({("cp20/HG", "overview"), ("cp21/HGL", "overview")})
+PINNED_CHARTS = frozenset({("cp20/HG", "overview"), ("cp21/HGL", "overview"), ("cp24/v5", "overview")})
 CHARTS_BY_RUN = {
-    "cp24/v5": (("overview", lambda: overview_chart()), ("v5-c2a", v5_main_chart)),
+    "cp24/v5": (("overview", lambda: overview_chart(G.V5_COMPARISON_ORDER, live=True)), ("v5-c2a", v5_main_chart)),
     "cp21/HGL": (("overview", lambda: overview_chart(G.V4_COMPARISON_ORDER, V4_EXPERIMENT)), ("v4-c2a", v4_main_chart),
                  ("v4-ladder", v4_ladder_chart),
                  ("v4-arms", v4_arms_chart), ("v4-c2b", v4_folds_chart), ("v4-c3", v4_absolute_chart),
@@ -1856,12 +1857,12 @@ def transitions_html() -> str:
 
 
 def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None = None, *,
-                    pinned: bool = False) -> list[Panel]:
+                    pinned: bool = False, live: bool | None = None) -> list[Panel]:
     """The shared comparison's panels: the rows of `order`, drawn from `experiment`'s committed rows, with the
     targets' dashed line from the newest generation's own criteria row there. Without arguments, the live one: each
     generation is labelled by its short name alone, and the met / not-met column is the value table's. `pinned` draws
     the comparison as `cp20/HG`'s run carries it: canonical names, with the targets column in the chart."""
-    live = order is None and experiment is None
+    live = (order is None and experiment is None) if live is None else live
     order = order or G.COMPARISON_ORDER
     entries = G.comparison_rows(order, experiment)
     if live:
@@ -1940,11 +1941,14 @@ def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
 COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen"}
 
 
-def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None, *, pinned: bool = False) -> str:
-    panels = overview_panels(order, experiment, pinned=pinned)
+def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None, *, pinned: bool = False,
+                   live: bool | None = None) -> str:
+    """The shared comparison. `live=True` with an `order` redraws a live comparison as it was published (PRES-5 pins
+    PRES-4's twelve rows, which `cp24/v5` carries)."""
+    live = (order is None and experiment is None) if live is None else live
+    panels = overview_panels(order, experiment, pinned=pinned, live=live)
     verdicts = ("The right-hand column says whether a policy met both targets." if pinned else
                 "Whether a policy met both targets is in the value table below the chart.")
-    live = order is None and experiment is None
     points = ("Candidates of experiments that were tested and not adopted are open circles, as study points. "
               if live and any(is_branch_point(entry) for entry in G.comparison_rows()) else "")
     return single_rows(
@@ -1973,7 +1977,8 @@ def comparison_audit() -> tuple[Audit, ...]:
 
 
 #: A headline term whose full statement lives in a chapter's detail links there; the anchor opens its disclosure.
-TERM_ROUTES = {"terms.adoption_rule": f' <a class="quiet in-text" href="#{G.current_generation().id}-rule">Read them</a>'}
+TERM_ROUTES = {"terms.adoption_rule": f' <a class="quiet in-text" href="#{G.current_generation().id}-rule">Read them</a>',
+               "terms.selection_rule": ' <a class="quiet in-text" href="#a1-rule">Read it</a>'}
 
 
 def comparison_terms_list() -> str:
@@ -2828,7 +2833,7 @@ def a1_slots() -> ChapterSlots:
     folds = (detail_head("a1-per-period-differences", "A1 against v5 in each test period") + block("a1.folds")
              + values_table("a1-c2b-values", "C907", a1_fold_panels(), visible=True)
              + detail_head("a1-absolute-errors", "Absolute errors per test period") + block("a1.absolute"))
-    stress = detail_head("a1-crisis", "The 2022 crisis period") + block("a1.absolute", ident="a1-crisis-errors")
+    stress = detail_head("a1-crisis", "The 2022 crisis period") + block("a1.stress")
     coverage = detail_head("a1-coverage", "Interval coverage and width") + block("a1.coverage")
     protocol = (detail_head("a1-selection", "How A1 was selected") + block("a1.rule", ident="a1-rule")
                 + block("a1.selection") + a1_arms_table() + block("a1.holm.note")
