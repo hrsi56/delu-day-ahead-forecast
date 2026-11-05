@@ -141,6 +141,9 @@ ROLE_STYLE = {
     "reference": {"color": TOKENS["ref"], "marker": "diamond", "filled": False},
     "study": {"color": TOKENS["ref"], "marker": "circle", "filled": False},
     "control": {"color": TOKENS["ref"], "marker": "square", "filled": False},
+    # PRES-5: the final candidate, A1, DDNN-2 alone: v5's pentagon, open, in the text colour, from the existing tokens
+    # (O16: visual choices are the Owner's; it differs from v5's mark by fill and colour, and is always labelled).
+    "final": {"color": TOKENS["text"], "marker": "pentagon", "filled": False},
 }
 
 
@@ -175,6 +178,33 @@ def contrast(a: str, b: str) -> float:
 
 
 # --------------------------------------------------------------------------- small helpers
+
+
+#: PRES-5's own rows are preserved by its evidence tag, created on its evidence tip at the landing (AGENTS.md § Branch and
+#: ref lifecycle); the registry dates it.
+PRES5_TAG = "evidence/pres-5"
+
+
+def history_url(C) -> str:
+    """v1's demo, kept as it was at the Space's `/history/` route (O17; decision 28 moves the Space's root to the live
+    product)."""
+    return C["space_app_url"] + "history/"
+
+
+#: The archived report's figures (v1's archive): the committed originals, which stay unchanged.
+ARCHIVE_FIGURES = {
+    "welch": "reports/fig_welch_periodogram.png",
+    "regime_spectrum": "reports/fig_per_regime_periodogram.png",
+    "acf": "reports/fig_acf_24_168.png",
+    "shap": "reports/cp2/fig_shap_summary.png",
+    "dep24": "reports/cp2/fig_shap_dependence_price_lag_24h.png",
+    "dep168": "reports/cp2/fig_shap_dependence_price_lag_168h.png",
+    "reliability": "reports/cp2/fig_reliability_three_stage.png",
+}
+#: What the page embeds for them (PRES-5, within the 2.0 MB budget): each original's exact pixels, stored without its
+#: alpha channel (255 at every pixel) in the smallest standard PNG encoding (`delu_forecast.compact_figures`), about
+#: 140 KB smaller on the page. `tests/test_50_pres5_publication.py` decodes both and requires equal pixels.
+ARCHIVE_FIGURES_EMBEDDED = {key: "reports/pres5/compact-figures/" + Path(path).name for key, path in ARCHIVE_FIGURES.items()}
 
 
 def data_uri(path: Path) -> str:
@@ -963,11 +993,12 @@ def preview_chart(payload: dict) -> str:
 #: no work-item number in the research anchor yet, so they carry none; no item fixes a design that no anchor has fixed.
 #: The wind and solar item is source-neutral: an external forecast may replace building one.
 PLANNED_WORK = (
-    ("A re-evaluation on every eligible day", "", "Re-evaluation",
-     "How do the adopted generations perform when every eligible day is scored, not only the five historical test "
-     "periods?",
-     "An evaluation protocol fixed before any result, then every generation scored on all eligible days, with the five "
-     "test periods kept as the historical record"),
+    ("The one-shot test of A1, from 2026-12-04", "4.7T", "Final evaluation",
+     "Does A1 beat v5 and the similar-day naive on 90 delivery days no model has seen, 2026-09-07 to 2026-12-05?",
+     "The test registered before it, run once on or after 2026-12-04, with its pass, fail and inconclusive rules"),
+    ("The live trial: prospective evaluation in progress", "live", "Prospective evaluation",
+     "How does the frozen A1 do on forecasts issued before their prices exist, day after day?",
+     "At least 90 consecutive delivery days issued, scored and published, kept apart from every development result"),
     ("New input data", "", "New data",
      "Do fuel and carbon prices, neighbouring markets, or earlier forecasts that already cover the delivery day add "
      "information to {comparator}?",
@@ -975,11 +1006,7 @@ PLANNED_WORK = (
     ("Wind and solar generation forecasts", "4.4V", "VRE",
      "Does a wind and solar generation forecast add information beyond direct weather?",
      "A generation forecast available before the auction, then an ablation"),
-    ("Combining models", "4.8", "Recombination", "Does combining adopted models help?",
-     "A predefined combination test"),
-    ("Frozen-protocol evaluation, then prospective monitoring", "4.7T and live", "Final evaluation",
-     "How does the selected model perform under a frozen evaluation protocol, and then prospectively?",
-     "An evaluation window and an evidence classification, both fixed in the protocol before the test"),
+
 )
 
 
@@ -998,6 +1025,10 @@ def _structural_versions(text: str) -> str:
     escaped = _VERSION_WORD.sub(lambda m: ver(m.group(1)), escaped)
     escaped = re.sub(r"(?<![\w.])(\d{1,2}(?:\.\d+)?)%", lambda m: S("level", m.group(1) + "%"), escaped)
     escaped = re.sub(r"\b(DDNN-2)(?![\w-])", lambda m: S("name", m.group(1)), escaped)
+    # PRES-5: the final candidate's public label and the test's work item are names, not numbers.
+    escaped = re.sub(r"(?<![\w>-])(A1)(?![\w-])", lambda m: S("name", m.group(1)), escaped)
+    escaped = re.sub(r"(?<![\w>.-])(4\.7T)(?![\w-])", lambda m: S("work-item", m.group(1)), escaped)
+    escaped = re.sub(r"(?<![\w>\"-])(\d+)(?= (?:consecutive )?delivery days)", lambda m: S("count", m.group(1)), escaped)
     return re.sub(r"(?<![\w>\"-])(\d+)(?= live days)", lambda m: S("count", m.group(1)), escaped)
 
 
@@ -1625,7 +1656,8 @@ def chapter_sequence(C, archive: str, *, specimen: bool = False) -> str:
     missing = [version for version in chapter_versions() if version not in builders]
     if missing:
         raise G.RegistryError(f"registered generations without a chapter: {missing}")
-    return "".join(builders[version]() for version in chapter_versions())
+    final = a1_chapter() if G.final_candidate() is not None else ""
+    return final + "".join(builders[version]() for version in chapter_versions())
 
 
 def opening(C, payload) -> str:
@@ -1644,6 +1676,29 @@ def opening(C, payload) -> str:
     )
     terms = "".join(f'<li data-block="{key}">{RC.render(key)}{TERM_ROUTES.get(key, "")}</li>'
                     for key in RC.headline_terms())
+    final = G.final_candidate()
+    if final is None:
+        product_status = (f'<div class="status status-released"><dt>Demo</dt><dd class="status-name"><span class="gen '
+                          f'gen-{released.style}">{RC.render_template("P23", "{g:released.name}")}</span></dd></div>')
+        research_label, research_name = "Research", RC.render_template("P23", "{g:current.name}")
+        primary_action = (f'<a class="btn-primary external" href="{attr(C["space_url"])}"><span>Try the '
+                          f'{ver(released.version)} demo</span></a>')
+        product_rule = f'<p class="release-rule" data-block="release-rule">{RC.render_template("P22", "{g:release_rule}")}</p>'
+    else:
+        # PRES-5 (decision 20's hero rule; decision 28; O13): the selected candidate leads, paired with the live
+        # product that runs it. Its status is "final candidate · pending 4.7T"; v1 stays the released model.
+        research = final
+        product_status = (f'<div class="status status-released"><dt>Live product</dt><dd class="status-name"><span '
+                          f'class="gen gen-{final.style}">{RC.render_template("P61", "{g:a1.name}")}</span></dd></div>')
+        research_label = (f'{RC.render_template("P61", "{g:a1.adoption}")} · pending '
+                          f'{S("work-item", "4.7T")}')
+        research_name = RC.render_template("P61", "{g:a1.name}")
+        primary_action = (f'<a class="btn-primary external" href="{attr(C["space_url"])}"><span>Open the live '
+                          f'product</span></a>')
+        product_rule = block("product.live", cls="release-rule")
+        startup = block("product.live.startup", cls="startup") + (
+            f'<p class="startup"><a class="quiet external in-text" href="{attr(history_url(C))}">'
+            f'{ver(released.version)}\'s historical demo</a>: {startup[startup.index(">") + 1:startup.rindex("</p>")]}</p>')
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">
@@ -1653,19 +1708,19 @@ def opening(C, payload) -> str:
    what failed and how it was checked.</p>
   <p class="byline">Led by {esc(RC.OWNER_PUBLIC_NAME)} · <a href="#contribution">Contribution</a></p>
   <dl class="status-pair">
-   <div class="status status-released"><dt>Demo</dt><dd class="status-name"><span class="gen gen-{released.style}">{RC.render_template("P23", "{g:released.name}")}</span></dd></div>
-   <div class="status status-research"><dt>Research</dt><dd class="status-name"><span class="gen gen-{research.style}">{RC.render_template("P23", "{g:current.name}")}</span></dd>
+   {product_status}
+   <div class="status status-research"><dt>{research_label}</dt><dd class="status-name"><span class="gen gen-{research.style}">{research_name}</span></dd>
     <dd class="headline" id="headline" data-block="headline">{RC.headline()}</dd>
     <dd class="headline-terms"><ul class="terms" aria-label="Terms used in the headline">{terms}</ul></dd></div>
   </dl>
  </div>
  <div class="opening-aside">
   <div class="actions">
-   <a class="btn-primary external" href="{attr(C['space_url'])}"><span>Try the {ver(released.version)} demo</span></a>
+   {primary_action}
    <a class="quiet" href="#research-results">Compare model results</a>
    <a class="quiet" href="#evidence">Code and evidence</a>
   </div>
-  <p class="release-rule" data-block="release-rule">{RC.render_template("P22", "{g:release_rule}")}</p>
+  {product_rule}
   {startup}
  <figure class="preview panel">
   <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver(released.version)}</span>
@@ -1744,9 +1799,17 @@ def lineage() -> str:
             f'<ul class="branches" aria-label="Experiments not adopted {plain}">'
             + "".join(branch_card(entry) for entry in entries) + "</ul>"
         )
+    final = G.final_candidate()
+    final_html = ""
+    if final is not None:
+        final_html = (f'<p class="final-node" data-registry="{final.id}"><a href="{final.anchor}">'
+                      f'<span class="node-name">{RC.render_template("P61", "{g:%s.name}" % final.id)}</span> · '
+                      f'<span class="node-status">{RC.render_template("P61", "{g:%s.adoption}" % final.id)} · pending '
+                      f'{S("work-item", "4.7T")} · {S("date", G.month(final.status.date))}</span></a> '
+                      f'<span class="node-sub">{_structural_versions(final.subtitle)}</span></p>')
     return (
         f'<div class="lineage"><ol class="mainline" aria-label="Adopted generations, oldest first">{nodes}</ol>'
-        f"{transitions_html()}{branch_html}</div>"
+        f"{final_html}{transitions_html()}{branch_html}</div>"
     )
 
 
@@ -1814,7 +1877,9 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
         label = entry.short if entry.kind == "generation" and not pinned else comparison_label(entry, experiment)
         rows.append((entry, G.comparison_prefix(source), code, label,
                      verdict if pinned and verdict in D.records() else None))
-    _, newest_prefix, newest, _, _ = rows[0]
+    # The targets' line comes from the newest generation's own criteria row; the final candidate (PRES-5), drawn first,
+    # was never tested against the targets and carries none.
+    _, newest_prefix, newest, _, _ = next(row for row in rows if row[0].kind == "generation")
 
     def panel(field: str, title: str, criterion: str) -> Panel:
         return Panel(
@@ -1872,7 +1937,7 @@ def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
 
 
 #: A count of policies as the chart's accessible title words it.
-COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve"}
+COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen"}
 
 
 def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None, *, pinned: bool = False) -> str:
@@ -1896,9 +1961,15 @@ def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None 
 def comparison_audit() -> tuple[Audit, ...]:
     """The comparison's audit-grade records: its experiment's verdict, report and the newest generation's committed
     equal-fold row, whose line is read from the record, never typed."""
-    newest = G.comparison_rows()[0]
+    newest = next(entry for entry in G.comparison_rows() if entry.kind == "generation")
     record = R.get(f"{G.comparison_prefix()}.metrics.{newest.code_in(G.COMPARISON_EXPERIMENT)}.equal_fold.S_MAE")
-    return checkpoint_audit(G.COMPARISON_EXPERIMENT, source=record.source_path, line=record.source_line)
+    audit = checkpoint_audit(G.COMPARISON_EXPERIMENT, source=record.source_path, line=record.source_line)
+    final = G.final_candidate()
+    if final is not None and final in G.comparison_rows():
+        # PRES-5: the final candidate's row is this publication's own rows, scored on the same population.
+        row = R.get(f"pres5.metrics.{final.code_in('PRES-5')}.equal_fold.S_MAE")
+        audit += (Audit("A1's raw CSV rows on this population", row.source_path, PRES5_TAG, row.source_line),)
+    return audit
 
 
 #: A headline term whose full statement lives in a chapter's detail links there; the anchor opens its disclosure.
@@ -1915,6 +1986,53 @@ def comparison_terms_list() -> str:
     return f'<ul class="terms comparison-terms" aria-label="Terms used in the comparison">{items}</ul>'
 
 
+#: The comparison's finding and caveat: the final candidate's against v5 when it leads (PRES-5), else the current
+#: generation's against its comparator.
+_FINDING = "comparison.finding.a1" if G.final_candidate() in G.comparison_rows() else "comparison.finding"
+_CAVEAT = "comparison.caveat.a1" if G.final_candidate() in G.comparison_rows() else "comparison.caveat"
+
+#: CP-26's streams in the every-day table (PRES-5), in the comparison's order: (registry id, route/policy).
+EVERYDAY_ROWS = (("a1", "nominal/D2"), ("v5", "nominal/v5"), ("v4", "nominal/v4"), ("v3", "nominal/v3"),
+                 ("v2", "nominal/v2"), ("v1-recipe-daily", "nominal/v1-R"), ("naive", "nominal/B0"),
+                 ("v5-weather-late", "gfs6/v5"), ("v5-no-load", "noload/v5"))
+
+
+def everyday_table() -> str:
+    """CP-26's every-day scores (PRES-5): mean daily error in EUR/MWh and its ratio to the naive, all eligible days."""
+    body = ""
+    for ident, stream in EVERYDAY_ROWS:
+        route, policy = stream.split("/")
+        base = f"cp26.every.{route}.{policy}.all_eligible"
+        cells = "".join(f'<td class="n">{value(f"{base}.{metric}.{field}", "C602")}</td>'
+                        for metric in ("MAE", "WIS") for field in ("raw_mean_daily_loss", "B0_ratio"))
+        body += f'<tr><th scope="row">{RC.render_template("C602", "{g:%s.name}" % ident)}</th>{cells}</tr>'
+    head = ('<th scope="col">Policy</th><th scope="col">Point error, EUR/MWh</th><th scope="col">Ratio to the naive</th>'
+            '<th scope="col">Interval error, EUR/MWh</th><th scope="col">Ratio to the naive</th>')
+    return (f'<div class="scroll" role="region" aria-label="Every-day scores" tabindex="0"><table class="data">'
+            f'<caption>{_label("Mean daily error on every eligible development day")}</caption><thead><tr>{head}</tr>'
+            f"</thead><tbody>{body}</tbody></table></div>")
+
+
+def everyday_panel() -> str:
+    """CP-26 (PRES-5, the brief's outcome 2): the re-baseline on every development day, beside the five periods and
+    never pooled with them -- its population, its finding with intervals, its two routes and its table."""
+    if G.final_candidate() is None:
+        return ""
+    checkpoint = G.CHECKPOINTS["CP-26"]
+    audit = (Audit("Review verdict", checkpoint.verdict, checkpoint.evidence_tag),
+             Audit("Engineering report", checkpoint.report, checkpoint.evidence_tag),
+             Audit("Every-day scores", R.CP26_EXPORT, checkpoint.evidence_tag))
+    return f"""
+ <figure class="panel analytical" id="everyday" aria-labelledby="everyday-title" data-research="everyday">
+  {block("everyday.title", tag="h3", cls="panel-title", ident="everyday-title")}
+  <p class="panel-sub" data-block="everyday.sub">{RC.render("everyday.sub")}</p>
+  {block("everyday.finding", cls="finding")}
+  {block("everyday.routes")}
+  {everyday_table()}
+  {evidence_row(audit=audit)}
+ </figure>"""
+
+
 def results() -> str:
     """The comparison (standard §1 i, §6): the change against the comparator with its interval and the
     main caveat above the chart; the target in words, with its date, N and a met / not-met column."""
@@ -1922,8 +2040,8 @@ def results() -> str:
 <section class="section" id="research-results" aria-labelledby="results-h" data-research="results">
  <h2 id="results-h">How the models compare</h2>
  <figure class="panel analytical" aria-labelledby="comparison-finding">
-  {block("comparison.finding", tag="h3", cls="panel-title finding-title", ident="comparison-finding")}
-  {block("comparison.caveat", cls="qualification caveat-line")}
+  {block(_FINDING, tag="h3", cls="panel-title finding-title", ident="comparison-finding")}
+  {block(_CAVEAT, cls="qualification caveat-line")}
   {comparison_terms_list()}
   <p class="panel-sub" data-block="comparison.sub">{RC.render("comparison.sub")}</p>
   {legend(tuple(dict.fromkeys(comparison_role(entry) for entry in G.comparison_rows())), comparison_legend_labels())}
@@ -1935,6 +2053,7 @@ def results() -> str:
   {evidence_row(compare="compare:overview", audit=comparison_audit())}
   {disclosure("overview-table", "View values", overview_table())}
  </figure>
+ {everyday_panel()}
  <div class="fairness">
   <h3>A fair comparison</h3>
   {block("overview.fairness")}
@@ -2297,7 +2416,8 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-forecast", "Read a forecast: interactive replay", "Read a forecast", ("10",),
               product_replay(payload) + "".join(block(k) for k in ("product.forecast.read", "product.forecast.controls",
                                                                    "product.forecast.demo"))
-              + f'<p><a class="quiet external" href="{attr(C["space_url"])}">Try the {ver(released.version)} demo</a></p>'),
+              + f'<p><a class="quiet external" href="{attr(history_url(C))}">Try the {ver(released.version)} demo, now '
+                'under the Space\'s History</a></p>'),
         Topic("product-limitations", "Limitations", "Limitations", ("11",),
               block("product.limits.summary") + f'<ul class="limitations">{limitations}</ul>'
               + f'<p><span data-claim="P48" data-v1="floor_change">{esc(C["floor_change"])}</span></p>'),
@@ -2400,7 +2520,11 @@ class ChapterSlots:
 
 
 def _comparator_code(entry: G.Entry, experiment: str) -> str | None:
-    return G.get(entry.comparator).code_in(experiment) if entry.comparator else None
+    if not entry.comparator:
+        return None
+    comparator = G.get(entry.comparator)
+    # PRES-5 scores A1 alone; its contrasts name v5 by its code in the comparison's own experiment (CP-24).
+    return comparator.code_in(experiment) or comparator.code_in(G.COMPARISON_EXPERIMENT)
 
 
 def slot_problems(slots: ChapterSlots) -> list[str]:
@@ -2499,6 +2623,8 @@ def render_chapter(slots: ChapterSlots, *, open_details: tuple[str, ...] = ()) -
 
 def chapter_header(entry: G.Entry, *, with_badge: bool = True) -> str:
     """A chapter's header: version, canonical name, subtitle, dated status and badge (standard §5)."""
+    if entry.version is None and entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
+        return final_chapter_header(entry)
     badge_html = badge(entry.badge, "development") if with_badge else ""
     name = entry.name.split(" · ", 1)[1]
     status = RC.render_template("P23", "{g:%s.adoption}" % entry.id)
@@ -2638,6 +2764,125 @@ def v5_slots() -> ChapterSlots:
 
 def v5_chapter() -> str:
     return render_chapter(v5_slots())
+
+
+# --------------------------------------------------------------------------- PRES-5: the final candidate's chapter
+
+_A1_MAE = "pres5.uncertainty.A1-v5.equal_fold.MAE"
+_A1_WIS = "pres5.uncertainty.A1-v5.equal_fold.WIS"
+_A1_MAE_975 = "pres5.uncertainty97_5.A1-v5.equal_fold.MAE"
+_A1_WIS_975 = "pres5.uncertainty97_5.A1-v5.equal_fold.WIS"
+
+
+def a1_main_panels() -> list[Panel]:
+    """A1 − v5 on both primary scores, on v5's population, each with its 95% interval and with its interval at the
+    level v5's rule decided at (97.5%), from the same draws. Descriptive: no rule is applied."""
+    return [Panel("Difference, A1 − v5", "error-score difference · below zero favours A1",
+                  (Row("Point-error score, 95% interval", _A1_MAE, "final", bold=True, claim="C902"),
+                   Row("Point-error score, 97.5% interval", _A1_MAE_975, "final", bold=True, claim="C902"),
+                   Row("Interval score, 95% interval", _A1_WIS, "final", bold=True, claim="C902"),
+                   Row("Interval score, 97.5% interval", _A1_WIS_975, "final", bold=True, claim="C902")),
+                  domain=(-0.08, 0.01), step=0.01,
+                  refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))]
+
+
+def a1_change() -> str:
+    v5, a1 = G.get("v5"), G.get("a1")
+    return (
+        f'<div class="feature-change" aria-label="What A1 keeps of {v5.version}">'
+        f'<div class="fc-col"><p class="fc-head">{ver(v5.version)}</p><ul><li>two LEAR forecasts and a LightGBM, five '
+        f"sixths of the weight</li><li>{S('name', 'DDNN-2')}, one sixth</li><li>hour-aware intervals from recent "
+        "errors</li></ul></div>"
+        '<div class="fc-arrow" aria-hidden="true">→</div>'
+        f'<div class="fc-col fc-added"><p class="fc-head">{S("name", "A1")}</p><ul>'
+        f"<li>{S('name', 'DDNN-2')} alone, with its own quantiles</li><li>refitted every day, frozen</li></ul></div></div>"
+    )
+
+
+def a1_fold_panels() -> list[Panel]:
+    return fold_difference_panels("pres5", "A1-v5", "final", "A1 − v5")
+
+
+def a1_arms_table() -> str:
+    """CP-28's seven arms against v5 on every development day: the change in each mean daily error, with CP-28's
+    descriptive 95% interval, and whether Holm rejected in every analysis."""
+    body = ""
+    for code in R.CP28_ARMS:
+        entry = G.by_code(code, "CP-28")
+        cells = "".join(f'<td class="n">{value(f"derived.cp28.{code}.{metric}", "C704")} '
+                        f'{interval(f"derived.cp28.{code}.{metric}", "C704")}</td>' for metric in ("MAE", "WIS"))
+        body += (f'<tr><th scope="row">{RC.render_template("C704", "{g:%s.name}" % entry.id)}</th>{cells}'
+                 f'<td>{value(f"cp28.holm.primary14.{code}.adjusted_p", "C702")}</td></tr>')
+    head = ('<th scope="col">Arm</th><th scope="col">Point error against v5</th>'
+            '<th scope="col">Interval error against v5</th><th scope="col">Holm-adjusted p, main analysis</th>')
+    return (f'<div class="scroll" role="region" aria-label="The seven arms" tabindex="0"><table class="data">'
+            f'<caption>{_label("Seven arms against v5 on every development day")}</caption><thead><tr>{head}</tr>'
+            f"</thead><tbody>{body}</tbody></table></div>")
+
+
+def a1_slots() -> ChapterSlots:
+    entry = G.get("a1")
+    method = (block("a1.method.network") + block("a1.method.scoring")
+              + detail_head("a1-information", "How A1's forecasts differ from v5's in these periods")
+              + block("a1.method.information"))
+    folds = (detail_head("a1-per-period-differences", "A1 against v5 in each test period") + block("a1.folds")
+             + values_table("a1-c2b-values", "C907", a1_fold_panels(), visible=True)
+             + detail_head("a1-absolute-errors", "Absolute errors per test period") + block("a1.absolute"))
+    stress = detail_head("a1-crisis", "The 2022 crisis period") + block("a1.absolute", ident="a1-crisis-errors")
+    coverage = detail_head("a1-coverage", "Interval coverage and width") + block("a1.coverage")
+    protocol = (detail_head("a1-selection", "How A1 was selected") + block("a1.rule", ident="a1-rule")
+                + block("a1.selection") + a1_arms_table() + block("a1.holm.note")
+                + detail_head("a1-freeze", "The freeze") + block("a1.freeze")
+                + detail_head("a1-fresh-test", "4.7T, registered before the test") + block("a1.fresh.window")
+                + block("a1.fresh.terms") + block("a1.fresh.rules") + block("a1.fresh.meaning"))
+    cp28, cp17c = G.CHECKPOINTS["CP-28"], "docs/track-b/evidence/cp-17c/integration.md"
+    row = R.get(_A1_MAE)
+    audit = (Audit("A1's raw CSV rows on v5's population", row.source_path, PRES5_TAG, row.source_line),
+             Audit("Review verdict of the selection", cp28.verdict, cp28.evidence_tag),
+             Audit("Selection report", cp28.report, cp28.evidence_tag),
+             Audit("Review verdict of the freeze", cp17c, "evidence/cp-17c"),
+             Audit("The registered test protocol", "docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md", "evidence/cp-17"))
+    return ChapterSlots(
+        entry=entry,
+        question="a1.question",
+        change=block("a1.change") + a1_change(),
+        chart=MainChart("a1-c2a", "C902", tuple(a1_main_panels()),
+                        title="A1 minus v5 on v5's own population: equal-fold error-score differences with 95 percent "
+                              "intervals and with 97.5 percent intervals",
+                        desc="Four rows: the point-error score and the interval score, each with its 95 percent "
+                             "interval and with its wider 97.5 percent interval, named in the row labels. Each shows "
+                             "the estimated difference as an open pentagon and its interval as a line; every interval "
+                             "lies wholly left of zero, which favours A1.",
+                        subtitle="Difference in error score, A1 − v5 · paired intervals at 95% and at 97.5% · the same "
+                                 "10,747 hours · development, post-selection",
+                        label_width=250, wrap_labels=True),
+        headline="a1.chart_headline",
+        reading="a1.reading",
+        not_established=("a1.caveat.information", "a1.caveat.selection"),
+        decision="a1.decision",
+        evidence=evidence_row(compare="compare:recombining-v5s-members", audit=audit),
+        details=(("method", method), ("per-period consistency", folds), ("stress period", stress),
+                 ("coverage and width", coverage), ("protocol and review", protocol)),
+    )
+
+
+def a1_chapter() -> str:
+    """The final candidate's chapter (PRES-5): the chapter grammar, with its own header (it has no version number)."""
+    return render_chapter(a1_slots())
+
+
+def final_chapter_header(entry: G.Entry) -> str:
+    """The final candidate's header: its public label, name, subtitle, dated status "pending 4.7T" and badge."""
+    label, name = entry.name.split(" · ", 1)
+    status = RC.render_template("P61", "{g:%s.adoption}" % entry.id)
+    return (
+        f'<header class="chapter-head"><p class="eyebrow"><span class="adoption">{status} · pending '
+        f'{S("work-item", "4.7T")}</span>{S("date", G.month(entry.status.date))}</p>'
+        f'<h2 id="{entry.id}-h"><span class="gen gen-{entry.style}">{S("name", label)}</span> · '
+        f"{_structural_versions(name)}</h2>"
+        f'<p class="chapter-sub">{_structural_versions(entry.subtitle)}</p>'
+        f'<p class="chapter-meta">{badge(entry.badge, "development")}</p></header>'
+    )
 
 
 def v4_slots() -> ChapterSlots:
@@ -2807,7 +3052,7 @@ def v1_chapter(C, archive: str) -> str:
  {block("v1.lesson")}
  <p class="chapter-links"><a class="quiet" href="#product">How the released model works, topic by topic</a>
   <a class="quiet" href="#forecast">The replay in the archived report</a>
-  <a class="quiet external" href="{attr(C['space_url'])}">Try the {ver(entry.version)} demo</a></p>
+  <a class="quiet external" href="{attr(history_url(C))}">Try the {ver(entry.version)} demo, now under the Space's History</a></p>
 {v1_archive_disclosure(archive)}
 </article>"""
 
@@ -2846,9 +3091,7 @@ def planned_work() -> str:
         f'<dt>Work item</dt><dd>{(S("work-item", item) + " · ") if item else ""}{esc(code)}</dd></dl></li>'
         for name, item, code, question, evidence in planned_items(current)
     )
-    teaser = ("Next: a re-evaluation on every eligible day, new input data, renewable-generation forecasts and model "
-              "combinations, then an evaluation of the selected model under a frozen protocol and prospective "
-              "monitoring.")
+    teaser = None
     plan = github("docs/track-b/presentation-and-tracking-plan-2026-09-24.md")
     body = (
         "<p>Each item is subject to the research plan, where its conditions are set out, and would be compared "
@@ -2858,7 +3101,7 @@ def planned_work() -> str:
     )
     return (
         '<section class="section planned" id="planned" aria-labelledby="planned-h" data-research="planned">'
-        f'<h2 id="planned-h">{esc(RC.PLANNED)}</h2><p>{esc(teaser)}</p>'
+        f'<h2 id="planned-h">{esc(RC.PLANNED)}</h2>{block("planned.teaser")}'
         + disclosure("planned-detail", "See planned experiments", body) + "</section>"
     )
 
@@ -2873,12 +3116,15 @@ SYSTEM_VIEW = (
     ("Features", "Calendar, price lags, load forecast; weather from v3", "implemented", ("pandas", "NumPy", "DuckDB")),
     ("Model and interval policy", "v1: LightGBM quantiles, conformal calibration; v2 and v3: blended LEAR, "
      "hour-aware intervals; v4: that blend plus a three-block LightGBM; v5: v4 plus a distributional neural network "
-     "written in NumPy", "implemented", ("LightGBM", "scikit-learn")),
+     "written in NumPy; A1, the final candidate: that network alone, refitted daily and frozen", "implemented",
+     ("LightGBM", "scikit-learn")),
     ("Evaluation and artifacts", "Five historical periods, identical hours; committed predictions, metrics and "
      "reviews", "implemented", ("pandas", "Parquet", "GitHub Actions")),
-    ("Report, demo and tracking", "This page, the in-browser v1 demo and the MLflow mirror", "implemented",
-     ("GitHub Pages", "marimo", "Pyodide", "Hugging Face Static Space", "MLflow on DagsHub")),
-    ("Live operation", "Daily forecasts scored after the fact", "planned", ()),
+    ("Report, product and tracking", "This page, the live product and v1's historical demo on the Space, and the "
+     "MLflow mirror", "implemented", ("GitHub Pages", "marimo", "Pyodide", "Hugging Face Static Space",
+                                      "MLflow on DagsHub")),
+    ("Live operation", "The frozen A1 issues each day's forecast before the auction; outcomes are scored after the "
+     "fact, prospective evaluation in progress", "implemented", ()),
 )
 
 
@@ -2921,13 +3167,17 @@ def evidence_section(C) -> str:
                  f'<a class="quiet external in-text" href="{attr(experiment)}" data-route="experiment">'
                  f"<code>{esc(C['mlflow_next_experiment'])}</code></a>, mirrored from the repository's committed "
                  "evidence; the repository is the source of truth, and this page works without the tracking service.</p>")
-    reproduce = (Audit("Reproduction instructions", "reports/ddnn2/reproduce.md", "evidence/cp-24"),
+    reproduce = (Audit("Selection report and its reproduction", "reports/cp28/report.md", "evidence/cp-28"),
+                 Audit("Re-baseline report", "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md",
+                       "land/cp-26"),
+                 Audit("Reproduction instructions", "reports/ddnn2/reproduce.md", "evidence/cp-24"),
                  Audit("Reproduction instructions", "reports/block-challenger/reproduce.md", "evidence/cp-21"),
                  Audit("Reproduction instructions", "reports/weather-ablation/reproduce.md", "evidence/cp-20"),
                  Audit("Reproduction instructions", "reports/v2-causal/reproduce.md", "evidence/cp-16"),
                  Audit("Reproduction instructions", "reports/cp15/reproduction.md", "evidence/cp-15"))
     labelled = "".join(f"<li><span>{label}:</span> {audit_link(item)}</li>"
-                       for label, item in zip((ver("v5"), ver("v4"), ver("v3"), ver("v2"), "the model comparison study"),
+                       for label, item in zip((f'{S("name", "A1")}\'s selection', "the every-day re-baseline", ver("v5"),
+                                               ver("v4"), ver("v3"), ver("v2"), "the model comparison study"),
                                               reproduce))
     return f"""
 <section class="section" id="evidence" aria-labelledby="evidence-h">
@@ -3108,7 +3358,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .badge-replay{{background:var(--surface);border-color:var(--v1);color:var(--v1)}}
 .adoption{{font-weight:650;font-size:14px;color:var(--text);margin-right:10px}}
 .gen{{font-weight:750;padding:0 2px;border-bottom:3px solid currentColor}}
-.gen-v1{{color:var(--v1)}}.gen-v2{{color:var(--v2)}}.gen-v3{{color:var(--v3)}}.gen-v4{{color:var(--v4)}}.gen-v5{{color:var(--v5)}}
+.gen-final{{color:var(--text)}}.gen-v1{{color:var(--v1)}}.gen-v2{{color:var(--v2)}}.gen-v3{{color:var(--v3)}}.gen-v4{{color:var(--v4)}}.gen-v5{{color:var(--v5)}}
 .analytical{{margin:0 0 32px}}
 .panel-title{{font-size:20px;margin:0 0 4px}}
 .panel-sub{{font-size:14px;line-height:22px;color:var(--text-2);margin:0 0 16px;max-width:none}}
@@ -3655,15 +3905,7 @@ def v1_archive(payload: dict) -> str:
         for level in sorted(INTERVAL_LEVELS)
     )
 
-    figures = {
-        "welch": data_uri(ROOT / "reports/fig_welch_periodogram.png"),
-        "regime_spectrum": data_uri(ROOT / "reports/fig_per_regime_periodogram.png"),
-        "acf": data_uri(ROOT / "reports/fig_acf_24_168.png"),
-        "shap": data_uri(ROOT / "reports/cp2/fig_shap_summary.png"),
-        "dep24": data_uri(ROOT / "reports/cp2/fig_shap_dependence_price_lag_24h.png"),
-        "dep168": data_uri(ROOT / "reports/cp2/fig_shap_dependence_price_lag_168h.png"),
-        "reliability": data_uri(ROOT / "reports/cp2/fig_reliability_three_stage.png"),
-    }
+    figures = {key: data_uri(ROOT / ARCHIVE_FIGURES_EMBEDDED[key]) for key in ARCHIVE_FIGURES}
 
     cutoff_table = f"""
     <div class='scroll'><table><thead><tr><th>Cutoff</th><th>Value</th></tr></thead><tbody>

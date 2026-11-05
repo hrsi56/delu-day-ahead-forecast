@@ -41,6 +41,7 @@ CLAIM_MAPS = (
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp23-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp24-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md",
+    REPO_ROOT / "docs" / "track-b" / "research-content" / "pres5-claims.md",
 )
 
 # --------------------------------------------------------------------------- names and labels
@@ -807,6 +808,161 @@ BLOCKS: tuple[Block, ...] = (
            is a static Hugging Face Space that computes in the browser, and publishing it is the Owner's action."""),
 )
 
+
+#: PRES-5 (2026-11-05): the final candidate A1 in v5's comparison, CP-26's every-day re-baseline, CP-28's selection, the
+#: freeze and 4.7T's registered terms, and the live product. Bound to `pres5-claims.md`; every number is a record.
+_A1 = "{g:a1.name}"
+PRES5_BLOCKS: tuple[Block, ...] = (
+    # ---- the headline's terms when the final candidate leads (decision 20: development results until 4.7T) ----
+    _block("terms.daily_errors", "P60", """**Point and interval error:** each day's mean absolute error of the median
+           forecast, and its interval score, averaged over days; lower is better.""", PAGE, README),
+    _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before any result; its
+           gates and its pick are in the {s:name:A1} chapter.""", PAGE, README),
+    _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** frozen for one test
+           on {s:count:90} days no model has seen.""", PAGE, README),
+    # ---- the opening's product line (decision 28; O13; O17) ----
+    _block("product.live", "P61", """The Space runs """ + _A1 + """ every day, frozen: each forecast is issued before
+           the auction; prospective evaluation in progress. {g:v1.version} stays the released model until
+           {s:work-item:4.7T} is scored; its demo is under the Space's History.""", PAGE, README),
+    _block("product.live.startup", "P61", """It opens with the day's records, about {s:size:0.55} MB measured on
+           development data on {s:date:2026-11-05}; the training window loads only on request.""", PAGE),
+    # ---- the comparison, with A1 first (the brief's outcome 1) ----
+    _block("comparison.finding.a1", "P62", _A1 + """ against {g:v5.version}, as a share of {g:v5.version}'s error
+           scores: {r:derived.change.a1.S_MAE} {r:derived.change.a1.S_MAE|ci} on the point-error score and
+           {r:derived.change.a1.S_WIS} {r:derived.change.a1.S_WIS|ci} on the interval score, with {s:level:95%}
+           confidence intervals.""", PAGE, README),
+    _block("comparison.caveat.a1", "P62", """Development evidence after selection, not a test on new data.
+           {s:name:A1}'s forecasts come from a later, daily protocol; its chapter says how they differ.""", PAGE, README),
+    _block("terms.a1_row", "P62", """**""" + _A1 + """:** the final candidate, scored on these same hours from its
+           stored forecasts; drawn as an open pentagon.""", PAGE),
+    # ---- CP-26's every-day results, beside the five periods and never pooled with them (outcome 2) ----
+    _block("everyday.title", "C602", """On every development day, the policies rank as on the five periods, with one
+           exception: {g:v5.version} and {g:v4.version} are level""", PAGE),
+    _block("everyday.sub", "C601", """A separate population: {r:cp28.paired_dates} eligible days from
+           {s:date:2020-12-29} to {s:date:2026-09-06}, every policy refitted daily under one protocol · mean daily error,
+           EUR/MWh · never pooled with the five periods above · development, post-selection""", PAGE),
+    _block("everyday.finding", "C603", """{g:v5.version} against {g:v4.version}: {r:derived.cp26.v5-v4.MAE}
+           {r:derived.cp26.v5-v4.MAE|ci} in point error and {r:derived.cp26.v5-v4.WIS}
+           {r:derived.cp26.v5-v4.WIS|ci} in interval error, with {s:level:95%} intervals: the five periods' gain does not
+           carry over to every day. {s:name:A1}'s forecasts, {s:name:DDNN-2} alone, have the lowest error on both scores,
+           a point comparison: {r:derived.cp26.a1-v5.MAE} and {r:derived.cp26.a1-v5.WIS} against {g:v5.version}.""",
+           PAGE, README),
+    _block("everyday.routes", "C605", """Two declared routes of {g:v5.version}: the weather forecast six hours later
+           costs {r:cp28.gfs.MAE.change}% in point error and {r:cp28.gfs.WIS.change}% in interval error, so that timing is
+           fragile; dropping the load forecast moves both by about {r:derived.cp26.noload-v5.WIS} or less.""",
+           PAGE, README),
+    # ---- the final candidate's chapter (the chapter grammar; outcome 1, 3, 4) ----
+    _block("a1.question", "C901", """How does """ + _A1 + """, the policy selected for the final test, compare with
+           {g:v5.version} on {g:v5.version}'s own five test periods, scored exactly as {g:v5.version}'s were?""",
+           PAGE, README),
+    _block("a1.change", "C901", _A1 + """ keeps only {g:v5.version}'s distributional neural network, {s:name:DDNN-2},
+           with its own quantiles: no LEAR forecasts, no LightGBM, no blend. It is refitted every day on the
+           {s:count:728} days before the forecast, issued at {s:time:11:00} Berlin time the day before delivery, and has
+           been frozen since {s:date:2026-10-30} for its one test.""", PAGE, README),
+    _block("a1.chart_headline", "C902", """Against {g:v5.version}, on the same {r:pres5.coverage.keys} hours, the
+           point-error score changed by {r:derived.change.a1.S_MAE} {r:derived.change.a1.S_MAE|ci} and the interval score
+           by {r:derived.change.a1.S_WIS} {r:derived.change.a1.S_WIS|ci}, each as a share of {g:v5.version}'s score, with
+           {s:level:95%} confidence intervals; at {s:level:97.5%}, the level {g:v5.version}'s rule decided at,
+           {r:derived.change_decision.a1.S_MAE|ci} and {r:derived.change_decision.a1.S_WIS|ci}.""", PAGE, README),
+    _block("a1.reading", "C903", """On these five periods both paired differences lie below zero, at {s:level:95%} and
+           at {s:level:97.5%}. Against the similar-day naive: {r:derived.change_naive.a1.S_MAE}
+           {r:derived.change_naive.a1.S_MAE|ci} on the point-error score and {r:derived.change_naive.a1.S_WIS}
+           {r:derived.change_naive.a1.S_WIS|ci} on the interval score. A description, not a decision:
+           {g:v5.version}'s adoption rule was not re-run, and it adopts nothing here.""", PAGE, README),
+    _block("a1.caveat.information", "C904", """**That the two had the same information.** {s:name:A1}'s forecasts were
+           made under the later daily protocol: issued one or two hours earlier, refitted every day, with its own network
+           searches and data identity, and the first period, {s:date:2020}, lies in that protocol's unscored warm-up. The
+           comparison shares the hours and prices, not the protocol.""", PAGE, README),
+    _block("a1.caveat.selection", "C905", """**Performance on new data.** {s:name:A1} was selected on every development
+           day, four of these periods among them, after {s:name:DDNN-2} alone had already scored best there. This is
+           development evidence after selection; {s:work-item:4.7T}, on {s:count:90} days no model has seen, is its one
+           test.""", PAGE, README),
+    _block("a1.decision", "C906", """On {s:date:2026-10-25} the selection rule, set on {s:date:2026-10-12}, picked
+           {s:name:A1} among {r:derived.cp28.tested} arms; it was frozen on {s:date:2026-10-28} and re-frozen, unchanged, on
+           {s:date:2026-10-30}. {g:a1.status} {g:v1.version} stays the released model until {s:work-item:4.7T} is scored,
+           and {g:v5.version} stays the latest generation adopted in research.""", PAGE, README),
+    _block("a1.method.network", "C901", """**The model.** {s:name:DDNN-2} is a feed-forward network written in NumPy
+           that forecasts the {s:hours:24} hours of a day at once, each as a full probability distribution; {s:name:A1}
+           issues that distribution's own seven quantiles. Eight networks, the four best configurations of its last
+           search with two seeds each, are fitted every day and combined.""", PAGE),
+    _block("a1.method.scoring", "C902", """**The scoring.** {s:name:A1}'s stored forecasts cover
+           {r:pres5.coverage.covered_keys} of the {r:pres5.coverage.keys} hours. They were scored by
+           {g:v5.version}'s own scoring code, against the same observed prices, with the same bootstrap draws; the
+           recomputed scores of {g:v5.version} and the naive equal their published values exactly.""", PAGE),
+    _block("a1.method.information", "C904", """Where the two protocols differ in these periods. **Issue time:**
+           {s:time:11:00} Berlin for {s:name:A1}, {s:time:11:00} UTC for {g:v5.version}. **Fitting:** daily refits on the
+           last {s:count:728} days for {s:name:A1}, one fit per test period for {g:v5.version}. **Search:**
+           {s:name:A1}'s networks come from searches run every {s:count:182} days on earlier data only. **Data:** a later
+           data identity and registered input vintages. **The first period:** in {s:name:A1}'s protocol it falls in an
+           unscored warm-up, with less than {s:count:728} days of history.""", PAGE),
+    _block("a1.folds", "C907", """Per test period, the paired difference in mean daily error, {s:name:A1} −
+           {g:v5.version}, with its {s:level:95%} interval. Descriptive: no rule reads them.""", PAGE),
+    _block("a1.absolute", "C907", """Mean absolute error per test period: {s:name:A1}
+           {r:derived.periods.a1.ordinary_low}–{r:derived.periods.a1.ordinary_high} EUR/MWh in the four ordinary periods
+           and {r:derived.periods.a1.stress} EUR/MWh in the {s:date:2022} crisis period; {g:v5.version}
+           {r:derived.periods.v5.ordinary_low}–{r:derived.periods.v5.ordinary_high} and
+           {r:derived.periods.v5.stress} EUR/MWh.""", PAGE),
+    _block("a1.coverage", "C908", """Pooled over the five periods, {s:name:A1}'s {s:level:95%} intervals covered a share
+           {r:pres5.metrics.A1.pooled.coverage95} of the hours at a mean width of
+           {r:pres5.metrics.A1.pooled.mean_width95|p=1} EUR/MWh; {g:v5.version}'s covered
+           {r:cp24.metrics.v5.pooled.coverage95} at {r:cp24.metrics.v5.pooled.mean_width95|p=1} EUR/MWh. Narrower
+           intervals with similar coverage; the nominal {s:level:95%} is a reference, not a target.""", PAGE),
+    _block("a1.rule", "C701", """**The selection rule**, set on {s:date:2026-10-12} and frozen before the re-baseline's
+           first score: seven recombinations of {g:v5.version}'s members, {s:name:A1} among them, each against
+           {g:v5.version} on every development day. To pass, an arm had to beat {g:v5.version} by more than half a
+           percent on both scores, lose no more than {s:level:2%} in any complete year from {s:date:2021} to
+           {s:date:2025} or any season, and survive Holm's correction across the seven at {s:level:5%}, in the main
+           analysis and in three sensitivity variants. Among those that passed, the lowest interval error won.""",
+           PAGE, README),
+    _block("a1.selection", "C703", """All seven passed every analysis. {s:name:A1} had the lowest interval error,
+           {r:cp28.selection.wis.A1} EUR/MWh against the next best's {r:cp28.selection.wis.A6}, so it was selected; its
+           largest p-value in the main analysis was {r:cp28.holm.primary14.A1.compound_p}. The table gives every arm's
+           change against {g:v5.version}, with descriptive {s:level:95%} intervals.""", PAGE),
+    _block("a1.holm.note", "C705", """The test was run only after the Owner saw the re-baseline's report, which
+           already showed {s:name:DDNN-2} alone on these days; its multiplicity control is conditional on that
+           decision.""", PAGE),
+    _block("a1.freeze", "C801", """**The freeze.** On {s:date:2026-10-28} {s:name:A1} was frozen as the product's
+           complete daily policy: one package, run unchanged by the issuing host and by the visitor's browser. It was
+           re-frozen on {s:date:2026-10-29} with the Owner's later decisions, and on {s:date:2026-10-30} under the issuing
+           host, Pyodide in Node.js on a macOS runner or the Owner's Mac, with every fit identical bit for bit. Its policy
+           identity is <code>720fc581</code>; any change to the policy, its code, runtime or state needs a new freeze and
+           a new test.""", PAGE),
+    _block("a1.fresh.window", "C803", """**{s:work-item:4.7T}, registered before the test.** One test of {s:name:A1}, on
+           delivery days {s:date:2026-09-07} to {s:date:2026-12-05}, {s:count:90} days, opening no earlier than
+           {s:date:2026-12-04}, once every price is published. The window is never extended, shortened or rolled.""",
+           PAGE, README),
+    _block("a1.fresh.terms", "C803", """**Against what, and how.** The control is {g:v5.version}, the reference the
+           similar-day naive, both run under the re-baseline's rules; {g:v3.version}, {g:v4.version} and {g:v1.version}'s
+           released model are reported, never tested. The scores are each day's mean absolute error of the median and its
+           interval score. It passes when the largest of four one-sided p-values is at most {s:level:0.05}:
+           {s:name:A1} better than {g:v5.version} by more than half a percent on both scores, and better than the naive on
+           both. The intervals come from a {s:count:7}-day block bootstrap with {s:count:10000} draws.""",
+           PAGE, README),
+    _block("a1.fresh.rules", "C803", """**The failure rules.** At least {s:count:60} of the {s:count:90} days must be
+           paired and scored, or the test is inconclusive. No runner-up moves up, the window is spent whatever the result,
+           and a null result is valid.""", PAGE, README),
+    _block("a1.fresh.meaning", "C804", """**What each result means.** A pass makes {s:name:A1} the product, replacing
+           {g:v1.version}, and the record says "It passed the pre-registered test". A fail or an inconclusive result keeps
+           {g:v1.version} as the product, and the record says "It did not pass; the window is spent, and {g:v1.version}
+           remains the product." Either way the live record stays "prospective evaluation in progress" until at least
+           {s:count:90} consecutive days are scored.""", PAGE, README),
+    # ---- CP-28 as a branch after v5 (runbook §3; outcome 3 and 6) ----
+    _block("branch.recombining-v5s-members.question", "P63", """Does a registered recombination of {g:v5.version}'s
+           three members beat {g:v5.version} on both scores on every development day, without losing more than
+           {s:level:2%} in any complete year or season? Seven arms, one look.""", PAGE, README),
+    _block("branch.recombining-v5s-members.result", "C704", """All seven passed. Against {g:v5.version}, the blends
+           changed the interval error by {r:derived.cp28.A5.WIS} to {r:derived.cp28.A6.WIS}; {s:name:DDNN-2} alone,
+           {s:name:A1}, by {r:derived.cp28.A1.WIS} {r:derived.cp28.A1.WIS|ci}, descriptive {s:level:95%} interval.
+           Development evidence after selection.""", PAGE, README),
+    _block("branch.recombining-v5s-members.reason", "C703", """No blend was selected: the arm with the lowest interval
+           error, {s:name:A1}, takes {s:name:DDNN-2} alone and became the final candidate.""", PAGE, README),
+    # ---- the planned list and the system view after PRES-5 (outcome: the planned-work list brought up to date) ----
+    _block("planned.teaser", "P64", """Next: {s:work-item:4.7T}, {s:name:A1}'s one test, opening no earlier than
+           {s:date:2026-12-04}; the live trial, prospective evaluation in progress; then new input data and
+           renewable-generation forecasts.""", PAGE, README),
+)
+
+BLOCKS = BLOCKS + PRES5_BLOCKS
 BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
 
 #: Chart claims: the records each figure may plot, beyond those its caption names.
@@ -853,7 +1009,16 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
     """(claim, template) of the headline block, generated from the registry's current generation and
     its derived records. It leads with the pre-specified verdict when a rule existed (§3.3 a), and with
     the change against the comparator otherwise (§3.3 b)."""
-    entry = entry or G.current_generation()
+    entry = entry or G.final_candidate() or G.current_generation()
+    if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
+        # Decision 20 (the Owner, 2026-10-29): until 4.7T is scored, the headline shows development, post-selection
+        # results. The final candidate's are its selection rule's: the verdict, the distance from the control with its
+        # descriptive interval, in each metric's name (A1), and N (§3.2).
+        return "P60", (
+            "Selected by a rule set before the test: against {g:%s.version} on all {r:cp28.paired_dates} development "
+            "days, {r:derived.cp28.A1.MAE} {r:derived.cp28.A1.MAE|ci} in point error and {r:derived.cp28.A1.WIS} "
+            "{r:derived.cp28.A1.WIS|ci} in interval error; {r:derived.cp28.tested} policies tested against the rule."
+            % entry.comparator)
     verdict_id = f"derived.criteria.{entry.id}.verdict"
     if entry.id in D.ADOPTION_RULES:
         # The generation's own pre-registered adoption rule (CP-21 on): it leads, with the rule's paired differences
@@ -947,7 +1112,8 @@ LISTED_LATER = 4
 
 #: Every term a headline form may introduce, in reading order.
 ALL_TERMS = ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.adoption_rule",
-             "terms.differences", "terms.class", "terms.ddnn2", "terms.not_adopted")
+             "terms.differences", "terms.class", "terms.ddnn2", "terms.not_adopted", "terms.daily_errors",
+             "terms.selection_rule", "terms.final_candidate", "terms.a1_row")
 
 
 def comparison_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
@@ -955,7 +1121,12 @@ def comparison_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     policies are still drawn there when the headline leads with a generation's own rule."""
     used = headline_terms(entry)
     comparison = tuple(key for key in ALL_TERMS if key not in used
-                       and key not in ("terms.adoption_rule", "terms.differences", "terms.ddnn2", "terms.not_adopted"))
+                       and key not in ("terms.adoption_rule", "terms.differences", "terms.ddnn2", "terms.not_adopted",
+                                       "terms.daily_errors", "terms.selection_rule", "terms.final_candidate",
+                                       "terms.a1_row"))
+    # The final candidate's row (PRES-5) is named where it is drawn.
+    if any(row.status is not None and row.status.status == G.FINAL_CANDIDATE for row in G.comparison_rows()):
+        comparison = ("terms.a1_row",) + comparison
     # The comparison's rows include the candidates of branches tested and not adopted (PRES-4): named where they are drawn.
     points = [row for row in G.comparison_rows() if row.kind == "branch" or (
         row.kind == "study arm" and row.checkpoint in G.COMPARISON_EXPERIMENTS
@@ -966,7 +1137,9 @@ def comparison_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
 def headline_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     """The terms the headline introduces, defined directly below it (standard §1 ii): they follow the headline's
     form, so a term is never defined for a headline that does not use it."""
-    entry = entry or G.current_generation()
+    entry = entry or G.final_candidate() or G.current_generation()
+    if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
+        return ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate", "terms.class", "terms.ddnn2")
     # A model name the generation's own name introduces is defined beneath the headline too (PRES-4: DDNN-2).
     named = ("terms.ddnn2",) if "DDNN-2" in entry.name else ()
     if entry.id in D.ADOPTION_RULES:
@@ -983,9 +1156,10 @@ def census_sentence(target: str = "html") -> str:
     where they meet, with both derived -- N from the decision records, the rows from the registry's comparison."""
     rows = G.comparison_rows()
     tested = [entry for entry in rows if _tested(entry)]
+    selected = [entry for entry in rows if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE]
     references = []
     for entry in rows:
-        if entry in tested:
+        if entry in tested or entry in selected:
             continue
         if entry.version:
             references.append("{g:%s.version}'s development replay" % entry.id)
@@ -994,6 +1168,9 @@ def census_sentence(target: str = "html") -> str:
     names = ", ".join(references[:-1]) + " and " + references[-1] if len(references) > 1 else "".join(references)
     template = ("The chart's {s:count:%d} rows are not that census: {s:count:%d} of them were tested against the "
                 "targets, and the others are references that never were: %s." % (len(rows), len(tested), names))
+    if selected:  # PRES-5: the final candidate was tested by its own rule, on another population
+        template += (" %s was tested by its own selection rule, on every development day, not against the targets."
+                     % " and ".join("{g:%s.name}" % entry.id for entry in selected))
     return render_template("P33", template, target)
 
 
@@ -1019,7 +1196,7 @@ def headline(target: str = "html") -> str:
     the README (§3.4)."""
     claim_id, template = headline_template()
     sentence = render_template(claim_id, template, target)
-    badge = G.current_generation().badge
+    badge = (G.final_candidate() or G.current_generation()).badge
     if target == "md":
         return f"{sentence} `{badge}`"
     return f'{sentence} <span class="badge badge-development">{html.escape(badge)}</span>'
@@ -1152,7 +1329,7 @@ def _v1(claim_id: str, spec: str, target: str) -> str:
 
 
 #: Model names that carry a digit as part of the name, declared structural wherever a name or fixed copy uses them.
-STRUCTURAL_NAMES = ("DDNN-2",)
+STRUCTURAL_NAMES = ("DDNN-2", "A1")
 _NAME_PARTS = re.compile(r"\b(v\d+)\b|(" + "|".join(re.escape(name) for name in STRUCTURAL_NAMES) + r")(?![\w-])")
 
 

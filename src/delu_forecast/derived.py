@@ -299,12 +299,21 @@ RATIO_CHANGES = {
     "v5": "cp24.ratio.v5-HGL.{metric}",
     # PRES-4: v5's study arm DDNN-2 alone, against its comparator v4 (descriptive, never eligible).
     "ddnn2-alone": "cp24.ratio.D2-HGL.{metric}",
+    # PRES-5: A1, the final candidate, on v5's population against v5 (descriptive; v5's rule is not re-run).
+    "a1": "pres5.ratio.A1-v5.{metric}",
+}
+
+#: PRES-5: A1 against the similar-day naive on v5's population, from the same draws (the brief's outcome 1).
+NAIVE_RATIO_CHANGES = {
+    "a1": "pres5.ratio.A1-B0.{metric}",
 }
 
 #: The same change at a rule's own decision level, where it is not 95% (capstone v21-r11 §23.8-§23.9): v5's rule decided
 #: at 97.5%, so its ratio is published at both levels, from the same stored draws.
 DECISION_LEVEL_CHANGES = {
     "v5": ("cp24.ratio97_5.v5-HGL.{metric}", "97.5%"),
+    # PRES-5: A1 against v5 at the level v5's rule decided at, from the same draws; no rule is applied.
+    "a1": ("pres5.ratio97_5.A1-v5.{metric}", "97.5%"),
 }
 
 
@@ -323,6 +332,16 @@ def _change_records() -> list[DerivedRecord]:
                 0, "P18", ci_low=_text(_d(ratio_id, "ci_low") * hundred),
                 ci_high=_text(_d(ratio_id, "ci_high") * hundred),
                 label=f"as a share of {comparator.short}'s score"))
+    for subject, ratio in NAIVE_RATIO_CHANGES.items():
+        for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
+            ratio_id = ratio.format(metric=metric)
+            hundred = Decimal(100)
+            out.append(DerivedRecord(
+                f"derived.change_naive.{subject}.{score}", "ratio_change", subject, UNIT_RELATIVE,
+                _text(_d(ratio_id) * hundred), (ratio_id,),
+                "the ratio S_policy / S_naive − 1 × 100; its interval the 2.5th and 97.5th percentiles over the same "
+                "draws, × 100", 0, "P18", ci_low=_text(_d(ratio_id, "ci_low") * hundred),
+                ci_high=_text(_d(ratio_id, "ci_high") * hundred), label="as a share of the naive's score"))
     for subject, (ratio, level) in DECISION_LEVEL_CHANGES.items():
         comparator = G.get(G.get(subject).comparator)
         for metric, score in (("MAE", "S_MAE"), ("WIS", "S_WIS")):
@@ -354,7 +373,7 @@ def _change_records() -> list[DerivedRecord]:
 #: Absolute context (§3.3 c): per-period MAE in EUR/MWh for these identities, each from the experiment whose rows it
 #: was published from: v5's from CP-24; the others from CP-21, as v4's chapter and the comparison published them. The
 #: shared rows are byte-identical across the comparison's experiments (`comparison_parity_problems`).
-PERIOD_SOURCES = {"v5": "CP-24", "v4": "CP-21", "v3": "CP-21", "v2": "CP-21", "daily-lear": "CP-21", "naive": "CP-21"}
+PERIOD_SOURCES = {"a1": "PRES-5", "v5": "CP-24", "v4": "CP-21", "v3": "CP-21", "v2": "CP-21", "daily-lear": "CP-21", "naive": "CP-21"}
 PERIOD_SUBJECTS = tuple(PERIOD_SOURCES)
 
 
@@ -591,18 +610,74 @@ def comparison_parity_problems(rows=None) -> list[str]:
                     there = f"{G.comparison_prefix(experiment)}.metrics.{code}.{scope}.{field_name}"
                     if R.get(here).raw != R.get(there).raw:
                         problems.append(f"{entry.id}: {field_name} ({scope}) differs between {source} and {experiment}")
-    for experiment in experiments[1:]:
+    with_naive = [experiment for experiment in experiments if G.get("naive").code_in(experiment) is not None]
+    for experiment in experiments:
+        if experiment in with_naive:
+            continue
+        # An experiment without its own naive rows (PRES-5 scores A1 alone): every row it holds keeps the naive's hours.
+        for entry in tuple(entries):
+            if G.comparison_source(entry) != experiment:
+                continue
+            for fold in FOLDS:
+                here = f"{G.comparison_prefix(with_naive[0])}.metrics.B0.{fold}.n_hours"
+                there = f"{G.comparison_prefix(experiment)}.metrics.{entry.code_in(experiment)}.{fold}.n_hours"
+                if R.get(here).raw != R.get(there).raw:
+                    problems.append(f"{entry.id}: {fold} hours differ from the naive's in {with_naive[0]}")
+    for experiment in with_naive[1:]:
         for fold in FOLDS:
-            here = f"{G.comparison_prefix(experiments[0])}.metrics.B0.{fold}.n_hours"
+            here = f"{G.comparison_prefix(with_naive[0])}.metrics.B0.{fold}.n_hours"
             there = f"{G.comparison_prefix(experiment)}.metrics.B0.{fold}.n_hours"
             if R.get(here).raw != R.get(there).raw:
                 problems.append(f"the naive's {fold} hours differ between {experiments[0]} and {experiment}")
     return problems
 
 
+# --------------------------------------------------------------------------- PRES-5: CP-28 and CP-26 (§3.2)
+
+#: CP-28's arms and CP-26's v5 − v4 audit, as changes against their comparator: (ratio of mean daily losses − 1) × 100,
+#: with the ratio's own interval. CP-28's intervals are descriptive (studentized); its decision was the compound test.
+CONTROL_CHANGES = {f"cp28.{arm}.{metric}": f"cp28.arm.{arm}.{metric}.ratio_to_control" for arm in R.CP28_ARMS
+                   for metric in ("MAE", "WIS")}
+CONTROL_CHANGES.update({f"cp26.v5-v4.{metric}": f"cp26.audit.v5-v4.{metric}" for metric in ("MAE", "WIS")})
+#: CP-26's two declared sensitivity routes against nominal v5 on every eligible day: the load-forecast bound is a point
+#: comparison of the committed mean daily losses; the weather delay's interval is CP-28's GFS note (`cp28.gfs.*`).
+POINT_CHANGES = {f"cp26.noload-v5.{metric}": (f"cp26.every.noload.v5.all_eligible.{metric}.raw_mean_daily_loss",
+                                              f"cp26.every.nominal.v5.all_eligible.{metric}.raw_mean_daily_loss")
+                 for metric in ("MAE", "WIS")}
+POINT_CHANGES.update({f"cp26.a1-v5.{metric}": (f"cp26.every.nominal.D2.all_eligible.{metric}.raw_mean_daily_loss",
+                                               f"cp26.every.nominal.v5.all_eligible.{metric}.raw_mean_daily_loss")
+                      for metric in ("MAE", "WIS")})
+
+
+def _cp28_tested(document: dict) -> str:
+    """N for CP-28's rule (§3.2): every arm the one look tested, from its selection record."""
+    return str(len(document["passes_all_four"]))
+
+
+def _pres5_records() -> list[DerivedRecord]:
+    out = [DerivedRecord("derived.cp28.tested", "cp28_tested", "a1", UNIT_COUNT, _cp28_tested(R._json(R.CP28_SELECTION)),
+                         (), "the number of arms in the one look's selection record", 0, "P60",
+                         sources=(R.CP28_SELECTION,))]
+    hundred = Decimal(100)
+    for key, ratio_id in CONTROL_CHANGES.items():
+        out.append(DerivedRecord(
+            f"derived.{key}", "control_change", key.split(".")[1], UNIT_RELATIVE, _text((_d(ratio_id) - 1) * hundred),
+            (ratio_id,), "(ratio of mean daily losses − 1) × 100; its interval the ratio's own, the same way", 0, "P60",
+            ci_low=_text((_d(ratio_id, "ci_low") - 1) * hundred), ci_high=_text((_d(ratio_id, "ci_high") - 1) * hundred),
+            label="as a share of v5's mean daily loss"))
+    for key, (numerator, denominator) in POINT_CHANGES.items():
+        out.append(DerivedRecord(
+            f"derived.{key}", "point_change", key.split(".")[1], UNIT_RELATIVE,
+            _text(_relative(_d(numerator), _d(denominator))), (numerator, denominator),
+            "(mean daily loss / v5's − 1) × 100, a point comparison", 0, "P60",
+            label="point comparison with v5's mean daily loss"))
+    return out
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, DerivedRecord]:
-    built = _criteria_records() + _change_records() + _adoption_records() + _period_records() + _coverage_records()
+    built = (_criteria_records() + _change_records() + _adoption_records() + _period_records() + _coverage_records()
+             + _pres5_records())
     out: dict[str, DerivedRecord] = {}
     for record in built:
         if record.record_id in out:
@@ -678,6 +753,19 @@ def validate_all() -> list[str]:
                 low, high = _text(value(ratio_id, "ci_low") * hundred), _text(value(ratio_id, "ci_high") * hundred)
                 if (low, high) != (record.ci_low, record.ci_high):
                     problems.append(f"{record.record_id}: interval no longer follows from its rows")
+            elif record.kind == "control_change":
+                (ratio_id,) = record.inputs
+                hundred = Decimal(100)
+                expected = _text((value(ratio_id) - 1) * hundred)
+                low = _text((value(ratio_id, "ci_low") - 1) * hundred)
+                high = _text((value(ratio_id, "ci_high") - 1) * hundred)
+                if (low, high) != (record.ci_low, record.ci_high):
+                    problems.append(f"{record.record_id}: interval no longer follows from its rows")
+            elif record.kind == "cp28_tested":
+                expected = _cp28_tested(fresh.document(R.CP28_SELECTION))
+            elif record.kind == "point_change":
+                numerator, denominator = record.inputs
+                expected = _text(_relative(value(numerator), value(denominator)))
             elif record.kind == "adoption_verdict":
                 spec = ADOPTION_RULES[record.subject]
                 expected = _adoption_verdict(spec, lambda rid: R.rederive(R.get(rid), fresh)["value"])
@@ -739,7 +827,7 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
 
 
 __all__ = [
-    "ADOPTION_RULES", "CHANGES", "COVERAGE_KINDS", "DECISION_LEVEL_CHANGES", "PERIOD_SOURCES", "RATIO_CHANGES",
+    "ADOPTION_RULES", "CHANGES", "CONTROL_CHANGES", "NAIVE_RATIO_CHANGES", "POINT_CHANGES", "COVERAGE_KINDS", "DECISION_LEVEL_CHANGES", "PERIOD_SOURCES", "RATIO_CHANGES",
     "comparison_parity_problems", "DerivedError", "DerivedRecord", "PERIOD_SUBJECTS", "RULE", "UNIT_COUNT", "UNIT_DATE", "UNIT_EUR",
     "UNIT_LABEL", "UNIT_RELATIVE", "display", "get", "is_derived", "records", "section_8", "stress_period",
     "validate_all",

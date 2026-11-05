@@ -1,8 +1,10 @@
 {
   "build_path": "purpose-built static assembly (\u00a79.2 fallback)",
-  "bytes": 1996267,
-  "final": true,
-  "links_omitted_until_verified": [],
+  "bytes": 1932833,
+  "final": false,
+  "links_omitted_until_verified": [
+    "compare:recombining-v5s-members"
+  ],
   "load_scale_points": 11,
   "marimo_export_external_hosts": [
     "cdn.jsdelivr.net"
@@ -17,6 +19,7 @@
     "compare:model-comparison",
     "compare:overview",
     "compare:pooled-lightgbm-member-for-v4",
+    "compare:recombining-v5s-members",
     "compare:v2",
     "compare:v3",
     "compare:v4",
