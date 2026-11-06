@@ -538,7 +538,7 @@ _CP28_SOURCES = ("reports/cp28/owner-summary.json", "reports/cp28/publication-pa
 _A1_SOURCES = ("reports/pres5/a1-in-v5/metrics.csv", "reports/pres5/a1-in-v5/uncertainty.csv",
                "reports/pres5/a1-in-v5/ratio-intervals.csv", "reports/pres5/a1-in-v5/summary.json")
 #: CP-28's arms that passed the gates and were not selected (capstone_v21.md §24.8, "Selection").
-_NOT_SELECTED = "passed every registered gate and was not selected: A1 had the lowest interval score"
+_NOT_SELECTED = "passed every registered gate and was not selected: v6 had the lowest interval score"
 
 
 def _cp28_arm(ident: str, code: str, name: str, subtitle: str, short: str) -> Entry:

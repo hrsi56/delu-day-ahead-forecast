@@ -165,7 +165,9 @@ def test_the_release_rule_is_beside_the_demo_action_and_outside_any_disclosure(p
     opened = page.rfind("<details", 0, rule)
     assert opened == -1 or page.rfind("</details>", 0, rule) > opened
     text = re.sub(r"<[^>]+>", "", page[rule:rule + 1200])
-    assert "The Space runs v6 · DDNN-2 alone every day" in text and "the last released generation" in text
+    assert "The Space runs v6 · DDNN-2 alone daily, frozen" in text and "the last released generation" in text
+    # The release check's own selector finds it beside the action (scripts/check_reader_paths.py, PLACEMENT_JS).
+    assert page.rfind('data-block="release-rule"', 0, rule) > action
 
 
 def test_the_byline_links_to_the_contribution(page):

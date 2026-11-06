@@ -9,16 +9,16 @@
 
 **Final candidate · pending 4.7T, v6 · DDNN-2 alone.** Selected by a rule set before the test: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error; 7 policies tested against the rule. `Development · post-selection`
 
-- **Point and interval error:** each day's mean absolute error of the median forecast, and its interval score, averaged over days; lower is better.
-- **Selection rule:** set on 2026-10-12, before any result; its gates and its pick are in the v6 chapter.
-- **Final candidate · pending 4.7T:** v6, A1 in the frozen records, frozen for one test on 90 days, registered before any of their data was opened.
+- **Point and interval error:** each day's mean absolute error of the median and its interval score, averaged; lower is better.
+- **Selection rule:** set on 2026-10-12, before any result.
+- **Final candidate · pending 4.7T:** v6 (A1 in the frozen records), frozen for one test on 90 days, registered in advance.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
 - **DDNN-2:** a distributional neural network (DDNN).
 
-**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Space runs v6 · DDNN-2 alone every day, frozen: each forecast is issued before the auction; prospective evaluation in progress. v1, the last released generation, is its historical demo under the Space's History, and the product again if 4.7T does not pass. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Space runs v6 · DDNN-2 alone daily, frozen: prospective evaluation in progress. v1, the last released generation, is its historical demo, and the product again if 4.7T fails. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
 
-**How the product works:** The product the Space runs, v6 · DDNN-2 alone, A1 in the frozen records, topic by topic: the frozen policy, its data, how it was selected and tested, its results, its limits and how to run it. v1's documentation, the last released generation, stays in its chapter and its archive. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
+**How the product works:** The product the Space runs, v6 · DDNN-2 alone (A1 in the frozen records), topic by topic; v1's stays in its chapter. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
 
 **Report:** [the one-page report](https://hrsi56.github.io/delu-day-ahead-forecast/), with every result, its limits and its evidence.
 

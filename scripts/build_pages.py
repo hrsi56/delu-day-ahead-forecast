@@ -1737,21 +1737,22 @@ def opening(C, payload) -> str:
         research_name = RC.render_template("P61", "{g:v6.name}")
         primary_action = (f'<a class="btn-primary external" href="{attr(C["space_url"])}"><span>Open the live '
                           f'product</span></a>')
-        product_rule = block("product.live", cls="release-rule")
+        # The product identity beside the action (§2's table; §7.1): what the Space runs, and v1's place.
+        product_rule = f'<div class="release-rule" data-block="release-rule">{block("product.live")}</div>'
         preview = (
             f'<figure class="preview panel">'
             f'<figcaption class="preview-label"><span class="badge badge-replay">Development forecast · '
-            f'{ver(final.version)}</span><span>Forecast and observed price for a development day, from its stored '
-            f'forecasts. Not a live forecast: those are on the live product.</span></figcaption>'
+            f'{ver(final.version)}</span><span>A stored forecast for a development day, with the observed price; not '
+            f'a live forecast.</span></figcaption>'
             f"{preview_chart(v6_preview_payload())}"
             f'<p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">'
             f'{S("level", "80%")} prediction interval</span> <span class="key-actual">Observed price</span></p>'
-            f'<p class="preview-links"><a class="quiet" href="#product">How the product works</a>'
-            f'<span class="preview-note">The product the Space runs, topic by topic.</span></p></figure>')
-        startup = block("product.live.startup", cls="startup") + (
-            f'<p class="startup" data-startup="measured"><a class="quiet external in-text" '
-            f'href="{attr(history_url(C))}">{ver(released.version)}\'s historical demo</a>: '
-            f'{startup[startup.index(">") + 1:startup.rindex("</p>")]}</p>')
+            f'<p class="preview-links"><a class="quiet" href="#product-forecast">Read a forecast</a></p></figure>')
+        # Startup metadata beside the primary action (§7.1) is the live product's. v1's measured start (2026-09-29)
+        # timed the earlier Space's root, which decision 28 gives to the live product; its demo is linked, not timed.
+        startup = (f'<p class="startup" data-block="product.live.startup">{RC.render("product.live.startup")} '
+                   f'<a class="quiet external in-text" href="{attr(history_url(C))}">{ver(released.version)}\'s '
+                   f'historical demo</a></p>')
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">
@@ -2493,22 +2494,21 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-inputs", "The inputs it uses, and why", "The inputs it uses, and why", ("3", "3b"),
               block("v6.product.inputs") + block("product.inputs.seasonal")
               + f'<p>{archive("spectral", "The spectral figures behind the calendar inputs, in the archived report")}</p>'),
-        Topic("product-validation", "How it was selected and how it will be tested",
+        Topic("product-validation", "How it was selected and will be tested",
               "How it was selected and how it will be tested", ("4",), block("v6.product.validation")),
-        Topic("product-results", "Measured results, on development data", "Measured results", ("5",),
-              block("v6.product.results") + chapter("v6-chart-title", "The comparison chart and its evidence, in the "
-                                                    "v6 chapter")),
-        Topic("product-attribution", "What drives its forecasts: on the live product", "What drives its forecasts",
+        Topic("product-results", "Measured results: development data", "Measured results", ("5",),
+              block("v6.product.results") + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
+        Topic("product-attribution", "What drives its forecasts: live product", "What drives its forecasts",
               ("6",), block("v6.product.attribution") + space("The Explainability view, on the live product"),
               disposition="not evaluated"),
-        Topic("product-importance", "Input importance: on the live product", "Which inputs it relies on", ("7",),
+        Topic("product-importance", "Input importance: live product", "Which inputs it relies on", ("7",),
               block("v6.product.importance") + space("The Features view, on the live product"),
               disposition="not evaluated"),
         Topic("product-failures", "Where it fails", "Where it fails", ("8",),
-              block("v6.product.failures") + chapter("v6-per-period-differences", "v6 against v5 in each test period")),
+              block("v6.product.failures") + chapter("v6-per-period-differences", "Each test period, in the v6 chapter")),
         Topic("product-reliability", "Interval reliability", "How reliable its intervals are", ("9",),
-              block("v6.product.reliability") + chapter("v6-coverage", "Interval coverage and width, in the v6 chapter")),
-        Topic("product-forecast", "Read a forecast: on the live product", "Read a forecast", ("10",),
+              block("v6.product.reliability") + chapter("v6-coverage", "How often its intervals held, in the v6 chapter")),
+        Topic("product-forecast", "Read a forecast: live product", "Read a forecast", ("10",),
               block("v6.product.forecast") + space("Open the live product")),
         Topic("product-limitations", "Limitations", "Limitations", ("11",), block("v6.product.limits")),
         Topic("product-run", "Run and check this product", "Run and check this product", ("12",),
@@ -2877,7 +2877,7 @@ def a1_main_panels() -> list[Panel]:
                    Row("Point-error score, 97.5% interval", _A1_MAE_975, "v6", bold=True, claim="C902"),
                    Row("Interval score, 95% interval", _A1_WIS, "v6", bold=True, claim="C902"),
                    Row("Interval score, 97.5% interval", _A1_WIS_975, "v6", bold=True, claim="C902")),
-                  domain=(-0.08, 0.01), step=0.01,
+                  domain=(-0.08, 0.02), step=0.02,
                   refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))]
 
 
@@ -3446,6 +3446,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .fc-note{{font-size:14px;color:var(--text-2);margin:6px 0 0}}
 .external::after{{content:" \\2197";font-size:.85em}}
 .startup{{font-size:14px;line-height:22px;color:var(--text-2);max-width:52ch}}
+.release-rule p{{margin:0;max-width:none}}
 .preview{{margin:0}}
 .preview-label{{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:14px;color:var(--text-2);margin-bottom:8px}}
 .preview-key{{font-size:13px;color:var(--text-2);display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 4px}}

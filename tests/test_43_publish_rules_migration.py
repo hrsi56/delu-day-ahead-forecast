@@ -353,7 +353,7 @@ def test_a5_the_preview_leads_to_the_product_replay_and_the_archive_keeps_its_ro
     # PRES-5: the opening previews v6's stored development forecast and routes to the product documentation; v1's
     # replay stays in its archive, with its route.
     opening = page[:page.index('id="product"')]
-    assert "Development forecast · " in _text(opening) and 'href="#product">How the product works' in opening
+    assert "Development forecast · " in _text(opening) and 'href="#product-forecast">Read a forecast' in opening
     assert 'href="#forecast">The replay in the archived report' in page
 
 
@@ -387,6 +387,19 @@ def test_f02_negative_control_a_page_without_an_icon_is_caught(page):
 
 def test_f03_the_measured_start_is_beside_the_action_outside_any_disclosure(page):
     action = page.index('class="btn-primary external"')
+    if G.final_candidate() is not None:
+        # PRES-5: the primary action opens the live product, and its startup metadata is beside it (§7.1): the first
+        # visit's size, as CP-18b measured it on development data. v1's measured start (2026-09-29) timed the earlier
+        # Space's root, which decision 28 gives to the live product; v1's demo is linked there, under History.
+        startup = page.index('data-block="product.live.startup"')
+        assert 0 < startup - action < 1500
+        opened = page.rfind("<details", 0, startup)
+        assert opened == -1 or page.rfind("</details>", 0, startup) > opened
+        line = _text(page[startup:page.index("</p>", startup)])
+        assert "MB of the day's records, measured on development data" in line and "historical demo" in line
+        assert re.search(r'href="https://[^"]+/history/"', page[startup:page.index("</p>", startup)])
+        assert 'data-startup="measured"' not in page[:page.index('id="product"')]
+        return
     startup = page.index('data-startup="measured"')
     assert 0 < startup - action < 1500
     opened = page.rfind("<details", 0, startup)

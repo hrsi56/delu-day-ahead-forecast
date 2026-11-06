@@ -332,3 +332,74 @@ def test_the_withheld_claims_are_guarded():
     # PRES-5's guards (W49-W53) find nothing on the page or in the README; the older guards keep their own tests.
     for surface in (_text(PAGE.split("<script>")[0]), README):
         assert not [hit for hit in RC.withheld_findings(surface) if hit.split(":")[0] in ("W49", "W50", "W51", "W52", "W53")]
+
+
+# --------------------------------------------------------------------------- CP-26's landed code (ruling O34)
+
+
+def _landed_record_copy(tmp_path: Path) -> Path:
+    import shutil
+
+    import pres5_landed_code as L
+
+    copy = tmp_path / "record"
+    shutil.copytree(ROOT / L.RECORD, copy)
+    return copy
+
+
+def test_cp26s_log_equals_the_recorded_landed_bytes_and_the_new_modules_are_outside_it():
+    import pres5_landed_code as L
+
+    log = json.loads((ROOT / "reports/rebaseline/harness-log.json").read_text())["landed_code"]
+    assert log == L.landed_code(ROOT)
+    record = json.loads((ROOT / L.RECORD / "manifest.json").read_text())
+    assert {name: entry["sha256"] for name, entry in record["files"].items()} == {
+        name: log[name] for name in record["files"]}
+    for added in ("src/delu_forecast/final_candidate.py", "src/delu_forecast/compact_figures.py"):
+        assert added in record["added_by_pres5"] and added not in log and (ROOT / added).exists()
+
+
+def test_a_changed_recorded_copy_fails(tmp_path, monkeypatch):
+    import pres5_landed_code as L
+
+    copy = _landed_record_copy(tmp_path)
+    target = copy / "registry.py.txt"
+    target.write_bytes(target.read_bytes() + b"\n# changed\n")
+    monkeypatch.setattr(L, "RECORD", copy)  # an absolute path: `root / RECORD` is the copy
+    with pytest.raises(AssertionError):
+        L.landed_code(ROOT)
+
+
+def test_a_recorded_copy_that_no_longer_matches_the_log_fails(tmp_path, monkeypatch):
+    """A copy changed together with its own hash and blob passes its own check, and then differs from CP-26's log."""
+    import hashlib
+
+    import pres5_landed_code as L
+
+    copy = _landed_record_copy(tmp_path)
+    raw = (copy / "research.py.txt").read_bytes() + b"\n# changed\n"
+    (copy / "research.py.txt").write_bytes(raw)
+    manifest = json.loads((copy / "manifest.json").read_text())
+    manifest["files"]["src/delu_forecast/research.py"].update(
+        bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest(),
+        git_blob=hashlib.sha1(b"blob %d\0" % len(raw) + raw).hexdigest())
+    (copy / "manifest.json").write_text(json.dumps(manifest))
+    monkeypatch.setattr(L, "RECORD", copy)
+    log = json.loads((ROOT / "reports/rebaseline/harness-log.json").read_text())["landed_code"]
+    assert L.landed_code(ROOT) != log
+
+
+def test_any_other_landed_file_is_still_compared_with_the_working_tree(tmp_path, monkeypatch):
+    import shutil
+
+    import pres5_landed_code as L
+
+    tree = tmp_path / "tree"
+    for base in L.H.LANDED_CODE:
+        shutil.copytree(ROOT / base, tree / base, ignore=shutil.ignore_patterns("__pycache__"))
+    shutil.copytree(ROOT / L.RECORD, tree / L.RECORD)
+    log = json.loads((ROOT / "reports/rebaseline/harness-log.json").read_text())["landed_code"]
+    assert L.landed_code(tree) == log
+    other = tree / "src/delu_forecast/claims.py"
+    other.write_bytes(other.read_bytes() + b"\n# changed\n")
+    assert L.landed_code(tree) != log

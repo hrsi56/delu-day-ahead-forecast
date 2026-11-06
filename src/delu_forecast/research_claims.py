@@ -654,10 +654,8 @@ BLOCKS: tuple[Block, ...] = (
            control there is no demonstrated joint preference.""", PAGE),
     # ---- the released product, documented (PUBLISH_RULES 1.0 §5 and A4): the twelve subjects, for the model the
     # registry names as released. Each block states which model, output and rows its evidence describes.
-    _block("product.lede", "P66", """The product the Space runs, """ + "{g:v6.name}" + """, {s:name:A1} in the frozen
-           records, topic by topic: the frozen policy, its data, how it was selected and tested, its results, its limits
-           and how to run it. {g:v1.version}'s documentation, the last released generation, stays in its chapter and its
-           archive.""", PAGE, README),
+    _block("product.lede", "P66", """The product the Space runs, """ + "{g:v6.name}" + """ ({s:name:A1} in the
+           frozen records), topic by topic; {g:v1.version}'s stays in its chapter.""", PAGE, README),
     _block("product.data.target", "P38", """**What it forecasts.** The German–Luxembourg day-ahead price of each
            hour of the next delivery day, in EUR/MWh: {s:hours:24} values on most days and {s:hours:23} or
            {s:hours:25} on daylight-saving transition days, issued together as one curve before the
@@ -822,19 +820,18 @@ _A1 = "{g:v6.name}"
 PRES5_BLOCKS: tuple[Block, ...] = (
     # ---- the headline's terms when the final candidate leads (decision 20: development results until 4.7T) ----
     _block("terms.daily_errors", "P60", """**Point and interval error:** each day's mean absolute error of the median
-           forecast, and its interval score, averaged over days; lower is better.""", PAGE, README),
-    _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before any result; its
-           gates and its pick are in the {g:v6.version} chapter.""", PAGE, README),
-    _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** {g:v6.version},
-           {s:name:A1} in the frozen records, frozen for one test on {s:count:90} days, registered before any of their
-           data was opened.""", PAGE, README),
+           and its interval score, averaged; lower is better.""", PAGE, README),
+    _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before any
+           result.""", PAGE, README),
+    _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** {g:v6.version}
+           ({s:name:A1} in the frozen records), frozen for one test on {s:count:90} days, registered in
+           advance.""", PAGE, README),
     # ---- the opening's product line (decision 28; O13; O17) ----
-    _block("product.live", "P61", """The Space runs """ + _A1 + """ every day, frozen: each forecast is issued before
-           the auction; prospective evaluation in progress. {g:v1.version}, the last released generation, is its
-           historical demo under the Space's History, and the product again if {s:work-item:4.7T} does not
-           pass.""", PAGE, README),
-    _block("product.live.startup", "P61", """It opens with the day's records, about {s:size:0.55} MB as measured on
-           development data before publication; the training window loads only on request.""", PAGE),
+    _block("product.live", "P61", """The Space runs """ + _A1 + """ daily, frozen: prospective evaluation in
+           progress. {g:v1.version}, the last released generation, is its historical demo, and the product again if
+           {s:work-item:4.7T} fails.""", PAGE, README),
+    _block("product.live.startup", "P61", """It opens with about {s:size:0.55} MB of the day's records, measured on
+           development data; the training window loads on request.""", PAGE),
     # ---- the comparison, with A1 first (the brief's outcome 1) ----
     _block("comparison.finding.a1", "P62", _A1 + """ against {g:v5.version}, as a share of {g:v5.version}'s error
            scores: {r:derived.change.v6.S_MAE} {r:derived.change.v6.S_MAE|ci} on the point-error score and
