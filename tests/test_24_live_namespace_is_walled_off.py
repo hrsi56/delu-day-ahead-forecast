@@ -120,3 +120,51 @@ def test_positive_control_the_surface_check_catches_a_live_claim_on_a_record_sur
     assert not surface.carries(key, value)
     tainted = replace(surface, text=surface.text + " " + value)
     assert tainted.carries(key, value), "the surface check cannot see a live claim"
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# CP-18c: the live product runs (r20 §24.14). Its prospective record lives in the live data-only paths (`live/`), and
+# the surfaces of the model of record must render none of its figures. The live paths hold data only.
+
+LIVE_PATHS = ("store", "inputs", "pinned", "outcomes", "evaluation", "bundles")
+
+
+def _live_root():
+    from delu_forecast.claims import REPO_ROOT
+    return REPO_ROOT / "live"
+
+
+def _prospective_figures():
+    """Every prospective-window figure of the committed live evaluation records, as the record surfaces would print
+    it (two and one decimals), as live_ claims: the namespace the wall checks."""
+    import json
+    figures = {}
+    for path in sorted((_live_root() / "evaluation").glob("*.json")):
+        value = json.loads(path.read_text())
+        for i, window in enumerate(value.get("windows", [])):
+            if window.get("window") != "prospective":
+                continue
+            pooled = window["record"]["pooled"]
+            for name in ("mae_eur", "wis_eur"):
+                if isinstance(pooled.get(name), (int, float)):
+                    for digits in (2, 1):
+                        figures[f"live_{path.stem}_{i}_{name}_{digits}"] = f"{pooled[name]:.{digits}f}"
+    return figures
+
+
+def test_the_live_paths_hold_data_only():
+    root = _live_root()
+    if not root.is_dir():
+        pytest.skip("no live record in this checkout (the live product's data-only paths are absent)")
+    assert {p.name for p in root.iterdir() if not p.name.startswith(".")} <= set(LIVE_PATHS)
+    code = [str(p) for p in root.rglob("*") if p.suffix in (".py", ".js", ".mjs", ".sh", ".html", ".yml", ".yaml")]
+    assert not code, code[:5]
+
+
+@pytest.mark.parametrize("surface", _record_surfaces(), ids=lambda s: s.name)
+def test_no_record_surface_renders_a_live_prospective_figure(surface):
+    figures = _prospective_figures()
+    if not figures:
+        pytest.skip("no committed live evaluation record with a scored prospective day in this checkout")
+    rendered = sorted(k for k, v in figures.items() if surface.carries(k, f"MAE {v} EUR/MWh"))
+    assert not rendered, f"{surface.name} renders live figures {rendered}"
