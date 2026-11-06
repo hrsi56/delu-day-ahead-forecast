@@ -161,9 +161,9 @@ BLOCKS: tuple[Block, ...] = (
            {{g:{_CMP.id}.version}}'s error scores: {{r:derived.change.{_CUR.id}.S_MAE}}
            {{r:derived.change.{_CUR.id}.S_MAE|ci}} on the point-error score and {{r:derived.change.{_CUR.id}.S_WIS}}
            {{r:derived.change.{_CUR.id}.S_WIS|ci}} on the interval score, with {{s:level:95%}} confidence
-           intervals.""", PAGE, README),
+           intervals.""", PAGE),
     _block("comparison.caveat", "P24", """Development evidence, not a test on new data. Meeting the targets is a
-           development diagnostic, not a product qualification.""", PAGE, README),
+           development diagnostic, not a product qualification.""", PAGE),
     # The visible fairness population (plan §7.9, review F04): hours and the days they fall on, together, from the
     # same committed row; the row count comes from the registry's comparison, never typed.
     _block("comparison.sub", "P07", f"""{{s:count:{len(G.comparison_rows())}}} policies · the same
@@ -1029,8 +1029,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            price."""),
     _block("v6.product.limits", "C607", """**Its limits.** The results are development evidence after selection, and
            {s:work-item:4.7T} is still to come. On the five test periods its information differs from
-           {g:v5.version}'s. The weather run's timing is fragile: six hours late, it changed {g:v5.version}'s point
-           error by {r:derived.cp26.gfs6-v5.MAE}. The load forecast's historical values are not their original
+           {g:v5.version}'s. The weather run's timing is fragile: a six-hour delay was measured on {g:v5.version}, and
+           {g:v6.version} reads the same weather inputs. The load forecast's historical values are not their original
            vintages, and the published prices may still be revised. A failed network member stops the day's fit, and
            the frozen fallback issues. It is frozen: any change needs a new freeze and a new test."""),
     _block("v6.product.run", "P66", """**Check the frozen policy.**
@@ -1243,7 +1243,8 @@ def headline_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     form, so a term is never defined for a headline that does not use it."""
     entry = entry or G.final_candidate() or G.current_generation()
     if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
-        return ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate", "terms.class", "terms.ddnn2")
+        return ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate", "terms.policies", "terms.class",
+                "terms.ddnn2")
     # A model name the generation's own name introduces is defined beneath the headline too (PRES-4: DDNN-2).
     named = ("terms.ddnn2",) if "DDNN-2" in entry.name else ()
     if entry.id in D.ADOPTION_RULES:

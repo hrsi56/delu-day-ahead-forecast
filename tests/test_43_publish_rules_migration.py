@@ -67,6 +67,8 @@ def a1_problems(headline_text: str) -> list[str]:
     """Each headline percentage is followed, before the next number, by the name of its metric. A rule's decision level
     ("v5 − v4 at 97.5%: …", defined beneath the headline) is a level, not a value."""
     problems = []
+    # An interval's endpoints belong to the value before them ("−7% [−9%, −5%] in point error"; PRES-5).
+    headline_text = re.sub(r"\s*\[[^\]]*\]", "", headline_text)
     for match in re.finditer(r"\d+(?:\.\d+)?%", headline_text):
         if headline_text[max(0, match.start() - 3):match.start()] == "at " and headline_text[match.end():].startswith(":"):
             continue
@@ -74,7 +76,8 @@ def a1_problems(headline_text: str) -> list[str]:
         following = re.split(r"\d", rest, maxsplit=1)[0]
         if match.start() > 0 and "at least" in headline_text[max(0, match.start() - 12):match.start()]:
             continue  # the rule's own margin, "at least 10% below", names both scores ("error scores")
-        if not re.search(r"(point-error|interval) score", following):
+        # PRES-5: the final candidate's headline names its selection rule's metrics, point and interval error.
+        if not re.search(r"(point-error|interval) score|(point|interval) error", following):
             problems.append(f"{match.group(0)} is not named by its metric")
     return problems
 
@@ -82,8 +85,11 @@ def a1_problems(headline_text: str) -> list[str]:
 def test_a1_every_headline_value_names_its_metric(page):
     text = _text(RC.headline())
     assert a1_problems(text) == []
-    assert "on the point-error score" in text and "on the interval score" in text
+    assert "in point error" in text and "in interval error" in text  # PRES-5: v6's selection rule (decision 20)
     assert RC.headline("md") in README.read_text()
+    claim, v5_form = RC.headline_template(G.get("v5"))
+    v5_text = _text(RC.render_template(claim, v5_form))
+    assert a1_problems(v5_text) == [] and "on the point-error score" in v5_text and "on the interval score" in v5_text
 
 
 def test_a1_negative_control_the_pres1_wording_is_caught():
@@ -130,8 +136,9 @@ def test_a2_negative_control_an_unmeasured_header_is_a_finding():
 def test_a3_the_predecessor_relation_is_one_dated_chain():
     assert G.transition_problems() == []
     assert [(item.predecessor.id, item.successor.id) for item in G.transitions(newest_first=False)] == [
-        ("v1", "v2"), ("v2", "v3"), ("v3", "v4"), ("v4", "v5")]
-    assert [item.comparator_is_predecessor for item in G.transitions(newest_first=False)] == [False, True, True, True]
+        ("v1", "v2"), ("v2", "v3"), ("v3", "v4"), ("v4", "v5"), ("v5", "v6")]
+    assert [item.comparator_is_predecessor for item in G.transitions(newest_first=False)] == [
+        False, True, True, True, True]
 
 
 @pytest.mark.parametrize("change, expected", [
@@ -212,8 +219,9 @@ def test_a3_the_readme_carries_the_same_transitions():
 
 
 def test_a4_every_subject_is_documented_for_the_released_model(page):
+    # PRES-5 (rulings O26, O29; decision 28): the documentation follows the product the Space runs, v6.
     section = _section(page, "product")
-    assert f'data-product="{G.released().id}"' in section
+    assert f'data-product="{B.product_identity().id}"' in section and B.product_identity().id == "v6"
     subjects = " ".join(re.findall(r'data-subjects="([^"]+)"', section)).split()
     assert sorted(subjects, key=B.PRODUCT_SUBJECTS.index) == list(B.PRODUCT_SUBJECTS)
     routes = re.findall(r'<nav class="product-routes"[^>]*>.*?</nav>', section, re.DOTALL)[0]
@@ -223,16 +231,16 @@ def test_a4_every_subject_is_documented_for_the_released_model(page):
 
 
 def test_a4_negative_control_an_undocumented_released_model_stops_the_build(monkeypatch):
-    monkeypatch.setattr(G, "released", lambda: G.get("v3"))
+    monkeypatch.setattr(B, "product_identity", lambda: G.get("v3"))
     with pytest.raises(B.ProductDocsError, match="no documentation"):
         B.product_topics(build_claims(), B.build_chart_payload())
 
 
 def test_a4_negative_control_a_missing_subject_stops_the_build(monkeypatch):
     def partial(C, payload):
-        return tuple(topic for topic in B.v1_product_topics(C, payload) if "9" not in topic.subjects)
+        return tuple(topic for topic in B.v6_product_topics(C, payload) if "9" not in topic.subjects)
 
-    monkeypatch.setitem(B.PRODUCT_DOCS, "v1", partial)
+    monkeypatch.setitem(B.PRODUCT_DOCS, "v6", partial)
     with pytest.raises(B.ProductDocsError, match="missing"):
         B.product_topics(build_claims(), B.build_chart_payload())
 
@@ -241,24 +249,36 @@ def product_identity_problems(section: str, released: G.Entry) -> list[str]:
     """Evidence in the product documentation describes the released model: its own CP-2 record or holdout, or its
     development replay in the shared comparison; never another generation's result."""
     problems = []
+    # PRES-5: v6's documentation reads its own research rows (A1 in the frozen records): its derived changes, its rows on
+    # v5's population, its CP-28 and CP-26 records. The regimes' development hours are data facts, kept after an
+    # applicability check. Another generation's result is still refused.
+    label = G.FROZEN_LABELS.get(released.id)
+    own = {released.id, label, "nominal/D2"} - {None}
     for record_id in set(re.findall(r'data-record="([^"]+)"', section)):
         if D.is_derived(record_id):
-            problems.append(f"{record_id}: a research headline record in the product documentation")
+            if released.id == "v1" or D.get(record_id).subject not in own:
+                problems.append(f"{record_id}: a research headline record in the product documentation")
             continue
         record = R.get(record_id)
-        if record.generation != released.version and record.policy_code not in ("B0",):
+        if record_id.startswith("cp2.regime.") and record.field in ("n_obs", "n_days") and released.id != "v1":
+            continue
+        if record.generation != released.version and record.policy_code not in {"B0"} | own:
             problems.append(f"{record_id} describes {record.generation or record.policy_code}, not {released.version}")
     return problems
 
 
 def test_a4_the_documentation_s_evidence_belongs_to_the_released_model(page):
-    assert product_identity_problems(_section(page, "product"), G.released()) == []
+    assert product_identity_problems(_section(page, "product"), B.product_identity()) == []
 
 
 def test_a4_negative_control_another_generation_s_record_is_caught(page):
     doctored = _section(page, "product").replace(
         "</section>", '<data data-claim="P42" data-record="cp20.metrics.HG.equal_fold.S_MAE">0.5658</data></section>', 1)
-    assert any("not v1" in problem for problem in product_identity_problems(doctored, G.released()))
+    assert any("not v6" in problem for problem in product_identity_problems(doctored, B.product_identity()))
+    derived = _section(page, "product").replace(
+        "</section>", '<data data-claim="P18" data-record="derived.change.v5.S_MAE">−2%</data></section>', 1)
+    assert any("research headline record" in problem for problem in product_identity_problems(derived,
+                                                                                              B.product_identity()))
 
 
 def test_a4_fold5_and_frozen_shap_are_labelled_as_different_evidence():
@@ -330,7 +350,10 @@ def test_a5_negative_control_a_chart_without_its_heading_is_caught(page):
 
 
 def test_a5_the_preview_leads_to_the_product_replay_and_the_archive_keeps_its_route(page):
-    assert 'href="#product-forecast">Explore this forecast' in page
+    # PRES-5: the opening previews v6's stored development forecast and routes to the product documentation; v1's
+    # replay stays in its archive, with its route.
+    opening = page[:page.index('id="product"')]
+    assert "Development forecast · " in _text(opening) and 'href="#product">How the product works' in opening
     assert 'href="#forecast">The replay in the archived report' in page
 
 
@@ -409,7 +432,7 @@ def test_the_census_distinction_is_derived(page):
     assert f"The chart's {len(rows)} rows are not that census: {len(tested)} of them" in sentence
     assert 'data-block="comparison.census"' in page and 'data-block="comparison.census.detail"' in page
     detail = _text(RC.census_detail())
-    current = G.current_generation().id
+    current = RC._criteria_generation().id  # the newest generation tested against the targets (v5)
     assert detail.startswith(f"The {D.get(f'derived.criteria.{current}.tested').value} policies tested against the targets")
 
 

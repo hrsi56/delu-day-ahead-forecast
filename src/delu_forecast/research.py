@@ -163,19 +163,6 @@ SOURCES: dict[str, Source] = dict(
 #: export's manifest lists the research mirror's sources, and these files are not part of that mirror.
 PRODUCT_SOURCES: dict[str, Source] = dict(
     [
-        # PRES-5: A1 on v5's population (`delu_forecast.final_candidate`), committed by this publication
-        _source("reports/pres5/a1-in-v5/metrics.csv", "evidence/pres-5", "26cadf08b9f93a61e755b34863224834801ee202"),
-        _source("reports/pres5/a1-in-v5/uncertainty.csv", "evidence/pres-5", "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972"),
-        _source("reports/pres5/a1-in-v5/ratio-intervals.csv", "evidence/pres-5", "4459d6d2a418b02164e2d2faf50ea0b6de8ac1f6"),
-        _source("reports/pres5/a1-in-v5/preview-day.csv", "evidence/pres-5", "350cff3177ebcd41d3a5c6bf667a8919d85e4890"),
-        _source("reports/pres5/a1-in-v5/summary.json", "evidence/pres-5", "72a7664c9e515c4663b1815ff45c347d6c58109a"),
-        # PRES-5: CP-28's one look (its evidence tag) and CP-26's re-baseline (its landing: the evidence tag is local only)
-        _source("reports/cp28/owner-summary.json", "evidence/cp-28", "2b9a884f06a6cede1f11c525ef7eab18755108f6"),
-        _source("reports/cp28/publication-packet.json", "evidence/cp-28", "9f7ff6af93bb817274fa7571567a10a281cc9f54"),
-        _source("reports/cp28/results/selection.json", "evidence/cp-28", "c0bde7889795eec8eec5ccd2ca7a645e07d28eb2"),
-        _source("reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json", "land/cp-26", "6b3e442090c5f2a5709b7f2d8e47b80610184fca"),
-        _source("reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json", "land/cp-26",
-                "6eee947c6600ab5befb4931e9bbf79654bd340bb"),
         _source("reports/cp2/holdout_report.json", "evidence/cp-2", "43676b8f3135bbd916a335b8cf8f422d57834def"),
         _source("reports/cp2/regime_table.csv", "evidence/cp-2", "417d2ccc45280ca305118221e775884dc4c5ac47"),
         _source("reports/cp2/reliability_three_stage.csv", "evidence/cp-2", "3994e819870bdb8ce6429ad782f17c51f997246c"),
@@ -415,6 +402,12 @@ POPULATIONS = {
     "cp20-extraction": "the CP-20 GFS extraction",
     "cp20-resources": "the CP-20 cumulative resource ledger",
     "protocol": "a frozen protocol setting",
+    # PRES-5: CP-26's daily calendar and its masks, and CP-28's paired days (the registry's POPULATIONS words them).
+    "cp26-every-day": "CP-26's 2,068 eligible development days, 2020-12-29 to 2026-09-06",
+    "cp26-never-scored": "the 755 of CP-26's days never scored before CP-26",
+    "cp26-old-folds": "the 358 days of the old folds 2 to 5, re-run under CP-26's protocol",
+    "cp26-newly-opened": "the 152 days from 2026-04-08 to 2026-09-06",
+    "cp28-paired-days": "CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control",
 }
 
 
@@ -1185,7 +1178,7 @@ def _cp28_records() -> list[EvidenceRecord]:
     """CP-28's one look: every arm's losses and ratios against the control and B0 on the 2,068 paired days, Holm's
     p-values in the four analyses, the selection and the GFS note, from its committed packet and summary."""
     out = []
-    population = "cp26-every-day"
+    population = "cp28-paired-days"
     for arm in CP28_ARMS:
         for metric in ("MAE", "WIS"):
             base = f"arms.{arm}.{metric}"

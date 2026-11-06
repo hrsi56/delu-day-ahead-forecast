@@ -1749,8 +1749,9 @@ def opening(C, payload) -> str:
             f'<p class="preview-links"><a class="quiet" href="#product">How the product works</a>'
             f'<span class="preview-note">The product the Space runs, topic by topic.</span></p></figure>')
         startup = block("product.live.startup", cls="startup") + (
-            f'<p class="startup"><a class="quiet external in-text" href="{attr(history_url(C))}">'
-            f'{ver(released.version)}\'s historical demo</a>: {startup[startup.index(">") + 1:startup.rindex("</p>")]}</p>')
+            f'<p class="startup" data-startup="measured"><a class="quiet external in-text" '
+            f'href="{attr(history_url(C))}">{ver(released.version)}\'s historical demo</a>: '
+            f'{startup[startup.index(">") + 1:startup.rindex("</p>")]}</p>')
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">

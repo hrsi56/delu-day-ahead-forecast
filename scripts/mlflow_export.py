@@ -837,7 +837,7 @@ def pres5_runs(key: str) -> list[dict]:
     fields = _CP26_FIELDS if key == "cp26" else _CP28_FIELDS
     source = R.CP26_EXPORT if key == "cp26" else R.CP28_PACKET
     blobs = {source: R.SOURCES[source].blob}
-    population = "cp26-every-day"
+    population = "cp26-every-day" if key == "cp26" else "cp28-paired-days"
     parent_tags = {
         "delu.run_key": checkpoint.run_key, "delu.checkpoint": checkpoint.code, "delu.registry_id": owner.id,
         "delu.kind": owner.kind, "delu.public_name": owner.name, "delu.status": _status_text(owner),

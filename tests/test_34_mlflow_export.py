@@ -87,7 +87,7 @@ def test_each_policy_appears_once_per_population(runs):
 
 
 UNIT_SUFFIX = re.compile(r"(_eur(_vs_\w+)?|coverage(50|80|95)|hits95|^s_(mae|wis)|^delta_s_(mae|wis)_vs_\w+|"
-                         r"^ratio_s_(mae|wis)_vs_\w+)")
+                         r"^ratio_s_(mae|wis)_vs_\w+|_ratio_to_(b0|control)$)")  # PRES-5: ratios of mean daily losses
 
 
 def test_every_metric_name_carries_its_unit(runs):
@@ -121,9 +121,20 @@ def test_every_metric_value_is_a_committed_record(runs):
 
 
 def test_comparability_ids_group_the_right_runs(runs):
-    common = {run["tags"]["delu.comparability_id"] for key, run in runs.items() if not key.startswith("cp10")}
+    later = ("cp10", "cp26", "cp28")
+    common = {run["tags"]["delu.comparability_id"] for key, run in runs.items() if not key.startswith(later)}
     cp10 = {run["tags"]["delu.comparability_id"] for key, run in runs.items() if key.startswith("cp10")}
     assert len(common) == 1 and len(cp10) == 1 and common != cp10
+    # PRES-5: CP-26's every-day calendar, its three masks and CP-28's paired days are populations of their own, one ID
+    # each, and none is the five periods'.
+    by_population: dict[str, set[str]] = {}
+    for key, run in runs.items():
+        if key.startswith(("cp26", "cp28")):
+            by_population.setdefault(run["tags"]["delu.population_id"], set()).add(run["tags"]["delu.comparability_id"])
+    assert set(by_population) == {"cp26-every-day", "cp26-never-scored", "cp26-old-folds", "cp26-newly-opened",
+                                  "cp28-paired-days"}
+    ids = [next(iter(group)) for group in by_population.values()]
+    assert all(len(group) == 1 for group in by_population.values()) and len(set(ids)) == 5 and not set(ids) & common
     assert all(not key.startswith("s_") for key in runs["cp10/c1_price_volatility"]["metrics"]), (
         "CP-10 is not normalized to B0 and must carry no s_ score"
     )

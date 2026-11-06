@@ -121,10 +121,13 @@ def test_every_derived_record_names_committed_inputs_and_a_mapped_claim():
 
 
 def test_no_v2_or_later_derived_value_reaches_past_the_development_boundary():
+    # PUBLISH_RULES 1.5 moved invariant 10's date to 2026-09-06 (research §24.2): CP-26's and CP-28's records reach it,
+    # and the five periods' records end at the shared population's own end, 2026-04-07.
     for record in D.records().values():
         for record_id in record.inputs:
             window = R.get(record_id).window
-            assert window is None or window[1] <= R.EVIDENCE_BOUNDARY, (record.record_id, record_id)
+            bound = R.RESEARCH_BOUNDARY if record_id.startswith(("cp26.", "cp28.")) else R.EVIDENCE_BOUNDARY
+            assert window is None or window[1] <= bound, (record.record_id, record_id)
 
 
 def test_derived_values_render_bound_to_their_record():
@@ -187,7 +190,7 @@ def test_display_never_rounds_a_whole_percent_across_the_sign():
 
 # Regression for independent-check-3 F1: decision counts cannot depend on CSV order.
 def test_counts_include_all_policies_at_each_recorded_decision_date():
-    expected = {G.by_code(code).id: "5" for code in ("A1", "A2", "A3", "A4", "A5")}
+    expected = {G.by_code(code, "CP-15").id: "5" for code in ("A1", "A2", "A3", "A4", "A5")}
     expected.update({"v2": "7", "pooled-control": "7", "v3": "8"})
     expected.update({ident: "12" for ident in ("v4", "pooled-lightgbm-weather", "block-lightgbm",
                                                 "normalized-block-lightgbm")})

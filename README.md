@@ -12,6 +12,7 @@
 - **Point and interval error:** each day's mean absolute error of the median forecast, and its interval score, averaged over days; lower is better.
 - **Selection rule:** set on 2026-10-12, before any result; its gates and its pick are in the v6 chapter.
 - **Final candidate · pending 4.7T:** v6, A1 in the frozen records, frozen for one test on 90 days, registered before any of their data was opened.
+- **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
 - **DDNN-2:** a distributional neural network (DDNN).
 
@@ -71,7 +72,7 @@ On 2026-10-25 the selection rule, set on 2026-10-12, picked arm A1, now v6, amon
 
 **On every development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. v6's forecasts, DDNN-2 alone, have the lowest error on both scores, a point comparison: −7% and −11% against v5. Two declared routes of v5: with the weather run six hours late, its point error changed by +14% [+10%, +16%] and its interval error by +15% [+12%, +18%], so that timing is fragile; without the load forecast, its point error rose by less than 1% and its interval error changed by +1%, point comparisons.
 
-Evidence: [The final candidate's raw CSV rows, frozen 2026-11-05](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22) · [Review verdict of the selection, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) · [Selection report, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md) · [The registered test protocol, frozen 2026-10-28](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md)
+Evidence: [The final candidate's raw CSV rows, frozen 2026-11-06](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22) · [Review verdict of the selection, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) · [Selection report, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md) · [The registered test protocol, frozen 2026-10-28](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md)
 
 ### v5 · DDNN-2 added
 
@@ -273,7 +274,6 @@ Evidence: [Engineering report, frozen 2026-10-04](https://github.com/hrsi56/delu
 - **Error scores:** error relative to a simple naive forecast, averaged over the test periods; lower is better.
 - **Accuracy targets:** each error score at least 10% below the strongest benchmark's, set on 2026-09-15; a policy's distance from them is a point comparison.
 - **Daily LEAR:** the strongest benchmark, a linear model refitted daily.
-- **Policies:** the models and variants tested.
 
 The accuracy targets: each error score at least 10% below the strongest benchmark, daily LEAR (set 2026-09-15). 25 policies were tested against them; v3 was the first to meet both; 16 later policies met them too, among them v4 and v5.
 

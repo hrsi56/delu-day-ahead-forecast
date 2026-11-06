@@ -73,7 +73,10 @@ def test_negative_control_codes(page):
 
 
 def test_negative_control_codes_denylist_is_generated_from_the_registry():
-    assert set(L.code_denylist()) >= {"A1", "B0", "HG", "H0", "V2-H", "V2-P", "v1_reference"}
+    # PRES-5: "A1", v6's label in the frozen records (ruling O30), is shown beside it and allowed; every other code is
+    # denied, CP-28's other arms among them.
+    assert set(L.code_denylist()) >= {"A2", "A7", "B0", "HG", "H0", "V2-H", "V2-P", "v1_reference"}
+    assert "A1" not in L.code_denylist() and G.FROZEN_LABELS == {"v6": "A1"}
     assert all(code in G.codes() for code in L.code_denylist())
 
 
@@ -90,9 +93,10 @@ def test_negative_control_precision_too_many_significant_figures(page):
 
 
 def test_negative_control_precision_eur_decimals(page):
-    marker = 'data-record="derived.periods.v5.stress" data-derived="period_stress">45.5<'
+    # PRES-5: the comparison's scale sentence, on the reading path, reads the first generation's row, v6.
+    marker = 'data-record="derived.periods.v6.stress" data-derived="period_stress">43.2<'
     assert marker in page
-    broken = page.replace(marker, marker.replace(">45.5<", ">45.53<"), 1)
+    broken = page.replace(marker, marker.replace(">43.2<", ">43.25<"), 1)
     assert any("not shown to one decimal" in finding for finding in L.lint_document(broken))
 
 

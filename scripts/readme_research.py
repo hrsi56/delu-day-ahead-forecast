@@ -364,7 +364,7 @@ def build_block() -> str:
         RC.target_sentence("md", surface=RC.README), "",
         md("overview.fairness.readme"), "",
         (md("comparison.finding.a1") + " " + md("comparison.caveat.a1") if G.final_candidate() is not None
-         else md("comparison.finding") + " " + md("comparison.caveat")), "",
+         else RC.render("comparison.finding", "md") + " " + RC.render("comparison.caveat", "md")), "",
         md("comparison.scale"), "",
         md("overview.f07"), "",
         "### Further reading", "",

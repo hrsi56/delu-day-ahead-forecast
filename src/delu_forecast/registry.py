@@ -372,7 +372,7 @@ EVIDENCE_TAGS: dict[str, tuple[str, str]] = {
     "evidence/cp-17c": ("2628804", "2026-10-30"),
     # PRES-5's own rows (A1 on v5's population): the tag is created on PRES-5's evidence tip at the landing, so its commit
     # is not known when this page is built; the date is the tip's, which the final build and the return check.
-    "evidence/pres-5": ("", "2026-11-05"),
+    "evidence/pres-5": ("", "2026-11-06"),
 }
 
 POPULATIONS = {
@@ -384,6 +384,8 @@ POPULATIONS = {
     "cp26-never-scored": "the 755 of CP-26's days never scored before CP-26 (CP-25's mask)",
     "cp26-old-folds": "the 358 days of the old folds 2 to 5, re-run under CP-26's protocol",
     "cp26-newly-opened": "the 152 days from 2026-04-08 to 2026-09-06, newly opened to research",
+    # CP-28 scored each arm and the control on the days both issued: all 2,068 of CP-26's eligible days, paired.
+    "cp28-paired-days": "CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control",
 }
 
 #: CP-26's four reporting masks (capstone_v21.md §24.7) and the population each is.
@@ -543,9 +545,9 @@ def _cp28_arm(ident: str, code: str, name: str, subtitle: str, short: str) -> En
     """One of CP-28's arms that passed and was not selected (the landing record of 2026-10-25)."""
     return Entry(
         id=ident, name=name, subtitle=subtitle, kind="study arm",
-        codes=(Code("CP-28", code, "cp26-every-day"),),
+        codes=(Code("CP-28", code, "cp28-paired-days"),),
         statuses=(StatusEvent(NOT_ADOPTED, "2026-10-25", _LANDING28, _NOT_SELECTED),),
-        comparator="v5", population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
+        comparator="v5", population="cp28-paired-days", evidence_class=EVIDENCE_DEVELOPMENT,
         plan=f"{_PLAN21} §24.8 (v21-r17)", rules=("cp28-selection",), sources=_CP28_SOURCES, claim_map=_PRES5,
         run_keys=(f"cp28/{code}",), style="study", checkpoint="CP-28", short=short,
     )
@@ -645,7 +647,7 @@ _ENTRIES: tuple[Entry, ...] = (
     # never adopted by v5's: no "adopted in research" event exists for it.
     Entry(
         id="v6", name="v6 · DDNN-2 alone", subtitle="DDNN-2 alone, refitted daily, frozen for 4.7T", kind="generation",
-        codes=(Code("CP-28", "A1", "cp26-every-day", "selected"),
+        codes=(Code("CP-28", "A1", "cp28-paired-days", "selected"),
                Code("PRES-5", "A1", "common-10747h", "on v5's population"),
                *_cp26("nominal", "D2", "descriptive in CP-26")[0]),
         statuses=(StatusEvent(FINAL_CANDIDATE, "2026-10-30", "docs/track-b/cp-17c-landing-2026-10-30.md",

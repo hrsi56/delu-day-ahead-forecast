@@ -46,10 +46,12 @@ def export() -> dict:
 def test_every_kind_the_standard_names_is_registered():
     kinds = {entry.kind for entry in G.entries()}
     assert kinds == set(G.KINDS)
-    assert [entry.version for entry in G.generations()] == ["v1", "v2", "v3", "v4", "v5"]
+    assert [entry.version for entry in G.generations()] == ["v1", "v2", "v3", "v4", "v5", "v6"]  # PRES-5: v6 (O30)
     assert {entry.id for entry in G.branches()} == {"calibration", "model-comparison", "pooled-lightgbm-member-for-v4",
                                                      "ddnn-member-on-v4"}
-    assert {entry.primary_code for entry in G.of_kind("reference")} == {"B0", "B2", "B3"}
+    # PRES-5: CP-26's own reference (its checkpoint) and v1's recipe refitted daily, beside the benchmarks.
+    assert {entry.primary_code for entry in G.of_kind("reference")} == {"B0", "B2", "B3", "CP-26",
+                                                                           "nominal/v1-R/all_eligible"}
     assert {entry.code_in("CP-15") for entry in G.of_kind("study arm") if entry.code_in("CP-15")} == {
         "A1", "A2", "A3", "A4", "A5"}
     assert [entry.primary_code for entry in G.of_kind("control")] == ["V2-P"]
@@ -91,9 +93,12 @@ def test_one_identity_across_experiment_codes():
 
 
 def test_status_is_derived_and_dated():
-    assert G.current_generation().version == "v5"
+    # PRES-5: v6, the final candidate, is the newest generation that reached a status, and the hero: a final candidate
+    # outranks the released model, which outranks research (standard §2; decision 20's hero rule).
+    assert G.current_generation().version == "v6"
     assert G.released().version == "v1"
-    assert G.hero().version == "v1", "the released model outranks a research generation (standard §2)"
+    assert G.hero().version == "v6", "the final candidate outranks the released model (standard §2)"
+    assert G.status_sentence(G.get("v6")) == "In October 2026, v6 became the final candidate."
     assert G.status_sentence(G.get("v3")) == "In September 2026, v3 was adopted in research."
     assert G.status_sentence(G.get("v4")) == "In September 2026, v4 was adopted in research."
     assert G.status_sentence(G.get("v5")) == "In October 2026, v5 was adopted in research."
@@ -156,8 +161,8 @@ def test_negative_control_a_generation_missing_from_the_rail_is_caught(page):
 
 def test_negative_control_an_unregistered_generation_on_the_page_is_caught(page):
     start = page.index('<nav class="jump"')
-    broken = page[:start] + page[start:].replace("</nav>", '<a href="#v6">v6</a></nav>', 1)
-    assert any("names v6, which is not registered" in problem for problem in L.page_consistency_problems(broken))
+    broken = page[:start] + page[start:].replace("</nav>", '<a href="#v7">v7</a></nav>', 1)
+    assert any("names v7, which is not registered" in problem for problem in L.page_consistency_problems(broken))
 
 
 def test_negative_control_a_missing_readme_heading_is_caught(readme):
@@ -168,7 +173,7 @@ def test_negative_control_a_missing_readme_heading_is_caught(readme):
 
 
 def test_negative_control_an_unregistered_readme_heading_is_caught(readme):
-    broken = readme + "\n### v6 · something unregistered\n"
+    broken = readme + "\n### v7 · something unregistered\n"
     assert any("unregistered generation" in problem for problem in L.readme_consistency_problems(broken))
 
 
