@@ -2481,7 +2481,7 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
     the live product's views as routes where the report draws no figure. Shared data facts are kept only where they
     hold for v6 (the target, the preprocessing, the regimes' hours, the seasonal rationale of the calendar inputs)."""
     archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
-    space = lambda text: f'<p><a class="quiet external in-text" href="{attr(C["space_url"])}">{text}</a></p>'  # noqa: E731
+    space = lambda text: f'<p><a class="quiet external" href="{attr(C["space_url"])}">{text}</a></p>'  # noqa: E731
     chapter = lambda anchor, text: f'<p><a class="quiet" href="#{anchor}">{_structural_versions(text)}</a></p>'  # noqa: E731
     freeze = Audit("The freeze manifest", "docs/track-b/evidence/cp-17c/freeze-manifest.json", "evidence/cp-17c")
     return (
