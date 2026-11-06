@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Assemble the final-product Space (A9; CP-18b) from `space-product/`, the pinned runtime and one dated bundle.
 
-    PYTHONPATH=src python scripts/build_product_space.py --bundle <dated bundle> --out <dist> \\
-        [--history <v1 build dir> [--history-note TEXT]] [--allow-refused]
+    PYTHONPATH=src python scripts/build_product_space.py --bundle <dated bundle> --out <dist> [--live <live folder>] \\
+        [--history <v1 build dir> [--history-note TEXT] [--history-gitattributes FILE] [--history-listing FILE]] \\
+        [--allow-refused]
 
 The served layout is fixed by the frozen "Train it yourself" worker (`src/cp17/browser/worker.js`, served byte for
 byte at `/app/worker.js`): `/index.html`, `/app/...`, `/pyodide/<the 23 pinned files>`, `/bundle/src.zip` (the frozen
@@ -25,6 +26,20 @@ manifest's hashes.
 - `README.md`: the Hugging Face Static Space card, its text from the live claims. Written, never published.
 - `.gitattributes`: Git LFS rules for the binary files (a Space repository needs them for files over 10 MB).
 
+**With `--live <live folder>` (CP-18c)** the build reads the live store (`cp18.store.LiveStore`, verified) through
+`cp18.live_claims.live_record` and writes `app/live-record.json`, loaded at start and listed with its hash: every issued
+day's cutoff-based issue time and its actual run (start, issuance start and end, run and host), every failed issuance,
+every day not issued with its cause, the days outside the live record as one range, the runs; and O33's running means
+with their 95% intervals, computed here natively by `cp18.running.running` on the bundle's evaluation windows (the
+page draws them and never recomputes them). The claims are then the live product's (`build_live_claims(live=...)`).
+The issued days and artifacts of the live record must be the bundle's, or the build refuses. Without `--live` the build
+is CP-18b's, unchanged.
+
+**History (O17, CP-18c):** `--history` is copied as it is to `history/`; `--history-gitattributes` (default: a
+`gitattributes` file beside the `--history` folder) is placed byte for byte at `history/.gitattributes`; and when a
+listing of the deployed files is given (`--history-listing`, default: a `listing.json` beside the folder), every copied
+file must equal it, path, bytes and SHA-256, or the build refuses. `app/history-files.json` binds them all.
+
 The output is deterministic: no timestamps, sorted listings, the same inputs give the same bytes.
 """
 from __future__ import annotations
@@ -40,14 +55,17 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 
-SCHEMA = 'cp18b-space-build-v1'
+SCHEMA = 'cp18c-space-build-v1'
 SOURCE = ROOT / 'space-product'
 FROZEN_WORKER = ROOT / 'src/cp17/browser/worker.js'
 GLUE = ROOT / 'src/cp18/spaceglue.py'
 FREEZE_MANIFEST = ROOT / 'docs/track-b/evidence/cp-17c/freeze-manifest.json'
 HOST_PARITY = ROOT / 'reports/cp17/host-parity.json'
 #: The files the page itself loads at start, beside the bundle's start records (`cp18.bundle.START_FILES`).
-PAGE_START = ('index.html', 'app/style.css', 'app/charts.js', 'app/main.js', 'app/claims.json', 'app/space-build.json')
+PAGE_START = ('index.html', 'app/style.css', 'app/charts.js', 'app/main.js', 'app/claims.json', 'app/space-build.json',
+              'app/live-record.json')
+LIVE_RECORD = 'app/live-record.json'
+LIVE_SCHEMA = 'cp18c-space-live-v1'
 #: The runtime files Pyodide's loader fetches (pyodide.mjs is served with the release and never loaded by a worker).
 RUNTIME_LOADED = ('pyodide.js', 'pyodide.asm.js', 'pyodide.asm.wasm', 'python_stdlib.zip', 'pyodide-lock.json')
 GITATTRIBUTES = ''.join(f'*.{ext} filter=lfs diff=lfs merge=lfs -text\n'
@@ -141,14 +159,90 @@ def issued_days(files: dict[str, bytes]) -> list[str] | None:
         return None
 
 
-def claims_for(files: dict[str, bytes]) -> dict:
-    from cp18.live_claims import build_live_claims, text
+def claims_for(files: dict[str, bytes], live: dict | None = None) -> dict:
+    from cp18.live_claims import build_live_claims, live_summary, text
     days = issued_days(files) or []
-    claims = build_live_claims(ROOT, rehearsal_days=(days[0], days[-1]) if days else ())
+    if live is None:
+        claims = build_live_claims(ROOT, rehearsal_days=(days[0], days[-1]) if days else ())
+    else:
+        claims = build_live_claims(ROOT, live=live_summary(live))
+        days = []                                   # the live record is not a rehearsal
     return {'schema': 'cp18b-space-claims-v1', 'source': 'cp18.live_claims.build_live_claims',
+            'mode': 'development rehearsal' if live is None else 'live',
             'rehearsal_days': [days[0], days[-1]] if days else [],
             'values': claims['values'], 'shared': claims['shared'],
             'limitations': [{'label': label, 'key': key, 'text': text(claims, key)} for label, key in claims['limitations']]}
+
+
+def live_data(live_folder: Path, files: dict[str, bytes], refused: bool) -> dict:
+    """`app/live-record.json`: the live store's record (`cp18.live_claims.live_record`) and O33's running intervals
+    (`cp18.running.running` on the bundle's evaluation windows). The record's issued days and artifacts must be the
+    bundle's (a refused bundle, built for a control, is checked as far as it parses)."""
+    from cp18 import running
+    from cp18.live_claims import live_record
+    try:
+        record = live_record(live_folder)
+    except Exception as exc:                        # an unverifiable store is never shown
+        raise Refused(f'the live store does not verify: {type(exc).__name__}: {exc}') from None
+    ours = {d['day']: d['artifact_sha256'] for d in record['issued']}
+    try:
+        forecasts = json.loads(files['issued-forecasts.json'])
+        theirs = {d['delivery_day']: d['issuing_artifact_sha256'] for d in forecasts['days']}
+    except (KeyError, ValueError, TypeError):
+        theirs = None
+    if theirs is None and not refused:
+        raise Refused('the bundle\'s issued forecasts do not parse')
+    if theirs is not None and theirs != ours:
+        raise Refused('the live record and the bundle name different issued days or artifacts: '
+                      f'record {sorted(ours.items())[-3:]}, bundle {sorted(theirs.items())[-3:]}')
+    try:
+        windows = json.loads(files['evaluation.json'])['windows']
+        intervals = running.running(windows)
+    except (KeyError, ValueError, TypeError) as exc:
+        if not refused:
+            raise Refused(f'the running intervals could not be computed: {type(exc).__name__}: {exc}') from None
+        intervals = None
+    return {'schema': LIVE_SCHEMA, 'bundle_manifest_sha256': sha(files['manifest.json']),
+            'record': record, 'running': intervals,
+            'running_source': 'cp18.running.running(evaluation.json windows), computed at build time'}
+
+
+def copy_history(history: Path, out: Path, gitattributes: Path | None, listing_file: Path | None) -> dict:
+    """v1's deployed files, as they are, to `out/history/`; its `.gitattributes` byte for byte; checked against the
+    deployed listing when one is given."""
+    skipped = []
+    for path in sorted(Path(history).rglob('*')):
+        rel = path.relative_to(history)
+        if path.name == '.DS_Store':
+            skipped.append(rel.as_posix())
+            continue
+        if path.is_file():
+            target = out / 'history' / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(path.read_bytes())
+    info = {}
+    if gitattributes is not None:
+        target = out / 'history/.gitattributes'
+        if target.exists() and target.read_bytes() != Path(gitattributes).read_bytes():
+            raise Refused('history: the folder holds a .gitattributes that is not the given one')
+        target.write_bytes(Path(gitattributes).read_bytes())
+        info['gitattributes'] = {'path': 'history/.gitattributes', 'sha256': sha(target.read_bytes()),
+                                 'bytes': target.stat().st_size, 'source_sha256': sha(Path(gitattributes).read_bytes())}
+    if listing_file is not None:
+        listing = json.loads(Path(listing_file).read_text())
+        want = {f['path']: (f['sha256'], f['bytes']) for f in listing['files']}
+        have = {p.relative_to(out / 'history').as_posix(): (sha(p.read_bytes()), p.stat().st_size)
+                for p in (out / 'history').rglob('*') if p.is_file()}
+        if have != want:
+            extra, missing = sorted(set(have) - set(want)), sorted(set(want) - set(have))
+            differ = sorted(k for k in set(have) & set(want) if have[k] != want[k])
+            raise Refused(f'history: the files are not the deployed listing ({len(extra)} extra {extra[:3]}, '
+                          f'{len(missing)} missing {missing[:3]}, {len(differ)} differ {differ[:3]})')
+        info['deployed_listing'] = {'source_sha256': sha(Path(listing_file).read_bytes()), 'files': len(want),
+                                    'space': listing.get('space'), 'revision': listing.get('revision'),
+                                    'matches': True}
+    info['skipped'] = skipped or None
+    return info
 
 
 # ------------------------------------------------------------------ outputs
@@ -234,7 +328,9 @@ def listing(out: Path, history: bool = False) -> list[dict]:
 
 
 def build(bundle_dir: Path, out: Path, *, history: Path | None = None, history_note: str | None = None,
-          allow_refused: bool = False, pyodide: Path | None = None, package_zip: Path | None = None) -> dict:
+          allow_refused: bool = False, pyodide: Path | None = None, package_zip: Path | None = None,
+          live: Path | None = None, history_gitattributes: Path | None = None,
+          history_listing: Path | None = None) -> dict:
     from cp17 import runtime
     from cp18 import bundle as B
     from cp18.host import PACKAGE_ZIP
@@ -281,25 +377,22 @@ def build(bundle_dir: Path, out: Path, *, history: Path | None = None, history_n
         (out / 'payloads' / name).write_bytes(data)
     history_info = {'present': False, 'note': history_note}
     if history is not None:
-        skipped = []
-        for path in sorted(Path(history).rglob('*')):
-            rel = path.relative_to(history)
-            if path.name == '.DS_Store':
-                skipped.append(rel.as_posix())
-                continue
-            if path.is_file():
-                target = out / 'history' / rel
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(path.read_bytes())
+        copied = copy_history(Path(history), out, history_gitattributes, history_listing)
         hist = [p for p in (out / 'history').rglob('*') if p.is_file()]
         history_info = {'present': True, 'note': history_note, 'files': len(hist),
                         'bytes': sum(p.stat().st_size for p in hist),
                         'index_sha256': sha((out / 'history/index.html').read_bytes())
-                        if (out / 'history/index.html').is_file() else None,
-                        'skipped': skipped or None}
+                        if (out / 'history/index.html').is_file() else None, **copied}
 
-    claims = claims_for(files)
+    live_value = live_data(Path(live), files, not gate['publishable']) if live is not None else None
+    claims = claims_for(files, live_value['record'] if live_value else None)
+    if live_value and live_value['running'] and (
+            live_value['running']['wording'] != claims['values']['live_running_wording']
+            or live_value['running']['before_minimum'] != claims['values']['live_running_before_minimum']):
+        raise Refused('the running intervals\' wording is not the claims\'')
     (out / 'app/claims.json').write_text(dump(claims), encoding='utf-8')
+    if live_value is not None:
+        (out / LIVE_RECORD).write_text(dump(live_value), encoding='utf-8')
     manifest = json.loads(files['manifest.json'])
     try:
         artifact = json.loads(files['artifact.json'])
@@ -328,6 +421,15 @@ def build(bundle_dir: Path, out: Path, *, history: Path | None = None, history_n
                           'byte_identical_to_source': True, 'source': 'src/cp17/browser/worker.js'},
         'claims_sha256': sha((out / 'app/claims.json').read_bytes()),
         'claims_rehearsal_days': claims['rehearsal_days'] or None,
+        'claims_mode': claims['mode'],
+        'live': None if live_value is None else {
+            'path': LIVE_RECORD, 'sha256': sha((out / LIVE_RECORD).read_bytes()),
+            'bytes': (out / LIVE_RECORD).stat().st_size, 'schema': live_value['schema'],
+            'record_schema': live_value['record']['schema'], 'store': live_value['record']['store'],
+            'issued_days': [d['day'] for d in live_value['record']['issued']],
+            'running_schema': (live_value['running'] or {}).get('schema'),
+            'running_points': None if not live_value['running'] else
+            {k: len(v) for k, v in live_value['running']['series'].items()}},
         'reference': reference_measurements(claims),
         'history': history_info,
         'report_url': REPORT_URL,
@@ -360,21 +462,39 @@ def main(argv=None) -> int:
     ap.add_argument('--out', required=True, type=Path)
     ap.add_argument('--history', type=Path, help="v1's build directory, copied as it is to <out>/history/")
     ap.add_argument('--history-note', help='a note the page and the build record show beside the History route')
+    ap.add_argument('--history-gitattributes', type=Path,
+                    help="v1's .gitattributes, placed at history/.gitattributes (default: a 'gitattributes' file beside "
+                         'the --history folder, when there is one)')
+    ap.add_argument('--history-listing', type=Path,
+                    help="the deployed listing of v1's files the copy must equal (default: a 'listing.json' beside "
+                         'the --history folder, when there is one)')
+    ap.add_argument('--live', type=Path, help='the live data-only folder (its store/): the live record (CP-18c)')
     ap.add_argument('--allow-refused', action='store_true',
                     help='build a refused bundle anyway (negative controls only); the build record says refused')
     ap.add_argument('--pyodide', type=Path, help='the pinned Pyodide folder (default: the project\'s)')
     ap.add_argument('--zip', type=Path, help='the frozen package zip (default: the project\'s)')
     args = ap.parse_args(argv)
+    gitattributes, listing = args.history_gitattributes, args.history_listing
+    if args.history is not None:
+        beside = args.history.resolve().parent
+        if gitattributes is None and (beside / 'gitattributes').is_file():
+            gitattributes = beside / 'gitattributes'
+        if listing is None and (beside / 'listing.json').is_file():
+            listing = beside / 'listing.json'
     try:
         record = build(args.bundle.resolve(), args.out.resolve(), history=args.history, history_note=args.history_note,
-                       allow_refused=args.allow_refused, pyodide=args.pyodide, package_zip=args.zip)
+                       allow_refused=args.allow_refused, pyodide=args.pyodide, package_zip=args.zip,
+                       live=args.live.resolve() if args.live else None, history_gitattributes=gitattributes,
+                       history_listing=listing)
     except Refused as exc:
         print('REFUSED:', exc)
         return 1
     s = record['size']
     print('built', args.out, '| bundle', record['bundle']['manifest_sha256'][:16],
           record['bundle']['freshness']['state'], '| REFUSED (allowed)' if record['refused'] else '| publishable',
-          '| first visit', s['first_visit']['bytes'], 'bytes | on request', s['on_request_bytes'], 'bytes')
+          '| first visit', s['first_visit']['bytes'], 'bytes | on request', s['on_request_bytes'], 'bytes',
+          '| live record', record['live']['sha256'][:16] if record['live'] else 'none',
+          '| history', record['history'].get('files', 0), 'files')
     return 0
 
 

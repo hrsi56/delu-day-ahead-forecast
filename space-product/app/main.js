@@ -1,7 +1,9 @@
-// The final-product Space (A9). Everything shown comes from three sources: the dated bundle (verified file by file
-// against its manifest before use), the build record (app/space-build.json) and the live claims (app/claims.json,
-// rendered by cp18.live_claims at build time). Status, badges, fixed wording and limitations are the claims' text;
-// numbers are the records'. The page requests nothing from another origin.
+// The final-product Space (A9). Everything shown comes from four sources: the dated bundle (verified file by file
+// against its manifest before use), the build record (app/space-build.json), the live claims (app/claims.json,
+// rendered by cp18.live_claims at build time) and, in a live build, the live record (app/live-record.json: the
+// store's issuance record and the running intervals, both computed at build time and listed with their hash).
+// Status, badges, fixed wording and limitations are the claims' text; numbers are the records'. The page requests
+// nothing from another origin.
 (function () {
   'use strict';
   const Charts = window.Charts;
@@ -282,10 +284,53 @@
   }
   // the cause exactly as the bundle states it, or no cause at all: never an invented one
   function notIssuedText(day) {
+    const o = outsideOf(day);
+    if (o) return `Outside the live record, ${o.first_day} to ${o.last_day}: ${L('live_outside_wording')}.`;
     const t = S.notIssued.get(day);
-    return t ? `${t}.` : 'The served bundle states no cause for this day.';
+    return t ? `${t}.` : 'The served record states no cause for this day.';
+  }
+  function liveNotIssued() {
+    const out = new Map();
+    for (const d of S.live.record.not_issued) out.set(d.day, d.cause_text);
+    for (const d of S.live.record.failed) out.set(d.day, d.cause_text);
+    return out;
   }
   function cutoffTime() { const m = /(\d{2}:\d{2})/.exec(L('live_cutoff')); return m ? m[1] : ''; }
+  function cap(t) { return t ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
+  // the last development delivery day, as the claims state the development displays' scope
+  function devBoundary() { const m = /(\d{4}-\d{2}-\d{2})/.exec(L('live_development_scope')); return m ? m[1] : null; }
+  // the frozen records name the product's policy by its record name; the page names it as the claims do (O30)
+  function policyLabel(p) { return p && p === S.manifest.product.designated_policy ? L('live_product_record_name') : (p || 'none'); }
+  // O18's N7: each issued day's actual run, from the live record (never the artifact's nominal time)
+  function issuanceOf(day) {
+    if (!S.live) return null;
+    const r = S.live.record;
+    return r.issued.find(d => d.day === day) || r.failed.find(d => d.day === day) || null;
+  }
+  function outsideOf(day) { return S.live ? S.live.record.outside.find(o => o.first_day <= day && day <= o.last_day) || null : null; }
+  function clock(iso) { if (!iso) return 'not recorded'; const b = berlin(iso); return `${b.hm} ${b.zone}`; }
+  function hostText(it) {
+    const base = it.host_kind === 'runner' ? L('live_host_runner') : L('live_host_local');
+    const r = it.runner;
+    if (!r) return base;
+    const parts = [r.image_os, r.image_version ? 'image ' + r.image_version : null, r.github_run_id ? 'run ' + r.github_run_id : null].filter(Boolean);
+    return parts.length ? `${base}, ${parts.join(', ')}` : base;
+  }
+  function runText(it) {
+    if (!it) return L('live_run_time_absent');
+    const sameDay = it.issuance_started_utc && berlin(it.issuance_started_utc).day === berlin(it.issuance_finished_utc || it.issuance_started_utc).day;
+    return `the run started ${when(it.run_started_utc)}; the issuance ran ${sameDay ? `${berlin(it.issuance_started_utc).day} ${clock(it.issuance_started_utc)}` : when(it.issuance_started_utc)} to ` +
+           `${clock(it.issuance_finished_utc)}, on ${hostText(it)} (run ${it.run_id})`;
+  }
+  // the two times of an issued day: the cutoff-based issue time (the artifact's) and the actual run (the record's)
+  function issueTimes(day, issueIso, attrs) {
+    const it = issuanceOf(day);
+    return h('div', Object.assign({class: 'issue-times', 'data-issue-times': day, 'data-cutoff-time': issueIso || '',
+                                   'data-run-started': it ? it.run_started_utc : '', 'data-issuance-started': it ? it.issuance_started_utc : '',
+                                   'data-issuance-finished': it ? it.issuance_finished_utc : '', 'data-host': it ? it.host_kind : ''}, attrs || {}),
+      h('p', {class: 'subtitle', 'data-time-kind': 'cutoff'}, h('strong', {}, cap(L('live_issue_time_label')) + ': '), when(issueIso), ` (${L('live_issue_time_note')})`),
+      h('p', {class: 'subtitle', 'data-time-kind': 'run'}, h('strong', {}, cap(L('live_run_time_label')) + ': '), runText(it)));
+  }
 
   // ------------------------------------------------------------------ start-up
   async function start() {
@@ -298,12 +343,22 @@
       const claimsEntry = S.build.files.find(f => f.path === 'app/claims.json');
       if (!claimsEntry || claimsEntry.sha256 !== await sha256hex(claimsBytes)) throw new VerifyError('app/claims.json', 'it is not the file the build record lists');
       S.claims = decode(claimsBytes);
+      if (S.build.live) {
+        const liveBytes = await getBytes('/' + S.build.live.path);
+        const liveEntry = S.build.files.find(f => f.path === S.build.live.path);
+        const got = await sha256hex(liveBytes);
+        if (!liveEntry || liveEntry.sha256 !== got || S.build.live.sha256 !== got) throw new VerifyError(S.build.live.path, 'it is not the file the build record lists');
+        S.live = decode(liveBytes);
+      }
       const manifestBytes = await getBytes('/payloads/manifest.json');
       S.manifestSha = await sha256hex(manifestBytes);
       if (S.manifestSha !== S.build.bundle.manifest_sha256) {
         throw new VerifyError('manifest.json', `its SHA-256 is ${S.manifestSha}; the build record lists ${S.build.bundle.manifest_sha256}`);
       }
       S.manifest = decode(manifestBytes);
+      if (S.live && S.live.bundle_manifest_sha256 !== S.manifestSha) {
+        throw new VerifyError(S.build.live.path, `it was built for manifest ${S.live.bundle_manifest_sha256}; the served manifest is ${S.manifestSha}`);
+      }
       for (const name of S.build.bundle.start_records) await payload(name);
       S.forecasts = decode(S.files['issued-forecasts.json'].bytes);
       S.outcomesRecord = decode(S.files['outcomes.json'].bytes);
@@ -311,6 +366,11 @@
       S.artifact = decode(S.files['artifact.json'].bytes);
       if (S.artifact.artifact_sha256 !== S.manifest.artifact.artifact_sha256) {
         throw new VerifyError('artifact.json', `it is artifact ${S.artifact.artifact_sha256}; the manifest names ${S.manifest.artifact.artifact_sha256}`);
+      }
+      if (S.live) {
+        const ours = S.live.record.issued.map(d => d.day + ' ' + d.artifact_sha256).sort().join(',');
+        const theirs = S.forecasts.days.map(d => d.delivery_day + ' ' + d.issuing_artifact_sha256).sort().join(',');
+        if (ours !== theirs) throw new VerifyError(S.build.live.path, 'it names other issued days or artifacts than the served bundle');
       }
       const p = S.manifest.policy;
       if (p.policy_identity_sha256 !== L('live_policy_identity_sha256') || p.package_sha256 !== L('live_package_sha256') ||
@@ -324,7 +384,8 @@
     S.issuedDays = S.forecasts.days.map(d => d.delivery_day).sort();
     S.today = S.manifest.freshness.as_of_day;
     S.tomorrow = addDays(S.today, 1);
-    S.notIssued = notIssuedItems();
+    S.notIssued = S.live ? liveNotIssued() : notIssuedItems();
+    S.yesterday = addDays(S.today, -1);
     $('#boot').remove();
     if (S.build.refused) {
       $('#banner').hidden = false;
@@ -389,7 +450,7 @@
     status.appendChild(badge(L('live_prospective_label')));
     status.appendChild(document.createTextNode(' ' + L('live_released_product') + '.'));
     $('#product-rule').textContent = L('live_hero_rule');
-    $('#product-rule').after(h('p', {class: 'secondary', 'data-evidence-label': '1'}, h('strong', {}, 'Evidence: '), m.product.evidence_label));
+    $('#product-rule').after(h('p', {class: 'secondary', 'data-evidence-label': '1'}, h('strong', {}, L('live_evidence_prefix')), m.product.evidence_label));
     const id = $('#identity');
     id.replaceWith(identityBlock(false));
 
@@ -400,15 +461,23 @@
     else if (f.state === 'stale') fresh = h('span', {'data-freshness': 'stale'}, h('strong', {}, `stale since ${when(m.times.issuance_utc)}`), `, the last issuance (for ${f.latest_issued_day}) · as of ${f.as_of_day}`);
     else fresh = h('span', {'data-freshness': f.state}, h('strong', {}, f.state), ` · as of ${f.as_of_day}; the latest issued day is ${f.latest_issued_day}`);
     const items = [...S.notIssued.entries()];
+    const trained = S.live ? (S.live.record.issued.concat(S.live.record.failed)).find(d => d.cutoff_utc === m.times.last_training_utc) || null : null;
+    const issuedRun = issuanceOf(a.delivery_day);
+    const outside = S.live ? S.live.record.outside : [];
     const dl = h('dl', {class: 'kv'},
-      h('dt', {}, 'Daily artifact'), h('dd', {}, h('span', {class: 'mono'}, short(a.artifact_sha256)), ` · delivery day ${a.delivery_day} · issued policy ${a.issued_policy || 'none'} · ${a.display}`),
-      h('dt', {}, 'Last training'), h('dd', {'data-time': 'training'}, when(m.times.last_training_utc)),
+      h('dt', {}, 'Daily artifact'), h('dd', {}, h('span', {class: 'mono'}, short(a.artifact_sha256)), ` · delivery day ${a.delivery_day} · issued policy ${policyLabel(a.issued_policy)} · ${a.display}`),
+      h('dt', {}, 'Last training'), h('dd', {'data-time': 'training', 'data-cutoff-time': m.times.last_training_utc, 'data-run-started': trained ? trained.issuance_started_utc : ''},
+        `${cap(L('live_issue_time_label'))}: ${when(m.times.last_training_utc)}. ${cap(L('live_run_time_label'))}: `,
+        trained ? `the fit ran inside the issuance of ${trained.day}, ${when(trained.issuance_started_utc)} to ${clock(trained.issuance_finished_utc)}, on ${hostText(trained)}` : L('live_run_time_absent')),
       h('dt', {}, 'Data refresh'), h('dd', {'data-time': 'refresh'}, when(m.times.data_refresh_utc)),
-      h('dt', {}, 'Forecast issuance'), h('dd', {'data-time': 'issuance'}, when(m.times.issuance_utc)),
+      h('dt', {}, 'Forecast issuance'), h('dd', {'data-time': 'issuance', 'data-cutoff-time': m.times.issuance_utc, 'data-run-started': issuedRun ? issuedRun.run_started_utc : ''},
+        `${cap(L('live_issue_time_label'))}: ${when(m.times.issuance_utc)}. ${cap(L('live_run_time_label'))}: ${runText(issuedRun)}`),
       h('dt', {}, 'Information cutoff'), h('dd', {}, L('live_cutoff')),
       h('dt', {}, 'Delivery dates'), h('dd', {}, `today ${S.today} and tomorrow ${S.tomorrow}; the timezone is Europe/Berlin`),
       h('dt', {}, 'Freshness'), h('dd', {}, fresh),
-      items.length ? [h('dt', {}, 'Days not issued'), h('dd', {}, h('ul', {class: 'plain'}, items.map(([d, t]) => h('li', {'data-not-issued': d}, `${d}: ${t}.`))))] : null);
+      items.length ? [h('dt', {}, 'Days not issued'), h('dd', {}, h('ul', {class: 'plain'}, items.map(([d, t]) => h('li', {'data-not-issued': d}, `${d}: ${t}.`))))] : null,
+      outside.length ? [h('dt', {}, 'Outside the live record'), h('dd', {}, h('ul', {class: 'plain'}, outside.map(o =>
+        h('li', {'data-outside': o.first_day + '/' + o.last_day}, `${o.first_day} to ${o.last_day} (${o.days} days): ${L('live_outside_wording')}.`))))] : null);
     times.appendChild(h('h2', {}, 'Times and freshness'));
     times.appendChild(dl);
     if (f.state !== 'fresh') {
@@ -418,6 +487,7 @@
     }
     renderToday();
     renderTomorrow();
+    renderEarlier();
     renderHowSure();
   }
 
@@ -447,18 +517,9 @@
     return state('partial', `Partial day: ${f.partial.issued_hours} of ${f.partial.canonical_hours} hours issued`,
       `The missing hours: ${f.partial.missing_hours.map(k => hourLabels([k])[0] + ' (' + k + ')').join(', ')}.`);
   }
-
-  function renderToday() {
-    const box = $('#today');
-    box.textContent = '';
-    const day = S.today;
-    box.appendChild(h('h2', {}, `Today, ${day}: the issued forecast against the published prices`));
-    const f = forecastOf(day);
-    if (!f) { box.appendChild(state('notissued', `${day}: not issued`, notIssuedText(day))); box.dataset.today = 'not issued'; return; }
-    box.appendChild(h('p', {class: 'subtitle'}, `Issued hourly p50 with its nominal bands, against the published hourly price · issued at ${when(f.issue_utc)} by artifact `,
-      h('span', {class: 'mono'}, short(f.issuing_artifact_sha256)), ` · ${f.display}`));
-    const pn = partialNote(f);
-    if (pn) box.appendChild(pn);
+  function publishedHours(f) { return f.keys.filter(k => { const o = S.outcomes.get(k); return o && o.price !== null && o.price !== undefined; }).length; }
+  // the score of one issued day over its published hours, from the committed evaluation record; never 0% or 100% unscored
+  function scoreBlock(day) {
     const found = dayEntry(day);
     const scoreBox = h('div', {class: 'score-block', 'data-score': day});
     if (!found || !found.entry.scored || !found.entry.scored_hours) {
@@ -466,59 +527,115 @@
         ? `No published price for ${day} is in the committed evaluation record yet; its hours are pending and unscored.`
         : `The committed evaluation records hold no entry for ${day} yet; its hours are unscored.`));
       scoreBox.dataset.scored = '0';
-    } else {
-      const e = found.entry;
-      const share = e.within_tau_hours / e.scored_hours;
-      scoreBox.dataset.scored = String(e.scored_hours);
-      const score = h('div', {class: 'score'},
-        h('div', {}, h('div', {class: 'big'}, num(share, pct(share), {'data-metric': 'percentage'})), h('div', {class: 'lab'}, L('live_percentage_label'))),
-        h('div', {}, h('div', {class: 'big'}, num(e.mae_eur, eur(e.mae_eur) + ' EUR/MWh', {'data-metric': 'mae'})), h('div', {class: 'lab'}, 'MAE of the issued p50 over the same hours')),
-        h('div', {}, h('div', {class: 'big'}, num(e.scored_hours, `${e.scored_hours} of ${e.canonical_hours}`, {'data-metric': 'scored-hours'})), h('div', {class: 'lab'}, `scored hours of the day's canonical ${e.canonical_hours}`)));
-      scoreBox.appendChild(score);
-      scoreBox.appendChild(h('p', {class: 'qual'}, `Scored over ${day}'s published hours (${e.within_tau_hours} of ${e.scored_hours} within ±${found.window.record.tau_eur} EUR/MWh), from the committed evaluation record: `, badge(found.window.evidence_class)));
-      if (e.scored_hours < e.canonical_hours) {
-        scoreBox.appendChild(state('partial', `Partial: ${e.scored_hours} of ${e.canonical_hours} hours scored`, 'The other hours have no published price yet; they are pending and unscored.'));
-      }
+      return scoreBox;
     }
-    box.appendChild(scoreBox);
-    box.appendChild(forecastFigure('product', f, `Today ${day}: issued p50 and nominal bands against the published price, EUR/MWh by hour`));
-    box.dataset.today = 'issued';
+    const e = found.entry;
+    const share = e.within_tau_hours / e.scored_hours;
+    scoreBox.dataset.scored = String(e.scored_hours);
+    scoreBox.appendChild(h('div', {class: 'score'},
+      h('div', {}, h('div', {class: 'big'}, num(share, pct(share), {'data-metric': 'percentage'})), h('div', {class: 'lab'}, L('live_percentage_label'))),
+      h('div', {}, h('div', {class: 'big'}, num(e.mae_eur, eur(e.mae_eur) + ' EUR/MWh', {'data-metric': 'mae'})), h('div', {class: 'lab'}, 'MAE of the issued p50 over the same hours')),
+      h('div', {}, h('div', {class: 'big'}, num(e.scored_hours, `${e.scored_hours} of ${e.canonical_hours}`, {'data-metric': 'scored-hours'})), h('div', {class: 'lab'}, `scored hours of the day's canonical ${e.canonical_hours}`))));
+    scoreBox.appendChild(h('p', {class: 'qual'}, `Scored over ${day}'s published hours (${e.within_tau_hours} of ${e.scored_hours} within ±${found.window.record.tau_eur} EUR/MWh), from the committed evaluation record: `,
+      badge(found.window.evidence_class), ' ', badge(badgeFor(found.window))));
+    if (e.scored_hours < e.canonical_hours) {
+      scoreBox.appendChild(state('partial', `Partial: ${e.scored_hours} of ${e.canonical_hours} hours scored`, 'The other hours have no published price yet; they are pending and unscored.'));
+    }
+    return scoreBox;
+  }
+  // a day the record did not issue: its cause, the outside range, or not decided yet
+  function dayState(day, pendingDetail) {
+    const o = outsideOf(day);
+    if (o) return {kind: 'outside', box: state('notissued', `${day}: outside the live record`, notIssuedText(day))};
+    if (S.notIssued.has(day)) return {kind: 'not issued', box: state('notissued', `${day}: not issued`, notIssuedText(day))};
+    return {kind: 'pending', box: state('pending', `Not issued yet: ${day}`, pendingDetail)};
+  }
+  // one delivery day of the product panel (A7): the issued forecast, its two times, its score and the published prices
+  function dayPanel(box, day, heading, key, pendingDetail, scored) {
+    box.textContent = '';
+    box.appendChild(h('h2', {}, heading));
+    const f = forecastOf(day);
+    if (!f) {
+      const st = dayState(day, pendingDetail);
+      box.appendChild(st.box);
+      box.dataset[key] = st.kind;
+      return null;
+    }
+    box.appendChild(h('p', {class: 'subtitle'}, `Issued hourly p50 with its nominal bands, against the published hourly price where published · artifact `,
+      h('span', {class: 'mono'}, short(f.issuing_artifact_sha256)), ` · ${policyLabel(f.issued_policy)} · ${f.display}`));
+    box.appendChild(issueTimes(day, f.issue_utc));
+    const pn = partialNote(f);
+    if (pn) box.appendChild(pn);
+    if (scored || publishedHours(f)) box.appendChild(scoreBlock(day));
+    else box.appendChild(state('pending', 'Not yet scored', `No price for ${day} is published in the served outcomes yet; its hours are pending and unscored.`));
+    box.appendChild(forecastFigure('product', f, `${heading.split(':')[0]}: issued p50 and nominal bands against the published price where published, EUR/MWh by hour`));
+    box.dataset[key] = 'issued';
+    return f;
+  }
+
+  function renderToday() {
+    const day = S.today;
+    dayPanel($('#today'), day, `Today, ${day}: the issued forecast against the published prices`, 'today',
+      `No forecast for ${day} is in the served record, and the record names no cause for it.`, true);
   }
 
   function renderTomorrow() {
-    const box = $('#tomorrow');
-    box.textContent = '';
     const day = S.tomorrow;
-    box.appendChild(h('h2', {}, `Tomorrow, ${day}: the issued forecast with its nominal bands`));
-    const f = forecastOf(day);
-    if (f) {
-      box.appendChild(h('p', {class: 'subtitle'}, `Issued at ${when(f.issue_utc)} by artifact `, h('span', {class: 'mono'}, short(f.issuing_artifact_sha256))));
-      const pn = partialNote(f);
-      if (pn) box.appendChild(pn);
-      box.appendChild(forecastFigure('product', f, `Tomorrow ${day}: issued p50 and nominal bands, EUR/MWh by hour`));
-      box.dataset.tomorrow = 'issued';
-    } else if (S.notIssued.has(day)) {
-      box.appendChild(state('notissued', `${day}: not issued`, notIssuedText(day)));
-      box.dataset.tomorrow = 'not issued';
-    } else {
-      box.appendChild(state('pending', `Not issued yet: ${day}`, `Its cutoff is ${S.today} at ${cutoffTime()} Europe/Berlin (${L('live_cutoff')}). No forecast for ${day} is in the served bundle.`));
-      box.dataset.tomorrow = 'pending';
-    }
+    dayPanel($('#tomorrow'), day, `Tomorrow, ${day}: the issued forecast with its nominal bands`, 'tomorrow',
+      `Its cutoff is ${S.today} at ${cutoffTime()} Europe/Berlin (${L('live_cutoff')}). No forecast for ${day} is in the served bundle.`, false);
   }
 
+  // O31: earlier issued forecasts against the published prices (yesterday's when it exists) and the whole issued record
+  function renderEarlier() {
+    const box = $('#earlier');
+    const day = S.yesterday;
+    dayPanel(box, day, `Yesterday, ${day}: the issued forecast against the published prices`, 'yesterday',
+      `No forecast for ${day} is in the served record, and the record names no cause for it.`, true);
+    box.appendChild(h('h3', {}, 'Every issued day against the published prices'));
+    box.appendChild(recordTable('product'));
+    box.appendChild(h('p', {}, h('a', {class: 'route', href: '#forecast'}, 'Forecast: any issued day, hour by hour')));
+  }
+  // every issued day: its two times, its scored hours and its scores, newest first (the panel and the Forecast view)
+  function recordTable(viewKey) {
+    const days = S.issuedDays.slice().reverse();
+    const rows = days.map(d => {
+      const f = forecastOf(d), it = issuanceOf(d), found = dayEntry(d);
+      const e = found && found.entry.scored && found.entry.scored_hours ? found.entry : null;
+      return h('tr', {'data-record-day': d},
+        td(d), td(when(f.issue_utc)), td(it ? `${when(it.issuance_started_utc)} to ${clock(it.issuance_finished_utc)}` : L('live_run_time_absent')),
+        td(it ? hostText(it) : '—'),
+        td(e ? num(e.scored_hours, `${e.scored_hours} of ${e.canonical_hours}`, {'data-metric': 'scored-hours'}) : h('span', {'data-not-scored': '1'}, 'not yet scored'), true),
+        td(e ? num(e.mae_eur, eur(e.mae_eur, 2), {'data-metric': 'mae'}) : '—', true),
+        td(e ? num(e.within_tau_hours / e.scored_hours, pct(e.within_tau_hours / e.scored_hours), {'data-metric': 'percentage'}) : '—', true),
+        td(e ? num(e.wis_eur, eur(e.wis_eur, 2), {'data-metric': 'wis'}) : '—', true));
+    });
+    const tau = (dayEntry(days[0] || '') || {window: {record: {tau_eur: null}}}).window.record.tau_eur;
+    return h('div', {'data-issued-record': viewKey},
+      table('Every issued day: its cutoff-based issue time, its actual run, and its score over the published hours',
+        ['Delivery day', cap(L('live_issue_time_label')), cap(L('live_run_time_label')) + ' (issuance)', 'Where it ran', {t: 'Scored hours', n: 1},
+         {t: 'MAE, EUR/MWh', n: 1}, {t: tau === null ? 'Within the tolerance' : `Within ±${tau} EUR/MWh`, n: 1}, {t: 'WIS, EUR/MWh', n: 1}], rows),
+      h('p', {class: 'qual'}, `Scores are the committed evaluation record's, `, badge(L('live_prospective_label')),
+        '; each row is one issued day, never pooled with development.'));
+  }
+
+  function panelWindow(policy) {
+    const pol = policy || 'product';
+    if (S.live) return S.evaluation.windows.find(w => w.window === 'prospective' && w.policy === pol);
+    return rehearsalRecord(pol);
+  }
   function rehearsalRecord(policy) { return S.evaluation.windows.find(w => isRehearsal(w) && w.policy === (policy || 'product')); }
   function coverageSentence(level, share, windowText, width) {
     return fill(L('live_coverage_wording'), {level, share: pct(share), window: windowText, width: eur(width)});
   }
-  function rollingWindowText(r, days) { return `the last ${r.window_days} scored delivery days (${r.window_first_day} to ${r.day}; the rolling window holds up to ${days || rehearsalRecord().record.rolling_days})`; }
+  function rollingWindowText(r, days) { return `the last ${r.window_days} scored delivery days (${r.window_first_day} to ${r.day}; the rolling window holds up to ${days || (panelWindow() || {record: {}}).record.rolling_days})`; }
 
   function renderHowSure() {
     const box = $('#howsure');
     box.appendChild(h('h2', {}, 'How sure: measured coverage, with width, of the nominal bands'));
-    const w = rehearsalRecord();
+    const w = panelWindow();
     const last = w && w.record.rolling && w.record.rolling[w.record.rolling.length - 1];
-    if (!last) { box.appendChild(state('pending', 'Not yet scored', 'The rehearsal record holds no scored day yet.')); return; }
-    box.appendChild(h('p', {class: 'subtitle'}, `Share of scored hours inside each nominal band and the band's mean width, over the named window · the nominal level is a reference, not a target · `, badge(L('live_rehearsal_badge'))));
+    if (!last) { box.appendChild(state('pending', 'Not yet scored', S.live ? 'The live record holds no scored day yet.' : 'The rehearsal record holds no scored day yet.')); return; }
+    box.appendChild(h('p', {class: 'subtitle'}, `Share of scored hours inside each nominal band and the band's mean width, over the named window · the nominal level is a reference, not a target · `, badge(badgeFor(w))));
     box.appendChild(h('ul', {class: 'plain'}, ['50', '80', '95'].map(b =>
       h('li', {'data-band': b, 'data-share': String(last['coverage' + b]), 'data-width': String(last['width' + b + '_eur'])},
         coverageSentence(b, last['coverage' + b], rollingWindowText(last, w.record.rolling_days), last['width' + b + '_eur'])))));
@@ -621,7 +738,8 @@
     const size = S.build.size.actions.train_it_yourself;
     const ref = S.build.reference;
     viewHead(panel, `Train it yourself: retrain ${day}'s model in your browser`,
-      `Retrains the issued ${a.issued_policy} fit of ${day} (artifact ${short(a.artifact_sha256)}) from its shipped training window, with the frozen package in WebAssembly, and compares ${L('live_retrained_label')} with the issued artifact.`);
+      `Retrains the issued fit of ${day} by ${policyLabel(a.issued_policy)} (artifact ${short(a.artifact_sha256)}) from its shipped training window, with the frozen package in WebAssembly, and compares ${L('live_retrained_label')} with the issued artifact.`);
+    panel.appendChild(issueTimes(day, a.issue_utc, {'data-train-times': '1'}));
     panel.appendChild(h('dl', {class: 'kv', 'data-train-meta': '1'},
       h('dt', {}, 'Extra download'), h('dd', {'data-size': 'train', 'data-v': String(size.bytes)}, `${bytesText(size.bytes)}: the runtime ${mb(size.parts.runtime)}, its packages ${mb(size.parts.packages)}, the frozen code ${mb(size.parts.code)} and this day's training window ${mb(size.parts.training_window)}`),
       h('dt', {}, 'Reference fit time'), h('dd', {}, h('ul', {class: 'plain'}, ref.runs.map(r =>
@@ -735,7 +853,7 @@
     viewHead(panel, 'Forecast: what the product issued for a day, and what happened',
       'Issued p50 and nominal 50/80/95% bands against the published hourly price, EUR/MWh; only issued days can be picked.');
     const days = S.issuedDays;
-    const select_ = h('select', {id: 'forecast-day', 'data-control': 'forecast-day'}, days.slice().reverse().map(d => h('option', {value: d}, d)));
+    const select_ = h('select', {id: 'forecast-day', 'data-control': 'forecast-day'}, days.slice().reverse().map(d => h('option', {value: d}, d === S.yesterday ? `${d} (yesterday)` : d === S.today ? `${d} (today)` : d === S.tomorrow ? `${d} (tomorrow)` : d)));
     panel.appendChild(h('div', {class: 'field'}, h('label', {for: 'forecast-day'}, 'Issued day'), h('span', {class: 'sel'}, select_)));
     const out = h('div', {class: 'panel', 'data-forecast-panel': '1'});
     panel.appendChild(out);
@@ -746,24 +864,34 @@
       out.dataset.day = day;
       out.appendChild(h('h3', {}, `${day}: the issued forecast against the published price`));
       out.appendChild(h('p', {class: 'subtitle', 'data-issued-by': f.issuing_artifact_sha256},
-        `Issued at ${when(f.issue_utc)} by artifact `, h('span', {class: 'mono'}, short(f.issuing_artifact_sha256)), ` · ${f.issued_policy} · ${f.display}`));
+        `Issued by artifact `, h('span', {class: 'mono'}, short(f.issuing_artifact_sha256)), ` · ${policyLabel(f.issued_policy)} · ${f.display}`));
+      out.appendChild(issueTimes(day, f.issue_utc));
       const pn = partialNote(f);
       if (pn) out.appendChild(pn);
       const pending = f.keys.filter(k => { const o = S.outcomes.get(k); return !o || o.price === null; }).length;
       if (pending) out.appendChild(state('pending', `${pending} of ${f.keys.length} hours pending`, 'Those hours have no published price in the served outcomes; they are unscored.'));
+      if (pending < f.keys.length) out.appendChild(scoreBlock(day));
       out.appendChild(forecastFigure('forecast', f, `${day}: issued p50 and nominal bands against the published price, EUR/MWh by hour`));
     };
     select_.addEventListener('change', () => show(select_.value));
     show(days[days.length - 1]);
-    // days not issued: the label's items, then any gap between issued days the label does not name
+    // days not issued: the record's items (the label's, without a live record), then any gap the record does not name
     const gaps = new Map(S.notIssued);
-    for (let d = days[0]; d && d < days[days.length - 1]; d = addDays(d, 1)) if (!days.includes(d) && !gaps.has(d)) gaps.set(d, null);
-    if (!days.includes(S.today) && !gaps.has(S.today)) gaps.set(S.today, null);
+    for (let d = days[0]; d && d < days[days.length - 1]; d = addDays(d, 1)) if (!days.includes(d) && !gaps.has(d) && !outsideOf(d)) gaps.set(d, null);
+    if (!days.includes(S.today) && !gaps.has(S.today) && !outsideOf(S.today)) gaps.set(S.today, null);
     const list = [...gaps.entries()].sort((a, b) => a[0] < b[0] ? -1 : 1);
+    panel.appendChild(h('h3', {}, 'Every issued day against the published prices'));
+    panel.appendChild(recordTable('forecast'));
     panel.appendChild(h('h3', {}, 'Days not issued'));
     panel.appendChild(list.length ? h('ul', {class: 'plain', 'data-not-issued-list': '1'}, list.map(([d, t]) =>
-      h('li', {'data-not-issued': d}, h('strong', {}, d), ': ', t ? `${t}.` : 'not issued; the served bundle states no cause for this day.')))
+      h('li', {'data-not-issued': d}, h('strong', {}, d), ': ', t ? `${t}.` : 'not issued; the served record states no cause for this day.')))
       : h('p', {}, 'Every day in the served record is issued.'));
+    const outside = S.live ? S.live.record.outside : [];
+    if (outside.length) {
+      panel.appendChild(h('h3', {}, 'Outside the live record'));
+      panel.appendChild(h('ul', {class: 'plain'}, outside.map(o => h('li', {'data-outside': o.first_day + '/' + o.last_day},
+        h('strong', {}, `${o.first_day} to ${o.last_day}`), ` (${o.days} days): ${L('live_outside_wording')}.`))));
+    }
   };
 
   // ------------------------------------------------------------------ Validation
@@ -785,6 +913,122 @@
     });
     return out;
   }
+  // O32: a window's per-day errors beside B0 (a reference, not a target): one window per chart and table, never pooled
+  function dayRows(w) { return (w.record.days || []).filter(d => d.scored && d.scored_hours); }
+  function bandCells(d) {
+    return ['50', '80', '95'].map(b => {
+      const share = d.covered[b] / d.scored_hours, width = d.width_sum_eur[b] / d.scored_hours;
+      return td([num(share, pct(share), {'data-metric': 'day-coverage' + b}), ' · ', num(width, eur(width), {'data-metric': 'day-width' + b})], true);
+    });
+  }
+  function perDay(sec, g) {
+    const prod = g.entries.find(x => x.w.policy === 'product'), ref = g.entries.find(x => x.w.policy === 'B0');
+    if (!prod) return null;
+    const development = g.window === 'development';
+    const limit = devBoundary();
+    let days = dayRows(prod.w);
+    const beyond = development && limit ? days.filter(d => d.day > limit).map(d => d.day) : [];
+    if (beyond.length) {
+      sec.appendChild(state('failed', 'Not shown: development days after the boundary', `${beyond.length} day(s) after ${limit} are in a development record (${beyond.slice(0, 3).join(', ')}); a development display stays on days through ${limit}.`, {alert: true}));
+      days = days.filter(d => d.day <= limit);
+    }
+    const holder = h('div', {class: 'per-day', 'data-per-day': String(prod.index)});
+    sec.appendChild(holder);
+    holder.appendChild(h('h4', {}, `Per day: ${L('live_daily_errors_wording')}`));
+    if (!days.length) { holder.appendChild(state('pending', 'Not yet scored', 'This window holds no scored day yet; there is no per-day error to show.')); return {days: [], holder}; }
+    const refBy = new Map((ref ? dayRows(ref.w) : []).map(d => [d.day, d]));
+    const labels = days.map(d => d.day);
+    holder.appendChild(h('p', {class: 'subtitle'}, `${days.length} scored delivery day${days.length === 1 ? '' : 's'}, ${days[0].day} to ${days[days.length - 1].day} · `,
+      badge(badgeFor(prod.w)), development ? [' ', badge(L('live_development_scope'))] : null));
+    for (const [metric, name] of [['mae_eur', 'MAE'], ['wis_eur', 'WIS (the interval score)']]) {
+      const series = [{name: `${L('live_product_name')}: daily ${name}`, short: 'product', values: days.map(d => d[metric]), color: Charts.colours.issued, marker: 'circle', dash: null, id: 'product-' + metric}];
+      if (ref) series.push({name: `B0 · ${B0_LABEL}: daily ${name}`, short: 'B0 (reference)', values: days.map(d => refBy.has(d.day) ? refBy.get(d.day)[metric] : NaN),
+                            color: Charts.colours.ref, dash: '6 3', marker: 'ring', id: 'b0-' + metric});
+      holder.appendChild(chart('validation', slot => Charts.lines(slot, {labels, series, unit: 'EUR/MWh', xTitle: 'delivery day (Europe/Berlin)',
+        title: `${g.evidence_class}: daily ${name} of ${L('live_product_name')}, with the similar-day naive (B0) as a reference, not a target, EUR/MWh by delivery day`})));
+    }
+    const tau = prod.w.record.tau_eur;
+    const body = h('tbody', {}, days.map(d => {
+      const r = refBy.get(d.day);
+      return h('tr', {'data-day-row': d.day, 'data-window-index': String(prod.index)},
+        td(d.day), td(num(d.scored_hours, `${d.scored_hours} of ${d.canonical_hours}`, {'data-metric': 'day-hours'}), true),
+        td(num(d.mae_eur, eur(d.mae_eur, 2), {'data-metric': 'day-mae'}), true), td(r ? num(r.mae_eur, eur(r.mae_eur, 2), {'data-metric': 'day-b0-mae'}) : '—', true),
+        td(num(d.wis_eur, eur(d.wis_eur, 2), {'data-metric': 'day-wis'}), true), td(r ? num(r.wis_eur, eur(r.wis_eur, 2), {'data-metric': 'day-b0-wis'}) : '—', true),
+        td(num(d.within_tau_hours, `${d.within_tau_hours} of ${d.scored_hours}`, {'data-metric': 'day-within'}), true), ...bandCells(d));
+    }));
+    let finalDay = null;
+    if (recomputedWindow(prod.w)) {
+      finalDay = td('Not recomputed yet: use “Recompute in your browser” above.', false, {colspan: '10'});
+      body.appendChild(h('tr', {class: 'final-day', 'data-final-day': String(prod.index)}, td('Matches the stored value · per day'), finalDay));
+    }
+    holder.appendChild(details(`Table: the per-day errors, with coverage and width per band (${days.length} day${days.length === 1 ? '' : 's'})`,
+      table(`${g.evidence_class}: per-day errors of ${L('live_product_name')} and B0 (a reference), EUR/MWh; coverage · mean width per nominal band`,
+        ['Delivery day', {t: 'Scored hours', n: 1}, {t: 'MAE', n: 1}, {t: 'B0 MAE', n: 1}, {t: 'WIS', n: 1}, {t: 'B0 WIS', n: 1}, {t: `Within ±${tau} EUR/MWh`, n: 1},
+         {t: '50%: coverage · width', n: 1}, {t: '80%: coverage · width', n: 1}, {t: '95%: coverage · width', n: 1}], [body])));
+    return {days, holder, finalDay, index: prod.index, refIndex: ref ? ref.index : null};
+  }
+  // the per-day row after the in-browser recomputation: every day's entries are among the compared items
+  function fillPerDay(pd, result) {
+    if (!pd || !pd.finalDay) return;
+    const cell = pd.finalDay;
+    cell.textContent = '';
+    const rows = [pd.index, pd.refIndex].filter(i => i !== null).map(i => result.rows.find(x => x.index === i)).filter(Boolean);
+    if (!rows.length || rows.some(r => !r.recomputed)) { cell.textContent = 'not recomputed'; return; }
+    const bad = rows.flatMap(r => r.mismatches.filter(mm => /^days\[\d+\]/.test(mm.path)).map(mm => Object.assign({policy: r.policy}, mm)));
+    const ok = rows.every(r => r.match);
+    cell.parentElement.dataset.match = String(ok);
+    if (ok) {
+      cell.appendChild(h('p', {}, h('span', {class: 'match-ok', 'data-mark-match-day': 'ok'}, '✓ matches'),
+        ` · every day's entry (its MAE, WIS, counts, coverage and width) recomputed in your browser equals the committed record, for the product and B0, among the ${rows.reduce((a, r) => a + r.compared, 0).toLocaleString('en-US')} compared items, over ${pd.days.map(d => d.day).join(', ')}`));
+    } else {
+      cell.appendChild(h('p', {}, h('span', {class: 'match-fail', 'data-mark-match-day': 'fail'}, '✗ does not match'),
+        ` · ${bad.length} per-day item${bad.length === 1 ? '' : 's'} listed differ (the first 20 mismatches per window are listed). This blocks that day's publication.`));
+      cell.appendChild(h('ul', {class: 'plain'}, bad.map(mm => h('li', {'data-mismatch-day': mm.path}, `${mm.policy} ${mm.path}: recomputed ${exact(mm.recomputed)} · committed ${exact(mm.committed)}`))));
+    }
+  }
+  // O33: the live record's running means with their 95% intervals, computed at build time (cp18.running); drawn only
+  function runningSection(sec) {
+    const r = S.live && S.live.running;
+    if (!r) return;
+    const box = h('div', {class: 'running', 'data-running': '1'});
+    sec.appendChild(box);
+    box.appendChild(h('h4', {}, 'Cumulative: the running mean daily error of the issued days, and its interval'));
+    const mae = r.series.mae, wis = r.series.wis, dm = r.series.mae_vs_B0, dw = r.series.wis_vs_B0;
+    if (!mae.length) { box.appendChild(state('pending', 'Not yet scored', 'The live record holds no scored day yet; there is no running mean.')); return; }
+    const last = mae[mae.length - 1];
+    const words = (p) => p.lower !== null && p.upper !== null ? fill(L('live_running_wording'), {n: p.n}) : L('live_running_before_minimum');
+    box.appendChild(h('p', {class: 'subtitle'}, `After each scored day: the running mean of the daily MAE and of the daily WIS, EUR/MWh; the band is the ${fill(L('live_running_wording'), {n: 'n'})}, drawn from ${r.minimum_days} scored days (before that, the running mean alone: ${L('live_running_before_minimum')}) · `,
+      badge(L('live_prospective_label'), true)));
+    const labels = mae.map(p => p.last_day);
+    const bandName = `${fill(L('live_running_wording'), {n: 'n'})} (${L('live_running_before_minimum')})`;
+    box.appendChild(chart('validation', slot => Charts.running(slot, {labels, unit: 'EUR/MWh', bandLabel: bandName,
+      title: `Running mean daily MAE and WIS of ${L('live_product_name')} over the live record's scored days, each with the ${fill(L('live_running_wording'), {n: 'n'})} as a band, EUR/MWh`,
+      series: [{name: 'running mean daily MAE', short: 'MAE', points: mae, color: Charts.colours.issued, marker: 'circle', dash: null, id: 'running-mae'},
+               {name: 'running mean daily WIS', short: 'WIS', points: wis, color: Charts.colours.accent, marker: 'square', dash: '6 3', id: 'running-wis'}]})));
+    box.appendChild(h('p', {class: 'finding', 'data-running-latest': String(last.n)}, `Over ${last.n} scored day${last.n === 1 ? '' : 's'} to ${last.last_day}: mean daily MAE ${eur(last.mean, 2)} EUR/MWh` +
+      (last.lower !== null ? ` (${words(last)}: ${eur(last.lower, 2)} to ${eur(last.upper, 2)})` : ` (${words(last)})`) +
+      `; mean daily WIS ${eur(wis[wis.length - 1].mean, 2)} EUR/MWh` + (wis[wis.length - 1].lower !== null ? ` (${eur(wis[wis.length - 1].lower, 2)} to ${eur(wis[wis.length - 1].upper, 2)})` : '') + '.'));
+    if (dm.length) {
+      const dl = dm[dm.length - 1];
+      box.appendChild(chart('validation', slot => Charts.running(slot, {labels: dm.map(p => p.last_day), unit: 'EUR/MWh', bandLabel: bandName,
+        zero: 'zero: no difference from the similar-day naive (B0), a reference',
+        title: `Running mean paired difference, ${L('live_product_name')} minus the similar-day naive (B0), daily MAE and WIS, each with the ${fill(L('live_running_wording'), {n: 'n'})} as a band, EUR/MWh; zero is a reference`,
+        series: [{name: 'running mean difference in daily MAE', short: 'MAE − B0', points: dm, color: Charts.colours.issued, marker: 'circle', dash: null, id: 'running-mae-b0'},
+                 {name: 'running mean difference in daily WIS', short: 'WIS − B0', points: dw, color: Charts.colours.accent, marker: 'square', dash: '6 3', id: 'running-wis-b0'}]})));
+      box.appendChild(h('p', {class: 'finding', 'data-running-difference': String(dl.n)}, `Over ${dl.n} paired day${dl.n === 1 ? '' : 's'}: mean difference in daily MAE ${signed(dl.mean, 2)} EUR/MWh` +
+        (dl.lower !== null ? ` (${words(dl)}: ${signed(dl.lower, 2)} to ${signed(dl.upper, 2)})` : ` (${words(dl)})`) + ` · ${L('live_running_difference')}.`));
+    }
+    const cell = (p) => p ? [num(p.mean, eur(p.mean, 2), {'data-mean': '1', 'data-lower': p.lower === null ? '' : String(p.lower), 'data-upper': p.upper === null ? '' : String(p.upper)}),
+                             p.lower !== null ? ` [${eur(p.lower, 2)}, ${eur(p.upper, 2)}]` : ''] : '—';
+    const byN = (list, n) => list.find(p => p.n === n);
+    box.appendChild(details('Table: the running means and their intervals',
+      table(`Running means after each scored day, EUR/MWh: the mean [the ${fill(L('live_running_wording'), {n: 'n'})}]`,
+        [{t: 'Scored days', n: 1}, 'Last day', {t: 'MAE', n: 1}, {t: 'WIS', n: 1}, {t: 'MAE − B0', n: 1}, {t: 'WIS − B0', n: 1}, 'Interval'],
+        mae.map((p, i) => h('tr', {'data-running-n': String(p.n)}, td(String(p.n), true), td(p.last_day), td(cell(p), true), td(cell(wis[i]), true),
+          td(cell(byN(dm, p.n)), true), td(cell(byN(dw, p.n)), true), td(words(p)))))));
+    box.appendChild(h('p', {class: 'qual', 'data-running-method': '1'}, `Interval method: ${r.method}. Only the method is shared; the record is the live product's own, ${L('live_prospective_label')}: not 4.7T's issuance or score and not a test result, and never pooled with development.`));
+  }
+
   RENDER.validation = (panel) => {
     viewHead(panel, 'Validation: how the product scores, window by window, never pooled',
       `MAE and WIS (the interval score) in EUR/MWh, lower is better; ${L('live_percentage_label')}; coverage · mean width per nominal band. ` +
@@ -825,7 +1069,10 @@
          {t: 'MAE, EUR/MWh', n: 1}, {t: 'WIS, EUR/MWh', n: 1}, {t: `Within ±${g.entries[0].w.record.tau_eur} EUR/MWh`, n: 1},
          {t: '50%: coverage · width', n: 1}, {t: '80%: coverage · width', n: 1}, {t: '95%: coverage · width', n: 1}], [body]));
       panel.appendChild(sec);
+      const pd = perDay(sec, g);
+      if (g.window === 'prospective') runningSection(sec);
       sections.push({fill: (result) => {
+        fillPerDay(pd, result);
         for (const f of finals) {
           const r = result.rows.find(x => x.index === f.index);
           f.cell.textContent = '';
@@ -853,7 +1100,8 @@
   RENDER.reliability = (panel) => {
     viewHead(panel, 'Reliability: how often the intervals hold, and how wide they are',
       'From the committed evaluation records (verified at start), one panel per record, never pooled. The nominal level is drawn as a reference, not a target.');
-    const records = windowsOf('product').filter(w => isRehearsal(w)).concat(windowsOf('product').filter(w => w.window === 'development' && !isRehearsal(w)));
+    const live = S.live ? windowsOf('product').filter(w => w.window === 'prospective') : [];
+    const records = live.concat(windowsOf('product').filter(w => isRehearsal(w)), windowsOf('product').filter(w => w.window === 'development' && !isRehearsal(w)));
     for (const w of records) {
       const rec = w.record, p = rec.pooled;
       const sec = h('div', {class: 'panel', 'data-reliability': w.evidence_class});
@@ -897,7 +1145,7 @@
         p.pit.map(b => h('tr', {}, td(pitInterval(b.band)), td(String(b.count), true), td(pct(b.share), true), td(pct(b.nominal_share), true))))));
       panel.appendChild(sec);
     }
-    const unscored = windowsOf('product').filter(w => w.window !== 'development');
+    const unscored = windowsOf('product').filter(w => w.window !== 'development' && !live.includes(w));
     panel.appendChild(h('div', {class: 'panel'}, h('h3', {}, 'The windows not yet scored'), h('ul', {class: 'plain'}, unscored.map(w =>
       h('li', {}, badge(badgeFor(w)), ' ', w.record.pooled.scored_hours ? `${w.record.pooled.scored_hours} scored hours` : 'not yet scored')))));
   };
@@ -913,7 +1161,7 @@
       `The issued p50 of ${a.delivery_day} decomposed into input-group contributions in EUR/MWh, against the model's stated baseline · artifact ${short(a.artifact_sha256)} · ${L('live_attribution_wording')}`);
     if (!a.issued_policy) return noArtifact(panel, 'explain');
     const members = (a.lineage.training.members || []).length;
-    panel.appendChild(h('p', {}, `${a.issued_policy} has no blend: it is one model, so there is no component decomposition. Its intervals are its own Johnson SU quantiles, the median of its ${members} members' quantiles at each level; they are not attributed to inputs, and the decomposition below is of the p50 only.`));
+    panel.appendChild(h('p', {}, `${policyLabel(a.issued_policy)} has no blend: it is one model, so there is no component decomposition. Its intervals are its own Johnson SU quantiles, the median of its ${members} members' quantiles at each level; they are not attributed to inputs, and the decomposition below is of the p50 only.`));
     const box = h('div', {});
     glueAction(box, 'explain', explainFiles, (out, r) => renderExplain(out, r),
       {label: 'Explain in your browser', againLabel: 'Explain again', extraWhat: 'the fitted arrays and the training window',
@@ -1125,8 +1373,8 @@
   };
   RENDER.history = (panel) => {
     viewHead(panel, 'History', null);
-    panel.appendChild(h('p', {}, badge('Historical', true), " v1's frozen demo, kept as history. It is not the product this Space presents."));
-    panel.appendChild(h('p', {}, "v1's demo loads its own runtime as v1 shipped it; it is not part of this Space's network rule, which covers the product's pages only."));
+    panel.appendChild(h('p', {'data-history-wording': '1'}, badge('Historical', true), ' ', L('live_history_wording')));
+    panel.appendChild(h('p', {}, L('live_history_network')));
     const hist = S.build.history || {};
     if (hist.present) {
       panel.appendChild(h('p', {}, h('a', {class: 'route', href: '/history/', 'data-history-link': '1'}, "Open v1's frozen demo (historical)")));

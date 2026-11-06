@@ -346,15 +346,19 @@
       const st = style(sr, k);
       polyline(g, sr.values.map((v, i) => isFinite(v) ? [x(i), y(v)] : null),
                {stroke: st.color, 'stroke-width': 2.25, 'stroke-dasharray': st.dash, 'data-mark': '1', 'data-series': sr.id || null, class: sr.cls || null});
-      sr.values.forEach((v, i) => { if (isFinite(v) && (n <= 25 || i % 2 === 0)) marker(g, x(i), y(v), st.shape, st.color, {'data-series': sr.id || null}); });
-      if (!mob) {
-        let yy = y(sr.values[n - 1]) + 4;
+      // long day series (more than 25 points) thin their markers to about 45, and label the last finite value
+      const step = n <= 25 ? 1 : Math.max(2, Math.ceil(n / 45));
+      sr.values.forEach((v, i) => { if (isFinite(v) && i % step === 0) marker(g, x(i), y(v), st.shape, st.color, {'data-series': sr.id || null}); });
+      const lastFinite = sr.values.reduce((a, v, i) => isFinite(v) ? i : a, -1);
+      if (!mob && lastFinite >= 0) {
+        let yy = y(sr.values[lastFinite]) + 4;
         for (const p of placed) if (Math.abs(p - yy) < 15) yy = p + 15;
         placed.push(yy);
         text(g, w - m.r + 8, yy, sr.short || sr.name, {fill: st.color});
       }
     });
-    const every = mob ? 6 : (w < 900 ? 3 : (n <= 25 ? 2 : 3));
+    // category labels: the hourly charts' rule for 25 points or fewer; for a day series, one label per ~84 px
+    const every = n > 25 ? Math.max(1, Math.ceil(n * 84 / (w - m.l - m.r))) : (mob ? 6 : (w < 900 ? 3 : (n <= 25 ? 2 : 3)));
     opts.labels.forEach((lab, i) => { if (i % every === 0) text(g, x(i), h - m.b + 18, lab, {'text-anchor': 'middle', fill: C.secondary}); });
     if (opts.xTitle) text(g, (m.l + w - m.r) / 2, h - 8, opts.xTitle, {'text-anchor': 'middle', fill: C.secondary});
     const fig = figure(container, s, opts.caption);
@@ -362,5 +366,74 @@
     return fig;
   }
 
-  window.Charts = {hourly, reliability, rolling, bars, lines, isMobile, widthOf, MOBILE, colours: C, fmt};
+  // ---------------------------------------------------------------- running means with their intervals (O33)
+  // opts: {labels[], series: [{name, short, points: [{mean, lower, upper}], color, dash, marker, id}], title, unit,
+  //        bandLabel, zero (a reference line's name, or none)}. The band is drawn only where both bounds exist; its
+  //        edges are dashed lines in the series' colour, so its meaning does not rest on the fill.
+  function running(container, opts) {
+    const w = widthOf(container), mob = isMobile(w);
+    const n = opts.labels.length;
+    const h = mob ? 280 : 320;
+    const m = {l: 60, r: mob ? 16 : 110, t: 26, b: 52};
+    const vals = [];
+    opts.series.forEach(sr => sr.points.forEach(p => { for (const v of [p.mean, p.lower, p.upper]) if (v !== null && v !== undefined && isFinite(v)) vals.push(v); }));
+    if (opts.zero) vals.push(0);
+    let lo = Math.min(...vals), hi = Math.max(...vals);
+    if (!opts.zero) lo = Math.min(0, lo);
+    const pad = (hi - lo) * 0.08 || 1;
+    if (opts.zero || lo < 0) lo -= pad;
+    hi += pad;
+    const s = svg(w, h, opts.title);
+    const g = el('g', {}, s);
+    const x = scale(-0.5, n - 0.5, m.l, w - m.r), y = scale(lo, hi, h - m.b, m.t);
+    const span = hi - lo;
+    yAxis(g, y, ticks(lo, hi, 5).filter(t => t >= lo && t <= hi), m.l, w - m.r, opts.unit, span < 4 ? 1 : 0);
+    if (opts.zero) {
+      el('line', {x1: m.l, x2: w - m.r, y1: y(0), y2: y(0), stroke: C.secondary, 'stroke-width': 1.5, 'stroke-dasharray': '4 3', 'data-mark': '1', 'data-ref': 'zero'}, g);
+    }
+    const shapes = ['circle', 'square', 'triangle', 'diamond'];
+    const placed = [];
+    opts.series.forEach((sr, k) => {
+      const color = sr.color || C.series[k % C.series.length];
+      const shape = sr.marker || shapes[k % 4];
+      const has = p => p && p.lower !== null && p.upper !== null && isFinite(p.lower) && isFinite(p.upper);
+      // the band: one polygon per run of points with both bounds
+      let run = [];
+      const flush = () => {
+        if (run.length) {
+          const top = run.map(i => [x(i), y(sr.points[i].upper)]), bottom = run.map(i => [x(i), y(sr.points[i].lower)]).reverse();
+          const pts = run.length === 1 ? [[top[0][0] - 4, top[0][1]], [top[0][0] + 4, top[0][1]], [bottom[0][0] + 4, bottom[0][1]], [bottom[0][0] - 4, bottom[0][1]]] : top.concat(bottom);
+          el('path', {d: 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + 'Z', fill: color, 'fill-opacity': 0.12, stroke: 'none', 'data-band': sr.id || null}, g);
+        }
+        run = [];
+      };
+      sr.points.forEach((p, i) => { if (has(p)) run.push(i); else flush(); });
+      flush();
+      for (const bound of ['lower', 'upper']) {
+        polyline(g, sr.points.map((p, i) => has(p) ? [x(i), y(p[bound])] : null),
+                 {stroke: color, 'stroke-width': 1.25, 'stroke-dasharray': '2 3', 'data-mark': '1', 'data-bound': bound, 'data-series': sr.id || null});
+      }
+      polyline(g, sr.points.map((p, i) => p.mean !== null && isFinite(p.mean) ? [x(i), y(p.mean)] : null),
+               {stroke: color, 'stroke-width': 2.25, 'stroke-dasharray': sr.dash || null, 'data-mark': '1', 'data-series': sr.id || null});
+      const step = n <= 25 ? 1 : Math.max(2, Math.ceil(n / 45));
+      sr.points.forEach((p, i) => { if (p.mean !== null && isFinite(p.mean) && (i % step === 0 || i === n - 1)) marker(g, x(i), y(p.mean), shape, color, {'data-series': sr.id || null}); });
+      if (!mob && n) {
+        let yy = y(sr.points[n - 1].mean) + 4;
+        for (const q of placed) if (Math.abs(q - yy) < 15) yy = q + 15;
+        placed.push(yy);
+        text(g, w - m.r + 8, yy, sr.short || sr.name, {fill: color});
+      }
+    });
+    const every = Math.max(1, Math.ceil(n * 84 / (w - m.l - m.r)));
+    opts.labels.forEach((lab, i) => { if (i % every === 0 || (n <= 3)) text(g, x(i), h - m.b + 18, lab, {'text-anchor': 'middle', fill: C.secondary}); });
+    text(g, (m.l + w - m.r) / 2, h - 8, 'after each scored delivery day (its date)', {'text-anchor': 'middle', fill: C.secondary});
+    const fig = figure(container, s, opts.caption);
+    const items = opts.series.map((sr, k) => ({label: sr.name, stroke: sr.color || C.series[k % C.series.length], dash: sr.dash || null, marker: sr.marker || shapes[k % 4]}));
+    items.push({label: opts.bandLabel || 'interval', kind: 'area', fill: 'rgba(24,24,27,0.12)', stroke: C.secondary});
+    if (opts.zero) items.push({label: opts.zero, stroke: C.secondary, dash: '4 3'});
+    legend(fig, items);
+    return fig;
+  }
+
+  window.Charts = {hourly, reliability, rolling, bars, lines, running, isMobile, widthOf, MOBILE, colours: C, fmt};
 })();

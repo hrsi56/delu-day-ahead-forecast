@@ -48,9 +48,9 @@ ISSUING_HOST = 'Pyodide 0.28.0 in Node.js v26.7.0'
 EVIDENCE_LABEL = ('A1 · final candidate · pending 4.7T; development data through 2026-09-06 only; the issued days are '
                   'a development rehearsal (CP-18 dry runs), not prospective and not 4.7T')
 #: The live product's label (CP-18c, r20 §24.14 item 5; O13): a store whose first day is after the development boundary.
-LIVE_EVIDENCE_LABEL = ("A1 · final candidate · pending 4.7T; the live product's own issued days from {first} (the Owner's "
-                       'decision 28), prospective evaluation in progress, never 4.7T\'s issuance or score; the '
-                       'development-period displays stay on days through 2026-09-06')
+LIVE_EVIDENCE_LABEL = ("v6 · DDNN-2 alone (A1 in the frozen records) · final candidate · pending 4.7T; the live "
+                       "product's own issued days from {first}, prospective evaluation in progress, never 4.7T's "
+                       'issuance or score; the development-period displays stay on days through 2026-09-06')
 START_FILES = ('manifest.json', 'issued-forecasts.json', 'outcomes.json', 'evaluation.json', 'artifact.json')
 SERIES_FIRST_DAY = date(2019, 1, 1)
 

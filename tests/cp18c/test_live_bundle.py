@@ -85,7 +85,8 @@ def test_the_live_label_and_the_manifest_time_notation():
                                'text': "a live day's inputs that cannot be shown to precede its cutoff"},
                               {'day': '2026-10-01', 'status': 'outside', 'cause': None, 'text': 'outside'}],
                              live_from='2026-11-03')
-    assert label.startswith('A1 · final candidate · pending 4.7T; the live product\'s own issued days from 2026-11-03')
+    assert label.startswith('v6 · DDNN-2 alone (A1 in the frozen records) · final candidate · pending 4.7T; the live '
+                            'product\'s own issued days from 2026-11-03')
     assert 'prospective evaluation in progress' in label and "never 4.7T's" in label and '2026-10-01' not in label
     assert B.evidence_label([]) == B.EVIDENCE_LABEL
     times = {'last_training_utc': '2026-11-05T10:00:00+00:00', 'data_refresh_utc': '2026-11-05T21:46:40Z',
