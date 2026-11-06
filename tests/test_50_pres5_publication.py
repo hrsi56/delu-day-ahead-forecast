@@ -1,14 +1,16 @@
-"""PRES-5: the publication of the research since v5, with A1, the final candidate, in v5's comparison.
+"""PRES-5: the publication of the research since v5, with v6 (A1 in the frozen records), the final candidate, in v5's
+comparison.
 
 The contracts, each with a negative control where a check could pass vacuously:
 
-- A1's rows on v5's population re-derive from the committed inputs, cover every key, and pair with v5's and the naive's
+- v6's rows on v5's population re-derive from the committed inputs, cover every key, and pair with v5's and the naive's
   scores that equal CP-24's committed rows exactly (the brief's outcome 1: never recomputed for publication);
-- the registry holds one final candidate, its status O13's, first in the comparison, with codes scoped by experiment;
+- the registry holds one final candidate, v6 (ruling O30), its status O13's, first in the comparison, with codes scoped by
+  experiment, and CP-28's six other arms as study arms, not selected;
 - every derived change follows from its committed record; CP-26's and CP-28's records stay on development days;
-- the page and the README carry the final candidate's headline (decision 20), the A1 chapter, CP-26's every-day panel
+- the page and the README carry the final candidate's headline (decision 20), v6's chapter, CP-26's every-day panel
   beside the five periods, the freeze and 4.7T's registered terms, and v1 under the Space's History;
-- the archive's figures are the originals' exact pixels, and the page fits the 2.0 MB budget;
+- the archive's figures are the originals' exact pixels (ruling O25), and the page fits the 2.0 MB budget;
 - the CP-26 and CP-28 exports mirror their drafts, add runs only, and leave every published run unchanged.
 """
 from __future__ import annotations
@@ -112,33 +114,38 @@ def test_a_changed_input_is_refused(monkeypatch):
 
 def test_one_final_candidate_with_o13s_status():
     final = G.final_candidate()
-    assert final is not None and final.id == "a1" and final.name == "A1 · DDNN-2 alone"
+    assert final is not None and final.id == "v6" and final.name == "v6 · DDNN-2 alone"  # ruling O30
+    assert final.kind == "generation" and final.version == "v6" and final.predecessor == "v5"
     assert final.status.status == G.FINAL_CANDIDATE and final.status.date == "2026-10-30"
-    assert final.version is None  # selected, never adopted: no version number (W49)
-    assert G.released().id == "v1" and G.current_generation().id == "v5"  # decision 21
-    assert G.comparison_rows()[0] is final
+    assert G.released().id == "v1"  # the last released generation (ruling O27)
+    assert G.current_generation() is final and G.comparison_rows()[0] is final
+    assert G.FROZEN_LABELS == {"v6": "A1"}
 
 
 def test_codes_are_scoped_and_an_unscoped_a1_is_refused():
-    assert G.by_code("A1", "CP-28").id == "a1" and G.by_code("A1", "PRES-5").id == "a1"
+    assert G.by_code("A1", "CP-28").id == "v6" and G.by_code("A1", "PRES-5").id == "v6"
     assert G.by_code("A1", "CP-15").id == "normalized-lear"
     with pytest.raises(G.RegistryError, match="name the experiment"):
         G.by_code("A1")
-    assert G.by_code("nominal/D2/all_eligible", "CP-26").id == "a1"
+    assert G.by_code("nominal/D2/all_eligible", "CP-26").id == "v6"
 
 
-def test_cp28_is_a_branch_whose_six_other_arms_were_not_selected():
-    branch = G.get("recombining-v5s-members")
-    assert branch.kind == "branch" and branch.after == "v5" and branch.informed == "a1"
+def test_cp28s_six_other_arms_are_study_arms_not_selected():
     arms = [G.by_code(code, "CP-28") for code in ("A2", "A3", "A4", "A5", "A6", "A7")]
     assert {arm.kind for arm in arms} == {"study arm"} and {arm.status.status for arm in arms} == {G.NOT_ADOPTED}
-    assert G.CHECKPOINTS["CP-28"].owner == branch.id
+    assert G.CHECKPOINTS["CP-28"].owner == "v6"
+    assert not [entry for entry in G.entries() if entry.kind == "branch" and entry.after == "v5"]
+    # On the page they are named without their codes, each marked "Not selected" (ruling O30).
+    table = PAGE[PAGE.index("Seven arms against"):]
+    table = _text(table[:table.index("</table>")])
+    assert table.count("Not selected") == 6 and table.count("Selected") == 1
+    assert not re.search(r"\bA[2-7]\b", table)
 
 
 def test_the_overview_route_lists_only_runs_mlflow_holds():
     kind, runs = G.expected_routes()["compare:overview"]
     assert len(runs) == len(G.comparison_rows()) - 1 and "cp28/A1" not in runs
-    assert G.expected_routes()["compare:recombining-v5s-members"][1] == tuple(f"cp28/A{i}" for i in range(1, 8))
+    assert "cp28/A1" in G.expected_routes()["compare:v6"][1]
 
 
 # --------------------------------------------------------------------------- records and the red line
@@ -146,7 +153,7 @@ def test_the_overview_route_lists_only_runs_mlflow_holds():
 
 def test_every_new_record_rederives():
     pres5 = [record for record_id, record in R.records().items() if record_id.startswith(("pres5.", "cp26.", "cp28."))]
-    assert len(pres5) > 600
+    assert len(pres5) > 500
     assert R.validate_all(pres5) == []
     assert D.validate_all() == []
 
@@ -172,7 +179,7 @@ def test_research_numbers_use_development_days_only():
 
 def test_the_derived_changes_follow_from_their_records():
     ratio = Decimal(R.get("pres5.ratio.A1-v5.WIS").raw)
-    assert Decimal(D.get("derived.change.a1.S_WIS").value) == ratio * 100
+    assert Decimal(D.get("derived.change.v6.S_WIS").value) == ratio * 100
     control = Decimal(R.get("cp28.arm.A1.MAE.ratio_to_control").raw)
     assert Decimal(D.get("derived.cp28.A1.MAE").value) == (control - 1) * 100
     assert D.get("derived.cp28.tested").value == "7"
@@ -186,7 +193,7 @@ def test_the_headline_is_the_final_candidates_development_result():
     claim, template = RC.headline_template()
     assert claim == "P60" and "{r:derived.cp28.A1.MAE}" in template and "{r:derived.cp28.tested}" in template
     text = RC.headline("md")
-    assert "in point error" in text and "in interval error" in text  # A1: each metric named beside its value
+    assert "in point error" in text and "in interval error" in text  # each metric named beside its value
     assert text.endswith("`Development · post-selection`")
     assert RC.headline_terms()[:3] == ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate")
 
@@ -194,13 +201,13 @@ def test_the_headline_is_the_final_candidates_development_result():
 def test_the_opening_pairs_the_final_candidate_with_the_live_product():
     opening = PAGE[PAGE.index('id="top"'):PAGE.index('id="product"')]
     text = _text(opening)
-    assert "Live product A1 · DDNN-2 alone" in text and "Final candidate · pending 4.7T A1 · DDNN-2 alone" in text
+    assert "Live product v6 · DDNN-2 alone" in text and "Final candidate · pending 4.7T v6 · DDNN-2 alone" in text
     assert "prospective evaluation in progress" in text and "Open the live product" in text
     assert "/history/" in opening  # v1's demo, historical (O17)
     assert "Try the v1 demo</span>" not in opening
 
 
-def test_the_comparison_draws_a1_first_from_its_own_rows():
+def test_the_comparison_draws_v6_first_from_its_own_rows():
     results = PAGE[PAGE.index('id="research-results"'):PAGE.index('id="journey"')]
     assert 'data-record="pres5.metrics.A1.equal_fold.S_MAE"' in results
     assert "13 policies" in _text(results)
@@ -218,22 +225,24 @@ def test_cp26_is_shown_beside_the_five_periods_and_never_pooled():
 
 def test_the_final_candidates_chapter_fills_the_grammar_and_states_its_terms():
     assert build_pages.slot_problems(build_pages.a1_slots()) == []
-    chapter = PAGE[PAGE.index('id="final-candidate"'):]
+    chapter = PAGE[re.search(r'<article[^>]*id="v6"', PAGE).start():]
     text = _text(chapter[:chapter.index("</article>")])
     for phrase in ("2026-09-07 to 2026-12-05", "opening no earlier than 2026-12-04", "at most 0.05",
                    "At least 60 of the 90 days", "No runner-up moves up", "It passed the pre-registered test",
-                   "It did not pass; the window is spent, and v1 remains the product.", "720fc581",
+                   "the window is spent", "720fc581", "A1 in the frozen records",
                    "The comparison shares the hours and prices, not the protocol.", "A description, not a decision"):
         assert phrase in text, phrase
+    # The chapter's headings use the public name; the frozen label appears only where the identity is shown (O30).
+    assert "How v6 was selected" in text and "How A1" not in text
 
 
 def test_the_registered_terms_are_the_protocols():
-    protocol = (ROOT / "docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md").read_text()
+    protocol = " ".join((ROOT / "docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md").read_text().split())
     for fragment in ("2026-09-07 to 2026-12-05", "no earlier than 2026-12-04", "**7-day blocks;**",
                      "**10,000 replicates;**", "**at least 60 of the 90 dates paired and scored**",
                      "**No runner-up moves up.**", "α = 0.05"):
         assert fragment in protocol, fragment
-    decisions = (ROOT / "docs/track-b/owner-decisions-2026-10-29.md").read_text()
+    decisions = " ".join((ROOT / "docs/track-b/owner-decisions-2026-10-29.md").read_text().split())
     assert '"It passed the pre-registered test (compound p ≤ 0.05)."' in decisions
     assert "the window is spent, and v1 remains the" in decisions
 
@@ -247,15 +256,15 @@ def test_the_report_shows_no_live_number():
 
 def test_the_planned_list_is_brought_up_to_date():
     names = [name for name, *_ in build_pages.PLANNED_WORK]
-    assert names[:2] == ["The one-shot test of A1, from 2026-12-04", "The live trial: prospective evaluation in progress"]
+    assert names[:2] == ["The one-shot test of v6, from 2026-12-04", "The live trial: prospective evaluation in progress"]
     assert "A re-evaluation on every eligible day" not in names and "Combining models" not in names
 
 
 def test_the_readme_carries_the_same_claims():
-    assert "**Final candidate · pending 4.7T, A1 · DDNN-2 alone.**" in README
+    assert "**Final candidate · pending 4.7T, v6 · DDNN-2 alone.**" in README
     assert RC.headline("md") in README
-    assert "### A1 · DDNN-2 alone · final candidate, pending 4.7T" in README
-    assert "#### Recombination of v5's members" in README
+    assert "### v6 · DDNN-2 alone" in README and "A1 in the frozen records" in README
+    assert "Recombination of v5's members" not in README
     assert "history/" in README
 
 
@@ -281,7 +290,7 @@ def test_a_changed_pixel_is_caught(tmp_path, monkeypatch):
         copy.write_bytes((ROOT / CF.copy_path(original)).read_bytes())
     first = tmp_path / CF.copy_path(CF.ORIGINALS[0])
     pixels = np.asarray(Image.open(first).convert("RGB")).copy()
-    pixels[0, 0] = (pixels[0, 0] + 1) % 256
+    pixels[0, 0] = (pixels[0, 0].astype(np.int16) + 1) % 256
     buffer = io.BytesIO()
     Image.fromarray(pixels, "RGB").save(buffer, "PNG")
     first.write_bytes(buffer.getvalue())
@@ -300,7 +309,7 @@ def test_the_cp26_and_cp28_exports_mirror_their_drafts():
     cp26 = json.loads((ROOT / "reports/presentation/mlflow-export/cp26.json").read_text())
     cp28 = json.loads((ROOT / "reports/presentation/mlflow-export/cp28.json").read_text())
     assert len(cp26["runs"]) == 53 and len(cp28["runs"]) == 8
-    assert {run["run_name"] for run in cp28["runs"] if run["run_key"] == "cp28/A1"} == {"A1 · DDNN-2 alone (A1, selected)"}
+    assert {run["run_name"] for run in cp28["runs"] if run["run_key"] == "cp28/A1"} == {"v6 · DDNN-2 alone (A1, selected)"}
 
 
 def test_no_published_run_changes():
@@ -316,7 +325,10 @@ def test_no_published_run_changes():
 
 def test_the_withheld_claims_are_guarded():
     assert RC.withheld_findings("A1 was adopted in research as v6")
+    assert RC.withheld_findings("v6 was adopted")
     assert RC.withheld_findings("A1 is live")
     assert RC.withheld_findings("the same protocol as v5")
-    assert not RC.withheld_findings("The live product runs A1, the final candidate; never pooled with the five periods.")
-    assert not RC.withheld_findings(_text(PAGE.split("<script>")[0]))
+    assert not RC.withheld_findings("The live product runs v6, the final candidate; never pooled with the five periods.")
+    # PRES-5's guards (W49-W53) find nothing on the page or in the README; the older guards keep their own tests.
+    for surface in (_text(PAGE.split("<script>")[0]), README):
+        assert not [hit for hit in RC.withheld_findings(surface) if hit.split(":")[0] in ("W49", "W50", "W51", "W52", "W53")]

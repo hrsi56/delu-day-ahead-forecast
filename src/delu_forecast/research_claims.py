@@ -941,7 +941,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            complete daily policy: one package, run unchanged by the issuing host and by the visitor's browser. It was
            re-frozen on {s:date:2026-10-29} with the Owner's later decisions, and on {s:date:2026-10-30} under the issuing
            host, Pyodide in Node.js on a macOS runner or the Owner's Mac, with every fit identical bit for bit. Its policy
-           identity begins `720fc581`; any change to the policy, its code, runtime or state needs a new freeze and
+           identity begins {s:hash:720fc581}; any change to the policy, its code, runtime or state needs a new freeze and
            a new test.""", PAGE),
     _block("v6.fresh.window", "C803", """**{s:work-item:4.7T}, registered before the test.** One test of {g:v6.version}, on
            delivery days {s:date:2026-09-07} to {s:date:2026-12-05}, {s:count:90} days, opening no earlier than
@@ -962,16 +962,6 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            result makes {g:v1.version} the product again, and the record says "It did not pass; the window is spent, and
            {g:v1.version} remains the product." Either way the live record stays "prospective evaluation in progress"
            until at least {s:count:90} consecutive days are scored.""", PAGE, README),
-    # ---- CP-28 as a branch after v5 (runbook §3; outcome 3 and 6) ----
-    _block("branch.recombining-v5s-members.question", "P63", """Does a registered recombination of {g:v5.version}'s
-           three members beat {g:v5.version} on both scores on every development day, without losing more than
-           {s:level:2%} in any complete year or season? Seven arms, one look.""", PAGE, README),
-    _block("branch.recombining-v5s-members.result", "C704", """All seven passed. Against {g:v5.version}, the blends
-           changed the interval error by {r:derived.cp28.A5.WIS} to {r:derived.cp28.A6.WIS}; {s:name:DDNN-2} alone,
-           {g:v6.version}, by {r:derived.cp28.A1.WIS} {r:derived.cp28.A1.WIS|ci}, descriptive {s:level:95%} interval.
-           Development evidence after selection.""", PAGE, README),
-    _block("branch.recombining-v5s-members.reason", "C703", """No blend was selected: the arm with the lowest interval
-           error, {g:v6.version}, takes {s:name:DDNN-2} alone and became the final candidate.""", PAGE, README),
     # ---- PRES-5 (O26, O29): "How the product works" documents v6, the policy the Space runs ----
     _block("v6.product.sources", "P66", """**Where the data comes from.** The committed development snapshot of the
            day-ahead price and the day-ahead load forecast, from SMARD.de, which republishes the ENTSO-E series, and the
@@ -1036,8 +1026,18 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     _block("v6.product.run", "P66", """**Check the frozen policy.**
            {s:command:python -m cp17.tools.refreeze verify docs/track-b/evidence/cp-17c/freeze-manifest.json} checks the
            package, its runtime and its state against the freeze and prints "verified"; the policy identity begins
-           `720fc581`. **Train it yourself.** The live product retrains one issued day's fit in your browser, with the
+           {s:hash:720fc581}. **Train it yourself.** The live product retrains one issued day's fit in your browser, with the
            same package, and says whether it matched."""),
+    # README-only, as v5's: the page shows these differences once, in the main chart and its table.
+    _block("v6.outcome.head", "C902", """Difference in error score ({s:version:v6} − {s:version:v5}) on
+           {s:version:v5}'s five test periods, with its {s:level:95%} confidence interval and its interval at
+           {s:level:97.5%}. Below zero favours {s:version:v6}.""", README),
+    _block("v6.outcome.mae", "C902", """Point-error score: {r:pres5.uncertainty.A1-v5.equal_fold.MAE}
+           {r:pres5.uncertainty.A1-v5.equal_fold.MAE|ci} at {s:level:95%};
+           {r:pres5.uncertainty97_5.A1-v5.equal_fold.MAE|ci} at {s:level:97.5%}""", README),
+    _block("v6.outcome.wis", "C902", """Interval score: {r:pres5.uncertainty.A1-v5.equal_fold.WIS}
+           {r:pres5.uncertainty.A1-v5.equal_fold.WIS|ci} at {s:level:95%};
+           {r:pres5.uncertainty97_5.A1-v5.equal_fold.WIS|ci} at {s:level:97.5%}""", README),
     # ---- the adopted-line transition into v6 (A3; ruling O30): selected by its own rule, not adopted by v5's ----
     _block("transition.v5-v6.title", "P65", """From {g:v5.version} to {g:v6.version}: {s:name:DDNN-2} alone""", PAGE, README),
     _block("transition.v5-v6.change", "P65", """{g:v6.version} keeps only {g:v5.version}'s distributional neural network,
@@ -1054,15 +1054,38 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            selection; not {s:work-item:4.7T}.""", PAGE, README),
     _block("transition.v5-v6.limits", "P65", """Selected by its own rule, never adopted by {g:v5.version}'s; its forecasts
            come from a later, daily protocol; and {s:work-item:4.7T}, from {s:date:2026-12-04}, is its one test on new
-           data.""", PAGE, README),
+           data.""", PAGE),
     # ---- the planned list and the system view after PRES-5 (outcome: the planned-work list brought up to date) ----
     _block("planned.teaser", "P64", """Next: {s:work-item:4.7T}, {g:v6.version}'s one test, opening no earlier than
            {s:date:2026-12-04}; the live trial, prospective evaluation in progress; then new input data and
-           renewable-generation forecasts.""", PAGE, README),
+           renewable-generation forecasts.""", PAGE),
 )
 
 BLOCKS = BLOCKS + PRES5_BLOCKS
 BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
+
+#: The blocks a page with a final candidate does not render (PRES-5): v5's headline-only terms and its comparison
+#: finding, which v6's replace (decision 20), and v1's product documentation, which v6's replaces (rulings O26, O29).
+#: They stay in the layer: they render again for a page without a final candidate, and the records they bind stay valid.
+V1_PRODUCT_ONLY = ("product.data.sources", "product.data.cutoff", "product.data.windows", "product.regimes.why",
+                   "product.inputs.catalog", "product.inputs.excluded", "product.validation.design",
+                   "product.validation.holdout", "product.validation.classes", "product.validation.leakage",
+                   "product.results.coverage", "product.results.shared", "product.attribution.headline",
+                   "product.attribution.reading", "product.reliability.headline", "product.attribution.identity",
+                   "product.attribution.scope", "product.importance.permutation", "product.importance.limits",
+                   "product.importance.sensitivity", "product.failures.reading", "product.failures.identity",
+                   "product.reliability.stages", "product.reliability.width", "product.reliability.crossings",
+                   "product.reliability.guarantee", "product.forecast.read", "product.forecast.controls",
+                   "product.forecast.demo", "product.limits.summary", "product.run.local", "product.run.identity",
+                   "product.run.demo", "product.run.historical")
+
+
+def inactive_page_blocks() -> frozenset[str]:
+    """The page blocks the registry's present state does not render (empty without a final candidate)."""
+    if G.final_candidate() is None:
+        return frozenset()
+    return frozenset(("terms.adoption_rule", "terms.differences", "comparison.finding", "comparison.caveat")
+                     + V1_PRODUCT_ONLY)
 
 #: Chart claims: the records each figure may plot, beyond those its caption names.
 CHART_CLAIMS: dict[str, str] = {
@@ -1091,7 +1114,7 @@ CHART_CLAIMS: dict[str, str] = {
 
 #: Claims bound outside a block: single chart rows where a chart mixes claims (v2's three
 #: contrasts), the target verdicts in the comparison, and the demo's startup figure (P13).
-ROW_CLAIMS: tuple[str, ...] = ("C33", "C34", "C38", "C70", "C108", "C112", "C113", "C114", "C116", "P13", "P16", "P20", "P22", "P23", "P28",
+ROW_CLAIMS: tuple[str, ...] = ("C602", "C702", "C704", "C33", "C34", "C38", "C70", "C108", "C112", "C113", "C114", "C116", "P13", "P16", "P20", "P22", "P23", "P28",
                                "P33", "P34", "P45", "P48", "P50")
 
 #: README research blocks (plan §9.4), each rendered from the same template as the page.

@@ -2481,7 +2481,7 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
     hold for v6 (the target, the preprocessing, the regimes' hours, the seasonal rationale of the calendar inputs)."""
     archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
     space = lambda text: f'<p><a class="quiet external in-text" href="{attr(C["space_url"])}">{text}</a></p>'  # noqa: E731
-    chapter = lambda anchor, text: f'<p><a class="quiet" href="#{anchor}">{text}</a></p>'  # noqa: E731
+    chapter = lambda anchor, text: f'<p><a class="quiet" href="#{anchor}">{_structural_versions(text)}</a></p>'  # noqa: E731
     freeze = Audit("The freeze manifest", "docs/track-b/evidence/cp-17c/freeze-manifest.json", "evidence/cp-17c")
     return (
         Topic("product-data", "Data and the information cutoff", "Data and the information cutoff", ("1",),
@@ -2907,10 +2907,14 @@ def a1_arms_table() -> str:
         entry = G.by_code(code, "CP-28")
         cells = "".join(f'<td class="n">{value(f"derived.cp28.{code}.{metric}", "C704")} '
                         f'{interval(f"derived.cp28.{code}.{metric}", "C704")}</td>' for metric in ("MAE", "WIS"))
+        # Ruling O30: the six other arms are study arms, "not selected", named without their codes.
+        result = "Selected" if entry is G.final_candidate() else "Not selected"
         body += (f'<tr><th scope="row">{RC.render_template("C704", "{g:%s.name}" % entry.id)}</th>{cells}'
-                 f'<td>{value(f"cp28.holm.primary14.{code}.adjusted_p", "C702")}</td></tr>')
-    head = ('<th scope="col">Arm</th><th scope="col">Point error against v5</th>'
-            '<th scope="col">Interval error against v5</th><th scope="col">Holm-adjusted p, main analysis</th>')
+                 f'<td>{value(f"cp28.holm.primary14.{code}.adjusted_p", "C702")}</td><td>{result}</td></tr>')
+    head = ('<th scope="col">Arm</th>'
+            f'<th scope="col">{_structural_versions("Point error against v5")}</th>'
+            f'<th scope="col">{_structural_versions("Interval error against v5")}</th>'
+            '<th scope="col">Holm-adjusted p, main analysis</th><th scope="col">Result</th>')
     return (f'<div class="scroll" role="region" aria-label="The seven arms" tabindex="0"><table class="data">'
             f'<caption>{_label("Seven arms against v5 on every development day")}</caption><thead><tr>{head}</tr>'
             f"</thead><tbody>{body}</tbody></table></div>")
@@ -2919,14 +2923,14 @@ def a1_arms_table() -> str:
 def a1_slots() -> ChapterSlots:
     entry = G.get("v6")
     method = (block("v6.method.network") + block("v6.method.scoring")
-              + detail_head("v6-information", "How A1's forecasts differ from v5's in these periods")
+              + detail_head("v6-information", "How v6's forecasts differ from v5's in these periods")
               + block("v6.method.information"))
-    folds = (detail_head("v6-per-period-differences", "A1 against v5 in each test period") + block("v6.folds")
+    folds = (detail_head("v6-per-period-differences", "v6 against v5 in each test period") + block("v6.folds")
              + values_table("v6-c2b-values", "C907", a1_fold_panels(), visible=True)
              + detail_head("v6-absolute-errors", "Absolute errors per test period") + block("v6.absolute"))
     stress = detail_head("v6-crisis", "The 2022 crisis period") + block("v6.stress")
     coverage = detail_head("v6-coverage", "Interval coverage and width") + block("v6.coverage")
-    protocol = (detail_head("v6-selection", "How A1 was selected") + block("v6.rule", ident="v6-rule")
+    protocol = (detail_head("v6-selection", "How v6 was selected") + block("v6.rule", ident="v6-rule")
                 + block("v6.selection") + a1_arms_table() + block("v6.holm.note")
                 + detail_head("v6-freeze", "The freeze") + block("v6.freeze")
                 + detail_head("v6-fresh-test", "4.7T, registered before the test") + block("v6.fresh.window")
@@ -2944,9 +2948,10 @@ def a1_slots() -> ChapterSlots:
         change=block("v6.change") + a1_change(),
         chart=MainChart("v6-c2a", "C902", tuple(a1_main_panels()),
                         title="v6 minus v5 on v5's own population: equal-fold error-score differences with 95 percent "
-                              "intervals and with 97.5 percent intervals",
+                              "intervals and with wider intervals at the level v5's rule decided at",
                         desc="Four rows: the point-error score and the interval score, each with its 95 percent "
-                             "interval and with its wider 97.5 percent interval, named in the row labels. Each shows "
+                             "interval and with its wider interval at the level v5's rule decided at, named in the "
+                             "row labels. Each shows "
                              "the estimated difference as a hexagon and its interval as a line; every interval "
                              "lies wholly left of zero, which favours v6.",
                         subtitle="Difference in error score, v6 − v5 · paired intervals at 95% and at 97.5% · the hours "
@@ -3184,7 +3189,7 @@ def planned_work() -> str:
     """Planned work, after the chapters (standard §6, amending plan §7.2): unscored, no version number."""
     current = G.current_generation()
     items = "".join(
-        f'<li class="planned-item"><p class="planned-name">{esc(name)}</p>'
+        f'<li class="planned-item"><p class="planned-name">{_structural_versions(name)}</p>'
         f'<dl><dt>Question it will test</dt><dd>{_structural_versions(question)}</dd>'
         f'<dt>Evidence that would decide it</dt><dd>{_structural_versions(evidence)}</dd>'
         f'<dt>Work item</dt><dd>{(S("work-item", item) + " · ") if item else ""}{esc(code)}</dd></dl></li>'

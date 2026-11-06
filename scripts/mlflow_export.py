@@ -751,7 +751,7 @@ PRES5_EXPORTS: dict[str, dict] = {
         "anchor_version": "capstone_v21.md v21-r13 to v21-r17 §24.7",
         "draft": "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json",
         "note": ("CP-26 re-ran B0, v1's recipe refitted daily, v2 to v5 and DDNN-2 alone (CP-28's A1) daily on every "
-                 "eligible development day, 2020-12-29 to 2026-09-06 (2,068 days), under one protocol: issue time D-1 "
+                 "eligible development day, 2020-12-29 to 2026-09-06, under one protocol: issue time D-1 "
                  "11:00 Europe/Berlin, daily refits on 728 days, registered input vintages, CP-25's exclusions; two "
                  "declared routes of v3 to v5 (the weather run six hours late; no load forecast). Four masks are "
                  "reported separately; the old five-fold results stay the historical record. No adoption decision "
@@ -766,7 +766,7 @@ PRES5_EXPORTS: dict[str, dict] = {
         "anchor_version": "capstone_v21.md v21-r17 §24.8",
         "draft": "reports/cp28/MLflow-export-draft.json",
         "note": ("CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each "
-                 "against nominal v5 on the 2,068 paired development days, with one look: improvement by more than 0.5% "
+                 "against nominal v5 on the paired development days, with one look: improvement by more than 0.5% "
                  "on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the "
                  "compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity "
                  "variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was "

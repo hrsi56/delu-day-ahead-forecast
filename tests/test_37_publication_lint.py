@@ -94,9 +94,10 @@ def test_negative_control_precision_too_many_significant_figures(page):
 
 def test_negative_control_precision_eur_decimals(page):
     # PRES-5: the comparison's scale sentence, on the reading path, reads the first generation's row, v6.
+    # (The same value also appears earlier, in "How the product works", which is not on the reading path.)
     marker = 'data-record="derived.periods.v6.stress" data-derived="period_stress">43.2<'
-    assert marker in page
-    broken = page.replace(marker, marker.replace(">43.2<", ">43.25<"), 1)
+    at = page.index(marker, page.index('id="research-results"'))
+    broken = page[:at] + marker.replace(">43.2<", ">43.25<") + page[at + len(marker):]
     assert any("not shown to one decimal" in finding for finding in L.lint_document(broken))
 
 

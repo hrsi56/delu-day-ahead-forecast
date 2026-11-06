@@ -1,0 +1,41 @@
+{
+ "added_by_pres5": [
+  "src/delu_forecast/compact_figures.py",
+  "src/delu_forecast/final_candidate.py"
+ ],
+ "commit": "61658c70520b880d844b1bb54af9973cf2851d9d",
+ "cross_checks": "every sha256 equals reports/rebaseline/harness-log.json's landed_code entry; every git_blob equals `git rev-parse <commit>:<path>`; the bytes equal main 3c8e158c's, PRES-5's base.",
+ "files": {
+  "src/delu_forecast/derived.py": {
+   "bytes": 39600,
+   "git_blob": "e669a65b7e279f24ff58b45286787a0157ed5594",
+   "sha256": "6e0844035c1ad3d7b74ab96a70176558266e00d6599f3e09df336f46d3b4a2d2",
+   "snapshot": "derived.py.txt"
+  },
+  "src/delu_forecast/publication_lint.py": {
+   "bytes": 24902,
+   "git_blob": "9ffc3fa490a35462b3d712679e1321ff2d4708fd",
+   "sha256": "9f56277157e81ca25f06f085bdc6e687187635438a772238fad05bee21b54288",
+   "snapshot": "publication_lint.py.txt"
+  },
+  "src/delu_forecast/registry.py": {
+   "bytes": 59623,
+   "git_blob": "9f21b7a54b3b89df0aa5c4f309585b96fa308194",
+   "sha256": "38df896b279627f7544541c0c5bc7cd6a77a5d5dc3d271120aec09d7abd90ff7",
+   "snapshot": "registry.py.txt"
+  },
+  "src/delu_forecast/research.py": {
+   "bytes": 77332,
+   "git_blob": "6b2c25e278c83da9c892007641c4ae9f4277132e",
+   "sha256": "d9c3ca61be20e03d828fd8773565e10ee21e52419d814b7f3e2a9e7539eea08e",
+   "snapshot": "research.py.txt"
+  },
+  "src/delu_forecast/research_claims.py": {
+   "bytes": 104632,
+   "git_blob": "ff892983d15cda0aca5aef3aeacd765d1bb2b023",
+   "sha256": "b8bc3018061d283fe8298a311593ba9d856a474326178755a531311c325eddc6",
+   "snapshot": "research_claims.py.txt"
+  }
+ },
+ "purpose": "PRES-5 changed these five presentation modules, which CP-26's harness log pins as landed code (reports/rebaseline/harness-log.json, landed_code). Their bytes at CP-26's landing are kept here, hash-bound, so that tests/test_cp26_r15.py and tests/test_cp26_repair_contract.py still prove the log against real bytes without the branch's Git history; every other landed file is compared with the working tree as before."
+}

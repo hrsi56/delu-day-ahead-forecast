@@ -49,6 +49,11 @@ How does v6 · DDNN-2 alone, the policy selected for the final test, compare wit
 
 v6 · DDNN-2 alone keeps only v5's distributional neural network, DDNN-2, with its own quantiles: no LEAR forecasts, no LightGBM, no blend. It is refitted every day on the 728 days before the forecast, issued at 11:00 Berlin time the day before delivery, and has been frozen since 2026-10-30 for its one test.
 
+Difference in error score (v6 − v5) on v5's five test periods, with its 95% confidence interval and its interval at 97.5%. Below zero favours v6.
+
+- Point-error score: −0.0295 [−0.0494, −0.0128] at 95%; [−0.0525, −0.0109] at 97.5%.
+- Interval score: −0.0563 [−0.0747, −0.0390] at 95%; [−0.0773, −0.0367] at 97.5%.
+
 Against v5, on the same 10,747 hours, the point-error score changed by −6% [−9%, −2%] and the interval score by −11% [−15%, −8%], each as a share of v5's score, with 95% confidence intervals; at 97.5%, the level v5's rule decided at, [−10%, −2%] and [−15%, −8%].
 
 On these five periods both paired differences lie below zero, at 95% and at 97.5%. Against the similar-day naive: −51% [−54%, −46%] on the point-error score and −56% [−59%, −52%] on the interval score. A description, not a decision: v5's adoption rule was not re-run, and it adopts nothing here.

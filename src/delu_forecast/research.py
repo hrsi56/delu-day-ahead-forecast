@@ -1150,10 +1150,12 @@ UNIT_RATIO_STREAM = "ratio to the comparator, mean daily loss"
 UNIT_RATIO_B0_DAILY = "ratio to the similar-day naive (B0), mean daily loss"
 UNIT_P = "p-value"
 UNIT_PERCENT_CHANGE = "percent change"
-#: CP-28's descriptive intervals: studentized, from each arm's own primary resamples (reports/cp28/report.md).
-CP28_INTERVAL = Interval("studentized moving-block bootstrap, descriptive (CP-28's primary resamples)", 0.95, 0, 0, 14)
-#: CP-26's ratio intervals (its control audits): paired, from its own resamples.
-CP26_INTERVAL = Interval("paired block bootstrap ratio interval (CP-26's control audits)", 0.95, 0, 0, 7)
+#: CP-28's descriptive intervals: studentized, from each arm's own primary resamples (reports/cp28/report.md), CP-26's
+#: bootstrap as CP-28's frozen protocol fixes it: 14-day blocks, 10,000 replicates, seed 20261012.
+CP28_INTERVAL = Interval("paired non-circular moving-block studentized bootstrap, descriptive (CP-28's primary analysis)",
+                         0.95, 20261012, 10000, 14)
+#: CP-26's ratio intervals (its control audits and the GFS note): its bootstrap (capstone_v21.md §24.7, "The bootstrap").
+CP26_INTERVAL = Interval("paired non-circular moving-block bootstrap ratio interval (CP-26)", 0.95, 20261012, 10000, 14)
 
 
 def _jrec(record_id: str, checkpoint: str, path: str, dotted: str, *, unit: str, precision: int, population: str,

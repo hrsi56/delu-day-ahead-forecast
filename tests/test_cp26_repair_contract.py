@@ -9,6 +9,7 @@ import json
 
 from cp26 import harness as H
 from cp26_ledger_snapshot import identity_path
+import pres5_landed_code
 
 ROOT = Path(__file__).resolve().parents[1]
 INITIAL = '5cc3cc083c4340fd8d792eeaf6551a007987a877'
@@ -59,8 +60,8 @@ def test_anchor_commit_and_landed_base_are_distinct_and_explicit():
     # The landed member code is the code at the landed base, as the harness log recorded it.
     assert active['landed_code_base'] == H.BASE_COMMIT
     landed = json.loads((ROOT / 'reports/rebaseline/harness-log.json').read_text())['landed_code']
-    assert landed == {str(path.relative_to(ROOT)): sha256(path)
-                      for base in H.LANDED_CODE for path in sorted((ROOT / base).rglob('*.py'))}
+    # PRES-5 changed five presentation modules under its brief; their landed bytes are recorded (tests/pres5_landed_code.py).
+    assert landed == pres5_landed_code.landed_code(ROOT)
 
 
 def test_original_documents_and_sections_1_through_23_stay_historical():
