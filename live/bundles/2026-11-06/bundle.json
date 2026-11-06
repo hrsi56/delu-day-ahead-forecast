@@ -1,0 +1,137 @@
+{
+ "as_of_day": "2026-11-06",
+ "manifest": {
+  "artifact": {
+   "artifact_sha256": "ec83580bfa48270c8bf1bf2e47d51714d1cd5c8a4d201fbf28099995665e7e22",
+   "delivery_day": "2026-11-07",
+   "display": "successful daily fit",
+   "issued_policy": "A1"
+  },
+  "files": [
+   {
+    "bytes": 4545,
+    "kind": "training_window",
+    "path": "A1-2026-11-07.json",
+    "sha256": "a25bbd053ebd82f34f9564756183c4b954addac5f8096bf1d3c4f6d17aec8452"
+   },
+   {
+    "bytes": 542444,
+    "kind": "training_window",
+    "path": "A1-2026-11-07.npz",
+    "sha256": "791e1383e898e3940966238d9c3dadb6d24e74418c56f73c533125c07ba1c0bf"
+   },
+   {
+    "bytes": 13328,
+    "kind": "training_window",
+    "path": "B0-2026-11-06.json",
+    "sha256": "e99b2cb34008d2d74b5c8de5cf4f58bee2c21d423e30d789535a1292616e51a4"
+   },
+   {
+    "bytes": 2450,
+    "kind": "training_window",
+    "path": "B0-2026-11-06.npz",
+    "sha256": "6e854b7f1b73f43f95a84e89774361826f765a89250e5a38e3f18857e3c61a4b"
+   },
+   {
+    "bytes": 13328,
+    "kind": "training_window",
+    "path": "B0-2026-11-07.json",
+    "sha256": "f88cb09adbb61ab30e665016ca0bd2e5b9ff0a2f4feb12b6e3d674e5dd8d4135"
+   },
+   {
+    "bytes": 2454,
+    "kind": "training_window",
+    "path": "B0-2026-11-07.npz",
+    "sha256": "30995e499ad2eafbae571fd67960dbce31ec10e0891aeeac4b04a04b63eb0ed3"
+   },
+   {
+    "bytes": 2133210,
+    "kind": "fitted_artifact",
+    "path": "artifact-arrays.npz",
+    "sha256": "e7e5364c2190cad1290e33da2e2da740f850309d6677303497138c84a61d133a"
+   },
+   {
+    "bytes": 8038,
+    "kind": "fitted_artifact",
+    "path": "artifact.json",
+    "sha256": "b81dc6c764ed5c3caf44a604021f22b18c2ecc37ea3bfae08c76930f4785f558"
+   },
+   {
+    "bytes": 340493,
+    "kind": "evaluation",
+    "path": "evaluation.json",
+    "sha256": "ea315730b4de5703b7c1cc21633fad78b11ea0f8ec54cea981646b82a936e23b"
+   },
+   {
+    "bytes": 8244,
+    "kind": "issued_forecasts",
+    "path": "issued-forecasts.json",
+    "sha256": "a0f3a3ed66376e87cdb30e5d8fe7267cc2910467e41e1274413e84b8c49b9a70"
+   },
+   {
+    "bytes": 12418,
+    "kind": "outcomes",
+    "path": "outcomes.json",
+    "sha256": "ef724c85d001400e7379958d74f3a3492be3ed393186853a6c012d05561d94f3"
+   },
+   {
+    "bytes": 2324896,
+    "kind": "series",
+    "path": "series.json",
+    "sha256": "95bd574fe9f239269901fd9f7f21d6fcd740f1646358bb314d2a3a55c1b486ab"
+   }
+  ],
+  "freshness": {
+   "as_of_day": "2026-11-06",
+   "latest_issued_day": "2026-11-07",
+   "state": "fresh"
+  },
+  "policy": {
+   "issuing_host": "Pyodide 0.28.0 in Node.js v26.7.0",
+   "package_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+   "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc"
+  },
+  "product": {
+   "designated_policy": "A1",
+   "evidence_label": "A1 \u00b7 final candidate \u00b7 pending 4.7T; the live product's own issued days from 2026-11-03 (the Owner's decision 28), prospective evaluation in progress, never 4.7T's issuance or score; the development-period displays stay on days through 2026-09-06; not issued: 2026-11-03, a live day's inputs that cannot be shown to precede its cutoff; 2026-11-04, a live day's inputs that cannot be shown to precede its cutoff; 2026-11-05, a live day's inputs that cannot be shown to precede its cutoff",
+   "name": "delu-day-ahead-policy"
+  },
+  "schema": "cp17-manifest-v1",
+  "times": {
+   "data_refresh_utc": "2026-11-06T09:07:44+00:00",
+   "issuance_utc": "2026-11-06T10:00:00+00:00",
+   "last_training_utc": "2026-11-06T10:00:00+00:00"
+  }
+ },
+ "manifest_sha256": "689ab83f6e4f3a942a8d88074117dea63580356ae0565d5bbd24e0fa503a5c75",
+ "publishable": true,
+ "recompute_match": true,
+ "run_id": "local-2026-11-07",
+ "schema": "cp18b-bundle-record-v1",
+ "size": {
+  "first_visit_bundle_bytes": 372173,
+  "first_visit_files": {
+   "artifact.json": 8038,
+   "evaluation.json": 340493,
+   "issued-forecasts.json": 8244,
+   "manifest.json": 2980,
+   "outcomes.json": 12418
+  },
+  "on_request_bytes": 4489666,
+  "on_request_files": {
+   "B0-2026-11-06.json": 13328,
+   "B0-2026-11-06.npz": 2450,
+   "B0-2026-11-07.json": 13328,
+   "B0-2026-11-07.npz": 2454,
+   "artifact-arrays.npz": 2133210,
+   "series.json": 2324896
+  },
+  "total_bytes": 5408828,
+  "training_window_bytes": 546989,
+  "training_window_files": {
+   "A1-2026-11-07.json": 4545,
+   "A1-2026-11-07.npz": 542444
+  }
+ },
+ "verify_problems": []
+}
