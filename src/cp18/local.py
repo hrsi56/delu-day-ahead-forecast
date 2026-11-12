@@ -101,11 +101,16 @@ def stage_env(*keep: str) -> dict:
     return env
 
 
-def stage(name: str, args: list[str], *, keep: tuple[str, ...] = (), cwd: Path | None = None) -> dict:
-    """One stage, a child process of this interpreter; its output goes to this command's own (the agent's log)."""
+def stage(name: str, args: list[str], *, keep: tuple[str, ...] = (), cwd: Path | None = None,
+          command: list[str] | None = None) -> dict:
+    """One stage, a child process of this interpreter (or `command`, e.g. the publication's overlay); its output goes
+    to this command's own (the agent's log)."""
     started = time.perf_counter()
     print(f'local fallback: {name}', flush=True)
-    done = subprocess.run([sys.executable, *args], env=stage_env(*keep), cwd=str(cwd) if cwd else None)
+    env = stage_env(*keep)
+    if command is not None:
+        env['UV_PROJECT_ENVIRONMENT'] = sys.prefix          # the project's environment, never synced or changed
+    done = subprocess.run(command or [sys.executable, *args], env=env, cwd=str(cwd) if cwd else None)
     return {'stage': name, 'exit': done.returncode, 'seconds': round(time.perf_counter() - started, 1),
             'credentials': sorted(keep)}
 
@@ -357,10 +362,11 @@ def after_run(clone: Path, project: Path, out: Path, *, now: datetime, run_id: s
             if built['exit'] == 0:
                 target = (['--hub', HUB] if publish == 'hub' else
                           ['--target', str(Path(publish.removeprefix('local:')).resolve())])
-                steps.append(stage('the publication', [
-                    '-m', 'cp18.publish', '--build', str(out / 'space'), '--bundle', str(out / 'bundle'), *target,
-                    '--root', str(clone), '--live', str(clone / 'live'), '--record', str(out / 'publication.json')],
-                    keep=('HF_TOKEN',) if publish == 'hub' else (), cwd=clone))
+                args = ['-m', 'cp18.publish', '--build', str(out / 'space'), '--bundle', str(out / 'bundle'), *target,
+                        '--root', str(clone), '--live', str(clone / 'live'), '--record', str(out / 'publication.json')]
+                from .publish import hub_command
+                steps.append(stage('the publication', args, keep=('HF_TOKEN',) if publish == 'hub' else (), cwd=clone,
+                                   command=hub_command(args) if publish == 'hub' else None))
     value = records(clone, remote=remote, run_id=run_id)
     dump(out / 'records.json', value)
     steps.append({'stage': 'the records', 'exit': value['exit'], 'outcome': value['outcome']})

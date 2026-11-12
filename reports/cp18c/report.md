@@ -151,7 +151,9 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
     hash), the ecCodes environment, `cp18 run --mode live --inputs live-http --remote origin`, then the bundle
     (`--arrays` from `$RESULTS/run/runs/A1-<day>-*/run-arrays.npz` before the results step deletes them, else
     `--refit`), the Space (`--live live --history reports/cp18c/history-v1/files`), the Hub publication
-    (`cp18.publish --hub`), and the day's records through the claim.
+    (`cp18.publish --hub`, with the Hub client pinned, `huggingface_hub==0.36.2` as v1's deployment pinned it, in an
+    ephemeral `uv run --with` overlay over the project's environment, which is never synced or changed), and the day's
+    records through the claim.
   - **Secrets** inside the steps that use them: `ENTSOE_API_TOKEN` on the acquisition and run steps, `HF_TOKEN` on the
     publication step; the by-value scan step reads them to search the results for their values. `DAGSHUB_USER_TOKEN`
     is not used. `permissions: {}` at the top; `contents: write` only on the acquisition and run jobs (N6); the dry run
@@ -212,5 +214,9 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
   has fewer than 14 scored days); that build is never served.
 - **Retrievals outside the archive:** the Lead's SMARD probe (counts only), a smoke test into a scratch archive, the two
   failed GFS decodes, v1's 805 files and their listing, and the scratch rehearsal's development-day GFS (40 MB per run).
+- **The Hub client** is not a project dependency, and the imported workflow and fallback called the publication without
+  it, so every daily publication would have failed on its import. Found before the review and fixed in both callers:
+  `cp18.publish.HUB_CLIENT` (`huggingface_hub==0.36.2`) through `uv run --frozen --no-sync --with`, leaving `uv.lock`
+  and the issuing host's environment unchanged (`tests/cp18c/test_publish_hub.py`).
 - **Cost:** 0.27 of 6 GitHub job-hours; about 6 local machine-hours before the Integration review
   (`reports/cp18c/evidence/compute-ledger.json`).

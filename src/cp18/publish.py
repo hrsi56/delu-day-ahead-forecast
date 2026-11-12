@@ -38,6 +38,19 @@ from .bundle import gate, read
 from .records import RecordLog
 
 SCHEMA = 'cp18b-publication-v1'
+#: The Hub client the live publication runs with (CP-18c), as v1's deployment pinned it. It is not a project
+#: dependency (`uv.lock` and the issuing host's environment never change): the publication runs in an ephemeral
+#: overlay, `uv run --frozen --no-sync --with huggingface_hub==0.36.2 python -m cp18.publish --hub …`, with
+#: `UV_PROJECT_ENVIRONMENT` naming the project's environment.
+HUB_CLIENT = 'huggingface_hub==0.36.2'
+
+
+def hub_command(python_args: list[str], uv: list[str] | None = None) -> list[str]:
+    """The publication's command line in the overlay that supplies `HUB_CLIENT` (the fallback and the workflow)."""
+    import shutil
+    import sys
+    uv = uv or ([shutil.which('uv')] if shutil.which('uv') else [sys.executable, '-m', 'uv'])
+    return [*uv, 'run', '--frozen', '--no-sync', '--with', HUB_CLIENT, 'python', *python_args]
 LOOPBACK = ('127.0.0.1', 'localhost', '[::1]')
 
 
@@ -103,8 +116,12 @@ class HubTarget:
         token = os.environ.get('HF_TOKEN')
         if not token:
             raise PublicationRefused('HF_TOKEN is unset; no upload was attempted')
-        from huggingface_hub import CommitOperationAdd, CommitOperationDelete, HfApi   # `uv run --with`, pinned
-        from huggingface_hub.utils import disable_progress_bars
+        try:
+            from huggingface_hub import CommitOperationAdd, CommitOperationDelete, HfApi
+            from huggingface_hub.utils import disable_progress_bars
+        except ImportError:
+            raise PublicationRefused(f'{HUB_CLIENT} is not available: run the publication through hub_command '
+                                     '(uv run --with); nothing was uploaded') from None
         disable_progress_bars()
         operations = [CommitOperationAdd(path_in_repo=path, path_or_fileobj=str(Path(build) / path)) for path in adds]
         operations += [CommitOperationDelete(path_in_repo=path) for path in deletes]

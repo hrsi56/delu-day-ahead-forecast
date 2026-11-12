@@ -407,7 +407,10 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          .venv/bin/python -m cp18.publish --build "$RESULTS/space" --bundle "$RESULTS/bundle" --hub "$SPACE_HUB" \
+          # The Hub client, pinned, in an ephemeral overlay over the project's environment (never synced or changed):
+          # cp18.publish.HUB_CLIENT, as v1's deployment pinned it.
+          UV_PROJECT_ENVIRONMENT=.venv python -m uv run --frozen --no-sync --with "huggingface_hub==0.36.2" \
+              python -m cp18.publish --build "$RESULTS/space" --bundle "$RESULTS/bundle" --hub "$SPACE_HUB" \
               --root . --live live --record "$RESULTS/publication.json"
       - name: The day's records, committed and pushed through the claim
         if: ${{ !cancelled() && steps.run.outcome == 'success' }}
