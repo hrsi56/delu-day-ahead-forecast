@@ -206,6 +206,16 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
   `git rm -r -q --ignore-unmatch live` before `seed-store`), after checking that no freeze manifest, `PINS` or evidence
   binds its bytes (`a6e56482…` before the line, named nowhere). The same set-aside is in `src/cp18/forced.py` and in
   `daily.yml`'s dry run.
+- **The Orchestrator's O36:** one added line in `tests/cp18a/test_rules.py`, the first statement of
+  `test_the_workflow_is_dispatch_only_with_its_permissions_scoped`: `__import__('pytest').skip(…)`, "superseded at
+  CP-18c's activation (r20 §24.14; brief item 8)". No manifest, `PINS` or evidence binds its bytes (`f839d52f…` before
+  the line). Every property of that test that still holds is asserted in `tests/cp18c/test_workflow.py`: the top-level
+  `permissions: {}` and `contents: write` only where a job pushes
+  (`test_permissions_contents_write_only_on_the_jobs_that_push`); SHA-pinned actions and the checkout keeping no
+  credential (`test_actions_are_pinned_by_commit_and_the_checkout_keeps_no_credential`); no interpolation into scripts
+  and the secrets read only inside the steps that use them (`test_secrets_are_read_only_inside_the_steps_that_use_them`);
+  the time limits (`test_every_job_has_a_time_limit`); the pipeline jobs on `macos-26`
+  (`test_the_pipeline_jobs_run_on_the_issuing_hosts_runner`).
 - **O33's runs** come from a transcription of `cp28.inference.calendar_runs` without its guard admission (the frozen
   function refuses every live date); everything else is `cp28`'s own code, shown bit-identical.
 - **The committed browser acceptance** (`reports/cp18c/acceptance/acceptance.json`) ran on the two-day bundle

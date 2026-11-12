@@ -140,6 +140,12 @@ def test_permissions_contents_write_only_on_the_jobs_that_push():
         assert pushes == (job['permissions'].get('contents') == 'write'), name
 
 
+def test_the_pipeline_jobs_run_on_the_issuing_hosts_runner():
+    # carried from CP-18a's dispatch-only test (superseded by brief item 8, the Orchestrator's O36): runs-on macos-26
+    for name in ('dry-run', 'acquire', 'run'):
+        assert JOBS[name]['runs-on'] == 'macos-26', name
+
+
 def test_every_job_has_a_time_limit():
     for name, job in JOBS.items():
         assert 'timeout-minutes' in job, name

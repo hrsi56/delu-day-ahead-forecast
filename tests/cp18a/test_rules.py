@@ -40,6 +40,7 @@ def test_the_pipeline_calls_verify_bundle_only_through_r7():
 # ---- the workflow ------------------------------------------------------------------------------------------------
 
 def test_the_workflow_is_dispatch_only_with_its_permissions_scoped():
+    __import__('pytest').skip("superseded at CP-18c's activation (r20 §24.14; brief item 8): daily.yml gains its schedule, the live mode and its secrets; tests/cp18c/test_workflow.py checks the activated workflow")
     text = WORKFLOW.read_text()
     import yaml
     value = yaml.safe_load(text)
