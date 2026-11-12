@@ -1,4 +1,4 @@
-# The Orchestrator's rulings during CP-18c, as relayed to the Lead
+# The Orchestrator's rulings during CP-18c, as relayed to the Lead (O29–O33, O35, O36)
 
 The Orchestrator relayed these to the CP-18c Lead by session message during the round, under decision 27 and logged
 for the Owner's ratification. They are copied here verbatim, so the Integration review can check the candidate against
@@ -73,6 +73,30 @@ them; the Lead did not author them.
 
 The Lead's question was to add, after the seed clone's `config core.hooksPath` line,
 `sh('git', '-C', str(seed), 'rm', '-r', '-q', '--ignore-unmatch', 'live')`.
+
+## O36 (2026-11-12), on the Lead's second question
+
+> Orchestrator: approved as an allowed-paths amendment, ruling O36 (decision 27). You may add
+> `tests/cp18a/test_rules.py`, for that one added skip line, with its reason as you wrote it. The reason is that
+> CP-18a's dispatch-only contract is superseded by brief item 8.
+>
+> Conditions:
+> 1. **Every property of the old test that still holds** must be asserted in `tests/cp18c/test_workflow.py`. Name each
+>    one in the return, mapped from the old assertion to the new test:
+>    - the top-level `permissions: {}`;
+>    - `contents: write` only where it pushes;
+>    - SHA-pinned actions;
+>    - no interpolation into scripts;
+>    - the timeouts.
+>
+>    Secrets must also be read only inside the steps that use them.
+> 2. Disclose O36 beside O35 in the return.
+>
+> Nothing else outside your paths is covered.
+
+The Lead's proposed line, the first statement of `test_the_workflow_is_dispatch_only_with_its_permissions_scoped`:
+`__import__('pytest').skip("superseded at CP-18c's activation (r20 §24.14; brief item 8): daily.yml gains its
+schedule, the live mode and its secrets; tests/cp18c/test_workflow.py checks the activated workflow")`.
 
 ## Instructions of 2026-11-12 (after the weekly pause)
 
