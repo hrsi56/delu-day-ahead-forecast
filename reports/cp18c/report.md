@@ -207,7 +207,7 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
 - **O33's runs** come from a transcription of `cp28.inference.calendar_runs` without its guard admission (the frozen
   function refuses every live date); everything else is `cp28`'s own code, shown bit-identical.
 - **The committed browser acceptance** (`reports/cp18c/acceptance/acceptance.json`) ran on the two-day bundle
-  (`689ab83f…`) before the live label took O30's name; the Integration Critic reran the Space in Chromium and WebKit
+  (`689ab83f…`) before the live label took O30's name; the Integration review reruns the Space in Chromium and WebKit
   on the candidate's live bundle. O33's band was checked on a display-only build from development days (the live record
   has fewer than 14 scored days); that build is never served.
 - **Retrievals outside the archive:** the Lead's SMARD probe (counts only), a smoke test into a scratch archive, the two
