@@ -382,6 +382,23 @@ def test_f02_negative_control_an_icon_with_its_namespace_in_clear_is_read_as_an_
     assert check_links._URL.findall(clear)
 
 
+def test_f03_negative_control_a_failed_or_one_engine_start_is_refused(tmp_path):
+    """The live product's measured start is refused when a cold start in the record did not reach the ready state, or
+    when one engine is missing (Integration review 1, F1)."""
+    record = json.loads(B.LIVE_CHECK.read_text())
+    failed = json.loads(json.dumps(record))
+    next(c for c in failed["checks"] if c["name"].startswith("demo: fresh anonymous cold start"))["evidence"]["ready"] = False
+    one_engine = json.loads(json.dumps(record))
+    one_engine["checks"] = [c for c in one_engine["checks"]
+                            if not (c["name"].startswith("demo: fresh anonymous cold start") and c["engine"] == "webkit")]
+    assert B.live_measurement()["seconds"] > 0  # the committed record passes
+    for doctored, reason in ((failed, "did not reach the ready state"), (one_engine, "in Chromium and in WebKit")):
+        path = tmp_path / "acceptance.json"
+        path.write_text(json.dumps(doctored))
+        with pytest.raises(ValueError, match=reason):
+            B.live_measurement(check=path)
+
+
 def test_f02_negative_control_a_page_without_an_icon_is_caught(page):
     stripped = re.sub(r'<link rel="icon"[^>]*>', "", page)
     assert not re.findall(r'<link rel="icon" href="data:', stripped[:stripped.index("</head>")])
@@ -390,17 +407,24 @@ def test_f02_negative_control_a_page_without_an_icon_is_caught(page):
 def test_f03_the_measured_start_is_beside_the_action_outside_any_disclosure(page):
     action = page.index('class="btn-primary external"')
     if G.final_candidate() is not None:
-        # PRES-5: the primary action opens the live product, and its startup metadata is beside it (§7.1): the first
-        # visit's size, as CP-18b measured it on development data. v1's measured start (2026-09-29) timed the earlier
-        # Space's root, which decision 28 gives to the live product; v1's demo is linked there, under History.
-        startup = page.index('data-block="product.live.startup"')
+        # PRES-5 (PUBLISH_RULES §7.1; Integration review 1, F1): the primary action opens the live product, and its
+        # startup metadata sits beside it: the first visit's size, the measured cold start, the browsers and machine,
+        # the date and the last verification, each read from CP-18b's committed records. v1's measured start of
+        # 2026-09-29 timed the earlier Space's root, which decision 28 gives to the live product; v1's demo is linked.
+        startup = page.index('data-startup="measured"')
         assert 0 < startup - action < 1500
         opened = page.rfind("<details", 0, startup)
         assert opened == -1 or page.rfind("</details>", 0, startup) > opened
-        line = _text(page[startup:page.index("</p>", startup)])
-        assert "MB, measured on development data" in line and "historical demo" in line
-        assert re.search(r'href="https://[^"]+/history/"', page[startup:page.index("</p>", startup)])
-        assert 'data-startup="measured"' not in page[:page.index('id="product"')]
+        live = B.live_measurement()
+        markup = page[startup:page.index("</p>", startup)]
+        line = _text(markup)
+        assert f"About {live['mb']} MB on a first visit" in line
+        assert f"ready within {live['seconds']} s in Chromium {live['chromium']} and WebKit {live['webkit']}" in line
+        assert f"on {live['machine']}, served locally on development data, {live['date']}" in line
+        assert f"last verified {live['verified']}" in line and "historical demo" in line
+        for field in ("#size", "#checks", "#engines", "#started_utc", "#finished_utc"):
+            assert f'{field}">' in markup, field  # each value carries its record's pointer
+        assert re.search(r'href="https://[^"]+/history/"', markup)
         return
     startup = page.index('data-startup="measured"')
     assert 0 < startup - action < 1500

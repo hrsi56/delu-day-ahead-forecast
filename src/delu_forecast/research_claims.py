@@ -833,11 +833,9 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            ({s:name:A1} in the frozen records), frozen for {s:work-item:4.7T}, its one test, on {s:count:90} days registered in
            advance.""", PAGE, README),
     # ---- the opening's product line (decision 28; O13; O17) ----
-    _block("product.live", "P61", """The Space runs """ + _A1 + """ daily, frozen, before its one test, by the Owner's
-           decision to go live: prospective evaluation in progress. A pass releases it; otherwise {g:v1.version}, the
-           last released generation, is the product again.""", PAGE, README),
-    _block("product.live.startup", "P61", """It opens with about {s:size:0.55} MB, measured on development data; the
-           training window loads on request.""", PAGE),
+    _block("product.live", "P61", """By the Owner's decision, the Space runs """ + _A1 + """ daily before its one test:
+           prospective evaluation in progress. A pass releases it; otherwise {g:v1.version}, the last released
+           generation, is the product again.""", PAGE, README),
     # ---- the comparison, with A1 first (the brief's outcome 1) ----
     _block("comparison.finding.a1", "P62", """{g:v6.version} against {g:v5.version}, as a share of {g:v5.version}'s error
            scores: {r:derived.change.v6.S_MAE} {r:derived.change.v6.S_MAE|ci} on the point-error score and
@@ -848,15 +846,15 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     _block("terms.a1_row", "P62", """**""" + _A1 + """:** {s:name:A1} in the frozen records, the final candidate,
            scored on these same hours from its stored forecasts.""", PAGE),
     # ---- CP-26's every-day results, beside the five periods and never pooled with them (outcome 2) ----
-    _block("everyday.title", "C603", """Every eligible development day, scored separately: {g:v5.version} and
-           {g:v4.version} are level there, and {g:v6.version}'s forecasts have the lowest error""", PAGE),
+    _block("everyday.title", "C603", """Every eligible development day, scored separately: {g:v5.version}'s gain
+           over {g:v4.version} is not shown there, and {g:v6.version}'s forecasts have the lowest error""", PAGE),
     _block("everyday.sub", "C601", """A separate population: {r:cp28.paired_dates} eligible days from
            {s:date:2020-12-29} to {s:date:2026-09-06}, every policy refitted daily under one protocol · mean daily error,
            EUR/MWh · never pooled with the five periods above · development, post-selection""", PAGE),
     _block("everyday.finding", "C603", """{g:v5.version} against {g:v4.version}: {r:derived.cp26.v5-v4.MAE}
            {r:derived.cp26.v5-v4.MAE|ci} in point error and {r:derived.cp26.v5-v4.WIS}
-           {r:derived.cp26.v5-v4.WIS|ci} in interval error, with {s:level:95%} intervals: the five periods' gain does not
-           carry over to every day.""", PAGE, README),
+           {r:derived.cp26.v5-v4.WIS|ci} in interval error, with {s:level:95%} intervals: the five periods' gain is not shown
+           on every day, and the intervals do not establish that the two are equal.""", PAGE, README),
     _block("everyday.finding.v6", "C604", """{g:v6.version}'s forecasts, {s:name:DDNN-2} alone, have the lowest error on
            both scores: {r:derived.cp28.A1.MAE} {r:derived.cp28.A1.MAE|ci} and {r:derived.cp28.A1.WIS}
            {r:derived.cp28.A1.WIS|ci} against {g:v5.version}, with the selection's descriptive {s:level:95%}

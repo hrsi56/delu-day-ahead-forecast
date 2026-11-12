@@ -77,6 +77,10 @@ MLFLOW_INDEX = ROOT / "reports" / "presentation" / "mlflow_index.json"
 #: The demo's measured start (plan §7.11, PUBLISH_RULES 1.0 §7.1): fresh anonymous cold starts of the public demo,
 #: recorded by `scripts/check_reader_paths.py demo`. The page states the record's own browser, machine and dates.
 DEMO_CHECK = ROOT / "reports" / "presentation" / "release-checks" / "pres-2-public-demo-baseline.json"
+#: The live product's measured start (PRES-5; PUBLISH_RULES §7.1): CP-18b's acceptance run of the Space it built, served
+#: locally on development data, and the build record's first-visit size.
+LIVE_CHECK = ROOT / "reports" / "cp18b" / "acceptance.json"
+LIVE_BUILD = ROOT / "reports" / "cp18b" / "space-build.json"
 #: The released model's inputs, from its committed card: identity, not a result.
 CHAMPION_CARD = ROOT / "models" / "champion" / "champion_card.json"
 
@@ -1670,6 +1674,25 @@ def demo_measurement(path: Path = DEMO_CHECK) -> dict:
             "path": str(path.relative_to(ROOT))}
 
 
+def live_measurement(check: Path = LIVE_CHECK, build: Path = LIVE_BUILD) -> dict:
+    """The live product's startup metadata beside its action (PUBLISH_RULES §7.1; Integration review 1, F1): the first
+    visit's size, the measured cold start in each engine, the browsers, the machine, the measurement date and the last
+    date on which every cold start in the record reached the ready state. Every value is read from CP-18b's committed
+    acceptance and build records (the Space served locally, on development data); none is typed."""
+    record = json.loads(check.read_text())
+    starts = [c for c in record["checks"] if c["name"].startswith("demo: fresh anonymous cold start")]
+    if not starts or not all(c.get("pass") and (c.get("evidence") or {}).get("ready") for c in starts):
+        raise ValueError(f"{check.name}: a cold start did not reach the ready state; the page cannot state a start")
+    if {c["engine"] for c in starts} != {"chromium", "webkit"}:
+        raise ValueError(f"{check.name}: the measured start needs a cold start in Chromium and in WebKit")
+    size = json.loads(build.read_text())["size"]["first_visit"]["bytes"]
+    return {"mb": f"{size / 1e6:.2f}", "seconds": max(c["evidence"]["seconds_to_ready"] for c in starts),
+            "chromium": record["engines"]["chromium"].split(".")[0], "webkit": record["engines"]["webkit"],
+            "machine": "a Mac" if record["machine"].startswith("macOS") else record["machine"],
+            "date": record["started_utc"][:10], "verified": record["finished_utc"][:10],
+            "check": str(check.relative_to(ROOT)), "build": str(build.relative_to(ROOT))}
+
+
 def header() -> str:
     return (
         '<header class="site-header"><div class="header-inner">'
@@ -1750,9 +1773,14 @@ def opening(C, payload) -> str:
             f'<p class="preview-links"><a class="quiet" href="#product-forecast">Read a forecast</a></p></figure>')
         # Startup metadata beside the primary action (§7.1) is the live product's. v1's measured start (2026-09-29)
         # timed the earlier Space's root, which decision 28 gives to the live product; its demo is linked, not timed.
-        startup = (f'<p class="startup" data-block="product.live.startup">{RC.render("product.live.startup")} '
-                   f'<a class="quiet external in-text" href="{attr(history_url(C))}">{ver(released.version)}\'s '
-                   f'historical demo</a></p>')
+        live = live_measurement()
+        rc = lambda field, text: f'<span data-release-check="{attr(live["check"])}#{field}">{esc(text)}</span>'  # noqa: E731
+        startup = (f'<p class="startup" data-startup="measured">About <span data-release-check="{attr(live["build"])}#size">'
+                   f'{esc(live["mb"])}</span> MB on a first visit; ready within {rc("checks", live["seconds"])} s in '
+                   f'Chromium {rc("engines", live["chromium"])} and WebKit {rc("engines", live["webkit"])} on '
+                   f'{esc(live["machine"])}, served locally on development data, {rc("started_utc", live["date"])}; last '
+                   f'verified {rc("finished_utc", live["verified"])}. <a class="quiet external in-text" '
+                   f'href="{attr(history_url(C))}">{ver(released.version)}\'s historical demo</a></p>')
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">

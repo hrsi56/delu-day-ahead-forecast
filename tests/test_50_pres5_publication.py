@@ -403,3 +403,20 @@ def test_any_other_landed_file_is_still_compared_with_the_working_tree(tmp_path,
     other = tree / "src/delu_forecast/claims.py"
     other.write_bytes(other.read_bytes() + b"\n# changed\n")
     assert L.landed_code(tree) != log
+
+
+def test_the_evidence_tags_date_is_the_tips():
+    """The page labels v6's raw rows "frozen <date>" from the registry; that date is the evidence tip's (Integration
+    review 1, F3). Before the tag exists, it is no earlier than the last commit of the rows it labels."""
+    date = G.EVIDENCE_TAGS["evidence/pres-5"][1]
+    tagged = subprocess.run(["git", "log", "-1", "--format=%cs", "evidence/pres-5"], cwd=ROOT, capture_output=True,
+                            text=True)
+    if tagged.returncode == 0 and tagged.stdout.strip():
+        assert date == tagged.stdout.strip()
+        return
+    shallow = subprocess.run(["git", "rev-parse", "--is-shallow-repository"], cwd=ROOT, capture_output=True, text=True)
+    rows = subprocess.run(["git", "log", "-1", "--format=%cs", "--", "reports/pres5/a1-in-v5"], cwd=ROOT,
+                          capture_output=True, text=True)
+    if shallow.stdout.strip() != "false" or rows.returncode != 0 or not rows.stdout.strip():
+        pytest.skip("no history here to date the rows (a depth-1 checkout)")
+    assert date >= rows.stdout.strip()
