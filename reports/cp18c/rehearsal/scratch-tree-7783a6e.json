@@ -1,0 +1,27 @@
+{
+ "boundary": {
+  "boundary": "2026-09-06",
+  "rows_admitted": {
+   "data/snapshot.parquet": 67343,
+   "reports/development-inputs/weather-features-gaps.parquet": 7897,
+   "reports/weather-ablation/weather-features.parquet": 59446
+  }
+ },
+ "bytes": 71198623,
+ "candidate": "8ff6b92af5c37646d90ac6a64e38c09cdc5c63e9",
+ "carried": {
+  "run42221640423": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18c/builder-workflow/run1/artifact/live/store"
+ },
+ "files": 456,
+ "largest": {
+  "bytes": 30830306,
+  "path": "models/champion/python_model.pkl"
+ },
+ "schema": "cp18a-scratch-tree-v1",
+ "scratch_files_sha256": "bfadce27ae05ec4e89c89b4f6b9a4a5672f3b34af638f251c14058cb3252837a",
+ "uncommitted": {
+  ".github/workflows/daily.yml": "755dfd7a8c3fbe79d026096ecb687fbcf24a4ab762cf6e8687a7e0b2e47d3e29",
+  "src/cp18/local.py": "fd9378517b178a47f5da32df50f79bb2a6553061c2f541600ea30121abce8a26",
+  "src/cp18/scratch.py": "d3dd645c2d59b0f7d78226d7474e2024d6c3cad52514a417dc87760c2b45eba1"
+ }
+}

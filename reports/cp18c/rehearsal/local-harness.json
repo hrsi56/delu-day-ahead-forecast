@@ -1,0 +1,201 @@
+{
+ "bundle": {
+  "arrays": "within the frozen recomputation tolerance (1.1e-13 EUR/MWh; runtime rounding)",
+  "bundle_record": "2026-08-30/bundle.json",
+  "first_visit_bytes": 355625,
+  "freshness": {
+   "as_of_day": "2026-08-30",
+   "latest_issued_day": "2026-08-31",
+   "state": "fresh",
+   "target_cause": null,
+   "target_day": "2026-08-31",
+   "target_status": "issued"
+  },
+  "manifest_sha256": "18d27de2af88ab58b32354d04059e8f1d625cc2b0274180944137842b180302b",
+  "publishable": true,
+  "reason": null,
+  "served_artifact": {
+   "day": "2026-08-31",
+   "sha256": "8457d45523e1f5710605eeb365dcfd0f9d8dedf1b982b59fa3e0f135126842d9"
+  }
+ },
+ "decode_check": {
+  "arrays": {
+   "data": true,
+   "fields": true,
+   "lats": true,
+   "leads": true,
+   "lons": true
+  },
+  "decoder": {
+   "eccodes": "2.49.0",
+   "module": "cp20.gfs.decode",
+   "numpy": "2.5.3",
+   "python": "3.13.15"
+  },
+  "delivery_day": "2026-09-06",
+  "equal": true,
+  "max_abs_difference": 0.0,
+  "messages": {
+   "byte_range_equal": 50,
+   "compared": 50,
+   "meta_equal": 50,
+   "packing_quantum_equal": 50,
+   "same_set": true,
+   "sha256_equal": 50
+  },
+  "npz_sha256": {
+   "archived": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "decoded": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "equal": true
+  },
+  "outcome": "the decode equals the archived decode: every message byte for byte, its metadata, and the arrays exactly",
+  "retrieved_bytes": 40254443,
+  "run": "2026-09-05"
+ },
+ "ecCodes": {
+  "eccodes": {
+   "api_version": "2.49.0",
+   "library": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18c/builder-workflow/tree2/.local/artifacts/cp-20/wx-venv/lib/python3.13/site-packages/eccodeslib/lib/libeccodes.dylib",
+   "library_sha256": "b04c71f716e64c71bb5f2a615ec01175211b2ece36611c1d7399b2ad6d263a48",
+   "module_version": "2.49.0"
+  },
+  "extra": [],
+  "pinned": {
+   "eccodes": {
+    "content_sha256": "c96452080376642dad1e997ec1901cc5010ed51e8b0af14c67726fac1fcb8cc1",
+    "files": 29,
+    "version": "2.48.0"
+   },
+   "eccodeslib": {
+    "content_sha256": "fdf4604e924024cbba8a9f7a982733fbd823ce79ce244f205bca89c1fe838a31",
+    "files": 71,
+    "version": "2.49.0.30"
+   },
+   "eckitlib": {
+    "content_sha256": "ec8496240d65031fe794cc91af31b427b88832f74f632af50a0b5b44682aa820",
+    "files": 785,
+    "version": "2.3.0.30"
+   },
+   "findlibs": {
+    "content_sha256": "08c9773ef45aa9d27b905287caeacff7392d4a76a78265c77419266305b4c5cb",
+    "files": 5,
+    "version": "0.1.3"
+   },
+   "numpy": {
+    "content_sha256": "12b4d910408ab5ba518c24285bedfb87f000219799ace52f8889de93f0ff8e37",
+    "files": 922,
+    "version": "2.5.3"
+   }
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "problems": [],
+  "python": "3.13.15"
+ },
+ "guard_demo": {
+  "all_as_expected": true,
+  "cases": [
+   [
+    "a clean commit, with fake credentials set",
+    "passed",
+    true,
+    false
+   ],
+   [
+    "a staged file holding a fake ENTSOE_API_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a commit message holding a fake HF_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a staged environment dump (no value set: the leak scan, by its shape)",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a push of a commit holding a fake DAGSHUB_USER_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a data-only commit, with fake credentials set",
+    "passed",
+    true,
+    false
+   ],
+   [
+    "its push, with fake credentials set",
+    "passed",
+    true,
+    false
+   ]
+  ]
+ },
+ "prepare": {
+  "node_binary_sha256": "a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df",
+  "package_equal_to_manifest": true,
+  "package_zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94",
+  "pinned_states": 4,
+  "pyodide_files": 23
+ },
+ "publication": {
+  "checked": 56,
+  "published": true,
+  "served_manifest_sha256": "18d27de2af88ab58b32354d04059e8f1d625cc2b0274180944137842b180302b",
+  "stopped": null,
+  "target": "http://127.0.0.1:50216/"
+ },
+ "records": {
+  "exit": 0,
+  "outcome": "pushed c0ea4765beb9967f7cdfc288881ea6c3dcfe83ff",
+  "paths": [
+   "live/store",
+   "live/inputs",
+   "live/evaluation",
+   "live/bundles"
+  ]
+ },
+ "results_files": 130,
+ "run": {
+  "commits": [
+   {
+    "pushed": "523ee3a0bdbe6035fdd5a191be1a91bd17a80484"
+   },
+   {
+    "pushed": "ba82b3b56ec99da050fe14ec3d73014b6c0e9a58"
+   }
+  ],
+  "days": {
+   "2026-08-31": {
+    "artifact_sha256": "8457d45523e1f5710605eeb365dcfd0f9d8dedf1b982b59fa3e0f135126842d9",
+    "policy": "A1",
+    "seconds": 262.1628504580003,
+    "status": "issued"
+   }
+  },
+  "exit": 0,
+  "gate_passed": true,
+  "outcome": "done",
+  "planned": [
+   "2026-08-31"
+  ],
+  "run_id": "gh-9000000001-1",
+  "seconds": 356.8022100420203
+ },
+ "space": {
+  "bundle_manifest_sha256": "18d27de2af88ab58b32354d04059e8f1d625cc2b0274180944137842b180302b",
+  "files": 45,
+  "history": true,
+  "refused": false
+ },
+ "tree": "cp18.scratch --uncommitted from 8ff6b92a",
+ "where": "local harness on the Owner's M3 (Apple M3, macOS 26.5.2), emulating the runner: tests/harness at .local/tmp/cp-18c/builder-workflow/harness.py"
+}

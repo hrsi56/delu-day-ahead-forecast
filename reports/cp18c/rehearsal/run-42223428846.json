@@ -1,0 +1,210 @@
+{
+ "bundle": {
+  "arrays": "within the frozen recomputation tolerance (1.3e-13 EUR/MWh; runtime rounding)",
+  "bundle_record": "2026-08-30/bundle.json",
+  "first_visit_bytes": 360832,
+  "freshness": {
+   "as_of_day": "2026-08-30",
+   "latest_issued_day": "2026-08-31",
+   "state": "fresh",
+   "target_cause": null,
+   "target_day": "2026-08-31",
+   "target_status": "issued"
+  },
+  "manifest_sha256": "d163e76cbc5b23682824ba6846554946da47fa988b013c97e32d1da3b11f5816",
+  "publishable": true,
+  "reason": null,
+  "served_artifact": {
+   "day": "2026-08-31",
+   "sha256": "1e08a67d37964a194a589fd8c4251c1aed2519da24564e0ba31ee26edb8b5638"
+  }
+ },
+ "decode_check": {
+  "arrays": {
+   "data": true,
+   "fields": true,
+   "lats": true,
+   "leads": true,
+   "lons": true
+  },
+  "decoder": {
+   "eccodes": "2.49.0",
+   "module": "cp20.gfs.decode",
+   "numpy": "2.5.3",
+   "python": "3.13.15"
+  },
+  "delivery_day": "2026-09-06",
+  "equal": true,
+  "max_abs_difference": 0.0,
+  "messages": {
+   "byte_range_equal": 50,
+   "compared": 50,
+   "meta_equal": 50,
+   "packing_quantum_equal": 50,
+   "same_set": true,
+   "sha256_equal": 50
+  },
+  "npz_sha256": {
+   "archived": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "decoded": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "equal": true
+  },
+  "outcome": "the decode equals the archived decode: every message byte for byte, its metadata, and the arrays exactly",
+  "retrieved_bytes": 40254443,
+  "run": "2026-09-05"
+ },
+ "ecCodes": {
+  "eccodes": {
+   "api_version": "2.49.0",
+   "library": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/artifacts/cp-20/wx-venv/lib/python3.13/site-packages/eccodeslib/lib/libeccodes.dylib",
+   "library_sha256": "b04c71f716e64c71bb5f2a615ec01175211b2ece36611c1d7399b2ad6d263a48",
+   "module_version": "2.49.0"
+  },
+  "extra": [],
+  "pinned": {
+   "eccodes": {
+    "content_sha256": "c96452080376642dad1e997ec1901cc5010ed51e8b0af14c67726fac1fcb8cc1",
+    "files": 29,
+    "version": "2.48.0"
+   },
+   "eccodeslib": {
+    "content_sha256": "fdf4604e924024cbba8a9f7a982733fbd823ce79ce244f205bca89c1fe838a31",
+    "files": 71,
+    "version": "2.49.0.30"
+   },
+   "eckitlib": {
+    "content_sha256": "ec8496240d65031fe794cc91af31b427b88832f74f632af50a0b5b44682aa820",
+    "files": 785,
+    "version": "2.3.0.30"
+   },
+   "findlibs": {
+    "content_sha256": "08c9773ef45aa9d27b905287caeacff7392d4a76a78265c77419266305b4c5cb",
+    "files": 5,
+    "version": "0.1.3"
+   },
+   "numpy": {
+    "content_sha256": "12b4d910408ab5ba518c24285bedfb87f000219799ace52f8889de93f0ff8e37",
+    "files": 922,
+    "version": "2.5.3"
+   }
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "problems": [],
+  "python": "3.13.15"
+ },
+ "github_run": "42223428846",
+ "guard_demo": {
+  "all_as_expected": true,
+  "cases": [
+   [
+    "a clean commit, with fake credentials set",
+    "passed",
+    true,
+    false
+   ],
+   [
+    "a staged file holding a fake ENTSOE_API_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a commit message holding a fake HF_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a staged environment dump (no value set: the leak scan, by its shape)",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a push of a commit holding a fake DAGSHUB_USER_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a data-only commit, with fake credentials set",
+    "passed",
+    true,
+    false
+   ],
+   [
+    "its push, with fake credentials set",
+    "passed",
+    true,
+    false
+   ]
+  ]
+ },
+ "head_sha": "7783a6e1839421cdbe6764a294feaca12f702333",
+ "inputs": {
+  "decode_run": "'' given; GitHub applied the default 2026-09-05",
+  "inputs": "live:reports/cp18a/dryrun/recorded",
+  "minutes": "60",
+  "mode": "dry-run",
+  "now": "2026-08-30T15:00:00+02:00",
+  "store": "carried:reports/cp18a/dryrun/carried/run42221640423"
+ },
+ "prepare": {
+  "node_binary_sha256": "a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df",
+  "package_equal_to_manifest": true,
+  "package_zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94",
+  "pinned_states": 4,
+  "pyodide_files": 23
+ },
+ "proved": [
+  "a carried store (run 42221640423's) seeds the dry run's origin; the run finds its target day decided and issues nothing (no H2 gate), and still pushes its run record",
+  "the bundle plan finds no A1 arrays from this run for the served day and chooses --refit; the refit under the issuing host reproduces the issued artifact and the bundle is publishable",
+  "the Space builds, the local publication reads back 56 files equal, the records are pushed through the claim",
+  "the GFS decode in the runner's ecCodes environment again equals the archived decode",
+  "no fake value in the artifact or the public log"
+ ],
+ "publication": {
+  "checked": 56,
+  "published": true,
+  "served_manifest_sha256": "d163e76cbc5b23682824ba6846554946da47fa988b013c97e32d1da3b11f5816",
+  "stopped": null,
+  "target": "http://127.0.0.1:49328/"
+ },
+ "records": {
+  "exit": 0,
+  "outcome": "pushed 453a0427d2ee4bc77415ef253b76b7df2bed67e6",
+  "paths": [
+   "live/store",
+   "live/inputs",
+   "live/outcomes",
+   "live/evaluation",
+   "live/bundles"
+  ]
+ },
+ "results_files": 126,
+ "run": {
+  "commits": [
+   {
+    "pushed": "be018c8031699a762e8815e1e90cea29d6e3f050"
+   }
+  ],
+  "days": {},
+  "exit": 0,
+  "gate_passed": null,
+  "outcome": "nothing to issue",
+  "planned": [],
+  "run_id": "gh-42223428846-1",
+  "seconds": 0.06294445900000767
+ },
+ "scans": {
+  "fake_values_by_run_id": "clean (127 files: the artifact and the public job log)",
+  "owner_values": "clean (ENTSOE_API_TOKEN, HF_TOKEN, DAGSHUB_USER_TOKEN, MLFLOW_TRACKING_PASSWORD set locally; none found)"
+ },
+ "space": {
+  "bundle_manifest_sha256": "d163e76cbc5b23682824ba6846554946da47fa988b013c97e32d1da3b11f5816",
+  "files": 45,
+  "history": true,
+  "refused": false
+ },
+ "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/42223428846"
+}

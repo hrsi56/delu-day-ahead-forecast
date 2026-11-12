@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  The live product's local fallback on the Owner's Mac, part 2 of 2: the run AFTER each day's cutoff (capstone v21-r20
+  §24.14; CP-18c item 8). WRITTEN AND TESTED, NOT INSTALLED: the Orchestrator installs it after the LAND, if the runner
+  cannot run (see "Install" below). It replaces CP-18a's reports/cp18a/launchd/com.delu.daily-fallback.plist, which
+  carried dry-run arguments. Its partner is com.delu.daily-acquire.plist.
+
+  What it runs: `python -m cp18.local run` in the live mode, in the pipeline's own clone of the product repository, with the
+  same binary (.local/tools/node-v26.7.0-official), the same checks (the package zip rebuilt and compared, the H2 gate:
+  pins, binary, machine, canary) and the same claim rule as the runner, then the runner's sequence: the dated bundle
+  (once per as-of day), the Space build, the publication to the Hugging Face Space, and the day's data-only records
+  pushed to main. When the runner has already issued and published the day, the fallback finds nothing to issue,
+  records its run and builds no second bundle. Each run gets its own results folder under .local/live/runs/.
+
+  When: the Mac's clock is in Asia/Jerusalem, and StartCalendarInterval follows the system time zone. D's cutoff is
+  D-1 11:00 Europe/Berlin.
+    - Jerusalem is one hour ahead of Berlin on every day of the year except the Friday and Saturday before the last
+      Sunday of March, when Israel's summer time has begun and the EU's has not (two hours ahead). Both end summer time
+      on the last Sunday of October (Israel at 02:00 local, the EU at 01:00 UTC), so in October the offset differs only
+      for about two hours that night, far from this time.
+    - 15:00 Jerusalem = 14:00 Berlin (13:00 Berlin on the two March days): three hours after the cutoff (two in
+      March). In UTC: 13:00 in winter, 12:00 in summer, 13:00 on the two March days: after the runner's run (10:40 UTC)
+      and before its retry (13:40 UTC).
+    - A Mac asleep at the time runs the job once when it wakes (launchd's calendar rule); a Mac switched off misses it,
+      and the next run's catch-up (decision 23) covers the open days of its lookback.
+    - ProcessType Standard, not Background: Background's throttled QoS could move the fits onto the efficiency cores,
+      against the frozen chain's 15-minute wall-time ceiling per fit (cp17.issue, criterion 5).
+
+  Credentials: none here. A LaunchAgent inherits the launchd session's environment, where the Owner's ~/.zshrc exports
+  are mirrored (AGENTS.md § Credentials); cp18.local passes ENTSOE_API_TOKEN only to the run's process and HF_TOKEN
+  only to the publication's. No value is ever written to this file. The push to GitHub uses the Owner's Git credential
+  helper (osxkeychain).
+
+  Install (the Orchestrator, after the LAND; never by an agent before it):
+    git clone https://github.com/hrsi56/delu-day-ahead-forecast.git /Users/djourno/Downloads/PJM/.local/live/clone
+    git -C /Users/djourno/Downloads/PJM/.local/live/clone config core.hooksPath .githooks
+    mkdir -p /Users/djourno/Downloads/PJM/.local/live/logs /Users/djourno/Downloads/PJM/.local/live/runs
+    cp <this file> ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.delu.daily-run.plist
+  The clone must exist first: PYTHONPATH and WorkingDirectory name it.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.delu.daily-run</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/djourno/Downloads/PJM/.venv/bin/python</string>
+    <string>-m</string>
+    <string>cp18.local</string>
+    <string>run</string>
+    <string>--clone</string>
+    <string>/Users/djourno/Downloads/PJM/.local/live/clone</string>
+    <string>--url</string>
+    <string>https://github.com/hrsi56/delu-day-ahead-forecast.git</string>
+    <string>--project</string>
+    <string>/Users/djourno/Downloads/PJM</string>
+    <string>--out-root</string>
+    <string>/Users/djourno/Downloads/PJM/.local/live/runs</string>
+    <string>--mode</string>
+    <string>live</string>
+    <string>--inputs</string>
+    <string>live-http</string>
+    <string>--publish</string>
+    <string>hub</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONPATH</key>
+    <string>/Users/djourno/Downloads/PJM/.local/live/clone/src</string>
+    <key>CP17_PROJECT_ROOT</key>
+    <string>/Users/djourno/Downloads/PJM</string>
+    <key>CP26_PROJECT_ROOT</key>
+    <string>/Users/djourno/Downloads/PJM</string>
+    <key>PATH</key>
+    <string>/Users/djourno/Downloads/PJM/.venv/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>OPENBLAS_NUM_THREADS</key>
+    <string>1</string>
+    <key>VECLIB_MAXIMUM_THREADS</key>
+    <string>1</string>
+    <key>OMP_NUM_THREADS</key>
+    <string>1</string>
+    <key>MKL_NUM_THREADS</key>
+    <string>1</string>
+    <key>NUMEXPR_NUM_THREADS</key>
+    <string>1</string>
+    <key>MLFLOW_DISABLE_TELEMETRY</key>
+    <string>true</string>
+    <key>DO_NOT_TRACK</key>
+    <string>1</string>
+    <key>GIT_TERMINAL_PROMPT</key>
+    <string>0</string>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/djourno/Downloads/PJM/.local/live/clone</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>15</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>ProcessType</key>
+  <string>Standard</string>
+  <key>StandardOutPath</key>
+  <string>/Users/djourno/Downloads/PJM/.local/live/logs/daily-run.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/djourno/Downloads/PJM/.local/live/logs/daily-run.log</string>
+</dict>
+</plist>

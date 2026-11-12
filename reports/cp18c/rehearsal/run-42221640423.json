@@ -1,0 +1,233 @@
+{
+ "bundle": {
+  "arrays": "within the frozen recomputation tolerance (1.3e-13 EUR/MWh; runtime rounding)",
+  "bundle_record": "2026-08-30/bundle.json",
+  "first_visit_bytes": 355638,
+  "freshness": {
+   "as_of_day": "2026-08-30",
+   "latest_issued_day": "2026-08-31",
+   "state": "fresh",
+   "target_cause": null,
+   "target_day": "2026-08-31",
+   "target_status": "issued"
+  },
+  "manifest_sha256": "57da97c05bdb3912af77e2258df2c7ee37ff63269ada8fc938207ff28f0dcf69",
+  "publishable": true,
+  "reason": null,
+  "served_artifact": {
+   "day": "2026-08-31",
+   "sha256": "1e08a67d37964a194a589fd8c4251c1aed2519da24564e0ba31ee26edb8b5638"
+  }
+ },
+ "decode_check": {
+  "arrays": {
+   "data": true,
+   "fields": true,
+   "lats": true,
+   "leads": true,
+   "lons": true
+  },
+  "decoder": {
+   "eccodes": "2.49.0",
+   "module": "cp20.gfs.decode",
+   "numpy": "2.5.3",
+   "python": "3.13.15"
+  },
+  "delivery_day": "2026-09-06",
+  "equal": true,
+  "max_abs_difference": 0.0,
+  "messages": {
+   "byte_range_equal": 50,
+   "compared": 50,
+   "meta_equal": 50,
+   "packing_quantum_equal": 50,
+   "same_set": true,
+   "sha256_equal": 50
+  },
+  "npz_sha256": {
+   "archived": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "decoded": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+   "equal": true
+  },
+  "outcome": "the decode equals the archived decode: every message byte for byte, its metadata, and the arrays exactly",
+  "retrieved_bytes": 40254443,
+  "run": "2026-09-05"
+ },
+ "ecCodes": {
+  "eccodes": {
+   "api_version": "2.49.0",
+   "library": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/artifacts/cp-20/wx-venv/lib/python3.13/site-packages/eccodeslib/lib/libeccodes.dylib",
+   "library_sha256": "b04c71f716e64c71bb5f2a615ec01175211b2ece36611c1d7399b2ad6d263a48",
+   "module_version": "2.49.0"
+  },
+  "extra": [],
+  "pinned": {
+   "eccodes": {
+    "content_sha256": "c96452080376642dad1e997ec1901cc5010ed51e8b0af14c67726fac1fcb8cc1",
+    "files": 29,
+    "version": "2.48.0"
+   },
+   "eccodeslib": {
+    "content_sha256": "fdf4604e924024cbba8a9f7a982733fbd823ce79ce244f205bca89c1fe838a31",
+    "files": 71,
+    "version": "2.49.0.30"
+   },
+   "eckitlib": {
+    "content_sha256": "ec8496240d65031fe794cc91af31b427b88832f74f632af50a0b5b44682aa820",
+    "files": 785,
+    "version": "2.3.0.30"
+   },
+   "findlibs": {
+    "content_sha256": "08c9773ef45aa9d27b905287caeacff7392d4a76a78265c77419266305b4c5cb",
+    "files": 5,
+    "version": "0.1.3"
+   },
+   "numpy": {
+    "content_sha256": "12b4d910408ab5ba518c24285bedfb87f000219799ace52f8889de93f0ff8e37",
+    "files": 922,
+    "version": "2.5.3"
+   }
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "problems": [],
+  "python": "3.13.15"
+ },
+ "github_run": "42221640423",
+ "guard_demo": {
+  "all_as_expected": true,
+  "cases": [
+   [
+    "a clean commit, with fake credentials set",
+    "passed",
+    true,
+    false
+   ],
+   [
+    "a staged file holding a fake ENTSOE_API_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a commit message holding a fake HF_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a staged environment dump (no value set: the leak scan, by its shape)",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a push of a commit holding a fake DAGSHUB_USER_TOKEN",
+    "blocked",
+    true,
+    false
+   ],
+   [
+    "a data-only commit, with fake credentials set",
+    "passed",
+    true,
+    false
+   ],
+   [
+    "its push, with fake credentials set",
+    "passed",
+    true,
+    false
+   ]
+  ]
+ },
+ "head_sha": "a08a304aabf9ec8d08f46c582df706d62f805468",
+ "inputs": {
+  "decode_run": "2026-09-05",
+  "inputs": "live:reports/cp18a/dryrun/recorded",
+  "minutes": "75",
+  "mode": "dry-run",
+  "now": "2026-08-30T12:00:00+02:00",
+  "store": "genesis:reports/cp18a/dryrun/states/start-2026-08-31.json:2026-08-31"
+ },
+ "issued_quantiles_sha256_prefix": "75d86a3b3cb9f670 (CP-17c's A1 of 2026-08-31: bit-identical)",
+ "jobs_skipped": [
+  "acquire",
+  "run",
+  "keep-alive (the repository check and the dispatch mode)"
+ ],
+ "prepare": {
+  "node_binary_sha256": "a9bd0630891c2dcdee70de88270fee2cc0c4a9e76495039dd3b4f91c5e6b71df",
+  "package_equal_to_manifest": true,
+  "package_zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94",
+  "pinned_states": 4,
+  "pyodide_files": 23
+ },
+ "proved": [
+  "GitHub parses the workflow (YAML anchors included) and a dry-run dispatch selects the dry-run job only; the live jobs and the keep-alive are skipped outside the product repository",
+  "the runner installs CP-20's pinned ecCodes environment from requirements.freeze.txt: every pinned version, eccodes 2.48.0 bindings over eccodeslib 2.49.0.30 (API 2.49.0), libeccodes.dylib b04c71f7... equal to the Mac's; every distribution's content digest equal to the Mac's except asciitree (built from its sdist)",
+  "the guards block the fake credentials by value and the environment dump by shape; a data-only commit and push pass",
+  "prepare: 4 pinned states, 23 Pyodide files, Node.js a9bd0630... by hash, the package zip equal to the manifest",
+  "the product's live record is set aside in the dry run's throwaway checkout (no live/ in this tree; the step is a no-op here)",
+  "the pipeline issues 2026-08-31 by A1 through the H2 gate, bit-identical to CP-17c (quantiles 75d86a3b...)",
+  "the bundle plan picks this run's own A1 arrays; the bundle is publishable (R7, identity, recompute) and its evaluation and bundle records are committed",
+  "the Space builds from the bundle (no /history/: v1 files are not shipped to the scratch repository) and the local publication reads back 56 files equal",
+  "the day's records are pushed through the claim to the dry run's origin (live/store, live/inputs, live/evaluation, live/bundles)",
+  "a development-day GFS run (2026-09-05 00 UTC, 40,254,443 bytes from the AWS archive, anonymous, under the development guard) decoded in the runner's ecCodes environment equals the archived decode: 50 messages byte for byte, their metadata, the arrays, even the npz SHA-256 (1212607215e4...)",
+  "no fake value in the artifact or the public log"
+ ],
+ "publication": {
+  "checked": 56,
+  "published": true,
+  "served_manifest_sha256": "57da97c05bdb3912af77e2258df2c7ee37ff63269ada8fc938207ff28f0dcf69",
+  "stopped": null,
+  "target": "http://127.0.0.1:49339/"
+ },
+ "records": {
+  "exit": 0,
+  "outcome": "pushed 49e44c1893b7da2592d982d9bf138708ca267a5f",
+  "paths": [
+   "live/store",
+   "live/inputs",
+   "live/evaluation",
+   "live/bundles"
+  ]
+ },
+ "results_files": 130,
+ "run": {
+  "commits": [
+   {
+    "pushed": "f3f90d94066f603096023116816b5fb53ea4dcbd"
+   },
+   {
+    "pushed": "64102739ef0bc63292182cf27d50208eeb07a5d9"
+   }
+  ],
+  "days": {
+   "2026-08-31": {
+    "artifact_sha256": "1e08a67d37964a194a589fd8c4251c1aed2519da24564e0ba31ee26edb8b5638",
+    "policy": "A1",
+    "seconds": 414.980612,
+    "status": "issued"
+   }
+  },
+  "exit": 0,
+  "gate_passed": true,
+  "outcome": "done",
+  "planned": [
+   "2026-08-31"
+  ],
+  "run_id": "gh-42221640423-1",
+  "seconds": 580.1276306249999
+ },
+ "scans": {
+  "fake_values_by_run_id": "clean (131 files: the artifact and the public job log)",
+  "owner_values": "clean (ENTSOE_API_TOKEN, HF_TOKEN, DAGSHUB_USER_TOKEN, MLFLOW_TRACKING_PASSWORD set locally; none in the artifact or the log)"
+ },
+ "space": {
+  "bundle_manifest_sha256": "57da97c05bdb3912af77e2258df2c7ee37ff63269ada8fc938207ff28f0dcf69",
+  "files": 45,
+  "history": true,
+  "refused": false
+ },
+ "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/42221640423"
+}

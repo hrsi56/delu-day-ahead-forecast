@@ -1,0 +1,89 @@
+{
+ "archived": "reports/cp18a/dryrun/recorded/gfs",
+ "arrays": {
+  "data": true,
+  "fields": true,
+  "lats": true,
+  "leads": true,
+  "lons": true
+ },
+ "decoder": {
+  "eccodes": "2.49.0",
+  "module": "cp20.gfs.decode",
+  "numpy": "2.5.3",
+  "python": "3.13.15"
+ },
+ "delivery_day": "2026-09-06",
+ "equal": true,
+ "finished_utc": "2026-11-05T22:05:53Z",
+ "max_abs_difference": 0.0,
+ "messages": {
+  "byte_range_equal": 50,
+  "compared": 50,
+  "meta_equal": 50,
+  "packing_quantum_equal": 50,
+  "same_set": true,
+  "sha256_equal": 50
+ },
+ "npz_sha256": {
+  "archived": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66",
+  "decoded": "1212607215e44d3d8906f790a240dc67975289d48b45050566bb3dc62abd2c66"
+ },
+ "outcome": "the decode equals the archived decode: every message byte for byte, its metadata, and the arrays exactly",
+ "python": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-20/wx-venv/bin/python",
+ "retrieval": {
+  "bytes": 40254443,
+  "complete": true,
+  "listing": {
+   "f021": {
+    "object_last_modified": "2026-09-05T03:41:53.000Z",
+    "object_size": 526539677
+   },
+   "f024": {
+    "object_last_modified": "2026-09-05T03:56:26.000Z",
+    "object_size": 531151203
+   },
+   "f027": {
+    "object_last_modified": "2026-09-05T03:43:45.000Z",
+    "object_size": 524747337
+   },
+   "f030": {
+    "object_last_modified": "2026-09-05T03:43:53.000Z",
+    "object_size": 533291609
+   },
+   "f033": {
+    "object_last_modified": "2026-09-05T03:44:36.000Z",
+    "object_size": 527613332
+   },
+   "f036": {
+    "object_last_modified": "2026-09-05T03:45:36.000Z",
+    "object_size": 532808177
+   },
+   "f039": {
+    "object_last_modified": "2026-09-05T03:45:38.000Z",
+    "object_size": 532056101
+   },
+   "f042": {
+    "object_last_modified": "2026-09-05T04:00:51.000Z",
+    "object_size": 533392042
+   },
+   "f045": {
+    "object_last_modified": "2026-09-05T03:47:03.000Z",
+    "object_size": 527078555
+   },
+   "f048": {
+    "object_last_modified": "2026-09-05T04:02:56.000Z",
+    "object_size": 536913060
+   }
+  },
+  "messages": 50,
+  "problems": []
+ },
+ "run": "2026-09-05",
+ "schema": "cp18c-decode-check-v1",
+ "started_utc": "2026-11-05T22:04:28Z",
+ "status": {
+  "archived": "complete",
+  "decoded": "complete"
+ }
+}
