@@ -30,6 +30,18 @@ HEADING = "## CP-3 showcase and release"
 NEXT_HEADING = "## Setup\n"
 
 
+
+def _since_release(C) -> str:
+    """PRES-5 (decision 28; ruling O27): the table describes the surfaces at v1's release. Since then the Space's root
+    runs the live product, and v1's demo, which the second row describes, is under its History."""
+    final = G.final_candidate()
+    if final is None:
+        return ""
+    released = G.released()
+    return (f"\nThe table describes the surfaces at {released.version}'s release. The Space's root now runs the live "
+            f"product, {final.name}, and the report documents it; {released.version}'s demo, which the second row "
+            f"describes, is under its [History]({C['space_app_url']}history/).\n")
+
 def build_section() -> str:
     C = build_claims()
     RUN_TABLE = "| Run name | What it decided |\n|---|---|\n" + "\n".join(
@@ -42,10 +54,10 @@ def build_section() -> str:
 ### Three public surfaces
 
 Each one answers a different question, and each stands on its own. The static report is the primary link.
-
+{_since_release(C)}
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
-| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* How the released model works, topic by topic — data, regimes, inputs, validation, results, explanations, failures, interval reliability, a forecast replay, limitations and how to run it — then the research history, newest first, and v1's original report preserved as an archive | One self-contained file with no additional runtime requests after it loads |
+| **1** | **[📄 Static report]({C["pages_url"]})**<br>the primary link | *Can they reason, and will they tell me what went wrong?* How the product works, topic by topic — data, regimes, inputs, validation, results, explanations, failures, interval reliability, a forecast replay, limitations and how to run it — then the research history, newest first, and v1's original report preserved as an archive | One self-contained file with no additional runtime requests after it loads |
 | **2** | **[⚡ Interactive Space]({C["space_url"]})**<br>[direct app]({C["space_app_url"]}) | *Does the thing actually run?* The champion's own boosters, running in your browser under Pyodide | about {C["wasm_cold_load_mb"]} MB first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts; ~1 MB after. A Static Space has no server-side process to sleep |
 | **3** | **[🔬 MLflow on DagsHub]({C["mlflow_url"]})** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run of v1, anonymously readable — no sign-in | — |
 
@@ -125,7 +137,7 @@ benchmark `{C["benchmark_strict_loss"]}` → `{C["benchmark_a69_loss"]}`, **{C["
 
 > {C["replay_label"]}
 
-Anything the Space or the static page renders over the holdout window {C["holdout_window"]} is that
+Anything {released.version}'s demo or its chapter renders over the holdout window {C["holdout_window"]} is that
 replay. It is never presented as a live forecast. The one scenario control is likewise labelled:
 
 > {C["sensitivity_probe_label"]}

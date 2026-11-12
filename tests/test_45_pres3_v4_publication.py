@@ -441,6 +441,11 @@ PUBLISHED_SECTIONS = {
 #: one byte for byte. The product section left this list: it documents v6 now (rulings O26, O29); v1's manual is in the
 #: repository at evidence/pres-4.
 def _as_published(section: str) -> str:
+    # PRES-5 (editorial V1, V6): v1's chapter routes to v1's own report, and a note outside the archive says where v1's
+    # demo now is; neither changes the archive or the chapter's other bytes.
+    section = re.sub(r'<p class="archive-note history-note">.*?</p>\n', "", section, flags=re.DOTALL)
+    section = re.sub(r'<a class="quiet" href="#v1-archive">.*?\'s original report, topic by topic</a>',
+                     '<a class="quiet" href="#product">How the released model works, topic by topic</a>', section)
     section = section.replace(B.history_url(build_claims()), build_claims()["space_url"])
     section = section.replace(" demo, under the Space's History</a>", " demo</a>")
     for key, original in B.ARCHIVE_FIGURES.items():

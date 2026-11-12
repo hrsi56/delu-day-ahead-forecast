@@ -7,18 +7,18 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Final candidate · pending 4.7T, v6 · DDNN-2 alone.** Selected by a rule set before the test: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error; 7 policies tested against the rule. `Development · post-selection`
+**Final candidate · pending 4.7T, v6 · DDNN-2 alone.** Selected by a rule set before any result: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with descriptive 95% intervals; 7 policies tested. `Development · post-selection`
 
 - **Point and interval error:** each day's mean absolute error of the median and its interval score, averaged; lower is better.
 - **Selection rule:** set on 2026-10-12, before any result.
-- **Final candidate · pending 4.7T:** v6 (A1 in the frozen records), frozen for one test on 90 days, registered in advance.
+- **Final candidate · pending 4.7T:** v6 (A1 in the frozen records), frozen for 4.7T, its one test, on 90 days registered in advance.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.
 - **DDNN-2:** a distributional neural network (DDNN).
 
-**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Space runs v6 · DDNN-2 alone daily, frozen: prospective evaluation in progress. v1, the last released generation, is its historical demo, and the product again if 4.7T fails. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Space runs v6 · DDNN-2 alone daily, frozen, before its one test, by the Owner's decision to go live: prospective evaluation in progress. A pass releases it; otherwise v1, the last released generation, is the product again. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
 
-**How the product works:** The product the Space runs, v6 · DDNN-2 alone (A1 in the frozen records), topic by topic; v1's stays in its chapter. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
+**How the product works:** The product the Space runs, v6 · DDNN-2 alone, topic by topic. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
 
 **Report:** [the one-page report](https://hrsi56.github.io/delu-day-ahead-forecast/), with every result, its limits and its evidence.
 
@@ -33,7 +33,7 @@
 
 ## Generations, newest first
 
-Names and statuses come from the registry. The research results are development evidence after selection, on the same historical hours for every policy; the released model's one-shot holdout is a separate evidence class. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#chapters) has the charts and the values.
+Names and statuses come from the registry. The research results are development evidence after selection, on the same historical hours for every policy in the shared comparison; v6's section also reports every eligible development day, a separate population; the released model's one-shot holdout is a separate evidence class. The [report](https://hrsi56.github.io/delu-day-ahead-forecast/#chapters) has the charts and the values.
 
 ### v6 · DDNN-2 alone
 
@@ -60,10 +60,10 @@ On these five periods both paired differences lie below zero, at 95% and at 97.5
 
 **What this result does not establish:**
 
-- **That the two had the same information.** v6's forecasts were made under the later daily protocol: issued one or two hours earlier, refitted every day, with its own network searches and data identity, and the first period, 2020, lies in that protocol's unscored warm-up. The comparison shares the hours and prices, not the protocol.
+- **That the two had the same information.** v6's forecasts were made under the later daily protocol: issued one or two hours earlier, refitted every day, with its own network searches and data identity. Its forecasts cover the first period, 2020, though that protocol's scores began after it. Under v5's protocol, v5's study arm of the same name scored 0.4785 and 0.4271 on these hours. The comparison shares the hours and prices, not the protocol.
 - **Performance on new data.** v6 was selected on every development day, four of these periods among them, after DDNN-2 alone had already scored best there. This is development evidence after selection; 4.7T, on 90 days whose data was opened only after its registration, is its one test.
 
-On 2026-10-25 the selection rule, set on 2026-10-12, picked arm A1, now v6, among 7 arms; it was frozen on 2026-10-28 and re-frozen, unchanged, on 2026-10-30. In October 2026, v6 became the final candidate. It was selected by its own rule, never adopted by v5's. v1 is the last released generation, and the product again if 4.7T does not pass.
+On 2026-10-25 the selection rule, set on 2026-10-12, picked arm A1, now v6, among 7 arms; the six others, blends of v5's members, also passed every gate and were not selected. It was frozen on 2026-10-28 and re-frozen on 2026-10-29 and 2026-10-30, its fit unchanged. In October 2026, v6 became the final candidate. It was selected by its own rule, never adopted by v5's. v1 is the last released generation, and the product again if 4.7T does not pass.
 
 **The selection rule**, set on 2026-10-12 and frozen before the re-baseline's first score: seven recombinations of v5's members, v6 among them, each against v5 on every development day. To pass, an arm had to beat v5 by more than half a percent on both scores, lose no more than 2% in any complete year from 2021 to 2025 or any season, and survive Holm's correction across the seven at 5%, in the main analysis and in three sensitivity variants. Among those that passed, the lowest interval error won.
 
@@ -75,7 +75,7 @@ On 2026-10-25 the selection rule, set on 2026-10-12, picked arm A1, now v6, amon
 
 **What each result means.** A pass keeps v6 as the product and ends its "pending" status; the record says "It passed the pre-registered test". A fail or an inconclusive result makes v1 the product again, and the record says "It did not pass; the window is spent, and v1 remains the product." Either way the live record stays "prospective evaluation in progress" until at least 90 consecutive days are scored.
 
-**On every development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. v6's forecasts, DDNN-2 alone, have the lowest error on both scores, a point comparison: −7% and −11% against v5. Two declared routes of v5: with the weather run six hours late, its point error changed by +14% [+10%, +16%] and its interval error by +15% [+12%, +18%], so that timing is fragile; without the load forecast, its point error rose by less than 1% and its interval error changed by +1%, point comparisons.
+**On every eligible development day, scored separately.** v5 against v4: −1% [−1%, +1%] in point error and −1% [−1%, +1%] in interval error, with 95% intervals: the five periods' gain does not carry over to every day. v6's forecasts, DDNN-2 alone, have the lowest error on both scores: −7% [−9%, −5%] and −11% [−13%, −9%] against v5, with the selection's descriptive 95% intervals. Two sensitivity runs of v5: with the weather run six hours late, its point error changed by +14% [+10%, +16%] and its interval error by +15% [+12%, +18%], so that timing is fragile; without the load forecast, its point error barely moved and its interval error changed by +1%, point comparisons.
 
 Evidence: [The final candidate's raw CSV rows, frozen 2026-11-06](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/pres-5/reports/pres5/a1-in-v5/uncertainty.csv#L22) · [Review verdict of the selection, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md) · [Selection report, frozen 2026-10-25](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md) · [The registered test protocol, frozen 2026-10-28](https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-17/docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md)
 
@@ -284,7 +284,7 @@ The accuracy targets: each error score at least 10% below the strongest benchmar
 
 Every policy was evaluated on the same 10,747 historical hours over 448 days, across five test periods (folds); the third covers the 2022 price crisis. Scores are normalized within each period, then averaged with equal weight. These are development results, not a test on new data.
 
-v6 · DDNN-2 alone against v5, as a share of v5's error scores: −6% [−9%, −2%] on the point-error score and −11% [−15%, −8%] on the interval score, with 95% confidence intervals. Development evidence after selection, not a test on new data. v6's forecasts come from a later, daily protocol; its chapter says how they differ.
+v6 against v5, as a share of v5's error scores: −6% [−9%, −2%] on the point-error score and −11% [−15%, −8%] on the interval score, with 95% confidence intervals. Development evidence after selection, not a test on new data. Its forecasts come from a later, daily protocol, which its chapter compares.
 
 For scale, as mean absolute error per test period: v6 4.5–13.4 EUR/MWh in the four ordinary periods and 43.2 EUR/MWh in the 2022 crisis period; the similar-day naive 8.6–30.5 and 86.9 EUR/MWh. Context only: the error scores rank the policies.
 
@@ -443,9 +443,11 @@ silently when `MLFLOW_TRACKING_URI` is unset.
 
 Each one answers a different question, and each stands on its own. The static report is the primary link.
 
+The table describes the surfaces at v1's release. The Space's root now runs the live product, v6 · DDNN-2 alone, and the report documents it; v1's demo, which the second row describes, is under its [History](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
-| **1** | **[📄 Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)**<br>the primary link | *Can they reason, and will they tell me what went wrong?* How the released model works, topic by topic — data, regimes, inputs, validation, results, explanations, failures, interval reliability, a forecast replay, limitations and how to run it — then the research history, newest first, and v1's original report preserved as an archive | One self-contained file with no additional runtime requests after it loads |
+| **1** | **[📄 Static report](https://hrsi56.github.io/delu-day-ahead-forecast/)**<br>the primary link | *Can they reason, and will they tell me what went wrong?* How the product works, topic by topic — data, regimes, inputs, validation, results, explanations, failures, interval reliability, a forecast replay, limitations and how to run it — then the research history, newest first, and v1's original report preserved as an archive | One self-contained file with no additional runtime requests after it loads |
 | **2** | **[⚡ Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)**<br>[direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/) | *Does the thing actually run?* The champion's own boosters, running in your browser under Pyodide | about 57 MB first visit, 352 requests, 5 hosts; ~1 MB after. A Static Space has no server-side process to sleep |
 | **3** | **[🔬 MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run of v1, anonymously readable — no sign-in | — |
 
@@ -535,7 +537,7 @@ benchmark `13.015841509664993` → `10.478714632475889`, **-19.4926%**.
 
 > Historical out-of-sample replay — the frozen champion forecasting a 90-day period it never trained on. This is not a live forecast.
 
-Anything the Space or the static page renders over the holdout window 2026-06-09..2026-09-06 is that
+Anything v1's demo or its chapter renders over the holdout window 2026-06-09..2026-09-06 is that
 replay. It is never presented as a live forecast. The one scenario control is likewise labelled:
 
 > Scenario perturbations are ceteris-paribus sensitivity probes and may be out of distribution.

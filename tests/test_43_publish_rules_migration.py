@@ -73,6 +73,8 @@ def a1_problems(headline_text: str) -> list[str]:
         if headline_text[max(0, match.start() - 3):match.start()] == "at " and headline_text[match.end():].startswith(":"):
             continue
         rest = headline_text[match.end():]
+        if re.match(r"\s*(confidence\s+)?intervals?\b", rest):
+            continue  # PRES-5 (editorial V3): "descriptive 95% intervals" names the intervals' level, not a value
         following = re.split(r"\d", rest, maxsplit=1)[0]
         if match.start() > 0 and "at least" in headline_text[max(0, match.start() - 12):match.start()]:
             continue  # the rule's own margin, "at least 10% below", names both scores ("error scores")
@@ -396,7 +398,7 @@ def test_f03_the_measured_start_is_beside_the_action_outside_any_disclosure(page
         opened = page.rfind("<details", 0, startup)
         assert opened == -1 or page.rfind("</details>", 0, startup) > opened
         line = _text(page[startup:page.index("</p>", startup)])
-        assert "MB of the day's records, measured on development data" in line and "historical demo" in line
+        assert "MB, measured on development data" in line and "historical demo" in line
         assert re.search(r'href="https://[^"]+/history/"', page[startup:page.index("</p>", startup)])
         assert 'data-startup="measured"' not in page[:page.index('id="product"')]
         return

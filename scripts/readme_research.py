@@ -309,7 +309,8 @@ def final_candidate_section(entry: G.Entry) -> list[str]:
         md("v6.fresh.terms"), "",
         md("v6.fresh.rules"), "",
         md("v6.fresh.meaning"), "",
-        "**On every development day, scored separately.** " + md("everyday.finding") + " " + md("everyday.routes"), "",
+        "**On every eligible development day, scored separately.** " + md("everyday.finding") + " "
+        + md("everyday.finding.v6") + " " + md("everyday.routes"), "",
         "Evidence: " + " · ".join(
             f"[{kind}, frozen {G.EVIDENCE_TAGS[tag][1]}]({GITHUB_URL}/blob/{tag}/{path}{f'#L{line}' if line else ''})"
             for kind, tag, path, line in (
@@ -339,8 +340,11 @@ def build_block() -> str:
         "## Generations, newest first",
         "",
         f"Names and statuses come from the registry. The research results are development evidence after "
-        f"selection, on the same historical hours for every policy; the released model's one-shot holdout is a "
-        f"separate evidence class. The [report]({PAGES_URL}#chapters) has the charts and the values.",
+        f"selection, on the same historical hours for every policy in the shared comparison"
+        + (f"; {G.final_candidate().version}'s section also reports every eligible development day, a separate "
+           f"population" if G.final_candidate() is not None else "")
+        + f"; the released model's one-shot holdout is a separate evidence class. The [report]({PAGES_URL}#chapters) "
+        f"has the charts and the values.",
         "",
     ]
     for entry in G.generations(newest_first=True):

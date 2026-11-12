@@ -1742,8 +1742,8 @@ def opening(C, payload) -> str:
         preview = (
             f'<figure class="preview panel">'
             f'<figcaption class="preview-label"><span class="badge badge-replay">Development forecast · '
-            f'{ver(final.version)}</span><span>A stored forecast for a development day, with the observed price; not '
-            f'a live forecast.</span></figcaption>'
+            f'{ver(final.version)}</span><span>A stored development-day forecast, not a live one.</span>'
+            f'</figcaption>'
             f"{preview_chart(v6_preview_payload())}"
             f'<p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">'
             f'{S("level", "80%")} prediction interval</span> <span class="key-actual">Observed price</span></p>'
@@ -1930,7 +1930,9 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
             rows=tuple(Row(label, f"{prefix}.metrics.{code}.equal_fold.{field}",
                            comparison_role(entry), code, entry.kind == "generation", verdict=verdict)
                        for entry, prefix, code, label, verdict in rows),
-            domain=(0.5, 1.1), step=0.1,
+            # PRES-5: v6's interval score lies below 0.5. Only the page's comparison widens its axis; every overview
+            # chart pinned to an earlier comparison (PINNED_CHARTS, published in MLflow) keeps its own.
+            domain=(0.4, 1.1) if order is None else (0.5, 1.1), step=0.1,
             refs=(Ref("naive", at=1.0, dash=None, colour=TOKENS["text"]),
                   Ref("target", f"{newest_prefix}.criteria.{newest}.{criterion}.equal_fold.{field}.upper_limit")),
             option="p=3",
@@ -2075,6 +2077,7 @@ def everyday_panel() -> str:
   {block("everyday.title", tag="h3", cls="panel-title", ident="everyday-title")}
   <p class="panel-sub" data-block="everyday.sub">{RC.render("everyday.sub")}</p>
   {block("everyday.finding", cls="finding")}
+  {block("everyday.finding.v6")}
   {block("everyday.routes")}
   {everyday_table()}
   {evidence_row(audit=audit)}
@@ -2489,7 +2492,7 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
               "".join(block(k) for k in ("product.data.target", "v6.product.sources", "v6.product.cutoff",
                                         "v6.product.windows", "product.data.preprocessing"))),
         Topic("product-regimes", "Price regimes and negative prices", "Price regimes and negative prices", ("2",),
-              block("product.regimes.periods") + block("v6.product.regimes")
+              block("v6.product.regimes.periods") + block("v6.product.regimes")
               + f'<p>{archive("regimes", "Yearly price levels and negative-hour counts, in the archived report")}</p>'),
         Topic("product-inputs", "The inputs it uses, and why", "The inputs it uses, and why", ("3", "3b"),
               block("v6.product.inputs") + block("product.inputs.seasonal")
@@ -3154,9 +3157,12 @@ def v1_chapter(C, archive: str) -> str:
  </div>
  {block("v1.unflattering")}
  {block("v1.lesson")}
- <p class="chapter-links"><a class="quiet" href="#product">How the released model works, topic by topic</a>
+ <p class="chapter-links"><a class="quiet" href="#v1-archive">{ver(entry.version)}'s original report, topic by topic</a>
   <a class="quiet" href="#forecast">The replay in the archived report</a>
   <a class="quiet external" href="{attr(history_url(C))}">Try the {ver(entry.version)} demo, under the Space's History</a></p>
+<p class="archive-note history-note">The archive below links the Space as it was at {ver(entry.version)}'s release; the Space's root
+ has since been given to the live product, and {ver(entry.version)}'s demo is under its
+ <a class="quiet external in-text" href="{attr(history_url(C))}">History</a>.</p>
 {v1_archive_disclosure(archive)}
 </article>"""
 
@@ -3293,9 +3299,9 @@ def evidence_section(C) -> str:
   <pre><code>uv sync</code></pre>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   {disclosure("rebuild-measurement", "One measured rebuild", f"<p>{runtime}</p>") if runtime else ""}
-  <p>Each experiment below has its own full reproduction. To run the released model, see
-   <a href="#product-run">Run this product</a>; {ver("v1")}'s original instructions, with the historical container,
-   are in <a href="#repro">its archive</a>.</p>
+  <p>Each experiment below has its own full reproduction. To check the live product's frozen policy, see
+   <a href="#product-run">Run and check this product</a>; {ver("v1")}, the last released generation, runs from its
+   original instructions, with the historical container, in <a href="#repro">its archive</a>.</p>
   <div class="evidence-row evidence-list"><span class="ev-label">Evidence</span><ul class="repro-list">{labelled}</ul></div>
  </div>
  <div class="tracking"><h3>Tracking</h3>
