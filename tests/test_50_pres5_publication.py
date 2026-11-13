@@ -426,8 +426,13 @@ def test_the_evidence_tags_date_is_the_tips():
     shallow = subprocess.run(["git", "rev-parse", "--is-shallow-repository"], cwd=ROOT, capture_output=True, text=True)
     rows = subprocess.run(["git", "log", "-1", "--format=%cs", "--", "reports/pres5/a1-in-v5"], cwd=ROOT,
                           capture_output=True, text=True)
+    commits = subprocess.run(["git", "rev-list", "--count", "HEAD"], cwd=ROOT, capture_output=True, text=True)
     if shallow.stdout.strip() != "false" or rows.returncode != 0 or not rows.stdout.strip():
         pytest.skip("no history here to date the rows (a depth-1 checkout)")
+    if commits.stdout.strip() == "1":
+        # a history-free single-commit copy (the Orchestrator's CI reproduction): its one commit is dated the day the
+        # copy was made, not the day the rows were committed, so it cannot date them either
+        pytest.skip("no history here to date the rows (a history-free single-commit copy)")
     assert date >= rows.stdout.strip()
 
 
