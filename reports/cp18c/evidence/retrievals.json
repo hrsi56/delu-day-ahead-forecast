@@ -1,0 +1,40 @@
+{
+ "archive_days": [
+  "2026-09-07",
+  "2026-11-13",
+  68
+ ],
+ "committed_live_bytes": 53909152,
+ "first_retrieval_utc": "2026-11-05T08:17:13Z",
+ "last_retrieval_utc": "2026-11-12T14:04:38Z",
+ "note": "every archived response of the live input archive and the outcomes retrievals; GFS messages are kept as hash and size only (local_only); the decoded runs are derived, not retrieved. Outside the archive: the Lead's SMARD availability probe (2026-11-05T08:13Z, counts only), the smoke test into a scratch archive, two GFS runs whose decode failed (49 of 50 messages) and were retried, and v1's deployed Space files (805 files, 44,164,910 bytes) with their tree listing",
+ "records_by_source_and_input": {
+  "aws:gfs_index": {
+   "bytes": 28056447,
+   "requests": 680
+  },
+  "aws:gfs_listing": {
+   "bytes": 652127,
+   "requests": 680
+  },
+  "aws:gfs_message": {
+   "bytes": 3107573703,
+   "requests": 3400
+  },
+  "entsoe:load_forecast": {
+   "bytes": 948098,
+   "requests": 92
+  },
+  "smard:price": {
+   "bytes": 1355678,
+   "requests": 89
+  },
+  "smard:price_index": {
+   "bytes": 409792,
+   "requests": 69
+  }
+ },
+ "schema": "cp18c-retrievals-v1",
+ "total_bytes": 3138995845,
+ "total_requests": 5010
+}

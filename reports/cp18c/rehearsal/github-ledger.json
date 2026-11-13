@@ -1,0 +1,34 @@
+{
+ "ceiling_job_hours": 3.0,
+ "class": "standard GitHub-hosted macos-26 runners",
+ "job_hours": 0.272,
+ "repository": "hrsi56/delu-pipeline-dryrun",
+ "runs": [
+  {
+   "conclusion": "success",
+   "head_sha": "a08a304aabf9ec8d08f46c582df706d62f805468",
+   "job": "dry-run",
+   "job_completed": "2026-11-06T13:09:06Z",
+   "job_minutes_billed_class": "macos-26 standard (public repository)",
+   "job_seconds": 689.0,
+   "job_started": "2026-11-06T12:57:37Z",
+   "note": "the whole dry-run sequence: genesis store, one issuance (2026-08-31), bundle with --arrays, Space, local publication, records, GFS decode check",
+   "run": "42221640423",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/42221640423"
+  },
+  {
+   "conclusion": "success",
+   "head_sha": "7783a6e1839421cdbe6764a294feaca12f702333",
+   "job": "dry-run",
+   "job_completed": "2026-11-06T13:15:54Z",
+   "job_minutes_billed_class": "macos-26 standard (public repository)",
+   "job_seconds": 291.0,
+   "job_started": "2026-11-06T13:11:03Z",
+   "note": "run 1's store carried: nothing to issue, the bundle by --refit, Space, local publication, records, GFS decode check",
+   "run": "42223428846",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/42223428846"
+  }
+ ],
+ "schema": "cp18c-github-ledger-v1",
+ "visibility": "public (decision 26), no Pages, no secret, no variable"
+}

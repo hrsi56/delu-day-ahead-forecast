@@ -1,0 +1,56 @@
+{
+ "artifact_fingerprint_sha256": "57e3ad40a7f48bb7896628ce2e5dec61314dea567da9867aede4bf1b0a10e0fb",
+ "catalog": "base",
+ "cqr_thresholds": {
+  "p025|p975": 18.62289828175607,
+  "p05|p95": 14.455407162140105,
+  "p10|p90": 9.7117992990109,
+  "p25|p75": 3.516837342123054
+ },
+ "cutoffs": {
+  "final_calibration_window": "2026-04-09..2026-06-07",
+  "holdout_window": "2026-06-09..2026-09-06",
+  "raw_model_fit_cutoff": "2026-04-07",
+  "snapshot_cutoff": "2026-09-06"
+ },
+ "default_day": "2026-09-06",
+ "features": [
+  "local_hour",
+  "day_of_week",
+  "month",
+  "is_federal_holiday",
+  "is_day_after_holiday",
+  "is_bridge_day",
+  "day_type",
+  "dst_transition_day",
+  "summer_peak",
+  "winter_peak",
+  "load_forecast_mw",
+  "load_forecast_day_mean_mw",
+  "price_lag_24h",
+  "price_lag_48h",
+  "price_lag_168h",
+  "price_roll_mean_168h",
+  "price_roll_std_168h",
+  "price_roll_mean_720h",
+  "price_roll_std_720h",
+  "price_roll_q05_168h",
+  "price_roll_q50_168h",
+  "price_roll_q95_168h",
+  "negative_price_count_168h",
+  "crisis_period",
+  "post_crisis"
+ ],
+ "quantile_labels": [
+  "p025",
+  "p05",
+  "p10",
+  "p25",
+  "p50",
+  "p75",
+  "p90",
+  "p95",
+  "p975"
+ ],
+ "snapshot_sha256": "7dd2dc73407706ca6bd3c1ad51d201ac0de35eec5ca129ce320cca639f697f00"
+}

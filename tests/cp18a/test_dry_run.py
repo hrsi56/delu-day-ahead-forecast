@@ -51,6 +51,7 @@ def test_a_real_dry_run_then_the_fallback_finds_the_day_claimed(tmp_path):
     head = sh('git', '-C', str(ROOT), 'rev-parse', 'HEAD').stdout.strip()
     sh('git', '-C', str(seed), 'checkout', '--quiet', '--detach', head)
     sh('git', '-C', str(seed), 'config', 'core.hooksPath', '.githooks')
+    sh('git', '-C', str(seed), 'rm', '-r', '-q', '--ignore-unmatch', 'live')
     seeded = sh(sys.executable, '-m', 'cp18', 'seed-store', '--root', str(seed), '--genesis', f'{STATE}:2026-08-31',
                 env=env)
     assert seeded.returncode == 0, seeded.stderr

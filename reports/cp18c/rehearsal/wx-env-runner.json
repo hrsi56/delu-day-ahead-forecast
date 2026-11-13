@@ -1,0 +1,269 @@
+{
+ "different": {},
+ "distributions": {
+  "annotated-types": {
+   "content_sha256": "e3ca7cf19ee01b163644248228b703e4f7f788a2cbfb5546dc027ac16256446c",
+   "files": 6,
+   "version": "0.8.0"
+  },
+  "anyio": {
+   "content_sha256": "8ffd883f345271ea306871b75d49c66b11d0b34802c146df959954a407362633",
+   "files": 52,
+   "version": "4.15.1"
+  },
+  "asciitree": {
+   "content_sha256": "6577b6a275b42911c24742743092f86f34c6da5646a847c65f33ebfa1df6363e",
+   "files": 9,
+   "version": "0.3.3"
+  },
+  "attrs": {
+   "content_sha256": "998024bf1fff693f7ea0249c732ea6e782fe1a28911c5fa174188fa02f2e5aff",
+   "files": 34,
+   "version": "26.1.0"
+  },
+  "blosc2": {
+   "content_sha256": "2779b4f8b123496cb5f6a68d52d945687d4379f70b8af6524526170f1a7d16f3",
+   "files": 108,
+   "version": "4.13.1"
+  },
+  "certifi": {
+   "content_sha256": "677b49aa8bb5072c8f4ddae1840fce0af4c33c0312f16a16946dcdf7571fd5f1",
+   "files": 11,
+   "version": "2026.7.22"
+  },
+  "cffi": {
+   "content_sha256": "e38c09d0e4ad4aa0ce59d9d519bd2087afadc4f44f55c9eee420be617006bfa8",
+   "files": 30,
+   "version": "2.1.1"
+  },
+  "charset-normalizer": {
+   "content_sha256": "2e28c2992659d60b484e5c677d4039bd9bc040291a4ff7bf7d07a54d4d371682",
+   "files": 20,
+   "version": "3.5.1"
+  },
+  "deprecated": {
+   "content_sha256": "63b797b03084cf7393f77c459bb3d9fec3d28a1f64017d69f31f2912e2ad8711",
+   "files": 8,
+   "version": "1.3.1"
+  },
+  "eccodes": {
+   "content_sha256": "c96452080376642dad1e997ec1901cc5010ed51e8b0af14c67726fac1fcb8cc1",
+   "files": 29,
+   "version": "2.48.0"
+  },
+  "eccodeslib": {
+   "content_sha256": "fdf4604e924024cbba8a9f7a982733fbd823ce79ce244f205bca89c1fe838a31",
+   "files": 71,
+   "version": "2.49.0.30"
+  },
+  "eckitlib": {
+   "content_sha256": "ec8496240d65031fe794cc91af31b427b88832f74f632af50a0b5b44682aa820",
+   "files": 785,
+   "version": "2.3.0.30"
+  },
+  "fasteners": {
+   "content_sha256": "7f9749651bbf66caec66e87232645eb10b57da52bc9d7b126791a08e92875069",
+   "files": 14,
+   "version": "0.20"
+  },
+  "findlibs": {
+   "content_sha256": "08c9773ef45aa9d27b905287caeacff7392d4a76a78265c77419266305b4c5cb",
+   "files": 5,
+   "version": "0.1.3"
+  },
+  "h11": {
+   "content_sha256": "eea20bda2d3d1fa0af6703ec8128cd5866da41e04cf81344a8598aa97e515880",
+   "files": 16,
+   "version": "0.16.0"
+  },
+  "h2": {
+   "content_sha256": "c2800714e757feea4ba9370ae985cb3617973cb451747d8897b2f042fe7a276d",
+   "files": 17,
+   "version": "4.4.1"
+  },
+  "hpack": {
+   "content_sha256": "d5eecee661b4fa60e1c8449854c4b77c4406ef2e4aefe56dffbdfd4726ab1e1d",
+   "files": 13,
+   "version": "4.2.0"
+  },
+  "httpcore": {
+   "content_sha256": "530e6662b44b61e2c87ee9fced072a544e629e93f9bfb80639fba497a007b5db",
+   "files": 35,
+   "version": "1.0.9"
+  },
+  "httpx": {
+   "content_sha256": "8d6a35de55044a9c0fae8ee28d3c670b477ebb8abc090cd920420f7832887636",
+   "files": 28,
+   "version": "0.28.1"
+  },
+  "hyperframe": {
+   "content_sha256": "50cfa48217c6a3cada9b496ad07766aed3785cc5033427f33c4a843c1a18f89b",
+   "files": 9,
+   "version": "6.1.0"
+  },
+  "idna": {
+   "content_sha256": "3a7c01cd060ab49fd2d3580825167c98adabf5fd3473365625d19915797a9e95",
+   "files": 15,
+   "version": "3.20"
+  },
+  "markdown-it-py": {
+   "content_sha256": "d29ba8fe65a2861e0bc9ee0b8671189bb160971c8bb3306d49b7094c5692bbe7",
+   "files": 73,
+   "version": "4.2.0"
+  },
+  "mdurl": {
+   "content_sha256": "afecba4c73332a8ef5623cef6b7d150d30ad1994437bce03a6a9f829e5e412d4",
+   "files": 10,
+   "version": "0.1.2"
+  },
+  "msgpack": {
+   "content_sha256": "4ff2414699d945bf5212af446b7bc0f696e33edede70deb6f365588e9cd961f0",
+   "files": 9,
+   "version": "1.2.2"
+  },
+  "ndindex": {
+   "content_sha256": "37431e71c36eda457000a53a2a531293824288059adb9b6f14eceef8190d4f80",
+   "files": 43,
+   "version": "1.10.1"
+  },
+  "numcodecs": {
+   "content_sha256": "ce7f56566603b4be08bdad003328292607f1ca2010dc403418f09e72dfdc4064",
+   "files": 78,
+   "version": "0.15.1"
+  },
+  "numexpr": {
+   "content_sha256": "3006d7880513c84acc38c81027efcd6d16d625e6edfd833ceffcface52eb5581",
+   "files": 33,
+   "version": "2.14.2"
+  },
+  "numpy": {
+   "content_sha256": "12b4d910408ab5ba518c24285bedfb87f000219799ace52f8889de93f0ff8e37",
+   "files": 922,
+   "version": "2.5.3"
+  },
+  "ocf-blosc2": {
+   "content_sha256": "f4f16dea294b80d86022415d90c9ce0d4c87bc66608ebba1a8d87a79140321a6",
+   "files": 7,
+   "version": "0.0.13"
+  },
+  "pycparser": {
+   "content_sha256": "07a01946965035d1c997485351d7cbccaf4b3428c2eae3f0a226b4d5206fecc8",
+   "files": 12,
+   "version": "3.0"
+  },
+  "pydantic": {
+   "content_sha256": "831a929d8a8c3b5d063d18ca0f30b1d86df2e10feff321060c0410218a0ded03",
+   "files": 110,
+   "version": "2.13.5"
+  },
+  "pydantic-core": {
+   "content_sha256": "98e59ec09f8624cf88b866aead28255f672e05528ffd67ec1965e2eb4f4c5497",
+   "files": 9,
+   "version": "2.46.5"
+  },
+  "pygments": {
+   "content_sha256": "21bc9d4f8acb9ca88939dbe2f7d2db89458c96e4ea7cefe7bbf0ae760cb104d8",
+   "files": 348,
+   "version": "2.21.0"
+  },
+  "requests": {
+   "content_sha256": "ffe928ed0ec08537e0d33f1f5cafb9d33b1c6f5e2965354c046e2d989a1c087f",
+   "files": 25,
+   "version": "2.34.2"
+  },
+  "rich": {
+   "content_sha256": "77a7fc19adf6f961f462024d0e3794d12430281a4eededea1d02a193331eeafa",
+   "files": 104,
+   "version": "15.0.0"
+  },
+  "threadpoolctl": {
+   "content_sha256": "a4663a8bafd56df6a1b5e3aeb847d0216befafe0202aa62129241dcc63532daa",
+   "files": 4,
+   "version": "3.7.0"
+  },
+  "typing-extensions": {
+   "content_sha256": "45a85545f15c89e155ed23af3a8020cceaf2bfa425dc3d48a4d47deb3cabca05",
+   "files": 4,
+   "version": "4.16.0"
+  },
+  "typing-inspection": {
+   "content_sha256": "2bc424ec69526c33c6ce715b18342a2d23e163f3ee7c184006c5c46e8cb58fb9",
+   "files": 8,
+   "version": "0.4.4"
+  },
+  "urllib3": {
+   "content_sha256": "3c0797b880539a3186911d5ca3d91f461bab4fb282c44c7f1043f52d4b235222",
+   "files": 41,
+   "version": "2.8.0"
+  },
+  "wrapt": {
+   "content_sha256": "e8e1f9430b7d91efd8c30979446949ad742297eec247d34b2cf59156e62fb01a",
+   "files": 20,
+   "version": "2.4.1"
+  },
+  "zarr": {
+   "content_sha256": "3dc60febf899c0d5535274ff84ab854690d03fb9e8e9467cd17b3a6de6a99026",
+   "files": 48,
+   "version": "2.18.7"
+  }
+ },
+ "eccodes": {
+  "api_version": "2.49.0",
+  "library": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/artifacts/cp-20/wx-venv/lib/python3.13/site-packages/eccodeslib/lib/libeccodes.dylib",
+  "library_sha256": "b04c71f716e64c71bb5f2a615ec01175211b2ece36611c1d7399b2ad6d263a48",
+  "module_version": "2.49.0"
+ },
+ "extra": [],
+ "freeze": "reports/weather-admission/scripts/requirements.freeze.txt",
+ "implementation": "cpython",
+ "machine": "arm64",
+ "missing": [],
+ "pinned": {
+  "annotated-types": "0.8.0",
+  "anyio": "4.15.1",
+  "asciitree": "0.3.3",
+  "attrs": "26.1.0",
+  "blosc2": "4.13.1",
+  "certifi": "2026.7.22",
+  "cffi": "2.1.1",
+  "charset-normalizer": "3.5.1",
+  "deprecated": "1.3.1",
+  "eccodes": "2.48.0",
+  "eccodeslib": "2.49.0.30",
+  "eckitlib": "2.3.0.30",
+  "fasteners": "0.20",
+  "findlibs": "0.1.3",
+  "h11": "0.16.0",
+  "h2": "4.4.1",
+  "hpack": "4.2.0",
+  "httpcore": "1.0.9",
+  "httpx": "0.28.1",
+  "hyperframe": "6.1.0",
+  "idna": "3.20",
+  "markdown-it-py": "4.2.0",
+  "mdurl": "0.1.2",
+  "msgpack": "1.2.2",
+  "ndindex": "1.10.1",
+  "numcodecs": "0.15.1",
+  "numexpr": "2.14.2",
+  "numpy": "2.5.3",
+  "ocf-blosc2": "0.0.13",
+  "pycparser": "3.0",
+  "pydantic": "2.13.5",
+  "pydantic-core": "2.46.5",
+  "pygments": "2.21.0",
+  "requests": "2.34.2",
+  "rich": "15.0.0",
+  "threadpoolctl": "3.7.0",
+  "typing-extensions": "4.16.0",
+  "typing-inspection": "0.4.4",
+  "urllib3": "2.8.0",
+  "wrapt": "2.4.1",
+  "zarr": "2.18.7"
+ },
+ "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+ "present": true,
+ "problems": [],
+ "python": "3.13.15",
+ "python_path": "/Users/runner/work/delu-pipeline-dryrun/delu-pipeline-dryrun/.local/artifacts/cp-20/wx-venv/bin/python"
+}

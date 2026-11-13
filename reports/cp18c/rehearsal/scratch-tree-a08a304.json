@@ -1,0 +1,25 @@
+{
+ "boundary": {
+  "boundary": "2026-09-06",
+  "rows_admitted": {
+   "data/snapshot.parquet": 67343,
+   "reports/development-inputs/weather-features-gaps.parquet": 7897,
+   "reports/weather-ablation/weather-features.parquet": 59446
+  }
+ },
+ "bytes": 70995339,
+ "candidate": "8ff6b92af5c37646d90ac6a64e38c09cdc5c63e9",
+ "carried": {},
+ "files": 449,
+ "largest": {
+  "bytes": 30830306,
+  "path": "models/champion/python_model.pkl"
+ },
+ "schema": "cp18a-scratch-tree-v1",
+ "scratch_files_sha256": "407c4e48599b05bbb0fbff0e48ce8cb8fa18eea57249fabbf7fe1e57669b2ab5",
+ "uncommitted": {
+  ".github/workflows/daily.yml": "755dfd7a8c3fbe79d026096ecb687fbcf24a4ab762cf6e8687a7e0b2e47d3e29",
+  "src/cp18/local.py": "ff313773149ac08292fc7045d7f033191efd2836792ca0ab7012a1bba061b81c",
+  "src/cp18/scratch.py": "d3dd645c2d59b0f7d78226d7474e2024d6c3cad52514a417dc87760c2b45eba1"
+ }
+}

@@ -89,6 +89,9 @@ def setup(candidate: Path, work: Path) -> Path:
     _git('clone', '--quiet', '--no-local', str(candidate), str(seed))
     _git('-C', str(seed), 'checkout', '--quiet', '--detach', _git('-C', str(candidate), 'rev-parse', 'HEAD'))
     _git('-C', str(seed), 'config', 'core.hooksPath', '.githooks')
+    # The candidate's tree may hold the live product's record (`live/`, CP-18c); this throwaway origin is a development
+    # rehearsal, so the record is removed from its seed commit (never from the candidate) before its own store.
+    _git('-C', str(seed), 'rm', '-r', '-q', '--ignore-unmatch', 'live')
     state = ShadowStates.from_dict(json.loads((seed / STATE).read_text()))
     LiveStore.init(seed / STORE_PATH, state, FIRST, f'forced causes: {STATE}', FIRST)
     _git('-C', str(seed), 'add', STORE_PATH)

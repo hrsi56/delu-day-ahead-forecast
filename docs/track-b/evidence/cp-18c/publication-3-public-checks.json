@@ -1,0 +1,294 @@
+{
+ "checks": [
+  {
+   "check": "chromium 1440: cold start reaches the ready state",
+   "passed": true,
+   "seconds": 2.9,
+   "state": {
+    "error": null,
+    "ready": true
+   }
+  },
+  {
+   "check": "chromium 1440: the served identity names the intended daily artifact",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: the product name and status are shown",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: no verification failure",
+   "failed": [],
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view train renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view forecast renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view validation renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view reliability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view explainability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view features renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view data renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view limitations renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: view history renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 1440: the product page requests its own origin only",
+   "hosts": {
+    "yarden-viktor-delu-day-ahead-forecast.static.hf.space": 13
+   },
+   "passed": true
+  },
+  {
+   "check": "chromium 390: cold start reaches the ready state",
+   "passed": true,
+   "seconds": 2.4,
+   "state": {
+    "error": null,
+    "ready": true
+   }
+  },
+  {
+   "check": "chromium 390: the served identity names the intended daily artifact",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: the product name and status are shown",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: no verification failure",
+   "failed": [],
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view train renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view forecast renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view validation renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view reliability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view explainability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view features renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view data renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view limitations renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: view history renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "chromium 390: the product page requests its own origin only",
+   "hosts": {
+    "yarden-viktor-delu-day-ahead-forecast.static.hf.space": 13
+   },
+   "passed": true
+  },
+  {
+   "check": "chromium: the Space's own History link opens v1's page on the Space's origin",
+   "final_url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html",
+   "href": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html",
+   "passed": true,
+   "served_title": "DE-LU Day-Ahead Forecast \u2014 runs in your browser",
+   "status": 200
+  },
+  {
+   "check": "webkit 1440: cold start reaches the ready state",
+   "passed": true,
+   "seconds": 2.4,
+   "state": {
+    "error": null,
+    "ready": true
+   }
+  },
+  {
+   "check": "webkit 1440: the served identity names the intended daily artifact",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: the product name and status are shown",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: no verification failure",
+   "failed": [],
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view train renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view forecast renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view validation renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view reliability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view explainability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view features renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view data renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view limitations renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: view history renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 1440: the product page requests its own origin only",
+   "hosts": {
+    "yarden-viktor-delu-day-ahead-forecast.static.hf.space": 13
+   },
+   "passed": true
+  },
+  {
+   "check": "webkit 390: cold start reaches the ready state",
+   "passed": true,
+   "seconds": 3.2,
+   "state": {
+    "error": null,
+    "ready": true
+   }
+  },
+  {
+   "check": "webkit 390: the served identity names the intended daily artifact",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: the product name and status are shown",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: no verification failure",
+   "failed": [],
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view train renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view forecast renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view validation renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view reliability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view explainability renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view features renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view data renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view limitations renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: view history renders without a failed state",
+   "passed": true
+  },
+  {
+   "check": "webkit 390: the product page requests its own origin only",
+   "hosts": {
+    "yarden-viktor-delu-day-ahead-forecast.static.hf.space": 13
+   },
+   "passed": true
+  },
+  {
+   "check": "webkit: the Space's own History link opens v1's page on the Space's origin",
+   "final_url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html",
+   "href": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html",
+   "passed": true,
+   "served_title": "DE-LU Day-Ahead Forecast \u2014 runs in your browser",
+   "status": 200
+  }
+ ],
+ "failed": 0,
+ "finished_utc": "2026-11-13T20:02:34Z",
+ "intended_artifact": "bf53cd675e4a07f1c409e9c048be0ceba8dbff9fda80c8d224f7e934bc9f87a7",
+ "origin": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+ "passed": 58,
+ "shots": {
+  "chromium-1440-panel.png": "66b8a8eaa10f2572b63d0e7855420109134f785ccdc0e35d867d77c4af570d2e",
+  "chromium-390-panel.png": "e1f34a67bfedc6ae087de2d61d4c78da1836d8dd1dcc5e105cb19a7206e769a7",
+  "chromium-history.png": "1fae0a87a899bbae966680ea81c7ac87b860dcde940bf4c10d85eacdb17ef048",
+  "webkit-1440-panel.png": "d2d1c7cb3bc13617dd29c2c48ef7d23e9e6e7c0c5cc037394a830f5d352764e6",
+  "webkit-390-panel.png": "df393aedb736de31abd24b2ff683e58770970240b24845bf2cc51568494b81ba",
+  "webkit-history.png": "9a2d387b977fe3a482653a5527084790211472e78a1b9e3d5db5da3c14f71d8e"
+ },
+ "started_utc": "2026-11-13T20:00:53Z"
+}

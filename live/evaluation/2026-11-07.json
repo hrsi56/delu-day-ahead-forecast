@@ -1,0 +1,610 @@
+{
+ "as_of_day": "2026-11-07",
+ "run_id": "local-2026-11-08",
+ "schema": "cp18b-daily-evaluation-v1",
+ "static_development_sha256": "040ab44e2f25ac4abbd573009c53ceec258bab5f330301e940a86b0abde83d49",
+ "windows": [
+  {
+   "evidence_class": "development rehearsal \u00b7 CP-18 dry runs on development days \u00b7 not prospective and not 4.7T",
+   "policy": "product",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "development"
+  },
+  {
+   "evidence_class": "development rehearsal \u00b7 CP-18 dry runs on development days \u00b7 not prospective and not 4.7T",
+   "policy": "B0",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "development"
+  },
+  {
+   "evidence_class": "one-shot fresh-data test (4.7T) \u00b7 not yet scored",
+   "policy": "product",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "4.7T"
+  },
+  {
+   "evidence_class": "one-shot fresh-data test (4.7T) \u00b7 not yet scored",
+   "policy": "B0",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "4.7T"
+  },
+  {
+   "evidence_class": "prospective \u00b7 evaluation in progress until CP-19",
+   "policy": "product",
+   "record": {
+    "days": [
+     {
+      "at_or_below": [
+       0,
+       6,
+       8,
+       10,
+       19,
+       23,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 11,
+       "80": 17,
+       "95": 24
+      },
+      "day": "2026-11-06",
+      "keys": 24,
+      "mae_eur": 16.314211981590848,
+      "pit_counts": [
+       0,
+       6,
+       2,
+       2,
+       9,
+       4,
+       1,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 656.016661627151,
+       "80": 1366.4756428753822,
+       "95": 2515.7353886737737
+      },
+      "wis_eur": 8.392183441298066,
+      "within_tau_hours": 6
+     },
+     {
+      "at_or_below": [
+       0,
+       4,
+       11,
+       15,
+       21,
+       22,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 10,
+       "80": 18,
+       "95": 24
+      },
+      "day": "2026-11-07",
+      "keys": 24,
+      "mae_eur": 12.825218849693847,
+      "pit_counts": [
+       0,
+       4,
+       7,
+       4,
+       6,
+       1,
+       2,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 522.8981197520275,
+       "80": 1052.257791406319,
+       "95": 1814.829777638576
+      },
+      "wis_eur": 7.163205997427137,
+      "within_tau_hours": 13
+     },
+     {
+      "canonical_hours": 24,
+      "completeness": 0.0,
+      "day": "2026-11-08",
+      "keys": 24,
+      "scored": false,
+      "scored_hours": 0
+     }
+    ],
+    "pooled": {
+     "coverage": {
+      "50": {
+       "covered_hours": 21,
+       "mean_width_eur": 24.56072461206622,
+       "nominal": 0.5,
+       "scored_hours": 48,
+       "share": 0.4375
+      },
+      "80": {
+       "covered_hours": 35,
+       "mean_width_eur": 50.390279880868775,
+       "nominal": 0.8,
+       "scored_hours": 48,
+       "share": 0.7291666666666666
+      },
+      "95": {
+       "covered_hours": 48,
+       "mean_width_eur": 90.22010763150729,
+       "nominal": 0.95,
+       "scored_hours": 48,
+       "share": 1.0
+      }
+     },
+     "mae_eur": 14.569715415642348,
+     "partial_days": 0,
+     "pending_or_unscored_days": 1,
+     "percentage": {
+      "label": "share of scored hours within \u00b110 EUR/MWh of the published price",
+      "scored_hours": 48,
+      "share": 0.3958333333333333,
+      "tau_eur": 10.0,
+      "within_hours": 19
+     },
+     "pit": [
+      {
+       "band": 0,
+       "count": 0,
+       "nominal_share": 0.025,
+       "share": 0.0
+      },
+      {
+       "band": 1,
+       "count": 10,
+       "nominal_share": 0.075,
+       "share": 0.20833333333333334
+      },
+      {
+       "band": 2,
+       "count": 9,
+       "nominal_share": 0.15,
+       "share": 0.1875
+      },
+      {
+       "band": 3,
+       "count": 6,
+       "nominal_share": 0.25,
+       "share": 0.125
+      },
+      {
+       "band": 4,
+       "count": 15,
+       "nominal_share": 0.25,
+       "share": 0.3125
+      },
+      {
+       "band": 5,
+       "count": 5,
+       "nominal_share": 0.15,
+       "share": 0.10416666666666667
+      },
+      {
+       "band": 6,
+       "count": 3,
+       "nominal_share": 0.075,
+       "share": 0.0625
+      },
+      {
+       "band": 7,
+       "count": 0,
+       "nominal_share": 0.025,
+       "share": 0.0
+      }
+     ],
+     "reliability": [
+      {
+       "at_or_below": 0,
+       "level": 0.025,
+       "name": "p025",
+       "scored_hours": 48,
+       "share": 0.0
+      },
+      {
+       "at_or_below": 10,
+       "level": 0.1,
+       "name": "p10",
+       "scored_hours": 48,
+       "share": 0.20833333333333334
+      },
+      {
+       "at_or_below": 19,
+       "level": 0.25,
+       "name": "p25",
+       "scored_hours": 48,
+       "share": 0.3958333333333333
+      },
+      {
+       "at_or_below": 25,
+       "level": 0.5,
+       "name": "p50",
+       "scored_hours": 48,
+       "share": 0.5208333333333334
+      },
+      {
+       "at_or_below": 40,
+       "level": 0.75,
+       "name": "p75",
+       "scored_hours": 48,
+       "share": 0.8333333333333334
+      },
+      {
+       "at_or_below": 45,
+       "level": 0.9,
+       "name": "p90",
+       "scored_hours": 48,
+       "share": 0.9375
+      },
+      {
+       "at_or_below": 48,
+       "level": 0.975,
+       "name": "p975",
+       "scored_hours": 48,
+       "share": 1.0
+      }
+     ],
+     "scored_days": 2,
+     "scored_hours": 48,
+     "wis_eur": 7.777694719362602
+    },
+    "rolling": [
+     {
+      "coverage50": 0.4583333333333333,
+      "coverage80": 0.7083333333333334,
+      "coverage95": 1.0,
+      "day": "2026-11-06",
+      "scored_hours": 24,
+      "width50_eur": 27.33402756779796,
+      "width80_eur": 56.93648511980759,
+      "width95_eur": 104.82230786140724,
+      "window_days": 1,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.4375,
+      "coverage80": 0.7291666666666666,
+      "coverage95": 1.0,
+      "day": "2026-11-07",
+      "scored_hours": 48,
+      "width50_eur": 24.56072461206622,
+      "width80_eur": 50.390279880868775,
+      "width95_eur": 90.22010763150729,
+      "window_days": 2,
+      "window_first_day": "2026-11-06"
+     }
+    ],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "prospective"
+  },
+  {
+   "evidence_class": "prospective \u00b7 evaluation in progress until CP-19",
+   "policy": "B0",
+   "record": {
+    "days": [
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       2,
+       9,
+       23,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 9,
+       "80": 23,
+       "95": 24
+      },
+      "day": "2026-11-06",
+      "keys": 24,
+      "mae_eur": 18.903958333333332,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       2,
+       7,
+       14,
+       1,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 815.4750000000004,
+       "80": 2136.072,
+       "95": 3990.2175000000016
+      },
+      "wis_eur": 11.123312648809526,
+      "within_tau_hours": 7
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       7,
+       17,
+       23,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 17,
+       "80": 23,
+       "95": 24
+      },
+      "day": "2026-11-07",
+      "keys": 24,
+      "mae_eur": 11.613437500000005,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       7,
+       10,
+       6,
+       1,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 815.4750000000004,
+       "80": 2136.072,
+       "95": 3990.2175000000016
+      },
+      "wis_eur": 8.793446577380955,
+      "within_tau_hours": 15
+     },
+     {
+      "canonical_hours": 24,
+      "completeness": 0.0,
+      "day": "2026-11-08",
+      "keys": 24,
+      "scored": false,
+      "scored_hours": 0
+     }
+    ],
+    "pooled": {
+     "coverage": {
+      "50": {
+       "covered_hours": 26,
+       "mean_width_eur": 33.97812500000001,
+       "nominal": 0.5,
+       "scored_hours": 48,
+       "share": 0.5416666666666666
+      },
+      "80": {
+       "covered_hours": 46,
+       "mean_width_eur": 89.003,
+       "nominal": 0.8,
+       "scored_hours": 48,
+       "share": 0.9583333333333334
+      },
+      "95": {
+       "covered_hours": 48,
+       "mean_width_eur": 166.25906250000006,
+       "nominal": 0.95,
+       "scored_hours": 48,
+       "share": 1.0
+      }
+     },
+     "mae_eur": 15.25869791666667,
+     "partial_days": 0,
+     "pending_or_unscored_days": 1,
+     "percentage": {
+      "label": "share of scored hours within \u00b110 EUR/MWh of the published price",
+      "scored_hours": 48,
+      "share": 0.4583333333333333,
+      "tau_eur": 10.0,
+      "within_hours": 22
+     },
+     "pit": [
+      {
+       "band": 0,
+       "count": 0,
+       "nominal_share": 0.025,
+       "share": 0.0
+      },
+      {
+       "band": 1,
+       "count": 0,
+       "nominal_share": 0.075,
+       "share": 0.0
+      },
+      {
+       "band": 2,
+       "count": 0,
+       "nominal_share": 0.15,
+       "share": 0.0
+      },
+      {
+       "band": 3,
+       "count": 9,
+       "nominal_share": 0.25,
+       "share": 0.1875
+      },
+      {
+       "band": 4,
+       "count": 17,
+       "nominal_share": 0.25,
+       "share": 0.3541666666666667
+      },
+      {
+       "band": 5,
+       "count": 20,
+       "nominal_share": 0.15,
+       "share": 0.4166666666666667
+      },
+      {
+       "band": 6,
+       "count": 2,
+       "nominal_share": 0.075,
+       "share": 0.041666666666666664
+      },
+      {
+       "band": 7,
+       "count": 0,
+       "nominal_share": 0.025,
+       "share": 0.0
+      }
+     ],
+     "reliability": [
+      {
+       "at_or_below": 0,
+       "level": 0.025,
+       "name": "p025",
+       "scored_hours": 48,
+       "share": 0.0
+      },
+      {
+       "at_or_below": 0,
+       "level": 0.1,
+       "name": "p10",
+       "scored_hours": 48,
+       "share": 0.0
+      },
+      {
+       "at_or_below": 0,
+       "level": 0.25,
+       "name": "p25",
+       "scored_hours": 48,
+       "share": 0.0
+      },
+      {
+       "at_or_below": 9,
+       "level": 0.5,
+       "name": "p50",
+       "scored_hours": 48,
+       "share": 0.1875
+      },
+      {
+       "at_or_below": 26,
+       "level": 0.75,
+       "name": "p75",
+       "scored_hours": 48,
+       "share": 0.5416666666666666
+      },
+      {
+       "at_or_below": 46,
+       "level": 0.9,
+       "name": "p90",
+       "scored_hours": 48,
+       "share": 0.9583333333333334
+      },
+      {
+       "at_or_below": 48,
+       "level": 0.975,
+       "name": "p975",
+       "scored_hours": 48,
+       "share": 1.0
+      }
+     ],
+     "scored_days": 2,
+     "scored_hours": 48,
+     "wis_eur": 9.95837961309524
+    },
+    "rolling": [
+     {
+      "coverage50": 0.375,
+      "coverage80": 0.9583333333333334,
+      "coverage95": 1.0,
+      "day": "2026-11-06",
+      "scored_hours": 24,
+      "width50_eur": 33.97812500000001,
+      "width80_eur": 89.003,
+      "width95_eur": 166.25906250000006,
+      "window_days": 1,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.5416666666666666,
+      "coverage80": 0.9583333333333334,
+      "coverage95": 1.0,
+      "day": "2026-11-07",
+      "scored_hours": 48,
+      "width50_eur": 33.97812500000001,
+      "width80_eur": 89.003,
+      "width95_eur": 166.25906250000006,
+      "window_days": 2,
+      "window_first_day": "2026-11-06"
+     }
+    ],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "prospective"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+ "at": "2026-11-13T10:05:40+00:00",
+ "note": "the first publication's served identity, read again with the check fixed after it: README.md (the card) is served rendered by the host and verified in the Hub tree at the new revision; HTML compared after the host's script and its one run of Open Graph and Twitter tags",
+ "revision": "2fcd91cd819830919236f8dddb9e96a63a96b3cb",
+ "schema": "cp18c-served-identity-recheck-v1",
+ "served": {
+  "artifact_sha256": "3e046a000a6bce7b22822dbf581b6f8a939ac49ec45eda30c4b6e0de0b742e98",
+  "checked": 870,
+  "how": {
+   "normalized": 2,
+   "raw": 867
+  },
+  "intended_manifest_sha256": "e4da8cb1721dda34053cc15f621dbdbc739493c0d1837461d10a2a3282eb4eee",
+  "problems": [],
+  "served_identity_equal": true,
+  "served_manifest_sha256": "e4da8cb1721dda34053cc15f621dbdbc739493c0d1837461d10a2a3282eb4eee",
+  "verified_in_the_hub_tree_only": [
+   "README.md"
+  ]
+ }
+}

@@ -47,6 +47,10 @@ SCHEMA = 'cp18b-bundle-build-v1'
 ISSUING_HOST = 'Pyodide 0.28.0 in Node.js v26.7.0'
 EVIDENCE_LABEL = ('A1 · final candidate · pending 4.7T; development data through 2026-09-06 only; the issued days are '
                   'a development rehearsal (CP-18 dry runs), not prospective and not 4.7T')
+#: The live product's label (CP-18c, r20 §24.14 item 5; O13): a store whose first day is after the development boundary.
+LIVE_EVIDENCE_LABEL = ("v6 · DDNN-2 alone (A1 in the frozen records) · final candidate · pending 4.7T; the live "
+                       "product's own issued days from {first}, prospective evaluation in progress, never 4.7T's "
+                       'issuance or score; the development-period displays stay on days through 2026-09-06')
 START_FILES = ('manifest.json', 'issued-forecasts.json', 'outcomes.json', 'evaluation.json', 'artifact.json')
 SERIES_FIRST_DAY = date(2019, 1, 1)
 
@@ -111,18 +115,52 @@ def not_issued(store: LiveStore, fresh: dict) -> list[dict]:
         else:
             text = 'cause not recorded'
         out.append({'day': day, 'status': item['status'], 'cause': item.get('cause'), 'text': text})
-    if fresh['state'] == 'stale':
+    # the open days (CP-18c): attempted by a run and not issued, still inside the lookback, so not yet closed
+    decided, attempts = set(store.days()), {}
+    for run in store.runs():
+        for day, item in (run.get('days') or {}).items():
+            if day not in decided and item.get('status') == 'open' and item.get('cause'):
+                attempts[day] = item['cause']
+    for day, cause in sorted(attempts.items()):
+        out.append({'day': day, 'status': 'not issued', 'cause': cause,
+                    'text': causes.text(cause) + ' (attempted, still inside the lookback)'})
+    if fresh['state'] == 'stale' and fresh['target_day'] not in attempts:
         out.append({'day': fresh['target_day'], 'status': 'not decided yet', 'cause': None,
                     'text': 'not issued yet: no run has decided it'})
     return out
 
 
-def evidence_label(gaps: list[dict]) -> str:
+def live_store(store: LiveStore) -> bool:
+    """A live product's store: its first issuable day after the development boundary (the carry's first live day)."""
+    first = store.first_day()
+    carried = [e for e in store.entries() if e['kind'] == 'carry']
+    if carried:
+        first = date.fromisoformat(carried[-1]['first_live_day'])
+    return first > guard.BOUNDARY
+
+
+def first_live_day(store: LiveStore) -> str:
+    carried = [e for e in store.entries() if e['kind'] == 'carry']
+    return carried[-1]['first_live_day'] if carried else str(store.first_day())
+
+
+def evidence_label(gaps: list[dict], live_from: str | None = None) -> str:
     """The manifest's evidence label, then each day not issued with its cause: the frozen manifest's one free-text
-    field (a dedicated field would change the frozen schema)."""
+    field (a dedicated field would change the frozen schema). A live store's outside days (before its first live day)
+    are named once, as a range, not day by day."""
+    base = EVIDENCE_LABEL if live_from is None else LIVE_EVIDENCE_LABEL.format(first=live_from)
+    if live_from is not None:
+        gaps = [g for g in gaps if g['status'] != 'outside']
     if not gaps:
-        return EVIDENCE_LABEL
-    return EVIDENCE_LABEL + '; not issued: ' + '; '.join(f"{g['day']}, {g['text']}" for g in gaps)
+        return base
+    return base + '; not issued: ' + '; '.join(f"{g['day']}, {g['text']}" for g in gaps)
+
+
+def manifest_times(times: dict) -> dict:
+    """The artifact's three times in the frozen manifest's notation: an instant written `...Z` (the first live artifact's
+    data refresh, from the archive's retrieval times) is restated as the same instant `...+00:00`; the artifact is
+    served as issued."""
+    return {k: (v[:-1] + '+00:00' if isinstance(v, str) and v.endswith('Z') else v) for k, v in times.items()}
 
 
 def served_artifact(entries: list[dict], fresh: dict) -> dict:
@@ -192,7 +230,8 @@ class Payloads:
         return meta_bytes, npz_bytes
 
     def rebuild(self, day: str) -> Path:
-        if self.root is None or self.recorded is None:
+        from . import boundary
+        if self.root is None or (self.recorded is None and not boundary.is_live()):
             raise FileNotFoundError(f'{day}: no cached payload and no recorded inputs to rebuild it from')
         from cp17.shadow import ShadowStates
         from cp26.search import serving_search
@@ -203,7 +242,11 @@ class Payloads:
         ledger = self.store.entries()
         i = next(k for k, e in enumerate(ledger) if e['kind'] == 'issuance' and e['day'] == day)
         state = ShadowStates.from_dict(json.loads((self.store.folder / ledger[i - 1]['state_file']).read_text()))
-        inputs = LiveInputs(self.root, self.project, self.recorded)
+        if self.recorded is None:              # live (CP-18c): the committed archive; anything missing is retrieved
+            from .live.transport import HttpTransport
+            inputs = LiveInputs(self.root, self.project, None, transport=HttpTransport())
+        else:
+            inputs = LiveInputs(self.root, self.project, self.recorded)
         if self.archive is not None:
             inputs = _ArchivedInputs(inputs, Path(self.archive))
         d = date.fromisoformat(day)
@@ -315,7 +358,7 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
     reconciliation = log.reconcile(Archive(Path(archive)), [date.fromisoformat(e['day']) for e in issued], now, run_id,
                                    transport=transport)
     view = log.view()
-    outcome_value = OC.bundle_outcomes([date.fromisoformat(e['day']) for e in issued], view)
+    outcome_value = OC.bundle_outcomes([date.fromisoformat(e['day']) for e in issued], view, named=live_store(store))
     dump(out / 'outcomes.json', outcome_value)
     # training windows: B0 for every issued day, A1 for the served artifact's day
     payloads = payloads or Payloads(store, entries, caches=caches, root=root, project=project, recorded=recorded,
@@ -356,13 +399,13 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
     identity = json.loads((root / MANIFEST).read_text())
     manifest = {'schema': 'cp17-manifest-v1',
                 'product': {'name': 'delu-day-ahead-policy', 'designated_policy': 'A1',
-                            'evidence_label': evidence_label(gaps)},
+                            'evidence_label': evidence_label(gaps, first_live_day(store) if live_store(store) else None)},
                 'policy': {'policy_identity_sha256': identity['policy_identity_sha256'],
                            'package_sha256': identity['policy_identity']['code']['package_sha256'],
                            'issuing_host': ISSUING_HOST},
                 'artifact': {'artifact_sha256': artifact['artifact_sha256'], 'delivery_day': artifact['delivery_day'],
                              'issued_policy': artifact['issued_policy'], 'display': artifact['display']},
-                'times': artifact['times'],
+                'times': manifest_times(artifact['times']),
                 'freshness': {k: fresh[k] for k in ('state', 'as_of_day', 'latest_issued_day')}, 'files': files}
     dump(out / 'manifest.json', manifest)
     return {'schema': SCHEMA, 'run_id': run_id, 'now': now.isoformat(), 'out': str(out),
@@ -417,12 +460,25 @@ def identity_problems(files: dict[str, bytes], root=None) -> list[str]:
     if lineage.get('policy_identity_sha256') != frozen['policy_identity_sha256'] or \
             lineage.get('code_sha256') != frozen['policy_identity']['code']['package_sha256']:
         problems.append("the served artifact's lineage is not the frozen policy's")
-    days = [d['delivery_day'] for d in forecasts.get('days', [])] + [p['delivery_day'] for p in outcomes.get('prices', [])]
-    days += [manifest['artifact']['delivery_day'], manifest['freshness']['as_of_day'], manifest['freshness']['latest_issued_day']]
-    if served is not None:
-        days.append(served['last_day'])
-    if any(date.fromisoformat(d) > guard.BOUNDARY for d in days):
-        problems.append('a served delivery day lies after the development boundary (the red line, §24.2)')
+    # The red line applies to the research windows only (CP-18c; r20 §24.14 items 2 and 5): the served series and the
+    # development evaluation windows stay on days through 2026-09-06; the live record's issued days, outcomes and the
+    # prospective window lie after it by design. No window labelled 4.7T may hold a day before 4.7T is scored, and the
+    # prospective window holds no development day: the classes never pool.
+    research = [served['last_day']] if served is not None else []
+    try:
+        windows = json.loads(files['evaluation.json'])['windows']
+    except (KeyError, ValueError, TypeError):
+        windows = []
+    for w in windows if isinstance(windows, list) else []:
+        days_scored = [d.get('day') for d in ((w.get('record') or {}).get('days') or []) if isinstance(d, dict)]
+        if w.get('window') == 'development':
+            research += [d for d in days_scored if d]
+        elif w.get('window') == '4.7T' and days_scored:
+            problems.append("a window labelled 4.7T holds scored days before 4.7T is scored")
+        elif w.get('window') == 'prospective' and any(d and date.fromisoformat(d) <= guard.BOUNDARY for d in days_scored):
+            problems.append('the prospective window holds a development day (the classes never pool)')
+    if any(date.fromisoformat(d) > guard.BOUNDARY for d in research):
+        problems.append('a research window lies after the development boundary (the red line, §24.2)')
     return problems
 
 
@@ -479,6 +535,15 @@ def refit_served(root, project, live, now, caches, recorded, work) -> Path:
     return refit_arrays(root, project, folder, day, folder / 'runs', artifact)
 
 
+def _live_transport():
+    """Live (CP-18c): the outcomes a later archive day does not hold yet are retrieved once published."""
+    from . import boundary
+    if not boundary.is_live():
+        return None
+    from .live.transport import HttpTransport
+    return HttpTransport()
+
+
 class _NoRetrieval:
     """A transport that retrieves nothing (the pending control): every request is a miss."""
 
@@ -494,7 +559,9 @@ def main(argv=None) -> int:
     ap.add_argument('--live', type=Path, help="the data-only folder (default <root>/live): store/, inputs/, outcomes/, "
                                              "evaluation/, bundles/")
     ap.add_argument('--recorded', type=Path, help="recorded responses to acquire or rebuild archive days from")
-    ap.add_argument('--now', required=True)
+    ap.add_argument('--now', help="the run's wall clock (a dry run's simulated one; a live run's default is the real clock)")
+    ap.add_argument('--mode', default='dry-run', choices=('dry-run', 'live'),
+                    help='live: the live record inside cp18.boundary.live() (CP-18c)')
     ap.add_argument('--out', required=True, type=Path)
     ap.add_argument('--arrays', type=Path, help="the served artifact's exported arrays (the issuing attempt's run-arrays.npz)")
     ap.add_argument('--refit', action='store_true', help="no arrays at hand (a run that issued nothing): refit the served "
@@ -506,7 +573,16 @@ def main(argv=None) -> int:
                                                                      'outcome retrieval, so unarchived days stay pending)')
     ap.add_argument('--commit-records', action='store_true', help='append to live/evaluation and live/bundles')
     args = ap.parse_args(argv)
+    from contextlib import nullcontext
+    from . import boundary
+    if args.mode == 'dry-run' and not args.now:
+        raise SystemExit('a dry run needs --now, its simulated wall clock')
     now = plan.parse_now(args.now)
+    with (boundary.live(now=now) if args.mode == 'live' else nullcontext()):
+        return _main(args, now)
+
+
+def _main(args, now) -> int:
     root = args.root.resolve()
     live = (args.live or root / 'live').resolve()
     arrays = args.arrays
@@ -515,7 +591,7 @@ def main(argv=None) -> int:
     value = build(root=root, store_dir=live / 'store', archive=live / 'inputs', outcomes_dir=live / 'outcomes', now=now,
                   out=args.out, arrays=arrays, run_id=args.run_id, caches=args.cache,
                   project=args.project.resolve(), recorded=args.recorded,
-                  transport=_NoRetrieval() if args.no_retrieval else None)
+                  transport=_NoRetrieval() if args.no_retrieval else _live_transport())
     verdict = gate(read(args.out), root)
     value['gate'] = {k: v for k, v in verdict.items()}
     if args.commit_records:

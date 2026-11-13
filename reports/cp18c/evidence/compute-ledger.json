@@ -1,0 +1,15 @@
+{
+ "schema": "cp18c-compute-ledger-v1",
+ "ceilings": {"local_machine_hours": 16, "local_concurrent_workers": 4, "github_job_hours": 6, "hugging_face": "one publication"},
+ "github": {"job_hours": 0.272, "repository": "hrsi56/delu-pipeline-dryrun (public, fake credentials, development days)",
+            "runs": ["42221640423 (689 s)", "42223428846 (291 s)"], "ledger": "reports/cp18c/rehearsal/github-ledger.json"},
+ "local_machine_hours_estimate": {
+  "live_acquisition": 1.7,
+  "live_runs_and_bundles": 0.8,
+  "lead_test_runs_and_ci": 1.4,
+  "space_builder_acceptance_and_builds": 1.6,
+  "workflow_builder_local_harness": 0.5,
+  "total_before_the_integration_review": 6.0,
+  "method": "summed worker wall time from the logs, rounded up; at most 4 concurrent workers; BLAS 1; CPU only; the largest peak 1.17 GB (an issuance)"
+ }
+}
