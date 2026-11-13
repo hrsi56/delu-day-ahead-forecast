@@ -82,11 +82,16 @@ term and the product line; P62 the comparison with v6 first; P63 CP-28's arms in
 P65 the transition; P66 "How the product works" for v6, with C403 for its inputs). Withheld: W1–W48 in force; PRES-5 adds W49–W53, each guarded in
 `research_claims.py::WITHHELD_PATTERNS` with negative controls in `tests/test_50`:
 
-- W49 v6/A1 "adopted" (v5's rule never ran on it);
-- W50 a live, prospective or 4.7T result;
-- W51 "the same protocol as v5" (the comparison shares hours and prices, not the protocol);
-- W52 pooling the every-day results with the five periods;
-- W53 v1 presented as what the Space runs now.
+- W49 calling v6 (A1) "adopted" or "adopted in research" (v5's rule never ran on it);
+- W50 presenting v6's comparison on v5's population as made under v5's protocol or information set;
+- W51 pooling CP-26's every-day results with the five periods, or calling either a test on new data;
+- W52 presenting a live forecast, score or price, or a number on a day after 2026-09-06, as research, or the live
+  record as 4.7T's result;
+- W53 giving v6 the status "live" or "released", or calling it the released product, before a passed 4.7T.
+
+(Corrected after Integration review 2, N1, to the claim map's and `WITHHELD_PATTERNS`' definitions.) That no surface
+says the Space, its root or its app runs v1 now is a separate check, `tests/test_50::test_no_surface_says_the_space_runs_v1_now`,
+with its negative control (Integration review 2, G1).
 
 ## 4. The derived headline quantities (standard §3.3), re-derived from committed rows
 
@@ -152,7 +157,8 @@ and v6 against v5 on every development day, "never pooled with the five periods 
 
 Decision 28 makes the live product v6 now; the Orchestrator ruled (O29) that "How the product works" documents v6,
 decision 28 prevailing over decision 21's timing (decision 21's fail branch survives). v1's manual is preserved in v1's
-chapter, its archive and git history; the page never says or implies that the Space runs v1 now (W53).
+chapter, its archive and git history; no surface says or implies that the Space runs v1 now
+(`tests/test_50::test_no_surface_says_the_space_runs_v1_now`).
 
 | Subject (§5.1) | Disposition | Evidence | Route |
 |---|---|---|---|
@@ -228,13 +234,14 @@ Incoming product v6; outgoing v1, "the last released generation", whose demo is 
 ## 7. Checks run
 
 Records under `reports/presentation/release-checks/` unless a path says otherwise. First failures and superseded runs
-are kept beside their retries. The candidate's code is `d487b4bd` (Integration review 1's repairs on `1d0f453e`); the
-candidate adds this packet and the records.
+are kept beside their retries. The candidate's code is `e86528a1`: Integration review 1's repairs (`d487b4bd`) and
+review 2's (`e86528a1`, the README's generator and `tests/test_50` only; the page is byte-identical to `d487b4bd`'s);
+the candidate adds this packet and the records.
 
 | Check (runbook §9; the brief) | Record | Result |
 |---|---|---|
-| The offline checks, `scripts/prerelease.py --stage pre-final`, from a clean detached worktree at `d487b4bd`: the browser payload; pytest on Python 3.13; a clean Python 3.12 run of every CI step; `make verify`; `make lint-publication`; the rebuild and `git status`; links; the publication guard | `pres-5-pre-final-3-prerelease.json` (raw output local only, `.local/worktrees/pres-5/prerelease/.local/artifacts/prerelease/pres-5-pre-final-3/`) | 2026-11-13, 44 min: every check as expected except three, each explained in §10.3: pytest 3.13, 3,237 passed, 9 skipped, 2 failed (CP-18a's two push tests refuse the non-final build record until the `--final` build); CI 3.12 pytest, 3,235 passed, 12 skipped, 1 failed (CP-17c's manifest test off the pinned interpreter on this Mac, item 6); links, 2 failed (the `evidence/pres-5` tag is not pushed yet, item 5); the rebuild changed no path; the guard exits 1 as expected before the `--final` build |
-| — its earlier runs | `pres-5-pre-final-2-prerelease.json` (at `1d0f453e`, before Integration review 1's repairs) and `pres-5-pre-final-prerelease.json` (at `b20ee9d1`, before the editorial repairs): the same three explained results, nothing else | superseded by the run above |
+| The offline checks, `scripts/prerelease.py --stage pre-final`, from a clean detached worktree at `e86528a1`: the browser payload; pytest on Python 3.13; a clean Python 3.12 run of every CI step; `make verify`; `make lint-publication`; the rebuild and `git status`; links; the publication guard | `pres-5-pre-final-4-prerelease.json` (raw output local only, `.local/worktrees/pres-5/prerelease/.local/artifacts/prerelease/pres-5-pre-final-4/`) | 2026-11-13, 46 min: every check as expected except three, each explained in §10.3: pytest 3.13, 3,240 passed, 9 skipped, 2 failed (CP-18a's two push tests refuse the non-final build record until the `--final` build); CI 3.12 pytest, 3,238 passed, 12 skipped, 1 failed (CP-17c's manifest test off the pinned interpreter on this Mac, item 6); links, 2 failed (the `evidence/pres-5` tag is not pushed yet, item 5); the rebuild changed no path; the guard exits 1 as expected before the `--final` build |
+| — its earlier runs | `pres-5-pre-final-3-prerelease.json` (at `d487b4bd`, before review 2's repair), `pres-5-pre-final-2-prerelease.json` (at `1d0f453e`, before Integration review 1's repairs) and `pres-5-pre-final-prerelease.json` (at `b20ee9d1`, before the editorial repairs): the same three explained results, nothing else | superseded by the run above |
 | The full suite in the lead worktree | local runs at `ef77b8e4` (3,229 passed; 2 failed, CP-18a's, by design) | superseded by the prerelease |
 | `make lint-publication` | inside the prerelease record; also run after every build | PASS: page, README and templates 0 findings |
 | `make publication-guard` | inside the prerelease record | BLOCKED by design until the `--final` build: `reports/cp3/pages_build.json` is a non-final build record |
@@ -250,7 +257,8 @@ candidate adds this packet and the records.
 | One editorial review | `docs/track-b/evidence/pres-5/editorial.md` (at `b20ee9d1`) | 12 violations (V1–V12), repaired in `1d0f453e`; 18 recommendations, dispositioned (§10.4) |
 | The fresh reader | `docs/track-b/evidence/pres-5/fresh-reader.md` | answers 1–5 agree with the records; two reading-path gaps repaired; observations dispositioned; continued applicability recorded |
 | Integration review 1, at `b866e996` | `docs/track-b/evidence/pres-5/integration-review-1.md` | **FAIL**: F1, the live product's startup line lacked §7.1's measured start, browser, date and last verification, and its size was typed (the editorial V4 deferred); F2, §8.2's command for a moved `main` used `--pathspec-from-file`, which `git diff` 2.50.1 rejects; F3, nothing checked the `evidence/pres-5` label's date; F4, "v5 and v4 are level" read a null result as equivalence; F5, the packet overstated what the lint checks for `A1`. All five repaired in `d487b4bd` (§10.4) |
-| Integration review 2 at the repaired candidate, and the focused recheck at the final SHA | `docs/track-b/evidence/pres-5/integration.md` | after this packet |
+| Integration review 2, at `9bb0cff8` | `docs/track-b/evidence/pres-5/integration-review-2.md` | **FAIL**: review 1's acceptance test met in every part; G1, the README's CP-3 section still said in the present tense that the Space runs v1's champion boosters at its root (the editorial V5's sentence, missed by the first repair), and no check guarded it; notes N1 (§3's W-list misdescribed), N2 (nothing set the evidence date), N3 (`reports/cp17c/inputs.json` records the five modules' old hashes). Repaired in `e86528a1` (§10.4) |
+| Integration review 3 at the repaired candidate, and the focused recheck at the final SHA | `docs/track-b/evidence/pres-5/integration.md` | after this packet |
 | The authorized MLflow upload, the mirror verification, the browser routes and the index | `pres-5-mlflow-upload.json`, `pres-5-public-mirror.json`, `pres-5-public-mlflow-routes.json`, `reports/presentation/mlflow_index.json` | after the independent check's PASS, before the `--final` build |
 
 No real Safari, real iPhone or screen reader was used; the phone widths are emulated viewports, and the iPhone is
@@ -353,7 +361,9 @@ extract), so a line in between means a path both changed: stop. (Git 2.50.1's `g
 the command passes the paths through `xargs`, which fails if any comparison differs. Integration review 1, F2.)
 
 **The evidence label's date equals the tip's** (Integration review 1, F3): the page labels v6's raw rows "frozen
-<date>" from `registry.py::EVIDENCE_TAGS["evidence/pres-5"]`, which the `--final` build set to the tip's date.
+<date>" from `registry.py::EVIDENCE_TAGS["evidence/pres-5"]`. The Lead sets that date by hand in the final-build
+commit, to that commit's date, and the evidence tip follows on the same day (Integration review 2, N2); this check
+confirms it before the tag is made.
 
 ```bash
 git --no-pager log -1 --format=%cs <evidence_tip_sha> && git --no-pager show <evidence_tip_sha>:src/delu_forecast/registry.py | grep '"evidence/pres-5"'
@@ -587,7 +597,7 @@ rollback is its own Owner action.
 | Ruling | What it decided | Basis |
 |---|---|---|
 | O25 | The archive's seven PNG figures embedded as RGB copies, pixel-identical to the originals, with a pixel-equality test | §5.2's budget; no visual change (`src/delu_forecast/compact_figures.py`, `tests/test_50`) |
-| O26, O29 | "How the product works" documents v6, the product the Space runs; decision 28 prevails over decision 21's timing; decision 21's fail branch survives; v1's manual preserved in its chapter, the archive and git history; the page never says or implies that the Space runs v1 now | A4 ("the documentation follows the new product"); decision 28; W53 |
+| O26, O29 | "How the product works" documents v6, the product the Space runs; decision 28 prevails over decision 21's timing; decision 21's fail branch survives; v1's manual preserved in its chapter, the archive and git history; the page never says or implies that the Space runs v1 now | A4 ("the documentation follows the new product"); decision 28; `test_no_surface_says_the_space_runs_v1_now` |
 | O27 | The hero: v6 "final candidate · pending 4.7T", the headline CP-28's pre-specified verdict with the development post-selection badge; v1 stays "released", "the last released generation", its demo historical at `/history/`, the product again if 4.7T fails | §4's hero order; decision 20's fresh-headline window; decision 21 |
 | O30 (replaces O28) | The public name "v6 · DDNN-2 alone", a generation, on the rail and timeline, the newest comparison row, the A3 transition "From v5 to v6" with its evidence class; "v6 (A1 in the frozen records)" where the identity is shown; CP-28's six other arms study arms "not selected", without codes; the Space uses the same name | §4; A3 |
 | O34 | CP-26's two landed-code tests check five presentation modules against their bytes as landed at `61658c7`, recorded under `cp26-landed-presentation-code/` and bound by SHA-256 and git blob; every other landed file stays checked against the working tree; negative controls; the two new modules named outside CP-26's landed set | the brief's allowed paths include the registry and the report's build, which CP-26's harness log pins as landed code |
@@ -600,6 +610,9 @@ rollback is its own Owner action.
   2026-11-12 13:50 UTC. The editorial reviewer was stopped by the same limits twice and resumed on the same checkout.
 - **O34's edit outside the allowed paths:** `tests/test_cp26_r15.py` and `tests/test_cp26_repair_contract.py`, one
   assertion each, and the helper `tests/pres5_landed_code.py`; no CP-26 record, manifest or harness file changed.
+- **`reports/cp17c/inputs.json`** (CP-17c's input record) also lists the five presentation modules' bytes as they were
+  at CP-17c's candidate. Nothing compares that record with the working tree, the freeze reads none of those modules,
+  and the freeze is untouched (Integration review 2, N3).
 - **The live-namespace wall** (`tests/test_24`) admits exactly three strings on the record surfaces — the product's
   name, its status and "prospective evaluation in progress" — by decision 28 and the brief's outcome 5; every live
   figure, score, date and other sentence stays behind it, with its positive control.
@@ -657,7 +670,7 @@ rollback is its own Owner action.
 | V2 no reason why the Space runs v6 | the product line beside the action: "… daily, frozen, before its one test, by the Owner's decision to go live: prospective evaluation in progress. A pass releases it; otherwise v1, the last released generation, is the product again." (P61; decision 28; C804) |
 | V3 unlabelled brackets and shares | the headline: "…, as shares of v5's, with descriptive 95% intervals" |
 | V4 incomplete startup metadata | deferred at first, then repaired after Integration review 1 (F1): every §7.1 field, read from CP-18b's records |
-| V5 the README's CP-3 section in the present tense | `scripts/cp3_readme.py`: a dated line says the table describes the surfaces at v1's release and where v1's demo is now; "How the product works"; the replay sentence names v1's demo |
+| V5 the README's CP-3 section in the present tense | `scripts/cp3_readme.py`: a dated line says the table describes the surfaces at v1's release and where v1's demo is now; "How the product works"; the replay sentence names v1's demo; and, after Integration review 2 (G1), v1's demo paragraph dated to its release and in the past tense |
 | V6 the archive's Space links | a note outside the protected archive: "The archive below links the Space as it was at v1's release; the Space's root has since been given to the live product, and v1's demo is under its History." The archive's bytes are unchanged (`tests/test_45`) |
 | V7 the regimes paragraph's population | v6's own block names v5's five test periods |
 | V8 the README's research introduction | "…in the shared comparison; v6's section also reports every eligible development day, a separate population" |
@@ -684,4 +697,11 @@ startup line's five bound fields, with F03's test and its negative controls; F2 
 this git; F3 by the date step in §8.2 and `tests/test_50::test_the_evidence_tags_date_is_the_tips`; F4 by "v5's gain
 over v4 is not shown there" and "the intervals do not establish that the two are equal"; F5 by the wording in §2 and
 §10.2. Its observations on the A8 order stay with §10.3 item 1.
+
+**Integration review 2** (`integration-review-2.md`, FAIL at `9bb0cff8`): G1 repaired by `scripts/cp3_readme.py`'s
+`_v1_demo_paragraph` (v1's demo paragraph dated to its release, in the past tense, with its address under History;
+the claims themselves unchanged, as the v1 Space card carries them) and by
+`tests/test_50::test_no_surface_says_the_space_runs_v1_now` with its negative control; N1 by §3's list and W51's and
+W52's negative controls in `tests/test_50`; N2 by the explicit date step (§8.2) taken in the final-build commit; N3
+disclosed in §10.2.
 
