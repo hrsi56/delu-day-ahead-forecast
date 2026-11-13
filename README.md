@@ -7,10 +7,10 @@
 
 **What it is.** Probabilistic forecasts of the next day's hourly German–Luxembourg (DE-LU) day-ahead electricity price, with prediction intervals, and the record of how successive research models were compared and checked.
 
-**Final candidate · pending 4.7T, v6 · DDNN-2 alone.** Selected by a rule set before any result: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with descriptive 95% intervals; 7 policies tested. `Development · post-selection`
+**Final candidate · pending 4.7T, v6 · DDNN-2 alone.** Selected by a rule set in advance: against v5 on all 2,068 development days, −7% [−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with descriptive 95% intervals; 7 policies tested. `Development · post-selection`
 
 - **Point and interval error:** each day's mean absolute error of the median and its interval score, averaged; lower is better.
-- **Selection rule:** set on 2026-10-12, before any result.
+- **Selection rule:** set on 2026-10-12, before the re-baseline's first score.
 - **Final candidate · pending 4.7T:** v6 (A1 in the frozen records), frozen for 4.7T, its one test, on 90 days registered in advance.
 - **Policies:** the models and variants tested.
 - **Development · post-selection:** development evidence, not a test on new data.

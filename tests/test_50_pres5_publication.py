@@ -468,3 +468,43 @@ def test_negative_controls_for_w51_and_w52():
     assert any(hit.startswith("W52") for hit in RC.withheld_findings("The live record as 4.7T is in progress."))
     assert any(hit.startswith("W52") for hit in RC.withheld_findings("4.7T's result is a pass."))
     assert not RC.withheld_findings("prospective evaluation in progress")
+
+
+# --------------------------------------------------------------------------- never adopted, in MLflow too (review 3, F1)
+
+
+def _adopted_problems(exports: dict[str, dict]) -> list[str]:
+    """Runs an export tags `delu.adopted = "true"` although their registry entry was never adopted in research or
+    released (a final candidate that its own rule selected: W49)."""
+    problems = []
+    for name, export in exports.items():
+        for run in export["runs"]:
+            entry = next((e for e in G.entries() if run["run_key"] in e.run_keys), None)
+            if entry is None:
+                continue
+            adopted = any(event.status in (G.ADOPTED_IN_RESEARCH, G.RELEASED) for event in entry.statuses)
+            if run["tags"].get("delu.adopted") == "true" and not adopted:
+                problems.append(f"{name}: {run['run_key']} ({entry.id})")
+    return problems
+
+
+def test_no_export_calls_v6_adopted():
+    exports = {name: json.loads((ROOT / f"reports/presentation/mlflow-export/{name}.json").read_text())
+               for name in ("cp26", "cp28")}
+    assert _adopted_problems(exports) == []
+    # cp28/A1 and CP-26's four D2 masks; the parent cp28 is the checkpoint's own run and carries no adoption tag
+    v6_runs = [run for export in exports.values() for run in export["runs"]
+               if run["run_key"] in G.get("v6").run_keys and run["run_key"] != "cp28"]
+    assert len(v6_runs) == 5
+    assert {run["tags"]["delu.adopted"] for run in v6_runs} == {"false"}
+    assert {run["tags"]["delu.status"] for run in v6_runs} == {"final candidate 2026-10-30"}
+
+
+def test_negative_control_a_final_candidate_tagged_adopted_is_caught():
+    export = json.loads((ROOT / "reports/presentation/mlflow-export/cp28.json").read_text())
+    next(run for run in export["runs"] if run["run_key"] == "cp28/A1")["tags"]["delu.adopted"] = "true"
+    assert _adopted_problems({"cp28": export}) == ["cp28: cp28/A1 (v6)"]
+    # the rule itself: a final candidate is "false" unless an adoption or a release came first
+    final = G.StatusEvent(G.FINAL_CANDIDATE, "2026-10-30", "x", "y")
+    assert G.adopted_flag(G.get("v6"), (final,)) == "false"
+    assert G.adopted_flag(G.get("v6"), (G.StatusEvent(G.ADOPTED_IN_RESEARCH, "2026-10-01", "x", "y"), final)) == "true"

@@ -827,8 +827,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     # ---- the headline's terms when the final candidate leads (decision 20: development results until 4.7T) ----
     _block("terms.daily_errors", "P60", """**Point and interval error:** each day's mean absolute error of the median
            and its interval score, averaged; lower is better.""", PAGE, README),
-    _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before any
-           result.""", PAGE, README),
+    _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before the re-baseline's
+           first score.""", PAGE, README),
     _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** {g:v6.version}
            ({s:name:A1} in the frozen records), frozen for {s:work-item:4.7T}, its one test, on {s:count:90} days registered in
            advance.""", PAGE, README),
@@ -991,7 +991,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            together, each as a full probability distribution, and issues that distribution's seven quantiles."""),
     _block("v6.product.validation", "P66", """**Before the test.** The re-baseline issued every policy daily on every
            development day, {s:date:2020-12-29} to {s:date:2026-09-06}, under one protocol; the selection rule, set
-           before any result, chose {g:v6.version} among seven arms there in one look; and {g:v6.version} was then scored
+           before the re-baseline's first score, chose {g:v6.version} among seven arms there in one look; and {g:v6.version} was then scored
            on {g:v5.version}'s five test periods. All of this is development evidence after selection. **The test.**
            {s:work-item:4.7T}, registered before any of its {s:count:90} days' data was opened, is its one test, from
            {s:date:2026-12-04}. **Live.** The live product's issued forecasts are scored after the fact, prospective
@@ -1144,7 +1144,7 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
         # results. The final candidate's are its selection rule's: the verdict, the distance from the control with its
         # descriptive interval, in each metric's name (A1), and N (§3.2).
         return "P60", (
-            "Selected by a rule set before any result: against {g:%s.version} on all {r:cp28.paired_dates} development "
+            "Selected by a rule set in advance: against {g:%s.version} on all {r:cp28.paired_dates} development "
             "days, {r:derived.cp28.A1.MAE} {r:derived.cp28.A1.MAE|ci} in point error and {r:derived.cp28.A1.WIS} "
             "{r:derived.cp28.A1.WIS|ci} in interval error, as shares of {g:%s.version}'s, with descriptive "
             "{s:level:95%%} intervals; {r:derived.cp28.tested} policies tested."

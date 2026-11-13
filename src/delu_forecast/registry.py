@@ -1103,11 +1103,19 @@ def run_role(run_key: str) -> str:
     return "control" if entry.kind == "control" else "candidate"
 
 
-def adopted_flag(entry: Entry) -> str:
-    """`delu.adopted`: true once adopted in research or beyond, false when not adopted, n/a otherwise."""
-    if entry.status is None:
+def adopted_flag(entry: Entry, statuses: tuple[StatusEvent, ...] | None = None) -> str:
+    """`delu.adopted`: true once adopted in research or released, false when not adopted, n/a otherwise. A final
+    candidate that no adoption rule decided (PRES-5's v6, selected by CP-28's own rule; W49) is "false": the status
+    alone never implies adoption (Integration review 3, F1)."""
+    history = entry.statuses if statuses is None else statuses
+    if not history:
         return "n/a"
-    return "false" if entry.status.status in (NOT_ADOPTED, RETIRED) else "true"
+    current = history[-1].status
+    if current in (NOT_ADOPTED, RETIRED):
+        return "false"
+    if current == FINAL_CANDIDATE and not any(event.status in (ADOPTED_IN_RESEARCH, RELEASED) for event in history):
+        return "false"
+    return "true"
 
 
 def parent_run_keys() -> tuple[str, ...]:

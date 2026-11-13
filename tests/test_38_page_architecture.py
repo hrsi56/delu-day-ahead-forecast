@@ -123,7 +123,7 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     assert text == re.sub(r"`", "", RC.headline("md"))
     # PRES-5 (decision 20's fresh-headline window; ruling O27): the final candidate, v6, leads with its own selection
     # rule's verdict, on development days, each value named by its metric (A1).
-    assert text.startswith("Selected by a rule set before any result: against v5 on all 2,068 development days, −7% "
+    assert text.startswith("Selected by a rule set in advance: against v5 on all 2,068 development days, −7% "
                            "[−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with "
                            "descriptive 95% intervals; 7 policies tested.")
     # PUBLISH_RULES 1.0 A1: v5's form, from the same generator, leads with its own rule (§3.3 a), at the rule's own
