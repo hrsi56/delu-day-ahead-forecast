@@ -420,3 +420,51 @@ def test_the_evidence_tags_date_is_the_tips():
     if shallow.stdout.strip() != "false" or rows.returncode != 0 or not rows.stdout.strip():
         pytest.skip("no history here to date the rows (a depth-1 checkout)")
     assert date >= rows.stdout.strip()
+
+
+# --------------------------------------------------------------------------- what the Space runs (review 2, G1)
+
+#: A sentence saying the Space, its root or its app runs v1 or v1's champion now (PUBLISH_RULES §8; the brief's
+#: outcome 5; rulings O26, O27, O29; Integration review 2, G1).
+SPACE_RUNS_V1_NOW = (
+    re.compile(r"\bThe Space (cannot|can't|can not) load\b"),
+    re.compile(r"\bThe app alone is at\b"),
+    re.compile(r"\b[Tt]he Space\b[^.]{0,80}\bruns\b[^.]{0,60}\b(champion|v1|released model)\b"),
+    re.compile(r"\b[Tt]he (demo|Space's root|app) runs\b[^.]{0,40}\b(champion|v1|released model)\b"),
+)
+
+
+def _space_runs_v1_now(text: str) -> list[str]:
+    flat = " ".join(text.split())
+    return [match.group(0) for pattern in SPACE_RUNS_V1_NOW for match in pattern.finditer(flat)]
+
+
+def test_no_surface_says_the_space_runs_v1_now():
+    page = PAGE.split("<script>")[0]
+    # v1's archive is preserved as published and labelled so; a note outside it says where v1's demo is now.
+    archive = re.search(r'<details class="disclosure archive" id="v1-archive">.*?</details>\s*</article>', page, re.S)
+    assert archive
+    assert not _space_runs_v1_now(_text(page.replace(archive.group(0), "")))
+    assert not _space_runs_v1_now(README)
+    assert "the Space could not load" in " ".join(README.split())  # v1's demo, dated to its release
+
+
+def test_negative_control_the_readme_sentence_before_the_repair_is_caught():
+    from delu_forecast.claims import build_claims
+
+    claims = build_claims()
+    restored = README.replace(
+        README[README.index("At v1's release, the Space could not load"):README.index("\n", README.index(
+            "At v1's release, the Space could not load"))],
+        f'{claims["wasm_identity"]} {claims["wasm_wrapper_disclosure"]}')
+    assert len(_space_runs_v1_now(restored)) >= 2  # "The Space cannot load …" and "The app alone is at …"
+
+
+def test_negative_controls_for_w51_and_w52():
+    """PRES-5's guards on pooling CP-26's every-day results with the five periods (W51) and on the live record as
+    4.7T's result (W52) catch their sentences, and leave the page's own wording alone (Integration review 2, N1)."""
+    assert any(hit.startswith("W51") for hit in RC.withheld_findings("CP-26's results pooled with the five periods"))
+    assert not RC.withheld_findings("never pooled with the five periods above")
+    assert any(hit.startswith("W52") for hit in RC.withheld_findings("The live record as 4.7T is in progress."))
+    assert any(hit.startswith("W52") for hit in RC.withheld_findings("4.7T's result is a pass."))
+    assert not RC.withheld_findings("prospective evaluation in progress")

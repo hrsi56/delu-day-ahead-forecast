@@ -31,6 +31,27 @@ NEXT_HEADING = "## Setup\n"
 
 
 
+def _v1_demo_paragraph(C) -> str:
+    """v1's demo, as the CP-3 section has described it since v1's release. With a final candidate live (decision 28),
+    the Space's root runs the live product, so the paragraph is dated and in the past tense, and it names where v1's
+    demo is now (PRES-5; Integration review 2, G1). The claims themselves are unchanged: the v1 Space card, which
+    describes v1's own bundle, carries them as written (`tests/test_23_static_space.py`)."""
+    text = f'{C["wasm_identity"]} {C["wasm_wrapper_disclosure"]}'
+    if G.final_candidate() is None:
+        return text
+    v1 = G.released().version
+    for before, after in (("The Space cannot load", f"At {v1}'s release, the Space could not load"),
+                          ("so it runs the champion's", "so it ran the champion's"),
+                          ("its output equals the", "its output equalled the"),
+                          ("Hugging Face's own page adds", "Hugging Face's own page added"),
+                          ("and runs the app in an iframe", "and ran the app in an iframe"),
+                          ("The app alone is at", "The app alone was then at")):
+        if before not in text:
+            raise ValueError(f"the v1 demo paragraph changed; re-date it by hand: {before!r}")
+        text = text.replace(before, after, 1)
+    return f"{text} {v1}'s demo is now under the Space's [History]({C['space_app_url']}history/)."
+
+
 def _since_release(C) -> str:
     """PRES-5 (decision 28; ruling O27): the table describes the surfaces at v1's release. Since then the Space's root
     runs the live product, and v1's demo, which the second row describes, is under its History."""
@@ -61,7 +82,7 @@ Each one answers a different question, and each stands on its own. The static re
 | **2** | **[⚡ Interactive Space]({C["space_url"]})**<br>[direct app]({C["space_app_url"]}) | *Does the thing actually run?* The champion's own boosters, running in your browser under Pyodide | about {C["wasm_cold_load_mb"]} MB first visit, {C["wasm_cold_load_requests"]} requests, {C["wasm_cold_load_hosts"]} hosts; ~1 MB after. A Static Space has no server-side process to sleep |
 | **3** | **[🔬 MLflow on DagsHub]({C["mlflow_url"]})** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run of v1, anonymously readable — no sign-in | — |
 
-{C["wasm_identity"]} {C["wasm_wrapper_disclosure"]}
+{_v1_demo_paragraph(C)}
 
 **Deployment.** {released.version} was released to GitHub Pages and the Static Space in {G.month(released.status.date)}. On 2026-07-08 Hugging
 Face moved the Docker and Gradio SDKs behind a paid PRO plan and only Static Spaces stayed free, so
