@@ -34,6 +34,11 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 #: v2+ model is scored on v1's holdout window (plan §6 invariant 10).
 EVIDENCE_BOUNDARY = "2026-04-07"
 
+#: The research boundary since PUBLISH_RULES 1.5 (invariant 10) and research §24.2: no research number, chart or choice
+#: uses a delivery day after it before 4.7T is scored. CP-26's and CP-28's records reach it; the shared five-period
+#: population keeps `EVIDENCE_BOUNDARY` as its own end (PRES-5).
+RESEARCH_BOUNDARY = "2026-09-06"
+
 MINUS = "−"
 
 
@@ -60,6 +65,19 @@ def _source(path: str, tag: str, blob: str) -> tuple[str, Source]:
 #: CP-10's files landed with CP-15, and CP-16's are also reachable from `evidence/cp-20`.
 SOURCES: dict[str, Source] = dict(
     [
+        # PRES-5: A1 on v5's population (`delu_forecast.final_candidate`), committed by this publication
+        _source("reports/pres5/a1-in-v5/metrics.csv", "evidence/pres-5", "26cadf08b9f93a61e755b34863224834801ee202"),
+        _source("reports/pres5/a1-in-v5/uncertainty.csv", "evidence/pres-5", "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972"),
+        _source("reports/pres5/a1-in-v5/ratio-intervals.csv", "evidence/pres-5", "4459d6d2a418b02164e2d2faf50ea0b6de8ac1f6"),
+        _source("reports/pres5/a1-in-v5/preview-day.csv", "evidence/pres-5", "350cff3177ebcd41d3a5c6bf667a8919d85e4890"),
+        _source("reports/pres5/a1-in-v5/summary.json", "evidence/pres-5", "72a7664c9e515c4663b1815ff45c347d6c58109a"),
+        # PRES-5: CP-28's one look (its evidence tag) and CP-26's re-baseline (its landing: the evidence tag is local only)
+        _source("reports/cp28/owner-summary.json", "evidence/cp-28", "2b9a884f06a6cede1f11c525ef7eab18755108f6"),
+        _source("reports/cp28/publication-packet.json", "evidence/cp-28", "9f7ff6af93bb817274fa7571567a10a281cc9f54"),
+        _source("reports/cp28/results/selection.json", "evidence/cp-28", "c0bde7889795eec8eec5ccd2ca7a645e07d28eb2"),
+        _source("reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json", "land/cp-26", "6b3e442090c5f2a5709b7f2d8e47b80610184fca"),
+        _source("reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json", "land/cp-26",
+                "6eee947c6600ab5befb4931e9bbf79654bd340bb"),
         # CP-24 (v5, scored attempt 1), registered by PRES-4
         _source("reports/ddnn2/attempt-1/metrics.csv", "evidence/cp-24", "9e9dcec32887a8684930e19ae244b7be317cb087"),
         _source("reports/ddnn2/attempt-1/uncertainty.csv", "evidence/cp-24", "a584caff5121b52ebe4b9f423791aa3b10c7d606"),
@@ -384,6 +402,12 @@ POPULATIONS = {
     "cp20-extraction": "the CP-20 GFS extraction",
     "cp20-resources": "the CP-20 cumulative resource ledger",
     "protocol": "a frozen protocol setting",
+    # PRES-5: CP-26's daily calendar and its masks, and CP-28's paired days (the registry's POPULATIONS words them).
+    "cp26-every-day": "CP-26's 2,068 eligible development days, 2020-12-29 to 2026-09-06",
+    "cp26-never-scored": "the 755 of CP-26's days never scored before CP-26",
+    "cp26-old-folds": "the 358 days of the old folds 2 to 5, re-run under CP-26's protocol",
+    "cp26-newly-opened": "the 152 days from 2026-04-08 to 2026-09-06",
+    "cp28-paired-days": "CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control",
 }
 
 
@@ -452,6 +476,16 @@ def _metric_records(prefix: str, checkpoint: str, path: str) -> list[EvidenceRec
 def _interval(checkpoint: str) -> Interval:
     """The bootstrap settings, read from the checkpoint's own frozen record. CP-16 inherited
     CP-15's recorded settings unchanged (capstone §14.4); CP-21 reused CP-20's index generator."""
+    if checkpoint == "PRES-5":
+        # PRES-5 scored A1 with CP-24's scoring blocks and CP-20's shared index set; its summary records the settings.
+        settings = _json(PRES5_ROWS["summary"])["bootstrap"]
+        return Interval(
+            method="paired noncircular moving-block percentile bootstrap",
+            level=0.95,
+            seed=int(settings["seed"]),
+            replicates=int(settings["replicates"]),
+            block_days=int(settings["block_days"]),
+        )
     if checkpoint in ("CP-22", "CP-23", "CP-24"):
         # CP-22's and CP-23's frozen protocols carry their bootstrap settings; CP-24's decision record does.
         settings = (_json(CP24_ROWS["decisions"])["bootstrap"] if checkpoint == "CP-24"
@@ -564,7 +598,8 @@ def _decision_level_records(prefix: str, checkpoint: str, path: str, ratio_path:
     (`ci97.5_lower`, `ci97.5_upper` of the uncertainty rows) and each ratio with its 97.5% interval
     (`ratio_ci97.5_lower`, `ratio_ci97.5_upper` of `ratio-intervals.csv`), from the checkpoint's own draws."""
     base = _interval(checkpoint)
-    level = float(_json(CP24_ROWS["decisions"])["bootstrap"]["decision_level"])
+    level = (float(_json(PRES5_ROWS["summary"])["bootstrap"]["levels"][1]) if checkpoint == "PRES-5"
+             else float(_json(CP24_ROWS["decisions"])["bootstrap"]["decision_level"]))
     records = []
     for line, row in _rows(path):
         if row["scope"] != "equal_fold" or row.get("ci97.5_lower", "") == "":
@@ -1095,6 +1130,157 @@ CP24_ROWS = {name: f"reports/ddnn2/attempt-1/{file}" for name, file in (
     ("decisions", "decisions.json"), ("controls", "controls.json"), ("leakage", "leakage-controls.json"))}
 
 
+# --------------------------------------------------------------------------- PRES-5: A1, CP-28 and CP-26
+
+#: A1 on v5's population, written by `delu_forecast.final_candidate` from CP-28's stored forecasts.
+PRES5_ROWS = {name: f"reports/pres5/a1-in-v5/{file}" for name, file in (
+    ("metrics", "metrics.csv"), ("uncertainty", "uncertainty.csv"), ("ratios", "ratio-intervals.csv"),
+    ("summary", "summary.json"))}
+CP28_SUMMARY = "reports/cp28/owner-summary.json"
+CP28_PACKET = "reports/cp28/publication-packet.json"
+CP28_SELECTION = "reports/cp28/results/selection.json"
+CP26_EXPORT = "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json"
+CP26_PACKET = "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json"
+#: CP-26's scored calendar (capstone_v21.md §24.7, "Days"), the window of every CP-26 and CP-28 record.
+CP26_WINDOW = ("2020-12-29", RESEARCH_BOUNDARY)
+CP28_ARMS = ("A1", "A2", "A3", "A4", "A5", "A6", "A7")
+CP28_ANALYSES = ("primary14", "sensitivity7", "sensitivity28", "unstratified14")
+UNIT_RATIO_CONTROL = "ratio to the control (v5), mean daily loss"
+UNIT_RATIO_STREAM = "ratio to the comparator, mean daily loss"
+UNIT_RATIO_B0_DAILY = "ratio to the similar-day naive (B0), mean daily loss"
+UNIT_P = "p-value"
+UNIT_PERCENT_CHANGE = "percent change"
+#: CP-28's descriptive intervals: studentized, from each arm's own primary resamples (reports/cp28/report.md), CP-26's
+#: bootstrap as CP-28's frozen protocol fixes it: 14-day blocks, 10,000 replicates, seed 20261012.
+CP28_INTERVAL = Interval("paired non-circular moving-block studentized bootstrap, descriptive (CP-28's primary analysis)",
+                         0.95, 20261012, 10000, 14)
+#: CP-26's ratio intervals (its control audits and the GFS note): its bootstrap (capstone_v21.md §24.7, "The bootstrap").
+CP26_INTERVAL = Interval("paired non-circular moving-block bootstrap ratio interval (CP-26)", 0.95, 20261012, 10000, 14)
+
+
+def _jrec(record_id: str, checkpoint: str, path: str, dotted: str, *, unit: str, precision: int, population: str,
+          field: str, metric: str, comparator: str | None = None, policy: str | None = None,
+          ci: tuple[str, str] | None = None, interval: Interval | None = None,
+          window: tuple[str, str] | None = CP26_WINDOW) -> EvidenceRecord:
+    """A record read from a committed JSON document, its interval (if any) from the same document."""
+    document = _json(path)
+    selector = (("json", dotted),) + ((("json_ci_low", ci[0]), ("json_ci_high", ci[1])) if ci else ())
+    return EvidenceRecord(
+        record_id=record_id, checkpoint=checkpoint, generation=None, policy_code=policy, source_path=path,
+        selector=selector, field=field, metric=metric, unit=unit, aggregation="record", population_id=population,
+        comparator=comparator, evidence_class=EVIDENCE_CLASS_DEVELOPMENT, window=window, display_precision=precision,
+        raw=_json_text(_json_get(document, dotted)),
+        interval=interval if ci else None,
+        ci_low_raw=_json_text(_json_get(document, ci[0])) if ci else None,
+        ci_high_raw=_json_text(_json_get(document, ci[1])) if ci else None,
+    )
+
+
+def _cp28_records() -> list[EvidenceRecord]:
+    """CP-28's one look: every arm's losses and ratios against the control and B0 on the 2,068 paired days, Holm's
+    p-values in the four analyses, the selection and the GFS note, from its committed packet and summary."""
+    out = []
+    population = "cp28-paired-days"
+    for arm in CP28_ARMS:
+        for metric in ("MAE", "WIS"):
+            base = f"arms.{arm}.{metric}"
+            for field, unit, precision in (("arm", UNIT_EUR, 1), ("control", UNIT_EUR, 1), ("B0", UNIT_EUR, 1),
+                                           ("ratio_to_B0", UNIT_RATIO_B0_DAILY, 4)):
+                out.append(_jrec(f"cp28.arm.{arm}.{metric}.{field}", "CP-28", CP28_PACKET, f"{base}.{field}",
+                                 unit=unit, precision=precision, population=population, field=field,
+                                 metric=f"mean_daily_{metric}", policy=arm,
+                                 comparator="B0" if field == "ratio_to_B0" else None))
+            out.append(_jrec(f"cp28.arm.{arm}.{metric}.ratio_to_control", "CP-28", CP28_PACKET,
+                             f"{base}.ratio_to_control", unit=UNIT_RATIO_CONTROL, precision=4, population=population,
+                             field="ratio_to_control", metric=f"mean_daily_{metric}", policy=arm, comparator="v5",
+                             ci=(f"{base}.ratio_to_control_ci95.0", f"{base}.ratio_to_control_ci95.1"),
+                             interval=CP28_INTERVAL))
+        for analysis in CP28_ANALYSES:
+            for field in ("compound_p", "adjusted_p"):
+                out.append(_jrec(f"cp28.holm.{analysis}.{arm}.{field}", "CP-28", CP28_SUMMARY,
+                                 f"holm.{analysis}.{arm}.{field}", unit=UNIT_P, precision=4, population=population,
+                                 field=field, metric="compound test", policy=arm))
+            out.append(_jrec(f"cp28.holm.{analysis}.{arm}.rejected", "CP-28", CP28_SUMMARY,
+                             f"holm.{analysis}.{arm}.rejected", unit=UNIT_LABEL, precision=0, population=population,
+                             field="rejected", metric="compound test", policy=arm))
+        out.append(_jrec(f"cp28.selection.wis.{arm}", "CP-28", CP28_SELECTION, f"wis_paired_with_control.{arm}",
+                         unit=UNIT_EUR, precision=2, population=population, field="wis", metric="mean_daily_WIS",
+                         policy=arm))
+        out.append(_jrec(f"cp28.fallback.{arm}.dates", "CP-28", CP28_SUMMARY, f"fallbacks.{arm}.fallback_dates",
+                         unit=UNIT_DAYS, precision=0, population=population, field="fallback_dates",
+                         metric="fallback dates", policy=arm))
+    for field, unit, precision in (("selected", UNIT_LABEL, 0), ("reason", UNIT_LABEL, 0), ("tie_bound", UNIT_EUR, 2)):
+        out.append(_jrec(f"cp28.selection.{field}", "CP-28", CP28_SELECTION, field, unit=unit, precision=precision,
+                         population=population, field=field, metric="selection"))
+    out.append(_jrec("cp28.paired_dates", "CP-28", CP28_SELECTION, "paired_counts.A1.paired_dates", unit=UNIT_DAYS,
+                     precision=0, population=population, field="paired_dates", metric="paired dates"))
+    for metric in ("MAE", "WIS"):
+        base = f"gfs_note_headline.{metric}"
+        out.append(_jrec(f"cp28.gfs.{metric}.change", "CP-28", CP28_SUMMARY, f"{base}.change_percent",
+                         unit=UNIT_PERCENT_CHANGE, precision=0, population=population, field="change_percent",
+                         metric=f"mean_daily_{metric}", comparator="v5"))
+        out.append(_jrec(f"cp28.gfs.{metric}.ratio_ci", "CP-28", CP28_SUMMARY, f"{base}.ci95_ratio.0",
+                         unit=UNIT_RATIO_CONTROL, precision=4, population=population, field="ci95_ratio_low",
+                         metric=f"mean_daily_{metric}", comparator="v5"))
+        out.append(_jrec(f"cp28.gfs.{metric}.ratio_ci_high", "CP-28", CP28_SUMMARY, f"{base}.ci95_ratio.1",
+                         unit=UNIT_RATIO_CONTROL, precision=4, population=population, field="ci95_ratio_high",
+                         metric=f"mean_daily_{metric}", comparator="v5"))
+    return out
+
+
+def _cp26_records() -> list[EvidenceRecord]:
+    """CP-26's every-day scores, one per stream, mask and score, from its committed export; and the v4 → v5 control
+    audit on every eligible day, with its ratio interval, from its committed packet."""
+    out = []
+    masks = {"all_eligible": "cp26-every-day", "never_scored": "cp26-never-scored", "old_fold_2_5": "cp26-old-folds",
+             "newly_opened": "cp26-newly-opened"}
+    for i, run in enumerate(_json(CP26_EXPORT)["runs"]):
+        route, policy, mask = run["key"].split("/", 1)[1].split("/")
+        for metric in ("MAE", "WIS"):
+            for field, unit, precision in (("raw_mean_daily_loss", UNIT_EUR, 1), ("B0_ratio", UNIT_RATIO_B0_DAILY, 4)):
+                key = f"{metric}/{field}"
+                if key not in run["metrics"]:
+                    continue
+                out.append(_jrec(f"cp26.every.{route}.{policy}.{mask}.{metric}.{field}", "CP-26", CP26_EXPORT,
+                                 f"runs.{i}.metrics.{key}", unit=unit, precision=precision, population=masks[mask],
+                                 field=field, metric=f"mean_daily_{metric}", policy=f"{route}/{policy}",
+                                 comparator="B0" if field == "B0_ratio" else None))
+    audits = _json(CP26_PACKET)["headline_quantities"]["comparisons"]
+    for a, audit in enumerate(audits):
+        for c, row in enumerate(audit["comparisons"]):
+            if row["mask"] != "all_eligible" or row.get("ratio_status") != "computable":
+                continue
+            left, right = row["left"].split("/")[1], row["right"].split("/")[1]
+            base = f"headline_quantities.comparisons.{a}.comparisons.{c}"
+            out.append(_jrec(f"cp26.audit.{left}-{right}.{row['metric']}", "CP-26", CP26_PACKET, f"{base}.ratio",
+                             unit=UNIT_RATIO_STREAM, precision=4, population="cp26-every-day", field="paired_ratio",
+                             metric=f"mean_daily_{row['metric']}", policy=row["left"], comparator=row["right"],
+                             ci=(f"{base}.ratio_ci95.0", f"{base}.ratio_ci95.1"), interval=CP26_INTERVAL))
+            out.append(_jrec(f"cp26.audit.{left}-{right}.{row['metric']}.paired_dates", "CP-26", CP26_PACKET,
+                             f"{base}.paired_dates", unit=UNIT_DAYS, precision=0, population="cp26-every-day",
+                             field="paired_dates", metric="paired dates", policy=row["left"]))
+    return out
+
+
+def _pres5_records() -> list[EvidenceRecord]:
+    """A1 on v5's population, by CP-24's builders (scores, paired differences, ratios, both levels); then CP-28 and
+    CP-26."""
+    windows = _fold_windows(CP24_ROWS["metrics"])  # the same population: v5's periods, as CP-24's B0 rows record them
+    out = (_metric_records("pres5", "PRES-5", PRES5_ROWS["metrics"])
+           + _uncertainty_records("pres5", "PRES-5", PRES5_ROWS["uncertainty"], windows)
+           + _ratio_records("pres5", "PRES-5", PRES5_ROWS["uncertainty"], windows)
+           + _decision_level_records("pres5", "PRES-5", PRES5_ROWS["uncertainty"], PRES5_ROWS["ratios"], windows))
+    summary = PRES5_ROWS["summary"]
+    for dotted, unit in (("coverage.covered_keys", UNIT_HOURS), ("coverage.keys", UNIT_HOURS),
+                         ("coverage.days", UNIT_DAYS), ("coverage.fallback_days", UNIT_DAYS),
+                         ("coverage.scored_by_cp26_cp28.False", UNIT_DAYS),
+                         ("coverage.first_stored_forecast_day", UNIT_LABEL),
+                         ("parity_with_cp24.max_abs_difference", UNIT_NORM_DIFF)):
+        out.append(_jrec(f"pres5.{dotted}", "PRES-5", summary, dotted, unit=unit, precision=0, population="common-10747h",
+                         field=dotted.split(".")[-1], metric=dotted, window=None))
+    return out + _cp28_records() + _cp26_records()
+
+
 def _checkpoint_records(prefix: str, checkpoint: str, rows: dict[str, str]) -> list[EvidenceRecord]:
     """One later checkpoint's committed rows, by the same builders as CP-21's: scores, paired differences, ratios,
     the original screening criteria and the diagnostics."""
@@ -1113,6 +1299,7 @@ def records() -> dict[str, EvidenceRecord]:
     cp16_windows = _fold_windows("reports/v2-causal/metrics.csv")
     cp21_windows = _fold_windows("reports/block-challenger/metrics.csv")
     built: list[EvidenceRecord] = []
+    built += _pres5_records()
     built += _checkpoint_records("cp24", "CP-24", CP24_ROWS)
     built += _decision_level_records("cp24", "CP-24", CP24_ROWS["uncertainty"], CP24_ROWS["ratios"],
                                      _fold_windows(CP24_ROWS["metrics"]))
@@ -1267,7 +1454,12 @@ def rederive(record: EvidenceRecord, fresh: FreshRead | None = None) -> dict[str
     fresh = fresh or FreshRead()
     selector = record.selector_dict()
     if "json" in selector:
-        return {"value": _json_text(_json_get(fresh.document(record.source_path), selector["json"]))}
+        document = fresh.document(record.source_path)
+        out = {"value": _json_text(_json_get(document, selector["json"]))}
+        if "json_ci_low" in selector:  # PRES-5: an interval held in the same JSON document
+            out["ci_low"] = _json_text(_json_get(document, selector["json_ci_low"]))
+            out["ci_high"] = _json_text(_json_get(document, selector["json_ci_high"]))
+        return out
     matches = fresh.matches(record.source_path, selector)
     if len(matches) != 1:
         raise EvidenceError(f"{record.record_id}: selector {selector} matches {len(matches)} rows")
@@ -1387,6 +1579,7 @@ def _places_for_two_significant(raw: str) -> int:
 __all__ = [
     "DAILY_SOURCES",
     "EVIDENCE_BOUNDARY",
+    "RESEARCH_BOUNDARY",
     "EvidenceError",
     "EvidenceRecord",
     "FreshRead",

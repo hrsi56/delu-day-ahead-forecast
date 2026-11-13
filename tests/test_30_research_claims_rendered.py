@@ -304,8 +304,10 @@ def test_every_page_record_and_v1_key_resolves(page):
 
 
 def test_every_published_page_block_is_rendered(page):
-    missing = [block.key for block in RC.BLOCKS if RC.PAGE in block.surfaces and f'data-block="{block.key}"' not in page]
+    missing = [block.key for block in RC.BLOCKS if RC.PAGE in block.surfaces and f'data-block="{block.key}"' not in page
+               and block.key not in RC.inactive_page_blocks()]  # PRES-5: v6's headline and product documentation
     assert not missing, missing
+    assert not [key for key in RC.inactive_page_blocks() if f'data-block="{key}"' in page]
 
 
 def test_the_page_carries_no_withheld_or_stale_phrasing(page):

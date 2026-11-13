@@ -1,13 +1,13 @@
 {
  "counts": {
-  "children": 36,
-  "parents": 8,
-  "total": 44
+  "children": 95,
+  "parents": 10,
+  "total": 105
  },
  "experiment": "delu-generations",
  "experiment_tags": {
   "mlflow.experimentKind": "custom_model_development",
-  "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20); v4 · three-block LightGBM added (CP-21); Pooled LightGBM member for v4 (CP-22); DDNN member on v4 (CP-23); v5 · DDNN-2 added (CP-24). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
+  "mlflow.note.content": "The repository https://github.com/hrsi56/delu-day-ahead-forecast is the source of truth: every run here mirrors its committed evidence, and every name, status and description comes from its registry. Each policy evaluated since v1 appears once, nested under the checkpoint that produced it: Calibration experiment (CP-10); Model comparison study (CP-15); v2 · blended LEAR, hour-aware intervals (CP-16); v3 · weather features (CP-20); v4 · three-block LightGBM added (CP-21); Pooled LightGBM member for v4 (CP-22); DDNN member on v4 (CP-23); v5 · DDNN-2 added (CP-24); Daily development re-baseline (CP-26); v6 · DDNN-2 alone (CP-28). Development evidence after selection, not a test on new data. v1's own runs are in delu-cp2."
  },
  "metric_units": {
   "daily_mae_eur": "EUR/MWh",
@@ -210,6 +210,9 @@
   "fold_mean_width95_eur": "EUR/MWh",
   "fold_pinball9_eur": "EUR/MWh",
   "fold_wis_eur": "EUR/MWh",
+  "mae_eur": "EUR/MWh",
+  "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+  "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
   "peak_coverage95": "fraction",
   "peak_hits95": "count",
   "peak_mae_eur": "EUR/MWh",
@@ -286,7 +289,10 @@
   "ratio_s_wis_vs_v4_ci_high": "change as a share of the comparator's score",
   "ratio_s_wis_vs_v4_ci_low": "change as a share of the comparator's score",
   "s_mae": "ratio to B0, equal-fold",
-  "s_wis": "ratio to B0, equal-fold"
+  "s_wis": "ratio to B0, equal-fold",
+  "wis_eur": "EUR/MWh",
+  "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+  "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
  },
  "runs": [
   {
@@ -2599,6 +2605,1169 @@
    "run_key": "cp24/v3+D2",
    "run_name": "v3 plus a DDNN-2 member (v3+D2, scored attempt 1)",
    "tags": 21
+  },
+  {
+   "artifacts": {
+    "README.md": "5aef8afde2d871d32ba1ab14ee6a6d015611bd614e47aa5eded8fe3a630efbe0",
+    "summary.json": "a2b671be8768a06d153f17c4266fff7c29389b5e2dfff2f774d3de6750243b59"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {},
+   "params": 2,
+   "parent": null,
+   "run_key": "cp26",
+   "run_name": "Daily development re-baseline (CP-26)",
+   "tags": 16
+  },
+  {
+   "artifacts": {
+    "README.md": "662f3cc6d2542f3b2aa992b95996e015e8551c3aa8ff5ae289f1f204f082ae98",
+    "summary.json": "402ee1053d64a7bf01aa72a45e4cb91f59922ef386f142a4fa997b10ecb7838b"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v3/all_eligible",
+   "run_name": "v3 with weather six hours late (gfs6/v3/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "2b5265cd58812166eef5562ec35d9772f7ae5db4cf388973242cf29b0d8916be",
+    "summary.json": "580d54ee66ff238ad708d5ebf554e56d8a43b1a014cdf51d66c8ad3376aca548"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v3/never_scored",
+   "run_name": "v3 with weather six hours late (gfs6/v3/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "21664cc4131920f3327e41d7114fca50e52155a2a637134e453ebf2b49f5ef4f",
+    "summary.json": "2d8f5196f7518ebd4457dfbb447cd11d5bfa020d1b05823742c3d45fd5c786db"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v3/old_fold_2_5",
+   "run_name": "v3 with weather six hours late (gfs6/v3/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "93c3c99ad832b47d986d3868fd0cfcfeb01fd4917b0c2a785c19783b14518853",
+    "summary.json": "6b36f998c836233f8dd7bf5272e3fab0eb4829a8eab833fbdfbdd1fc203edd3a"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v3/newly_opened",
+   "run_name": "v3 with weather six hours late (gfs6/v3/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "f5168dd8e2796d4b37f5d178c7b5e88ae88adc05767af7f46726a6e087049309",
+    "summary.json": "d48d16d51fbac58c56ebb4423b6bd900656e58ff7b60662876ef647ee533a88e"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v4/all_eligible",
+   "run_name": "v4 with weather six hours late (gfs6/v4/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "f348c23f236e4d16ac09143af71dc8541ddedef7ef711216a866f3728886f31a",
+    "summary.json": "7cfd7525266fee34f101b89a29db49e09eb0c41792e6c0d39e741c490584acc0"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v4/never_scored",
+   "run_name": "v4 with weather six hours late (gfs6/v4/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "cd507d0e2fdba759a63b588338bb60cb750a99799bcf4f79307acc92eef85e1a",
+    "summary.json": "8456a37e93dae8b304044ef668133ea80cf77b8872ee76d4dfdd7fbe4f757d23"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v4/old_fold_2_5",
+   "run_name": "v4 with weather six hours late (gfs6/v4/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "38e0f71e60917c043bba9c86ef9e6a85b98e86667a2cbbd69865c2961f83ef71",
+    "summary.json": "0ee7002b2d1c1f5a5a992ec34e09605c0df22f1c8d298cf12acbe1d70e578585"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v4/newly_opened",
+   "run_name": "v4 with weather six hours late (gfs6/v4/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "f4d53f597ed800fde0747d77f23a2506a1c1694f1c3e0fd7683fc9c4dfb8fbd7",
+    "summary.json": "34a2c234cac2f47ce07255b4b8ec3a1caf7040e88855a70e8b6a5147ed93fd30"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v5/all_eligible",
+   "run_name": "v5 with weather six hours late (gfs6/v5/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "656be364e46c224122d1bc7bc4448a5ea8a80775b75880b488493b7985152164",
+    "summary.json": "e784958f745fcd46815b0a41b1effa995326879c14f652ef46f0278722f8e8a8"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v5/never_scored",
+   "run_name": "v5 with weather six hours late (gfs6/v5/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "11c3aec7ce43db6dfcbb8ec423668c07c2d91019bbf430b1ca2fe4d11bd09b49",
+    "summary.json": "a3f41ab72a73a04460a2a39067b4697cc9bec59b10215e70a63fcd65f400ee74"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v5/old_fold_2_5",
+   "run_name": "v5 with weather six hours late (gfs6/v5/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "0eff9c85ab7d568dc9d15ed1c4bcca241f5f5db3cade23ac17641b3f0f58b8be",
+    "summary.json": "e777fad91c0c0cda87a53e2c4b8edbb2fed645b9e520a18f443c68357a5ba844"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/gfs6/v5/newly_opened",
+   "run_name": "v5 with weather six hours late (gfs6/v5/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "eed3855ac08e28ba681f6534cff744e7fc2504afe2556d2d46093e9a4e9649c2",
+    "summary.json": "a3708b69469e9420e008b620905d1a9d4e72240914deefcd470956b75b15ede6"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v3/all_eligible",
+   "run_name": "v3 without the load forecast (noload/v3/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "2b97aad37294094029eb919a4956854c14d58acc59e39034fe0b2594bca6a167",
+    "summary.json": "108fbff90aad5106e586870d93629dba435d7bcbcf0509b9f85467d2aedada2e"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v3/never_scored",
+   "run_name": "v3 without the load forecast (noload/v3/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "4dfb12f4cfdf55335b0b9be146fe05eeeb77f0b71c0e1a3e62b26fc7d2a0a00d",
+    "summary.json": "a8d1829fc1858c54108b1004241e635af355b260bcfa88bd07e60c1378e31d35"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v3/old_fold_2_5",
+   "run_name": "v3 without the load forecast (noload/v3/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "19b2a6afe05528572fd2114b5a36e09b4849244a4a07f3007b4ff4968d134191",
+    "summary.json": "85be0f398f957020b22846d790b735c5b19f4415a5053cf6df86413a79ab6402"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v3/newly_opened",
+   "run_name": "v3 without the load forecast (noload/v3/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "ffc5ea7ff0440b7460a969ba010ace6ea98d037d2e3457b3a1856d1e1224e5e5",
+    "summary.json": "cdfb87a6d3073bd42db6798514319c556e29e896c032cbed6025fa0e1ca74260"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v4/all_eligible",
+   "run_name": "v4 without the load forecast (noload/v4/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "35c2265dec74a648f82a42fef375be8835c0fe3af58d7f45d15c70757051c075",
+    "summary.json": "2c7f1edbfad283c116ffbed549f1d96e4bbbf4f2b585f3ef13bec3188263009b"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v4/never_scored",
+   "run_name": "v4 without the load forecast (noload/v4/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "02e65c7b4179e0728b108f05ff4da1e59ac66352abb2fffb47bdf0de18e24aca",
+    "summary.json": "7186363ad1670c247c1a2cc06971312bde5782667f2f555002f82135d2d62297"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v4/old_fold_2_5",
+   "run_name": "v4 without the load forecast (noload/v4/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "b08ab3438004c4748e623b2804d60a88be10d144510ce2ce9d84217b67af0253",
+    "summary.json": "f05e8d317a93b8b3da2dee8f25dcb9e3dae8591a48bb49a691639c0ff08ffc9f"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v4/newly_opened",
+   "run_name": "v4 without the load forecast (noload/v4/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "745ca52947f763f710f12e973bf84606fba0968839723bdadc30155ac4be8ca1",
+    "summary.json": "7d743ba2c23f440cdb669202d33aee86ff1e3533dcddfe0becce1e63d0b926a5"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v5/all_eligible",
+   "run_name": "v5 without the load forecast (noload/v5/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "d3245b3ad0299244ce39ad3687a2a54e4966bb2857cb9b9a9f7ad6e24fa7efc1",
+    "summary.json": "682f04b5e8685d40f460444506f5945210161bb29df9793bd297909feaa459cb"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v5/never_scored",
+   "run_name": "v5 without the load forecast (noload/v5/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "60310c0c004962e50f15b8b468a39f2140359d2461a68246f73ddaa79a854cd6",
+    "summary.json": "64d51ce38b8cb70ba6189279ffa8e468175129bcd817eb1ea1559a6af93eab11"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v5/old_fold_2_5",
+   "run_name": "v5 without the load forecast (noload/v5/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "5bd8b36521c1401b109ba05ed85849d2af90c45022a9ec633d8099c0fe476689",
+    "summary.json": "0eafbb3e15e91adec95c52d537c324f9bf2c3e1d193167c88ee76d024d6d60e9"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/noload/v5/newly_opened",
+   "run_name": "v5 without the load forecast (noload/v5/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "e9c404eba3cb399a89fdfed47162c938e834e467c95a0d7127901aa5d90873fb",
+    "summary.json": "313382cf2c2505aa50364c5be3a8b528b088397ea53f7b93dc3b493ba187e213"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/B0/all_eligible",
+   "run_name": "Similar-day naive (nominal/B0/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "bf22b281e5fe3d62fcae363e871203909d46598700bcff083e74542824e99808",
+    "summary.json": "5e636a6169d8a20c480e64f08fd74edc58e01f384a8d6fb879bb879b835ca25c"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/B0/never_scored",
+   "run_name": "Similar-day naive (nominal/B0/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "4a5fc58fda0d241670a66ef7aeac52c1b0995633ab7b873bd4505ea418832065",
+    "summary.json": "052b2706b877aedb91375b9c301fb8a0e0f3bd7e719708503c0f90dbb7ea6875"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/B0/old_fold_2_5",
+   "run_name": "Similar-day naive (nominal/B0/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "9e26fc7dfa122ec36281ac05cdb7a15d1257338e0e7f29321243ecdb67949cfc",
+    "summary.json": "ac8277ee27d67a678810b6e4943b587a361bef33e599a892e4b677d83898e577"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/B0/newly_opened",
+   "run_name": "Similar-day naive (nominal/B0/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "5ac398b5e2485c816c77a0558312e3d7d298abc4bff4458500bfc028aea48b5b",
+    "summary.json": "5dec5d52e8ec95d977e645fb9b2b9faf8c15f031940b1c3ce97a6306c280fb4b"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/D2/all_eligible",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/all_eligible, descriptive in CP-26)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "02ee6e5062680c600b974ec3c4ebb0d302551980bbc0824653436171ab81da52",
+    "summary.json": "9e1c92002b445f680c176e43e4679a11e8022252fe1de1b1105d6cab4bd15cda"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/D2/never_scored",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/never_scored, descriptive in CP-26)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "535e0a23c31b73963cb7713cbf0df46ed9bdcfcb0ef6ad6385f4337460b4e870",
+    "summary.json": "c01b1778060da38e452281f610d67e24d926231e44c6ee24a8e2c2b9f6ff17b5"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/D2/old_fold_2_5",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/old_fold_2_5, descriptive in CP-26)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "88a4d7ded9414cbedb345e97d4b21040814898153a3a123586f402e8e68a9ed1",
+    "summary.json": "7631dee5288ce48d621242381b72d7edd9d48920e2007e46eb83a153a6cfdd8a"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/D2/newly_opened",
+   "run_name": "v6 · DDNN-2 alone (nominal/D2/newly_opened, descriptive in CP-26)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "5d3f74484cda9ec44c9de6fdeb60545970760c0ff1310cd37443da78ee8743e1",
+    "summary.json": "78eb5a37291fd6a0521c9a4b1d594f59b99d03da5f1c38fee133c04ba9171d25"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v1-R/all_eligible",
+   "run_name": "v1's recipe, refitted daily (nominal/v1-R/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "429a3405e21c382bb8145528cc227c2fea7ff2c51c1e82a4841c9b75496c8283",
+    "summary.json": "973cd0485260821706f1e663b3062edfd85b8468326cec8c0294b6073972e495"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v1-R/never_scored",
+   "run_name": "v1's recipe, refitted daily (nominal/v1-R/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "6aa634b52a8a435cd8052d81042c2ccb9e1219ad6670c8437349d2b127892d97",
+    "summary.json": "568064313fef316bc6c956550ce4f48a48cf5d3ed24e5deedb16841ca77f46d3"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v1-R/old_fold_2_5",
+   "run_name": "v1's recipe, refitted daily (nominal/v1-R/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "f481ddc6f80676e5e0152c029b67feefc10a023227206bb8f4299655a9d4d9fd",
+    "summary.json": "892d6babe722101aa0478f5143364be9fe8caea1f72e22632ef9ce2b1805a6d9"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v1-R/newly_opened",
+   "run_name": "v1's recipe, refitted daily (nominal/v1-R/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "fc0042dfb4816774a7ae9f0a001a427343b8e115bbd87c5b4d991e7e293f3bb6",
+    "summary.json": "a9858535c7f5a74a7a7001dba218ff19072a5e7f8186f82319c3a47ff5662c65"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v2/all_eligible",
+   "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "79a2c944de8d8fd808dad588b59f1c86bcae90989d13630539d447e8e431d453",
+    "summary.json": "799174a44254870d0f2535b78ea0041b8de0923d5b178bdd9a10cf6912b9be51"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v2/never_scored",
+   "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "8fd661adb9f62fbfdb8b867feab273a30227c900d1fb224c30ce8ab10544a32a",
+    "summary.json": "300a33a50e080f705622a7418297fdeac3c8b33b93daa964b6876d5d0fc333fa"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v2/old_fold_2_5",
+   "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "4d645861c995ef74baa03d3cd5676e563e75eadb637ca87b05fe27404d57855b",
+    "summary.json": "dd6b03449a0474cfb9037ef44f27ec827b0a6a9cd2019f954d877a09c4d7a024"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v2/newly_opened",
+   "run_name": "v2 · blended LEAR, hour-aware intervals (nominal/v2/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "8f727b919e0c3958a889efa3115ab86a4fbf9224ff9e999e35ff0373ed645193",
+    "summary.json": "d8c789fd126d1ad3323ec1fd2058ba98f1ddaedd174084c74e4027507d958391"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v3/all_eligible",
+   "run_name": "v3 · weather features (nominal/v3/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "af4a292ba870f91a6f1bef3559698ebef10b7bdfc6fb45e775f340b8faec6796",
+    "summary.json": "b621750d618d80814ed2e49a91f645c402b3e36168e800c5e9a87782ff9e3fe0"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v3/never_scored",
+   "run_name": "v3 · weather features (nominal/v3/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "491d35ae95998a352bd0debf4e3a3dc21f72a36ca056fa2988dc774f0862f43e",
+    "summary.json": "ecf75bfdc315b134c2af61d9452d608c268881cb11388ca28fffab020f050f00"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v3/old_fold_2_5",
+   "run_name": "v3 · weather features (nominal/v3/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "aaa3a58232fd8313e70392a3a40423251a0255535e280b29bda888c16f039983",
+    "summary.json": "209605d3a83d01930058071563cde63c199c27ff43b87d6803a87f64974c5451"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v3/newly_opened",
+   "run_name": "v3 · weather features (nominal/v3/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "e40e070b3c08e512b72bd9dea11673117e9991991077db288634de81d007c9b7",
+    "summary.json": "a248798fd3530ccf12889a5c756c4044ce5be0d9690c7a9018cc662717f4435e"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v4/all_eligible",
+   "run_name": "v4 · three-block LightGBM added (nominal/v4/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "e0253a04dc4552a84cd55fb675397f6638632101bd4ee1bdd5a44ff71e6bb000",
+    "summary.json": "87777975f2c08c79ef0d88fac1f13aab72dc44a3a37b079bb404a90090ba457b"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v4/never_scored",
+   "run_name": "v4 · three-block LightGBM added (nominal/v4/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "6ad710e66d1c8ad42d69f5c9ac70c65672c988158a1c14b0a15105fb5fbb8350",
+    "summary.json": "36485a623ec47d42523b0b1026cd0ded063b8d49bcccc953c7bf8e18397c2598"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v4/old_fold_2_5",
+   "run_name": "v4 · three-block LightGBM added (nominal/v4/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "1eb34da9a112976d4c394ae94e813257edd8dc1dd0b4bbda61a77ed22d193449",
+    "summary.json": "931dfcbf1c6262f0ac4ddb4b45386232ae74ceba38eef2a039748596bae0ffac"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v4/newly_opened",
+   "run_name": "v4 · three-block LightGBM added (nominal/v4/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "29b897cb350f0c8d5fd809584b3ab2e9faba14c9c44c09d856475c55f34f3344",
+    "summary.json": "3a59cf3086d7b79543ce47a3e50ca463ac6ae10468e6eceb9580d31812983eca"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v5/all_eligible",
+   "run_name": "v5 · DDNN-2 added (nominal/v5/all_eligible)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "99b4362020a942abd599830fe208adb60c4ecbee1ad447395b2e58d247944bb1",
+    "summary.json": "39af88993489b1238521cc2ead4bfafaa614df6d701ab2d8109b270bf23f02b9"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v5/never_scored",
+   "run_name": "v5 · DDNN-2 added (nominal/v5/never_scored)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "82b2525e1de7059f8aea64530493828f64e758b8c5305ff934df9e4f8deac83c",
+    "summary.json": "78983a11bfe3de7ecb0ba65887053e83ce9edde93c0bd6cb5b3403c03403f776"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v5/old_fold_2_5",
+   "run_name": "v5 · DDNN-2 added (nominal/v5/old_fold_2_5)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "92a31d7ff9f3b3f879b616cf52a6a83b14725e6850e1b2e660de35b5dfde8679",
+    "summary.json": "78084b44188173f00bb60b4deffb2097a05918608c29c31eba08c24d644fc055"
+   },
+   "file": "cp26.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1
+   },
+   "params": 1,
+   "parent": "cp26",
+   "run_key": "cp26/nominal/v5/newly_opened",
+   "run_name": "v5 · DDNN-2 added (nominal/v5/newly_opened)",
+   "tags": 26
+  },
+  {
+   "artifacts": {
+    "README.md": "5f300d23ff7215f41b1ea3b7f003133f13c3c515c179a95086c688362cb18c90",
+    "summary.json": "83db06c2859df3b5564e3f060531fcdc5bb08298316840676025ad0e3b5a02c4"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {},
+   "params": 2,
+   "parent": null,
+   "run_key": "cp28",
+   "run_name": "v6 · DDNN-2 alone (CP-28)",
+   "tags": 16
+  },
+  {
+   "artifacts": {
+    "README.md": "1a8c913d02616238895bb9e85af237aee6101b75136e83721a247da1e5756bcf",
+    "summary.json": "d53a2bb900a85217a179b13e57e4f8da3eecd70133c28b157d7ace0a651c7bd3"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A1",
+   "run_name": "v6 · DDNN-2 alone (A1, selected)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "95cb27eda8a2e5e378086faa17f4523c87bc6bc65e1b83c1103f53a957817625",
+    "summary.json": "bc907589d6317653c98980f02981a73ba670dfdbe67dc37d6f374a7bfabb2cfd"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A2",
+   "run_name": "Equal-weight blend of v5's members (A2)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "4dc012dd8958c129310811825861a2244adefb8a6e414f5c4566b5c0ef5b9567",
+    "summary.json": "41fd6652f384c72764df3340ea7e391032c03ff05c80adecad94c23005e66579"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A3",
+   "run_name": "Fitted blend weights, half shrunk (A3)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "d35277256c7b4615b9411ae5f47f0621ffb2a4bbd3389cd574f3f063f1e7ade1",
+    "summary.json": "e3740d997d43d1bb5db9fba3dbf065527884213cf050d5b79c9689b0d6329669"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A4",
+   "run_name": "Per-block blend weights (A4)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "cd9f268a67f19cdc9d8d6ffc68749ed9935b4314af4711ca5ffb107c0c083d29",
+    "summary.json": "678c4f98215812d33c85e5fcbd8ca51a5379cba1204332ea62ecd348bf214a9f"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A5",
+   "run_name": "Small-network blend, half shrunk (A5)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "6abbe6539c99cc1201cb1d1505ad288e996095076250b0f0bfeb91cf79bf7df8",
+    "summary.json": "94b205dbd0c2b788174a8eb084603667ebff5c2808be4bc5b82ccf27c493ba1d"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A6",
+   "run_name": "Fitted blend weights, unshrunk (A6)",
+   "tags": 22
+  },
+  {
+   "artifacts": {
+    "README.md": "1384c70fe156c0c57a5c983e6aa99507682620bbb51e55f13919ee25059c6b85",
+    "summary.json": "e4f5ca7e16eb3d14d1eca49c74f60753f2f33632edcf9b1a86cb7e89afebb747"
+   },
+   "file": "cp28.json",
+   "inputs": [],
+   "metrics": {
+    "mae_eur": 1,
+    "mae_ratio_to_b0": 1,
+    "mae_ratio_to_control": 1,
+    "wis_eur": 1,
+    "wis_ratio_to_b0": 1,
+    "wis_ratio_to_control": 1
+   },
+   "params": 3,
+   "parent": "cp28",
+   "run_key": "cp28/A7",
+   "run_name": "Small-network blend, unshrunk (A7)",
+   "tags": 22
   }
  ],
  "sources": {
@@ -2714,6 +3883,18 @@
    "blob": "05b225ef472fc2368526c95381ae773fdaf92aec",
    "tag": "evidence/cp-2"
   },
+  "reports/cp28/owner-summary.json": {
+   "blob": "2b9a884f06a6cede1f11c525ef7eab18755108f6",
+   "tag": "evidence/cp-28"
+  },
+  "reports/cp28/publication-packet.json": {
+   "blob": "9f7ff6af93bb817274fa7571567a10a281cc9f54",
+   "tag": "evidence/cp-28"
+  },
+  "reports/cp28/results/selection.json": {
+   "blob": "c0bde7889795eec8eec5ccd2ca7a645e07d28eb2",
+   "tag": "evidence/cp-28"
+  },
   "reports/ddnn2/attempt-1/controls.json": {
    "blob": "190d29c3388f4c378828e3e0ebb189947e04d9d3",
    "tag": "evidence/cp-24"
@@ -2773,6 +3954,34 @@
   "reports/distribution-challenger/uncertainty.csv": {
    "blob": "1eae3fe473bab425ba91f0b51a124fe840244870",
    "tag": "evidence/cp-23"
+  },
+  "reports/pres5/a1-in-v5/metrics.csv": {
+   "blob": "26cadf08b9f93a61e755b34863224834801ee202",
+   "tag": "evidence/pres-5"
+  },
+  "reports/pres5/a1-in-v5/preview-day.csv": {
+   "blob": "350cff3177ebcd41d3a5c6bf667a8919d85e4890",
+   "tag": "evidence/pres-5"
+  },
+  "reports/pres5/a1-in-v5/ratio-intervals.csv": {
+   "blob": "4459d6d2a418b02164e2d2faf50ea0b6de8ac1f6",
+   "tag": "evidence/pres-5"
+  },
+  "reports/pres5/a1-in-v5/summary.json": {
+   "blob": "72a7664c9e515c4663b1815ff45c347d6c58109a",
+   "tag": "evidence/pres-5"
+  },
+  "reports/pres5/a1-in-v5/uncertainty.csv": {
+   "blob": "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972",
+   "tag": "evidence/pres-5"
+  },
+  "reports/rebaseline/cold-rerun-2026-10-15/MLflow-export.json": {
+   "blob": "6b3e442090c5f2a5709b7f2d8e47b80610184fca",
+   "tag": "land/cp-26"
+  },
+  "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/publication-packet.json": {
+   "blob": "6eee947c6600ab5befb4931e9bbf79654bd340bb",
+   "tag": "land/cp-26"
   },
   "reports/v2-causal/criteria.csv": {
    "blob": "29c0b5bf5c3b251e1cde32f0c28310f924edfa3c",

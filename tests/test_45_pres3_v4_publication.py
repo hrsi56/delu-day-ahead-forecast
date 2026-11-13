@@ -35,7 +35,7 @@ from delu_forecast import derived as D
 from delu_forecast import registry as G
 from delu_forecast import research as R
 from delu_forecast import research_claims as RC
-from delu_forecast.claims import REPO_ROOT
+from delu_forecast.claims import REPO_ROOT, build_claims
 
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
@@ -76,7 +76,9 @@ def test_the_registry_holds_the_packets_draft_entries_exactly_apart_from_the_lan
                 continue
             value = getattr(entry, field.name)
             if field.name == "codes":  # PRES-4 appended the later experiments' saved rows of v4 (their code additions)
-                value = tuple(code for code in value if code.experiment not in ("CP-22", "CP-23", "CP-24"))
+                value = tuple(code for code in value if code.experiment not in ("CP-22", "CP-23", "CP-24", "CP-26"))
+            if field.name == "run_keys":  # PRES-5 appended CP-26's daily re-baseline runs of v4
+                value = tuple(key for key in value if not key.startswith("cp26/"))
             assert value == getattr(drafted, field.name), (ident, field.name)
         assert [(e.status, e.reason) for e in entry.statuses] == [(e.status, e.reason) for e in drafted.statuses]
         assert all(e.date == "pending-at-landing" for e in drafted.statuses)
@@ -118,7 +120,7 @@ def test_the_rule_the_orders_and_the_study_arms():
         spec["rule"]["provenance"])
     # v4's comparison as PRES-3 published it; PRES-4 put v5 first in the live order and pinned this one.
     assert G.V4_COMPARISON_ORDER[0] == "v4" and G.V4_COMPARISON_ORDER[1:] == G.V3_COMPARISON_ORDER
-    assert G.COMPARISON_ORDER[:2] == ("v5", "v4")
+    assert G.COMPARISON_ORDER[:3] == ("v6", "v5", "v4")  # PRES-5 put v6, the final candidate, first
     assert G.CRISIS_ORDER[-1] == "v4" and "v4" not in G.V3_CRISIS_ORDER
     assert ("v3", "v4", True) in [(t.predecessor.id, t.successor.id, t.comparator_is_predecessor)
                                   for t in G.transitions(newest_first=False)]
@@ -202,12 +204,16 @@ def test_negative_control_a_rule_date_the_anchor_does_not_state_is_refused():
 
 
 def test_the_headline_leads_with_the_rules_verdict_and_names_each_metric(page):
-    text = _text(RC.headline())
+    # PRES-5: the page's headline is the final candidate's (decision 20); the adopted generations' form, from the same
+    # generator, still leads with the rule's verdict and names each metric.
+    claim, form = RC.headline_template(G.get("v5"))
+    text = _text(RC.render_template(claim, form))
     assert text.startswith("Met the adoption rule set before the experiment")
     for number, metric in re.findall(r"(−?\d\.\d{4}) \[[^\]]+\] on the (point-error|interval) score", text):
         assert number and metric
     assert len(re.findall(r"\] on the (point-error|interval) score", text)) == 2
     assert "1 policy tested against the rule" in text
+    text = _text(RC.headline())
     opening = page[page.index('id="headline"'):page.index("</dl>", page.index('id="headline"'))]
     assert _text(RC.headline()) in _text(opening)
     readme = README.read_text()
@@ -215,18 +221,21 @@ def test_the_headline_leads_with_the_rules_verdict_and_names_each_metric(page):
 
 
 def test_the_opening_pairs_research_v4_with_released_v1(page):
-    """At PRES-3 the research half named v4; it names the registry's current generation (v5 since PRES-4)."""
+    """At PRES-3 the research half named v4, and PRES-4 v5. From PRES-5 the opening pairs the final candidate, v6,
+    with the live product that runs it (decision 28; ruling O27), and v1's demo is historical, under /history/."""
     pair = page[page.index('class="status-pair"'):page.index("</dl>", page.index('class="status-pair"'))]
-    assert 'data-registry="v1"' in pair and f'data-registry="{G.current_generation().id}"' in pair
-    assert "Try the" in page and 'data-structural="version">v1</span> demo' in page
+    assert pair.count('data-registry="v6"') == 2 and 'data-registry="v1"' not in pair
+    assert "Try the" in page and 'data-structural="version">v1</span> demo, under the Space' in page
 
 
 def test_the_terms_follow_the_headline(page):
-    # "policy" is in the headline ("1 policy tested against the rule"), so it is defined beneath it (the fresh reader)
-    assert RC.headline_terms()[:5] == ("terms.error_scores", "terms.adoption_rule", "terms.differences",
-                                       "terms.policies", "terms.class")
-    # PRES-4: the current generation's name introduces DDNN-2, defined beneath the headline too.
-    assert RC.headline_terms()[5:] == (("terms.ddnn2",) if "DDNN-2" in G.current_generation().name else ())
+    # "policy" is in the adopted generations' headline ("1 policy tested against the rule"), so it is defined beneath it
+    # (the fresh reader). PRES-5: the final candidate's headline defines its own terms.
+    assert RC.headline_terms(G.get("v5"))[:5] == ("terms.error_scores", "terms.adoption_rule", "terms.differences",
+                                                  "terms.policies", "terms.class")
+    assert RC.headline_terms(G.get("v5"))[5:] == ("terms.ddnn2",)
+    assert RC.headline_terms() == ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate",
+                                   "terms.policies", "terms.class", "terms.ddnn2")
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     for key in RC.headline_terms():
         assert f'data-block="{key}"' in terms
@@ -245,6 +254,10 @@ def _undefined(headline: str, terms: tuple[str, ...]) -> list[str]:
 
 def test_every_term_the_headline_uses_is_defined_beneath_it():
     assert _undefined(_text(RC.headline()), RC.headline_terms()) == []
+    claim, form = RC.headline_template(G.get("v5"))
+    v5_text = _text(RC.render_template(claim, form))
+    assert _undefined(v5_text, RC.headline_terms(G.get("v5"))) == []
+    assert "terms.policies" in RC.headline_terms(G.get("v5"))  # "policy" in v5's form is defined beneath it
 
 
 def test_negative_control_a_headline_term_left_undefined_is_caught():
@@ -307,7 +320,7 @@ def test_the_comparison_defines_its_terms_on_the_reading_path(page):
     for key in RC.comparison_terms():
         assert f'data-block="{key}"' in terms
     assert "at least 10% below the strongest benchmark's, set on 2026-09-15" in _text(terms)
-    assert section.index('data-block="comparison.caveat"') < section.index('class="terms comparison-terms"')
+    assert section.index('data-block="comparison.caveat.a1"') < section.index('class="terms comparison-terms"')
 
 
 def test_the_readme_states_the_targets_their_n_and_who_met_them():
@@ -416,7 +429,6 @@ PUBLISHED_SECTIONS = {
     r'<article class="chapter" id="v3".*?</article>': "9e0c19f406a1a6602ecbe6a7f85220b3cd6de4069f6a341649909c9c93de282f",
     r'<article class="chapter" id="v2".*?</article>': "500c8545e3833f4fb0e5c4abebc90218a7be4e7e0c46153128bbc23507147348",
     r'<article class="chapter" id="v1".*?</article>': "c44c7ebb9a536512ded94cb46df481a9be0080bc8aeee27d598ecebbb36fbbb4",
-    r'<section class="section product".*?</section>': "7b8078e57432917624aa767e553045b51739e89fa2e49dd40320a4c47ed7551c",
     r'<article class="transition" id="transition-v2-v3".*?</article>':
         "8fc10b4cea60451946d03a18d3f56963c8b6dc794b67e19cb942f448aad03d2e",
     r'<article class="transition" id="transition-v1-v2".*?</article>':
@@ -424,9 +436,27 @@ PUBLISHED_SECTIONS = {
 }
 
 
+#: PRES-5's two deliberate changes to v1's chapter: its demo link points to the Space's History (decision 28; ruling O17),
+#: and the archive's figures are their pixel-identical compact copies (ruling O25). Put back, the chapter is the published
+#: one byte for byte. The product section left this list: it documents v6 now (rulings O26, O29); v1's manual is in the
+#: repository at evidence/pres-4.
+def _as_published(section: str) -> str:
+    # PRES-5 (editorial V1, V6): v1's chapter routes to v1's own report, and a note outside the archive says where v1's
+    # demo now is; neither changes the archive or the chapter's other bytes.
+    section = re.sub(r'<p class="archive-note history-note">.*?</p>\n', "", section, flags=re.DOTALL)
+    section = re.sub(r'<a class="quiet" href="#v1-archive">.*?\'s original report, topic by topic</a>',
+                     '<a class="quiet" href="#product">How the released model works, topic by topic</a>', section)
+    section = section.replace(B.history_url(build_claims()), build_claims()["space_url"])
+    section = section.replace(" demo, under the Space's History</a>", " demo</a>")
+    for key, original in B.ARCHIVE_FIGURES.items():
+        section = section.replace(B.data_uri(REPO_ROOT / B.ARCHIVE_FIGURES_EMBEDDED[key]),
+                                  B.data_uri(REPO_ROOT / original))
+    return section
+
+
 @pytest.mark.parametrize("pattern", sorted(PUBLISHED_SECTIONS))
 def test_every_historical_section_is_byte_identical_to_the_published_page(page, pattern):
-    section = re.search(pattern, page, re.DOTALL).group(0)
+    section = _as_published(re.search(pattern, page, re.DOTALL).group(0))
     assert hashlib.sha256(section.encode()).hexdigest() == PUBLISHED_SECTIONS[pattern]
 
 
@@ -456,7 +486,8 @@ def planned_problems(surfaces: dict[str, str], comparator: str) -> list[str]:
         section = _text(page[start:page.index("</section>", start)])
         if "4.5" in section or "Three-block LightGBM" in section:
             problems.append("page: 4.5 is still planned")
-        # PRES-4 took 4.6 off the list (it is v5's chapter and a branch card) and compares on the same days.
+        # PRES-4 took 4.6 off the list (it is v5's chapter and a branch card) and compares on the same days; PRES-5
+        # compares with the registry's current generation, v6.
         if f"compared with {comparator} on the same days" not in section:
             problems.append(f"page: the section's comparator is not {comparator}")
     return problems
@@ -473,30 +504,31 @@ def _generated_surfaces() -> dict[str, str]:
 def test_the_planned_list_is_corrected_on_every_generated_surface():
     assert planned_problems(_generated_surfaces(), G.current_generation().version) == []
     items = {item: (name, code, question) for name, item, code, question, _ in B.planned_items()}
-    assert {"4.4V", "4.8", "4.7T and live"} <= set(items) and "4.5" not in items
+    # PRES-5: 4.8 left the list (CP-28 ran it), and 4.7T and the live trial are separate items.
+    assert {"4.4V", "4.7T", "live"} <= set(items) and "4.5" not in items and "4.8" not in items
 
 
 def test_the_other_planned_items_keep_their_content():
     kept = {item: (name, code, question, evidence) for name, item, code, question, evidence in B.PLANNED_WORK}
     # 4.4V became source-neutral at PRES-4 (the Owner's programme plan of 2026-10-11); test_49 binds its new text.
     assert kept["4.4V"][:2] == ("Wind and solar generation forecasts", "VRE")
-    assert kept["4.8"] == ("Combining models", "Recombination", "Does combining adopted models help?",
-                           "A predefined combination test")
-    assert kept["4.7T and live"][0] == "Frozen-protocol evaluation, then prospective monitoring"
+    assert "4.8" not in kept  # PRES-5: CP-28 ran it; its result is v6's chapter
+    assert kept["4.7T"][0] == "The one-shot test of v6, from 2026-12-04"
+    assert kept["live"][0] == "The live trial: prospective evaluation in progress"
 
 
 @pytest.mark.parametrize("doctored, expected", [
     (lambda s: s.replace("· VRE</dd>", "· VRE / TabPFN</dd>"), "TabPFN"),
     (lambda s: s.replace("a distributional neural network", "a tabular foundation model"), "tabular foundation model"),
-    (lambda s: s.replace('compared with <span data-structural="version">v5</span> on the same days',
-                         'compared with <span data-structural="version">v3</span> on the same days'), "is not v5"),
+    (lambda s: s.replace('compared with <span data-structural="version">v6</span> on the same days',
+                         'compared with <span data-structural="version">v3</span> on the same days'), "is not v6"),
     (lambda s: s.replace('<ol class="planned-list">', '<ol class="planned-list"><li>4.5 · Three-block LightGBM</li>'),
      "4.5 is still planned"),
 ])
 def test_negative_controls_a_stale_planned_list_is_caught(doctored, expected):
     surfaces = _generated_surfaces()
     surfaces["page"] = doctored(surfaces["page"])
-    assert any(expected in problem for problem in planned_problems(surfaces, "v5"))
+    assert any(expected in problem for problem in planned_problems(surfaces, "v6"))
 
 
 def test_negative_control_tabpfn_in_a_space_card_or_the_readme_is_caught():

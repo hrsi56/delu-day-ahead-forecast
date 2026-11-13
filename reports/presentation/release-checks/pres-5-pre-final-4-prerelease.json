@@ -1,0 +1,297 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "python3",
+        "scripts/leak_scan.py",
+        "ci",
+        "${{ github.event.before }}",
+        "${{ github.sha }}"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "Python 3.13, before pytest: Value-free leak scan (CP-18a item 7)",
+      "python": "3.13",
+      "result": "as expected",
+      "seconds": 3.2
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/build_wasm_payload.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "Python 3.13, before pytest: Build the browser payload (M3.5 item 2)",
+      "python": "3.13",
+      "result": "as expected",
+      "seconds": 37.6
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "counts": {
+        "failed": 2,
+        "passed": 3240,
+        "skipped": 9
+      },
+      "exit": 1,
+      "expected_exit": [
+        0
+      ],
+      "name": "pytest, Python 3.13",
+      "python": "3.13",
+      "result": "UNEXPECTED",
+      "seconds": 1353.1
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/leak_scan.py",
+        "ci",
+        "${{ github.event.before }}",
+        "${{ github.sha }}"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: Value-free leak scan (CP-18a item 7)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 3.2
+    },
+    {
+      "argv": [
+        "uv",
+        "sync",
+        "--locked",
+        "--dev"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: uv sync --locked --dev",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 0.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/build_wasm_payload.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: Build the browser payload (M3.5 item 2)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 35.0
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "counts": {
+        "failed": 1,
+        "passed": 3238,
+        "skipped": 12
+      },
+      "exit": 1,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: uv run pytest -q",
+      "python": "3.12",
+      "result": "UNEXPECTED",
+      "seconds": 1273.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "tests/test_10_cqr_order_statistic.py",
+        "-q"
+      ],
+      "counts": {
+        "passed": 8
+      },
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: CQR order-statistic fixture (\u00a76.2)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 1.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/verify_release.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: Cross-surface agreement and zero runtime calls (CP-3 items 3, 5)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 1.4
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "tests/test_22_wasm_equivalence.py",
+        "-q"
+      ],
+      "counts": {
+        "passed": 15
+      },
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "CI, Python 3.12: WASM model-identity equivalence (CP-3B item 2)",
+      "python": "3.12",
+      "result": "as expected",
+      "seconds": 2.5
+    },
+    {
+      "argv": [
+        "make",
+        "verify"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "make verify",
+      "result": "as expected",
+      "seconds": 2.0
+    },
+    {
+      "argv": [
+        "make",
+        "lint-publication"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "make lint-publication",
+      "result": "as expected",
+      "seconds": 1.7
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/rebuild_presentation.py"
+      ],
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "rebuild the presentation",
+      "result": "as expected",
+      "seconds": 19.5
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "changed_paths": 0,
+      "counts": {},
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "name": "the tree is unchanged after the rebuild",
+      "result": "as expected",
+      "seconds": 0.1
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "scripts/check_links.py"
+      ],
+      "counts": {},
+      "exit": 1,
+      "expected_exit": [
+        0
+      ],
+      "name": "links",
+      "result": "UNEXPECTED",
+      "seconds": 41.8
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/publication_guard.py",
+        "tree"
+      ],
+      "counts": {},
+      "exit": 1,
+      "expected_exit": [
+        1
+      ],
+      "name": "publication guard (tree)",
+      "result": "as expected",
+      "seconds": 0.0
+    }
+  ],
+  "completed_utc": "2026-11-13T06:08:35+00:00",
+  "conditional_ci_steps_left_to_the_guard_check": [
+    "No placeholder or non-final build record on main (Publication Standard v1 \u00a79)"
+  ],
+  "head": "e86528a13959c1e11ad66ea13de7567646dc1941",
+  "partial": false,
+  "raw_output": ".local/artifacts/prerelease/pres-5-pre-final-4 (local only, never committed)",
+  "schema": "prerelease-v1",
+  "stage": "pre-final",
+  "started_utc": "2026-11-13T05:22:20+00:00",
+  "status": "FAIL",
+  "unexpected": [
+    "pytest, Python 3.13",
+    "CI, Python 3.12: uv run pytest -q",
+    "links"
+  ]
+}

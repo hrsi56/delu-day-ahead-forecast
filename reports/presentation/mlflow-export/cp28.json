@@ -1,0 +1,904 @@
+{
+ "checkpoint": "CP-28",
+ "experiment": "delu-generations",
+ "runs": [
+  {
+   "artifacts": [
+    {
+     "bytes": 1937,
+     "content": "{\"comparability\":{\"aggregation\":\"dates weighted equally; actual hours averaged within each date\",\"comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"description\":\"CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control\",\"population_id\":\"cp28-paired-days\"},\"inputs\":[],\"metric_units\":{},\"metrics\":{},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol_sha256\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\"},\"parent\":null,\"run_key\":\"cp28\",\"run_name\":\"v6 · DDNN-2 alone (CP-28)\",\"tags\":{\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.children\":\"cp28/A1,cp28/A2,cp28/A3,cp28/A4,cp28/A5,cp28/A6,cp28/A7\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.kind\":\"generation\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"checkpoint\",\"delu.run_key\":\"cp28\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "83db06c2859df3b5564e3f060531fcdc5bb08298316840676025ad0e3b5a02c4"
+    },
+    {
+     "bytes": 904,
+     "content": "# v6 · DDNN-2 alone (CP-28)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "5f300d23ff7215f41b1ea3b7f003133f13c3c515c179a95086c688362cb18c90"
+    }
+   ],
+   "comparability": {
+    "aggregation": "dates weighted equally; actual hours averaged within each date",
+    "comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "description": "CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control",
+    "population_id": "cp28-paired-days"
+   },
+   "inputs": [],
+   "metric_provenance": {},
+   "metric_units": {},
+   "metrics": {},
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol_sha256": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8"
+   },
+   "parent": null,
+   "run_key": "cp28",
+   "run_name": "v6 · DDNN-2 alone (CP-28)",
+   "tags": {
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.children": "cp28/A1,cp28/A2,cp28/A3,cp28/A4,cp28/A5,cp28/A6,cp28/A7",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.kind": "generation",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
+    "delu.role": "checkpoint",
+    "delu.run_key": "cp28",
+    "delu.status": "final candidate 2026-10-30",
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2732,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.18690839935313}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49741114775496587}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.93104781357463}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":9.682532615295441}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4579770082975788}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.8906970179035324}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"DDNN-2 alone, with its own Johnson SU quantiles\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A1\",\"run_name\":\"v6 · DDNN-2 alone (A1, selected)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"True\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"v6\",\"delu.kind\":\"generation\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A1\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"v6 · DDNN-2 alone\",\"delu.registry_id\":\"v6\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A1\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"final candidate 2026-10-30\",\"mlflow.note.content\":\"v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code A1; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "d53a2bb900a85217a179b13e57e4f8da3eecd70133c28b157d7ace0a651c7bd3"
+    },
+    {
+     "bytes": 911,
+     "content": "# v6 · DDNN-2 alone (A1, selected)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "1a8c913d02616238895bb9e85af237aee6101b75136e83721a247da1e5756bcf"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A1.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A1.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A1.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A1.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A1.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A1.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.18690839935313
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.49741114775496587
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.93104781357463
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 9.682532615295441
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.4579770082975788
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.8906970179035324
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "DDNN-2 alone, with its own Johnson SU quantiles"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A1",
+   "run_name": "v6 · DDNN-2 alone (A1, selected)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "True",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "v6",
+    "delu.kind": "generation",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A1",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "v6 · DDNN-2 alone",
+    "delu.registry_id": "v6",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A1",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "final candidate 2026-10-30",
+    "mlflow.note.content": "v6 · DDNN-2 alone: DDNN-2 alone, refitted daily, frozen for 4.7T. In October 2026, v6 became the final candidate. Code A1; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2814,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.569446870209454}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.5084823011833647}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9517706567191463}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.364086910046503}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4902140488843957}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9533932567899523}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"equal weights (1/3, 1/3, 1/3), its own H layer\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A2\",\"run_name\":\"Equal-weight blend of v5's members (A2)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"False\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A2\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"Equal-weight blend of v5's members\",\"delu.registry_id\":\"equal-weight-blend\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A2\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Equal-weight blend of v5's members: v5's three members, equal weights, own intervals. In October 2026, the equal-weight blend of v5's members was not adopted. Code A2; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "bc907589d6317653c98980f02981a73ba670dfdbe67dc37d6f374a7bfabb2cfd"
+    },
+    {
+     "bytes": 917,
+     "content": "# Equal-weight blend of v5's members (A2)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "95cb27eda8a2e5e378086faa17f4523c87bc6bc65e1b83c1103f53a957817625"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A2.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A2.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A2.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A2.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A2.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A2.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.569446870209454
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.5084823011833647
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9517706567191463
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 10.364086910046503
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.4902140488843957
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9533932567899523
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "equal weights (1/3, 1/3, 1/3), its own H layer"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A2",
+   "run_name": "Equal-weight blend of v5's members (A2)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "False",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "none",
+    "delu.kind": "study arm",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A2",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "Equal-weight blend of v5's members",
+    "delu.registry_id": "equal-weight-blend",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A2",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "not adopted 2026-10-25",
+    "mlflow.note.content": "Equal-weight blend of v5's members: v5's three members, equal weights, own intervals. In October 2026, the equal-weight blend of v5's members was not adopted. Code A2; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2840,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.434914090963}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.5045887501978854}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9444827578684}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.308612951388104}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4875901695096272}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9482902025053445}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"global simplex-grid MAE fit on the latest ≤728 dates (min 364), deployed 0.5·fit + 0.5·w0\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A3\",\"run_name\":\"Fitted blend weights, half shrunk (A3)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"False\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A3\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"Fitted blend weights, half shrunk\",\"delu.registry_id\":\"fitted-blend-shrunk\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A3\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Fitted blend weights, half shrunk: One weight fit, halfway back to v5's. In October 2026, the fitted blend weights, half shrunk was not adopted. Code A3; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "41fd6652f384c72764df3340ea7e391032c03ff05c80adecad94c23005e66579"
+    },
+    {
+     "bytes": 916,
+     "content": "# Fitted blend weights, half shrunk (A3)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "4dc012dd8958c129310811825861a2244adefb8a6e414f5c4566b5c0ef5b9567"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A3.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A3.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A3.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A3.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A3.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A3.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.434914090963
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.5045887501978854
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9444827578684
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 10.308612951388104
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.4875901695096272
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9482902025053445
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "global simplex-grid MAE fit on the latest ≤728 dates (min 364), deployed 0.5·fit + 0.5·w0"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A3",
+   "run_name": "Fitted blend weights, half shrunk (A3)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "False",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "none",
+    "delu.kind": "study arm",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A3",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "Fitted blend weights, half shrunk",
+    "delu.registry_id": "fitted-blend-shrunk",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A3",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "not adopted 2026-10-25",
+    "mlflow.note.content": "Fitted blend weights, half shrunk: One weight fit, halfway back to v5's. In October 2026, the fitted blend weights, half shrunk was not adopted. Code A3; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2805,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.274135187668048}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49993560275772464}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9357730561056717}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.231349531310398}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.48393566387727543}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9411827337685463}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"per-block grid fits (min 728), deployed 0.25·block + 0.75·A3 deployed; before 728 = A3\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A4\",\"run_name\":\"Per-block blend weights (A4)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"False\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A4\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"Per-block blend weights\",\"delu.registry_id\":\"per-block-blend\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A4\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Per-block blend weights: Weights fitted for each hour block, shrunk. In October 2026, the per-block blend weights was not adopted. Code A4; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "e3740d997d43d1bb5db9fba3dbf065527884213cf050d5b79c9689b0d6329669"
+    },
+    {
+     "bytes": 906,
+     "content": "# Per-block blend weights (A4)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "d35277256c7b4615b9411ae5f47f0621ffb2a4bbd3389cd574f3f063f1e7ade1"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A4.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A4.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A4.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A4.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A4.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A4.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.274135187668048
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.49993560275772464
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9357730561056717
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 10.231349531310398
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.48393566387727543
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9411827337685463
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "per-block grid fits (min 728), deployed 0.25·block + 0.75·A3 deployed; before 728 = A3"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A4",
+   "run_name": "Per-block blend weights (A4)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "False",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "none",
+    "delu.kind": "study arm",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A4",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "Per-block blend weights",
+    "delu.registry_id": "per-block-blend",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A4",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "not adopted 2026-10-25",
+    "mlflow.note.content": "Per-block blend weights: Weights fitted for each hour block, shrunk. In October 2026, the per-block blend weights was not adopted. Code A4; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2827,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.51902456771338}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.5070230151515636}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9490391838210807}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.382390606933981}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.49107980092204656}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.955077015459511}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"NumPy 16→8→3 meta-learner (min 364), deployed 0.5·network + 0.5·w0\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A5\",\"run_name\":\"Small-network blend, half shrunk (A5)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"False\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A5\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"Small-network blend, half shrunk\",\"delu.registry_id\":\"network-blend-shrunk\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A5\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Small-network blend, half shrunk: A small network sets weights, halfway back. In October 2026, the small-network blend, half shrunk was not adopted. Code A5; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "678c4f98215812d33c85e5fcbd8ca51a5379cba1204332ea62ecd348bf214a9f"
+    },
+    {
+     "bytes": 915,
+     "content": "# Small-network blend, half shrunk (A5)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "cd9f268a67f19cdc9d8d6ffc68749ed9935b4314af4711ca5ffb107c0c083d29"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A5.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A5.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A5.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A5.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A5.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A5.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.51902456771338
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.5070230151515636
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9490391838210807
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 10.382390606933981
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.49107980092204656
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.955077015459511
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "NumPy 16→8→3 meta-learner (min 364), deployed 0.5·network + 0.5·w0"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A5",
+   "run_name": "Small-network blend, half shrunk (A5)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "False",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "none",
+    "delu.kind": "study arm",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A5",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "Small-network blend, half shrunk",
+    "delu.registry_id": "network-blend-shrunk",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A5",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "not adopted 2026-10-25",
+    "mlflow.note.content": "Small-network blend, half shrunk: A small network sets weights, halfway back. In October 2026, the small-network blend, half shrunk was not adopted. Code A5; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2759,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.10048915897446}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4949100642240568}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.926366317465163}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.129356652838439}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.47911147219043737}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9318004000019794}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"A3's fit unshrunk (min 364)\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A6\",\"run_name\":\"Fitted blend weights, unshrunk (A6)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"False\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A6\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"Fitted blend weights, unshrunk\",\"delu.registry_id\":\"fitted-blend\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A6\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Fitted blend weights, unshrunk: The fitted weights at full strength. In October 2026, the fitted blend weights, unshrunk was not adopted. Code A6; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "94b205dbd0c2b788174a8eb084603667ebff5c2808be4bc5b82ccf27c493ba1d"
+    },
+    {
+     "bytes": 913,
+     "content": "# Fitted blend weights, unshrunk (A6)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "6abbe6539c99cc1201cb1d1505ad288e996095076250b0f0bfeb91cf79bf7df8"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A6.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A6.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A6.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A6.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A6.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A6.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.10048915897446
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.4949100642240568
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.926366317465163
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 10.129356652838439
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.47911147219043737
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9318004000019794
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "A3's fit unshrunk (min 364)"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A6",
+   "run_name": "Fitted blend weights, unshrunk (A6)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "False",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "none",
+    "delu.kind": "study arm",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A6",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "Fitted blend weights, unshrunk",
+    "delu.registry_id": "fitted-blend",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A6",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "not adopted 2026-10-25",
+    "mlflow.note.content": "Fitted blend weights, unshrunk: The fitted weights at full strength. In October 2026, the fitted blend weights, unshrunk was not adopted. Code A6; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  },
+  {
+   "artifacts": [
+    {
+     "bytes": 2763,
+     "content": "{\"inputs\":[],\"metric_units\":{\"mae_eur\":\"EUR/MWh\",\"mae_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"mae_ratio_to_control\":\"ratio to the control (v5), mean daily loss\",\"wis_eur\":\"EUR/MWh\",\"wis_ratio_to_b0\":\"ratio to the similar-day naive (B0), mean daily loss\",\"wis_ratio_to_control\":\"ratio to the control (v5), mean daily loss\"},\"metrics\":{\"mae_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":17.275907797759547}],\"mae_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.499986904364718}],\"mae_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9358690817963697}],\"wis_eur\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":10.294043652189552}],\"wis_ratio_to_b0\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.4869010518660259}],\"wis_ratio_to_control\":[{\"step\":0,\"timestamp\":1788652800000,\"value\":0.9469499714041762}]},\"params\":{\"anchor_version\":\"capstone_v21.md v21-r17 §24.8\",\"protocol\":\"2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8\",\"rule\":\"A5's network unshrunk (min 364)\"},\"parent\":\"cp28\",\"run_key\":\"cp28/A7\",\"run_name\":\"Small-network blend, unshrunk (A7)\",\"tags\":{\"delu.adopted\":\"false\",\"delu.backfilled\":\"false\",\"delu.checkpoint\":\"CP-28\",\"delu.comparability_id\":\"21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd\",\"delu.comparator\":\"v5 · DDNN-2 added\",\"delu.draft.passes_all_four\":\"True\",\"delu.draft.selected\":\"False\",\"delu.evidence_class\":\"development_post_selection\",\"delu.evidence_ref\":\"evidence/cp-28@1a86c54\",\"delu.generation\":\"none\",\"delu.kind\":\"study arm\",\"delu.model_code_sha\":\"36ed7249db274cb99a906b5485e06ec2380d4922\",\"delu.original_completed_utc\":\"2026-10-24T22:09:25Z\",\"delu.policy_code\":\"A7\",\"delu.population_id\":\"cp28-paired-days\",\"delu.public_name\":\"Small-network blend, unshrunk\",\"delu.registry_id\":\"network-blend\",\"delu.role\":\"candidate\",\"delu.run_key\":\"cp28/A7\",\"delu.source_blobs\":\"{\\\"reports/cp28/publication-packet.json\\\":\\\"9f7ff6af93bb817274fa7571567a10a281cc9f54\\\"}\",\"delu.status\":\"not adopted 2026-10-25\",\"mlflow.note.content\":\"Small-network blend, unshrunk: The network's weights at full strength. In October 2026, the small-network blend, unshrunk was not adopted. Code A7; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection.\"}}\n",
+     "path": "summary.json",
+     "sha256": "e4f5ca7e16eb3d14d1eca49c74f60753f2f33632edcf9b1a86cb7e89afebb747"
+    },
+    {
+     "bytes": 912,
+     "content": "# Small-network blend, unshrunk (A7)\n\nTracked by CP-28 and published by PRES-5 from its committed evidence (tag `evidence/cp-28` at commit `1a86c54`). Development evidence after selection; nothing here is a live or confirmatory result, and no number describes a delivery day after 2026-09-06.\n\n- Report: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/report.md\n- Independent Integration review: https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/docs/track-b/evidence/cp-28/integration.md\n- Landing record: https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/docs/track-b/cp-28-landing-2026-10-25.md\n- Presentation: https://hrsi56.github.io/delu-day-ahead-forecast/\n\nSource rows at the tag:\n\n- https://github.com/hrsi56/delu-day-ahead-forecast/blob/evidence/cp-28/reports/cp28/publication-packet.json (blob 9f7ff6af93bb817274fa7571567a10a281cc9f54)\n",
+     "path": "README.md",
+     "sha256": "1384c70fe156c0c57a5c983e6aa99507682620bbb51e55f13919ee25059c6b85"
+    }
+   ],
+   "inputs": [],
+   "metric_provenance": {
+    "mae_eur": [
+     "cp28.arm.A7.MAE.arm#value"
+    ],
+    "mae_ratio_to_b0": [
+     "cp28.arm.A7.MAE.ratio_to_B0#value"
+    ],
+    "mae_ratio_to_control": [
+     "cp28.arm.A7.MAE.ratio_to_control#value"
+    ],
+    "wis_eur": [
+     "cp28.arm.A7.WIS.arm#value"
+    ],
+    "wis_ratio_to_b0": [
+     "cp28.arm.A7.WIS.ratio_to_B0#value"
+    ],
+    "wis_ratio_to_control": [
+     "cp28.arm.A7.WIS.ratio_to_control#value"
+    ]
+   },
+   "metric_units": {
+    "mae_eur": "EUR/MWh",
+    "mae_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "mae_ratio_to_control": "ratio to the control (v5), mean daily loss",
+    "wis_eur": "EUR/MWh",
+    "wis_ratio_to_b0": "ratio to the similar-day naive (B0), mean daily loss",
+    "wis_ratio_to_control": "ratio to the control (v5), mean daily loss"
+   },
+   "metrics": {
+    "mae_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 17.275907797759547
+     }
+    ],
+    "mae_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.499986904364718
+     }
+    ],
+    "mae_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9358690817963697
+     }
+    ],
+    "wis_eur": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 10.294043652189552
+     }
+    ],
+    "wis_ratio_to_b0": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.4869010518660259
+     }
+    ],
+    "wis_ratio_to_control": [
+     {
+      "step": 0,
+      "timestamp": 1788652800000,
+      "value": 0.9469499714041762
+     }
+    ]
+   },
+   "params": {
+    "anchor_version": "capstone_v21.md v21-r17 §24.8",
+    "protocol": "2b9286b0e948f59f97de33315a8b4fb3ef121003fc4ba82355b1ccf6585497a8",
+    "rule": "A5's network unshrunk (min 364)"
+   },
+   "parent": "cp28",
+   "run_key": "cp28/A7",
+   "run_name": "Small-network blend, unshrunk (A7)",
+   "tags": {
+    "delu.adopted": "false",
+    "delu.backfilled": "false",
+    "delu.checkpoint": "CP-28",
+    "delu.comparability_id": "21d526dc9e556dee78cbce409a5f5e778ae60050e3fa8c30ec29b09b71151fcd",
+    "delu.comparator": "v5 · DDNN-2 added",
+    "delu.draft.passes_all_four": "True",
+    "delu.draft.selected": "False",
+    "delu.evidence_class": "development_post_selection",
+    "delu.evidence_ref": "evidence/cp-28@1a86c54",
+    "delu.generation": "none",
+    "delu.kind": "study arm",
+    "delu.model_code_sha": "36ed7249db274cb99a906b5485e06ec2380d4922",
+    "delu.original_completed_utc": "2026-10-24T22:09:25Z",
+    "delu.policy_code": "A7",
+    "delu.population_id": "cp28-paired-days",
+    "delu.public_name": "Small-network blend, unshrunk",
+    "delu.registry_id": "network-blend",
+    "delu.role": "candidate",
+    "delu.run_key": "cp28/A7",
+    "delu.source_blobs": "{\"reports/cp28/publication-packet.json\":\"9f7ff6af93bb817274fa7571567a10a281cc9f54\"}",
+    "delu.status": "not adopted 2026-10-25",
+    "mlflow.note.content": "Small-network blend, unshrunk: The network's weights at full strength. In October 2026, the small-network blend, unshrunk was not adopted. Code A7; role candidate. CP-28 tested seven registered recombinations of v5's members on CP-26's stored forecasts, each against nominal v5 on the paired development days, with one look: improvement by more than 0.5% on MAE and WIS, non-inferiority within 2% in every complete year 2021-2025 and pooled season, the compound maximum, Holm across the seven at 0.05, in the primary analysis and three sensitivity variants. All seven passed; A1, DDNN-2 alone with its own quantiles, had the lowest WIS and was selected, then frozen for 4.7T (CP-17 to CP-17c). development_post_selection."
+   }
+  }
+ ]
+}

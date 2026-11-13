@@ -41,6 +41,7 @@ from delu_forecast.claims import (  # noqa: E402
     GITHUB_URL,
     HOLDOUT_LIMITATION,
     PAGES_URL,
+    SPACE_APP_URL,
     SPACE_URL,
     build_claims,
     limitation_bullets,
@@ -157,13 +158,17 @@ def build_glance(target: str = "md") -> str:
              "day-ahead electricity price, with prediction intervals, and the record of how successive research "
              "models were compared and checked."),
         "",
-        para(bold(f"Research, {tok('{g:current.name}')}.") + " " + RC.headline(target)),
+        para(bold(f"Research, {tok('{g:current.name}')}.") + " " + RC.headline(target)) if G.final_candidate() is None
+        else para(bold(f"Final candidate · pending {RC.structural('work-item', '4.7T', target)}, "
+                       f"{tok('{g:v6.name}', 'P61')}.") + " " + RC.headline(target)),
         "",
         ("<ul>" + "".join(f"<li>{term}</li>" for term in terms) + "</ul>") if html
         else "\n".join(f"- {term}" for term in terms),
         "",
         para(bold(f"Demo, {tok('{g:released.name}')}:") + " " + link(f"try the {tok('{g:released.version}')} demo", SPACE_URL)
-             + ". " + tok("{g:release_rule}", "P22")),
+             + ". " + tok("{g:release_rule}", "P22")) if G.final_candidate() is None
+        else para(bold("Live product:") + " " + link("open it on the Space", SPACE_URL) + ". " + render("product.live")
+                  + " " + link(f"{tok('{g:released.version}')}'s historical demo", SPACE_APP_URL + "history/") + "."),
         "",
         para(bold("How the product works:") + " " + render("product.lede") + " "
              + link("Read it in the report", PAGES_URL + "#product") + ": its data, validation, results, failures, "
@@ -205,6 +210,8 @@ def transition_lines(entry: G.Entry) -> list[str]:
 
 def generation_section(entry: G.Entry) -> list[str]:
     head = [f"### {entry.name}", "", f"*{entry.subtitle}.* {G.status_sentence(entry)}", ""]
+    if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
+        return final_candidate_section(entry)
     if entry.id == "v5":
         primary = R.get("cp24.uncertainty.v5-HGL.equal_fold.MAE")
         return head + [
@@ -277,6 +284,45 @@ def generation_section(entry: G.Entry) -> list[str]:
     raise MarkerError(f"no README section for the generation {entry.id}")
 
 
+def final_candidate_section(entry: G.Entry) -> list[str]:
+    """The final candidate (PRES-5): A1 in v5's comparison, its selection, the freeze and 4.7T's registered terms, as on
+    the page, and CP-26's every-day finding beside it."""
+    cp28 = G.CHECKPOINTS["CP-28"]
+    row = R.get("pres5.uncertainty.A1-v5.equal_fold.MAE")
+    return [
+        f"### {entry.name}", "",
+        f"*{entry.subtitle}; {G.FROZEN_LABELS.get(entry.id, entry.version)} in the frozen records.* "
+        f"{G.status_sentence(entry)} It is pending 4.7T.", "",
+        *transition_lines(entry),
+        md("v6.question"), "",
+        md("v6.change"), "",
+        md("v6.outcome.head"), "",
+        f"- {md('v6.outcome.mae')}.",
+        f"- {md('v6.outcome.wis')}.",
+        "",
+        md("v6.chart_headline"), "",
+        md("v6.reading"), "",
+        *not_established(("v6.caveat.information", "v6.caveat.selection")),
+        md("v6.decision"), "",
+        md("v6.rule"), "",
+        md("v6.fresh.window"), "",
+        md("v6.fresh.terms"), "",
+        md("v6.fresh.rules"), "",
+        md("v6.fresh.meaning"), "",
+        "**On every eligible development day, scored separately.** " + md("everyday.finding") + " "
+        + md("everyday.finding.v6") + " " + md("everyday.routes"), "",
+        "Evidence: " + " · ".join(
+            f"[{kind}, frozen {G.EVIDENCE_TAGS[tag][1]}]({GITHUB_URL}/blob/{tag}/{path}{f'#L{line}' if line else ''})"
+            for kind, tag, path, line in (
+                ("The final candidate's raw CSV rows", "evidence/pres-5", row.source_path, row.source_line),
+                ("Review verdict of the selection", cp28.evidence_tag, cp28.verdict, None),
+                ("Selection report", cp28.evidence_tag, cp28.report, None),
+                ("The registered test protocol", "evidence/cp-17", "docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md",
+                 None))),
+        "",
+    ]
+
+
 def branch_section(entry: G.Entry) -> list[str]:
     return [
         f"#### {entry.name}", "",
@@ -294,8 +340,11 @@ def build_block() -> str:
         "## Generations, newest first",
         "",
         f"Names and statuses come from the registry. The research results are development evidence after "
-        f"selection, on the same historical hours for every policy; the released model's one-shot holdout is a "
-        f"separate evidence class. The [report]({PAGES_URL}#chapters) has the charts and the values.",
+        f"selection, on the same historical hours for every policy in the shared comparison"
+        + (f"; {G.final_candidate().version}'s section also reports every eligible development day, a separate "
+           f"population" if G.final_candidate() is not None else "")
+        + f"; the released model's one-shot holdout is a separate evidence class. The [report]({PAGES_URL}#chapters) "
+        f"has the charts and the values.",
         "",
     ]
     for entry in G.generations(newest_first=True):
@@ -322,13 +371,16 @@ def build_block() -> str:
         *([""] if RC.comparison_terms() else []),
         RC.target_sentence("md", surface=RC.README), "",
         md("overview.fairness.readme"), "",
-        md("comparison.finding") + " " + md("comparison.caveat"), "",
+        (md("comparison.finding.a1") + " " + md("comparison.caveat.a1") if G.final_candidate() is not None
+         else RC.render("comparison.finding", "md") + " " + RC.render("comparison.caveat", "md")), "",
         md("comparison.scale"), "",
         md("overview.f07"), "",
         "### Further reading", "",
         "- The research updates behind each generation: [CP-20](docs/track-b/research-content/cp20-update.md) and "
         "[CP-15 and CP-16](docs/track-b/research-content/cp15-cp16-update.md).",
-        "- The landing records: [CP-24](docs/track-b/cp-24-landing-2026-10-11.md), "
+        "- The landing records: [CP-28](docs/track-b/cp-28-landing-2026-10-25.md), "
+        "[CP-17c](docs/track-b/cp-17c-landing-2026-10-30.md), [CP-26](docs/track-b/cp-26-landing-2026-10-21.md), "
+        "[CP-24](docs/track-b/cp-24-landing-2026-10-11.md), "
         "[CP-23](docs/track-b/cp-23-landing-2026-10-04.md), [CP-22](docs/track-b/cp-22-landing-2026-10-04.md), "
         "[CP-21](docs/track-b/cp-21-landing-2026-09-30.md), "
         "[CP-20](docs/track-b/cp-20-landing-2026-09-24.md), "

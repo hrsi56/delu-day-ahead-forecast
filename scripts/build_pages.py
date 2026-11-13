@@ -32,6 +32,8 @@ from __future__ import annotations
 
 import argparse
 import base64
+import csv
+import io
 import html
 import json
 import math
@@ -75,6 +77,10 @@ MLFLOW_INDEX = ROOT / "reports" / "presentation" / "mlflow_index.json"
 #: The demo's measured start (plan §7.11, PUBLISH_RULES 1.0 §7.1): fresh anonymous cold starts of the public demo,
 #: recorded by `scripts/check_reader_paths.py demo`. The page states the record's own browser, machine and dates.
 DEMO_CHECK = ROOT / "reports" / "presentation" / "release-checks" / "pres-2-public-demo-baseline.json"
+#: The live product's measured start (PRES-5; PUBLISH_RULES §7.1): CP-18b's acceptance run of the Space it built, served
+#: locally on development data, and the build record's first-visit size.
+LIVE_CHECK = ROOT / "reports" / "cp18b" / "acceptance.json"
+LIVE_BUILD = ROOT / "reports" / "cp18b" / "space-build.json"
 #: The released model's inputs, from its committed card: identity, not a result.
 CHAMPION_CARD = ROOT / "models" / "champion" / "champion_card.json"
 
@@ -106,6 +112,9 @@ TOKENS: dict[str, str] = {
     "v4": "#B45309",
     # The Owner's encoding for v5 (2026-10-11): rose, a filled pentagon, the direct label "v5".
     "v5": "#BE123C",
+    # PRES-5 (ruling O30): v6, from the existing tokens -- the text colour, a filled hexagon, the direct label "v6"
+    # (O16: the Owner may change it).
+    "v6": "#18181B",
     "ref": "#71717A",
     "badge-bg": "#F4F4F5",
     "badge-text": "#3F3F46",
@@ -133,6 +142,7 @@ MOBILE_COLUMN_AT_320 = 320 - 2 * 12 - 2 * 8
 MOBILE_LINE_CHARS = 39
 
 ROLE_STYLE = {
+    "v6": {"color": TOKENS["v6"], "marker": "hexagon", "filled": True},
     "v5": {"color": TOKENS["v5"], "marker": "pentagon", "filled": True},
     "v4": {"color": TOKENS["v4"], "marker": "diamond", "filled": True},
     "v3": {"color": TOKENS["v3"], "marker": "circle", "filled": True},
@@ -175,6 +185,33 @@ def contrast(a: str, b: str) -> float:
 
 
 # --------------------------------------------------------------------------- small helpers
+
+
+#: PRES-5's own rows are preserved by its evidence tag, created on its evidence tip at the landing (AGENTS.md § Branch and
+#: ref lifecycle); the registry dates it.
+PRES5_TAG = "evidence/pres-5"
+
+
+def history_url(C) -> str:
+    """v1's demo, kept as it was at the Space's `/history/` route (O17; decision 28 moves the Space's root to the live
+    product)."""
+    return C["space_app_url"] + "history/"
+
+
+#: The archived report's figures (v1's archive): the committed originals, which stay unchanged.
+ARCHIVE_FIGURES = {
+    "welch": "reports/fig_welch_periodogram.png",
+    "regime_spectrum": "reports/fig_per_regime_periodogram.png",
+    "acf": "reports/fig_acf_24_168.png",
+    "shap": "reports/cp2/fig_shap_summary.png",
+    "dep24": "reports/cp2/fig_shap_dependence_price_lag_24h.png",
+    "dep168": "reports/cp2/fig_shap_dependence_price_lag_168h.png",
+    "reliability": "reports/cp2/fig_reliability_three_stage.png",
+}
+#: What the page embeds for them (PRES-5, within the 2.0 MB budget): each original's exact pixels, stored without its
+#: alpha channel (255 at every pixel) in the smallest standard PNG encoding (`delu_forecast.compact_figures`), about
+#: 140 KB smaller on the page. `tests/test_50_pres5_publication.py` decodes both and requires equal pixels.
+ARCHIVE_FIGURES_EMBEDDED = {key: "reports/pres5/compact-figures/" + Path(path).name for key, path in ARCHIVE_FIGURES.items()}
 
 
 def data_uri(path: Path) -> str:
@@ -426,6 +463,11 @@ def marker(x: float, y: float, role: str, *, size: float = 6.0, extra: str = "",
     elif style["marker"] == "triangle":
         s = size * 1.15
         shape = f'<polygon points="{x:.1f},{y - s:.1f} {x + s:.1f},{y + s * 0.8:.1f} {x - s:.1f},{y + s * 0.8:.1f}" '
+    elif style["marker"] == "hexagon":
+        s = size * 1.1
+        points = " ".join(f"{x + s * math.cos(math.pi * k / 3):.1f},{y + s * math.sin(math.pi * k / 3):.1f}"
+                          for k in range(6))
+        shape = f'<polygon points="{points}" '
     elif style["marker"] == "pentagon":
         s = size * 1.15
         points = " ".join(f"{x + s * math.sin(2 * math.pi * k / 5):.1f},{y - s * math.cos(2 * math.pi * k / 5):.1f}"
@@ -904,6 +946,30 @@ def build_chart_payload() -> dict:
     }
 
 
+#: PRES-5: the opening's preview of the product the Space runs: v6's stored forecast for the last day of v5's population,
+#: from committed rows (`delu_forecast.final_candidate.preview_rows`), beside the prices that cleared.
+PREVIEW_ROWS = "reports/pres5/a1-in-v5/preview-day.csv"
+
+
+def v6_preview_payload() -> dict:
+    """The preview chart's payload for v6's development day, in the replay payload's shape (one scenario, ×1.00)."""
+    rows = list(csv.DictReader(io.StringIO(R.source_bytes(PREVIEW_ROWS).decode("utf-8"))))
+    labels = ["p025", "p10", "p25", "p50", "p75", "p90", "p975"]
+    series = [[float(row[label]) for label in labels] for row in rows]
+    actual = [float(row["y_true"]) for row in rows]
+    flat = [value for row in series for value in row] + actual
+    low, high = min(flat), max(flat)
+    pad = (high - low) * 0.06
+    day = rows[len(rows) // 2]["timestamp_utc"][:10]
+    return {"delivery_day": day, "hours": [int(row["local_hour"]) for row in rows], "labels": labels,
+            "levels": {"80": ["p10", "p90"]}, "scales": ["1.00"], "series": {"1.00": series}, "actual": actual,
+            "domain": [low - pad, high + pad], "style": "v6",
+            "title": "v6 on a development day: its stored forecast and the observed price",
+            "desc": ("Static rendering of v6's stored forecast for one development delivery day: the median forecast, "
+                     "the 80 percent interval as a shaded band, and the price that actually cleared as a dashed line. "
+                     "A development forecast, not a live forecast.")}
+
+
 def preview_chart(payload: dict) -> str:
     """A static rendering of v1's saved historical replay: the default day, ×1.00, 80% (P05).
     Its numbers are the replay's own axis; nothing here is a research claim."""
@@ -934,20 +1000,21 @@ def preview_chart(payload: dict) -> str:
         band = [f"{x(i):.1f},{y(rows[i][hi]):.1f}" for i in range(n)] + \
                [f"{x(i):.1f},{y(rows[i][li]):.1f}" for i in reversed(range(n))]
         # The tint alone is about 1.3:1 against the panel; the outline carries the band's extent at 3:1 or more.
-        out.append(f'<polygon points="{" ".join(band)}" fill="{TOKENS["v1"]}" fill-opacity="0.18" '
+        colour = TOKENS[payload.get("style", "v1")]
+        out.append(f'<polygon points="{" ".join(band)}" fill="{colour}" fill-opacity="0.18" '
                    f'stroke="{TOKENS["ref"]}" stroke-width="1"/>')
         median = " ".join(f"{x(i):.1f},{y(rows[i][mi]):.1f}" for i in range(n))
-        out.append(f'<polyline points="{median}" fill="none" stroke="{TOKENS["v1"]}" stroke-width="2.4"/>')
+        out.append(f'<polyline points="{median}" fill="none" stroke="{colour}" stroke-width="2.4"/>')
         actual = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, v in enumerate(payload["actual"]))
         out.append(f'<polyline points="{actual}" fill="none" stroke="{TOKENS["text"]}" stroke-width="1.6" stroke-dasharray="6 4"/>')
         out.append(f'<text x="{ml}" y="16" font-size="{CHART_FONT}" fill="{TOKENS["text-2"]}">EUR/MWh · local hour · '
                    f'<tspan data-structural="date">{esc(payload["delivery_day"])}</tspan></text>')
         return "".join(out)
 
-    title = "v1 historical replay: the default delivery day"
-    desc = ("Static rendering of v1's saved historical replay for one holdout delivery day at the unperturbed "
-            "load scenario: the median forecast, the 80 percent interval as a shaded band, and the price that "
-            "actually cleared as a dashed line. Not a live forecast.")
+    title = payload.get("title", "v1 historical replay: the default delivery day")
+    desc = payload.get("desc", "Static rendering of v1's saved historical replay for one holdout delivery day at the "
+                       "unperturbed load scenario: the median forecast, the 80 percent interval as a shaded band, and "
+                       "the price that actually cleared as a dashed line. Not a live forecast.")
     desktop = svg_wrap(440, 270, draw(440, 270, 42, "d"), title=title, desc=desc, variant="d", chart_id="preview")
     mobile = svg_wrap(MOBILE_W, 164, draw(MOBILE_W, 164, 40, "m"), title=title, desc=desc, variant="m",
                       chart_id="preview")
@@ -963,11 +1030,13 @@ def preview_chart(payload: dict) -> str:
 #: no work-item number in the research anchor yet, so they carry none; no item fixes a design that no anchor has fixed.
 #: The wind and solar item is source-neutral: an external forecast may replace building one.
 PLANNED_WORK = (
-    ("A re-evaluation on every eligible day", "", "Re-evaluation",
-     "How do the adopted generations perform when every eligible day is scored, not only the five historical test "
-     "periods?",
-     "An evaluation protocol fixed before any result, then every generation scored on all eligible days, with the five "
-     "test periods kept as the historical record"),
+    ("The one-shot test of v6, from 2026-12-04", "4.7T", "Final evaluation",
+     "Does v6 beat v5 and the similar-day naive on 90 delivery days, 2026-09-07 to 2026-12-05, whose data was opened "
+     "only after the test was registered?",
+     "The test registered before it, run once on or after 2026-12-04, with its pass, fail and inconclusive rules"),
+    ("The live trial: prospective evaluation in progress", "live", "Prospective evaluation",
+     "How does the frozen v6 do on forecasts issued before their prices exist, day after day?",
+     "At least 90 consecutive delivery days issued, scored and published, kept apart from every development result"),
     ("New input data", "", "New data",
      "Do fuel and carbon prices, neighbouring markets, or earlier forecasts that already cover the delivery day add "
      "information to {comparator}?",
@@ -975,11 +1044,7 @@ PLANNED_WORK = (
     ("Wind and solar generation forecasts", "4.4V", "VRE",
      "Does a wind and solar generation forecast add information beyond direct weather?",
      "A generation forecast available before the auction, then an ablation"),
-    ("Combining models", "4.8", "Recombination", "Does combining adopted models help?",
-     "A predefined combination test"),
-    ("Frozen-protocol evaluation, then prospective monitoring", "4.7T and live", "Final evaluation",
-     "How does the selected model perform under a frozen evaluation protocol, and then prospectively?",
-     "An evaluation window and an evidence classification, both fixed in the protocol before the test"),
+
 )
 
 
@@ -998,6 +1063,10 @@ def _structural_versions(text: str) -> str:
     escaped = _VERSION_WORD.sub(lambda m: ver(m.group(1)), escaped)
     escaped = re.sub(r"(?<![\w.])(\d{1,2}(?:\.\d+)?)%", lambda m: S("level", m.group(1) + "%"), escaped)
     escaped = re.sub(r"\b(DDNN-2)(?![\w-])", lambda m: S("name", m.group(1)), escaped)
+    # PRES-5: the final candidate's public label and the test's work item are names, not numbers.
+    escaped = re.sub(r"(?<![\w>-])(A1)(?![\w-])", lambda m: S("name", m.group(1)), escaped)
+    escaped = re.sub(r"(?<![\w>.-])(4\.7T)(?![\w-])", lambda m: S("work-item", m.group(1)), escaped)
+    escaped = re.sub(r"(?<![\w>\"-])(\d+)(?= (?:consecutive )?delivery days)", lambda m: S("count", m.group(1)), escaped)
     return re.sub(r"(?<![\w>\"-])(\d+)(?= live days)", lambda m: S("count", m.group(1)), escaped)
 
 
@@ -1490,9 +1559,9 @@ def v5_main_chart() -> str:
 #: its chapter published them: `cp20/HG`'s overview is v3's, pinned, and `cp21/HGL` carries v4's.
 #: The run charts no longer drawn on the live page: the comparison as v3's chapter published it (seven rows), and as v4's
 #: did (eight rows, from CP-21's rows; PRES-4 pinned it when the live comparison moved to v5).
-PINNED_CHARTS = frozenset({("cp20/HG", "overview"), ("cp21/HGL", "overview")})
+PINNED_CHARTS = frozenset({("cp20/HG", "overview"), ("cp21/HGL", "overview"), ("cp24/v5", "overview")})
 CHARTS_BY_RUN = {
-    "cp24/v5": (("overview", lambda: overview_chart()), ("v5-c2a", v5_main_chart)),
+    "cp24/v5": (("overview", lambda: overview_chart(G.V5_COMPARISON_ORDER, live=True)), ("v5-c2a", v5_main_chart)),
     "cp21/HGL": (("overview", lambda: overview_chart(G.V4_COMPARISON_ORDER, V4_EXPERIMENT)), ("v4-c2a", v4_main_chart),
                  ("v4-ladder", v4_ladder_chart),
                  ("v4-arms", v4_arms_chart), ("v4-c2b", v4_folds_chart), ("v4-c3", v4_absolute_chart),
@@ -1605,6 +1674,25 @@ def demo_measurement(path: Path = DEMO_CHECK) -> dict:
             "path": str(path.relative_to(ROOT))}
 
 
+def live_measurement(check: Path = LIVE_CHECK, build: Path = LIVE_BUILD) -> dict:
+    """The live product's startup metadata beside its action (PUBLISH_RULES §7.1; Integration review 1, F1): the first
+    visit's size, the measured cold start in each engine, the browsers, the machine, the measurement date and the last
+    date on which every cold start in the record reached the ready state. Every value is read from CP-18b's committed
+    acceptance and build records (the Space served locally, on development data); none is typed."""
+    record = json.loads(check.read_text())
+    starts = [c for c in record["checks"] if c["name"].startswith("demo: fresh anonymous cold start")]
+    if not starts or not all(c.get("pass") and (c.get("evidence") or {}).get("ready") for c in starts):
+        raise ValueError(f"{check.name}: a cold start did not reach the ready state; the page cannot state a start")
+    if {c["engine"] for c in starts} != {"chromium", "webkit"}:
+        raise ValueError(f"{check.name}: the measured start needs a cold start in Chromium and in WebKit")
+    size = json.loads(build.read_text())["size"]["first_visit"]["bytes"]
+    return {"mb": f"{size / 1e6:.2f}", "seconds": max(c["evidence"]["seconds_to_ready"] for c in starts),
+            "chromium": record["engines"]["chromium"].split(".")[0], "webkit": record["engines"]["webkit"],
+            "machine": "a Mac" if record["machine"].startswith("macOS") else record["machine"],
+            "date": record["started_utc"][:10], "verified": record["finished_utc"][:10],
+            "check": str(check.relative_to(ROOT)), "build": str(build.relative_to(ROOT))}
+
+
 def header() -> str:
     return (
         '<header class="site-header"><div class="header-inner">'
@@ -1620,7 +1708,7 @@ def header() -> str:
 def chapter_sequence(C, archive: str, *, specimen: bool = False) -> str:
     """Every generation's chapter, newest first, in the registry's order. A registered generation
     without a chapter builder is a build error, never a silent omission."""
-    builders = {"v5": v5_chapter, "v4": v4_chapter, "v3": lambda: v3_chapter(open_folds=specimen), "v2": v2_chapter,
+    builders = {"v6": a1_chapter, "v5": v5_chapter, "v4": v4_chapter, "v3": lambda: v3_chapter(open_folds=specimen), "v2": v2_chapter,
                 "v1": lambda: v1_chapter(C, archive)}
     missing = [version for version in chapter_versions() if version not in builders]
     if missing:
@@ -1644,6 +1732,55 @@ def opening(C, payload) -> str:
     )
     terms = "".join(f'<li data-block="{key}">{RC.render(key)}{TERM_ROUTES.get(key, "")}</li>'
                     for key in RC.headline_terms())
+    final = G.final_candidate()
+    if final is None:
+        product_status = (f'<div class="status status-released"><dt>Demo</dt><dd class="status-name"><span class="gen '
+                          f'gen-{released.style}">{RC.render_template("P23", "{g:released.name}")}</span></dd></div>')
+        research_label, research_name = "Research", RC.render_template("P23", "{g:current.name}")
+        primary_action = (f'<a class="btn-primary external" href="{attr(C["space_url"])}"><span>Try the '
+                          f'{ver(released.version)} demo</span></a>')
+        product_rule = f'<p class="release-rule" data-block="release-rule">{RC.render_template("P22", "{g:release_rule}")}</p>'
+        preview = f"""<figure class="preview panel">
+  <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver(released.version)}</span>
+   <span>Forecast and observed price for a held-out day. This is a historical replay, not a live forecast.</span></figcaption>
+  {preview_chart(payload)}
+  <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
+   <span class="key-actual">Observed price</span></p>
+  <p class="preview-links"><a class="quiet" href="#product-forecast">Explore this forecast</a>
+   <span class="preview-note">Opens the interactive replay in the product documentation.</span></p>
+ </figure>"""
+    else:
+        # PRES-5 (decision 20's hero rule; decision 28; O13): the selected candidate leads, paired with the live
+        # product that runs it. Its status is "final candidate · pending 4.7T"; v1 stays the released model.
+        research = final
+        product_status = (f'<div class="status status-released"><dt>Live product</dt><dd class="status-name"><span '
+                          f'class="gen gen-{final.style}">{RC.render_template("P61", "{g:v6.name}")}</span></dd></div>')
+        research_label = (f'{RC.render_template("P61", "{g:v6.adoption}")} · pending '
+                          f'{S("work-item", "4.7T")}')
+        research_name = RC.render_template("P61", "{g:v6.name}")
+        primary_action = (f'<a class="btn-primary external" href="{attr(C["space_url"])}"><span>Open the live '
+                          f'product</span></a>')
+        # The product identity beside the action (§2's table; §7.1): what the Space runs, and v1's place.
+        product_rule = f'<div class="release-rule" data-block="release-rule">{block("product.live")}</div>'
+        preview = (
+            f'<figure class="preview panel">'
+            f'<figcaption class="preview-label"><span class="badge badge-replay">Development forecast · '
+            f'{ver(final.version)}</span><span>A stored development-day forecast, not a live one.</span>'
+            f'</figcaption>'
+            f"{preview_chart(v6_preview_payload())}"
+            f'<p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">'
+            f'{S("level", "80%")} prediction interval</span> <span class="key-actual">Observed price</span></p>'
+            f'<p class="preview-links"><a class="quiet" href="#product-forecast">Read a forecast</a></p></figure>')
+        # Startup metadata beside the primary action (§7.1) is the live product's. v1's measured start (2026-09-29)
+        # timed the earlier Space's root, which decision 28 gives to the live product; its demo is linked, not timed.
+        live = live_measurement()
+        rc = lambda field, text: f'<span data-release-check="{attr(live["check"])}#{field}">{esc(text)}</span>'  # noqa: E731
+        startup = (f'<p class="startup" data-startup="measured">About <span data-release-check="{attr(live["build"])}#size">'
+                   f'{esc(live["mb"])}</span> MB on a first visit; ready within {rc("checks", live["seconds"])} s in '
+                   f'Chromium {rc("engines", live["chromium"])} and WebKit {rc("engines", live["webkit"])} on '
+                   f'{esc(live["machine"])}, served locally on development data, {rc("started_utc", live["date"])}; last '
+                   f'verified {rc("finished_utc", live["verified"])}. <a class="quiet external in-text" '
+                   f'href="{attr(history_url(C))}">{ver(released.version)}\'s historical demo</a></p>')
     return f"""
 <section class="opening" id="top" aria-labelledby="title">
  <div class="opening-copy">
@@ -1653,29 +1790,21 @@ def opening(C, payload) -> str:
    what failed and how it was checked.</p>
   <p class="byline">Led by {esc(RC.OWNER_PUBLIC_NAME)} · <a href="#contribution">Contribution</a></p>
   <dl class="status-pair">
-   <div class="status status-released"><dt>Demo</dt><dd class="status-name"><span class="gen gen-{released.style}">{RC.render_template("P23", "{g:released.name}")}</span></dd></div>
-   <div class="status status-research"><dt>Research</dt><dd class="status-name"><span class="gen gen-{research.style}">{RC.render_template("P23", "{g:current.name}")}</span></dd>
+   {product_status}
+   <div class="status status-research"><dt>{research_label}</dt><dd class="status-name"><span class="gen gen-{research.style}">{research_name}</span></dd>
     <dd class="headline" id="headline" data-block="headline">{RC.headline()}</dd>
     <dd class="headline-terms"><ul class="terms" aria-label="Terms used in the headline">{terms}</ul></dd></div>
   </dl>
  </div>
  <div class="opening-aside">
   <div class="actions">
-   <a class="btn-primary external" href="{attr(C['space_url'])}"><span>Try the {ver(released.version)} demo</span></a>
+   {primary_action}
    <a class="quiet" href="#research-results">Compare model results</a>
    <a class="quiet" href="#evidence">Code and evidence</a>
   </div>
-  <p class="release-rule" data-block="release-rule">{RC.render_template("P22", "{g:release_rule}")}</p>
+  {product_rule}
   {startup}
- <figure class="preview panel">
-  <figcaption class="preview-label"><span class="badge badge-replay">Historical forecast · {ver(released.version)}</span>
-   <span>Forecast and observed price for a held-out day. This is a historical replay, not a live forecast.</span></figcaption>
-  {preview_chart(payload)}
-  <p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">{S("level", "80%")} prediction interval</span>
-   <span class="key-actual">Observed price</span></p>
-  <p class="preview-links"><a class="quiet" href="#product-forecast">Explore this forecast</a>
-   <span class="preview-note">Opens the interactive replay in the product documentation.</span></p>
- </figure>
+ {preview}
  </div>
 </section>"""
 
@@ -1720,7 +1849,8 @@ def lineage() -> str:
         f'<li class="node node-{entry.style}" data-registry="{entry.id}"><a href="{entry.anchor}">'
         f'<span class="dot" aria-hidden="true"></span>'
         f'<span class="node-name">{RC.render_template("P23", "{g:%s.name}" % entry.id)}</span>'
-        f'<span class="node-status">{RC.render_template("P23", "{g:%s.adoption}" % entry.id)} · '
+        f'<span class="node-status">{RC.render_template("P23", "{g:%s.adoption}" % entry.id)}'
+        f'{" · pending " + S("work-item", "4.7T") if entry.status.status == G.FINAL_CANDIDATE else ""} · '
         f'{S("date", G.month(entry.status.date))}</span>'
         f'<span class="node-sub">{_structural_versions(entry.subtitle)}</span></a></li>'
         for entry in G.generations()
@@ -1787,18 +1917,21 @@ def transition_card(item: G.Transition) -> str:
 
 
 def transitions_html() -> str:
-    cards = "".join(transition_card(item) for item in G.transitions(newest_first=True))
-    return (f'<div class="transitions"><h3 class="transitions-head" id="adopted-changes">Adopted changes, newest '
-            f"first</h3>{cards}</div>")
+    items = G.transitions(newest_first=True)
+    cards = "".join(transition_card(item) for item in items)
+    # PRES-5: v6 was selected by its own rule, not adopted, so the heading names both kinds of change it lists.
+    selected = any(item.successor.status.status == G.FINAL_CANDIDATE for item in items)
+    head = "Changes between generations, newest first" if selected else "Adopted changes, newest first"
+    return (f'<div class="transitions"><h3 class="transitions-head" id="adopted-changes">{head}</h3>{cards}</div>')
 
 
 def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None = None, *,
-                    pinned: bool = False) -> list[Panel]:
+                    pinned: bool = False, live: bool | None = None) -> list[Panel]:
     """The shared comparison's panels: the rows of `order`, drawn from `experiment`'s committed rows, with the
     targets' dashed line from the newest generation's own criteria row there. Without arguments, the live one: each
     generation is labelled by its short name alone, and the met / not-met column is the value table's. `pinned` draws
     the comparison as `cp20/HG`'s run carries it: canonical names, with the targets column in the chart."""
-    live = order is None and experiment is None
+    live = (order is None and experiment is None) if live is None else live
     order = order or G.COMPARISON_ORDER
     entries = G.comparison_rows(order, experiment)
     if live:
@@ -1814,7 +1947,10 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
         label = entry.short if entry.kind == "generation" and not pinned else comparison_label(entry, experiment)
         rows.append((entry, G.comparison_prefix(source), code, label,
                      verdict if pinned and verdict in D.records() else None))
-    _, newest_prefix, newest, _, _ = rows[0]
+    # The targets' line comes from the newest generation's own criteria row; the final candidate (PRES-5), drawn first,
+    # was never tested against the targets and carries none.
+    _, newest_prefix, newest, _, _ = next(row for row in rows if row[0].kind == "generation"
+                                          and f"derived.criteria.{row[0].id}.verdict" in D.records())
 
     def panel(field: str, title: str, criterion: str) -> Panel:
         return Panel(
@@ -1822,7 +1958,9 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
             rows=tuple(Row(label, f"{prefix}.metrics.{code}.equal_fold.{field}",
                            comparison_role(entry), code, entry.kind == "generation", verdict=verdict)
                        for entry, prefix, code, label, verdict in rows),
-            domain=(0.5, 1.1), step=0.1,
+            # PRES-5: v6's interval score lies below 0.5. Only the page's comparison widens its axis; every overview
+            # chart pinned to an earlier comparison (PINNED_CHARTS, published in MLflow) keeps its own.
+            domain=(0.4, 1.1) if order is None else (0.5, 1.1), step=0.1,
             refs=(Ref("naive", at=1.0, dash=None, colour=TOKENS["text"]),
                   Ref("target", f"{newest_prefix}.criteria.{newest}.{criterion}.equal_fold.{field}.upper_limit")),
             option="p=3",
@@ -1872,14 +2010,17 @@ def comparison_label(entry: G.Entry, experiment: str | None = None) -> str:
 
 
 #: A count of policies as the chart's accessible title words it.
-COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve"}
+COUNT_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen"}
 
 
-def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None, *, pinned: bool = False) -> str:
-    panels = overview_panels(order, experiment, pinned=pinned)
+def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None = None, *, pinned: bool = False,
+                   live: bool | None = None) -> str:
+    """The shared comparison. `live=True` with an `order` redraws a live comparison as it was published (PRES-5 pins
+    PRES-4's twelve rows, which `cp24/v5` carries)."""
+    live = (order is None and experiment is None) if live is None else live
+    panels = overview_panels(order, experiment, pinned=pinned, live=live)
     verdicts = ("The right-hand column says whether a policy met both targets." if pinned else
                 "Whether a policy met both targets is in the value table below the chart.")
-    live = order is None and experiment is None
     points = ("Candidates of experiments that were tested and not adopted are open circles, as study points. "
               if live and any(is_branch_point(entry) for entry in G.comparison_rows()) else "")
     return single_rows(
@@ -1896,13 +2037,21 @@ def overview_chart(order: tuple[str, ...] | None = None, experiment: str | None 
 def comparison_audit() -> tuple[Audit, ...]:
     """The comparison's audit-grade records: its experiment's verdict, report and the newest generation's committed
     equal-fold row, whose line is read from the record, never typed."""
-    newest = G.comparison_rows()[0]
+    newest = next(entry for entry in G.comparison_rows()
+                  if entry.kind == "generation" and entry.code_in(G.COMPARISON_EXPERIMENT) is not None)
     record = R.get(f"{G.comparison_prefix()}.metrics.{newest.code_in(G.COMPARISON_EXPERIMENT)}.equal_fold.S_MAE")
-    return checkpoint_audit(G.COMPARISON_EXPERIMENT, source=record.source_path, line=record.source_line)
+    audit = checkpoint_audit(G.COMPARISON_EXPERIMENT, source=record.source_path, line=record.source_line)
+    final = G.final_candidate()
+    if final is not None and final in G.comparison_rows():
+        # PRES-5: the final candidate's row is this publication's own rows, scored on the same population.
+        row = R.get(f"pres5.metrics.{final.code_in('PRES-5')}.equal_fold.S_MAE")
+        audit += (Audit("The final candidate's raw CSV rows", row.source_path, PRES5_TAG, row.source_line),)
+    return audit
 
 
 #: A headline term whose full statement lives in a chapter's detail links there; the anchor opens its disclosure.
-TERM_ROUTES = {"terms.adoption_rule": f' <a class="quiet in-text" href="#{G.current_generation().id}-rule">Read them</a>'}
+TERM_ROUTES = {"terms.adoption_rule": f' <a class="quiet in-text" href="#{G.current_generation().id}-rule">Read them</a>',
+               "terms.selection_rule": ' <a class="quiet in-text" href="#v6-rule">Read it</a>'}
 
 
 def comparison_terms_list() -> str:
@@ -1915,6 +2064,54 @@ def comparison_terms_list() -> str:
     return f'<ul class="terms comparison-terms" aria-label="Terms used in the comparison">{items}</ul>'
 
 
+#: The comparison's finding and caveat: the final candidate's against v5 when it leads (PRES-5), else the current
+#: generation's against its comparator.
+_FINDING = "comparison.finding.a1" if G.final_candidate() in G.comparison_rows() else "comparison.finding"
+_CAVEAT = "comparison.caveat.a1" if G.final_candidate() in G.comparison_rows() else "comparison.caveat"
+
+#: CP-26's streams in the every-day table (PRES-5), in the comparison's order: (registry id, route/policy).
+EVERYDAY_ROWS = (("v6", "nominal/D2"), ("v5", "nominal/v5"), ("v4", "nominal/v4"), ("v3", "nominal/v3"),
+                 ("v2", "nominal/v2"), ("v1-recipe-daily", "nominal/v1-R"), ("naive", "nominal/B0"),
+                 ("v5-weather-late", "gfs6/v5"), ("v5-no-load", "noload/v5"))
+
+
+def everyday_table() -> str:
+    """CP-26's every-day scores (PRES-5): mean daily error in EUR/MWh and its ratio to the naive, all eligible days."""
+    body = ""
+    for ident, stream in EVERYDAY_ROWS:
+        route, policy = stream.split("/")
+        base = f"cp26.every.{route}.{policy}.all_eligible"
+        cells = "".join(f'<td class="n">{value(f"{base}.{metric}.{field}", "C602")}</td>'
+                        for metric in ("MAE", "WIS") for field in ("raw_mean_daily_loss", "B0_ratio"))
+        body += f'<tr><th scope="row">{RC.render_template("C602", "{g:%s.name}" % ident)}</th>{cells}</tr>'
+    head = ('<th scope="col">Policy</th><th scope="col">Point error, EUR/MWh</th><th scope="col">Ratio to the naive</th>'
+            '<th scope="col">Interval error, EUR/MWh</th><th scope="col">Ratio to the naive</th>')
+    return (f'<div class="scroll" role="region" aria-label="Every-day scores" tabindex="0"><table class="data">'
+            f'<caption>{_label("Mean daily error on every eligible development day")}</caption><thead><tr>{head}</tr>'
+            f"</thead><tbody>{body}</tbody></table></div>")
+
+
+def everyday_panel() -> str:
+    """CP-26 (PRES-5, the brief's outcome 2): the re-baseline on every development day, beside the five periods and
+    never pooled with them -- its population, its finding with intervals, its two routes and its table."""
+    if G.final_candidate() is None:
+        return ""
+    checkpoint = G.CHECKPOINTS["CP-26"]
+    audit = (Audit("Review verdict", checkpoint.verdict, checkpoint.evidence_tag),
+             Audit("Engineering report", checkpoint.report, checkpoint.evidence_tag),
+             Audit("Every-day scores", R.CP26_EXPORT, checkpoint.evidence_tag))
+    return f"""
+ <figure class="panel analytical" id="everyday" aria-labelledby="everyday-title" data-research="everyday">
+  {block("everyday.title", tag="h3", cls="panel-title", ident="everyday-title")}
+  <p class="panel-sub" data-block="everyday.sub">{RC.render("everyday.sub")}</p>
+  {block("everyday.finding", cls="finding")}
+  {block("everyday.finding.v6")}
+  {block("everyday.routes")}
+  {everyday_table()}
+  {evidence_row(audit=audit)}
+ </figure>"""
+
+
 def results() -> str:
     """The comparison (standard §1 i, §6): the change against the comparator with its interval and the
     main caveat above the chart; the target in words, with its date, N and a met / not-met column."""
@@ -1922,8 +2119,8 @@ def results() -> str:
 <section class="section" id="research-results" aria-labelledby="results-h" data-research="results">
  <h2 id="results-h">How the models compare</h2>
  <figure class="panel analytical" aria-labelledby="comparison-finding">
-  {block("comparison.finding", tag="h3", cls="panel-title finding-title", ident="comparison-finding")}
-  {block("comparison.caveat", cls="qualification caveat-line")}
+  {block(_FINDING, tag="h3", cls="panel-title finding-title", ident="comparison-finding")}
+  {block(_CAVEAT, cls="qualification caveat-line")}
   {comparison_terms_list()}
   <p class="panel-sub" data-block="comparison.sub">{RC.render("comparison.sub")}</p>
   {legend(tuple(dict.fromkeys(comparison_role(entry) for entry in G.comparison_rows())), comparison_legend_labels())}
@@ -1935,6 +2132,7 @@ def results() -> str:
   {evidence_row(compare="compare:overview", audit=comparison_audit())}
   {disclosure("overview-table", "View values", overview_table())}
  </figure>
+ {everyday_panel()}
  <div class="fairness">
   <h3>A fair comparison</h3>
   {block("overview.fairness")}
@@ -2297,7 +2495,8 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-forecast", "Read a forecast: interactive replay", "Read a forecast", ("10",),
               product_replay(payload) + "".join(block(k) for k in ("product.forecast.read", "product.forecast.controls",
                                                                    "product.forecast.demo"))
-              + f'<p><a class="quiet external" href="{attr(C["space_url"])}">Try the {ver(released.version)} demo</a></p>'),
+              + f'<p><a class="quiet external" href="{attr(history_url(C))}">Try the {ver(released.version)} demo, under '
+                'the Space\'s History</a></p>'),
         Topic("product-limitations", "Limitations", "Limitations", ("11",),
               block("product.limits.summary") + f'<ul class="limitations">{limitations}</ul>'
               + f'<p><span data-claim="P48" data-v1="floor_change">{esc(C["floor_change"])}</span></p>'),
@@ -2307,12 +2506,59 @@ def v1_product_topics(C, payload) -> tuple[Topic, ...]:
     )
 
 
-#: The documentation of each model the registry may name as released. Only v1 has been released.
-PRODUCT_DOCS = {"v1": v1_product_topics}
+def v6_product_topics(C, payload) -> tuple[Topic, ...]:
+    """v6's documentation (PRES-5; rulings O26 and O29, decision 28): the twelve subjects for the policy the Space runs,
+    each from evidence about v6 -- the re-baseline, the selection, its rows on v5's population and the freeze -- with
+    the live product's views as routes where the report draws no figure. Shared data facts are kept only where they
+    hold for v6 (the target, the preprocessing, the regimes' hours, the seasonal rationale of the calendar inputs)."""
+    archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
+    space = lambda text: f'<p><a class="quiet external" href="{attr(C["space_url"])}">{text}</a></p>'  # noqa: E731
+    chapter = lambda anchor, text: f'<p><a class="quiet" href="#{anchor}">{_structural_versions(text)}</a></p>'  # noqa: E731
+    freeze = Audit("The freeze manifest", "docs/track-b/evidence/cp-17c/freeze-manifest.json", "evidence/cp-17c")
+    return (
+        Topic("product-data", "Data and the information cutoff", "Data and the information cutoff", ("1",),
+              "".join(block(k) for k in ("product.data.target", "v6.product.sources", "v6.product.cutoff",
+                                        "v6.product.windows", "product.data.preprocessing"))),
+        Topic("product-regimes", "Price regimes and negative prices", "Price regimes and negative prices", ("2",),
+              block("v6.product.regimes.periods") + block("v6.product.regimes")
+              + f'<p>{archive("regimes", "Yearly price levels and negative-hour counts, in the archived report")}</p>'),
+        Topic("product-inputs", "The inputs it uses, and why", "The inputs it uses, and why", ("3", "3b"),
+              block("v6.product.inputs") + block("product.inputs.seasonal")
+              + f'<p>{archive("spectral", "The spectral figures behind the calendar inputs, in the archived report")}</p>'),
+        Topic("product-validation", "How it was selected and will be tested",
+              "How it was selected and how it will be tested", ("4",), block("v6.product.validation")),
+        Topic("product-results", "Measured results: development data", "Measured results", ("5",),
+              block("v6.product.results") + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
+        Topic("product-attribution", "What drives its forecasts: live product", "What drives its forecasts",
+              ("6",), block("v6.product.attribution") + space("The Explainability view, on the live product"),
+              disposition="not evaluated"),
+        Topic("product-importance", "Input importance: live product", "Which inputs it relies on", ("7",),
+              block("v6.product.importance") + space("The Features view, on the live product"),
+              disposition="not evaluated"),
+        Topic("product-failures", "Where it fails", "Where it fails", ("8",),
+              block("v6.product.failures") + chapter("v6-per-period-differences", "Each test period, in the v6 chapter")),
+        Topic("product-reliability", "Interval reliability", "How reliable its intervals are", ("9",),
+              block("v6.product.reliability") + chapter("v6-coverage", "How often its intervals held, in the v6 chapter")),
+        Topic("product-forecast", "Read a forecast: live product", "Read a forecast", ("10",),
+              block("v6.product.forecast") + space("Open the live product")),
+        Topic("product-limitations", "Limitations", "Limitations", ("11",), block("v6.product.limits")),
+        Topic("product-run", "Run and check this product", "Run and check this product", ("12",),
+              block("v6.product.run", cls="run") + evidence_row(audit=(freeze,))),
+    )
+
+
+#: The documentation of each model the product may run: the released v1 before decision 28; from PRES-5, v6, which the
+#: Space runs (rulings O26 and O29). v1's documentation stays reachable in its chapter, its archive and the repository.
+PRODUCT_DOCS = {"v1": v1_product_topics, "v6": v6_product_topics}
+
+
+def product_identity() -> G.Entry:
+    """The model "How the product works" documents: the final candidate the Space runs, else the released model."""
+    return G.final_candidate() or G.released()
 
 
 def product_topics(C, payload) -> tuple[Topic, ...]:
-    released = G.released()
+    released = product_identity()
     builder = PRODUCT_DOCS.get(released.id)
     if builder is None:
         raise ProductDocsError(f"the registry names {released.id} as released, and this page has no documentation "
@@ -2330,8 +2576,8 @@ def product_topics(C, payload) -> tuple[Topic, ...]:
 
 
 def product_section(C, payload) -> str:
-    """How the product works (A4): the released model's orientation, a route to every topic, and the topics."""
-    released = G.released()
+    """How the product works (A4): the product's orientation, a route to every topic, and the topics."""
+    released = product_identity()
     topics = product_topics(C, payload)
     routes = "".join(f'<li><a href="#{topic.anchor}">{esc(topic.label)}</a></li>' for topic in topics)
     bodies = "".join(
@@ -2400,7 +2646,11 @@ class ChapterSlots:
 
 
 def _comparator_code(entry: G.Entry, experiment: str) -> str | None:
-    return G.get(entry.comparator).code_in(experiment) if entry.comparator else None
+    if not entry.comparator:
+        return None
+    comparator = G.get(entry.comparator)
+    # PRES-5 scores A1 alone; its contrasts name v5 by its code in the comparison's own experiment (CP-24).
+    return comparator.code_in(experiment) or comparator.code_in(G.COMPARISON_EXPERIMENT)
 
 
 def slot_problems(slots: ChapterSlots) -> list[str]:
@@ -2499,6 +2749,8 @@ def render_chapter(slots: ChapterSlots, *, open_details: tuple[str, ...] = ()) -
 
 def chapter_header(entry: G.Entry, *, with_badge: bool = True) -> str:
     """A chapter's header: version, canonical name, subtitle, dated status and badge (standard §5)."""
+    if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
+        return final_chapter_header(entry)
     badge_html = badge(entry.badge, "development") if with_badge else ""
     name = entry.name.split(" · ", 1)[1]
     status = RC.render_template("P23", "{g:%s.adoption}" % entry.id)
@@ -2638,6 +2890,134 @@ def v5_slots() -> ChapterSlots:
 
 def v5_chapter() -> str:
     return render_chapter(v5_slots())
+
+
+# --------------------------------------------------------------------------- PRES-5: the final candidate's chapter
+
+_A1_MAE = "pres5.uncertainty.A1-v5.equal_fold.MAE"
+_A1_WIS = "pres5.uncertainty.A1-v5.equal_fold.WIS"
+_A1_MAE_975 = "pres5.uncertainty97_5.A1-v5.equal_fold.MAE"
+_A1_WIS_975 = "pres5.uncertainty97_5.A1-v5.equal_fold.WIS"
+
+
+def a1_main_panels() -> list[Panel]:
+    """A1 − v5 on both primary scores, on v5's population, each with its 95% interval and with its interval at the
+    level v5's rule decided at (97.5%), from the same draws. Descriptive: no rule is applied."""
+    return [Panel("Difference, v6 − v5", "error-score difference · below zero favours v6",
+                  (Row("Point-error score, 95% interval", _A1_MAE, "v6", bold=True, claim="C902"),
+                   Row("Point-error score, 97.5% interval", _A1_MAE_975, "v6", bold=True, claim="C902"),
+                   Row("Interval score, 95% interval", _A1_WIS, "v6", bold=True, claim="C902"),
+                   Row("Interval score, 97.5% interval", _A1_WIS_975, "v6", bold=True, claim="C902")),
+                  domain=(-0.08, 0.02), step=0.02,
+                  refs=(Ref("no difference", at=0.0, dash=None, colour=TOKENS["text"]),))]
+
+
+def a1_change() -> str:
+    v5, a1 = G.get("v5"), G.get("v6")
+    return (
+        f'<div class="feature-change" aria-label="What A1 keeps of {v5.version}">'
+        f'<div class="fc-col"><p class="fc-head">{ver(v5.version)}</p><ul><li>two LEAR forecasts and a LightGBM, five '
+        f"sixths of the weight</li><li>{S('name', 'DDNN-2')}, one sixth</li><li>hour-aware intervals from recent "
+        "errors</li></ul></div>"
+        '<div class="fc-arrow" aria-hidden="true">→</div>'
+        f'<div class="fc-col fc-added fc-v6"><p class="fc-head">{ver(a1.version)} ({S("name", "A1")} in the frozen '
+        'records)</p><ul>'
+        f"<li>{S('name', 'DDNN-2')} alone, with its own quantiles</li><li>refitted every day, frozen</li></ul></div></div>"
+    )
+
+
+def a1_fold_panels() -> list[Panel]:
+    return fold_difference_panels("pres5", "A1-v5", "v6", "v6 − v5")
+
+
+def a1_arms_table() -> str:
+    """CP-28's seven arms against v5 on every development day: the change in each mean daily error, with CP-28's
+    descriptive 95% interval, and whether Holm rejected in every analysis."""
+    body = ""
+    for code in R.CP28_ARMS:
+        entry = G.by_code(code, "CP-28")
+        cells = "".join(f'<td class="n">{value(f"derived.cp28.{code}.{metric}", "C704")} '
+                        f'{interval(f"derived.cp28.{code}.{metric}", "C704")}</td>' for metric in ("MAE", "WIS"))
+        # Ruling O30: the six other arms are study arms, "not selected", named without their codes.
+        result = "Selected" if entry is G.final_candidate() else "Not selected"
+        body += (f'<tr><th scope="row">{RC.render_template("C704", "{g:%s.name}" % entry.id)}</th>{cells}'
+                 f'<td>{value(f"cp28.holm.primary14.{code}.adjusted_p", "C702")}</td><td>{result}</td></tr>')
+    head = ('<th scope="col">Arm</th>'
+            f'<th scope="col">{_structural_versions("Point error against v5")}</th>'
+            f'<th scope="col">{_structural_versions("Interval error against v5")}</th>'
+            '<th scope="col">Holm-adjusted p, main analysis</th><th scope="col">Result</th>')
+    return (f'<div class="scroll" role="region" aria-label="The seven arms" tabindex="0"><table class="data">'
+            f'<caption>{_label("Seven arms against v5 on every development day")}</caption><thead><tr>{head}</tr>'
+            f"</thead><tbody>{body}</tbody></table></div>")
+
+
+def a1_slots() -> ChapterSlots:
+    entry = G.get("v6")
+    method = (block("v6.method.network") + block("v6.method.scoring")
+              + detail_head("v6-information", "How v6's forecasts differ from v5's in these periods")
+              + block("v6.method.information"))
+    folds = (detail_head("v6-per-period-differences", "v6 against v5 in each test period") + block("v6.folds")
+             + values_table("v6-c2b-values", "C907", a1_fold_panels(), visible=True)
+             + detail_head("v6-absolute-errors", "Absolute errors per test period") + block("v6.absolute"))
+    stress = detail_head("v6-crisis", "The 2022 crisis period") + block("v6.stress")
+    coverage = detail_head("v6-coverage", "Interval coverage and width") + block("v6.coverage")
+    protocol = (detail_head("v6-selection", "How v6 was selected") + block("v6.rule", ident="v6-rule")
+                + block("v6.selection") + a1_arms_table() + block("v6.holm.note")
+                + detail_head("v6-freeze", "The freeze") + block("v6.freeze")
+                + detail_head("v6-fresh-test", "4.7T, registered before the test") + block("v6.fresh.window")
+                + block("v6.fresh.terms") + block("v6.fresh.rules") + block("v6.fresh.meaning"))
+    cp28, cp17c = G.CHECKPOINTS["CP-28"], "docs/track-b/evidence/cp-17c/integration.md"
+    row = R.get(_A1_MAE)
+    audit = (Audit("The final candidate's raw CSV rows", row.source_path, PRES5_TAG, row.source_line),
+             Audit("Review verdict of the selection", cp28.verdict, cp28.evidence_tag),
+             Audit("Selection report", cp28.report, cp28.evidence_tag),
+             Audit("Review verdict of the freeze", cp17c, "evidence/cp-17c"),
+             Audit("The registered test protocol", "docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md", "evidence/cp-17"))
+    return ChapterSlots(
+        entry=entry,
+        question="v6.question",
+        change=block("v6.change") + a1_change(),
+        chart=MainChart("v6-c2a", "C902", tuple(a1_main_panels()),
+                        title="v6 minus v5 on v5's own population: equal-fold error-score differences with 95 percent "
+                              "intervals and with wider intervals at the level v5's rule decided at",
+                        desc="Four rows: the point-error score and the interval score, each with its 95 percent "
+                             "interval and with its wider interval at the level v5's rule decided at, named in the "
+                             "row labels. Each shows "
+                             "the estimated difference as a hexagon and its interval as a line; every interval "
+                             "lies wholly left of zero, which favours v6.",
+                        subtitle="Difference in error score, v6 − v5 · paired intervals at 95% and at 97.5% · the hours "
+                                 "of v5's comparison · development, post-selection",
+                        label_width=250, wrap_labels=True),
+        headline="v6.chart_headline",
+        reading="v6.reading",
+        not_established=("v6.caveat.information", "v6.caveat.selection"),
+        decision="v6.decision",
+        evidence=evidence_row(compare="compare:v6", audit=audit),
+        details=(("method", method), ("per-period consistency", folds), ("stress period", stress),
+                 ("coverage and width", coverage), ("protocol and review", protocol)),
+    )
+
+
+def a1_chapter() -> str:
+    """The final candidate's chapter (PRES-5): the chapter grammar, with its own header (it has no version number)."""
+    return render_chapter(a1_slots())
+
+
+def final_chapter_header(entry: G.Entry) -> str:
+    """The final candidate's header: its version, name and its label in the frozen records (ruling O30), subtitle,
+    dated status "pending 4.7T" and badge."""
+    label, name = entry.name.split(" · ", 1)
+    frozen = G.FROZEN_LABELS.get(entry.id)
+    status = RC.render_template("P61", "{g:%s.adoption}" % entry.id)
+    return (
+        f'<header class="chapter-head"><p class="eyebrow"><span class="adoption">{status} · pending '
+        f'{S("work-item", "4.7T")}</span>{S("date", G.month(entry.status.date))}</p>'
+        f'<h2 id="{entry.id}-h"><span class="gen gen-{entry.style}">{ver(label)}</span> · '
+        f"{_structural_versions(name)}</h2>"
+        f'<p class="chapter-sub">{_structural_versions(entry.subtitle)}'
+        + (f'; {S("name", frozen)} in the frozen records' if frozen else "") + "</p>"
+        f'<p class="chapter-meta">{badge(entry.badge, "development")}</p></header>'
+    )
 
 
 def v4_slots() -> ChapterSlots:
@@ -2805,9 +3185,12 @@ def v1_chapter(C, archive: str) -> str:
  </div>
  {block("v1.unflattering")}
  {block("v1.lesson")}
- <p class="chapter-links"><a class="quiet" href="#product">How the released model works, topic by topic</a>
+ <p class="chapter-links"><a class="quiet" href="#v1-archive">{ver(entry.version)}'s original report, topic by topic</a>
   <a class="quiet" href="#forecast">The replay in the archived report</a>
-  <a class="quiet external" href="{attr(C['space_url'])}">Try the {ver(entry.version)} demo</a></p>
+  <a class="quiet external" href="{attr(history_url(C))}">Try the {ver(entry.version)} demo, under the Space's History</a></p>
+<p class="archive-note history-note">The archive below links the Space as it was at {ver(entry.version)}'s release; the Space's root
+ has since been given to the live product, and {ver(entry.version)}'s demo is under its
+ <a class="quiet external in-text" href="{attr(history_url(C))}">History</a>.</p>
 {v1_archive_disclosure(archive)}
 </article>"""
 
@@ -2840,15 +3223,13 @@ def planned_work() -> str:
     """Planned work, after the chapters (standard §6, amending plan §7.2): unscored, no version number."""
     current = G.current_generation()
     items = "".join(
-        f'<li class="planned-item"><p class="planned-name">{esc(name)}</p>'
+        f'<li class="planned-item"><p class="planned-name">{_structural_versions(name)}</p>'
         f'<dl><dt>Question it will test</dt><dd>{_structural_versions(question)}</dd>'
         f'<dt>Evidence that would decide it</dt><dd>{_structural_versions(evidence)}</dd>'
         f'<dt>Work item</dt><dd>{(S("work-item", item) + " · ") if item else ""}{esc(code)}</dd></dl></li>'
         for name, item, code, question, evidence in planned_items(current)
     )
-    teaser = ("Next: a re-evaluation on every eligible day, new input data, renewable-generation forecasts and model "
-              "combinations, then an evaluation of the selected model under a frozen protocol and prospective "
-              "monitoring.")
+    teaser = None
     plan = github("docs/track-b/presentation-and-tracking-plan-2026-09-24.md")
     body = (
         "<p>Each item is subject to the research plan, where its conditions are set out, and would be compared "
@@ -2858,7 +3239,7 @@ def planned_work() -> str:
     )
     return (
         '<section class="section planned" id="planned" aria-labelledby="planned-h" data-research="planned">'
-        f'<h2 id="planned-h">{esc(RC.PLANNED)}</h2><p>{esc(teaser)}</p>'
+        f'<h2 id="planned-h">{esc(RC.PLANNED)}</h2>{block("planned.teaser")}'
         + disclosure("planned-detail", "See planned experiments", body) + "</section>"
     )
 
@@ -2873,12 +3254,15 @@ SYSTEM_VIEW = (
     ("Features", "Calendar, price lags, load forecast; weather from v3", "implemented", ("pandas", "NumPy", "DuckDB")),
     ("Model and interval policy", "v1: LightGBM quantiles, conformal calibration; v2 and v3: blended LEAR, "
      "hour-aware intervals; v4: that blend plus a three-block LightGBM; v5: v4 plus a distributional neural network "
-     "written in NumPy", "implemented", ("LightGBM", "scikit-learn")),
+     "written in NumPy; v6, the final candidate: that network alone, refitted daily and frozen", "implemented",
+     ("LightGBM", "scikit-learn")),
     ("Evaluation and artifacts", "Five historical periods, identical hours; committed predictions, metrics and "
      "reviews", "implemented", ("pandas", "Parquet", "GitHub Actions")),
-    ("Report, demo and tracking", "This page, the in-browser v1 demo and the MLflow mirror", "implemented",
-     ("GitHub Pages", "marimo", "Pyodide", "Hugging Face Static Space", "MLflow on DagsHub")),
-    ("Live operation", "Daily forecasts scored after the fact", "planned", ()),
+    ("Report, product and tracking", "This page, the live product and v1's historical demo on the Space, and the "
+     "MLflow mirror", "implemented", ("GitHub Pages", "marimo", "Pyodide", "Hugging Face Static Space",
+                                      "MLflow on DagsHub")),
+    ("Live operation", "The frozen v6 issues each day's forecast before the auction; outcomes are scored after the "
+     "fact, prospective evaluation in progress", "implemented", ()),
 )
 
 
@@ -2921,13 +3305,17 @@ def evidence_section(C) -> str:
                  f'<a class="quiet external in-text" href="{attr(experiment)}" data-route="experiment">'
                  f"<code>{esc(C['mlflow_next_experiment'])}</code></a>, mirrored from the repository's committed "
                  "evidence; the repository is the source of truth, and this page works without the tracking service.</p>")
-    reproduce = (Audit("Reproduction instructions", "reports/ddnn2/reproduce.md", "evidence/cp-24"),
+    reproduce = (Audit("Selection report and its reproduction", "reports/cp28/report.md", "evidence/cp-28"),
+                 Audit("Re-baseline report", "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md",
+                       "land/cp-26"),
+                 Audit("Reproduction instructions", "reports/ddnn2/reproduce.md", "evidence/cp-24"),
                  Audit("Reproduction instructions", "reports/block-challenger/reproduce.md", "evidence/cp-21"),
                  Audit("Reproduction instructions", "reports/weather-ablation/reproduce.md", "evidence/cp-20"),
                  Audit("Reproduction instructions", "reports/v2-causal/reproduce.md", "evidence/cp-16"),
                  Audit("Reproduction instructions", "reports/cp15/reproduction.md", "evidence/cp-15"))
     labelled = "".join(f"<li><span>{label}:</span> {audit_link(item)}</li>"
-                       for label, item in zip((ver("v5"), ver("v4"), ver("v3"), ver("v2"), "the model comparison study"),
+                       for label, item in zip((f'{ver("v6")}\'s selection', "the every-day re-baseline", ver("v5"),
+                                               ver("v4"), ver("v3"), ver("v2"), "the model comparison study"),
                                               reproduce))
     return f"""
 <section class="section" id="evidence" aria-labelledby="evidence-h">
@@ -2939,9 +3327,9 @@ def evidence_section(C) -> str:
   <pre><code>uv sync</code></pre>
   <pre><code>uv run python scripts/rebuild_presentation.py</code></pre>
   {disclosure("rebuild-measurement", "One measured rebuild", f"<p>{runtime}</p>") if runtime else ""}
-  <p>Each experiment below has its own full reproduction. To run the released model, see
-   <a href="#product-run">Run this product</a>; {ver("v1")}'s original instructions, with the historical container,
-   are in <a href="#repro">its archive</a>.</p>
+  <p>Each experiment below has its own full reproduction. To check the live product's frozen policy, see
+   <a href="#product-run">Run and check this product</a>; {ver("v1")}, the last released generation, runs from its
+   original instructions, with the historical container, in <a href="#repro">its archive</a>.</p>
   <div class="evidence-row evidence-list"><span class="ev-label">Evidence</span><ul class="repro-list">{labelled}</ul></div>
  </div>
  <div class="tracking"><h3>Tracking</h3>
@@ -3057,6 +3445,7 @@ data{{font-variant-numeric:tabular-nums}}
 .rail-v1 .dot{{background:var(--v1)}}.rail-v2 .dot{{background:var(--v2)}}.rail-v3 .dot{{background:var(--v3)}}
 .rail-v4 .dot{{background:var(--v4);border-radius:1px;transform:rotate(45deg) scale(.85)}}
 .rail-v5 .dot{{background:var(--v5);border-radius:0;clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}}
+.rail-v6 .dot{{background:var(--v6);border-radius:0;clip-path:polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%)}}
 .jump{{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}}
 .jump a{{min-height:44px;min-width:56px;display:inline-flex;align-items:center;justify-content:center;
  border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);
@@ -3091,6 +3480,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .fc-note{{font-size:14px;color:var(--text-2);margin:6px 0 0}}
 .external::after{{content:" \\2197";font-size:.85em}}
 .startup{{font-size:14px;line-height:22px;color:var(--text-2);max-width:52ch}}
+.release-rule p{{margin:0;max-width:none}}
 .preview{{margin:0}}
 .preview-label{{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:14px;color:var(--text-2);margin-bottom:8px}}
 .preview-key{{font-size:13px;color:var(--text-2);display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 4px}}
@@ -3108,7 +3498,7 @@ p{{margin:0 0 16px;max-width:var(--prose)}}
 .badge-replay{{background:var(--surface);border-color:var(--v1);color:var(--v1)}}
 .adoption{{font-weight:650;font-size:14px;color:var(--text);margin-right:10px}}
 .gen{{font-weight:750;padding:0 2px;border-bottom:3px solid currentColor}}
-.gen-v1{{color:var(--v1)}}.gen-v2{{color:var(--v2)}}.gen-v3{{color:var(--v3)}}.gen-v4{{color:var(--v4)}}.gen-v5{{color:var(--v5)}}
+.gen-v6{{color:var(--v6)}}.gen-v1{{color:var(--v1)}}.gen-v2{{color:var(--v2)}}.gen-v3{{color:var(--v3)}}.gen-v4{{color:var(--v4)}}.gen-v5{{color:var(--v5)}}
 .analytical{{margin:0 0 32px}}
 .panel-title{{font-size:20px;margin:0 0 4px}}
 .panel-sub{{font-size:14px;line-height:22px;color:var(--text-2);margin:0 0 16px;max-width:none}}
@@ -3157,6 +3547,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .node-v1 .dot{{background:var(--v1)}}.node-v2 .dot{{background:var(--v2);border-radius:4px}}.node-v3 .dot{{background:var(--v3)}}
 .node-v4 .dot{{background:var(--v4);border-radius:2px;transform:rotate(45deg) scale(.86)}}
 .node-v5 .dot{{background:var(--v5);border-radius:0;clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}}
+.node-v6 .dot{{background:var(--v6);border-radius:0;clip-path:polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%)}}
 .node-name{{display:block;font-weight:700;font-size:17px}}
 .node-status{{display:block;font-size:14px;color:var(--text-2)}}
 .branches{{list-style:none;padding:0;margin:8px 0 32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
@@ -3183,7 +3574,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .story-label{{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);margin:0 0 6px}}
 .feature-change{{display:flex;gap:12px;align-items:stretch;font-size:14px;line-height:22px;margin:0 0 24px}}
 .fc-col{{border:1px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--surface);flex:1}}
-.fc-added{{border:2px solid var(--v3)}}.fc-added.fc-v4{{border-color:var(--v4)}}.fc-added.fc-v5{{border-color:var(--v5)}}
+.fc-added{{border:2px solid var(--v3)}}.fc-added.fc-v4{{border-color:var(--v4)}}.fc-added.fc-v5{{border-color:var(--v5)}}.fc-added.fc-v6{{border-color:var(--v6)}}
 .fc-col ul{{margin:0;padding-left:18px}}.fc-head{{margin:0 0 4px;font-weight:650}}
 .fc-arrow{{align-self:center;font-weight:700;font-size:20px}}
 .outcomes{{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch;margin:0 0 24px}}
@@ -3655,15 +4046,7 @@ def v1_archive(payload: dict) -> str:
         for level in sorted(INTERVAL_LEVELS)
     )
 
-    figures = {
-        "welch": data_uri(ROOT / "reports/fig_welch_periodogram.png"),
-        "regime_spectrum": data_uri(ROOT / "reports/fig_per_regime_periodogram.png"),
-        "acf": data_uri(ROOT / "reports/fig_acf_24_168.png"),
-        "shap": data_uri(ROOT / "reports/cp2/fig_shap_summary.png"),
-        "dep24": data_uri(ROOT / "reports/cp2/fig_shap_dependence_price_lag_24h.png"),
-        "dep168": data_uri(ROOT / "reports/cp2/fig_shap_dependence_price_lag_168h.png"),
-        "reliability": data_uri(ROOT / "reports/cp2/fig_reliability_three_stage.png"),
-    }
+    figures = {key: data_uri(ROOT / ARCHIVE_FIGURES_EMBEDDED[key]) for key in ARCHIVE_FIGURES}
 
     cutoff_table = f"""
     <div class='scroll'><table><thead><tr><th>Cutoff</th><th>Value</th></tr></thead><tbody>

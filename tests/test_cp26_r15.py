@@ -13,6 +13,7 @@ from cp26 import budget as B
 from cp26 import harness as H
 from cp26.limits import shutdown_exposure_seconds
 from cp26_ledger_snapshot import identity_path
+import pres5_landed_code
 
 #: The scientific base's four modules, recorded at the landing repair with their hashes.
 SCIENTIFIC_BASE = Path('docs/track-b/evidence/cp-26/landing-repair/scientific-base-1e7eb02')
@@ -147,8 +148,8 @@ def test_r15_authority_does_not_relabel_scientific_plan_or_parity():
         if name not in ('capstone_v21.md', H.SCIENTIFIC_AUTHORITY_PATH):
             assert sha256(identity_path(root, name)) == expected, name
     landed = read_json(root / 'reports/rebaseline/harness-log.json')['landed_code']
-    assert landed == {str(path.relative_to(root)): sha256(path)
-                      for base in H.LANDED_CODE for path in sorted((root / base).rglob('*.py'))}
+    # PRES-5 changed five presentation modules under its brief; their landed bytes are recorded (tests/pres5_landed_code.py).
+    assert landed == pres5_landed_code.landed_code(root)
     fingerprint = hashlib.sha256(json.dumps({'identities': inputs, 'landed_code': landed},
                                             sort_keys=True).encode()).hexdigest()
     assert manifest['input_fingerprint'] == fingerprint

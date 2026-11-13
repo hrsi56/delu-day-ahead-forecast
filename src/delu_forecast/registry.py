@@ -27,7 +27,7 @@ consistency checks and their negative controls.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date
 from functools import lru_cache
 
@@ -260,6 +260,30 @@ RULES: dict[str, Rule] = {
         provenance=("capstone_v21.md v21-r11 §23.9 (ratified 2026-10-05)",
                     "reports/ddnn2/attempt-1/protocol.json rule_verbatim (frozen before its fits)"),
     ),
+    # PRES-5: CP-28's selection rule, registered with the arms on 2026-10-12 (the Owner) and frozen in CP-28's protocol
+    # before CP-26's first score.
+    "cp28-selection": Rule(
+        id="cp28-selection",
+        plan="capstone_v21.md §24.8 (v21-r14 to v21-r17)",
+        words="seven recombinations of v5's members, each against v5 on every development day: both scores better by "
+              "more than 0.5%, no complete year from 2021 to 2025 or pooled season more than 2% worse, the largest of "
+              "the arm's one-sided p-values as its test, Holm across the seven at 0.05, in the primary analysis and "
+              "all three sensitivity variants; among the arms that pass, the lowest interval score wins",
+        set_on="2026-10-12",
+        provenance=("capstone_v21.md §24.8, 'The arms (Owner, 2026-10-12)' and 'The gates'",
+                    "docs/track-b/evidence/cp-26/cp28-frozen-protocol-v21-r14.md (frozen before CP-26's first score)"),
+    ),
+    # PRES-5: 4.7T, the one-shot fresh-data test of A1, registered at CP-17 before its window's data existed.
+    "fresh-test-4-7t": Rule(
+        id="fresh-test-4-7t",
+        plan="capstone_v21.md §24.12 (v21-r18) and docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md",
+        words="A1 against v5 and the similar-day naive on delivery days 2026-09-07 to 2026-12-05, once: the largest "
+              "of four one-sided p-values (both scores, against v5 with a 0.5% margin and against the naive) at or "
+              "below 0.05",
+        set_on="2026-10-28",
+        provenance=("docs/track-b/evidence/cp-17/4-7t-frozen-protocol.md, registered at CP-17",
+                    "capstone_v21.md v21-r18 §24.12, which ratifies its terms"),
+    ),
 }
 
 
@@ -310,6 +334,21 @@ CHECKPOINTS: dict[str, Checkpoint] = {
     "CP-24": Checkpoint("CP-24", "cp24", "v5", "evidence/cp-24", "05b7e61", "2026-10-10",
                         "reports/ddnn2/report.md", "docs/track-b/evidence/cp-24/integration.md",
                         "docs/track-b/cp-24-landing-2026-10-11.md", ("v5", "D2", "v3+D2")),
+    # PRES-5 (2026-11-05): CP-26's re-baseline on every development day and CP-28's selection, from their landing records.
+    # CP-26's evidence tag is local only and never pushed, so its public tag is its landing, whose files are a
+    # byte-identical subset of the evidence tip (the landing record's "curated landing").
+    "CP-26": Checkpoint("CP-26", "cp26", "cp26-rebaseline", "land/cp-26", "61658c7", "2026-10-21",
+                        "reports/rebaseline/cold-rerun-2026-10-15/presentation-v21-r16/report.md",
+                        "docs/track-b/evidence/cp-26/cold-rerun-2026-10-15/integration-final-r16-2-PASS.md",
+                        "docs/track-b/cp-26-landing-2026-10-21.md",
+                        tuple(f"{route}/{policy}/{mask}" for route, policy in (
+                            ("gfs6", "v3"), ("gfs6", "v4"), ("gfs6", "v5"), ("noload", "v3"), ("noload", "v4"),
+                            ("noload", "v5"), ("nominal", "B0"), ("nominal", "D2"), ("nominal", "v1-R"),
+                            ("nominal", "v2"), ("nominal", "v3"), ("nominal", "v4"), ("nominal", "v5"))
+                              for mask in ("all_eligible", "never_scored", "old_fold_2_5", "newly_opened"))),
+    "CP-28": Checkpoint("CP-28", "cp28", "v6", "evidence/cp-28", "1a86c54", "2026-10-25",
+                        "reports/cp28/report.md", "docs/track-b/evidence/cp-28/integration.md",
+                        "docs/track-b/cp-28-landing-2026-10-25.md", ("A1", "A2", "A3", "A4", "A5", "A6", "A7")),
 }
 
 #: Every evidence tag a public link may cite, with the date it froze (the date its commit was
@@ -325,13 +364,39 @@ EVIDENCE_TAGS: dict[str, tuple[str, str]] = {
     "evidence/cp-22": ("8daf7d0", "2026-10-04"),
     "evidence/cp-23": ("928bc13", "2026-10-04"),
     "evidence/cp-24": ("05b7e61", "2026-10-10"),
+    # PRES-5: CP-26's public tag is its landing (its evidence tag is local only); CP-28's evidence tag; the freeze.
+    "land/cp-26": ("61658c7", "2026-10-21"),
+    "evidence/cp-28": ("1a86c54", "2026-10-25"),
+    "evidence/cp-17": ("3876bcd", "2026-10-28"),
+    "evidence/cp-17b": ("9b89774", "2026-10-29"),
+    "evidence/cp-17c": ("2628804", "2026-10-30"),
+    # PRES-5's own rows (A1 on v5's population): the tag is created on PRES-5's evidence tip at the landing, so its commit
+    # is not known when this page is built; the date is the tip's, which the final build and the return check.
+    "evidence/pres-5": ("", "2026-11-13"),
 }
 
 POPULATIONS = {
-    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16 and CP-20 to CP-24",
+    "common-10747h": "the 10,747 eligible development hours shared by CP-15, CP-16, CP-20 to CP-24 and PRES-5's A1 rows",
     "cp10-fold-block": "CP-10's full fold blocks, v1's nine-quantile scores",
     "v1-holdout-90d": "v1's pre-specified 90-day holdout, delivery 2026-06-09..2026-09-06",
+    # PRES-5: CP-26's daily calendar and its three reporting masks (capstone_v21.md §24.7, "Days").
+    "cp26-every-day": "CP-26's 2,068 eligible development days, 2020-12-29 to 2026-09-06, under one daily protocol",
+    "cp26-never-scored": "the 755 of CP-26's days never scored before CP-26 (CP-25's mask)",
+    "cp26-old-folds": "the 358 days of the old folds 2 to 5, re-run under CP-26's protocol",
+    "cp26-newly-opened": "the 152 days from 2026-04-08 to 2026-09-06, newly opened to research",
+    # CP-28 scored each arm and the control on the days both issued: all 2,068 of CP-26's eligible days, paired.
+    "cp28-paired-days": "CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control",
 }
+
+#: CP-26's four reporting masks (capstone_v21.md §24.7) and the population each is.
+CP26_MASKS = {"all_eligible": "cp26-every-day", "never_scored": "cp26-never-scored", "old_fold_2_5": "cp26-old-folds",
+              "newly_opened": "cp26-newly-opened"}
+
+
+def _cp26(route: str, policy: str, note: str = "") -> tuple[tuple[Code, ...], tuple[str, ...]]:
+    """One CP-26 stream's codes, one per mask, and its run keys (CP-26's export: one run per stream and mask)."""
+    codes = tuple(Code("CP-26", f"{route}/{policy}/{mask}", population, note) for mask, population in CP26_MASKS.items())
+    return codes, tuple(f"cp26/{code.code}" for code in codes)
 
 _CP15 = "docs/track-b/research-content/cp15-cp16-claims.md"
 _CP20 = "docs/track-b/research-content/cp20-claims.md"
@@ -460,6 +525,55 @@ def _cp21_arm(ident: str, code: str, name: str, subtitle: str, short: str) -> En
     )
 
 
+_PRES5 = "docs/track-b/research-content/pres5-claims.md"
+_LANDING26 = "docs/track-b/cp-26-landing-2026-10-21.md"
+_LANDING28 = "docs/track-b/cp-28-landing-2026-10-25.md"
+_CP26_DIR = "reports/rebaseline/cold-rerun-2026-10-15"
+#: CP-26's committed rows: the export holding every stream's every-day scores, and the packet holding the control audits.
+_CP26_SOURCES = (f"{_CP26_DIR}/MLflow-export.json", f"{_CP26_DIR}/presentation-v21-r16/publication-packet.json")
+#: CP-28's committed rows: the one look's summary, its packet and its selection record.
+_CP28_SOURCES = ("reports/cp28/owner-summary.json", "reports/cp28/publication-packet.json",
+                 "reports/cp28/results/selection.json")
+#: PRES-5's rows of A1 on v5's population (`delu_forecast.final_candidate`).
+_A1_SOURCES = ("reports/pres5/a1-in-v5/metrics.csv", "reports/pres5/a1-in-v5/uncertainty.csv",
+               "reports/pres5/a1-in-v5/ratio-intervals.csv", "reports/pres5/a1-in-v5/summary.json")
+#: CP-28's arms that passed the gates and were not selected (capstone_v21.md §24.8, "Selection").
+_NOT_SELECTED = "passed every registered gate and was not selected: v6 had the lowest interval score"
+
+
+def _cp28_arm(ident: str, code: str, name: str, subtitle: str, short: str) -> Entry:
+    """One of CP-28's arms that passed and was not selected (the landing record of 2026-10-25)."""
+    return Entry(
+        id=ident, name=name, subtitle=subtitle, kind="study arm",
+        codes=(Code("CP-28", code, "cp28-paired-days"),),
+        statuses=(StatusEvent(NOT_ADOPTED, "2026-10-25", _LANDING28, _NOT_SELECTED),),
+        comparator="v5", population="cp28-paired-days", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §24.8 (v21-r17)", rules=("cp28-selection",), sources=_CP28_SOURCES, claim_map=_PRES5,
+        run_keys=(f"cp28/{code}",), style="study", checkpoint="CP-28", short=short,
+    )
+
+
+def _cp26_stream(ident: str, route: str, policy: str, name: str, subtitle: str, short: str, *,
+                 kind: str = "study arm", comparator: str = "v5") -> Entry:
+    """A CP-26 stream that is not an earlier identity: v1's recipe refitted daily, and the two declared sensitivity
+    routes (weather six hours late; no load forecast). Never eligible: CP-26 decides nothing."""
+    codes, run_keys = _cp26(route, policy)
+    statuses = () if kind == "reference" else (
+        StatusEvent(NOT_ADOPTED, "2026-10-21", _LANDING26, "a sensitivity route of the re-baseline; never eligible"),)
+    return Entry(
+        id=ident, name=name, subtitle=subtitle, kind=kind, codes=codes, statuses=statuses,
+        comparator=comparator, population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §24.7 (v21-r17)", rules=(), sources=_CP26_SOURCES, claim_map=_PRES5,
+        run_keys=run_keys, style="reference" if kind == "reference" else "study", checkpoint="CP-26", short=short,
+    )
+
+
+#: The earlier identities CP-26 re-ran daily (B0, v2 to v5): their CP-26 codes and run keys are added to their
+#: entries below, one identity across experiments (`by_code` scopes the code to CP-26).
+_CP26_SAME = {"naive": ("nominal", "B0"), "v2": ("nominal", "v2"), "v3": ("nominal", "v3"), "v4": ("nominal", "v4"),
+              "v5": ("nominal", "v5")}
+
+
 #: Every published identity. The order within a kind is the order surfaces show it in:
 #: generations oldest first (the lineage reads left to right; chapters reverse it), branches in
 #: time order, references and study arms in the comparison's fixed order.
@@ -525,6 +639,24 @@ _ENTRIES: tuple[Entry, ...] = (
         plan=f"{_PLAN21} §23 (v21-r11)", rules=("cp24-adoption",), sources=_CP24_SOURCES,
         claim_map=_CP24, run_keys=("cp24", "cp24/v5"), style="v5", anchor="#v5", checkpoint="CP-24", short="v5",
         predecessor="v4",
+    ),
+    # PRES-5 (the Owner's request of 2026-11-05, ruling O30): CP-28's selection, A1 in the frozen records, as the newest
+    # generation, v6. One identity across three experiments: CP-26 stored its forecasts as the descriptive "nominal D2",
+    # CP-28 tested and selected them as arm A1, and PRES-5 scores them on v5's population. Its status is O13's: the final
+    # candidate, pending 4.7T, dated by the freeze that made it the candidate (CP-17c). It was selected by CP-28's rule,
+    # never adopted by v5's: no "adopted in research" event exists for it.
+    Entry(
+        id="v6", name="v6 · DDNN-2 alone", subtitle="DDNN-2 alone, refitted daily, frozen for 4.7T", kind="generation",
+        codes=(Code("CP-28", "A1", "cp28-paired-days", "selected"),
+               Code("PRES-5", "A1", "common-10747h", "on v5's population"),
+               *_cp26("nominal", "D2", "descriptive in CP-26")[0]),
+        statuses=(StatusEvent(FINAL_CANDIDATE, "2026-10-30", "docs/track-b/cp-17c-landing-2026-10-30.md",
+                              "selected by CP-28's rule on 2026-10-25 and frozen for 4.7T; pending 4.7T"),),
+        comparator="v5", population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §24.8 and §24.12 (v21-r17, v21-r18)", rules=("cp28-selection", "fresh-test-4-7t"),
+        sources=_CP28_SOURCES + _A1_SOURCES, claim_map=_PRES5,
+        run_keys=("cp28", "cp28/A1", *_cp26("nominal", "D2")[1]), style="v6", anchor="#v6",
+        checkpoint="CP-28", short="v6", predecessor="v5",
     ),
     # ---- branches ------------------------------------------------------------------------
     Entry(
@@ -641,6 +773,42 @@ _ENTRIES: tuple[Entry, ...] = (
          "DDNN-2 alone", comparator="v4"),
     _arm("v3-plus-ddnn2", "CP-24", "v3+D2", "v3 plus a DDNN-2 member", "DDNN-2 as v3's third member, in LightGBM's place",
          "v3 + DDNN-2", comparator="v3"),
+    # ---- PRES-5: CP-28's six other arms; each passed the gates and was not selected ----------------------------
+    _cp28_arm("equal-weight-blend", "A2", "Equal-weight blend of v5's members",
+              "v5's three members, equal weights, own intervals", "Equal weights"),
+    _cp28_arm("fitted-blend-shrunk", "A3", "Fitted blend weights, half shrunk",
+              "One weight fit, halfway back to v5's", "Fitted weights, shrunk"),
+    _cp28_arm("per-block-blend", "A4", "Per-block blend weights",
+              "Weights fitted for each hour block, shrunk", "Per-block weights"),
+    _cp28_arm("network-blend-shrunk", "A5", "Small-network blend, half shrunk",
+              "A small network sets weights, halfway back", "Network weights, shrunk"),
+    _cp28_arm("fitted-blend", "A6", "Fitted blend weights, unshrunk",
+              "The fitted weights at full strength", "Fitted weights"),
+    _cp28_arm("network-blend", "A7", "Small-network blend, unshrunk",
+              "The network's weights at full strength", "Network weights"),
+    # ---- PRES-5: CP-26, the re-baseline on every development day ----------------------------------------------
+    Entry(
+        id="cp26-rebaseline", name="Daily development re-baseline", subtitle="Every policy refitted daily on every development day",
+        kind="reference", codes=(Code("programme", "CP-26", "cp26-every-day"),), statuses=(),
+        comparator=None, population="cp26-every-day", evidence_class=EVIDENCE_DEVELOPMENT,
+        plan=f"{_PLAN21} §24.7 (v21-r13 to v21-r17)", rules=(), sources=_CP26_SOURCES, claim_map=_PRES5,
+        run_keys=("cp26",), style="reference", anchor="#cp26", checkpoint="CP-26", short="CP-26 re-baseline",
+    ),
+    _cp26_stream("v1-recipe-daily", "nominal", "v1-R", "v1's recipe, refitted daily",
+                 "v1's recipe, a 728-day window, no regime flags", "v1 recipe, daily", kind="reference",
+                 comparator="naive"),
+    _cp26_stream("v3-weather-late", "gfs6", "v3", "v3 with weather six hours late",
+                 "v3 fed the weather run six hours later", "v3, weather late"),
+    _cp26_stream("v4-weather-late", "gfs6", "v4", "v4 with weather six hours late",
+                 "v4 fed the weather run six hours later", "v4, weather late"),
+    _cp26_stream("v5-weather-late", "gfs6", "v5", "v5 with weather six hours late",
+                 "v5 fed the weather run six hours later", "v5, weather late"),
+    _cp26_stream("v3-no-load", "noload", "v3", "v3 without the load forecast",
+                 "v3 with the day-ahead load forecast removed", "v3, no load"),
+    _cp26_stream("v4-no-load", "noload", "v4", "v4 without the load forecast",
+                 "v4 with the day-ahead load forecast removed", "v4, no load"),
+    _cp26_stream("v5-no-load", "noload", "v5", "v5 without the load forecast",
+                 "v5 with the day-ahead load forecast removed", "v5, no load"),
     # ---- the calibration experiment's arms (CP-10) ---------------------------------------
     _cp10("cp10-head-spread", "c1_head_spread", "Scaled conformal, head spread",
           "Conformal scores scaled by the heads' spread"),
@@ -656,11 +824,29 @@ _ENTRIES: tuple[Entry, ...] = (
           "Adaptive conformal intervals, largest step", "selected step"),
 )
 
+
+
+def _with_cp26(entry: Entry) -> Entry:
+    """An earlier identity CP-26 re-ran daily, with its CP-26 codes and run keys added (PRES-5)."""
+    if entry.id not in _CP26_SAME:
+        return entry
+    codes, run_keys = _cp26(*_CP26_SAME[entry.id])
+    return replace(entry, codes=entry.codes + codes, run_keys=entry.run_keys + run_keys)
+
+
+_ENTRIES = tuple(_with_cp26(entry) for entry in _ENTRIES)
+
 #: The order of the shared comparison's rows (plan §8.2): generations newest first, then the candidates of the branches
 #: tested against v4 and not adopted, as study points (the Owner's decision D2 of 2026-10-11), then the benchmarks and
 #: the study's best challenger by score, v1's development replay, and the naive.
-COMPARISON_ORDER = ("v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
+#: PRES-5 puts the newest generation, v6, the final candidate, first: A1 on v5's own population, scored as v5's policies were (the Owner's decision 28).
+COMPARISON_ORDER = ("v6", "v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
                     "ddnn-member-on-v4", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
+
+#: The shared comparison as PRES-4 published it, the overview the `cp24/v5` MLflow run carries as an artifact (PRES-5
+#: pinned it when the live comparison put the final candidate first): a published record never changes.
+V5_COMPARISON_ORDER = ("v5", "v4", "v3", "v2", "v3-plus-pooled-normalized-lightgbm-averaged", "v3-plus-pooled-lightgbm-pair",
+                       "ddnn-member-on-v4", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
 #: The shared comparison as v4's chapter published it, from CP-21's rows (PRES-3). It redraws the overview that the
 #: `cp21/HGL` MLflow run carries as an artifact, byte for byte: a published record never changes (§17.9).
@@ -671,7 +857,7 @@ V4_COMPARISON_ORDER = ("v4", "v3", "v2", "daily-lear", "normalized-lear", "daily
 V3_COMPARISON_ORDER = ("v3", "v2", "daily-lear", "normalized-lear", "daily-lightgbm", "v1", "naive")
 
 #: The marker-key words for the non-generation styles.
-STYLE_LABELS = {"reference": "reference", "study": "study arm", "control": "control arm"}
+STYLE_LABELS = {"reference": "reference", "study": "study arm", "control": "control arm", "final": "final candidate"}
 
 
 #: The order of the scores chart at the time of v2 (the v2 chapter's protocol detail).
@@ -802,6 +988,14 @@ def released() -> Entry:
     return found[0]
 
 
+def final_candidate() -> Entry | None:
+    """The one identity whose current status is "final candidate", or None (PRES-5: A1, pending 4.7T)."""
+    found = [entry for entry in entries() if entry.status is not None and entry.status.status == FINAL_CANDIDATE]
+    if len(found) > 1:
+        raise RegistryError(f"at most one final candidate; found {[entry.id for entry in found]}")
+    return found[0] if found else None
+
+
 def hero() -> Entry:
     """The model with the highest status reached: live, final candidate, released, research (§2)."""
     for status in HERO_ORDER:
@@ -828,11 +1022,11 @@ COMPARISON_EXPERIMENT = "CP-24"
 #: CP-22, CP-22's candidates from CP-22 and CP-23's from CP-23. They are one population, not a join of incompatible
 #: results: every identity two of them carry has byte-identical committed rows there
 #: (`delu_forecast.derived.comparison_parity_problems`), and the build refuses otherwise (PUBLISH_RULES §3.2).
-COMPARISON_EXPERIMENTS = ("CP-24", "CP-23", "CP-22", "CP-21")
+COMPARISON_EXPERIMENTS = ("PRES-5", "CP-24", "CP-23", "CP-22", "CP-21")
 
 #: Each experiment's record prefix in `delu_forecast.research`.
 EXPERIMENT_PREFIX = {"CP-15": "cp15", "CP-16": "cp16", "CP-20": "cp20", "CP-21": "cp21", "CP-22": "cp22",
-                     "CP-23": "cp23", "CP-24": "cp24"}
+                     "CP-23": "cp23", "CP-24": "cp24", "CP-26": "cp26", "CP-28": "cp28", "PRES-5": "pres5"}
 
 
 def comparison_prefix(experiment: str | None = None) -> str:
@@ -892,6 +1086,8 @@ def status_sentence(entry: Entry) -> str:
     if event is None:
         raise RegistryError(f"{entry.id} has no status")
     subject = entry.version or f"the {inline_name(entry)}"  # keeps an acronym's case: "the DDNN member on v4"
+    if event.status == FINAL_CANDIDATE and not entry.version:
+        subject = entry.name
     verb = {"adopted in research": "was adopted in research", "not adopted": "was not adopted",
             "released": "was released", "final candidate": "became the final candidate",
             "live": "went live", "retired": "was retired"}[event.status]
@@ -907,11 +1103,19 @@ def run_role(run_key: str) -> str:
     return "control" if entry.kind == "control" else "candidate"
 
 
-def adopted_flag(entry: Entry) -> str:
-    """`delu.adopted`: true once adopted in research or beyond, false when not adopted, n/a otherwise."""
-    if entry.status is None:
+def adopted_flag(entry: Entry, statuses: tuple[StatusEvent, ...] | None = None) -> str:
+    """`delu.adopted`: true once adopted in research or released, false when not adopted, n/a otherwise. A final
+    candidate that no adoption rule decided (PRES-5's v6, selected by CP-28's own rule; W49) is "false": the status
+    alone never implies adoption (Integration review 3, F1)."""
+    history = entry.statuses if statuses is None else statuses
+    if not history:
         return "n/a"
-    return "false" if entry.status.status in (NOT_ADOPTED, RETIRED) else "true"
+    current = history[-1].status
+    if current in (NOT_ADOPTED, RETIRED):
+        return "false"
+    if current == FINAL_CANDIDATE and not any(event.status in (ADOPTED_IN_RESEARCH, RELEASED) for event in history):
+        return "false"
+    return "true"
 
 
 def parent_run_keys() -> tuple[str, ...]:
@@ -1040,6 +1244,22 @@ def resolve(ident: str) -> Entry:
     return get(ident)
 
 
+def comparator_run_key(entry: Entry) -> str:
+    """The comparator's run on the generation's own population: v6 (PRES-5) is compared on CP-26's every-day calendar,
+    so with v5's CP-26 run, never with v5's five-period run."""
+    comparator = get(entry.comparator)
+    if entry.population != "common-10747h":
+        for code in comparator.codes:
+            if code.population == entry.population:
+                return f"{CHECKPOINTS[code.experiment].run_key}/{code.code}"
+    return common_run_key(comparator)
+
+
+#: A generation whose frozen records name it otherwise: v6 is A1 in CP-17's to CP-28's records (ruling O30). The page
+#: shows "v6 (A1 in the frozen records)" where the identity is shown, so the label is allowed on the reading path.
+FROZEN_LABELS = {"v6": "A1"}
+
+
 def common_run_key(entry: Entry) -> str:
     """An identity's run on the shared population (CP-15/16/20): v2's is CP-16's V2-H, never H0."""
     for key in entry.run_keys:
@@ -1053,13 +1273,16 @@ def expected_routes() -> dict[str, tuple[str, tuple[str, ...]]]:
     `{route id: (kind, run keys)}`: the experiment, the shared comparison, each research
     generation against its comparator, and each branch's own runs. Nothing else is advertised."""
     routes: dict[str, tuple[str, tuple[str, ...]]] = {"experiment": ("experiment", ())}
-    routes["compare:overview"] = ("compare", tuple(common_run_key(entry) for entry in comparison_rows()))
+    # A row drawn from an experiment with no MLflow run on the shared population (PRES-5's A1 rows) has no run to compare:
+    # its evidence is the committed rows, and the route lists the rows that MLflow holds.
+    routes["compare:overview"] = ("compare", tuple(common_run_key(entry) for entry in comparison_rows()
+                                                   if comparison_source(entry) in CHECKPOINTS))
     for entry in generations():
         checkpoint = CHECKPOINTS.get(entry.checkpoint)
         if checkpoint is None:
             continue  # v1's runs are its own experiment's, delu-cp2
         runs = tuple(f"{checkpoint.run_key}/{code}" for code in checkpoint.children)
-        routes[f"compare:{entry.id}"] = ("compare", runs + (common_run_key(get(entry.comparator)),))
+        routes[f"compare:{entry.id}"] = ("compare", runs + (comparator_run_key(entry),))
     for entry in branches():
         checkpoint = CHECKPOINTS[entry.checkpoint]
         routes[f"compare:{entry.id}"] = ("compare", tuple(f"{checkpoint.run_key}/{code}" for code in checkpoint.children))
@@ -1075,7 +1298,7 @@ def mlflow_run_name(run_key: str) -> str:
     checkpoint = checkpoint_of_run_key(run_key)
     code = run_key.split("/", 1)[1]
     note = next((c.note for c in entry.codes if c.code == code and c.experiment == checkpoint.code), "")
-    if entry.code_in(checkpoint.code) != code:
+    if not any(c.code == code and c.experiment == checkpoint.code for c in entry.codes):
         raise RegistryError(f"{run_key}: {entry.id} has no code {code} in {checkpoint.code}")
     return f"{entry.name} ({code}{', ' + note if note else ''})"
 
@@ -1085,7 +1308,7 @@ __all__ = [
     "EVIDENCE_CALIBRATION", "EVIDENCE_DEVELOPMENT", "EVIDENCE_TAGS", "EVIDENCE_V1_HOLDOUT", "Entry",
     "FINAL_CANDIDATE", "HERO_ORDER", "KINDS", "LIVE", "NOT_ADOPTED", "POPULATIONS", "RELEASED", "RELEASE_RULE",
     "RETIRED", "RULES", "STYLE_LABELS", "RegistryError", "Rule", "STATUSES", "StatusEvent", "Transition",
-    "V2_SCORES_ORDER", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
+    "V2_SCORES_ORDER", "V5_COMPARISON_ORDER", "final_candidate", "CP26_MASKS", "FROZEN_LABELS", "comparator_run_key", "V3_COMPARISON_ORDER", "V4_COMPARISON_ORDER", "V3_CRISIS_ORDER", "EXPERIMENT_PREFIX", "COMPARISON_EXPERIMENTS", "comparison_prefix", "comparison_source", "branches", "by_code", "codes", "first_status", "transition_into", "transition_problems",
     "transitions",
     "adopted_flag", "common_run_key", "comparison_rows", "expected_routes", "expected_run_keys", "run_role", "COMPARISON_EXPERIMENT", "current_generation", "entries", "entry_for_run_key", "generation_of", "generations",
     "get", "hero", "mlflow_run_name", "month", "adoption_label", "inline_name", "of_kind", "parent_run_keys", "release_sentence", "resolve", "population_in", "released", "status_sentence", "with_status",

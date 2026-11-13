@@ -123,8 +123,14 @@ def test_every_record_declares_its_unit_population_and_class(registry):
         if record.interval is not None:
             # CP-24's decision-level records carry the rule's 97.5% interval (capstone v21-r11 §23.9); every other is 95%.
             level = 0.975 if "97_5." in record.record_id else 0.95
-            assert record.interval.level == level and record.interval.replicates == 2000
-            assert record.interval.seed == 15042 and record.interval.block_days == 7
+            assert record.interval.level == level
+            if record.checkpoint in ("CP-26", "CP-28"):
+                # PRES-5: CP-26's bootstrap, which CP-28 reused (capstone_v21.md §24.7; CP-28's frozen protocol).
+                assert (record.interval.replicates, record.interval.seed, record.interval.block_days) == (
+                    10000, 20261012, 14), record.record_id
+            else:
+                assert record.interval.replicates == 2000
+                assert record.interval.seed == 15042 and record.interval.block_days == 7
 
 
 def test_the_display_rule_never_shows_a_small_endpoint_as_zero():

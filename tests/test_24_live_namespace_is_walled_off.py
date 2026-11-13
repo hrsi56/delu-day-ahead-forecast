@@ -93,10 +93,18 @@ def test_no_live_claim_key_reaches_the_record_claim_set():
     assert not record & set(_live_claims()["values"])
 
 
+#: PRES-5 (the Owner's decision 28; research §24.14 items 5 and 6; the publication brief's outcome 5): the report and the
+#: README name the product the Space runs and say what it is, "prospective evaluation in progress", under the status
+#: O13 words. These three identity and label strings are shared by decision; every live figure, score, date and other
+#: sentence stays behind the wall.
+SHARED_BY_DECISION_28 = frozenset({"live_product_name", "live_product_status", "live_prospective_label"})
+
+
 @pytest.mark.parametrize("surface", _record_surfaces(), ids=lambda s: s.name)
 def test_no_record_surface_renders_a_live_claim(surface):
     """Every sentence and figure the live builder produces is absent from the surfaces of the model of record."""
-    rendered = sorted(k for k, v in _live_claims()["values"].items() if surface.carries(k, v))
+    rendered = sorted(k for k, v in _live_claims()["values"].items()
+                      if k not in SHARED_BY_DECISION_28 and surface.carries(k, v))
     assert not rendered, f"{surface.name} renders live claims {rendered}"
 
 

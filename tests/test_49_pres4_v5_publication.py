@@ -98,6 +98,8 @@ def test_the_registry_holds_each_drafts_entries_apart_from_the_landing_identitie
                 continue
             drafted = raw[field.name]
             value = getattr(entry, field.name)
+            if field.name == "run_keys":  # PRES-5 appended CP-26's daily re-baseline runs (its code additions)
+                value = tuple(key for key in value if not key.startswith("cp26/"))
             assert (list(value) if isinstance(value, tuple) else value) == drafted, (entry.id, field.name)
         assert [G.Code(**code) for code in raw["codes"]] == list(entry.codes[:len(raw["codes"])]), entry.id
         assert [(event.date, event.source, event.status) for event in entry.statuses] == [
@@ -117,7 +119,8 @@ def test_the_owners_name_and_the_adoption_date_come_from_the_brief_and_the_landi
     assert v5.statuses == (G.StatusEvent(G.ADOPTED_IN_RESEARCH, "2026-10-11", LANDING24),)
     landing = (REPO_ROOT / LANDING24).read_text()
     assert landing.splitlines()[0].endswith("2026-10-11") and "adopted in research" in landing
-    assert G.current_generation().id == "v5" and G.released().id == "v1" and G.hero().id == "v1"
+    # PRES-5: v6, the final candidate, is the current generation and the hero; v1 stays the released model.
+    assert G.current_generation().id == "v6" and G.released().id == "v1" and G.hero().id == "v6"
     for ident in ("ddnn2-alone", "v3-plus-ddnn2"):
         assert G.get(ident).kind == "study arm" and G.adoption_label(G.get(ident)) == "Not adopted"
 
@@ -189,7 +192,8 @@ def test_the_lists_gain_the_three_checkpoints_tags_and_rules():
     for code in DRAFTS:
         for rule in _draft(code)["rules"]:
             assert (G.RULES[rule["id"]].plan, G.RULES[rule["id"]].set_on) == (rule["plan"], rule["set_on"])
-    assert G.COMPARISON_ORDER[0] == "v5" and list(G.CHECKPOINTS)[-3:] == ["CP-22", "CP-23", "CP-24"]
+    # PRES-5 put v6 first and added CP-26 and CP-28 after PRES-4's three checkpoints.
+    assert G.COMPARISON_ORDER[:2] == ("v6", "v5") and list(G.CHECKPOINTS)[-5:] == ["CP-22", "CP-23", "CP-24", "CP-26", "CP-28"]
 
 
 # --------------------------------------------------------------------------- evidence (steps 7-10)
@@ -347,16 +351,16 @@ def test_v4s_published_comparison_stays_pinned_on_its_run():
 
 
 def test_the_headline_leads_with_the_verdict_at_the_decision_level_and_names_each_metric(page):
-    text = re.sub(r"<[^>]+>", "", RC.headline())
+    # PRES-5: the page's headline is v6's (decision 20); v5's form, from the same generator, is unchanged.
+    claim, form = RC.headline_template(G.get("v5"))
+    text = re.sub(r"<[^>]+>", "", RC.render_template(claim, form))
     assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v4's "
                            "(v5 − v4 at 97.5%: ")
     assert "on the point-error score" in text and "on the interval score" in text
-    claim, _ = RC.headline_template()
     assert claim == "P53" and RC.headline("md") in README.read_text()
-    terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
-    plain = re.sub(r"<[^>]+>", "", terms)
+    plain = " ".join(re.sub(r"<[^>]+>", "", RC.render(key)) for key in RC.headline_terms(G.get("v5")))
     assert "with the rule's 97.5% interval" in plain and "DDNN-2: a distributional neural network (DDNN)" in plain
-    assert "its five conditions are in the v5 chapter" in plain and 'href="#v5-rule"' in terms
+    assert "its five conditions are in the v5 chapter" in plain
 
 
 def _standard_definition() -> str:
@@ -366,11 +370,15 @@ def _standard_definition() -> str:
     return re.sub(r"\s+", " ", quoted)
 
 
+def _v5_terms() -> str:
+    """v5's headline terms as the generator renders them (PRES-5 moved the page's headline to v6)."""
+    return " ".join(RC.render(key) for key in RC.headline_terms(G.get("v5")))
+
+
 def _term_problems(page: str) -> list[str]:
     """The headline terms against the text their claims bind (Integration review 1, V2): the error scores'
     definition is the standard's (P21), and the paired difference reads as P53 quotes it."""
-    start = page.index('class="headline-terms"')
-    terms = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", page[start:page.index("</dd>", start)]))
+    terms = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", page))
     p53 = next(line for line in (REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md"
                                  ).read_text().splitlines() if line.startswith("| P53 |"))
     quoted = re.search(r'the paired difference is defined beneath it at that level \("([^"]+)"', p53).group(1)
@@ -383,7 +391,7 @@ def _term_problems(page: str) -> list[str]:
 
 
 def test_the_headline_terms_read_as_their_claims_bind(page):
-    assert _term_problems(page) == []
+    assert _term_problems(_v5_terms()) == []
 
 
 @pytest.mark.parametrize("old, new", [
@@ -391,11 +399,9 @@ def test_the_headline_terms_read_as_their_claims_bind(page):
     ("with the rule's", "with its"),
 ])
 def test_negative_controls_a_term_that_drifts_from_its_claim_is_caught(page, old, new):
-    start = page.index('class="headline-terms"')
-    end = page.index("</dd>", start)
-    terms = re.sub(r"\s+", " ", page[start:end])
+    terms = re.sub(r"\s+", " ", _v5_terms())
     assert old in terms
-    assert _term_problems(page[:start] + terms.replace(old, new) + page[end:])
+    assert _term_problems(terms.replace(old, new))
 
 
 #: The exact interval endpoints of v5's change as a share of v4's score (`ratio-intervals.csv` L2–L3), as the
@@ -611,13 +617,15 @@ def planned_problems(surfaces: dict[str, str], comparator: str) -> list[str]:
     if page:
         start = page.index('id="planned"')
         section = _text(page[start:page.index("</section>", start)])
-        for item in ("A re-evaluation on every eligible day", "New input data", "fuel and carbon prices",
+        # PRES-5: the re-evaluation (CP-26) and the combination test (CP-28) left the list; 4.7T and the live trial
+        # lead it.
+        for item in ("The one-shot test of v6, from 2026-12-04", "4.7T · Final evaluation",
+                     "The live trial: prospective evaluation in progress", "New input data", "fuel and carbon prices",
                      "neighbouring markets", "earlier forecasts that already cover the delivery day",
-                     "Wind and solar generation forecasts", "Combining models", "4.8 · Recombination",
-                     "4.7T and live · Final evaluation"):
+                     "Wind and solar generation forecasts"):
             if item not in section:
                 problems.append(f"page: {item!r} is not planned")
-        if "4.6" in section or "DDNN" in section:
+        if "4.6" in section or "DDNN" in section or "Combining models" in section:
             problems.append("page: 4.6 is still planned")
         if f"compared with {comparator} on the same days" not in section:
             problems.append(f"page: the section's comparator is not {comparator}")
@@ -634,31 +642,23 @@ def _generated_surfaces() -> dict[str, str]:
 def test_the_planned_list_follows_the_programme_plan_on_every_generated_surface():
     assert planned_problems(_generated_surfaces(), G.current_generation().version) == []
     items = [(name, item) for name, item, *_ in B.planned_items()]
-    assert items == [("A re-evaluation on every eligible day", ""), ("New input data", ""),
-                     ("Wind and solar generation forecasts", "4.4V"), ("Combining models", "4.8"),
-                     ("Frozen-protocol evaluation, then prospective monitoring", "4.7T and live")]
-    kept = {item: (name, code, question, evidence) for name, item, code, question, evidence in B.PLANNED_WORK}
-    assert kept["4.8"] == ("Combining models", "Recombination", "Does combining adopted models help?",
-                           "A predefined combination test")
-    assert kept["4.7T and live"] == (
-        "Frozen-protocol evaluation, then prospective monitoring", "Final evaluation",
-        "How does the selected model perform under a frozen evaluation protocol, and then prospectively?",
-        "An evaluation window and an evidence classification, both fixed in the protocol before the test")
+    assert items == [("The one-shot test of v6, from 2026-12-04", "4.7T"),
+                     ("The live trial: prospective evaluation in progress", "live"), ("New input data", ""),
+                     ("Wind and solar generation forecasts", "4.4V")]
 
 
 @pytest.mark.parametrize("doctored, expected", [
-    (lambda s: s.replace("A re-evaluation on every eligible day</p>", "A distributional neural network</p>", 1),
-     "is not planned"),
+    (lambda s: s.replace("New input data</p>", "A distributional neural network</p>", 1), "is not planned"),
     (lambda s: s.replace("Does a wind and solar generation", "Does an in-house wind and solar generation", 1), "in-house"),
     (lambda s: s.replace("4.4V</span> · VRE", "4.6</span> · DDNN", 1), "4.6"),
-    (lambda s: s.replace('compared with <span data-structural="version">v5</span> on the same days',
-                         'compared with <span data-structural="version">v4</span> on the same days'), "is not v5"),
+    (lambda s: s.replace('compared with <span data-structural="version">v6</span> on the same days',
+                         'compared with <span data-structural="version">v4</span> on the same days'), "is not v6"),
     (lambda s: s.replace("neighbouring markets", "TabPFN", 1), "TabPFN"),
 ])
 def test_negative_controls_a_stale_planned_list_is_caught(doctored, expected):
     surfaces = _generated_surfaces()
     surfaces["page"] = doctored(surfaces["page"])
-    assert any(expected in problem for problem in planned_problems(surfaces, "v5"))
+    assert any(expected in problem for problem in planned_problems(surfaces, "v6"))
 
 
 # --------------------------------------------------------------------------- the MLflow export (step 17)
@@ -693,8 +693,9 @@ def test_no_previously_published_record_changes():
         pytest.skip("the published export's commit is not in this checkout")
     report = E.diff_exports(E.export_at(PUBLISHED_REF), E.build_export())
     assert report["only_identity"] and report["identity_changes"] == {} and report["substantive_changes"] == []
+    # PRES-5 added CP-26's and CP-28's runs after PRES-4's.
     assert sorted(report["runs_added"]) == sorted(key for key in G.expected_run_keys()
-                                                 if key.split("/")[0] in ("cp22", "cp23", "cp24"))
+                                                 if key.split("/")[0] in ("cp22", "cp23", "cp24", "cp26", "cp28"))
     assert report["experiment_tag_changes"] == ["mlflow.note.content"]
 
 

@@ -1,0 +1,150 @@
+{
+ "bootstrap": {
+  "block_days": 7,
+  "index_equals_cp20": true,
+  "index_sha256": "e1df9a68dc6715aa2ecd9705ef61f504a3fe109ed917d1151ccbc46ea9e0f99b",
+  "levels": [
+   0.95,
+   0.975
+  ],
+  "method": "paired noncircular calendar moving-block percentile",
+  "ratio_method": "R_b = S_policy,b / S_comparator,b - 1 from the same replicates; point = full-sample ratio - 1",
+  "replicates": 2000,
+  "seed": 15042
+ },
+ "code": "src/delu_forecast/final_candidate.py",
+ "contrasts": [
+  [
+   "A1",
+   "v5",
+   "final_candidate_vs_v5"
+  ],
+  [
+   "A1",
+   "B0",
+   "final_candidate_vs_naive"
+  ]
+ ],
+ "coverage": {
+  "covered_keys": 10747,
+  "days": 448,
+  "fallback_days": 0,
+  "first_stored_forecast_day": "2020-02-29",
+  "keys": 10747,
+  "output_source": {
+   "native": 448
+  },
+  "per_fold": {
+   "fold_1": [
+    2160,
+    2160
+   ],
+   "fold_2": [
+    2159,
+    2159
+   ],
+   "fold_3": [
+    2112,
+    2112
+   ],
+   "fold_4": [
+    2160,
+    2160
+   ],
+   "fold_5": [
+    2156,
+    2156
+   ]
+  },
+  "scored_by_cp26_cp28": {
+   "False": 90,
+   "True": 358
+  },
+  "unscored_days": [
+   "2020-07-01",
+   "2020-09-28"
+  ]
+ },
+ "evidence_class": "development_post_selection",
+ "information_set": [
+  {
+   "a1": "D-1 11:00 Europe/Berlin, one or two hours earlier, strictly before the 12:00 gate (\u00a724.4)",
+   "item": "issue time",
+   "source": "capstone_v21.md \u00a724.4; reports/ddnn2/attempt-1/predictions.parquet origin_utc",
+   "v5": "D-1 11:00 UTC, the origin of every record before research v21-r13 (capstone_v21.md \u00a724.4)"
+  },
+  {
+   "a1": "refitted every day on the 728 days before the origin (fewer in 2020), filtered by availability at the issue time (\u00a724.7, 'Training and information')",
+   "item": "fitting",
+   "source": "capstone_v21.md \u00a724.7; reports/cp28/forecast/fits.parquet",
+   "v5": "CP-24's fold protocol: v5's members fitted for each test period from data before it"
+  },
+  {
+   "a1": "CP-26's training-only searches every 182 days from 2020-01-15, each serving only the origins after it; CP-24's ensembles are never reused (\u00a724.7)",
+   "item": "network search",
+   "source": "capstone_v21.md \u00a724.7, 'DDNN-2's training-only search'",
+   "v5": "CP-24's DDNN-2 search and ensemble, run inside its own protocol"
+  },
+  {
+   "a1": "CP-25's data identity, CP-20's and CP-25's weather grids and the registered input vintages (\u00a724.5, \u00a724.7)",
+   "item": "data identity and inputs",
+   "source": "capstone_v21.md \u00a724.5 and \u00a724.7, 'The harness'",
+   "v5": "the development snapshot as CP-24 read it"
+  },
+  {
+   "a1": "2020-07-01 to 2020-09-28 lies in CP-26's unscored warm-up (2020-01-01 to 2020-12-28): A1's forecasts there exist and are stored, but CP-26 and CP-28 never scored them",
+   "item": "the first period",
+   "source": "capstone_v21.md \u00a724.7, 'Days'; reports/cp28/forecast/arm-days.parquet scored",
+   "v5": "a scored test period"
+  },
+  {
+   "a1": "selected by CP-28 on CP-26's every-day calendar, which contains periods 2 to 5; DDNN-2 alone was already shown, descriptively, as the best single model there before CP-28 ran",
+   "item": "selection",
+   "source": "reports/cp28/report.md; docs/track-b/cp-28-landing-2026-10-25.md",
+   "v5": "adopted on these five periods under cp24-adoption"
+  }
+ ],
+ "inputs_sha256": {
+  "reports/cp15/predictions.parquet": "1a606d613ba5f6af82712a7e44adcaf639ba0ece1b7865f407f559fafafeda92",
+  "reports/cp28/forecast/arm-days.parquet": "c9fea79fa8ea4ec38a0c343c1343ef0d38702cbd3d3226fe369e3f2076f0d131",
+  "reports/cp28/forecast/hourly.parquet": "f5cb02a19236edd20c182c2874a5d59628652e6838fe5745aa6ffacf3f53f638",
+  "reports/cp28/forecast/manifest.json": "f092140ed028d18a973bfad11ad9aa0397ad3e492223c4da683bc8e775cf3ce8",
+  "reports/ddnn2/attempt-1/metrics.csv": "60627fd72b4906760c0bfbcaca83b4d7a9ac4caeb7294f4b70f38bcb4dc91f6e",
+  "reports/ddnn2/attempt-1/predictions.parquet": "9d3f539fa78e34e65cb495a0e79f8044731e33d5b2d9e95d110a1ce886a05cf9",
+  "reports/weather-ablation/predictions.parquet": "0ff4b6a816bd1318dde99b4853e4707c43369c64abaf44ee3bf86f339f761aab"
+ },
+ "parity_with_cp24": {
+  "equal": true,
+  "max_abs_difference": 0.0
+ },
+ "population": {
+  "days": 448,
+  "denominator": "B0, the similar-day naive",
+  "id": "common-10747h",
+  "keys": 10747,
+  "periods": 5,
+  "truth": "the observed prices of v5's committed rows",
+  "weights": "equal period weights"
+ },
+ "rule": "none applied: v5's adoption rule (cp24-adoption) is not re-run and adopts nothing; A1 was selected by CP-28's registered rule on another population",
+ "schema": "pres5-a1-in-v5-v1",
+ "scores": {
+  "A1": {
+   "S_MAE": 0.4928063413559064,
+   "S_WIS": 0.4373719802748803
+  },
+  "B0": {
+   "S_MAE": 1.0,
+   "S_WIS": 1.0
+  },
+  "HG": {
+   "S_MAE": 0.5657606376333641,
+   "S_WIS": 0.532218690181866
+  },
+  "v5": {
+   "S_MAE": 0.5223212760431432,
+   "S_WIS": 0.4936627890811673
+  }
+ },
+ "what": "A1, the final candidate, scored on v5's comparison population by CP-24's scoring blocks"
+}

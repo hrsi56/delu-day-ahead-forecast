@@ -121,11 +121,18 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     assert RC.headline("md") in readme[:readme.index(readme_research.GLANCE_END)]
     text = re.sub(r"<[^>]+>", "", RC.headline())
     assert text == re.sub(r"`", "", RC.headline("md"))
-    # PUBLISH_RULES 1.0 A1: each headline value names its metric beside it. v5 leads with its own rule (§3.3 a), at the
-    # rule's own decision level, 97.5% (capstone v21-r11 §23.9; W47), which the paired-difference term defines.
-    assert text.startswith("Met the adoption rule set before the experiment: both error scores improved on v4's "
-                           "(v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, "
-                           "−0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule).")
+    # PRES-5 (decision 20's fresh-headline window; ruling O27): the final candidate, v6, leads with its own selection
+    # rule's verdict, on development days, each value named by its metric (A1).
+    assert text.startswith("Selected by a rule set in advance: against v5 on all 2,068 development days, −7% "
+                           "[−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with "
+                           "descriptive 95% intervals; 7 policies tested.")
+    # PUBLISH_RULES 1.0 A1: v5's form, from the same generator, leads with its own rule (§3.3 a), at the rule's own
+    # decision level, 97.5% (capstone v21-r11 §23.9; W47), unchanged.
+    claim, v5_form = RC.headline_template(G.get("v5"))
+    assert re.sub(r"<[^>]+>", "", RC.render_template(claim, v5_form)).startswith(
+        "Met the adoption rule set before the experiment: both error scores improved on v4's "
+        "(v5 − v4 at 97.5%: −0.0133 [−0.0166, −0.0091] on the point-error score, "
+        "−0.0119 [−0.0147, −0.0084] on the interval score; 1 policy tested against the rule).")
     # v4's form, from the same generator, is unchanged for a rule that decided at 95%.
     claim, v4_form = RC.headline_template(G.get("v4"))
     assert re.sub(r"<[^>]+>", "", RC.render_template(claim, v4_form)).startswith(
@@ -150,12 +157,17 @@ def test_the_terms_are_defined_directly_below_the_headline(page):
 
 
 def test_the_release_rule_is_beside_the_demo_action_and_outside_any_disclosure(page):
+    # PRES-5: the product line beside the live product's action says what the Space runs, and where v1's demo is
+    # (decision 28; rulings O27, O29). The release rule's own wording stays for a page without a final candidate.
     action = page.index('class="btn-primary external"')
-    rule = page.index('data-block="release-rule"')
-    assert 0 < rule - action < 700, "the release rule follows the demo action directly"
+    rule = page.index('data-block="product.live"')
+    assert 0 < rule - action < 700, "the product line follows the product's action directly"
     opened = page.rfind("<details", 0, rule)
     assert opened == -1 or page.rfind("</details>", 0, rule) > opened
-    assert "The demo runs the released model, " in page[rule:rule + 400]
+    text = re.sub(r"<[^>]+>", "", page[rule:rule + 1200])
+    assert "the Space runs v6 · DDNN-2 alone daily before its one test" in text and "the last released generation" in text
+    # The release check's own selector finds it beside the action (scripts/check_reader_paths.py, PLACEMENT_JS).
+    assert page.rfind('data-block="release-rule"', 0, rule) > action
 
 
 def test_the_byline_links_to_the_contribution(page):
@@ -170,23 +182,23 @@ def test_the_latest_research_summary_is_gone(page):
 def test_the_comparison_finding_and_caveat_sit_above_its_chart(page):
     section = page[page.index('id="research-results"'):]
     finding = section.index('id="comparison-finding"')
-    caveat = section.index('data-block="comparison.caveat"')
+    caveat = section.index('data-block="comparison.caveat.a1"')
     chart = section.index('data-chart-id="overview"')
     assert finding < caveat < chart
-    assert "a development diagnostic, not a product qualification" in section[caveat:chart]
+    assert "Development evidence after selection, not a test on new data." in section[caveat:chart]
 
 
 # --------------------------------------------------------------------------- the chapter grammar (§6)
 
 
 def test_every_research_chapter_fills_the_grammar():
-    for slots in (B.v5_slots(), B.v4_slots(), B.v3_slots(), B.v2_slots()):
+    for slots in (B.a1_slots(), B.v5_slots(), B.v4_slots(), B.v3_slots(), B.v2_slots()):
         assert B.slot_problems(slots) == [], slots.entry.id
 
 
 def test_the_page_renders_its_research_chapters_through_the_grammar(page):
     rendered = re.findall(r'<article class="chapter" id="(v\d+)"[^>]*data-grammar="chapter"', page)
-    assert rendered == ["v5", "v4", "v3", "v2"]
+    assert rendered == ["v6", "v5", "v4", "v3", "v2"]
     for chapter in rendered:
         body = page[page.index(f'<article class="chapter" id="{chapter}"'):]
         body = body[:body.index("</article>")]
@@ -238,9 +250,19 @@ def test_the_branch_cards_attach_to_the_lineage_with_their_content(page):
 
 
 def test_v1s_archive_is_byte_identical_to_af0abb0(page):
+    """PRES-5 (ruling O25) embeds the archive's seven figures as pixel-identical compact copies, within the page budget:
+    with each copy's data URI put back to its original's, the archive is af0abb0's byte for byte; and each copy decodes
+    to its original's exact pixels (`delu_forecast.compact_figures.check`)."""
+    from delu_forecast import compact_figures
+
     archive = archive_element(page)
+    for key, original in B.ARCHIVE_FIGURES.items():
+        compact = B.data_uri(REPO_ROOT / B.ARCHIVE_FIGURES_EMBEDDED[key])
+        assert compact in archive, key
+        archive = archive.replace(compact, B.data_uri(REPO_ROOT / original), 1)
     assert len(archive) == AF0ABB0_ARCHIVE_CHARS
     assert hashlib.sha256(archive.encode()).hexdigest() == AF0ABB0_ARCHIVE_SHA256
+    assert compact_figures.check() == []
 
 
 def test_the_recorded_archive_hash_is_af0abb0s_where_history_is_available():

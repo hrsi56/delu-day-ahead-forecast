@@ -1,0 +1,32 @@
+{
+ "against": "reports/ddnn2/attempt-1/metrics.csv",
+ "by_field": {
+  "B0.equal_fold.S_MAE": 0.0,
+  "B0.equal_fold.S_WIS": 0.0,
+  "B0.per_fold.MAE": 0.0,
+  "B0.per_fold.WIS": 0.0,
+  "B0.per_fold.coverage95": 0.0,
+  "B0.per_fold.mean_width95": 0.0,
+  "B0.pooled.MAE": 0.0,
+  "B0.pooled.WIS": 0.0,
+  "HG.equal_fold.S_MAE": 0.0,
+  "HG.equal_fold.S_WIS": 0.0,
+  "HG.per_fold.MAE": 0.0,
+  "HG.per_fold.WIS": 0.0,
+  "HG.per_fold.coverage95": 0.0,
+  "HG.per_fold.mean_width95": 0.0,
+  "HG.pooled.MAE": 0.0,
+  "HG.pooled.WIS": 0.0,
+  "v5.equal_fold.S_MAE": 0.0,
+  "v5.equal_fold.S_WIS": 0.0,
+  "v5.per_fold.MAE": 0.0,
+  "v5.per_fold.WIS": 0.0,
+  "v5.per_fold.coverage95": 0.0,
+  "v5.per_fold.mean_width95": 0.0,
+  "v5.pooled.MAE": 0.0,
+  "v5.pooled.WIS": 0.0
+ },
+ "equal": true,
+ "max_abs_difference": 0.0,
+ "meaning": "v5's, v3's and B0's rows on the page stay CP-24's committed rows; this records that the losses paired with A1's here reproduce every one of their scores exactly"
+}
