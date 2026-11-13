@@ -122,7 +122,7 @@
     }
   },
   "check": "Release checks of PUBLISH_RULES 1.0 \u00a79 (Publication Standard v1 \u00a710), the \u00a71 placements with A2's measured header, and A5's discovery routes",
-  "checked_at_utc": "2026-11-12T14:18:35+00:00",
+  "checked_at_utc": "2026-11-13T00:07:32+00:00",
   "discovery": [
     {
       "engine": "chrome",
@@ -10005,7 +10005,7 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 4888,
+          "checked": 4893,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -10015,7 +10015,7 @@
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 4881,
+          "checked": 4886,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -10066,7 +10066,7 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 4888,
+          "checked": 4893,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -10076,7 +10076,7 @@
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 4881,
+          "checked": 4886,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -10143,7 +10143,7 @@
         "smallest_text_px": 12.38
       },
       "cold_reader_screens": {
-        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/cold-reader/chrome-1440x900",
+        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/cold-reader/chrome-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -10203,7 +10203,7 @@
           20256,
           21100,
           21944,
-          22405
+          22431
         ],
         "screens": 28,
         "step_px": 844
@@ -10217,7 +10217,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/cold-reader/chrome-1440x900",
+        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/cold-reader/chrome-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -10277,7 +10277,7 @@
           20256,
           21100,
           21944,
-          22405
+          22431
         ],
         "screens": 28,
         "step_px": 844
@@ -10306,7 +10306,7 @@
           "bottom": 800.6,
           "top": 644.6
         },
-        "page_height": 23305,
+        "page_height": 23331,
         "release_rule": {
           "bottom": 297,
           "top": 209
@@ -10320,7 +10320,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/chrome/1440x900.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/chrome/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -10369,9 +10369,9 @@
           "bottom": 624.5,
           "top": 546.5
         },
-        "page_height": 29354,
+        "page_height": 29380,
         "release_rule": {
-          "bottom": 1041.5,
+          "bottom": 1019.5,
           "top": 953.5
         },
         "release_rule_in_disclosure": false,
@@ -10383,7 +10383,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/chrome/768x1024.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/chrome/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -10410,7 +10410,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/placement/chrome-390x844",
+        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/placement/chrome-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -10512,7 +10512,7 @@
           35460,
           36248,
           37036,
-          37185
+          37211
         ],
         "screens": 49,
         "step_px": 788
@@ -10541,9 +10541,9 @@
           "bottom": 628.6,
           "top": 458.6
         },
-        "page_height": 38029,
+        "page_height": 38055,
         "release_rule": {
-          "bottom": 1155.6,
+          "bottom": 1133.6,
           "top": 1045.6
         },
         "release_rule_in_disclosure": false,
@@ -10555,7 +10555,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/chrome/390x844.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/chrome/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -10592,19 +10592,19 @@
           "top": 976.6
         },
         "finding": {
-          "bottom": 2517.9,
-          "top": 2392.9
+          "bottom": 2539.9,
+          "top": 2414.9
         },
         "finding_chart": {
-          "bottom": 5147.5,
-          "top": 3302.9
+          "bottom": 5169.5,
+          "top": 3324.9
         },
         "header_px": 56,
         "headline": {
           "bottom": 653.6,
           "top": 483.6
         },
-        "page_height": 39629,
+        "page_height": 39730,
         "release_rule": {
           "bottom": 1251.6,
           "top": 1141.6
@@ -10618,7 +10618,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/chrome/360x780.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/chrome/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -10655,21 +10655,21 @@
           "top": 1076.6
         },
         "finding": {
-          "bottom": 2695.6,
-          "top": 2545.6
+          "bottom": 2717.6,
+          "top": 2567.6
         },
         "finding_chart": {
-          "bottom": 5254.6,
-          "top": 3556.6
+          "bottom": 5276.6,
+          "top": 3578.6
         },
         "header_px": 56,
         "headline": {
           "bottom": 677.6,
           "top": 483.6
         },
-        "page_height": 41352,
+        "page_height": 41400,
         "release_rule": {
-          "bottom": 1373.6,
+          "bottom": 1351.6,
           "top": 1241.6
         },
         "release_rule_in_disclosure": false,
@@ -10681,7 +10681,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/chrome/320x640.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/chrome/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -10708,7 +10708,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/placement/webkit-1440x900",
+        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/placement/webkit-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -10768,7 +10768,7 @@
           20256,
           21100,
           21944,
-          22628
+          22654
         ],
         "screens": 28,
         "step_px": 844
@@ -10797,7 +10797,7 @@
           "bottom": 801.3,
           "top": 644.8
         },
-        "page_height": 23528,
+        "page_height": 23554,
         "release_rule": {
           "bottom": 296.9,
           "top": 208.9
@@ -10811,7 +10811,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/webkit/1440x900.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/webkit/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -10860,9 +10860,9 @@
           "bottom": 625,
           "top": 520.5
         },
-        "page_height": 29507,
+        "page_height": 29533,
         "release_rule": {
-          "bottom": 1041.9,
+          "bottom": 1019.9,
           "top": 953.9
         },
         "release_rule_in_disclosure": false,
@@ -10874,7 +10874,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/webkit/768x1024.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/webkit/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -10893,7 +10893,7 @@
         "smallest_text_px": 14.58
       },
       "cold_reader_screens": {
-        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/cold-reader/webkit-390x844",
+        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/cold-reader/webkit-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -10995,7 +10995,7 @@
           35460,
           36248,
           37036,
-          37185
+          37211
         ],
         "screens": 49,
         "step_px": 788
@@ -11009,7 +11009,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/cold-reader/webkit-390x844",
+        "folder": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/cold-reader/webkit-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -11111,7 +11111,7 @@
           35460,
           36248,
           37036,
-          37185
+          37211
         ],
         "screens": 49,
         "step_px": 788
@@ -11140,9 +11140,9 @@
           "bottom": 628.7,
           "top": 458.7
         },
-        "page_height": 38029,
+        "page_height": 38055,
         "release_rule": {
-          "bottom": 1155.6,
+          "bottom": 1133.6,
           "top": 1045.6
         },
         "release_rule_in_disclosure": false,
@@ -11154,7 +11154,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/webkit/390x844.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/webkit/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -11191,19 +11191,19 @@
           "top": 976.7
         },
         "finding": {
-          "bottom": 2517.7,
-          "top": 2392.7
+          "bottom": 2539.7,
+          "top": 2414.7
         },
         "finding_chart": {
-          "bottom": 5147.3,
-          "top": 3302.7
+          "bottom": 5169.3,
+          "top": 3324.7
         },
         "header_px": 56,
         "headline": {
           "bottom": 653.7,
           "top": 483.7
         },
-        "page_height": 39653,
+        "page_height": 39754,
         "release_rule": {
           "bottom": 1251.6,
           "top": 1141.6
@@ -11217,7 +11217,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/webkit/360x780.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/webkit/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -11254,21 +11254,21 @@
           "top": 1076.7
         },
         "finding": {
-          "bottom": 2695.4,
-          "top": 2545.4
+          "bottom": 2717.4,
+          "top": 2567.4
         },
         "finding_chart": {
-          "bottom": 5254.5,
-          "top": 3556.4
+          "bottom": 5276.5,
+          "top": 3578.4
         },
         "header_px": 56,
         "headline": {
           "bottom": 677.7,
           "top": 483.7
         },
-        "page_height": 41351,
+        "page_height": 41399,
         "release_rule": {
-          "bottom": 1373.6,
+          "bottom": 1351.6,
           "top": 1241.6
         },
         "release_rule_in_disclosure": false,
@@ -11280,7 +11280,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/webkit/320x640.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/webkit/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -11329,9 +11329,9 @@
           "bottom": 628.7,
           "top": 458.7
         },
-        "page_height": 37834,
+        "page_height": 37860,
         "release_rule": {
-          "bottom": 1155.6,
+          "bottom": 1133.6,
           "top": 1045.6
         },
         "release_rule_in_disclosure": false,
@@ -11343,7 +11343,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-3/webkit/iphone-15.png",
+      "screenshot": ".local/worktrees/pres-5/lead/.local/artifacts/pres-5/local-release-4/webkit/iphone-15.png",
       "view": "iphone-15",
       "viewport": "393x659"
     }

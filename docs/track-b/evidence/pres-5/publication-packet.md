@@ -47,7 +47,7 @@ identity says "v6 (A1 in the frozen records)". Below, "v6" and "A1" name the sam
 | `claim_map`, `run_keys` | `docs/track-b/research-content/pres5-claims.md`; `cp28`, `cp28/A1`, `cp26/nominal/D2/*` |
 | `style`, `anchor` | `v6`: near-black `#18181B`, a filled hexagon (a visual choice for the Owner, O16); `#v6` |
 | `checkpoint` | CP-28 |
-| Frozen label | `registry.py::FROZEN_LABELS = {"v6": "A1"}`: the lint admits the code `A1` beside v6's public name where the identity is shown |
+| Frozen label | `registry.py::FROZEN_LABELS = {"v6": "A1"}`: the lint's code denylist admits `A1`, v6's frozen label, anywhere; that every `A1` on the reading path sits beside v6's identity is a review check, not the lint's (Integration review 1, F5) |
 
 **CP-28's six other arms (O30): study arms, "not selected", named without their codes.** Each: kind study arm; code
 CP-28 `A2`…`A7` (`cp28-paired-days`); status not adopted, 2026-10-25, `docs/track-b/cp-28-landing-2026-10-25.md`,
@@ -228,19 +228,20 @@ Incoming product v6; outgoing v1, "the last released generation", whose demo is 
 ## 7. Checks run
 
 Records under `reports/presentation/release-checks/` unless a path says otherwise. First failures and superseded runs
-are kept beside their retries. The candidate's code is `1d0f453e`; the candidate adds this packet and the records.
+are kept beside their retries. The candidate's code is `d487b4bd` (Integration review 1's repairs on `1d0f453e`); the
+candidate adds this packet and the records.
 
 | Check (runbook §9; the brief) | Record | Result |
 |---|---|---|
-| The offline checks, `scripts/prerelease.py --stage pre-final`, from a clean detached worktree at `1d0f453e`: the browser payload; pytest on Python 3.13; a clean Python 3.12 run of every CI step; `make verify`; `make lint-publication`; the rebuild and `git status`; links; the publication guard | `pres-5-pre-final-2-prerelease.json` (raw output local only, `.local/worktrees/pres-5/prerelease/.local/artifacts/prerelease/pres-5-pre-final-2/`) | 2026-11-12, 47 min: every check as expected except three, each explained in §10.3: pytest 3.13, 3,237 passed, 9 skipped, 2 failed (CP-18a's two push tests refuse the non-final build record until the `--final` build); CI 3.12 pytest, 3,235 passed, 12 skipped, 1 failed (CP-17c's manifest test off the pinned interpreter on this Mac, item 6); links, 2 failed (the `evidence/pres-5` tag is not pushed yet, item 5); the rebuild changed no path; the guard exits 1 as expected before the `--final` build |
-| — its earlier run | `pres-5-pre-final-prerelease.json` (at `b20ee9d1`, before the review repairs: the same three explained results; pytest 3,233 passed on 3.13 and 3,231 on 3.12) | superseded by the run above |
+| The offline checks, `scripts/prerelease.py --stage pre-final`, from a clean detached worktree at `d487b4bd`: the browser payload; pytest on Python 3.13; a clean Python 3.12 run of every CI step; `make verify`; `make lint-publication`; the rebuild and `git status`; links; the publication guard | `pres-5-pre-final-3-prerelease.json` (raw output local only, `.local/worktrees/pres-5/prerelease/.local/artifacts/prerelease/pres-5-pre-final-3/`) | 2026-11-13, 44 min: every check as expected except three, each explained in §10.3: pytest 3.13, 3,237 passed, 9 skipped, 2 failed (CP-18a's two push tests refuse the non-final build record until the `--final` build); CI 3.12 pytest, 3,235 passed, 12 skipped, 1 failed (CP-17c's manifest test off the pinned interpreter on this Mac, item 6); links, 2 failed (the `evidence/pres-5` tag is not pushed yet, item 5); the rebuild changed no path; the guard exits 1 as expected before the `--final` build |
+| — its earlier runs | `pres-5-pre-final-2-prerelease.json` (at `1d0f453e`, before Integration review 1's repairs) and `pres-5-pre-final-prerelease.json` (at `b20ee9d1`, before the editorial repairs): the same three explained results, nothing else | superseded by the run above |
 | The full suite in the lead worktree | local runs at `ef77b8e4` (3,229 passed; 2 failed, CP-18a's, by design) | superseded by the prerelease |
 | `make lint-publication` | inside the prerelease record; also run after every build | PASS: page, README and templates 0 findings |
 | `make publication-guard` | inside the prerelease record | BLOCKED by design until the `--final` build: `reports/cp3/pages_build.json` is a non-final build record |
 | Determinism: `rebuild_presentation.py`, then `git status` | inside the prerelease record; also in the lead worktree at `1d0f453e` | every generated surface equals its committed bytes |
-| The page budget | `reports/cp3/pages_build.json` | 1,847,871 bytes ≤ 2,000,000 (152,129 to spare), with the archive's seven figures re-encoded without loss (O25; `compact_figures --check`: pixel-identical) |
-| The §10 release checks and the placements, Chrome 157.0.8103.51 and WebKit 26.6, at 1440 × 900, 768 × 1024, 390 × 844, 360 × 780, 320 × 640 and the emulated iPhone 393 × 659 | `pres-5-local-release.json` (at `1d0f453e`'s page, `2fcb53ac…d9ca`, 2026-11-12 14:18 UTC) | **passed**: the headline block ends at 800.6 / 801.3 px (desktop) and 628.6 / 628.7 px (phone); the finding at 1,672.6 / 1,673.3 px (A2 limit 1,744) and 2,394.5 / 2,394.3 px (limit 2,420); chart text at least 12.21 px (320 px), 14.58 px (390 px) and 12.38 px (1440 px); no chart overlap or clipping, no collapsed space, no horizontal overflow; no console error, failed request, HTTP error or resource after the document; accessibility trees, keyboard (160 stops), touch targets at 390 px (none under 24 px), contrast, 200% zoom and 320 px reflow, in both engines |
-| — its earlier attempts | `.local/artifacts/pres-5/local-release-1.json` (failed: the finding at 1,769.6 / 2,695.5 px; the product line not where the release check reads it; three routes reaching closed copies; v6's chart ticks overlapping); `local-release-2.json` (passed except three tap targets under 24 px; its screens are the fresh reader's) | superseded |
+| The page budget | `reports/cp3/pages_build.json` | 1,848,377 bytes ≤ 2,000,000 (151,623 to spare), with the archive's seven figures re-encoded without loss (O25; `compact_figures --check`: pixel-identical) |
+| The §10 release checks and the placements, Chrome 157.0.8103.51 and WebKit 26.6, at 1440 × 900, 768 × 1024, 390 × 844, 360 × 780, 320 × 640 and the emulated iPhone 393 × 659 | `pres-5-local-release.json` (at `d487b4bd`'s page, `409e1708…1cbe`, 2026-11-13 00:07 UTC) | **passed**: the headline block ends at 800.6 / 801.3 px (desktop) and 628.6 / 628.7 px (phone); the finding at 1,672.6 / 1,673.3 px (A2 limit 1,744) and 2,394.5 / 2,394.3 px (limit 2,420); chart text at least 12.21 px (320 px), 14.58 px (390 px) and 12.38 px (1440 px); no chart overlap or clipping, no collapsed space, no horizontal overflow; no console error, failed request, HTTP error or resource after the document; accessibility trees, keyboard (160 stops), touch targets at 390 px (none under 24 px), contrast, 200% zoom and 320 px reflow, in both engines |
+| — its earlier attempts | `pres-5-local-release-at-1d0f453e.json` (passed at `1d0f453e`'s page, `2fcb53ac…d9ca`, 2026-11-12 14:18 UTC, the same placements; before review 1's repairs); `.local/artifacts/pres-5/local-release-1.json` (failed: the finding at 1,769.6 / 2,695.5 px; the product line not where the release check reads it; three routes reaching closed copies; v6's chart ticks overlapping); `local-release-2.json` (passed except three tap targets under 24 px; its screens are the fresh reader's) | superseded |
 | A5 discovery, from the closed default page, by mouse, keyboard and deep link | inside the release record | 48 routes in each engine at both placement sizes |
 | v6 on v5's population | `uv run python -m delu_forecast.final_candidate --check`; `reports/pres5/a1-in-v5/parity.json` | v6's rows re-derive byte for byte from the pinned inputs; v5's and the naive's recomputed scores equal CP-24's published rows (maximum difference 0.0) |
 | The export | `pres-5-export-diff.json`; `mlflow_export.py --check` | current; runs 44 → 105, the 61 of cp26 and cp28 added, `only_identity` true, no identity or substantive change, the one experiment-tag change `mlflow.note.content`; `pres5_draft_problems()` empty |
@@ -248,7 +249,8 @@ are kept beside their retries. The candidate's code is `1d0f453e`; the candidate
 | The value-based secret scan | `scripts/secret_guard.py` | the pre-commit and commit-msg hooks on every commit; the pre-push scan over `gauntlet/pres-5` at the evidence tip, in the return |
 | One editorial review | `docs/track-b/evidence/pres-5/editorial.md` (at `b20ee9d1`) | 12 violations (V1–V12), repaired in `1d0f453e`; 18 recommendations, dispositioned (§10.4) |
 | The fresh reader | `docs/track-b/evidence/pres-5/fresh-reader.md` | answers 1–5 agree with the records; two reading-path gaps repaired; observations dispositioned; continued applicability recorded |
-| The Integration review at the candidate, and the focused recheck at the final SHA | `docs/track-b/evidence/pres-5/integration.md` | after this packet |
+| Integration review 1, at `b866e996` | `docs/track-b/evidence/pres-5/integration-review-1.md` | **FAIL**: F1, the live product's startup line lacked §7.1's measured start, browser, date and last verification, and its size was typed (the editorial V4 deferred); F2, §8.2's command for a moved `main` used `--pathspec-from-file`, which `git diff` 2.50.1 rejects; F3, nothing checked the `evidence/pres-5` label's date; F4, "v5 and v4 are level" read a null result as equivalence; F5, the packet overstated what the lint checks for `A1`. All five repaired in `d487b4bd` (§10.4) |
+| Integration review 2 at the repaired candidate, and the focused recheck at the final SHA | `docs/track-b/evidence/pres-5/integration.md` | after this packet |
 | The authorized MLflow upload, the mirror verification, the browser routes and the index | `pres-5-mlflow-upload.json`, `pres-5-public-mirror.json`, `pres-5-public-mlflow-routes.json`, `reports/presentation/mlflow_index.json` | after the independent check's PASS, before the `--final` build |
 
 No real Safari, real iPhone or screen reader was used; the phone widths are emulated viewports, and the iPhone is
@@ -260,7 +262,7 @@ Playwright's emulated device in WebKit.
 
 | Surface | Reviewed output | Identity | Now public |
 |---|---|---|---|
-| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>` (the return and `integration.md`); at the candidate, before the index, `1,847,871` bytes, `2fcb53acd9adb086f9add95aefa3d7c20843cd6e4ad3c2b00ac790da6270d9ca` | 1,996,267 bytes, `54708134fdfeb2ce3f2ee2d04b1f93008b7506917690a74d93548951a18d37ce` (PRES-4, `main` `3c8e158c`) |
+| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>` (the return and `integration.md`); at the candidate, before the index, `1,848,377` bytes, `409e1708055b3a91d768ab2ebc0bd527ac63384278b3d971b8843180e1641cbe` | 1,996,267 bytes, `54708134fdfeb2ce3f2ee2d04b1f93008b7506917690a74d93548951a18d37ce` (PRES-4, `main` `3c8e158c`) |
 | README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>` | at `main` `3c8e158c`: `c816972a7ddb4509f4e7617f4f480588b2500becb9217d8d36a4afebee8315fc` |
 | Hugging Face Space and its card | **CP-18c's**, not this block's: PRES-5 uploads nothing to the Space | CP-18c's reviewed bundle and card identities, from CP-18c's return | revision `0331088725fedab2f5a1ec804ae03bf960cf126f` (PRES-4's v1 bundle) until CP-18c publishes |
 | MLflow `delu-generations` | `reports/presentation/mlflow-export/` | 105 runs; `cp26.json` `ff12582b…c3c9`, `cp28.json` `6cca5b2a…f1f0`, `manifest.json` `8cf3f334…7e59`; the 61 runs of cp26 and cp28 and the one experiment-description write, uploaded under the brief's authority before the final build (§6), their run IDs in `pres-5-public-mirror.json` | 44 runs, no cp26 or cp28 run (PRES-4) |
@@ -343,11 +345,21 @@ Expect only `STAGED-TREE-EQUALS-EVIDENCE-TIP`. If it does not print, stop: nothi
 **(main moved)** — PRES-5's paths equal the evidence tip's, and every other path equals `main`'s:
 
 ```bash
-git --no-pager diff --name-only 3c8e158c9895f5b3fed13db794b0ddd5fb80c56f <evidence_tip_sha> > .local/artifacts/pres-5/pres5-paths.txt && git --no-pager diff --cached --quiet <evidence_tip_sha> --pathspec-from-file=.local/artifacts/pres-5/pres5-paths.txt && test -z "$(git --no-pager diff --cached --name-only HEAD | grep -vxFf .local/artifacts/pres-5/pres5-paths.txt)" && echo STAGED-PRES5-PATHS-EQUAL-EVIDENCE-TIP
+git --no-pager diff --name-only 3c8e158c9895f5b3fed13db794b0ddd5fb80c56f <evidence_tip_sha> > .local/artifacts/pres-5/pres5-paths.txt && xargs git --no-pager diff --cached --quiet <evidence_tip_sha> -- < .local/artifacts/pres-5/pres5-paths.txt && test -z "$(git --no-pager diff --cached --name-only HEAD | grep -vxFf .local/artifacts/pres-5/pres5-paths.txt)" && echo STAGED-PRES5-PATHS-EQUAL-EVIDENCE-TIP
 ```
 
 Expect only `STAGED-PRES5-PATHS-EQUAL-EVIDENCE-TIP`. PRES-5's paths and CP-18c's are disjoint (the brief's task-specific
-extract), so a line in between means a path both changed: stop.
+extract), so a line in between means a path both changed: stop. (Git 2.50.1's `git diff` has no `--pathspec-from-file`;
+the command passes the paths through `xargs`, which fails if any comparison differs. Integration review 1, F2.)
+
+**The evidence label's date equals the tip's** (Integration review 1, F3): the page labels v6's raw rows "frozen
+<date>" from `registry.py::EVIDENCE_TAGS["evidence/pres-5"]`, which the `--final` build set to the tip's date.
+
+```bash
+git --no-pager log -1 --format=%cs <evidence_tip_sha> && git --no-pager show <evidence_tip_sha>:src/delu_forecast/registry.py | grep '"evidence/pres-5"'
+```
+
+Expect the same date on both lines. A different date: stop and report it; the label would misdate the evidence.
 
 ```bash
 git commit -F .local/artifacts/pres-5/land-commit-message.txt
@@ -490,7 +502,7 @@ rollback is its own Owner action.
 | §4 A10 revision in place | no | No adopted generation is revised in place | — |
 | §5 page architecture; A4 | yes | A4's order; "How the product works" documents v6, the product the Space runs (O26/O29), with the twelve-subject map (§5b) | `tests/test_45`; §5b |
 | §5 A8 product-first order | not applied | See §10, item 1: a proposed ruling | — |
-| §5.2 chapter grammar; page budget | yes | v6's chapter fills every slot (`slot_problems` empty); one page, `1,847,871` bytes ≤ 2.0 MB, by pixel-identical re-encoding of the archive's seven figures (O25) | `tests/test_50`; `reports/cp3/pages_build.json` |
+| §5.2 chapter grammar; page budget | yes | v6's chapter fills every slot (`slot_problems` empty); one page, `1,848,377` bytes ≤ 2.0 MB, by pixel-identical re-encoding of the archive's seven figures (O25) | `tests/test_50`; `reports/cp3/pages_build.json` |
 | §6 charts, discovery; A5 | yes | v6's main chart with direct labels and its hexagon marker; the comparison with v6 first; A5 routes from the closed default page in both engines | `pres-5-local-release.json` (`discovery`) |
 | §7.1 product contract | yes, changed | The opening names the product the Space runs (v6), its status and why it runs before its test (decision 28), beside "Open the live product"; the first visit's size beside the action (its measured start: §10.3 item 4); v1's historical demo linked at `/history/` | the opening; `tests/test_38`, `tests/test_43` F03 |
 | §7.2 live presentation; A7 | the Space's (CP-18c) | The report shows no live panel and no live number (§24.14 item 5); it links the Space and says "prospective evaluation in progress" | `tests/test_24`, `tests/test_50` |
@@ -564,7 +576,7 @@ rollback is its own Owner action.
 | 5 The product | the opening's status pair, "Open the live product", the product line, v1's historical demo at `/history/`; no live number; nothing after 2026-09-06 | `tests/test_24`, `tests/test_50` |
 | 6 The model identity | v6 · DDNN-2 alone (O30); the six arms study arms | §2 |
 | 7 MLflow | §6; after the Integration PASS | `pres-5-mlflow-upload.json`, `pres-5-public-mirror.json` |
-| 8 The page budget | `1,847,871` bytes ≤ 2,000,000, by lossless re-encoding (O25) | `reports/cp3/pages_build.json` |
+| 8 The page budget | `1,848,377` bytes ≤ 2,000,000, by lossless re-encoding (O25) | `reports/cp3/pages_build.json` |
 | 9 Review | the Integration check at the candidate and the focused recheck at the final SHA | `integration.md` |
 | 10 The packet | this packet's §8 | — |
 
@@ -591,13 +603,19 @@ rollback is its own Owner action.
 - **The live-namespace wall** (`tests/test_24`) admits exactly three strings on the record surfaces — the product's
   name, its status and "prospective evaluation in progress" — by decision 28 and the brief's outcome 5; every live
   figure, score, date and other sentence stays behind it, with its positive control.
-- **The frozen label.** The lint's code denylist admits `A1` only beside v6's identity (`FROZEN_LABELS`); CP-15's
-  normalized LEAR keeps its own code `A1` in the comparison's values table, each scoped by its experiment.
+- **The frozen label.** The lint's code denylist admits `A1`, v6's frozen label, wherever it appears
+  (`FROZEN_LABELS`); the lint does not check that it sits beside v6's identity. Integration review 1 found every `A1`
+  on the reading path beside v6 (F5). CP-15's normalized LEAR keeps its own code `A1` in the comparison's values
+  table, each scoped by its experiment.
 - **The overview MLflow route** lists the twelve runs MLflow holds: v6's comparison row comes from PRES-5's rows, which
   have no MLflow run; the page's audit routes v6's row to its raw CSV rows at `evidence/pres-5`.
-- **Startup metadata.** The live product's first-visit size (about 0.55 MB) is CP-18b's measurement on development data;
-  no public timing of CP-18c's Space exists yet. v1's measured start of 2026-09-29 timed the earlier Space's root, which
-  decision 28 gives to the live product, so the opening now links v1's historical demo without timing it.
+- **Startup metadata** (§7.1; Integration review 1, F1). Beside "Open the live product" the page reads from CP-18b's
+  committed records the first visit's size, the measured cold start in Chromium and WebKit, the browsers, the
+  machine, the date and the last verification (`build_pages.py::live_measurement`, which refuses a record whose cold
+  start failed or lacks an engine; `tests/test_43` F03). They measure the Space CP-18b built, served locally on
+  development data, and the line says so; no public timing of CP-18c's Space exists yet. v1's measured start of
+  2026-09-29 timed the earlier Space's root, which decision 28 gives to the live product, so the opening links v1's
+  historical demo without timing it.
 - **CP-26's and CP-28's intervals** on the page carry CP-26's bootstrap (14-day blocks, 10,000 replicates, seed
   20261012); v6's intervals on v5's population carry CP-24's (7-day blocks, 2,000 replicates, seed 15042). Each is
   named where it is shown.
@@ -615,12 +633,10 @@ rollback is its own Owner action.
    CP-18c's Space is served differently, its rows may fail for a reason that is not a defect. **Proposed ruling:** the
    Space's public identity is CP-18c's receipt's; PRES-5's receipt keeps its Space rows, failures included, as records.
 3. **v6's colour and marker** (§2.16): **proposed ruling:** keep `#18181B` and the hexagon until the Owner chooses.
-4. **The live product's measured start** (editorial V4). §7.1 asks for the measured cold-start time, device, browser,
-   date and last verification beside the action. No public timing of CP-18c's Space exists before it deploys; the
-   opening gives the first visit's size as CP-18b measured it (about 0.55 MB, 551,515 bytes, on development data),
-   declared, not bound to a record. **Proposed ruling:** measure the public Space after both publications in §8.5
-   (`check_reader_paths.py demo` against the Space's root), and bind the size and time to that record at the next
-   publication; until then the gap stays disclosed here.
+4. **The live product's public start** (editorial V4; Integration review 1, F1, repaired). The page now shows all of
+   §7.1's fields, read from CP-18b's records of the Space served locally on development data. **Proposed ruling:**
+   after both publications, time the public Space in §8.5 and bind the line to that record at the next
+   publication.
 5. **Two links to `evidence/pres-5`** (v6's raw rows, `metrics.csv#L8` and `uncertainty.csv#L22`) answer 404 until the
    Orchestrator pushes the tag in §8.3: the prerelease's link check records them as its one unexpected result.
    **Proposed ruling:** accept them as pending destinations; the receipt's link row after the push (§8.5) must show
@@ -640,7 +656,7 @@ rollback is its own Owner action.
 | V1 "the released model" routes reached v6's manual | v1's chapter routes to "v1's original report, topic by topic" (`#v1-archive`); the reproduction line says "To check the live product's frozen policy, see Run and check this product; v1, the last released generation, runs from its original instructions … in its archive" |
 | V2 no reason why the Space runs v6 | the product line beside the action: "… daily, frozen, before its one test, by the Owner's decision to go live: prospective evaluation in progress. A pass releases it; otherwise v1, the last released generation, is the product again." (P61; decision 28; C804) |
 | V3 unlabelled brackets and shares | the headline: "…, as shares of v5's, with descriptive 95% intervals" |
-| V4 incomplete startup metadata | an open item, §10.3 item 4 |
+| V4 incomplete startup metadata | deferred at first, then repaired after Integration review 1 (F1): every §7.1 field, read from CP-18b's records |
 | V5 the README's CP-3 section in the present tense | `scripts/cp3_readme.py`: a dated line says the table describes the surfaces at v1's release and where v1's demo is now; "How the product works"; the replay sentence names v1's demo |
 | V6 the archive's Space links | a note outside the protected archive: "The archive below links the Space as it was at v1's release; the Space's root has since been given to the live product, and v1's demo is under its History." The archive's bytes are unchanged (`tests/test_45`) |
 | V7 the regimes paragraph's population | v6's own block names v5's five test periods |
@@ -662,4 +678,10 @@ view's legend is shared with earlier generations).
 
 **The fresh reader** (`fresh-reader.md`): answers 1–5 agree with the records; its observations 1–6 and 12 were
 repaired in `1d0f453e`, the rest dispositioned in its record.
+
+**Integration review 1** (`integration-review-1.md`, FAIL at `b866e996`): F1 repaired by `live_measurement` and the
+startup line's five bound fields, with F03's test and its negative controls; F2 by the `xargs` form in §8.2, tested on
+this git; F3 by the date step in §8.2 and `tests/test_50::test_the_evidence_tags_date_is_the_tips`; F4 by "v5's gain
+over v4 is not shown there" and "the intervals do not establish that the two are equal"; F5 by the wording in §2 and
+§10.2. Its observations on the A8 order stay with §10.3 item 1.
 
