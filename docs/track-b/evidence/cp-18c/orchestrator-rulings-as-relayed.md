@@ -1,4 +1,4 @@
-# The Orchestrator's rulings during CP-18c, as relayed to the Lead (O29–O33, O35, O36)
+# The Orchestrator's rulings during CP-18c, as relayed to the Lead (O29–O33, O35–O37)
 
 The Orchestrator relayed these to the CP-18c Lead by session message during the round, under decision 27 and logged
 for the Owner's ratification. They are copied here verbatim, so the Integration review can check the candidate against
@@ -97,6 +97,19 @@ The Lead's question was to add, after the seed clone's `config core.hooksPath` l
 The Lead's proposed line, the first statement of `test_the_workflow_is_dispatch_only_with_its_permissions_scoped`:
 `__import__('pytest').skip("superseded at CP-18c's activation (r20 §24.14; brief item 8): daily.yml gains its
 schedule, the live mode and its secrets; tests/cp18c/test_workflow.py checks the activated workflow")`.
+
+## O37 (2026-11-12), committed in the evidence after the final review, which noted its absence here
+
+> Orchestrator: don't wait for the 2026-11-14 issuance. The Owner wants the live product up now. Ruling O37 (decision 27):
+>
+> 1. **Publish to Hugging Face as soon as the Integration PASS arrives,** with the live record as it then stands. Days
+>    whose outcomes are not yet published show as pending, which the Space already handles. Then run the
+>    served-identity check and A6's public checks.
+> 2. **The brief's "one publication" is widened:**
+>    - While your round is open, you may publish each later day's bundle the same way: the same route, the gate
+>      passing, and the served-identity check after each.
+>    - Each one is a daily update of the same Space, not a new publication. Record each one in the return.
+> 3. Then write the return. My LAND follows, and from it the runner's schedule takes over the daily publication.
 
 ## Instructions of 2026-11-12 (after the weekly pause)
 
