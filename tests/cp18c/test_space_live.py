@@ -165,11 +165,20 @@ def test_the_live_limitations_name_the_live_record_and_its_outside_range(live_cl
     assert 'no forecast is claimed' in text(live_claims, 'live_limitation_operation')
 
 
+#: PRES-5 (decision 28; r20 §24.14 items 5 and 6; O30): the report and the README name the product the Space runs,
+#: "v6 · DDNN-2 alone" ("A1 in the frozen records"), and say what it is, under the status O13 words and "prospective
+#: evaluation in progress". These identity and label strings are shared by decision, as in test_24's
+#: SHARED_BY_DECISION_28; every live figure, score, date and other sentence stays off the record surfaces.
+SHARED_BY_DECISION_28 = frozenset({'live_product_name', 'live_product_record_name', 'live_product_status',
+                                   'live_prospective_label'})
+
+
 @needs_store
 def test_no_record_surface_renders_a_live_mode_claim(live_claims):
     from delu_forecast.surfaces import load_surfaces
     surfaces = [s for s in load_surfaces() if s.name in ('README', 'Space card', 'Static Space card', 'Pages export')]
-    rendered = sorted((s.name, k) for s in surfaces for k, v in live_claims['values'].items() if s.carries(k, v))
+    rendered = sorted((s.name, k) for s in surfaces for k, v in live_claims['values'].items()
+                      if k not in SHARED_BY_DECISION_28 and s.carries(k, v))
     assert not rendered
 
 
