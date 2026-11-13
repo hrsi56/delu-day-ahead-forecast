@@ -372,7 +372,7 @@ EVIDENCE_TAGS: dict[str, tuple[str, str]] = {
     "evidence/cp-17c": ("2628804", "2026-10-30"),
     # PRES-5's own rows (A1 on v5's population): the tag is created on PRES-5's evidence tip at the landing, so its commit
     # is not known when this page is built; the date is the tip's, which the final build and the return check.
-    "evidence/pres-5": ("", "2026-11-06"),
+    "evidence/pres-5": ("", "2026-11-13"),
 }
 
 POPULATIONS = {

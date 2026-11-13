@@ -194,7 +194,7 @@ Incoming product v6; outgoing v1, "the last released generation", whose demo is 
 | Owner designation and lifecycle | v6 (A1) selected 2026-10-25, frozen 2026-10-30; live by decision 28 through CP-18c; status "final candidate · pending 4.7T" (O13, O27); 4.7T's pass or fail decides the release (decision 21's branches, preserved) |
 | One product identity | the report's opening, "How the product works", the README and the Space (CP-18c, the same public name, O30) name v6; MLflow tracks the research runs `cp28/A1` and `cp26/nominal/D2/*`. The report shows no live number |
 | Frozen policy, daily training and issuance, coverage, today, scores, reliability | CP-17c's freeze and CP-18c's live pipeline: not this block's output. The report links the Space and says "prospective evaluation in progress" |
-| Page order | A4's order, with "How the product works" documenting v6; A8's product-first order (Product results, Business insights before the comparison) is **not applied**: proposed ruling in §10, item 1 |
+| Page order | A4's order, with "How the product works" documenting v6. A8: not yet triggered; the product-first order is applied at 4.7T's publication (O38) |
 | Business evidence | not evaluated; nothing is claimed |
 | Prospective state | in progress from CP-18c's first live day; nothing prospective is published here |
 
@@ -512,7 +512,7 @@ rollback is its own Owner action.
 | §4 registry, transitions, branches; A3 | yes | One registry; v6 a generation (O30) with its dated final-candidate status and no adoption event; the transition "From v5 to v6" with its evidence class (A3); CP-28's six other arms study arms, "Not selected"; CP-26's sensitivity routes study arms, never eligible | §2; `tests/test_43` A3; `tests/test_50` |
 | §4 A10 revision in place | no | No adopted generation is revised in place | — |
 | §5 page architecture; A4 | yes | A4's order; "How the product works" documents v6, the product the Space runs (O26/O29), with the twelve-subject map (§5b) | `tests/test_45`; §5b |
-| §5 A8 product-first order | not applied | See §10, item 1: a proposed ruling | — |
+| §5 A8 product-first order | not yet triggered | A8's trigger is the Owner-designated final-product transition, which under decision 21 (left in place by decision 28) is 4.7T's pass; the product-first order is applied at 4.7T's publication (O38) | ruling O38 |
 | §5.2 chapter grammar; page budget | yes | v6's chapter fills every slot (`slot_problems` empty); one page, `1,848,408` bytes ≤ 2.0 MB, by pixel-identical re-encoding of the archive's seven figures (O25) | `tests/test_50`; `reports/cp3/pages_build.json` |
 | §6 charts, discovery; A5 | yes | v6's main chart with direct labels and its hexagon marker; the comparison with v6 first; A5 routes from the closed default page in both engines | `pres-5-local-release.json` (`discovery`) |
 | §7.1 product contract | yes, changed | The opening names the product the Space runs (v6), its status and why it runs before its test (decision 28), beside "Open the live product"; the first visit's size beside the action (its measured start: §10.3 item 4); v1's historical demo linked at `/history/` | the opening; `tests/test_38`, `tests/test_43` F03 |
@@ -601,6 +601,7 @@ rollback is its own Owner action.
 | O26, O29 | "How the product works" documents v6, the product the Space runs; decision 28 prevails over decision 21's timing; decision 21's fail branch survives; v1's manual preserved in its chapter, the archive and git history; the page never says or implies that the Space runs v1 now | A4 ("the documentation follows the new product"); decision 28; `test_no_surface_says_the_space_runs_v1_now` |
 | O27 | The hero: v6 "final candidate · pending 4.7T", the headline CP-28's pre-specified verdict with the development post-selection badge; v1 stays "released", "the last released generation", its demo historical at `/history/`, the product again if 4.7T fails | §4's hero order; decision 20's fresh-headline window; decision 21 |
 | O30 (replaces O28) | The public name "v6 · DDNN-2 alone", a generation, on the rail and timeline, the newest comparison row, the A3 transition "From v5 to v6" with its evidence class; "v6 (A1 in the frozen records)" where the identity is shown; CP-28's six other arms study arms "not selected", without codes; the Space uses the same name | §4; A3 |
+| O38 | A8: not yet triggered; the product-first order is applied at 4.7T's publication; the final build goes ahead without another review | A8's trigger (the Owner-designated final-product transition) is 4.7T's pass under decision 21; P1's red line; A8's ban on fabricated business evaluation |
 | O34 | CP-26's two landed-code tests check five presentation modules against their bytes as landed at `61658c7`, recorded under `cp26-landed-presentation-code/` and bound by SHA-256 and git blob; every other landed file stays checked against the working tree; negative controls; the two new modules named outside CP-26's landed set | the brief's allowed paths include the registry and the report's build, which CP-26's harness log pins as landed code |
 
 ### 10.2 Disclosures
@@ -638,11 +639,11 @@ rollback is its own Owner action.
 
 ### 10.3 Open presentation items, each with a proposed ruling
 
-1. **A8's product-first order.** A8 orders, at the Owner-designated final-product transition, "How the product works"
-   → "Product results" → "Business insights" → "How the models compare". PRES-5 keeps A4's order with "How the product
-   works" documenting v6, because the Owner's designation of the final product is decision 21's outcome of 4.7T (O27
-   keeps v1 "released" until then), and no business evaluation exists to fill "Business insights" honestly.
-   **Proposed ruling:** A8's order applies at 4.7T's publication, with the release; until then A4's order stands.
+1. **A8's product-first order — ruled (O38).** A8: not yet triggered; the product-first order is applied at 4.7T's
+   publication (O38). Its trigger, the Owner-designated final-product transition, is 4.7T's pass under decision 21,
+   which decision 28 left in place; its sections could not be filled honestly now ("Product results" would be
+   prospective live scores, which the report may not show; no business evaluation exists). The Orchestrator puts A8's
+   order into the 4.7T publication brief.
 2. **The Space's receipt rows** (§8.5). `scripts/publication_receipt.py` compares a static bundle file by file; if
    CP-18c's Space is served differently, its rows may fail for a reason that is not a defect. **Proposed ruling:** the
    Space's public identity is CP-18c's receipt's; PRES-5's receipt keeps its Space rows, failures included, as records.
