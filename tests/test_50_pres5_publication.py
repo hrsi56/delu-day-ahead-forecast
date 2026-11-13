@@ -268,6 +268,15 @@ def test_the_readme_carries_the_same_claims():
     assert "history/" in README
 
 
+def test_v1s_demo_is_linked_by_its_file_never_the_bare_history_route():
+    """O44: the Space's static host redirects the bare `/history/` to huggingface.co/history, an unrelated profile
+    (CP-18c found it on the Space on 2026-11-13). The report and the README link `history/index.html`."""
+    for surface in (PAGE, README):
+        assert "hf.space/history/index.html" in surface
+        assert not re.search(r"hf\.space/history/(?!index\.html)", surface)
+        assert not re.search(r"hf\.space/history(?![/\w])", surface)
+
+
 # --------------------------------------------------------------------------- the budget, without loss
 
 

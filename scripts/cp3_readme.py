@@ -49,7 +49,7 @@ def _v1_demo_paragraph(C) -> str:
         if before not in text:
             raise ValueError(f"the v1 demo paragraph changed; re-date it by hand: {before!r}")
         text = text.replace(before, after, 1)
-    return f"{text} {v1}'s demo is now under the Space's [History]({C['space_app_url']}history/)."
+    return f"{text} {v1}'s demo is now under the Space's [History]({C['space_app_url']}history/index.html)."
 
 
 def _since_release(C) -> str:
@@ -61,7 +61,7 @@ def _since_release(C) -> str:
     released = G.released()
     return (f"\nThe table describes the surfaces at {released.version}'s release. The Space's root now runs the live "
             f"product, {final.name}, and the report documents it; {released.version}'s demo, which the second row "
-            f"describes, is under its [History]({C['space_app_url']}history/).\n")
+            f"describes, is under its [History]({C['space_app_url']}history/index.html).\n")
 
 def build_section() -> str:
     C = build_claims()

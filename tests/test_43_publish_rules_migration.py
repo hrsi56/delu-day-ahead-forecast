@@ -424,7 +424,7 @@ def test_f03_the_measured_start_is_beside_the_action_outside_any_disclosure(page
         assert f"last verified {live['verified']}" in line and "historical demo" in line
         for field in ("#size", "#checks", "#engines", "#started_utc", "#finished_utc"):
             assert f'{field}">' in markup, field  # each value carries its record's pointer
-        assert re.search(r'href="https://[^"]+/history/"', markup)
+        assert re.search(r'href="https://[^"]+/history/index\.html"', markup)  # O44: never the bare /history/
         return
     startup = page.index('data-startup="measured"')
     assert 0 < startup - action < 1500

@@ -16,7 +16,7 @@
 - **Development · post-selection:** development evidence, not a test on new data.
 - **DDNN-2:** a distributional neural network (DDNN).
 
-**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). By the Owner's decision, the Space runs v6 · DDNN-2 alone daily before its one test: prospective evaluation in progress. A pass releases it; otherwise v1, the last released generation, is the product again. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). By the Owner's decision, the Space runs v6 · DDNN-2 alone daily before its one test: prospective evaluation in progress. A pass releases it; otherwise v1, the last released generation, is the product again. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html).
 
 **How the product works:** The product the Space runs, v6 · DDNN-2 alone, topic by topic. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
 
@@ -443,7 +443,7 @@ silently when `MLFLOW_TRACKING_URI` is unset.
 
 Each one answers a different question, and each stands on its own. The static report is the primary link.
 
-The table describes the surfaces at v1's release. The Space's root now runs the live product, v6 · DDNN-2 alone, and the report documents it; v1's demo, which the second row describes, is under its [History](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+The table describes the surfaces at v1's release. The Space's root now runs the live product, v6 · DDNN-2 alone, and the report documents it; v1's demo, which the second row describes, is under its [History](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html).
 
 | | Surface | Answers | Cost to open |
 |---|---|---|---|
@@ -451,7 +451,7 @@ The table describes the surfaces at v1's release. The Space's root now runs the 
 | **2** | **[⚡ Interactive Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast)**<br>[direct app](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/) | *Does the thing actually run?* The champion's own boosters, running in your browser under Pyodide | about 57 MB first visit, 352 requests, 5 hosts; ~1 MB after. A Static Space has no server-side process to sleep |
 | **3** | **[🔬 MLflow on DagsHub](https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow)** | *Is the decision trail real, or is the README the only evidence?* Every decision-bearing run of v1, anonymously readable — no sign-in | — |
 
-At v1's release, the Space could not load the packaged `mlflow.pyfunc`, so it ran the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equalled the frozen artifact bitwise: maximum absolute deviation 0.0. Opened through huggingface.co, Hugging Face's own page added its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and ran the app in an iframe. The app alone was then at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/. v1's demo is now under the Space's [History](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/).
+At v1's release, the Space could not load the packaged `mlflow.pyfunc`, so it ran the champion's own nine boosters, base-catalog preprocessing, four CQR thresholds and isotonic step in the browser — and on a committed 54-day fixture spanning all three regimes, both daylight-saving transitions, and federal holidays and bridge days (1,296 rows, 11,628 quantile values) its output equalled the frozen artifact bitwise: maximum absolute deviation 0.0. Opened through huggingface.co, Hugging Face's own page added its document and 201 requests from huggingface.co, js.stripe.com, cdnjs.cloudflare.com and an AWS WAF host — about 1.2 MB measurable, on a page Hugging Face controls — and ran the app in an iframe. The app alone was then at https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/. v1's demo is now under the Space's [History](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html).
 
 **Deployment.** v1 was released to GitHub Pages and the Static Space in September 2026. On 2026-07-08 Hugging
 Face moved the Docker and Gradio SDKs behind a paid PRO plan and only Static Spaces stayed free, so

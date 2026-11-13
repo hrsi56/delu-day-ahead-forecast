@@ -194,8 +194,9 @@ PRES5_TAG = "evidence/pres-5"
 
 def history_url(C) -> str:
     """v1's demo, kept as it was at the Space's `/history/` route (O17; decision 28 moves the Space's root to the live
-    product)."""
-    return C["space_app_url"] + "history/"
+    product). The link names `history/index.html`: the static host redirects the bare `/history/` off the Space, to
+    huggingface.co/history (CP-18c's finding; O44)."""
+    return C["space_app_url"] + "history/index.html"
 
 
 #: The archived report's figures (v1's archive): the committed originals, which stay unchanged.
