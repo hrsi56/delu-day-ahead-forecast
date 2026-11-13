@@ -502,14 +502,31 @@ def wording_check(rec: Record, page, engine: str):
 
 
 # ------------------------------------------------------------------ CP-18c: N7, O29-O33 against the live record
+def forecast_day(page, day: str) -> dict | None:
+    """The Forecast view's panel for one issued day: its text, its pending and price cells, and its score block."""
+    open_view(page, 'forecast')
+    try:
+        page.select_option('#forecast-day', day)
+    except Exception:  # noqa: BLE001 - the day is not offered: not an issued day
+        return None
+    time.sleep(0.2)
+    return page.evaluate("""(day) => { const out = document.querySelector('[data-forecast-panel]'); if (!out || out.dataset.day !== day) return null;
+        const s = out.querySelector(`[data-score="${day}"]`); const v = k => { const e = s && s.querySelector(`[data-metric="${k}"]`); return e ? Number(e.dataset.v) : null; };
+        return {box: 'forecast', scored: s ? (s.dataset.scored || null) : null, text: out.innerText.slice(0, 900),
+                metrics: s ? s.querySelectorAll('[data-metric]').length : 0, pending_cells: out.querySelectorAll('td [data-pending]').length,
+                score: s ? {box: 'forecast', text: s.innerText.slice(0, 500), mae: v('mae'), pct: v('percentage'), hours: v('scored-hours'),
+                            partial: !!s.querySelector('[data-state="partial"]'), prices: [...out.querySelectorAll('td [data-price]')].map(e => Number(e.dataset.v)),
+                            pending: out.querySelectorAll('td [data-pending]').length} : null}; }""", day)
+
+
 def expected_state(b: Bundle, day: str) -> str:
     r = b.live['record']
     if any(d['day'] == day for d in r['issued']):
         return 'issued'
     if any(o['first_day'] <= day <= o['last_day'] for o in r['outside']):
         return 'outside'
-    if any(d['day'] == day for d in r['not_issued'] + r['failed']):
-        return 'not issued'
+    if any(d['day'] == day for d in r['not_issued'] + r['failed'] + r.get('open', [])):
+        return 'not issued'          # an open day (attempted, still inside the lookback) is not issued, with its cause
     return 'pending'
 
 
@@ -565,8 +582,12 @@ def live_checks(rec: Record, page, b: Bundle, engine: str):
     shown = page.evaluate(JS_TIMES, '#product')
     bad = {x['day']: times_ok(x, issued.get(x['day']), forecasts[x['day']]['issue_utc']) for x in shown if x['day'] in forecasts}
     bad = {k: v2 for k, v2 in bad.items() if v2}
+    from datetime import date as _d, timedelta as _td
+    _d0 = _d.fromisoformat(m['freshness']['as_of_day'])
+    boxed = {str(_d0 + _td(days=k)) for k in (-1, 0, 1)} & set(forecasts)     # the issued days today, tomorrow, yesterday
     rec.check("N7 (O18): every issued day in the panel carries its cutoff-based issue time and its actual run (start, issuance, host, run id), equal to the live record",
-              shown and not bad, {'days': [x['day'] for x in shown], 'problems': bad}, engine=engine)
+              boxed <= {x['day'] for x in shown} and not bad,
+              {'days': [x['day'] for x in shown], 'issued_in_the_day_boxes': sorted(boxed), 'problems': bad}, engine=engine)
     # O31: today, tomorrow, yesterday
     today = m['freshness']['as_of_day']
     states = page.evaluate("""() => ({today: document.querySelector('#today').dataset.today, tomorrow: document.querySelector('#tomorrow').dataset.tomorrow,
@@ -575,7 +596,7 @@ def live_checks(rec: Record, page, b: Bundle, engine: str):
     d0 = date.fromisoformat(today)
     want = {'today': expected_state(b, str(d0)), 'tomorrow': expected_state(b, str(d0 + timedelta(days=1))),
             'yesterday': expected_state(b, str(d0 - timedelta(days=1)))}
-    causes = {d['day']: d['cause_text'] for d in r['not_issued'] + r['failed']}
+    causes = {d['day']: d['cause_text'] for d in r['not_issued'] + r['failed'] + r.get('open', [])}
     cause_ok = all(causes[str(day)] in states['texts'][box] for key, box, day in
                    (('today', '#today', d0), ('tomorrow', '#tomorrow', d0 + timedelta(days=1)), ('yesterday', '#earlier', d0 - timedelta(days=1)))
                    if want[key] == 'not issued')
@@ -1066,6 +1087,10 @@ def variant_checks(rec: Record, p, engine: str, name: str, dist: Path, scratch: 
                 if (!box) return null; const s = box.querySelector('[data-score]');
                 return {box: box.id, scored: s ? s.dataset.scored : null, text: box.innerText.slice(0, 900), metrics: box.querySelectorAll('[data-metric]').length,
                         pending_cells: box.querySelectorAll('td [data-pending]').length}; }""", day)
+            if info is None:                 # a stale panel's day boxes may not hold the day: the Forecast view shows any issued day
+                info = forecast_day(page, day)
+                if info is not None and 'hours pending' in info['text'] and not info['score']:
+                    info['text'] += ' Not yet scored'
             shot(rec, page, scratch, engine, '1440', 'variant-pending', 'default', {'width': 1440, 'height': 900})
             rec.check('negative control pending: the issued day with no published price reads "Not yet scored", its hours pending, no score shown',
                       info and 'Not yet scored' in info['text'] and info['scored'] in (None, '0') and info['metrics'] == 0 and info['pending_cells'] > 0,
@@ -1094,6 +1119,9 @@ def variant_checks(rec: Record, p, engine: str, name: str, dist: Path, scratch: 
                 const box = s.closest('#today, #tomorrow, #earlier'); const v = k => { const e = s.querySelector(`[data-metric="${k}"]`); return e ? Number(e.dataset.v) : null; };
                 return {box: box.id, text: s.innerText.slice(0, 500), mae: v('mae'), pct: v('percentage'), hours: v('scored-hours'), partial: !!s.querySelector('[data-state="partial"]'),
                         prices: [...box.querySelectorAll('td [data-price]')].map(e => Number(e.dataset.v)), pending: box.querySelectorAll('td [data-pending]').length}; }""", day)
+            if info is None:                 # not in a day box (a stale panel): the Forecast view's score block for the day
+                f = forecast_day(page, day)
+                info = None if f is None or not f['score'] else f['score']
             day_prices = [x['price'] for x in b.outcomes['prices'] if x['delivery_day'] == day]
             want_pct = entry['within_tau_hours'] / entry['scored_hours']
             ok = info and info['partial'] and info['hours'] == entry['scored_hours'] < entry['canonical_hours'] and info['mae'] == entry['mae_eur'] \
@@ -1146,9 +1174,16 @@ def prepare(variants: Path, bundle: Path, live: Path, project: Path) -> dict:
         if folder.exists():
             shutil.rmtree(folder)
         folder.mkdir()
+        artifact_day = json.loads((bundle / 'manifest.json').read_text())['artifact']['delivery_day']
         for part in ('store', 'inputs') + (('outcomes',) if plan['outcomes'] else ()):
             if (live / part).exists():
-                shutil.copytree(live / part, folder / part, ignore=shutil.ignore_patterns('.DS_Store'))
+                def skip(folder_name, names, part=part):
+                    out = {n for n in names if n == '.DS_Store'}
+                    # pending: no archive day after the artifact's day, so no later archive holds its published prices
+                    if name == 'pending' and part == 'inputs' and Path(folder_name).name == 'days':
+                        out |= {n for n in names if n > artifact_day}
+                    return out
+                shutil.copytree(live / part, folder / part, ignore=skip)
         if plan['not_issued']:
             code = ('import sys; from datetime import date; from cp18.store import LiveStore; s = LiveStore(sys.argv[1]); '
                     "s.record_not_issued(date.fromisoformat(sys.argv[2]), 'h2', ['acceptance-control']); print(s.verify()['last_day'])")

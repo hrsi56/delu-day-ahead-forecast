@@ -115,7 +115,16 @@ def not_issued(store: LiveStore, fresh: dict) -> list[dict]:
         else:
             text = 'cause not recorded'
         out.append({'day': day, 'status': item['status'], 'cause': item.get('cause'), 'text': text})
-    if fresh['state'] == 'stale':
+    # the open days (CP-18c): attempted by a run and not issued, still inside the lookback, so not yet closed
+    decided, attempts = set(store.days()), {}
+    for run in store.runs():
+        for day, item in (run.get('days') or {}).items():
+            if day not in decided and item.get('status') == 'open' and item.get('cause'):
+                attempts[day] = item['cause']
+    for day, cause in sorted(attempts.items()):
+        out.append({'day': day, 'status': 'not issued', 'cause': cause,
+                    'text': causes.text(cause) + ' (attempted, still inside the lookback)'})
+    if fresh['state'] == 'stale' and fresh['target_day'] not in attempts:
         out.append({'day': fresh['target_day'], 'status': 'not decided yet', 'cause': None,
                     'text': 'not issued yet: no run has decided it'})
     return out

@@ -293,6 +293,7 @@
     const out = new Map();
     for (const d of S.live.record.not_issued) out.set(d.day, d.cause_text);
     for (const d of S.live.record.failed) out.set(d.day, d.cause_text);
+    for (const d of S.live.record.open || []) out.set(d.day, `${d.cause_text} (${L('live_open_day_wording')})`);
     return out;
   }
   function cutoffTime() { const m = /(\d{2}:\d{2})/.exec(L('live_cutoff')); return m ? m[1] : ''; }
@@ -877,7 +878,7 @@
     show(days[days.length - 1]);
     // days not issued: the record's items (the label's, without a live record), then any gap the record does not name
     const gaps = new Map(S.notIssued);
-    for (let d = days[0]; d && d < days[days.length - 1]; d = addDays(d, 1)) if (!days.includes(d) && !gaps.has(d) && !outsideOf(d)) gaps.set(d, null);
+    for (let d = days[0]; d && d <= S.today; d = addDays(d, 1)) if (!days.includes(d) && !gaps.has(d) && !outsideOf(d)) gaps.set(d, null);
     if (!days.includes(S.today) && !gaps.has(S.today) && !outsideOf(S.today)) gaps.set(S.today, null);
     const list = [...gaps.entries()].sort((a, b) => a[0] < b[0] ? -1 : 1);
     panel.appendChild(h('h3', {}, 'Every issued day against the published prices'));

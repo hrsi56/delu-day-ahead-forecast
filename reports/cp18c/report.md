@@ -15,7 +15,7 @@ The public name is "v6 · DDNN-2 alone" (the Orchestrator's O30); the frozen rec
 | Item (brief) | Result |
 |---|---|
 | 1. The guard, live only | `cp18.boundary`: inside `boundary.live()` each delivery day is admitted through the present (the next day whose cutoff is ahead) and judged against its own cutoff; outside it, every check is `cp25.guard`'s. `src/cp25/guard.py` is bound by CP-17c's freeze manifest, so it was not edited: the route is in `src/cp18/`. Research paths still refuse any row after 2026-09-06 (`tests/cp18c/test_guard_two_sides.py`) |
-| 2. All the data, through the present | `live/inputs/days/2026-09-07 … 2026-11-07/`: SMARD prices, ENTSO-E A65 load forecasts, GFS (AWS listing, index, byte ranges, decoded by CP-20's decoder with ecCodes 2.49.0). Each response with URL, retrieval time, size, SHA-256 and publication evidence |
+| 2. All the data, through the present | `live/inputs/days/2026-09-07 … 2026-11-13/` (acquired through 2026-11-12): SMARD prices, ENTSO-E A65 load forecasts, GFS (AWS listing, index, byte ranges, decoded by CP-20's decoder with ecCodes 2.49.0). Each response with URL, retrieval time, size, SHA-256 and publication evidence |
 | 3. The live store | Genesis at 2026-09-06 (`seed-store --genesis …freeze-origin-state.json:2026-09-07:2026-09-06`), carried to 2026-11-03 with decision 28 as the reason; 2026-09-07..11-02 outside, never issued |
 | 4. The first live issuances | 2026-11-06, 11-07 and 11-08 issued by A1 on the Owner's Mac after the H2 gate; 2026-11-03..05 not issued, cause "a live day's inputs that cannot be shown to precede its cutoff"; the gap 2026-11-09..13 (§4) |
 | 5. Outcomes and evaluation | Reconciled through `cp18.outcomes` with the live transport; each price names its archive and record (N1); the live days are the prospective window only |
@@ -85,8 +85,9 @@ until the runner takes over (2026-11-14 to 11-18 scheduled); the records made af
 claim, and the return's table carries them to `main` after the LAND, before the first runner dispatch.
 
 **The evidence bundle** (`reports/cp18c/evidence/`): built from the candidate's live record as of 2026-11-12, manifest
-`c0c32fe9…`, "stale" (2026-11-13 not decided yet), latest issued 2026-11-08, publishable; CP-18b's 20 negative controls
-all refused; the Space built from it (first visit 572,789 bytes, 805 History files).
+`7d2ae84c…`, "stale" (2026-11-13 not decided yet), latest issued 2026-11-08, publishable, its not-issued list naming
+2026-11-03..05, 11-09 and the open days 11-10..13 with their causes; CP-18b's 20 negative controls all refused; the
+Space built from it (first visit 574,269 bytes, 805 History files).
 
 ## 5. N5 and the bridge-day edge
 
@@ -127,9 +128,11 @@ builds it from the live record (the Space Builder's work):
 - v1's deployed files, unchanged (805 files, 44,164,910 bytes, revision `0331088725fedab2f5a1ec804ae03bf960cf126f`,
   each matching the Hub's blob id), at `/history/`.
 
-The browser acceptance (`tests/cp18c/space_acceptance.py`, `reports/cp18c/acceptance/acceptance.json`): Chromium and
-WebKit, seven widths, 590 passed, 0 failed, 1 not run (WebKit's `<details>` state, as in CP-18b); zero non-local
-requests; "Train it yourself" identical bit for bit in both engines.
+The browser acceptance (`tests/cp18c/space_acceptance.py`, `reports/cp18c/acceptance/acceptance.json`), on the Space
+built from the candidate's live record as of 2026-11-12 (bundle `7d2ae84c…`, stale, the open days listed): Chromium and
+WebKit, seven widths, **603 passed, 0 failed, 1 not run** (WebKit's `<details>` state, as in CP-18b; 25 checks
+superseded by the variants' rerun); zero non-local requests; "Train it yourself" identical bit for bit in both engines,
+the changed seed "different".
 
 ## 8. O33's interval method
 
@@ -178,6 +181,22 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
 
 ## 10. Disclosures
 
+- **The first Integration review failed** (`docs/track-b/evidence/cp-18c/integration-1-fail.md`, at `ab4915c0`): days a
+  run attempted and could not issue, still inside the lookback after the last issued day (2026-11-10..13), were missing
+  from the Space's "Days not issued", or shown without their cause, because only closed days were listed. Repaired: the
+  live record the Space reads (`live_record()['open']`) and the bundle's not-issued list name each open day with its
+  latest attempt's cause, "attempted, still inside the lookback", and the Forecast view fills gaps through the as-of
+  day (`tests/cp18c/test_open_days.py`); the acceptance's panel check now expects exactly the issued days among today,
+  tomorrow and yesterday. Everything else in that review passed.
+- **The frozen designation sentence.** The served `app/claims.json` carries the frozen policy identity's designation
+  text verbatim, which predates decision 28 ("v1 remains the product until CP-19"); no view displays it, and the frozen
+  record is not edited. The displayed product rule is O29's.
+- **GitHub's concurrency group** keeps one pending run: a third acquisition cron can replace a second one still queued
+  behind a running acquisition (never a running one). The running acquisition polls until the cutoff, so the day's
+  acquisition still happens.
+- **The Hub client** (`huggingface_hub==0.36.2` in the `uv run --with` overlay) is not part of a runner rehearsal: its
+  first use is this round's publication from the Owner's Mac, after the Integration review, and the runner's is the
+  Orchestrator's first dispatch after the LAND.
 - **Usage-limit pauses.** 2026-11-05 about 06:22–08:10 and 08:52–21:44 UTC; 2026-11-06 about 00:10–07:50,
   08:00–12:50 and 13:15–17:50 UTC; then the weekly limit, 2026-11-06 about 18:00 UTC to 2026-11-12 about 13:50 UTC.
   Both Builders were interrupted several times and resumed from their own state.
@@ -218,10 +237,11 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
   (`test_the_pipeline_jobs_run_on_the_issuing_hosts_runner`).
 - **O33's runs** come from a transcription of `cp28.inference.calendar_runs` without its guard admission (the frozen
   function refuses every live date); everything else is `cp28`'s own code, shown bit-identical.
-- **The committed browser acceptance** (`reports/cp18c/acceptance/acceptance.json`) ran on the two-day bundle
-  (`689ab83f…`) before the live label took O30's name; the Integration review reruns the Space in Chromium and WebKit
-  on the candidate's live bundle. O33's band was checked on a display-only build from development days (the live record
-  has fewer than 14 scored days); that build is never served.
+- **The browser acceptance's controls in a stale state.** Its pending and prices controls looked for the artifact's day
+  in the panel's three day boxes only, and its pending variant was not pending once that day's prices were archived;
+  both now read the Forecast view when the day is in no box, and the pending variant copies no archive day after the
+  artifact's. O33's band was checked on a display-only build from development days (the live record has fewer than 14
+  scored days); that build is never served.
 - **Retrievals outside the archive:** the Lead's SMARD probe (counts only), a smoke test into a scratch archive, the two
   failed GFS decodes, v1's 805 files and their listing, and the scratch rehearsal's development-day GFS (40 MB per run).
 - **The Hub client** is not a project dependency, and the imported workflow and fallback called the publication without

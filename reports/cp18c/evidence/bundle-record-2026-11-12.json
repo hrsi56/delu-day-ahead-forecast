@@ -1406,7 +1406,7 @@
    "raised": null
   }
  },
- "manifest_sha256": "c0c32fe9c12e11331f1e8459f53340f89aa8a4c5743f2b3156febe9096f89fbe",
+ "manifest_sha256": "7d2ae84ca96c6babcb499438598ce6e6a383ca6c2ff9c1312e242d1cbd2a3983",
  "not_issued": [
   {
    "cause": null,
@@ -1775,14 +1775,32 @@
    "text": "no run within the lookback"
   },
   {
-   "cause": null,
+   "cause": "inputs",
+   "day": "2026-11-10",
+   "status": "not issued",
+   "text": "a live day's inputs that cannot be shown to precede its cutoff (attempted, still inside the lookback)"
+  },
+  {
+   "cause": "inputs",
+   "day": "2026-11-11",
+   "status": "not issued",
+   "text": "a live day's inputs that cannot be shown to precede its cutoff (attempted, still inside the lookback)"
+  },
+  {
+   "cause": "inputs",
+   "day": "2026-11-12",
+   "status": "not issued",
+   "text": "a live day's inputs that cannot be shown to precede its cutoff (attempted, still inside the lookback)"
+  },
+  {
+   "cause": "inputs",
    "day": "2026-11-13",
-   "status": "not decided yet",
-   "text": "not issued yet: no run has decided it"
+   "status": "not issued",
+   "text": "a live day's inputs that cannot be shown to precede its cutoff (attempted, still inside the lookback)"
   }
  ],
- "now": "2026-11-12T14:05:43.575835+00:00",
- "out": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18c/evidence/bundle",
+ "now": "2026-11-12T19:07:12.460771+00:00",
+ "out": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18c/publish/accept/bundle",
  "payload_sources": {
   "A1-2026-11-08": "cache /Users/djourno/Downloads/PJM/.local/tmp/cp-18c/claim/daily/2026-11-08/run/payloads/2026-11-08",
   "B0-2026-11-06": "cache /Users/djourno/Downloads/PJM/.local/tmp/cp-18c/run2/out/payloads/2026-11-06",
@@ -1793,17 +1811,17 @@
   "days": [
    "2026-11-08"
   ],
-  "entry_sha256": "f466347389073ef6ea3c486537256136f705f8e4639e795ec5d7521ccc22386b",
+  "entry_sha256": "0a3d2b2e7761641a737b37a72ea5e04dfc03b7682a2c493ac30265aed9032110",
   "file": "entries/00002-2026-11-12.json",
-  "file_sha256": "eddf2cdf42c71f85be350882b89c36c72704600a96df12451db60887938066df",
+  "file_sha256": "0aeb88a6da0c248fe4111e05306cd75eb014e5eb0a7c9cf578abc3ef0f96b9f6",
   "kind": "reconciliation",
   "previous_entry_sha256": "9983d338775fcdca6cd58cb5bd57c0abb49416972f689b7adb7fccb4110988ef",
-  "reconciled_utc": "2026-11-12T14:05:43+00:00",
-  "run_id": "cp18c-evidence",
+  "reconciled_utc": "2026-11-12T19:07:12+00:00",
+  "run_id": "cp18c-accept",
   "schema": "cp18b-record-log-v1",
   "seq": 2
  },
- "run_id": "cp18c-evidence",
+ "run_id": "cp18c-accept",
  "schema": "cp18b-bundle-build-v1",
  "series_last_day": "2026-09-06",
  "served_artifact": {
@@ -1812,12 +1830,12 @@
   "sha256": "3e046a000a6bce7b22822dbf581b6f8a939ac49ec45eda30c4b6e0de0b742e98"
  },
  "size": {
-  "first_visit_bundle_bytes": 389028,
+  "first_visit_bundle_bytes": 389437,
   "first_visit_files": {
    "artifact.json": 8047,
    "evaluation.json": 342904,
    "issued-forecasts.json": 12337,
-   "manifest.json": 3381,
+   "manifest.json": 3790,
    "outcomes.json": 22359
   },
   "on_request_bytes": 4505719,
@@ -1831,7 +1849,7 @@
    "artifact-arrays.npz": 2133485,
    "series.json": 2324896
   },
-  "total_bytes": 5441836,
+  "total_bytes": 5442245,
   "training_window_bytes": 547089,
   "training_window_files": {
    "A1-2026-11-08.json": 4545,

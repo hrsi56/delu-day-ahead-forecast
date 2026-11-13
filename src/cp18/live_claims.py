@@ -177,6 +177,10 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
     return {'values': values, 'shared': shared, 'limitations': limitations}
 
 
+OPEN_DAY_WORDING = ('not issued; attempted, and still inside the three-day lookback, so a later run closes it with '
+                    'this cause')
+
+
 def _common(fresh_test: str) -> dict:
     """The keys both modes carry (the page reads them all): N7's labels, the hosts, the history wording, O33's."""
     from cp18 import running
@@ -184,6 +188,7 @@ def _common(fresh_test: str) -> dict:
     return {
         'live_product_record_name': 'A1, the designated policy',
         'live_evidence_prefix': 'Evidence, as the manifest states it: ',
+        'live_open_day_wording': OPEN_DAY_WORDING,
         # O18's N7: the artifact's nominal D−1 11:00 is the information cutoff, not when the work happened
         'live_issue_time_label': 'cutoff-based issue time',
         'live_issue_time_note': ('the information cutoff, D−1 11:00 Europe/Berlin, which the artifact records as its '
@@ -221,6 +226,7 @@ def _live_values(live: dict, fresh_test: str, status: str) -> dict:
         'live_product_name': 'v6 · DDNN-2 alone',
         'live_product_record_name': 'v6 (A1 in the frozen records)',
         'live_evidence_prefix': 'Evidence, as the manifest states it (the frozen records name v6 "A1"): ',
+        'live_open_day_wording': OPEN_DAY_WORDING,
         'live_product_status': status,
         'live_released_product': (
             'v1 is the product again: 4.7T did not pass' if failed else
@@ -318,6 +324,16 @@ def live_record(folder) -> dict:
                 outside.append({'first_day': str(last + timedelta(days=1)), 'last_day': str(nxt - timedelta(days=1)),
                                 'days': (nxt - last).days - 1, 'first_live_day': str(nxt), 'reason': entry['reason']})
     runs = []
+    # The open days (CP-18c): attempted by a run and not issued, still inside decision 23's lookback, so not yet closed
+    # in the ledger; each with its latest attempt's cause. A later issuance, or the lookback, closes them.
+    decided = set(store.days())
+    attempts: dict[str, list] = {}
+    for run in store.runs():
+        for day, item in sorted((run.get('days') or {}).items()):
+            if day not in decided and item.get('status') == 'open' and item.get('cause'):
+                attempts.setdefault(day, []).append((run.get('run_id'), item['cause']))
+    open_days = [{'day': day, 'cause': tries[-1][1], 'cause_text': causes.text(tries[-1][1]),
+                  'attempts': [r for r, _ in tries]} for day, tries in sorted(attempts.items())]
     for run in store.runs():
         runs.append({'run_id': run.get('run_id'), 'host_kind': run.get('host_kind'), 'mode': run.get('mode'),
                      'started_utc': _when(run.get('started_utc')), 'finished_utc': _when(run.get('finished_utc')),
@@ -331,7 +347,8 @@ def live_record(folder) -> dict:
                       'first_live_day': carried[-1]['first_live_day'] if carried else
                       (genesis.get('first_day') or genesis.get('origin')),
                       'last_day': head.get('last_day')},
-            'issued': issued, 'failed': failed, 'not_issued': not_issued, 'outside': outside, 'runs': runs}
+            'issued': issued, 'failed': failed, 'not_issued': not_issued, 'open': open_days, 'outside': outside,
+            'runs': runs}
 
 
 def live_summary(record: dict) -> dict:

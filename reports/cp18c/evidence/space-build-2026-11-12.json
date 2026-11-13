@@ -12,7 +12,7 @@
    "latest_issued_day": "2026-11-08",
    "state": "stale"
   },
-  "manifest_sha256": "c0c32fe9c12e11331f1e8459f53340f89aa8a4c5743f2b3156febe9096f89fbe",
+  "manifest_sha256": "7d2ae84ca96c6babcb499438598ce6e6a383ca6c2ff9c1312e242d1cbd2a3983",
   "start_records": [
    "issued-forecasts.json",
    "outcomes.json",
@@ -22,7 +22,7 @@
  },
  "claims_mode": "live",
  "claims_rehearsal_days": null,
- "claims_sha256": "ec3478e3bc13d1c4d948b4ca72e4007db7541e77e544d84abb6b7b609d7744d7",
+ "claims_sha256": "609459347e8a57b08e8f436679e1f26c955f8cada9269bbcfede4070a543a77e",
  "files": [
   {
    "bytes": 382,
@@ -30,9 +30,9 @@
    "sha256": "8f66b3f81007c983c7a7f7afc56439846cadaaf5fcc64ef4eb4252d12f7d70f8"
   },
   {
-   "bytes": 5169,
+   "bytes": 5578,
    "path": "README.md",
-   "sha256": "9167608d3b6d2c052b5612fe9d65f69b044b4b1eaeedd7e354f77d8c22b4ab8a"
+   "sha256": "23c384690ba70904758fc75ab3184e63e1939165737d43149150661101dcf98b"
   },
   {
    "bytes": 27265,
@@ -40,9 +40,9 @@
    "sha256": "fdcd37ebb03118db577a4ca86a840b2f253ab263d647dc10f6c2a7c6d6f23d4b"
   },
   {
-   "bytes": 12457,
+   "bytes": 12592,
    "path": "app/claims.json",
-   "sha256": "ec3478e3bc13d1c4d948b4ca72e4007db7541e77e544d84abb6b7b609d7744d7"
+   "sha256": "609459347e8a57b08e8f436679e1f26c955f8cada9269bbcfede4070a543a77e"
   },
   {
    "bytes": 19851,
@@ -55,14 +55,14 @@
    "sha256": "f80f56eddcb7fd8aed016ffb7752abc42069d7c880f34413e780ff38a4fd67e5"
   },
   {
-   "bytes": 8832,
+   "bytes": 9668,
    "path": "app/live-record.json",
-   "sha256": "c267770fc55123c77532d72028ff149547ee46a13d2bd472cced9e96b3cf984d"
+   "sha256": "007e754944381f4e3f2bb9288e9b2cf84ff22a32bb4dbd6f766dc6ea29621728"
   },
   {
-   "bytes": 102423,
+   "bytes": 102523,
    "path": "app/main.js",
-   "sha256": "c0fd998fa1ca31b03c79432934337e84314dc4569de565e67bb3f45c2a5638f8"
+   "sha256": "d3d0013308a882cfeba283f73863bc4848064ba315da97f384e58c0b985dca97"
   },
   {
    "bytes": 5345,
@@ -150,9 +150,9 @@
    "sha256": "5a69bd85b5742d3c071a065af6b5ce82a3a0d02f74d6c527391e25c070119b0c"
   },
   {
-   "bytes": 3381,
+   "bytes": 3790,
    "path": "payloads/manifest.json",
-   "sha256": "c0c32fe9c12e11331f1e8459f53340f89aa8a4c5743f2b3156febe9096f89fbe"
+   "sha256": "7d2ae84ca96c6babcb499438598ce6e6a383ca6c2ff9c1312e242d1cbd2a3983"
   },
   {
    "bytes": 22359,
@@ -334,7 +334,7 @@
   "zip_sha256": "460a94e1df39dc07ce549828c07da92d16a286b4344df1654772313e7164be94"
  },
  "live": {
-  "bytes": 8832,
+  "bytes": 9668,
   "issued_days": [
    "2026-11-06",
    "2026-11-07",
@@ -350,7 +350,7 @@
   },
   "running_schema": "cp18c-running-intervals-v1",
   "schema": "cp18c-space-live-v1",
-  "sha256": "c267770fc55123c77532d72028ff149547ee46a13d2bd472cced9e96b3cf984d",
+  "sha256": "007e754944381f4e3f2bb9288e9b2cf84ff22a32bb4dbd6f766dc6ea29621728",
   "store": {
    "entries": 14,
    "first_day": "2026-09-07",
@@ -597,19 +597,19 @@
    }
   },
   "first_visit": {
-   "bytes": 572789,
+   "bytes": 574269,
    "files": {
     "app/charts.js": 27265,
-    "app/claims.json": 12457,
-    "app/live-record.json": 8832,
-    "app/main.js": 102423,
+    "app/claims.json": 12592,
+    "app/live-record.json": 9668,
+    "app/main.js": 102523,
     "app/space-build.json": 21789,
     "app/style.css": 8568,
     "index.html": 2427,
     "payloads/artifact.json": 8047,
     "payloads/evaluation.json": 342904,
     "payloads/issued-forecasts.json": 12337,
-    "payloads/manifest.json": 3381,
+    "payloads/manifest.json": 3790,
     "payloads/outcomes.json": 22359
    }
   },
