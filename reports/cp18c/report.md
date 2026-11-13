@@ -19,8 +19,8 @@ The public name is "v6 · DDNN-2 alone" (the Orchestrator's O30); the frozen rec
 | 3. The live store | Genesis at 2026-09-06 (`seed-store --genesis …freeze-origin-state.json:2026-09-07:2026-09-06`), carried to 2026-11-03 with decision 28 as the reason; 2026-09-07..11-02 outside, never issued |
 | 4. The first live issuances | 2026-11-06, 11-07 and 11-08 issued by A1 on the Owner's Mac after the H2 gate; 2026-11-03..05 not issued, cause "a live day's inputs that cannot be shown to precede its cutoff"; the gap 2026-11-09..13 (§4) |
 | 5. Outcomes and evaluation | Reconciled through `cp18.outcomes` with the live transport; each price names its archive and record (N1); the live days are the prospective window only |
-| 6. The bundle and the Space | `cp18.bundle --mode live`: the gate passes (R7, the frozen identity, the native recompute), the red line on the research windows only, 20 of 20 negative controls refused. The Space from the live record (`--live`), v1 at `/history/`; the browser acceptance 603 passed, 0 failed, 1 not run |
-| 7. The publication | After the second Integration review's PASS (O37): one Hub commit, revision `0331088…` → `2fcd91cd819830919236f8dddb9e96a63a96b3cb` (2026-11-13T05:04:37Z; 854 added, 3 changed, v1's 802 root files deleted, the tree verified); A6's public checks 58 passed, 0 failed; the served identity equal on re-reading with the check fixed (§10). Records in `docs/track-b/evidence/cp-18c/publication-1*.json` |
+| 6. The bundle and the Space | `cp18.bundle --mode live`: the gate passes (R7, the frozen identity, the native recompute), the red line on the research windows only, 20 of 20 negative controls refused. The Space from the live record (`--live`), v1 at `/history/`; the browser acceptance 591 passed, 0 failed, 1 not run |
+| 7. The publication | After the second Integration review's PASS (O37): one Hub commit, revision `0331088…` → `2fcd91cd819830919236f8dddb9e96a63a96b3cb` (2026-11-13T05:04:37Z; 854 added, 3 changed, v1's 802 root files deleted, the tree verified); A6's public checks 58 passed, 0 failed; the served identity equal on re-reading with the check fixed (§10). Then a daily update (O37), 2026-11-13T14:59Z: `2fcd91cd…` → `8f6a9d9f7763de10e887e0cc69fbfbc88fe3c3d3`, the bundle fresh as of 2026-11-13 with 2026-11-14 issued, the served identity equal on the first attempt (874 files, 871 raw, 2 normalized, the card in the Hub tree). Records in `docs/track-b/evidence/cp-18c/publication-*.json` |
 | 8. The daily operation | §9 below |
 | 9. N5, N1, N7, the bridge-day edge, the rulesets | Done (§§4, 6, 7); the rulesets stay CP-18a's written `reports/cp18a/rulesets/`, applied by the Orchestrator after the LAND |
 | 10. The exposure ledger's continuation | `docs/track-b/exposure-ledger-continued.md`, entry 6, dated 2026-11-05 by the first retrieval; no market value |
@@ -129,10 +129,11 @@ builds it from the live record (the Space Builder's work):
   each matching the Hub's blob id), at `/history/`.
 
 The browser acceptance (`tests/cp18c/space_acceptance.py`, `reports/cp18c/acceptance/acceptance.json`), on the Space
-built from the candidate's live record as of 2026-11-12 (bundle `7d2ae84c…`, stale, the open days listed): Chromium and
-WebKit, seven widths, **603 passed, 0 failed, 1 not run** (WebKit's `<details>` state, as in CP-18b; 25 checks
-superseded by the variants' rerun); zero non-local requests; "Train it yourself" identical bit for bit in both engines,
-the changed seed "different".
+built from the live record as of 2026-11-13 (bundle `127d5bb5…`, fresh, 2026-11-14 issued, the days not issued listed
+with their causes): Chromium and WebKit, seven widths, **591 passed, 0 failed, 1 not run** (WebKit's `<details>` state,
+as in CP-18b); zero non-local requests; "Train it yourself" identical bit for bit in both engines, the changed seed
+"different"; the History link names `history/index.html`, and v1's demo opens from it. An earlier run, as of
+2026-11-12 with the open days, read 603 passed, 0 failed, 1 not run.
 
 ## 8. O33's interval method
 
@@ -190,6 +191,13 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
   contiguous run of those tags anywhere in the head, and nothing else (`tests/cp18c/test_publish_hub.py`). Re-read with
   the fixed check, the first publication is equal: 870 files, 867 raw and 2 normalized, the card in the tree
   (`publication-1-served-recheck.json`). The daily operation would otherwise have recorded every publication as failed.
+- **The History link left the Space on the public host.** The product page linked v1's demo as `/history/`. Hugging
+  Face's static host serves no directory index and redirects that path to `https://huggingface.co/history`, an unrelated
+  user's profile, while `history/index.html` serves v1. The local acceptance's server serves directory indexes, so it
+  could not see this. The public check of publication 2 recorded the redirect as a pass, because it accepted any
+  `200`. Fixed: the link names `history/index.html`. The acceptance follows the page's own link. The public check
+  (`tests/cp18c/public_check.py`) follows the Space's own History link and requires v1's page, by its served title, on
+  the Space's origin.
 - **The first Integration review failed** (`docs/track-b/evidence/cp-18c/integration-1-fail.md`, at `ab4915c0`): days a
   run attempted and could not issue, still inside the lookback after the last issued day (2026-11-10..13), were missing
   from the Space's "Days not issued", or shown without their cause, because only closed days were listed. Repaired: the

@@ -1029,7 +1029,16 @@ def history_route(rec: Record, p, dist: Path):
     try:
         ctx = open_context(browser, server.base, blocked, seen, viewport={'width': 1440, 'height': 900})
         page = ctx.new_page()
-        page.goto(server.base + '/history/')
+        # the page's own History link, as a visitor follows it (a static host serves no directory index: CP-18c's
+        # publication found '/history/' redirected away from the Space; the link names history/index.html)
+        page.goto(server.base + '/')
+        wait_until(page, '!!(window.__space && (window.__space.ready || window.__space.startError))', 120)
+        page.evaluate("location.hash = '#history'")
+        time.sleep(1)
+        href = page.evaluate("(document.querySelector('[data-history-link]') || {}).getAttribute ? document.querySelector('[data-history-link]').getAttribute('href') : null")
+        rec.check("History route: the page's own link names v1's page by file, never a directory", href == 'history/index.html',
+                  {'href': href}, engine='chromium')
+        page.goto(server.base + '/' + (href or 'history/index.html'))
         time.sleep(15)
         served = server.take()
         rec.value['requests']['history'] = {'blocked_non_local': sorted(set(blocked)), 'local_paths': len({s['path'] for s in served}),

@@ -1378,7 +1378,7 @@
     panel.appendChild(h('p', {}, L('live_history_network')));
     const hist = S.build.history || {};
     if (hist.present) {
-      panel.appendChild(h('p', {}, h('a', {class: 'route', href: '/history/', 'data-history-link': '1'}, "Open v1's frozen demo (historical)")));
+      panel.appendChild(h('p', {}, h('a', {class: 'route', href: 'history/index.html', 'data-history-link': '1'}, "Open v1's frozen demo (historical)")));
       if (hist.note) panel.appendChild(h('p', {class: 'secondary', 'data-history-note': '1'}, `Note: ${hist.note}.`));
     } else {
       panel.appendChild(state('unavailable', "v1's demo is not in this build", 'This local build has no /history/ route.', {route: true}));
