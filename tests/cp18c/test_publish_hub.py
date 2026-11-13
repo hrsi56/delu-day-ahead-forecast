@@ -96,3 +96,43 @@ def test_both_callers_run_the_publication_with_the_pinned_client():
     assert f'--with "{P.HUB_CLIENT}"' in step and 'UV_PROJECT_ENVIRONMENT=.venv' in step and '--no-sync' in step
     local = (ROOT / 'src/cp18/local.py').read_text()
     assert 'hub_command(args) if publish == \'hub\'' in local
+
+
+def test_the_space_card_rendered_by_the_host_is_verified_in_the_hub_tree(tmp_path):
+    """The static host serves README.md rendered as HTML; the served identity checks it in the Hub tree instead."""
+    import json
+    build = tmp_path / 'build'
+    bundle = tmp_path / 'bundle'
+    for folder in (build, bundle):
+        folder.mkdir()
+    manifest = {'artifact': {'artifact_sha256': 'a' * 64}, 'files': []}
+    (bundle / 'manifest.json').write_text(json.dumps(manifest))
+    (build / 'README.md').write_bytes(b'---\nsdk: static\n---\ncard')
+    (build / 'index.html').write_bytes(b'<html><head></head></html>')
+    (build / 'app').mkdir()
+    listed = {p: {'sha256': hashlib.sha256((build / p).read_bytes()).hexdigest()} for p in ('README.md', 'index.html')}
+    (build / 'app' / 'space-build.json').write_text(json.dumps({'files': listed}))
+    served = {'payloads/manifest.json': (bundle / 'manifest.json').read_bytes(), 'index.html': (build / 'index.html').read_bytes(),
+              'README.md': b'<head></head><div>rendered card</div>',
+              'payloads/artifact.json': json.dumps({'artifact_sha256': 'a' * 64}).encode()}
+    fetch = served.get
+    raw = P.verify_served(fetch, build, bundle)
+    assert not raw['served_identity_equal'] and any('README.md' in x for x in raw['problems'])
+    hub = P.verify_served(fetch, build, bundle, P.HubTarget.host_rendered, {'verified': True})
+    assert hub['served_identity_equal'] and hub['verified_in_the_hub_tree_only'] == ['README.md']
+    unverified = P.verify_served(fetch, build, bundle, P.HubTarget.host_rendered, {'verified': False})
+    assert not unverified['served_identity_equal']
+    assert P.LocalTarget.host_rendered == ()
+
+
+def test_the_meta_run_may_sit_anywhere_in_the_head_once():
+    page = (b'<!doctype html><html><head><meta charset="utf-8"><script src="/app/main.js" defer></script>\n'
+            b'<title>t</title></head><body></body></html>')
+    want = hashlib.sha256(page).hexdigest()
+    served = page.replace(b'<head>', b'<head><script>window.huggingface={variables:{"A":"1"}};</script>').replace(
+        b'defer></script>\n', b'defer></script>\n<meta property="og:title" content="v6"><meta name="twitter:card" content="s">')
+    assert P.matches('index.html', served, want) == (True, 'normalized')
+    twice = served.replace(b'<meta charset="utf-8">', b'<meta charset="utf-8"><meta property="og:x" content="y">')
+    assert P.matches('index.html', twice, want)[0] is False                 # two runs: ambiguous, compared as served
+    body = page.replace(b'<body>', b'<body><meta property="og:title" content="v6">')
+    assert P.matches('index.html', body, want)[0] is False                  # outside the head: never removed

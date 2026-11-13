@@ -73,6 +73,7 @@ class LocalTarget:
     """A static host on this machine: the build is copied into `folder`, which a local server serves."""
 
     kind = 'local static server'
+    host_rendered: tuple = ()
 
     def __init__(self, folder):
         self.folder = Path(folder)
@@ -99,6 +100,9 @@ class HubTarget:
     and HTTP status only."""
 
     kind = 'Hugging Face Static Space'
+    #: The Space card: the static host serves README.md rendered as HTML, never as its bytes (found at CP-18c's
+    #: publication). Its bytes are verified in the Hub tree at the new revision instead (`upload`'s tree check).
+    host_rendered: tuple = ('README.md',)
 
     def __init__(self, repo: str, *, authorized: bool = False, hub=None, committer=None):
         if not authorized:
@@ -190,21 +194,35 @@ def listed(build: Path) -> dict[str, dict]:
 
 
 # ------------------------------------------------------------------ reading what is served
-#: What Hugging Face's static host injects into every served HTML file, right after its first `<head>`: one script
-#: naming the Space's creator, then Open Graph and Twitter card tags. Nothing else is accepted as an injection.
-HF_INJECTION = re.compile(rb'<script>window\.huggingface=\{[^<]*\};</script>'
-                          rb'(?:<meta (?:property|name)="(?:og|twitter):[a-z_:]+" content="[^"<>]*">)*')
+#: What Hugging Face's static host injects into every served HTML page (found at CP-18c's publication): one script
+#: naming the Space's creator right after `<head>`, and one contiguous run of Open Graph and Twitter card tags somewhere
+#: inside the head (after the injected script on one page, after the page's own last head script on another). Nothing
+#: else is accepted as an injection, and two runs are ambiguous: the page is then compared as served.
+HF_SCRIPT = re.compile(rb'<script>window\.huggingface=\{[^<]*\};</script>')
+HF_META_RUN = re.compile(rb'(?:<meta (?:property|name)="(?:og|twitter):[a-z_:]+" content="[^"<>]*">)+')
 
 
 def normalized(path: str, data: bytes) -> tuple[bytes, bytes | None]:
-    """A served HTML file without the host's injection (A6: "raw/normalized hashes as applicable"); else as served."""
+    """A served HTML page without the host's injection (A6: "raw/normalized hashes as applicable"); else as served."""
     if not path.endswith('.html'):
         return data, None
-    i = data.find(b'<head>')
-    m = HF_INJECTION.match(data, i + 6) if i >= 0 else None
-    if not m or m.end() == i + 6:
+    i, e = data.find(b'<head>'), data.find(b'</head>')
+    if i < 0 or e < i:
         return data, None
-    return data[:i + 6] + data[m.end():], data[i + 6:m.end()]
+    head, removed = data[i + 6:e], []
+    m = HF_SCRIPT.match(head)
+    if m:
+        removed.append(m.group(0))
+        head = head[m.end():]
+    runs = list(HF_META_RUN.finditer(head))
+    if len(runs) > 1:
+        return data, None
+    if runs:
+        removed.append(runs[0].group(0))
+        head = head[:runs[0].start()] + head[runs[0].end():]
+    if not removed:
+        return data, None
+    return data[:i + 6] + head + data[e:], b''.join(removed)
 
 
 def matches(path: str, data: bytes | None, sha256: str, size: int | None = None) -> tuple[bool, str]:
@@ -255,7 +273,7 @@ def http_fetch(base: str):
     return get
 
 
-def verify_served(fetch, build: Path, bundle: Path) -> dict:
+def verify_served(fetch, build: Path, bundle: Path, rendered: tuple = (), tree: dict | None = None) -> dict:
     """The served identity against the intended build and bundle; every difference is listed."""
     intended = read(bundle)
     problems = []
@@ -277,7 +295,14 @@ def verify_served(fetch, build: Path, bundle: Path) -> dict:
         how[kind] = how.get(kind, 0) + 1
         if not ok:
             problems.append(f"payloads/{f['path']}: not served as the manifest lists it")
+    by_tree = []
     for path, item in sorted(listed(build).items()):
+        if path in rendered:
+            # served rendered by the host, never as bytes: its bytes are the Hub tree's, checked at the new revision
+            if not (tree or {}).get('verified'):
+                problems.append(f'{path}: rendered by the host and not verified in the Hub tree')
+            by_tree.append(path)
+            continue
         data = fetch(path)
         checked += 1
         ok, kind = matches(path, data, item['sha256'])
@@ -288,6 +313,7 @@ def verify_served(fetch, build: Path, bundle: Path) -> dict:
     if served_artifact is None or json.loads(served_artifact).get('artifact_sha256') != want['artifact']['artifact_sha256']:
         problems.append('the served artifact is not the intended daily artifact')
     return {'served_identity_equal': not problems, 'problems': problems[:50], 'checked': checked, 'how': how,
+            'verified_in_the_hub_tree_only': by_tree,
             'served_manifest_sha256': sha(served_manifest), 'intended_manifest_sha256': sha(intended['manifest.json']),
             'artifact_sha256': want['artifact']['artifact_sha256']}
 
@@ -329,12 +355,14 @@ def publish(build: Path, bundle: Path, target, fetch, root=None, *, retries: int
         if isinstance(exc, PublicationRefused) and 'HF_TOKEN' not in str(exc):
             out['stopped'] += f': {exc}'
         return out
-    out['served'] = verify_served(fetch, build, bundle)
+    rendered = tuple(getattr(target, 'host_rendered', ()))
+    hub_tree = (out['upload'] or {}).get('tree') if isinstance(out.get('upload'), dict) else None
+    out['served'] = verify_served(fetch, build, bundle, rendered, hub_tree)
     out['served_attempts'] = [{'at': _now(), 'equal': out['served']['served_identity_equal'],
                                'problems': out['served']['problems'][:5]}]
     while not out['served']['served_identity_equal'] and len(out['served_attempts']) < retries + 1:
         sleep(retry_seconds)                  # a CDN may serve the previous revision for a while: retried, recorded
-        out['served'] = verify_served(fetch, build, bundle)
+        out['served'] = verify_served(fetch, build, bundle, rendered, hub_tree)
         out['served_attempts'].append({'at': _now(), 'equal': out['served']['served_identity_equal'],
                                        'problems': out['served']['problems'][:5]})
     out['published'] = out['served']['served_identity_equal']

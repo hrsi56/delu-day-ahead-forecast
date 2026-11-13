@@ -19,8 +19,8 @@ The public name is "v6 · DDNN-2 alone" (the Orchestrator's O30); the frozen rec
 | 3. The live store | Genesis at 2026-09-06 (`seed-store --genesis …freeze-origin-state.json:2026-09-07:2026-09-06`), carried to 2026-11-03 with decision 28 as the reason; 2026-09-07..11-02 outside, never issued |
 | 4. The first live issuances | 2026-11-06, 11-07 and 11-08 issued by A1 on the Owner's Mac after the H2 gate; 2026-11-03..05 not issued, cause "a live day's inputs that cannot be shown to precede its cutoff"; the gap 2026-11-09..13 (§4) |
 | 5. Outcomes and evaluation | Reconciled through `cp18.outcomes` with the live transport; each price names its archive and record (N1); the live days are the prospective window only |
-| 6. The bundle and the Space | `cp18.bundle --mode live`: the gate passes (R7, the frozen identity, the native recompute), the red line on the research windows only, 20 of 20 negative controls refused. The Space from the live record (`--live`), v1 at `/history/`; the browser acceptance 590 passed, 0 failed, 1 not run |
-| 7. The publication | After the Integration PASS (the return records it) |
+| 6. The bundle and the Space | `cp18.bundle --mode live`: the gate passes (R7, the frozen identity, the native recompute), the red line on the research windows only, 20 of 20 negative controls refused. The Space from the live record (`--live`), v1 at `/history/`; the browser acceptance 603 passed, 0 failed, 1 not run |
+| 7. The publication | After the second Integration review's PASS (O37): one Hub commit, revision `0331088…` → `2fcd91cd819830919236f8dddb9e96a63a96b3cb` (2026-11-13T05:04:37Z; 854 added, 3 changed, v1's 802 root files deleted, the tree verified); A6's public checks 58 passed, 0 failed; the served identity equal on re-reading with the check fixed (§10). Records in `docs/track-b/evidence/cp-18c/publication-1*.json` |
 | 8. The daily operation | §9 below |
 | 9. N5, N1, N7, the bridge-day edge, the rulesets | Done (§§4, 6, 7); the rulesets stay CP-18a's written `reports/cp18a/rulesets/`, applied by the Orchestrator after the LAND |
 | 10. The exposure ledger's continuation | `docs/track-b/exposure-ledger-continued.md`, entry 6, dated 2026-11-05 by the first retrieval; no market value |
@@ -168,7 +168,7 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
 - **The rehearsal** in the public scratch repository `hrsi56/delu-pipeline-dryrun`, fake credentials only, development
   days only (`reports/cp18c/rehearsal/`): run 42221640423 (success, 689 s: genesis, one issuance, the bundle with
   `--arrays`, the Space, the local publication, the records, the GFS decode check) and run 42223428846 (success,
-  291 s: the carried store, nothing to issue, the bundle by `--refit`). **0.27 of 3 job-hours.** The runner's ecCodes
+  291 s: the carried store, nothing to issue, the bundle by `--refit`). **0.27 of 6 job-hours.** The runner's ecCodes
   2.49.0 decoded the 2026-09-05 run equal to the archived decode, every message byte for byte.
 - **The local fallback** (`python -m cp18.local run --mode live`, `acquire`): the same binary, checks and claim; it
   exports `CP17_PROJECT_ROOT` and `CP26_PROJECT_ROOT` first. Its two `launchd` agents,
@@ -181,6 +181,15 @@ minimum is 14 scored days** (two blocks); before it the running mean stands alon
 
 ## 10. Disclosures
 
+- **The first publication's served-identity check failed, though the upload was right.** It ran 21 attempts
+  (2026-11-13T05:10–06:52Z) and found two differences, both the host's and not the Space's. Hugging Face's static host
+  serves `README.md`, the Space card, rendered as HTML, never as its bytes. It also places its Open Graph and Twitter
+  tags after the page's own last head script, while the normalization expected them right after its injected script, as
+  on v1's page. Fixed in `cp18.publish`: the Hub target names the card as host-rendered, so its bytes are checked in the
+  Hub tree at the new revision, which `upload` verifies; HTML is compared after removing the one injected script and one
+  contiguous run of those tags anywhere in the head, and nothing else (`tests/cp18c/test_publish_hub.py`). Re-read with
+  the fixed check, the first publication is equal: 870 files, 867 raw and 2 normalized, the card in the tree
+  (`publication-1-served-recheck.json`). The daily operation would otherwise have recorded every publication as failed.
 - **The first Integration review failed** (`docs/track-b/evidence/cp-18c/integration-1-fail.md`, at `ab4915c0`): days a
   run attempted and could not issue, still inside the lookback after the last issued day (2026-11-10..13), were missing
   from the Space's "Days not issued", or shown without their cause, because only closed days were listed. Repaired: the
