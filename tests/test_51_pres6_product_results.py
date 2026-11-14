@@ -427,21 +427,18 @@ def test_no_surface_says_hourly_prices_are_committed_only_for_v5s_periods():
 
 
 def test_the_evidence_tags_date_is_the_tips():
-    """The page labels the product results' rows "frozen <date>" from the registry; that date is the evidence tip's
-    (packet §8.2). Before the tag exists, it is no earlier than the last commit of the rows it labels."""
+    """The page labels the product results' rows "frozen <date>" from the registry; that date is the evidence tip's.
+    Checked where the tag is present. Without it (GitHub's CI checks out no tags) nothing in the history can date the
+    tip, since `main` holds the squash, not the tip: packet §8.2 checks the date before the tag is made (Integration
+    recheck, N1: a fallback to the landing commit's date would turn `main` red whenever the landing is a day late)."""
     import subprocess
 
     from delu_forecast import registry as G
 
     date = G.EVIDENCE_TAGS["evidence/pres-6"][1]
+    assert re.fullmatch(r"2026-11-1[4-9]", date)
     tagged = subprocess.run(["git", "log", "-1", "--format=%cs", "evidence/pres-6"], cwd=ROOT, capture_output=True,
                             text=True)
-    if tagged.returncode == 0 and tagged.stdout.strip():
-        assert date == tagged.stdout.strip()
-        return
-    rows = subprocess.run(["git", "log", "-1", "--format=%cs", "--", "reports/pres6/product-results"], cwd=ROOT,
-                          capture_output=True, text=True)
-    commits = subprocess.run(["git", "rev-list", "--count", "HEAD"], cwd=ROOT, capture_output=True, text=True)
-    if rows.returncode != 0 or not rows.stdout.strip() or commits.stdout.strip() == "1":
-        pytest.skip("no history here to date the rows")
-    assert date >= rows.stdout.strip()
+    if tagged.returncode != 0 or not tagged.stdout.strip():
+        pytest.skip("the evidence/pres-6 tag is not in this checkout (packet §8.2 checks the date before tagging)")
+    assert date == tagged.stdout.strip()

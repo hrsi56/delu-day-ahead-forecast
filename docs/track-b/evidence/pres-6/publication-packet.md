@@ -710,6 +710,14 @@ fixed in `1cb0608d`. Its advisories: §10.3 item 1's margin updated; the bins' t
 explanation's nine-of-ten groups and the manifest's sources list stay as disclosed (§5c, §6); §0's coverage correction
 carries its own disclosure; §8.2's last check lists the names it compares. Everything else in its checklist passed.
 
+**Integration review 2** (`integration-review-2.md`, the focused recheck, PASS at `6dfca90f`): review 1's acceptance test
+passes item by item; the delta moves no number. Its advisory N1 needed action: `test_51`'s date check fell back, without
+the tag (GitHub's CI fetches none), to the landing commit's date, so a landing after 2026-11-15 would have turned
+`main`'s CI red; the check now runs only where the tag is present (packet §8.2 checks the date before tagging). N2: the
+evidence tip is committed on 2026-11-15 (local time), the date the registry carries. N3: the final-stage prerelease ran
+at `f8fcd723`, as §7 says; the code delta since is the fix, one test and the date. N4: §7 binds the served page's hash.
+N5: the bins' reason is procedural and true; kept.
+
 **The focused recheck at the final SHA** (`integration.md`): its own verdict.
 
 ### 10.5 Integration review 4's R1–R7
