@@ -122,7 +122,7 @@
     }
   },
   "check": "Release checks of PUBLISH_RULES 1.0 \u00a79 (Publication Standard v1 \u00a710), the \u00a71 placements with A2's measured header, and A5's discovery routes",
-  "checked_at_utc": "2026-11-14T16:52:17+00:00",
+  "checked_at_utc": "2026-11-14T21:34:14+00:00",
   "discovery": [
     {
       "engine": "chrome",
@@ -11397,7 +11397,7 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 5515,
+          "checked": 5517,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -11407,7 +11407,7 @@
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 5513,
+          "checked": 5515,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -11458,7 +11458,7 @@
         "1440": {
           "below": [],
           "below_count": 0,
-          "checked": 5515,
+          "checked": 5517,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -11468,7 +11468,7 @@
         "390": {
           "below": [],
           "below_count": 0,
-          "checked": 5513,
+          "checked": 5515,
           "non_text": {
             "below": [],
             "below_count": 0,
@@ -11535,7 +11535,7 @@
         "smallest_text_px": 12.38
       },
       "cold_reader_screens": {
-        "folder": ".local/artifacts/pres-6/release-http-6/cold-reader/chrome-1440x900",
+        "folder": ".local/artifacts/pres-6/release-http-7/cold-reader/chrome-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -11621,7 +11621,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-6/release-http-6/cold-reader/chrome-1440x900",
+        "folder": ".local/artifacts/pres-6/release-http-7/cold-reader/chrome-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -11735,7 +11735,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/chrome/1440x900.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/chrome/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -11797,7 +11797,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/chrome/768x1024.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/chrome/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -11824,7 +11824,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-6/release-http-6/placement/chrome-390x844",
+        "folder": ".local/artifacts/pres-6/release-http-7/placement/chrome-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -11950,7 +11950,7 @@
           44916,
           45704,
           46492,
-          46877
+          46903
         ],
         "screens": 61,
         "step_px": 788
@@ -11978,7 +11978,7 @@
           "top": 458.6
         },
         "order": "A8",
-        "page_height": 47721,
+        "page_height": 47747,
         "release_rule": {
           "bottom": 1133.6,
           "top": 1045.6
@@ -11992,7 +11992,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/chrome/390x844.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/chrome/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -12040,7 +12040,7 @@
           "top": 483.6
         },
         "order": "A8",
-        "page_height": 49326,
+        "page_height": 49352,
         "release_rule": {
           "bottom": 1251.6,
           "top": 1141.6
@@ -12054,7 +12054,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/chrome/360x780.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/chrome/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -12102,7 +12102,7 @@
           "top": 483.6
         },
         "order": "A8",
-        "page_height": 51185,
+        "page_height": 51211,
         "release_rule": {
           "bottom": 1370.6,
           "top": 1260.6
@@ -12116,7 +12116,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/chrome/320x640.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/chrome/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -12143,7 +12143,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-6/release-http-6/placement/webkit-1440x900",
+        "folder": ".local/artifacts/pres-6/release-http-7/placement/webkit-1440x900",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -12217,7 +12217,7 @@
           26164,
           27008,
           27852,
-          28112
+          28138
         ],
         "screens": 35,
         "step_px": 844
@@ -12245,7 +12245,7 @@
           "top": 644.8
         },
         "order": "A8",
-        "page_height": 29012,
+        "page_height": 29038,
         "release_rule": {
           "bottom": 296.9,
           "top": 208.9
@@ -12259,7 +12259,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/webkit/1440x900.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/webkit/1440x900.png",
       "view": "1440x900",
       "viewport": "1440x900"
     },
@@ -12307,7 +12307,7 @@
           "top": 520.5
         },
         "order": "A8",
-        "page_height": 38450,
+        "page_height": 38476,
         "release_rule": {
           "bottom": 993.9,
           "top": 927.9
@@ -12321,7 +12321,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/webkit/768x1024.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/webkit/768x1024.png",
       "view": "768x1024",
       "viewport": "768x1024"
     },
@@ -12340,7 +12340,7 @@
         "smallest_text_px": 14.58
       },
       "cold_reader_screens": {
-        "folder": ".local/artifacts/pres-6/release-http-6/cold-reader/webkit-390x844",
+        "folder": ".local/artifacts/pres-6/release-http-7/cold-reader/webkit-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -12466,7 +12466,7 @@
           44916,
           45704,
           46492,
-          46877
+          46903
         ],
         "screens": 61,
         "step_px": 788
@@ -12480,7 +12480,7 @@
       "http_errors": [],
       "overflow_with_disclosures_open": 0,
       "placement_screens": {
-        "folder": ".local/artifacts/pres-6/release-http-6/cold-reader/webkit-390x844",
+        "folder": ".local/artifacts/pres-6/release-http-7/cold-reader/webkit-390x844",
         "header_px": 56,
         "header_px_seen": [
           56,
@@ -12606,7 +12606,7 @@
           44916,
           45704,
           46492,
-          46877
+          46903
         ],
         "screens": 61,
         "step_px": 788
@@ -12634,7 +12634,7 @@
           "top": 458.7
         },
         "order": "A8",
-        "page_height": 47721,
+        "page_height": 47747,
         "release_rule": {
           "bottom": 1133.6,
           "top": 1045.6
@@ -12648,7 +12648,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/webkit/390x844.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/webkit/390x844.png",
       "view": "390x844",
       "viewport": "390x844"
     },
@@ -12696,7 +12696,7 @@
           "top": 483.7
         },
         "order": "A8",
-        "page_height": 49350,
+        "page_height": 49376,
         "release_rule": {
           "bottom": 1251.6,
           "top": 1141.6
@@ -12710,7 +12710,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/webkit/360x780.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/webkit/360x780.png",
       "view": "360x780",
       "viewport": "360x780"
     },
@@ -12758,7 +12758,7 @@
           "top": 483.7
         },
         "order": "A8",
-        "page_height": 51184,
+        "page_height": 51210,
         "release_rule": {
           "bottom": 1370.6,
           "top": 1260.6
@@ -12772,7 +12772,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/webkit/320x640.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/webkit/320x640.png",
       "view": "320x640",
       "viewport": "320x640"
     },
@@ -12820,7 +12820,7 @@
           "top": 458.7
         },
         "order": "A8",
-        "page_height": 47552,
+        "page_height": 47578,
         "release_rule": {
           "bottom": 1133.6,
           "top": 1045.6
@@ -12834,7 +12834,7 @@
       },
       "problems": [],
       "resources_after_document": [],
-      "screenshot": ".local/artifacts/pres-6/release-http-6/webkit/iphone-15.png",
+      "screenshot": ".local/artifacts/pres-6/release-http-7/webkit/iphone-15.png",
       "view": "iphone-15",
       "viewport": "393x659"
     }

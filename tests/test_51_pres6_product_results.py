@@ -424,3 +424,24 @@ def test_no_surface_says_hourly_prices_are_committed_only_for_v5s_periods():
                        ("populations", " ".join(R.POPULATIONS.values()))):
         assert not FALSE_PRICE_CLAUSES.search(text), name
     assert FALSE_PRICE_CLAUSES.search("the only hours whose prices are committed hour by hour")  # the negative control
+
+
+def test_the_evidence_tags_date_is_the_tips():
+    """The page labels the product results' rows "frozen <date>" from the registry; that date is the evidence tip's
+    (packet §8.2). Before the tag exists, it is no earlier than the last commit of the rows it labels."""
+    import subprocess
+
+    from delu_forecast import registry as G
+
+    date = G.EVIDENCE_TAGS["evidence/pres-6"][1]
+    tagged = subprocess.run(["git", "log", "-1", "--format=%cs", "evidence/pres-6"], cwd=ROOT, capture_output=True,
+                            text=True)
+    if tagged.returncode == 0 and tagged.stdout.strip():
+        assert date == tagged.stdout.strip()
+        return
+    rows = subprocess.run(["git", "log", "-1", "--format=%cs", "--", "reports/pres6/product-results"], cwd=ROOT,
+                          capture_output=True, text=True)
+    commits = subprocess.run(["git", "rev-list", "--count", "HEAD"], cwd=ROOT, capture_output=True, text=True)
+    if rows.returncode != 0 or not rows.stdout.strip() or commits.stdout.strip() == "1":
+        pytest.skip("no history here to date the rows")
+    assert date >= rows.stdout.strip()
