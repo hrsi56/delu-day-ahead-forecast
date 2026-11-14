@@ -366,8 +366,9 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     4.7T's registered terms, and the live product. Development data only.
   - **One public defect, fixed:** the link to v1's historical demo redirected to an unrelated profile for
     about 55 minutes (O44).
-  - **Next:** 4.7T, no earlier than 2026-12-04, then the publication of its result with A8's
-    product-first order (O38).
+  - **Next:** 4.7T, no earlier than 2026-12-04, then the publication of its result.
+- **PRES-6 issued on 2026-11-14** (brief `bdb78f02…`; Session Log): A8's product-first order now (O46
+  reverses O38). The page will show v6's product results and business insights before the model comparison.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1169,6 +1170,20 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **PRES-6 issued, 2026-11-14** (brief `bdb78f02894896d2ee1f249355d23351f972cdb217d4d906d22561172f40e5f6`;
+  canonical copy `.local/artifacts/pres-6/issued-brief.md`).
+  - **Why.** The Owner asked why the top of the page shows no charts of v6's performance, as the
+    publication contract defines for a final product. O46 reverses O38: A8 applies now.
+  - **What it does:**
+    - Product results: v6's development-period charts, from CP-28's stored forecasts with no fit;
+    - Business insights: the section kept, stating that no economic evaluation exists yet;
+    - both placed before How the models compare;
+    - the link checker refuses cross-origin redirects, and the receipt normalizes by CP-18c's rule;
+    - review 4's R1–R7 where they apply.
+
+    No external write.
+  - **Ceilings:** about 16 active hours, 10 local machine-hours and 4 workers.
 
 - **PRES-5 landed and deployed, 2026-11-13/14** (`land/pres-5` `8bcfc454`, evidence tip `511e91e3`;
   [landing record](docs/track-b/pres-5-landing-2026-11-14.md)).
