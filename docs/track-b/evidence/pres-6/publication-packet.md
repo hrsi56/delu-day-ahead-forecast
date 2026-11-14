@@ -650,6 +650,15 @@ existing committed result made any computation unnecessary.
    recorded, not a PRES-6 failure.
 6. **Business insights draws no chart** (A8: business conclusions cite the results "without duplicating full charts").
    Proposed: accept.
+7. **The comparison chart clips v6's interval-score marker on phones** (fresh reader, P18): at 0.437 it lies below
+   the phone axis's start, so the hexagon is drawn at x < 0. The chart is PRES-5's, already public, and the brief keeps
+   the comparison unchanged. Proposed: a small presentation fix after this landing (the phone axis's lower bound), not
+   under this brief.
+8. **The fresh reader's other confusions are in sections PRES-6 does not change** (`fresh-reader.md`, Dispositions):
+   "Owner", "4.7T", "re-baseline" and "A1 in the frozen records" undefined at first use; the policy counts (7, 13, 25,
+   16); −7% beside −6% on two populations; "point error" beside "point-error score"; two development-period ends;
+   "descriptive" beside "confidence" intervals. Proposed: one glossary-and-wording pass over the opening and the
+   comparison as its own presentation checkpoint.
 
 ### 10.4 The reviews' findings and their dispositions
 
@@ -661,7 +670,7 @@ its row; no evidence-class, W54 or W55 breach). Fixed in `b48888a9` unless state
 | E1 (violation) | **Fixed.** The heading and route read "Which inputs moved its median on two development days"; topic 6 reads "Input attribution: two days and live" |
 | E2 (violation) | **Fixed** by the review's fallback within the budget: the identity line governs every graphic ("Every graphic below, unless it names fewer days: …"); the three graphics on fewer days name theirs in their own text |
 | E3 (violation) | **Fixed.** Coverage with its width on its own line directly below the finding; with the width inside the finding it ended at 2,480.5 px on phones, beyond A2's 2,420. P68 amended to match |
-| E4 (violation) | **Fixed.** The caption names EUR/MWh and the ratio |
+| E4 (violation) | **Fixed.** The caption names EUR/MWh; the column reads "Ratio to the naive" (a phone-width caption, after the fresh reader) |
 | E5 | **Fixed.** The bins' rise and largest gap from records (bin 10, 516.9 against 510.9); "ten bins of equal size"; the route names v5's test periods |
 | E6 | **Fixed.** "Mean absolute contributions"; the method in a sentence |
 | E7 | **Fixed.** "Averaged over the development days … missed"; the unevaluated advice replaced by "how to size that allowance has not been evaluated"; "any of them" |
@@ -669,14 +678,18 @@ its row; no evidence-class, W54 or W55 breach). Fixed in `b48888a9` unless state
 | E9 | **Fixed.** The regimes dated; "about half"; "none is too thin to report" with its 60-day rule |
 | E10 | **Fixed.** "Each a little below its nominal level"; the naive's coverage stated as not in the committed rows |
 | E11 | **Fixed.** The evidence row links all product-result rows |
-| E12 | **Partly fixed.** The naive is defined in the caveat (`baselines.py::SIMILAR_DAY_LAG_BY_WEEKDAY`). "Eligible" stays CP-26's term, defined at the every-day panel; the budget leaves no room for a second definition |
+| E12 | **Fixed.** The naive is defined in the caveat (`baselines.py::SIMILAR_DAY_LAG_BY_WEEKDAY`), and, after the fresh reader asked the same, "eligible" too (CP-26's eligibility calendar) |
 | E13 | **Fixed.** "Each panel has its own price scale" |
 | E14 | **Fixed.** Topic 6's body as proposed |
 | E15 | **Fixed.** The README's route names the explanation |
 | E16 | **Fixed.** "Which opens no earlier than 2026-12-04"; "the Space shows the live record" |
 | E17 | **Fixed** in the tests: `test_51::test_the_rank_and_extreme_words_hold_on_the_rows` |
 
-**The fresh reader** and **the Integration check**: below, as they arrive.
+**The fresh reader** (`fresh-reader.md`, page `9fc144b9…` at `ef968187`): answers 1–5 agree with the records. Four
+observations in PRES-6's sections were repaired in `0d998e6e` ("eligible" defined; the bins' population explained; the
+naive's coverage explained; a grammar slip; phone-width captions); the rest are §10.3 items 7 and 8.
+
+**The Integration check**: below, as it arrives.
 
 ### 10.5 Integration review 4's R1–R7
 
