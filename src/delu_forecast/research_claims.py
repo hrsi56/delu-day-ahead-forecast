@@ -42,6 +42,7 @@ CLAIM_MAPS = (
     REPO_ROOT / "docs" / "track-b" / "research-content" / "cp24-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "pres5-claims.md",
+    REPO_ROOT / "docs" / "track-b" / "research-content" / "pres6-claims.md",
 )
 
 # --------------------------------------------------------------------------- names and labels
@@ -855,8 +856,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            {r:derived.cp26.v5-v4.MAE|ci} in point error and {r:derived.cp26.v5-v4.WIS}
            {r:derived.cp26.v5-v4.WIS|ci} in interval error, with {s:level:95%} intervals: the five periods' gain is not shown
            on every day, and the intervals do not establish that the two are equal.""", PAGE, README),
-    _block("everyday.finding.v6", "C604", """{g:v6.version}'s forecasts, {s:name:DDNN-2} alone, have the lowest error on
-           both scores: {r:derived.cp28.A1.MAE} {r:derived.cp28.A1.MAE|ci} and {r:derived.cp28.A1.WIS}
+    _block("everyday.finding.v6", "C604", """{g:v6.version}'s forecasts, {s:name:DDNN-2} alone, have the lowest error of
+           the re-baseline's policies on both scores: {r:derived.cp28.A1.MAE} {r:derived.cp28.A1.MAE|ci} and {r:derived.cp28.A1.WIS}
            {r:derived.cp28.A1.WIS|ci} against {g:v5.version}, with the selection's descriptive {s:level:95%}
            intervals.""", PAGE, README),
     _block("everyday.routes", "C605", """Two sensitivity runs of {g:v5.version}: with the weather run six hours late,
@@ -959,7 +960,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            released model are reported, never tested. The scores are each day's mean absolute error of the median and its
            interval score. It passes when the largest of four one-sided p-values is at most {s:level:0.05}:
            {g:v6.version} better than {g:v5.version} by more than half a percent on both scores, and better than the naive on
-           both. The intervals come from a {s:count:7}-day block bootstrap with {s:count:10,000} draws.""",
+           both. The p-values come from a {s:count:7}-day block bootstrap with {s:count:10,000} draws.""",
            PAGE, README),
     _block("v6.fresh.rules", "C803", """**The failure rules.** At least {s:count:60} of the {s:count:90} days must be
            paired and scored, or the test is inconclusive. No runner-up moves up, the window is spent whatever the result,
@@ -967,8 +968,8 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     _block("v6.fresh.meaning", "C804", """**What each result means.** A pass keeps {g:v6.version} as the product and
            ends its "pending" status; the record says "It passed the pre-registered test". A fail or an inconclusive
            result makes {g:v1.version} the product again, and the record says "It did not pass; the window is spent, and
-           {g:v1.version} remains the product." Either way the live record stays "prospective evaluation in progress"
-           until at least {s:count:90} consecutive days are scored.""", PAGE, README),
+           {g:v1.version} remains the product." While {g:v6.version} runs on the Space, its live record stays "prospective
+           evaluation in progress" until at least {s:count:90} consecutive days are scored.""", PAGE, README),
     # ---- PRES-5 (O26, O29): "How the product works" documents v6, the policy the Space runs ----
     _block("v6.product.sources", "P66", """**Where the data comes from.** The committed development snapshot of the
            day-ahead price and the day-ahead load forecast, from SMARD.de, which republishes the ENTSO-E series, and the
@@ -1068,7 +1069,71 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            renewable-generation forecasts.""", PAGE),
 )
 
-BLOCKS = BLOCKS + PRES5_BLOCKS
+#: PRES-6 (PUBLISH_RULES §5.1a, A8; ruling O46): the final product's results and business insights, from the rules
+#: the packet fixed first (§0); and Integration review 4's wording (R1, R2, R5, R7).
+_V6_ALL = "{r:pres6.p_all.days}"
+PRES6_BLOCKS: tuple[Block, ...] = (
+    _block("everyday.question", "P71", """Do the five-period results hold when every eligible day is scored under one
+           daily protocol?""", PAGE),
+    _block("outcomes.sub", "P69", """{g:v6.name} ({s:name:A1} in the frozen records), its forecasts as the selection
+           stored them · every eligible development day, {s:date:2020-12-29} to {s:date:2026-09-06} · EUR/MWh ·
+           development, post-selection""", PAGE),
+    _block("outcomes.finding", "P68", """On all """ + _V6_ALL + """ eligible development days, {g:v6.version}'s mean
+           daily point error was {r:pres6.regime.all.MAE.v6} EUR/MWh {r:pres6.regime.all.MAE.v6|ci} against the
+           similar-day naive's {r:pres6.regime.all.MAE.naive}; its {s:level:80%} intervals covered
+           {r:pres6.coverage.all.80.coverage} of the hours.""", PAGE, README),
+    _block("outcomes.caveat", "C1001", """Development evidence after selection: {g:v6.version} was chosen on these days.
+           The brackets are {s:level:95%} confidence intervals of the mean, from {s:count:14}-day block resamples. The
+           live record is on the Space, prospective evaluation in progress.""", PAGE, README),
+    _block("outcomes.days", "C1005", """Three development days, one per
+           regime, each the day at its regime's median point error within {g:v5.version}'s test periods, a rule fixed
+           before any was drawn: {r:pres6.chosen.pre_crisis.day}, {r:pres6.chosen.crisis.day} and
+           {r:pres6.chosen.negative_prices.day}. The line is {g:v6.version}'s median forecast; the bands its
+           {s:level:50%}, {s:level:80%} and {s:level:95%} intervals; the dashes the price that cleared.""", PAGE),
+    _block("outcomes.bins", "C1006", """Over every scored hour of those test periods inside the eligible days,
+           {r:pres6.p_v5.hours} hours on {r:pres6.p_v5.days} days, grouped into ten equal bins by {g:v6.version}'s
+           median forecast, the mean observed price follows the mean forecast in every bin; the share of hours inside the
+           {s:level:80%} interval runs from {r:pres6.bin.2.inside80} to {r:pres6.bin.5.inside80} across the
+           bins.""", PAGE),
+    _block("outcomes.time", "C1004", """Each day's point error and interval score, as
+           calendar-month means from {s:date:2020-12} to {s:date:2026-09}: {g:v6.version} lies below the similar-day
+           naive in every month on both scores, and both peak in the crisis months.""", PAGE),
+    _block("outcomes.regimes", "C1002", """{r:pres6.regime.pre_crisis.days} days before the
+           crisis, {r:pres6.regime.crisis.days} in it and {r:pres6.regime.negative_prices.days} from
+           {s:date:2023}; none is thin. In each, {g:v6.version}'s mean daily point error is a fraction of the naive's,
+           its ratio {r:pres6.regime.pre_crisis.MAE.ratio}, {r:pres6.regime.crisis.MAE.ratio} and
+           {r:pres6.regime.negative_prices.MAE.ratio}, each interval below one; the crisis carries the largest errors,
+           {r:pres6.regime.crisis.MAE.v6} EUR/MWh in point error.""", PAGE),
+    _block("outcomes.coverage", "C1003", """Over the eligible days, {g:v6.version}'s
+           {s:level:50%}, {s:level:80%} and {s:level:95%} intervals covered {r:pres6.coverage.all.50.coverage},
+           {r:pres6.coverage.all.80.coverage} and {r:pres6.coverage.all.95.coverage} of the hours, at mean widths of
+           {r:pres6.coverage.all.50.width_eur}, {r:pres6.coverage.all.80.width_eur} and
+           {r:pres6.coverage.all.95.width_eur} EUR/MWh. In the crisis they covered least,
+           {r:pres6.coverage.crisis.80.coverage} at {s:level:80%}, and were widest. The nominal level is a reference,
+           not a target.""", PAGE),
+    _block("outcomes.explanation", "C1007", """No attribution of {g:v6.version}'s forecasts on development days is
+           committed, and the selection's stored networks belong to other arms, so this section shows none. The live
+           product's Explainability view computes one for each issued day: exact baseline Shapley over {g:v6.version}'s
+           input groups on its median, relative to a stated baseline; an attribution within one fitted model, never
+           causality.""", PAGE),
+    _block("business.use", "P70", """**The intended use.** An hourly price forecast for the next delivery day, with
+           intervals, issued before the {s:time:12:00} auction: an input to bidding, scheduling and hedging decisions in
+           the German–Luxembourg market.""", PAGE, README),
+    _block("business.measured", "P70", """**What the results imply for that use.** On an average development day the
+           median misses the hourly price by {r:pres6.regime.all.MAE.v6} EUR/MWh, against the naive's
+           {r:pres6.regime.all.MAE.naive}, and by {r:pres6.regime.crisis.MAE.v6} in the crisis; an {s:level:80%}
+           interval about {r:pres6.coverage.all.80.width_eur} EUR/MWh wide held {r:pres6.coverage.all.80.coverage} of
+           the hours. A decision that uses the forecast can size its margin to that spread.""", PAGE, README),
+    _block("business.gap", "P70", """**What is not established.** No decision policy, cost model or trading
+           simulation has been authorized or run for this product, so there is no profit, value or loss figure, and no
+           curve of either. Lower forecast error and interval coverage are not profit, and not a success rate of any
+           decision.""", PAGE, README),
+    _block("business.limits", "P70", """**Limits.** These are development results after selection; {s:work-item:4.7T}, from
+           {s:date:2026-12-04}, is {g:v6.version}'s one test on new data, and the live record on the Space is
+           prospective evaluation in progress.""", PAGE, README),
+)
+
+BLOCKS = BLOCKS + PRES5_BLOCKS + PRES6_BLOCKS
 BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
 
 #: The blocks a page with a final candidate does not render (PRES-5): v5's headline-only terms and its comparison
@@ -1658,6 +1723,10 @@ WITHHELD_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
         ("W52", r"\b(live|prospective) (score|record|result)s? (of|from|as) 4\.7T\b|\b4\.7T('s)? (score|result) (is|was)\b"),
         # W53: A1 given the status "live" or "released" before a passed 4.7T.
         ("W53", r"\b(v6|A1)\b[^.]{0,30}\b(is|was|became) (live|released|the released (model|product))\b"),
+        # PRES-6: no error or coverage figure is a profit or a success rate (§5.1a); no product result is prospective
+        ("W54", r"\b(error|coverage|interval score|intervals?)\b[^.]{0,40}\b(is|are|means|equals|amounts to) (a |an )?"
+                r"(profit|gain in money|return|success rate)\b|\bprofit (curve )?(of|was|is) [−+-]?\d"),
+        ("W55", r"\b(these|the product) results\b[^.]{0,40}\b(are|were|is) (prospective|live|4\.7T|unused-data)\b"),
     )
 )
 
