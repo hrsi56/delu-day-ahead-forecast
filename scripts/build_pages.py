@@ -2196,7 +2196,7 @@ def forecast_days_chart() -> str:
     mobile = "".join(svg_wrap(MOBILE_W, 196, panel(c["day"], c["regime"], MOBILE_W, 196, "m"), title=title, desc=desc,
                               variant="m", chart_id=f"outcomes-day-{c['regime']}") for c in chosen)
     key = (f'<p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">'
-           f'{S("level", "50%")}, {S("level", "80%")} and {S("level", "95%")} intervals</span> '
+           f'{S("level", "50%")}, {S("level", "80%")} and {S("level", "95%")} prediction intervals</span> '
            f'<span class="key-actual">Observed price</span></p>')
     return (f'<div class="chart outcome-days" data-chart-id="outcomes-days-chart"><div class="outcome-days-row">{desktop}</div>'
             f'<div class="outcome-days-stack">{mobile}</div>{key}</div>')
@@ -2264,13 +2264,13 @@ def regime_panels() -> list[Panel]:
 
     # The point error is drawn; the interval score by regime, with its intervals, is in the values table beside it
     # (the page's 2.0 MB budget: an interval chart binds every figure twice, desktop and phone).
-    return [Panel("Mean daily point error", "EUR/MWh · 95% interval of the mean", rows("MAE"), domain=(0, 80), step=20,
+    return [Panel("Mean daily point error", "EUR/MWh · 95% confidence interval of the mean", rows("MAE"), domain=(0, 80), step=20,
                   option="p=1")]
 
 
 def coverage_panel() -> list[Panel]:
     levels = (("50", 0.5), ("80", 0.8), ("95", 0.95))
-    return [Panel("Coverage of v6's intervals", "share of hours inside · every eligible development day",
+    return [Panel("Coverage of v6's prediction intervals", "share of hours inside · every eligible development day",
                   tuple(Row(f"{level}% interval", f"pres6.coverage.all.{level}.coverage", "v6", bold=True, claim="C1003")
                         for level, _ in levels),
                   domain=(0.4, 1.0), step=0.1,
