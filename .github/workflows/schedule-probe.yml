@@ -1,0 +1,37 @@
+# The Owner's experiment of 2026-11-15: how late GitHub's scheduler starts a job at each hour before a delivery
+# day's cutoff (D-1 10:00 UTC in winter), and how long a macos-26 job then waits for a runner.
+# It checks out nothing, reads no secret and writes nothing. The timing is read afterwards from the runs' metadata:
+# each run's name carries its cron line, its creation time is the scheduler's start, and each job's start is the
+# runner's. To be removed after about a week.
+name: schedule-probe
+run-name: probe ${{ github.event.schedule || 'dispatch' }}
+
+on:
+  schedule:
+    - cron: '7 0 * * *'
+    - cron: '7 1 * * *'
+    - cron: '7 2 * * *'
+    - cron: '7 3 * * *'
+    - cron: '7 4 * * *'
+    - cron: '7 5 * * *'
+    - cron: '7 6 * * *'
+    - cron: '7 7 * * *'
+    - cron: '7 8 * * *'
+    - cron: '7 9 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  probe:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, macos-26]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 3
+    steps:
+      - name: Record the start
+        env:
+          CRON: ${{ github.event.schedule }}
+        run: echo "cron='${CRON}' started=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
