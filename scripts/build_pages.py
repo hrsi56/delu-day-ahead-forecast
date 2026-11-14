@@ -2128,10 +2128,12 @@ PRES6_TAG = "evidence/pres-6"
 REGIME_LABELS = {"pre_crisis": "Before the crisis", "crisis": "The crisis", "negative_prices": "From 2023"}
 OUTCOME_ROUTES = (("outcomes-days", "Forecast against the observed price on three development days"),
                   ("outcomes-time", "Error over time, month by month"),
-                  ("outcomes-regimes", "Error by regime, with intervals"),
-                  ("outcomes-coverage", "Interval coverage with width"),
-                  ("outcomes-explanation", "What drives its forecasts"),
-                  ("outcomes-bins-h", "All hours of the test periods, by forecast bin"))
+                  ("outcomes-regimes", "Error by regime, with 95% confidence intervals"),
+                  ("outcomes-coverage", "Prediction-interval coverage with width"),
+                  ("outcomes-explanation", "Which inputs moved its median on two development days"),
+                  ("outcomes-bins-h", "All hours of v5's test periods, by forecast bin"))
+#: Each route's heading is its own words (A5: the link says what the reader will see).
+OUTCOME_HEADINGS = dict(OUTCOME_ROUTES)
 
 
 def _pres6_rows(name: str) -> list[dict[str, str]]:
@@ -2186,10 +2188,9 @@ def forecast_days_chart() -> str:
                    f'stroke-dasharray="6 4"/>')
         return "".join(out)
 
-    title = "v6's forecast against the observed price on three development days, one per regime"
-    desc = ("For each of three development delivery days chosen by a rule fixed beforehand, one per price regime: v6's "
-            "median forecast as a line, its 50, 80 and 95 percent intervals as nested bands, and the price that cleared "
-            "as a dashed line, by local hour. Development evidence after selection; not a live forecast.")
+    title = "v6's forecast against the observed price, one development day per regime"
+    desc = ("v6's median and 50, 80 and 95 percent prediction intervals against the cleared price, by local hour, "
+            "EUR/MWh. Development, post-selection.")
     desktop = "".join(svg_wrap(292, 236, panel(c["day"], c["regime"], 292, 236, "d"), title=title, desc=desc,
                                variant="d", chart_id=f"outcomes-day-{c['regime']}") for c in chosen)
     mobile = "".join(svg_wrap(MOBILE_W, 196, panel(c["day"], c["regime"], MOBILE_W, 196, "m"), title=title, desc=desc,
@@ -2242,10 +2243,9 @@ def monthly_chart() -> str:
                                 fill=colours[stream], weight="600"))
         return "".join(out)
 
-    title = "v6's error over time against the similar-day naive, every eligible development day"
-    desc = ("Two panels, the point error and the interval score, each the calendar-month mean of the daily values of v6 "
-            "and of the similar-day naive, December 2020 to September 2026, in EUR/MWh. v6 is the solid line, the naive "
-            "the dashed one. Development evidence after selection.")
+    title = "v6's and the naive's monthly mean errors, every eligible development day"
+    desc = ("Calendar-month means of the daily point error or interval score, EUR/MWh, December 2020 to September 2026; "
+            "v6 solid, the naive dashed. Development, post-selection.")
     desktop = "".join(svg_wrap(436, 236, panel(m, 436, 236), title=title, desc=desc, variant="d",
                                chart_id=f"outcomes-time-{m}") for m in ("MAE", "WIS"))
     mobile = "".join(svg_wrap(MOBILE_W, 200, panel(m, MOBILE_W, 200), title=title, desc=desc, variant="m",
@@ -2306,7 +2306,7 @@ def outcome_regime_table() -> str:
                      f'<td class="n">{value(f"pres6.regime.{regime}.days", "C1002")}</td>'
                      f'<td class="n">{value(f"pres6.regime.{regime}.hours", "C1002")}</td><td>{name}</td>{cells}</tr>')
     return (f'<div class="scroll" role="region" aria-label="Error by regime" tabindex="0"><table class="data">'
-            f'<caption>{_label("Mean daily error by regime, with 95% intervals of the mean")}</caption>'
+            f'<caption>{_label("Mean daily error by regime, EUR/MWh, with 95% confidence intervals of the mean; the ratio is v6's mean over the naive's")}</caption>'
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
@@ -2321,7 +2321,7 @@ def bins_table() -> str:
                  + "".join(f'<td class="n">{value(f"pres6.bin.{b}.{f}", "C1006")}</td>'
                            for f in ("hours", "p50_low", "p50_high", "mean_p50", "mean_observed", "inside80")) + "</tr>")
     return (f'<div class="scroll" role="region" aria-label="Forecast bins" tabindex="0"><table class="data">'
-            f'<caption>{_label("Every scored hour of the test periods inside the eligible days, in ten equal bins by v6's median forecast, EUR/MWh")}</caption>'
+            f'<caption>{_label("Every scored hour of v5's test periods on the eligible days, in ten bins of equal size by v6's median forecast, EUR/MWh")}</caption>'
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
@@ -2366,7 +2366,7 @@ def explanation_table() -> str:
 
 
 def outcome_audit() -> tuple[Audit, ...]:
-    return (Audit("Daily, regime and coverage results", R.PRES6_ROWS["regimes"], PRES6_TAG),
+    return (Audit("All product-result rows", R.PRES6_DIR, PRES6_TAG),
             Audit("The three days, hour by hour", R.PRES6_ROWS["days"], PRES6_TAG),
             Audit("The committed attribution (the retraining probe's native reference)",
                   "reports/cp17-probe/native-reference.json", "evidence/cp-17"),
@@ -2384,37 +2384,38 @@ def product_results() -> str:
  <h2 id="outcomes-h">Product results</h2>
  <figure class="panel analytical" aria-labelledby="product-finding">
   {block("outcomes.finding", tag="h3", cls="panel-title finding-title", ident="product-finding")}
+  {block("outcomes.finding.coverage", cls="finding-coverage")}
   {block("outcomes.caveat", cls="qualification caveat-line")}
   <p class="panel-sub" data-block="outcomes.sub">{RC.render("outcomes.sub")}</p>
   <nav class="explore" aria-labelledby="outcomes-explore-h"><h3 class="story-label" id="outcomes-explore-h">Explore these
    results</h3><ul>{routes}</ul></nav>
  </figure>
  <div class="outcome-block">
-  {detail_head("outcomes-days", "Forecast against the observed price on three development days")}
+  {detail_head("outcomes-days", OUTCOME_HEADINGS["outcomes-days"])}
   {block("outcomes.days")}
   {forecast_days_chart()}
  </div>
  <div class="outcome-block">
-  {detail_head("outcomes-time", "Error over time, month by month")}
+  {detail_head("outcomes-time", OUTCOME_HEADINGS["outcomes-time"])}
   {block("outcomes.time")}
   {monthly_chart()}
  </div>
  <div class="outcome-block">
-  {detail_head("outcomes-regimes", "Error by regime, with intervals")}
+  {detail_head("outcomes-regimes", OUTCOME_HEADINGS["outcomes-regimes"])}
   {block("outcomes.regimes")}
   {single_rows("outcomes-regimes-chart", "C1002", regime_panels(), title="v6's mean daily error by price regime, against the similar-day naive",
-               desc="For each price regime, v6's and the similar-day naive's mean daily point error in EUR/MWh, each with its 95 percent interval of the mean; the interval score by regime is in the values table. Development evidence after selection.")}
+               desc="v6's and the naive's mean daily point error by price regime, EUR/MWh, with 95 percent confidence intervals of the mean. Development, post-selection.")}
   {disclosure("outcomes-regimes-table", "View values, with the ratios to the naive", outcome_regime_table())}
  </div>
  <div class="outcome-block">
-  {detail_head("outcomes-coverage", "Interval coverage with width")}
+  {detail_head("outcomes-coverage", OUTCOME_HEADINGS["outcomes-coverage"])}
   {block("outcomes.coverage")}
-  {single_rows("outcomes-coverage-chart", "C1003", coverage_panel(), title="Coverage of v6's 50, 80 and 95 percent intervals",
-               desc="The share of hours inside each of v6's intervals over every eligible development day, with the nominal level drawn as a reference line, not a target. Development evidence after selection.")}
+  {single_rows("outcomes-coverage-chart", "C1003", coverage_panel(), title="Coverage of v6's 50, 80 and 95 percent prediction intervals",
+               desc="Share of hours inside each interval, every eligible development day; the nominal level is a reference line. Development, post-selection.")}
   {coverage_table()}
  </div>
  <div class="outcome-block">
-  {detail_head("outcomes-explanation", "What drives its forecasts")}
+  {detail_head("outcomes-explanation", OUTCOME_HEADINGS["outcomes-explanation"])}
   {block("outcomes.explanation")}
   {single_rows("outcomes-explanation-chart", "C1007", explanation_panels(), title="Which input groups moved v6's median on two development days",
                desc="Each input group's mean absolute contribution an hour to v6's issued median on two development days, EUR/MWh: an attribution within one fitted model, not causality.")}
@@ -2423,7 +2424,7 @@ def product_results() -> str:
   {disclosure("outcomes-explanation-table", "View the signed values", explanation_table())}
  </div>
  <div class="outcome-block">
-  {detail_head("outcomes-bins-h", "All hours of the test periods, by forecast bin")}
+  {detail_head("outcomes-bins-h", OUTCOME_HEADINGS["outcomes-bins-h"])}
   {block("outcomes.bins")}
   {bins_table()}
  </div>
@@ -2864,7 +2865,8 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-results", "Measured results: development data", "Measured results", ("5",),
               block("v6.product.results") + results("outcomes", "v6's results on every development day, in Product results")
               + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
-        Topic("product-attribution", "What drives its forecasts", "What drives its forecasts",
+        Topic("product-attribution", "Input attribution: two days and live",
+              "Input attribution: two development days and the live product",
               ("6",), block("v6.product.attribution")
               + results("outcomes-explanation", "Which inputs moved its median on two development days, in Product results")
               + space("The Explainability view, on the live product")),

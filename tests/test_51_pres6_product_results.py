@@ -255,11 +255,14 @@ def test_each_graphic_names_policy_population_dates_units_and_class():
 def test_the_product_finding_is_v6s_development_result():
     finding = re.search(r'<h3 [^>]*id="product-finding"[^>]*>.*?</h3>', BODY, re.S).group(0)
     records = re.findall(r'data-record="([^"]+)"', finding)
-    for needed in ("pres6.p_all.days", "pres6.regime.all.MAE.v6", "pres6.regime.all.MAE.naive",
-                   "pres6.coverage.all.80.coverage"):
+    for needed in ("pres6.p_all.days", "pres6.regime.all.MAE.v6", "pres6.regime.all.MAE.naive"):
         assert needed in records, needed
     text = _text(finding)
-    assert "2,068" in text and "17.2 EUR/MWh" in text and "34.6" in text and "0.7826" in text
+    assert "2,068" in text and "17.2 EUR/MWh" in text and "34.6" in text
+    # coverage only with its width, on the line directly below the finding (editorial review E3; P68)
+    after = BODY[BODY.index(finding) + len(finding):]
+    coverage = re.match(r'\s*<p [^>]*data-block="outcomes.finding.coverage"[^>]*>.*?</p>', after, re.S)
+    assert coverage and "51.7 EUR/MWh wide on average" in _text(coverage.group(0)) and "0.7826" in _text(coverage.group(0))
     caveat = _text(_section(BODY, "outcomes"))
     assert "Development evidence after selection" in caveat and "prospective evaluation in progress" in caveat
 
@@ -288,9 +291,11 @@ def test_the_withheld_claims_w54_and_w55_are_guarded():
 def test_the_readme_carries_the_same_claims():
     product = next(line for line in README.splitlines() if line.startswith("**Product results:**"))
     business = next(line for line in README.splitlines() if line.startswith("**Business insights:**"))
-    finding = _text(re.search(r'<h3 [^>]*id="product-finding"[^>]*>.*?</h3>', BODY, re.S).group(0))
-    numbers = re.findall(r"\d[\d,]*\.?\d*", finding)
-    assert numbers == re.findall(r"\d[\d,]*\.?\d*", product.split(". Development")[0])
+    for key in ("outcomes.finding", "outcomes.finding.coverage", "outcomes.caveat"):
+        assert RC.render(key, "md", surface=RC.README) in product, key
+    page = _text(re.search(r'<h3 [^>]*id="product-finding"[^>]*>.*?</h3>', BODY, re.S).group(0))
+    numbers = re.findall(r"\d[\d,]*\.?\d*", page)
+    assert numbers == re.findall(r"\d[\d,]*\.?\d*", RC.render("outcomes.finding", "md", surface=RC.README))
     assert "#outcomes" in product and "prospective evaluation in progress" in product
     assert "no profit, value or loss figure" in business and "not a success rate" in business
     assert README.index("**Product results:**") < README.index("**Business insights:**")
@@ -374,3 +379,31 @@ def test_product_results_wears_none_of_the_v1_card_styles():
     assert section.count('class="outcome-block"') == 6
     css = build_pages.css()
     assert css.count(".outcome-block{") == 1 and ".outcome{" in css  # v1's card rule stays, unused here
+
+
+def test_the_rank_and_extreme_words_hold_on_the_rows():
+    """Editorial review E17: the words the templates fix -- the bins' rise and largest gap, the 2022 peaks, the
+    crisis's least coverage and widest intervals, the two inputs that contributed most -- checked on the rows."""
+    bins = _rows("bins.csv")
+    observed = [float(r["mean_observed"]) for r in bins]
+    assert all(a < b for a, b in zip(observed, observed[1:]))
+    gaps = [abs(float(r["mean_observed"]) - float(r["mean_p50"])) for r in bins]
+    assert gaps.index(max(gaps)) == 9  # the top bin
+    inside = [float(r["inside80"]) for r in bins]
+    assert inside.index(min(inside)) == 1 and inside.index(max(inside)) == 4  # bins 2 and 5, as the text binds them
+    monthly = _rows("monthly.csv")
+    for stream in ("v6", "naive"):
+        for metric in ("MAE", "WIS"):
+            peak = max((r for r in monthly if r["stream"] == stream), key=lambda r: float(r[metric]))
+            assert peak["month"].startswith("2022"), (stream, metric)
+    coverage = [r for r in _rows("coverage.csv") if r["regime"] != "all"]
+    for level in ("50", "80", "95"):
+        at = [r for r in coverage if r["level"] == level]
+        assert min(at, key=lambda r: float(r["coverage"]))["regime"] == "crisis"
+        assert max(at, key=lambda r: float(r["width_eur"]))["regime"] == "crisis"
+    for row in (r for r in _rows("coverage.csv") if r["regime"] == "all"):
+        assert float(row["coverage"]) < int(row["level"]) / 100  # "each a little below its nominal level"
+    explain = [r for r in _rows("explanation.csv") if r["kind"] == "group" and r["used"] == "True"]
+    for day in ("2026-03-29", "2026-09-06"):
+        ranked = sorted((r for r in explain if r["day"] == day), key=lambda r: -float(r["mean_abs_phi_eur"]))
+        assert {r["group"] for r in ranked[:2]} == {"load_d0", "gfs"}, day

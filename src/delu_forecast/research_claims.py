@@ -1004,9 +1004,9 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            {r:derived.periods.v6.ordinary_low}–{r:derived.periods.v6.ordinary_high} EUR/MWh in the ordinary periods and
            {r:derived.periods.v6.stress} EUR/MWh in the {s:date:2022} crisis period. Development evidence after
            selection, not a test on new data."""),
-    _block("v6.product.attribution", "P66", """**On two development days, in Product results.** An attribution of
-           {g:v6.version}'s issued median by input group, committed before the freeze, is drawn for two development days.
-           The live product's Explainability view decomposes each issued forecast by network member and by input, in
+    _block("v6.product.attribution", "P66", """**Drawn in Product results for two development days.** An attribution
+           of {g:v6.version}'s issued median by input group, within each day's fitted model, committed before the
+           freeze: not a cause, and not how it behaves on other days. The live product's Explainability view decomposes each issued forecast by network member and by input, in
            EUR/MWh against the model's baseline: what contributed, never what caused."""),
     _block("v6.product.importance", "P66", """**Not evaluated in this report.** The live product's Features view shows
            how much the fitted networks rely on each input, read from the day's artifact, beside that day's inputs
@@ -1076,73 +1076,85 @@ _V6_ALL = "{r:pres6.p_all.days}"
 PRES6_BLOCKS: tuple[Block, ...] = (
     _block("everyday.question", "P71", """Do the five-period results hold when every eligible day is scored under one
            daily protocol?""", PAGE),
-    _block("outcomes.sub", "P69", """{g:v6.name} ({s:name:A1} in the frozen records), its forecasts as the selection
-           stored them · every eligible development day, {s:date:2020-12-29} to {s:date:2026-09-06} · EUR/MWh ·
-           development, post-selection""", PAGE),
+    _block("outcomes.sub", "P69", """Every graphic below, unless it names fewer days: {g:v6.name} ({s:name:A1} in the
+           frozen records), its forecasts as the selection stored them · every eligible development day,
+           {s:date:2020-12-29} to {s:date:2026-09-06} · EUR/MWh · development, post-selection""", PAGE),
     _block("outcomes.finding", "P68", """On all """ + _V6_ALL + """ eligible development days, {g:v6.version}'s mean
            daily point error was {r:pres6.regime.all.MAE.v6} EUR/MWh {r:pres6.regime.all.MAE.v6|ci} against the
-           similar-day naive's {r:pres6.regime.all.MAE.naive}; its {s:level:80%} intervals covered
-           {r:pres6.coverage.all.80.coverage} of the hours.""", PAGE, README),
+           similar-day naive's {r:pres6.regime.all.MAE.naive}.""", PAGE, README),
+    _block("outcomes.finding.coverage", "P68", """Its {s:level:80%} prediction intervals,
+           {r:pres6.coverage.all.80.width_eur} EUR/MWh wide on average, covered {r:pres6.coverage.all.80.coverage} of
+           the hours.""", PAGE, README),
     _block("outcomes.caveat", "C1001", """Development evidence after selection: {g:v6.version} was chosen on these days.
            The brackets are {s:level:95%} confidence intervals of the mean, from {s:count:14}-day block resamples. The
-           live record is on the Space, prospective evaluation in progress.""", PAGE, README),
+           naive forecasts each hour with the same hour's price the day before, or a week before for Mondays and
+           weekends. The live record is on the Space, prospective evaluation in progress.""", PAGE, README),
     _block("outcomes.days", "C1005", """Three development days, one per
            regime, each the day at its regime's median point error within {g:v5.version}'s test periods, a rule fixed
            before any was drawn: {r:pres6.chosen.pre_crisis.day}, {r:pres6.chosen.crisis.day} and
            {r:pres6.chosen.negative_prices.day}. The line is {g:v6.version}'s median forecast; the bands its
-           {s:level:50%}, {s:level:80%} and {s:level:95%} intervals; the dashes the price that cleared.""", PAGE),
-    _block("outcomes.bins", "C1006", """Over every scored hour of those test periods inside the eligible days,
-           {r:pres6.p_v5.hours} hours on {r:pres6.p_v5.days} days, grouped into ten equal bins by {g:v6.version}'s
-           median forecast, the mean observed price follows the mean forecast in every bin; the share of hours inside the
-           {s:level:80%} interval runs from {r:pres6.bin.2.inside80} to {r:pres6.bin.5.inside80} across the
-           bins.""", PAGE),
+           {s:level:50%}, {s:level:80%} and {s:level:95%} prediction intervals; the dashes the price that cleared. Each
+           panel has its own price scale.""", PAGE),
+    _block("outcomes.bins", "C1006", """Over every scored hour of {g:v5.version}'s test periods that falls on an
+           eligible development day, {r:pres6.p_v5.hours} hours on {r:pres6.p_v5.days} days, sorted by
+           {g:v6.version}'s median forecast into ten bins of equal size, the mean observed price rises with the mean
+           forecast from bin to bin and stays close to it, the largest gap in the top bin:
+           {r:pres6.bin.10.mean_p50} EUR/MWh forecast against {r:pres6.bin.10.mean_observed} observed. The share of
+           hours inside the {s:level:80%} prediction interval runs from {r:pres6.bin.2.inside80} to
+           {r:pres6.bin.5.inside80} across the bins.""", PAGE),
     _block("outcomes.time", "C1004", """Each day's point error and interval score, as
            calendar-month means from {s:date:2020-12} to {s:date:2026-09}: {g:v6.version} lies below the similar-day
-           naive in every month on both scores, and both peak in the crisis months.""", PAGE),
-    _block("outcomes.regimes", "C1002", """{r:pres6.regime.pre_crisis.days} days before the
-           crisis, {r:pres6.regime.crisis.days} in it and {r:pres6.regime.negative_prices.days} from
-           {s:date:2023}; none is thin. In each, {g:v6.version}'s mean daily point error is a fraction of the naive's,
-           its ratio {r:pres6.regime.pre_crisis.MAE.ratio}, {r:pres6.regime.crisis.MAE.ratio} and
-           {r:pres6.regime.negative_prices.MAE.ratio}, each interval below one; the crisis carries the largest errors,
-           {r:pres6.regime.crisis.MAE.v6} EUR/MWh in point error.""", PAGE),
+           naive in every month on both scores, and both peak in {s:date:2022}, in the crisis.""", PAGE),
+    _block("outcomes.regimes", "C1002", """{r:pres6.regime.pre_crisis.days} days before the crisis
+           ({s:date:2020-12-29} to {s:date:2021-08-31}), {r:pres6.regime.crisis.days} in it ({s:date:2021-09-01} to
+           {s:date:2022-12-31}) and {r:pres6.regime.negative_prices.days} from {s:date:2023-01-01}; each has at least
+           {s:count:60} days, so none is too thin to report. In each, {g:v6.version}'s mean daily point error is about
+           half the naive's: ratios of {r:pres6.regime.pre_crisis.MAE.ratio}, {r:pres6.regime.crisis.MAE.ratio} and
+           {r:pres6.regime.negative_prices.MAE.ratio}, each {s:level:95%} confidence interval below one. The crisis
+           carries the largest errors, {r:pres6.regime.crisis.MAE.v6} EUR/MWh in point error over the whole
+           regime.""", PAGE),
     _block("outcomes.coverage", "C1003", """Over the eligible days, {g:v6.version}'s
-           {s:level:50%}, {s:level:80%} and {s:level:95%} intervals covered {r:pres6.coverage.all.50.coverage},
-           {r:pres6.coverage.all.80.coverage} and {r:pres6.coverage.all.95.coverage} of the hours, at mean widths of
+           {s:level:50%}, {s:level:80%} and {s:level:95%} prediction intervals covered
+           {r:pres6.coverage.all.50.coverage}, {r:pres6.coverage.all.80.coverage} and
+           {r:pres6.coverage.all.95.coverage} of the hours, each a little below its nominal level, at mean widths of
            {r:pres6.coverage.all.50.width_eur}, {r:pres6.coverage.all.80.width_eur} and
            {r:pres6.coverage.all.95.width_eur} EUR/MWh. In the crisis they covered least,
            {r:pres6.coverage.crisis.80.coverage} at {s:level:80%}, and were widest. The nominal level is a reference,
-           not a target.""", PAGE),
+           not a target. The naive's coverage is not in the committed rows, so none is shown.""", PAGE),
     _block("outcomes.explanation", "C1007", """Which inputs moved {g:v6.version}'s median on two development days:
            {s:date:2026-03-29}, the spring clock-change day ({r:pres6.explain.2026-03-29.hours} hours), and
-           {s:date:2026-09-06}, the last development day. The attribution is the one committed, before the freeze, by the
-           probe that measured its in-browser retraining: exact baseline Shapley over the input groups that day's networks
-           use. Its fits are
-           {g:v6.version}'s stored forecasts for both days, quantile for quantile. On both days the load forecast for
-           the delivery day and the weather forecast moved the median most: on average
+           {s:date:2026-09-06}, the last development day. The attribution was computed and committed before the freeze,
+           in a study of {g:v6.version}'s in-browser retraining, as exact baseline Shapley values: each input group's
+           share of the step from the networks' training-mean forecast to the issued median. The models it explains
+           reproduce {g:v6.version}'s stored forecasts for both days, quantile for quantile. On both days the load
+           forecast for the delivery day and the weather forecast contributed most, with mean absolute contributions of
            {r:pres6.explain.2026-03-29.load_d0.mean_abs} and {r:pres6.explain.2026-03-29.gfs.mean_abs} EUR/MWh an hour
-           on the first day, {r:pres6.explain.2026-09-06.load_d0.mean_abs} and
+           on the first day, and {r:pres6.explain.2026-09-06.load_d0.mean_abs} and
            {r:pres6.explain.2026-09-06.gfs.mean_abs} on the second.""", PAGE),
     _block("outcomes.explanation.drawn", "C1007", """Drawn: the nine groups both days' networks use. Prices two days
-           before, used on the last day only, moved the median by {r:pres6.explain.2026-09-06.price_d2.mean_abs} EUR/MWh
-           an hour; the holidays, day type and month group is used on neither day.""", PAGE),
+           before, used on the last day only, had a mean absolute contribution of
+           {r:pres6.explain.2026-09-06.price_d2.mean_abs} EUR/MWh an hour; the holidays, day type and month group is
+           used on neither day.""", PAGE),
     _block("outcomes.explanation.terms", "C1007", """Each value attributes that day's issued median within one fitted
            model, relative to its networks' training-mean baseline. It is not a cause, not the value an input adds, and
            not how the model behaves on other days; two days are not the development period.""", PAGE),
     _block("business.use", "P70", """**The intended use.** An hourly price forecast for the next delivery day, with
            intervals, issued before the {s:time:12:00} auction: an input to bidding, scheduling and hedging decisions in
            the German–Luxembourg market.""", PAGE, README),
-    _block("business.measured", "P70", """**What the results imply for that use.** On an average development day the
-           median misses the hourly price by {r:pres6.regime.all.MAE.v6} EUR/MWh, against the naive's
-           {r:pres6.regime.all.MAE.naive}, and by {r:pres6.regime.crisis.MAE.v6} in the crisis; an {s:level:80%}
-           interval about {r:pres6.coverage.all.80.width_eur} EUR/MWh wide held {r:pres6.coverage.all.80.coverage} of
-           the hours. A decision that uses the forecast can size its margin to that spread.""", PAGE, README),
+    _block("business.measured", "P70", """**What the results imply for that use.** Averaged over the development
+           days, the median forecast missed the hourly price by {r:pres6.regime.all.MAE.v6} EUR/MWh, against the naive's
+           {r:pres6.regime.all.MAE.naive}, and by {r:pres6.regime.crisis.MAE.v6} in the {s:date:2021}–{s:date:2022}
+           crisis; its {s:level:80%} prediction intervals, {r:pres6.coverage.all.80.width_eur} EUR/MWh wide on average,
+           held {r:pres6.coverage.all.80.coverage} of the hours, a little less than their nominal level. A decision
+           built on the forecast must allow for misses of that size, larger in a crisis; how to size that allowance has
+           not been evaluated.""", PAGE, README),
     _block("business.gap", "P70", """**What is not established.** No decision policy, cost model or trading
            simulation has been authorized or run for this product, so there is no profit, value or loss figure, and no
-           curve of either. Lower forecast error and interval coverage are not profit, and not a success rate of any
+           curve of any of them. Lower forecast error and interval coverage are not profit, and not a success rate of any
            decision.""", PAGE, README),
-    _block("business.limits", "P70", """**Limits.** These are development results after selection; {s:work-item:4.7T}, from
-           {s:date:2026-12-04}, is {g:v6.version}'s one test on new data, and the live record on the Space is
-           prospective evaluation in progress.""", PAGE, README),
+    _block("business.limits", "P70", """**Limits.** These are development results after selection.
+           {s:work-item:4.7T}, which opens no earlier than {s:date:2026-12-04}, is {g:v6.version}'s one test on new
+           data; the Space shows the live record, prospective evaluation in progress.""", PAGE, README),
 )
 
 BLOCKS = BLOCKS + PRES5_BLOCKS + PRES6_BLOCKS
