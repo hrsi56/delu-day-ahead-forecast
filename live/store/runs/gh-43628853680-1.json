@@ -1,0 +1,34 @@
+{
+ "boundary": {
+  "horizon": "2026-11-16",
+  "mode": "live",
+  "present_utc": "2026-11-14T18:51:35Z",
+  "rule": "r20 \u00a724.14 item 2: the guard retired for the live pipeline only; each delivery day's own cutoff (cp18.live.availability) through the present"
+ },
+ "closed": [],
+ "days": {},
+ "exit": 0,
+ "finished_utc": "2026-11-14T18:51:36+00:00",
+ "gate": null,
+ "host_kind": "runner",
+ "lookback": [
+  "2026-11-12",
+  "2026-11-13",
+  "2026-11-14"
+ ],
+ "machine": {
+  "github_run_id": "43628853680",
+  "machine": "arm64",
+  "runner_image": "20261102.0473.1",
+  "system": "Darwin"
+ },
+ "mode": "live",
+ "outcome": "nothing to issue",
+ "planned": [],
+ "run_id": "gh-43628853680-1",
+ "schema": "cp18a-run-v1",
+ "seconds": 0.7916932500000087,
+ "started_utc": "2026-11-14T18:51:35+00:00",
+ "target_day": "2026-11-15",
+ "wall_clock": "2026-11-14T18:51:34.216887+00:00"
+}
