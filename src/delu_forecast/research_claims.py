@@ -1004,9 +1004,10 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            {r:derived.periods.v6.ordinary_low}–{r:derived.periods.v6.ordinary_high} EUR/MWh in the ordinary periods and
            {r:derived.periods.v6.stress} EUR/MWh in the {s:date:2022} crisis period. Development evidence after
            selection, not a test on new data."""),
-    _block("v6.product.attribution", "P66", """**Not evaluated in this report.** No attribution is drawn here for
-           {g:v6.version}. The live product's Explainability view decomposes each issued forecast by network member and
-           by input, in EUR/MWh against the model's baseline: what contributed, never what caused."""),
+    _block("v6.product.attribution", "P66", """**On two development days, in Product results.** An attribution of
+           {g:v6.version}'s issued median by input group, committed before the freeze, is drawn for two development days.
+           The live product's Explainability view decomposes each issued forecast by network member and by input, in
+           EUR/MWh against the model's baseline: what contributed, never what caused."""),
     _block("v6.product.importance", "P66", """**Not evaluated in this report.** The live product's Features view shows
            how much the fitted networks rely on each input, read from the day's artifact, beside that day's inputs
            against their training window. That is attribution, not the value an input adds, which no experiment here has
@@ -1111,11 +1112,22 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            {r:pres6.coverage.all.95.width_eur} EUR/MWh. In the crisis they covered least,
            {r:pres6.coverage.crisis.80.coverage} at {s:level:80%}, and were widest. The nominal level is a reference,
            not a target.""", PAGE),
-    _block("outcomes.explanation", "C1007", """No attribution of {g:v6.version}'s forecasts on development days is
-           committed, and the selection's stored networks belong to other arms, so this section shows none. The live
-           product's Explainability view computes one for each issued day: exact baseline Shapley over {g:v6.version}'s
-           input groups on its median, relative to a stated baseline; an attribution within one fitted model, never
-           causality.""", PAGE),
+    _block("outcomes.explanation", "C1007", """Which inputs moved {g:v6.version}'s median on two development days:
+           {s:date:2026-03-29}, the spring clock-change day ({r:pres6.explain.2026-03-29.hours} hours), and
+           {s:date:2026-09-06}, the last development day. The attribution is the one committed, before the freeze, by the
+           probe that measured its in-browser retraining: exact baseline Shapley over the input groups that day's networks
+           use. Its fits are
+           {g:v6.version}'s stored forecasts for both days, quantile for quantile. On both days the load forecast for
+           the delivery day and the weather forecast moved the median most: on average
+           {r:pres6.explain.2026-03-29.load_d0.mean_abs} and {r:pres6.explain.2026-03-29.gfs.mean_abs} EUR/MWh an hour
+           on the first day, {r:pres6.explain.2026-09-06.load_d0.mean_abs} and
+           {r:pres6.explain.2026-09-06.gfs.mean_abs} on the second.""", PAGE),
+    _block("outcomes.explanation.drawn", "C1007", """Drawn: the nine groups both days' networks use. Prices two days
+           before, used on the last day only, moved the median by {r:pres6.explain.2026-09-06.price_d2.mean_abs} EUR/MWh
+           an hour; the holidays, day type and month group is used on neither day.""", PAGE),
+    _block("outcomes.explanation.terms", "C1007", """Each value attributes that day's issued median within one fitted
+           model, relative to its networks' training-mean baseline. It is not a cause, not the value an input adds, and
+           not how the model behaves on other days; two days are not the development period.""", PAGE),
     _block("business.use", "P70", """**The intended use.** An hourly price forecast for the next delivery day, with
            intervals, issued before the {s:time:12:00} auction: an input to bidding, scheduling and hedging decisions in
            the German–Luxembourg market.""", PAGE, README),

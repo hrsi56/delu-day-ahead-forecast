@@ -132,6 +132,39 @@ def test_a2_negative_control_an_unmeasured_header_is_a_finding():
     assert any("not measured" in problem for problem in CRP.placement_findings(_view(1600, header=0)))
 
 
+def _a8_view(bottom: float) -> dict:
+    view = _view(bottom)
+    view["placements"].update(order="A8", finding_id="product-finding")
+    return view
+
+
+def test_a2_under_a8_the_product_finding_is_measured_and_one_pixel_too_low_fails():
+    """Ruling O48: on a page in A8's order the release check measures the product finding."""
+    assert CRP.placement_findings(_a8_view(1744)) == []
+    problems = CRP.placement_findings(_a8_view(1745))
+    assert any("#product-finding, A8 order" in problem and "beyond 1744" in problem for problem in problems)
+
+
+def test_a2_negative_control_an_a4_page_still_checks_the_comparisons_finding():
+    view = _view(1745)
+    view["placements"].update(order="A4", finding_id="comparison-finding")
+    assert any("#comparison-finding, A4 order" in problem for problem in CRP.placement_findings(view))
+    # a record made before O48 carries no order: it is read as the A4 measurement it was
+    assert any("#comparison-finding, A4 order" in problem for problem in CRP.placement_findings(_view(1745)))
+
+
+def test_a2_the_order_is_read_from_the_pages_sections_not_from_the_caller():
+    js = CRP.PLACEMENT_JS
+    assert "section#outcomes #product-finding" in js and "DOCUMENT_POSITION_FOLLOWING" in js
+    assert "section#research-results" in js and "order: a8 ? 'A8' : 'A4'" in js
+    import inspect
+
+    assert "order" not in inspect.signature(CRP.placement_findings).parameters
+    view = _a8_view(1600)
+    view["placements"]["finding"] = None
+    assert any("is missing" in problem for problem in CRP.placement_findings(view))
+
+
 # --------------------------------------------------------------------------- A3
 
 

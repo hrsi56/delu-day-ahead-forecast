@@ -2293,7 +2293,8 @@ def coverage_table() -> str:
 
 def outcome_regime_table() -> str:
     head = ('<th scope="col">Regime</th><th scope="col">Days</th><th scope="col">Hours</th>'
-            '<th scope="col">Score</th><th scope="col">v6</th><th scope="col">Naive</th><th scope="col">Ratio</th>')
+            f'<th scope="col">Score</th><th scope="col">{_structural_versions("v6")}</th><th scope="col">Naive</th>'
+            '<th scope="col">Ratio</th>')
     body = ""
     for regime, label in (("all", "Every eligible day"),) + tuple(REGIME_LABELS.items()):
         for metric, name in (("MAE", "Point error"), ("WIS", "Interval score")):
@@ -2323,9 +2324,52 @@ def bins_table() -> str:
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
+#: The frozen input groups (`cp17.attribution.GROUPS`), in words: a label carries no numeral (`cp24.design`'s table).
+EXPLAIN_GROUPS = {"price_d1": "Prices of the day before", "price_d2": "Prices two days before",
+                  "price_d3": "Prices three days before", "price_d7": "Prices a week before",
+                  "load_d0": "Load forecast for the day", "load_d1": "Load forecast, day before",
+                  "load_d7": "Load forecast, a week before", "gfs": "Weather forecast: wind and sun",
+                  "stats": "Recent price statistics", "weekday": "Weekday", "calendar": "Holidays, day type and month"}
+#: The two development days of CP-17-probe's committed attribution (packet §0's correction), as the panels name them.
+EXPLAIN_DAYS = (("2026-03-29", "The spring clock-change day"), ("2026-09-06", "The last development day"))
+
+
+def _explain_used(day: str) -> list[str]:
+    return [row["group"] for row in _pres6_rows("explanation")
+            if row["day"] == day and row["kind"] == "group" and row["used"] == "True"]
+
+
+def explanation_panels() -> list[Panel]:
+    """One panel per day, side by side on the same rows: the groups both days' networks use (a group used on one day
+    only is stated beside the chart and listed in the values table, never drawn as zero)."""
+    both = [g for g in EXPLAIN_GROUPS if all(g in _explain_used(day) for day, _ in EXPLAIN_DAYS)]
+    return [Panel(title, "mean absolute contribution an hour, EUR/MWh",
+                  tuple(Row(EXPLAIN_GROUPS[g], f"pres6.explain.{day}.{g}.mean_abs", "v6", bold=True, claim="C1007")
+                        for g in both),
+                  domain=(0, 50), step=10, option="p=1") for day, title in EXPLAIN_DAYS]
+
+
+def explanation_table() -> str:
+    head = '<th scope="col">Input group</th>' + "".join(f'<th scope="col">{S("date", day)}</th>' for day, _ in EXPLAIN_DAYS)
+    body = ""
+    for g, label in EXPLAIN_GROUPS.items():
+        cells = "".join(f'<td class="n">{value(f"pres6.explain.{day}.{g}.mean", "C1007")}</td>' if g in _explain_used(day)
+                        else "<td>not used</td>" for day, _ in EXPLAIN_DAYS)
+        body += f'<tr><th scope="row">{label}</th>{cells}</tr>'
+    for kind, label in (("baseline", "Baseline median"), ("issued", "Issued median")):
+        cells = "".join(f'<td class="n">{value(f"pres6.explain.{day}.{kind}", "C1007")}</td>' for day, _ in EXPLAIN_DAYS)
+        body += f'<tr><th scope="row">{label}</th>{cells}</tr>'
+    return (f'<div class="scroll" role="region" aria-label="Signed attribution by input group" tabindex="0"><table class="data">'
+            f'<caption>{_label("Signed mean contribution an hour to the issued median, EUR/MWh, over the delivered hours: the groups add up from the baseline (the networks' training mean) to the issued median")}</caption>'
+            f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
+
+
 def outcome_audit() -> tuple[Audit, ...]:
     return (Audit("Daily, regime and coverage results", R.PRES6_ROWS["regimes"], PRES6_TAG),
             Audit("The three days, hour by hour", R.PRES6_ROWS["days"], PRES6_TAG),
+            Audit("The committed attribution (the retraining probe's native reference)",
+                  "reports/cp17-probe/native-reference.json", "evidence/cp-17"),
+            Audit("The attribution, by day and input group", R.PRES6_ROWS["explanation"], PRES6_TAG),
             Audit("The rules, fixed before the computation", "docs/track-b/evidence/pres-6/publication-packet.md",
                   PRES6_TAG))
 
@@ -2371,6 +2415,11 @@ def product_results() -> str:
  <div class="outcome">
   {detail_head("outcomes-explanation", "What drives its forecasts")}
   {block("outcomes.explanation")}
+  {single_rows("outcomes-explanation-chart", "C1007", explanation_panels(), title="Which input groups moved v6's median on two development days",
+               desc="Each input group's mean absolute contribution an hour to v6's issued median on two development days, EUR/MWh: an attribution within one fitted model, not causality.")}
+  {block("outcomes.explanation.drawn", cls="qualification")}
+  {block("outcomes.explanation.terms", cls="qualification caveat-line")}
+  {disclosure("outcomes-explanation-table", "View the signed values", explanation_table())}
  </div>
  <div class="outcome">
   {detail_head("outcomes-bins-h", "All hours of the test periods, by forecast bin")}
@@ -2814,9 +2863,10 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-results", "Measured results: development data", "Measured results", ("5",),
               block("v6.product.results") + results("outcomes", "v6's results on every development day, in Product results")
               + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
-        Topic("product-attribution", "What drives its forecasts: live product", "What drives its forecasts",
-              ("6",), block("v6.product.attribution") + space("The Explainability view, on the live product"),
-              disposition="not evaluated"),
+        Topic("product-attribution", "What drives its forecasts", "What drives its forecasts",
+              ("6",), block("v6.product.attribution")
+              + results("outcomes-explanation", "Which inputs moved its median on two development days, in Product results")
+              + space("The Explainability view, on the live product")),
         Topic("product-importance", "Input importance: live product", "Which inputs it relies on", ("7",),
               block("v6.product.importance") + space("The Features view, on the live product"),
               disposition="not evaluated"),

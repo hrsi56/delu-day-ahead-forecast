@@ -241,7 +241,8 @@ def test_negative_control_another_tables_values_are_caught():
 def test_each_graphic_names_policy_population_dates_units_and_class():
     section = _section(BODY, "outcomes")
     charts = re.findall(r'data-chart-id="(outcomes-[a-z]+-chart)"', section)
-    assert charts == ["outcomes-days-chart", "outcomes-time-chart", "outcomes-regimes-chart", "outcomes-coverage-chart"]
+    assert charts == ["outcomes-days-chart", "outcomes-time-chart", "outcomes-regimes-chart", "outcomes-coverage-chart",
+                      "outcomes-explanation-chart"]
     identity = _text(section[:section.index('data-chart-id="outcomes-days-chart"')])
     for needed in ("v6 · DDNN-2 alone", "A1", "every eligible development day", "2020-12-29 to 2026-09-06",
                    "EUR/MWh", "development, post-selection"):
@@ -304,3 +305,62 @@ def test_r3_a_shared_code_text_carries_its_experiment():
     codes = [_text(c) for c in re.findall(r'<span class="code">(.*?)</span>', table, re.S)]
     assert len(codes) == len(set(codes)), codes  # no two rows show the same code
     assert any(code.startswith("A1, ") for code in codes)
+
+
+# --------------------------------------------------------------------------- the explanation (§0's correction; O49 superseded)
+
+
+def test_the_explanation_is_the_probes_committed_attribution_of_v6s_stored_fits():
+    """The cited result's fits are v6's stored forecasts: the probe's quantiles equal CP-28's arm A1 rows exactly."""
+    probe = json.loads((ROOT / FC.EXPLAIN_SOURCE).read_text())["results"]
+    hourly = pd.read_parquet(ROOT / "reports/cp28/forecast/hourly.parquet")
+    for day in FC.EXPLAIN_DAYS:
+        assert day <= "2026-09-06"  # r20 §24.14: development displays only
+        stored = hourly[(hourly.arm == "A1") & (hourly.day.astype(str) == day)].sort_values("timestamp_utc")
+        quantiles = stored[["q025", "q10", "q25", "q50", "q75", "q90", "q975"]].to_numpy(float).tolist()
+        assert quantiles == probe[f"A1-{day}"]["quantiles"], day
+    assert FC.PRODUCT_INPUTS[FC.EXPLAIN_SOURCE] == "f1decb8087de2abee65e32754e19b9c2a5d30cffdfa8aad1029be9bdc2df96ab"
+
+
+def test_the_explanation_rows_bridge_the_baseline_and_count_delivered_hours():
+    rows = _rows("explanation.csv")
+    for day, hours in (("2026-03-29", 23), ("2026-09-06", 24)):
+        mine = [r for r in rows if r["day"] == day]
+        assert {int(r["hours"]) for r in mine} == {hours}
+        groups = [r for r in mine if r["kind"] == "group"]
+        assert [r["group"] for r in groups] == list(build_pages.EXPLAIN_GROUPS)
+        used = [r for r in groups if r["used"] == "True"]
+        assert all(r["mean_phi_eur"] == r["mean_abs_phi_eur"] == "" for r in groups if r["used"] == "False")
+        base = float(next(r for r in mine if r["kind"] == "baseline")["mean_phi_eur"])
+        issued = float(next(r for r in mine if r["kind"] == "issued")["mean_phi_eur"])
+        assert abs(sum(float(r["mean_phi_eur"]) for r in used) - (issued - base)) < 1e-9
+        assert all(float(r["mean_abs_phi_eur"]) >= abs(float(r["mean_phi_eur"])) for r in used)
+    assert {r["group"] for r in rows if r["used"] == "False"} == {"price_d2", "calendar"}
+
+
+def test_each_explanation_mark_sits_on_its_own_groups_row():
+    labels = {label: group for group, label in build_pages.EXPLAIN_GROUPS.items()}
+    panels = build_pages.explanation_panels()
+    assert [p.title for p in panels] == [title for _, title in build_pages.EXPLAIN_DAYS]
+    assert [r.label for r in panels[0].rows] == [r.label for r in panels[1].rows]  # side by side, one set of labels
+    for panel, (day, _) in zip(panels, build_pages.EXPLAIN_DAYS):
+        for row in panel.rows:
+            assert row.record_id == f"pres6.explain.{day}.{labels[row.label]}.mean_abs"
+    # the negative control: the first draft drew each day's own groups, so the last day's rows slid under the wrong
+    # labels; panels that differ in their groups are refused here
+    drafted = [tuple(g for g in build_pages.EXPLAIN_GROUPS if g in build_pages._explain_used(day))
+               for day, _ in build_pages.EXPLAIN_DAYS]
+    assert drafted[0] != drafted[1]
+    assert "price_d2" not in {labels[r.label] for r in panels[1].rows}
+
+
+def test_the_explanation_is_labelled_and_cited():
+    section = _section(BODY, "outcomes")
+    part = section[section.index('id="outcomes-explanation"'):section.index('id="outcomes-bins-h"')]
+    text = _text(part)
+    for needed in ("2026-03-29", "2026-09-06", "within one fitted model", "not a cause", "not the value an input adds",
+                   "not how the model behaves on other days", "quantile for quantile", "used on the last day only"):
+        assert needed in text, needed
+    assert "reports/cp17-probe/native-reference.json" in section and "evidence/cp-17/" in section
+    topic = BODY[BODY.index('id="product-attribution"'):]
+    assert 'href="#outcomes-explanation"' in topic[:topic.index('id="product-importance"')]

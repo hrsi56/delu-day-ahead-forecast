@@ -14,11 +14,12 @@ prospective or 4.7T's; the Space shows the live record, "prospective evaluation 
 
 | Key | File |
 |---|---|
-| PR6 | [reports/pres6/product-results/](../../../reports/pres6/product-results/) — `regimes.csv`, `coverage.csv`, `monthly.csv`, `days.csv`, `bins.csv`, `summary.json`, written by `src/delu_forecast/final_candidate.py --product` |
+| PR6 | [reports/pres6/product-results/](../../../reports/pres6/product-results/) — `regimes.csv`, `coverage.csv`, `monthly.csv`, `days.csv`, `bins.csv`, `summary.json`, `explanation.csv`, written by `src/delu_forecast/final_candidate.py --product` |
 | DL28 | [reports/cp28/results/daily-losses.parquet](../../../reports/cp28/results/daily-losses.parquet) (CP-28's daily losses: stream A1 = v6, B0 = the naive) |
 | FC28 | [reports/cp28/forecast/hourly.parquet](../../../reports/cp28/forecast/hourly.parquet) (v6's stored quantiles, arm A1) |
 | P24 | [reports/ddnn2/attempt-1/predictions.parquet](../../../reports/ddnn2/attempt-1/predictions.parquet) (`y_true`, the observed prices of v5's periods) |
 | PK6 | [docs/track-b/evidence/pres-6/publication-packet.md](../evidence/pres-6/publication-packet.md) §0 (the rules) |
+| PB17 | [reports/cp17-probe/native-reference.json](../../../reports/cp17-probe/native-reference.json) (CP-17-probe's committed attribution of A1's fits, under `evidence/cp-17`) |
 
 ## Product results (§5.1a)
 
@@ -30,7 +31,7 @@ prospective or 4.7T's; the Space shows the live record, "prospective evaluation 
 | C1004 | The month-by-month means of the daily errors over 70 calendar months (2020-12 to 2026-09): v6 below the naive in every month on both scores, highest in the crisis months. | PR6 `monthly.csv` | S-d |
 | C1005 | The three rule-chosen days (§0: per regime, the P-v5 day at the regime's median v6 daily MAE): 2021-06-16 (before the crisis, MAE 5.3), 2022-07-26 (crisis, 35.1), 2025-05-02 (from 2023, 12.1), each with v6's median and 50/80/95% intervals against the cleared price. | PR6 `days.csv`, `summary.json` `chosen_days` | S |
 | C1006 | Over every scored hour of P-v5 (8,587 hours, 358 days), binned into ten deciles of v6's median forecast, the mean observed price tracks the mean forecast in every bin; the 80% interval holds 0.6868–0.8685 of each bin's hours. | PR6 `bins.csv` | S-d |
-| C1007 | v6's explanation: see the packet's §0 and §5b; the source and method follow the Orchestrator's ruling, or the section states the gap. | PK6 | S |
+| C1007 | v6's explanation on two development days, from CP-17-probe's committed attribution (exact baseline Shapley over the input groups the day's networks use, on the issued median, against the training-mean baseline), whose fits equal CP-28's stored A1 quantiles for both days: 2026-03-29 (23 delivered hours, 9 groups) and 2026-09-06 (24 hours, 10 groups). On both days the delivery day's load forecast and the weather forecast moved the median most: mean absolute contribution 14.0 and 14.4 EUR/MWh an hour on 2026-03-29, 43.7 and 30.8 on 2026-09-06. An attribution within one fitted model, relative to its baseline: never causality, incremental value or general behaviour (§19.7). | PR6 `explanation.csv`; PB17; PK6 §0 (the correction) | S-d |
 
 ## The publication's wording
 
