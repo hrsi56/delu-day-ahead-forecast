@@ -179,7 +179,8 @@ def build_glance(target: str = "md") -> str:
                 + link("Read them in the report", PAGES_URL + "#outcomes") + ": forecast against the observed price, "
                 "error over time and by regime, and interval coverage with width."),
            "",
-           para(bold("Business insights:") + " " + render("business.use") + " " + render("business.gap") + " "
+           para(bold("Business insights:") + " " + render("business.use") + " " + render("business.measured") + " "
+                + render("business.gap") + " " + render("business.limits") + " "
                 + link("Read them in the report", PAGES_URL + "#business") + "."),
            ""] if G.final_candidate() is not None else []),
         para(bold("Report:") + " " + link("the one-page report", PAGES_URL) + ", with every result, its limits and its evidence."),

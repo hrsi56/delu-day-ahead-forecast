@@ -2197,7 +2197,7 @@ def forecast_days_chart() -> str:
     key = (f'<p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">'
            f'{S("level", "50%")}, {S("level", "80%")} and {S("level", "95%")} intervals</span> '
            f'<span class="key-actual">Observed price</span></p>')
-    return (f'<div class="chart outcome-days" data-chart-id="outcomes-days"><div class="outcome-days-row">{desktop}</div>'
+    return (f'<div class="chart outcome-days" data-chart-id="outcomes-days-chart"><div class="outcome-days-row">{desktop}</div>'
             f'<div class="outcome-days-stack">{mobile}</div>{key}</div>')
 
 
@@ -2249,7 +2249,7 @@ def monthly_chart() -> str:
                                chart_id=f"outcomes-time-{m}") for m in ("MAE", "WIS"))
     mobile = "".join(svg_wrap(MOBILE_W, 200, panel(m, MOBILE_W, 200), title=title, desc=desc, variant="m",
                               chart_id=f"outcomes-time-{m}") for m in ("MAE", "WIS"))
-    return (f'<div class="chart outcome-time" data-chart-id="outcomes-time"><div class="outcome-days-row">{desktop}</div>'
+    return (f'<div class="chart outcome-time" data-chart-id="outcomes-time-chart"><div class="outcome-days-row">{desktop}</div>'
             f'<div class="outcome-days-stack">{mobile}</div></div>')
 
 
