@@ -457,7 +457,18 @@ those hashes:
 RUN=$(GH_PAGER=cat gh run list --workflow daily.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId') && echo "$RUN" && gh run download "$RUN" -n pipeline -D ".local/tmp/pres-6/runner-$RUN" && (cd ".local/tmp/pres-6/runner-$RUN" && shasum -a 256 -c results-sha256.txt --quiet) && echo RUNNER-BUILD-INTACT
 ```
 
-Expect the run id and `RUNNER-BUILD-INTACT`. Then its identity:
+Expect the run id and `RUNNER-BUILD-INTACT`.
+
+**One served file is missing from the download by design:** before uploading, the runner deletes every
+`*-arrays.npz` ("the fitted arrays deleted first"), and the Space serves `payloads/artifact-arrays.npz` (its
+Explainability view needs it). Fetch that one file from the Space, anonymously, and check it, and every other file,
+against the build's own record `app/space-build.json`:
+
+```bash
+B=".local/tmp/pres-6/runner-$RUN/space" && curl -sfL -o "$B/payloads/artifact-arrays.npz" https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/payloads/artifact-arrays.npz && python3 -c "import hashlib, json, os, sys; b = sys.argv[1]; files = json.load(open(os.path.join(b, 'app/space-build.json')))['files']; bad = [f['path'] for f in files if not os.path.isfile(os.path.join(b, f['path'])) or hashlib.sha256(open(os.path.join(b, f['path']), 'rb').read()).hexdigest() != f['sha256']]; print('BUILD-EQUALS-ITS-RECORD' if not bad else ('DIFFERS', bad[:5]))" "$B"
+```
+
+Expect `BUILD-EQUALS-ITS-RECORD`. Then its identity:
 
 ```bash
 uv run python -c "import sys, pathlib; sys.path.insert(0, 'scripts'); from build_wasm_space import bundle_sha256; print(bundle_sha256(pathlib.Path('.local/tmp/pres-6/runner-$RUN/space')))"
