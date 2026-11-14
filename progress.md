@@ -376,6 +376,9 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   local fallback; no page-size limit; no delivery day missing because the acquisition missed the cutoff, v6
   running with the load forecast fetched after it, labelled. An experiment measures GitHub's scheduler
   (`.github/workflows/schedule-probe.yml`); CP-18d makes the change.
+- **CP-18d issued on 2026-11-15** (brief `d4fcc76a…`; Session Log): decision 31 in the live product (v6 with the
+  late load forecast, labelled), an earlier acquisition from the schedule probe, the claim over a moved `main`
+  (O47), and the Space's wording follow-ups.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1177,6 +1180,17 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-18d issued, 2026-11-15** (brief `d4fcc76a3c91d52d1558079f3a0d762c5f7f03378f1937289fa1d991e4dcadca`;
+  canonical copy `.local/artifacts/cp-18d/issued-brief.md`).
+  - **Why.** Of the live record's first 13 days it issued 5; seven were not issued because their load
+    forecast could not be shown to precede the cutoff, and GitHub's scheduler ran the first day's jobs late or
+    not at all. The Owner ruled that no day goes missing for this reason (decision 31).
+  - **What it does:** v6 issues a missed day with the load forecast fetched after the cutoff, labelled and
+    reported separately; the acquisition starts earlier and waits in its job, from the schedule probe's
+    measurement; a push during a run no longer discards its records; the Space's wording follow-ups and the
+    runner's full artifact. Nothing frozen changes, and 4.7T stays exactly as registered.
+  - **Ceilings:** about 16 active hours, 12 local machine-hours and 4 workers.
 
 - **PRES-6 landed and deployed, 2026-11-15** (`land/pres-6` `fe2460fc`, evidence tip `f497879f`;
   [landing record](docs/track-b/pres-6-landing-2026-11-15.md)).
