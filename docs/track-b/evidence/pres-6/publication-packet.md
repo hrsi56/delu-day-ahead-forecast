@@ -50,6 +50,10 @@ days (the ratio's interval from the same draws). A regime with fewer than 60 day
 naive: coverage, the scored-hour-weighted share of hours inside the interval, and width, the scored-hour-weighted mean
 interval width in EUR/MWh, both from `daily-losses.parquet`. The nominal level is drawn as a reference, never as a
 target.
+- *Correction, 2026-11-14, before any number was computed:* `daily-losses.parquet` carries coverage and width for the
+  arms only; the naive's and the control's rows hold MAE and WIS alone. Coverage with width is therefore reported for
+  v6 only, at each level, for P-all and for each regime. The naive's would need its hourly quantiles and the observed
+  prices on P-all, which are not committed; it is not computed.
 
 **Explanation or sensitivity.** No committed explanation of v6 exists. CP-28's stored `networks.npz` and
 `features.parquet` belong to the small-network blend arms (A5, A7): their inputs are member error statistics and their
