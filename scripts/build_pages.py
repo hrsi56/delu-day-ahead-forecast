@@ -2868,7 +2868,7 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-attribution", "Input attribution: two days and live",
               "Input attribution: two development days and the live product",
               ("6",), block("v6.product.attribution")
-              + results("outcomes-explanation", "Which inputs moved its median on two development days, in Product results")
+              + results("outcomes-explanation", "The attribution on two development days, in Product results")
               + space("The Explainability view, on the live product")),
         Topic("product-importance", "Input importance: live product", "Which inputs it relies on", ("7",),
               block("v6.product.importance") + space("The Features view, on the live product"),
