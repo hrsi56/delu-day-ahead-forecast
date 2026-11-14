@@ -2229,8 +2229,9 @@ def monthly_chart() -> str:
             tick += step
         for i, m in enumerate(months):
             if m.endswith("-01") and (width > 320 or int(m[:4]) % 2 == 1):
-                out.append(svg_text(x(i), height - 10, m[:4], anchor="middle", fill=TOKENS["text-2"],
-                                    extra=' data-scale="outcome-year"'))
+                # a year next to the value axis starts at its tick, clear of the axis's "0" (release check, 768 px)
+                out.append(svg_text(x(i), height - 10, m[:4], anchor="start" if x(i) - ml < 20 else "middle",
+                                    fill=TOKENS["text-2"], extra=' data-scale="outcome-year"'))
         for stream in ("naive", "v6"):
             points = " ".join(f"{x(i):.0f},{y(v):.0f}" for i, v in enumerate(series[(stream, metric)]))
             dash = ' stroke-dasharray="5 3"' if stream == "naive" else ""
@@ -2388,31 +2389,31 @@ def product_results() -> str:
   <nav class="explore" aria-labelledby="outcomes-explore-h"><h3 class="story-label" id="outcomes-explore-h">Explore these
    results</h3><ul>{routes}</ul></nav>
  </figure>
- <div class="outcome">
+ <div class="outcome-block">
   {detail_head("outcomes-days", "Forecast against the observed price on three development days")}
   {block("outcomes.days")}
   {forecast_days_chart()}
  </div>
- <div class="outcome">
+ <div class="outcome-block">
   {detail_head("outcomes-time", "Error over time, month by month")}
   {block("outcomes.time")}
   {monthly_chart()}
  </div>
- <div class="outcome">
+ <div class="outcome-block">
   {detail_head("outcomes-regimes", "Error by regime, with intervals")}
   {block("outcomes.regimes")}
   {single_rows("outcomes-regimes-chart", "C1002", regime_panels(), title="v6's mean daily error by price regime, against the similar-day naive",
                desc="For each price regime, v6's and the similar-day naive's mean daily point error in EUR/MWh, each with its 95 percent interval of the mean; the interval score by regime is in the values table. Development evidence after selection.")}
   {disclosure("outcomes-regimes-table", "View values, with the ratios to the naive", outcome_regime_table())}
  </div>
- <div class="outcome">
+ <div class="outcome-block">
   {detail_head("outcomes-coverage", "Interval coverage with width")}
   {block("outcomes.coverage")}
   {single_rows("outcomes-coverage-chart", "C1003", coverage_panel(), title="Coverage of v6's 50, 80 and 95 percent intervals",
                desc="The share of hours inside each of v6's intervals over every eligible development day, with the nominal level drawn as a reference line, not a target. Development evidence after selection.")}
   {coverage_table()}
  </div>
- <div class="outcome">
+ <div class="outcome-block">
   {detail_head("outcomes-explanation", "What drives its forecasts")}
   {block("outcomes.explanation")}
   {single_rows("outcomes-explanation-chart", "C1007", explanation_panels(), title="Which input groups moved v6's median on two development days",
@@ -2421,10 +2422,10 @@ def product_results() -> str:
   {block("outcomes.explanation.terms", cls="qualification caveat-line")}
   {disclosure("outcomes-explanation-table", "View the signed values", explanation_table())}
  </div>
- <div class="outcome">
+ <div class="outcome-block">
   {detail_head("outcomes-bins-h", "All hours of the test periods, by forecast bin")}
   {block("outcomes.bins")}
-  {disclosure("outcomes-bins", "View the ten bins", bins_table())}
+  {bins_table()}
  </div>
  {evidence_row(audit=outcome_audit())}
 </section>"""
@@ -3873,7 +3874,7 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .chart svg.d{{width:100%;max-width:{DESKTOP_W}px}}
 .chart svg.m{{display:none;width:100%;max-width:{MOBILE_MAX_W}px;margin:0 auto}}
 .outcome-days-row{{display:flex;flex-wrap:wrap;gap:12px}}.outcome-days-row svg.d{{flex:1 1 280px;width:auto;max-width:440px}}
-.outcome-days-stack svg.m{{margin:0 0 12px}}.outcome{{margin:28px 0 0}}
+.outcome-days-stack svg.m{{margin:0 0 12px}}.outcome-block{{margin:28px 0 0}}
 .preview-chart svg.d{{max-width:440px}}
 @media (max-width:{MOBILE_BREAKPOINT - 1}px){{.chart svg.d{{display:none}}.chart svg.m{{display:block}}}}
 .chart-note{{font-size:14px;color:var(--text-2);margin-top:20px}}

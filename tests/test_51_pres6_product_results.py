@@ -364,3 +364,13 @@ def test_the_explanation_is_labelled_and_cited():
     assert "reports/cp17-probe/native-reference.json" in section and "evidence/cp-17/" in section
     topic = BODY[BODY.index('id="product-attribution"'):]
     assert 'href="#outcomes-explanation"' in topic[:topic.index('id="product-importance"')]
+
+
+def test_product_results_wears_none_of_the_v1_card_styles():
+    """The release check caught it: wrappers named `outcome` took v1's result-card style (a border and 20 px padding),
+    shrinking every new chart's text below 12 px at 320 px wide."""
+    section = _section(BODY, "outcomes")
+    assert not re.search(r'class="outcome"', section)
+    assert section.count('class="outcome-block"') == 6
+    css = build_pages.css()
+    assert css.count(".outcome-block{") == 1 and ".outcome{" in css  # v1's card rule stays, unused here
