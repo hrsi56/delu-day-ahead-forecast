@@ -106,7 +106,7 @@ it is after CP-22 (Owner, 2026-10-04).
 | 5b | Checkpoint automation ([plan](docs/automation-plan.md) items 2, 1, 5, 3, 4, 8) | ✅ Done 2026-10-04 (`42e4ceb`). Items 6 and 7 deferred to the next publication, with a binding reminder |
 | 6 | DDNN, written in NumPy only: CP-23, 4.6L → 4.6R → 4.6C ([v21-r10 §21](capstone_v21.md)) | ✅ CP-23 closed 2026-10-04: PASS; DDNN passed 4.6L, the correctness checks and 4.6R; v5 not adopted (`cp23-adoption` condition 1); landed as `land/cp-23` ([landing record](docs/track-b/cp-23-landing-2026-10-04.md)). DDNN-2 follows as CP-24 (row 6a) |
 | 6a | DDNN-2: CP-24, a literature-faithful DDNN behind a pre-fold gate ([v21-r11 §23](capstone_v21.md)) | ✅ CP-24 closed 2026-10-11: PASS; DDNN-2 passed 4.6L′, the correctness checks, 4.6R′ and the pre-fold gate in one round; **v5 adopted in research** in scored attempt 1 (`cp24-adoption`, all five conditions); leakage ruled out at all 636 origins; landed as `land/cp-24` ([landing record](docs/track-b/cp-24-landing-2026-10-11.md)) |
-| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** **v21-r19 ratified 2026-10-30.** **CP-17c landed 2026-10-30: A1 re-frozen under the `macos-26` issuing host (policy identity `720fc581…`), 58 of 58 fits bit-identical on the runner and the M3.** **CP-18a landed 2026-11-04: the daily pipeline around the frozen A1, rehearsed on development days only.** **CP-18b landed 2026-11-05: the outcomes, the dated bundle and the final-product Space, rehearsed on development days only.** **Decision 28 (2026-11-05): publish and go live now; A1 stays frozen and 4.7T exactly as registered (v21-r20 §24.14).** **CP-18c landed 2026-11-13: the live product runs, and the final-product Space is published; the daily operation moved to the `macos-26` runner.** Next: PRES-5 (the publication), then 4.7T (not before 2026-12-04) |
+| 7 | The Owner's [programme plan of 2026-10-11](docs/track-b/programme-plan-2026-10-11.md), approved that day. Its stages: publish v5 (PRES-4) → search for new sources and design the evaluation protocol → collect all the data in one checkpoint (CP-25) → re-baseline v1–v5 on every eligible day as the control arm (CP-26) → new-source admission tests (CP-27) → 4.8 (CP-28) → freeze and 4.7T on 2026-09-07..12-05 (moved 2026-10-12; the replay is withdrawn) → security, live trial and activation (CP-18 → CP-19) → final publication and CV | 🔄 Stages 2 and 3 done: PRES-4 closed 2026-10-11, v5 published ([closure record](docs/track-b/pres-4-closure-2026-10-11.md)); the source search reported 2026-10-12 ([report](docs/track-b/data-source-research-2026-10-11.md)), and the Owner set the vintage standard. Stage 4's memo received and decided 2026-10-12 ([memo](docs/track-b/stage-4-methodology-memo-2026-10-12.md)). **The Owner chose the short path, 2026-10-12: no new sources; CP-27 dropped.** v21-r13 and PUBLISH_RULES 1.5 ratified 2026-10-12. CP-25 landed 2026-10-12; **CP-26 landed 2026-10-21** (v21-r17 on `main`); **CP-28 landed 2026-10-25: A1 (DDNN-2 alone) selected**; **CP-17-probe landed 2026-10-27: A1 can be retrained in the browser**; **CP-17 landed 2026-10-28 and CP-17b 2026-10-29: A1 frozen**; **v21-r18 ratified 2026-10-29**. The Owner ruled on r18's two open items, 2026-10-29 (decisions 20–21), and confirmed a factual correction to 4.7T's public wording the same day. On 2026-10-30 he set the road to the live product (decisions 22–25). **CP-17c-probe landed 2026-10-30: both GitHub-hosted runners reproduce the frozen host bit for bit; the Orchestrator chose `macos-26`.** **v21-r19 ratified 2026-10-30.** **CP-17c landed 2026-10-30: A1 re-frozen under the `macos-26` issuing host (policy identity `720fc581…`), 58 of 58 fits bit-identical on the runner and the M3.** **CP-18a landed 2026-11-04: the daily pipeline around the frozen A1, rehearsed on development days only.** **CP-18b landed 2026-11-05: the outcomes, the dated bundle and the final-product Space, rehearsed on development days only.** **Decision 28 (2026-11-05): publish and go live now; A1 stays frozen and 4.7T exactly as registered (v21-r20 §24.14).** **CP-18c landed 2026-11-13: the live product runs, and the final-product Space is published; the daily operation moved to the `macos-26` runner.** **PRES-5 landed and deployed 2026-11-13/14: v6 · DDNN-2 alone (A1) in v5's comparison, CP-26, CP-28, the freeze with 4.7T's registered terms, and the live product, on the report, the README and MLflow.** Next: 4.7T (not before 2026-12-04), then the publication of its result |
 
 **CP-26 closed on 2026-10-21** ([landing record](docs/track-b/cp-26-landing-2026-10-21.md)). The
 all-season re-baseline to 2026-09-06 ran under v21-r13 → v21-r17 §24.7.
@@ -360,6 +360,14 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
     enabled). The local runs are stopped and the fallback is not installed. The rulesets are active.
   - **The live record so far:** 2026-11-06, 11-07, 11-08 and 11-14 issued. The other days since 11-03 are
     not issued, each with its cause.
+- **PRES-5 landed and deployed on 2026-11-13/14** ([landing record](docs/track-b/pres-5-landing-2026-11-14.md)).
+  - **On the report, the README and MLflow:** v6 · DDNN-2 alone (A1 in the frozen records) in v5's
+    comparison on v5's own 10,747 hours, CP-26's every-day re-baseline, CP-28's selection, the freeze with
+    4.7T's registered terms, and the live product. Development data only.
+  - **One public defect, fixed:** the link to v1's historical demo redirected to an unrelated profile for
+    about 55 minutes (O44).
+  - **Next:** 4.7T, no earlier than 2026-12-04, then the publication of its result with A8's
+    product-first order (O38).
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1161,6 +1169,21 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **PRES-5 landed and deployed, 2026-11-13/14** (`land/pres-5` `8bcfc454`, evidence tip `511e91e3`;
+  [landing record](docs/track-b/pres-5-landing-2026-11-14.md)).
+  - **The Lead returned PASS:** reviews 1–3 failed and were repaired, review 4 passed at `48f56b0e`, and the
+    focused recheck passed at `300926de`. MLflow gained 61 runs, and the 44 earlier ones are unchanged.
+  - **The landing:** the squash on CP-18c's closure equals the checked merge. Then came three commits of the
+    Orchestrator's:
+    - `d1061484`: a test-only merge repair, after CP-18c's wall test met PRES-5's surfaces (O43);
+    - `eac95cae`: the history link fixed (O44);
+    - `50d51507`: a test-only fix for the reproduction.
+  - **The CI.** The history-free run at `50d51507` passed: 3,297 passed and 73 skipped. GitHub's `main` CI
+    passed: 3,286 passed and 84 skipped. The `land/pres-5` run failed on the one test O43 repairs.
+  - **The public checks.** Pages served the reviewed page at 22:02Z and the fixed page at 22:56Z. Every
+    receipt row passed but the Space's direct page, whose normalizer is out of date; CP-18c's normalization
+    shows it equal. The browser records passed. A12's independent check passed.
 
 - **CP-18c landed, 2026-11-13** (`land/cp-18c` `f55c4eae`, evidence tip `8468da6c`;
   [landing record](docs/track-b/cp-18c-landing-2026-11-13.md)).
