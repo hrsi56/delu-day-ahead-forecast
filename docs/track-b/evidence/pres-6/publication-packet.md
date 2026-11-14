@@ -161,7 +161,9 @@ claim template in `research_claims.PRES6_BLOCKS`, rendered on the page and, wher
 | `outcomes.time` | C1004 | Each day's point error and interval score, as calendar-month means from 2020-12 to 2026-09: v6 lies below the similar-day naive in every month on both scores, and both peak in the crisis months. |
 | `outcomes.regimes` | C1002 | 246 days before the crisis, 481 in it and 1,341 from 2023; none is thin. In each, v6's mean daily point error is a fraction of the naive's, its ratio 0.4508, 0.4934 and 0.5047, each interval below one; the crisis carries the largest errors, 30.7 EUR/MWh in point error. |
 | `outcomes.coverage` | C1003 | Over the eligible days, v6's 50%, 80% and 95% intervals covered 0.4779, 0.7826 and 0.9437 of the hours, at mean widths of 25.5, 51.7 and 88.8 EUR/MWh. In the crisis they covered least, 0.7531 at 80%, and were widest. The nominal level is a reference, not a target. |
-| `outcomes.explanation` | C1007 | No attribution of v6's forecasts on development days is committed, and the selection's stored networks belong to other arms, so this section shows none. The live product's Explainability view computes one for each issued day: exact baseline Shapley over v6's input groups on its median, relative to a stated baseline; an attribution within one fitted model, never causality. |
+| `outcomes.explanation` | C1007 | Which inputs moved v6's median on two development days: 2026-03-29, the spring clock-change day (23 hours), and 2026-09-06, the last development day. The attribution is the one committed, before the freeze, by the probe that measured its in-browser retraining: exact baseline Shapley over the input groups that day's networks use. Its fits are v6's stored forecasts for both days, quantile for quantile. On both days the load forecast for the delivery day and the weather forecast moved the median most: on average 14.0 and 14.4 EUR/MWh an hour on the first day, 43.7 and 30.8 on the second. |
+| `outcomes.explanation.drawn` | C1007 | Drawn: the nine groups both days' networks use. Prices two days before, used on the last day only, moved the median by 2.7 EUR/MWh an hour; the holidays, day type and month group is used on neither day. |
+| `outcomes.explanation.terms` | C1007 | Each value attributes that day's issued median within one fitted model, relative to its networks' training-mean baseline. It is not a cause, not the value an input adds, and not how the model behaves on other days; two days are not the development period. |
 | `business.use` | P70 | **The intended use.** An hourly price forecast for the next delivery day, with intervals, issued before the 12:00 auction: an input to bidding, scheduling and hedging decisions in the German–Luxembourg market. |
 | `business.measured` | P70 | **What the results imply for that use.** On an average development day the median misses the hourly price by 17.2 EUR/MWh, against the naive's 34.6, and by 30.7 in the crisis; an 80% interval about 51.7 EUR/MWh wide held 0.7826 of the hours. A decision that uses the forecast can size its margin to that spread. |
 | `business.gap` | P70 | **What is not established.** No decision policy, cost model or trading simulation has been authorized or run for this product, so there is no profit, value or loss figure, and no curve of either. Lower forecast error and interval coverage are not profit, and not a success rate of any decision. |
@@ -175,7 +177,7 @@ None: no generation is adopted. The "From v5 to v6" summary stands as PRES-5 pub
 
 The product is unchanged: v6, which the Space runs (O26, O29). "How the product works" keeps PRES-5's twelve subjects.
 A8 makes the three product sections complement each other ("method explanations link to the canonical result
-graphics"), so four topics gain a route to Product results. Each keeps its route to the v6 chapter:
+graphics"), so five topics gain a route to Product results. Each keeps its earlier route:
 
 | Subject (§5.1) | Disposition | Evidence | Routes |
 |---|---|---|---|
@@ -184,7 +186,7 @@ graphics"), so four topics gain a route to Product results. Each keeps its route
 | 3 Inputs; 3b seasonal rationale | supported | unchanged | `#product-inputs` |
 | 4 Validation | supported | unchanged | `#product-validation` |
 | 5 Results | supported | unchanged; **+** Product results, every development day | `#product-results` → `#outcomes`, `#v6-chart-title` |
-| 6 Attribution | not evaluated in research | unchanged; Product results' "What drives its forecasts" states the gap (§0; §10.3 item 2) | `#product-attribution` → the Space's Explainability view |
+| 6 Attribution | **supported, on two development days** (was "not evaluated in research") | `v6.product.attribution` rewritten: CP-17-probe's committed attribution of v6's stored fits, drawn in Product results (§0's correction; C1007) | `#product-attribution` → `#outcomes-explanation`, the Space's Explainability view |
 | 7 Importance and sensitivity | not evaluated in research | unchanged | `#product-importance` → the Space's Features view |
 | 8 Where it fails | supported | unchanged; **+** the month-by-month error | `#product-failures` → `#outcomes-time`, `#v6-per-period-differences` |
 | 9 Reliability | supported | unchanged; **+** coverage with width at each level, every development day | `#product-reliability` → `#outcomes-coverage`, `#v6-coverage` |
@@ -202,7 +204,7 @@ The incoming and outgoing product are both v6: no transition. v1's documentation
 | `outcomes-time-chart` | `#outcomes-time` | "Error over time, month by month" | the same; product topic 8 |
 | `outcomes-regimes-chart` | `#outcomes-regimes` | "Error by regime, with intervals" | the same; product topic 2 |
 | `outcomes-coverage-chart` | `#outcomes-coverage` | "Interval coverage with width" | the same; product topic 9 |
-| (text) | `#outcomes-explanation` | "What drives its forecasts" | the same |
+| `outcomes-explanation-chart` | `#outcomes-explanation` | "What drives its forecasts" | the same; product topic 6 |
 | (table) | `#outcomes-bins-h` | "All hours of the test periods, by forecast bin" | the same |
 
 Each chart has one heading and one canonical place, in Product results. Business insights draws no chart and cites the
@@ -231,7 +233,23 @@ experiment tags, not the sources. No route changes, so `reports/presentation/mlf
 
 ## 7. Checks the checkpoint ran
 
-(Filled at the candidate; see below the §8 commands.)
+| Check | Result | Record |
+|---|---|---|
+| The product results re-derive byte for byte from the four pinned inputs (`final_candidate --product --check`); a changed input is refused | pass | `tests/test_51` (`test_the_product_rows_rederive_byte_for_byte`, `test_a_changed_input_is_refused`) |
+| The populations agree with CP-26's and CP-28's (2,068 days, 49,596 hours; v6's and the naive's means equal CP-26's D2 and B0 records within 1e-9) | pass | `test_51::test_the_populations_agree_with_cp26_and_cp28` |
+| The three days are the rule's, re-chosen independently; the upper median would choose another day (the rule is not vacuous) | pass | `test_51::test_the_three_days_are_the_rules` |
+| Every PRES-6 record re-derives (453 records); a perturbed value fails; no record describes a day after 2026-09-06 | pass | `test_51::test_every_pres6_record_rederives_and_a_perturbed_one_fails` |
+| The explanation is the probe's committed result, its fits v6's stored forecasts (the probe's quantiles equal CP-28's A1 rows, both days); the bridge holds; each mark sits on its own group's row (negative control: the first draft's misaligned panels) | pass | `test_51` (four explanation tests) |
+| A8's order; the navigation leads to Product results; the PRES-5 order is caught | pass | `test_51::test_the_order_is_a8s_product_first` |
+| Product results and Business insights bind only PRES-6 records and show no unrounded value; the pre-fix page (v1's stratum table under a name clash) fails with 126 foreign values | pass | `test_51::test_product_results_binds_only_pres6_records_and_shows_no_live_number`, `…another_tables_values_are_caught` |
+| W54 and W55, each with positive and negative cases, find nothing on the page or in the README | pass | `test_51::test_the_withheld_claims_w54_and_w55_are_guarded` |
+| The link checker: the recorded `/history/` chain fails as a cross-host redirect; a same-host redirect passes and is recorded; a loop and a missing `Location` fail | pass | `tests/test_33` (fixture `tests/fixtures/pres6/recorded.json`) |
+| The receipt: `normalize_space_page` is `cp18.publish.normalized`; the recorded served page passes after 495 bytes are removed; PRES-5's script-only rule, a changed page and an ambiguous second meta run fail | pass | `tests/test_48` |
+| A2 under A8 (O48): the rule's arithmetic for the product finding, one pixel too low fails, an A4 page still checks the comparison's; in Chrome and WebKit the candidate passes, PRES-5's published page measures `#comparison-finding`, and a candidate with 900 px inserted above the product finding fails | pass | `tests/test_43` (A2 tests); `reports/presentation/release-checks/pres-6-placement-o48.json` |
+| The presentation suites (tests 29–34, 38, 43, 50, 51) | 799 passed, 1 skipped at `9b60c88c` | local run |
+| The prerelease in a clean worktree (runbook §9 offline checks) | `<prerelease result>` | `reports/presentation/release-checks/pres-6-pre-final-prerelease.json` |
+| The browser release check over HTTP (Chrome and WebKit; 1440, 768, 390, 360, 320; iPhone 15 emulation; placements, accessibility, keyboard, contrast, charts, requests) | `<release result>` | `reports/presentation/release-checks/pres-6-local-release.json` |
+| The page budget | `<final_page_bytes>` bytes ≤ 2,000,000 | `reports/cp3/pages_build.json` |
 
 ## 8. Publication completion receipt and the Orchestrator's packet
 
@@ -501,3 +519,141 @@ Stop the rollout and name each affected URL and revision. The identities to rest
 `983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475` and README `bc98e9cc…c472` (PRES-5 fix 1). PRES-6
 touches neither the Space nor MLflow. No force-push or history rewrite is part of a recovery, and `main` keeps the
 runner's commits: a revert is a new commit on top of them, and a rollback is its own Owner action.
+
+## 9. Applicability matrix
+
+### 9.1 PUBLISH_RULES 1.5, clause by clause
+
+| Clause | Applies? | How PRES-6 meets it, or why not | Evidence |
+|---|---|---|---|
+| §1.1–§1.3 authority, identities, categories | yes | Rules 1.5 and research v21-r20 §24.14 by the brief's hashes; the product status (v6, "final candidate · pending 4.7T", live on the Space) unchanged; every new figure a development research result | §1; the brief |
+| §2 reader contract; A1; A2 | yes | Each new number names its metric beside it (A1); **A2 under A8 applies to the product finding** (O48), measured with the persistent header in Chrome and WebKit | §7; `pres-6-placement-o48.json`; `pres-6-local-release.json` |
+| §3.1 evidence classes; withheld claims | yes | Development, post-selection on every product result; nothing live, prospective or 4.7T's; W54 and W55 added and guarded, W1–W53 in force | `test_51` |
+| §3.2 scores, comparisons, uncertainty | yes | The naive as the reference beside every error; regime means with the paired block-bootstrap intervals of §0; coverage with width at each level, the nominal level a reference; thin subsets stated (none) | §0; §4 |
+| §3.3 counting | yes | No new rule, verdict or N; the 2,068 days and three regimes counted from the committed rows | §4 |
+| §3.4 provenance and formatting | yes | Every number a record; whole percents, four significant figures for fractions and ratios, one decimal for EUR/MWh | the lint in the prerelease; `test_30` |
+| §4 registry, transitions; A3; A10 | no change | No identity added or adopted; no generation revised in place | §2; §5a |
+| §5 page architecture; **A8** | **yes, triggered (O46)** | A8's order; the three product sections complement each other: five product topics route to the canonical result graphics, Business insights cites the results in words with no chart; the comparison and later sections unchanged except R1, R2, R3, R5 and R7's wording | §5b–§5d; `test_51` |
+| §5.1 twelve subjects; §5.1a Product results and Business insights | yes | §5b (subject 6 now supported on two development days); Product results' five items; Business insights' use, measured implications, gap and limits | §5, §5b |
+| §5.2 page budget | yes | `<final_page_bytes>` bytes ≤ 2.0 MB; the regime chart draws point error only and the explanation's table its signed means only, to fit | `reports/cp3/pages_build.json` |
+| §6 charts, discovery; A5 | yes | Five new charts, each with its heading, a route in "Explore these results", direct labels, and its policy, artifact, population, dates, units and class | §5c; `test_31`; `test_51` |
+| §7.1–§7.3 product, live, final-product Space; A7, A9 | the Space's (CP-18c) | The report shows no live panel or live number, and says the Space shows the live record, "prospective evaluation in progress" | `test_24`, `test_51` |
+| §8 surfaces | yes | Report and README updated and in agreement; MLflow and the Space unchanged (§6, §8.4) | §8 |
+| §9 browser and accessibility matrix | yes | The release check over HTTP, both engines, every width, iPhone emulation | `pres-6-local-release.json` |
+| §10.1–§10.4 independence, fresh reader, public identity, verdict; A6 | yes | Editorial review, fresh reader and Integration Critic, none an author of PRES-6; the public checks after the Orchestrator's steps | `editorial.md`, `fresh-reader.md`, `integration.md`; §8.5 |
+| §10.5 A12 | yes, after deployment | Its conditions and the useful check | §8.6 |
+| §11 packet and order | yes | §0 before the computation; build → editorial → fresh reader → Integration at the candidate → final build → focused recheck → the Orchestrator's steps | this packet |
+| §12 baseline coverage | yes | Invariant 10's date: every research number on days through 2026-09-06 | `test_51`; `test_36` |
+| §13 acceptance record | yes | §9.2 | — |
+| §14 pending triggers | yes | A8's trigger was decided by O46; 4.7T's publication remains its own | the brief |
+| A11 work availability | yes | One usage-limit pause, recorded (§10.2) | the ledger |
+
+### 9.2 The §13 acceptance record
+
+| Area | Record |
+|---|---|
+| Authority | Rules 1.5 `1bc0c523…f94e`; research v21-r20 §24.14; brief `bdb78f02…40e5f6`; rulings O46, O48, the explanation ruling (§10.1) |
+| Identity | `gauntlet/pres-6` off `87811abc`; `<final_candidate_sha>`; `<evidence_tip_sha>`; the landing and served identities after the Orchestrator's steps |
+| Claims | §0's rules committed before the numbers; §4's records with their source rows, populations and intervals; C1001–C1007 |
+| Reader | A8's order; the product finding within A2 (O48); the fresh reader's record |
+| Content | Product results' five items; Business insights with its gap; the twelve subjects (§5b) |
+| Charts | Five charts, each identified, routed and directly labelled |
+| Accessibility | The engine and width matrix over HTTP |
+| Tracking | MLflow unchanged; the manifest's sources list only (§6) |
+| Release | The prerelease in a clean worktree; the `--final` build; the exact-candidate Integration check; the focused recheck |
+| Public check | After the Orchestrator's steps (§8.5–§8.6) |
+| Follow-up | §10.3's open items with proposed rulings; the reviews' findings, each dispositioned (§10.4) |
+
+### 9.3 The runbook
+
+| Touchpoint | Status |
+|---|---|
+| `registry.EVIDENCE_TAGS["evidence/pres-6"]` | added; its date set in the final-build commit to that commit's date |
+| `research.py::SOURCES`, `POPULATIONS` | PRES-6's seven files by blob and tag; the regime populations, `pres6-p-v5`, `pres6-explain-days` |
+| Claim map and blocks | `pres6-claims.md`; `PRES6_BLOCKS`; `v6.product.attribution` and PRES-5's R1, R2, R7 blocks reworded |
+| `CHARTS_BY_RUN`, `mlflow_export.py` | not needed: no run or route changes |
+| Tests | `tests/test_51`; updates to tests 29, 33, 43, 48 |
+| Limits to watch | A2 under A8 in both engines; chart text ≥ 12 px; the 2.0 MB budget (margin `<margin>` bytes) |
+
+### 9.4 The brief's observable outcome
+
+| Outcome | Where it is met | Evidence |
+|---|---|---|
+| 1 The order (A8) | navigation → opening → How the product works → Product results → Business insights → How the models compare → the rest unchanged | `test_51::test_the_order_is_a8s_product_first` |
+| 2 Product results | forecast against observed on the rule's three days and the ten bins; error over time; error by regime with counts and intervals; the explanation (the committed attribution, two development days); coverage with width at 50/80/95%; each graphic identified; populations agree; A2 on the product finding | §0, §4, §7 |
+| 3 Business insights | the intended use, the measured implications with their limits, the gap; no profit curve; W54 | `test_51` |
+| 4 The README | "Product results" and "Business insights" in the glance, through the claim layer, the same numbers as the page | `test_51::test_the_readme_carries_the_same_claims` |
+| 5 The link checker | hop by hop, the chain recorded, a cross-host end fails; the recorded `/history/` fixture | `test_33` |
+| 6 The receipt's Space page | `cp18.publish.normalized`, imported; the recorded served page | `test_48` |
+| 7 R1–R7 | §10.5 | — |
+| 8 The page budget | `<final_page_bytes>` bytes | `reports/cp3/pages_build.json` |
+| 9 Review | editorial, fresh reader, Integration at the candidate, focused recheck at the final SHA | `docs/track-b/evidence/pres-6/` |
+| 10 The packet | §8 | — |
+
+## 10. Rulings, disclosures and open presentation items
+
+### 10.1 The Orchestrator's rulings in this block
+
+| Ruling | What it decided |
+|---|---|
+| O46 | A8's product-first order now (reverses O38); the brief's basis |
+| O48 | `scripts/check_reader_paths.py` and its test join the allowed paths: on an A8 page `PLACEMENT_JS` measures `#product-finding`, on an A4 page `#comparison-finding`, chosen from the page's own sections; a negative control each way; nothing else in the tool changes |
+| The explanation (the Orchestrator's second message, superseding the first form of O49) | Use CP-17-probe's committed attribution under the brief's first branch and compute nothing; the label says it is an attribution of the named development days' issued median within one fitted model, never causality, incremental value or general behaviour; only days through 2026-09-06; cite the result by its committed path and evidence tag, with the check that its quantiles equal CP-28's arm A1 rows |
+
+**A defect of the brief, resolved:** the brief pointed the explanation to "the stored networks and features", which
+names CP-28's `networks.npz` and `features.parquet`. Those belong to the blend arms' meta-learner (their inputs are
+member error statistics, their outputs blend weights) and cannot explain v6. The Orchestrator confirmed the error; the
+existing committed result made any computation unnecessary.
+
+### 10.2 Disclosures
+
+- **§0 was corrected twice before use,** each in its own commit before the numbers it governs: coverage for v6 only
+  (`beac7da6`: the naive's daily rows carry no coverage), and the explanation's source (`72e688e2`: the packet first
+  said no committed explanation existed).
+- **A defect found and fixed before review:** a second `regime_table()` in `build_pages.py` silently replaced PRES-6's,
+  so Product results rendered v1's stratum table with unrounded values. The presentation suites passed it; `test_51`
+  now refuses it (the pre-fix page fails with 126 foreign values).
+- **The explanation chart's first draft mislabelled rows:** side-by-side panels share row labels, and the last day uses
+  one more group. The chart now draws the nine groups both days use and states the tenth beside it (§0 had said "each
+  day's … by group"; the values table keeps every group). A test refuses differing panels.
+- **The fixtures were recorded live** on 2026-11-14 at 11:51 UTC by anonymous GETs that follow no redirect; the served
+  page's injected script carries the Space creator's public user id, no credential.
+- **The ledger's early rows are bounds,** not timings (the ledger says which). One usage-limit pause, about 12:15 to
+  15:45 UTC; nothing ran during it.
+- **The commit hook's fingerprint check (F1) is skipped in this worktree** (`.githooks/credential-fingerprints.json`
+  is local to the primary checkout); F2 and F3 ran on every commit, and §8.3's value-based scan runs before the push.
+- **A first full test run was stopped** at about 12% (25 minutes) in favour of the clean-worktree prerelease.
+
+### 10.3 Open presentation items, each with a proposed ruling
+
+1. **A2's margin on phones is 25.5 px** (2,394.5 against 2,420). Proposed: accept; anything added above the product
+   finding must be re-measured.
+2. **The page budget's margin is small** (`<margin>` bytes). Proposed: accept; the next publication that adds a chart
+   plans its bytes first (for example by moving v1's archive figures out of the page, an Owner decision).
+3. **The naive's coverage is not shown** (its daily rows hold MAE and WIS only). Proposed: accept; a later checkpoint
+   may commit the naive's hourly quantiles on P-all.
+4. **The explanation covers two development days,** not the population; the text says so. Proposed: accept; a
+   population attribution would need a new, authorized inference run.
+5. **The receipt's Space rows have never run against a runner-published Space** (§8.5). Proposed: run them against the
+   runner's `pipeline` artifact; a failure the runner's own served-identity check does not share is a tool gap,
+   recorded, not a PRES-6 failure.
+6. **Business insights draws no chart** (A8: business conclusions cite the results "without duplicating full charts").
+   Proposed: accept.
+
+### 10.4 The reviews' findings and their dispositions
+
+(Filled after the reviews.)
+
+### 10.5 Integration review 4's R1–R7
+
+| Item | Disposition |
+|---|---|
+| R1 | **Applied.** The every-day panel: "the lowest error of the re-baseline's policies" (`everyday.finding.v6`) |
+| R2 | **Applied.** `v6.fresh.terms`: "The p-values come from a 7-day block bootstrap with 10,000 draws" |
+| R3 | **Applied.** The values table shows a code text two rows share with its experiment ("A1, …"); `test_51::test_r3_a_shared_code_text_carries_its_experiment` |
+| R4 | **Applied.** The release records are made over HTTP (`pres-6-local-release.json`; the final-SHA record likewise), with the served page's SHA-256 bound beside each (§7) |
+| R5 | **Applied.** The every-day panel opens with its question as a sentence (`everyday.question`) |
+| R6 | **Applied.** The machine-hours ledger (`.local/artifacts/pres-6/ledger.md`), named in the return |
+| R7 | **Applied.** "While v6 runs on the Space, its live record stays …", which holds on both of 4.7T's branches (`v6.fresh.meaning`) |
+
+None changes a published number.
