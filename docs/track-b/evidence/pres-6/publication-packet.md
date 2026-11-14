@@ -249,8 +249,8 @@ experiment tags, not the sources. No route changes, so `reports/presentation/mlf
 | The presentation suites (tests 29–34, 38, 43, 50, 51) | 799 passed, 1 skipped at `9b60c88c` | local run |
 | The prerelease in a clean worktree (runbook §9 offline checks), at `9b60c88c` | pytest 3.13: 3,418 passed, 17 skipped; CI steps under 3.12: 3,414 passed, 20 skipped, **1 failed**, `tests/cp17c/test_refreeze17c.py::test_the_committed_manifest_verifies_here` ("CPython 3.12.14 here, 3.13.15 pinned": the frozen package pins 3.13; PRES-5's prerelease recorded the same one); verify, lint, rebuild determinism (tree unchanged) pass; links: **4 failed**, the `blob/evidence/pres-6/…` links, which answer 404 until the Orchestrator pushes the tag (§8.5), no cross-host redirect; the publication guard passes at the pre-final stage because PRES-6 adds no MLflow route, so every build is final | `reports/presentation/release-checks/pres-6-pre-final-prerelease.json` |
 | The prerelease at the final candidate, `--stage final` | `<final prerelease result>` | `reports/presentation/release-checks/pres-6-final-prerelease.json` |
-| The browser release check over HTTP (Chrome and WebKit; 1440, 768, 390, 360, 320; iPhone 15 emulation; placements, accessibility, keyboard, contrast, charts, requests, A5 discovery of 54 routes) | **pass** at `ef968187`, served page SHA-256 `9fc144b9287572a213505e8879843e0f5c8d8a918d9c2ef969900dcb317dd6b2` (R4), 2026-11-14 16:27–16:36 UTC; the product finding at 1,667.6 / 1,668.3 px (1440×900) and 2,369.5 / 2,369.3 px (390×844); smallest chart text 12.21 px (320). Attempts 1 and 3 failed and are kept: chart text at 320 px and an axis overlap at 768 px (a class clash), and one route that followed a hidden twin link; attempt 2 passed on the page before the editorial fixes | `reports/presentation/release-checks/pres-6-local-release.json`; `…-attempt-1/2/3.json` |
-| The page budget | `<final_page_bytes>` bytes ≤ 2,000,000 | `reports/cp3/pages_build.json` |
+| The browser release check over HTTP (Chrome and WebKit; 1440, 768, 390, 360, 320; iPhone 15 emulation; placements, accessibility, keyboard, contrast, charts, requests, A5 discovery of 54 routes) | **pass** at the candidate's page, served page SHA-256 `48fef1a0e025cb79a7b53f833062e6e18c8c5ac3f04a7a8654fb5c2711b9c91c` (R4), 2026-11-14 16:43–16:52 UTC; the product finding at 1,667.6 / 1,668.3 px (1440×900) and 2,369.5 / 2,369.3 px (390×844); smallest chart text 12.21 px (320). Attempts 1 and 3 failed and are kept: chart text at 320 px and an axis overlap at 768 px (a class clash), and one route that followed a hidden twin link; attempts 2 and 4 passed on earlier pages (before the editorial and the fresh reader's repairs) | `reports/presentation/release-checks/pres-6-local-release.json`; `…-attempt-1/2/3/4.json` |
+| The page budget | 1,997,761 bytes ≤ 2,000,000 | `reports/cp3/pages_build.json` |
 
 ## 8. Publication completion receipt and the Orchestrator's packet
 
@@ -547,7 +547,7 @@ runner's commits: a revert is a new commit on top of them, and a rollback is its
 | §4 registry, transitions; A3; A10 | no change | No identity added or adopted; no generation revised in place | §2; §5a |
 | §5 page architecture; **A8** | **yes, triggered (O46)** | A8's order; the three product sections complement each other: five product topics route to the canonical result graphics, Business insights cites the results in words with no chart; the comparison and later sections unchanged except R1, R2, R3, R5 and R7's wording | §5b–§5d; `test_51` |
 | §5.1 twelve subjects; §5.1a Product results and Business insights | yes | §5b (subject 6 now supported on two development days); Product results' five items; Business insights' use, measured implications, gap and limits | §5, §5b |
-| §5.2 page budget | yes | `<final_page_bytes>` bytes ≤ 2.0 MB; the regime chart draws point error only and the explanation's table its signed means only, to fit | `reports/cp3/pages_build.json` |
+| §5.2 page budget | yes | 1,997,761 bytes ≤ 2.0 MB; the regime chart draws point error only and the explanation's table its signed means only, to fit | `reports/cp3/pages_build.json` |
 | §6 charts, discovery; A5 | yes | Five new charts, each with its heading, a route in "Explore these results", direct labels, and its policy, artifact, population, dates, units and class | §5c; `test_31`; `test_51` |
 | §7.1–§7.3 product, live, final-product Space; A7, A9 | the Space's (CP-18c) | The report shows no live panel or live number, and says the Space shows the live record, "prospective evaluation in progress" | `test_24`, `test_51` |
 | §8 surfaces | yes | Report and README updated and in agreement; MLflow and the Space unchanged (§6, §8.4) | §8 |
@@ -585,7 +585,7 @@ runner's commits: a revert is a new commit on top of them, and a rollback is its
 | Claim map and blocks | `pres6-claims.md`; `PRES6_BLOCKS`; `v6.product.attribution` and PRES-5's R1, R2, R7 blocks reworded |
 | `CHARTS_BY_RUN`, `mlflow_export.py` | not needed: no run or route changes |
 | Tests | `tests/test_51`; updates to tests 29, 33, 43, 48 |
-| Limits to watch | A2 under A8 in both engines; chart text ≥ 12 px; the 2.0 MB budget (margin `<margin>` bytes) |
+| Limits to watch | A2 under A8 in both engines; chart text ≥ 12 px; the 2.0 MB budget (margin 2,239 bytes) |
 
 ### 9.4 The brief's observable outcome
 
@@ -598,7 +598,7 @@ runner's commits: a revert is a new commit on top of them, and a rollback is its
 | 5 The link checker | hop by hop, the chain recorded, a cross-host end fails; the recorded `/history/` fixture | `test_33` |
 | 6 The receipt's Space page | `cp18.publish.normalized`, imported; the recorded served page | `test_48` |
 | 7 R1–R7 | §10.5 | — |
-| 8 The page budget | `<final_page_bytes>` bytes | `reports/cp3/pages_build.json` |
+| 8 The page budget | 1,997,761 bytes | `reports/cp3/pages_build.json` |
 | 9 Review | editorial, fresh reader, Integration at the candidate, focused recheck at the final SHA | `docs/track-b/evidence/pres-6/` |
 | 10 The packet | §8 | — |
 
@@ -640,7 +640,7 @@ existing committed result made any computation unnecessary.
 
 1. **A2's margin on phones is 25.5 px** (2,394.5 against 2,420). Proposed: accept; anything added above the product
    finding must be re-measured.
-2. **The page budget's margin is small** (`<margin>` bytes). Proposed: accept; the next publication that adds a chart
+2. **The page budget's margin is small** (2,239 bytes). Proposed: accept; the next publication that adds a chart
    plans its bytes first (for example by moving v1's archive figures out of the page, an Owner decision).
 3. **The naive's coverage is not shown** (its daily rows hold MAE and WIS only). Proposed: accept; a later checkpoint
    may commit the naive's hourly quantiles on P-all.
