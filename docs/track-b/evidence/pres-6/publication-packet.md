@@ -62,7 +62,442 @@ an Orchestrator ruling requested on 2026-11-14 (proposed: the frozen §19.7 meth
 input groups on the issued median, by inference only, from CP-18b's committed A1 artifact for development day
 2026-09-05). Until that ruling and its own pre-registration here, nothing is computed; if neither fits, the section
 states the gap.
+- *Correction, 2026-11-14, before any explanation was drawn or summarized:* **a committed explanation of v6 exists**,
+  and the sentence "No committed explanation of v6 exists" above is wrong. CP-17-probe's native reference
+  `reports/cp17-probe/native-reference.json` (`f1decb80…96ab`, committed in `42e27c70`, under `evidence/cp-17`) holds
+  the §19.7 attribution of A1's fits for two development days. Its method is exact baseline Shapley over the input
+  groups that day's members use, on the issued median, against each member's training-row mean:
+  - 2026-03-29, the spring DST day: 23 delivered hours, 9 groups, 512 coalitions;
+  - 2026-09-06: 24 hours, 10 groups, 1,024 coalitions.
+
+  **Those fits are v6's stored forecasts:** their quantiles equal CP-28's `hourly.parquet` arm A1 rows for both days
+  exactly (largest absolute difference 0). By the brief's first branch ("use an existing committed result for v6"),
+  the section shows that result. **Nothing is computed by inference, and the ruling requested above is moot.**
+
+  **The display rules, fixed now:**
+  - **The source:** for each of the two days, the result's `attribution` (`players`, `phi_eur`, `baseline_p50`,
+    `full_p50`).
+  - **Delivered hours only:** a model slot counts when its `full_p50` equals the day's issued median (`central`)
+    within 1e-9, matched in order. On 2026-03-29 that drops slot 2, local 02:00, which does not exist that day.
+  - **Per day and input group, in EUR/MWh:** the mean over the delivered hours of the contribution, signed, and of its
+    absolute value. Also the day's mean baseline median and mean issued median, which the signed means bridge
+    exactly (the attribution's efficiency).
+  - **The groups** in the frozen order (`cp17.attribution.GROUPS`). A group the day's members do not use is shown
+    as such, never as zero.
+  - **Drawn:** each day's mean absolute contribution by group, the same reading as the live product's Features view.
+    The signed means and the bridge go in a values table.
+  - **Wording:** attribution within one fitted artifact, relative to its stated baseline; never causality or
+    incremental value (§19.7). Two days are not the population, and the section says so.
 
 **Evidence class.** Development, post-selection on every figure: v6 was selected on P-all (CP-28). Nothing
 prospective: the report shows no live forecast, score or price, and says that the Space shows the live record,
 "prospective evaluation in progress".
+
+---
+
+The sections below follow the packet template. They were written after the results existed. Values marked
+`<final_…>` are the final build's and the evidence tip's, and the return gives them filled in.
+
+## 1. Identity
+
+| Item | Value |
+|---|---|
+| Checkpoint | PRES-6, brief `docs/track-b/evidence/pres-6/issued-brief.md` at `bdb78f02894896d2ee1f249355d23351f972cdb217d4d906d22561172f40e5f6` (the first commit, `405e588c`, byte for byte) |
+| Governing rules and plan | PUBLISH_RULES 1.5 (`1bc0c523…f94e`), A8 triggered by ruling O46; research v21-r20 §24.14 (what may be published now, on development data only) |
+| Evidence tag and tip | `evidence/pres-6` at `<evidence_tip_sha>`, frozen `<final_date>` (`registry.EVIDENCE_TAGS["evidence/pres-6"]`, set in the final-build commit) |
+| Final reviewed candidate | `<final_candidate_sha>`: the `--final` build of the page and README |
+| Report, review verdict, landing record | this packet; `docs/track-b/evidence/pres-6/integration.md` (the Integration verdict at the candidate) and the focused recheck at the final SHA; the landing record is the Orchestrator's |
+
+## 2. The registry entries (standard §5)
+
+**None is added or changed.** PRES-6 evaluates no new identity. v6's entry (`v6`, A1 in the frozen records, policy
+`720fc581…`) stands as PRES-5 entered it, status "final candidate · pending 4.7T" (O13). The similar-day naive is the
+existing reference `B0`. The one registry change is the evidence tag `evidence/pres-6`, which dates the product
+results' rows on the page.
+
+## 3. The claim map
+
+`docs/track-b/research-content/pres6-claims.md`: C1001–C1007 (the product results), P67–P71 (the order, the finding,
+the graphics' identity, Business insights, R1–R7) and the withheld claims W54 (no error or coverage figure is a
+profit or a success rate; no profit curve) and W55 (no product result is prospective). Both are in
+`research_claims.WITHHELD_PATTERNS`, each with positive and negative tests
+(`tests/test_51_pres6_product_results.py::test_the_withheld_claims_w54_and_w55_are_guarded`).
+
+## 4. The derived headline quantities (standard §3.3)
+
+**The report's headline is unchanged:** PRES-5's (P60), v6 against v5 on all 2,068 development days, −7% and −11%,
+7 policies tested. PRES-6 adds no decision and no rule. The product finding (A2's bound under A8) reads these
+records:
+
+| Quantity | Value | Record (`reports/pres6/product-results/`) |
+|---|---|---|
+| (a) A pre-specified verdict | none: these are descriptions of the selected policy, not a test | — |
+| Population | 2,068 eligible development days, 49,596 scored hours, 2020-12-29 to 2026-09-06 | `pres6.p_all.days`, `pres6.p_all.hours` (`summary.json`) |
+| v6's mean daily point error | 17.19 EUR/MWh [15.45, 19.09] | `pres6.regime.all.MAE.v6` (`regimes.csv`) |
+| The naive's | 34.55 [31.09, 38.26] | `pres6.regime.all.MAE.naive` |
+| (b) v6 as a share of the naive's error | 0.4974 [0.4734, 0.5230] point; 0.4580 [0.4353, 0.4821] interval score | `pres6.regime.all.{MAE,WIS}.ratio` |
+| Its 95% interval | the paired non-circular moving-block bootstrap of §0: 14-day blocks, 2,000 replicates, seed 20261114, order all, pre_crisis, crisis, negative_prices | `summary.json` `bootstrap` |
+| (c) By regime, point error | before the crisis 6.25, in it 30.67, from 2023 14.36 EUR/MWh | `pres6.regime.{regime}.MAE.v6` |
+| 80% coverage with width | 0.7826 of the hours, mean width 51.7 EUR/MWh | `pres6.coverage.all.80.{coverage,width_eur}` (`coverage.csv`) |
+
+**The populations agree with CP-26's and CP-28's.** v6's and the naive's P-all means equal CP-26's every-day records
+for DDNN-2 (`cp26.every.nominal.D2.all_eligible.*.raw_mean_daily_loss`) and the naive (`…B0…`) within 1e-9, on
+both scores. The three regimes sum to the 2,068 days and the 49,596 hours
+(`test_51::test_the_populations_agree_with_cp26_and_cp28`).
+
+## 5. Slot texts, as rendered (standard §6)
+
+There is no chapter grammar: Product results and Business insights are product sections (§5.1a). Each block is a
+claim template in `research_claims.PRES6_BLOCKS`, rendered on the page and, where marked, in the README:
+
+| Block | Claim | Text (README form) |
+|---|---|---|
+| `everyday.question` | P71 | Do the five-period results hold when every eligible day is scored under one daily protocol? |
+| `outcomes.sub` | P69 | v6 · DDNN-2 alone (A1 in the frozen records), its forecasts as the selection stored them · every eligible development day, 2020-12-29 to 2026-09-06 · EUR/MWh · development, post-selection |
+| `outcomes.finding` | P68 | On all 2,068 eligible development days, v6's mean daily point error was 17.2 EUR/MWh [15.4, 19.1] against the similar-day naive's 34.6; its 80% intervals covered 0.7826 of the hours. |
+| `outcomes.caveat` | C1001 | Development evidence after selection: v6 was chosen on these days. The brackets are 95% confidence intervals of the mean, from 14-day block resamples. The live record is on the Space, prospective evaluation in progress. |
+| `outcomes.days` | C1005 | Three development days, one per regime, each the day at its regime's median point error within v5's test periods, a rule fixed before any was drawn: 2021-06-16, 2022-07-26 and 2025-05-02. The line is v6's median forecast; the bands its 50%, 80% and 95% intervals; the dashes the price that cleared. |
+| `outcomes.bins` | C1006 | Over every scored hour of those test periods inside the eligible days, 8,587 hours on 358 days, grouped into ten equal bins by v6's median forecast, the mean observed price follows the mean forecast in every bin; the share of hours inside the 80% interval runs from 0.6868 to 0.8685 across the bins. |
+| `outcomes.time` | C1004 | Each day's point error and interval score, as calendar-month means from 2020-12 to 2026-09: v6 lies below the similar-day naive in every month on both scores, and both peak in the crisis months. |
+| `outcomes.regimes` | C1002 | 246 days before the crisis, 481 in it and 1,341 from 2023; none is thin. In each, v6's mean daily point error is a fraction of the naive's, its ratio 0.4508, 0.4934 and 0.5047, each interval below one; the crisis carries the largest errors, 30.7 EUR/MWh in point error. |
+| `outcomes.coverage` | C1003 | Over the eligible days, v6's 50%, 80% and 95% intervals covered 0.4779, 0.7826 and 0.9437 of the hours, at mean widths of 25.5, 51.7 and 88.8 EUR/MWh. In the crisis they covered least, 0.7531 at 80%, and were widest. The nominal level is a reference, not a target. |
+| `outcomes.explanation` | C1007 | No attribution of v6's forecasts on development days is committed, and the selection's stored networks belong to other arms, so this section shows none. The live product's Explainability view computes one for each issued day: exact baseline Shapley over v6's input groups on its median, relative to a stated baseline; an attribution within one fitted model, never causality. |
+| `business.use` | P70 | **The intended use.** An hourly price forecast for the next delivery day, with intervals, issued before the 12:00 auction: an input to bidding, scheduling and hedging decisions in the German–Luxembourg market. |
+| `business.measured` | P70 | **What the results imply for that use.** On an average development day the median misses the hourly price by 17.2 EUR/MWh, against the naive's 34.6, and by 30.7 in the crisis; an 80% interval about 51.7 EUR/MWh wide held 0.7826 of the hours. A decision that uses the forecast can size its margin to that spread. |
+| `business.gap` | P70 | **What is not established.** No decision policy, cost model or trading simulation has been authorized or run for this product, so there is no profit, value or loss figure, and no curve of either. Lower forecast error and interval coverage are not profit, and not a success rate of any decision. |
+| `business.limits` | P70 | **Limits.** These are development results after selection; 4.7T, from 2026-12-04, is v6's one test on new data, and the live record on the Space is prospective evaluation in progress. |
+
+### 5a. The adopted transition (A3)
+
+None: no generation is adopted. The "From v5 to v6" summary stands as PRES-5 published it.
+
+### 5b. The product's documentation (A4, under A8)
+
+The product is unchanged: v6, which the Space runs (O26, O29). "How the product works" keeps PRES-5's twelve subjects.
+A8 makes the three product sections complement each other ("method explanations link to the canonical result
+graphics"), so four topics gain a route to Product results. Each keeps its route to the v6 chapter:
+
+| Subject (§5.1) | Disposition | Evidence | Routes |
+|---|---|---|---|
+| 1 Data and the information cutoff | supported | unchanged (PRES-5) | `#product-data` |
+| 2 Regimes and negative prices | supported | unchanged; **+** v6's error in each regime | `#product-regimes` → `#outcomes-regimes` |
+| 3 Inputs; 3b seasonal rationale | supported | unchanged | `#product-inputs` |
+| 4 Validation | supported | unchanged | `#product-validation` |
+| 5 Results | supported | unchanged; **+** Product results, every development day | `#product-results` → `#outcomes`, `#v6-chart-title` |
+| 6 Attribution | not evaluated in research | unchanged; Product results' "What drives its forecasts" states the gap (§0; §10.3 item 2) | `#product-attribution` → the Space's Explainability view |
+| 7 Importance and sensitivity | not evaluated in research | unchanged | `#product-importance` → the Space's Features view |
+| 8 Where it fails | supported | unchanged; **+** the month-by-month error | `#product-failures` → `#outcomes-time`, `#v6-per-period-differences` |
+| 9 Reliability | supported | unchanged; **+** coverage with width at each level, every development day | `#product-reliability` → `#outcomes-coverage`, `#v6-coverage` |
+| 10 Read a forecast | supported, on the live product | unchanged | `#product-forecast` |
+| 11 Limitations | supported | unchanged | `#product-limitations` |
+| 12 Running it | supported | unchanged | `#product-run` |
+
+The incoming and outgoing product are both v6: no transition. v1's documentation stays where PRES-5 left it.
+
+### 5c. The chart routes (A5)
+
+| Chart | Its heading | The route | Where it starts |
+|---|---|---|---|
+| `outcomes-days-chart` | `#outcomes-days` | "Forecast against the observed price on three development days" | Product results' "Explore these results" |
+| `outcomes-time-chart` | `#outcomes-time` | "Error over time, month by month" | the same; product topic 8 |
+| `outcomes-regimes-chart` | `#outcomes-regimes` | "Error by regime, with intervals" | the same; product topic 2 |
+| `outcomes-coverage-chart` | `#outcomes-coverage` | "Interval coverage with width" | the same; product topic 9 |
+| (text) | `#outcomes-explanation` | "What drives its forecasts" | the same |
+| (table) | `#outcomes-bins-h` | "All hours of the test periods, by forecast bin" | the same |
+
+Each chart has one heading and one canonical place, in Product results. Business insights draws no chart and cites the
+results in words (A8: "without duplicating full charts").
+
+### 5d. Final-product transition / daily operation (A7/A8/A9)
+
+| Field | State |
+|---|---|
+| Owner designation and lifecycle | unchanged: v6 (A1) selected 2026-10-25, frozen 2026-10-30, live through CP-18c; "final candidate · pending 4.7T" (O13, O27) |
+| One product identity | the opening, How the product works, Product results, Business insights, the README and the Space name v6; Product results names its artifact (CP-28's stored forecasts, arm A1) and policy |
+| Frozen policy, daily training and issuance, coverage, today, scores, reliability | CP-17c's freeze and CP-18c's live pipeline, not this block's. The report shows no live number and says the Space shows the live record, "prospective evaluation in progress" |
+| Page order | **A8's, now (O46):** compact navigation → the product and daily-forecast opening → How the product works → **Product results** → **Business insights** → How the models compare → the rest in their existing order (`test_51::test_the_order_is_a8s_product_first`) |
+| A2 placement | the product finding `#product-finding` (§7, the browser matrix) |
+| Product coverage and science | §5b; development results only, labelled post-selection; nothing unused-data or prospective |
+| Business evidence | **not evaluated, and the gap stated:** the intended use and the measured forecasting implications only. No decision policy, cost model, capital or trading simulation exists, so there is no net-value series, profit curve or business rate |
+| Acceptance | this packet's §7 and §9; the Integration check at the candidate and the recheck at the final SHA |
+| Prospective state | in progress since CP-18c's first live day; nothing prospective is published here |
+
+## 6. The MLflow export
+
+**No run changes and nothing is uploaded.** The export's 105 runs and its experiment tags are byte-identical to the
+published set. `manifest.json` changes only in its `sources` list, which gains the six PRES-6 files with the
+`evidence/pres-6` tag: that list is a local record, and `scripts/verify_mlflow_mirror.py::verify` reads the runs and the
+experiment tags, not the sources. No route changes, so `reports/presentation/mlflow_index.json` is unchanged.
+
+## 7. Checks the checkpoint ran
+
+(Filled at the candidate; see below the §8 commands.)
+
+## 8. Publication completion receipt and the Orchestrator's packet
+
+### 8.0 What would be published
+
+| Surface | Reviewed output | Identity | Now public |
+|---|---|---|---|
+| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>`, `<final_page_bytes>` bytes | 1,848,955 bytes, `983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475` (PRES-5 fix 1, `main` `50d51507`) |
+| README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>` | `bc98e9ccb74546a2d3fbdbbfabd8034bc63addfc165c0264598f1a1d3747c472` |
+| Hugging Face Space and its card | **no PRES-6 action**: CP-18c's live product, published daily by the runner | the runner's latest publication (its `pipeline` artifact, §8.5) | revision `69c6ea3bebfc19bb2396679993f95b2b3fcbab40` at 2026-11-14 11:21 UTC; it moves with each daily run |
+| MLflow `delu-generations` | **no PRES-6 action** (§6) | 105 runs, the committed export | 105 runs (PRES-5) |
+
+### 8.1 Receipt — intended identities (the Orchestrator and the public checker complete the rest)
+
+| Surface | Intended identity | Action / unchanged rationale | Observed public identity and UTC time | Verification record and result | Outstanding action |
+|---|---|---|---|---|---|
+| GitHub source / README | `land/pres-6` (the squash of `<evidence_tip_sha>` onto the moved `main`; PRES-6's paths equal the tip's); README `<final_readme_sha256>`, with the "Product results" and "Business insights" glance | push (§8.3) | to fill | `pres-6-publication-receipt.json` (GitHub main); the served README's hash (§8.5) | §8.2–8.3 |
+| GitHub Pages | `<final_page_sha256>`: A8's order with Product results and Business insights before How the models compare | deploy by the push (§8.3) | to fill | `pres-6-publication-receipt.json` (Pages); `pres-6-public-report.json`; `pres-6-postdeploy-links.json` | §8.3, §8.5 |
+| Public MLflow | unchanged: the committed export's 105 runs and experiment tags | verified unchanged (§6) | to fill | `pres-6-postdeploy-mlflow-mirror.json` | §8.5 |
+| Hugging Face Space card | CP-18c's, as the runner last published it | **no PRES-6 action** | to fill | `pres-6-publication-receipt.json` (Space files) against the runner's `pipeline` build | §8.5 |
+| Hugging Face direct demo | CP-18c's live product at the root; v1 at `history/index.html` | **no PRES-6 action** | to fill | `pres-6-publication-receipt.json` (direct page, by CP-18c's normalization); the report's Space links, each hop recorded, none ending on another host (`pres-6-postdeploy-links.json`) | §8.5 |
+
+- **Publication-to-MLflow mapping:** unchanged: PRES-5's (`pres-5-public-mirror.json`, `mlflow_index.json`).
+- **Final product and daily updates:** CP-18c's. The report carries no live record.
+- **Completion disposition:** incomplete until these steps and their public checks pass; A12 is decided in §8.6.
+- **Authority:** the landing, the push and the Pages deployment are the Orchestrator's, after the return (the
+  brief's "Owner-only actions already authorized"; decisions 27 and 28). There is no Space or MLflow step.
+
+Every command below runs from the primary checkout, `/Users/djourno/Downloads/PJM`. None opens a pager or an editor
+(`git --no-pager`, `GH_PAGER=cat`). Substitute `<evidence_tip_sha>`, `<land_sha>`, `<final_page_sha256>`,
+`<final_readme_sha256>` and `<final_date>` from the return, which gives these commands filled in. Keep every record a
+step writes, first failures included.
+
+### 8.2 Step 1 — the LAND, on a moved `main`
+
+PRES-6 branched from `87811abc645b6d903dafaf7093452361e21aa193`. Since then `main` has moved by the Orchestrator's
+`29b6431e` (`docs/track-b/cp-18c-landing-2026-11-13.md` only), and `origin/main` moves each day by the runner's
+data-only commits (author `delu-daily`, `live/` only). PRES-6's paths (listed by the first command below) and those
+are disjoint.
+
+**No daily job may be running** (CP-18c's landing record, O47: a push during a run made the run discard its records).
+Here and again before the push:
+
+```bash
+GH_PAGER=cat gh run list --workflow daily.yml --limit 6 --json databaseId,status,event,createdAt --jq '.[] | "\(.databaseId) \(.status) \(.event) \(.createdAt)"'
+```
+
+Expect every line `completed`. A `queued`, `in_progress` or `waiting` line: wait for it to finish. The scheduled jobs
+start from 07:40 UTC; a run publishes until about 11:30 UTC.
+
+```bash
+git --no-pager rev-parse --abbrev-ref HEAD
+```
+
+Expect `main`.
+
+```bash
+git fetch origin && git --no-pager log --format='%h %an %s' main..origin/main && git --no-pager diff --name-only main origin/main | grep -v '^live/' ; echo only-live-checked
+```
+
+Expect only `delu-daily` commits and then only `only-live-checked`: nothing outside `live/` arrived. Any other path:
+stop and read it first.
+
+```bash
+git merge --ff-only origin/main
+```
+
+Expect `Fast-forward` (or `Already up to date.`).
+
+```bash
+git --no-pager status --porcelain=v1
+```
+
+Expect no output (or only ` M progress.md`, the Orchestrator's own edit). Any other line: stop and resolve it first.
+
+**PRES-6's paths, and no untracked twin:**
+
+```bash
+git --no-pager diff --name-only 87811abc645b6d903dafaf7093452361e21aa193 <evidence_tip_sha> > .local/artifacts/pres-6/pres6-paths.txt && wc -l < .local/artifacts/pres-6/pres6-paths.txt && grep -c '^live/' .local/artifacts/pres-6/pres6-paths.txt; while IFS= read -r f; do git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 && ! git --no-pager diff --quiet -- "$f" && echo "MODIFIED $f"; git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 || { [ -e "$f" ] && echo "TWIN $f"; }; done < .local/artifacts/pres-6/pres6-paths.txt; echo twins-checked
+```
+
+Expect the path count the return gives, then `0` (no `live/` path), then only `twins-checked`.
+
+```bash
+git --no-pager diff --name-only 87811abc645b6d903dafaf7093452361e21aa193 HEAD | grep -vxFf .local/artifacts/pres-6/pres6-paths.txt | grep -v '^live/' ; echo moved-main-checked
+```
+
+Expect only `docs/track-b/cp-18c-landing-2026-11-13.md` (and any later Orchestrator record), then
+`moved-main-checked`. A path that is also in `pres6-paths.txt` would not be listed here, so this proves nothing about
+overlap; the next check does.
+
+```bash
+git --no-pager diff --name-only 87811abc645b6d903dafaf7093452361e21aa193 HEAD | grep -xFf .local/artifacts/pres-6/pres6-paths.txt ; echo overlap-checked
+```
+
+Expect only `overlap-checked`: no path changed on both sides.
+
+```bash
+git --no-pager merge --squash gauntlet/pres-6
+```
+
+Expect `Squash commit -- not updating HEAD` and the diffstat, with no `CONFLICT` line.
+
+**PRES-6's paths equal the evidence tip's, and every other path equals `main`'s:**
+
+```bash
+xargs git --no-pager diff --cached --quiet <evidence_tip_sha> -- < .local/artifacts/pres-6/pres6-paths.txt && test -z "$(git --no-pager diff --cached --name-only HEAD | grep -vxFf .local/artifacts/pres-6/pres6-paths.txt)" && echo STAGED-PRES6-PATHS-EQUAL-EVIDENCE-TIP
+```
+
+Expect only `STAGED-PRES6-PATHS-EQUAL-EVIDENCE-TIP`. If it does not print, stop: nothing is committed yet, and
+`git reset --merge` restores the index.
+
+**The evidence label's date equals the tip's:** the page labels the product results' rows "frozen <date>" from
+`registry.py::EVIDENCE_TAGS["evidence/pres-6"]`.
+
+```bash
+git --no-pager log -1 --format=%cs <evidence_tip_sha> && git --no-pager show <evidence_tip_sha>:src/delu_forecast/registry.py | grep '"evidence/pres-6"'
+```
+
+Expect the same date on both lines (`<final_date>`). A different date: stop and report it.
+
+```bash
+git commit -F .local/artifacts/pres-6/land-commit-message.txt
+```
+
+Expect `[main <land_sha>] Publish PRES-6: …`. The hooks run and print nothing when clean.
+
+```bash
+git tag land/pres-6 HEAD
+```
+
+```bash
+git tag evidence/pres-6 <evidence_tip_sha>
+```
+
+Both print nothing.
+
+```bash
+git --no-pager diff --stat HEAD <evidence_tip_sha> | tail -1
+```
+
+Expect only `main`'s own movement since `87811abc`: `docs/track-b/cp-18c-landing-2026-11-13.md` and the `live/` files.
+
+### 8.3 Step 2 — the push
+
+Re-run the first command of §8.2: no daily job may be running. Then **the value-based secret scan**, over exactly what
+the push will send:
+
+```bash
+printf '%s %s %s %s\n' refs/heads/main "$(git rev-parse main)" refs/heads/main "$(git rev-parse origin/main)" refs/tags/land/pres-6 "$(git rev-parse land/pres-6)" refs/tags/land/pres-6 0000000000000000000000000000000000000000 refs/tags/evidence/pres-6 "$(git rev-parse evidence/pres-6)" refs/tags/evidence/pres-6 0000000000000000000000000000000000000000 | python3 scripts/secret_guard.py pre-push origin "$(git remote get-url origin)" && echo SECRET-SCAN-CLEAN
+```
+
+Expect `SECRET-SCAN-CLEAN`. A `secret-guard: BLOCKED` line means stop and tell no one the value.
+
+```bash
+python3 scripts/publication_guard.py tree
+```
+
+Expect a PASS line: the landed page is the final build.
+
+```bash
+git push origin main land/pres-6 evidence/pres-6
+```
+
+Expect `<old>..<first 7 of land_sha>  main -> main` and two `[new tag]` lines. **If the push is refused** because the
+runner pushed in between (`fetch first`): never force, rebase or reset. Wait until no daily job runs, `git fetch
+origin`, confirm with §8.2's command that the new commits touch only `live/`, merge them with `git merge --no-edit
+origin/main` (data-only paths, so no conflict; the tags stay on the squash commit), and push again. GitHub Pages then
+serves `docs/`. Read GitHub's CI for the pushed commit before the closure:
+
+```bash
+GH_PAGER=cat gh run list --branch main --limit 4
+```
+
+### 8.4 Step 3 — no Space upload and no MLflow write
+
+PRES-6 changes nothing on Hugging Face or DagsHub. The Space is CP-18c's, published daily by the runner. If the served
+Space is not what the runner's latest publication record names, that is CP-18c's to resolve; do not redeploy under
+this packet.
+
+### 8.5 Step 4 — the public checks, per surface
+
+Each writes a new record; keep a first failure beside its retry. The Playwright commands need
+`PLAYWRIGHT_BROWSERS_PATH=/Users/djourno/Downloads/PJM/.local/tools/ms-playwright`. Wait until Pages has deployed the
+push:
+
+```bash
+curl -s https://hrsi56.github.io/delu-day-ahead-forecast/ | shasum -a 256
+```
+
+Expect `<final_page_sha256>` (now `983a75c4…9475`, PRES-5's).
+
+```bash
+curl -s https://raw.githubusercontent.com/hrsi56/delu-day-ahead-forecast/main/README.md | shasum -a 256
+```
+
+Expect `<final_readme_sha256>`.
+
+**The Space's reviewed build is the runner's.** The receipt checks the Space's files and direct page against a local
+build. The runner uploads its whole results folder, `space/` included, as the Actions artifact `pipeline` (30 days),
+with its own hashes in `results-sha256.txt`. Fetch the latest successful run's (read-only), and check it against
+those hashes:
+
+```bash
+RUN=$(GH_PAGER=cat gh run list --workflow daily.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId') && echo "$RUN" && gh run download "$RUN" -n pipeline -D ".local/tmp/pres-6/runner-$RUN" && (cd ".local/tmp/pres-6/runner-$RUN" && shasum -a 256 -c results-sha256.txt --quiet) && echo RUNNER-BUILD-INTACT
+```
+
+Expect the run id and `RUNNER-BUILD-INTACT`. Then its identity:
+
+```bash
+uv run python -c "import sys, pathlib; sys.path.insert(0, 'scripts'); from build_wasm_space import bundle_sha256; print(bundle_sha256(pathlib.Path('.local/tmp/pres-6/runner-$RUN/space')))"
+```
+
+**The receipt** (automation item 6): GitHub `main`, Pages, the Space's files and direct page against that build, the
+public MLflow mirror and the links, each checked independently and anonymously, every attempt kept:
+
+```bash
+MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python scripts/publication_receipt.py --landing land/pres-6 --bundle ".local/tmp/pres-6/runner-$RUN/space" --expect <the identity just printed> --date pres-6
+```
+
+Expect six rows `PASS` and `PASS: wrote reports/presentation/release-checks/pres-6-publication-receipt.json`, with
+`pres-6-postdeploy-links.json` and `pres-6-postdeploy-mlflow-mirror.json` beside it; exit 0.
+- **The direct page** passes by CP-18c's rule (`cp18.publish.normalized`): the record's `removed_bytes` is the host's
+  script and meta run (495 bytes on 2026-11-14).
+- **The links record** lists every hop of every redirect. Every link into the Space must end on the Space's own host:
+  `cross_host_redirects` must be `[]`. The two same-host redirects known today are `….mlflow` → `….mlflow/` and the
+  Space's root → `/index.html`.
+- **This is the receipt's first run against a runner-published Space.** If the Space-files row fails because the Space
+  moved after `$RUN` (a newer run published), rerun from the download with the newer run. If it fails for a reason the
+  runner's own served-identity check does not share (for example the card `README.md`, which the runner verifies in
+  the Hub tree only), keep the record, report it as a receipt-tool gap with the file names, and verify the Space with
+  the runner's `publication.json`; the GitHub, Pages, MLflow and link rows still bind.
+
+The browser records:
+
+```bash
+.local/tools/playwright/bin/python scripts/check_reader_paths.py release https://hrsi56.github.io/delu-day-ahead-forecast/ --shots .local/artifacts/pres-6/public-report --out reports/presentation/release-checks/pres-6-public-report.json
+```
+
+```bash
+.local/tools/playwright/bin/python scripts/check_reader_paths.py mlflow-routes --mirror-record reports/presentation/release-checks/pres-6-postdeploy-mlflow-mirror.json --shots .local/artifacts/pres-6/public-mlflow-postdeploy --out reports/presentation/release-checks/pres-6-public-mlflow-routes-postdeploy.json
+```
+
+Each passes with `passed` true. GitHub may answer anonymous `blob` requests with 503 after a burst: keep the failed
+record, wait, and rerun with a new `--date` (for example `pres-6-retry-1`); a 503 is never a pass. The links to
+`blob/evidence/pres-6/…` answer 404 until the tag is pushed: run the checks after the push.
+
+### 8.6 Step 5 — A12, then the receipt
+
+**A12 (§10.5).** An independent post-deployment check is required if either:
+
+1. a served surface differs from what the binding independent pre-deployment review covered: Pages' bytes differ from
+   `<final_page_sha256>`, the focused recheck's page; or the public MLflow differs from the committed export; or
+2. a required public check above fails without a passing targeted retry.
+
+**Where it can add something** even without a trigger: the deployed page's order and the product finding's placement
+in a real browser (A2 under A8), and the new link rule, live: one fresh anonymous visit to the deployed report in both
+engines, reading `#outcomes` and `#business` and following the report's links into the Space hop by hop. A checker that
+wrote none of PRES-6 forms its findings before reading earlier reviews and writes a dated review under `docs/track-b/`
+with the per-surface identities, first failures and retries, and its PASS / FAIL / INCOMPLETE verdict.
+
+Then fill §8.1's last three columns from the records. The disposition is complete only when every row is verified.
+
+### 8.7 If publication fails
+
+Stop the rollout and name each affected URL and revision. The identities to restore are Pages
+`983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475` and README `bc98e9cc…c472` (PRES-5 fix 1). PRES-6
+touches neither the Space nor MLflow. No force-push or history rewrite is part of a recovery, and `main` keeps the
+runner's commits: a revert is a new commit on top of them, and a rollback is its own Owner action.
