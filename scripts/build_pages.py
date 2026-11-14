@@ -1095,12 +1095,15 @@ def overview_table() -> str:
     """The comparison's values, exact (standard §4): scores, the target verdict and distance, pooled errors. Each row
     is read from the experiment it is drawn from (`registry.comparison_source`)."""
     rows = []
+    # PRES-6 (Integration review 4, R3): a code text two rows share (`A1`: v6 in PRES-5, normalized LEAR in CP-15) is
+    # shown with its experiment, as a code that is another identity's version label already was.
+    texts = [entry.code_in(G.comparison_source(entry)) for entry in G.comparison_rows()]
     for entry in G.comparison_rows():
         source = G.comparison_source(entry)
         prefix, code = G.comparison_prefix(source), entry.code_in(source)
         # A code whose text is another identity's version label (CP-23's candidate, `v5`) is shown with its experiment.
         shown = code
-        if code in {e.version for e in G.generations()} and code != entry.version:
+        if (code in {e.version for e in G.generations()} and code != entry.version) or texts.count(code) > 1:
             shown = f"{code}, {source}"
         cells = [f'<th scope="row">{_structural_versions(comparison_label(entry))} <span class="code">{S("code", shown)}</span></th>']
         for field in ("S_MAE", "S_WIS"):
@@ -1701,7 +1704,7 @@ def header() -> str:
         '<span class="brand-full">DE-LU day-ahead price forecasting</span>'
         '<span class="brand-short" aria-hidden="true">DE-LU forecasts</span>'
         '<span class="brand-tiny" aria-hidden="true">DE-LU</span></a>'
-        '<nav class="main-nav" aria-label="Main"><a href="#research-results">Results</a><a href="#journey">Journey</a>'
+        '<nav class="main-nav" aria-label="Main"><a href="#outcomes">Results</a><a href="#journey">Journey</a>'
         '<a href="#evidence">Evidence</a></nav></div></header>'
     )
 
@@ -2104,6 +2107,7 @@ def everyday_panel() -> str:
     return f"""
  <figure class="panel analytical" id="everyday" aria-labelledby="everyday-title" data-research="everyday">
   {block("everyday.title", tag="h3", cls="panel-title", ident="everyday-title")}
+  {block("everyday.question", cls="panel-question")}
   <p class="panel-sub" data-block="everyday.sub">{RC.render("everyday.sub")}</p>
   {block("everyday.finding", cls="finding")}
   {block("everyday.finding.v6")}
@@ -2111,6 +2115,333 @@ def everyday_panel() -> str:
   {everyday_table()}
   {evidence_row(audit=audit)}
  </figure>"""
+
+
+# --------------------------------------------------------------------------- the final product's results (A8, §5.1a)
+#
+# PRES-6 (ruling O46): directly after "How the product works", v6's own results on every eligible development day, from
+# the rules the packet fixed before any was computed (its §0): forecast against observed, error over time and by
+# regime, explanation, and coverage with width. Every value is a record of `research.PRES6_ROWS`; every graphic names
+# the policy and artifact, the population and its dates, the units and the evidence class. Nothing prospective.
+
+PRES6_TAG = "evidence/pres-6"
+REGIME_LABELS = {"pre_crisis": "Before the crisis", "crisis": "The crisis", "negative_prices": "From 2023"}
+OUTCOME_ROUTES = (("outcomes-days", "Forecast against the observed price on three development days"),
+                  ("outcomes-time", "Error over time, month by month"),
+                  ("outcomes-regimes", "Error by regime, with 95% confidence intervals"),
+                  ("outcomes-coverage", "Prediction-interval coverage with width"),
+                  ("outcomes-explanation", "Which inputs moved its median on two development days"),
+                  ("outcomes-bins-h", "All hours of v5's test periods, by forecast bin"))
+#: Each route's heading is its own words (A5: the link says what the reader will see).
+OUTCOME_HEADINGS = dict(OUTCOME_ROUTES)
+
+
+def _pres6_rows(name: str) -> list[dict[str, str]]:
+    return list(csv.DictReader(io.StringIO(R.source_bytes(R.PRES6_ROWS[name]).decode("utf-8"))))
+
+
+def _nice_step(span: float, ticks: int = 4) -> float:
+    raw = span / ticks
+    magnitude = 10 ** math.floor(math.log10(raw))
+    return next(m * magnitude for m in (1, 2, 2.5, 5, 10) if m * magnitude >= raw)
+
+
+def forecast_days_chart() -> str:
+    """v6's median and its 50%, 80% and 95% intervals against the cleared price on the rule's three days (packet §0)."""
+    rows = _pres6_rows("days")
+    chosen = R._json(R.PRES6_SUMMARY)["chosen_days"]
+    v6 = TOKENS["v6"]
+
+    def panel(day: str, regime: str, width: float, height: float, variant: str) -> str:
+        hours = [r for r in rows if r["day"] == day]
+        get = lambda r, k: float(r[k])  # noqa: E731
+        flat = [get(r, k) for r in hours for k in ("p025", "p975", "y_true")]
+        lo, hi = min(flat), max(flat)
+        pad = (hi - lo) * 0.08
+        lo, hi = lo - pad, hi + pad
+        ml, mr, mt, mb = 44, 10, 46, 28
+        n = len(hours)
+        x = lambda i: ml + (width - ml - mr) * (i / (n - 1))  # noqa: E731
+        y = lambda v: mt + (height - mt - mb) * (1 - (v - lo) / (hi - lo))  # noqa: E731
+        out = [svg_text(ml, 16, REGIME_LABELS[regime], weight="600"),
+               f'<text x="{ml}" y="34" font-size="{CHART_FONT}" fill="{TOKENS["text-2"]}">EUR/MWh · local hour · '
+               f'<tspan data-structural="date">{esc(day)}</tspan></text>']
+        step = _nice_step(hi - lo)
+        tick = math.ceil(lo / step) * step
+        while tick <= hi:
+            out.append(f'<line x1="{ml}" x2="{width - mr}" y1="{y(tick):.1f}" y2="{y(tick):.1f}" stroke="{TOKENS["grid"]}"/>')
+            out.append(svg_text(ml - 6, y(tick) + 4.5, tick_text(tick, 1), anchor="end", fill=TOKENS["text-2"],
+                                extra=f' data-scale="outcome-price-{regime}"'))
+            tick += step
+        for i in range(0, n, 6):
+            out.append(svg_text(x(i), height - 10, str(int(hours[i]["local_hour"])), anchor="middle",
+                                fill=TOKENS["text-2"], extra=' data-scale="outcome-hour"'))
+        for lo_k, hi_k, opacity in (("p025", "p975", 0.12), ("p10", "p90", 0.2), ("p25", "p75", 0.32)):
+            band = [f"{x(i):.0f},{y(get(r, hi_k)):.0f}" for i, r in enumerate(hours)] + \
+                   [f"{x(i):.0f},{y(get(r, lo_k)):.0f}" for i, r in reversed(list(enumerate(hours)))]
+            out.append(f'<polygon points="{" ".join(band)}" fill="{v6}" fill-opacity="{opacity}" stroke="{TOKENS["ref"]}" '
+                       f'stroke-width="0.8"/>')
+        median = " ".join(f"{x(i):.0f},{y(get(r, 'p50')):.0f}" for i, r in enumerate(hours))
+        out.append(f'<polyline points="{median}" fill="none" stroke="{v6}" stroke-width="2.4"/>')
+        observed = " ".join(f"{x(i):.0f},{y(get(r, 'y_true')):.0f}" for i, r in enumerate(hours))
+        out.append(f'<polyline points="{observed}" fill="none" stroke="{TOKENS["text"]}" stroke-width="1.6" '
+                   f'stroke-dasharray="6 4"/>')
+        return "".join(out)
+
+    title = "v6's forecast against the observed price, one development day per regime"
+    desc = ("v6's median and 50, 80 and 95 percent prediction intervals against the cleared price, by local hour, "
+            "EUR/MWh. Development, post-selection.")
+    desktop = "".join(svg_wrap(292, 236, panel(c["day"], c["regime"], 292, 236, "d"), title=title, desc=desc,
+                               variant="d", chart_id=f"outcomes-day-{c['regime']}") for c in chosen)
+    mobile = "".join(svg_wrap(MOBILE_W, 196, panel(c["day"], c["regime"], MOBILE_W, 196, "m"), title=title, desc=desc,
+                              variant="m", chart_id=f"outcomes-day-{c['regime']}") for c in chosen)
+    key = (f'<p class="preview-key"><span class="key-median">Median forecast</span> <span class="key-band">'
+           f'{S("level", "50%")}, {S("level", "80%")} and {S("level", "95%")} prediction intervals</span> '
+           f'<span class="key-actual">Observed price</span></p>')
+    return (f'<div class="chart outcome-days" data-chart-id="outcomes-days-chart"><div class="outcome-days-row">{desktop}</div>'
+            f'<div class="outcome-days-stack">{mobile}</div>{key}</div>')
+
+
+def monthly_chart() -> str:
+    """Error over time: the calendar-month means of v6's and the naive's daily point error and interval score."""
+    rows = _pres6_rows("monthly")
+    months = sorted({r["month"] for r in rows})
+    series = {(stream, metric): [R.get(f"pres6.monthly.{m}.{stream}.{metric}").value for m in months]
+              for stream in ("v6", "naive") for metric in ("MAE", "WIS")}
+    colours = {"v6": TOKENS["v6"], "naive": ROLE_STYLE["reference"]["color"]}
+    names = {"MAE": "Point error: monthly mean of each day's MAE", "WIS": "Interval score: monthly mean of each day's"}
+
+    def panel(metric: str, width: float, height: float) -> str:
+        ml, mr, mt, mb = 44, 46, 34, 28
+        top = max(max(series[("naive", metric)]), max(series[("v6", metric)]))
+        step = _nice_step(top)
+        hi = math.ceil(top / step) * step
+        n = len(months)
+        x = lambda i: ml + (width - ml - mr) * (i / (n - 1))  # noqa: E731
+        y = lambda v: mt + (height - mt - mb) * (1 - v / hi)  # noqa: E731
+        out = [f'<text x="{ml}" y="16" font-size="{CHART_FONT}" font-weight="600" fill="{TOKENS["text"]}">'
+               f'{esc("Point error" if metric == "MAE" else "Interval score")}</text>',
+               svg_text(ml, 30, "EUR/MWh · calendar-month mean", fill=TOKENS["text-2"])]
+        tick = 0.0
+        while tick <= hi + 1e-9:
+            out.append(f'<line x1="{ml}" x2="{width - mr}" y1="{y(tick):.1f}" y2="{y(tick):.1f}" stroke="{TOKENS["grid"]}"/>')
+            out.append(svg_text(ml - 6, y(tick) + 4.5, tick_text(tick, 1), anchor="end", fill=TOKENS["text-2"],
+                                extra=f' data-scale="outcome-month-{metric}"'))
+            tick += step
+        for i, m in enumerate(months):
+            if m.endswith("-01") and (width > 320 or int(m[:4]) % 2 == 1):
+                # a year next to the value axis starts at its tick, clear of the axis's "0" (release check, 768 px)
+                out.append(svg_text(x(i), height - 10, m[:4], anchor="start" if x(i) - ml < 20 else "middle",
+                                    fill=TOKENS["text-2"], extra=' data-scale="outcome-year"'))
+        for stream in ("naive", "v6"):
+            points = " ".join(f"{x(i):.0f},{y(v):.0f}" for i, v in enumerate(series[(stream, metric)]))
+            dash = ' stroke-dasharray="5 3"' if stream == "naive" else ""
+            out.append(f'<polyline points="{points}" fill="none" stroke="{colours[stream]}" '
+                       f'stroke-width="{2.4 if stream == "v6" else 1.6}"{dash}/>')
+            last = series[(stream, metric)][-1]
+            out.append(svg_text(x(n - 1) + 6, y(last) + (4.5 if stream == "v6" else -4), stream,
+                                fill=colours[stream], weight="600"))
+        return "".join(out)
+
+    title = "v6's and the naive's monthly mean errors, every eligible development day"
+    desc = ("Calendar-month means of the daily point error or interval score, EUR/MWh, December 2020 to September 2026; "
+            "v6 solid, the naive dashed. Development, post-selection.")
+    desktop = "".join(svg_wrap(436, 236, panel(m, 436, 236), title=title, desc=desc, variant="d",
+                               chart_id=f"outcomes-time-{m}") for m in ("MAE", "WIS"))
+    mobile = "".join(svg_wrap(MOBILE_W, 200, panel(m, MOBILE_W, 200), title=title, desc=desc, variant="m",
+                              chart_id=f"outcomes-time-{m}") for m in ("MAE", "WIS"))
+    return (f'<div class="chart outcome-time" data-chart-id="outcomes-time-chart"><div class="outcome-days-row">{desktop}</div>'
+            f'<div class="outcome-days-stack">{mobile}</div></div>')
+
+
+def regime_panels() -> list[Panel]:
+    def rows(metric: str) -> tuple[Row, ...]:
+        out = []
+        for regime, label in REGIME_LABELS.items():
+            out.append(Row(f"{label} · v6", f"pres6.regime.{regime}.{metric}.v6", "v6", bold=True, claim="C1002"))
+            out.append(Row(f"{label} · naive", f"pres6.regime.{regime}.{metric}.naive", "reference", claim="C1002"))
+        return tuple(out)
+
+    # The point error is drawn; the interval score by regime, with its intervals, is in the values table beside it
+    # (the page's 2.0 MB budget: an interval chart binds every figure twice, desktop and phone).
+    return [Panel("Mean daily point error", "EUR/MWh · 95% confidence interval of the mean", rows("MAE"), domain=(0, 80), step=20,
+                  option="p=1")]
+
+
+def coverage_panel() -> list[Panel]:
+    levels = (("50", 0.5), ("80", 0.8), ("95", 0.95))
+    return [Panel("Coverage of v6's prediction intervals", "share of hours inside · every eligible development day",
+                  tuple(Row(f"{level}% interval", f"pres6.coverage.all.{level}.coverage", "v6", bold=True, claim="C1003")
+                        for level, _ in levels),
+                  domain=(0.4, 1.0), step=0.1,
+                  refs=tuple(Ref(f"nominal {level}%", at=at) for level, at in levels), option="p=4")]
+
+
+def coverage_table() -> str:
+    head = ('<th scope="col">Regime</th>' + "".join(f'<th scope="col">{S("level", lv + "%")} coverage</th>'
+                                                   f'<th scope="col">{S("level", lv + "%")} width, EUR/MWh</th>'
+                                                   for lv in ("50", "80", "95")))
+    body = ""
+    for regime, label in (("all", "Every eligible day"),) + tuple(REGIME_LABELS.items()):
+        cells = "".join(f'<td class="n">{value(f"pres6.coverage.{regime}.{lv}.coverage", "C1003")}</td>'
+                        f'<td class="n">{value(f"pres6.coverage.{regime}.{lv}.width_eur", "C1003")}</td>'
+                        for lv in ("50", "80", "95"))
+        body += f'<tr><th scope="row">{_structural_versions(label)}</th>{cells}</tr>'
+    return (f'<div class="scroll" role="region" aria-label="Coverage with width by regime" tabindex="0"><table class="data">'
+            f'<caption>{_label("Coverage with width by regime, v6")}</caption>'
+            f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
+
+
+def outcome_regime_table() -> str:
+    head = ('<th scope="col">Regime</th><th scope="col">Days</th><th scope="col">Hours</th>'
+            f'<th scope="col">Score</th><th scope="col">{_structural_versions("v6")}</th><th scope="col">Naive</th>'
+            '<th scope="col">Ratio to the naive</th>')
+    body = ""
+    for regime, label in (("all", "Every eligible day"),) + tuple(REGIME_LABELS.items()):
+        for metric, name in (("MAE", "Point error"), ("WIS", "Interval score")):
+            cells = "".join(f'<td class="n">{value(f"pres6.regime.{regime}.{metric}.{st}", "C1002")} '
+                            f'{interval(f"pres6.regime.{regime}.{metric}.{st}", "C1002")}</td>'
+                            for st in ("v6", "naive", "ratio"))
+            body += (f'<tr><th scope="row">{_structural_versions(label)}</th>'
+                     f'<td class="n">{value(f"pres6.regime.{regime}.days", "C1002")}</td>'
+                     f'<td class="n">{value(f"pres6.regime.{regime}.hours", "C1002")}</td><td>{name}</td>{cells}</tr>')
+    return (f'<div class="scroll" role="region" aria-label="Error by regime" tabindex="0"><table class="data">'
+            f'<caption>{_label("Mean daily error by regime, EUR/MWh")}</caption>'
+            f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
+
+
+def bins_table() -> str:
+    head = ('<th scope="col">Bin</th><th scope="col">Hours</th><th scope="col">Median forecast, from</th>'
+            '<th scope="col">to</th><th scope="col">Mean median forecast</th><th scope="col">Mean observed price</th>'
+            f'<th scope="col">Share inside the {S("level", "80%")} interval</th>')
+    body = ""
+    for row in _pres6_rows("bins"):
+        b = row["bin"]
+        body += (f'<tr><th scope="row">{S("count", b)}</th>'
+                 + "".join(f'<td class="n">{value(f"pres6.bin.{b}.{f}", "C1006")}</td>'
+                           for f in ("hours", "p50_low", "p50_high", "mean_p50", "mean_observed", "inside80")) + "</tr>")
+    return (f'<div class="scroll" role="region" aria-label="Forecast bins" tabindex="0"><table class="data">'
+            f'<caption>{_label("Ten bins of equal size, EUR/MWh")}</caption>'
+            f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
+
+
+#: The frozen input groups (`cp17.attribution.GROUPS`), in words: a label carries no numeral (`cp24.design`'s table).
+EXPLAIN_GROUPS = {"price_d1": "Prices of the day before", "price_d2": "Prices two days before",
+                  "price_d3": "Prices three days before", "price_d7": "Prices a week before",
+                  "load_d0": "Load forecast for the day", "load_d1": "Load forecast, day before",
+                  "load_d7": "Load forecast, a week before", "gfs": "Weather forecast: wind and sun",
+                  "stats": "Recent price statistics", "weekday": "Weekday", "calendar": "Holidays, day type and month"}
+#: The two development days of CP-17-probe's committed attribution (packet §0's correction), as the panels name them.
+EXPLAIN_DAYS = (("2026-03-29", "The spring clock-change day"), ("2026-09-06", "The last development day"))
+
+
+def _explain_used(day: str) -> list[str]:
+    return [row["group"] for row in _pres6_rows("explanation")
+            if row["day"] == day and row["kind"] == "group" and row["used"] == "True"]
+
+
+def explanation_panels() -> list[Panel]:
+    """One panel per day, side by side on the same rows: the groups both days' networks use (a group used on one day
+    only is stated beside the chart and listed in the values table, never drawn as zero)."""
+    both = [g for g in EXPLAIN_GROUPS if all(g in _explain_used(day) for day, _ in EXPLAIN_DAYS)]
+    return [Panel(title, "mean absolute contribution an hour, EUR/MWh",
+                  tuple(Row(EXPLAIN_GROUPS[g], f"pres6.explain.{day}.{g}.mean_abs", "v6", bold=True, claim="C1007")
+                        for g in both),
+                  domain=(0, 50), step=10, option="p=1") for day, title in EXPLAIN_DAYS]
+
+
+def explanation_table() -> str:
+    head = '<th scope="col">Input group</th>' + "".join(f'<th scope="col">{S("date", day)}</th>' for day, _ in EXPLAIN_DAYS)
+    body = ""
+    for g, label in EXPLAIN_GROUPS.items():
+        cells = "".join(f'<td class="n">{value(f"pres6.explain.{day}.{g}.mean", "C1007")}</td>' if g in _explain_used(day)
+                        else "<td>not used</td>" for day, _ in EXPLAIN_DAYS)
+        body += f'<tr><th scope="row">{label}</th>{cells}</tr>'
+    for kind, label in (("baseline", "Baseline median"), ("issued", "Issued median")):
+        cells = "".join(f'<td class="n">{value(f"pres6.explain.{day}.{kind}", "C1007")}</td>' for day, _ in EXPLAIN_DAYS)
+        body += f'<tr><th scope="row">{label}</th>{cells}</tr>'
+    return (f'<div class="scroll" role="region" aria-label="Signed attribution by input group" tabindex="0"><table class="data">'
+            f'<caption>{_label("Signed mean contribution an hour, EUR/MWh")}</caption>'
+            f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
+
+
+def outcome_audit() -> tuple[Audit, ...]:
+    return (Audit("All product-result rows", R.PRES6_DIR, PRES6_TAG),
+            Audit("The three days, hour by hour", R.PRES6_ROWS["days"], PRES6_TAG),
+            Audit("The committed attribution (the retraining probe's native reference)",
+                  "reports/cp17-probe/native-reference.json", "evidence/cp-17"),
+            Audit("The attribution, by day and input group", R.PRES6_ROWS["explanation"], PRES6_TAG),
+            Audit("The rules, fixed before the computation", "docs/track-b/evidence/pres-6/publication-packet.md",
+                  PRES6_TAG))
+
+
+def product_results() -> str:
+    """Product results (PUBLISH_RULES §5.1a, A8): v6's development results, the finding first (A2's bound)."""
+    routes = "".join(f'<li><a class="quiet" href="#{anchor}"><span>{_structural_versions(text)}</span></a></li>'
+                     for anchor, text in OUTCOME_ROUTES)
+    return f"""
+<section class="section" id="outcomes" aria-labelledby="outcomes-h" data-research="outcomes">
+ <h2 id="outcomes-h">Product results</h2>
+ <figure class="panel analytical" aria-labelledby="product-finding">
+  {block("outcomes.finding", tag="h3", cls="panel-title finding-title", ident="product-finding")}
+  {block("outcomes.finding.coverage", cls="finding-coverage")}
+  {block("outcomes.caveat", cls="qualification caveat-line")}
+  <p class="panel-sub" data-block="outcomes.sub">{RC.render("outcomes.sub")}</p>
+  <nav class="explore" aria-labelledby="outcomes-explore-h"><h3 class="story-label" id="outcomes-explore-h">Explore these
+   results</h3><ul>{routes}</ul></nav>
+ </figure>
+ <div class="outcome-block">
+  {detail_head("outcomes-days", OUTCOME_HEADINGS["outcomes-days"])}
+  {block("outcomes.days")}
+  {forecast_days_chart()}
+ </div>
+ <div class="outcome-block">
+  {detail_head("outcomes-time", OUTCOME_HEADINGS["outcomes-time"])}
+  {block("outcomes.time")}
+  {monthly_chart()}
+ </div>
+ <div class="outcome-block">
+  {detail_head("outcomes-regimes", OUTCOME_HEADINGS["outcomes-regimes"])}
+  {block("outcomes.regimes")}
+  {single_rows("outcomes-regimes-chart", "C1002", regime_panels(), title="v6's mean daily error by price regime, against the similar-day naive",
+               desc="v6's and the naive's mean daily point error by price regime, EUR/MWh, with 95 percent confidence intervals of the mean. Development, post-selection.")}
+  {disclosure("outcomes-regimes-table", "View values, with the ratios to the naive", outcome_regime_table())}
+ </div>
+ <div class="outcome-block">
+  {detail_head("outcomes-coverage", OUTCOME_HEADINGS["outcomes-coverage"])}
+  {block("outcomes.coverage")}
+  {single_rows("outcomes-coverage-chart", "C1003", coverage_panel(), title="Coverage of v6's 50, 80 and 95 percent prediction intervals",
+               desc="Share of hours inside each interval, every eligible development day; the nominal level is a reference line. Development, post-selection.")}
+  {coverage_table()}
+ </div>
+ <div class="outcome-block">
+  {detail_head("outcomes-explanation", OUTCOME_HEADINGS["outcomes-explanation"])}
+  {block("outcomes.explanation")}
+  {single_rows("outcomes-explanation-chart", "C1007", explanation_panels(), title="Which input groups moved v6's median on two development days",
+               desc="Each input group's mean absolute contribution an hour to v6's issued median on two development days, EUR/MWh: an attribution within one fitted model, not causality.")}
+  {block("outcomes.explanation.drawn", cls="qualification")}
+  {block("outcomes.explanation.terms", cls="qualification caveat-line")}
+  {disclosure("outcomes-explanation-table", "View the signed values", explanation_table())}
+ </div>
+ <div class="outcome-block">
+  {detail_head("outcomes-bins-h", OUTCOME_HEADINGS["outcomes-bins-h"])}
+  {block("outcomes.bins")}
+  {bins_table()}
+ </div>
+ {evidence_row(audit=outcome_audit())}
+</section>"""
+
+
+def business_insights() -> str:
+    """Business insights (§5.1a): the intended use, the measured forecasting implications, the gap and the limits."""
+    return f"""
+<section class="section" id="business" aria-labelledby="business-h" data-research="business">
+ <h2 id="business-h">Business insights</h2>
+ {block("business.use")}
+ {block("business.measured")}
+ {block("business.gap")}
+ {block("business.limits")}
+</section>"""
 
 
 def results() -> str:
@@ -2515,6 +2846,8 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
     archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
     space = lambda text: f'<p><a class="quiet external" href="{attr(C["space_url"])}">{text}</a></p>'  # noqa: E731
     chapter = lambda anchor, text: f'<p><a class="quiet" href="#{anchor}">{_structural_versions(text)}</a></p>'  # noqa: E731
+    # A8 (PRES-6): the method explanations link to the canonical result graphics, in Product results.
+    results = chapter
     freeze = Audit("The freeze manifest", "docs/track-b/evidence/cp-17c/freeze-manifest.json", "evidence/cp-17c")
     return (
         Topic("product-data", "Data and the information cutoff", "Data and the information cutoff", ("1",),
@@ -2522,6 +2855,7 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
                                         "v6.product.windows", "product.data.preprocessing"))),
         Topic("product-regimes", "Price regimes and negative prices", "Price regimes and negative prices", ("2",),
               block("v6.product.regimes.periods") + block("v6.product.regimes")
+              + results("outcomes-regimes", "v6's error in each regime, in Product results")
               + f'<p>{archive("regimes", "Yearly price levels and negative-hour counts, in the archived report")}</p>'),
         Topic("product-inputs", "The inputs it uses, and why", "The inputs it uses, and why", ("3", "3b"),
               block("v6.product.inputs") + block("product.inputs.seasonal")
@@ -2529,17 +2863,23 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-validation", "How it was selected and will be tested",
               "How it was selected and how it will be tested", ("4",), block("v6.product.validation")),
         Topic("product-results", "Measured results: development data", "Measured results", ("5",),
-              block("v6.product.results") + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
-        Topic("product-attribution", "What drives its forecasts: live product", "What drives its forecasts",
-              ("6",), block("v6.product.attribution") + space("The Explainability view, on the live product"),
-              disposition="not evaluated"),
+              block("v6.product.results") + results("outcomes", "v6's results on every development day, in Product results")
+              + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
+        Topic("product-attribution", "Input attribution: two days and live",
+              "Input attribution: two development days and the live product",
+              ("6",), block("v6.product.attribution")
+              + results("outcomes-explanation", "The attribution on two development days, in Product results")
+              + space("The Explainability view, on the live product")),
         Topic("product-importance", "Input importance: live product", "Which inputs it relies on", ("7",),
               block("v6.product.importance") + space("The Features view, on the live product"),
               disposition="not evaluated"),
         Topic("product-failures", "Where it fails", "Where it fails", ("8",),
-              block("v6.product.failures") + chapter("v6-per-period-differences", "Each test period, in the v6 chapter")),
+              block("v6.product.failures") + results("outcomes-time", "v6's error month by month, in Product results")
+              + chapter("v6-per-period-differences", "Each test period, in the v6 chapter")),
         Topic("product-reliability", "Interval reliability", "How reliable its intervals are", ("9",),
-              block("v6.product.reliability") + chapter("v6-coverage", "How often its intervals held, in the v6 chapter")),
+              block("v6.product.reliability")
+              + results("outcomes-coverage", "Coverage with width at each level, every development day, in Product results")
+              + chapter("v6-coverage", "How often its intervals held, in the v6 chapter")),
         Topic("product-forecast", "Read a forecast: live product", "Read a forecast", ("10",),
               block("v6.product.forecast") + space("Open the live product")),
         Topic("product-limitations", "Limitations", "Limitations", ("11",), block("v6.product.limits")),
@@ -3535,6 +3875,8 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .chart svg{{display:block;height:auto}}
 .chart svg.d{{width:100%;max-width:{DESKTOP_W}px}}
 .chart svg.m{{display:none;width:100%;max-width:{MOBILE_MAX_W}px;margin:0 auto}}
+.outcome-days-row{{display:flex;flex-wrap:wrap;gap:12px}}.outcome-days-row svg.d{{flex:1 1 280px;width:auto;max-width:440px}}
+.outcome-days-stack svg.m{{margin:0 0 12px}}.outcome-block{{margin:28px 0 0}}
 .preview-chart svg.d{{max-width:440px}}
 @media (max-width:{MOBILE_BREAKPOINT - 1}px){{.chart svg.d{{display:none}}.chart svg.m{{display:block}}}}
 .chart-note{{font-size:14px;color:var(--text-2);margin-top:20px}}
@@ -4462,6 +4804,8 @@ def build_html(*, specimen: bool = False, stress: bool = False) -> str:
 <main id="main">
 {opening(C, payload)}
 {product_section(C, payload)}
+{product_results()}
+{business_insights()}
 {results()}
 {journey()}
 <section class="section chapters" id="chapters" aria-labelledby="chapters-h">

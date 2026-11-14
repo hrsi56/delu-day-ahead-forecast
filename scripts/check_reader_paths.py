@@ -848,16 +848,22 @@ RELEASE_SIZES = ((1440, 900), (768, 1024), (390, 844), (360, 780), (320, 640))
 COLD_READER_VIEWS = (("chrome", 1440, 900), ("webkit", 390, 844))
 IPHONE = "iPhone 15"
 
-#: The standard's §1 placements, measured with every disclosure closed.
+#: The standard's §1 placements, measured with every disclosure closed. A2's finding is the page's own: on a page in
+#: A8's order (Product results before the comparison, read from the page's sections, never from the caller) it is the
+#: product finding `#product-finding` (PUBLISH_RULES A8, §2; ruling O48); on an A4-order page, the comparison's.
 PLACEMENT_JS = r"""() => {
   const box = e => { if (!e) return null; const r = e.getBoundingClientRect();
     return {top: Math.round((r.top + scrollY) * 10) / 10, bottom: Math.round((r.bottom + scrollY) * 10) / 10}; };
   const q = s => document.querySelector(s);
   const release = q('[data-block="release-rule"]'), actions = q('.actions'), byline = q('.byline a[href="#contribution"]');
-  const finding = q('#comparison-finding'), panel = finding && finding.closest('.panel');
+  const outcomes = q('section#outcomes'), compare = q('section#research-results');
+  const a8 = !!(outcomes && compare && q('section#outcomes #product-finding')
+                && (outcomes.compareDocumentPosition(compare) & Node.DOCUMENT_POSITION_FOLLOWING));
+  const finding = q(a8 ? '#product-finding' : '#comparison-finding'), panel = finding && finding.closest('.panel');
   const chart = panel && [...panel.querySelectorAll('svg[role="img"]')].find(s => s.getBoundingClientRect().width > 0);
   const header = q('.site-header');
   return {header_px: header ? Math.round(header.getBoundingClientRect().height * 10) / 10 : null,
+          order: a8 ? 'A8' : 'A4', finding_id: a8 ? 'product-finding' : 'comparison-finding',
           headline: box(q('#headline')), terms: box(q('ul.terms')), finding: box(finding), finding_chart: box(chart),
           release_rule: box(release), demo_action: box(actions), byline: box(byline),
           release_rule_in_disclosure: !!(release && release.closest('details')),
@@ -1085,7 +1091,8 @@ def _view(playwright, engine: str, url: str, out: Path, *, width: int | None = N
     if record.get("placement_screens"):
         placements, screens = record["placements"], record["placement_screens"]
         header = max([placements["header_px"] or 0] + screens["header_px_seen"])
-        record["finding_screen"] = screen_of(placements["finding"]["bottom"], size["height"], header)
+        if placements["finding"]:
+            record["finding_screen"] = screen_of(placements["finding"]["bottom"], size["height"], header)
     page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
     page.wait_for_timeout(500)
     record["charts_with_disclosures_open"] = measure_charts()
@@ -1154,14 +1161,18 @@ def placement_findings(view: dict) -> list[str]:
         header = max([p.get("header_px") or 0] + list((view.get("placement_screens") or {}).get("header_px_seen") or []))
         screens = A2_SCREENS[(width, height)]
         limit = a2_limit(height, screens, header)
-        if p["finding"]["bottom"] > limit:
-            problems.append(f"the finding sentence ends at {p['finding']['bottom']} px, beyond {limit} "
+        # A record made before O48 names no finding: it measured the comparison's, as its page's order then required.
+        which = f"#{p.get('finding_id', 'comparison-finding')}, {p.get('order', 'A4')} order"
+        if not p["finding"]:
+            problems.append(f"the finding sentence ({which}) is missing")
+        elif p["finding"]["bottom"] > limit:
+            problems.append(f"the finding sentence ({which}) ends at {p['finding']['bottom']} px, beyond {limit} "
                             f"({screens} screens of {height} px with a {header} px header, A2)")
         if header <= 0:
             problems.append("the persistent header was not measured")
     if not p["terms"] or p["terms"]["top"] < p["headline"]["bottom"] or p["terms"]["top"] - p["headline"]["bottom"] > 40:
         problems.append("the terms are not directly below the headline block")
-    if p["finding_chart"] and p["finding"]["bottom"] > p["finding_chart"]["top"]:
+    if p["finding_chart"] and p["finding"] and p["finding"]["bottom"] > p["finding_chart"]["top"]:
         problems.append("the finding sentence is not above the comparison's chart")
     if p["release_rule_in_disclosure"] or not p["release_rule"] or not p["demo_action"]:
         problems.append("the release rule is missing or inside a disclosure")

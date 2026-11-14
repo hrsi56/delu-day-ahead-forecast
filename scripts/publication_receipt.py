@@ -12,10 +12,14 @@ compares the intended identity with the observed one:
   bundle, file by file. It reuses `scripts/deploy_space.py`'s anonymous Hub reads and per-file check, after the
   bundle itself is checked against `--expect`. An unchanged Space is verified the same way: it must still serve
   the bundle it was last deployed with.
-- **Space page:** the served direct-app page is the bundle's `index.html` once Hugging Face's injected
-  `window.huggingface` creator-metadata script, and only that, is removed. Both hashes are recorded.
+- **Space page:** the served direct-app page is the bundle's `index.html`, as served or once the host's injection is
+  removed by CP-18c's own rule, `src/cp18/publish.py`'s `normalized` (imported, not copied): the one
+  `window.huggingface` creator-metadata script at the head's start and the one contiguous run of Open Graph and
+  Twitter meta tags. Both hashes, and the removed bytes' size and hash, are recorded.
 - **MLflow:** the public mirror holds the committed export (`scripts/verify_mlflow_mirror.py::verify`).
-- **Links:** every destination on the public surfaces answers 200 (`scripts/check_links.py::main`).
+- **Links:** every destination on the public surfaces answers 200 on the host it names
+  (`scripts/check_links.py::main`): redirects are followed one hop at a time and recorded, and a chain that ends on
+  another host fails.
 
 **Each surface is checked independently.** A failed attempt is retried after `--wait` seconds, up to `--retries`
 times. Every attempt, the first failure included, stays in the record (publication runbook §1). The records go to
@@ -34,7 +38,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
 import subprocess
 import sys
 import time
@@ -47,11 +50,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
 import deploy_space  # noqa: E402
+from cp18.publish import normalized as served_normalized  # noqa: E402  (CP-18c's rule, reused, never copied)
 from delu_forecast.claims import build_claims  # noqa: E402
 
 RECORDS = ROOT / "reports" / "presentation" / "release-checks"
-#: Hugging Face injects exactly this into every served Static Space page (observed 2026-09-29 and 2026-10-11).
-HF_INJECTION = re.compile(rb"<script>window\.huggingface=\{[^<]*?\};</script>")
 AGENT = "delu-publication-receipt (anonymous, read-only)"
 
 
@@ -86,10 +88,10 @@ def resolve(commit: str) -> str:
                           text=True, check=True).stdout.strip()
 
 
-def normalize_space_page(body: bytes) -> tuple[bytes, int]:
-    """The served page without Hugging Face's creator-metadata script, and how many such scripts there were."""
-    found = len(HF_INJECTION.findall(body))
-    return HF_INJECTION.sub(b"", body), found
+def normalize_space_page(body: bytes) -> tuple[bytes, bytes | None]:
+    """The served page without the host's injection, by CP-18c's rule (`cp18.publish.normalized`), and the bytes
+    removed; `None` when the rule finds no injection, or an ambiguous one, and the page stands as served."""
+    return served_normalized("index.html", body)
 
 
 def check_github(landing: str, *, remote=remote_main) -> dict:
@@ -116,12 +118,15 @@ def check_space_files(bundle: Path, expected: str, *, hub) -> dict:
 def check_space_page(bundle: Path, url: str, *, get=fetch) -> dict:
     expected = _sha256((bundle / "index.html").read_bytes())
     served = get(url)
-    normalized, injected = normalize_space_page(served)
-    return {"intended": expected, "observed": _sha256(normalized), "url": url, "sha256": _sha256(served),
-            "normalized_sha256": _sha256(normalized), "exact_bytes_match": _sha256(served) == expected,
-            "hosting_injection": "Hugging Face window.huggingface public creator metadata script",
-            "injected_script_count": injected,
-            "passed": injected <= 1 and _sha256(normalized) == expected}
+    normalized, removed = normalize_space_page(served)
+    exact = _sha256(served) == expected
+    return {"intended": expected, "observed": _sha256(served) if exact else _sha256(normalized), "url": url,
+            "sha256": _sha256(served), "normalized_sha256": _sha256(normalized), "exact_bytes_match": exact,
+            "hosting_injection": "cp18.publish.normalized: the window.huggingface creator-metadata script and one "
+                                 "run of Open Graph/Twitter meta tags",
+            "removed_bytes": len(removed) if removed is not None else 0,
+            "removed_sha256": _sha256(removed) if removed is not None else None,
+            "passed": exact or (removed is not None and _sha256(normalized) == expected)}
 
 
 def check_mlflow(record: Path, *, verify=None) -> dict:
@@ -143,9 +148,11 @@ def check_links(record: Path, *, links=None) -> dict:
         from check_links import main as links
 
     code = links([], record=record)
-    failed = json.loads(record.read_text()).get("failed_destinations", {}) if record.is_file() else {}
-    return {"intended": "every destination answers 200", "observed": f"{len(failed)} failed destinations",
-            "record": _rel(record), "failed": failed, "passed": code == 0}
+    body = json.loads(record.read_text()) if record.is_file() else {}
+    failed, cross = body.get("failed_destinations", {}), body.get("cross_host_redirects", [])
+    return {"intended": "every destination answers 200 on the host it names",
+            "observed": f"{len(failed)} failed destinations, {len(cross)} ending on another host",
+            "record": _rel(record), "failed": failed, "cross_host_redirects": cross, "passed": code == 0}
 
 
 def _rel(path: Path) -> str:

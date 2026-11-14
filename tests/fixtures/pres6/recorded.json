@@ -1,0 +1,39 @@
+{
+ "schema": "pres6-recorded-fixtures-v1",
+ "recorded_by": "PRES-6 Lead, anonymous GETs that follow no redirect (scripts/check_links.py::fetch_once; urllib with _NoRedirect)",
+ "space_history_redirect": {
+  "linked_url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/",
+  "why": "The Space's retired bare /history/ route: PRES-5's links record counted its followed 200 at huggingface.co/History as a pass (pres-5-postdeploy-links.json, 2026-11-13T22:37:44Z); the A12 review recorded its 302 to https://huggingface.co/history (2026-11-14T01:07:58Z, docs/track-b/pres-5-a12-postdeploy-review-2026-11-14.md finding 3, R1).",
+  "hops": [
+   {
+    "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/",
+    "recorded_utc": "2026-11-14T11:51:14+00:00",
+    "status": 302,
+    "location": "https://huggingface.co/history"
+   },
+   {
+    "url": "https://huggingface.co/history",
+    "recorded_utc": "2026-11-14T11:51:15+00:00",
+    "status": 307,
+    "location": "/History"
+   },
+   {
+    "url": "https://huggingface.co/History",
+    "recorded_utc": "2026-11-14T11:51:15+00:00",
+    "status": 200,
+    "location": null
+   }
+  ]
+ },
+ "space_page": {
+  "url": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/index.html",
+  "recorded_utc": "2026-11-14T11:51:15+00:00",
+  "served_file": "space-page-served.html",
+  "served_sha256": "e9f37753e7915bd025a368c308e4fd87606ea7048e1a17ab973c4da526b2b9da",
+  "served_bytes": 2922,
+  "bundle_file": "space-page-bundle.html",
+  "bundle_sha256": "7b962a0f779efb4c36ba2ccf641cddb81b650cddb0456fea4fe42f014e169553",
+  "bundle_source": "space-product/index.html at gauntlet/pres-6's base (main 87811abc; unchanged at 29b6431e), equal to the served page after cp18.publish.normalized removed 495 bytes",
+  "removed_bytes": 495
+ }
+}

@@ -1,0 +1,149 @@
+{
+ "schema": "pres6-placement-o48-v1",
+ "checked_at_utc": "2026-11-14T15:47:19+00:00",
+ "rule": "PUBLISH_RULES A2 under A8 (ruling O48): PLACEMENT_JS reads the page's order from its sections and measures #product-finding on an A8 page, #comparison-finding on an A4 page; limit N x H - (N - 1) x h",
+ "file_urls": "file:// loads, every disclosure closed (the HTTP release record is separate)",
+ "rows": [
+  {
+   "engine": "chrome 157.0.8103.51",
+   "page": "A8 candidate (this branch's docs/index.html)",
+   "page_sha256": "0fecf39b9ef242ec70d97afee5ca34d6b3d180035e69525d70d4a2409e7d70da",
+   "viewport": "1440x900",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 1667.6,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "chrome 157.0.8103.51",
+   "page": "A8 candidate (this branch's docs/index.html)",
+   "page_sha256": "0fecf39b9ef242ec70d97afee5ca34d6b3d180035e69525d70d4a2409e7d70da",
+   "viewport": "390x844",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 2394.5,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "chrome 157.0.8103.51",
+   "page": "A4, PRES-5's published page (main:docs/index.html)",
+   "page_sha256": "983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475",
+   "viewport": "1440x900",
+   "order": "A4",
+   "finding_id": "comparison-finding",
+   "finding_bottom": 1667.6,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "chrome 157.0.8103.51",
+   "page": "A4, PRES-5's published page (main:docs/index.html)",
+   "page_sha256": "983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475",
+   "viewport": "390x844",
+   "order": "A4",
+   "finding_id": "comparison-finding",
+   "finding_bottom": 2394.5,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "chrome 157.0.8103.51",
+   "page": "negative control: the A8 candidate with 900 px inserted above #product-finding",
+   "page_sha256": "ea9ab26d970c9949dcfce54d18dd69536a6b7a005b7206538de565a86d78f0eb",
+   "viewport": "1440x900",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 2567.6,
+   "header_px": 56,
+   "a2_finding_problems": [
+    "the finding sentence (#product-finding, A8 order) ends at 2567.6 px, beyond 1744 (2 screens of 900 px with a 56 px header, A2)"
+   ]
+  },
+  {
+   "engine": "chrome 157.0.8103.51",
+   "page": "negative control: the A8 candidate with 900 px inserted above #product-finding",
+   "page_sha256": "ea9ab26d970c9949dcfce54d18dd69536a6b7a005b7206538de565a86d78f0eb",
+   "viewport": "390x844",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 3294.5,
+   "header_px": 56,
+   "a2_finding_problems": [
+    "the finding sentence (#product-finding, A8 order) ends at 3294.5 px, beyond 2420 (3 screens of 844 px with a 56 px header, A2)"
+   ]
+  },
+  {
+   "engine": "webkit 26.6",
+   "page": "A8 candidate (this branch's docs/index.html)",
+   "page_sha256": "0fecf39b9ef242ec70d97afee5ca34d6b3d180035e69525d70d4a2409e7d70da",
+   "viewport": "1440x900",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 1668.3,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "webkit 26.6",
+   "page": "A8 candidate (this branch's docs/index.html)",
+   "page_sha256": "0fecf39b9ef242ec70d97afee5ca34d6b3d180035e69525d70d4a2409e7d70da",
+   "viewport": "390x844",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 2394.3,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "webkit 26.6",
+   "page": "A4, PRES-5's published page (main:docs/index.html)",
+   "page_sha256": "983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475",
+   "viewport": "1440x900",
+   "order": "A4",
+   "finding_id": "comparison-finding",
+   "finding_bottom": 1668.3,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "webkit 26.6",
+   "page": "A4, PRES-5's published page (main:docs/index.html)",
+   "page_sha256": "983a75c44b0f93dabd183ee810158aefbfa62adfb5545b4a433afe4b5bbb9475",
+   "viewport": "390x844",
+   "order": "A4",
+   "finding_id": "comparison-finding",
+   "finding_bottom": 2394.3,
+   "header_px": 56,
+   "a2_finding_problems": []
+  },
+  {
+   "engine": "webkit 26.6",
+   "page": "negative control: the A8 candidate with 900 px inserted above #product-finding",
+   "page_sha256": "ea9ab26d970c9949dcfce54d18dd69536a6b7a005b7206538de565a86d78f0eb",
+   "viewport": "1440x900",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 2568.3,
+   "header_px": 56,
+   "a2_finding_problems": [
+    "the finding sentence (#product-finding, A8 order) ends at 2568.3 px, beyond 1744 (2 screens of 900 px with a 56 px header, A2)"
+   ]
+  },
+  {
+   "engine": "webkit 26.6",
+   "page": "negative control: the A8 candidate with 900 px inserted above #product-finding",
+   "page_sha256": "ea9ab26d970c9949dcfce54d18dd69536a6b7a005b7206538de565a86d78f0eb",
+   "viewport": "390x844",
+   "order": "A8",
+   "finding_id": "product-finding",
+   "finding_bottom": 3294.3,
+   "header_px": 56,
+   "a2_finding_problems": [
+    "the finding sentence (#product-finding, A8 order) ends at 3294.3 px, beyond 2420 (3 screens of 844 px with a 56 px header, A2)"
+   ]
+  }
+ ],
+ "passed": true
+}

@@ -174,6 +174,17 @@ def build_glance(target: str = "md") -> str:
              + link("Read it in the report", PAGES_URL + "#product") + ": its data, validation, results, failures, "
              "interval reliability and how to run it."),
         "",
+        # PRES-6 (A8; ruling O46): the product-first summary, as the page orders it, through the claim layer.
+        *([para(bold("Product results:") + " " + render("outcomes.finding") + " " + render("outcomes.finding.coverage")
+                + " " + render("outcomes.caveat") + " "
+                + link("Read them in the report", PAGES_URL + "#outcomes") + ": forecast against the observed price, "
+                "error over time and by regime, prediction-interval coverage with width, and which inputs moved its "
+                "median on two development days."),
+           "",
+           para(bold("Business insights:") + " " + render("business.use") + " " + render("business.measured") + " "
+                + render("business.gap") + " " + render("business.limits") + " "
+                + link("Read them in the report", PAGES_URL + "#business") + "."),
+           ""] if G.final_candidate() is not None else []),
         para(bold("Report:") + " " + link("the one-page report", PAGES_URL) + ", with every result, its limits and its evidence."),
         "",
         para(bold("Evidence:") + " each generation below links its engineering report, its review verdict and its "

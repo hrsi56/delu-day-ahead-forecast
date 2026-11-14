@@ -65,6 +65,14 @@ def _source(path: str, tag: str, blob: str) -> tuple[str, Source]:
 #: CP-10's files landed with CP-15, and CP-16's are also reachable from `evidence/cp-20`.
 SOURCES: dict[str, Source] = dict(
     [
+        # PRES-6: v6's product results on development days (`delu_forecast.final_candidate --product`)
+        _source("reports/pres6/product-results/monthly.csv", "evidence/pres-6", "ebfb21bfce7c32fb91be56d914d8fc86eaf5c557"),
+        _source("reports/pres6/product-results/regimes.csv", "evidence/pres-6", "446687f132f5555bdaf65a9235ad3723f2979159"),
+        _source("reports/pres6/product-results/coverage.csv", "evidence/pres-6", "74f9110fcb18c76301bc3bee72dd23700ee5c7dc"),
+        _source("reports/pres6/product-results/days.csv", "evidence/pres-6", "1428e978dd07675d13ddef7896cf61eff0a52f35"),
+        _source("reports/pres6/product-results/bins.csv", "evidence/pres-6", "056b32d5ddef7a95b187f69459e7a5dc01685ef1"),
+        _source("reports/pres6/product-results/summary.json", "evidence/pres-6", "054db2a5306f48694fec3b2a256b3f53cd55a676"),
+        _source("reports/pres6/product-results/explanation.csv", "evidence/pres-6", "34baf44228e97d5c9ccd9d18c16220aaf922f533"),
         # PRES-5: A1 on v5's population (`delu_forecast.final_candidate`), committed by this publication
         _source("reports/pres5/a1-in-v5/metrics.csv", "evidence/pres-5", "26cadf08b9f93a61e755b34863224834801ee202"),
         _source("reports/pres5/a1-in-v5/uncertainty.csv", "evidence/pres-5", "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972"),
@@ -408,6 +416,12 @@ POPULATIONS = {
     "cp26-old-folds": "the 358 days of the old folds 2 to 5, re-run under CP-26's protocol",
     "cp26-newly-opened": "the 152 days from 2026-04-08 to 2026-09-06",
     "cp28-paired-days": "CP-28's paired days: CP-26's 2,068 eligible days, each arm scored beside the control",
+    # PRES-6: the product results' populations (the packet's §0): CP-26's days by regime, and P-v5.
+    "cp26-every-day/pre_crisis": "CP-26's 246 eligible days before the energy crisis, 2020-12-29 to 2021-08-31",
+    "cp26-every-day/crisis": "CP-26's 481 eligible days of the energy crisis, 2021-09-01 to 2022-12-31",
+    "cp26-every-day/negative_prices": "CP-26's 1,341 eligible days from 2023-01-01, frequent negative prices",
+    "pres6-p-v5": "the 358 days of v5's test periods 2 to 5 inside CP-26's days",
+    "pres6-explain-days": "the two development days CP-17-probe attributed, 2026-03-29 and 2026-09-06, delivered hours",
 }
 
 
@@ -1292,6 +1306,107 @@ def _checkpoint_records(prefix: str, checkpoint: str, rows: dict[str, str]) -> l
             + _diagnostic_records(prefix, checkpoint, rows["diagnostics"]))
 
 
+# --------------------------------------------------------------------------- PRES-6: v6's product results
+
+PRES6_DIR = "reports/pres6/product-results"
+PRES6_ROWS = {name: f"{PRES6_DIR}/{name}.csv" for name in ("monthly", "regimes", "coverage", "days", "bins",
+                                                             "explanation")}
+PRES6_SUMMARY = f"{PRES6_DIR}/summary.json"
+#: The regime means' intervals: the packet's §0 bootstrap, v6 and the naive on the same draws.
+PRES6_INTERVAL = Interval("paired non-circular moving-block bootstrap of the regime's mean daily loss (PRES-6)",
+                          0.95, 20261114, 2000, 14)
+PRES6_REGIMES = {"all": ("cp26-every-day", CP26_WINDOW), "pre_crisis": ("cp26-every-day/pre_crisis", ("2020-12-29", "2021-08-31")),
+                 "crisis": ("cp26-every-day/crisis", ("2021-09-01", "2022-12-31")),
+                 "negative_prices": ("cp26-every-day/negative_prices", ("2023-01-01", "2026-09-06"))}
+_PRES6_EUR = {"MAE", "WIS", "width_eur", "mean_p50", "mean_observed", "p50_low", "p50_high", "y_true",
+              "p025", "p10", "p25", "p50", "p75", "p90", "p975", "mean_phi_eur", "mean_abs_phi_eur"}
+
+
+def _pres6_unit(record: EvidenceRecord) -> str:
+    """The unit of a PRES-6 product-result column (its own files' columns, not CP-24's)."""
+    if record.field == "value":
+        return UNIT_RATIO_B0_DAILY if record.selector_dict().get("stream") == "ratio" else UNIT_EUR
+    if record.field in _PRES6_EUR:
+        return UNIT_EUR
+    return {"days": UNIT_DAYS, "hours": UNIT_HOURS, "coverage": UNIT_FRACTION, "inside80": UNIT_FRACTION}[record.field]
+
+
+def _prow(record_id: str, path: str, selector: dict[str, str], field: str, *, precision: int, population: str,
+          window: tuple[str, str] | None, metric: str, interval: Interval | None = None) -> EvidenceRecord:
+    """A PRES-6 record read from one row of its committed CSV, its interval (if any) from the same row."""
+    matches = [(line, row) for line, row in _rows(path) if all(row[k] == v for k, v in selector.items())]
+    if len(matches) != 1:
+        raise EvidenceError(f"{record_id}: selector {selector} matches {len(matches)} rows of {path}")
+    line, row = matches[0]
+    unit_probe = EvidenceRecord(record_id, "PRES-6", None, None, path, tuple(selector.items()), field, metric, "", "",
+                                population, None, EVIDENCE_CLASS_DEVELOPMENT, window, precision, row[field])
+    return EvidenceRecord(
+        record_id=record_id, checkpoint="PRES-6", generation="v6", policy_code="A1", source_path=path,
+        selector=tuple(selector.items()), field=field, metric=metric, unit=_pres6_unit(unit_probe),
+        aggregation="record", population_id=population, comparator="B0", evidence_class=EVIDENCE_CLASS_DEVELOPMENT,
+        window=window, display_precision=precision, raw=row[field], source_line=line, interval=interval,
+        ci_low_raw=row["ci_lower"] if interval else None, ci_high_raw=row["ci_upper"] if interval else None)
+
+
+def _pres6_records() -> list[EvidenceRecord]:
+    """v6's product results (PUBLISH_RULES §5.1a): the regime means with their intervals, coverage with width, the
+    monthly series, the rule-chosen days and the decile bins, each from its committed row."""
+    out = []
+    for regime, (population, window) in PRES6_REGIMES.items():
+        for metric in ("MAE", "WIS"):
+            for stream in ("v6", "naive", "ratio"):
+                out.append(_prow(f"pres6.regime.{regime}.{metric}.{stream}", PRES6_ROWS["regimes"],
+                                 {"regime": regime, "metric": metric, "stream": stream}, "value",
+                                 precision=4 if stream == "ratio" else 1, population=population, window=window,
+                                 metric=metric, interval=PRES6_INTERVAL))
+        for field in ("days", "hours"):
+            out.append(_prow(f"pres6.regime.{regime}.{field}", PRES6_ROWS["regimes"],
+                             {"regime": regime, "metric": "MAE", "stream": "v6"}, field, precision=0,
+                             population=population, window=window, metric=field))
+        for level in ("50", "80", "95"):
+            for field in ("coverage", "width_eur"):
+                out.append(_prow(f"pres6.coverage.{regime}.{level}.{field}", PRES6_ROWS["coverage"],
+                                 {"regime": regime, "stream": "v6", "level": level}, field,
+                                 precision=4 if field == "coverage" else 1, population=population, window=window,
+                                 metric=f"coverage{level}" if field == "coverage" else f"width{level}"))
+    for _, row in _rows(PRES6_ROWS["monthly"]):
+        for metric in ("MAE", "WIS"):
+            out.append(_prow(f"pres6.monthly.{row['month']}.{row['stream']}.{metric}", PRES6_ROWS["monthly"],
+                             {"month": row["month"], "stream": row["stream"]}, metric, precision=1,
+                             population="cp26-every-day", window=CP26_WINDOW, metric=metric))
+    for _, row in _rows(PRES6_ROWS["bins"]):
+        for field in ("hours", "mean_p50", "mean_observed", "p50_low", "p50_high", "inside80"):
+            out.append(_prow(f"pres6.bin.{row['bin']}.{field}", PRES6_ROWS["bins"], {"bin": row["bin"]}, field,
+                             precision=0 if field == "hours" else (4 if field == "inside80" else 1),
+                             population="pres6-p-v5", window=CP26_WINDOW, metric=field))
+    for index, chosen in enumerate(_json(PRES6_SUMMARY)["chosen_days"]):
+        for field, unit in (("day", UNIT_LABEL), ("v6_daily_mae", UNIT_EUR), ("days_in_regime", UNIT_DAYS)):
+            out.append(_jrec(f"pres6.chosen.{chosen['regime']}.{field}", "PRES-6", PRES6_SUMMARY,
+                             f"chosen_days.{index}.{field}", unit=unit, precision=1 if unit == UNIT_EUR else 0,
+                             population="pres6-p-v5", field=field, metric=field, window=CP26_WINDOW))
+    for _, row in _rows(PRES6_ROWS["explanation"]):
+        day, kind, group = row["day"], row["kind"], row["group"]
+        window = (day, day)
+        if kind == "group" and row["used"] == "True":
+            for field, name in (("mean_phi_eur", "mean"), ("mean_abs_phi_eur", "mean_abs")):
+                out.append(_prow(f"pres6.explain.{day}.{group}.{name}", PRES6_ROWS["explanation"],
+                                 {"day": day, "kind": kind, "group": group}, field, precision=1,
+                                 population="pres6-explain-days", window=window, metric="attribution"))
+        elif kind in ("baseline", "issued"):
+            out.append(_prow(f"pres6.explain.{day}.{kind}", PRES6_ROWS["explanation"], {"day": day, "kind": kind},
+                             "mean_phi_eur", precision=1, population="pres6-explain-days", window=window,
+                             metric=f"{kind}_p50"))
+            if kind == "issued":
+                out.append(_prow(f"pres6.explain.{day}.hours", PRES6_ROWS["explanation"], {"day": day, "kind": kind},
+                                 "hours", precision=0, population="pres6-explain-days", window=window, metric="hours"))
+    for dotted, unit in (("p_all.days", UNIT_DAYS), ("p_all.hours", UNIT_HOURS), ("p_v5.days", UNIT_DAYS),
+                         ("p_v5.hours", UNIT_HOURS)):
+        out.append(_jrec(f"pres6.{dotted}", "PRES-6", PRES6_SUMMARY, dotted, unit=unit, precision=0,
+                         population="cp26-every-day" if dotted.startswith("p_all") else "pres6-p-v5",
+                         field=dotted.split(".")[-1], metric=dotted, window=CP26_WINDOW))
+    return out
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, EvidenceRecord]:
     """Every published evidence record, keyed by `record_id`."""
@@ -1299,6 +1414,7 @@ def records() -> dict[str, EvidenceRecord]:
     cp16_windows = _fold_windows("reports/v2-causal/metrics.csv")
     cp21_windows = _fold_windows("reports/block-challenger/metrics.csv")
     built: list[EvidenceRecord] = []
+    built += _pres6_records()
     built += _pres5_records()
     built += _checkpoint_records("cp24", "CP-24", CP24_ROWS)
     built += _decision_level_records("cp24", "CP-24", CP24_ROWS["uncertainty"], CP24_ROWS["ratios"],
@@ -1387,6 +1503,8 @@ def daily_series(checkpoint: str, policy: str, column: str = "MAE") -> tuple[Dai
 
 
 def _expected_unit(record: EvidenceRecord) -> str:
+    if record.checkpoint == "PRES-6" and record.selector[0][0] != "json":
+        return _pres6_unit(record)
     if record.unit == UNIT_LABEL or record.selector[0][0] == "json":
         return record.unit
     if record.field == "difference":
