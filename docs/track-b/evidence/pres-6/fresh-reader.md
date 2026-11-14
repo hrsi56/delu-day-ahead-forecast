@@ -160,7 +160,7 @@ Things that confused me:
 | Observation | Disposition |
 |---|---|
 | "Eligible" development day is never defined (D02) | **Repaired.** The caveat under the finding: "Eligible days are the development days from 2020-12-29 with complete prices and load forecasts" (CP-26's eligibility calendar, v21 §24.7 item 7) |
-| The bin table uses only v5's test periods, with no reason (D07) | **Repaired.** "…the only hours whose prices are committed hour by hour…" |
+| The bin table uses only v5's test periods, with no reason (D07) | **Repaired, then corrected.** The first repair gave a false reason ("…the only hours whose prices are committed hour by hour…"; Integration review 1 found the snapshot holds every hour's price). The text now names the periods' dates and the true reason: "the population fixed before any bin was drawn" |
 | "The naive's coverage is not in the committed rows" leaves open whether it has intervals (D05) | **Repaired.** "The naive's daily rows record its interval score but not its coverage, so none is shown." |
 | A grammar slip, "the holidays, day type and month group is used" (D06) | **Repaired.** "the group of holidays, day type and month is used on neither day" |
 | Phone: table captions cut off on the right (P09, P13) | **Repaired** for PRES-6's tables: the four new captions are short enough for a phone (the tables still scroll sideways, by design). P22 is PRES-5's every-day table, scrolled by design, its caption whole |

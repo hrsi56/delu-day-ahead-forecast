@@ -420,7 +420,7 @@ POPULATIONS = {
     "cp26-every-day/pre_crisis": "CP-26's 246 eligible days before the energy crisis, 2020-12-29 to 2021-08-31",
     "cp26-every-day/crisis": "CP-26's 481 eligible days of the energy crisis, 2021-09-01 to 2022-12-31",
     "cp26-every-day/negative_prices": "CP-26's 1,341 eligible days from 2023-01-01, frequent negative prices",
-    "pres6-p-v5": "the 358 days of v5's test periods 2 to 5 inside CP-26's days, with committed observed prices",
+    "pres6-p-v5": "the 358 days of v5's test periods 2 to 5 inside CP-26's days",
     "pres6-explain-days": "the two development days CP-17-probe attributed, 2026-03-29 and 2026-09-06, delivered hours",
 }
 

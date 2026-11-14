@@ -407,3 +407,20 @@ def test_the_rank_and_extreme_words_hold_on_the_rows():
     for day in ("2026-03-29", "2026-09-06"):
         ranked = sorted((r for r in explain if r["day"] == day), key=lambda r: -float(r["mean_abs_phi_eur"]))
         assert {r["group"] for r in ranked[:2]} == {"load_d0", "gfs"}, day
+
+
+#: Integration review 1's finding: hourly prices are committed for every development day (CP-26's pinned snapshot), so no
+#: surface may say they are committed only for v5's test periods.
+FALSE_PRICE_CLAUSES = re.compile(r"only hours whose prices are committed|prices are committed hour by hour|"
+                                 r"with committed observed prices|where committed hourly observed prices exist")
+
+
+def test_no_surface_says_hourly_prices_are_committed_only_for_v5s_periods():
+    snapshot = pd.read_parquet(ROOT / "data/snapshot.parquet", columns=["delivery_date", "price_eur_mwh"])
+    days = set(snapshot.loc[snapshot.price_eur_mwh.notna(), "delivery_date"].astype(str))
+    assert {"2020-12-29", "2022-07-26", "2026-09-06"} <= days  # the premise is false: every period's prices are there
+    templates = " ".join(block.template for block in RC.PRES6_BLOCKS)
+    for name, text in (("page", _text(BODY)), ("README", README), ("templates", " ".join(templates.split())),
+                       ("populations", " ".join(R.POPULATIONS.values()))):
+        assert not FALSE_PRICE_CLAUSES.search(text), name
+    assert FALSE_PRICE_CLAUSES.search("the only hours whose prices are committed hour by hour")  # the negative control

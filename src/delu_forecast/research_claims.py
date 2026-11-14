@@ -1097,8 +1097,8 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            {s:level:50%}, {s:level:80%} and {s:level:95%} prediction intervals; the dashes the price that cleared. Each
            panel has its own price scale.""", PAGE),
     _block("outcomes.bins", "C1006", """Over every scored hour of {g:v5.version}'s test periods that falls on an
-           eligible development day, the only hours whose prices are committed hour by hour, {r:pres6.p_v5.hours} hours
-           on {r:pres6.p_v5.days} days, sorted by
+           eligible development day (four periods between {s:date:2021-04-01} and {s:date:2026-04-07}), the population
+           fixed before any bin was drawn, {r:pres6.p_v5.hours} hours on {r:pres6.p_v5.days} days, sorted by
            {g:v6.version}'s median forecast into ten bins of equal size, the mean observed price rises with the mean
            forecast from bin to bin and stays close to it, the largest gap in the top bin:
            {r:pres6.bin.10.mean_p50} EUR/MWh forecast against {r:pres6.bin.10.mean_observed} observed. The share of
