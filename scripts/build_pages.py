@@ -2288,14 +2288,14 @@ def coverage_table() -> str:
                         for lv in ("50", "80", "95"))
         body += f'<tr><th scope="row">{_structural_versions(label)}</th>{cells}</tr>'
     return (f'<div class="scroll" role="region" aria-label="Coverage with width by regime" tabindex="0"><table class="data">'
-            f'<caption>{_label("Coverage with width, by regime: v6, every eligible development day")}</caption>'
+            f'<caption>{_label("Coverage with width by regime, v6")}</caption>'
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
 def outcome_regime_table() -> str:
     head = ('<th scope="col">Regime</th><th scope="col">Days</th><th scope="col">Hours</th>'
             f'<th scope="col">Score</th><th scope="col">{_structural_versions("v6")}</th><th scope="col">Naive</th>'
-            '<th scope="col">Ratio</th>')
+            '<th scope="col">Ratio to the naive</th>')
     body = ""
     for regime, label in (("all", "Every eligible day"),) + tuple(REGIME_LABELS.items()):
         for metric, name in (("MAE", "Point error"), ("WIS", "Interval score")):
@@ -2306,7 +2306,7 @@ def outcome_regime_table() -> str:
                      f'<td class="n">{value(f"pres6.regime.{regime}.days", "C1002")}</td>'
                      f'<td class="n">{value(f"pres6.regime.{regime}.hours", "C1002")}</td><td>{name}</td>{cells}</tr>')
     return (f'<div class="scroll" role="region" aria-label="Error by regime" tabindex="0"><table class="data">'
-            f'<caption>{_label("Mean daily error by regime, EUR/MWh, with 95% confidence intervals of the mean; the ratio is v6's mean over the naive's")}</caption>'
+            f'<caption>{_label("Mean daily error by regime, EUR/MWh")}</caption>'
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
@@ -2321,7 +2321,7 @@ def bins_table() -> str:
                  + "".join(f'<td class="n">{value(f"pres6.bin.{b}.{f}", "C1006")}</td>'
                            for f in ("hours", "p50_low", "p50_high", "mean_p50", "mean_observed", "inside80")) + "</tr>")
     return (f'<div class="scroll" role="region" aria-label="Forecast bins" tabindex="0"><table class="data">'
-            f'<caption>{_label("Every scored hour of v5's test periods on the eligible days, in ten bins of equal size by v6's median forecast, EUR/MWh")}</caption>'
+            f'<caption>{_label("Ten bins of equal size, EUR/MWh")}</caption>'
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
@@ -2361,7 +2361,7 @@ def explanation_table() -> str:
         cells = "".join(f'<td class="n">{value(f"pres6.explain.{day}.{kind}", "C1007")}</td>' for day, _ in EXPLAIN_DAYS)
         body += f'<tr><th scope="row">{label}</th>{cells}</tr>'
     return (f'<div class="scroll" role="region" aria-label="Signed attribution by input group" tabindex="0"><table class="data">'
-            f'<caption>{_label("Signed mean contribution an hour to the issued median, EUR/MWh, over the delivered hours: the groups add up from the baseline (the networks' training mean) to the issued median")}</caption>'
+            f'<caption>{_label("Signed mean contribution an hour, EUR/MWh")}</caption>'
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 

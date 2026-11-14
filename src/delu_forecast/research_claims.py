@@ -1088,7 +1088,8 @@ PRES6_BLOCKS: tuple[Block, ...] = (
     _block("outcomes.caveat", "C1001", """Development evidence after selection: {g:v6.version} was chosen on these days.
            The brackets are {s:level:95%} confidence intervals of the mean, from {s:count:14}-day block resamples. The
            naive forecasts each hour with the same hour's price the day before, or a week before for Mondays and
-           weekends. The live record is on the Space, prospective evaluation in progress.""", PAGE, README),
+           weekends. Eligible days are the development days from {s:date:2020-12-29} with complete prices and load
+           forecasts. The live record is on the Space, prospective evaluation in progress.""", PAGE, README),
     _block("outcomes.days", "C1005", """Three development days, one per
            regime, each the day at its regime's median point error within {g:v5.version}'s test periods, a rule fixed
            before any was drawn: {r:pres6.chosen.pre_crisis.day}, {r:pres6.chosen.crisis.day} and
@@ -1096,7 +1097,8 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            {s:level:50%}, {s:level:80%} and {s:level:95%} prediction intervals; the dashes the price that cleared. Each
            panel has its own price scale.""", PAGE),
     _block("outcomes.bins", "C1006", """Over every scored hour of {g:v5.version}'s test periods that falls on an
-           eligible development day, {r:pres6.p_v5.hours} hours on {r:pres6.p_v5.days} days, sorted by
+           eligible development day, the only hours whose prices are committed hour by hour, {r:pres6.p_v5.hours} hours
+           on {r:pres6.p_v5.days} days, sorted by
            {g:v6.version}'s median forecast into ten bins of equal size, the mean observed price rises with the mean
            forecast from bin to bin and stays close to it, the largest gap in the top bin:
            {r:pres6.bin.10.mean_p50} EUR/MWh forecast against {r:pres6.bin.10.mean_observed} observed. The share of
@@ -1120,7 +1122,8 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            {r:pres6.coverage.all.50.width_eur}, {r:pres6.coverage.all.80.width_eur} and
            {r:pres6.coverage.all.95.width_eur} EUR/MWh. In the crisis they covered least,
            {r:pres6.coverage.crisis.80.coverage} at {s:level:80%}, and were widest. The nominal level is a reference,
-           not a target. The naive's coverage is not in the committed rows, so none is shown.""", PAGE),
+           not a target. The naive's daily rows record its interval score but not its coverage, so none is shown.""",
+           PAGE),
     _block("outcomes.explanation", "C1007", """Which inputs moved {g:v6.version}'s median on two development days:
            {s:date:2026-03-29}, the spring clock-change day ({r:pres6.explain.2026-03-29.hours} hours), and
            {s:date:2026-09-06}, the last development day. The attribution was computed and committed before the freeze,
@@ -1133,7 +1136,7 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            {r:pres6.explain.2026-09-06.gfs.mean_abs} on the second.""", PAGE),
     _block("outcomes.explanation.drawn", "C1007", """Drawn: the nine groups both days' networks use. Prices two days
            before, used on the last day only, had a mean absolute contribution of
-           {r:pres6.explain.2026-09-06.price_d2.mean_abs} EUR/MWh an hour; the holidays, day type and month group is
+           {r:pres6.explain.2026-09-06.price_d2.mean_abs} EUR/MWh an hour; the group of holidays, day type and month is
            used on neither day.""", PAGE),
     _block("outcomes.explanation.terms", "C1007", """Each value attributes that day's issued median within one fitted
            model, relative to its networks' training-mean baseline. It is not a cause, not the value an input adds, and
