@@ -591,7 +591,7 @@ runner's commits: a revert is a new commit on top of them, and a rollback is its
 
 | Touchpoint | Status |
 |---|---|
-| `registry.EVIDENCE_TAGS["evidence/pres-6"]` | added; its date set in the final-build commit to that commit's date |
+| `registry.EVIDENCE_TAGS["evidence/pres-6"]` | added; dated 2026-11-15, the evidence tip's date (the final-build commit, `6dfca90f`, is dated 2026-11-14; §8.2 checks the tip's date against the registry's before tagging; Integration review 3, A3) |
 | `research.py::SOURCES`, `POPULATIONS` | PRES-6's seven files by blob and tag; the regime populations, `pres6-p-v5`, `pres6-explain-days` |
 | Claim map and blocks | `pres6-claims.md`; `PRES6_BLOCKS`; `v6.product.attribution` and PRES-5's R1, R2, R7 blocks reworded |
 | `CHARTS_BY_RUN`, `mlflow_export.py` | not needed: no run or route changes |
@@ -718,7 +718,11 @@ evidence tip is committed on 2026-11-15 (local time), the date the registry carr
 at `f8fcd723`, as §7 says; the code delta since is the fix, one test and the date. N4: §7 binds the served page's hash.
 N5: the bins' reason is procedural and true; kept.
 
-**The focused recheck at the final SHA** (`integration.md`): its own verdict.
+**Integration review 3** (`integration.md`, the focused recheck at the final SHA `4ecfcd09`, PASS): the one-test delta
+is clean, N1 is resolved (shown both ways in a throwaway clone), the page reproduces byte for byte. Its advisories: A3
+(this §9.3 row) corrected in the evidence tip; A2 (a tag-push CI run would check the date strictly, as intended), A4
+(the assignment's excerpt joins non-adjacent lines; each is verbatim) and A5 (a Finder `.DS_Store`, ignored) need
+nothing.
 
 ### 10.5 Integration review 4's R1–R7
 
