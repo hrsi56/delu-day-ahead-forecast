@@ -50,17 +50,19 @@ class FakeHub:
 
 def test_only_the_hugging_face_script_is_removed():
     served = PAGE.replace(b"<head>", b"<head>" + INJECTION)
-    normalized, found = R.normalize_space_page(served)
-    assert (normalized, found) == (PAGE, 1)
-    assert R.normalize_space_page(PAGE) == (PAGE, 0)
+    normalized, removed = R.normalize_space_page(served)
+    assert (normalized, removed) == (PAGE, INJECTION)
+    assert R.normalize_space_page(PAGE) == (PAGE, None)
     assert b"<script>app()</script>" in normalized
 
 
 def test_the_space_page_matches_only_after_the_injection_is_removed(bundle):
     served = PAGE.replace(b"<head>", b"<head>" + INJECTION)
     ok = R.check_space_page(bundle, "https://space", get=lambda url: served)
-    assert ok["passed"] and not ok["exact_bytes_match"] and ok["injected_script_count"] == 1
+    assert ok["passed"] and not ok["exact_bytes_match"] and ok["removed_bytes"] == len(INJECTION)
     assert ok["normalized_sha256"] == hashlib.sha256(PAGE).hexdigest() != ok["sha256"]
+    exact = R.check_space_page(bundle, "https://space", get=lambda url: PAGE)
+    assert exact["passed"] and exact["exact_bytes_match"] and exact["removed_sha256"] is None
     tampered = R.check_space_page(bundle, "https://space", get=lambda url: served.replace(b"demo", b"other"))
     assert not tampered["passed"]
 
@@ -120,6 +122,52 @@ def test_the_receipt_writes_one_record_and_fails_on_any_surface(tmp_path):
     assert "| GitHub Pages | `h1` | `h2`" in rows[3] and "FAIL after 1 retry" in rows[3] and "recheck" in rows[3]
     passing = {"GitHub main": lambda: {"passed": True, "intended": "a", "observed": "a"}}
     assert R.receipt("a" * 40, tmp_path, "e" * 64, tmp_path / "ok", "d", checks=passing)[1] == 0
+
+
+# --- PRES-6 outcome 6: the receipt normalizes by CP-18c's rule, on a recorded served page --------------------------
+
+FIXTURES = REPO_ROOT / "tests" / "fixtures" / "pres6"
+
+
+def _recorded() -> dict:
+    return json.loads((FIXTURES / "recorded.json").read_text())
+
+
+def test_the_receipt_reuses_cp18cs_rule_rather_than_a_copy():
+    from cp18 import publish
+
+    assert R.served_normalized is publish.normalized
+    assert not hasattr(R, "HF_INJECTION")
+
+
+def test_the_recorded_space_page_passes_once_the_hosts_script_and_meta_run_are_removed(tmp_path):
+    record = _recorded()["space_page"]
+    served, page = (FIXTURES / record["served_file"]).read_bytes(), (FIXTURES / record["bundle_file"]).read_bytes()
+    assert hashlib.sha256(served).hexdigest() == record["served_sha256"] and len(served) == record["served_bytes"]
+    assert hashlib.sha256(page).hexdigest() == record["bundle_sha256"]
+    (tmp_path / "index.html").write_bytes(page)
+    ok = R.check_space_page(tmp_path, record["url"], get=lambda url: served)
+    assert ok["passed"] and not ok["exact_bytes_match"] and ok["removed_bytes"] == record["removed_bytes"] == 495
+    assert ok["observed"] == ok["normalized_sha256"] == ok["intended"] == record["bundle_sha256"]
+    _, removed = R.normalize_space_page(served)
+    assert removed.startswith(b"<script>window.huggingface=") and b'<meta property="og:title"' in removed
+    assert b"<script" not in removed[removed.index(b"</script>") + 9:]
+
+
+def test_negative_controls_the_old_script_only_rule_fails_and_a_changed_page_fails(tmp_path):
+    record = _recorded()["space_page"]
+    served, page = (FIXTURES / record["served_file"]).read_bytes(), (FIXTURES / record["bundle_file"]).read_bytes()
+    (tmp_path / "index.html").write_bytes(page)
+    import re
+
+    script_only = re.sub(rb"<script>window\.huggingface=\{[^<]*?\};</script>", b"", served)
+    assert hashlib.sha256(script_only).hexdigest() != record["bundle_sha256"]  # PRES-5's receipt gap, reproduced
+    changed = R.check_space_page(tmp_path, record["url"], get=lambda url: served.replace(b"<title>", b"<title>x"))
+    assert not changed["passed"]
+    meta = re.search(rb'(?:<meta (?:property|name)="(?:og|twitter):[a-z_:]+" content="[^"<>]*">)+', served).group(0)
+    twice = served.replace(b"<title>", meta + b"\n<title>", 1)  # a second, separate run: ambiguous, kept as served
+    ambiguous = R.check_space_page(tmp_path, record["url"], get=lambda url: twice)
+    assert not ambiguous["passed"] and ambiguous["removed_sha256"] is None
 
 
 # --- item 7: the pre-review check runner ---------------------------------------------------------------------------
