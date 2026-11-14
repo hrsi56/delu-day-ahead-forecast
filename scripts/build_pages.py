@@ -2291,7 +2291,7 @@ def coverage_table() -> str:
             f"<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
 
 
-def regime_table() -> str:
+def outcome_regime_table() -> str:
     head = ('<th scope="col">Regime</th><th scope="col">Days</th><th scope="col">Hours</th>'
             '<th scope="col">Score</th><th scope="col">v6</th><th scope="col">Naive</th><th scope="col">Ratio</th>')
     body = ""
@@ -2359,7 +2359,7 @@ def product_results() -> str:
   {block("outcomes.regimes")}
   {single_rows("outcomes-regimes-chart", "C1002", regime_panels(), title="v6's mean daily error by price regime, against the similar-day naive",
                desc="For each price regime, v6's and the similar-day naive's mean daily point error in EUR/MWh, each with its 95 percent interval of the mean; the interval score by regime is in the values table. Development evidence after selection.")}
-  {disclosure("outcomes-regimes-table", "View values, with the ratios to the naive", regime_table())}
+  {disclosure("outcomes-regimes-table", "View values, with the ratios to the naive", outcome_regime_table())}
  </div>
  <div class="outcome">
   {detail_head("outcomes-coverage", "Interval coverage with width")}
@@ -2795,6 +2795,8 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
     archive = lambda anchor, html_text: f'<a class="quiet archive-route" href="#{anchor}">{html_text}</a>'  # noqa: E731
     space = lambda text: f'<p><a class="quiet external" href="{attr(C["space_url"])}">{text}</a></p>'  # noqa: E731
     chapter = lambda anchor, text: f'<p><a class="quiet" href="#{anchor}">{_structural_versions(text)}</a></p>'  # noqa: E731
+    # A8 (PRES-6): the method explanations link to the canonical result graphics, in Product results.
+    results = chapter
     freeze = Audit("The freeze manifest", "docs/track-b/evidence/cp-17c/freeze-manifest.json", "evidence/cp-17c")
     return (
         Topic("product-data", "Data and the information cutoff", "Data and the information cutoff", ("1",),
@@ -2802,6 +2804,7 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
                                         "v6.product.windows", "product.data.preprocessing"))),
         Topic("product-regimes", "Price regimes and negative prices", "Price regimes and negative prices", ("2",),
               block("v6.product.regimes.periods") + block("v6.product.regimes")
+              + results("outcomes-regimes", "v6's error in each regime, in Product results")
               + f'<p>{archive("regimes", "Yearly price levels and negative-hour counts, in the archived report")}</p>'),
         Topic("product-inputs", "The inputs it uses, and why", "The inputs it uses, and why", ("3", "3b"),
               block("v6.product.inputs") + block("product.inputs.seasonal")
@@ -2809,7 +2812,8 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
         Topic("product-validation", "How it was selected and will be tested",
               "How it was selected and how it will be tested", ("4",), block("v6.product.validation")),
         Topic("product-results", "Measured results: development data", "Measured results", ("5",),
-              block("v6.product.results") + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
+              block("v6.product.results") + results("outcomes", "v6's results on every development day, in Product results")
+              + chapter("v6-chart-title", "v6's comparison chart, in its chapter")),
         Topic("product-attribution", "What drives its forecasts: live product", "What drives its forecasts",
               ("6",), block("v6.product.attribution") + space("The Explainability view, on the live product"),
               disposition="not evaluated"),
@@ -2817,9 +2821,12 @@ def v6_product_topics(C, payload) -> tuple[Topic, ...]:
               block("v6.product.importance") + space("The Features view, on the live product"),
               disposition="not evaluated"),
         Topic("product-failures", "Where it fails", "Where it fails", ("8",),
-              block("v6.product.failures") + chapter("v6-per-period-differences", "Each test period, in the v6 chapter")),
+              block("v6.product.failures") + results("outcomes-time", "v6's error month by month, in Product results")
+              + chapter("v6-per-period-differences", "Each test period, in the v6 chapter")),
         Topic("product-reliability", "Interval reliability", "How reliable its intervals are", ("9",),
-              block("v6.product.reliability") + chapter("v6-coverage", "How often its intervals held, in the v6 chapter")),
+              block("v6.product.reliability")
+              + results("outcomes-coverage", "Coverage with width at each level, every development day, in Product results")
+              + chapter("v6-coverage", "How often its intervals held, in the v6 chapter")),
         Topic("product-forecast", "Read a forecast: live product", "Read a forecast", ("10",),
               block("v6.product.forecast") + space("Open the live product")),
         Topic("product-limitations", "Limitations", "Limitations", ("11",), block("v6.product.limits")),

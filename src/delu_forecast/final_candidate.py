@@ -302,6 +302,8 @@ PRODUCT_INPUTS = {
     "reports/cp28/results/daily-losses.parquet": "7e9c972f24a99627fd7e9ed8fc80ecffbf4b50be55426805d5b574a6ede9b85d",
     "reports/cp28/forecast/hourly.parquet": "f5cb02a19236edd20c182c2874a5d59628652e6838fe5745aa6ffacf3f53f638",
     "reports/ddnn2/attempt-1/predictions.parquet": "9d3f539fa78e34e65cb495a0e79f8044731e33d5b2d9e95d110a1ce886a05cf9",
+    # §0's correction: CP-17-probe's committed attribution of v6's stored fits, summarized, never recomputed.
+    "reports/cp17-probe/native-reference.json": "f1decb8087de2abee65e32754e19b9c2a5d30cffdfa8aad1029be9bdc2df96ab",
 }
 #: P-all: every eligible development day CP-26 scored and CP-28 selected on.
 P_ALL = ("2020-12-29", "2026-09-06")
@@ -437,6 +439,53 @@ def product_bins(hours: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+#: The two development days CP-17-probe attributed (§0's correction), and the slot-matching tolerance in EUR/MWh.
+EXPLAIN_SOURCE, EXPLAIN_DAYS, EXPLAIN_TOLERANCE = "reports/cp17-probe/native-reference.json", ("2026-03-29", "2026-09-06"), 1e-9
+
+
+def product_explanation(root: Path) -> pd.DataFrame:
+    """§0's correction: CP-17-probe's committed group attribution of v6's stored fits, summarized per day and group.
+
+    Only delivered hours count: a model slot whose attributed full median equals the day's issued median, matched in
+    order (on 2026-03-29 slot 2, local 02:00, does not exist). Per group: the mean signed and mean absolute
+    contribution in EUR/MWh; a group the day's members do not use is marked unused, never zero. The baseline and the
+    issued medians' means are kept, and the signed means must bridge them (the attribution's efficiency)."""
+    from cp17.attribution import GROUPS
+
+    results = json.loads((root / EXPLAIN_SOURCE).read_text())["results"]
+    rows = []
+    for day in EXPLAIN_DAYS:
+        result = results[f"A1-{day}"]
+        a = result["attribution"]
+        full, base, phi = (np.asarray(a[k], float) for k in ("full_p50", "baseline_p50", "phi_eur"))
+        central = np.asarray(result["central"], float)
+        slots, j = [], 0
+        for value in central:
+            while j < len(full) and abs(full[j] - value) > EXPLAIN_TOLERANCE:
+                j += 1
+            if j == len(full):
+                raise ValueError(f"{day}: an issued hour matches no attributed slot")
+            slots.append(j)
+            j += 1
+        n = len(slots)
+        signed = {}
+        for group in GROUPS:
+            used = group in a["players"]
+            contribution = phi[a["players"].index(group), slots] if used else None
+            if used:
+                signed[group] = float(contribution.mean())
+            rows.append({"day": day, "hours": n, "kind": "group", "group": group, "used": used,
+                         "mean_phi_eur": signed.get(group, np.nan),
+                         "mean_abs_phi_eur": float(np.abs(contribution).mean()) if used else np.nan})
+        baseline, issued = float(base[slots].mean()), float(central.mean())
+        if abs(sum(signed.values()) - (issued - baseline)) > 1e-9:
+            raise ValueError(f"{day}: the group means do not bridge the baseline to the issued median")
+        for kind, value in (("baseline", baseline), ("issued", issued)):
+            rows.append({"day": day, "hours": n, "kind": kind, "group": "", "used": True, "mean_phi_eur": value,
+                         "mean_abs_phi_eur": np.nan})
+    return pd.DataFrame(rows)
+
+
 def product_build(root: Path = ROOT) -> dict[str, str]:
     inputs = _product_inputs(root)
     daily = _daily(root)
@@ -457,11 +506,14 @@ def product_build(root: Path = ROOT) -> dict[str, str]:
                       "replicates": BOOT_REPLICATES, "seed": BOOT_SEED,
                       "order": ["all"] + [n for n, _, _ in REGIMES], "interval": "percentile, 2.5% and 97.5%"},
         "chosen_days": chosen.to_dict(orient="records"),
+        "explanation": {"source": EXPLAIN_SOURCE, "days": list(EXPLAIN_DAYS),
+                        "method": "CP-17-probe's committed exact baseline Shapley over input groups, issued p50, "
+                                  "training-mean baseline; summarized over delivered hours, never recomputed"},
         "packet_rules": "docs/track-b/evidence/pres-6/publication-packet.md §0, committed before this computation",
     }
     return {"monthly.csv": csv(product_monthly(daily)), "regimes.csv": csv(product_regimes(daily)),
             "coverage.csv": csv(product_coverage(daily)), "days.csv": csv(day_rows),
-            "bins.csv": csv(product_bins(hours)),
+            "bins.csv": csv(product_bins(hours)), "explanation.csv": csv(product_explanation(root)),
             "summary.json": json.dumps(summary, indent=1, sort_keys=True, default=str) + "\n"}
 
 

@@ -71,7 +71,8 @@ SOURCES: dict[str, Source] = dict(
         _source("reports/pres6/product-results/coverage.csv", "evidence/pres-6", "74f9110fcb18c76301bc3bee72dd23700ee5c7dc"),
         _source("reports/pres6/product-results/days.csv", "evidence/pres-6", "1428e978dd07675d13ddef7896cf61eff0a52f35"),
         _source("reports/pres6/product-results/bins.csv", "evidence/pres-6", "056b32d5ddef7a95b187f69459e7a5dc01685ef1"),
-        _source("reports/pres6/product-results/summary.json", "evidence/pres-6", "8e53c0e246ac01bcb45472687522c54f77beb665"),
+        _source("reports/pres6/product-results/summary.json", "evidence/pres-6", "054db2a5306f48694fec3b2a256b3f53cd55a676"),
+        _source("reports/pres6/product-results/explanation.csv", "evidence/pres-6", "34baf44228e97d5c9ccd9d18c16220aaf922f533"),
         # PRES-5: A1 on v5's population (`delu_forecast.final_candidate`), committed by this publication
         _source("reports/pres5/a1-in-v5/metrics.csv", "evidence/pres-5", "26cadf08b9f93a61e755b34863224834801ee202"),
         _source("reports/pres5/a1-in-v5/uncertainty.csv", "evidence/pres-5", "8b89b728e9abd6effeb935d7d0f4bfbf7cc51972"),
@@ -420,6 +421,7 @@ POPULATIONS = {
     "cp26-every-day/crisis": "CP-26's 481 eligible days of the energy crisis, 2021-09-01 to 2022-12-31",
     "cp26-every-day/negative_prices": "CP-26's 1,341 eligible days from 2023-01-01, frequent negative prices",
     "pres6-p-v5": "the 358 days of v5's test periods 2 to 5 inside CP-26's days, with committed observed prices",
+    "pres6-explain-days": "the two development days CP-17-probe attributed, 2026-03-29 and 2026-09-06, delivered hours",
 }
 
 
@@ -1307,7 +1309,8 @@ def _checkpoint_records(prefix: str, checkpoint: str, rows: dict[str, str]) -> l
 # --------------------------------------------------------------------------- PRES-6: v6's product results
 
 PRES6_DIR = "reports/pres6/product-results"
-PRES6_ROWS = {name: f"{PRES6_DIR}/{name}.csv" for name in ("monthly", "regimes", "coverage", "days", "bins")}
+PRES6_ROWS = {name: f"{PRES6_DIR}/{name}.csv" for name in ("monthly", "regimes", "coverage", "days", "bins",
+                                                             "explanation")}
 PRES6_SUMMARY = f"{PRES6_DIR}/summary.json"
 #: The regime means' intervals: the packet's §0 bootstrap, v6 and the naive on the same draws.
 PRES6_INTERVAL = Interval("paired non-circular moving-block bootstrap of the regime's mean daily loss (PRES-6)",
@@ -1316,7 +1319,7 @@ PRES6_REGIMES = {"all": ("cp26-every-day", CP26_WINDOW), "pre_crisis": ("cp26-ev
                  "crisis": ("cp26-every-day/crisis", ("2021-09-01", "2022-12-31")),
                  "negative_prices": ("cp26-every-day/negative_prices", ("2023-01-01", "2026-09-06"))}
 _PRES6_EUR = {"MAE", "WIS", "width_eur", "mean_p50", "mean_observed", "p50_low", "p50_high", "y_true",
-              "p025", "p10", "p25", "p50", "p75", "p90", "p975"}
+              "p025", "p10", "p25", "p50", "p75", "p90", "p975", "mean_phi_eur", "mean_abs_phi_eur"}
 
 
 def _pres6_unit(record: EvidenceRecord) -> str:
@@ -1381,6 +1384,21 @@ def _pres6_records() -> list[EvidenceRecord]:
             out.append(_jrec(f"pres6.chosen.{chosen['regime']}.{field}", "PRES-6", PRES6_SUMMARY,
                              f"chosen_days.{index}.{field}", unit=unit, precision=1 if unit == UNIT_EUR else 0,
                              population="pres6-p-v5", field=field, metric=field, window=CP26_WINDOW))
+    for _, row in _rows(PRES6_ROWS["explanation"]):
+        day, kind, group = row["day"], row["kind"], row["group"]
+        window = (day, day)
+        if kind == "group" and row["used"] == "True":
+            for field, name in (("mean_phi_eur", "mean"), ("mean_abs_phi_eur", "mean_abs")):
+                out.append(_prow(f"pres6.explain.{day}.{group}.{name}", PRES6_ROWS["explanation"],
+                                 {"day": day, "kind": kind, "group": group}, field, precision=1,
+                                 population="pres6-explain-days", window=window, metric="attribution"))
+        elif kind in ("baseline", "issued"):
+            out.append(_prow(f"pres6.explain.{day}.{kind}", PRES6_ROWS["explanation"], {"day": day, "kind": kind},
+                             "mean_phi_eur", precision=1, population="pres6-explain-days", window=window,
+                             metric=f"{kind}_p50"))
+            if kind == "issued":
+                out.append(_prow(f"pres6.explain.{day}.hours", PRES6_ROWS["explanation"], {"day": day, "kind": kind},
+                                 "hours", precision=0, population="pres6-explain-days", window=window, metric="hours"))
     for dotted, unit in (("p_all.days", UNIT_DAYS), ("p_all.hours", UNIT_HOURS), ("p_v5.days", UNIT_DAYS),
                          ("p_v5.hours", UNIT_HOURS)):
         out.append(_jrec(f"pres6.{dotted}", "PRES-6", PRES6_SUMMARY, dotted, unit=unit, precision=0,
