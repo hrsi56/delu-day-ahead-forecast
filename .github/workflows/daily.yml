@@ -521,8 +521,7 @@ jobs:
           [[ "${LEFT:-0}" =~ ^[0-9]+$ ]] || { echo "last: the number of links left" >&2; exit 2; }
           echo "a rehearsed link, $LEFT left"; sleep 30
           [ "${LEFT:-0}" -gt 0 ] || { echo "the rehearsed chain ends here"; exit 0; }
-          python3 src/cp18/chain.py next --repo "$GITHUB_REPOSITORY" --mode chain-dry-run --links "$((LEFT - 1))" \
-              --state "{\"left\": $((LEFT - 1))}"
+          python3 src/cp18/chain.py next --repo "$GITHUB_REPOSITORY" --mode chain-dry-run --links "$((LEFT - 1))"
 
   acquire:
     name: macos-26 acquisition before the cutoff (live)

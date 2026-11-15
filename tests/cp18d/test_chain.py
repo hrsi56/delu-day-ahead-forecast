@@ -275,3 +275,20 @@ def test_the_chain_and_the_gate_run_without_the_projects_environment():
     out = dict(line.split('=', 1) for line in done.stdout.strip().splitlines())
     assert out['action'] == 'none' and out['target_day'] == '2026-11-15'
     assert json.loads(out['state'])['now_utc'] == '2026-11-14T23:00:00Z'
+
+
+def test_only_the_workflows_declared_inputs_are_dispatched():
+    """The scratch rehearsal's finding (run 43735265261): an undeclared input (`links`) made GitHub answer 422."""
+    import yaml
+    declared = set(yaml.safe_load((ROOT / '.github/workflows/daily.yml').read_text())
+                   .get('on', {}).get('workflow_dispatch', {}).get('inputs', {}) or
+                   yaml.safe_load((ROOT / '.github/workflows/daily.yml').read_text())[True]['workflow_dispatch']['inputs'])
+    for state, mode in (({'action': 'run'}, 'chain'), ('2', 'chain-dry-run')):
+        api = FakeApi()
+        C.dispatch(api, state, mode=mode, sleep=lambda s: None)
+        (post,) = [c for c in api.calls if c[0] == 'POST']
+        assert set(post[2]['inputs']) <= declared and post[2]['inputs']['mode'] == mode
+    assert [c for c in FakeApi().calls] == []
+    api = FakeApi()
+    C.dispatch(api, '2', mode='chain-dry-run', sleep=lambda s: None)
+    assert api.calls[-1][2]['inputs'] == {'mode': 'chain-dry-run', 'last': '2'}

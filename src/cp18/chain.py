@@ -166,7 +166,11 @@ class Api:
             with urllib.request.urlopen(req, timeout=60) as resp:
                 data = resp.read()
         except urllib.error.HTTPError as exc:
-            raise RuntimeError(f'GitHub API {method} {path}: HTTP {exc.code}') from None
+            try:                                   # GitHub's own message (never the request's headers or token)
+                message = json.loads(exc.read() or b'{}').get('message') or ''
+            except Exception:  # noqa: BLE001 - the status alone then
+                message = ''
+            raise RuntimeError(f'GitHub API {method} {path}: HTTP {exc.code}' + (f' ({message})' if message else '')) from None
         return json.loads(data) if data else None
 
 
@@ -182,10 +186,12 @@ def alive(api, exclude: int | None = None) -> list[dict]:
     return out
 
 
-def dispatch(api, state: dict, ref: str = 'main', mode: str = 'chain', extra: dict | None = None,
-             attempts: int = 3, sleep=time.sleep) -> dict:
-    """The next link: `workflow_dispatch` of this workflow, with this link's state. Retried; never more than one."""
-    body = {'ref': ref, 'inputs': {'mode': mode, 'last': json.dumps(state, sort_keys=True), **(extra or {})}}
+def dispatch(api, state, ref: str = 'main', mode: str = 'chain', attempts: int = 3, sleep=time.sleep) -> dict:
+    """The next link: `workflow_dispatch` of this workflow, with this link's state in its one input `last` (a dict as
+    JSON; the rehearsal's count of links left as text). Only the workflow's declared inputs are sent. Retried; never
+    more than one."""
+    last = state if isinstance(state, str) else json.dumps(state, sort_keys=True)
+    body = {'ref': ref, 'inputs': {'mode': mode, 'last': last}}
     errors = []
     for i in range(attempts):
         try:
@@ -265,12 +271,14 @@ def main(argv=None) -> int:
         _outputs(value)
         return 0
     api = Api(args.repo)
-    if args.cmd == 'next':
+    if args.cmd == 'next' and args.links:
+        value = dispatch(api, args.links, args.ref, args.mode)            # the rehearsal: `last` = the links left
+    elif args.cmd == 'next':
         state = json.loads(args.state) if args.state else link_state(
             args.action, args.day, {'tick': args.tick_result, 'acquire': args.acquire_result, 'run': args.run_result},
             args.shown, args.stopped)
         print(json.dumps({'state': state}, sort_keys=True))
-        value = dispatch(api, state, args.ref, args.mode, {'links': args.links} if args.links else None)
+        value = dispatch(api, state, args.ref, args.mode)
     else:
         value = seed(api, args.ref)
     print(json.dumps(value, sort_keys=True))
