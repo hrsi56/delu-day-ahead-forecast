@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from datetime import date, datetime, timedelta, timezone
 import json
+from pathlib import Path
 
 import pytest
 
@@ -157,3 +158,20 @@ def test_negative_control_an_issued_forecast_replaced_is_refused(tmp_path):
     path.write_text(json.dumps(art))
     with pytest.raises(StoreRefused):
         LiveStore(repo / STORE_PATH).verify()
+
+
+def test_the_after_cutoff_fixture_is_a_verified_store_copy_and_refuses_a_checkout(tmp_path):
+    import shutil
+    from cp18d.fixture_after_cutoff import FIXTURE, relabel
+    root = Path(__file__).resolve().parents[2]
+    shutil.copytree(root / 'live/store', tmp_path / 'live/store')
+    relabel(tmp_path / 'live', '2026-11-14', '2026-11-13T10:47:12Z')
+    live = live_record(tmp_path / 'live')
+    shown = {i['day']: i for i in live['issued']}
+    assert shown['2026-11-14']['input_class'] == inputclass.AFTER
+    assert shown['2026-11-14']['load_forecast_fetched_utc'] == '2026-11-13T10:47:12+00:00'
+    assert shown['2026-11-15']['input_class'] == inputclass.BEFORE
+    rec = json.loads((tmp_path / 'live/store/issued/2026-11-14/record.json').read_text())
+    assert rec['fixture'] == FIXTURE
+    with pytest.raises(SystemExit, match='refused'):
+        relabel(root / 'live', '2026-11-14', '2026-11-13T10:47:12Z')
