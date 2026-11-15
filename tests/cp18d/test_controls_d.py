@@ -122,6 +122,12 @@ def test_negative_control_a_label_its_evidence_contradicts_is_refused():
                 {**inputclass.label(inputclass.AFTER, '2026-11-04T11:00:00Z'), 'input_class_text': 'late'}):
         with pytest.raises(inputclass.LabelMissing):
             inputclass.of_record({**rec, **bad})
+    # a copy fetched after the issuance that used it is refused (the run fetches, then builds)
+    with pytest.raises(inputclass.LabelMissing, match='after the issuance'):
+        inputclass.of_record({**rec, 'issuance_started_utc': '2026-11-04T10:59:00+00:00',
+                              **inputclass.label(inputclass.AFTER, '2026-11-04T11:00:00Z')})
+    assert inputclass.of_record({**rec, 'issuance_started_utc': '2026-11-04T11:05:00+00:00',
+                                 **inputclass.label(inputclass.AFTER, '2026-11-04T11:00:00Z')})
     rec['inputs']['availability']['records'] = [dict(late, fetched_utc='2026-11-04T09:00:00Z')]
     with pytest.raises(inputclass.LabelMissing, match='before the cutoff'):
         inputclass.of_record({**rec, **inputclass.label(inputclass.AFTER, '2026-11-04T09:00:00Z')})
@@ -165,13 +171,13 @@ def test_the_after_cutoff_fixture_is_a_verified_store_copy_and_refuses_a_checkou
     from cp18d.fixture_after_cutoff import FIXTURE, relabel
     root = Path(__file__).resolve().parents[2]
     shutil.copytree(root / 'live/store', tmp_path / 'live/store')
-    relabel(tmp_path / 'live', '2026-11-14', '2026-11-13T10:47:12Z')
+    relabel(tmp_path / 'live', '2026-11-14', '2026-11-13T10:21:07Z')
     live = live_record(tmp_path / 'live')
     shown = {i['day']: i for i in live['issued']}
     assert shown['2026-11-14']['input_class'] == inputclass.AFTER
-    assert shown['2026-11-14']['load_forecast_fetched_utc'] == '2026-11-13T10:47:12+00:00'
+    assert shown['2026-11-14']['load_forecast_fetched_utc'] == '2026-11-13T10:21:07+00:00'
     assert shown['2026-11-15']['input_class'] == inputclass.BEFORE
     rec = json.loads((tmp_path / 'live/store/issued/2026-11-14/record.json').read_text())
     assert rec['fixture'] == FIXTURE
     with pytest.raises(SystemExit, match='refused'):
-        relabel(root / 'live', '2026-11-14', '2026-11-13T10:47:12Z')
+        relabel(root / 'live', '2026-11-14', '2026-11-13T10:21:07Z')

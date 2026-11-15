@@ -108,6 +108,14 @@ def _check_evidence(record: dict, value: dict) -> None:
         raise LabelMissing(f"{record.get('day')}: a copy fetched before the cutoff is not a copy fetched after it")
 
 
+def _check_issuance(record: dict, value: dict) -> None:
+    """A copy fetched after the cutoff was fetched before the issuance that used it (the run fetches, then builds)."""
+    started = _instant(record.get('issuance_started_utc'))
+    fetched = _instant(value.get('load_forecast_fetched_utc'))
+    if started is not None and fetched is not None and fetched > started:
+        raise LabelMissing(f"{record.get('day')}: the copy's retrieval time is after the issuance that used it")
+
+
 def of_record(record: dict) -> dict:
     """The class of a day record (an issuance's `record.json`, or the pipeline's record before it is written)."""
     schema = record.get('schema')
@@ -125,6 +133,7 @@ def of_record(record: dict) -> dict:
     if record['input_class_text'] != value['input_class_text']:
         raise LabelMissing(f"{record.get('day')}: the label's text is not its class's")
     _check_evidence(record, value)
+    _check_issuance(record, value)
     return value
 
 

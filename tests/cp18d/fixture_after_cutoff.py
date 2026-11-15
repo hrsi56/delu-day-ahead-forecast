@@ -10,7 +10,7 @@ CP-17c's own formula (`cp17c.store._canonical`). The copy is used by tests and l
 it writes says so (`FIXTURE`).
 
     PYTHONPATH=src python tests/cp18d/fixture_after_cutoff.py --live <copy of live/> --day 2026-11-14 \
-        --fetched 2026-11-13T10:47:12Z
+        --fetched 2026-11-13T10:21:07Z
 """
 from __future__ import annotations
 
