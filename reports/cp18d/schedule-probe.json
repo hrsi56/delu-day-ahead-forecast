@@ -1,14 +1,21 @@
 {
- "collected_utc": "2026-11-15T02:35:28Z",
+ "collected_utc": "2026-11-15T11:25:42Z",
  "collections": [
   {
    "collection_finished_utc": "2026-11-15T02:35:31Z",
    "collection_started_utc": "2026-11-15T02:35:28Z",
    "runs": 1
+  },
+  {
+   "collection_finished_utc": "2026-11-15T11:25:47Z",
+   "collection_started_utc": "2026-11-15T11:25:42Z",
+   "runs": 5
   }
  ],
- "days_with_a_run": [],
- "grace_minutes": 60.0,
+ "days_with_a_run": [
+  "2026-11-15"
+ ],
+ "grace_minutes": 1440.0,
  "lines": [
   "7 0 * * *",
   "7 1 * * *",
@@ -21,57 +28,178 @@
   "7 8 * * *",
   "7 9 * * *"
  ],
- "method": "Source: the raw collections listed under \"collections\", each made with GitHub's CLI read calls only (gh run list and GET gh api; nothing was written to GitHub): gh run list --repo hrsi56/delu-day-ahead-forecast --workflow schedule-probe.yml --json attempt,conclusion,createdAt,databaseId,displayTitle,event,headBranch,headSha,name,number,startedAt,status,updatedAt,url,workflowDatabaseId,workflowName --limit 1000; gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/<id>/jobs?per_page=100 for each listed run; gh api repos/hrsi56/delu-day-ahead-forecast/actions/workflows/schedule-probe.yml (the workflow's own record). Scheduled runs only (event schedule). Each run's cron line is read from its name (probe <cron line>). Its cron instant is the latest instant at or before the run's createdAt that the line names (minute M of hour H, UTC), so a run created after midnight for the previous evening's line belongs to the previous day. Scheduler delay = run createdAt - cron instant, in seconds. Queue = job started_at - run createdAt, in seconds, per runner label (the job's labels); a job not yet started has none. Missed: the probe days run from the first scheduled run's cron day through the collection day (UTC; the collection time is the latest collection's start); every cron instant of the probed lines on those days that is past at the collection, after the workflow's creation, with no scheduled run is missed, except one less than 60 minutes before the collection, listed as pending (its run may still be created). Instants between the workflow's creation and the first probe day with no run are listed apart (missed_before_first_run). Per cron hour: days observed (instants past at the collection on the probe days), runs, missed, pending, delay min / median / p90 (nearest rank) / max, queue min / median / max per runner label, and the days that had a run. Raw files merge by run id, the latest collection's copy winning.",
+ "method": "Source: the raw collections listed under \"collections\", each made with GitHub's CLI read calls only (gh run list and GET gh api; nothing was written to GitHub): gh run list --repo hrsi56/delu-day-ahead-forecast --workflow schedule-probe.yml --json attempt,conclusion,createdAt,databaseId,displayTitle,event,headBranch,headSha,name,number,startedAt,status,updatedAt,url,workflowDatabaseId,workflowName --limit 1000; gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/<id>/jobs?per_page=100 for each listed run; gh api repos/hrsi56/delu-day-ahead-forecast/actions/workflows/schedule-probe.yml (the workflow's own record). Scheduled runs only (event schedule). Each run's cron line is read from its name (probe <cron line>). Its cron instant is the latest instant at or before the run's createdAt that the line names (minute M of hour H, UTC), so a run created after midnight for the previous evening's line belongs to the previous day. Scheduler delay = run createdAt - cron instant, in seconds. Queue = job started_at - run createdAt, in seconds, per runner label (the job's labels); a job not yet started has none. Missed: the probe days run from the first scheduled run's cron day through the collection day (UTC; the collection time is the latest collection's start); every cron instant of the probed lines on those days that is past at the collection, after the workflow's creation, with no scheduled run is missed, except one less than 1440 minutes before the collection, listed as pending (its run may still be created). Instants between the workflow's creation and the first probe day with no run are listed apart (missed_before_first_run). Per cron hour: days observed (instants past at the collection on the probe days), runs, missed, pending, delay min / median / p90 (nearest rank) / max, queue min / median / max per runner label, and the days that had a run. Raw files merge by run id, the latest collection's copy winning.",
  "missed": [],
- "missed_before_first_run": [
-  {
-   "cron": "7 0 * * *",
-   "cron_utc": "2026-11-15T00:07:00Z"
-  },
-  {
-   "cron": "7 1 * * *",
-   "cron_utc": "2026-11-15T01:07:00Z"
-  }
- ],
+ "missed_before_first_run": [],
  "pending": [
   {
-   "cron": "7 2 * * *",
-   "cron_utc": "2026-11-15T02:07:00Z"
+   "cron": "7 4 * * *",
+   "cron_utc": "2026-11-15T04:07:00Z"
+  },
+  {
+   "cron": "7 5 * * *",
+   "cron_utc": "2026-11-15T05:07:00Z"
+  },
+  {
+   "cron": "7 6 * * *",
+   "cron_utc": "2026-11-15T06:07:00Z"
+  },
+  {
+   "cron": "7 7 * * *",
+   "cron_utc": "2026-11-15T07:07:00Z"
+  },
+  {
+   "cron": "7 8 * * *",
+   "cron_utc": "2026-11-15T08:07:00Z"
+  },
+  {
+   "cron": "7 9 * * *",
+   "cron_utc": "2026-11-15T09:07:00Z"
   }
  ],
  "per_hour": [
   {
    "cron": "7 0 * * *",
-   "days_observed": 0,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 1,
+   "days_with_a_run": [
+    "2026-11-15"
+   ],
+   "delay_seconds": {
+    "max": 22270.0,
+    "median": 22270.0,
+    "min": 22270.0,
+    "n": 1,
+    "p90": 22270.0
+   },
    "hour_utc": 0,
    "minute": 7,
    "missed": 0,
-   "missed_before_first_run": 1,
+   "missed_before_first_run": 0,
    "pending": 0,
-   "queue_seconds": {},
-   "runs": 0
+   "queue_seconds": {
+    "macos-26": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 1
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 1
+    }
+   },
+   "runs": 1
   },
   {
    "cron": "7 1 * * *",
-   "days_observed": 0,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 1,
+   "days_with_a_run": [
+    "2026-11-15"
+   ],
+   "delay_seconds": {
+    "max": 23869.0,
+    "median": 23869.0,
+    "min": 23869.0,
+    "n": 1,
+    "p90": 23869.0
+   },
    "hour_utc": 1,
    "minute": 7,
    "missed": 0,
-   "missed_before_first_run": 1,
+   "missed_before_first_run": 0,
    "pending": 0,
-   "queue_seconds": {},
-   "runs": 0
+   "queue_seconds": {
+    "macos-26": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 1
+    },
+    "ubuntu-latest": {
+     "max": 2.0,
+     "median": 2.0,
+     "min": 2.0,
+     "n": 1
+    }
+   },
+   "runs": 1
   },
   {
    "cron": "7 2 * * *",
-   "days_observed": 0,
+   "days_observed": 1,
+   "days_with_a_run": [
+    "2026-11-15"
+   ],
+   "delay_seconds": {
+    "max": 25593.0,
+    "median": 25593.0,
+    "min": 25593.0,
+    "n": 1,
+    "p90": 25593.0
+   },
+   "hour_utc": 2,
+   "minute": 7,
+   "missed": 0,
+   "missed_before_first_run": 0,
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 1
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 1
+    }
+   },
+   "runs": 1
+  },
+  {
+   "cron": "7 3 * * *",
+   "days_observed": 1,
+   "days_with_a_run": [
+    "2026-11-15"
+   ],
+   "delay_seconds": {
+    "max": 27373.0,
+    "median": 27373.0,
+    "min": 27373.0,
+    "n": 1,
+    "p90": 27373.0
+   },
+   "hour_utc": 3,
+   "minute": 7,
+   "missed": 0,
+   "missed_before_first_run": 0,
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 4.0,
+     "median": 4.0,
+     "min": 4.0,
+     "n": 1
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 1
+    }
+   },
+   "runs": 1
+  },
+  {
+   "cron": "7 4 * * *",
+   "days_observed": 1,
    "days_with_a_run": [],
    "delay_seconds": null,
-   "hour_utc": 2,
+   "hour_utc": 4,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
@@ -80,101 +208,202 @@
    "runs": 0
   },
   {
-   "cron": "7 3 * * *",
-   "days_observed": 0,
-   "days_with_a_run": [],
-   "delay_seconds": null,
-   "hour_utc": 3,
-   "minute": 7,
-   "missed": 0,
-   "missed_before_first_run": 0,
-   "pending": 0,
-   "queue_seconds": {},
-   "runs": 0
-  },
-  {
-   "cron": "7 4 * * *",
-   "days_observed": 0,
-   "days_with_a_run": [],
-   "delay_seconds": null,
-   "hour_utc": 4,
-   "minute": 7,
-   "missed": 0,
-   "missed_before_first_run": 0,
-   "pending": 0,
-   "queue_seconds": {},
-   "runs": 0
-  },
-  {
    "cron": "7 5 * * *",
-   "days_observed": 0,
+   "days_observed": 1,
    "days_with_a_run": [],
    "delay_seconds": null,
    "hour_utc": 5,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 0,
+   "pending": 1,
    "queue_seconds": {},
    "runs": 0
   },
   {
    "cron": "7 6 * * *",
-   "days_observed": 0,
+   "days_observed": 1,
    "days_with_a_run": [],
    "delay_seconds": null,
    "hour_utc": 6,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 0,
+   "pending": 1,
    "queue_seconds": {},
    "runs": 0
   },
   {
    "cron": "7 7 * * *",
-   "days_observed": 0,
+   "days_observed": 1,
    "days_with_a_run": [],
    "delay_seconds": null,
    "hour_utc": 7,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 0,
+   "pending": 1,
    "queue_seconds": {},
    "runs": 0
   },
   {
    "cron": "7 8 * * *",
-   "days_observed": 0,
+   "days_observed": 1,
    "days_with_a_run": [],
    "delay_seconds": null,
    "hour_utc": 8,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 0,
+   "pending": 1,
    "queue_seconds": {},
    "runs": 0
   },
   {
    "cron": "7 9 * * *",
-   "days_observed": 0,
+   "days_observed": 1,
    "days_with_a_run": [],
    "delay_seconds": null,
    "hour_utc": 9,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 0,
+   "pending": 1,
    "queue_seconds": {},
    "runs": 0
   }
  ],
- "probe_days": [],
+ "probe_days": [
+  "2026-11-15"
+ ],
  "repo": "hrsi56/delu-day-ahead-forecast",
- "runs": [],
- "scheduled_runs": 0,
+ "runs": [
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T06:18:10Z",
+   "cron": "7 0 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T00:07:00Z",
+   "delay_seconds": 22270.0,
+   "hour": 0,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132722946339,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T06:18:13Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132722946138,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T06:18:13Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43684811253,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T07:44:49Z",
+   "cron": "7 1 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T01:07:00Z",
+   "delay_seconds": 23869.0,
+   "hour": 1,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132742351378,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T07:44:52Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132742351741,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T07:44:51Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43691305160,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T09:13:33Z",
+   "cron": "7 2 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T02:07:00Z",
+   "delay_seconds": 25593.0,
+   "hour": 2,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132763304703,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T09:13:36Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132763304908,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T09:13:36Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43698203520,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T10:43:13Z",
+   "cron": "7 3 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T03:07:00Z",
+   "delay_seconds": 27373.0,
+   "hour": 3,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132785374402,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-15T10:43:17Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132785374202,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T10:43:16Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43705434118,
+   "status": "completed"
+  }
+ ],
+ "scheduled_runs": 4,
  "schema": "cp18d-schedule-probe-v1",
  "skipped": [
   {

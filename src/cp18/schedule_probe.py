@@ -3,7 +3,7 @@ long each runner then queues, and which scheduled starts never came.
 
     python -m cp18.schedule_probe collect --repo hrsi56/delu-day-ahead-forecast --workflow schedule-probe.yml \\
         --out <raw.json>
-    python -m cp18.schedule_probe measure --raw <raw.json> [--raw ...] --out <measurement.json> [--grace-minutes 60]
+    python -m cp18.schedule_probe measure --raw <raw.json> [--raw ...] --out <measurement.json> [--grace-minutes 1440]
 
 **collect** reads only, through GitHub's CLI: `gh run list --json <fields> --limit 1000` for the workflow, then each
 run's jobs (`gh api repos/<repo>/actions/runs/<id>/jobs?per_page=100`) and the workflow's own record
@@ -23,8 +23,9 @@ unchanged, with the collection's start and end time (UTC) and the exact commands
   cron instant of the probed lines on those days that is past at the collection (and after the workflow's creation,
   when its record is known), with no scheduled run, is missed. The probed lines are the runs' own, and any given with
   `--line` or read from `--workflow-file` (so a line that never fired is still counted).
-  An instant less than `--grace-minutes` before the collection (default 60) is listed as pending instead: its run may
-  still be created. With the workflow's own record, the instants between its creation and the first probe day with no
+  An instant less than `--grace-minutes` before the collection (default 1440, a day: on 2026-11-15 this repository's
+  runs were created 6 to 8 hours after their cron time, so a shorter grace would count delayed runs as missed) is
+  listed as pending instead: its run may still be created. With the workflow's own record, the instants between its creation and the first probe day with no
   run are listed apart, as missed before the first scheduled run.
 - **Per cron hour:** the days observed, the runs, the missed starts, the delay's minimum, median, 90th percentile
   (nearest rank) and maximum, and each runner's queue minimum, median and maximum, with the days that had a run.
@@ -189,7 +190,7 @@ def measure_runs(merged: dict) -> tuple[list[dict], list[dict]]:
     return measured, skipped
 
 
-def measure(raws: list[dict], *, grace_minutes: float = 60.0, lines: list[str] | None = None) -> dict:
+def measure(raws: list[dict], *, grace_minutes: float = 1440.0, lines: list[str] | None = None) -> dict:
     merged = merge(raws)
     collected = merged['collected']
     runs, skipped = measure_runs(merged)
@@ -301,7 +302,7 @@ def parser() -> argparse.ArgumentParser:
     c.add_argument('--out', required=True, type=Path)
     m = sub.add_parser('measure', help='the delays, queues and missed starts from raw files (no network)')
     m.add_argument('--raw', action='append', required=True, type=Path)
-    m.add_argument('--grace-minutes', type=float, default=60.0)
+    m.add_argument('--grace-minutes', type=float, default=1440.0)
     m.add_argument('--line', action='append', default=[], help='a probed cron line to expect even if no run carries it')
     m.add_argument('--workflow-file', type=Path, help="the probe's workflow file: its cron lines are the probed lines")
     m.add_argument('--out', required=True, type=Path)
