@@ -104,6 +104,6 @@ apart) and the sleep before its start (600 s); the chain's self-dispatch.
   with the copy after the cutoff: no live day has one yet. It never touches a checkout's `live/`, says so in every file it
   writes, and re-chains the copy's ledger with CP-17c's own formula.
 - **Not changed, by the brief's allowed paths:** the report's and the root README's "runs ... daily" sentence; the
-  development bundle's bytes (CP-18b's evidence) stay reproducible (the label and the sets are added only where the
-  live store or a CP-18d record carries them, and never into the bundle's files).
+  development bundle's bytes (CP-18b's evidence) stay reproducible: the label and the sets are never written into the
+  bundle's files.
 - **Usage-limit pauses:** three, recorded in the Lead's ledger with what was running.
