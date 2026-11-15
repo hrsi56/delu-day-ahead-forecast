@@ -221,3 +221,23 @@ written to MLflow. The pin check before the edit: no committed file cites the ma
 | The full default suite in a clean worktree at `7b7727ef`, after CI's browser-payload build | 3,469 passed, 17 skipped, 0 failed (27 min); the worktree clean after | local run, 21:13–21:41 UTC. The commits after it change only the report's wording and add CP-29's two positive controls; `tests/cp29` passes at the candidate |
 
 The machine-hours: ≤ 1.1 of the 4-hour ceiling, one worker at a time (`.local/artifacts/cp-29/ledger.md`).
+
+## §4. The Integration review and its observations
+
+**Integration review 1** (`integration.md`): PASS at `a04f3407`. It reproduced every record byte for byte, re-solved all
+26,964 rows with an independently built programme, and re-derived every summary and interval. Its observations, none
+blocking, with their dispositions:
+
+1. **A missing cleared-price row:** the code would solve the day on its remaining hours instead of not trading it.
+   This cannot occur with the pinned inputs, which hold every hour of every day. Proposed: fix it in the round that
+   applies the contract to the live record.
+2. **Near-ties in the integer stage (the €1e-4 slack):** on one row (2025-07-29, risk-aware variant, wear €0) the
+   tie-break gave up €5.9e-5 of forecast value and €3.23 of realized profit. One sensitivity cell moves: 353,809
+   against 353,813 EUR, the same share. §0's "nothing is lost" holds only within that slack.
+3. **Wording:** §0's cause for v6's 33 missing days also covers the second day after each clock change; the count is
+   right.
+4. **Doing nothing,** the contract's zero reference, is not a row in the report. Its profit is zero by definition.
+5. **The brief said the snapshot holds later days;** the pinned file ends at 2026-09-06.
+6. **O57's check named `tests/test_30`;** the file changed was `tests/test_29`. No committed file cites its earlier
+   bytes, which the review confirmed.
+7. **O57–O59** are recorded here as issued.
