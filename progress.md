@@ -386,6 +386,8 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
   days the battery earned 89.5% of perfect foresight's profit with v6's forecasts and 76.6% with the naive's
   (v6 − naive +37,077 EUR [+32,323, +42,311]); v6 and v5 are level on v5's days. Simulated, development,
   post-selection.
+- **PRES-7 issued on 2026-11-16** (brief `b6a45b60…`; Session Log): the profit chart in Business insights, decision
+  30 (no page limit), and PRES-6's two follow-ups (the phone axis and the glossary pass).
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1187,6 +1189,14 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **PRES-7 issued, 2026-11-16** (brief `b6a45b6002969c238547938661841e74f7b44f343fc60e3a56ced02879451175`;
+  canonical copy `.local/artifacts/pres-7/issued-brief.md`).
+  - **What it does:** Business insights shows CP-29's cumulative profit chart (v6, the naive, perfect foresight,
+    doing nothing at zero) with its shares, losses, sensitivity, regimes and paired intervals, labelled simulated,
+    development, post-selection; the gap sentence is replaced. Decision 30 removes the page-size test (PUBLISH_RULES
+    stays pinned by CP-26's harness; decision 30 supersedes its budget sentence). O51's phone axis and glossary pass.
+  - **Ceilings:** about 14 active hours, 10 local machine-hours and 4 workers. It runs beside CP-18d.
 
 - **CP-29 landed, 2026-11-16** (`land/cp-29` `ed18d219`, evidence tip `d253482f`;
   [landing record](docs/track-b/cp-29-landing-2026-11-16.md)).
