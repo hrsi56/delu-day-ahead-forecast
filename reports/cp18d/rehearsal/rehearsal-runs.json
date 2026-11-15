@@ -1,4 +1,60 @@
 {
+ "chain_rehearsal": {
+  "result": "one chain survived (43735995024 cancelled at 16:32:29Z); 4 links, each created within seconds of the last",
+  "runs": [
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:31:51Z",
+    "databaseId": 43735984719,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:32:30Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735984719"
+   },
+   {
+    "conclusion": "cancelled",
+    "createdAt": "2026-11-15T16:31:58Z",
+    "databaseId": 43735995024,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:32:29Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735995024"
+   },
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:32:27Z",
+    "databaseId": 43736042543,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:33:08Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43736042543"
+   },
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:33:06Z",
+    "databaseId": 43736103411,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:33:46Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43736103411"
+   },
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:33:43Z",
+    "databaseId": 43736164748,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:34:24Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43736164748"
+   }
+  ],
+  "scenario": "two chains dispatched 7 s apart (chain-dry-run, last=3 each) in one concurrency group: the first runs, the second waits pending; when the first link dispatches its successor, the newer pending run cancels the older, so one chain survives; each link dispatches the next through workflow_dispatch with the job's own token until no link is left"
+ },
  "pushes": [
   {
    "range": "7783a6e..249d155",
@@ -9,6 +65,11 @@
    "range": "249d155..42a7031",
    "record": "scratch-tree-f375f99a.json",
    "tree_from": "f375f99a"
+  },
+  {
+   "range": "5444d13..1a1c699",
+   "record": "scratch-tree-56d76de7.json",
+   "tree_from": "56d76de7"
   }
  ],
  "repository": "hrsi56/delu-pipeline-dryrun (public scratch; fake credentials only; development days only)",
@@ -262,6 +323,30 @@
    "scenario": "the sleep before the start, then the acquisition (an event at simulated 03:20Z; start 03:30Z; published 8 min after the acquisition starts)",
    "updatedAt": "2026-11-15T12:03:26Z",
    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43708849112"
+  },
+  {
+   "conclusion": "failure",
+   "createdAt": "2026-11-15T16:24:07Z",
+   "databaseId": 43735265261,
+   "displayTitle": "daily chain-dry-run",
+   "event": "workflow_dispatch",
+   "finding": "HTTP 422 on the next link's dispatch: the rehearsal sent an input the workflow does not declare (links); fixed at 56d76de7 (only declared inputs; the count in last)",
+   "headSha": "5444d1312d785c3fb5b6f86c5c5b0f21c71f3114",
+   "scenario": "two rehearsed chains (3 links each) from the tree of 7631fa44",
+   "updatedAt": "2026-11-15T16:27:50Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735265261"
+  },
+  {
+   "conclusion": "failure",
+   "createdAt": "2026-11-15T16:24:13Z",
+   "databaseId": 43735273951,
+   "displayTitle": "daily chain-dry-run",
+   "event": "workflow_dispatch",
+   "finding": "HTTP 422 on the next link's dispatch: the rehearsal sent an input the workflow does not declare (links); fixed at 56d76de7 (only declared inputs; the count in last)",
+   "headSha": "5444d1312d785c3fb5b6f86c5c5b0f21c71f3114",
+   "scenario": "two rehearsed chains (3 links each) from the tree of 7631fa44",
+   "updatedAt": "2026-11-15T16:31:33Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735273951"
   }
  ],
  "scans_before_each_push": "scripts/leak_scan.py tree clean; the commit and pre-push hooks (secret guard by value, leak scan) passed",
