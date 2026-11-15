@@ -18,10 +18,11 @@ about an hour (`cp18.live.acquire`).
 4. the archive day published to `main` through the claim (a data-only commit of `live/inputs/`), whatever was found:
    a retrieval is evidence either way.
 
-Exit: 0 D's load forecast is shown before its cutoff and published; 1 it is not, by this acquisition (a later start
-may still show it; otherwise the run after the cutoff issues D with the load forecast fetched after the cutoff,
-labelled so: the Owner's decision 31, CP-18d); 2 refused (the claim or the publication). An exception never escapes:
-it is the record's outcome.
+Exit: 0 D's load forecast is shown before its cutoff and published, or this start reached its own stop-by with the
+cutoff still ahead and published what it found (a hand-over: the next start continues); 1 it is not shown by the
+cutoff's margin (the run after the cutoff then issues D with the load forecast fetched after the cutoff, labelled so:
+the Owner's decision 31, CP-18d); 2 refused (the claim or the publication). An exception never escapes: it is the
+record's outcome.
 
 **Earlier starts (CP-18d).** The workflow starts the acquisition several times before the cutoff, each one waiting
 inside its job; the starts run one at a time (`daily.yml`'s concurrency), and a start that finds nothing missing
@@ -111,6 +112,12 @@ def run(root, *, claim, day: str | None = None, poll_seconds: int = 300, margin_
             elif record['load_forecast'].get('shown'):
                 record.update(outcome=f"{target}: the load forecast is shown before the cutoff "
                                       f"({record['load_forecast'].get('publication_utc')})", exit=0)
+            elif record['stopped'] and record['stopped'].startswith('its stop-by'):
+                record.update(outcome=f"{target}: not yet shown when this start reached its stop-by, with the cutoff "
+                                      f"still ahead ({record['load_forecast'].get('reason')}); what it found is "
+                                      'published, and the next scheduled start continues; without a copy before the '
+                                      'cutoff, the run after it issues the day with the load forecast fetched after '
+                                      'the cutoff, labelled so (decision 31)', exit=0)
             else:
                 record.update(outcome=f"{target}: the load forecast is not shown before the cutoff by this acquisition "
                                       f"({record['load_forecast'].get('reason')}; stopped at {record['stopped']}); "

@@ -29,10 +29,11 @@ def test_an_early_start_waits_in_its_job_until_its_stop_by_then_publishes_what_i
     record = acquire.run(tmp_path, claim=claim, transport=Transport(clock, datetime(2026, 11, 5, 9, 4, tzinfo=UTC)),
                          clock=clock, sleep=clock.sleep, poll_seconds=300, margin_seconds=120, window_hours=6,
                          stop_by=datetime(2026, 11, 5, 6, 0, tzinfo=UTC))
-    assert record['day'] == str(DAY) and record['exit'] == 1 and not record['load_forecast']['shown']
+    assert record['day'] == str(DAY) and record['exit'] == 0 and not record['load_forecast']['shown']   # a hand-over
     assert record['stopped'].startswith('its stop-by') and record['stop_by_utc'] == '2026-11-05T06:00:00Z'
     assert len(record['attempts']) == 12 and clock() < datetime(2026, 11, 5, 6, 0, tzinfo=UTC)     # 05:00 ... 05:55
-    assert claim.published and 'fetched after the cutoff' in record['outcome']      # published; the next start continues
+    assert claim.published and 'next scheduled start continues' in record['outcome']
+    assert 'fetched after the cutoff' in record['outcome']
 
 
 def test_a_start_inside_the_window_waits_until_the_forecast_is_published(tmp_path):
