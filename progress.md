@@ -382,6 +382,10 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
 - **Decision 32 and CP-29, 2026-11-15:** the Owner approved the economic-policy contract (battery arbitrage in the
   day-ahead market; [contract](docs/track-b/economic-policy-contract-2026-11-15.md)). CP-29 issued (brief `c3a5a891…`):
   it runs the contract on development days only; PRES-7 then shows the profit chart in Business insights.
+- **CP-29 landed on 2026-11-16** ([landing record](docs/track-b/cp-29-landing-2026-11-16.md)): on 2,068 development
+  days the battery earned 89.5% of perfect foresight's profit with v6's forecasts and 76.6% with the naive's
+  (v6 − naive +37,077 EUR [+32,323, +42,311]); v6 and v5 are level on v5's days. Simulated, development,
+  post-selection.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1183,6 +1187,13 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **CP-29 landed, 2026-11-16** (`land/cp-29` `ed18d219`, evidence tip `d253482f`;
+  [landing record](docs/track-b/cp-29-landing-2026-11-16.md)).
+  - **The Lead returned PASS:** Integration review 1 passed at `a04f3407`, reproducing every record and re-solving
+    all 26,964 schedules. Rulings O56–O60.
+  - **The result:** v6 89.5% of perfect foresight's 287,292 EUR, the naive 76.6%; v6 − naive +37,077 EUR
+    [+32,323, +42,311]; v6 − v5 on P-v5 +165 EUR [−727, +1,032]. No page change; PRES-7 shows it.
 
 - **Decision 32; CP-29 issued, 2026-11-15** (brief `c3a5a8919631293916a0a457ca93542e0544a400a8bc9019596fb00313e3a1b0`;
   canonical copy `.local/artifacts/cp-29/issued-brief.md`).
