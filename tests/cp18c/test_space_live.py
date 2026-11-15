@@ -293,7 +293,9 @@ def test_the_running_intervals_are_cp18_runnings_on_the_served_windows(built):
     out, _ = built
     value = json.loads((out / 'app/live-record.json').read_text())
     windows = json.loads((out / 'payloads/evaluation.json').read_text())['windows']
-    assert value['running'] == json.loads(json.dumps(running.running(windows)))
+    classes = {i['day']: i['input_class'] for i in value['record']['issued']}
+    # CP-18d (item 1, the evaluation): was running.running(windows), now with the live store's classes (decision 31's sets)
+    assert value['running'] == json.loads(json.dumps(running.running(windows, classes=classes)))
     for series in value['running']['series'].values():
         for point in series:
             assert (point['lower'] is None) == (point['n'] < running.MINIMUM_DAYS)
@@ -317,7 +319,8 @@ def test_history_is_in_the_build_and_its_listing(built):
     served = {f['path']: f for f in json.loads((out / 'app/history-files.json').read_text())['files']}
     assert set(served) == {'history/' + f['path'] for f in listing['files']}
     for f in listing['files']:
-        assert served['history/' + f['path']]['sha256'] == f['sha256']
+        # CP-18d (item 4, v1's preview tags): was every file's deployed hash, now index.html's deployed hash is its row's
+        assert served['history/' + f['path']].get('deployed_sha256', served['history/' + f['path']]['sha256']) == f['sha256']
     assert record['history']['gitattributes']['path'] == 'history/.gitattributes'
     assert record['history']['deployed_listing']['matches'] is True
 

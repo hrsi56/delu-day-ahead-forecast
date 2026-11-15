@@ -1,36 +1,36 @@
 # The live product's daily operation on GitHub-hosted macos-26 runners (capstone v21-r20 §24.14; CP-18c item 8; CP-18d
 # items 2 and 4), and the dispatch-only dry runs on development days (CP-18a's; CP-18d's rehearsals, item 5).
 #
-# The jobs, selected by the event (and, for a schedule, by github.event.schedule):
-#   acquire  before each day's cutoff: `cp18 acquire` retrieves the next delivery day D's inputs, its tier-3 load
+# The daily operation is a self-dispatching chain (CP-18d item 2 and the Orchestrator's ruling O54: fire and forget,
+# robust to GitHub's scheduler). GitHub starts scheduled runs late, and under load drops them: the first runner day had
+# none fire before the cutoff, and the Orchestrator's schedule probe measured this repository's scheduled runs created
+# 6 h 11 min to 7 h 36 min after their cron time on the probe's first night, the delay growing by about half an hour
+# each hour (reports/cp18d/schedule-probe.json). O54 asks the operation to keep acquiring and issuing every day when the
+# scheduler is late by up to 12 hours or drops most of a day's events. An hourly event through a gate covers any delay
+# only while events keep arriving; with most of them dropped, whole days go uncovered (tests/cp18d/test_chain.py). So
+# the daily work no longer waits for the scheduler. Each link of the chain is one run started by workflow_dispatch,
+# which GitHub starts at once, and its jobs are:
+#   tick     on ubuntu (no macOS runner held): `src/cp18/chain.py tick` (the standard library only) reads the store's run
+#            records on main and the previous link's state, and decides what is due and when: D's acquisition from 5.5 h
+#            before D's cutoff (04:30 UTC winter, 03:30 UTC summer) until it shows the forecast or reaches the cutoff's
+#            margin; the run for the target day 5 min after its cutoff; their retries and backoffs. It sleeps until the
+#            action is due, at most 5.75 h, then decides again (the action, or none). A dispatch by hand (live,
+#            acquire-live) acts at once, then continues the chain.
+#   acquire  when the tick says so (macOS): `cp18 acquire` retrieves the next delivery day D's inputs, its tier-3 load
 #            forecast above all (shown only by a retrieval before D's cutoff), archives them and pushes live/inputs/
 #            through the claim. D's cutoff is D-1 11:00 Europe/Berlin: 10:00 UTC in winter time (CET), 09:00 UTC in
 #            summer time (CEST). The TSOs publish the load forecast by D-1 10:00 Berlin (09:00 / 08:00 UTC); on the live
-#            record's days it was seen first between 09:03 and 09:17 UTC. GitHub starts a scheduled run late, and under
-#            load drops it: the first runner day had none fire, and the Orchestrator's schedule probe measured this
-#            repository's scheduled runs created 6 h 11 min to 7 h 36 min after their cron time on the probe's first night,
-#            the delay growing by about half an hour each hour (reports/cp18d/schedule-probe.json).
-#            No fixed cron time can be placed before the cutoff against such a delay, so (CP-18d item 2, decision 31)
-#            the acquisition is scheduled every hour (`20 * * * *`) and each event passes the gate first:
-#   gate     on ubuntu (no macOS runner held): `src/cp18/window.py` (the standard library only) names D (the next day
-#            whose cutoff is ahead) and D's acquisition start, the cutoff less 5.5 h (04:30 UTC winter, 03:30 UTC
-#            summer). An event after the start starts the acquisition at once; an event before it by at most 5.75 h
-#            sleeps in the gate until the start; an earlier event does nothing (a later one will come); an event within
-#            7 min of the cutoff does nothing (the run after the cutoff handles the day). So any one event in a band of
-#            about 11 hours before the cutoff starts D's acquisition in time, whatever the scheduler's delay. A dispatch
-#            (acquire-live) passes at once.
-#   acquire  after the gate: it waits inside its job (`--window-hours 6`): it polls until D's load forecast is published,
-#            or the cutoff's margin arrives (2 min before it), or its own stop-by (the job's start + 340 min, inside its
-#            timeout-minutes 355 and GitHub's 6-hour job limit); then it publishes the archive. One acquisition runs at a
-#            time (its concurrency group); the next pending event continues after it, and an acquisition that finds
-#            nothing missing commits nothing, so two acquisitions never write the same day twice. GitHub cancels an
-#            older pending event when a newer one queues: those runs show as cancelled, by design.
-#   run      after the cutoff: `cp18 run --mode live` (the real clock, inside cp18.boundary.live()) issues the target
+#            record's days it was seen first between 09:03 and 09:17 UTC. It waits inside its job (`--window-hours 6`):
+#            it polls until D's load forecast is published, or the cutoff's margin arrives (2 min before it), or its own
+#            stop-by (the job's start + 340 min, inside its timeout-minutes 355 and GitHub's 6-hour job limit); then it
+#            publishes the archive. An acquisition that finds nothing missing commits nothing.
+#   run      when the tick says so (macOS), after the cutoff: `cp18 run --mode live` (the real clock, inside
+#            cp18.boundary.live()) issues the target
 #            day and decision 23's catch-up through the frozen chain; then, once per as-of day, the dated bundle
 #            (`cp18.bundle`, its arrays from this run's own A1 attempt before the results step deletes them, else a
 #            refit), the Space build, the publication to the Hugging Face Space, and the day's data-only records
-#            pushed through the claim. 10:40 UTC (40 min after the winter cutoff, 100 after the summer one) and a retry
-#            at 13:40 UTC: the claim makes a second run find nothing to issue, record its run and build no second bundle.
+#            pushed through the claim. A target day left open is retried 3 h later, at most three runs for it; a second
+#            run finds nothing to issue, records its run and builds no second bundle.
 #            Its results keep the Space's whole build, hidden files included, recorded by cp18.runner_artifact before
 #            the results step deletes the fitted arrays (CP-18d item 4), so a public check can verify a runner-published
 #            Space from the artifact alone.
@@ -41,20 +41,34 @@
 #            rehearsals (CP-18d item 5): late_day, a development day whose load forecast is archived as a retrieval after
 #            its cutoff, so the run issues it with the late copy, labelled; move_main, an unrelated commit pushed to the
 #            dry run's origin between the records' commit and their push, so the claim must re-apply them.
-#   acquire-dry-run  workflow_dispatch only (mode acquire-dry-run): the gate and the acquisition rehearsed on a development
-#            day (through 2026-09-06): the gate's decision at the simulated arrival `now`, its sleep for real (at most
-#            20 min here), then replayed responses, a simulated clock continuing from `now`, the load forecast published
-#            `published_after` minutes later, the in-job wait and its stop-by (the job's start + 45 min, inside its
-#            60-min limit), the archive pushed to the dry run's bare origin through the claim. Fake credentials only.
-# A dispatch with mode live or acquire-live starts the live jobs by hand (the Orchestrator's first dispatch).
+#   acquire-dry-run  workflow_dispatch only (mode acquire-dry-run): the sleep before the start and the acquisition
+#            rehearsed on a development day (through 2026-09-06): the decision at the simulated arrival `now`
+#            (src/cp18/window.py, the same start and sleep the tick uses), its sleep for real (at most 20 min here), then
+#            replayed responses, a simulated clock continuing from `now`, the load forecast published `published_after`
+#            minutes later, the in-job wait and its stop-by (the job's start + 45 min, inside its 60-min limit), the
+#            archive pushed to the dry run's bare origin through the claim. Fake credentials only.
+#   chain-dry-run  workflow_dispatch only (mode chain-dry-run, `last` = the links left): the self-dispatch rehearsed with
+#            no work and no secret: a short sleep, then the next link through workflow_dispatch with the job's token,
+#            while links are left, in its own concurrency group.
+# A dispatch with mode live or acquire-live acts at once, then continues the chain (no hand dispatch is needed: O54).
 #
-# Concurrency, in three groups, none cancelling a run in progress: daily-dry-run (dispatch modes dry-run and
-# acquire-dry-run), daily-acquire (the acquisition crons and dispatch acquire-live) and daily-run (the run crons, the
-# 13:40 retry and keep-alive included, and dispatch live). GitHub keeps one pending run per group and cancels an older
-# pending one when another queues: with one live group, a delayed acquisition trigger could cancel a pending run. Two
-# acquisitions stay serial (never the same day twice); a run and an acquisition may now overlap, and the claim (O47)
-# re-applies a pusher's records over a moved main when the moved commits touch none of the pusher's own files, and
-# refuses otherwise.
+#   alert    on ubuntu, `issues: write` (and `contents: read`) only: `src/cp18/alert.py` opens, comments on or closes one
+#            GitHub issue per problem (a failed job, a recent day not issued, a recent day issued with the load forecast
+#            fetched after the cutoff), so nobody has to watch (O54); GitHub emails the Owner. An issue closes itself once
+#            a later day is issued with all inputs before the cutoff. The text carries the day, the cause and the run's
+#            link, never a credential.
+#   next     on ubuntu, `actions: write` (and `contents: read`) only: `src/cp18/chain.py next` dispatches the next link
+#            at once with this link's state (retried; after a failed tick it waits 10 min first).
+#   seed     a scheduled event (every hour, and 13:40 UTC): `src/cp18/chain.py seed` dispatches a new chain only if no
+#            link is queued or running. A chain breaks only if a dispatch fails or a link is cancelled by hand; any one
+#            seed that arrives afterwards, however late, restarts it.
+#
+# Concurrency, in four groups, none cancelling a run in progress: daily-chain (the chain's links, dispatch chain, live and
+# acquire-live), daily-seed (the scheduled events), daily-dry-run (dispatch dry-run and acquire-dry-run) and
+# daily-chain-dry-run. GitHub keeps one pending run per group and cancels an older pending one when another queues: so
+# at most one chain survives (a second one dies at its next link), and two acquisitions are never in flight together,
+# so two never write the same day. The claim (O47) re-applies a pusher's records over a moved main when the moved
+# commits touch none of the pusher's own files, and refuses otherwise.
 #
 # Where the live jobs run: only in hrsi56/delu-day-ahead-forecast, so a copy of this file (the public scratch repository)
 # never runs them; and a schedule starts them only while the repository variable DAILY_SCHEDULE is `enabled`. Setting it
@@ -70,7 +84,8 @@
 # the run id (cp18.guarddemo.fake_environment), never printed, scanned for by value afterwards.
 #
 # Permissions: `{}` at the top; `contents: write` only on the jobs that push to main (acquire, run: N6); the dry runs
-# read only; the keep-alive job holds `actions: write` and nothing else.
+# read only; `actions: write` only where a run is dispatched or re-enabled (seed, next, the chain's rehearsal,
+# keep-alive); `issues: write` only on the alert.
 #
 # Staying enabled (GitHub disables a scheduled workflow in a public repository after 60 days without repository
 # activity): every live run, acquisition included, pushes a data-only commit to main through the claim when it has
@@ -78,29 +93,33 @@
 # record, which every run pushes whatever it did, the day's bundle records); a later acquisition that finds nothing
 # missing commits nothing. That is repository activity. Belt and braces, at no cost and with no external service: the
 # keep-alive job, on the 13:40 UTC schedule, re-enables this workflow through GitHub's own API (a no-op while it is
-# enabled) and records its state; and the local fallback on the Owner's Mac (cp18.local, reports/cp18c/launchd/),
-# if installed, pushes its own runs.
+# enabled) and records its state. The chain itself runs on workflow_dispatch, which the 60-day rule does not disable.
+# The Owner's decision 29: no local fallback (the launchd files of CP-18c stay uninstalled).
 #
 # Retrieval is software only, plus the live sources in the live jobs: GitHub's own actions pinned by commit SHA; uv and
 # the Python packages uv.lock pins; uv's CPython 3.13.15; CP-20's pinned ecCodes environment
 # (reports/weather-admission/scripts/requirements.freeze.txt), recorded by version and content hash; Node.js v26.7.0's
 # tarball and SHASUMS256.txt and Pyodide's 23 files, checked by hash.
 name: daily
+run-name: daily ${{ github.event_name == 'workflow_dispatch' && inputs.mode || format('seed {0}', github.event.schedule) }}
 
 on:
   schedule:
-    # The acquisition's events (CP-18d item 2, from reports/cp18d/schedule-probe.json): every hour; the gate decides.
-    # The gate job's `if:` names the same line.
-    - cron: '20 * * * *'     # acquire: every hour; the gate starts D's acquisition in time, or sleeps, or waits
-    - cron: '40 10 * * *'    # run: after the cutoff
-    - cron: '40 13 * * *'    # run: the retry (and the keep-alive)
+    # The chain's seeds (CP-18d item 2 and the Orchestrator's O54; reports/cp18d/schedule-probe.json): a scheduled event
+    # only restarts the chain when no link is queued or running. The daily work itself runs in the chain.
+    - cron: '20 * * * *'     # seed: every hour, so that one surviving event, however late, restarts a broken chain
+    - cron: '40 13 * * *'    # seed, and the keep-alive
   workflow_dispatch:
     inputs:
       mode:
-        description: 'dry-run (development days, replayed inputs, fake credentials), live (the run), acquire-live, acquire-dry-run (the acquisition rehearsed on a development day)'
+        description: 'dry-run (development days, replayed inputs, fake credentials); chain (a link of the daily chain, as the chain dispatches it); live (the run at once, then the chain); acquire-live (the acquisition at once, then the chain); acquire-dry-run (the acquisition rehearsed on a development day); chain-dry-run (the self-dispatch rehearsed: last = the links left)'
         type: choice
-        options: [dry-run, live, acquire-live, acquire-dry-run]
+        options: [dry-run, live, acquire-live, acquire-dry-run, chain, chain-dry-run]
         default: dry-run
+      last:
+        description: 'chain only: the previous link''s state (JSON), as the chain passes it; chain-dry-run: the links left'
+        required: false
+        default: ''
       now:
         description: 'dry-run and acquire-dry-run only: the simulated wall clock, ISO 8601 with its offset (a development day''s run; the acquisition rehearsal''s start)'
         required: false
@@ -144,7 +163,7 @@ permissions: {}
 # Three groups (see the header): daily-dry-run, daily-run (the run crons, as the run job's `if:` lists them, and
 # dispatch live), daily-acquire (everything else: the acquisition crons and dispatch acquire-live).
 concurrency:
-  group: daily-${{ (github.event_name == 'workflow_dispatch' && (inputs.mode == 'dry-run' || inputs.mode == 'acquire-dry-run')) && 'dry-run' || ((github.event_name == 'workflow_dispatch' && inputs.mode == 'live') || (github.event_name == 'schedule' && contains(fromJSON('["40 10 * * *", "40 13 * * *"]'), github.event.schedule))) && 'run' || 'acquire' }}
+  group: daily-${{ github.event_name == 'schedule' && 'seed' || ((inputs.mode == 'dry-run' || inputs.mode == 'acquire-dry-run') && 'dry-run' || (inputs.mode == 'chain-dry-run' && 'chain-dry-run' || 'chain')) }}
   cancel-in-progress: false
 
 env:
@@ -426,56 +445,97 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
-  gate:
-    name: The acquisition's gate (when D's acquisition starts; an early event sleeps here, on Linux)
-    # The same line as on.schedule's acquisition event.
+  seed:
+    name: Seed the chain (a scheduled event restarts it only if no link is queued or running)
     if: >-
-      github.repository == 'hrsi56/delu-day-ahead-forecast' && (
-        (github.event_name == 'schedule' && vars.DAILY_SCHEDULE == 'enabled' &&
-         contains(fromJSON('["20 * * * *"]'), github.event.schedule)) ||
-        (github.event_name == 'workflow_dispatch' && inputs.mode == 'acquire-live'))
+      github.repository == 'hrsi56/delu-day-ahead-forecast' && github.event_name == 'schedule' &&
+      vars.DAILY_SCHEDULE == 'enabled'
     runs-on: ubuntu-24.04
-    timeout-minutes: 355  # a sleep of at most 5.75 h (window.py's max_sleep_hours), inside GitHub's 6-hour job limit
+    timeout-minutes: 10
     permissions:
-      contents: read      # the gate's one file only
+      contents: read      # the chain's two files
+      actions: write      # list this workflow's runs, and dispatch the chain's first link
+    steps:
+      - &chain-files
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            src/cp18/chain.py
+            src/cp18/window.py
+            src/cp18/alert.py
+          sparse-checkout-cone-mode: false
+      - name: A new chain, only if none is alive (src/cp18/chain.py seed)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 src/cp18/chain.py seed --repo "$GITHUB_REPOSITORY"
+
+  tick:
+    name: The chain's tick (what is due, and a sleep on Linux until it is due, at most 5.75 h)
+    if: >-
+      github.repository == 'hrsi56/delu-day-ahead-forecast' && github.event_name == 'workflow_dispatch' && (
+        inputs.mode == 'live' || inputs.mode == 'acquire-live' ||
+        (inputs.mode == 'chain' && vars.DAILY_SCHEDULE == 'enabled'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355  # a sleep of at most 5.75 h (window.py's MAX_SLEEP_HOURS), inside GitHub's 6-hour job limit
+    permissions:
+      contents: read      # the chain's files and the store's run records on main
     outputs:
-      go: ${{ steps.window.outputs.go }}
+      action: ${{ steps.tick.outputs.action }}
+      day: ${{ steps.tick.outputs.day }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
-          sparse-checkout: src/cp18/window.py
+          ref: main
+          sparse-checkout: |
+            src/cp18/chain.py
+            src/cp18/window.py
+            live/store/runs
           sparse-checkout-cone-mode: false
-      - name: When D's acquisition starts (src/cp18/window.py, the standard library only)
-        id: window
+      - name: What is due, and when (src/cp18/chain.py tick; a dispatch by hand acts at once)
+        id: tick
         env:
-          DISPATCHED: ${{ github.event_name == 'workflow_dispatch' }}
+          LAST: ${{ inputs.last }}
+          MODE: ${{ inputs.mode }}
         run: |
-          python3 src/cp18/window.py > "$RUNNER_TEMP/window.txt"
-          cat "$RUNNER_TEMP/window.txt"
-          if [ "$DISPATCHED" = true ]; then
-            # a dispatch by hand starts at once; the acquisition's own day and window rules apply
-            printf 'go=true\nsleep_seconds=0\n' >> "$GITHUB_OUTPUT"
-          else
-            cat "$RUNNER_TEMP/window.txt" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Sleep until D's acquisition starts (an event that arrived before it)
-        if: steps.window.outputs.go == 'true' && steps.window.outputs.sleep_seconds != '0'
+          force=()
+          case "$MODE" in live) force=(--force run) ;; acquire-live) force=(--force acquire) ;; esac
+          python3 src/cp18/chain.py tick --store live/store --last "$LAST" "${force[@]}" --sleep >> "$GITHUB_OUTPUT"
+
+  chain-dry-run:
+    name: The chain's self-dispatch rehearsed (no work, no secret; a short sleep, then the next link)
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'chain-dry-run'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read      # the chain's files
+      actions: write      # dispatch the next rehearsed link
+    steps:
+      - *chain-files
+      - name: A link, then the next one while links are left (`last` is the number of links left)
         env:
-          SLEEP: ${{ steps.window.outputs.sleep_seconds }}
+          GH_TOKEN: ${{ github.token }}
+          LEFT: ${{ inputs.last }}
         run: |
-          echo "sleeping ${SLEEP} s, until $(date -u -d "+${SLEEP} seconds" +%Y-%m-%dT%H:%M:%SZ)"
-          sleep "$SLEEP"
+          [[ "${LEFT:-0}" =~ ^[0-9]+$ ]] || { echo "last: the number of links left" >&2; exit 2; }
+          echo "a rehearsed link, $LEFT left"; sleep 30
+          [ "${LEFT:-0}" -gt 0 ] || { echo "the rehearsed chain ends here"; exit 0; }
+          python3 src/cp18/chain.py next --repo "$GITHUB_REPOSITORY" --mode chain-dry-run --links "$((LEFT - 1))" \
+              --state "{\"left\": $((LEFT - 1))}"
 
   acquire:
     name: macos-26 acquisition before the cutoff (live)
-    needs: gate
-    # After the gate (which holds the event, repository and schedule conditions): only when it says go.
-    if: needs.gate.outputs.go == 'true'
+    needs: tick
+    # After the tick (which holds the event, repository and schedule conditions): only when it says so.
+    if: needs.tick.outputs.action == 'acquire'
     runs-on: macos-26
     timeout-minutes: 355  # GitHub's 6-hour job limit, less a margin for the publication after the stop-by
     permissions:
       contents: write     # the day's data-only commit of live/inputs/ to main, through the claim (N6)
+    outputs:
+      shown: ${{ steps.outcome.outputs.shown }}
+      stopped: ${{ steps.outcome.outputs.stopped }}
     steps:
       - name: The job's start and its stop-by (the start + 340 min; polling ends there, then the archive is published)
         env:
@@ -505,6 +565,12 @@ jobs:
         run: |
           .venv/bin/python -m cp18 acquire --root . --out "$RESULTS/acquire.json" --remote origin --window-hours 6 \
               --stop-by "$STOP_BY" ${DAY:+--day "$DAY"}
+      - name: The acquisition's outcome, for the chain's next link (shown, and why it stopped)
+        id: outcome
+        if: always()
+        run: |
+          .venv/bin/python -c "import json, sys; r = json.load(open(sys.argv[1])); print('shown=' + str(bool((r.get('load_forecast') or {}).get('shown'))).lower()); print('stopped=' + (r.get('stopped') or ''))" \
+              "$RESULTS/acquire.json" >> "$GITHUB_OUTPUT" || true
       - &scan
         name: No credential in any result (by value; a found value uploads nothing)
         id: scan
@@ -527,11 +593,9 @@ jobs:
 
   run:
     name: macos-26 daily pipeline (live)
-    if: >-
-      github.repository == 'hrsi56/delu-day-ahead-forecast' && (
-        (github.event_name == 'schedule' && vars.DAILY_SCHEDULE == 'enabled' &&
-         contains(fromJSON('["40 10 * * *", "40 13 * * *"]'), github.event.schedule)) ||
-        (github.event_name == 'workflow_dispatch' && inputs.mode == 'live'))
+    needs: tick
+    # After the tick (which holds the event, repository and schedule conditions): only when it says so.
+    if: needs.tick.outputs.action == 'run'
     runs-on: macos-26
     timeout-minutes: 150
     permissions:
@@ -625,6 +689,71 @@ jobs:
           retention-days: 30
           if-no-files-found: error
           include-hidden-files: true    # the build's .gitattributes files (PRES-6's landing record: the dotfile dropped)
+
+  alert:
+    name: The alert (one issue per problem, opened, commented on, or closed by a later healthy day)
+    needs: [tick, acquire, run]
+    if: always() && github.repository == 'hrsi56/delu-day-ahead-forecast' && needs.tick.result != 'skipped'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read      # the alert's files and the store on main, after this link's records
+      issues: write       # open, comment on, close the alert's issues, and nothing more
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+          ref: main
+          sparse-checkout: |
+            src/cp18/alert.py
+            src/cp18/chain.py
+            src/cp18/window.py
+            live/store/ledger.jsonl
+            live/store/issued
+          sparse-checkout-cone-mode: false
+      - name: Open, comment on or close the alert's issues (src/cp18/alert.py; no credential in any text)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TICK: ${{ needs.tick.result }}
+          ACQUIRE: ${{ needs.acquire.result }}
+          RUN: ${{ needs.run.result }}
+          DAY: ${{ needs.tick.outputs.day }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          failed=()
+          [ "$TICK" != failure ] || failed+=(--failed tick)
+          [ "$ACQUIRE" != failure ] || failed+=(--failed acquisition)
+          [ "$RUN" != failure ] || failed+=(--failed run)
+          python3 src/cp18/alert.py --repo "$GITHUB_REPOSITORY" --store live/store --run-url "$RUN_URL" --day "$DAY" \
+              "${failed[@]}"
+
+  next:
+    name: The chain's next link (dispatched at once, with this link's state)
+    needs: [tick, acquire, run, alert]
+    if: >-
+      always() && github.repository == 'hrsi56/delu-day-ahead-forecast' && vars.DAILY_SCHEDULE == 'enabled' &&
+      needs.tick.result != 'skipped' && needs.tick.result != 'cancelled'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read      # the chain's files
+      actions: write      # dispatch the next link, and nothing more
+    steps:
+      - *chain-files
+      - name: The next link (src/cp18/chain.py next; retried; a failed tick waits 10 min first)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ACTION: ${{ needs.tick.outputs.action }}
+          DAY: ${{ needs.tick.outputs.day }}
+          TICK: ${{ needs.tick.result }}
+          ACQUIRE: ${{ needs.acquire.result }}
+          RUN: ${{ needs.run.result }}
+          SHOWN: ${{ needs.acquire.outputs.shown }}
+          STOPPED: ${{ needs.acquire.outputs.stopped }}
+        run: |
+          [ "$TICK" = success ] || { echo "the tick did not succeed: the next link waits 10 min"; sleep 600; }
+          python3 src/cp18/chain.py next --repo "$GITHUB_REPOSITORY" --action "$ACTION" --day "$DAY" \
+              --tick-result "$TICK" --acquire-result "$ACQUIRE" --run-result "$RUN" --shown "$SHOWN" --stopped "$STOPPED"
 
   keep-alive:
     name: The schedule stays enabled (belt and braces)

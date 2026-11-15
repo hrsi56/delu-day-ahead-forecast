@@ -30,3 +30,43 @@ Committed verbatim by the Lead. Each is the Orchestrator's, relayed through the 
 >    review for it; just keep item 1 (the late load forecast) first in your order of work.
 >
 > Everything else in the brief stands. Ask me if anything is unclear.
+
+## 2026-11-15, the Orchestrator's ruling O54
+
+> Orchestrator ruling O54 for CP-18d (decision 27; the Owner asked today that the daily operation be fire-and-forget:
+> no hand dispatch ever, nothing that needs his computer). Two additions to your brief's scope, inside its allowed paths
+> (`src/cp18/`, `tests/cp18d/`, `.github/workflows/daily.yml`); record this ruling in your packet beside the brief:
+>
+> 1. **Robust to the scheduler, measured.** Brief item 2's bar rises: the daily operation must keep acquiring and
+>    issuing every day when GitHub's scheduler is late by up to 12 hours or drops most of a day's events (the probe
+>    already shows 6 h 11 min to 7 h 36 min, growing). Your hourly acquisition through a Linux gate may meet it; state
+>    the argument from the probe data and test it. If it does not, one option is a self-dispatching chain: a job
+>    dispatches the next run through `workflow_dispatch` with `GITHUB_TOKEN` (GitHub starts such runs at once; the token
+>    needs `actions: write` in that job only), with the scheduled crons re-seeding a broken chain. One chain at a time,
+>    never two acquisitions writing the same day, every job inside the 6-hour limit, and nothing that would count as
+>    using Actions for work unrelated to this project's daily production run. Choose the design and state why.
+>
+> 2. **An alert, so nobody has to watch.** A failed daily run, a day closed as not issued, or a day issued with the late
+>    load forecast opens (or comments on) one GitHub issue in the product repository, which notifies the Owner by email.
+>    Give that step `issues: write` and nothing more. One open issue per problem, closed automatically once a later day
+>    issues with all inputs before the cutoff. The issue's text carries the day, the cause and the run link, and never a
+>    credential or a value derived from one. A test covers the open, the comment and the close, with a recorded or
+>    mocked API, not the network.
+>
+> Not for this round: where the six-monthly search state S_14 (2027-01-06) runs. That is the Owner's decision under H4,
+> and I have put it to him.
+>
+> Everything else in the brief stands, including the order of work (decision 31's late copy first). Your ceilings stay
+> as issued; ask me if these additions would breach one.
+
+## 2026-11-15, the Orchestrator's ruling O56
+
+> Orchestrator ruling O56, a change to your brief's expected state (no change to your scope): from about 12:35 UTC
+> today a second checkpoint, CP-29 (the economic evaluation of the Owner's battery-arbitrage contract, research on
+> development data only), runs beside CP-18d in its own worktree `.local/worktrees/cp-29/` on the branch
+> `gauntlet/cp-29`. Its paths are `src/cp29/`, `tests/cp29/`, `reports/cp29/`, `docs/track-b/evidence/cp-29/` and the
+> registry/claim-layer entries for CP-29 (`src/delu_forecast/registry.py`, `src/delu_forecast/research_claims.py`).
+> None of these is in your allowed paths, and CP-29 never touches yours. `main` also gains two Orchestrator commits,
+> the approved contract `docs/track-b/economic-policy-contract-2026-11-15.md` and CP-29's issue in `progress.md`. Your
+> brief's lines "No other checkpoint runs beside it" and "Branches and worktrees: main only" are superseded by this
+> ruling; record it in your packet beside O54. Nothing else changes.

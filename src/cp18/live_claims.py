@@ -232,6 +232,16 @@ def _common(fresh_test: str) -> dict:
                                   'input preceded the cutoff'),
         'live_sets_wording': ('the issued days with every input before the cutoff on their own, and all issued days '
                               'beside them, each with its count'),
+        # the Space's surfaces of decision 31 (CP-18d): the copy's retrieval time, the counts, the two sets when equal
+        'live_input_class_fetched': 'fetched {time} UTC',
+        'live_input_class_counts': ('{n} issued days: {k} with every input before the cutoff, {m} with the load '
+                                    'forecast fetched after the cutoff'),
+        'live_sets_same': ('the two sets are the same {n} issued days: no issued day has its load forecast fetched '
+                           'after the cutoff'),
+        # v1's history page: its own preview tags (PRES-5's A12 review, R3; CP-18d), so a link to it names v1
+        'live_history_preview_title': 'v1 · historical demo — DE-LU day-ahead price forecast',
+        'live_history_preview_description': ("v1's frozen demo of the DE-LU day-ahead price forecast, kept as history. "
+                                             'It is not the product this Space presents.'),
         'live_schedule': ("Daily operation is a schedule, not a guarantee: each day GitHub's scheduler starts the "
                           'acquisition several times before the cutoff, and the run after it with a retry; a job may '
                           'start hours after its scheduled time, or not at all. Each delivery day is then issued or not '

@@ -24,9 +24,11 @@ TEXT = WORKFLOW.read_text()
 WF = yaml.safe_load(TEXT)
 ON = WF.get('on', WF.get(True))
 JOBS = WF['jobs']
-# CP-18d (item 2): was ['40 7 * * *', '20 8 * * *', '20 9 * * *'], now one event every hour, through the gate job
+# CP-18d (item 2, O54): the acquisition's crons were ['40 7 * * *', '20 8 * * *', '20 9 * * *'] and the run's
+# ['40 10 * * *', '40 13 * * *']; now the daily work runs in the self-dispatching chain, and the scheduled events are its
+# seeds only: every hour, and 13:40 (the keep-alive's)
 ACQUIRE_CRONS = ['20 * * * *']
-RUN_CRONS = ['40 10 * * *', '40 13 * * *']
+RUN_CRONS = ['40 13 * * *']
 PRODUCT = 'hrsi56/delu-day-ahead-forecast'
 UTC = timezone.utc
 
@@ -51,52 +53,67 @@ def evaluate(expression: str, ctx: dict) -> bool:
     names = {'github.event_name': ctx['event'], 'github.event.schedule': ctx.get('schedule', ''),
              'github.repository': ctx['repository'], 'vars.DAILY_SCHEDULE': ctx.get('var', ''),
              'inputs.mode': ctx.get('mode', ''),
-             # CP-18d (item 2): the acquisition follows the gate job; its condition is the gate's answer
-             'needs.gate.outputs.go': ctx.get('go', 'true')}
+             # CP-18d (item 2, O54): the chain's jobs follow its tick; their conditions are the tick's answer and result
+             'needs.tick.outputs.action': ctx.get('action', ''),
+             'needs.tick.result': ctx.get('tick_result', 'success')}
     for name, value in sorted(names.items(), key=lambda kv: -len(kv[0])):
         e = e.replace(name, repr(value))
     e = re.sub(r"fromJSON\('(.*?)'\)", lambda m: repr(json.loads(m.group(1))), e)
     e = re.sub(r"contains\((\[.*?\]),\s*('.*?')\)", r'(\2 in \1)', e)
+    e = e.replace('always()', 'True')                    # CP-18d (O54): the chain's alert and next run whatever happened
     e = e.replace('&&', ' and ').replace('||', ' or ')
     assert re.fullmatch(r"[\s\w'\"\[\]\(\),*=!./:-]*", e), e
     return bool(eval(e, {}))
 
 
+def _needs(name: str) -> list[str]:
+    value = JOBS[name].get('needs', [])
+    return [value] if isinstance(value, str) else list(value)
+
+
 def selected(**ctx) -> set[str]:
+    """CP-18d (item 2, O54): the jobs without `needs` first; then each job that needs others, which runs only if they
+    run, unless its condition holds `always()` (GitHub runs it whatever they did, and it reads their results)."""
     ctx.setdefault('repository', PRODUCT)
-    chosen = {name for name, job in JOBS.items() if evaluate(str(job['if']), ctx)}
-    # CP-18d (item 2): a job that `needs` another runs only if that one runs (GitHub skips it otherwise)
-    return {name for name in chosen if all(n in chosen for n in ([JOBS[name]['needs']] if isinstance(
-        JOBS[name].get('needs'), str) else JOBS[name].get('needs', [])))}
+    chosen = {name for name, job in JOBS.items() if not _needs(name) and evaluate(str(job['if']), ctx)}
+    ctx.setdefault('tick_result', 'success' if 'tick' in chosen else 'skipped')
+    for name, job in JOBS.items():
+        if _needs(name) and evaluate(str(job['if']), ctx) and (
+                'always()' in str(job['if']) or all(n in chosen for n in _needs(name))):
+            chosen.add(name)
+    return chosen
 
 
 def test_the_triggers_are_the_schedule_and_the_dispatch():
     assert set(ON) == {'schedule', 'workflow_dispatch'}
     assert [c['cron'] for c in ON['schedule']] == ACQUIRE_CRONS + RUN_CRONS
     mode = ON['workflow_dispatch']['inputs']['mode']
-    # CP-18d (item 5): was ['dry-run', 'live', 'acquire-live'], now the acquisition rehearsal's mode added
-    assert mode['type'] == 'choice' and mode['options'] == ['dry-run', 'live', 'acquire-live', 'acquire-dry-run']
+    # CP-18d (items 2 and 5, O54): was ['dry-run', 'live', 'acquire-live'], now the rehearsals' and the chain's modes
+    assert mode['type'] == 'choice' and mode['options'] == ['dry-run', 'live', 'acquire-live', 'acquire-dry-run',
+                                                            'chain', 'chain-dry-run']
     assert mode['default'] == 'dry-run'
     assert not any(i.get('required') for i in ON['workflow_dispatch']['inputs'].values())
 
 
 @pytest.mark.parametrize('cron', ACQUIRE_CRONS)
 def test_an_acquisition_cron_starts_the_acquisition_only(cron):
-    # CP-18d (item 2): was {'acquire'}, now the gate and, when it says go, the acquisition after it
-    assert selected(event='schedule', schedule=cron, var='enabled') == {'gate', 'acquire'}
-    assert selected(event='schedule', schedule=cron, var='enabled', go='false') == {'gate'}
+    # CP-18d (item 2, O54): was {'acquire'}, now a scheduled event only seeds the chain (which acquires and runs)
+    assert selected(event='schedule', schedule=cron, var='enabled') == {'seed'}
 
 
 @pytest.mark.parametrize('cron', RUN_CRONS)
 def test_a_run_cron_starts_the_run_and_the_retry_the_keep_alive(cron):
-    assert selected(event='schedule', schedule=cron, var='enabled') == (
-        {'run', 'keep-alive'} if cron == '40 13 * * *' else {'run'})
+    # CP-18d (item 2, O54): was {'run', 'keep-alive'} at 13:40 and {'run'} at 10:40; now the seed and the keep-alive
+    assert selected(event='schedule', schedule=cron, var='enabled') == {'seed', 'keep-alive'}
 
 
-# CP-18d (item 2): acquire-live was {'acquire'}, now {'gate', 'acquire'} (a dispatch passes the gate at once)
-@pytest.mark.parametrize('mode, jobs', [('dry-run', {'dry-run'}), ('live', {'run'}), ('acquire-live', {'gate', 'acquire'})])
-def test_a_dispatch_starts_the_job_of_its_mode(mode, jobs):
-    assert selected(event='workflow_dispatch', mode=mode) == jobs
+# CP-18d (item 2, O54): was live {'run'}, acquire-live {'acquire'}; now each is a link of the chain: its tick acts at
+# once, then the alert and the next link
+@pytest.mark.parametrize('mode, action, jobs', [('dry-run', '', {'dry-run'}),
+                                                ('live', 'run', {'tick', 'run', 'alert', 'next'}),
+                                                ('acquire-live', 'acquire', {'tick', 'acquire', 'alert', 'next'})])
+def test_a_dispatch_starts_the_job_of_its_mode(mode, action, jobs):
+    assert selected(event='workflow_dispatch', mode=mode, action=action, var='enabled') == jobs
 
 
 def test_the_schedule_does_nothing_until_enabled_and_never_outside_the_product():
@@ -104,8 +121,11 @@ def test_the_schedule_does_nothing_until_enabled_and_never_outside_the_product()
         assert selected(event='schedule', schedule=cron, var='') == set()
         assert selected(event='schedule', schedule=cron, var='enabled', repository='hrsi56/delu-pipeline-dryrun') == set()
     # the public scratch repository runs the dry run only, whatever is dispatched
-    for mode in ('live', 'acquire-live'):
-        assert selected(event='workflow_dispatch', mode=mode, repository='hrsi56/delu-pipeline-dryrun') == set()
+    # CP-18d (O54): the chain's modes added, and a chain link does nothing until the schedule is enabled
+    for mode in ('live', 'acquire-live', 'chain'):
+        assert selected(event='workflow_dispatch', mode=mode, action='run', var='enabled',
+                        repository='hrsi56/delu-pipeline-dryrun') == set()
+    assert selected(event='workflow_dispatch', mode='chain', action='run', var='') == set()
     assert selected(event='workflow_dispatch', mode='dry-run', repository='hrsi56/delu-pipeline-dryrun') == {'dry-run'}
 
 
@@ -139,7 +159,8 @@ def test_on_every_day_of_two_years_two_acquisitions_precede_the_cutoff_and_the_r
 def test_the_concurrency_group_keeps_live_runs_apart_and_never_cancels_one():
     group = WF['concurrency']['group']
     assert WF['concurrency']['cancel-in-progress'] is False
-    assert "'dry-run'" in group and "'live'" in group and 'inputs.mode' in group
+    # CP-18d (O54): was the groups 'dry-run' and 'live'; now 'dry-run', 'chain-dry-run', 'seed' and 'chain'
+    assert "'dry-run'" in group and "'chain'" in group and "'seed'" in group and 'inputs.mode' in group
 
 
 # ------------------------------------------------------------------------------------------------ permissions
@@ -207,9 +228,12 @@ def test_secrets_are_read_only_inside_the_steps_that_use_them():
     assert hf == {('run', 'The publication to the Hugging Face Space'), ('acquire', 'No credential in any result'),
                   ('run', 'No credential in any result')}
     token = {(j, n.split(' (')[0].split(',')[0]) for j, n in used['github.token']}
+    # CP-18d (O54): the chain's seed, alert, next and rehearsal steps added, each with the job's token alone
     assert token == {('acquire', 'The acquisition before the cutoff'), ('acquire', 'No credential in any result'),
                      ('run', 'The pipeline'), ('run', "The day's records"), ('run', 'No credential in any result'),
-                     ('keep-alive', 'Re-enable this workflow through GitHub\'s own API')}
+                     ('keep-alive', 'Re-enable this workflow through GitHub\'s own API'),
+                     ('seed', 'A new chain'), ('alert', 'Open'), ('next', 'The next link'),
+                     ('chain-dry-run', 'A link')}
     assert not any(j == 'dry-run' for uses in used.values() for j, _ in uses)        # the dry run uses no secret
 
 

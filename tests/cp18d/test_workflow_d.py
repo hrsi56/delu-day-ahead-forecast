@@ -24,9 +24,10 @@ from cp25 import guard
 
 HEADER = TEXT.split('\nname: daily')[0]
 SCRATCH = 'hrsi56/delu-pipeline-dryrun'
-GROUPS = ('dry-run', 'acquire', 'run')
+GROUPS = ('dry-run', 'chain-dry-run', 'seed', 'chain')
 #: The jobs each group may hold.
-MEMBERS = {'dry-run': {'dry-run', 'acquire-dry-run'}, 'acquire': {'gate', 'acquire'}, 'run': {'run', 'keep-alive'}}
+MEMBERS = {'dry-run': {'dry-run', 'acquire-dry-run'}, 'chain-dry-run': {'chain-dry-run'}, 'seed': {'seed', 'keep-alive'},
+           'chain': {'tick', 'acquire', 'run', 'alert', 'next'}}
 UTC = timezone.utc
 LIVE_ONLY = ('--late-day', '--rehearse-moved-main', '--rehearsal', '--clock-start', '--published-after-minutes')
 
@@ -52,14 +53,16 @@ def group_of(**ctx) -> str:
     return hits[0]
 
 
-EVENTS = ([({'event': 'workflow_dispatch', 'mode': m}, g) for m, g in
-           [('dry-run', 'dry-run'), ('acquire-dry-run', 'dry-run'), ('acquire-live', 'acquire'), ('live', 'run')]] +
-          [({'event': 'schedule', 'schedule': c, 'var': 'enabled'}, 'acquire') for c in ACQUIRE_CRONS] +
-          [({'event': 'schedule', 'schedule': c, 'var': 'enabled'}, 'run') for c in RUN_CRONS])
+EVENTS = ([({'event': 'workflow_dispatch', 'mode': m, 'var': 'enabled', 'action': a}, g) for m, a, g in
+           [('dry-run', '', 'dry-run'), ('acquire-dry-run', '', 'dry-run'), ('chain-dry-run', '', 'chain-dry-run'),
+            ('acquire-live', 'acquire', 'chain'), ('live', 'run', 'chain'), ('chain', 'acquire', 'chain'),
+            ('chain', 'run', 'chain'), ('chain', 'none', 'chain')]] +
+          [({'event': 'schedule', 'schedule': c, 'var': 'enabled'}, 'seed') for c in ACQUIRE_CRONS + RUN_CRONS])
 
 
-@pytest.mark.parametrize('ctx, group', EVENTS, ids=[f"{c['event']}:{c.get('mode') or c.get('schedule')}" for c, _ in EVENTS])
-def test_three_concurrency_groups_and_the_events_each_holds(ctx, group):
+@pytest.mark.parametrize('ctx, group', EVENTS,
+                         ids=[f"{c['event']}:{c.get('mode') or c.get('schedule')}:{c.get('action')}" for c, _ in EVENTS])
+def test_four_concurrency_groups_and_the_events_each_holds(ctx, group):
     assert WF['concurrency']['cancel-in-progress'] is False
     assert group_of(**ctx) == group
     # the jobs the event starts belong to its group, in the product and in the public scratch repository
@@ -68,37 +71,82 @@ def test_three_concurrency_groups_and_the_events_each_holds(ctx, group):
         assert jobs <= MEMBERS[group], (ctx, repository, jobs)
 
 
-def test_the_run_group_names_the_run_jobs_crons():
-    assert fromjson_list(WF['concurrency']['group']) == RUN_CRONS == fromjson_list(str(JOBS['run']['if']))
-
-
-# ------------------------------------------------------------------------------------------------ the crons
-def test_the_acquisition_event_is_hourly_and_the_run_crons_are_unchanged():
+def test_the_scheduled_events_are_seeds_only_and_name_no_job_of_the_chain():
     crons = [c['cron'] for c in ON['schedule']]
-    assert crons == ['20 * * * *', '40 10 * * *', '40 13 * * *'] and crons[-2:] == RUN_CRONS
-    assert fromjson_list(str(JOBS['gate']['if'])) == ACQUIRE_CRONS == ['20 * * * *']
-    assert "'PLACEHOLDER" not in TEXT and 'PLACEHOLDER:' not in TEXT
+    assert crons == ['20 * * * *', '40 13 * * *'] == ACQUIRE_CRONS + RUN_CRONS
     assert 'reports/cp18d/schedule-probe.json' in TEXT.split('\non:\n')[1].split('\n  workflow_dispatch:')[0]
+    for cron in crons:
+        assert selected(event='schedule', schedule=cron, var='enabled') == (
+            {'seed', 'keep-alive'} if cron == '40 13 * * *' else {'seed'})
+    for name in ('tick', 'acquire', 'run', 'alert', 'next'):
+        assert 'github.event.schedule' not in str(JOBS[name]['if']), name
+    assert WF['run-name'] == ("daily ${{ github.event_name == 'workflow_dispatch' && inputs.mode || "
+                              "format('seed {0}', github.event.schedule) }}")
 
 
-def test_the_gate_runs_on_linux_with_the_window_file_only_and_the_acquisition_follows_it():
-    gate, acquire = JOBS['gate'], JOBS['acquire']
-    assert gate['runs-on'].startswith('ubuntu') and gate['permissions'] == {'contents': 'read'}
-    assert gate['timeout-minutes'] == 355 and gate['outputs'] == {'go': '${{ steps.window.outputs.go }}'}
-    checkout = gate['steps'][0]
-    assert checkout['uses'].startswith('actions/checkout@') and re.search(r'@[0-9a-f]{40}$', checkout['uses'])
-    assert checkout['with'] == {'persist-credentials': False, 'sparse-checkout': 'src/cp18/window.py',
-                                'sparse-checkout-cone-mode': False}
-    _, window = step('gate', 'window.py')
-    assert 'python3 src/cp18/window.py' in window['run'] and 'secrets' not in str(gate)
-    _, sleep = step('gate', 'sleep "$SLEEP"')
-    assert sleep['if'] == "steps.window.outputs.go == 'true' && steps.window.outputs.sleep_seconds != '0'"
-    assert acquire['needs'] == 'gate' and acquire['if'] == "needs.gate.outputs.go == 'true'"
-    # the gate holds every condition the acquisition held before CP-18d
-    assert str(gate['if']).startswith(f"github.repository == '{PRODUCT}'") and "vars.DAILY_SCHEDULE == 'enabled'" in str(gate['if'])
-    # the gate's sleep fits its limit: at most 5.75 h, with the checkout and the plan before it
-    from cp18 import window as W
-    assert W.MAX_SLEEP_HOURS * 60 + 10 <= gate['timeout-minutes'] <= 360
+def _files(job: str) -> list[str]:
+    (co,) = [s for s in steps(job) if str(s.get('uses', '')).startswith('actions/checkout@')]
+    assert re.search(r'@[0-9a-f]{40}$', co['uses']) and co['with']['persist-credentials'] is False
+    assert co['with']['sparse-checkout-cone-mode'] is False
+    return co['with']['sparse-checkout'].split()
+
+
+def test_the_chains_jobs_their_runners_their_permissions_and_their_limits():
+    seed, tick, alert, nxt, rehearsal = (JOBS[n] for n in ('seed', 'tick', 'alert', 'next', 'chain-dry-run'))
+    for job in (seed, tick, alert, nxt, rehearsal):
+        assert job['runs-on'].startswith('ubuntu'), job['name']
+    assert seed['permissions'] == {'contents': 'read', 'actions': 'write'} and seed['timeout-minutes'] <= 10
+    assert tick['permissions'] == {'contents': 'read'} and tick['timeout-minutes'] == 355
+    assert alert['permissions'] == {'contents': 'read', 'issues': 'write'} and alert['timeout-minutes'] <= 10
+    assert nxt['permissions'] == {'contents': 'read', 'actions': 'write'} and nxt['timeout-minutes'] <= 20
+    assert rehearsal['permissions'] == {'contents': 'read', 'actions': 'write'}
+    # write permissions only where they are needed
+    writes = {n: {k for k, v in j['permissions'].items() if v == 'write'} for n, j in JOBS.items()}
+    assert {n for n, w in writes.items() if 'actions' in w} == {'seed', 'next', 'chain-dry-run', 'keep-alive'}
+    assert {n for n, w in writes.items() if 'issues' in w} == {'alert'}
+    assert {n for n, w in writes.items() if 'contents' in w} == {'acquire', 'run'}
+    # each reads only its files; the tick and the alert read main as it is now (after this link's records)
+    assert _files('seed') == _files('next') == _files('chain-dry-run') == [
+        'src/cp18/chain.py', 'src/cp18/window.py', 'src/cp18/alert.py']
+    assert _files('tick') == ['src/cp18/chain.py', 'src/cp18/window.py', 'live/store/runs']
+    assert _files('alert') == ['src/cp18/alert.py', 'src/cp18/chain.py', 'src/cp18/window.py',
+                               'live/store/ledger.jsonl', 'live/store/issued']
+    for name in ('tick', 'alert'):
+        (co,) = [s for s in steps(name) if str(s.get('uses', '')).startswith('actions/checkout@')]
+        assert co['with']['ref'] == 'main'
+    # the chain's order: the tick, then the acquisition or the run, then the alert, then the next link
+    assert JOBS['acquire']['needs'] == 'tick' and JOBS['acquire']['if'] == "needs.tick.outputs.action == 'acquire'"
+    assert JOBS['run']['needs'] == 'tick' and JOBS['run']['if'] == "needs.tick.outputs.action == 'run'"
+    assert alert['needs'] == ['tick', 'acquire', 'run'] and nxt['needs'] == ['tick', 'acquire', 'run', 'alert']
+    assert str(alert['if']).startswith('always()') and str(nxt['if']).startswith('always()')
+    assert "vars.DAILY_SCHEDULE == 'enabled'" in str(nxt['if'])          # the schedule's variable stops the chain
+    assert JOBS['acquire']['outputs'] == {'shown': '${{ steps.outcome.outputs.shown }}',
+                                          'stopped': '${{ steps.outcome.outputs.stopped }}'}
+
+
+def test_the_tick_the_alert_and_the_next_link_run_the_chain_and_alert_commands():
+    _, tick = step('tick', 'chain.py tick')
+    assert one_line(tick['run']).endswith('python3 src/cp18/chain.py tick --store live/store --last "$LAST" '
+                                          '"${force[@]}" --sleep >> "$GITHUB_OUTPUT"')
+    assert 'live) force=(--force run)' in tick['run'] and 'acquire-live) force=(--force acquire)' in tick['run']
+    assert tick['env'] == {'LAST': '${{ inputs.last }}', 'MODE': '${{ inputs.mode }}'}
+    _, alert = step('alert', 'alert.py')
+    assert 'python3 src/cp18/alert.py --repo "$GITHUB_REPOSITORY" --store live/store --run-url "$RUN_URL"' in \
+        one_line(alert['run'])
+    assert alert['env']['GH_TOKEN'] == '${{ github.token }}' and 'secrets.' not in json.dumps(alert)
+    _, nxt = step('next', 'chain.py next')
+    assert 'sleep 600' in nxt['run'] and nxt['env']['GH_TOKEN'] == '${{ github.token }}'
+    _, seed = step('seed', 'chain.py seed')
+    assert one_line(seed['run']) == 'python3 src/cp18/chain.py seed --repo "$GITHUB_REPOSITORY"'
+    for name in ('seed', 'tick', 'alert', 'next', 'chain-dry-run'):
+        assert 'secrets.' not in json.dumps(JOBS[name]), name
+
+
+def test_a_link_by_hand_acts_at_once_and_the_disabled_schedule_stops_the_chain():
+    assert selected(event='workflow_dispatch', mode='live', action='run', var='enabled') == {'tick', 'run', 'alert', 'next'}
+    assert selected(event='workflow_dispatch', mode='live', action='run', var='') == {'tick', 'run', 'alert'}
+    assert selected(event='workflow_dispatch', mode='chain', action='acquire', var='') == set()
+    assert selected(event='workflow_dispatch', mode='chain', action='none', var='enabled') == {'tick', 'alert', 'next'}
 
 
 def _stop_after(job: str) -> int:
@@ -152,11 +200,12 @@ def test_on_every_day_of_two_years_any_event_in_the_gates_band_starts_the_acquis
 
 def test_the_header_states_the_schedule_and_the_groups():
     for part in ('09:03 and 09:17 UTC', '6 h 11 min to 7 h 36 min', 'the job\'s start + 340 min', 'timeout-minutes 355',
-                 "GitHub's 6-hour job limit", 'an acquisition that finds nothing missing commits nothing',
-                 'daily-dry-run', 'daily-acquire', 'daily-run', 'cancels an older', 'O47',
+                 "GitHub's 6-hour job limit", 'An acquisition that finds nothing missing commits nothing',
+                 'daily-dry-run', 'daily-chain', 'daily-seed', 'cancels an older', 'O47', 'O54',
                  'touch none of the pusher\'s own files', 'refuses otherwise', '10:00 UTC in winter time',
-                 '09:00 UTC in summer time', 'the first runner day had none fire', 'every hour (`20 * * * *`)',
-                 'band of about 11 hours', 'cancelled, by design'):
+                 '09:00 UTC in summer time', 'the first runner day had none fire', 'late by up to 12 hours',
+                 'at most one chain survives', 'however late, restarts it', 'never a credential',
+                 'two never write the same day'):
         assert part in ' '.join(line.lstrip('# ') for line in HEADER.splitlines()), part
 
 
@@ -170,7 +219,9 @@ def test_the_rehearsal_modes_are_dispatch_only_and_read_only():
         assert selected(event='workflow_dispatch', mode='acquire-dry-run', repository=repository) == {'acquire-dry-run'}
     for cron in ACQUIRE_CRONS + RUN_CRONS:
         for var in ('enabled', ''):
-            assert not selected(event='schedule', schedule=cron, var=var) & {'dry-run', 'acquire-dry-run'}
+            assert not selected(event='schedule', schedule=cron, var=var) & {'dry-run', 'acquire-dry-run', 'chain-dry-run'}
+    for repository in (PRODUCT, SCRATCH):
+        assert selected(event='workflow_dispatch', mode='chain-dry-run', repository=repository) == {'chain-dry-run'}
     job = JOBS['acquire-dry-run']
     assert job['runs-on'] == 'macos-26' and job['permissions'] == {'contents': 'read'}
     assert job['timeout-minutes'] <= 60
@@ -277,13 +328,16 @@ def test_the_runs_artifact_keeps_the_whole_build_recorded_before_the_arrays_are_
 
 # ------------------------------------------------------------------------------------------------ unchanged
 def test_the_live_guarantees_stand():
-    for name in ('gate', 'run', 'keep-alive'):             # the acquisition follows the gate (`needs: gate`)
+    for name in ('seed', 'tick', 'keep-alive'):            # the chain's other jobs follow the tick (`needs`)
         assert str(JOBS[name]['if']).startswith(f"github.repository == '{PRODUCT}'"), name
+    for name in ('seed', 'keep-alive'):
         assert "vars.DAILY_SCHEDULE == 'enabled'" in str(JOBS[name]['if']), name
+    for name in ('alert', 'next'):
+        assert f"github.repository == '{PRODUCT}'" in str(JOBS[name]['if']), name
     assert {n for n, j in JOBS.items() if j['permissions'].get('contents') == 'write'} == {'acquire', 'run'}
     keep = JOBS['keep-alive']
     assert "github.event.schedule == '40 13 * * *'" in str(keep['if']) and keep['permissions'] == {'actions': 'write'}
-    assert selected(event='schedule', schedule='40 13 * * *', var='enabled') == {'run', 'keep-alive'}
+    assert selected(event='schedule', schedule='40 13 * * *', var='enabled') == {'seed', 'keep-alive'}
     assert 'every live run, acquisition included, pushes a data-only commit to main' in HEADER and '60 days' in HEADER
     _, store = step('dry-run', 'seed-store')
     assert 'git rm -r -q --ignore-unmatch -- live' in store['run'] and 'rm -rf live' in store['run']
