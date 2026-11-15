@@ -162,3 +162,50 @@ from 2023-01-01. The cumulative series is the daily rows themselves.
   words.
 
 **Nothing else is computed:** no other battery, rule, threshold or variant.
+
+---
+
+The sections below were written after the results existed.
+
+## §1. What the round produced
+
+| Item (the brief's outcome) | Where | Evidence |
+|---|---|---|
+| 1 The rules fixed before any number | §0, committed in `212a39cc`, corrected in `774238d2`, both before any profit was kept | `git log` |
+| 2 The checks before the results | `reports/cp29/checks.json` | the naive's parity 8/8 with CP-26's B0, 5/5 with the frozen package's; P-all 2,068, P-v5 358; the brute force never beat the solver in 184 programmes; every schedule within the limits; perfect foresight never negative; no tie-break fallback |
+| 3 The results, exactly the contract's | `reports/cp29/daily.csv` (26,964 rows), `summary.csv`, `paired.csv` | `python -m cp29.evaluate --check`; `tests/cp29/test_evaluation.py` (a fresh re-solve of sampled days reproduces the committed rows) |
+| 4 The records | `reports/cp29/`: the daily rows, each labelled simulated, development, post-selection; the summaries and pairs derived from them alone | the same |
+| 5 The report | `reports/cp29/report.md`, written from the records (`python -m cp29.report --check`) | `tests/cp29/test_evaluation.py` |
+| 6 The registry entries for PRES-7 | `research.py`: three sources and 2,076 `cp29.*` records; `research_claims.py`: eight claim blocks (C1101–C1108) on the `PRES7` surface, rendered nowhere in this round, and W56, W57; `registry.py`: `evidence/cp-29`; the claim map `docs/track-b/research-content/cp29-claims.md` | `tests/cp29/test_claims.py`; `tests/test_29`, `tests/test_30` |
+
+**One defect found and fixed before commit:** the first summaries listed v5 under P-all, whose share of perfect
+foresight then compared v5's 358 days with perfect foresight's 2,068. The contract runs v5 on P-v5 only; P-all's
+summaries now omit it, and a test refuses the mixing.
+
+## §2. The export manifest (ruling O59)
+
+`scripts/mlflow_export.py` regenerated `reports/presentation/mlflow-export/manifest.json`. **Every changed line is a
+CP-29 source entry** (`git diff`, 23 lines, all additions):
+
+```text
++  "reports/cp29/daily.csv": {
++   "blob": "c0a8794b8139633cf945922e460db699ca4facab",
++   "tag": "evidence/cp-29"
++  },
++  "reports/cp29/paired.csv": {
++   "blob": "64d305bd70e844ca19b6701872f2f4aff248141a",
++   "tag": "evidence/cp-29"
++  },
++  "reports/cp29/summary.csv": {
++   "blob": "6e969b79ce891a7ea861d412a44ce20e25e97b92",
++   "tag": "evidence/cp-29"
++  },
+```
+
+No run, experiment tag, description or other field changed; no other export file changed; nothing was uploaded or
+written to MLflow. The pin check before the edit: no committed file cites the manifest's earlier bytes (blob
+`17ea2a73…`, SHA-256 `c9eaac33…`). `tests/test_34`: see §3.
+
+## §3. Checks run
+
+(Filled at the candidate.)
