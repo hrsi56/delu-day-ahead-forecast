@@ -379,6 +379,9 @@ brief `54169c7c…`, under PUBLISH_RULES 1.4.
 - **CP-18d issued on 2026-11-15** (brief `d4fcc76a…`; Session Log): decision 31 in the live product (v6 with the
   late load forecast, labelled), an earlier acquisition from the schedule probe, the claim over a moved `main`
   (O47), and the Space's wording follow-ups.
+- **Decision 32 and CP-29, 2026-11-15:** the Owner approved the economic-policy contract (battery arbitrage in the
+  day-ahead market; [contract](docs/track-b/economic-policy-contract-2026-11-15.md)). CP-29 issued (brief `c3a5a891…`):
+  it runs the contract on development days only; PRES-7 then shows the profit chart in Business insights.
 - *The withdrawn brief's text, kept for its history:* CP-17, the freeze. Issued 2026-10-25, brief `64758101…`, canonical copy
   `.local/artifacts/cp-17/withdrawn-64758101/issued-brief.md`, with a 15-machine-hour ceiling. It covers:
   - the A1 GFS check;
@@ -1180,6 +1183,15 @@ Session Log.
 ---
 
 ## 5. Session Log — newest first
+
+- **Decision 32; CP-29 issued, 2026-11-15** (brief `c3a5a8919631293916a0a457ca93542e0544a400a8bc9019596fb00313e3a1b0`;
+  canonical copy `.local/artifacts/cp-29/issued-brief.md`).
+  - **Why.** Business insights names the gap: no economic evaluation exists. The Owner chose battery arbitrage and
+    approved the contract the Orchestrator drafted (decision 32), frozen by its SHA-256 before 4.7T opens.
+  - **What it does:** a price-taking 1 MW / 2 MWh battery scheduled from each forecast and settled at the cleared
+    price, on P-all (2,068 days) and P-v5 (358 days); v6 against the naive, v5 and perfect foresight; simulated,
+    development, post-selection. No fit; 4.7T unchanged. It runs beside CP-18d, on disjoint paths (O56).
+  - **Ceilings:** about 10 active hours, 4 local machine-hours and 4 workers.
 
 - **CP-18d issued, 2026-11-15** (brief `d4fcc76a3c91d52d1558079f3a0d762c5f7f03378f1937289fa1d991e4dcadca`;
   canonical copy `.local/artifacts/cp-18d/issued-brief.md`).
