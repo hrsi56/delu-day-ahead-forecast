@@ -124,7 +124,11 @@ def test_every_record_declares_its_unit_population_and_class(registry):
             # CP-24's decision-level records carry the rule's 97.5% interval (capstone v21-r11 §23.9); every other is 95%.
             level = 0.975 if "97_5." in record.record_id else 0.95
             assert record.interval.level == level
-            if record.checkpoint == "PRES-6":
+            if record.checkpoint == "CP-29":
+                # CP-29: the paired differences' bootstrap, fixed in its packet's §0 before any number.
+                assert (record.interval.replicates, record.interval.seed, record.interval.block_days) == (
+                    2000, 20261115, 14), record.record_id
+            elif record.checkpoint == "PRES-6":
                 # PRES-6: the regime means' bootstrap, fixed in its packet's §0 before the computation.
                 assert (record.interval.replicates, record.interval.seed, record.interval.block_days) == (
                     2000, 20261114, 14), record.record_id

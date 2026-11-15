@@ -65,6 +65,10 @@ def _source(path: str, tag: str, blob: str) -> tuple[str, Source]:
 #: CP-10's files landed with CP-15, and CP-16's are also reachable from `evidence/cp-20`.
 SOURCES: dict[str, Source] = dict(
     [
+        # CP-29: the economic evaluation under the approved contract (decision 32; `python -m cp29.evaluate`)
+        _source("reports/cp29/summary.csv", "evidence/cp-29", "6e969b79ce891a7ea861d412a44ce20e25e97b92"),
+        _source("reports/cp29/paired.csv", "evidence/cp-29", "64d305bd70e844ca19b6701872f2f4aff248141a"),
+        _source("reports/cp29/daily.csv", "evidence/cp-29", "c0a8794b8139633cf945922e460db699ca4facab"),
         # PRES-6: v6's product results on development days (`delu_forecast.final_candidate --product`)
         _source("reports/pres6/product-results/monthly.csv", "evidence/pres-6", "ebfb21bfce7c32fb91be56d914d8fc86eaf5c557"),
         _source("reports/pres6/product-results/regimes.csv", "evidence/pres-6", "446687f132f5555bdaf65a9235ad3723f2979159"),
@@ -1407,6 +1411,79 @@ def _pres6_records() -> list[EvidenceRecord]:
     return out
 
 
+# --------------------------------------------------------------------------- CP-29: the economic evaluation
+
+CP29_FILES = {"summary": "reports/cp29/summary.csv", "paired": "reports/cp29/paired.csv"}
+#: CP-29's money and energy units: a total or a daily figure in EUR (not EUR/MWh), a paired difference, energy.
+UNIT_EUR_MONEY = "EUR"
+UNIT_EUR_MONEY_DIFF = "EUR, paired difference of daily profits"
+UNIT_MWH = "MWh"
+EVIDENCE_CLASS_SIMULATED = "simulated_development_post_selection"
+#: The paired differences' bootstrap, fixed in CP-29's packet §0 before any number.
+CP29_INTERVAL = Interval("paired non-circular moving-block bootstrap of the mean daily profit difference (CP-29)",
+                         0.95, 20261115, 2000, 14)
+_CP29_UNITS = {"cumulative_profit_eur": UNIT_EUR_MONEY, "mean_eur": UNIT_EUR_MONEY, "median_eur": UNIT_EUR_MONEY,
+               "p05_eur": UNIT_EUR_MONEY, "p95_eur": UNIT_EUR_MONEY, "largest_daily_loss_eur": UNIT_EUR_MONEY,
+               "max_drawdown_eur": UNIT_EUR_MONEY, "share_of_perfect_foresight": UNIT_FRACTION,
+               "losing_share": UNIT_FRACTION, "days": UNIT_DAYS, "missing_days": UNIT_DAYS, "trading_days": UNIT_DAYS,
+               "losing_days": UNIT_DAYS, "bought_mwh": UNIT_MWH, "sold_mwh": UNIT_MWH, "discharged_battery_mwh": UNIT_MWH,
+               "full_cycles": UNIT_COUNT, "mean_difference_eur": UNIT_EUR_MONEY_DIFF,
+               "total_difference_eur": UNIT_EUR_MONEY_DIFF}
+_CP29_PRECISION = {UNIT_EUR_MONEY: 0, UNIT_EUR_MONEY_DIFF: 0, UNIT_FRACTION: 4, UNIT_DAYS: 0, UNIT_MWH: 0,
+                   UNIT_COUNT: 0}
+#: A daily figure (a mean, a median, a percentile, a mean daily difference) is shown to one decimal, in EUR.
+_CP29_DAILY = {"mean_eur", "median_eur", "p05_eur", "p95_eur", "mean_difference_eur"}
+_CP29_POPULATION = {("P-all", "all"): "cp26-every-day", ("P-v5", "all"): "pres6-p-v5"}
+_CP29_ID = {"P-all": "p_all", "P-v5": "p_v5"}
+
+
+def _cp29_population(population: str, scope: str) -> str:
+    base = _CP29_POPULATION[(population, "all")]
+    return base if scope == "all" else f"{base}/{scope}"
+
+
+def _cp29_record(record_id: str, path: str, line: int, row: dict[str, str], selector: dict[str, str], field: str, *,
+                 population: str, interval: Interval | None = None, ci: tuple[str, str] | None = None,
+                 comparator: str | None = None) -> EvidenceRecord:
+    unit = _CP29_UNITS[field]
+    return EvidenceRecord(
+        record_id=record_id, checkpoint="CP-29", generation="v6", policy_code="A1", source_path=path,
+        selector=tuple(selector.items()), field=field, metric=field, unit=unit, aggregation="record",
+        population_id=population, comparator=comparator, evidence_class=EVIDENCE_CLASS_SIMULATED,
+        window=CP26_WINDOW, display_precision=1 if field in _CP29_DAILY else _CP29_PRECISION[unit], raw=row[field],
+        source_line=line,
+        interval=interval, ci_low_raw=row[ci[0]] if ci else None, ci_high_raw=row[ci[1]] if ci else None,
+        ci_columns=ci or ("ci_lower", "ci_upper"))
+
+
+def _cp29_records() -> list[EvidenceRecord]:
+    """The contract's measures (CP-29's `summary.csv`) and the paired differences with their intervals (`paired.csv`),
+    each from its committed row: `cp29.<p_all|p_v5>.<scope>.<source>.<rule>.w<wear>.<field>` and
+    `cp29.paired.<p_all|p_v5>.<rule>.<source>_minus_<minus>.w<wear>.<field>`."""
+    out = []
+    for line, row in _rows(CP29_FILES["summary"]):
+        keys = {k: row[k] for k in ("population", "scope", "source", "rule", "wear_eur_per_mwh")}
+        stem = (f"cp29.{_CP29_ID[row['population']]}.{row['scope']}.{row['source']}.{row['rule']}"
+                f".w{row['wear_eur_per_mwh']}")
+        for field in _CP29_UNITS:
+            if field in row and row[field] != "" and not field.startswith(("mean_difference", "total_difference")):
+                out.append(_cp29_record(f"{stem}.{field}", CP29_FILES["summary"], line, row, keys, field,
+                                        population=_cp29_population(row["population"], row["scope"])))
+    for line, row in _rows(CP29_FILES["paired"]):
+        keys = {k: row[k] for k in ("population", "rule", "source", "minus", "wear_eur_per_mwh")}
+        stem = (f"cp29.paired.{_CP29_ID[row['population']]}.{row['rule']}.{row['source']}_minus_{row['minus']}"
+                f".w{row['wear_eur_per_mwh']}")
+        population = _cp29_population(row["population"], "all")
+        out.append(_cp29_record(f"{stem}.mean_difference_eur", CP29_FILES["paired"], line, row, keys,
+                                "mean_difference_eur", population=population, interval=CP29_INTERVAL,
+                                ci=("mean_ci_lower", "mean_ci_upper"), comparator=row["minus"]))
+        out.append(_cp29_record(f"{stem}.total_difference_eur", CP29_FILES["paired"], line, row, keys,
+                                "total_difference_eur", population=population, interval=CP29_INTERVAL,
+                                ci=("total_ci_lower", "total_ci_upper"), comparator=row["minus"]))
+        out.append(_cp29_record(f"{stem}.days", CP29_FILES["paired"], line, row, keys, "days", population=population))
+    return out
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, EvidenceRecord]:
     """Every published evidence record, keyed by `record_id`."""
@@ -1414,6 +1491,7 @@ def records() -> dict[str, EvidenceRecord]:
     cp16_windows = _fold_windows("reports/v2-causal/metrics.csv")
     cp21_windows = _fold_windows("reports/block-challenger/metrics.csv")
     built: list[EvidenceRecord] = []
+    built += _cp29_records()
     built += _pres6_records()
     built += _pres5_records()
     built += _checkpoint_records("cp24", "CP-24", CP24_ROWS)
@@ -1503,6 +1581,8 @@ def daily_series(checkpoint: str, policy: str, column: str = "MAE") -> tuple[Dai
 
 
 def _expected_unit(record: EvidenceRecord) -> str:
+    if record.checkpoint == "CP-29":
+        return _CP29_UNITS[record.field]
     if record.checkpoint == "PRES-6" and record.selector[0][0] != "json":
         return _pres6_unit(record)
     if record.unit == UNIT_LABEL or record.selector[0][0] == "json":
@@ -1519,6 +1599,8 @@ def _expected_unit(record: EvidenceRecord) -> str:
 
 
 def _expected_aggregation(record: EvidenceRecord) -> str | None:
+    if record.checkpoint == "CP-29":
+        return "record"                  # CP-29's rows are its own measures; its `scope` column is a regime, not a fold
     selector = record.selector_dict()
     if record.field == "difference":
         return "equal_fold_contrast" if selector["scope"] == "equal_fold" else "per_fold_contrast"
@@ -1649,8 +1731,9 @@ def format_number(raw: str, precision: int, *, signed: bool = False, thousands: 
 
 
 #: Differences are shown with an explicit sign: "+0.037" is a finding, "0.037" is ambiguous.
-SIGNED_UNITS = {UNIT_NORM_DIFF, UNIT_EUR_DIFF}
-THOUSANDS_UNITS = {UNIT_COUNT, UNIT_HOURS, UNIT_DAYS, UNIT_RUNS, UNIT_MESSAGES, UNIT_REPLICATES}
+SIGNED_UNITS = {UNIT_NORM_DIFF, UNIT_EUR_DIFF, UNIT_EUR_MONEY_DIFF}
+THOUSANDS_UNITS = {UNIT_COUNT, UNIT_HOURS, UNIT_DAYS, UNIT_RUNS, UNIT_MESSAGES, UNIT_REPLICATES, UNIT_EUR_MONEY,
+                   UNIT_EUR_MONEY_DIFF, UNIT_MWH}
 
 
 def display(record: EvidenceRecord, which: str = "value", *, precision: int | None = None,

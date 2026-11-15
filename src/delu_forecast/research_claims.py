@@ -43,6 +43,7 @@ CLAIM_MAPS = (
     REPO_ROOT / "docs" / "track-b" / "research-content" / "publication-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "pres5-claims.md",
     REPO_ROOT / "docs" / "track-b" / "research-content" / "pres6-claims.md",
+    REPO_ROOT / "docs" / "track-b" / "research-content" / "cp29-claims.md",
 )
 
 # --------------------------------------------------------------------------- names and labels
@@ -96,6 +97,8 @@ def _block(key: str, claim_id: str, template: str, *surfaces: str) -> Block:
 
 
 PAGE, README = "page", "readme"
+#: CP-29: claims written for PRES-7's Business insights, which renders them; until then they are on no published surface.
+PRES7 = "pres7"
 
 _HG_MAE = "cp20.uncertainty.HG-H0.equal_fold.MAE"
 _HG_WIS = "cp20.uncertainty.HG-H0.equal_fold.WIS"
@@ -1160,7 +1163,64 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            data; the Space shows the live record, prospective evaluation in progress.""", PAGE, README),
 )
 
-BLOCKS = BLOCKS + PRES5_BLOCKS + PRES6_BLOCKS
+_W25 = "cp29.p_all.all.{source}.{rule}.w25"
+_V6, _NV, _PF = (_W25.format(source="v6", rule="median"), _W25.format(source="naive", rule="median"),
+                 _W25.format(source="perfect_foresight", rule="perfect"))
+_PAIR = "cp29.paired.{pop}.{rule}.v6_minus_{minus}.w25"
+
+#: CP-29: the economic evaluation under the Owner's approved contract (decision 32), written for PRES-7's Business
+#: insights. Every number is a CP-29 record (`reports/cp29/`), evidence class simulated, development, post-selection.
+CP29_BLOCKS: tuple[Block, ...] = (
+    _block("economics.setup", "C1101", """**How the forecast was put to use, in a simulation.** A battery trading in the
+           German–Luxembourg day-ahead market: {s:contract:1 MW} at the grid, {s:contract:2 MWh} usable, {s:level:85%}
+           round trip, at most one cycle a day, and charging or discharging in an hour, never both. Each day its
+           schedule is fixed from the forecast before the {s:time:12:00} auction, then settled at the cleared prices,
+           net of the battery's wear ({s:contract:€25} per MWh leaving it) and the exchange fees ({s:contract:€0.10}
+           per MWh bought or sold).""", PRES7),
+    _block("economics.finding", "C1102", """On all """ + "{r:" + _V6 + """.days} eligible development days, the schedule
+           from {g:v6.version}'s forecasts would have earned {r:""" + _V6 + """.cumulative_profit_eur} EUR net,
+           {r:""" + _V6 + """.share_of_perfect_foresight} of what a perfect forecast would have earned
+           ({r:""" + _PF + """.cumulative_profit_eur} EUR). The similar-day naive's would have earned
+           {r:""" + _NV + """.cumulative_profit_eur} EUR, {r:""" + _NV + """.share_of_perfect_foresight} of it.""",
+           PRES7),
+    _block("economics.difference", "C1103", """Day by day on the same days, {g:v6.version}'s schedule earned
+           {r:""" + _PAIR.format(pop="p_all", rule="median", minus="naive") + """.total_difference_eur} EUR more
+           than the naive's {r:""" + _PAIR.format(pop="p_all", rule="median", minus="naive") + """.total_difference_eur|ci}:
+           a {s:level:95%} interval from resampling {s:count:14}-day blocks of these days, not a forecast for other
+           days.""", PRES7),
+    _block("economics.v5", "C1104", """On the {r:cp29.p_v5.all.v6.median.w25.days} days of {g:v5.version}'s test
+           periods, {g:v6.version}'s and {g:v5.version}'s schedules earned about the same,
+           {r:cp29.p_v5.all.v6.median.w25.cumulative_profit_eur} and {r:cp29.p_v5.all.v5.median.w25.cumulative_profit_eur}
+           EUR: a difference of {r:""" + _PAIR.format(pop="p_v5", rule="median", minus="v5") + """.total_difference_eur}
+           EUR {r:""" + _PAIR.format(pop="p_v5", rule="median", minus="v5") + """.total_difference_eur|ci}, whose
+           interval spans zero.""", PRES7),
+    _block("economics.risk", "C1105", """**Losses.** The schedule from {g:v6.version}'s forecasts lost money on
+           {r:""" + _V6 + """.losing_days} of the days, at most {r:""" + _V6 + """.largest_daily_loss_eur} EUR in a day,
+           and its cumulative earnings fell at most {r:""" + _V6 + """.max_drawdown_eur} EUR below an earlier peak. The
+           naive's lost on {r:""" + _NV + """.losing_days} days, at most {r:""" + _NV + """.largest_daily_loss_eur} EUR
+           in a day. A perfect forecast never loses: it can always do nothing.""", PRES7),
+    _block("economics.sensitivity", "C1106", """**The wear cost is an assumption,** so it was varied, never chosen
+           afterwards: with none, {g:v6.version}'s schedule would have earned
+           {r:cp29.p_all.all.v6.median.w0.cumulative_profit_eur} EUR ({r:cp29.p_all.all.v6.median.w0.share_of_perfect_foresight}
+           of a perfect forecast's), and at {s:contract:€50} per MWh, {r:cp29.p_all.all.v6.median.w50.cumulative_profit_eur}
+           EUR ({r:cp29.p_all.all.v6.median.w50.share_of_perfect_foresight}).""", PRES7),
+    _block("economics.regimes", "C1107", """By regime, {g:v6.version}'s schedule earned
+           {r:cp29.p_all.pre_crisis.v6.median.w25.share_of_perfect_foresight} of a perfect forecast's before the
+           crisis ({r:cp29.p_all.pre_crisis.v6.median.w25.days} days, when even a perfect forecast earned only
+           {r:cp29.p_all.pre_crisis.perfect_foresight.perfect.w25.mean_eur} EUR a day on average),
+           {r:cp29.p_all.crisis.v6.median.w25.share_of_perfect_foresight} in it
+           ({r:cp29.p_all.crisis.v6.median.w25.days} days) and
+           {r:cp29.p_all.negative_prices.v6.median.w25.share_of_perfect_foresight} from {s:date:2023}
+           ({r:cp29.p_all.negative_prices.v6.median.w25.days} days).""", PRES7),
+    _block("economics.limits", "C1108", """**Simulated, development, post-selection.** No money was traded, and
+           {g:v6.version} was selected on these same days, so its result is optimistic for it. Day-ahead arbitrage only:
+           no intraday trading, balancing energy or reserves, which are a large share of a real battery's income; hourly,
+           not quarter-hourly. Not a trading recommendation, not realized income, not a property of {g:v6.version}
+           alone, and not {s:work-item:4.7T}'s result. No return or payback is computed: there is no capital cost.""",
+           PRES7),
+)
+
+BLOCKS = BLOCKS + PRES5_BLOCKS + PRES6_BLOCKS + CP29_BLOCKS
 BLOCKS_BY_KEY: dict[str, Block] = {block.key: block for block in BLOCKS}
 
 #: The blocks a page with a final candidate does not render (PRES-5): v5's headline-only terms and its comparison
@@ -1754,6 +1814,11 @@ WITHHELD_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
         ("W54", r"\b(error|coverage|interval score|intervals?)\b[^.]{0,40}\b(is|are|means|equals|amounts to) (a |an )?"
                 r"(profit|gain in money|return|success rate)\b|\bprofit (curve )?(of|was|is) [−+-]?\d"),
         ("W55", r"\b(these|the product) results\b[^.]{0,40}\b(are|were|is) (prospective|live|4\.7T|unused-data)\b"),
+        # CP-29: no return, IRR, payback or return on investment is computed (no capital cost model, contract §6), and a
+        # simulated profit is never called realized income (contract §§8, 9)
+        ("W56", r"\b(annualized return|internal rate of return|IRR|payback( period| time)?|return on investment|ROI)"
+                r"\b[^.]{0,30}\b(of|was|is|equals) [−+-]?\d"),
+        ("W57", r"\b(realized|actual|real) (income|profit|earnings|revenue)\b[^.]{0,30}\b(of|was|is|were) [−+-]?\d"),
     )
 )
 
