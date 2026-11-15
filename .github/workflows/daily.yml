@@ -7,15 +7,24 @@
 #            through the claim. D's cutoff is D-1 11:00 Europe/Berlin: 10:00 UTC in winter time (CET), 09:00 UTC in
 #            summer time (CEST). The TSOs publish the load forecast by D-1 10:00 Berlin (09:00 / 08:00 UTC); on the live
 #            record's days it was seen first between 09:03 and 09:17 UTC. GitHub starts a scheduled run late, and under
-#            load drops it (the first runner day had none fire), so the acquisition starts early and several times
-#            (CP-18d item 2, decision 31): hourly from 04:20 UTC (PLACEHOLDER hours, set from
-#            reports/cp18d/schedule-probe.json), so that one dropped or delayed start is covered by the next. Each start
-#            waits inside its job (`--window-hours 6`): it polls until D's load forecast is published, or the cutoff's
-#            margin arrives (2 min before it), or its own stop-by (the job's start + 340 min, inside its
-#            timeout-minutes 355 and GitHub's 6-hour job limit); then it publishes the archive. The next pending start
-#            continues after it (its concurrency group runs one acquisition at a time, so two never write the same day
-#            together), and an acquisition that finds nothing missing commits nothing. A start after the summer cutoff
-#            finds the next cutoff a day away, outside `--window-hours 6`, and does nothing.
+#            load drops it: the first runner day had none fire, and the Orchestrator's schedule probe measured this
+#            repository's scheduled runs created 6 h 11 min to 7 h 36 min after their cron time overnight on 2026-11-15,
+#            the delay growing by about half an hour each hour (reports/cp18d/schedule-probe.json).
+#            No fixed cron time can be placed before the cutoff against such a delay, so (CP-18d item 2, decision 31)
+#            the acquisition is scheduled every hour (`20 * * * *`) and each event passes the gate first:
+#   gate     on ubuntu (no macOS runner held): `src/cp18/window.py` (the standard library only) names D (the next day
+#            whose cutoff is ahead) and D's acquisition start, the cutoff less 5.5 h (04:30 UTC winter, 03:30 UTC
+#            summer). An event after the start starts the acquisition at once; an event before it by at most 5.75 h
+#            sleeps in the gate until the start; an earlier event does nothing (a later one will come); an event within
+#            7 min of the cutoff does nothing (the run after the cutoff handles the day). So any one event in a band of
+#            about 11 hours before the cutoff starts D's acquisition in time, whatever the scheduler's delay. A dispatch
+#            (acquire-live) passes at once.
+#   acquire  after the gate: it waits inside its job (`--window-hours 6`): it polls until D's load forecast is published,
+#            or the cutoff's margin arrives (2 min before it), or its own stop-by (the job's start + 340 min, inside its
+#            timeout-minutes 355 and GitHub's 6-hour job limit); then it publishes the archive. One acquisition runs at a
+#            time (its concurrency group); the next pending event continues after it, and an acquisition that finds
+#            nothing missing commits nothing, so two acquisitions never write the same day twice. GitHub cancels an
+#            older pending event when a newer one queues: those runs show as cancelled, by design.
 #   run      after the cutoff: `cp18 run --mode live` (the real clock, inside cp18.boundary.live()) issues the target
 #            day and decision 23's catch-up through the frozen chain; then, once per as-of day, the dated bundle
 #            (`cp18.bundle`, its arrays from this run's own A1 attempt before the results step deletes them, else a
@@ -32,8 +41,9 @@
 #            rehearsals (CP-18d item 5): late_day, a development day whose load forecast is archived as a retrieval after
 #            its cutoff, so the run issues it with the late copy, labelled; move_main, an unrelated commit pushed to the
 #            dry run's origin between the records' commit and their push, so the claim must re-apply them.
-#   acquire-dry-run  workflow_dispatch only (mode acquire-dry-run): the acquisition rehearsed on a development day
-#            (through 2026-09-06): replayed responses, a simulated clock from `now`, the load forecast published
+#   acquire-dry-run  workflow_dispatch only (mode acquire-dry-run): the gate and the acquisition rehearsed on a development
+#            day (through 2026-09-06): the gate's decision at the simulated arrival `now`, its sleep for real (at most
+#            20 min here), then replayed responses, a simulated clock continuing from `now`, the load forecast published
 #            `published_after` minutes later, the in-job wait and its stop-by (the job's start + 45 min, inside its
 #            60-min limit), the archive pushed to the dry run's bare origin through the claim. Fake credentials only.
 # A dispatch with mode live or acquire-live starts the live jobs by hand (the Orchestrator's first dispatch).
@@ -79,14 +89,9 @@ name: daily
 
 on:
   schedule:
-    # PLACEHOLDER: set from reports/cp18d/schedule-probe.json. The acquisition's starts; the acquire job's `if:` lists
-    # the same lines, in the same order.
-    - cron: '20 4 * * *'     # acquire: waits in its job (winter 340 min before the cutoff, summer 280)
-    - cron: '20 5 * * *'     # acquire: the next start, if the one before was dropped or delayed
-    - cron: '20 6 * * *'     # acquire
-    - cron: '20 7 * * *'     # acquire
-    - cron: '20 8 * * *'     # acquire (winter 100 min before the cutoff, summer 40)
-    - cron: '20 9 * * *'     # acquire (winter 40 min before the cutoff; after it in summer: a no-op)
+    # The acquisition's events (CP-18d item 2, from reports/cp18d/schedule-probe.json): every hour; the gate decides.
+    # The gate job's `if:` names the same line.
+    - cron: '20 * * * *'     # acquire: every hour; the gate starts D's acquisition in time, or sleeps, or waits
     - cron: '40 10 * * *'    # run: after the cutoff
     - cron: '40 13 * * *'    # run: the retry (and the keep-alive)
   workflow_dispatch:
@@ -360,21 +365,41 @@ jobs:
       - *checkout
       - *setup-python
       - *uv
+      - name: The gate rehearsed at the simulated arrival `now` (src/cp18/window.py); an early event sleeps, for real (at most 20 min here)
+        id: gate
+        env:
+          DAY: ${{ inputs.day }}
+          NOW: ${{ inputs.now }}
+        run: |
+          [ -n "$DAY" ] && [ -n "$NOW" ] || { echo "an acquisition rehearsal needs the inputs day and now" >&2; exit 2; }
+          # Development days only, through 2026-09-06 (cp18 acquire refuses later days too).
+          { [[ "$DAY" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] && [[ ! "$DAY" > 2026-09-06 ]] && [[ ! "${NOW:0:10}" > 2026-09-06 ]]; } || \
+              { echo "day and now: a development day (YYYY-MM-DD, through 2026-09-06)" >&2; exit 2; }
+          echo "GATE_EPOCH=$(date -u +%s)" >> "$GITHUB_ENV"
+          python3 src/cp18/window.py --now "$NOW" | tee "$RESULTS/gate.txt"
+          cat "$RESULTS/gate.txt" >> "$GITHUB_OUTPUT"
+          grep -qx "day=$DAY" "$RESULTS/gate.txt" || { echo "the gate names another day than $DAY" >&2; exit 2; }
+          sleep_s=$(sed -n 's/^sleep_seconds=//p' "$RESULTS/gate.txt")
+          [ "$sleep_s" -le 1200 ] || { echo "a rehearsal arrival may be at most 20 min before the start" >&2; exit 2; }
+          if grep -qx 'go=true' "$RESULTS/gate.txt" && [ "$sleep_s" != 0 ]; then
+            echo "sleeping ${sleep_s} s, as the live gate would"; sleep "$sleep_s"
+          fi
       - *environment
       - *ecCodes
       - *guards
       - *dry-store
       - name: The acquisition rehearsed (a development day, replayed responses, a simulated clock, the in-job wait)
         id: acquire
+        if: steps.gate.outputs.go == 'true'
         env:
           DAY: ${{ inputs.day }}
           NOW: ${{ inputs.now }}
           AFTER: ${{ inputs.published_after }}
         run: |
-          [ -n "$DAY" ] && [ -n "$NOW" ] || { echo "an acquisition rehearsal needs the inputs day and now" >&2; exit 2; }
-          # Development days only, through 2026-09-06 (cp18 acquire refuses later days too).
-          { [[ "$DAY" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] && [[ ! "$DAY" > 2026-09-06 ]] && [[ ! "${NOW:0:10}" > 2026-09-06 ]]; } || \
-              { echo "day and now: a development day (YYYY-MM-DD, through 2026-09-06)" >&2; exit 2; }
+          # The simulated clock continues from the gate's arrival `now` through the real time since (its sleep included).
+          CLOCK_START=$(python3 -c "import datetime as d, os, time; n = d.datetime.fromisoformat(os.environ['NOW'].replace('Z', '+00:00')); print((n + d.timedelta(seconds=int(time.time()) - int(os.environ['GATE_EPOCH']))).isoformat())")
+          echo "the acquisition's simulated start: $CLOCK_START"
+          NOW="$CLOCK_START"
           # Fake credentials in the consuming process only, derived from the run id and never printed.
           eval "$(.venv/bin/python -c "from cp18.guarddemo import fake_environment as f; import os, shlex; [print(f'export {k}={shlex.quote(v)}') for k, v in f(os.environ.get('GITHUB_RUN_ID', '')).items()]")"
           set +e -o pipefail
@@ -401,14 +426,52 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
-  acquire:
-    name: macos-26 acquisition before the cutoff (live)
-    # PLACEHOLDER: set from reports/cp18d/schedule-probe.json; the same lines as on.schedule's acquisition crons.
+  gate:
+    name: The acquisition's gate (when D's acquisition starts; an early event sleeps here, on Linux)
+    # The same line as on.schedule's acquisition event.
     if: >-
       github.repository == 'hrsi56/delu-day-ahead-forecast' && (
         (github.event_name == 'schedule' && vars.DAILY_SCHEDULE == 'enabled' &&
-         contains(fromJSON('["20 4 * * *", "20 5 * * *", "20 6 * * *", "20 7 * * *", "20 8 * * *", "20 9 * * *"]'), github.event.schedule)) ||
+         contains(fromJSON('["20 * * * *"]'), github.event.schedule)) ||
         (github.event_name == 'workflow_dispatch' && inputs.mode == 'acquire-live'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355  # a sleep of at most 5.75 h (window.py's max_sleep_hours), inside GitHub's 6-hour job limit
+    permissions:
+      contents: read      # the gate's one file only
+    outputs:
+      go: ${{ steps.window.outputs.go }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: src/cp18/window.py
+          sparse-checkout-cone-mode: false
+      - name: When D's acquisition starts (src/cp18/window.py, the standard library only)
+        id: window
+        env:
+          DISPATCHED: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          python3 src/cp18/window.py > "$RUNNER_TEMP/window.txt"
+          cat "$RUNNER_TEMP/window.txt"
+          if [ "$DISPATCHED" = true ]; then
+            # a dispatch by hand starts at once; the acquisition's own day and window rules apply
+            printf 'go=true\nsleep_seconds=0\n' >> "$GITHUB_OUTPUT"
+          else
+            cat "$RUNNER_TEMP/window.txt" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Sleep until D's acquisition starts (an event that arrived before it)
+        if: steps.window.outputs.go == 'true' && steps.window.outputs.sleep_seconds != '0'
+        env:
+          SLEEP: ${{ steps.window.outputs.sleep_seconds }}
+        run: |
+          echo "sleeping ${SLEEP} s, until $(date -u -d "+${SLEEP} seconds" +%Y-%m-%dT%H:%M:%SZ)"
+          sleep "$SLEEP"
+
+  acquire:
+    name: macos-26 acquisition before the cutoff (live)
+    needs: gate
+    # After the gate (which holds the event, repository and schedule conditions): only when it says go.
+    if: needs.gate.outputs.go == 'true'
     runs-on: macos-26
     timeout-minutes: 355  # GitHub's 6-hour job limit, less a margin for the publication after the stop-by
     permissions:

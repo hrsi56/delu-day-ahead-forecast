@@ -60,7 +60,7 @@ def run(root, *, claim, day: str | None = None, poll_seconds: int = 300, margin_
         window_hours: float | None = 3.0, transport=None, clock=None, sleep=time.sleep,
         stop_by: datetime | None = None, live: bool = True, inputs=None) -> dict:
     """One acquisition. With `window_hours`, a run that finds the next cutoff further away than that does nothing
-    (exit 0, "not yet"): a schedule that fires twice a day, for winter and summer time, never polls for a day.
+    (exit 0, "not yet"): an event the workflow's gate (`src/cp18/window.py`) let through always falls inside it.
     `stop_by` ends the polling before that instant (the job's deadline). `live=False` and `inputs` are the rehearsal's
     (development days, `cp18.rehearsal`)."""
     from .live import acquire as AQ

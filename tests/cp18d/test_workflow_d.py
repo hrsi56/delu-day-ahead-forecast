@@ -10,8 +10,9 @@ History-free; no platform requirement beyond bash.
 """
 from __future__ import annotations
 
-from datetime import date, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 import json
+from pathlib import Path
 import re
 import subprocess
 
@@ -25,7 +26,7 @@ HEADER = TEXT.split('\nname: daily')[0]
 SCRATCH = 'hrsi56/delu-pipeline-dryrun'
 GROUPS = ('dry-run', 'acquire', 'run')
 #: The jobs each group may hold.
-MEMBERS = {'dry-run': {'dry-run', 'acquire-dry-run'}, 'acquire': {'acquire'}, 'run': {'run', 'keep-alive'}}
+MEMBERS = {'dry-run': {'dry-run', 'acquire-dry-run'}, 'acquire': {'gate', 'acquire'}, 'run': {'run', 'keep-alive'}}
 UTC = timezone.utc
 LIVE_ONLY = ('--late-day', '--rehearse-moved-main', '--rehearsal', '--clock-start', '--published-after-minutes')
 
@@ -72,18 +73,32 @@ def test_the_run_group_names_the_run_jobs_crons():
 
 
 # ------------------------------------------------------------------------------------------------ the crons
-def test_the_acquisition_crons_agree_and_the_run_crons_are_unchanged():
+def test_the_acquisition_event_is_hourly_and_the_run_crons_are_unchanged():
     crons = [c['cron'] for c in ON['schedule']]
-    assert crons[-2:] == RUN_CRONS == ['40 10 * * *', '40 13 * * *']
-    assert crons[:-2] == fromjson_list(str(JOBS['acquire']['if'])) == ACQUIRE_CRONS
-    assert len(set(crons)) == len(crons)
-    # the placeholder is marked where the list is set, both times
-    schedule_block = TEXT.split('\non:\n')[1].split('\n  workflow_dispatch:')[0]
-    assert 'PLACEHOLDER: set from reports/cp18d/schedule-probe.json' in schedule_block
-    acquire_block = TEXT.split('\n  acquire:\n')[1].split('\n    if: >-')[0]
-    assert 'PLACEHOLDER: set from reports/cp18d/schedule-probe.json' in acquire_block
-    for cron in ACQUIRE_CRONS:
-        assert re.fullmatch(r'\d{1,2} \d{1,2} \* \* \*', cron)
+    assert crons == ['20 * * * *', '40 10 * * *', '40 13 * * *'] and crons[-2:] == RUN_CRONS
+    assert fromjson_list(str(JOBS['gate']['if'])) == ACQUIRE_CRONS == ['20 * * * *']
+    assert "'PLACEHOLDER" not in TEXT and 'PLACEHOLDER:' not in TEXT
+    assert 'reports/cp18d/schedule-probe.json' in TEXT.split('\non:\n')[1].split('\n  workflow_dispatch:')[0]
+
+
+def test_the_gate_runs_on_linux_with_the_window_file_only_and_the_acquisition_follows_it():
+    gate, acquire = JOBS['gate'], JOBS['acquire']
+    assert gate['runs-on'].startswith('ubuntu') and gate['permissions'] == {'contents': 'read'}
+    assert gate['timeout-minutes'] == 355 and gate['outputs'] == {'go': '${{ steps.window.outputs.go }}'}
+    checkout = gate['steps'][0]
+    assert checkout['uses'].startswith('actions/checkout@') and re.search(r'@[0-9a-f]{40}$', checkout['uses'])
+    assert checkout['with'] == {'persist-credentials': False, 'sparse-checkout': 'src/cp18/window.py',
+                                'sparse-checkout-cone-mode': False}
+    _, window = step('gate', 'window.py')
+    assert 'python3 src/cp18/window.py' in window['run'] and 'secrets' not in str(gate)
+    _, sleep = step('gate', 'sleep "$SLEEP"')
+    assert sleep['if'] == "steps.window.outputs.go == 'true' && steps.window.outputs.sleep_seconds != '0'"
+    assert acquire['needs'] == 'gate' and acquire['if'] == "needs.gate.outputs.go == 'true'"
+    # the gate holds every condition the acquisition held before CP-18d
+    assert str(gate['if']).startswith(f"github.repository == '{PRODUCT}'") and "vars.DAILY_SCHEDULE == 'enabled'" in str(gate['if'])
+    # the gate's sleep fits its limit: at most 5.75 h, with the checkout and the plan before it
+    from cp18 import window as W
+    assert W.MAX_SLEEP_HOURS * 60 + 10 <= gate['timeout-minutes'] <= 360
 
 
 def _stop_after(job: str) -> int:
@@ -107,30 +122,41 @@ def test_each_acquisition_and_its_stop_by_stay_inside_six_hours_with_the_timeout
     assert _stop_after('acquire-dry-run') + 10 <= JOBS['acquire-dry-run']['timeout-minutes'] <= 60
 
 
-def test_on_every_day_of_two_years_the_starts_wait_inside_the_window_and_none_acts_after_the_cutoff():
-    """D's cutoff (`cp25.guard.issue_time`): 10:00 UTC in winter, 09:00 UTC in summer. On every day, DST changes
-    included, every start before the cutoff falls within `--window-hours 6` of it (so it waits instead of doing
-    nothing), at least two of them an hour or more ahead (one dropped or delayed start is covered by the next), and a
-    start after the cutoff finds the next cutoff beyond the window (it does nothing). Both run crons follow it."""
+def test_on_every_day_of_two_years_any_event_in_the_gates_band_starts_the_acquisition_in_time():
+    """D's cutoff (`cp25.guard.issue_time`): 10:00 UTC in winter, 09:00 UTC in summer, DST changes included. For an
+    hourly event arriving at any delay, the gate (`src/cp18/window.py`) starts D's acquisition 5.5 h before the cutoff
+    (at once if it arrives later, after a sleep if earlier by at most 5.75 h); the acquisition then covers the
+    publication (seen first 09:03-09:17 UTC in winter: 43-57 min before the cutoff) up to the cutoff's margin, inside
+    its stop-by. So every arrival in the band [cutoff - 11.25 h, cutoff - 7 min] covers the day. Both run crons follow
+    the cutoff."""
+    from cp18 import window as W
+    stop = _stop_after('acquire')
     day = date(2027, 1, 1)
     while day < date(2029, 1, 1):
-        cutoff = guard.issue_time(day + timedelta(days=1))
-        assert cutoff.astimezone(UTC).date() == day
-        ahead = [(cutoff - _cron_time(c, day)) / timedelta(minutes=1) for c in ACQUIRE_CRONS]
-        assert all(m <= 6 * 60 or m <= 0 for m in ahead), (day, ahead)
-        assert sum(60 <= m <= 6 * 60 for m in ahead) >= 2, (day, ahead)
-        assert all(m > 0 or m + 24 * 60 > 6 * 60 for m in ahead), (day, ahead)
+        target = day + timedelta(days=1)
+        cutoff = guard.issue_time(target)
+        assert W.cutoff(target) == cutoff and cutoff.astimezone(UTC).date() == day
+        for minutes_before in range(8, int(11.25 * 60) + 1, 37):     # arrivals across the band
+            now = cutoff - timedelta(minutes=minutes_before)
+            p = W.plan(now)
+            assert p['go'] and p['day'] == str(target), (day, minutes_before, p)
+            begins = now + timedelta(seconds=p['sleep_seconds'])
+            assert begins <= cutoff - timedelta(minutes=57) or begins == now          # before the publication, or now
+            assert begins + timedelta(minutes=stop) >= cutoff - timedelta(minutes=2) or begins == now
+        assert not W.plan(cutoff - timedelta(hours=11.5))['go']                       # earlier: a later event comes
+        assert not W.plan(cutoff - timedelta(minutes=5))['go']                        # too close: the run handles it
         for c in RUN_CRONS:
             assert _cron_time(c, day) > cutoff, (day, c)
         day += timedelta(days=1)
 
 
 def test_the_header_states_the_schedule_and_the_groups():
-    for part in ('09:03 and 09:17 UTC', 'PLACEHOLDER', 'the job\'s start + 340 min', 'timeout-minutes 355',
+    for part in ('09:03 and 09:17 UTC', '6 h 11 min to 7 h 36 min', 'the job\'s start + 340 min', 'timeout-minutes 355',
                  "GitHub's 6-hour job limit", 'an acquisition that finds nothing missing commits nothing',
                  'daily-dry-run', 'daily-acquire', 'daily-run', 'cancels an older', 'O47',
                  'touch none of the pusher\'s own files', 'refuses otherwise', '10:00 UTC in winter time',
-                 '09:00 UTC in summer time', 'the first runner day had none fire'):
+                 '09:00 UTC in summer time', 'the first runner day had none fire', 'every hour (`20 * * * *`)',
+                 'band of about 11 hours', 'cancelled, by design'):
         assert part in ' '.join(line.lstrip('# ') for line in HEADER.splitlines()), part
 
 
@@ -181,11 +207,18 @@ def test_the_acquisition_rehearsal_is_the_dry_runs_setup_then_the_rehearsed_acqu
     assert json.dumps(store, sort_keys=True) in dry                         # the dry run's own store step, aliased
     assert store['run'].index('git rm -r -q --ignore-unmatch -- live') < store['run'].index('seed-store')
     i_guard, guard_step = step('acquire-dry-run', 'git config core.hooksPath .githooks')
+    i_uv, _ = step('acquire-dry-run', 'pip install --no-deps')
+    i_gate, gate = step('acquire-dry-run', 'python3 src/cp18/window.py --now "$NOW"')
     i_env, _ = step('acquire-dry-run', 'uv sync --locked')
     i_acq, acq = step('acquire-dry-run', '-m cp18 acquire')
     i_scan, _ = step('acquire-dry-run', 'cp18.guarddemo scan')
     i_del, _ = step('acquire-dry-run', "-name '*-arrays.npz' -delete")
-    assert 0 < i_env < i_guard < i_store < i_acq < i_scan < i_del, names
+    assert 0 < i_uv < i_gate < i_env < i_guard < i_store < i_acq < i_scan < i_del, names
+    # the gate rehearsed as the live gate decides, its sleep real and bounded; the acquisition only when it says go,
+    # its simulated clock continuing from the arrival through the real time since
+    assert gate['env'] == {'DAY': '${{ inputs.day }}', 'NOW': '${{ inputs.now }}'} and gate['id'] == 'gate'
+    assert '[ "$sleep_s" -le 1200 ]' in gate['run'] and 'sleep "$sleep_s"' in gate['run']
+    assert acq['if'] == "steps.gate.outputs.go == 'true'" and 'GATE_EPOCH' in acq['run']
     assert acq['env'] == {'DAY': '${{ inputs.day }}', 'NOW': '${{ inputs.now }}', 'AFTER': '${{ inputs.published_after }}'}
     command = one_line(acq['run'].split('set +e -o pipefail')[1].split(' 2>&1')[0])
     assert command == ('.venv/bin/python -m cp18 acquire --root . --out "$RESULTS/acquire.json" --remote dryrun '
@@ -217,8 +250,8 @@ def test_the_late_day_is_a_development_day(late_day, code):
                                             ('', '2026-09-04T06:20:00+02:00', 2), ('2026-09-05', '', 2),
                                             ('tomorrow', '2026-09-04T06:20:00+02:00', 2)])
 def test_the_acquisition_rehearsal_runs_on_development_days_only(day, now, code):
-    _, acq = step('acquire-dry-run', '-m cp18 acquire')
-    done = subprocess.run(['bash', '-c', _checks(acq['run'])], capture_output=True, text=True,
+    _, gate = step('acquire-dry-run', 'python3 src/cp18/window.py --now "$NOW"')
+    done = subprocess.run(['bash', '-c', gate['run'].split('echo "GATE_EPOCH')[0]], capture_output=True, text=True,
                           env={'DAY': day, 'NOW': now, 'PATH': '/usr/bin:/bin'})
     assert done.returncode == code, done.stderr
 
@@ -244,7 +277,7 @@ def test_the_runs_artifact_keeps_the_whole_build_recorded_before_the_arrays_are_
 
 # ------------------------------------------------------------------------------------------------ unchanged
 def test_the_live_guarantees_stand():
-    for name in ('acquire', 'run', 'keep-alive'):
+    for name in ('gate', 'run', 'keep-alive'):             # the acquisition follows the gate (`needs: gate`)
         assert str(JOBS[name]['if']).startswith(f"github.repository == '{PRODUCT}'"), name
         assert "vars.DAILY_SCHEDULE == 'enabled'" in str(JOBS[name]['if']), name
     assert {n for n, j in JOBS.items() if j['permissions'].get('contents') == 'write'} == {'acquire', 'run'}
@@ -254,3 +287,25 @@ def test_the_live_guarantees_stand():
     assert 'every live run, acquisition included, pushes a data-only commit to main' in HEADER and '60 days' in HEADER
     _, store = step('dry-run', 'seed-store')
     assert 'git rm -r -q --ignore-unmatch -- live' in store['run'] and 'rm -rf live' in store['run']
+
+
+def test_the_gates_cutoff_and_next_day_are_the_pipelines_on_every_hour_of_two_years():
+    from cp18 import acquire, window as W
+    t = datetime(2027, 1, 1, 0, 20, tzinfo=UTC)
+    while t < datetime(2029, 1, 1, tzinfo=UTC):
+        assert W.next_day(t) == acquire.next_day(t), t
+        assert W.cutoff(W.next_day(t)) == guard.issue_time(W.next_day(t)), t
+        t += timedelta(hours=1)
+
+
+def test_the_gate_runs_without_the_projects_environment():
+    import subprocess
+    import sys
+    root = Path(__file__).resolve().parents[2]
+    done = subprocess.run([sys.executable, '-I', str(root / 'src/cp18/window.py'), '--now', '2026-11-16T23:20:00Z'],
+                          capture_output=True, text=True, cwd='/', env={})
+    assert done.returncode == 0, done.stderr
+    out = dict(line.split('=', 1) for line in done.stdout.strip().splitlines())
+    assert out == {'go': 'true', 'sleep_seconds': str(5 * 3600 + 10 * 60), 'day': '2026-11-18',
+                   'cutoff_utc': '2026-11-17T10:00:00Z', 'start_utc': '2026-11-17T04:30:00Z',
+                   'reason': "sleep until 2026-11-18's acquisition starts (2026-11-17T04:30:00Z)"}

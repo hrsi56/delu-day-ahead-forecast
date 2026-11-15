@@ -24,8 +24,8 @@ TEXT = WORKFLOW.read_text()
 WF = yaml.safe_load(TEXT)
 ON = WF.get('on', WF.get(True))
 JOBS = WF['jobs']
-# CP-18d (item 2): was ['40 7 * * *', '20 8 * * *', '20 9 * * *'], now the hourly PLACEHOLDER starts 04:20-09:20 UTC
-ACQUIRE_CRONS = ['20 4 * * *', '20 5 * * *', '20 6 * * *', '20 7 * * *', '20 8 * * *', '20 9 * * *']
+# CP-18d (item 2): was ['40 7 * * *', '20 8 * * *', '20 9 * * *'], now one event every hour, through the gate job
+ACQUIRE_CRONS = ['20 * * * *']
 RUN_CRONS = ['40 10 * * *', '40 13 * * *']
 PRODUCT = 'hrsi56/delu-day-ahead-forecast'
 UTC = timezone.utc
@@ -50,7 +50,9 @@ def evaluate(expression: str, ctx: dict) -> bool:
         e = e[3:-2]
     names = {'github.event_name': ctx['event'], 'github.event.schedule': ctx.get('schedule', ''),
              'github.repository': ctx['repository'], 'vars.DAILY_SCHEDULE': ctx.get('var', ''),
-             'inputs.mode': ctx.get('mode', '')}
+             'inputs.mode': ctx.get('mode', ''),
+             # CP-18d (item 2): the acquisition follows the gate job; its condition is the gate's answer
+             'needs.gate.outputs.go': ctx.get('go', 'true')}
     for name, value in sorted(names.items(), key=lambda kv: -len(kv[0])):
         e = e.replace(name, repr(value))
     e = re.sub(r"fromJSON\('(.*?)'\)", lambda m: repr(json.loads(m.group(1))), e)
@@ -62,7 +64,10 @@ def evaluate(expression: str, ctx: dict) -> bool:
 
 def selected(**ctx) -> set[str]:
     ctx.setdefault('repository', PRODUCT)
-    return {name for name, job in JOBS.items() if evaluate(str(job['if']), ctx)}
+    chosen = {name for name, job in JOBS.items() if evaluate(str(job['if']), ctx)}
+    # CP-18d (item 2): a job that `needs` another runs only if that one runs (GitHub skips it otherwise)
+    return {name for name in chosen if all(n in chosen for n in ([JOBS[name]['needs']] if isinstance(
+        JOBS[name].get('needs'), str) else JOBS[name].get('needs', [])))}
 
 
 def test_the_triggers_are_the_schedule_and_the_dispatch():
@@ -77,7 +82,9 @@ def test_the_triggers_are_the_schedule_and_the_dispatch():
 
 @pytest.mark.parametrize('cron', ACQUIRE_CRONS)
 def test_an_acquisition_cron_starts_the_acquisition_only(cron):
-    assert selected(event='schedule', schedule=cron, var='enabled') == {'acquire'}
+    # CP-18d (item 2): was {'acquire'}, now the gate and, when it says go, the acquisition after it
+    assert selected(event='schedule', schedule=cron, var='enabled') == {'gate', 'acquire'}
+    assert selected(event='schedule', schedule=cron, var='enabled', go='false') == {'gate'}
 
 
 @pytest.mark.parametrize('cron', RUN_CRONS)
@@ -86,7 +93,8 @@ def test_a_run_cron_starts_the_run_and_the_retry_the_keep_alive(cron):
         {'run', 'keep-alive'} if cron == '40 13 * * *' else {'run'})
 
 
-@pytest.mark.parametrize('mode, jobs', [('dry-run', {'dry-run'}), ('live', {'run'}), ('acquire-live', {'acquire'})])
+# CP-18d (item 2): acquire-live was {'acquire'}, now {'gate', 'acquire'} (a dispatch passes the gate at once)
+@pytest.mark.parametrize('mode, jobs', [('dry-run', {'dry-run'}), ('live', {'run'}), ('acquire-live', {'gate', 'acquire'})])
 def test_a_dispatch_starts_the_job_of_its_mode(mode, jobs):
     assert selected(event='workflow_dispatch', mode=mode) == jobs
 
@@ -108,16 +116,21 @@ def _cron_time(cron: str, day: date) -> datetime:
 
 def test_on_every_day_of_two_years_two_acquisitions_precede_the_cutoff_and_the_runs_follow_it():
     """D's cutoff is D-1 11:00 Berlin (`cp25.guard.issue_time`): 10:00 UTC in winter, 09:00 UTC in summer. On every day
-    (the DST changes included) at least two acquisition crons fall within 3 h before it (`--window-hours 3`, at least
-    30 min ahead), and both run crons fall after it."""
+    (the DST changes included) at least two acquisition events can start D's acquisition before it, and both run crons
+    fall after it.
+
+    CP-18d (item 2): was "at least two of the three daily crons fall 30-180 min before the cutoff"; now the event is
+    hourly and passes the gate (`src/cp18/window.py`), so the assertion is that at least two hourly events in the 3 h
+    before the cutoff (at least 30 min ahead) are started by the gate, and that a run cron follows the cutoff."""
+    from cp18 import window as W
     day = date(2027, 1, 1)
     while day < date(2029, 1, 1):
         cutoff = guard.issue_time(day + timedelta(days=1))          # the cutoff that falls on `day`
         assert cutoff.astimezone(UTC).date() == day
-        ahead = [(cutoff - _cron_time(c, day)) / timedelta(minutes=1) for c in ACQUIRE_CRONS]
-        assert sum(30 <= m <= 180 for m in ahead) >= 2, (day, ahead)
-        for m in ahead:                                               # a cron after the cutoff finds the next one far
-            assert m > 0 or m + 24 * 60 > 180
+        hourly = [datetime(day.year, day.month, day.day, h, 20, tzinfo=UTC) for h in range(24)]
+        ahead = [(cutoff - t) / timedelta(minutes=1) for t in hourly]
+        started = [t for t, m in zip(hourly, ahead) if 30 <= m <= 180 and W.plan(t)['go']]
+        assert len(started) >= 2, (day, ahead)
         for c in RUN_CRONS:
             assert _cron_time(c, day) > cutoff, (day, c)
         day += timedelta(days=1)
