@@ -22,10 +22,44 @@ def daily() -> pd.DataFrame:
     return pd.read_csv(OUT / "daily.csv", dtype={"day": str})
 
 
+def _same_within_rounding(committed: str, rebuilt: str) -> bool:
+    """Every field equal, or both numbers equal to 1e-12 relative (1e-9 absolute near zero)."""
+    import csv
+    import io
+    import math
+    a = list(csv.reader(io.StringIO(committed)))
+    b = list(csv.reader(io.StringIO(rebuilt)))
+    if len(a) != len(b) or any(len(x) != len(y) for x, y in zip(a, b)):
+        return False
+    for row_a, row_b in zip(a, b):
+        for x, y in zip(row_a, row_b):
+            if x == y:
+                continue
+            try:
+                fx, fy = float(x), float(y)
+            except ValueError:
+                return False
+            if not math.isclose(fx, fy, rel_tol=1e-12, abs_tol=1e-9):
+                return False
+    return True
+
+
 def test_the_summaries_and_the_report_rederive_from_the_daily_rows(daily):
+    # The daily rows are the record, identical on every platform. The aggregates' last bits depend on the platform's
+    # floating-point summation and interpolation: GitHub's Linux runner differs from the macOS build in the 16th
+    # significant digit (O61). So the re-derivation is checked to 1e-12 relative, never a looser bound.
     for name, text in E.summary_files(daily).items():
-        assert (OUT / name).read_text() == text, name
+        committed = (OUT / name).read_text()
+        assert committed == text or _same_within_rounding(committed, text), name
     assert (OUT / "report.md").read_text() == RP.build(ROOT)
+
+
+def test_the_rounding_check_still_refuses_a_real_difference():
+    committed = "a,b\nx,1.0000000000000002\n"
+    assert _same_within_rounding(committed, "a,b\nx,1.0000000000000004\n")
+    assert not _same_within_rounding(committed, "a,b\nx,1.000001\n")
+    assert not _same_within_rounding(committed, "a,b\ny,1.0000000000000002\n")
+    assert not _same_within_rounding(committed, "a,b\nx,1.0000000000000002\nx,2\n")
 
 
 def test_the_checks_before_the_results_passed():
