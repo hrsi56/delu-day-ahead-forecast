@@ -283,17 +283,21 @@ def archive_gfs_recorded(archive: AR.Archive, day: date, root: Path, sources=GFS
 
 
 def archive_day(archive: AR.Archive, replay_root: Path, day: date, root: Path, source: str = 'smard',
-                gfs_sources=GFS_SOURCES) -> dict:
-    """One development archive day: rendered market responses through the client, recorded GFS."""
+                gfs_sources=GFS_SOURCES, load_forecast: bool = True) -> dict:
+    """One development archive day: rendered market responses through the client, recorded GFS. Without
+    `load_forecast` (CP-18d's late-copy rehearsal) the day's load forecast is left to the caller."""
     client = smard if source == 'smard' else entsoe
     tr = ReplayTransport(Path(replay_root) / source)
     price_days = [day - timedelta(days=k) for k in (3, 2, 1) if day - timedelta(days=k) >= FLOOR]
     fp = client.fetch(tr, 'price', price_days)
     AR.store_market(archive, day, fp, development_snapshot=True)
-    fl = client.fetch(tr, 'load_forecast', [day])
-    AR.store_market(archive, day, fl, development_snapshot=True)
+    problems = list(fp.problems)
+    if load_forecast:
+        fl = client.fetch(tr, 'load_forecast', [day])
+        AR.store_market(archive, day, fl, development_snapshot=True)
+        problems += fl.problems
     archive_gfs_recorded(archive, day, root, gfs_sources)
-    return {'day': day.isoformat(), 'problems': fp.problems + fl.problems, 'size': archive.size(day),
+    return {'day': day.isoformat(), 'problems': problems, 'size': archive.size(day),
             'verify': archive.verify(day)}
 
 

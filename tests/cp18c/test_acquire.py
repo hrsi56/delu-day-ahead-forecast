@@ -104,7 +104,9 @@ def test_a_load_forecast_not_published_before_the_cutoff_is_not_shown(tmp_path):
     record, claim, archive = go(tmp_path, datetime(2026, 11, 5, 9, 50, tzinfo=UTC),
                                 datetime(2026, 11, 5, 12, 0, tzinfo=UTC))
     assert record['exit'] == 1 and not record['load_forecast']['shown'] and len(record['attempts']) == 2   # 09:50, 09:55
-    assert 'will not be issued' in record['outcome'] and claim.published         # the evidence is published anyway
+    # CP-18d (decision 31): was 'will not be issued' in the outcome; now the run after the cutoff issues the day with
+    # the load forecast fetched after the cutoff, labelled so, and the outcome says that
+    assert 'fetched after the cutoff' in record['outcome'] and claim.published  # the evidence is published anyway
     with boundary.live(now=datetime(2026, 11, 5, 9, 55, tzinfo=UTC)):
         assert 'load_forecast' in AQ.missing(archive, DAY)
 

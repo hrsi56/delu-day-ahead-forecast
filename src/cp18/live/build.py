@@ -10,6 +10,9 @@ See the package docstring (`cp18.live`) for the contract. In order:
    `cp26.search.validate_ensemble`; absent, the result is `search_state_missing` and nothing is built;
 5. if every required input is shown (or admitted under a recorded exception valid for that day), the context
    and the four payloads `A1`, `v4`, `v2`, `B0` as `<policy>-<D>.{npz,json}` in `out`, for `cp17.daily.issue_day`.
+   D's own load forecast, if no copy precedes D's cutoff, is the copy fetched after it (the Owner's decision 31,
+   `history.fetched_after_cutoff`); the availability then names the day's input class (`cp18.inputclass`), "all inputs
+   before the cutoff" or "load forecast fetched after the cutoff" with that copy's retrieval time.
 """
 from __future__ import annotations
 
@@ -57,7 +60,12 @@ def _availability(history: Hs.History, day: date, integrity: list) -> dict:
                         'by_exception': False, 'vector_valid': g.get('vector_valid'), 'status': g['status'],
                         'reason': g['reason'], 'required': False})
     reasons = list(history.missing_required) + [f'archive integrity: {p}' for p in integrity]
-    return {'shown': not reasons, 'reasons': reasons,
+    from .. import inputclass
+    copy = history.load_forecast_copy
+    label = inputclass.label(inputclass.AFTER, copy['fetched_utc']) if copy else inputclass.label(inputclass.BEFORE)
+    # `shown`: every required input is admitted, D's own load forecast possibly by decision 31's copy fetched after the
+    # cutoff, which the input class then names (`cp18.inputclass`)
+    return {'shown': not reasons, 'reasons': reasons, **label, 'load_forecast_copy': copy,
             'by_exception': [{'input': r['input'], 'data_day': r['data_day'], 'record': r.get('record'),
                               'basis': r.get('basis')} for r in records if r.get('admitted') and r.get('by_exception')],
             'records': records,

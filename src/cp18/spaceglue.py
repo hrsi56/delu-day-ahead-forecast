@@ -46,14 +46,26 @@ def recomputed(entry: dict) -> bool:
     return entry['window'] in ('4.7T', 'prospective') or entry['evidence_class'].startswith('development rehearsal')
 
 
-def window_days(entry: dict, days: list[str]) -> list[str]:
+def window_days(entry: dict, days: list[str], classes: dict | None = None) -> list[str]:
     """The issued days a recomputed window scores: the rehearsal holds development days, the prospective record any
-    later issued day; 4.7T's days are not served before it is scored."""
+    later issued day; 4.7T's days are not served before it is scored. The prospective record's subset
+    `before_cutoff` (the Owner's decision 31, CP-18d) holds those of its days whose input class (`classes`, from the
+    issued forecasts) is "all inputs before the cutoff"."""
     if entry['evidence_class'].startswith('development rehearsal'):
         return [d for d in days if date.fromisoformat(d) <= BOUNDARY]
     if entry['window'] == 'prospective':
-        return [d for d in days if date.fromisoformat(d) > BOUNDARY]
+        chosen = [d for d in days if date.fromisoformat(d) > BOUNDARY]
+        if entry.get('subset') == 'before_cutoff':
+            chosen = [d for d in chosen if (classes or {}).get(d) == 'before_cutoff']
+        elif entry.get('subset') not in (None, 'all'):
+            raise ValueError(f"unknown subset {entry.get('subset')!r} of the prospective record")
+        return chosen
     return []
+
+
+def input_classes(forecasts: dict) -> dict:
+    """Each issued day's input class, from the served issued forecasts (decision 31)."""
+    return {d['delivery_day']: d.get('input_class') for d in forecasts['days']}
 
 
 def _json(files: dict, name: str):
@@ -117,7 +129,7 @@ def recompute(files: dict) -> dict:
                          'policy': entry['policy'], 'recomputed': False,
                          'note': 'static, from evidence: the development folds are not recomputed in the browser'})
             continue
-        days = window_days(entry, issued_days)
+        days = window_days(entry, issued_days, input_classes(forecasts))
         if entry['policy'] == 'product':
             items, absent = product_items(forecasts, days), []
         else:

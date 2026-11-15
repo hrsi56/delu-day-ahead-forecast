@@ -126,9 +126,12 @@ def test_o14_and_the_running_wording_are_read_from_their_sources(live_claims):
     from cp18 import running
     from cp18.live_claims import build_live_claims
     v = live_claims['values']
-    assert v['live_retrain_wording'] == build_live_claims(ROOT)['values']['live_retrain_wording']
-    assert v['live_retrain_wording'].endswith("by up to 0.082 EUR/MWh (A1's p2.5 on 2026-03-30), the largest difference "
-                                              'observed, not a bound.')
+    # CP-18d (brief item 4, O45 item 8): was equal to the development mode's sentence, ending "(A1's p2.5 on
+    # 2026-03-30)"; now the live mode names v6, and "A1" appears only as "A1 in the frozen records"
+    assert v['live_retrain_wording'] == build_live_claims(ROOT)['values']['live_retrain_wording'].replace(
+        "(A1's p2.5 on 2026-03-30)", "(v6's p2.5 on 2026-03-30, A1 in the frozen records)")
+    assert v['live_retrain_wording'].endswith("by up to 0.082 EUR/MWh (v6's p2.5 on 2026-03-30, A1 in the frozen "
+                                              'records), the largest difference observed, not a bound.')
     assert v['live_running_wording'] == running.WORDING == '95% interval of the mean daily error over {n} scored days'
     assert v['live_running_before_minimum'] == running.BEFORE_MINIMUM == 'interval from 14 scored days'
 

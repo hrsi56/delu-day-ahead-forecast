@@ -106,7 +106,8 @@ def acquire_market(archive: AR.Archive, day: date, transport, input_name: str, t
     source = source or SOURCES[input_name]
     days = price_days(day) if input_name == 'price' else [day]
     fetched = CLIENTS[source].fetch(transport, input_name, days)
-    stored = AR.store_market(archive, day, fetched, tag=tag)
+    # a rehearsal stand-in names itself in the records (`cp18.rehearsal`); the live transport has no `origin`
+    stored = AR.store_market(archive, day, fetched, tag=tag, origin=getattr(transport, 'origin', None))
     complete = all(d in fetched.values and not bool((fetched.values[d] != fetched.values[d]).any()) for d in days)
     return {'input': input_name, 'source': source, 'day': day.isoformat(), 'data_days': [d.isoformat() for d in days],
             'records': [r['id'] for r in stored], 'complete': complete, 'problems': fetched.problems,

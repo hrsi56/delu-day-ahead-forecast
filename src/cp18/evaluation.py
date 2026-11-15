@@ -8,6 +8,7 @@
 | development | development rehearsal (CP-18 dry runs) | the store's issued days on development dates, the reconciled outcomes, and B0's shadow forecasts from its served training windows | recomputed |
 | 4.7T | one-shot fresh-data test · not yet scored | empty until 4.7T is scored | recomputed (empty) |
 | prospective | prospective · evaluation in progress until CP-19 | the issued days after the development boundary; none yet | recomputed (empty) |
+| prospective, subset | the same, · issued days with every input before the cutoff | of those days, the ones whose input class is "all inputs before the cutoff" (the Owner's decision 31, CP-18d: a day issued with its load forecast fetched after the cutoff is scored with all issued days, and apart from this subset) | recomputed |
 
 The dry runs' issued days (2026-08-31 to 2026-09-05) are a development rehearsal: labelled so everywhere, and never
 shown or scored as prospective or as 4.7T (`cp18.spaceglue.window_days` puts no development date in either).
@@ -92,24 +93,47 @@ def empty(window: str, evidence_class: str, policy: str) -> dict:
     return {'window': window, 'evidence_class': evidence_class, 'policy': policy, 'record': scoring.evaluate([], {})}
 
 
-def daily_windows(forecasts: dict, outcomes: dict, b0: list[dict]) -> list[dict]:
+#: The prospective record's subset (the Owner's decision 31, CP-18d): the issued days whose inputs all precede the
+#: cutoff, reported on their own beside all issued days (`cp18.inputclass`). The window's own entries stay all days.
+SUBSET_BEFORE = 'before_cutoff'
+SUBSET_LABEL = 'issued days with every input before the cutoff'
+
+
+def daily_windows(forecasts: dict, outcomes: dict, b0: list[dict], sets: bool = False) -> list[dict]:
     """The recomputed windows, product then B0 in each: the rehearsal, 4.7T (empty until scored), the prospective
-    record. `b0` holds B0's forecasts of the issued days (`spaceglue.b0_items`)."""
+    record; then (decision 31, with `sets`) the prospective record's days with every input before the cutoff, product
+    then B0, as entries with `subset` and the count of each set's days. Without `sets` (a development bundle of
+    CP-18a/b's records) the windows are CP-18b's, unchanged. `b0` holds B0's forecasts of the issued days
+    (`spaceglue.b0_items`)."""
     from cp17 import scoring
     truth = G.outcome_map(outcomes)
     days = sorted(d['delivery_day'] for d in forecasts['days'])
+    classes = G.input_classes(forecasts)
     out = []
     for window, label in (('development', G.REHEARSAL), ('4.7T', G.FRESH_TEST), ('prospective', G.PROSPECTIVE)):
         for policy in ('product', 'B0'):
             entry = {'window': window, 'evidence_class': label, 'policy': policy}
             chosen = G.window_days(entry, days)
-            if policy == 'product':
-                items = G.product_items(forecasts, chosen)
-            else:
-                items = [{k: v for k, v in it.items() if k != 'quantiles_sha256'} for it in b0 if it['day'] in chosen]
-            entry['record'] = scoring.evaluate(items, truth)
+            if window == 'prospective' and sets:
+                entry['subset'] = 'all'
+                entry['subset_label'] = 'all issued days'
+                entry['issued_days'] = len(chosen)
+            entry['record'] = scoring.evaluate(_items(policy, forecasts, b0, chosen), truth)
             out.append(entry)
+    for policy in ('product', 'B0') if sets else ():
+        entry = {'window': 'prospective', 'evidence_class': f'{G.PROSPECTIVE} · {SUBSET_LABEL}', 'policy': policy,
+                 'subset': SUBSET_BEFORE, 'subset_label': SUBSET_LABEL}
+        chosen = G.window_days(entry, days, classes)
+        entry['issued_days'] = len(chosen)
+        entry['record'] = scoring.evaluate(_items(policy, forecasts, b0, chosen), truth)
+        out.append(entry)
     return out
+
+
+def _items(policy: str, forecasts: dict, b0: list[dict], chosen: list[str]) -> list[dict]:
+    if policy == 'product':
+        return G.product_items(forecasts, chosen)
+    return [{k: v for k, v in it.items() if k != 'quantiles_sha256'} for it in b0 if it['day'] in chosen]
 
 
 def evaluation_bundle(static: list[dict], daily: list[dict]) -> dict:

@@ -24,7 +24,8 @@ TEXT = WORKFLOW.read_text()
 WF = yaml.safe_load(TEXT)
 ON = WF.get('on', WF.get(True))
 JOBS = WF['jobs']
-ACQUIRE_CRONS = ['40 7 * * *', '20 8 * * *', '20 9 * * *']
+# CP-18d (item 2): was ['40 7 * * *', '20 8 * * *', '20 9 * * *'], now the hourly PLACEHOLDER starts 04:20-09:20 UTC
+ACQUIRE_CRONS = ['20 4 * * *', '20 5 * * *', '20 6 * * *', '20 7 * * *', '20 8 * * *', '20 9 * * *']
 RUN_CRONS = ['40 10 * * *', '40 13 * * *']
 PRODUCT = 'hrsi56/delu-day-ahead-forecast'
 UTC = timezone.utc
@@ -68,7 +69,8 @@ def test_the_triggers_are_the_schedule_and_the_dispatch():
     assert set(ON) == {'schedule', 'workflow_dispatch'}
     assert [c['cron'] for c in ON['schedule']] == ACQUIRE_CRONS + RUN_CRONS
     mode = ON['workflow_dispatch']['inputs']['mode']
-    assert mode['type'] == 'choice' and mode['options'] == ['dry-run', 'live', 'acquire-live']
+    # CP-18d (item 5): was ['dry-run', 'live', 'acquire-live'], now the acquisition rehearsal's mode added
+    assert mode['type'] == 'choice' and mode['options'] == ['dry-run', 'live', 'acquire-live', 'acquire-dry-run']
     assert mode['default'] == 'dry-run'
     assert not any(i.get('required') for i in ON['workflow_dispatch']['inputs'].values())
 
@@ -149,7 +151,8 @@ def test_the_pipeline_jobs_run_on_the_issuing_hosts_runner():
 def test_every_job_has_a_time_limit():
     for name, job in JOBS.items():
         assert 'timeout-minutes' in job, name
-    assert JOBS['acquire']['timeout-minutes'] <= 180 and JOBS['run']['timeout-minutes'] <= 180
+    # CP-18d (item 2): was acquire <= 180, now <= 360 (the in-job wait, inside GitHub's 6-hour job limit)
+    assert JOBS['acquire']['timeout-minutes'] <= 360 and JOBS['run']['timeout-minutes'] <= 180
     assert JOBS['keep-alive']['timeout-minutes'] <= 10
     assert 'inputs.minutes' in str(JOBS['dry-run']['timeout-minutes'])
 
@@ -245,7 +248,8 @@ def test_the_live_run_is_the_live_mode_with_the_claim_on_origin():
     _, rec = step('run', 'cp18.local records')
     assert '--remote origin' in rec['run']
     _, acq = step('acquire', '-m cp18 acquire')
-    assert '--remote origin' in acq['run'] and '--window-hours 3' in acq['run']
+    # CP-18d (item 2): was '--window-hours 3', now '--window-hours 6' (the earlier starts wait in their job)
+    assert '--remote origin' in acq['run'] and '--window-hours 6' in acq['run']
 
 
 def test_the_dry_run_sets_the_live_record_aside_and_never_touches_github():
@@ -273,7 +277,8 @@ def test_the_eccodes_environment_is_cp20s_pinned_one_where_cp18_live_gfs_finds_i
     assert '-r "$WX_FREEZE"' in wx['run'] and '--freeze "$WX_FREEZE"' in wx['run']
     assert WF['env']['WX_FREEZE'] == 'reports/weather-admission/scripts/requirements.freeze.txt'
     assert (ROOT / WF['env']['WX_FREEZE']).is_file()
-    _, uv = step(job, 'GITHUB_ENV')
+    # CP-18d (item 2): was step(job, 'GITHUB_ENV'), now its RESULTS line (the acquire job's STOP_BY step writes it too)
+    _, uv = step(job, '"RESULTS=$RUNNER_TEMP/results" >> "$GITHUB_ENV"')
     assert 'echo "CP17_PROJECT_ROOT=$GITHUB_WORKSPACE"' in uv['run']
     assert 'echo "CP26_PROJECT_ROOT=$GITHUB_WORKSPACE"' in uv['run']
     pins = dict(line.split('==') for line in (ROOT / WF['env']['WX_FREEZE']).read_text().split())

@@ -13,9 +13,12 @@ repointed head fails `verify()`. This module adds four entry kinds, each carryin
 - `carry`: the carry from 4.7T's last window day to the first live day, naming the days between them, which are
   outside both and never issued.
 
-And it adds four checks: every non-issuance entry carries the state of the entry before it; the delivery days of
-issuance and not-issued entries strictly increase together; no day precedes the store's first day; and a search
-file hashes as recorded and its content is the search it names (`cp26.search.validate_ensemble`).
+And it adds five checks: every non-issuance entry carries the state of the entry before it; the delivery days of
+issuance and not-issued entries strictly increase together; no day precedes the store's first day; a search
+file hashes as recorded and its content is the search it names (`cp26.search.validate_ensemble`); and (CP-18d, the
+Owner's decision 31) every issuance's record names its input class, "all inputs before the cutoff" or "load forecast
+fetched after the cutoff" with that copy's retrieval time, agreeing with the record's own availability evidence
+(`cp18.inputclass`; a CP-18a–c record is derived from that evidence). A record without it is refused.
 
 **Where the live store lives (the paths CP-18's daily commits to `main` will use, AGENTS.md's daily exception).**
 `live/store/` in the product repository: `head.json`, `ledger.jsonl`, `states/<day>.json`, `issued/<day>/artifact.json`,
@@ -31,7 +34,7 @@ from pathlib import Path
 
 from cp17c.store import SCHEMA as CP17C_SCHEMA, Store, StoreRefused, _canonical, _sha, _sha_bytes, _write
 
-from . import causes
+from . import causes, inputclass
 
 STORE_PATH = 'live/store'
 INPUTS_PATH = 'live/inputs'
@@ -62,6 +65,11 @@ class LiveStore(Store):
                 if previous_day is not None and day <= previous_day:
                     raise StoreRefused(f'ledger entry {i}: {day} does not follow {previous_day}')
                 previous_day = day
+            if kind == 'issuance':
+                try:
+                    self.input_class(entry)
+                except (inputclass.LabelMissing, OSError, ValueError) as exc:
+                    raise StoreRefused(f'ledger entry {i}: {exc}') from None
             if kind == 'not_issued':
                 try:
                     causes.text(entry.get('cause'))
@@ -89,6 +97,17 @@ class LiveStore(Store):
                     raise StoreRefused(f'ledger entry {i}: the search content is not the recorded one')
         return head
 
+    def input_class(self, entry: dict) -> dict:
+        """An issuance entry's input class (decision 31), read from its record file (bound by the entry's hash)."""
+        cache = self.__dict__.setdefault('_classes', {})
+        key = (entry['record_file'], entry.get('record_file_sha256'))
+        if key not in cache:
+            data = (self.folder / entry['record_file']).read_bytes()
+            if entry.get('record_file_sha256') and _sha_bytes(data) != entry['record_file_sha256']:
+                raise StoreRefused(f"{entry['record_file']}: the record differs from its ledger entry")
+            cache[key] = inputclass.of_record(json.loads(data))
+        return cache[key]
+
     def first_day(self) -> date:
         genesis = self.entries()[0]
         return date.fromisoformat(genesis.get('first_day') or genesis['origin'])
@@ -101,7 +120,7 @@ class LiveStore(Store):
                 failed = entry.get('issued_policy') is None
                 out[entry['day']] = {'status': 'not issued' if failed else 'issued', 'policy': entry.get('issued_policy'),
                                      'cause': causes.CHAIN if failed else None, 'display': entry.get('display'),
-                                     'artifact_sha256': entry.get('artifact_sha256')}
+                                     'artifact_sha256': entry.get('artifact_sha256'), **self.input_class(entry)}
             elif entry['kind'] == 'not_issued':
                 out[entry['day']] = {'status': 'not issued', 'policy': None, 'cause': entry['cause'],
                                      'attempts': entry.get('attempts', [])}
@@ -153,6 +172,16 @@ class LiveStore(Store):
             raise StoreRefused(f'{day} is not after the last decided day {last}; days go forward')
         if day < self.first_day():
             raise StoreRefused(f'{day} precedes the store\'s first day {self.first_day()}')
+
+    def record_day(self, day: date, state, artifact: dict, record: dict, parent_state_sha256: dict) -> dict:
+        """CP-17c's issuance, after its own checks (never twice, never backwards), refused if the day's record does not
+        name a valid input class (the Owner's decision 31, CP-18d): nothing is written then."""
+        self.check_day(day)
+        try:
+            inputclass.of_record(record)
+        except inputclass.LabelMissing as exc:
+            raise StoreRefused(f'{day}: {exc}') from None
+        return super().record_day(day, state, artifact, record, parent_state_sha256)
 
     def record_run(self, run_id: str, record: dict) -> dict:
         rel = f'runs/{run_id}.json'

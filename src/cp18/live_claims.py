@@ -31,8 +31,10 @@ reads them all), and no text says late or timely (decision 22) or claims publica
 
 **The live record** (`live_record(folder)`): what the Space shows of the live store (`cp18.store.LiveStore`, verified
 first): every issued day with its cutoff-based issue time and its actual run's start, issuance start and end, run and
-host; every failed issuance; every day not issued with its cause; the days outside the live record as one range; the
-runs. It holds no market value and no local path.
+host, and (CP-18d, the Owner's decision 31) its input class, "all inputs before the cutoff" or "load forecast fetched
+after the cutoff" with that copy's retrieval time (`cp18.inputclass`), and the count of each; every failed issuance;
+every day not issued with its cause; the days outside the live record as one range; the runs. It holds no market value
+and no local path.
 """
 from __future__ import annotations
 
@@ -48,7 +50,7 @@ SHARED = ('attribution', 'limitation_mtu_averaging')
 SHARED_CONSTANTS = {'gfs_attribution': 'GFS_ATTRIBUTION'}
 STATES = ('pending', 'passed', 'failed')
 LIMITATION_ORDER = ('evidence', 'rehearsal', 'f1', 'retrain_selections', 'inputs', 'rendered', 'operation')
-RECORD_SCHEMA = 'cp18c-space-live-record-v1'
+RECORD_SCHEMA = 'cp18d-space-live-record-v1'
 HOSTS = ('local', 'runner')
 
 
@@ -92,7 +94,6 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
     first, last = (rehearsal_days[0], rehearsal_days[-1]) if rehearsal_days else ('', '')
     values = {
         'live_product_name': 'A1 · DDNN-2 alone',
-        'live_product_designation': pi['designation'],
         'live_product_status': status,
         'live_released_product': ('v1 stays the released product until CP-18\'s activation, which requires a passed '
                                   '4.7T' if fresh_test != 'failed' else 'v1 stays the released product'),
@@ -162,11 +163,20 @@ def build_live_claims(root=None, fresh_test: str = 'pending', rehearsal_days: tu
               'f1': 'The issuing runtime against native arithmetic', 'retrain_selections': 'What a retrain compares',
               'inputs': 'Inputs shown to precede the cutoff', 'rendered': 'Rendered development responses',
               'operation': 'Not yet operating'}
+    # CP-18d: the designation sentence ("... v1 remains the product until CP-19") is removed from both modes: no page
+    # rendered it, and it was stale (PRES-5's A12 review, R3; O45 item 8)
     values.update(_common(fresh_test))
     if live is not None:
         values.update(_live_values(live, fresh_test, status))
+        # O45 item 8 (CP-18d): the product's name is v6; "A1" appears only as "A1 in the frozen records"
+        named = f"v6's {f1_level} on {f1_day}, A1 in the frozen records"
+        for key in ('live_retrain_wording', 'live_limitation_f1'):
+            values[key] = values[key].replace(f1_where, named)
+        values['live_fresh_test_wording'] = re.sub(r'\bA1\b', 'v6 (A1 in the frozen records)',
+                                                   values['live_fresh_test_wording'], count=1)
         labels.update(evidence='Development evidence and the live record', rehearsal='The live record',
-                      rendered='Where the prices come from', operation='Issue times and run times')
+                      rendered='Where the prices come from', operation='Issue times and run times',
+                      inputs='Inputs and the cutoff')
     claims = build_claims()
     shared = {k: claims[k] for k in SHARED}
     shared.update({k: getattr(record, name) for k, name in SHARED_CONSTANTS.items()})
@@ -182,8 +192,9 @@ OPEN_DAY_WORDING = ('not issued; attempted, and still inside the three-day lookb
 
 
 def _common(fresh_test: str) -> dict:
-    """The keys both modes carry (the page reads them all): N7's labels, the hosts, the history wording, O33's."""
-    from cp18 import running
+    """The keys both modes carry (the page reads them all): N7's labels, the hosts, the history wording, O33's, and
+    decision 31's labels and the schedule's wording (CP-18d)."""
+    from cp18 import inputclass, running
     from cp18.spaceglue import BOUNDARY
     return {
         'live_product_record_name': 'A1, the designated policy',
@@ -212,6 +223,19 @@ def _common(fresh_test: str) -> dict:
         'live_running_before_minimum': running.BEFORE_MINIMUM,
         'live_running_difference': ('the product minus the similar-day naive (B0), on the days both scored; below '
                                     'zero the product\'s daily error was smaller'),
+        # the Owner's decision 31 (CP-18d): each issued day's input class, and the scores reported per set
+        'live_input_class_before_cutoff': inputclass.TEXT[inputclass.BEFORE],
+        'live_input_class_load_forecast_after_cutoff': inputclass.TEXT[inputclass.AFTER],
+        'live_input_class_note': ("the day-ahead load forecast was not retrieved before the day's cutoff (D−1 11:00 "
+                                  "Europe/Berlin); by the Owner's decision 31 the day is issued with the copy retrieved "
+                                  'after the cutoff, at the time shown (UTC), rather than left missing; every other '
+                                  'input preceded the cutoff'),
+        'live_sets_wording': ('the issued days with every input before the cutoff on their own, and all issued days '
+                              'beside them, each with its count'),
+        'live_schedule': ("Daily operation is a schedule, not a guarantee: each day GitHub's scheduler starts the "
+                          'acquisition several times before the cutoff, and the run after it with a retry; a job may '
+                          'start hours after its scheduled time, or not at all. Each delivery day is then issued or not '
+                          'issued, and every day not issued is listed below with its cause.'),
     }
 
 
@@ -225,7 +249,7 @@ def _live_values(live: dict, fresh_test: str, status: str) -> dict:
     return {
         'live_product_name': 'v6 · DDNN-2 alone',
         'live_product_record_name': 'v6 (A1 in the frozen records)',
-        'live_evidence_prefix': 'Evidence, as the manifest states it (the frozen records name v6 "A1"): ',
+        'live_evidence_prefix': 'Evidence, as the manifest states it (v6 is A1 in the frozen records): ',
         'live_open_day_wording': OPEN_DAY_WORDING,
         'live_product_status': status,
         'live_released_product': (
@@ -258,7 +282,16 @@ def _live_values(live: dict, fresh_test: str, status: str) -> dict:
             'Europe/Berlin) that the artifact records, and its actual run\'s start and end, with where it ran (the '
             'local fallback or the runner). A run can happen after the auction and after the day\'s prices are '
             'published (a catch-up within the lookback); the forecast still rests only on inputs shown to precede its '
-            'cutoff, and no forecast is claimed to have been published before the auction or before its outcome.'),
+            'cutoff, except a day labelled "load forecast fetched after the cutoff", and no forecast is claimed to '
+            'have been published before the auction or before its outcome.'),
+        'live_limitation_inputs': (
+            'A live day is issued when each input can be shown to precede its cutoff (D−1 11:00 Europe/Berlin), with '
+            'one exception the Owner set (decision 31): when the day-ahead load forecast was not retrieved before the '
+            'cutoff, the day is issued with the load forecast fetched after the cutoff, and labelled so, with that '
+            'retrieval\'s time (UTC), wherever the day is shown; the scores report those days apart from the days '
+            'whose inputs all precede the cutoff. Any other input that cannot be shown to precede the cutoff leaves '
+            'the day not issued, with its cause. The load forecast\'s stored development history rests on the '
+            'Owner\'s recorded exception (ruling 1), which covers development days only.'),
     }
 
 
@@ -284,7 +317,7 @@ def live_record(folder) -> dict:
     by the hash its ledger entry holds."""
     import hashlib
     from datetime import date as _date, timedelta
-    from cp18 import causes
+    from cp18 import causes, inputclass
     from cp18.store import LiveStore, head_sha256, ledger_sha256
     store = LiveStore(Path(folder) / 'store')
     head = store.verify()
@@ -311,6 +344,8 @@ def live_record(folder) -> dict:
                     'issuance_started_utc': _when(rec.get('issuance_started_utc')),
                     'issuance_finished_utc': _when(rec.get('issuance_finished_utc')),
                     'data_refresh_utc': _when((rec.get('inputs') or {}).get('data_refresh_utc'))}
+            label = inputclass.of_record(rec)            # decision 31: refused if the label is missing
+            item.update(label, load_forecast_fetched_utc=_when(label['load_forecast_fetched_utc']))
             if entry.get('issued_policy'):
                 issued.append(item)
             else:
@@ -348,7 +383,10 @@ def live_record(folder) -> dict:
                       (genesis.get('first_day') or genesis.get('origin')),
                       'last_day': head.get('last_day')},
             'issued': issued, 'failed': failed, 'not_issued': not_issued, 'open': open_days, 'outside': outside,
-            'runs': runs}
+            'runs': runs,
+            # decision 31: the issued days by input class, each with its count (the evaluation reports them apart)
+            'input_classes': [{'input_class': c, 'input_class_text': inputclass.TEXT[c],
+                               'issued': sum(1 for i in issued if i['input_class'] == c)} for c in inputclass.ORDER]}
 
 
 def live_summary(record: dict) -> dict:

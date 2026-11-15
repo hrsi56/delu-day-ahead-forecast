@@ -15,6 +15,11 @@
 - **the load forecast of P**, preferring P's own archive day, then later ones, admitted against D's cutoff
   (tier 3: retrieval or document time strictly before it, or ruling 1 for development data). A load forecast
   not admitted is left missing (NaN), and the judgement says why;
+- **D's own load forecast, when none is admitted** (the Owner's decision 31, CP-18d): the earliest complete live
+  retrieval of it after D's cutoff (`fetched_after_cutoff`), so v6 still issues D. Its judgement stays "not admitted",
+  names the copy and its retrieval time, and `History.load_forecast_copy` carries the day's label
+  (`cp18.inputclass`). Only D's own load forecast: a history day's load forecast and every other input keep the
+  rule above, and no copy at all leaves D's load forecast missing, as before;
 - **the weather of P** from the D-1 00 UTC run archived on day P, converted by CP-20's frozen recipe
   (`cp20.weather.convert_run`) if P's GFS flag is True; otherwise all of P's hours are missing under §15.3
   (`cp20.weather.missing_day`), with the reason.
@@ -114,6 +119,7 @@ class History:
     gfs: dict = field(default_factory=dict)
     problems: list = field(default_factory=list)
     missing_required: list = field(default_factory=list)
+    load_forecast_copy: dict | None = None         # decision 31: D's load forecast fetched after the cutoff, if used
 
     def truth(self):
         return published_prices(self.frame, self.day)
@@ -178,6 +184,32 @@ def market(reader: _Reader, input_name: str, data_day: date) -> tuple[np.ndarray
         return None, j, problems
     chosen = dict(chosen, candidates=len(judgements))
     return chosen_values, chosen, problems
+
+
+def fetched_after_cutoff(reader: _Reader, day: date) -> tuple[np.ndarray, dict] | None:
+    """Decision 31: D's own load forecast when no copy is admitted against D's cutoff. The earliest complete live
+    retrieval of it (by retrieval time), whose publication is not strictly before the cutoff; None if there is none."""
+    best = None
+    for x, rec in reader.candidates('load_forecast', day):
+        if x != day or rec.get('provenance') != 'live':
+            continue
+        pub = rec['publication'].get(day.isoformat(), {})
+        if pub.get('basis_id') not in ('retrieval_time', 'document_time'):
+            continue
+        j = A.judge('load_forecast', day, day, pub, rec, archive_day=x)
+        fetched = A.parse_iso(rec.get('retrieved_utc'))
+        if j['admitted'] or fetched is None or guard.strictly_before(fetched, day):
+            continue
+        values = reader.values(x, rec, 'load_forecast', day)
+        if not len(values) or np.isnan(values).any():
+            continue
+        if best is None or fetched < best[0]:
+            best = (fetched, values, j)
+    if best is None:
+        return None
+    fetched, values, j = best
+    return values, dict(j, fetched_after_cutoff=True, fetched_utc=A.iso(fetched),
+                        used="decision 31: D's load forecast fetched after the cutoff")
 
 
 def gfs_for_day(archive: Archive, day: date) -> dict:
@@ -251,6 +283,14 @@ def assemble(root: Path, archive: Archive, day: date, base_end: date) -> History
         else:
             price = np.full(len(hours), np.nan)      # the target-day embargo: D's price is never read
         load, j, probs = market(reader, 'load_forecast', p)
+        if p == day and load is None:
+            copy = fetched_after_cutoff(reader, day)          # decision 31: v6 issues D with the copy after the cutoff
+            if copy is not None:
+                rejected = j.get('candidates') if isinstance(j.get('candidates'), list) else []
+                load, j = copy[0], dict(copy[1], candidates=len(rejected), not_admitted=rejected)
+                history.load_forecast_copy = {'record': j['record'], 'archive_day': j['archive_day'],
+                                              'fetched_utc': j['fetched_utc'], 'publication_utc': j['publication_utc'],
+                                              'cutoff_utc': j['cutoff_utc'], 'sha256': j['sha256']}
         history.judgements.append(j)
         history.problems += probs
         if load is None:

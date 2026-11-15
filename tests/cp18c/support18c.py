@@ -11,7 +11,7 @@ import numpy as np
 from cp17 import issue as cp17issue
 from cp17.dailyfit import array_hash
 from cp17.shadow import ShadowStates
-from cp18 import pipeline
+from cp18 import inputclass, pipeline
 from cp18.claim import Claim
 from cp18.store import STORE_PATH, LiveStore
 from cp25 import guard
@@ -89,9 +89,12 @@ class Inputs:
         if str(day) in self.raising:
             raise TimeoutError('the ENTSO-E request timed out (stand-in)')
         shown = str(day) not in self.hidden
+        # CP-18d (decision 31): a built day now names its input class, which the pipeline requires (cp18.inputclass);
+        # this stand-in's shown days are "all inputs before the cutoff". No assertion changes.
         return {'payloads': str(out), 'gfs_available': True, 'shown': shown,
                 'reasons': [] if shown else ['the load forecast was retrieved after the cutoff'],
-                'data_refresh_utc': '', 'availability': []}
+                'data_refresh_utc': '', 'availability': [],
+                **(inputclass.label(inputclass.BEFORE) if shown else {})}
 
 
 def stand_in_issue():

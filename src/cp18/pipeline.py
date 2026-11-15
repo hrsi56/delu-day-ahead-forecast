@@ -13,7 +13,9 @@
 5. **Each planned day,** oldest first: fetch again (a day another host decided meanwhile is never issued); load the
    store's state and release D−2 with the published prices; ask the inputs for the day's payloads, built with the
    state's buffers. The serving search's state not in place (S_14) or inputs not shown to precede the cutoff leave
-   the day open with that cause. Otherwise `cp17.daily.issue_day` issues it, with its shadows registered in the state;
+   the day open with that cause; D's own load forecast fetched after the cutoff does not (the Owner's decision 31:
+   the day is issued with that copy and labelled, `cp18.inputclass`), and a built day without its input class is
+   refused, left open. Otherwise `cp17.daily.issue_day` issues it, with its shadows registered in the state;
    any earlier day of this run left open is closed first (days go forward); the day's artifact, record and state are
    appended to the store, committed and pushed. A lost push race discards this host's issuance and ends the run.
 6. **The run's record** is appended to the store and pushed, whatever the run did: the store lists every run.
@@ -36,13 +38,13 @@ import uuid
 
 from cp25 import guard
 
-from . import boundary, causes, plan
+from . import boundary, causes, inputclass, plan
 from .claim import Claim, ClaimError
 from .host import MANIFEST, PACKAGE_ZIP
 from .store import INPUTS_PATH, STORE_PATH, LiveStore, StoreRefused
 
 SCHEMA = 'cp18a-run-v1'
-RECORD_SCHEMA = 'cp18a-day-record-v1'
+RECORD_SCHEMA = inputclass.RECORD_SCHEMA        # CP-18d: the day record names its input class (decision 31)
 RED_LINE = ('refused: the plan holds a delivery day after the development boundary (cp25.guard, §24.2); '
             'nothing was synchronized, checked, retrieved or issued')
 
@@ -215,6 +217,16 @@ def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict
         if not built.get('shown'):
             item.update(status='open', cause=causes.INPUTS, cause_text=causes.text(causes.INPUTS))
             continue
+        try:
+            # decision 31's label: the day's input class, checked against the build's own availability evidence
+            label = inputclass.of_build(built)
+            inputclass.of_record({'schema': RECORD_SCHEMA, 'day': str(day), 'cutoff_utc': plan.cutoff(day).isoformat(),
+                                  'inputs': item['inputs'], **label})
+        except inputclass.LabelMissing as exc:
+            item.update(status='open', cause=causes.INPUTS, cause_text=causes.text(causes.INPUTS),
+                        error=f'LabelMissing: {exc}', note='the built inputs name no valid input class; nothing issued')
+            continue
+        item.update(label)
         for earlier in days[:i]:
             if record['days'].get(str(earlier), {}).get('status') == 'open':
                 _close(store, earlier, record)
@@ -227,7 +239,7 @@ def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict
         day_record = {'schema': RECORD_SCHEMA, 'day': str(day), 'run_id': run_id, 'host_kind': settings.host_kind,
                       'run_started_utc': record['started_utc'], 'issuance_started_utc': issuance_started,
                       'issuance_finished_utc': utc_now(), 'cutoff_utc': plan.cutoff(day).isoformat(),
-                      'gfs_available': bool(built['gfs_available']), 'inputs': item['inputs'],
+                      'gfs_available': bool(built['gfs_available']), 'inputs': item['inputs'], **label,
                       'gate': {'passed': record['gate']['passed'], 'started_utc': record['gate']['started_utc'],
                                'machine': next((c.get('described') for c in record['gate']['checks']
                                                 if c['check'] == 'machine'), None)},
