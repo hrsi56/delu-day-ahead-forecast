@@ -39,7 +39,13 @@ def relabel(live: Path, day: str, fetched_utc: str) -> dict:
     record = json.loads((folder / rel).read_text())
     lf = inputclass.required_load_forecast(record)
     if lf is None:
-        raise SystemExit(f'{day}: its record holds no availability evidence to rewrite')
+        # a record from prebuilt development payloads holds no per-input evidence: the fixture writes the one record
+        # decision 31's label rests on, marked as the fixture's
+        cutoff = record['cutoff_utc'].replace('+00:00', 'Z')
+        lf = {'input': 'load_forecast', 'data_day': day, 'for_day': day, 'required': True, 'cutoff_utc': cutoff,
+              'provenance': 'live', 'record': f'load_forecast-fixture@{day}', 'by_exception': False}
+        record['inputs']['availability'] = {'records': [lf], 'reasons': [], 'shown': True, 'fixture': FIXTURE,
+                                            'previous': record['inputs'].get('availability')}
     lf.update(admitted=False, fetched_after_cutoff=True, fetched_utc=fetched_utc,
               publication_utc=fetched_utc, basis_id='retrieval_time',
               reason=f"published {fetched_utc}, not strictly before the cutoff {lf.get('cutoff_utc')}",

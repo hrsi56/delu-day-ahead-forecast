@@ -341,18 +341,18 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
     for old in out.iterdir():
         old.unlink()
     issued = [e for e in entries if e['artifact']['issued_policy']]
-    # CP-18d (the Owner's decision 31): a live bundle, or a store whose records carry CP-18d's own label, names each
-    # issued day's input class and reports the prospective record's days with every input before the cutoff apart.
-    # A development store of CP-18a/b's records (no label of its own) keeps its bundle's bytes (CP-18b's evidence).
-    labelled = live_store(store) or any(e['record'].get('schema') == inputclass.RECORD_SCHEMA for e in entries)
+    # CP-18d (the Owner's decision 31): every issued day's record must name its input class, or the bundle is refused.
+    # The class itself is not written here: the bundle's files keep the frozen schema (`cp17.schema.verify_bundle`
+    # refuses any key it does not know), so the label and the evaluation per class live in the Space's own live record
+    # (`cp18.live_claims.live_record`, `cp18.evaluation.class_sets`), built from the store.
+    for e in entries:
+        inputclass.of_record(e['record'])
     forecasts = {'schema': 'cp17b-issued-forecasts-v2', 'levels': [0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975],
                  'days': [{'delivery_day': e['day'], 'issue_utc': e['artifact']['issue_utc'],
                            'issuing_artifact_sha256': e['artifact']['artifact_sha256'],
                            'issued_policy': e['artifact']['issued_policy'], 'display': e['artifact']['display'],
                            'keys': e['artifact']['keys'], 'quantiles': e['artifact']['quantiles'],
-                           'partial': e['artifact']['partial'],
-                           # CP-18d (decision 31): the day's input class, from its own record (refused if missing)
-                           **(inputclass.of_record(e['record']) if labelled else {})} for e in issued]}
+                           'partial': e['artifact']['partial']} for e in issued]}
     dump(out / 'issued-forecasts.json', forecasts)
     dump(out / 'artifact.json', artifact)
     # outcomes, reconciled at `now`
@@ -385,7 +385,7 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
     if absent or not all(b0_check.values()):
         raise ValueError(f'B0 context: absent {absent}, unequal to the shadow {[d for d, ok in b0_check.items() if not ok]}')
     static, static_sha = EV.load_development(root, development_file)
-    daily = EV.daily_windows(forecasts, outcome_value, b0, sets=labelled)
+    daily = EV.daily_windows(forecasts, outcome_value, b0)
     dump(out / 'evaluation.json', EV.evaluation_bundle(static, daily))
     # the fitted arrays
     arrays_how = None

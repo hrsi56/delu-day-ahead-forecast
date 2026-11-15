@@ -137,31 +137,30 @@ def _series(product: dict, naive: dict, replicates) -> dict:
     return series
 
 
-def running(windows: list[dict], *, replicates=F.REPLICATES) -> dict:
+def running(windows: list[dict], *, classes: dict | None = None, replicates=F.REPLICATES) -> dict:
     """The four running series of the prospective window (the live record), from the bundle's evaluation windows: for
-    all issued days (`series`), and per set (`sets`, decision 31) with each set's count of issued and scored days."""
-    def chosen(subset):
-        return {w['policy']: w for w in windows if w.get('window') == 'prospective'
-                and w.get('subset', 'all') == subset}
-    # (the all-days set: the window's entries marked `all`, or, before CP-18d, the unmarked ones)
-    every = chosen('all')
-    if 'product' not in every:
+    all issued days (`series`), and (decision 31, with each issued day's input class in `classes`, from the live store)
+    per set (`sets`), each with its count of issued, scored and paired days. A day's daily error is the same in either
+    set: only which days enter changes."""
+    chosen = {w['policy']: w for w in windows if w.get('window') == 'prospective'}
+    if 'product' not in chosen:
         raise ValueError('no prospective window: the running intervals are the live record\'s only')
-    sets, computed = [], {}
-    for subset, label in SETS:
-        found = chosen(subset)
-        if 'product' not in found:
-            # a bundle before CP-18d carries no subset: its all-days set stands alone (a CP-18d live bundle always
-            # carries both, and the Space's build refuses a live record without them)
-            continue
-        product = _daily(found['product'])
-        naive = _daily(found['B0']) if 'B0' in found else {}
-        key = (tuple(sorted(product.items())), tuple(sorted(naive.items())))
-        series = computed.get(key) or _series(product, naive, replicates)   # equal sets are computed once
-        computed[key] = series
-        sets.append({'set': subset, 'label': label, 'issued_days': found['product'].get('issued_days'),
-                     'scored_days': len(product), 'paired_days': len([x for x in product if x in naive]),
-                     'series': series})
+    product = _daily(chosen['product'])
+    naive = _daily(chosen['B0']) if 'B0' in chosen else {}
+    issued = [d['day'] for d in chosen['product']['record']['days']]
+    every = _series(product, naive, replicates)
+    sets = []
+    if classes is not None:
+        missing = [d for d in issued if d not in classes]
+        if missing:
+            raise ValueError(f'issued days without an input class (decision 31): {missing}')
+        for subset, label in SETS:
+            keep = set(issued) if subset == 'all' else {d for d in issued if classes[d] == 'before_cutoff'}
+            sub = {d: v for d, v in product.items() if d in keep}
+            subn = {d: v for d, v in naive.items() if d in keep}
+            series = every if keep == set(issued) else _series(sub, subn, replicates)   # equal sets: computed once
+            sets.append({'set': subset, 'label': label, 'issued_days': len(keep), 'scored_days': len(sub),
+                         'paired_days': len([d for d in sub if d in subn]), 'series': series})
     return {'schema': SCHEMA, 'label': LABEL, 'unit': 'EUR/MWh', 'level': LEVEL, 'minimum_days': MINIMUM_DAYS,
             'before_minimum': BEFORE_MINIMUM, 'wording': WORDING,
             'method': ("4.7T's registered dependence treatment (cp17.tools.fresh_test): cp28.inference's paired, "
@@ -169,4 +168,4 @@ def running(windows: list[dict], *, replicates=F.REPLICATES) -> dict:
                        "at lag 14, stratified calendar runs; the studentized (percentile-t) interval"),
             'block_days': F.BLOCK_DAYS, 'replicates': replicates, 'seed': F.SEED,
             'difference': 'the product minus the similar-day naive (B0), on the days both scored',
-            'series': sets[-1]['series'], 'sets': sets}
+            'series': every, 'sets': sets}

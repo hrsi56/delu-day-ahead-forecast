@@ -8,10 +8,13 @@
 | development | development rehearsal (CP-18 dry runs) | the store's issued days on development dates, the reconciled outcomes, and B0's shadow forecasts from its served training windows | recomputed |
 | 4.7T | one-shot fresh-data test · not yet scored | empty until 4.7T is scored | recomputed (empty) |
 | prospective | prospective · evaluation in progress until CP-19 | the issued days after the development boundary; none yet | recomputed (empty) |
-| prospective, subset | the same, · issued days with every input before the cutoff | of those days, the ones whose input class is "all inputs before the cutoff" (the Owner's decision 31, CP-18d: a day issued with its load forecast fetched after the cutoff is scored with all issued days, and apart from this subset) | recomputed |
 
 The dry runs' issued days (2026-08-31 to 2026-09-05) are a development rehearsal: labelled so everywhere, and never
 shown or scored as prospective or as 4.7T (`cp18.spaceglue.window_days` puts no development date in either).
+
+The prospective record per input class (the Owner's decision 31, CP-18d) is `class_sets`: the days whose inputs all
+precede the cutoff on their own, all issued days beside them, each with its count. It is computed at the Space's build
+and served in the Space's live record, not in the bundle, whose files keep the frozen schema.
 
 **The static development records** are computed once (`python -m cp18.evaluation development`, which reads CP-26's
 stored ledger from the local-only `evidence/cp-26` extract) and committed at `DEVELOPMENT_FILE`; their summaries must
@@ -93,40 +96,19 @@ def empty(window: str, evidence_class: str, policy: str) -> dict:
     return {'window': window, 'evidence_class': evidence_class, 'policy': policy, 'record': scoring.evaluate([], {})}
 
 
-#: The prospective record's subset (the Owner's decision 31, CP-18d): the issued days whose inputs all precede the
-#: cutoff, reported on their own beside all issued days (`cp18.inputclass`). The window's own entries stay all days.
-SUBSET_BEFORE = 'before_cutoff'
-SUBSET_LABEL = 'issued days with every input before the cutoff'
-
-
-def daily_windows(forecasts: dict, outcomes: dict, b0: list[dict], sets: bool = False) -> list[dict]:
+def daily_windows(forecasts: dict, outcomes: dict, b0: list[dict]) -> list[dict]:
     """The recomputed windows, product then B0 in each: the rehearsal, 4.7T (empty until scored), the prospective
-    record; then (decision 31, with `sets`) the prospective record's days with every input before the cutoff, product
-    then B0, as entries with `subset` and the count of each set's days. Without `sets` (a development bundle of
-    CP-18a/b's records) the windows are CP-18b's, unchanged. `b0` holds B0's forecasts of the issued days
-    (`spaceglue.b0_items`)."""
+    record. `b0` holds B0's forecasts of the issued days (`spaceglue.b0_items`). Their schema is the frozen one
+    (`cp17.schema.verify_bundle`): decision 31's sets are `class_sets`, outside the bundle."""
     from cp17 import scoring
     truth = G.outcome_map(outcomes)
     days = sorted(d['delivery_day'] for d in forecasts['days'])
-    classes = G.input_classes(forecasts)
     out = []
     for window, label in (('development', G.REHEARSAL), ('4.7T', G.FRESH_TEST), ('prospective', G.PROSPECTIVE)):
         for policy in ('product', 'B0'):
             entry = {'window': window, 'evidence_class': label, 'policy': policy}
-            chosen = G.window_days(entry, days)
-            if window == 'prospective' and sets:
-                entry['subset'] = 'all'
-                entry['subset_label'] = 'all issued days'
-                entry['issued_days'] = len(chosen)
-            entry['record'] = scoring.evaluate(_items(policy, forecasts, b0, chosen), truth)
+            entry['record'] = scoring.evaluate(_items(policy, forecasts, b0, G.window_days(entry, days)), truth)
             out.append(entry)
-    for policy in ('product', 'B0') if sets else ():
-        entry = {'window': 'prospective', 'evidence_class': f'{G.PROSPECTIVE} · {SUBSET_LABEL}', 'policy': policy,
-                 'subset': SUBSET_BEFORE, 'subset_label': SUBSET_LABEL}
-        chosen = G.window_days(entry, days, classes)
-        entry['issued_days'] = len(chosen)
-        entry['record'] = scoring.evaluate(_items(policy, forecasts, b0, chosen), truth)
-        out.append(entry)
     return out
 
 
@@ -134,6 +116,51 @@ def _items(policy: str, forecasts: dict, b0: list[dict], chosen: list[str]) -> l
     if policy == 'product':
         return G.product_items(forecasts, chosen)
     return [{k: v for k, v in it.items() if k != 'quantiles_sha256'} for it in b0 if it['day'] in chosen]
+
+
+#: The prospective record per input class (the Owner's decision 31, CP-18d): the issued days whose inputs all precede
+#: the cutoff on their own, and all issued days beside them, each with its count.
+SETS = (('before_cutoff', 'issued days with every input before the cutoff'), ('all', 'all issued days'))
+
+
+def class_sets(files: dict[str, bytes], classes: dict[str, str]) -> dict:
+    """Decision 31's evaluation sets, computed at the Space's build from the served bundle (its issued forecasts,
+    outcomes and B0's served training windows) and each issued day's class from the live store (`classes`). The
+    `all` set must equal the bundle's own prospective windows (`evaluation.json`), or it is refused. Outside the
+    bundle: the bundle's files keep the frozen schema."""
+    import json
+    from cp17 import scoring
+    forecasts = json.loads(files['issued-forecasts.json'])
+    truth = G.outcome_map(json.loads(files['outcomes.json']))
+    served = {(w['window'], w['policy']): w for w in json.loads(files['evaluation.json'])['windows']
+              if w['window'] == 'prospective'}
+    days = sorted(d['delivery_day'] for d in forecasts['days'])
+    missing = [d for d in G.window_days({'window': 'prospective', 'evidence_class': G.PROSPECTIVE}, days)
+               if d not in classes]
+    if missing:
+        raise ValueError(f'issued days without an input class (decision 31): {missing}')
+    out = []
+    for subset, label in SETS:
+        entry = {'window': 'prospective', 'evidence_class': G.PROSPECTIVE, 'subset': subset}
+        chosen = G.window_days(entry, days, classes)
+        windows = []
+        for policy in ('product', 'B0'):
+            absent = []
+            if policy == 'product':
+                items = G.product_items(forecasts, chosen)
+            else:
+                items, absent = G.b0_items(files, chosen)       # as the recomputation does: absent days are named
+            record = scoring.evaluate([{k: v for k, v in it.items() if k != 'quantiles_sha256'} for it in items], truth)
+            if subset == 'all' and ('prospective', policy) in served:
+                check = scoring.recompute_check(record, served[('prospective', policy)]['record'])
+                if not check['match']:
+                    raise ValueError(f'the all-days set of {policy} differs from the bundle\'s prospective window')
+            windows.append({'policy': policy, 'record': record,
+                            **({'absent_days': absent} if policy == 'B0' and absent else {})})
+        out.append({'set': subset, 'label': label, 'evidence_class': f'{G.PROSPECTIVE} · {label}',
+                    'issued_days': len(chosen), 'days': chosen, 'windows': windows})
+    return {'schema': 'cp18d-evaluation-sets-v1', 'source': ('cp17.scoring.evaluate on the served bundle\'s issued '
+            'forecasts and outcomes, per input class (cp18.inputclass), computed at the build'), 'sets': out}
 
 
 def evaluation_bundle(static: list[dict], daily: list[dict]) -> dict:
