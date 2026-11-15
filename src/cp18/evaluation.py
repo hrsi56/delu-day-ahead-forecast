@@ -99,7 +99,7 @@ def empty(window: str, evidence_class: str, policy: str) -> dict:
 def daily_windows(forecasts: dict, outcomes: dict, b0: list[dict]) -> list[dict]:
     """The recomputed windows, product then B0 in each: the rehearsal, 4.7T (empty until scored), the prospective
     record. `b0` holds B0's forecasts of the issued days (`spaceglue.b0_items`). Their schema is the frozen one
-    (`cp17.schema.verify_bundle`): decision 31's sets are `class_sets`, outside the bundle."""
+    (the frozen verifier, through `cp18.r7`): decision 31's sets are `class_sets`, outside the bundle."""
     from cp17 import scoring
     truth = G.outcome_map(outcomes)
     days = sorted(d['delivery_day'] for d in forecasts['days'])

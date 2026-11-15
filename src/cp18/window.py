@@ -3,7 +3,7 @@ D's acquisition. Standard library only, run as a file (`python3 src/cp18/window.
 any environment is installed, so an event that arrives too early costs a sleeping Linux job, not a macOS runner.
 
 **Why.** The Orchestrator's schedule probe measured GitHub's scheduler starting this repository's jobs 6 h 11 min to
-7 h 36 min after their cron time overnight on 2026-11-15, the delay growing by about half an hour each hour
+7 h 36 min after their cron time on the probe's first night, the delay growing by about half an hour each hour
 (`reports/cp18d/schedule-probe.json`). No fixed cron time can then be placed before D's cutoff. So the acquisition is
 scheduled every hour, and each arriving event passes this gate:
 

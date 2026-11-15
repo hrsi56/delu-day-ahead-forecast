@@ -342,7 +342,7 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
         old.unlink()
     issued = [e for e in entries if e['artifact']['issued_policy']]
     # CP-18d (the Owner's decision 31): every issued day's record must name its input class, or the bundle is refused.
-    # The class itself is not written here: the bundle's files keep the frozen schema (`cp17.schema.verify_bundle`
+    # The class itself is not written here: the bundle's files keep the frozen schema (the frozen verifier, through `cp18.r7`,
     # refuses any key it does not know), so the label and the evaluation per class live in the Space's own live record
     # (`cp18.live_claims.live_record`, `cp18.evaluation.class_sets`), built from the store.
     for e in entries:

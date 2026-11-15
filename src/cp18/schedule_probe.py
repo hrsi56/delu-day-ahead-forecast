@@ -23,7 +23,7 @@ unchanged, with the collection's start and end time (UTC) and the exact commands
   cron instant of the probed lines on those days that is past at the collection (and after the workflow's creation,
   when its record is known), with no scheduled run, is missed. The probed lines are the runs' own, and any given with
   `--line` or read from `--workflow-file` (so a line that never fired is still counted).
-  An instant less than `--grace-minutes` before the collection (default 1440, a day: on 2026-11-15 this repository's
+  An instant less than `--grace-minutes` before the collection (default 1440, a day: on the probe's first night this repository's
   runs were created 6 to 8 hours after their cron time, so a shorter grace would count delayed runs as missed) is
   listed as pending instead: its run may still be created. With the workflow's own record, the instants between its creation and the first probe day with no
   run are listed apart, as missed before the first scheduled run.

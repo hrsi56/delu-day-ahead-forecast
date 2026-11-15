@@ -8,7 +8,7 @@
 #            summer time (CEST). The TSOs publish the load forecast by D-1 10:00 Berlin (09:00 / 08:00 UTC); on the live
 #            record's days it was seen first between 09:03 and 09:17 UTC. GitHub starts a scheduled run late, and under
 #            load drops it: the first runner day had none fire, and the Orchestrator's schedule probe measured this
-#            repository's scheduled runs created 6 h 11 min to 7 h 36 min after their cron time overnight on 2026-11-15,
+#            repository's scheduled runs created 6 h 11 min to 7 h 36 min after their cron time on the probe's first night,
 #            the delay growing by about half an hour each hour (reports/cp18d/schedule-probe.json).
 #            No fixed cron time can be placed before the cutoff against such a delay, so (CP-18d item 2, decision 31)
 #            the acquisition is scheduled every hour (`20 * * * *`) and each event passes the gate first:
