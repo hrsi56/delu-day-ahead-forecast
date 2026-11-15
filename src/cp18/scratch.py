@@ -53,10 +53,13 @@ NEVER = ('live/', 'reports/cp18c/history-v1/')
 DRY_RUN = 'reports/cp18a/dryrun/'
 README = """# delu-pipeline-dryrun
 
-Public scratch repository for CP-18a and CP-18c of the DE-LU day-ahead forecasting project
+Public scratch repository for CP-18a, CP-18c and CP-18d of the DE-LU day-ahead forecasting project
 ([hrsi56/delu-day-ahead-forecast](https://github.com/hrsi56/delu-day-ahead-forecast)): dry runs of the daily pipeline
 around the frozen A1 package on GitHub-hosted `macos-26` runners, on development days through 2026-09-06 only. The
-workflow's live jobs run only in the product repository; here, only its dry run is dispatched.
+workflow's live jobs run only in the product repository; here, only its dry runs are dispatched (CP-18d adds the
+rehearsals of a missed acquisition issued with the load forecast fetched after the cutoff, a `main` moved during the
+records step, and the acquisition's in-job wait, all with a stand-in source on development days). Its scheduled
+events start nothing here: every job is skipped outside the product repository.
 
 It holds only what the runs need: the candidate's code and the files its freeze manifest verifies, the guards, the
 workflow, A1's search state, the freeze-origin states, the canary's payload, a development state for the store and the
