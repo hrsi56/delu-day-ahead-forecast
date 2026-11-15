@@ -208,4 +208,16 @@ written to MLflow. The pin check before the edit: no committed file cites the ma
 
 ## §3. Checks run
 
-(Filled at the candidate.)
+| Check | Result | Where |
+|---|---|---|
+| The checks before the results (outcome 2) | all pass | `reports/cp29/checks.json`; §1 |
+| The summaries and the report re-derive from the committed daily rows | identical | `python -m cp29.evaluate --check`; `python -m cp29.report --check` |
+| A fresh re-solve of every 250th P-all day, from the pinned inputs, reproduces the committed rows | identical | `tests/cp29/test_evaluation.py` |
+| §16.4's positive controls: an altered input identity is refused; a row after 2026-09-06 is refused and the snapshot is cut at the boundary; missing hours are not traded; zero and negative prices; 23- and 25-hour days | pass | `tests/cp29/test_battery.py` |
+| The programme: a hand-computed day, the tie-break, every limit with a negative control, the brute force with a planted worse schedule, settlement arithmetic, the risk-aware variant | pass | `tests/cp29/test_battery.py` (31 tests in `tests/cp29` in all) |
+| CP-29's records re-derive (2,076), a perturbed one fails; the claims hold on their records; W56 and W57 with positive and negative cases; nothing on the page or in the README | pass | `tests/cp29/test_claims.py` |
+| The evidence and claim layers, and the export (O59) | 676 passed, 1 skipped | `tests/test_29`, `tests/test_30`, `tests/test_32`, `tests/test_34`, `tests/cp29` |
+| `make lint-publication` (page, README, templates) | PASS, 0 findings | — |
+| The full default suite in a clean worktree at `7b7727ef`, after CI's browser-payload build | 3,469 passed, 17 skipped, 0 failed (27 min); the worktree clean after | local run, 21:13–21:41 UTC. The commits after it change only the report's wording and add CP-29's two positive controls; `tests/cp29` passes at the candidate |
+
+The machine-hours: ≤ 1.1 of the 4-hour ceiling, one worker at a time (`.local/artifacts/cp-29/ledger.md`).
