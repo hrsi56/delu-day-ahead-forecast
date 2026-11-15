@@ -148,3 +148,28 @@ def test_the_measures():
     assert m["cumulative_profit_eur"] == 10.0 and m["share_of_perfect_foresight"] == 0.5
     assert m["losing_days"] == 1 and m["largest_daily_loss_eur"] == 2.0 and m["missing_days"] == 1
     assert E.measures(group, 0.0)["share_of_perfect_foresight"] is None    # "undefined" for a zero denominator
+
+
+# --------------------------------------------------------------- §16.4's positive controls (identities, leakage)
+
+def test_positive_control_an_altered_input_identity_is_refused(monkeypatch):
+    first = next(iter(I.PINNED))
+    monkeypatch.setitem(I.PINNED, first, "0" * 64)
+    with pytest.raises(ValueError, match="is not the pinned"):
+        I.check_pins()
+
+
+def test_positive_control_a_row_after_the_development_boundary_is_refused():
+    from datetime import datetime, timezone
+
+    from cp25 import guard
+
+    with pytest.raises(guard.BoundaryRefused):
+        guard.admit_rows([datetime(2026, 9, 6, 22, 0, tzinfo=timezone.utc)])     # delivery day 2026-09-07, Berlin
+    assert guard.admit_rows([datetime(2026, 9, 6, 21, 0, tzinfo=timezone.utc)]) == 1   # 23:00 on 2026-09-06
+    prices = I._prices(I.ROOT)
+    assert prices.day.max() <= "2026-09-06"
+    future = prices.copy()
+    future.loc[future.index[-1], "timestamp_utc"] = pd.Timestamp("2026-09-07 10:00", tz="UTC")
+    with pytest.raises(guard.BoundaryRefused):
+        guard.admit_rows(pd.DatetimeIndex(future.timestamp_utc).to_pydatetime())
