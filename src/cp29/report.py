@@ -139,16 +139,20 @@ def build(root: Path = I.ROOT) -> str:
         f"of {len(checks['naive_parity_with_cp26_b0']['days'])} records), and the frozen package's issued B0 central "
         f"vector on {sum(d['equal'] for d in checks['naive_against_the_frozen_package_b0']['days'])} further days.",
         f"- **The solver against a brute force:** on {checks['brute_force']['solves']} sampled day-source-rule "
-        "programmes, an exhaustive search over a grid of schedules never beat the solver "
-        f"({'none did' if checks['brute_force']['solver_never_beaten'] else 'ONE DID'}).",
+        "programmes, an exhaustive search over a grid of schedules "
+        f"{'never beat the solver' if checks['brute_force']['solver_never_beaten'] else 'BEAT THE SOLVER'}.",
         f"- **The limits:** every one of the {after['rows']:,} daily schedules meets every limit; perfect foresight is "
         f"never negative on a day (its lowest day: {eur(after['perfect_foresight_min_eur'], 2)} EUR).",
-        f"- **The tie-break:** {after['tie_break_fallbacks']} tie-break solves fell back to the previous stage "
-        f"({after['rows_with_a_fallback']} rows), as §0 provides.",
+        ("- **The tie-break:** no tie-break solve needed §0's fallback." if after["tie_break_fallbacks"] == 0 else
+         f"- **The tie-break:** {after['tie_break_fallbacks']} tie-break solves fell back to the previous stage "
+         f"({after['rows_with_a_fallback']} rows), as §0 provides."),
         "- **Days not traded because an hour is missing** (contract §5: kept, counted, profit zero): "
         + ", ".join(f"{src} {int(n)}" for src, n in missing.items()) + ".",
         "",
         "## Results on P-all, at the main wear cost (€25 per MWh)",
+        "",
+        "For a battery of 1 MW and 2 MWh, in EUR over the whole period. The complete daily series, one row per day, "
+        "source, rule and wear cost, is `reports/cp29/daily.csv`; the cumulative curve is its running sum.",
         "",
         *main_table(summary, "P-all"),
         "",

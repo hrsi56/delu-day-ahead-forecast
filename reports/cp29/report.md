@@ -13,12 +13,14 @@
 ## Checks run before the results
 
 - **The naive's parity:** its central vector equals CP-26's B0 central vector bit for bit wherever a committed record holds it (8 of 8 records), and the frozen package's issued B0 central vector on 5 further days.
-- **The solver against a brute force:** on 184 sampled day-source-rule programmes, an exhaustive search over a grid of schedules never beat the solver (none did).
+- **The solver against a brute force:** on 184 sampled day-source-rule programmes, an exhaustive search over a grid of schedules never beat the solver.
 - **The limits:** every one of the 26,964 daily schedules meets every limit; perfect foresight is never negative on a day (its lowest day: 0.00 EUR).
-- **The tie-break:** 0 tie-break solves fell back to the previous stage (0 rows), as §0 provides.
+- **The tie-break:** no tie-break solve needed §0's fallback.
 - **Days not traded because an hour is missing** (contract §5: kept, counted, profit zero): naive 11, v5 4, v6 33.
 
 ## Results on P-all, at the main wear cost (€25 per MWh)
+
+For a battery of 1 MW and 2 MWh, in EUR over the whole period. The complete daily series, one row per day, source, rule and wear cost, is `reports/cp29/daily.csv`; the cumulative curve is its running sum.
 
 | Source and rule | Cumulative net profit, EUR | Share of perfect foresight | Trading days | Losing days | Largest daily loss, EUR | Maximum drawdown, EUR | Mean / median daily profit, EUR | 5th–95th percentile, EUR | Discharged from the battery, MWh (full cycles) |
 |---|---|---|---|---|---|---|---|---|---|
