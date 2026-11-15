@@ -73,6 +73,15 @@ For each delivery day D, each source and each rule, one programme over D's hours
 - **Tolerances:** ε_v = €1e-6; ε_e = 1e-7 MWh; an energy below 1e-9 MWh is set to zero; the limit check allows 1e-7
   MWh. The schedule is a function of the inputs alone; `tests/cp29` checks that the same inputs give the same schedule.
 - **The limits are checked on every schedule** (`battery.violations`); any breach stops the run, writing nothing.
+- *Correction, 2026-11-15 16:33 UTC, before any profit was kept or seen:* the first run (16:30–16:32 UTC) stopped in
+  the integer stage's third solve, which HiGHS found infeasible. The cause: ε_e = 1e-7 MWh (and ε_v = €1e-6) are below
+  HiGHS's MIP feasibility tolerance, about 1e-6, which scipy's `milp` cannot tighten. That run had passed the checks
+  before the results and wrote nothing; no profit from it was written, printed or read.
+  - **The integer stage's tie-break slacks** are now ε_v = €1e-4 and ε_e = 1e-5 MWh. That stage only chooses each
+    hour's direction.
+  - **The linear stage keeps ε_v = €1e-6 and ε_e = 1e-7 MWh** and sets the schedule.
+  - **A tie-break solve** (the second or third) that HiGHS still finds infeasible keeps the previous stage's
+    solution, deterministically. Each one is counted in `daily.csv` (`tie_break_fallbacks`) and in `checks.json`.
 
 ### The day, a missing hour, and the joins (`src/cp29/inputs.py`)
 

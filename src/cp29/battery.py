@@ -41,7 +41,10 @@ WEARS = (25.0, 0.0, 50.0)  # EUR per MWh discharged: the main value, then the se
 #: Tolerances (the packet's §0): HiGHS's primal and dual feasibility; the value slack ε_v (EUR) and the energy slack
 #: ε_e (MWh) of the tie-break; the do-nothing threshold (EUR); the zero below which an energy is set to 0 (MWh); and the
 #: feasibility tolerance of the schedule check (MWh).
-TOL = {"feasibility": 1e-9, "value": 1e-6, "energy": 1e-7, "nothing": 1e-6, "zero": 1e-9, "check": 1e-7}
+TOL = {"feasibility": 1e-9, "value": 1e-6, "energy": 1e-7, "nothing": 1e-6, "zero": 1e-9, "check": 1e-7,
+       # the integer stage's tie-break slacks, above HiGHS's MIP feasibility tolerance (about 1e-6), which scipy's
+       # `milp` cannot tighten (§0's correction of 2026-11-15)
+       "value_integer": 1e-4, "energy_integer": 1e-5}
 HIGHS = {"primal_feasibility_tolerance": TOL["feasibility"], "dual_feasibility_tolerance": TOL["feasibility"],
          "presolve": True}
 
@@ -58,6 +61,7 @@ class Schedule:
     charge: np.ndarray       # c[t], MWh bought at the grid
     discharge: np.ndarray    # d[t], MWh sold at the grid
     value: float             # the forecast's own net value of this schedule, EUR
+    fallbacks: int = 0       # tie-break solves that were infeasible and kept the previous stage's solution
 
     @property
     def traded(self) -> bool:
@@ -131,9 +135,12 @@ def _solve(objective: np.ndarray, rows, lo, hi, lb, ub, spec: Spec, n: int) -> n
 
 
 def _stages(buy: np.ndarray, sell: np.ndarray, wear: float, spec: Spec, cmax: np.ndarray, dmax: np.ndarray):
-    """The three solves (value, then least energy, then earliest) with per-hour power bounds; None when the best value
-    is not above zero."""
+    """The three solves (value, then least energy, then earliest) with per-hour power bounds. Returns None when the best
+    value is not above zero; else (x, value row, fallbacks). A tie-break solve (the second or third) that HiGHS finds
+    infeasible keeps the previous stage's solution, deterministically, and is counted."""
     n = len(buy)
+    slack_v = TOL["value_integer"] if spec.exclusive else TOL["value"]
+    slack_e = TOL["energy_integer"] if spec.exclusive else TOL["energy"]
     rows, lo, hi, lb, ub, m = _matrices(n, spec)
     ub[:n] = np.minimum(ub[:n], cmax)
     ub[n:2 * n] = np.minimum(ub[n:2 * n], dmax)
@@ -142,13 +149,21 @@ def _stages(buy: np.ndarray, sell: np.ndarray, wear: float, spec: Spec, cmax: np
     best = float(value @ x)
     if best <= TOL["nothing"]:
         return None
+    fallbacks = 0
     energy = np.zeros(m); energy[:2 * n] = 1.0
-    rows2 = np.vstack([rows, value]); lo2 = np.append(lo, best - TOL["value"]); hi2 = np.append(hi, np.inf)
-    x = _solve(energy, rows2, lo2, hi2, lb, ub, spec, n)
+    rows2 = np.vstack([rows, value]); lo2 = np.append(lo, best - slack_v); hi2 = np.append(hi, np.inf)
+    try:
+        x = _solve(energy, rows2, lo2, hi2, lb, ub, spec, n)
+    except RuntimeError:
+        fallbacks += 1
     least = float(energy @ x)
     early = np.zeros(m); early[:n] = early[n:2 * n] = np.arange(1, n + 1)
-    rows3 = np.vstack([rows2, energy]); lo3 = np.append(lo2, -np.inf); hi3 = np.append(hi2, least + TOL["energy"])
-    return _solve(early, rows3, lo3, hi3, lb, ub, spec, n), value
+    rows3 = np.vstack([rows2, energy]); lo3 = np.append(lo2, -np.inf); hi3 = np.append(hi2, least + slack_e)
+    try:
+        x = _solve(early, rows3, lo3, hi3, lb, ub, spec, n)
+    except RuntimeError:
+        fallbacks += 1
+    return x, value, fallbacks
 
 
 def plan(buy: np.ndarray, sell: np.ndarray, wear: float, spec: Spec) -> Schedule:
@@ -163,22 +178,25 @@ def plan(buy: np.ndarray, sell: np.ndarray, wear: float, spec: Spec) -> Schedule
         raise ValueError("a day with a missing hour is not planned (the caller records it as not traded)")
     full = np.full(n, POWER_MWH)
     linear = Spec(exclusive=False, wear_on_battery=spec.wear_on_battery)
+    fallbacks = 0
     if spec.exclusive:
         found = _stages(buy, sell, wear, spec, full, full)
         if found is None:
             return Schedule(np.zeros(n), np.zeros(n), 0.0)
         z = np.round(found[0][3 * n:])               # 1: the hour may charge; 0: it may discharge
+        fallbacks += found[2]
         found = _stages(buy, sell, wear, linear, full * z, full * (1 - z))
     else:
         found = _stages(buy, sell, wear, linear, full, full)
     if found is None:
         return Schedule(np.zeros(n), np.zeros(n), 0.0)
-    x, value = found
+    x, value, more = found
+    fallbacks += more
     c, d = x[:n].copy(), x[n:2 * n].copy()
     c[np.abs(c) < TOL["zero"]] = 0.0
     d[np.abs(d) < TOL["zero"]] = 0.0
     c, d = np.clip(c, 0.0, POWER_MWH), np.clip(d, 0.0, POWER_MWH)
-    return Schedule(c, d, float(value[:2 * n] @ np.concatenate([c, d])))
+    return Schedule(c, d, float(value[:2 * n] @ np.concatenate([c, d])), fallbacks)
 
 
 def settle(schedule: Schedule, price: np.ndarray, wear: float, spec: Spec) -> float:

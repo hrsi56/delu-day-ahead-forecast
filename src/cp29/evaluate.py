@@ -40,7 +40,7 @@ BOOT_SEED = 20261115
 BRUTE_EVERY, BRUTE_STEP = 50, 0.05
 DAILY_COLUMNS = ["day", "regime", "in_p_v5", "hours", "source", "rule", "wear_eur_per_mwh", "missing_hour", "traded",
                  "bought_mwh", "sold_mwh", "discharged_battery_mwh", "expected_profit_eur", "profit_eur",
-                 "evidence_class"]
+                 "tie_break_fallbacks", "evidence_class"]
 
 
 def _csv(frame: pd.DataFrame) -> str:
@@ -66,7 +66,7 @@ def daily_rows(days: dict[str, I.Day], p_v5: set[str]) -> pd.DataFrame:
                            "evidence_class": EVIDENCE}
                     if missing:      # §5: not traded, profit zero, kept and counted
                         row.update(traded=False, bought_mwh=0.0, sold_mwh=0.0, discharged_battery_mwh=0.0,
-                                   expected_profit_eur=0.0, profit_eur=0.0)
+                                   expected_profit_eur=0.0, profit_eur=0.0, tie_break_fallbacks=0)
                     else:
                         s = B.plan(buy, sell, wear, SPEC)
                         bad = B.violations(s, SPEC)
@@ -74,7 +74,8 @@ def daily_rows(days: dict[str, I.Day], p_v5: set[str]) -> pd.DataFrame:
                             raise AssertionError(f"{day} {source} {rule} {wear}: the schedule breaks {bad}")
                         row.update(traded=s.traded, bought_mwh=float(s.charge.sum()),
                                    sold_mwh=float(s.discharge.sum()), discharged_battery_mwh=s.discharged_battery,
-                                   expected_profit_eur=s.value, profit_eur=B.settle(s, data.price, wear, SPEC))
+                                   expected_profit_eur=s.value, profit_eur=B.settle(s, data.price, wear, SPEC),
+                                   tie_break_fallbacks=s.fallbacks)
                     rows.append(row)
     return pd.DataFrame(rows, columns=DAILY_COLUMNS)
 
@@ -214,6 +215,8 @@ def after_checks(daily: pd.DataFrame) -> dict:
     return {"perfect_foresight_never_negative": bool((pf >= -B.TOL["value"]).all()),
             "perfect_foresight_min_eur": float(pf.min()),
             "every_schedule_within_the_limits": True,     # `daily_rows` raises on any violation
+            "tie_break_fallbacks": int(daily.tie_break_fallbacks.sum()),
+            "rows_with_a_fallback": int((daily.tie_break_fallbacks > 0).sum()),
             "rows": len(daily)}
 
 
