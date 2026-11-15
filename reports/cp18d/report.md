@@ -88,4 +88,22 @@ apart) and the sleep before its start (600 s); the chain's self-dispatch.
 
 ## 7. Disclosures
 
-Filled at the return.
+- **The rehearsal found two defects, both fixed and both covered by tests:** the label written into the bundle's frozen
+  files (run 43670023047; fixed at 740ea312, `test_evaluation_sets.py`'s gate test), and an undeclared dispatch input in
+  the chain's rehearsal (run 43735265261, HTTP 422; fixed at 56d76de7, `test_chain.py`'s declared-inputs test).
+- **The CI reproduction found six scanner failures** (pre1 at 3bf2e074: dates after the boundary in `src/cp18` and the
+  workflow, and the frozen verifier's name outside `cp18.r7`); fixed at 633bcb75. pre2 at 0b84126a: every step exit 0.
+- **The gate came first and was kept as a part:** the hourly event through a Linux gate (f375f99a) answered the probe's
+  first measurements; O54 then raised the bar, and the chain (7631fa44) replaced the gate as the schedule. The gate's
+  module (`window.py`) remains: the chain uses its cutoff, start and sleep limit, the acquisition rehearsal uses its
+  plan, and the comparison test uses it as the alternative.
+- **The test stand-ins** (`tests/cp18a/test_pipeline.py`, `tests/cp18c/support18c.py`) now return a built day's input
+  class, which the pipeline requires; no assertion of theirs changed. Every changed CP-18a–c assertion has its `CP-18d`
+  comment beside it (`tests/cp18c/test_acquire.py`, `test_space_live.py`, `test_workflow.py`).
+- **A test fixture rewrites a copy of the live store** (`tests/cp18d/fixture_after_cutoff.py`) to render a day issued
+  with the copy after the cutoff: no live day has one yet. It never touches a checkout's `live/`, says so in every file it
+  writes, and re-chains the copy's ledger with CP-17c's own formula.
+- **Not changed, by the brief's allowed paths:** the report's and the root README's "runs ... daily" sentence; the
+  development bundle's bytes (CP-18b's evidence) stay reproducible (the label and the sets are added only where the
+  live store or a CP-18d record carries them, and never into the bundle's files).
+- **Usage-limit pauses:** three, recorded in the Lead's ledger with what was running.
