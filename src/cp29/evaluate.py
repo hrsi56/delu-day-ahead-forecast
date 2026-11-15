@@ -2,6 +2,7 @@
 
     uv run python -m cp29.evaluate              # the checks, then every daily row, the summaries and the report
     uv run python -m cp29.evaluate --check      # re-derive every summary from the committed daily rows; write nothing
+    uv run python -m cp29.evaluate --summaries  # rewrite the summaries from the committed daily rows
 
 **What is computed, and nothing else:** for each source and rule the contract names (v6 and v5 under the median rule
 and the risk-aware variant; the similar-day naive under the median rule; perfect foresight), at each wear cost (€25,
@@ -116,6 +117,8 @@ def summaries(daily: pd.DataFrame) -> pd.DataFrame:
                 at = part.loc[part.wear_eur_per_mwh == wear]
                 pf_total = float(at.loc[at.source == "perfect_foresight", "profit_eur"].sum())
                 for source, rules in RULES.items():
+                    if source == "v5" and population == "P-all":
+                        continue                  # contract §4: v5 on P-v5 only, the days where its forecasts exist
                     for rule, _, _ in rules:
                         group = at.loc[(at.source == source) & (at.rule == rule)]
                         if group.empty:
@@ -229,9 +232,16 @@ def summary_files(daily: pd.DataFrame) -> dict[str, str]:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="re-derive the summaries from the committed daily rows")
+    ap.add_argument("--summaries", action="store_true", help="rewrite the summaries from the committed daily rows")
     args = ap.parse_args(argv)
     root = I.ROOT
     out = root / OUT
+    if args.summaries:
+        daily = pd.read_csv(out / "daily.csv", dtype={"day": str})
+        for name, text in summary_files(daily).items():
+            (out / name).write_text(text)
+        print(json.dumps({"wrote": sorted(summary_files(daily))}))
+        return 0
     if args.check:
         daily = pd.read_csv(out / "daily.csv", dtype={"day": str})
         files = summary_files(daily)
