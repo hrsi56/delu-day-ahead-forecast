@@ -13,7 +13,8 @@ The contracts, each with a negative control where a check could pass vacuously:
   class, and no live number appears;
 - Business insights states the use, the measured implications and the gap, and no error or coverage figure is called a
   profit or a success rate (W54); no product result is called prospective (W55);
-- the README carries the same claims; the page fits the 2.0 MB budget; R3's shared code texts carry their experiment.
+- the README carries the same claims (decision 30 later removed the 2.0 MB budget); R3's shared code texts carry their
+  experiment.
 """
 from __future__ import annotations
 
@@ -214,18 +215,20 @@ def test_the_order_is_a8s_product_first():
     assert _order(old)[:5] != ["top", "product", "outcomes", "business", "research-results"]
 
 
-def _foreign(section: str) -> list[str]:
-    """What does not belong in a PRES-6 section: a record not PRES-6's or unknown, a live record, a raw value shown
-    unrounded."""
+def _foreign(section: str, prefixes: tuple[str, ...] = ("pres6.",)) -> list[str]:
+    """What does not belong in a PRES-6 section: a record not PRES-6's (or, in Business insights since PRES-7, not
+    CP-29's) or unknown, a live record, a raw value shown unrounded."""
     problems = [f"record {record_id}" for record_id in re.findall(r'data-record="([^"]+)"', section)
-                if not record_id.startswith("pres6.") or record_id not in R.records()]
+                if not record_id.startswith(prefixes) or record_id not in R.records()]
     visible = _text(re.sub(r"<svg.*?</svg>", "", re.sub(r"<data [^>]*>", "", section), flags=re.S))
     return problems + [f"unrounded {value}" for value in re.findall(r"\d+\.\d{6,}", visible)]
 
 
 def test_product_results_binds_only_pres6_records_and_shows_no_live_number():
-    for section in ("outcomes", "business"):
-        assert _foreign(_section(BODY, section)) == [], section
+    assert _foreign(_section(BODY, "outcomes")) == []
+    # PRES-7: Business insights renders CP-29's evaluation (decision 32) beside PRES-6's measured implications
+    assert _foreign(_section(BODY, "business"), ("pres6.", "cp29.")) == []
+    assert _foreign(_section(BODY, "outcomes") + '<span data-record="cp29.p_all.all.v6.median.w25.days">2,068</span>')
     bound = re.findall(r'data-record="([^"]+)"', _section(BODY, "outcomes"))
     assert len(bound) > 200 and not any(record_id.startswith("live") for record_id in bound)
 
@@ -270,17 +273,23 @@ def test_the_product_finding_is_v6s_development_result():
 def test_business_insights_states_the_use_the_implications_and_the_gap():
     text = _text(_section(BODY, "business"))
     for needed in ("12:00 auction", "bidding, scheduling and hedging", "17.2", "34.6", "51.7", "0.7826",
-                   "No decision policy, cost model or trading simulation has been authorized or run",
-                   "no profit, value or loss figure", "not profit, and not a success rate"):
+                   "not profit, and not a success rate"):
         assert needed in text, needed
-    assert not re.search(r"\b(profit|return|gain) (curve|of [−+-]?\d)", text)
-    assert "<svg" not in _section(BODY, "business")  # no profit curve, no chart
+    # PRES-7 replaced the gap (CP-29's open item 4): an evaluation now exists, so the section says what is still not
+    # evaluated; its profit chart and claims are tests/test_52_pres7_business_insights.py's
+    assert "What is still not evaluated" in text
+    for gone in ("No decision policy, cost model or trading simulation has been authorized or run",
+                 "no profit, value or loss figure"):
+        assert gone not in text and gone not in README, gone
 
 
 def test_the_withheld_claims_w54_and_w55_are_guarded():
-    for claim in ("The lower error is a profit", "its coverage equals a success rate", "a profit of 3",
-                  "a profit curve of 12", "the product results are prospective", "These results were live"):
+    for claim in ("The lower error is a profit", "its coverage equals a success rate",
+                  "the product results are prospective", "These results were live"):
         assert RC.withheld_findings(claim), claim
+    # PRES-7 (O60): W54 keeps only its "error or coverage called a profit" half; a labelled simulated profit is published
+    for claim in ("a profit of 3", "a profit curve of 12"):
+        assert not [h for h in RC.withheld_findings(claim) if h.split(":")[0] == "W54"], claim
     for allowed in ("Lower forecast error and interval coverage are not profit, and not a success rate.",
                     "These are development results after selection.", "there is no profit, value or loss figure"):
         assert not [h for h in RC.withheld_findings(allowed) if h.split(":")[0] in ("W54", "W55")], allowed
@@ -297,12 +306,8 @@ def test_the_readme_carries_the_same_claims():
     numbers = re.findall(r"\d[\d,]*\.?\d*", page)
     assert numbers == re.findall(r"\d[\d,]*\.?\d*", RC.render("outcomes.finding", "md", surface=RC.README))
     assert "#outcomes" in product and "prospective evaluation in progress" in product
-    assert "no profit, value or loss figure" in business and "not a success rate" in business
+    assert "What is still not evaluated" in business and "not a success rate" in business
     assert README.index("**Product results:**") < README.index("**Business insights:**")
-
-
-def test_the_page_fits_the_budget():
-    assert len(PAGE.encode("utf-8")) <= 2_000_000
 
 
 def test_r3_a_shared_code_text_carries_its_experiment():

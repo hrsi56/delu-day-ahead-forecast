@@ -30,14 +30,43 @@ def test_every_cp29_record_rederives_and_a_perturbed_one_fails():
         assert record.evidence_class == R.EVIDENCE_CLASS_SIMULATED and record.window[1] <= R.RESEARCH_BOUNDARY
 
 
-def test_the_blocks_are_written_for_pres7_and_appear_on_no_published_surface():
-    keys = [block.key for block in RC.CP29_BLOCKS]
-    assert keys and all(block.surfaces == frozenset({RC.PRES7}) for block in RC.CP29_BLOCKS)
-    for key in keys:
-        assert f'data-block="{key}"' not in PAGE
-        with pytest.raises(RC.ClaimError):
-            RC.render(key)                                   # not on the page in this round
-    assert "cp29." not in PAGE and "cp29." not in README
+def _publication_problems(block: RC.Block, page: str, readme: str) -> list[str]:
+    """Where a CP-29 block is not on the page and in the README exactly as the claim layer renders it, bound to its
+    `cp29.*` records on the page."""
+    problems = []
+    rendered = RC.render(block.key)
+    if f'data-block="{block.key}"' not in page or rendered not in page:
+        problems.append(f"{block.key}: not on the page as the claim layer renders it")
+    for record_id in block.records():
+        if f'data-record="{record_id}"' not in rendered or f'data-record="{record_id}"' not in page:
+            problems.append(f"{block.key}: {record_id} is not bound on the page")
+    if RC.render(block.key, "md", surface=RC.README) not in readme:
+        problems.append(f"{block.key}: not in the README as the claim layer renders it")
+    return problems
+
+
+def test_the_blocks_render_on_the_page_and_the_readme_through_the_claim_layer():
+    """PRES-7's successor (ruling O63) to CP-29's round-scoped `..._appear_on_no_published_surface`: PRES-7 publishes
+    the eight blocks, so each renders on the page and in the README from the claim layer and binds its records; an
+    altered number or record fails (the negative control)."""
+    assert len(RC.CP29_BLOCKS) == 8
+    for block in RC.CP29_BLOCKS:
+        assert block.surfaces == frozenset({RC.PRES7, RC.PAGE, RC.README}), block.key
+        assert all(record_id.startswith("cp29.") for record_id in block.records()), block.key
+        assert _publication_problems(block, PAGE, README) == [], block.key
+    # C1101 (the setup) and C1108 (the limits) are definitions; the other six bind CP-29's records
+    assert [block.key for block in RC.CP29_BLOCKS if not block.records()] == ["economics.setup", "economics.limits"]
+    assert "cp29." not in README                              # the README carries the text, not the bindings
+    # The negative control: the finding with one number altered, on the page and in the README, fails.
+    finding = RC.BLOCKS_BY_KEY["economics.finding"]
+    number = re.sub(r"<[^>]+>", "", RC.render(finding.key)).split("earned ")[1].split(" ")[0]
+    altered = number[:-1] + str((int(number[-1]) + 1) % 10)
+    assert number in PAGE and number in README and altered != number
+    assert _publication_problems(finding, PAGE.replace(number, altered), README)
+    assert _publication_problems(finding, PAGE, README.replace(number, altered))
+    # ... and a block bound to a record it does not render fails too.
+    record_id = finding.records()[0]
+    assert _publication_problems(finding, PAGE.replace(f'data-record="{record_id}"', 'data-record="cp29.altered"'), README)
 
 
 def test_each_block_binds_its_records_and_the_claims_hold_on_them():

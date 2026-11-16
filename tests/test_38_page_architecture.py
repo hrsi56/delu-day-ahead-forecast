@@ -125,7 +125,7 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     # rule's verdict, on development days, each value named by its metric (A1).
     assert text.startswith("Selected by a rule set in advance: against v5 on all 2,068 development days, −7% "
                            "[−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with "
-                           "descriptive 95% intervals; 7 policies tested.")
+                           "descriptive 95% intervals; 7 candidates tested.")  # PRES-7 (O51 item 8): the count says what it counts
     # PUBLISH_RULES 1.0 A1: v5's form, from the same generator, leads with its own rule (§3.3 a), at the rule's own
     # decision level, 97.5% (capstone v21-r11 §23.9; W47), unchanged.
     claim, v5_form = RC.headline_template(G.get("v5"))
@@ -165,7 +165,9 @@ def test_the_release_rule_is_beside_the_demo_action_and_outside_any_disclosure(p
     opened = page.rfind("<details", 0, rule)
     assert opened == -1 or page.rfind("</details>", 0, rule) > opened
     text = re.sub(r"<[^>]+>", "", page[rule:rule + 1200])
-    assert "the Space runs v6 · DDNN-2 alone daily before its one test" in text and "the last released generation" in text
+    # PRES-7 (O51 item 8): the Owner is defined at first use
+    assert "The Owner, the project's lead, has the Space run v6 · DDNN-2 alone daily before its one test" in text
+    assert "the last released generation" in text
     # The release check's own selector finds it beside the action (scripts/check_reader_paths.py, PLACEMENT_JS).
     assert page.rfind('data-block="release-rule"', 0, rule) > action
 
@@ -276,10 +278,6 @@ def test_negative_control_an_edited_archive_is_caught(page):
     archive = archive_element(page)
     edited = page.replace(archive, archive.replace("preserved as published", "preserved"), 1)
     assert hashlib.sha256(archive_element(edited).encode()).hexdigest() != AF0ABB0_ARCHIVE_SHA256
-
-
-def test_the_page_stays_within_its_size_budget(page):
-    assert len(page.encode()) <= 2_000_000
 
 
 def test_the_generation_colours_and_markers_stay():

@@ -590,8 +590,8 @@ def test_negative_control_v5_sharing_a_shape_is_caught():
     assert any("v5 shares its marker shape" in problem for problem in B.marker_problems(styles))
 
 
-def test_the_page_fits_the_budget_without_compaction(page):
-    assert len(page.encode()) <= 2_000_000
+def test_the_page_keeps_v2_and_v3_without_compaction(page):
+    # decision 30 (2026-11-15) removed the page budget this test also asserted; the chapters stay whole
     for version in ("v2", "v3"):
         assert f'<article class="chapter" id="{version}"' in page
 

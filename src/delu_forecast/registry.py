@@ -376,6 +376,8 @@ EVIDENCE_TAGS: dict[str, tuple[str, str]] = {
     # PRES-6: dated by the evidence tip, set in the final-build commit (PRES-5's review 2, N2).
     "evidence/pres-6": ("", "2026-11-15"),
     "evidence/cp-29": ("", "2026-11-15"),
+    # PRES-7: the chart's rules (packet §0) at its evidence tip, dated by the tip, set in the final-build commit.
+    "evidence/pres-7": ("", "2026-11-16"),
 }
 
 POPULATIONS = {

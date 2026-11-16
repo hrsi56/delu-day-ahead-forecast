@@ -292,6 +292,10 @@ def _unit_rule(node: Node) -> tuple[str, str | None]:
             return "eur", raw
         if record.unit in (R.UNIT_RATIO, R.UNIT_NORM_DIFF, R.UNIT_FRACTION):
             return "sig4", raw
+        # PRES-7: CP-29's daily money figures (a daily mean, median or percentile, a mean daily difference) are shown to
+        # one decimal, as a price is; its totals stay whole EUR, counted like any other thousands unit
+        if record.unit in (R.UNIT_EUR_MONEY, R.UNIT_EUR_MONEY_DIFF) and record.display_precision == 1:
+            return "eur", raw
         if record.unit in R.THOUSANDS_UNITS or record.unit in (R.UNIT_SEED, R.UNIT_USD):
             return "count", raw
         return "exempt", raw
