@@ -1,0 +1,3110 @@
+{
+ "day": "2026-11-17",
+ "records": [
+  {
+   "body": "bodies/c6f0678668a6e9f05f6087cf57109b58a2e7b2a2c9d0f4cec6f89ca11ef96051.gz",
+   "bytes": 5966,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261116T204358Zn0000",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-16T20:43:58Z",
+   "role": "index",
+   "sha256": "c6f0678668a6e9f05f6087cf57109b58a2e7b2a2c9d0f4cec6f89ca11ef96051",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/46212b79b812b17813b4fa1d95fc135f8484cf4df57fefa8f1697ffacfdfe8cf.gz",
+   "bytes": 15426,
+   "covers": [
+    "2026-11-14",
+    "2026-11-15"
+   ],
+   "document_time_utc": "2026-11-14T12:14:36Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261116T204358Zn0000",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-14": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-13T12:00:00Z"
+    },
+    "2026-11-15": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-14T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-09",
+     "2026-11-10",
+     "2026-11-11",
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794178800000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-16T20:43:59Z",
+   "role": "bucket",
+   "sha256": "46212b79b812b17813b4fa1d95fc135f8484cf4df57fefa8f1697ffacfdfe8cf",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/cb6dc6f2639b6eed56571c9d3d87a01d950ba087883382ae1b77848a67a181f0.gz",
+   "bytes": 14533,
+   "covers": [
+    "2026-11-16"
+   ],
+   "document_time_utc": "2026-11-16T12:28:54Z",
+   "error": null,
+   "id": "price-smard-bucket-02@20261116T204358Zn0000",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-16": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-15T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-16T20:43:59Z",
+   "role": "bucket",
+   "sha256": "cb6dc6f2639b6eed56571c9d3d87a01d950ba087883382ae1b77848a67a181f0",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/1acecebb32b01fedbdb324e37fc9285153a1bd4c3bfde2069e12edfe34a02387.gz",
+   "bytes": 13612,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": "2026-11-16T20:44:06Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261116T204400Zn0003",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-17": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-16T20:44:06Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611172300",
+     "periodStart": "202611162300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-17"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-16T20:44:06Z",
+   "role": "document",
+   "sha256": "1acecebb32b01fedbdb324e37fc9285153a1bd4c3bfde2069e12edfe34a02387",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/6ef7b28931ecbb795d9f74c4e2819ac86ac9beae2dccea4c5e8e0825c0878626.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f021",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;8ca1d2869070925791f94bd2cca748a3&quot;",
+     "size": 41253,
+     "utc": "2026-11-16T03:41:21Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;0f7a74199cb079623bf15c92a1766fab&quot;",
+     "size": 537826771,
+     "utc": "2026-11-16T03:40:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:06Z",
+   "sha256": "6ef7b28931ecbb795d9f74c4e2819ac86ac9beae2dccea4c5e8e0825c0878626",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/cede2f0a4a8b6c7c0477b78062c3d406b6488fcb246c1534e180a5d35a788124.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f024",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;9168dd029ec34aebd6a21d0df85d01e6&quot;",
+     "size": 41253,
+     "utc": "2026-11-16T03:56:49Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;01b225bc1f4378311774fcb8b5b547e0&quot;",
+     "size": 544174565,
+     "utc": "2026-11-16T03:56:08Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:08Z",
+   "sha256": "cede2f0a4a8b6c7c0477b78062c3d406b6488fcb246c1534e180a5d35a788124",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/3d419fd813acdac1f9e762e712e26a5b93239c766a482ccd521fa507fbe16f92.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f027",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;894429aa07700dc094e737182a6f8fe1&quot;",
+     "size": 41254,
+     "utc": "2026-11-16T03:43:53Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;2c39e7803303fa2b0e47ef913cfc2b2f&quot;",
+     "size": 543537278,
+     "utc": "2026-11-16T03:43:03Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:11Z",
+   "sha256": "3d419fd813acdac1f9e762e712e26a5b93239c766a482ccd521fa507fbe16f92",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/a726b9ffbfe5ef05461d95a392991031c41bdea9f371269597e95991ffa73cdd.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f030",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;310f1fd3d19adb139ed5b6f32c5540c7&quot;",
+     "size": 41255,
+     "utc": "2026-11-16T03:43:38Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;554bd8f13c95b85a5b1abfd77e4eb183&quot;",
+     "size": 544454019,
+     "utc": "2026-11-16T03:43:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:13Z",
+   "sha256": "a726b9ffbfe5ef05461d95a392991031c41bdea9f371269597e95991ffa73cdd",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/eeb06832307cdead41296c5fffeedba5909f0ff27985663cd0ffce1ca91be721.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f033",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;fbe2ab96675022d2e2f2748e75cb63b8&quot;",
+     "size": 41258,
+     "utc": "2026-11-16T03:43:37Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;1d507e76b2ff8732d28c57ab37d6b58e&quot;",
+     "size": 541991142,
+     "utc": "2026-11-16T03:43:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:15Z",
+   "sha256": "eeb06832307cdead41296c5fffeedba5909f0ff27985663cd0ffce1ca91be721",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/b542771d6d89cd10902ca874f80e3ad2c2e87a080a4ec4359e77c442b0b371d3.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f036",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;0ffbc9f814814004cdda7eca2bd7efb0&quot;",
+     "size": 41255,
+     "utc": "2026-11-16T03:45:45Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;9593b385a48374139ea1950114224138&quot;",
+     "size": 542846007,
+     "utc": "2026-11-16T03:45:15Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:17Z",
+   "sha256": "b542771d6d89cd10902ca874f80e3ad2c2e87a080a4ec4359e77c442b0b371d3",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/0219fdf0dece9b35790818f76f09451020a1f6de6f01a68e3846d76a1437b9f5.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f039",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;dde7d6018427d14973103514402a259a&quot;",
+     "size": 41255,
+     "utc": "2026-11-16T03:44:56Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;456ace3d70bdbcd2d019dc64d5694ccb&quot;",
+     "size": 537314586,
+     "utc": "2026-11-16T03:44:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:19Z",
+   "sha256": "0219fdf0dece9b35790818f76f09451020a1f6de6f01a68e3846d76a1437b9f5",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/55375e758ae9a286faef093e68714084d95f4036eeeb7f195bf7447ffa5a5768.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f042",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;dd51b55afea473a8d2c9b9cff49bd8a2&quot;",
+     "size": 41254,
+     "utc": "2026-11-16T03:46:58Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;3b6160b48bae449dc7324bcec96fd45b&quot;",
+     "size": 538404638,
+     "utc": "2026-11-16T03:46:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:21Z",
+   "sha256": "55375e758ae9a286faef093e68714084d95f4036eeeb7f195bf7447ffa5a5768",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/5d6c2c61f0ac9d59b2e51ff8251bbc71cbb6124d4b93fbc5b7533107230e19cd.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f045",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;cd5ae847f964ff8079f656c1e54408f1&quot;",
+     "size": 41254,
+     "utc": "2026-11-16T03:49:37Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;64c8160650e50276b22a7c8dc8826d7c&quot;",
+     "size": 538358465,
+     "utc": "2026-11-16T03:49:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:23Z",
+   "sha256": "5d6c2c61f0ac9d59b2e51ff8251bbc71cbb6124d4b93fbc5b7533107230e19cd",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/ae6b223c902ad98ff2587e475e6c218b23a8f4d2d8287511ea18a267ffdbb0b3.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f048",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;9130b8ff2994ae918c239ee302845a9b&quot;",
+     "size": 41250,
+     "utc": "2026-11-16T03:50:05Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;08bc57cc988f3f93f50edfb76d9e35b4&quot;",
+     "size": 542695447,
+     "utc": "2026-11-16T03:49:36Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-16T20:44:25Z",
+   "sha256": "ae6b223c902ad98ff2587e475e6c218b23a8f4d2d8287511ea18a267ffdbb0b3",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/509679e1fe0b7464a50a9cacb1e19d194f6a1dff34605339e6d9c8c9739c4373.gz",
+   "bytes": 41253,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f021",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:41:21Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:07Z",
+   "sha256": "509679e1fe0b7464a50a9cacb1e19d194f6a1dff34605339e6d9c8c9739c4373",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:421203276:d=2026111600:UGRD:10 m above ground:21 hour fcst:",
+    "589:422165873:d=2026111600:VGRD:10 m above ground:21 hour fcst:",
+    "653:461048113:d=2026111600:DSWRF:surface:18-21 hour ave fcst:",
+    "689:496635910:d=2026111600:UGRD:100 m above ground:21 hour fcst:",
+    "690:497612495:d=2026111600:VGRD:100 m above ground:21 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 828027,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:40:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     461048113,
+     461876139
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-16T20:44:08Z",
+   "sha256": "9eea004f054e38ef92e9b62986b3bb25dd1e13625aad26dcfa7e20d72cbd34a6",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 962597,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:40:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     421203276,
+     422165872
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-16T20:44:07Z",
+   "sha256": "f211cf1a9d67bb455b3155cb66c7c24194d00b03078e3a336475cbc6bb3a44cd",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 976585,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:40:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     496635910,
+     497612494
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-16T20:44:08Z",
+   "sha256": "e2bfb4456de52d742c95f79868a562c412fd31744496bad87f51486684ccf78c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 942568,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:40:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     422165873,
+     423108440
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-16T20:44:07Z",
+   "sha256": "b53550c03df7adcecf3b3bdb4fca0b2e48ac6b95a4203dc38635d42805727c7f",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 964813,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:40:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     497612495,
+     498577307
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-16T20:44:08Z",
+   "sha256": "b623ba033bad7dbf38eb5fb5c55704f3b010eed9f57173200d4a8840daab6348",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/14558bc298380321311cca61e670081db9e55e85dc8d0b3236d7e1678f724e15.gz",
+   "bytes": 41253,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f024",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:56:49Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:09Z",
+   "sha256": "14558bc298380321311cca61e670081db9e55e85dc8d0b3236d7e1678f724e15",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425892615:d=2026111600:UGRD:10 m above ground:24 hour fcst:",
+    "589:426851795:d=2026111600:VGRD:10 m above ground:24 hour fcst:",
+    "653:467015160:d=2026111600:DSWRF:surface:18-24 hour ave fcst:",
+    "689:502890999:d=2026111600:UGRD:100 m above ground:24 hour fcst:",
+    "690:503859993:d=2026111600:VGRD:100 m above ground:24 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 926860,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:56:08Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     467015160,
+     467942019
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-16T20:44:10Z",
+   "sha256": "96920f7a4ddad19c4ed9b7f810c9413befdefb55dd89daa442ef920e4c42fa03",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959180,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:56:08Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425892615,
+     426851794
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-16T20:44:09Z",
+   "sha256": "1c82681c55eac9c9fce9a21582650e11e3a44f907923ae021a263a672c6d3e15",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 968994,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:56:08Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     502890999,
+     503859992
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-16T20:44:10Z",
+   "sha256": "d0c889011d16f8ced658917f7e96fe73bb441fe25a2dea51d10a6078640990ec",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 943316,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:56:08Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426851795,
+     427795110
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-16T20:44:09Z",
+   "sha256": "fd49674ee6e7a37739b4eb16c46e8038194c7b992babb821278de058665a30fa",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 963007,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:56:08Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     503859993,
+     504822999
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-16T20:44:10Z",
+   "sha256": "ee126dc38e13d29f7b6b3ef3fda88e27e7e75e73ab34a187c8027bdbdc2ebf6b",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/33ae72df057c9b7806d2344a0159efecab0b44d4625efbd3f535d4f970532554.gz",
+   "bytes": 41254,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f027",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:53Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:11Z",
+   "sha256": "33ae72df057c9b7806d2344a0159efecab0b44d4625efbd3f535d4f970532554",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425928564:d=2026111600:UGRD:10 m above ground:27 hour fcst:",
+    "589:426884952:d=2026111600:VGRD:10 m above ground:27 hour fcst:",
+    "653:466178384:d=2026111600:DSWRF:surface:24-27 hour ave fcst:",
+    "689:501539829:d=2026111600:UGRD:100 m above ground:27 hour fcst:",
+    "690:502507161:d=2026111600:VGRD:100 m above ground:27 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 810544,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:03Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     466178384,
+     466988927
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-16T20:44:13Z",
+   "sha256": "93048f4b2867fb751ebbf832957db86fe1b0422e42031761edf904ce27bf8b0c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 956388,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:03Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425928564,
+     426884951
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-16T20:44:11Z",
+   "sha256": "772983a950f3986d2ae90bbc06be8656196b5ea5a835d8fbb90bd3f274a462aa",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 967332,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:03Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501539829,
+     502507160
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-16T20:44:12Z",
+   "sha256": "563e42f0648ed968ea76dddc51feb806cea3476e53c56a420f63b07f17856fd8",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 941929,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:03Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426884952,
+     427826880
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-16T20:44:11Z",
+   "sha256": "451874292dd862fb068fc373bd39ce2eaa7f1d05ebc0561cf456a80323fcc456",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 960399,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:03Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     502507161,
+     503467559
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-16T20:44:12Z",
+   "sha256": "17414f2a1b21d9d9878b69d99fad7d03f51ede859746dc5fa638886d8a632036",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/b3b8dd5e58eab520d694c15b19530b729532cea9ecc542b89d789dd54b2a1580.gz",
+   "bytes": 41255,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f030",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:38Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:13Z",
+   "sha256": "b3b8dd5e58eab520d694c15b19530b729532cea9ecc542b89d789dd54b2a1580",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425578251:d=2026111600:UGRD:10 m above ground:30 hour fcst:",
+    "589:426533690:d=2026111600:VGRD:10 m above ground:30 hour fcst:",
+    "653:467113517:d=2026111600:DSWRF:surface:24-30 hour ave fcst:",
+    "689:502531922:d=2026111600:UGRD:100 m above ground:30 hour fcst:",
+    "690:503501937:d=2026111600:VGRD:100 m above ground:30 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 907790,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     467113517,
+     468021306
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-16T20:44:15Z",
+   "sha256": "121b8700c546d18d81cf9de654ec76068909ce46f264d3f0a405c176bc3cd03a",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 955439,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425578251,
+     426533689
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-16T20:44:13Z",
+   "sha256": "8b450de6a28c80e773e672db062512e2763a6dc06015c3fb7b7ed0029b0e32ba",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 970015,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     502531922,
+     503501936
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-16T20:44:14Z",
+   "sha256": "d777656fa7803fede080bd6337392fce7215c1fc38fe6be3598530bff7a719fc",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 940520,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426533690,
+     427474209
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-16T20:44:14Z",
+   "sha256": "3e3c2ef6b59aef5346276e037c98e0f01f13c6e7f2f4796a8882ce685e8a3ce9",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 958336,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     503501937,
+     504460272
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-16T20:44:14Z",
+   "sha256": "e9c0cfd6b7d01acc14859078766cecc638e76f05b11f53af2b4b7180682c051c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/401c8db36bacbfc60b149d602ef013314c492f9f95ca867f7e5341e8831f6706.gz",
+   "bytes": 41258,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f033",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:37Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:15Z",
+   "sha256": "401c8db36bacbfc60b149d602ef013314c492f9f95ca867f7e5341e8831f6706",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425239375:d=2026111600:UGRD:10 m above ground:33 hour fcst:",
+    "589:426198627:d=2026111600:VGRD:10 m above ground:33 hour fcst:",
+    "653:465251511:d=2026111600:DSWRF:surface:30-33 hour ave fcst:",
+    "689:500686907:d=2026111600:UGRD:100 m above ground:33 hour fcst:",
+    "690:501656095:d=2026111600:VGRD:100 m above ground:33 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 804734,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     465251511,
+     466056244
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-16T20:44:17Z",
+   "sha256": "4d2d5949401ebe2f29a075a312003dea284eb393da615f70a3b7386428aae9f7",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959252,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425239375,
+     426198626
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-16T20:44:15Z",
+   "sha256": "651e3bcbfa8c77a4ee620a9d553c52023ed44ee59b6569e6a23daad8dff046ce",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 969188,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     500686907,
+     501656094
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-16T20:44:16Z",
+   "sha256": "875c09b7c1700a79e85700d0094a8a60b7dacba96caac251c38c83cd9cc0aa4c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 935773,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426198627,
+     427134399
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-16T20:44:16Z",
+   "sha256": "0287a61c56458a6d46522e1202abf905c42b1b5a6b8bfd7f4f82d6111c654b1d",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957198,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:43:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501656095,
+     502613292
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-16T20:44:16Z",
+   "sha256": "50a9f7668d98f0754522c75ddadc9da6f428bdb08a252b8e75da7f0e1d3a4b35",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/71534a2985569ce4ad68d01dabc0ff4aadc30c1896e74a51c06295efa09f9455.gz",
+   "bytes": 41255,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f036",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:45:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:17Z",
+   "sha256": "71534a2985569ce4ad68d01dabc0ff4aadc30c1896e74a51c06295efa09f9455",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:424652832:d=2026111600:UGRD:10 m above ground:36 hour fcst:",
+    "589:425609932:d=2026111600:VGRD:10 m above ground:36 hour fcst:",
+    "653:465922418:d=2026111600:DSWRF:surface:30-36 hour ave fcst:",
+    "689:501562123:d=2026111600:UGRD:100 m above ground:36 hour fcst:",
+    "690:502528082:d=2026111600:VGRD:100 m above ground:36 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 912388,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:45:15Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     465922418,
+     466834805
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-16T20:44:19Z",
+   "sha256": "42db114ac24ec102728cb7205cb7461f08a40901548bb0c6597a5c772ab437d3",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957100,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:45:15Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     424652832,
+     425609931
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-16T20:44:17Z",
+   "sha256": "bf4c8d72ec5a21148e48277460b2f3911849c7a9beeb6274ff0a29bae2cd8349",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 965959,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:45:15Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501562123,
+     502528081
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-16T20:44:18Z",
+   "sha256": "0f29570086a4f1693a5d55d1ebe37e47544ab0450818fceec070317790931691",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 938864,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:45:15Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425609932,
+     426548795
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-16T20:44:18Z",
+   "sha256": "7415a88b82c933458dc6b7ff3eddace4e5db88e69992f97d5da82e6902f8ac67",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 960609,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:45:15Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     502528082,
+     503488690
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-16T20:44:18Z",
+   "sha256": "dc52b7156402896fe03abc72e87ecea7d9c4c2bdef3d0e33a5da7d59623c5efb",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/f08a911e19f07460e5cb7d5a49e4edc9a0f8b6f3edb5090fbf731d226018698c.gz",
+   "bytes": 41255,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f039",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:44:56Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:19Z",
+   "sha256": "f08a911e19f07460e5cb7d5a49e4edc9a0f8b6f3edb5090fbf731d226018698c",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:420605837:d=2026111600:UGRD:10 m above ground:39 hour fcst:",
+    "589:421570251:d=2026111600:VGRD:10 m above ground:39 hour fcst:",
+    "653:460866407:d=2026111600:DSWRF:surface:36-39 hour ave fcst:",
+    "689:496403601:d=2026111600:UGRD:100 m above ground:39 hour fcst:",
+    "690:497377037:d=2026111600:VGRD:100 m above ground:39 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 812802,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:44:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     460866407,
+     461679208
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-16T20:44:21Z",
+   "sha256": "a56181ef474fe15c8cf16d8fb0a72d5674ca2a55b9f40a48149ae1d555e49904",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 964414,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:44:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     420605837,
+     421570250
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-16T20:44:19Z",
+   "sha256": "57964b3f08c3eb4f75b449a48f295f6beba25e3d1da2a71c4854c04cf5cac496",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 973436,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:44:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     496403601,
+     497377036
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-16T20:44:20Z",
+   "sha256": "b2c6e074419757b4530b0ce74608ca3eb0c39f9f4453491d23809d6c58acec71",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 937566,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:44:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     421570251,
+     422507816
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-16T20:44:20Z",
+   "sha256": "7c93dd1d5049765306ccf8c1f266a740a61bb2d4c0049e00f9e100f9b2813006",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959220,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:44:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     497377037,
+     498336256
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-16T20:44:21Z",
+   "sha256": "67bbcb6688cca2d29859c94bfb6b0955bbc677fdf986341553012b304a544ffb",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/0fddc3f7f17aeb6a7b8bb2002f49e1fcbd47881c813fa7275b6681fe32fa6a69.gz",
+   "bytes": 41254,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f042",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:46:58Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:22Z",
+   "sha256": "0fddc3f7f17aeb6a7b8bb2002f49e1fcbd47881c813fa7275b6681fe32fa6a69",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:420319366:d=2026111600:UGRD:10 m above ground:42 hour fcst:",
+    "589:421283954:d=2026111600:VGRD:10 m above ground:42 hour fcst:",
+    "653:461731552:d=2026111600:DSWRF:surface:36-42 hour ave fcst:",
+    "689:497481110:d=2026111600:UGRD:100 m above ground:42 hour fcst:",
+    "690:498454892:d=2026111600:VGRD:100 m above ground:42 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 919267,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:46:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     461731552,
+     462650818
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-16T20:44:23Z",
+   "sha256": "66213853d18223103db5e24bfa7fd6d98d28b05a34d8dac965e9e256a5ce34bc",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 964588,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:46:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     420319366,
+     421283953
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-16T20:44:22Z",
+   "sha256": "ecfe6e21a887bf6c5d85094e35d3a411e01a9d999ed02525591010b17af9f872",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 973782,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:46:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     497481110,
+     498454891
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-16T20:44:22Z",
+   "sha256": "44283ee91c059f31373f0c61ee700cd7d0c90a0f5c0d7c40aea70aeef0c86c99",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 942326,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:46:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     421283954,
+     422226279
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-16T20:44:22Z",
+   "sha256": "a947131e6efb7bd4879b5448534393037f63d33ec45ffb82c9bbbe26d099f1b8",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 960977,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:46:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     498454892,
+     499415868
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-16T20:44:23Z",
+   "sha256": "38edd4eb674c05855d49b22b833030fa19467835f46e1a2e2b865c4916fe7489",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/f749dd8bd4a32cc2a322bc0f62a6f655842357f2a5b817531f890443c8e920c8.gz",
+   "bytes": 41254,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f045",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:37Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:24Z",
+   "sha256": "f749dd8bd4a32cc2a322bc0f62a6f655842357f2a5b817531f890443c8e920c8",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:422077585:d=2026111600:UGRD:10 m above ground:45 hour fcst:",
+    "589:423040841:d=2026111600:VGRD:10 m above ground:45 hour fcst:",
+    "653:462306077:d=2026111600:DSWRF:surface:42-45 hour ave fcst:",
+    "689:497689825:d=2026111600:UGRD:100 m above ground:45 hour fcst:",
+    "690:498662204:d=2026111600:VGRD:100 m above ground:45 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 825041,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     462306077,
+     463131117
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-16T20:44:25Z",
+   "sha256": "00ca9622bc453cc71e54fdd106de54593a814b25e0b3ab720cd06e4cf3364e8a",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 963256,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     422077585,
+     423040840
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-16T20:44:24Z",
+   "sha256": "f560ee07a48caf2822ffa4f3d52b5fcf36e65eaa148795804494cf4b23007ec1",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 972379,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     497689825,
+     498662203
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-16T20:44:25Z",
+   "sha256": "4ce9d8bf9da23a8f6b3595d6d03f8a820a51acde5cfa9875e8af180054ae4197",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 936899,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     423040841,
+     423977739
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-16T20:44:24Z",
+   "sha256": "fc2853a02c889faeb1c947d516f68fee43b700c5ecd22adb7138ddeb8d2c3646",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959140,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     498662204,
+     499621343
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-16T20:44:25Z",
+   "sha256": "d87cb5fd98bce2aa3d3db665bc2f0b1a1c57b444089aaae1f0fab11f28135a79",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/554c2ebc285a0cffdbfa575a3e65b1d75ae951e73a66d1b2c80b56dc5ffc2360.gz",
+   "bytes": 41250,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f048",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:50:05Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048.idx"
+   },
+   "retrieved_utc": "2026-11-16T20:44:26Z",
+   "sha256": "554c2ebc285a0cffdbfa575a3e65b1d75ae951e73a66d1b2c80b56dc5ffc2360",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:424552146:d=2026111600:UGRD:10 m above ground:48 hour fcst:",
+    "589:425507509:d=2026111600:VGRD:10 m above ground:48 hour fcst:",
+    "653:465836746:d=2026111600:DSWRF:surface:42-48 hour ave fcst:",
+    "689:501489923:d=2026111600:UGRD:100 m above ground:48 hour fcst:",
+    "690:502455411:d=2026111600:VGRD:100 m above ground:48 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 923861,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:36Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     465836746,
+     466760606
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-16T20:44:27Z",
+   "sha256": "b0da4a1994e23672add99e64bd831195aa597dbdf74eb602cb760ad23628c802",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 955363,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:36Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     424552146,
+     425507508
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-16T20:44:26Z",
+   "sha256": "eae0c31c371b8f22843e72f558c8a9bbe279cbe33fdf19254913fcf2e31d54b3",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 965488,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:36Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501489923,
+     502455410
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-16T20:44:27Z",
+   "sha256": "bcd097162210ad07845ab9051563071834142a2b8655da8cc473d85afcea0026",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 937540,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:36Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425507509,
+     426445048
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-16T20:44:26Z",
+   "sha256": "460faf3e478c32e028d7b2030d52397598649c5c2945bda44501143eb5074b67",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957272,
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-16T03:49:36Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     502455411,
+     503412682
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261116/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-16T20:44:27Z",
+   "sha256": "bfa828649191537db7a445e61e38a3a8b863e942388330761929149a084fbfd8",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 172863,
+   "checks": {
+    "decoded": true,
+    "listed": 20,
+    "messages": 50,
+    "version": "v16"
+   },
+   "covers": [
+    "2026-11-17"
+   ],
+   "document_time_utc": null,
+   "files": {
+    "gfs/runs/2026-11-16.json": {
+     "bytes": 97600,
+     "sha256": "cef61c29d9c8d53013dd62f98486e7d387f873a7928ea7b630ae0569fefa48b3"
+    },
+    "gfs/runs/2026-11-16.npz": {
+     "bytes": 172863,
+     "sha256": "2c72675df8c4ec2d91d9bc0a8ae07905319b1f82cd492607cbce3e59dc86e960"
+    }
+   },
+   "id": "gfs-run-2026-11-16",
+   "input": "gfs_run",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "problems": [],
+   "provenance": "live",
+   "publication": {
+    "2026-11-17": {
+     "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+     "basis_id": "aws_last_modified",
+     "evidence": {
+      "objects_listed": 20
+     },
+     "utc": "2026-11-16T03:56:49Z"
+    }
+   },
+   "request": {
+    "fields": 5,
+    "leads": [
+     21,
+     48
+    ],
+    "run": "2026-11-16"
+   },
+   "retrieved_utc": "2026-11-16T20:44:27Z",
+   "run": "2026-11-16",
+   "sha256": "2c72675df8c4ec2d91d9bc0a8ae07905319b1f82cd492607cbce3e59dc86e960",
+   "source": "aws",
+   "status": null
+  }
+ ],
+ "schema": "cp18-live-archive-day-v1"
+}
