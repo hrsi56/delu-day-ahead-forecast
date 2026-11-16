@@ -2539,12 +2539,13 @@ def profit_chart() -> str:
     hi = math.ceil(top / step) * step
 
     def panel(width: float, height: float, phone: bool) -> str:
-        ml, mr, mt, mb = 44, (72 if phone else 128), 40, 28
+        # a phone's top margin leaves room for perfect foresight's two-line label under the subtitle
+        ml, mr, mt, mb = 44, (72 if phone else 128), (60 if phone else 40), 28
         x = lambda day: ml + (width - ml - mr) * (_day_number(day) - d0) / (d1 - d0)  # noqa: E731
         y = lambda v: mt + (height - mt - mb) * (1 - (v - low) / (hi - low))  # noqa: E731
         out = [svg_text(ml, 16, "Cumulative net profit", weight="600"),
                svg_text(ml, 32, "thousand EUR · one battery · every eligible development day", fill=TOKENS["text-2"])
-               if not phone else svg_text(ml, 32, "thousand EUR · every eligible development day", fill=TOKENS["text-2"])]
+               if not phone else svg_text(ml, 32, "thousand EUR · development days", fill=TOKENS["text-2"])]
         tick = 0.0
         while tick <= hi + 1e-9:
             out.append(f'<line x1="{ml}" x2="{width - mr:.0f}" y1="{y(tick):.1f}" y2="{y(tick):.1f}" '
@@ -2583,7 +2584,7 @@ def profit_chart() -> str:
             "development, post-selection.")
     desktop = svg_wrap(DESKTOP_W, 320, panel(DESKTOP_W, 320, False), title=title, desc=desc, variant="d",
                        chart_id="business-profit")
-    mobile = svg_wrap(MOBILE_W, 300, panel(MOBILE_W, 300, True), title=title, desc=desc, variant="m",
+    mobile = svg_wrap(MOBILE_W, 320, panel(MOBILE_W, 320, True), title=title, desc=desc, variant="m",
                       chart_id="business-profit")
     names = {"v6": f'{_structural_versions("v6")}, median rule', "naive": "Similar-day naive, median rule",
              "perfect_foresight": "Perfect foresight"}
