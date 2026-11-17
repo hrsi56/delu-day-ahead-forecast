@@ -34,14 +34,21 @@ here is to be checked against the code, the tests and the records it names.*
 
 ## 2. The daily operation without the scheduler (item 2 and O54)
 
-- **The measurement** (`reports/cp18d/schedule-probe.json`, by `src/cp18/schedule_probe.py`, read-only `gh` calls):
-  FINAL NUMBERS PENDING THE THIRD PROBE DAY. On the probe's first night its runs were created 6 h 11 min to 7 h 36 min
-  after their cron time, growing about half an hour an hour; the macOS queue was seconds. The Orchestrator measured
-  `daily.yml`'s own 07:40 and 08:20 UTC crons start 7 h 16 min and 7 h 23 min late the same day.
+- **The measurement** (`reports/cp18d/schedule-probe.json`, by `src/cp18/schedule_probe.py`, read-only `gh` calls,
+  collected 2026-11-17T20:52:59Z): the Orchestrator's probe over three probe days, 2026-11-15 to 2026-11-17, ten cron
+  hours (00:07 to 09:07 UTC) a day: 30 scheduled runs, none missed. Every run was created between 6 h 10 min and
+  10 h 22 min after its cron time; the delay grew within each night and from one day to the next (the median by hour
+  rose from 6 h 11 min at 00:07 to 9 h 18 min - 9 h 42 min at 07:07 - 09:07). The `macos-26` job then started within 4 s
+  to about 10 min of the run's creation. The Orchestrator measured `daily.yml`'s own 07:40 and 08:20 UTC crons start
+  7 h 16 min and 7 h 23 min late on 2026-11-15. No fixed cron time can be placed before a cutoff against a delay of this
+  size that keeps growing.
 - **First design, an hourly event through a Linux gate** (`src/cp18/window.py`): an event in a band of about 11 hours
   before D's cutoff starts D's acquisition in time, whatever the delay. It covers any delay up to 12 hours while events
   keep coming; it does not cover days on which the scheduler drops most events (`tests/cp18d/test_chain.py`, the
   simulation: with 85 % of events dropped, whole days go uncovered).
+- **The measured delays against the designs:** a run created 10 h 22 min late is still inside the gate's band of about
+  11 hours; a delay of 12 hours is not, and a day whose events are mostly dropped is not covered at all. The chain does
+  not depend on the delay: its seeds only restart a broken chain, and one seed arriving however late does it.
 - **The design chosen, a self-dispatching chain** (`src/cp18/chain.py`, `.github/workflows/daily.yml`), because O54
   asks for robustness to both: each link is one run started by `workflow_dispatch` (GitHub starts it at once):
   `tick` (Linux; decides what is due from the store's run records on `main` and the last link's state; sleeps at most

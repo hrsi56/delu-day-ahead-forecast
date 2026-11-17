@@ -1,5 +1,5 @@
 {
- "collected_utc": "2026-11-15T11:25:42Z",
+ "collected_utc": "2026-11-17T20:52:59Z",
  "collections": [
   {
    "collection_finished_utc": "2026-11-15T02:35:31Z",
@@ -10,10 +10,17 @@
    "collection_finished_utc": "2026-11-15T11:25:47Z",
    "collection_started_utc": "2026-11-15T11:25:42Z",
    "runs": 5
+  },
+  {
+   "collection_finished_utc": "2026-11-17T20:53:22Z",
+   "collection_started_utc": "2026-11-17T20:52:59Z",
+   "runs": 31
   }
  ],
  "days_with_a_run": [
-  "2026-11-15"
+  "2026-11-15",
+  "2026-11-16",
+  "2026-11-17"
  ],
  "grace_minutes": 1440.0,
  "lines": [
@@ -31,45 +38,22 @@
  "method": "Source: the raw collections listed under \"collections\", each made with GitHub's CLI read calls only (gh run list and GET gh api; nothing was written to GitHub): gh run list --repo hrsi56/delu-day-ahead-forecast --workflow schedule-probe.yml --json attempt,conclusion,createdAt,databaseId,displayTitle,event,headBranch,headSha,name,number,startedAt,status,updatedAt,url,workflowDatabaseId,workflowName --limit 1000; gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/<id>/jobs?per_page=100 for each listed run; gh api repos/hrsi56/delu-day-ahead-forecast/actions/workflows/schedule-probe.yml (the workflow's own record). Scheduled runs only (event schedule). Each run's cron line is read from its name (probe <cron line>). Its cron instant is the latest instant at or before the run's createdAt that the line names (minute M of hour H, UTC), so a run created after midnight for the previous evening's line belongs to the previous day. Scheduler delay = run createdAt - cron instant, in seconds. Queue = job started_at - run createdAt, in seconds, per runner label (the job's labels); a job not yet started has none. Missed: the probe days run from the first scheduled run's cron day through the collection day (UTC; the collection time is the latest collection's start); every cron instant of the probed lines on those days that is past at the collection, after the workflow's creation, with no scheduled run is missed, except one less than 1440 minutes before the collection, listed as pending (its run may still be created). Instants between the workflow's creation and the first probe day with no run are listed apart (missed_before_first_run). Per cron hour: days observed (instants past at the collection on the probe days), runs, missed, pending, delay min / median / p90 (nearest rank) / max, queue min / median / max per runner label, and the days that had a run. Raw files merge by run id, the latest collection's copy winning.",
  "missed": [],
  "missed_before_first_run": [],
- "pending": [
-  {
-   "cron": "7 4 * * *",
-   "cron_utc": "2026-11-15T04:07:00Z"
-  },
-  {
-   "cron": "7 5 * * *",
-   "cron_utc": "2026-11-15T05:07:00Z"
-  },
-  {
-   "cron": "7 6 * * *",
-   "cron_utc": "2026-11-15T06:07:00Z"
-  },
-  {
-   "cron": "7 7 * * *",
-   "cron_utc": "2026-11-15T07:07:00Z"
-  },
-  {
-   "cron": "7 8 * * *",
-   "cron_utc": "2026-11-15T08:07:00Z"
-  },
-  {
-   "cron": "7 9 * * *",
-   "cron_utc": "2026-11-15T09:07:00Z"
-  }
- ],
+ "pending": [],
  "per_hour": [
   {
    "cron": "7 0 * * *",
-   "days_observed": 1,
+   "days_observed": 3,
    "days_with_a_run": [
-    "2026-11-15"
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
    ],
    "delay_seconds": {
-    "max": 22270.0,
+    "max": 27619.0,
     "median": 22270.0,
-    "min": 22270.0,
-    "n": 1,
-    "p90": 22270.0
+    "min": 22202.0,
+    "n": 3,
+    "p90": 27619.0
    },
    "hour_utc": 0,
    "minute": 7,
@@ -78,32 +62,34 @@
    "pending": 0,
    "queue_seconds": {
     "macos-26": {
-     "max": 3.0,
+     "max": 4.0,
      "median": 3.0,
      "min": 3.0,
-     "n": 1
+     "n": 3
     },
     "ubuntu-latest": {
      "max": 3.0,
      "median": 3.0,
-     "min": 3.0,
-     "n": 1
+     "min": 2.0,
+     "n": 3
     }
    },
-   "runs": 1
+   "runs": 3
   },
   {
    "cron": "7 1 * * *",
-   "days_observed": 1,
+   "days_observed": 3,
    "days_with_a_run": [
-    "2026-11-15"
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
    ],
    "delay_seconds": {
-    "max": 23869.0,
-    "median": 23869.0,
+    "max": 28507.0,
+    "median": 24302.0,
     "min": 23869.0,
-    "n": 1,
-    "p90": 23869.0
+    "n": 3,
+    "p90": 28507.0
    },
    "hour_utc": 1,
    "minute": 7,
@@ -115,29 +101,31 @@
      "max": 3.0,
      "median": 3.0,
      "min": 3.0,
-     "n": 1
+     "n": 3
     },
     "ubuntu-latest": {
-     "max": 2.0,
+     "max": 3.0,
      "median": 2.0,
      "min": 2.0,
-     "n": 1
+     "n": 3
     }
    },
-   "runs": 1
+   "runs": 3
   },
   {
    "cron": "7 2 * * *",
-   "days_observed": 1,
+   "days_observed": 3,
    "days_with_a_run": [
-    "2026-11-15"
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
    ],
    "delay_seconds": {
-    "max": 25593.0,
-    "median": 25593.0,
+    "max": 30523.0,
+    "median": 26564.0,
     "min": 25593.0,
-    "n": 1,
-    "p90": 25593.0
+    "n": 3,
+    "p90": 30523.0
    },
    "hour_utc": 2,
    "minute": 7,
@@ -146,32 +134,34 @@
    "pending": 0,
    "queue_seconds": {
     "macos-26": {
-     "max": 3.0,
-     "median": 3.0,
+     "max": 4.0,
+     "median": 4.0,
      "min": 3.0,
-     "n": 1
+     "n": 3
     },
     "ubuntu-latest": {
      "max": 3.0,
      "median": 3.0,
-     "min": 3.0,
-     "n": 1
+     "min": 2.0,
+     "n": 3
     }
    },
-   "runs": 1
+   "runs": 3
   },
   {
    "cron": "7 3 * * *",
-   "days_observed": 1,
+   "days_observed": 3,
    "days_with_a_run": [
-    "2026-11-15"
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
    ],
    "delay_seconds": {
-    "max": 27373.0,
-    "median": 27373.0,
+    "max": 30981.0,
+    "median": 28478.0,
     "min": 27373.0,
-    "n": 1,
-    "p90": 27373.0
+    "n": 3,
+    "p90": 30981.0
    },
    "hour_utc": 3,
    "minute": 7,
@@ -180,101 +170,241 @@
    "pending": 0,
    "queue_seconds": {
     "macos-26": {
-     "max": 4.0,
+     "max": 5.0,
      "median": 4.0,
-     "min": 4.0,
-     "n": 1
+     "min": 3.0,
+     "n": 3
     },
     "ubuntu-latest": {
      "max": 3.0,
-     "median": 3.0,
-     "min": 3.0,
-     "n": 1
+     "median": 2.0,
+     "min": 2.0,
+     "n": 3
     }
    },
-   "runs": 1
+   "runs": 3
   },
   {
    "cron": "7 4 * * *",
-   "days_observed": 1,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 3,
+   "days_with_a_run": [
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "delay_seconds": {
+    "max": 32252.0,
+    "median": 30659.0,
+    "min": 27932.0,
+    "n": 3,
+    "p90": 32252.0
+   },
    "hour_utc": 4,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 1,
-   "queue_seconds": {},
-   "runs": 0
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 4.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 3
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 2.0,
+     "min": 2.0,
+     "n": 3
+    }
+   },
+   "runs": 3
   },
   {
    "cron": "7 5 * * *",
-   "days_observed": 1,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 3,
+   "days_with_a_run": [
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "delay_seconds": {
+    "max": 32969.0,
+    "median": 30256.0,
+    "min": 27090.0,
+    "n": 3,
+    "p90": 32969.0
+   },
    "hour_utc": 5,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 1,
-   "queue_seconds": {},
-   "runs": 0
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 16.0,
+     "median": 6.0,
+     "min": 4.0,
+     "n": 3
+    },
+    "ubuntu-latest": {
+     "max": 4.0,
+     "median": 3.0,
+     "min": 2.0,
+     "n": 3
+    }
+   },
+   "runs": 3
   },
   {
    "cron": "7 6 * * *",
-   "days_observed": 1,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 3,
+   "days_with_a_run": [
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "delay_seconds": {
+    "max": 34739.0,
+    "median": 33285.0,
+    "min": 27456.0,
+    "n": 3,
+    "p90": 34739.0
+   },
    "hour_utc": 6,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 1,
-   "queue_seconds": {},
-   "runs": 0
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 603.0,
+     "median": 4.0,
+     "min": 3.0,
+     "n": 3
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 2.0,
+     "min": 2.0,
+     "n": 3
+    }
+   },
+   "runs": 3
   },
   {
    "cron": "7 7 * * *",
-   "days_observed": 1,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 3,
+   "days_with_a_run": [
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "delay_seconds": {
+    "max": 35317.0,
+    "median": 34952.0,
+    "min": 27149.0,
+    "n": 3,
+    "p90": 35317.0
+   },
    "hour_utc": 7,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 1,
-   "queue_seconds": {},
-   "runs": 0
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 604.0,
+     "median": 303.0,
+     "min": 2.0,
+     "n": 3
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 2.0,
+     "n": 3
+    }
+   },
+   "runs": 3
   },
   {
    "cron": "7 8 * * *",
-   "days_observed": 1,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 3,
+   "days_with_a_run": [
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "delay_seconds": {
+    "max": 36719.0,
+    "median": 33920.0,
+    "min": 26843.0,
+    "n": 3,
+    "p90": 36719.0
+   },
    "hour_utc": 8,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 1,
-   "queue_seconds": {},
-   "runs": 0
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 604.0,
+     "median": 3.0,
+     "min": 0.0,
+     "n": 3
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 2.0,
+     "min": 2.0,
+     "n": 3
+    }
+   },
+   "runs": 3
   },
   {
    "cron": "7 9 * * *",
-   "days_observed": 1,
-   "days_with_a_run": [],
-   "delay_seconds": null,
+   "days_observed": 3,
+   "days_with_a_run": [
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "delay_seconds": {
+    "max": 37348.0,
+    "median": 33486.0,
+    "min": 25691.0,
+    "n": 3,
+    "p90": 37348.0
+   },
    "hour_utc": 9,
    "minute": 7,
    "missed": 0,
    "missed_before_first_run": 0,
-   "pending": 1,
-   "queue_seconds": {},
-   "runs": 0
+   "pending": 0,
+   "queue_seconds": {
+    "macos-26": {
+     "max": 304.0,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 3
+    },
+    "ubuntu-latest": {
+     "max": 3.0,
+     "median": 3.0,
+     "min": 2.0,
+     "n": 3
+    }
+   },
+   "runs": 3
   }
  ],
  "probe_days": [
-  "2026-11-15"
+  "2026-11-15",
+  "2026-11-16",
+  "2026-11-17"
  ],
  "repo": "hrsi56/delu-day-ahead-forecast",
  "runs": [
@@ -401,9 +531,815 @@
    "minute": 7,
    "run_id": 43705434118,
    "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T11:52:32Z",
+   "cron": "7 4 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T04:07:00Z",
+   "delay_seconds": 27932.0,
+   "hour": 4,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132802362678,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T11:52:35Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132802362811,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T11:52:34Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43711021003,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T12:38:30Z",
+   "cron": "7 5 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T05:07:00Z",
+   "delay_seconds": 27090.0,
+   "hour": 5,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132814134899,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-15T12:38:34Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132814134678,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T12:38:32Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43714882757,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T13:44:36Z",
+   "cron": "7 6 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T06:07:00Z",
+   "delay_seconds": 27456.0,
+   "hour": 6,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132831471039,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-15T13:44:40Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132831470744,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T13:44:38Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43720575467,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T14:39:29Z",
+   "cron": "7 7 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T07:07:00Z",
+   "delay_seconds": 27149.0,
+   "hour": 7,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132846562439,
+     "name": "probe (macos-26)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T14:39:31Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132846562699,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T14:39:31Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43725542431,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T15:34:23Z",
+   "cron": "7 8 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T08:07:00Z",
+   "delay_seconds": 26843.0,
+   "hour": 8,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132862036743,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T15:34:26Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132862036527,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T15:34:25Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43730628874,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-15T16:15:11Z",
+   "cron": "7 9 * * *",
+   "cron_day": "2026-11-15",
+   "cron_utc": "2026-11-15T09:07:00Z",
+   "delay_seconds": 25691.0,
+   "hour": 9,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 132873758494,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-15T16:15:14Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 132873758176,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-15T16:15:13Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43734424683,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T06:17:02Z",
+   "cron": "7 0 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T00:07:00Z",
+   "delay_seconds": 22202.0,
+   "hour": 0,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133127104189,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T06:17:05Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133127104519,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-16T06:17:04Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43815693155,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T07:52:02Z",
+   "cron": "7 1 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T01:07:00Z",
+   "delay_seconds": 24302.0,
+   "hour": 1,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133162516809,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T07:52:05Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133162516567,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T07:52:05Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43826820067,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T09:29:44Z",
+   "cron": "7 2 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T02:07:00Z",
+   "delay_seconds": 26564.0,
+   "hour": 2,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133206817664,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-16T09:29:48Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133206817243,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T09:29:47Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43840243140,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T11:01:38Z",
+   "cron": "7 3 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T03:07:00Z",
+   "delay_seconds": 28478.0,
+   "hour": 3,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133253658782,
+     "name": "probe (macos-26)",
+     "queue_seconds": 5.0,
+     "started_utc": "2026-11-16T11:01:43Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133253659206,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-16T11:01:40Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43854054886,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T12:37:59Z",
+   "cron": "7 4 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T04:07:00Z",
+   "delay_seconds": 30659.0,
+   "hour": 4,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133302584152,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T12:38:02Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133302583902,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T12:38:02Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43868342733,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T13:31:16Z",
+   "cron": "7 5 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T05:07:00Z",
+   "delay_seconds": 30256.0,
+   "hour": 5,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133330974213,
+     "name": "probe (macos-26)",
+     "queue_seconds": 6.0,
+     "started_utc": "2026-11-16T13:31:22Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133330973829,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T13:31:19Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43876546506,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T15:21:45Z",
+   "cron": "7 6 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T06:07:00Z",
+   "delay_seconds": 33285.0,
+   "hour": 6,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133397821861,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T15:21:48Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133397822331,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T15:21:48Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43895497239,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T16:55:37Z",
+   "cron": "7 7 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T07:07:00Z",
+   "delay_seconds": 35317.0,
+   "hour": 7,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133459038902,
+     "name": "probe (macos-26)",
+     "queue_seconds": 303.0,
+     "started_utc": "2026-11-16T17:00:40Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133459039520,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T16:55:40Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43912837246,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "failure",
+   "created_utc": "2026-11-16T18:18:59Z",
+   "cron": "7 8 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T08:07:00Z",
+   "delay_seconds": 36719.0,
+   "hour": 8,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "cancelled",
+     "job_id": 133510854259,
+     "name": "probe (macos-26)",
+     "queue_seconds": 0.0,
+     "started_utc": "2026-11-16T18:18:59Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133510854826,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-16T18:19:01Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43927528510,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-16T19:29:28Z",
+   "cron": "7 9 * * *",
+   "cron_day": "2026-11-16",
+   "cron_utc": "2026-11-16T09:07:00Z",
+   "delay_seconds": 37348.0,
+   "hour": 9,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133554203544,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T19:29:31Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133554202940,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-16T19:29:31Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 43939861933,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T07:47:19Z",
+   "cron": "7 0 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T00:07:00Z",
+   "delay_seconds": 27619.0,
+   "hour": 0,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133896568729,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-17T07:47:23Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133896568308,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-17T07:47:22Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44041393476,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T09:02:07Z",
+   "cron": "7 1 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T01:07:00Z",
+   "delay_seconds": 28507.0,
+   "hour": 1,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133931345332,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-17T09:02:10Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133931345888,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-17T09:02:09Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44051850400,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T10:35:43Z",
+   "cron": "7 2 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T02:07:00Z",
+   "delay_seconds": 30523.0,
+   "hour": 2,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 133980644452,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-17T10:35:47Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 133980644941,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-17T10:35:45Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44066274786,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T11:43:21Z",
+   "cron": "7 3 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T03:07:00Z",
+   "delay_seconds": 30981.0,
+   "hour": 3,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134015948022,
+     "name": "probe (macos-26)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-17T11:43:24Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134015947807,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-17T11:43:23Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44076553175,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T13:04:32Z",
+   "cron": "7 4 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T04:07:00Z",
+   "delay_seconds": 32252.0,
+   "hour": 4,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134059288333,
+     "name": "probe (macos-26)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-17T13:04:36Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134059288088,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-17T13:04:34Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44089112747,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T14:16:29Z",
+   "cron": "7 5 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T05:07:00Z",
+   "delay_seconds": 32969.0,
+   "hour": 5,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134101733135,
+     "name": "probe (macos-26)",
+     "queue_seconds": 16.0,
+     "started_utc": "2026-11-17T14:16:45Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134101733522,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 4.0,
+     "started_utc": "2026-11-17T14:16:33Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44101309925,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T15:45:59Z",
+   "cron": "7 6 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T06:07:00Z",
+   "delay_seconds": 34739.0,
+   "hour": 6,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134161523701,
+     "name": "probe (macos-26)",
+     "queue_seconds": 603.0,
+     "started_utc": "2026-11-17T15:56:02Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134161523317,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 2.0,
+     "started_utc": "2026-11-17T15:46:01Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44118070360,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T16:49:32Z",
+   "cron": "7 7 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T07:07:00Z",
+   "delay_seconds": 34952.0,
+   "hour": 7,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134204667169,
+     "name": "probe (macos-26)",
+     "queue_seconds": 604.0,
+     "started_utc": "2026-11-17T16:59:36Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134204666581,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-17T16:49:35Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44130146873,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T17:32:20Z",
+   "cron": "7 8 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T08:07:00Z",
+   "delay_seconds": 33920.0,
+   "hour": 8,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134233012484,
+     "name": "probe (macos-26)",
+     "queue_seconds": 604.0,
+     "started_utc": "2026-11-17T17:42:24Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134233013083,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-17T17:32:23Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44138080950,
+   "status": "completed"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "created_utc": "2026-11-17T18:25:06Z",
+   "cron": "7 9 * * *",
+   "cron_day": "2026-11-17",
+   "cron_utc": "2026-11-17T09:07:00Z",
+   "delay_seconds": 33486.0,
+   "hour": 9,
+   "jobs": {
+    "macos-26": {
+     "conclusion": "success",
+     "job_id": 134266896231,
+     "name": "probe (macos-26)",
+     "queue_seconds": 304.0,
+     "started_utc": "2026-11-17T18:30:10Z",
+     "status": "completed"
+    },
+    "ubuntu-latest": {
+     "conclusion": "success",
+     "job_id": 134266896368,
+     "name": "probe (ubuntu-latest)",
+     "queue_seconds": 3.0,
+     "started_utc": "2026-11-17T18:25:09Z",
+     "status": "completed"
+    }
+   },
+   "minute": 7,
+   "run_id": 44147607582,
+   "status": "completed"
   }
  ],
- "scheduled_runs": 4,
+ "scheduled_runs": 30,
  "schema": "cp18d-schedule-probe-v1",
  "skipped": [
   {
