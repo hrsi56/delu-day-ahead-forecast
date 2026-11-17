@@ -296,6 +296,9 @@ def _unit_rule(node: Node) -> tuple[str, str | None]:
         # one decimal, as a price is; its totals stay whole EUR, counted like any other thousands unit
         if record.unit in (R.UNIT_EUR_MONEY, R.UNIT_EUR_MONEY_DIFF) and record.display_precision == 1:
             return "eur", raw
+        # a paired money total is a difference: at most four significant figures, its trailing zeros not counted
+        if record.unit == R.UNIT_EUR_MONEY_DIFF:
+            return "sig4_whole", raw
         if record.unit in R.THOUSANDS_UNITS or record.unit in (R.UNIT_SEED, R.UNIT_USD):
             return "count", raw
         return "exempt", raw
@@ -336,7 +339,9 @@ def precision_findings(nodes: list[Node]) -> list[str]:
         # "near zero": the value would round to zero at the unit's precision (standard §4)
         threshold = Decimal("0.05") if rule == "eur" else Decimal("0.00005")
         near_zero = raw is not None and _near_zero_ok(value, raw) and Decimal(raw).copy_abs() < threshold
-        if rule == "sig4" and _significant(value) > 4 and not near_zero:
+        if rule == "sig4_whole" and len(value.replace(",", "").lstrip("−+-").lstrip("0").rstrip("0")) > 4:
+            findings.append(f"precision: {value!r} has more than four significant figures ({node.bindings.get('data-record')})")
+        elif rule == "sig4" and _significant(value) > 4 and not near_zero:
             findings.append(f"precision: {value!r} has more than four significant figures ({node.bindings.get('data-record')})")
         elif rule == "eur" and _decimals(value) != 1 and not near_zero:
             findings.append(f"precision: {value!r} in EUR/MWh is not shown to one decimal ({node.bindings.get('data-record') or node.bindings.get('data-v1')})")

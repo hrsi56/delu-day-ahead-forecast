@@ -23,14 +23,25 @@ same days (CP-28), so its result is optimistic for v6. Nothing here is prospecti
 
 | ID | Claim | Source | Class |
 |---|---|---|---|
-| C1201 | The profit chart: on P-all's 2,068 days at €25, the running sum of each day's net profit for v6 (median rule), the similar-day naive (median rule) and perfect foresight, ending at 257,212, 220,136 and 287,292 EUR; doing nothing is the zero line. | DA29 (wear 25); SU29 `cumulative_profit_eur`; PK7 §0 | S-d |
-| C1202 | The untraded days on P-all at €25: v6's median-rule schedule traded on 1,770 of 2,068 days; 33 days had a forecast hour missing after a clock change (not traded, profit zero, kept); the naive's 11. | SU29 `trading_days`, `missing_days`; CO29 §5 | S-d |
+| C1201 | The profit chart: on P-all's 2,068 days at €25 wear and €0.10 per MWh traded, 85% round trip, one cycle a day, empty at each day's start and end, by the median rule, the running sum of each day's net profit for v6 (median rule), the similar-day naive (median rule) and perfect foresight, ending at 257,212, 220,136 and 287,292 EUR; doing nothing is the zero line. | DA29 (wear 25); SU29 `cumulative_profit_eur`; PK7 §0 | S-d |
+| C1202 | The untraded days on P-all at €25: v6's median-rule schedule traded on 1,770 of 2,068 days; 33 days, within a week after a clock change, had a forecast hour missing (not traded, profit zero, kept); the naive's 11. | SU29 `trading_days`, `missing_days`; CO29 §5 | S-d |
 | C1203 | The risk-aware variant (buy at the 75th percentile, sell at the 25th) for v6 on P-all at €25: 1,457 trading days, 39 losing days, largest daily loss 101 EUR, 247,436 EUR, 0.8613 of perfect foresight's. | SU29 (`rule` risk); CO29 §3 | S-d |
 | C1204 | The assumptions: a price-taker (filled at the cleared price, moving none); no outage, imbalance or deviation from the schedule; the wear cost and the exchange fee are stated assumptions; the grid-fee exemption is a legal assumption that may change. | CO29 §§2, 8 | O |
 
-C1103's wording on the page: "v6's profit minus the naive's, summed over the days, is +37,077 EUR [+32,323, +42,311]"
-(CP-29's "earned +37,077 EUR more than the naive's" put a signed total inside "more"); the claim and its records are
-unchanged.
+**CP-29's claims as PRES-7 words them** (the claims and their records unchanged; the editorial review's E1, E3, E5,
+E6 and advisories A1–A3, A10, A11):
+- **C1101** adds the contract's initial condition (empty at the start and the end of each day, §2), the median rule
+  in words (§3: the schedule the forecast's median prices value highest, net of costs, or nothing if none pays) and
+  "no grid fees, levies or taxes are charged" (§2).
+- **C1102** names its subject: "one 1 MW / 2 MWh battery scheduled each day from v6's forecasts would have earned …".
+- **C1103** reads "Paired over the same days, v6's schedule earned more in total than the naive's, though not on every
+  day: v6's profit minus the naive's, summed over the days, is +37,080 EUR [+32,320, +42,310] …" (CP-29's "earned
+  +37,077 EUR more than the naive's" put a signed total inside "more"); a paired money difference is shown to four
+  significant figures (standard v1 §4).
+- **C1104** ends "whose 95% interval spans zero: no advantage either way is shown".
+- **C1108** is stated once per surface: its class caveat beside the finding (`economics.caveat`), day-ahead only with
+  what is not evaluated (`business.gap`), and the rest under "What the result is not", which adds the contract's §9
+  "not a forecast of future profit".
 
 ## Withheld claims
 

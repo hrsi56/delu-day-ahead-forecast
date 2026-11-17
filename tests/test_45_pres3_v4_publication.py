@@ -234,8 +234,9 @@ def test_the_terms_follow_the_headline(page):
     assert RC.headline_terms(G.get("v5"))[:5] == ("terms.error_scores", "terms.adoption_rule", "terms.differences",
                                                   "terms.policies", "terms.class")
     assert RC.headline_terms(G.get("v5"))[5:] == ("terms.ddnn2",)
+    # PRES-7 (editorial E2): the final candidate's class term also defines its "descriptive" intervals
     assert RC.headline_terms() == ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate",
-                                   "terms.policies", "terms.class", "terms.ddnn2")
+                                   "terms.policies", "terms.class_final", "terms.ddnn2")
     terms = page[page.index('class="headline-terms"'):page.index("</dd>", page.index('class="headline-terms"'))]
     for key in RC.headline_terms():
         assert f'data-block="{key}"' in terms

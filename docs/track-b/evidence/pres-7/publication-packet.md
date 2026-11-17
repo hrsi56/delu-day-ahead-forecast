@@ -7,6 +7,20 @@
 committed before the profit chart was drawn or any of PRES-7's text was written; the rest of the packet follows the
 template once the build exists.
 
+## The Orchestrator's rulings in this round (decision 27), beside the brief
+
+- **O60 (in the assignment, 2026-11-16):** W54 narrows to its "error or coverage called a profit" half; W56 and W57 stay
+  (CP-29's open item 4).
+- **O63 (2026-11-16, after this packet's §0 was committed; it governs no chart rule):** PRES-7 may make exactly one
+  edit in `tests/cp29/`. `test_claims.py::test_the_blocks_are_written_for_pres7_and_appear_on_no_published_surface`, a
+  test scoped to CP-29's own round, becomes its PRES-7 successor: every CP-29 block renders on the page and in the
+  README through the claim layer and binds its `cp29.*` records, with a negative control (an altered number or record
+  fails). Every other file in `tests/cp29/`, `src/cp29/` and `reports/cp29/` stays byte-identical. The pin check comes
+  first: no evidence binds `test_claims.py`'s bytes (CP-29's evidence cites the test by name only). The edit and the
+  check are recorded in §10.1.
+- **Decision 30 (the Owner, 2026-11-15):** no page-size limit; `docs/PUBLISH_RULES.md` is not edited (CP-26's harness
+  pins its bytes).
+
 ## §0. Rules fixed before the chart is drawn
 
 PRES-7 computes nothing new. It renders CP-29's committed rows (`evidence/cp-29`), and every number it shows is either

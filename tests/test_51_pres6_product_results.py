@@ -277,7 +277,7 @@ def test_business_insights_states_the_use_the_implications_and_the_gap():
         assert needed in text, needed
     # PRES-7 replaced the gap (CP-29's open item 4): an evaluation now exists, so the section says what is still not
     # evaluated; its profit chart and claims are tests/test_52_pres7_business_insights.py's
-    assert "What is still not evaluated" in text
+    assert "Not evaluated." in text
     for gone in ("No decision policy, cost model or trading simulation has been authorized or run",
                  "no profit, value or loss figure"):
         assert gone not in text and gone not in README, gone
@@ -306,7 +306,7 @@ def test_the_readme_carries_the_same_claims():
     numbers = re.findall(r"\d[\d,]*\.?\d*", page)
     assert numbers == re.findall(r"\d[\d,]*\.?\d*", RC.render("outcomes.finding", "md", surface=RC.README))
     assert "#outcomes" in product and "prospective evaluation in progress" in product
-    assert "What is still not evaluated" in business and "not a success rate" in business
+    assert "Not evaluated." in business and "not a success rate" in business
     assert README.index("**Product results:**") < README.index("**Business insights:**")
 
 

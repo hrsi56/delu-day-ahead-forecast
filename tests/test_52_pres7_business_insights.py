@@ -179,18 +179,23 @@ def test_every_cp29_and_pres7_claim_is_on_the_page():
 
 def test_the_limits_are_on_the_page_in_plain_words():
     text = _text(BUSINESS)
-    for needed in ("No money was traded", "not realized income", "Day-ahead arbitrage only",
-                   "no intraday trading, balancing energy or reserves", "price-taker", "hourly, not quarter-hourly",
-                   "selected on these same days, so its result is optimistic for it", "Not a trading recommendation",
-                   "No return or payback is computed: there is no capital cost", "not 4.7T's result"):
+    for needed in ("no money was traded", "Not realized income", "Only day-ahead arbitrage was simulated",
+                   "not intraday trading, balancing energy or reserves", "price-taker", "Hourly, not quarter-hourly",
+                   "chosen on these same days, so its result is optimistic for it", "not a trading recommendation",
+                   "No return or payback is computed: there is no capital cost", "Not 4.7T's result",
+                   "not a forecast of future profit", "Not a property of v6 alone",
+                   "empty at the start and the end of each day", "no grid fees, levies or taxes are charged",
+                   "never out of service", "the median rule"):
         assert needed in text, needed
+    # each caveat once (editorial E5): the class caveat beside the finding, not repeated in the limits
+    assert text.count("so its result is optimistic for it") == 1 and text.count("after selection") == 0
 
 
 def test_what_is_still_not_evaluated_replaces_the_gap():
     text = _text(BUSINESS)
     gap = _text(RC.render("business.gap"))
-    assert gap.startswith("What is still not evaluated.")
-    for needed in ("Intraday trading", "balancing energy and reserves", "a real battery's own costs",
+    assert gap.startswith("Not evaluated.")
+    for needed in ("intraday trading", "balancing energy or reserves", "a real battery's own costs",
                    "the live product's forecasts", "no live or prospective profit"):
         assert needed in gap, needed
     assert gap in text and "No decision policy, cost model or trading simulation" not in text
@@ -201,7 +206,7 @@ def test_the_untraded_days_and_the_risk_aware_variant_bind_their_records():
     for record_id in ("cp29.p_all.all.v6.median.w25.trading_days", "cp29.p_all.all.v6.median.w25.missing_days",
                       "cp29.p_all.all.naive.median.w25.missing_days"):
         assert f'data-record="{record_id}"' in untraded
-    assert "traded on 1,770 of the 2,068 days" in _text(untraded) and "on 33," in _text(untraded)
+    assert "traded on 1,770 of the 2,068 days" in _text(untraded) and "on 33, within a week after a clock change" in _text(untraded)
     assert "11 days that way" in _text(untraded)
     # C1203 says "lost money on fewer days ... but earned less": it holds on the records
     get = lambda rule, field: R.get(f"cp29.p_all.all.v6.{rule}.w25.{field}").value  # noqa: E731
@@ -214,6 +219,31 @@ def test_the_untraded_days_and_the_risk_aware_variant_bind_their_records():
     assert len(missing) == get("median", "missing_days") and all(float(row["profit_eur"]) == 0 for row in missing)
 
 
+def test_no_status_word_in_the_new_or_reworded_text():
+    """Standard v1 §§1, 5 (editorial E4): no wording that expires. The template lint scans only the claim layer's root
+    block list, so PRES-7 scans its own blocks here."""
+    keys = [block.key for block in RC.CP29_BLOCKS + RC.PRES7_BLOCKS] + [
+        "business.use", "business.measured", "business.gap", "business.limits", "terms.class_final",
+        "terms.selection_rule", "terms.final_candidate", "product.live", "comparison.caveat.a1", "everyday.finding.v6",
+        "comparison.sub"]
+    for key in keys:
+        assert not L.STATUS_WORDS.search(re.sub(r"\{[^}]*\}", "", RC.BLOCKS_BY_KEY[key].template)), key
+    assert L.STATUS_WORDS.search("What is still not evaluated.")  # the negative control: E4's first wording
+
+
+def test_a_paired_money_difference_has_four_significant_figures():
+    """Standard v1 §4 (editorial E6): a difference is shown to at most four significant figures."""
+    record = R.get("cp29.paired.p_all.median.v6_minus_naive.w25.total_difference_eur")
+    assert (R.display(record), R.display(record, "ci_low"), R.display(record, "ci_high")) == ("+37,080", "+32,320", "+42,310")
+    assert abs(float(R.display(record).replace(",", "")) - record.value) / record.value < 5e-4
+    v5 = R.get("cp29.paired.p_v5.median.v6_minus_v5.w25.total_difference_eur")
+    assert (R.display(v5), R.display(v5, "ci_low"), R.display(v5, "ci_high")) == ("+165", "−727", "+1,032")
+    rid = record.record_id
+    assert L.precision_findings(L.reading_path(f'<p><span data-record="{rid}">+37,080</span></p>')) == []
+    assert L.precision_findings(L.reading_path(f'<p><span data-record="{rid}">+37,077</span></p>'))
+    assert "+37,080 EUR [+32,320, +42,310]" in _text(BUSINESS)
+
+
 def test_the_forbidden_claims_are_absent_and_guarded():
     for surface in (_text(BODY), README):
         assert not [hit for hit in RC.withheld_findings(surface) if hit.split(":")[0] in ("W54", "W56", "W57", "W58")]
@@ -221,7 +251,7 @@ def test_the_forbidden_claims_are_absent_and_guarded():
                   "prospective earnings were 300 EUR", "an annualized return of 9%", "a realized income of 1 EUR"):
         assert RC.withheld_findings(claim), claim
     for allowed in ("the report shows no live or prospective profit", "would have earned 257,212 EUR net",
-                    "v6's profit minus the naive's, summed over the days, is +37,077 EUR"):
+                    "v6's profit minus the naive's, summed over the days, is +37,080 EUR"):
         assert not RC.withheld_findings(allowed), allowed
     assert "live." not in "".join(re.findall(r'data-record="([^"]+)"', BUSINESS))
 
@@ -288,13 +318,16 @@ def test_the_terms_are_defined_at_first_use():
     assert body[first("Owner") - 4:].startswith("The Owner, the project's lead,")
     assert body[first("re-baseline"):].startswith("re-baseline re-scored every policy on every day")
     assert body[first("A1 in the frozen records") - 6:].startswith("named A1 in the frozen records")
+    # "descriptive", first used in the headline, is defined directly below it (editorial E2)
+    terms = _text(BODY[BODY.index('class="headline-terms"'):BODY.index("</dd>", BODY.index('class="headline-terms"'))])
+    assert first("descriptive") < first("descriptive intervals: not the rule's own test") and "descriptive intervals: not the rule's own test" in terms
     assert body[first("4.7T"):first("Open the live product")].count("its one test on new data") == 1
     assert "7 candidate policies tested" in body and "13 policies drawn" in body
 
 
 def test_the_comparison_explains_its_populations_ends_and_intervals():
     text = _text(_section(BODY, "research-results"))
-    assert ("The opening's −7% is another population, all 2,068 development days to 2026-09-06; this is the five "
+    assert ("The headline's −7% is another population, all 2,068 development days to 2026-09-06; this is the five "
             "test periods' 10,747 hours, the last on 2026-04-07.") in text
     assert ("confidence intervals from resampling 14-day blocks of days, called descriptive because the selection "
             "decided by its registered tests, not by them") in text

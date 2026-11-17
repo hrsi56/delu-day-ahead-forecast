@@ -832,6 +832,10 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     # ---- the headline's terms when the final candidate leads (decision 20: development results until 4.7T) ----
     _block("terms.daily_errors", "P60", """**Point and interval error:** each day's mean absolute error of the median
            and its interval score, averaged; lower is better.""", PAGE, README),
+    # PRES-7 (editorial E2): "descriptive" is defined directly below the headline that first uses it; the general class
+    # term stays for headline forms whose intervals are the rule's own
+    _block("terms.class_final", "P60", """**{g:current.badge}:** development evidence, not a test on new data;
+           descriptive intervals: not the rule's own test.""", PAGE, README),
     _block("terms.selection_rule", "P60", """**Selection rule:** set on {s:date:2026-10-12}, before the re-baseline
            re-scored every policy on every day.""", PAGE, README),
     _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** {g:v6.version}
@@ -848,7 +852,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            {r:derived.change.v6.S_WIS} {r:derived.change.v6.S_WIS|ci} on the interval score, with {s:level:95%}
            confidence intervals.""", PAGE, README),
     _block("comparison.caveat.a1", "P62", """Development evidence after selection, not a test on new data.
-           Its forecasts come from a later, daily protocol, which its chapter compares. The opening's
+           Its forecasts come from a later, daily protocol, which its chapter compares. The headline's
            {r:derived.cp28.A1.MAE} is another population, all {r:cp28.paired_dates} development days to
            {s:date:2026-09-06}; this is the five test periods' {r:""" + _OV + """.metrics.B0.pooled.n_hours} hours, the
            last on {s:date:2026-04-07}.""", PAGE, README),
@@ -1160,14 +1164,14 @@ PRES6_BLOCKS: tuple[Block, ...] = (
            held {r:pres6.coverage.all.80.coverage} of the hours, a little less than their nominal level. A decision
            built on the forecast must allow for misses of that size, larger in a crisis; how to size that allowance has
            not been evaluated.""", PAGE, README),
-    _block("business.gap", "P70", """**What is still not evaluated.** Only day-ahead arbitrage was simulated, on
-           development days. Intraday trading, balancing energy and reserves, a real battery's own costs (its price,
-           financing, grid connection and outages) and the live product's forecasts have not been evaluated for profit,
-           and the report shows no live or prospective profit. Lower forecast error and interval coverage are not
-           profit, and not a success rate of any decision.""", PAGE, README),
-    _block("business.limits", "P70", """**Limits.** These are development results after selection.
-           {s:work-item:4.7T}, which opens no earlier than {s:date:2026-12-04}, is {g:v6.version}'s one test on new
-           data; the Space shows the live record, prospective evaluation in progress.""", PAGE, README),
+    _block("business.gap", "P70", """**Not evaluated.** Only day-ahead arbitrage was simulated, on development days:
+           not intraday trading, balancing energy or reserves, which are a large share of a real battery's income; not a
+           real battery's own costs (its price, financing, grid connection and outages); and not the live product's
+           forecasts, so the report shows no live or prospective profit. Lower forecast error and interval coverage are
+           not profit, and not a success rate of any decision.""", PAGE, README),
+    _block("business.limits", "P70", """**Limits.** {s:work-item:4.7T}, which opens no earlier than
+           {s:date:2026-12-04}, is {g:v6.version}'s one test on new data; the Space shows the live record, prospective
+           evaluation in progress.""", PAGE, README),
 )
 
 _W25 = "cp29.p_all.all.{source}.{rule}.w25"
@@ -1181,18 +1185,22 @@ _PAIR = "cp29.paired.{pop}.{rule}.v6_minus_{minus}.w25"
 CP29_BLOCKS: tuple[Block, ...] = (
     _block("economics.setup", "C1101", """**How the forecast was put to use, in a simulation.** A battery trading in the
            German–Luxembourg day-ahead market: {s:contract:1 MW} at the grid, {s:contract:2 MWh} usable, {s:level:85%}
-           round trip, at most one cycle a day, and charging or discharging in an hour, never both. Each day its
-           schedule is fixed from the forecast before the {s:time:12:00} auction, then settled at the cleared prices,
-           net of the battery's wear ({s:contract:€25} per MWh leaving it) and the exchange fees ({s:contract:€0.10}
-           per MWh bought or sold).""", PRES7, PAGE, README),
-    _block("economics.finding", "C1102", """On all """ + "{r:" + _V6 + """.days} eligible development days, the schedule
-           from {g:v6.version}'s forecasts would have earned {r:""" + _V6 + """.cumulative_profit_eur} EUR net,
-           {r:""" + _V6 + """.share_of_perfect_foresight} of what a perfect forecast would have earned
-           ({r:""" + _PF + """.cumulative_profit_eur} EUR). The similar-day naive's would have earned
-           {r:""" + _NV + """.cumulative_profit_eur} EUR, {r:""" + _NV + """.share_of_perfect_foresight} of it.""",
+           round trip, empty at the start and the end of each day, at most one cycle a day, and charging or
+           discharging in an hour, never both. Each day before the {s:time:12:00} auction it takes the schedule that the
+           forecast's median prices value highest, net of its costs, and does nothing if none pays: the median rule.
+           The schedule is then settled at the cleared prices, net of the battery's wear ({s:contract:€25} per MWh
+           leaving it) and the exchange fees ({s:contract:€0.10} per MWh bought or sold); no grid fees, levies or taxes
+           are charged.""", PRES7, PAGE, README),
+    _block("economics.finding", "C1102", """On all """ + "{r:" + _V6 + """.days} eligible development days, one
+           {s:contract:1 MW} / {s:contract:2 MWh} battery scheduled each day from {g:v6.version}'s forecasts would have
+           earned {r:""" + _V6 + """.cumulative_profit_eur} EUR net, {r:""" + _V6 + """.share_of_perfect_foresight} of
+           what a perfect forecast would have earned ({r:""" + _PF + """.cumulative_profit_eur} EUR). Scheduled from the
+           similar-day naive's forecasts, it would have earned {r:""" + _NV + """.cumulative_profit_eur} EUR,
+           {r:""" + _NV + """.share_of_perfect_foresight} of it.""",
            PRES7, PAGE, README),
-    _block("economics.difference", "C1103", """Day by day on the same days, {g:v6.version}'s schedule earned more
-           than the naive's: {g:v6.version}'s profit minus the naive's, summed over the days, is
+    _block("economics.difference", "C1103", """Paired over the same days, {g:v6.version}'s schedule earned more in
+           total than the naive's, though not on every day: {g:v6.version}'s profit minus the naive's, summed over the
+           days, is
            {r:""" + _PAIR.format(pop="p_all", rule="median", minus="naive") + """.total_difference_eur} EUR
            {r:""" + _PAIR.format(pop="p_all", rule="median", minus="naive") + """.total_difference_eur|ci}, the bracket a
            {s:level:95%} confidence interval from resampling {s:count:14}-day blocks of these days, not a forecast for
@@ -1202,7 +1210,7 @@ CP29_BLOCKS: tuple[Block, ...] = (
            {r:cp29.p_v5.all.v6.median.w25.cumulative_profit_eur} and {r:cp29.p_v5.all.v5.median.w25.cumulative_profit_eur}
            EUR: a difference of {r:""" + _PAIR.format(pop="p_v5", rule="median", minus="v5") + """.total_difference_eur}
            EUR {r:""" + _PAIR.format(pop="p_v5", rule="median", minus="v5") + """.total_difference_eur|ci}, whose
-           interval spans zero.""", PRES7, PAGE, README),
+           {s:level:95%} interval spans zero: no advantage either way is shown.""", PRES7, PAGE, README),
     _block("economics.risk", "C1105", """**Losses.** The schedule from {g:v6.version}'s forecasts lost money on
            {r:""" + _V6 + """.losing_days} of the days, at most {r:""" + _V6 + """.largest_daily_loss_eur} EUR in a day,
            and its cumulative earnings fell at most {r:""" + _V6 + """.max_drawdown_eur} EUR below an earlier peak. The
@@ -1221,11 +1229,9 @@ CP29_BLOCKS: tuple[Block, ...] = (
            ({r:cp29.p_all.crisis.v6.median.w25.days} days) and
            {r:cp29.p_all.negative_prices.v6.median.w25.share_of_perfect_foresight} from {s:date:2023}
            ({r:cp29.p_all.negative_prices.v6.median.w25.days} days).""", PRES7, PAGE, README),
-    _block("economics.limits", "C1108", """**Simulated, development, post-selection.** No money was traded, and
-           {g:v6.version} was selected on these same days, so its result is optimistic for it. Day-ahead arbitrage only:
-           no intraday trading, balancing energy or reserves, which are a large share of a real battery's income; hourly,
-           not quarter-hourly. Not a trading recommendation, not realized income, not a property of {g:v6.version}
-           alone, and not {s:work-item:4.7T}'s result. No return or payback is computed: there is no capital cost.""",
+    _block("economics.limits", "C1108", """**What the result is not.** Hourly, not quarter-hourly. Not a property of
+           {g:v6.version} alone: it depends on the battery, the costs and the rule above. Not {s:work-item:4.7T}'s result
+           and not a forecast of future profit. No return or payback is computed: there is no capital cost.""",
            PRES7, PAGE, README),
 )
 
@@ -1236,19 +1242,20 @@ _V6R = _W25.format(source="v6", rule="risk")
 PRES7_BLOCKS: tuple[Block, ...] = (
     _block("economics.caveat", "C1108", """Simulated, development, post-selection: no money was traded, and
            {g:v6.version} was chosen on these same days, so its result is optimistic for it. Not realized income and
-           not a trading recommendation.""", PAGE),
+           not a trading recommendation.""", PAGE, README),
     _block("economics.chart", "C1201", """Drawn: the cumulative net profit, in EUR, of one {s:contract:1 MW} /
-           {s:contract:2 MWh} battery on each of the {r:""" + _V6 + """.days} eligible development days,
-           {s:date:2020-12-29} to {s:date:2026-09-06}, at {s:contract:€25} per MWh of wear · scheduled from
-           {g:v6.version}'s stored forecasts ({g:v6.name}, {s:name:A1} in the frozen records; the median rule), from the
-           similar-day naive's and from the cleared prices themselves (perfect foresight, the ceiling) · doing nothing
-           earns zero, the line at zero · simulated, development, post-selection""", PAGE),
+           {s:contract:2 MWh} battery ({s:level:85%} round trip, one cycle a day, empty at each day's start and end) on
+           each of the {r:""" + _V6 + """.days} eligible development days, {s:date:2020-12-29} to {s:date:2026-09-06},
+           net of {s:contract:€25} per MWh of wear and {s:contract:€0.10} per MWh traded · scheduled by the median rule
+           from {g:v6.version}'s stored forecasts ({g:v6.name}, {s:name:A1} in the frozen records, policy identity
+           {s:hash:720fc581}…), from the similar-day naive's and from the cleared prices themselves (perfect foresight,
+           the ceiling) · doing nothing earns zero, the line at zero · simulated, development, post-selection""", PAGE),
     _block("economics.untraded", "C1202", """**Days not traded.** {g:v6.version}'s schedule traded on
            {r:""" + _V6 + """.trading_days} of the {r:""" + _V6 + """.days} days. On the others it did nothing: on most,
-           no cycle was expected to pay its costs; on {r:""" + _V6 + """.missing_days}, shortly after a clock change,
-           the forecast had no value for one hour, and the contract counts such a day as not traded, with zero profit,
-           never dropped. The naive's schedule missed {r:""" + _NV + """.missing_days} days that way. Every such day
-           stays in the curve, at zero.""", PAGE),
+           no cycle was expected to pay its costs; on {r:""" + _V6 + """.missing_days}, within a week after a clock
+           change, the forecast was missing one hour, and the evaluation's rules, fixed in advance, count such a day as
+           not traded, with zero profit, never dropped. The naive's schedule missed {r:""" + _NV + """.missing_days} days that way. Every such day
+           stays in the totals and the curve, at zero.""", PAGE, README),
     _block("economics.risk_aware", "C1203", """**A more cautious rule.** The risk-aware variant plans as if it buys at
            the forecast's {s:level:75th} percentile and sells at its {s:level:25th}, so it trades only when the spread
            holds under those prices. With it, {g:v6.version}'s schedule traded on {r:""" + _V6R + """.trading_days} days
@@ -1441,7 +1448,7 @@ LISTED_LATER = 4
 #: Every term a headline form may introduce, in reading order.
 ALL_TERMS = ("terms.error_scores", "terms.targets", "terms.benchmark", "terms.policies", "terms.adoption_rule",
              "terms.differences", "terms.class", "terms.ddnn2", "terms.not_adopted", "terms.daily_errors",
-             "terms.selection_rule", "terms.final_candidate", "terms.a1_row")
+             "terms.selection_rule", "terms.final_candidate", "terms.a1_row", "terms.class_final")
 
 
 def comparison_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
@@ -1467,8 +1474,8 @@ def headline_terms(entry: G.Entry | None = None) -> tuple[str, ...]:
     form, so a term is never defined for a headline that does not use it."""
     entry = entry or G.final_candidate() or G.current_generation()
     if entry.status is not None and entry.status.status == G.FINAL_CANDIDATE:
-        return ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate", "terms.policies", "terms.class",
-                "terms.ddnn2")
+        return ("terms.daily_errors", "terms.selection_rule", "terms.final_candidate", "terms.policies",
+                "terms.class_final", "terms.ddnn2")
     # A model name the generation's own name introduces is defined beneath the headline too (PRES-4: DDNN-2).
     named = ("terms.ddnn2",) if "DDNN-2" in entry.name else ()
     if entry.id in D.ADOPTION_RULES:

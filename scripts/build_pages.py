@@ -2579,9 +2579,10 @@ def profit_chart() -> str:
 
     title = "Cumulative net profit of one battery from v6's, the naive's and perfect forecasts, development days"
     desc = ("The running sum of each day's simulated net profit, in thousand EUR, of a 1 MW, 2 MWh battery trading in "
-            "the day-ahead market, December 2020 to September 2026, at 25 EUR per MWh of wear: v6 solid, the "
-            "similar-day naive dashed, perfect foresight dotted; doing nothing is the line at zero. Simulated, "
-            "development, post-selection.")
+            "the day-ahead market (85 percent round trip, one cycle a day, empty at each day's start and end), "
+            "December 2020 to September 2026, net of 25 EUR per MWh of wear and 10 cents per MWh traded, each day's "
+            "schedule chosen by the median rule: v6 solid, the similar-day naive dashed, perfect foresight dotted; "
+            "doing nothing is the line at zero. Simulated, development, post-selection.")
     desktop = svg_wrap(DESKTOP_W, 320, panel(DESKTOP_W, 320, False), title=title, desc=desc, variant="d",
                        chart_id="business-profit")
     mobile = svg_wrap(MOBILE_W, 320, panel(MOBILE_W, 320, True), title=title, desc=desc, variant="m",
