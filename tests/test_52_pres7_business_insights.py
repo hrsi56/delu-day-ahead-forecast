@@ -289,7 +289,7 @@ def test_the_terms_are_defined_at_first_use():
     assert body[first("re-baseline"):].startswith("re-baseline re-scored every policy on every day")
     assert body[first("A1 in the frozen records") - 6:].startswith("named A1 in the frozen records")
     assert body[first("4.7T"):first("Open the live product")].count("its one test on new data") == 1
-    assert "7 candidates tested" in body and "13 policies drawn" in body
+    assert "7 candidate policies tested" in body and "13 policies drawn" in body
 
 
 def test_the_comparison_explains_its_populations_ends_and_intervals():

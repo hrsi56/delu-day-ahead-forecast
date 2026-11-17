@@ -125,7 +125,7 @@ def test_the_headline_block_is_in_the_research_status_card_and_matches_the_readm
     # rule's verdict, on development days, each value named by its metric (A1).
     assert text.startswith("Selected by a rule set in advance: against v5 on all 2,068 development days, −7% "
                            "[−9%, −5%] in point error and −11% [−13%, −9%] in interval error, as shares of v5's, with "
-                           "descriptive 95% intervals; 7 candidates tested.")  # PRES-7 (O51 item 8): the count says what it counts
+                           "descriptive 95% intervals; 7 candidate policies tested.")  # PRES-7 (O51 item 8): the count says what it counts
     # PUBLISH_RULES 1.0 A1: v5's form, from the same generator, leads with its own rule (§3.3 a), at the rule's own
     # decision level, 97.5% (capstone v21-r11 §23.9; W47), unchanged.
     claim, v5_form = RC.headline_template(G.get("v5"))

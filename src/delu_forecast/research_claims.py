@@ -1340,7 +1340,7 @@ def headline_template(entry: G.Entry | None = None) -> tuple[str, str]:
             "Selected by a rule set in advance: against {g:%s.version} on all {r:cp28.paired_dates} development "
             "days, {r:derived.cp28.A1.MAE} {r:derived.cp28.A1.MAE|ci} in point error and {r:derived.cp28.A1.WIS} "
             "{r:derived.cp28.A1.WIS|ci} in interval error, as shares of {g:%s.version}'s, with descriptive "
-            "{s:level:95%%} intervals; {r:derived.cp28.tested} candidates tested."
+            "{s:level:95%%} intervals; {r:derived.cp28.tested} candidate policies tested."
             % (entry.comparator, entry.comparator))
     verdict_id = f"derived.criteria.{entry.id}.verdict"
     if entry.id in D.ADOPTION_RULES:
