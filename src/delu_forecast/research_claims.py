@@ -1205,8 +1205,8 @@ CP29_BLOCKS: tuple[Block, ...] = (
            {r:""" + _PAIR.format(pop="p_all", rule="median", minus="naive") + """.total_difference_eur|ci}, the bracket a
            {s:level:95%} confidence interval from resampling {s:count:14}-day blocks of these days, not a forecast for
            other days.""", PRES7, PAGE, README),
-    _block("economics.v5", "C1104", """On the {r:cp29.p_v5.all.v6.median.w25.days} days of {g:v5.version}'s test
-           periods, {g:v6.version}'s and {g:v5.version}'s schedules earned about the same,
+    _block("economics.v5", "C1104", """On the {r:cp29.p_v5.all.v6.median.w25.days} days of {g:v5.version}'s last
+           four test periods (the eligible days inside them), {g:v6.version}'s and {g:v5.version}'s schedules earned about the same,
            {r:cp29.p_v5.all.v6.median.w25.cumulative_profit_eur} and {r:cp29.p_v5.all.v5.median.w25.cumulative_profit_eur}
            EUR: a difference of {r:""" + _PAIR.format(pop="p_v5", rule="median", minus="v5") + """.total_difference_eur}
            EUR {r:""" + _PAIR.format(pop="p_v5", rule="median", minus="v5") + """.total_difference_eur|ci}, whose
@@ -1253,7 +1253,7 @@ PRES7_BLOCKS: tuple[Block, ...] = (
     _block("economics.untraded", "C1202", """**Days not traded.** {g:v6.version}'s schedule traded on
            {r:""" + _V6 + """.trading_days} of the {r:""" + _V6 + """.days} days. On the others it did nothing: on most,
            no cycle was expected to pay its costs; on {r:""" + _V6 + """.missing_days}, within a week after a clock
-           change, the forecast was missing one hour, and the evaluation's rules, fixed in advance, count such a day as
+           change, the forecast was missing one hour by design (its input rules fail closed there), and the evaluation's rules, fixed in advance, count such a day as
            not traded, with zero profit, never dropped. The naive's schedule missed {r:""" + _NV + """.missing_days} days that way. Every such day
            stays in the totals and the curve, at zero.""", PAGE, README),
     _block("economics.risk_aware", "C1203", """**A more cautious rule.** The risk-aware variant plans as if it buys at

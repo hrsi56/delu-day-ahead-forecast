@@ -92,7 +92,7 @@ and after the pass, outside the sections PRES-7 adds, and comparing the two list
 |---|---|
 | Checkpoint | PRES-7, brief `docs/track-b/evidence/pres-7/issued-brief.md` at `b6a45b60…1175` (the first commit, `5e07f0d3`, byte for byte) |
 | Governing rules and plan | PUBLISH_RULES 1.5 (`1bc0c523…f94e`), A8 in force (O46), decision 30 superseding §5.2's page budget and §14's trigger; research v21-r20 §16.3 and §24.14; the economic contract (`21a92085…0889`, decision 32) §§6, 8, 9 with O58's clarifications |
-| Evidence tag and tip | `evidence/pres-7` at `<evidence_tip_sha>`, frozen `2026-11-16` (`registry.EVIDENCE_TAGS["evidence/pres-7"]`, checked against the tip's commit date by the return) |
+| Evidence tag and tip | `evidence/pres-7` at `<evidence_tip_sha>`, frozen `2026-11-18` (`registry.EVIDENCE_TAGS["evidence/pres-7"]`, checked against the tip's commit date by the return) |
 | Final reviewed candidate | `<final_candidate_sha>`: the `--final` build of the page and README |
 | Report, review verdict, landing record | this packet; `docs/track-b/evidence/pres-7/integration.md` (the Integration verdict at the candidate) and the focused recheck at the final SHA; the landing record is the Orchestrator's |
 
@@ -216,3 +216,491 @@ duplicated.
 **No run changes and nothing is uploaded.** PRES-7 registers no new evidence source (CP-29's three were added to the
 export manifest's `sources` by O59), adds no MLflow route (Business insights' routes are page anchors), and changes
 no run, tag or experiment. `reports/presentation/mlflow_index.json` is unchanged.
+
+## 7. Checks the checkpoint ran
+
+| Check | Result | Record |
+|---|---|---|
+| **The binding check before editing** (the brief): no record binds the bytes of a file PRES-7 changed: `src/cp26/harness.py` `PINS` lists none of them; `tests/pres5_landed_code.py` records five `src/delu_forecast/` modules at CP-26's landing and compares every other landed module with the working tree, and the three PRES-7 changes there (`research_claims.py`, `registry.py`, `publication_lint.py`) are among the five recorded; no file in the tree holds the SHA-256 or blob of `scripts/build_pages.py`, `scripts/readme_research.py`, the claim layer or the changed tests (a `git grep` of each hash), except earlier evidence records quoting the published page's and README's hashes as history, and `reports/ddnn2/base-tree.json`, which records CP-24's base commit and is checked against that commit, not the tree | pass | the commands in this row, at `5e07f0d3` |
+| Each drawn line ends at its record within 1e-9 relative (never bytes) and keeps all 2,068 days in order; a changed row is refused by the blob check, and past it by the record check | pass | `test_52::test_each_line_ends_at_its_record_and_keeps_every_day`, `…a_changed_daily_row_is_refused` |
+| The thinning keeps each pixel column's first, lowest, highest and last point | pass | `test_52::test_the_thinning_keeps_…` |
+| The chart: three lines and the zero line in both variants, direct labels, distinct dashes; its identity line names battery, costs, policy, artifact, population, dates, units and class; the key's totals bound to their records | pass | `test_52` (two tests) |
+| CP-29's C1101–C1108 and C1201–C1204 on the page, as the claim layer renders them; the limits in plain words; what is still not evaluated in place of the gap | pass | `test_52` (three tests) |
+| The untraded days and the risk-aware variant bind their records; C1203's "fewer losses … earned less" holds on them; the 33 missing-hour days are zero in the daily rows | pass | `test_52::test_the_untraded_days_and_the_risk_aware_variant_bind_their_records` |
+| W54 (narrowed), W56, W57 and W58 find nothing on the page or in the README; each has positive and negative cases | pass | `test_52::test_the_forbidden_claims_are_absent_and_guarded`; `test_51`; `tests/cp29` |
+| The lint's rule for CP-29's daily money figures: 22.2 passes, 22 fails, a total with a decimal fails | pass | `test_52::test_a_daily_money_figure_keeps_its_decimal` |
+| The README carries the business claims through the claim layer | pass | `test_52::test_the_readme_carries_the_same_business_claims`; `tests/cp29` (O63's successor) |
+| O51 item 7: every marker of the comparison's phone variant inside the drawing; the live axis (0.4, 1.1), every pinned one (0.5, 1.1); the old axis would start v6's hexagon left of the drawing | pass | `test_52::test_the_comparisons_phone_axis_holds_every_marker` |
+| O51 item 8: the terms defined at first use ("descriptive" directly below the headline, editorial E2); −7% beside −6%, the two ends, the two kinds of interval | pass | `test_52` (two tests) |
+| The editorial fixes: no status word in any new or reworded block (E4, with a negative control); a paired money difference at four significant figures, and the lint refusing five (E6); each caveat once (E5) | pass | `test_52::test_no_status_word_…`, `…four_significant_figures`, `…limits_are_on_the_page_in_plain_words` |
+| **No number changed** (O51 item 8): outside Business insights, all 1,147 bound values render as on the published page (`a5db292a`, `5e294d40…`), none added or removed; the reading text loses no number, and every number it gains was already on the page: the comparison's new sentence (−7%, 2,068, 2026-09-06, 10,747, 2026-04-07), "14" (the 14-day blocks) and the overview's new `0.4` tick, twice (O51 item 7). Re-run after the editorial fixes: unchanged. A changed value is caught | pass | `test_52::test_the_wording_pass_changed_no_number` (skips without the history; this row records the run) |
+| Decision 30: the five `<= 2_000_000` assertions removed (`test_31`, `test_38`, `test_49`, `test_50`, `test_51`); `test_31` checks that `reports/cp3/pages_build.json` states the page's measured bytes, with a negative control; `test_19` keeps the page self-contained | pass | `test_31::test_the_page_size_is_measured_and_recorded` |
+| A2 under A8: the product finding after the wording pass above it | 1440×900: 1,714.6 / 1,715.3 px (limit 1,744); 390×844: 2,407.5 / 2,407.3 px (limit 2,420), Chrome / WebKit; margins 28.7 and 12.5 px | the release check, attempt 4 |
+| The browser release check over HTTP (Chrome and WebKit; 1440, 768, 390, 360, 320; iPhone emulation; placements, accessibility, keyboard, contrast, charts, requests, A5 discovery of 59 routes) | **pass** (attempt 4, 2026-11-18 09:4x–09:57 UTC, page `d2358f0f…`). Attempt 1 stopped (the page rebuilt during it; no record); attempt 2 passed on an earlier page (`306c6096`); attempt 3 failed one keyboard route, "Measured results: development data", whose scroll timed out at 5 s with the machine's load near 50 (mouse and deep link passed); attempt 4 on the same page passed every route. The editorial and fresh-reader repairs after it change Business insights' text below the product finding only (A2 re-measured: unchanged) | `reports/presentation/release-checks/pres-7-local-release-attempt-{2,3,4}.json` |
+| The page's size | 2,082,672 bytes, +84,799 over PRES-6's 1,997,873: the profit chart's two variants (the desktop's three polylines thinned to at most four points a pixel column) and the new text | `reports/cp3/pages_build.json` |
+| The lint | page 0, README 0, templates 0: PASS | `make lint-publication` |
+
+## 8. Publication completion receipt and the Orchestrator's packet
+
+### 8.0 What would be published
+
+| Surface | Reviewed output | Identity | Now public |
+|---|---|---|---|
+| Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>`, `<final_page_bytes>` bytes | 1,997,873 bytes, `5e294d40790f3415c14cf932e94f1351e2e99a0b84d6efd3d2321046d7eccdaa` (PRES-6) |
+| README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>` | `da9ae187766c895d102676b16a5870540029d471b26687fe78cc3319edc77e1a` |
+| Hugging Face Space and its card | **no PRES-7 action**: CP-18c's live product, published daily by the runner | the runner's latest publication (§8.5) | it moves with each daily run |
+| MLflow `delu-generations` | **no PRES-7 action** (§6) | 105 runs, the committed export | 105 runs |
+
+### 8.1 Receipt — intended identities (the Orchestrator and the public checker complete the rest)
+
+| Surface | Intended identity | Action / unchanged rationale | Observed public identity and UTC time | Verification record and result | Outstanding action |
+|---|---|---|---|---|---|
+| GitHub source / README | `land/pres-7` (the squash of `<evidence_tip_sha>` onto the moved `main`; PRES-7's paths equal the tip's); README `<final_readme_sha256>`, its Business insights paragraph carrying CP-29's claims | push (§8.3) | to fill | `pres-7-publication-receipt.json` (GitHub main); the served README's hash (§8.5) | §8.2–8.3 |
+| GitHub Pages | `<final_page_sha256>`: Business insights with the profit chart, A8's order unchanged | deploy by the push (§8.3) | to fill | `pres-7-publication-receipt.json` (Pages); `pres-7-public-report.json`; `pres-7-postdeploy-links.json` | §8.3, §8.5 |
+| Public MLflow | unchanged: the committed export's 105 runs and experiment tags | verified unchanged (§6) | to fill | `pres-7-postdeploy-mlflow-mirror.json` | §8.5 |
+| Hugging Face Space card | CP-18c's, as the runner last published it | **no PRES-7 action** | to fill | `pres-7-publication-receipt.json` (Space files) against the assembled runner build | §8.5 |
+| Hugging Face direct demo | CP-18c's live product at the root; v1 at `history/index.html` | **no PRES-7 action** | to fill | `pres-7-publication-receipt.json` (direct page, by `cp18.publish.normalized`); the report's Space links hop by hop, none ending on another host | §8.5 |
+
+- **Publication-to-MLflow mapping:** unchanged.
+- **Final product and daily updates:** CP-18c's (CP-18d's once it lands). The report carries no live record.
+- **Completion disposition:** incomplete until these steps and their public checks pass; A12 is decided in §8.6.
+- **Authority:** the landing, the push and the Pages deployment are the Orchestrator's, after the return (the brief's
+  "Owner-only actions already authorized"; decisions 27, 28 and 32). There is no Space or MLflow step.
+
+Every command below runs from the primary checkout, `/Users/djourno/Downloads/PJM`. None opens a pager or an editor
+(`git --no-pager`, `GH_PAGER=cat`). The return gives these commands with `<evidence_tip_sha>`, `<final_page_sha256>`,
+`<final_readme_sha256>` filled in. Keep every record a step writes, first failures included.
+
+### 8.2 Step 1 — the LAND, on a moved `main`
+
+PRES-7 branched from the issue commit `a5db292aa0aed68886ea0ab7237cf5fe9a672b65`. Since then `origin/main` moves each day
+by the runner's data-only commits (author `delu-daily`, `live/` only), and CP-18d may land beside (O56), adding
+`src/cp18/`, `space-product/`, `.github/workflows/` and its own records. PRES-7's paths (the first command below lists
+them) are disjoint from all of those.
+
+**No daily job may be running** (O47: a push during a run makes the run discard its records). Here and again before
+the push:
+
+```bash
+GH_PAGER=cat gh run list --workflow daily.yml --limit 6 --json databaseId,status,event,createdAt --jq '.[] | "\(.databaseId) \(.status) \(.event) \(.createdAt)"'
+```
+
+Expect every line `completed`. A `queued`, `in_progress` or `waiting` line: wait for it to finish.
+
+```bash
+git --no-pager rev-parse --abbrev-ref HEAD
+```
+
+Expect `main`.
+
+```bash
+git fetch origin && git --no-pager log --format='%h %an %s' main..origin/main && git --no-pager diff --name-only main origin/main | grep -v '^live/' ; echo only-live-checked
+```
+
+Expect only `delu-daily` commits and then only `only-live-checked`. Any other path: stop and read it first (CP-18d's
+landing, if it pushed, is expected and is checked for overlap below).
+
+```bash
+git merge --ff-only origin/main
+```
+
+Expect `Fast-forward` (or `Already up to date.`).
+
+```bash
+git --no-pager status --porcelain=v1
+```
+
+Expect no output (or only the Orchestrator's own edit to `progress.md`). Any other line: stop and resolve it first.
+
+**PRES-7's paths, and no untracked twin:**
+
+```bash
+git --no-pager diff --name-only a5db292aa0aed68886ea0ab7237cf5fe9a672b65 <evidence_tip_sha> > .local/artifacts/pres-7/pres7-paths.txt && wc -l < .local/artifacts/pres-7/pres7-paths.txt && grep -c '^live/' .local/artifacts/pres-7/pres7-paths.txt; while IFS= read -r f; do git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 && ! git --no-pager diff --quiet -- "$f" && echo "MODIFIED $f"; git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 || { [ -e "$f" ] && echo "TWIN $f"; }; done < .local/artifacts/pres-7/pres7-paths.txt; echo twins-checked
+```
+
+Expect the path count the return gives, then `0` (no `live/` path), then only `twins-checked`.
+
+```bash
+git --no-pager diff --name-only a5db292aa0aed68886ea0ab7237cf5fe9a672b65 HEAD | grep -xFf .local/artifacts/pres-7/pres7-paths.txt ; echo overlap-checked
+```
+
+Expect only `overlap-checked`: no path changed on both sides (if CP-18d landed first, this is the check that it shares
+no path with PRES-7).
+
+```bash
+git --no-pager merge --squash gauntlet/pres-7
+```
+
+Expect `Squash commit -- not updating HEAD` and the diffstat, with no `CONFLICT` line.
+
+**PRES-7's paths equal the evidence tip's, and every other path equals `main`'s:**
+
+```bash
+xargs git --no-pager diff --cached --quiet <evidence_tip_sha> -- < .local/artifacts/pres-7/pres7-paths.txt && test -z "$(git --no-pager diff --cached --name-only HEAD | grep -vxFf .local/artifacts/pres-7/pres7-paths.txt)" && echo STAGED-PRES7-PATHS-EQUAL-EVIDENCE-TIP
+```
+
+Expect only `STAGED-PRES7-PATHS-EQUAL-EVIDENCE-TIP`. If it does not print, stop: nothing is committed yet, and
+`git reset --merge` restores the index.
+
+**The evidence label's date equals the tip's:** Business insights' evidence row labels the chart's rules "frozen
+<date>" from `registry.py::EVIDENCE_TAGS["evidence/pres-7"]`.
+
+```bash
+git --no-pager log -1 --format=%cs <evidence_tip_sha> && git --no-pager show <evidence_tip_sha>:src/delu_forecast/registry.py | grep '"evidence/pres-7"'
+```
+
+Expect the same date on both lines (`2026-11-18`). A different date: stop and report it.
+
+```bash
+git commit -F .local/artifacts/pres-7/land-commit-message.txt
+```
+
+Expect `[main <land_sha>] Publish PRES-7: …`. The hooks run and print nothing when clean.
+
+```bash
+git tag land/pres-7 HEAD
+```
+
+```bash
+git tag evidence/pres-7 <evidence_tip_sha>
+```
+
+Both print nothing.
+
+```bash
+git --no-pager diff --name-only HEAD <evidence_tip_sha> | grep -v '^live/' ; echo landed-tree-checked
+```
+
+Expect only `main`'s own movement since `a5db292a` outside `live/` (CP-18d's paths and records if it landed first, any
+Orchestrator record), then `landed-tree-checked`.
+
+### 8.3 Step 2 — the push
+
+Re-run the first command of §8.2: no daily job may be running. Then **the value-based secret scan**, over exactly what
+the push will send:
+
+```bash
+printf '%s %s %s %s\n' refs/heads/main "$(git rev-parse main)" refs/heads/main "$(git rev-parse origin/main)" refs/tags/land/pres-7 "$(git rev-parse land/pres-7)" refs/tags/land/pres-7 0000000000000000000000000000000000000000 refs/tags/evidence/pres-7 "$(git rev-parse evidence/pres-7)" refs/tags/evidence/pres-7 0000000000000000000000000000000000000000 | python3 scripts/secret_guard.py pre-push origin "$(git remote get-url origin)" && echo SECRET-SCAN-CLEAN
+```
+
+Expect `SECRET-SCAN-CLEAN`. A `secret-guard: BLOCKED` line means stop and tell no one the value.
+
+```bash
+python3 scripts/publication_guard.py tree
+```
+
+Expect a PASS line: the landed page is the final build.
+
+```bash
+git push origin main land/pres-7 evidence/pres-7
+```
+
+Expect `<old>..<first 7 of land_sha>  main -> main` and two `[new tag]` lines. **If the push is refused** because the
+runner pushed in between (`fetch first`): never force, rebase or reset. Wait until no daily job runs, `git fetch
+origin`, confirm with §8.2's command that the new commits touch only `live/`, merge them with `git merge --no-edit
+origin/main` (data-only paths, so no conflict; the tags stay on the squash commit), and push again. GitHub Pages then
+serves `docs/`. Read GitHub's CI for the pushed commit before the closure:
+
+```bash
+GH_PAGER=cat gh run list --branch main --limit 4
+```
+
+### 8.4 Step 3 — no Space upload and no MLflow write
+
+PRES-7 changes nothing on Hugging Face or DagsHub. The Space is CP-18c's (CP-18d's once landed), published daily by the
+runner. If the served Space is not what the runner's latest publication record names, that is the live product's to
+resolve; do not redeploy under this packet.
+
+### 8.5 Step 4 — the public checks, per surface
+
+Each writes a new record; keep a first failure beside its retry. The Playwright commands need
+`PLAYWRIGHT_BROWSERS_PATH=/Users/djourno/Downloads/PJM/.local/tools/ms-playwright`. Wait until Pages has deployed the
+push:
+
+```bash
+curl -s https://hrsi56.github.io/delu-day-ahead-forecast/ | shasum -a 256
+```
+
+Expect `<final_page_sha256>` (now `5e294d40…daa`, PRES-6's).
+
+```bash
+curl -s https://raw.githubusercontent.com/hrsi56/delu-day-ahead-forecast/main/README.md | shasum -a 256
+```
+
+Expect `<final_readme_sha256>`.
+
+**The Space's build for the receipt, from the runner's latest publication** (PRES-6's landing record, Disclosures).
+The runner's Actions artifact is named `daily`. Fetch the latest successful run's, read-only, and check it against its
+own hashes:
+
+```bash
+RUN=$(GH_PAGER=cat gh run list --workflow daily.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId') && echo "$RUN" && gh run download "$RUN" -n daily -D ".local/tmp/pres-7/runner-$RUN" && (cd ".local/tmp/pres-7/runner-$RUN" && shasum -a 256 -c results-sha256.txt --quiet) && echo RUNNER-BUILD-INTACT
+```
+
+Expect the run id and `RUNNER-BUILD-INTACT`.
+
+- **If CP-18d has landed and its runner uploads the full Space build** (the artifact's `space/` holds every file its
+  `app/space-build.json` and `app/history-files.json` list), use that folder as it is.
+- **Otherwise assemble it as at PRES-6's landing:** the last assembled full build (CP-18c's publication build as the
+  Orchestrator assembled it for PRES-6's receipt, identity `50ed50ed…f70f`), overlaid with the run's changed Space
+  files and the run's dated bundle as `payloads/`; remove the payloads the build's record no longer lists; and fetch
+  the one file the runner deletes before uploading, anonymously, from the Space:
+
+```bash
+B=<the assembled build folder> && curl -sfL -o "$B/payloads/artifact-arrays.npz" https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/payloads/artifact-arrays.npz && echo FETCHED
+```
+
+Either way, the build must equal its own record, every file listed and none extra:
+
+```bash
+MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python -c "import hashlib, sys, pathlib; from cp18.publish import listed; b = pathlib.Path(sys.argv[1]); files = listed(b); bad = [p for p, f in files.items() if not (b / p).is_file() or hashlib.sha256((b / p).read_bytes()).hexdigest() != f['sha256']]; extra = sorted(str(q.relative_to(b)) for q in b.rglob('*') if q.is_file() and str(q.relative_to(b)) not in files); print('BUILD-EQUALS-ITS-RECORD' if not bad else ('DIFFERS', bad[:5]), 'extra:', extra)" "$B"
+```
+
+Expect `BUILD-EQUALS-ITS-RECORD` and an `extra` list that is empty or holds only `app/space-build.json` (a record
+cannot list its own hash). Any other extra file is a stale payload: remove it and check again. `cp18.publish.listed` is the live product's own reading of
+its record (`app/space-build.json` with History's `app/history-files.json`). Then its identity:
+
+```bash
+MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python -c "import sys, pathlib; sys.path.insert(0, 'scripts'); from build_wasm_space import bundle_sha256; print(bundle_sha256(pathlib.Path(sys.argv[1])))" "$B"
+```
+
+**The receipt:** GitHub `main`, Pages, the Space's files and direct page against that build, the public MLflow mirror
+and the links, each checked independently and anonymously, every attempt kept:
+
+```bash
+MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python scripts/publication_receipt.py --landing land/pres-7 --bundle "$B" --expect <the identity just printed> --date pres-7
+```
+
+Expect six rows `PASS` and `PASS: wrote reports/presentation/release-checks/pres-7-publication-receipt.json`, with
+`pres-7-postdeploy-links.json` and `pres-7-postdeploy-mlflow-mirror.json` beside it; exit 0.
+- **The direct page** passes by CP-18c's rule (`cp18.publish.normalized`): the record's `removed_bytes` is the host's
+  script and meta run.
+- **The links record** lists every hop of every redirect, never followed blindly: every link into the Space must end
+  on the Space's own host, `cross_host_redirects` `[]`. The report links into the Space from the opening and v1's
+  history; PRES-7 adds no Space link.
+- If the Space-files row fails because the Space moved after `$RUN` (a newer run published), rerun from the newer
+  run's download.
+
+The browser records:
+
+```bash
+PLAYWRIGHT_BROWSERS_PATH=/Users/djourno/Downloads/PJM/.local/tools/ms-playwright .local/tools/playwright/bin/python scripts/check_reader_paths.py release https://hrsi56.github.io/delu-day-ahead-forecast/ --shots .local/artifacts/pres-7/public-report --out reports/presentation/release-checks/pres-7-public-report.json
+```
+
+```bash
+PLAYWRIGHT_BROWSERS_PATH=/Users/djourno/Downloads/PJM/.local/tools/ms-playwright .local/tools/playwright/bin/python scripts/check_reader_paths.py mlflow-routes --mirror-record reports/presentation/release-checks/pres-7-postdeploy-mlflow-mirror.json --shots .local/artifacts/pres-7/public-mlflow-postdeploy --out reports/presentation/release-checks/pres-7-public-mlflow-routes-postdeploy.json
+```
+
+Each passes with `passed` true. GitHub may answer anonymous `blob` requests with 503 after a burst: keep the failed
+record, wait, and rerun with a new `--date` (for example `pres-7-retry-1`); a 503 is never a pass. The links to
+`blob/evidence/pres-7/…` (Business insights' "The chart's rules" link) answer 404 until the tag is pushed: run the
+checks after the push.
+
+### 8.6 Step 5 — A12, then the receipt
+
+**A12 (§10.5).** An independent post-deployment check is required if either:
+
+1. a served surface differs from what the binding independent pre-deployment review covered: Pages' bytes differ from
+   `<final_page_sha256>`, the focused recheck's page; or the public MLflow differs from the committed export; or
+2. a required public check above fails without a passing targeted retry.
+
+**Where it can add something** even without a trigger: the deployed Business insights in a real browser, both engines,
+at 1440 and 390 px: the profit chart's two variants (each line labelled, the zero line, the key's totals equal to the
+page's text), its route from "Explore the evaluation" by mouse, keyboard and deep link, and the product finding's
+placement after the wording pass (A2 under A8). A checker that wrote none of PRES-7 forms its findings before reading
+earlier reviews and writes a dated review under `docs/track-b/` with the per-surface identities, first failures and
+retries, and its PASS / FAIL / INCOMPLETE verdict. If `pres-7-public-report.json` already records all of that and
+passes on its first attempt, it covers the point, as at PRES-6 (O50).
+
+Then fill §8.1's last three columns from the records. The disposition is complete only when every row is verified.
+
+### 8.7 If publication fails
+
+Stop the rollout and name each affected URL and revision. The identities to restore are Pages
+`5e294d40790f3415c14cf932e94f1351e2e99a0b84d6efd3d2321046d7eccdaa` and README `da9ae187…77e1a` (PRES-6). PRES-7 touches
+neither the Space nor MLflow. No force-push or history rewrite is part of a recovery, and `main` keeps the runner's
+commits: a revert is a new commit on top of them, and a rollback is its own Owner action.
+
+## 9. Applicability matrix
+
+### 9.1 PUBLISH_RULES 1.5, clause by clause (decision 30 superseding §5.2's budget and §14's trigger)
+
+| Clause | Applies? | How PRES-7 meets it, or why not | Evidence |
+|---|---|---|---|
+| §1.1–§1.3 authority, identities, categories | yes | Rules 1.5, research v21-r20 §§16.3, 24.14 and the contract by the brief's hashes; v6's status unchanged; every new figure a simulated development result | §1; the brief |
+| §2 reader contract; A1; A2 | yes | Each money figure names its unit (EUR) and what it is; A2 under A8 on the product finding, re-measured after the wording pass above it, in Chrome and WebKit | §7 |
+| §3.1 evidence classes; withheld claims | yes | Every economic figure "simulated, development, post-selection"; nothing live, prospective or 4.7T's; W54 narrowed (O60), W58 added, W56 and W57 kept, W1–W55 in force | §3; `test_52` |
+| §3.2 scores, comparisons, uncertainty | yes | The declared benchmark (the naive) and the ceiling (perfect foresight) beside v6; the paired differences with their 95% block-bootstrap intervals; v6 − v5 shown with an interval spanning zero; losses, drawdown, wear sensitivity and regimes beside the total | §4; §5 |
+| §3.3 counting | yes | No new rule or verdict; the headline's count names what it counts; the 2,068 days and the untraded days from the committed rows | §4; §5 |
+| §3.4 provenance and formatting | yes | Every number a record; money totals whole EUR, daily money figures one decimal (the lint's rule, §7), shares four significant figures | the lint; `test_30`; `test_52` |
+| §4 registry, transitions; A3; A10 | no change | No identity added or adopted | §2; §5a |
+| §5 page architecture; A8 | yes, in force (O46) | A8's order unchanged; Business insights cites its own evaluated use case with its own chart, duplicating no Product results chart; the comparison changes only by O51 items 7 and 8 | §5c, §5d; `test_51`, `test_52` |
+| §5.1 twelve subjects | unchanged | The product is unchanged | §5b |
+| §5.1a Business insights | **yes, the decision-policy evaluation now exists** | Cumulative net profit over the full named period (P-all) against the declared benchmark, with units, costs, constraints, the initial condition (empty each day) and risk and loss context; simulated against realized labelled; untraded and missing days kept and counted; no return without capital; no error or coverage figure called a profit or a success rate; no business success percentage | §0; §5; `test_52` |
+| §5.2 page budget | **superseded by decision 30** | No limit; the size measured (2,082,672 bytes, +84,799 over PRES-6's 1,997,873), recorded in `reports/cp3/pages_build.json` and checked against the page (`test_31`); the page stays one self-contained file (`test_19`) | §7 |
+| §6 charts, discovery; A5 | yes | One new chart: its identity line, direct labels, line styles, a key with each total, the zero line; its route in "Explore the evaluation"; chart text ≥ 12 px at 320 | §5c; §7 |
+| §7.1–§7.3 product, live, Space; A7, A9 | the Space's (CP-18c) | The report shows no live panel, number or profit | `test_51`, `test_52` |
+| §8 surfaces | yes | Report and README updated and in agreement; MLflow and the Space unchanged | §6, §8 |
+| §9 browser and accessibility matrix | yes | The release check over HTTP, both engines, every width, iPhone emulation | §7 |
+| §10.1–§10.4 independence, fresh reader, public identity, verdict; A6 | yes | Editorial review, fresh reader (the six questions, then the brief's two) and Integration Critic, none an author of PRES-7 | `editorial.md`, `fresh-reader.md`, `integration.md`; §8.5 |
+| §10.5 A12 | yes, after deployment | Its conditions and the useful check | §8.6 |
+| §11 packet and order | yes | §0 before drawing; build → editorial → fresh reader → Integration at the candidate → final build → focused recheck → the Orchestrator's steps | this packet |
+| §12 baseline coverage | yes | Every number on days through 2026-09-06 | `test_52`; `tests/cp29` |
+| §13 acceptance record | yes | §9.2 | — |
+| §14 pending triggers | §14's page-size trigger superseded (decision 30) | — | the brief |
+| A11 work availability | yes | One usage-limit pause, recorded | the ledger; §10.2 |
+
+### 9.2 The §13 acceptance record
+
+| Area | Record |
+|---|---|
+| Authority | Rules 1.5 `1bc0c523…f94e` with decision 30; research v21-r20 §§16.3, 24.14; the contract `21a92085…0889` (decision 32, O58); brief `b6a45b60…1175`; rulings O60, O63 |
+| Identity | `gauntlet/pres-7` off `a5db292a`; `<final_candidate_sha>`; `<evidence_tip_sha>`; the landing and served identities after the Orchestrator's steps |
+| Claims | §0's rules committed before drawing; §4's records with their rows, populations and intervals; C1101–C1108 (CP-29), C1201–C1204 |
+| Reader | A8's order; the product finding within A2; the fresh reader's record, with the battery questions |
+| Content | Business insights: the use, the measured implications, the evaluated use with its chart, losses, sensitivity, regimes, v6 against v5, the untraded days, the limits, what is not evaluated |
+| Charts | One new chart, identified, routed, directly labelled, with its zero line; the comparison's phone axis |
+| Accessibility | The engine and width matrix over HTTP |
+| Tracking | MLflow unchanged (§6) |
+| Release | The prerelease in a clean worktree; the `--final` build; the exact-candidate Integration check; the focused recheck |
+| Public check | After the Orchestrator's steps (§8.5–§8.6) |
+| Follow-up | §10.3's open items with proposed rulings; the reviews' findings, each dispositioned (§10.4) |
+
+### 9.3 The runbook
+
+| Touchpoint | Status |
+|---|---|
+| `registry.EVIDENCE_TAGS["evidence/pres-7"]` | added, dated by the evidence tip in the final-build commit; §8.2 checks it before tagging |
+| `research.py::SOURCES`, `POPULATIONS` | unchanged: CP-29's sources and populations, registered by CP-29 (O57) |
+| `research.py::display` | paired money differences at four significant figures (E6) |
+| Claim map and blocks | `pres7-claims.md`; `PRES7_BLOCKS`; CP-29's blocks on the page and README; `business.gap`, `business.limits`, and O51 item 8's blocks reworded; `terms.class_final` |
+| `publication_lint` | two precision cases: CP-29's daily money figures one decimal; paired money differences four significant figures |
+| `CHARTS_BY_RUN`, `mlflow_export.py` | not needed: no run or route changes |
+| Tests | `tests/test_52`; updates to tests 31, 38, 45, 49, 50, 51; `tests/cp29/test_claims.py` under O63 |
+| Limits to watch | A2 under A8 on phones (12.5 px) and desktop (28.7 px); chart text ≥ 12 px at 320 |
+
+### 9.4 The brief's observable outcome
+
+| Outcome | Where it is met | Evidence |
+|---|---|---|
+| 1 The profit chart | Business insights' chart from `daily.csv` by §0; the identity line; C1101–C1108, C1202, C1203 beside it; the limits in plain words; nothing forbidden | §0, §4, §5, §7; `test_52` |
+| 2 Business insights' text | the use, the measured implications, the evaluation's result, its limits; "Not evaluated." in place of the gap | §5; `test_51`, `test_52` |
+| 3 The order (A8); A2 | unchanged; the product finding re-measured | §7; the release check |
+| 4 The README | the same business claims through the claim layer | `test_52::test_the_readme_carries_the_same_business_claims`; `tests/cp29` (O63) |
+| 5 Decision 30; O51 items 7, 8; CP-29's items 3–5 | §7; §5's wording table; the untraded days (C1202); `business.gap`; W54 narrowed; the zero line | §5, §7, §10 |
+| 6 The page's size | 2,082,672 bytes, recorded | `reports/cp3/pages_build.json` |
+| 7 Review | editorial, fresh reader, Integration at the candidate, focused recheck at the final SHA | `docs/track-b/evidence/pres-7/` |
+| 8 The packet | §8 | — |
+
+## 10. Rulings, disclosures and open presentation items
+
+### 10.1 The Orchestrator's rulings in this block
+
+| Ruling | What it decides | Where applied |
+|---|---|---|
+| O60 (in the assignment) | W54 narrows to its "error or coverage called a profit" half; W56 and W57 stay | `research_claims.WITHHELD_PATTERNS`; `pres7-claims.md`; `test_51`, `test_52` |
+| O63 (2026-11-16, decision 27) | PRES-7 may make exactly one edit in `tests/cp29/`: `test_claims.py::test_the_blocks_are_written_for_pres7_and_appear_on_no_published_surface` becomes its PRES-7 successor, which asserts that every CP-29 block renders on the page and in the README through the claim layer and binds its `cp29.*` records, with a negative control; the other CP-29 files stay byte-identical; the pin check first | `tests/cp29/test_claims.py::test_the_blocks_render_on_the_page_and_the_readme_through_the_claim_layer` (with its helper `_publication_problems`). The pin check: no record, manifest or test in the tree holds `test_claims.py`'s SHA-256 (`b935aeea…3b13`) or its blob (`991568ef…1567`); CP-29's evidence cites it by name only (`docs/track-b/evidence/cp-29/integration.md`, `publication-packet.md`). `git diff a5db292a -- src/cp29 reports/cp29 tests/cp29` lists only `tests/cp29/test_claims.py` |
+| Decision 30 (the Owner, 2026-11-15) | No page-size limit; `docs/PUBLISH_RULES.md` stays unedited (CP-26's harness pins its bytes) | five assertions removed (§7); the size measured and recorded |
+
+### 10.2 Disclosures
+
+- **CP-29's blocks keep their `PRES7` surface** beside `PAGE` and `README`: CP-29's
+  `test_each_block_binds_its_records_and_the_claims_hold_on_them`, byte-identical under O63, renders them there.
+- **C1103 is reworded** on every surface: CP-29's "earned +37,077 EUR more than the naive's" put a signed total inside
+  "more"; it now reads "earned more than the naive's: v6's profit minus the naive's, summed over the days, is +37,077
+  EUR [+32,323, +42,311], the bracket a 95% confidence interval …". Its claim and records are unchanged.
+- **Four PRES-6 tests and two PRES-5 wording pins are updated** for what PRES-7 replaces: `test_51`'s Business insights
+  checks (the gap sentence, "no chart", the old W54 profit half, the README's gap) now check the use, the measured
+  implications, that the gap sentence is gone and what is still not evaluated; `test_51`'s binding check admits CP-29's
+  records in Business insights only, with a negative control for Product results; `test_38`'s headline and product-line
+  pins carry the new words.
+- **The lint's precision rule gains one case:** CP-29's daily money figures (`display_precision` 1: a daily mean,
+  median or percentile) follow the one-decimal EUR rule; without it, C1107's "22.2 EUR a day" was refused as a count.
+  Totals stay whole.
+- **The comparison's axis widens on both variants,** not only the phone's: the fix is to the live comparison's domain,
+  which PRES-5 meant to be (0.4, 1.1) for both. On desktop v6's interval-score marker no longer sits left of the axis's
+  start. The rows, values and pinned charts are unchanged.
+- **Release-check attempt 1 was stopped** (2026-11-16, minutes after 02:35 UTC): the page was rebuilt (the phone chart's
+  subtitle and top margin) while it read the page over HTTP, so its record would have mixed two pages. It wrote no
+  record; attempt 2 ran on the committed page.
+- **Two usage-limit pauses,** recorded in the ledger, the work resumed each time where it stopped: the five-hour limit,
+  2026-11-15 ~23:25 to 2026-11-16 02:20 UTC; the weekly limit, 2026-11-16 ~03:05 to 2026-11-17 20:52 UTC, which also
+  stopped the editorial review mid-way (it resumed at the same candidate and says so).
+- **§0's "thin and dashed" perfect-foresight line** is drawn with the short dash `2 3`, which the key and the chart's
+  description call dotted; the naive's dash is `6 4`. §0's identity list is met in the line above the chart (the policy
+  identity `720fc581…` added after the editorial review's A5); the naive's frozen rule is stated in Product results'
+  caveat directly above.
+- **The suite's one failure at `5be0d178`** (`test_45`'s undefined-term control): "7 candidates tested" dropped the word
+  "policies" that the term beneath the headline defines. The headline reads "7 candidate policies tested"
+  (`bf369d6b`); the next full run is the prerelease (§7).
+- **The final candidate's class term is new** (`terms.class_final`, editorial E2): the general `terms.class` also
+  serves headline forms whose intervals are the rule's own, where "not the rule's own test" would be false.
+  `test_45`'s pin of the final candidate's terms names it.
+- **The machine was shared:** CP-18d's Critic and stress runs held the load average near 50 during release-check
+  attempt 3 (2026-11-17 21:12 UTC on); its timings are not PRES-7's measurements, and no PRES-7 check depends on
+  speed.
+- **The A2 margin on phones** narrows from PRES-6's 50.5 px to 12.5 px: every definition above the
+  product finding was fitted to add no phone line where it could (measured candidate by candidate in Chrome at 390 px),
+  and the remaining growth is one line of the selection-rule term (19 px; with its "Read it" link, the only
+  two-line wording, "re-scored every policy daily", would read as an ongoing daily process).
+
+### 10.3 Open presentation items, each with a proposed ruling
+
+1. **A2's phone margin is 12.5 px** (PRES-6: 50.5): the definitions O51 item 8 and the editorial
+   review's E2 require sit above the product finding, each fitted to add as few phone lines as it could (§10.2).
+   Proposed: accept; anything added above the product finding is re-measured. A later presentation round may win room
+   back from the opening without a number change.
+2. **The status-word lint scans only the claim layer's root block list** (editorial A16): `PRES5_BLOCKS` onward are
+   not scanned, so the pre-existing "the published prices may still be revised" in How the product works passes.
+   `test_52` scans PRES-7's own blocks. Proposed: the next presentation round extends `TEMPLATE_SOURCES` to every
+   block list and rewords that sentence.
+3. **"among 7 arms" in v6's chapter** (editorial A9; outside the brief's opening and comparison): the headline says "7
+   candidate policies tested". Proposed: the next presentation round uses the same words there.
+4. **PRES-6's fresh reader's other confusions, outside O51 item 8** (packet §5): "point error" beside "point-error
+   score"; v1's three numbers; "is not shown there"; the "re-frozen" date; "−2% [−3%, −2%]"; "the trained champion";
+   the page-load timings in the hero. Proposed: one more wording pass, as its own presentation round, if the Owner
+   wants it; none is a rule violation.
+5. **The receipt against the runner's partial artifact** (PRES-6's O51 item 5): §8.5 assembles the Space's build by
+   hand, as at PRES-6's landing, unless CP-18d's runner uploads the full build. Proposed: a tooling follow-up for the
+   live product's round, not PRES-7's.
+6. **CP-29's open item 1** (a missing cleared-price row would be solved on the remaining hours) stays with the round
+   that applies the contract to the live record (contract §7); PRES-7 shows no live number.
+
+### 10.4 The reviews' findings and their dispositions
+
+**The editorial review** (`editorial.md`, at `306c6096`; six violations, seventeen advisories; every bound number
+equal to its row; the chart's six polylines byte-identical to the reviewer's own re-derivation). Fixed in the commit
+after `bf369d6b` unless stated:
+
+| Finding | Disposition |
+|---|---|
+| E1 (medium): no initial condition; the chart's line names only the battery's size and the wear cost | **Fixed.** C1101 states "empty at the start and the end of each day"; the line above the chart and the chart's description name the 85% round trip, one cycle a day, the empty start and end, €25 per MWh of wear and €0.10 per MWh traded |
+| E2 (medium): "descriptive 95% intervals" first used in the headline, defined at the comparison | **Fixed** directly below the headline: the final candidate's class term, `terms.class_final`, reads "development evidence, not a test on new data; descriptive intervals: not the rule's own test" (the general `terms.class` stays for headline forms whose intervals are the rule's own). The comparison keeps the longer sentence. A2 re-measured (§7) |
+| E3 (medium): "the schedule", "the median rule" and "the contract" used before they are defined | **Fixed.** C1102: "one 1 MW / 2 MWh battery scheduled each day from v6's forecasts"; C1101 states the median rule; C1202: "the evaluation's rules, fixed in advance" |
+| E4 (low): "What is still not evaluated" uses wording that expires | **Fixed:** "Not evaluated." `test_52` scans every new and reworded block for the standard's status words, with a negative control |
+| E5 (low): the class caveat stated twice in Business insights, and "after selection" a third time | **Fixed.** The class caveat stands once, beside the finding (and beside the README's first profit figure); day-ahead only stands once, with what is not evaluated; C1108's rest is "What the result is not"; `business.limits` keeps 4.7T and the live record only |
+| E6 (low): a paired money difference at five significant figures | **Fixed:** "+37,080 EUR [+32,320, +42,310]" (`research.display`, four significant figures for `UNIT_EUR_MONEY_DIFF`); the lint's rule `sig4_whole`, with a negative control; totals stay whole EUR (A13: no clause caps a total) |
+| A1 "Day by day … earned more" reads as every day | **Adopted:** "Paired over the same days, v6's schedule earned more in total than the naive's, though not on every day" |
+| A2 the v5 block | **Adopted:** "whose 95% interval spans zero: no advantage either way is shown" |
+| A3 "had no value for one hour"; "shortly after" | **Adopted:** "within a week after a clock change, the forecast was missing one hour" |
+| A4 tense | **Kept:** each figure carries its class; the finding's conditional sets the frame |
+| A5 packet §0 against the page | **Adopted:** the line above the chart names the policy identity (`720fc581…`); §0's "dashed" perfect-foresight line is drawn with the short dash `2 3`, which the key and the description call dotted (§10.2) |
+| A6 the README | **Adopted:** the class caveat beside its first profit figure, and C1202 (the untraded days) carried; C1203 stays a page route |
+| A7 README length | **Kept:** one paragraph per section, as the README's other sections |
+| A8 "The opening's −7%" in the README | **Adopted:** "The headline's −7%" (both surfaces start with the headline) |
+| A9 "arms" against "candidate policies" | **Partly:** the headline says "7 candidate policies tested" ("policies" stays the defined term); v6's chapter's "among 7 arms" is outside the brief's opening and comparison: open item §10.3 |
+| A10 contract §9's "a forecast of future profit" | **Adopted** in "What the result is not" |
+| A11 no grid fees stated | **Adopted** in C1101 |
+| A12 the 10 days of the span outside P-all | **Kept:** "eligible" is defined in Product results directly above; a count of 10 is no committed record |
+| A13 totals at six figures | **Kept:** no clause caps a total; the chart's axis is in thousand EUR |
+| A14 `business.measured`'s "how to size that allowance" | **Kept:** the risk-aware variant trades only when the spread holds under cautious prices; it does not size an allowance for misses |
+| A15 the `evidence/pres-7` label date and link | **Adopted:** the date is set to the evidence tip's at the final build and checked by the return and §8.2; the link answers 404 until the tag is pushed with `main` (§8.3) |
+| A16 the status-word lint scans only the claim layer's root block list | **For the Integration check;** `test_52` covers PRES-7's blocks. Extending the lint would also flag the pre-existing "may still be revised" in How the product works: open item §10.3 |
+| A17 why the Owner had v6 run early | **Kept:** optional (not in O51 item 8) |
+| The reviewer's note on `tests/cp29/test_claims.py` | O63 (§10.1), recorded beside the brief |
+
+**The fresh reader** (`fresh-reader.md`, the page at `5575920c`; 38 desktop and 67 phone screens; the six questions of
+§10.2 and the brief's two). Answers 1–5 agree with the records, and answers 7 and 8 with CP-29's records and the
+page's limits. Repaired after the reading: C1104 names "v5's last four test periods (the eligible days inside them)";
+C1202 says the missing hour is "by design (its input rules fail closed there)". The rest answered or outside PRES-7's
+sections (§10.3 item 4), each listed in the record.
