@@ -1,0 +1,1025 @@
+{
+  "checked_at_utc": "2026-11-18T20:42:59+00:00",
+  "counts": {
+    "expected": 105,
+    "found": 105,
+    "metric_points": 17003
+  },
+  "experiment": "delu-generations",
+  "experiment_id": "1",
+  "passed": true,
+  "problems": [],
+  "routes": {
+    "compare:calibration": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp10/v1_reference",
+        "cp10/c1_head_spread",
+        "cp10/c1_price_volatility",
+        "cp10/c2_aci_gamma_0.000001",
+        "cp10/c2_aci_gamma_0.000005",
+        "cp10/c2_aci_gamma_0.00001",
+        "cp10/c2_aci_gamma_0.00002"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%222a78da98d6984c55b2c2c31e4e1f498a%22,%2231a984a28dce4ff69abed0172ac71165%22,%22b95809838bb74972b5fd72d3a5d63c61%22,%22bf30d3dee57141cebe3d4ef41b39c907%22,%228e7e60963cad465ab436035d324d3760%22,%22250f44b8704e4c52bf5d9bd9de66f36c%22,%22754fcaa4bcc0482badb084a7cd56117e%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:ddnn-member-on-v4": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp23/v5",
+        "cp23/D",
+        "cp23/v3+D"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%227eed5eecc48c4aeb8aebdb3ea1616099%22,%227cf1e2b137574dfbb513bec0f948292d%22,%22a0244146107c4551b44d0055fffa8977%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:model-comparison": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp15/B0",
+        "cp15/B1",
+        "cp15/B2",
+        "cp15/B3",
+        "cp15/A1",
+        "cp15/A2",
+        "cp15/A3",
+        "cp15/A4",
+        "cp15/A5"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22733341b233284f758702cde99044f4a9%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%22d61166d3413747d2b07d6350df704f2d%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22c5b522f86dd54415b085c1f69ff42948%22,%221c31337399104ba881aa0caeefa24a6c%22,%229182613a781b455daf70704f30ee99db%22,%22c3da9c3d87714550aa4ef68fc0ec8913%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:overview": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp24/v5",
+        "cp21/HGL",
+        "cp20/HG",
+        "cp16/V2-H",
+        "cp22/R",
+        "cp22/M",
+        "cp23/v5",
+        "cp15/B2",
+        "cp15/A1",
+        "cp15/B3",
+        "cp15/B1",
+        "cp15/B0"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%224efaef01e7e441f5ad09a8c5e4ef1c82%22,%22d7c53e9d7db94ed48d91da14be2d343b%22,%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22,%22f0c3258715b140e19ad0b5085399efba%22,%228829c99afa524d47bcffcb16080b3510%22,%227eed5eecc48c4aeb8aebdb3ea1616099%22,%2279c27a8d702f42a59db2bea0aeb71186%22,%2226d695d8a1de465a9a1a156ad6226430%22,%22d61166d3413747d2b07d6350df704f2d%22,%22656fd6dc4ebd48ec878b06fb3e042b54%22,%22733341b233284f758702cde99044f4a9%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:pooled-lightgbm-member-for-v4": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp22/R",
+        "cp22/M",
+        "cp22/A-PN-sel",
+        "cp22/A-LP",
+        "cp22/A-LN",
+        "cp22/v4+DL",
+        "cp22/v3+DL"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22f0c3258715b140e19ad0b5085399efba%22,%228829c99afa524d47bcffcb16080b3510%22,%22f7773812153f43458e87c594780e54ef%22,%22ec67bfec11db4308bcba71535781463e%22,%2232bda8bc99564425b39984bbace24631%22,%228f25ca7fac244b458f215c25005f53ac%22,%22449ca0aa988a43e5a83886c81ff1b13a%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v2": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp16/V2-P",
+        "cp16/V2-H",
+        "cp15/B2"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22c8e1cc9025b041d9adff72a8e244099f%22,%22de8fde118e71406ab440246ec2072b84%22,%2279c27a8d702f42a59db2bea0aeb71186%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v3": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp20/HG",
+        "cp16/V2-H"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%2266e1e5f516da4be38db3d5b96bde4397%22,%22de8fde118e71406ab440246ec2072b84%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v4": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp21/HGL",
+        "cp21/L-P",
+        "cp21/L-R",
+        "cp21/L-N",
+        "cp20/HG"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22d7c53e9d7db94ed48d91da14be2d343b%22,%22c9b0216014dd48ed8d02939f9f88b458%22,%22cbdb4a2a7b8e47a78c7bc1feeb9aa8eb%22,%222990b1081ea943c584548dc4a5190ad7%22,%2266e1e5f516da4be38db3d5b96bde4397%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v5": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp24/v5",
+        "cp24/D2",
+        "cp24/v3+D2",
+        "cp21/HGL"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%224efaef01e7e441f5ad09a8c5e4ef1c82%22,%22dd360e325c754a2eb264cf8cd6bf4979%22,%22004be4217f084bc4adea91dc2bf4f6c6%22,%22d7c53e9d7db94ed48d91da14be2d343b%22%5D&experiments=%5B%221%22%5D"
+    },
+    "compare:v6": {
+      "kind": "compare",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [
+        "cp28/A1",
+        "cp28/A2",
+        "cp28/A3",
+        "cp28/A4",
+        "cp28/A5",
+        "cp28/A6",
+        "cp28/A7",
+        "cp26/nominal/v5/all_eligible"
+      ],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/compare-runs?runs=%5B%22369c58dae974477b9806baa394e125b6%22,%22b19ab6fb6cc842f3ae11ad53937a1d80%22,%224f4aca1f18bf4af6adcda3262ca1d2e0%22,%2280615e0623c64520992478a04d916231%22,%2265e1793bf4884cd7a4a32691da229e37%22,%22c3e74d6b25a4468cbea9b0c4262f65dc%22,%2252bc534a5ce2466386556e7e7f340e59%22,%22257d7decf5664da78e0da878f5a8f6be%22%5D&experiments=%5B%221%22%5D"
+    },
+    "experiment": {
+      "kind": "experiment",
+      "problems": [],
+      "rest": "passed",
+      "run_keys": [],
+      "url": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow/#/experiments/1"
+    }
+  },
+  "runs": {
+    "cp10": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "2b7c648b7a3b47ac8e1115672096266b"
+    },
+    "cp10/c1_head_spread": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "31a984a28dce4ff69abed0172ac71165"
+    },
+    "cp10/c1_price_volatility": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "b95809838bb74972b5fd72d3a5d63c61"
+    },
+    "cp10/c2_aci_gamma_0.000001": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "bf30d3dee57141cebe3d4ef41b39c907"
+    },
+    "cp10/c2_aci_gamma_0.000005": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "8e7e60963cad465ab436035d324d3760"
+    },
+    "cp10/c2_aci_gamma_0.00001": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "250f44b8704e4c52bf5d9bd9de66f36c"
+    },
+    "cp10/c2_aci_gamma_0.00002": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "754fcaa4bcc0482badb084a7cd56117e"
+    },
+    "cp10/v1_reference": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "cp10-fold-block",
+        "market-snapshot"
+      ],
+      "metrics_checked": 8,
+      "points_checked": 28,
+      "run_id": "2a78da98d6984c55b2c2c31e4e1f498a"
+    },
+    "cp15": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "48867457b6554f59928493af90469555"
+    },
+    "cp15/A1": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "26d695d8a1de465a9a1a156ad6226430"
+    },
+    "cp15/A2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "c5b522f86dd54415b085c1f69ff42948"
+    },
+    "cp15/A3": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "1c31337399104ba881aa0caeefa24a6c"
+    },
+    "cp15/A4": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "9182613a781b455daf70704f30ee99db"
+    },
+    "cp15/A5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 66,
+      "points_checked": 633,
+      "run_id": "c3da9c3d87714550aa4ef68fc0ec8913"
+    },
+    "cp15/B0": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "733341b233284f758702cde99044f4a9"
+    },
+    "cp15/B1": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "656fd6dc4ebd48ec878b06fb3e042b54"
+    },
+    "cp15/B2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "79c27a8d702f42a59db2bea0aeb71186"
+    },
+    "cp15/B3": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 18,
+      "points_checked": 489,
+      "run_id": "d61166d3413747d2b07d6350df704f2d"
+    },
+    "cp16": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "a9f285e009844f8e8a9f671fd2fab86e"
+    },
+    "cp16/V2-H": {
+      "artifacts_checked": 4,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 42,
+      "points_checked": 561,
+      "run_id": "de8fde118e71406ab440246ec2072b84"
+    },
+    "cp16/V2-P": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "market-snapshot"
+      ],
+      "metrics_checked": 30,
+      "points_checked": 525,
+      "run_id": "c8e1cc9025b041d9adff72a8e244099f"
+    },
+    "cp20": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "ceaa8e1ac8f140f9abc233709fd17836"
+    },
+    "cp20/HG": {
+      "artifacts_checked": 9,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 30,
+      "points_checked": 525,
+      "run_id": "66e1e5f516da4be38db3d5b96bde4397"
+    },
+    "cp21": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "bc152519f4cc4c3abada756a67e9ad89"
+    },
+    "cp21/HGL": {
+      "artifacts_checked": 10,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 36,
+      "points_checked": 531,
+      "run_id": "d7c53e9d7db94ed48d91da14be2d343b"
+    },
+    "cp21/L-N": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "2990b1081ea943c584548dc4a5190ad7"
+    },
+    "cp21/L-P": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "c9b0216014dd48ed8d02939f9f88b458"
+    },
+    "cp21/L-R": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "cbdb4a2a7b8e47a78c7bc1feeb9aa8eb"
+    },
+    "cp22": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "b93f1feafd634fa18b7af44724acb054"
+    },
+    "cp22/A-LN": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "32bda8bc99564425b39984bbace24631"
+    },
+    "cp22/A-LP": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 36,
+      "points_checked": 531,
+      "run_id": "ec67bfec11db4308bcba71535781463e"
+    },
+    "cp22/A-PN-sel": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 72,
+      "points_checked": 615,
+      "run_id": "f7773812153f43458e87c594780e54ef"
+    },
+    "cp22/M": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "8829c99afa524d47bcffcb16080b3510"
+    },
+    "cp22/R": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 90,
+      "points_checked": 657,
+      "run_id": "f0c3258715b140e19ad0b5085399efba"
+    },
+    "cp22/v3+DL": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 36,
+      "points_checked": 531,
+      "run_id": "449ca0aa988a43e5a83886c81ff1b13a"
+    },
+    "cp22/v4+DL": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "8f25ca7fac244b458f215c25005f53ac"
+    },
+    "cp23": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "6bb5b17721a44502a32d7b074d4f5ec3"
+    },
+    "cp23/D": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "7cf1e2b137574dfbb513bec0f948292d"
+    },
+    "cp23/v3+D": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 36,
+      "points_checked": 531,
+      "run_id": "a0244146107c4551b44d0055fffa8977"
+    },
+    "cp23/v5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 72,
+      "points_checked": 615,
+      "run_id": "7eed5eecc48c4aeb8aebdb3ea1616099"
+    },
+    "cp24": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "d6b8061fab3e4fa49bb6eb45e5aebdb7"
+    },
+    "cp24/D2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 72,
+      "points_checked": 615,
+      "run_id": "dd360e325c754a2eb264cf8cd6bf4979"
+    },
+    "cp24/v3+D2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 54,
+      "points_checked": 573,
+      "run_id": "004be4217f084bc4adea91dc2bf4f6c6"
+    },
+    "cp24/v5": {
+      "artifacts_checked": 4,
+      "datasets_on_server": [
+        "common-10747h",
+        "gfs-weather-features",
+        "market-snapshot"
+      ],
+      "metrics_checked": 72,
+      "points_checked": 615,
+      "run_id": "4efaef01e7e441f5ad09a8c5e4ef1c82"
+    },
+    "cp26": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "057c6013d46549d98c2b77e5be7ab66a"
+    },
+    "cp26/gfs6/v3/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "b3906117111047f29a0cc181108c02cd"
+    },
+    "cp26/gfs6/v3/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "8f01d19c962d416195ead4237522448d"
+    },
+    "cp26/gfs6/v3/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "e5b7d8753bd949bb8028a4b80b02d311"
+    },
+    "cp26/gfs6/v3/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "e323719f992c490eb8a811bc6760354f"
+    },
+    "cp26/gfs6/v4/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "f32c1f995aa744e2a21b33a6e218cbf9"
+    },
+    "cp26/gfs6/v4/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "cb3cdcf9e2a740c19cf730e841060f54"
+    },
+    "cp26/gfs6/v4/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "ccb005b4c25747f4ae4477a828725c54"
+    },
+    "cp26/gfs6/v4/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "03eac674ad4e4cab973467b6c5d2202f"
+    },
+    "cp26/gfs6/v5/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "9ae39cbe1dd34b968d30084ed5e2c932"
+    },
+    "cp26/gfs6/v5/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "4124d2ee4d534eba92497d27be92bafe"
+    },
+    "cp26/gfs6/v5/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "31a3c3b43ade48ef9cab8ae1a02f4cd1"
+    },
+    "cp26/gfs6/v5/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "9d542818e1df42d39063ad7c619df8a0"
+    },
+    "cp26/noload/v3/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "ed0fbe8de7d94ac1875f1f8074ac5b7e"
+    },
+    "cp26/noload/v3/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "9f9e12fe2d29403b80a4d255fd8a218f"
+    },
+    "cp26/noload/v3/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "a41afd1abaf44e039f0a7432cc90e383"
+    },
+    "cp26/noload/v3/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "7e781d19c9254079890c89824601716b"
+    },
+    "cp26/noload/v4/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "bc998e79731b476b9d82afe60bd4af22"
+    },
+    "cp26/noload/v4/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "1d2a012b97db4a0d9580ef3f52751ddd"
+    },
+    "cp26/noload/v4/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "1e600c4e75094df0b1ac0c33ce8b1e99"
+    },
+    "cp26/noload/v4/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "326f907c394444f4a283d94494dd2a87"
+    },
+    "cp26/noload/v5/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "d55878f233664feaaa5653c1a45e5e49"
+    },
+    "cp26/noload/v5/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "2e1024c61ee045ed891df67c7ddce0b0"
+    },
+    "cp26/noload/v5/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "ad1ae1fb992f4d2192caf1a0fe4b3bd7"
+    },
+    "cp26/noload/v5/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "2f085ad028a74a53ab0a3e9d6b0764cc"
+    },
+    "cp26/nominal/B0/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "56d1426a9a6c412aba6791e352d9e75b"
+    },
+    "cp26/nominal/B0/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "2f667e7ee4c341768ee6f9bfdbd2c4a8"
+    },
+    "cp26/nominal/B0/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "9de5ff0eee4b419a8ae7a8d180e13579"
+    },
+    "cp26/nominal/B0/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "e57dbc651cde4260b5e0134d8ee9ac87"
+    },
+    "cp26/nominal/D2/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "33bcc3b53ab542129274355492bed5be"
+    },
+    "cp26/nominal/D2/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "20feadfd2ced4ff6926f334227101462"
+    },
+    "cp26/nominal/D2/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "c7a7b666a95c456a9cb2511ebf2739b8"
+    },
+    "cp26/nominal/D2/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "e96bcb55abbc426da6d57b0193ed8fa4"
+    },
+    "cp26/nominal/v1-R/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "176ae4e43792406c9341efb9586caffa"
+    },
+    "cp26/nominal/v1-R/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "169b7ac3d12744508699f1550364c5ca"
+    },
+    "cp26/nominal/v1-R/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "cdeb79bbe87746b0bb6c472169802b20"
+    },
+    "cp26/nominal/v1-R/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "cc239fc35d1043b799f458ce94470c0a"
+    },
+    "cp26/nominal/v2/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "8b1776b0015c46f492e3fefeab61c0d4"
+    },
+    "cp26/nominal/v2/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "34dc477789154e529c20f5d79ae3dc60"
+    },
+    "cp26/nominal/v2/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "870123a5aa134a43877262bc924c2c94"
+    },
+    "cp26/nominal/v2/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "8d5b79e7a45f43048fee4cb21df34cf2"
+    },
+    "cp26/nominal/v3/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "3a9eeb36b0fc4da0b3493d7643462edf"
+    },
+    "cp26/nominal/v3/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "838c0ab8d55544759f1ec7df1a2dc56e"
+    },
+    "cp26/nominal/v3/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "c466c24286a249f29eb24be862d98e4e"
+    },
+    "cp26/nominal/v3/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "e4901bf4d94847baaf7cf49fb0b242c6"
+    },
+    "cp26/nominal/v4/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "0078836f0c2d4f2d95c14ebdea2b7c64"
+    },
+    "cp26/nominal/v4/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "8ff57e81fa3448a49a1accfa5f4b2673"
+    },
+    "cp26/nominal/v4/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "304328da343c4876b699a95d57a04ea5"
+    },
+    "cp26/nominal/v4/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "41f390d93b964ffdae72431768914041"
+    },
+    "cp26/nominal/v5/all_eligible": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "257d7decf5664da78e0da878f5a8f6be"
+    },
+    "cp26/nominal/v5/never_scored": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "f0e96c58f32a4235a6b7aaf6338cc491"
+    },
+    "cp26/nominal/v5/newly_opened": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "f419b0e833f74582b9ba461fd14acbd5"
+    },
+    "cp26/nominal/v5/old_fold_2_5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 4,
+      "points_checked": 4,
+      "run_id": "debfdebb72824294a191f807ab91fd15"
+    },
+    "cp28": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 0,
+      "points_checked": 0,
+      "run_id": "281d3c5c25204a629c056044bdee8b25"
+    },
+    "cp28/A1": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "369c58dae974477b9806baa394e125b6"
+    },
+    "cp28/A2": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "b19ab6fb6cc842f3ae11ad53937a1d80"
+    },
+    "cp28/A3": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "4f4aca1f18bf4af6adcda3262ca1d2e0"
+    },
+    "cp28/A4": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "80615e0623c64520992478a04d916231"
+    },
+    "cp28/A5": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "65e1793bf4884cd7a4a32691da229e37"
+    },
+    "cp28/A6": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "c3e74d6b25a4468cbea9b0c4262f65dc"
+    },
+    "cp28/A7": {
+      "artifacts_checked": 2,
+      "datasets_on_server": [],
+      "metrics_checked": 6,
+      "points_checked": 6,
+      "run_id": "52bc534a5ce2466386556e7e7f340e59"
+    }
+  },
+  "target": "https://dagshub.com/hrsi56/delu-day-ahead-forecast.mlflow"
+}
