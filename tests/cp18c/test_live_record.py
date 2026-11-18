@@ -4,11 +4,12 @@ and the outside days are the carry's. Skipped, with the reason, where the live r
 from __future__ import annotations
 
 from datetime import date
+import json
 from pathlib import Path
 
 import pytest
 
-from cp18 import boundary, causes
+from cp18 import boundary, causes, inputclass
 from cp18.live import acquire as AQ
 from cp18.live.archive import Archive
 from cp18.store import INPUTS_PATH, STORE_PATH, LiveStore
@@ -43,4 +44,11 @@ def test_every_issued_days_load_forecast_was_shown_before_its_own_cutoff_and_the
             assert archive.verify(x) == [], x
         for d in issued:
             shown = AQ.load_forecast_shown(archive, date.fromisoformat(d))
+            # CP-18d (decision 31; O68): a day issued with the load forecast fetched after the cutoff carries that label,
+            # checked against its own evidence by `inputclass.of_record`; its archived copy is complete, and not
+            # admitted before the cutoff. Every other issued day keeps CP-18c's assertion unchanged.
+            record = json.loads((ROOT / STORE_PATH / 'issued' / d / 'record.json').read_text())
+            if inputclass.of_record(record)['input_class'] == inputclass.AFTER:
+                assert shown['complete'] and not shown['admitted'], (d, shown)
+                continue
             assert shown['shown'] and shown['admitted'] and shown['complete'], (d, shown)

@@ -56,15 +56,37 @@ def test_an_unknown_or_incomplete_label_is_refused(cls, fetched):
         inputclass.label(cls, fetched)
 
 
+PRE_CP18D_ISSUED = ['2026-11-06', '2026-11-07', '2026-11-08', '2026-11-14', '2026-11-15']   # the ledger is append-only
+
+
 def test_the_live_records_issued_before_cp18d_are_derived_from_their_own_evidence():
+    # O68: the live record grows after the landing, so the days issued before CP-18d are pinned by their dates and
+    # schema, and every day issued since must carry decision 31's complete label, read through the module's own check.
     store = LiveStore(ROOT / STORE_PATH)
     store.verify()
     issued = {d: v for d, v in store.days().items() if v['status'] == 'issued'}
-    assert issued and all(v['input_class'] == inputclass.BEFORE for v in issued.values())
-    for day in issued:
-        record = json.loads((ROOT / STORE_PATH / 'issued' / day / 'record.json').read_text())
-        assert record['schema'] == inputclass.LEGACY_SCHEMA
-        assert inputclass.required_load_forecast(record)['admitted']
+    records = {day: json.loads((ROOT / STORE_PATH / 'issued' / day / 'record.json').read_text()) for day in issued}
+    legacy = sorted(day for day, record in records.items() if record['schema'] == inputclass.LEGACY_SCHEMA)
+    assert legacy == PRE_CP18D_ISSUED
+    for day in legacy:
+        assert issued[day]['input_class'] == inputclass.BEFORE
+        assert inputclass.required_load_forecast(records[day])['admitted']
+    for day in sorted(set(issued) - set(legacy)):
+        assert day > PRE_CP18D_ISSUED[-1] and records[day]['schema'] == inputclass.RECORD_SCHEMA
+        assert inputclass.of_record(records[day])['input_class'] == issued[day]['input_class']
+
+
+def test_a_day_issued_since_cp18d_without_its_label_is_refused():
+    # the negative control of O68's repair: a new-schema record with its label removed fails the module's own check
+    store = ROOT / STORE_PATH / 'issued'
+    since = sorted(p.name for p in store.iterdir() if p.is_dir() and p.name > PRE_CP18D_ISSUED[-1])
+    if not since:
+        pytest.skip('no day issued since CP-18d in this checkout')
+    record = json.loads((store / since[0] / 'record.json').read_text())
+    for key in inputclass.FIELDS:
+        record.pop(key, None)
+    with pytest.raises(inputclass.LabelMissing):
+        inputclass.of_record(record)
 
 
 # ------------------------------------------------------------------------------------------------ the copy
