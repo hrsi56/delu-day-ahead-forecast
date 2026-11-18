@@ -10,7 +10,7 @@ The contracts, each with a negative control where a check could pass vacuously:
 - every derived change follows from its committed record; CP-26's and CP-28's records stay on development days;
 - the page and the README carry the final candidate's headline (decision 20), v6's chapter, CP-26's every-day panel
   beside the five periods, the freeze and 4.7T's registered terms, and v1 under the Space's History;
-- the archive's figures are the originals' exact pixels (ruling O25), and the page fits the 2.0 MB budget;
+- the archive's figures are the originals' exact pixels (ruling O25) (decision 30 later removed the 2.0 MB budget);
 - the CP-26 and CP-28 exports mirror their drafts, add runs only, and leave every published run unchanged.
 """
 from __future__ import annotations
@@ -304,10 +304,6 @@ def test_a_changed_pixel_is_caught(tmp_path, monkeypatch):
     Image.fromarray(pixels, "RGB").save(buffer, "PNG")
     first.write_bytes(buffer.getvalue())
     assert any("pixels differ" in problem for problem in CF.check(tmp_path))
-
-
-def test_the_page_fits_the_budget():
-    assert len(PAGE.encode("utf-8")) <= 2_000_000
 
 
 # --------------------------------------------------------------------------- MLflow (outcome 7)

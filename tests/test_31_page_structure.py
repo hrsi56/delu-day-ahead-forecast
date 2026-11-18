@@ -1,6 +1,6 @@
 """Presentation plan §9.5 and §7.10–§7.12: the built page's structure.
 
-Every table sits in a scroll wrapper, internal anchors resolve, the size budget holds, phone chart
+Every table sits in a scroll wrapper, internal anchors resolve, the page's size is measured and recorded, phone chart
 variants keep their text at 12 px or more at 390 and 320 px viewports, ids are unique, every chart mark is labelled,
 badge texts are exact and long values can wrap, and v1's archived fan chart keeps its behaviour.
 """
@@ -22,9 +22,10 @@ import build_pages as B  # noqa: E402
 
 PAGE = REPO_ROOT / "docs" / "index.html"
 
-#: The page, charts and v1's embedded figures included. The seven PNGs alone are ~0.7 MB; the
-#: budget leaves room for later chapters while keeping one self-contained file.
-SIZE_BUDGET_BYTES = 2_000_000
+#: The build's record of the page it wrote. The Owner's decision 30 (2026-11-15) removed the page's 2.0 MB budget: its
+#: size is no longer bounded, but it is still measured, recorded here and stated in each publication's packet, and the
+#: page stays one self-contained file (`tests/test_19_static_page_is_offline.py`).
+BUILD_RECORD = REPO_ROOT / "reports" / "cp3" / "pages_build.json"
 
 
 @pytest.fixture(scope="module")
@@ -101,8 +102,24 @@ def test_negative_control_a_duplicate_id_is_caught(document):
     assert duplicate_ids(document.replace('id="research-results"', 'id="results"', 1)) == ["results"]
 
 
-def test_the_size_budget_holds(document):
-    assert len(document.encode()) <= SIZE_BUDGET_BYTES
+def size_problems(record: dict, document: str) -> list[str]:
+    """Where the build record does not state the page's measured size (decision 30: measured, not bounded)."""
+    problems = []
+    if record.get("output") != "docs/index.html":
+        problems.append(f"the record is for {record.get('output')!r}")
+    if record.get("bytes") != len(document.encode()):
+        problems.append(f"the record states {record.get('bytes')} bytes; the page has {len(document.encode())}")
+    return problems
+
+
+def test_the_page_size_is_measured_and_recorded(document):
+    import json
+
+    assert size_problems(json.loads(BUILD_RECORD.read_text()), document) == []
+
+
+def test_negative_control_a_stale_size_record_is_caught(document):
+    assert size_problems({"output": "docs/index.html", "bytes": len(document.encode()) + 1}, document)
 
 
 def _svgs(document: str, variant: str) -> list[str]:

@@ -181,9 +181,15 @@ def build_glance(target: str = "md") -> str:
                 "error over time and by regime, prediction-interval coverage with width, and which inputs moved its "
                 "median on two development days."),
            "",
+           # PRES-7: CP-29's evaluated use (decision 32), its claims as the page renders them, then what is not evaluated
            para(bold("Business insights:") + " " + render("business.use") + " " + render("business.measured") + " "
-                + render("business.gap") + " " + render("business.limits") + " "
-                + link("Read them in the report", PAGES_URL + "#business") + "."),
+                + " ".join(render(key) for key in ("economics.setup", "economics.finding", "economics.caveat",
+                                                   "economics.difference", "economics.untraded", "economics.v5",
+                                                   "economics.risk", "economics.sensitivity", "economics.regimes",
+                                                   "economics.limits", "economics.assumptions"))
+                + " " + render("business.gap") + " " + render("business.limits") + " "
+                + link("Read them in the report", PAGES_URL + "#business") + ": the profit curve day by day, a "
+                "more cautious trading rule, and the evidence."),
            ""] if G.final_candidate() is not None else []),
         para(bold("Report:") + " " + link("the one-page report", PAGES_URL) + ", with every result, its limits and its evidence."),
         "",

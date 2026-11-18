@@ -1936,6 +1936,9 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
     generation is labelled by its short name alone, and the met / not-met column is the value table's. `pinned` draws
     the comparison as `cp20/HG`'s run carries it: canonical names, with the targets column in the chart."""
     live = (order is None and experiment is None) if live is None else live
+    # The page's own comparison, before `order` takes its default (PRES-7, O51 item 7: the test below read `order` after
+    # the default, so the widened axis never applied and v6's interval-score marker fell off the phone's axis).
+    page_comparison = order is None
     order = order or G.COMPARISON_ORDER
     entries = G.comparison_rows(order, experiment)
     if live:
@@ -1964,7 +1967,7 @@ def overview_panels(order: tuple[str, ...] | None = None, experiment: str | None
                        for entry, prefix, code, label, verdict in rows),
             # PRES-5: v6's interval score lies below 0.5. Only the page's comparison widens its axis; every overview
             # chart pinned to an earlier comparison (PINNED_CHARTS, published in MLflow) keeps its own.
-            domain=(0.4, 1.1) if order is None else (0.5, 1.1), step=0.1,
+            domain=(0.4, 1.1) if page_comparison else (0.5, 1.1), step=0.1,
             refs=(Ref("naive", at=1.0, dash=None, colour=TOKENS["text"]),
                   Ref("target", f"{newest_prefix}.criteria.{newest}.{criterion}.equal_fold.{field}.upper_limit")),
             option="p=3",
@@ -2432,15 +2435,225 @@ def product_results() -> str:
 </section>"""
 
 
+# --------------------------------------------------------------------------- Business insights (PRES-7)
+# CP-29's economic evaluation (decision 32): the cumulative net profit of one 1 MW / 2 MWh battery on the development
+# days, from `reports/cp29/daily.csv` under packet §0's rules, with CP-29's claims beside it. Nothing live or prospective.
+
+CP29_TAG = "evidence/cp-29"
+PRES7_TAG = "evidence/pres-7"
+CP29_DAILY = "reports/cp29/daily.csv"
+#: The lines drawn (packet §0), top to bottom at the end: (source, rule, direct label, phone label lines).
+PROFIT_LINES = (("perfect_foresight", "perfect", "perfect foresight", ("perfect", "foresight")),
+                ("v6", "median", "v6", ("v6",)),
+                ("naive", "median", "naive", ("naive",)))
+#: Each line's style: colour, width and dash (no meaning by colour alone: the dash and the label carry it too).
+PROFIT_STYLE = {"perfect_foresight": (TOKENS["text-2"], 1.6, "2 3"), "v6": (TOKENS["v6"], 2.4, None),
+                "naive": (ROLE_STYLE["reference"]["color"], 1.6, "6 4")}
+PROFIT_WEAR = "25"
+#: The relative tolerance between a line's last value and its committed record (packet §0: the summation order may
+#: differ from CP-29's in the last bits; never compared as bytes).
+PROFIT_TOLERANCE = 1e-9
+BUSINESS_ROUTES = (("business-profit", "Cumulative profit of the battery, day by day, against the naive"),
+                   ("business-setup", "The battery, its costs and the trading rule"),
+                   ("business-losses", "Losses, the wear cost, the regimes and a more cautious rule"),
+                   ("business-v5", "Against v5 on its test periods, where the interval spans zero"),
+                   ("business-limits", "What the simulation does not show"))
+BUSINESS_HEADINGS = dict(BUSINESS_ROUTES)
+
+
+class ProfitSeriesError(RuntimeError):
+    """A drawn line does not end at its committed record (packet §0's check)."""
+
+
+def _profit_record(source: str, rule: str, field: str = "cumulative_profit_eur") -> str:
+    return f"cp29.p_all.all.{source}.{rule}.w{PROFIT_WEAR}.{field}"
+
+
+def profit_series() -> dict[str, list[tuple[str, float]]]:
+    """Each drawn line's running sum of `profit_eur` in day order, every day of P-all kept (an untraded day adds its
+    committed zero), checked against its record before anything is drawn (packet §0)."""
+    R.check_source(CP29_DAILY)
+    rows = csv.DictReader(io.StringIO(R.source_bytes(CP29_DAILY).decode("utf-8"), newline=""))
+    wanted = {(source, rule): source for source, rule, _, _ in PROFIT_LINES}
+    daily: dict[str, dict[str, float]] = {source: {} for source in wanted.values()}
+    for row in rows:
+        key = (row["source"], row["rule"])
+        if row["wear_eur_per_mwh"] != PROFIT_WEAR or key not in wanted:
+            continue
+        days = daily[wanted[key]]
+        if row["day"] in days:
+            raise ProfitSeriesError(f"{key} has two rows for {row['day']}")
+        days[row["day"]] = float(row["profit_eur"])
+    out = {}
+    for source, rule, _, _ in PROFIT_LINES:
+        total, series = 0.0, []
+        for day in sorted(daily[source]):
+            total += daily[source][day]
+            series.append((day, total))
+        record = R.get(_profit_record(source, rule))
+        expected_days = R.get(_profit_record(source, rule, "days")).value
+        if len(series) != expected_days:
+            raise ProfitSeriesError(f"{source}: {len(series)} days drawn, the record has {expected_days:.0f}")
+        if not math.isclose(series[-1][1], record.value, rel_tol=PROFIT_TOLERANCE, abs_tol=0.0):
+            raise ProfitSeriesError(f"{source}: the line ends at {series[-1][1]!r}, the record is {record.value!r}")
+        out[source] = series
+    return out
+
+
+def _thin(points: list[tuple[float, float]], left: float) -> list[tuple[float, float]]:
+    """Packet §0's thinning: in date order, each pixel column's first, lowest, highest and last point."""
+    out: list[tuple[float, float]] = []
+    column: list[tuple[float, float]] = []
+
+    def flush() -> None:
+        if not column:
+            return
+        keep = sorted({0, len(column) - 1, min(range(len(column)), key=lambda i: column[i][1]),
+                       max(range(len(column)), key=lambda i: column[i][1])})
+        out.extend(column[i] for i in keep)
+
+    current = None
+    for x, y in points:
+        index = int(x - left)
+        if index != current:
+            flush()
+            column, current = [], index
+        column.append((x, y))
+    flush()
+    return out
+
+
+def _day_number(day: str) -> int:
+    year, month, date_ = (int(part) for part in day.split("-"))
+    return pd.Timestamp(year=year, month=month, day=date_).toordinal()
+
+
+def profit_chart() -> str:
+    """The cumulative net profit chart (§5.1a; packet §0): v6, the naive and perfect foresight, doing nothing at zero."""
+    series = profit_series()
+    first, last = series["v6"][0][0], series["v6"][-1][0]
+    d0, d1 = _day_number(first), _day_number(last)
+    top = series["perfect_foresight"][-1][1]
+    low = min(0.0, min(value for line in series.values() for _, value in line))
+    step = _nice_step(top - low)
+    hi = math.ceil(top / step) * step
+
+    def panel(width: float, height: float, phone: bool) -> str:
+        # a phone's top margin leaves room for perfect foresight's two-line label under the subtitle
+        ml, mr, mt, mb = 44, (72 if phone else 128), (60 if phone else 40), 28
+        x = lambda day: ml + (width - ml - mr) * (_day_number(day) - d0) / (d1 - d0)  # noqa: E731
+        y = lambda v: mt + (height - mt - mb) * (1 - (v - low) / (hi - low))  # noqa: E731
+        out = [svg_text(ml, 16, "Cumulative net profit", weight="600"),
+               svg_text(ml, 32, "thousand EUR · one battery · every eligible development day", fill=TOKENS["text-2"])
+               if not phone else svg_text(ml, 32, "thousand EUR · development days", fill=TOKENS["text-2"])]
+        tick = 0.0
+        while tick <= hi + 1e-9:
+            out.append(f'<line x1="{ml}" x2="{width - mr:.0f}" y1="{y(tick):.1f}" y2="{y(tick):.1f}" '
+                       f'stroke="{TOKENS["grid"]}"/>')
+            out.append(svg_text(ml - 6, y(tick) + 4.5, tick_text(tick / 1000, step / 1000), anchor="end",
+                                fill=TOKENS["text-2"], extra=' data-scale="business-profit-keur"'))
+            tick += step
+        for year in range(int(first[:4]) + 1, int(last[:4]) + 1):
+            if phone and year % 2 == 0:
+                continue
+            at = x(f"{year}-01-01")
+            out.append(svg_text(at, height - 10, str(year), anchor="start" if at - ml < 20 else "middle",
+                                fill=TOKENS["text-2"], extra=' data-scale="business-profit-year"'))
+        # doing nothing: the contract's zero reference, labelled inside the plot at the right, where no line runs
+        out.append(f'<line x1="{ml}" x2="{width - mr:.0f}" y1="{y(0):.1f}" y2="{y(0):.1f}" stroke="{TOKENS["text"]}" '
+                   f'stroke-width="1.2"/>')
+        out.append(svg_text(width - mr, y(0) - 6, "doing nothing", anchor="end", fill=TOKENS["text"], extra=HALO))
+        for source, rule, label, phone_label in PROFIT_LINES:
+            colour, stroke, dash = PROFIT_STYLE[source]
+            points = _thin([(x(day), y(value)) for day, value in series[source]], ml)
+            dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
+            out.append(f'<polyline points="{" ".join(f"{px:.1f},{py:.1f}" for px, py in points)}" fill="none" '
+                       f'stroke="{colour}" stroke-width="{stroke}"{dash_attr} stroke-linejoin="round"/>')
+            end_y = y(series[source][-1][1])
+            lines = phone_label if phone else (label,)
+            for index, line in enumerate(lines):
+                # a two-line label stacks upwards, its last line level with the line's end
+                out.append(svg_text(width - mr + 6, end_y + 4.5 - 15 * (len(lines) - 1 - index), line, fill=colour,
+                                    weight="600"))
+        return "".join(out)
+
+    title = "Cumulative net profit of one battery from v6's, the naive's and perfect forecasts, development days"
+    desc = ("The running sum of each day's simulated net profit, in thousand EUR, of a 1 MW, 2 MWh battery trading in "
+            "the day-ahead market (85 percent round trip, one cycle a day, empty at each day's start and end), "
+            "December 2020 to September 2026, net of 25 EUR per MWh of wear and 10 cents per MWh traded, each day's "
+            "schedule chosen by the median rule: v6 solid, the similar-day naive dashed, perfect foresight dotted; "
+            "doing nothing is the line at zero. Simulated, development, post-selection.")
+    desktop = svg_wrap(DESKTOP_W, 320, panel(DESKTOP_W, 320, False), title=title, desc=desc, variant="d",
+                       chart_id="business-profit")
+    mobile = svg_wrap(MOBILE_W, 320, panel(MOBILE_W, 320, True), title=title, desc=desc, variant="m",
+                      chart_id="business-profit")
+    names = {"v6": f'{_structural_versions("v6")}, median rule', "naive": "Similar-day naive, median rule",
+             "perfect_foresight": "Perfect foresight"}
+    key = "".join(f'<span class="key-profit key-profit-{source.replace("_", "-")}">{names[source]}: '
+                  f'{value(_profit_record(source, rule), "C1201")} EUR</span> '
+                  for source, rule, _, _ in (PROFIT_LINES[1], PROFIT_LINES[2], PROFIT_LINES[0]))
+    key += '<span class="key-profit key-profit-zero">Doing nothing: zero</span>'
+    return (f'<div class="chart business-profit" data-chart-id="business-profit-chart">{desktop}{mobile}'
+            f'<p class="preview-key profit-key">{key}</p></div>')
+
+
+def business_audit() -> tuple[Audit, ...]:
+    return (Audit("The daily rows (the cumulative series)", CP29_DAILY, CP29_TAG),
+            Audit("The measures", "reports/cp29/summary.csv", CP29_TAG),
+            Audit("The paired differences", "reports/cp29/paired.csv", CP29_TAG),
+            Audit("The evaluation's report", "reports/cp29/report.md", CP29_TAG),
+            Audit("The economic contract", "docs/track-b/economic-policy-contract-2026-11-15.md", CP29_TAG),
+            Audit("The evaluation's review verdict", "docs/track-b/evidence/cp-29/integration.md", CP29_TAG),
+            Audit("The chart's rules, fixed before drawing", "docs/track-b/evidence/pres-7/publication-packet.md",
+                  PRES7_TAG))
+
+
 def business_insights() -> str:
-    """Business insights (§5.1a): the intended use, the measured forecasting implications, the gap and the limits."""
+    """Business insights (§5.1a, A8): the intended use, the measured forecasting implications, CP-29's evaluated use
+    with its profit chart, losses, sensitivity and limits, and what is still not evaluated (PRES-7)."""
+    routes = "".join(f'<li><a class="quiet" href="#{anchor}"><span>{_structural_versions(text)}</span></a></li>'
+                     for anchor, text in BUSINESS_ROUTES)
     return f"""
 <section class="section" id="business" aria-labelledby="business-h" data-research="business">
  <h2 id="business-h">Business insights</h2>
  {block("business.use")}
  {block("business.measured")}
- {block("business.gap")}
- {block("business.limits")}
+ <figure class="panel analytical" aria-labelledby="business-finding">
+  {block("economics.finding", tag="h3", cls="panel-title finding-title", ident="business-finding")}
+  {block("economics.caveat", cls="qualification caveat-line")}
+  <nav class="explore" aria-labelledby="business-explore-h"><h3 class="story-label" id="business-explore-h">Explore the
+   evaluation</h3><ul>{routes}</ul></nav>
+ </figure>
+ <div class="outcome-block">
+  {detail_head("business-profit", BUSINESS_HEADINGS["business-profit"])}
+  <p class="panel-sub" data-block="economics.chart">{RC.render("economics.chart")}</p>
+  {profit_chart()}
+  {block("economics.difference")}
+  {block("economics.untraded")}
+ </div>
+ <div class="outcome-block">
+  {detail_head("business-setup", BUSINESS_HEADINGS["business-setup"])}
+  {block("economics.setup")}
+ </div>
+ <div class="outcome-block">
+  {detail_head("business-losses", BUSINESS_HEADINGS["business-losses"])}
+  {block("economics.risk")}
+  {block("economics.sensitivity")}
+  {block("economics.regimes")}
+  {block("economics.risk_aware")}
+ </div>
+ <div class="outcome-block">
+  {detail_head("business-v5", BUSINESS_HEADINGS["business-v5"])}
+  {block("economics.v5")}
+ </div>
+ <div class="outcome-block">
+  {detail_head("business-limits", BUSINESS_HEADINGS["business-limits"])}
+  {block("economics.limits")}
+  {block("economics.assumptions")}
+  {block("business.gap")}
+  {block("business.limits")}
+ </div>
+ {evidence_row(audit=business_audit())}
 </section>"""
 
 
@@ -3877,6 +4090,9 @@ table.data .code{{color:var(--text-2);font-size:12px;margin-left:4px}}
 .chart svg.m{{display:none;width:100%;max-width:{MOBILE_MAX_W}px;margin:0 auto}}
 .outcome-days-row{{display:flex;flex-wrap:wrap;gap:12px}}.outcome-days-row svg.d{{flex:1 1 280px;width:auto;max-width:440px}}
 .outcome-days-stack svg.m{{margin:0 0 12px}}.outcome-block{{margin:28px 0 0}}
+.key-profit::before{{content:"";display:inline-block;width:22px;vertical-align:middle;margin-right:6px}}
+.key-profit-v6::before{{border-top:3px solid var(--text)}}.key-profit-naive::before{{border-top:2px dashed #71717A}}
+.key-profit-perfect-foresight::before{{border-top:2px dotted #52525B}}.key-profit-zero::before{{border-top:1px solid var(--text)}}
 .preview-chart svg.d{{max-width:440px}}
 @media (max-width:{MOBILE_BREAKPOINT - 1}px){{.chart svg.d{{display:none}}.chart svg.m{{display:block}}}}
 .chart-note{{font-size:14px;color:var(--text-2);margin-top:20px}}

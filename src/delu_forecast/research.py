@@ -22,7 +22,7 @@ import hashlib
 import io
 import json
 from dataclasses import dataclass, field
-from decimal import Decimal
+from decimal import ROUND_HALF_EVEN, Decimal
 from functools import lru_cache
 from pathlib import Path
 
@@ -1761,11 +1761,23 @@ def display(record: EvidenceRecord, which: str = "value", *, precision: int | No
     places = record.display_precision if precision is None else precision
     if style == "int":
         places = 0
+    if record.unit == UNIT_EUR_MONEY_DIFF and places == 0:
+        # PRES-7 (editorial E6): a paired money difference is a difference, shown to at most four significant
+        # figures (standard v1 §4): +37,080 EUR [+32,320, +42,310], never +37,077 to the euro.
+        raw = str(_round_significant(Decimal(raw), 4))
     # Never round toward zero across a sign (standard §4): a value near zero keeps its sign and at
     # least two significant figures, whatever precision was asked for (+0.0000039, not +0.0000).
     if Decimal(raw) != 0 and round(Decimal(raw), places) == 0:
         places = max(places, _places_for_two_significant(raw))
     return format_number(raw, places, signed=signed, thousands=record.unit in THOUSANDS_UNITS)
+
+
+def _round_significant(value: Decimal, figures: int) -> Decimal:
+    """`value` rounded to `figures` significant figures, half to even as `format_number` rounds."""
+    if value == 0:
+        return value
+    step = Decimal(1).scaleb(max(0, value.adjusted() - figures + 1))
+    return (value / step).quantize(Decimal(1), rounding=ROUND_HALF_EVEN) * step
 
 
 def _places_for_two_significant(raw: str) -> int:
