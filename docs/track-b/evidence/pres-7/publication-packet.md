@@ -114,8 +114,8 @@ CP-29's sources (`reports/cp29/*.csv`, `evidence/cp-29`) were registered by CP-2
   success rate" half. Its second half, which refused any "profit of <number>", is withdrawn. W56 and W57 stay.
 
 CP-29's C1101–C1108 (`cp29-claims.md`) move onto the page and into the README, keeping CP-29's `PRES7` surface, which
-CP-29's own tests render. C1103's wording changes on every surface, its claim and records unchanged (the claim map
-records the old and new words). Every guard has positive and negative cases (`tests/test_52`,
+CP-29's own tests render. C1101, C1102, C1103, C1104 and C1108 are reworded on every surface, their claims and records
+unchanged (the claim map records each change; editorial E1, E3, E5, E6 and A1, A2, A10, A11). Every guard has positive and negative cases (`tests/test_52`,
 `test_the_forbidden_claims_are_absent_and_guarded`; `tests/test_51`, W54's narrowed half; `tests/cp29`, W56 and W57).
 
 ## 4. The derived headline quantities (standard §3.3)
@@ -131,7 +131,7 @@ drawn running sums, each checked against its record:
 | v6's cumulative net profit (median rule, €25) | 257,212 EUR, 0.8953 of perfect foresight's | `cp29.p_all.all.v6.median.w25.{cumulative_profit_eur,share_of_perfect_foresight}` |
 | The naive's | 220,136 EUR, 0.7662 | `cp29.p_all.all.naive.median.w25.*` |
 | Perfect foresight's (the ceiling) | 287,292 EUR | `cp29.p_all.all.perfect_foresight.perfect.w25.cumulative_profit_eur` |
-| (b) v6 − the naive, summed over the days | +37,077 EUR [+32,323, +42,311] | `cp29.paired.p_all.median.v6_minus_naive.w25.total_difference_eur` (`paired.csv`) |
+| (b) v6 − the naive, summed over the days | +37,076.8 EUR [+32,322.6, +42,311.2] in the record (`paired.csv`); shown +37,080 [+32,320, +42,310] (four significant figures, editorial E6) | `cp29.paired.p_all.median.v6_minus_naive.w25.total_difference_eur` (`paired.csv`) |
 | Its 95% interval | CP-29's paired non-circular moving-block bootstrap: 14-day blocks, 2,000 replicates, seed 20261115 | `research.CP29_INTERVAL` |
 | (c) v6 − v5 on P-v5 (358 days) | +165 EUR [−727, +1,032], spanning zero | `cp29.paired.p_v5.median.v6_minus_v5.w25.total_difference_eur` |
 
@@ -143,19 +143,26 @@ qualification, "Explore the evaluation"), then five detail blocks, each under it
 C1201, C1103 and C1202; the setup (C1101); losses, the wear cost, the regimes and the risk-aware variant (C1105, C1106,
 C1107, C1203); against v5 (C1104); what the simulation does not show (C1108, C1204, `business.gap`,
 `business.limits`); and the evidence row. The README's Business insights paragraph renders, from the claim layer:
-`business.use`, `business.measured`, C1101–C1108, C1204, `business.gap` and `business.limits`.
+`business.use`, `business.measured`, C1101, C1102, the class caveat, C1103, C1202, C1104–C1108, C1204, `business.gap`
+and `business.limits`.
 
-The new and reworded blocks (README form where the block is in the README):
+The new and reworded blocks of Business insights, as the final build renders them (README form where the block is in
+the README):
 
 | Block | Claim | Text |
 |---|---|---|
+| `economics.setup` | C1101 | **How the forecast was put to use, in a simulation.** A battery trading in the German–Luxembourg day-ahead market: 1 MW at the grid, 2 MWh usable, 85% round trip, empty at the start and the end of each day, at most one cycle a day, and charging or discharging in an hour, never both. Each day before the 12:00 auction it takes the schedule that the forecast's median prices value highest, net of its costs, and does nothing if none pays: the median rule. The schedule is then settled at the cleared prices, net of the battery's wear (€25 per MWh leaving it) and the exchange fees (€0.10 per MWh bought or sold); no grid fees, levies or taxes are charged. |
+| `economics.finding` | C1102 | On all 2,068 eligible development days, one 1 MW / 2 MWh battery scheduled each day from v6's forecasts would have earned 257,212 EUR net, 0.8953 of what a perfect forecast would have earned (287,292 EUR). Scheduled from the similar-day naive's forecasts, it would have earned 220,136 EUR, 0.7662 of it. |
 | `economics.caveat` | C1108 | Simulated, development, post-selection: no money was traded, and v6 was chosen on these same days, so its result is optimistic for it. Not realized income and not a trading recommendation. |
-| `economics.chart` | C1201 | Drawn: the cumulative net profit, in EUR, of one 1 MW / 2 MWh battery on each of the 2,068 eligible development days, 2020-12-29 to 2026-09-06, at €25 per MWh of wear · scheduled from v6's stored forecasts (v6 · DDNN-2 alone, A1 in the frozen records; the median rule), from the similar-day naive's and from the cleared prices themselves (perfect foresight, the ceiling) · doing nothing earns zero, the line at zero · simulated, development, post-selection |
-| `economics.untraded` | C1202 | Days not traded. v6's schedule traded on 1,770 of the 2,068 days. On the others it did nothing: on most, no cycle was expected to pay its costs; on 33, shortly after a clock change, the forecast had no value for one hour, and the contract counts such a day as not traded, with zero profit, never dropped. The naive's schedule missed 11 days that way. Every such day stays in the curve, at zero. |
+| `economics.chart` | C1201 | Drawn: the cumulative net profit, in EUR, of one 1 MW / 2 MWh battery (85% round trip, one cycle a day, empty at each day's start and end) on each of the 2,068 eligible development days, 2020-12-29 to 2026-09-06, net of €25 per MWh of wear and €0.10 per MWh traded · scheduled by the median rule from v6's stored forecasts (v6 · DDNN-2 alone, A1 in the frozen records, policy identity 720fc581…), from the similar-day naive's and from the cleared prices themselves (perfect foresight, the ceiling) · doing nothing earns zero, the line at zero · simulated, development, post-selection |
+| `economics.difference` | C1103 | Paired over the same days, v6's schedule earned more in total than the naive's, though not on every day: v6's profit minus the naive's, summed over the days, is +37,080 EUR [+32,320, +42,310], the bracket a 95% confidence interval from resampling 14-day blocks of these days, not a forecast for other days. |
+| `economics.untraded` | C1202 | **Days not traded.** v6's schedule traded on 1,770 of the 2,068 days. On the others it did nothing: on most, no cycle was expected to pay its costs; on 33, within a week after a clock change, the forecast was missing one hour by design (its input rules fail closed there), and the evaluation's rules, fixed in advance, count such a day as not traded, with zero profit, never dropped. The naive's schedule missed 11 days that way. Every such day stays in the totals and the curve, at zero. |
+| `economics.v5` | C1104 | On the 358 days of v5's last four test periods (the eligible days inside them), v6's and v5's schedules earned about the same, 55,708 and 55,544 EUR: a difference of +165 EUR [−727, +1,032], whose 95% interval spans zero: no advantage either way is shown. |
 | `economics.risk_aware` | C1203 | A more cautious rule. The risk-aware variant plans as if it buys at the forecast's 75th percentile and sells at its 25th, so it trades only when the spread holds under those prices. With it, v6's schedule traded on 1,457 days and lost money on 39, at most 101 EUR in a day, but earned less: 247,436 EUR, 0.8613 of a perfect forecast's. |
+| `economics.limits` | C1108 | **What the result is not.** Hourly, not quarter-hourly. Not a property of v6 alone: it depends on the battery, the costs and the rule above. Not 4.7T's result and not a forecast of future profit. No return or payback is computed: there is no capital cost. |
 | `economics.assumptions` | C1204 | **Assumed, not modelled.** The battery is a price-taker: every schedule is filled at the cleared price and moves no price. It is never out of service and never deviates from its schedule. The wear cost and the exchange fee are stated assumptions, and the exemption from grid fees is a legal assumption that may change. |
-| `business.gap` | P70 | **What is still not evaluated.** Only day-ahead arbitrage was simulated, on development days. Intraday trading, balancing energy and reserves, a real battery's own costs (its price, financing, grid connection and outages) and the live product's forecasts have not been evaluated for profit, and the report shows no live or prospective profit. Lower forecast error and interval coverage are not profit, and not a success rate of any decision. |
-| `economics.difference` | C1103 | Day by day on the same days, v6's schedule earned more than the naive's: v6's profit minus the naive's, summed over the days, is +37,077 EUR [+32,323, +42,311], the bracket a 95% confidence interval from resampling 14-day blocks of these days, not a forecast for other days. |
+| `business.gap` | P70 | **Not evaluated.** Only day-ahead arbitrage was simulated, on development days: not intraday trading, balancing energy or reserves, which are a large share of a real battery's income; not a real battery's own costs (its price, financing, grid connection and outages); and not the live product's forecasts, so the report shows no live or prospective profit. Lower forecast error and interval coverage are not profit, and not a success rate of any decision. |
+| `business.limits` | P70 | **Limits.** 4.7T, which opens no earlier than 2026-12-04, is v6's one test on new data; the Space shows the live record, prospective evaluation in progress. |
 
 **The wording pass (O51 item 8), each change listed.** The opening and the comparison only; no number changed (§7, the
 rendered-number diff). Above the product finding, every definition was fitted so as to add no phone line where it
@@ -221,11 +228,11 @@ no run, tag or experiment. `reports/presentation/mlflow_index.json` is unchanged
 
 | Check | Result | Record |
 |---|---|---|
-| **The binding check before editing** (the brief): no record binds the bytes of a file PRES-7 changed: `src/cp26/harness.py` `PINS` lists none of them; `tests/pres5_landed_code.py` records five `src/delu_forecast/` modules at CP-26's landing and compares every other landed module with the working tree, and the three PRES-7 changes there (`research_claims.py`, `registry.py`, `publication_lint.py`) are among the five recorded; no file in the tree holds the SHA-256 or blob of `scripts/build_pages.py`, `scripts/readme_research.py`, the claim layer or the changed tests (a `git grep` of each hash), except earlier evidence records quoting the published page's and README's hashes as history, and `reports/ddnn2/base-tree.json`, which records CP-24's base commit and is checked against that commit, not the tree | pass | the commands in this row, at `5e07f0d3` |
+| **The binding check before editing** (the brief): no record binds the bytes of a file PRES-7 changed: `src/cp26/harness.py` `PINS` lists none of them; `tests/pres5_landed_code.py` records five `src/delu_forecast/` modules at CP-26's landing and compares every other landed module with the working tree, and the four PRES-7 changes there (`research.py`, `research_claims.py`, `registry.py`, `publication_lint.py`) are among the five recorded; no file in the tree holds the SHA-256 or blob of `scripts/build_pages.py`, `scripts/readme_research.py`, the claim layer or the changed tests (a `git grep` of each hash), except earlier evidence records quoting the published page's and README's hashes as history, and `reports/ddnn2/base-tree.json`, which records CP-24's base commit and is checked against that commit, not the tree | pass | the commands in this row, at `5e07f0d3` |
 | Each drawn line ends at its record within 1e-9 relative (never bytes) and keeps all 2,068 days in order; a changed row is refused by the blob check, and past it by the record check | pass | `test_52::test_each_line_ends_at_its_record_and_keeps_every_day`, `…a_changed_daily_row_is_refused` |
 | The thinning keeps each pixel column's first, lowest, highest and last point | pass | `test_52::test_the_thinning_keeps_…` |
 | The chart: three lines and the zero line in both variants, direct labels, distinct dashes; its identity line names battery, costs, policy, artifact, population, dates, units and class; the key's totals bound to their records | pass | `test_52` (two tests) |
-| CP-29's C1101–C1108 and C1201–C1204 on the page, as the claim layer renders them; the limits in plain words; what is still not evaluated in place of the gap | pass | `test_52` (three tests) |
+| CP-29's C1101–C1108 and C1201–C1204 on the page, as the claim layer renders them; the limits in plain words; "Not evaluated." in place of the gap | pass | `test_52` (three tests) |
 | The untraded days and the risk-aware variant bind their records; C1203's "fewer losses … earned less" holds on them; the 33 missing-hour days are zero in the daily rows | pass | `test_52::test_the_untraded_days_and_the_risk_aware_variant_bind_their_records` |
 | W54 (narrowed), W56, W57 and W58 find nothing on the page or in the README; each has positive and negative cases | pass | `test_52::test_the_forbidden_claims_are_absent_and_guarded`; `test_51`; `tests/cp29` |
 | The lint's rule for CP-29's daily money figures: 22.2 passes, 22 fails, a total with a decimal fails | pass | `test_52::test_a_daily_money_figure_keeps_its_decimal` |
@@ -235,10 +242,11 @@ no run, tag or experiment. `reports/presentation/mlflow_index.json` is unchanged
 | The editorial fixes: no status word in any new or reworded block (E4, with a negative control); a paired money difference at four significant figures, and the lint refusing five (E6); each caveat once (E5) | pass | `test_52::test_no_status_word_…`, `…four_significant_figures`, `…limits_are_on_the_page_in_plain_words` |
 | **No number changed** (O51 item 8): outside Business insights, all 1,147 bound values render as on the published page (`a5db292a`, `5e294d40…`), none added or removed; the reading text loses no number, and every number it gains was already on the page: the comparison's new sentence (−7%, 2,068, 2026-09-06, 10,747, 2026-04-07), "14" (the 14-day blocks) and the overview's new `0.4` tick, twice (O51 item 7). Re-run after the editorial fixes: unchanged. A changed value is caught | pass | `test_52::test_the_wording_pass_changed_no_number` (skips without the history; this row records the run) |
 | Decision 30: the five `<= 2_000_000` assertions removed (`test_31`, `test_38`, `test_49`, `test_50`, `test_51`); `test_31` checks that `reports/cp3/pages_build.json` states the page's measured bytes, with a negative control; `test_19` keeps the page self-contained | pass | `test_31::test_the_page_size_is_measured_and_recorded` |
-| A2 under A8: the product finding after the wording pass above it | 1440×900: 1,714.6 / 1,715.3 px (limit 1,744); 390×844: 2,407.5 / 2,407.3 px (limit 2,420), Chrome / WebKit; margins 28.7 and 12.5 px | the release check, attempt 4 |
-| The browser release check over HTTP (Chrome and WebKit; 1440, 768, 390, 360, 320; iPhone emulation; placements, accessibility, keyboard, contrast, charts, requests, A5 discovery of 59 routes) | **pass** (attempt 4, 2026-11-18 09:4x–09:57 UTC, page `d2358f0f…`). Attempt 1 stopped (the page rebuilt during it; no record); attempt 2 passed on an earlier page (`306c6096`); attempt 3 failed one keyboard route, "Measured results: development data", whose scroll timed out at 5 s with the machine's load near 50 (mouse and deep link passed); attempt 4 on the same page passed every route. The editorial and fresh-reader repairs after it change Business insights' text below the product finding only (A2 re-measured: unchanged) | `reports/presentation/release-checks/pres-7-local-release-attempt-{2,3,4}.json` |
+| A2 under A8: the product finding after the wording pass above it | 1440×900: 1,714.6 / 1,715.3 px (limit 1,744); 390×844: 2,407.5 / 2,407.3 px (limit 2,420), Chrome / WebKit; margins 28.7 and 12.5 px | the final release check |
+| The browser release check over HTTP (Chrome and WebKit; 1440, 768, 390, 360, 320; iPhone emulation; placements, accessibility, keyboard, contrast, charts, requests, A5 discovery of 59 routes) | **pass at the final page** (`7fd8dd2f…`, the candidate's bytes; 2026-11-18 16:26 UTC); the product finding at 1,714.6 / 1,715.3 px (1440×900, limit 1,744) and 2,407.5 / 2,407.3 px (390×844, limit 2,420). Earlier attempts kept: 1 stopped (the page rebuilt during it; no record); 2 passed on `306c6096`'s page; 3 failed one keyboard route ("Measured results: development data": its scroll timed out at 5 s with the machine's load near 50; mouse and deep link passed); 4 passed on `5575920c`'s page; Integration review 1 passed its own run at the candidate's page | `reports/presentation/release-checks/pres-7-local-release.json`; `…-attempt-{2,3,4}.json` |
 | The page's size | 2,082,672 bytes, +84,799 over PRES-6's 1,997,873: the profit chart's two variants (the desktop's three polylines thinned to at most four points a pixel column) and the new text | `reports/cp3/pages_build.json` |
 | The lint | page 0, README 0, templates 0: PASS | `make lint-publication` |
+| The prerelease in a clean worktree (runbook §9 offline checks), `--stage final`, at the candidate `364ac020` (2026-11-18 10:02–10:57 UTC) | pytest 3.13: 3,501 passed, 17 skipped; CI's steps under 3.12: 3,497 passed, 20 skipped, **1 failed**, `tests/cp17c/test_refreeze17c.py::test_the_committed_manifest_verifies_here` ("CPython 3.12.14 here, 3.13.15 pinned": the frozen package pins 3.13; PRES-5's and PRES-6's prereleases recorded the same one); verify, lint, rebuild determinism (tree unchanged) and the publication guard pass; links: **1 failed**, `blob/evidence/pres-7/…/publication-packet.md`, 404 until the Orchestrator pushes the tag (§8.5), no cross-host redirect | `reports/presentation/release-checks/pres-7-candidate-prerelease.json` |
 
 ## 8. Publication completion receipt and the Orchestrator's packet
 
@@ -248,7 +256,7 @@ no run, tag or experiment. `reports/presentation/mlflow_index.json` is unchanged
 |---|---|---|---|
 | Report, GitHub Pages | `docs/index.html` at `<final_candidate_sha>`, the `--final` build | `<final_page_sha256>`, `<final_page_bytes>` bytes | 1,997,873 bytes, `5e294d40790f3415c14cf932e94f1351e2e99a0b84d6efd3d2321046d7eccdaa` (PRES-6) |
 | README | `README.md` at `<final_candidate_sha>` | `<final_readme_sha256>` | `da9ae187766c895d102676b16a5870540029d471b26687fe78cc3319edc77e1a` |
-| Hugging Face Space and its card | **no PRES-7 action**: CP-18c's live product, published daily by the runner | the runner's latest publication (§8.5) | it moves with each daily run |
+| Hugging Face Space and its card | **no PRES-7 action**: the live product (CP-18d's since 2026-11-18), published daily by the runner | the runner's latest publication (§8.5) | it moves with each daily run |
 | MLflow `delu-generations` | **no PRES-7 action** (§6) | 105 runs, the committed export | 105 runs |
 
 ### 8.1 Receipt — intended identities (the Orchestrator and the public checker complete the rest)
@@ -258,8 +266,8 @@ no run, tag or experiment. `reports/presentation/mlflow_index.json` is unchanged
 | GitHub source / README | `land/pres-7` (the squash of `<evidence_tip_sha>` onto the moved `main`; PRES-7's paths equal the tip's); README `<final_readme_sha256>`, its Business insights paragraph carrying CP-29's claims | push (§8.3) | to fill | `pres-7-publication-receipt.json` (GitHub main); the served README's hash (§8.5) | §8.2–8.3 |
 | GitHub Pages | `<final_page_sha256>`: Business insights with the profit chart, A8's order unchanged | deploy by the push (§8.3) | to fill | `pres-7-publication-receipt.json` (Pages); `pres-7-public-report.json`; `pres-7-postdeploy-links.json` | §8.3, §8.5 |
 | Public MLflow | unchanged: the committed export's 105 runs and experiment tags | verified unchanged (§6) | to fill | `pres-7-postdeploy-mlflow-mirror.json` | §8.5 |
-| Hugging Face Space card | CP-18c's, as the runner last published it | **no PRES-7 action** | to fill | `pres-7-publication-receipt.json` (Space files) against the assembled runner build | §8.5 |
-| Hugging Face direct demo | CP-18c's live product at the root; v1 at `history/index.html` | **no PRES-7 action** | to fill | `pres-7-publication-receipt.json` (direct page, by `cp18.publish.normalized`); the report's Space links hop by hop, none ending on another host | §8.5 |
+| Hugging Face Space card | the live product's, as the runner last published it | **no PRES-7 action** | to fill | `pres-7-publication-receipt.json` (Space files) against the runner artifact's build | §8.5 |
+| Hugging Face direct demo | the live product at the root; v1 at `history/index.html` | **no PRES-7 action** | to fill | `pres-7-publication-receipt.json` (direct page, by `cp18.publish.normalized`); the report's Space links hop by hop, none ending on another host | §8.5 |
 
 - **Publication-to-MLflow mapping:** unchanged.
 - **Final product and daily updates:** CP-18c's (CP-18d's once it lands). The report carries no live record.
@@ -274,9 +282,10 @@ Every command below runs from the primary checkout, `/Users/djourno/Downloads/PJ
 ### 8.2 Step 1 — the LAND, on a moved `main`
 
 PRES-7 branched from the issue commit `a5db292aa0aed68886ea0ab7237cf5fe9a672b65`. Since then `origin/main` moves each day
-by the runner's data-only commits (author `delu-daily`, `live/` only), and CP-18d may land beside (O56), adding
-`src/cp18/`, `space-product/`, `.github/workflows/` and its own records. PRES-7's paths (the first command below lists
-them) are disjoint from all of those.
+by the runner's data-only commits (author `delu-daily`, `live/` only), and CP-18d landed beside it on 2026-11-18
+(`c61757d8`: `src/cp18/`, `space-product/`, `scripts/build_product_space.py`, `.github/workflows/daily.yml`,
+`tests/cp18*`, `reports/cp18d/` and its records). PRES-7's paths (the first command below lists them) are disjoint from
+all of those; the overlap check below proves it.
 
 **No daily job may be running** (O47: a push during a run makes the run discard its records). Here and again before
 the push:
@@ -429,36 +438,33 @@ curl -s https://raw.githubusercontent.com/hrsi56/delu-day-ahead-forecast/main/RE
 
 Expect `<final_readme_sha256>`.
 
-**The Space's build for the receipt, from the runner's latest publication** (PRES-6's landing record, Disclosures).
-The runner's Actions artifact is named `daily`. Fetch the latest successful run's, read-only, and check it against its
-own hashes:
+**The Space's build for the receipt, from the runner's latest publication.** CP-18d landed on 2026-11-18
+(`c61757d8`): the runner's Actions artifact `daily` now keeps the Space's whole build, recorded before the upload by
+`cp18.runner_artifact` (`space-artifact.json`), so the build is taken from the artifact, not assembled (PRES-6's
+landing record described the assembly for the earlier, partial artifact). Fetch the latest successful run's artifact,
+read-only, and verify it with the live product's own checker:
 
 ```bash
-RUN=$(GH_PAGER=cat gh run list --workflow daily.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId') && echo "$RUN" && gh run download "$RUN" -n daily -D ".local/tmp/pres-7/runner-$RUN" && (cd ".local/tmp/pres-7/runner-$RUN" && shasum -a 256 -c results-sha256.txt --quiet) && echo RUNNER-BUILD-INTACT
+RUN=$(GH_PAGER=cat gh run list --workflow daily.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId') && echo "$RUN" && gh run download "$RUN" -n daily -D ".local/tmp/pres-7/runner-$RUN" && MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python -m cp18.runner_artifact verify --artifact ".local/tmp/pres-7/runner-$RUN" --out ".local/tmp/pres-7/runner-$RUN-verify.json" && echo RUNNER-ARTIFACT-VERIFIED
 ```
 
-Expect the run id and `RUNNER-BUILD-INTACT`.
-
-- **If CP-18d has landed and its runner uploads the full Space build** (the artifact's `space/` holds every file its
-  `app/space-build.json` and `app/history-files.json` list), use that folder as it is.
-- **Otherwise assemble it as at PRES-6's landing:** the last assembled full build (CP-18c's publication build as the
-  Orchestrator assembled it for PRES-6's receipt, identity `50ed50ed…f70f`), overlaid with the run's changed Space
-  files and the run's dated bundle as `payloads/`; remove the payloads the build's record no longer lists; and fetch
-  the one file the runner deletes before uploading, anonymously, from the Space:
+Expect the run id and `RUNNER-ARTIFACT-VERIFIED`: the whole build is present as recorded, except exactly the fitted
+arrays the results step deletes on purpose (`deleted_arrays` in `space-artifact.json`). The Space serves those arrays
+(its Explainability view needs them), so fetch each one, anonymously, from the Space:
 
 ```bash
-B=<the assembled build folder> && curl -sfL -o "$B/payloads/artifact-arrays.npz" https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/payloads/artifact-arrays.npz && echo FETCHED
+B=".local/tmp/pres-7/runner-$RUN/space" && for f in $(python3 -c "import json, sys; print(' '.join(a['path'] for a in json.load(open(sys.argv[1]))['deleted_arrays']))" ".local/tmp/pres-7/runner-$RUN/space-artifact.json"); do curl -sfL -o "$B/$f" "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/$f" && echo "fetched $f"; done
 ```
 
-Either way, the build must equal its own record, every file listed and none extra:
+Then the build must equal its own record, every file listed and none extra:
 
 ```bash
 MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python -c "import hashlib, sys, pathlib; from cp18.publish import listed; b = pathlib.Path(sys.argv[1]); files = listed(b); bad = [p for p, f in files.items() if not (b / p).is_file() or hashlib.sha256((b / p).read_bytes()).hexdigest() != f['sha256']]; extra = sorted(str(q.relative_to(b)) for q in b.rglob('*') if q.is_file() and str(q.relative_to(b)) not in files); print('BUILD-EQUALS-ITS-RECORD' if not bad else ('DIFFERS', bad[:5]), 'extra:', extra)" "$B"
 ```
 
 Expect `BUILD-EQUALS-ITS-RECORD` and an `extra` list that is empty or holds only `app/space-build.json` (a record
-cannot list its own hash). Any other extra file is a stale payload: remove it and check again. `cp18.publish.listed` is the live product's own reading of
-its record (`app/space-build.json` with History's `app/history-files.json`). Then its identity:
+cannot list its own hash). A fetched array that differs from the record means the Space moved after `$RUN`: rerun from
+the newer run. Then its identity:
 
 ```bash
 MLFLOW_DISABLE_TELEMETRY=true DO_NOT_TRACK=1 uv run python -c "import sys, pathlib; sys.path.insert(0, 'scripts'); from build_wasm_space import bundle_sha256; print(bundle_sha256(pathlib.Path(sys.argv[1])))" "$B"
@@ -607,11 +613,12 @@ commits: a revert is a new commit on top of them, and a rollback is its own Owne
 - **CP-29's blocks keep their `PRES7` surface** beside `PAGE` and `README`: CP-29's
   `test_each_block_binds_its_records_and_the_claims_hold_on_them`, byte-identical under O63, renders them there.
 - **C1103 is reworded** on every surface: CP-29's "earned +37,077 EUR more than the naive's" put a signed total inside
-  "more"; it now reads "earned more than the naive's: v6's profit minus the naive's, summed over the days, is +37,077
-  EUR [+32,323, +42,311], the bracket a 95% confidence interval …". Its claim and records are unchanged.
+  "more"; it now reads "Paired over the same days, v6's schedule earned more in total than the naive's, though not on
+  every day: v6's profit minus the naive's, summed over the days, is +37,080 EUR [+32,320, +42,310], the bracket a 95%
+  confidence interval …". Its claim and records are unchanged; the other reworded CP-29 claims are listed in §3.
 - **Four PRES-6 tests and two PRES-5 wording pins are updated** for what PRES-7 replaces: `test_51`'s Business insights
   checks (the gap sentence, "no chart", the old W54 profit half, the README's gap) now check the use, the measured
-  implications, that the gap sentence is gone and what is still not evaluated; `test_51`'s binding check admits CP-29's
+  implications, that the gap sentence is gone and "Not evaluated." stands; `test_51`'s binding check admits CP-29's
   records in Business insights only, with a negative control for Product results; `test_38`'s headline and product-line
   pins carry the new words.
 - **The lint's precision rule gains one case:** CP-29's daily money figures (`display_precision` 1: a daily mean,
@@ -660,9 +667,9 @@ commits: a revert is a new commit on top of them, and a rollback is its own Owne
    score"; v1's three numbers; "is not shown there"; the "re-frozen" date; "−2% [−3%, −2%]"; "the trained champion";
    the page-load timings in the hero. Proposed: one more wording pass, as its own presentation round, if the Owner
    wants it; none is a rule violation.
-5. **The receipt against the runner's partial artifact** (PRES-6's O51 item 5): §8.5 assembles the Space's build by
-   hand, as at PRES-6's landing, unless CP-18d's runner uploads the full build. Proposed: a tooling follow-up for the
-   live product's round, not PRES-7's.
+5. **The receipt against the runner's artifact** (PRES-6's O51 item 5): closed by CP-18d's landing, whose runner keeps
+   the Space's whole build in its artifact; §8.5 takes the build from it and verifies it with `cp18.runner_artifact`.
+   Proposed: closed.
 6. **CP-29's open item 1** (a missing cleared-price row would be solved on the remaining hours) stays with the round
    that applies the contract to the live record (contract §7); PRES-7 shows no live number.
 
@@ -704,3 +711,18 @@ after `bf369d6b` unless stated:
 page's limits. Repaired after the reading: C1104 names "v5's last four test periods (the eligible days inside them)";
 C1202 says the missing hour is "by design (its input rules fail closed there)". The rest answered or outside PRES-7's
 sections (§10.3 item 4), each listed in the record.
+
+**Integration review 1** (`integration-review-1.md`, **PASS** at the candidate `364ac020`; a fresh agent that wrote
+none of PRES-7; it re-derived the three series from `daily.csv` and the six drawn polylines exactly, checked all 44
+bound `cp29.*` values, the paths, the guards, the browser matrix at the candidate's page and §8's commands; a usage
+limit paused it, and it resumed at the same candidate). Its four packet notes, fixed in the final candidate:
+
+| Note | Disposition |
+|---|---|
+| §5's "as rendered" table predates the editorial fixes, and its README list omits the class caveat and C1202 | **Fixed:** the table is regenerated from the claim layer as the final build renders it; the README list is complete |
+| §3 names C1103 as the only reworded CP-29 claim | **Fixed:** C1101, C1102, C1103, C1104 and C1108 (the claim map already recorded each) |
+| §7's binding row names three changed `src/delu_forecast/` modules | **Fixed:** four, `research.py` included; all four are among PRES-5's recorded modules, so the conclusion stands |
+| §10.2 points to a prerelease row §7 lacked; §7's browser figures were measured on the previous page | **Fixed:** §7 records the prerelease at the candidate and the release check at the final page (whose bytes equal the candidate's) |
+
+The review's note on its own full-suite run (15 failures and errors in `tests/test_22`, which needs the browser payload
+CI builds first) is reconciled by the prerelease, which builds it as CI does (3,501 passed, 17 skipped).
