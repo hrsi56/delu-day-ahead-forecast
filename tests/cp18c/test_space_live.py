@@ -126,9 +126,12 @@ def test_o14_and_the_running_wording_are_read_from_their_sources(live_claims):
     from cp18 import running
     from cp18.live_claims import build_live_claims
     v = live_claims['values']
-    assert v['live_retrain_wording'] == build_live_claims(ROOT)['values']['live_retrain_wording']
-    assert v['live_retrain_wording'].endswith("by up to 0.082 EUR/MWh (A1's p2.5 on 2026-03-30), the largest difference "
-                                              'observed, not a bound.')
+    # CP-18d (brief item 4, O45 item 8): was equal to the development mode's sentence, ending "(A1's p2.5 on
+    # 2026-03-30)"; now the live mode names v6, and "A1" appears only as "A1 in the frozen records"
+    assert v['live_retrain_wording'] == build_live_claims(ROOT)['values']['live_retrain_wording'].replace(
+        "(A1's p2.5 on 2026-03-30)", "(v6's p2.5 on 2026-03-30, A1 in the frozen records)")
+    assert v['live_retrain_wording'].endswith("by up to 0.082 EUR/MWh (v6's p2.5 on 2026-03-30, A1 in the frozen "
+                                              'records), the largest difference observed, not a bound.')
     assert v['live_running_wording'] == running.WORDING == '95% interval of the mean daily error over {n} scored days'
     assert v['live_running_before_minimum'] == running.BEFORE_MINIMUM == 'interval from 14 scored days'
 
@@ -290,7 +293,9 @@ def test_the_running_intervals_are_cp18_runnings_on_the_served_windows(built):
     out, _ = built
     value = json.loads((out / 'app/live-record.json').read_text())
     windows = json.loads((out / 'payloads/evaluation.json').read_text())['windows']
-    assert value['running'] == json.loads(json.dumps(running.running(windows)))
+    classes = {i['day']: i['input_class'] for i in value['record']['issued']}
+    # CP-18d (item 1, the evaluation): was running.running(windows), now with the live store's classes (decision 31's sets)
+    assert value['running'] == json.loads(json.dumps(running.running(windows, classes=classes)))
     for series in value['running']['series'].values():
         for point in series:
             assert (point['lower'] is None) == (point['n'] < running.MINIMUM_DAYS)
@@ -314,7 +319,8 @@ def test_history_is_in_the_build_and_its_listing(built):
     served = {f['path']: f for f in json.loads((out / 'app/history-files.json').read_text())['files']}
     assert set(served) == {'history/' + f['path'] for f in listing['files']}
     for f in listing['files']:
-        assert served['history/' + f['path']]['sha256'] == f['sha256']
+        # CP-18d (item 4, v1's preview tags): was every file's deployed hash, now index.html's deployed hash is its row's
+        assert served['history/' + f['path']].get('deployed_sha256', served['history/' + f['path']]['sha256']) == f['sha256']
     assert record['history']['gitattributes']['path'] == 'history/.gitattributes'
     assert record['history']['deployed_listing']['matches'] is True
 

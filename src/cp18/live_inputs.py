@@ -7,7 +7,7 @@ clients and archive writers the live route uses); CP-18's activation adds the li
 from the network here.
 
 **The day.** `build` calls `cp18.live.build.build_day` with the store state's buffers after D−2's release and maps its
-result onto the pipeline's: `built` gives the payloads; `not_shown` and `failed` leave the day open with the cause
+result onto the pipeline's: `built` gives the payloads and the day's input class (decision 31, `cp18.inputclass`); `not_shown` and `failed` leave the day open with the cause
 "a live day's inputs that cannot be shown to precede its cutoff", the second because no payload could be built from
 them (the build's own cause is kept in the record); `search_state_missing` leaves it open with "S_14's state not in
 place". The day's `data_refresh_utc` is the latest retrieval time among its archive records.
@@ -45,9 +45,16 @@ class LiveInputs:
     """`recorded` is a folder of recorded responses (a dry run, replayed) or None with a `transport` (live: CP-18c,
     inside `cp18.boundary.live()`), which acquires each archive day's missing inputs (`cp18.live.acquire`)."""
 
-    def __init__(self, root, project, recorded, base_end: date | None = None, source: str = 'smard', transport=None):
+    def __init__(self, root, project, recorded, base_end: date | None = None, source: str = 'smard', transport=None,
+                 late_days=(), late_transport=None):
         self.root, self.project = Path(root), Path(project)
         self.transport = transport
+        # CP-18d's rehearsal (dry runs only): these replayed days' load forecasts come from `late_transport` (a stand-in,
+        # `cp18.rehearsal`) at the run's clock, after the cutoff, as if their acquisition had been missed
+        self.late_days = {date.fromisoformat(str(d)) for d in late_days}
+        if self.late_days and (recorded is None or late_transport is None):
+            raise ValueError('a late-copy rehearsal replays recorded responses and needs its stand-in transport')
+        self.late_transport = late_transport
         self.recorded = Path(recorded) if recorded is not None else None
         if self.recorded is None:
             if transport is None:
@@ -91,7 +98,11 @@ class LiveInputs:
                 if x not in self.recorded_days:
                     raise FileNotFoundError(f'no recorded responses for archive day {x}')
                 item = R.archive_day(archive, self.recorded / REPLAY, x, self.root, self.source,
-                                     [self.recorded / GFS_SOURCE])
+                                     [self.recorded / GFS_SOURCE], load_forecast=x not in self.late_days)
+                if x in self.late_days:
+                    from .live import acquire as AQ
+                    self.acquisitions.append(AQ.acquire_market(archive, x, self.late_transport, 'load_forecast'))
+                    item['verify'] = archive.verify(x)
                 if item['verify']:
                     raise ValueError(f'archive day {x} does not verify: {item["verify"]}')
                 self.acquired.append(str(x))
@@ -125,6 +136,11 @@ class LiveInputs:
                      'archive_days': sorted(str(d) for d in archive.days() if self.base_end < d <= day),
                      'acquired': [a for a in self.acquisitions if a['day'] <= str(day)]}
         out_value['shown'] = status == 'built'
+        if status == 'built':
+            # decision 31's label (`cp18.inputclass`): every built day names its input class
+            avail = result.get('availability') or {}
+            out_value.update({k: avail.get(k) for k in ('input_class', 'input_class_text', 'load_forecast_fetched_utc')})
+            out_value['load_forecast_copy'] = avail.get('load_forecast_copy')
         out_value['reasons'] = [] if status == 'built' else [result.get('cause') or status]
         if status == 'search_state_missing':
             out_value['search_missing'] = True

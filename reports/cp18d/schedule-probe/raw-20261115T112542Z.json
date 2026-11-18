@@ -1,0 +1,669 @@
+{
+ "collection_finished_utc": "2026-11-15T11:25:47Z",
+ "collection_started_utc": "2026-11-15T11:25:42Z",
+ "commands": [
+  "gh run list --repo hrsi56/delu-day-ahead-forecast --workflow schedule-probe.yml --json attempt,conclusion,createdAt,databaseId,displayTitle,event,headBranch,headSha,name,number,startedAt,status,updatedAt,url,workflowDatabaseId,workflowName --limit 1000",
+  "gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/43705434118/jobs?per_page=100",
+  "gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/43698203520/jobs?per_page=100",
+  "gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/43691305160/jobs?per_page=100",
+  "gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/43684811253/jobs?per_page=100",
+  "gh api repos/hrsi56/delu-day-ahead-forecast/actions/runs/43655250428/jobs?per_page=100",
+  "gh api repos/hrsi56/delu-day-ahead-forecast/actions/workflows/schedule-probe.yml"
+ ],
+ "jobs": {
+  "43655250428": {
+   "jobs": [
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132632234435",
+     "completed_at": "2026-11-14T23:50:54Z",
+     "conclusion": "success",
+     "created_at": "2026-11-14T23:50:49Z",
+     "head_branch": "main",
+     "head_sha": "c7d33ebc9b4f63404bb92d07024b9f71f4ee3c0b",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43655250428/job/132632234435",
+     "id": 132632234435,
+     "labels": [
+      "ubuntu-latest"
+     ],
+     "name": "probe (ubuntu-latest)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe4X9Jww",
+     "run_attempt": 1,
+     "run_id": 43655250428,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43655250428",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001436,
+     "runner_name": "GitHub Actions 1000001436",
+     "started_at": "2026-11-14T23:50:51Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-14T23:50:51Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-14T23:50:51Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-14T23:50:52Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-14T23:50:51Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-14T23:50:52Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-14T23:50:52Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132632234435",
+     "workflow_name": "probe dispatch"
+    },
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132632234641",
+     "completed_at": "2026-11-14T23:50:57Z",
+     "conclusion": "success",
+     "created_at": "2026-11-14T23:50:49Z",
+     "head_branch": "main",
+     "head_sha": "c7d33ebc9b4f63404bb92d07024b9f71f4ee3c0b",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43655250428/job/132632234641",
+     "id": 132632234641,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "probe (macos-26)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe4X9KkQ",
+     "run_attempt": 1,
+     "run_id": 43655250428,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43655250428",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001437,
+     "runner_name": "GitHub Actions 1000001437",
+     "started_at": "2026-11-14T23:50:52Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-14T23:50:53Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-14T23:50:53Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-14T23:50:54Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-14T23:50:53Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-14T23:50:54Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-14T23:50:54Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132632234641",
+     "workflow_name": "probe dispatch"
+    }
+   ],
+   "total_count": 2
+  },
+  "43684811253": {
+   "jobs": [
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132722946138",
+     "completed_at": "2026-11-15T06:18:15Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T06:18:11Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43684811253/job/132722946138",
+     "id": 132722946138,
+     "labels": [
+      "ubuntu-latest"
+     ],
+     "name": "probe (ubuntu-latest)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe5udwWg",
+     "run_attempt": 1,
+     "run_id": 43684811253,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43684811253",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001446,
+     "runner_name": "GitHub Actions 1000001446",
+     "started_at": "2026-11-15T06:18:13Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T06:18:13Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T06:18:13Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T06:18:13Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T06:18:13Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T06:18:13Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T06:18:13Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132722946138",
+     "workflow_name": "probe 7 0 * * *"
+    },
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132722946339",
+     "completed_at": "2026-11-15T06:18:18Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T06:18:11Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43684811253/job/132722946339",
+     "id": 132722946339,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "probe (macos-26)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe5udxIw",
+     "run_attempt": 1,
+     "run_id": 43684811253,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43684811253",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001447,
+     "runner_name": "GitHub Actions 1000001447",
+     "started_at": "2026-11-15T06:18:13Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T06:18:13Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T06:18:13Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T06:18:14Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T06:18:13Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T06:18:14Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T06:18:14Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132722946339",
+     "workflow_name": "probe 7 0 * * *"
+    }
+   ],
+   "total_count": 2
+  },
+  "43691305160": {
+   "jobs": [
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132742351378",
+     "completed_at": "2026-11-15T07:44:55Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T07:44:49Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43691305160/job/132742351378",
+     "id": 132742351378,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "probe (macos-26)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe6A-KEg",
+     "run_attempt": 1,
+     "run_id": 43691305160,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43691305160",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001448,
+     "runner_name": "GitHub Actions 1000001448",
+     "started_at": "2026-11-15T07:44:52Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T07:44:53Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T07:44:52Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T07:44:53Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T07:44:53Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T07:44:53Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T07:44:53Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132742351378",
+     "workflow_name": "probe 7 1 * * *"
+    },
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132742351741",
+     "completed_at": "2026-11-15T07:44:54Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T07:44:50Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43691305160/job/132742351741",
+     "id": 132742351741,
+     "labels": [
+      "ubuntu-latest"
+     ],
+     "name": "probe (ubuntu-latest)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe6A-LfQ",
+     "run_attempt": 1,
+     "run_id": 43691305160,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43691305160",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001449,
+     "runner_name": "GitHub Actions 1000001449",
+     "started_at": "2026-11-15T07:44:51Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T07:44:52Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T07:44:52Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T07:44:52Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T07:44:52Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T07:44:52Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T07:44:52Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132742351741",
+     "workflow_name": "probe 7 1 * * *"
+    }
+   ],
+   "total_count": 2
+  },
+  "43698203520": {
+   "jobs": [
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132763304703",
+     "completed_at": "2026-11-15T09:13:39Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T09:13:34Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43698203520/job/132763304703",
+     "id": 132763304703,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "probe (macos-26)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe6U9C_w",
+     "run_attempt": 1,
+     "run_id": 43698203520,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43698203520",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001451,
+     "runner_name": "GitHub Actions 1000001451",
+     "started_at": "2026-11-15T09:13:36Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T09:13:36Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T09:13:36Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T09:13:37Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T09:13:36Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T09:13:37Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T09:13:37Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132763304703",
+     "workflow_name": "probe 7 2 * * *"
+    },
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132763304908",
+     "completed_at": "2026-11-15T09:13:38Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T09:13:34Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43698203520/job/132763304908",
+     "id": 132763304908,
+     "labels": [
+      "ubuntu-latest"
+     ],
+     "name": "probe (ubuntu-latest)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe6U9DzA",
+     "run_attempt": 1,
+     "run_id": 43698203520,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43698203520",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001452,
+     "runner_name": "GitHub Actions 1000001452",
+     "started_at": "2026-11-15T09:13:36Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T09:13:36Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T09:13:36Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T09:13:36Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T09:13:36Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T09:13:36Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T09:13:36Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132763304908",
+     "workflow_name": "probe 7 2 * * *"
+    }
+   ],
+   "total_count": 2
+  },
+  "43705434118": {
+   "jobs": [
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132785374202",
+     "completed_at": "2026-11-15T10:43:19Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T10:43:14Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43705434118/job/132785374202",
+     "id": 132785374202,
+     "labels": [
+      "ubuntu-latest"
+     ],
+     "name": "probe (ubuntu-latest)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe6qAD-g",
+     "run_attempt": 1,
+     "run_id": 43705434118,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43705434118",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001453,
+     "runner_name": "GitHub Actions 1000001453",
+     "started_at": "2026-11-15T10:43:16Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T10:43:17Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T10:43:16Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T10:43:17Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T10:43:17Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T10:43:17Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T10:43:17Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132785374202",
+     "workflow_name": "probe 7 3 * * *"
+    },
+    {
+     "check_run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/check-runs/132785374402",
+     "completed_at": "2026-11-15T10:43:21Z",
+     "conclusion": "success",
+     "created_at": "2026-11-15T10:43:14Z",
+     "head_branch": "main",
+     "head_sha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+     "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43705434118/job/132785374402",
+     "id": 132785374402,
+     "labels": [
+      "macos-26"
+     ],
+     "name": "probe (macos-26)",
+     "node_id": "CR_kwDOS0ca-c8AAAAe6qAEwg",
+     "run_attempt": 1,
+     "run_id": 43705434118,
+     "run_url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/runs/43705434118",
+     "runner_group_id": 0,
+     "runner_group_name": "GitHub Actions",
+     "runner_id": 1000001454,
+     "runner_name": "GitHub Actions 1000001454",
+     "started_at": "2026-11-15T10:43:17Z",
+     "status": "completed",
+     "steps": [
+      {
+       "completed_at": "2026-11-15T10:43:18Z",
+       "conclusion": "success",
+       "name": "Set up job",
+       "number": 1,
+       "started_at": "2026-11-15T10:43:18Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T10:43:18Z",
+       "conclusion": "success",
+       "name": "Record the start",
+       "number": 2,
+       "started_at": "2026-11-15T10:43:18Z",
+       "status": "completed"
+      },
+      {
+       "completed_at": "2026-11-15T10:43:18Z",
+       "conclusion": "success",
+       "name": "Complete job",
+       "number": 3,
+       "started_at": "2026-11-15T10:43:18Z",
+       "status": "completed"
+      }
+     ],
+     "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/jobs/132785374402",
+     "workflow_name": "probe 7 3 * * *"
+    }
+   ],
+   "total_count": 2
+  }
+ },
+ "limit": 1000,
+ "read_only": "gh run list and GET gh api calls only; nothing was written to GitHub",
+ "repo": "hrsi56/delu-day-ahead-forecast",
+ "runs": [
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "createdAt": "2026-11-15T10:43:13Z",
+   "databaseId": 43705434118,
+   "displayTitle": "probe 7 3 * * *",
+   "event": "schedule",
+   "headBranch": "main",
+   "headSha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+   "name": "probe 7 3 * * *",
+   "number": 5,
+   "startedAt": "2026-11-15T10:43:13Z",
+   "status": "completed",
+   "updatedAt": "2026-11-15T10:43:22Z",
+   "url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43705434118",
+   "workflowDatabaseId": 418732262,
+   "workflowName": "schedule-probe"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "createdAt": "2026-11-15T09:13:33Z",
+   "databaseId": 43698203520,
+   "displayTitle": "probe 7 2 * * *",
+   "event": "schedule",
+   "headBranch": "main",
+   "headSha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+   "name": "probe 7 2 * * *",
+   "number": 4,
+   "startedAt": "2026-11-15T09:13:33Z",
+   "status": "completed",
+   "updatedAt": "2026-11-15T09:13:39Z",
+   "url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43698203520",
+   "workflowDatabaseId": 418732262,
+   "workflowName": "schedule-probe"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "createdAt": "2026-11-15T07:44:49Z",
+   "databaseId": 43691305160,
+   "displayTitle": "probe 7 1 * * *",
+   "event": "schedule",
+   "headBranch": "main",
+   "headSha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+   "name": "probe 7 1 * * *",
+   "number": 3,
+   "startedAt": "2026-11-15T07:44:49Z",
+   "status": "completed",
+   "updatedAt": "2026-11-15T07:44:56Z",
+   "url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43691305160",
+   "workflowDatabaseId": 418732262,
+   "workflowName": "schedule-probe"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "createdAt": "2026-11-15T06:18:10Z",
+   "databaseId": 43684811253,
+   "displayTitle": "probe 7 0 * * *",
+   "event": "schedule",
+   "headBranch": "main",
+   "headSha": "b866e6129e8872f606e6e06eb19f79522dad8508",
+   "name": "probe 7 0 * * *",
+   "number": 2,
+   "startedAt": "2026-11-15T06:18:10Z",
+   "status": "completed",
+   "updatedAt": "2026-11-15T06:18:18Z",
+   "url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43684811253",
+   "workflowDatabaseId": 418732262,
+   "workflowName": "schedule-probe"
+  },
+  {
+   "attempt": 1,
+   "conclusion": "success",
+   "createdAt": "2026-11-14T23:50:47Z",
+   "databaseId": 43655250428,
+   "displayTitle": "probe dispatch",
+   "event": "workflow_dispatch",
+   "headBranch": "main",
+   "headSha": "c7d33ebc9b4f63404bb92d07024b9f71f4ee3c0b",
+   "name": "probe dispatch",
+   "number": 1,
+   "startedAt": "2026-11-14T23:50:47Z",
+   "status": "completed",
+   "updatedAt": "2026-11-14T23:50:58Z",
+   "url": "https://github.com/hrsi56/delu-day-ahead-forecast/actions/runs/43655250428",
+   "workflowDatabaseId": 418732262,
+   "workflowName": "schedule-probe"
+  }
+ ],
+ "schema": "cp18d-schedule-probe-raw-v1",
+ "workflow": "schedule-probe.yml",
+ "workflow_record": {
+  "badge_url": "https://github.com/hrsi56/delu-day-ahead-forecast/workflows/schedule-probe/badge.svg",
+  "created_at": "2026-11-15T01:50:37.000+02:00",
+  "html_url": "https://github.com/hrsi56/delu-day-ahead-forecast/blob/main/.github/workflows/schedule-probe.yml",
+  "id": 418732262,
+  "name": "schedule-probe",
+  "node_id": "W_kwDOS0ca-c4Y9Vjm",
+  "path": ".github/workflows/schedule-probe.yml",
+  "state": "active",
+  "updated_at": "2026-11-15T01:50:37.000+02:00",
+  "url": "https://api.github.com/repos/hrsi56/delu-day-ahead-forecast/actions/workflows/418732262"
+ }
+}

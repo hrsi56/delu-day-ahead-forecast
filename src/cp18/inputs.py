@@ -28,6 +28,8 @@ import numpy as np
 
 from cp25 import guard
 
+from . import inputclass
+
 POLICIES = ('A1', 'v4', 'v2', 'B0')
 DEVELOPMENT_BASIS = ("development day built by cp17.tools.payloads from the recorded snapshot (pulled 2026-09-08): "
                      "admitted under the tier register and the Owner's ruling 1 (the load forecast's recorded "
@@ -109,4 +111,7 @@ class PrebuiltInputs:
         return {'payloads': str(out), 'payload_sha256': shas, 'gfs_available': str(day) not in self.gfs_late,
                 'shown': True, 'reasons': [], 'data_refresh_utc': '',
                 'availability': [{'input': 'all', 'basis': DEVELOPMENT_BASIS, 'cutoff_utc': cutoff, 'admitted': True}],
-                'source': 'prebuilt development payloads', 'search_file': str(search_file)}
+                'source': 'prebuilt development payloads', 'search_file': str(search_file),
+                # CP-18d (decision 31): every built day names its input class; development payloads' inputs are all
+                # admitted before the cutoff (the development basis above)
+                **inputclass.label(inputclass.BEFORE)}

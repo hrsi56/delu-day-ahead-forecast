@@ -101,6 +101,21 @@ def cmd_prepare(args) -> int:
     return 0 if record['package']['equal_to_manifest'] else 1
 
 
+def late_inputs(args, root: Path, project: Path, now):
+    """CP-18d's late-copy rehearsal (`--late-day`, dry runs on development days only): the named days' load forecasts
+    are fetched at the run's simulated clock, after their cutoffs, from the stand-in (`cp18.rehearsal`)."""
+    from datetime import date
+    from cp25 import guard
+    from .live_inputs import LiveInputs
+    from .rehearsal import StandInLoadForecast, published_before
+    kind, _, where = args.inputs.partition(':')
+    if args.mode != 'dry-run' or kind != 'live':
+        raise SystemExit('--late-day is a dry run\'s rehearsal: --mode dry-run with --inputs live:<recorded responses>')
+    days = [guard.admit_delivery_day(date.fromisoformat(d)) for d in args.late_day]
+    stand_in = StandInLoadForecast(root, lambda: now, published_before(min(days), 50))
+    return LiveInputs(root, project, Path(where), late_days=days, late_transport=stand_in)
+
+
 def cmd_run(args) -> int:
     _check_blas()
     from . import pipeline
@@ -110,9 +125,10 @@ def cmd_run(args) -> int:
     now, scope = _mode(args)
     settings = pipeline.Settings(root=root, project=project, out=out, host_kind=args.host, mode=args.mode,
                                  run_label=args.run_label or '')
+    inputs = late_inputs(args, root, project, now) if args.late_day else make_inputs(args.inputs, root, project)
     with scope:
         record = pipeline.run(settings, now, claim=Claim(root, remote=args.remote, branch=args.branch),
-                              inputs=make_inputs(args.inputs, root, project))
+                              inputs=inputs)
     _dump(out / 'run.json', record)
     print('run', record['run_id'], '|', record['outcome'], '|', 'planned', record['planned'], flush=True)
     for day, item in record['days'].items():
@@ -126,12 +142,40 @@ def cmd_run(args) -> int:
 def cmd_acquire(args) -> int:
     """Before the cutoff: the next delivery day's inputs, its load forecast above all (tier 3, shown only by a
     retrieval before D's cutoff), retrieved, archived and published through the claim (`cp18.acquire`)."""
-    from . import acquire
+    from . import acquire, plan
     from .claim import Claim
     root = args.root.resolve()
+    stop_by = plan.parse_now(args.stop_by) if args.stop_by else None
+    extra = {}
+    if args.rehearsal:
+        # CP-18d's rehearsal of the in-job wait: a development day, the stand-in source, a simulated clock advancing in
+        # real time, the claim on a local bare repository; never the live boundary, never a live source
+        from datetime import date, timedelta
+        from cp25 import guard
+        from .live.transport import ReplayTransport
+        from .local import moved_main_rehearsal
+        from .rehearsal import StandInLoadForecast, real_time_clock
+        if not args.day or not args.clock_start:
+            raise SystemExit('--rehearsal needs --day (a development day) and --clock-start (the simulated start)')
+        guard.admit_delivery_day(date.fromisoformat(args.day))
+        moved_main_rehearsal(root, args.remote, args.branch)       # refuses unless the remote is a local bare repository
+        clock = real_time_clock(plan.parse_now(args.clock_start))
+        published = clock() + timedelta(minutes=args.published_after_minutes)
+        if stop_by is not None:
+            # the job's stop-by is a real instant; the rehearsal's clock is simulated, so it is carried over by offset
+            from datetime import datetime as _dt, timezone as _tz
+            stop_by = clock() + (stop_by - _dt.now(_tz.utc))
+        transport = StandInLoadForecast(root, clock, published,
+                                        fallback=ReplayTransport(Path(args.rehearsal) / 'replay' / 'smard'))
+        extra = {'transport': transport, 'clock': clock, 'live': False, 'inputs': ('price', 'load_forecast')}
     record = acquire.run(root, claim=Claim(root, remote=args.remote, branch=args.branch),
                          day=args.day, poll_seconds=args.poll_seconds, margin_seconds=args.margin_seconds,
-                         window_hours=args.window_hours if args.window_hours > 0 else None)
+                         window_hours=args.window_hours if args.window_hours > 0 else None, stop_by=stop_by, **extra)
+    if args.rehearsal:
+        record['rehearsal'] = {'stand_in': transport.origin, 'requests': transport.sent,
+                               'published_at_utc': published.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                               'inputs': ['price', 'load_forecast'], 'gfs': 'not rehearsed (the time-critical input '
+                               'is the load forecast; GFS keeps its vintage-preserving listing)'}
     _dump(args.out, record)
     print('acquire', record.get('day'), '|', record['outcome'], flush=True)
     return record['exit']
@@ -210,6 +254,8 @@ def main(argv=None) -> int:
     r.add_argument('--remote', default='origin')
     r.add_argument('--branch', default='main')
     r.add_argument('--run-label')
+    r.add_argument('--late-day', action='append', default=[],
+                   help='CP-18d dry run only: this development day\'s load forecast fetched after its cutoff')
     a = sub.add_parser('acquire')
     a.add_argument('--root', default=Path('.'), type=Path)
     a.add_argument('--out', required=True, type=Path)
@@ -218,6 +264,11 @@ def main(argv=None) -> int:
     a.add_argument('--branch', default='main')
     a.add_argument('--poll-seconds', type=int, default=300, help='while the load forecast is not yet published')
     a.add_argument('--margin-seconds', type=int, default=120, help='stop polling this long before the cutoff')
+    a.add_argument('--stop-by', help='end the polling before this instant (ISO 8601 with its offset): the job\'s deadline')
+    a.add_argument('--rehearsal', help='CP-18d dry run only: <recorded responses>; with --day, --clock-start and '
+                                       '--published-after-minutes, on a local bare repository')
+    a.add_argument('--clock-start', help='the rehearsal\'s simulated start (ISO 8601 with its offset)')
+    a.add_argument('--published-after-minutes', type=float, default=8.0)
     a.add_argument('--window-hours', type=float, default=3.0, help='do nothing when the next cutoff is further away '
                                                                    '(0: no window); a given --day ignores it')
     i = sub.add_parser('seed-store')

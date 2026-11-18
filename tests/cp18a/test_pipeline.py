@@ -17,7 +17,7 @@ import pytest
 from cp17 import issue as cp17issue
 from cp17.dailyfit import array_hash
 from cp17.shadow import ShadowStates
-from cp18 import causes, pipeline, plan
+from cp18 import causes, inputclass, pipeline, plan
 from cp18.claim import Claim, ClaimError
 from cp18.store import STORE_PATH, LiveStore, StoreRefused
 from cp25 import guard
@@ -88,9 +88,12 @@ class Inputs:
         self.built.append(str(day))
         assert set(buffers) == {'v4', 'v2', 'B0'} and all(len(b) == 28 for b in buffers.values())
         shown = str(day) not in self.hidden
+        # CP-18d (decision 31): a built day now names its input class, which the pipeline requires (cp18.inputclass);
+        # this stand-in's shown days are "all inputs before the cutoff". No assertion changes.
         return {'payloads': str(out), 'gfs_available': True, 'shown': shown,
                 'reasons': [] if shown else ['the load forecast was retrieved after the cutoff'],
-                'data_refresh_utc': '', 'availability': []}
+                'data_refresh_utc': '', 'availability': [],
+                **(inputclass.label(inputclass.BEFORE) if shown else {})}
 
 
 def stand_in_issue(fail=()):

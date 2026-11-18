@@ -179,11 +179,12 @@ def _base(record_id, input_name, source, request, response, *, origin, provenanc
 
 
 def store_market(archive: Archive, day: date, fetched, *, development_snapshot: bool = False,
-                 tag: str | None = None) -> list[dict]:
+                 tag: str | None = None, origin: str | None = None) -> list[dict]:
     """Archive a SMARD or ENTSO-E fetch (`smard.Fetched` / `entsoe.Fetched`) under delivery day `day`. A live
-    acquisition passes a `tag` (its retrieval time), so a day acquired in parts or retried keeps unique ids."""
+    acquisition passes a `tag` (its retrieval time), so a day acquired in parts or retried keeps unique ids. `origin`
+    names a non-retrieval source in the records (CP-18d's rehearsal stand-in, `cp18.rehearsal`)."""
     out = []
-    origin = SNAPSHOT_ORIGIN if development_snapshot else f'{fetched.source} retrieval'
+    origin = origin or (SNAPSHOT_ORIGIN if development_snapshot else f'{fetched.source} retrieval')
     for i, ex in enumerate(fetched.exchanges):
         rid = f'{fetched.input}-{fetched.source}-{ex.role}-{i:02d}' + (f'@{tag}' if tag else '')
         resp = ex.response

@@ -1,0 +1,354 @@
+{
+ "chain_rehearsal": {
+  "result": "one chain survived (43735995024 cancelled at 16:32:29Z); 4 links, each created within seconds of the last",
+  "runs": [
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:31:51Z",
+    "databaseId": 43735984719,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:32:30Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735984719"
+   },
+   {
+    "conclusion": "cancelled",
+    "createdAt": "2026-11-15T16:31:58Z",
+    "databaseId": 43735995024,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:32:29Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735995024"
+   },
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:32:27Z",
+    "databaseId": 43736042543,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:33:08Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43736042543"
+   },
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:33:06Z",
+    "databaseId": 43736103411,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:33:46Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43736103411"
+   },
+   {
+    "conclusion": "success",
+    "createdAt": "2026-11-15T16:33:43Z",
+    "databaseId": 43736164748,
+    "displayTitle": "daily chain-dry-run",
+    "event": "workflow_dispatch",
+    "headSha": "1a1c699d1ffffb027d785fb2dac335cdbc2c3582",
+    "updatedAt": "2026-11-15T16:34:24Z",
+    "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43736164748"
+   }
+  ],
+  "scenario": "two chains dispatched 7 s apart (chain-dry-run, last=3 each) in one concurrency group: the first runs, the second waits pending; when the first link dispatches its successor, the newer pending run cancels the older, so one chain survives; each link dispatches the next through workflow_dispatch with the job's own token until no link is left"
+ },
+ "pushes": [
+  {
+   "range": "7783a6e..249d155",
+   "record": "scratch-tree-48ca0fd4.json",
+   "tree_from": "48ca0fd4"
+  },
+  {
+   "range": "249d155..42a7031",
+   "record": "scratch-tree-f375f99a.json",
+   "tree_from": "f375f99a"
+  },
+  {
+   "range": "5444d13..1a1c699",
+   "record": "scratch-tree-56d76de7.json",
+   "tree_from": "56d76de7"
+  }
+ ],
+ "repository": "hrsi56/delu-pipeline-dryrun (public scratch; fake credentials only; development days only)",
+ "runs": [
+  {
+   "artifact_files_sha256": {
+    "bundle-record.json": "203c736ab1dbb0f20c9dc1a2cf16d62618f28d2b4744ced04b351fca74d97d3b",
+    "records.json": "abbce2b10dadd6622e40524cdd2fe027fb74095111fb00ed89e01ec1416a4e54",
+    "run/run.json": "f2cbd857f891827c65bc0e8046ad336a651c195dab3573759fad86ea2fe47e60"
+   },
+   "bundle": {
+    "problems": [
+     "evaluation.json.windows[8]: unexpected issued_days",
+     "evaluation.json.windows[8]: unexpected subset",
+     "evaluation.json.windows[8]: unexpected subset_label",
+     "evaluation.json.windows[9]: unexpected issued_days",
+     "evaluation.json.windows[9]: unexpected subset",
+     "evaluation.json.windows[9]: unexpected subset_label"
+    ],
+    "publishable": false,
+    "reason": "the bundle does not verify (the frozen verifier through cp18.r7)"
+   },
+   "conclusion": "failure",
+   "createdAt": "2026-11-15T02:55:50Z",
+   "databaseId": 43670023047,
+   "days": {
+    "2026-08-31": {
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_fetched_utc": null,
+     "policy": "A1",
+     "status": "issued"
+    },
+    "2026-09-01": {
+     "input_class": "load_forecast_after_cutoff",
+     "input_class_text": "load forecast fetched after the cutoff",
+     "load_forecast_fetched_utc": "2026-08-31T10:00:00Z",
+     "policy": "A1",
+     "status": "issued"
+    }
+   },
+   "displayTitle": "daily",
+   "finding": "the frozen verifier refused the label written into the bundle's files; fixed at 740ea312 (the bundle keeps the frozen schema)",
+   "headSha": "249d15542740403f11e8360c0e397f840aa09a0e",
+   "jobs": [
+    {
+     "completedAt": "2026-11-15T03:13:04Z",
+     "conclusion": "failure",
+     "name": "macos-26 daily pipeline (dry run, development days)",
+     "startedAt": "2026-11-15T02:55:54Z"
+    }
+   ],
+   "reapplied": [
+    {
+     "moved_by": [
+      "65b5d80776efb13d2cea82feab9c25664b1e0ba4"
+     ],
+     "original": "74127fcac14fcfe39ad76b211392f34d09819af1",
+     "over": "65b5d80776efb13d2cea82feab9c25664b1e0ba4",
+     "reapplied": "12ec537c39cd92bca38602a7e24f77401e4b7ef7",
+     "touched": [
+      "docs/rehearsal/moved-main.md"
+     ]
+    }
+   ],
+   "records": "pushed 12ec537c39cd92bca38602a7e24f77401e4b7ef7, re-applied over a moved main (1 commit(s) touching none of these files; O47)",
+   "scenario": "a normal day and a missed acquisition (late_day 2026-09-01), main moved during the records step (move_main)",
+   "updatedAt": "2026-11-15T03:13:04Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43670023047"
+  },
+  {
+   "acquisition": {
+    "cutoff_utc": "2026-09-03T09:00:00Z",
+    "day": "2026-09-04",
+    "exit": 0,
+    "outcome": "2026-09-04: the load forecast is shown before the cutoff (2026-09-03T08:48:02Z)",
+    "stop_by_utc": "2026-09-03T09:24:25Z",
+    "stopped": "shown"
+   },
+   "artifact_files_sha256": {
+    "acquire.json": "f6c88a10c80d15cb093863e7dc85198af135ee8fe1f3a6617d54ceaf78bcc104"
+   },
+   "conclusion": "success",
+   "createdAt": "2026-11-15T02:55:52Z",
+   "databaseId": 43670025084,
+   "displayTitle": "daily",
+   "headSha": "249d15542740403f11e8360c0e397f840aa09a0e",
+   "jobs": [
+    {
+     "completedAt": "2026-11-15T03:21:52Z",
+     "conclusion": "success",
+     "name": "macos-26 acquisition rehearsal (dry run, development days)",
+     "startedAt": "2026-11-15T03:13:06Z"
+    }
+   ],
+   "polls": [
+    "2026-11-15T03:13:43Z",
+    "2026-11-15T03:14:43Z",
+    "2026-11-15T03:15:43Z",
+    "2026-11-15T03:16:43Z",
+    "2026-11-15T03:17:44Z",
+    "2026-11-15T03:18:44Z",
+    "2026-11-15T03:19:44Z",
+    "2026-11-15T03:20:44Z",
+    "2026-11-15T03:21:44Z"
+   ],
+   "scenario": "the acquisition in-job wait on a development day (day 2026-09-04, simulated start 08:40Z, published after 8 min)",
+   "stand_in": [
+    [
+     "2026-09-03T08:40:01Z",
+     false
+    ],
+    [
+     "2026-09-03T08:41:01Z",
+     false
+    ],
+    [
+     "2026-09-03T08:42:01Z",
+     false
+    ],
+    [
+     "2026-09-03T08:43:02Z",
+     false
+    ],
+    [
+     "2026-09-03T08:44:02Z",
+     false
+    ],
+    [
+     "2026-09-03T08:45:02Z",
+     false
+    ],
+    [
+     "2026-09-03T08:46:02Z",
+     false
+    ],
+    [
+     "2026-09-03T08:47:02Z",
+     false
+    ],
+    [
+     "2026-09-03T08:48:02Z",
+     true
+    ]
+   ],
+   "updatedAt": "2026-11-15T03:21:53Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43670025084"
+  },
+  {
+   "artifact_files_sha256": {
+    "bundle-record.json": "73398c259d4d885669d3d7ffa61db79df3c761be4b2418155268c940c1939b19",
+    "records.json": "420a0c255f206bd50cc8615784d93a94349f244faade52f000b47803061d3ac9",
+    "run/run.json": "a2385b48f5d60bff2cfafa18d676d563c01d06dac9bcc1f05d71b291524b749f"
+   },
+   "bundle": {
+    "manifest_sha256": "fef0bf198c8e71fe3c5e7c5feb78de81f093fe24fb3273fc9e9423cd1410af45",
+    "publishable": true
+   },
+   "conclusion": "success",
+   "createdAt": "2026-11-15T11:25:21Z",
+   "databaseId": 43708842868,
+   "days": {
+    "2026-08-31": {
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_fetched_utc": null,
+     "policy": "A1",
+     "status": "issued"
+    },
+    "2026-09-01": {
+     "input_class": "load_forecast_after_cutoff",
+     "input_class_text": "load forecast fetched after the cutoff",
+     "load_forecast_fetched_utc": "2026-08-31T10:00:00Z",
+     "policy": "A1",
+     "status": "issued"
+    }
+   },
+   "displayTitle": "daily",
+   "headSha": "42a703145bc09b37c8762565bb1aa7a93221e051",
+   "jobs": [
+    {
+     "completedAt": "2026-11-15T11:44:46Z",
+     "conclusion": "success",
+     "name": "macos-26 daily pipeline (dry run, development days)",
+     "startedAt": "2026-11-15T11:25:25Z"
+    }
+   ],
+   "reapplied": [
+    {
+     "moved_by": [
+      "c15001f9a6aa21eb60a8afc0bcc1ee8032a7ac06"
+     ],
+     "original": "46859828cc5d8f30a5c2cde7856404374b0c61e0",
+     "over": "c15001f9a6aa21eb60a8afc0bcc1ee8032a7ac06",
+     "reapplied": "85e81522400bc4387f9e96e03feb3924c02263bd",
+     "touched": [
+      "docs/rehearsal/moved-main.md"
+     ]
+    }
+   ],
+   "records": "pushed 85e81522400bc4387f9e96e03feb3924c02263bd, re-applied over a moved main (1 commit(s) touching none of these files; O47)",
+   "scenario": "the same, after the bundle fix (tree from f375f99a)",
+   "updatedAt": "2026-11-15T11:44:46Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43708842868"
+  },
+  {
+   "acquisition": {
+    "cutoff_utc": "2026-09-03T09:00:00Z",
+    "day": "2026-09-04",
+    "exit": 0,
+    "outcome": "2026-09-04: the load forecast is shown before the cutoff (2026-09-03T03:38:21Z)",
+    "stop_by_utc": "2026-09-03T04:04:54Z",
+    "stopped": "shown"
+   },
+   "artifact_files_sha256": {
+    "acquire.json": "b762a1c4b166a5a8c609230d5e572c9709c9e4bd010ab120086560fca2b5366c",
+    "gate.txt": "0fd09805586d719235516383d9d458e074e5a4d078cc97239378405769be9414"
+   },
+   "conclusion": "success",
+   "createdAt": "2026-11-15T11:25:25Z",
+   "databaseId": 43708849112,
+   "displayTitle": "daily",
+   "gate": {
+    "cutoff_utc": "2026-09-03T09:00:00Z",
+    "day": "2026-09-04",
+    "go": "true",
+    "reason": "sleep until 2026-09-04's acquisition starts (2026-09-03T03:30:00Z)",
+    "sleep_seconds": "600",
+    "start_utc": "2026-09-03T03:30:00Z"
+   },
+   "headSha": "42a703145bc09b37c8762565bb1aa7a93221e051",
+   "jobs": [
+    {
+     "completedAt": "2026-11-15T12:03:26Z",
+     "conclusion": "success",
+     "name": "macos-26 acquisition rehearsal (dry run, development days)",
+     "startedAt": "2026-11-15T11:44:48Z"
+    }
+   ],
+   "polls": [
+    "2026-11-15T11:55:15Z",
+    "2026-11-15T11:56:15Z",
+    "2026-11-15T11:57:16Z",
+    "2026-11-15T11:58:16Z",
+    "2026-11-15T11:59:16Z",
+    "2026-11-15T12:00:16Z",
+    "2026-11-15T12:01:16Z",
+    "2026-11-15T12:02:16Z",
+    "2026-11-15T12:03:16Z"
+   ],
+   "scenario": "the sleep before the start, then the acquisition (an event at simulated 03:20Z; start 03:30Z; published 8 min after the acquisition starts)",
+   "updatedAt": "2026-11-15T12:03:26Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43708849112"
+  },
+  {
+   "conclusion": "failure",
+   "createdAt": "2026-11-15T16:24:07Z",
+   "databaseId": 43735265261,
+   "displayTitle": "daily chain-dry-run",
+   "event": "workflow_dispatch",
+   "finding": "HTTP 422 on the next link's dispatch: the rehearsal sent an input the workflow does not declare (links); fixed at 56d76de7 (only declared inputs; the count in last)",
+   "headSha": "5444d1312d785c3fb5b6f86c5c5b0f21c71f3114",
+   "scenario": "two rehearsed chains (3 links each) from the tree of 7631fa44",
+   "updatedAt": "2026-11-15T16:27:50Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735265261"
+  },
+  {
+   "conclusion": "failure",
+   "createdAt": "2026-11-15T16:24:13Z",
+   "databaseId": 43735273951,
+   "displayTitle": "daily chain-dry-run",
+   "event": "workflow_dispatch",
+   "finding": "HTTP 422 on the next link's dispatch: the rehearsal sent an input the workflow does not declare (links); fixed at 56d76de7 (only declared inputs; the count in last)",
+   "headSha": "5444d1312d785c3fb5b6f86c5c5b0f21c71f3114",
+   "scenario": "two rehearsed chains (3 links each) from the tree of 7631fa44",
+   "updatedAt": "2026-11-15T16:31:33Z",
+   "url": "https://github.com/hrsi56/delu-pipeline-dryrun/actions/runs/43735273951"
+  }
+ ],
+ "scans_before_each_push": "scripts/leak_scan.py tree clean; the commit and pre-push hooks (secret guard by value, leak scan) passed",
+ "schema": "cp18d-rehearsal-v1"
+}

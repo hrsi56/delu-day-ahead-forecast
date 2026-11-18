@@ -33,7 +33,7 @@ import numpy as np
 from cp17.tools import fresh_test as F
 from cp28 import inference as I
 
-SCHEMA = 'cp18c-running-intervals-v1'
+SCHEMA = 'cp18d-running-intervals-v1'
 LEVEL = 0.95
 MINIMUM_DAYS = 2 * F.BLOCK_DAYS
 WORDING = '95% interval of the mean daily error over {n} scored days'
@@ -116,13 +116,12 @@ def _daily(window: dict) -> dict[str, tuple[float, float]]:
     return out
 
 
-def running(windows: list[dict], *, replicates=F.REPLICATES) -> dict:
-    """The four running series of the prospective window (the live record), from the bundle's evaluation windows."""
-    chosen = {w['policy']: w for w in windows if w.get('window') == 'prospective'}
-    if 'product' not in chosen:
-        raise ValueError('no prospective window: the running intervals are the live record\'s only')
-    product = _daily(chosen['product'])
-    naive = _daily(chosen['B0']) if 'B0' in chosen else {}
+#: The two sets the live record reports (the Owner's decision 31, CP-18d): the days whose inputs all precede the cutoff
+#: on their own, and all issued days beside them, each with its count. `series` stays the all-days set.
+SETS = (('before_cutoff', 'issued days with every input before the cutoff'), ('all', 'all issued days'))
+
+
+def _series(product: dict, naive: dict, replicates) -> dict:
     series = {name: [] for name in SERIES}
     days = sorted(product)
     for k in range(1, len(days) + 1):
@@ -135,10 +134,38 @@ def running(windows: list[dict], *, replicates=F.REPLICATES) -> dict:
         for j, name in enumerate(('mae_vs_B0', 'wis_vs_B0')):
             series[name].append(interval([product[x][j] - naive[x][j] for x in paired[:k]], dates,
                                          replicates=replicates))
+    return series
+
+
+def running(windows: list[dict], *, classes: dict | None = None, replicates=F.REPLICATES) -> dict:
+    """The four running series of the prospective window (the live record), from the bundle's evaluation windows: for
+    all issued days (`series`), and (decision 31, with each issued day's input class in `classes`, from the live store)
+    per set (`sets`), each with its count of issued, scored and paired days. A day's daily error is the same in either
+    set: only which days enter changes."""
+    chosen = {w['policy']: w for w in windows if w.get('window') == 'prospective'}
+    if 'product' not in chosen:
+        raise ValueError('no prospective window: the running intervals are the live record\'s only')
+    product = _daily(chosen['product'])
+    naive = _daily(chosen['B0']) if 'B0' in chosen else {}
+    issued = [d['day'] for d in chosen['product']['record']['days']]
+    every = _series(product, naive, replicates)
+    sets = []
+    if classes is not None:
+        missing = [d for d in issued if d not in classes]
+        if missing:
+            raise ValueError(f'issued days without an input class (decision 31): {missing}')
+        for subset, label in SETS:
+            keep = set(issued) if subset == 'all' else {d for d in issued if classes[d] == 'before_cutoff'}
+            sub = {d: v for d, v in product.items() if d in keep}
+            subn = {d: v for d, v in naive.items() if d in keep}
+            series = every if keep == set(issued) else _series(sub, subn, replicates)   # equal sets: computed once
+            sets.append({'set': subset, 'label': label, 'issued_days': len(keep), 'scored_days': len(sub),
+                         'paired_days': len([d for d in sub if d in subn]), 'series': series})
     return {'schema': SCHEMA, 'label': LABEL, 'unit': 'EUR/MWh', 'level': LEVEL, 'minimum_days': MINIMUM_DAYS,
             'before_minimum': BEFORE_MINIMUM, 'wording': WORDING,
             'method': ("4.7T's registered dependence treatment (cp17.tools.fresh_test): cp28.inference's paired, "
                        "non-circular, moving-block studentized bootstrap, 7-day blocks, 10,000 replicates, Bartlett HAC "
                        "at lag 14, stratified calendar runs; the studentized (percentile-t) interval"),
             'block_days': F.BLOCK_DAYS, 'replicates': replicates, 'seed': F.SEED,
-            'difference': 'the product minus the similar-day naive (B0), on the days both scored', 'series': series}
+            'difference': 'the product minus the similar-day naive (B0), on the days both scored',
+            'series': every, 'sets': sets}

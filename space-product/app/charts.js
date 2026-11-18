@@ -346,9 +346,16 @@
       const st = style(sr, k);
       polyline(g, sr.values.map((v, i) => isFinite(v) ? [x(i), y(v)] : null),
                {stroke: st.color, 'stroke-width': 2.25, 'stroke-dasharray': st.dash, 'data-mark': '1', 'data-series': sr.id || null, class: sr.cls || null});
-      // long day series (more than 25 points) thin their markers to about 45, and label the last finite value
+      // long day series (more than 25 points) thin their markers to about 45, and label the last finite value; a point
+      // with its own marker (sr.markers[i], e.g. a day issued with the load forecast fetched after the cutoff) is
+      // always drawn; sr.titles[i] is the point's tooltip
       const step = n <= 25 ? 1 : Math.max(2, Math.ceil(n / 45));
-      sr.values.forEach((v, i) => { if (isFinite(v) && i % step === 0) marker(g, x(i), y(v), st.shape, st.color, {'data-series': sr.id || null}); });
+      sr.values.forEach((v, i) => {
+        const own = sr.markers && sr.markers[i];
+        if (!isFinite(v) || (i % step !== 0 && !own)) return;
+        const mk = marker(g, x(i), y(v), own || st.shape, st.color, {'data-series': sr.id || null, 'data-point': opts.labels[i], 'data-own-marker': own || null});
+        if (mk && sr.titles && sr.titles[i]) { const t = el('title', {}, mk); t.textContent = sr.titles[i]; }
+      });
       const lastFinite = sr.values.reduce((a, v, i) => isFinite(v) ? i : a, -1);
       if (!mob && lastFinite >= 0) {
         let yy = y(sr.values[lastFinite]) + 4;
@@ -362,7 +369,8 @@
     opts.labels.forEach((lab, i) => { if (i % every === 0) text(g, x(i), h - m.b + 18, lab, {'text-anchor': 'middle', fill: C.secondary}); });
     if (opts.xTitle) text(g, (m.l + w - m.r) / 2, h - 8, opts.xTitle, {'text-anchor': 'middle', fill: C.secondary});
     const fig = figure(container, s, opts.caption);
-    legend(fig, opts.series.map((sr, k) => { const st = style(sr, k); return {label: sr.name, stroke: st.color, dash: st.dash, marker: st.shape}; }));
+    legend(fig, opts.series.map((sr, k) => { const st = style(sr, k); return {label: sr.name, stroke: st.color, dash: st.dash, marker: st.shape}; })
+      .concat((opts.legendExtra || []).map(it => ({label: it.label, stroke: 'transparent', marker: it.marker, markerColor: it.color}))));
     return fig;
   }
 

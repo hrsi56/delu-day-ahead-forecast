@@ -312,23 +312,62 @@ def bundle_plan(root: Path, runs: Path, now: datetime, mode: str = 'dry-run') ->
     return {**plan, 'how': 'refit', 'reason': "the served day's A1 fit is not in this run's results: a refit"}
 
 
-def records(root: Path, *, remote: str = 'origin', branch: str = 'main', run_id: str = '') -> dict:
+MOVED_MAIN_PATH = 'docs/rehearsal/moved-main.md'
+
+
+def moved_main_rehearsal(root: Path, remote: str, branch: str = 'main'):
+    """Dry runs only (CP-18d's rehearsal of O47): another writer pushes one commit touching no `live/` path to the dry
+    run's bare origin, between the records' commit and their push. Refused unless the remote is a local bare
+    repository (never the product repository)."""
+    import subprocess
+    import tempfile
+    from .claim import Claim, ClaimError
+    url = Claim(root, remote=remote, branch=branch).git('remote', 'get-url', remote).stdout.strip()
+    if not url or '://' in url or ':' in url.split('/')[0] or not Path(url).is_dir():
+        raise ClaimError(f'the moved-main rehearsal runs only against a local bare repository, not {remote!r}')
+    env = {**os.environ, 'GIT_AUTHOR_NAME': 'rehearsal', 'GIT_AUTHOR_EMAIL': 'rehearsal@localhost',
+           'GIT_COMMITTER_NAME': 'rehearsal', 'GIT_COMMITTER_EMAIL': 'rehearsal@localhost', 'GIT_TERMINAL_PROMPT': '0'}
+
+    def push() -> None:
+        with tempfile.TemporaryDirectory(prefix='cp18d-moved-main-') as tmp:
+            clone = Path(tmp) / 'other'
+            for args in (['clone', '--quiet', '--branch', branch, url, str(clone)],):
+                subprocess.run(['git', *args], check=True, capture_output=True, env=env)
+            target = clone / MOVED_MAIN_PATH
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(f'Another writer moved main during the records step (CP-18d rehearsal), {utc_now()}.\n')
+            for args in (['add', MOVED_MAIN_PATH], ['commit', '--quiet', '-m', 'rehearsal: main moved by another writer'],
+                         ['push', '--quiet', 'origin', f'HEAD:refs/heads/{branch}']):
+                subprocess.run(['git', '-C', str(clone), *args], check=True, capture_output=True, env=env)
+    return push
+
+
+def records(root: Path, *, remote: str = 'origin', branch: str = 'main', run_id: str = '',
+            rehearse_moved_main: bool = False) -> dict:
     """The day's data-only records committed and pushed through the claim, on the commit the run left synchronized.
-    A lost race leaves the other host's records standing; a refusal (a guard, the network) publishes nothing."""
+    `main` moved by commits touching none of these files: the records are re-applied on it (O47). Moved by a commit
+    touching one of them: the other host's records stand. A refusal (a guard, the network) publishes nothing."""
     from cp25 import guard
     from .claim import Claim, ClaimError
     paths = [p for p in DATA_PATHS if (Path(root) / p).exists()]
     record = {'schema': 'cp18c-records-v1', 'run_id': run_id, 'paths': paths, 'started_utc': utc_now()}
     try:
+        before = moved_main_rehearsal(root, remote, branch) if rehearse_moved_main else None
+        if before is not None:
+            record['rehearsal'] = f'another writer pushes {MOVED_MAIN_PATH} to {remote} before the records are pushed'
         result = Claim(root, remote=remote, branch=branch).publish(
             paths, f'live: the records of run {run_id} (outcomes, evaluation, bundle, publication)\n\n'
-                   f'Delu-Daily-Run: {run_id}\n')
+                   f'Delu-Daily-Run: {run_id}\n', before_push=before)
     except ClaimError as exc:
         return {**record, 'outcome': f'refused: {guard.redact(str(exc))}', 'exit': 2, 'finished_utc': utc_now()}
     if result.get('lost'):
-        outcome = "main moved first: the other host's records stand; these were discarded"
+        outcome = f"main moved first ({result.get('why')}): the other host's records stand; these were discarded"
     elif result.get('nothing'):
         outcome = 'nothing to commit'
+    elif result.get('reapplied'):
+        moved = sum(len(r['moved_by']) for r in result['reapplied'])
+        outcome = (f"pushed {result['pushed']}, re-applied over a moved main ({moved} commit(s) touching none of "
+                   'these files; O47)')
     else:
         outcome = f"pushed {result['pushed']}"
     return {**record, 'result': result, 'outcome': outcome, 'exit': 0, 'finished_utc': utc_now()}
@@ -491,6 +530,9 @@ def parser() -> argparse.ArgumentParser:
     r.add_argument('--branch', default='main')
     r.add_argument('--run-id', required=True)
     r.add_argument('--out', required=True, type=Path)
+    r.add_argument('--rehearse-moved-main', action='store_true',
+                   help='dry runs only: another writer moves main before the push (refused unless the remote is a '
+                        'local bare repository)')
     w = sub.add_parser('wx-env')
     w.add_argument('--python', required=True, type=Path)
     w.add_argument('--freeze', type=Path)
@@ -521,7 +563,8 @@ def main(argv=None) -> int:
             print(f"{k}={str(v).lower() if isinstance(v, bool) else str(v).replace(chr(10), ' ')}")
         return 0
     if args.cmd == 'records':
-        value = records(args.root.resolve(), remote=args.remote, branch=args.branch, run_id=args.run_id)
+        value = records(args.root.resolve(), remote=args.remote, branch=args.branch, run_id=args.run_id,
+                        rehearse_moved_main=args.rehearse_moved_main)
         dump(args.out, value)
         print('records |', value['outcome'], flush=True)
         return value['exit']

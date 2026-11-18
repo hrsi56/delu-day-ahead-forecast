@@ -38,7 +38,7 @@ import numpy as np
 
 from cp25 import guard
 
-from . import evaluation as EV, outcomes as OC, plan, spaceglue as G
+from . import evaluation as EV, inputclass, outcomes as OC, plan, spaceglue as G
 from .host import MANIFEST
 from .records import BUNDLES_PATH, RecordLog
 from .store import LiveStore
@@ -341,6 +341,12 @@ def build(*, root, store_dir, archive, now: datetime, out, development_file=EV.D
     for old in out.iterdir():
         old.unlink()
     issued = [e for e in entries if e['artifact']['issued_policy']]
+    # CP-18d (the Owner's decision 31): every issued day's record must name its input class, or the bundle is refused.
+    # The class itself is not written here: the bundle's files keep the frozen schema (the frozen verifier, through `cp18.r7`,
+    # refuses any key it does not know), so the label and the evaluation per class live in the Space's own live record
+    # (`cp18.live_claims.live_record`, `cp18.evaluation.class_sets`), built from the store.
+    for e in entries:
+        inputclass.of_record(e['record'])
     forecasts = {'schema': 'cp17b-issued-forecasts-v2', 'levels': [0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975],
                  'days': [{'delivery_day': e['day'], 'issue_utc': e['artifact']['issue_utc'],
                            'issuing_artifact_sha256': e['artifact']['artifact_sha256'],

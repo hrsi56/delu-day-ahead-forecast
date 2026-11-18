@@ -28,6 +28,9 @@ h1 { font-size: 32px; line-height: 40px; margin: 0 0 var(--s2); }
 h2 { font-size: 26px; line-height: 34px; margin: 0 0 var(--s3); }
 h3 { font-size: 20px; line-height: 28px; margin: var(--s5) 0 var(--s2); }
 h4 { font-size: 17px; line-height: 26px; margin: var(--s4) 0 var(--s2); }
+h5 { font-size: 16px; line-height: 24px; margin: var(--s4) 0 var(--s2); }
+/* decision 31 (CP-18d): the two sets of the cumulative section, one after the other, divided by the decorative border */
+.running-sets .running + .running { border-top: 1px solid var(--border); margin-top: var(--s4); }
 p { margin: 0 0 var(--s3); max-width: 68ch; }
 a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 a.ext, a.route { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
@@ -113,6 +116,7 @@ th, td { text-align: left; padding: var(--s1) var(--s2); border-bottom: 1px soli
 td.n, th.n { text-align: right; white-space: nowrap; }
 caption { text-align: left; color: var(--secondary); padding: var(--s1) 0; }
 tr.final td { border-top: 2px solid var(--text); font-weight: 600; }
+tr.set-head th { padding-top: var(--s3); font-weight: 700; color: var(--text); }   /* decision 31's sets (CP-18d) */
 .match-ok { font-weight: 700; }
 .match-fail { font-weight: 700; color: var(--state-fail); }
 
