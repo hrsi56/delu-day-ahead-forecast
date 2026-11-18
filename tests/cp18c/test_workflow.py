@@ -136,23 +136,27 @@ def _cron_time(cron: str, day: date) -> datetime:
 
 def test_on_every_day_of_two_years_two_acquisitions_precede_the_cutoff_and_the_runs_follow_it():
     """D's cutoff is D-1 11:00 Berlin (`cp25.guard.issue_time`): 10:00 UTC in winter, 09:00 UTC in summer. On every day
-    (the DST changes included) at least two acquisition events can start D's acquisition before it, and both run crons
-    fall after it.
+    (the DST changes included) the acquisition can start before it, and the run follows it.
 
-    CP-18d (item 2): was "at least two of the three daily crons fall 30-180 min before the cutoff"; now the event is
-    hourly and passes the gate (`src/cp18/window.py`), so the assertion is that at least two hourly events in the 3 h
-    before the cutoff (at least 30 min ahead) are started by the gate, and that a run cron follows the cutoff."""
-    from cp18 import window as W
+    CP-18d (item 2, O54): was "at least two of the three daily crons fall 30-180 min before the cutoff, and both run
+    crons after it"; now the daily work is the chain's (`src/cp18/chain.py`), so the assertion is that on every day the
+    chain's tick has D's acquisition due from 5.5 h before D's cutoff until its margin, and the run for D due 5 min after
+    D's cutoff (and none before it)."""
+    from cp18 import chain as C
     day = date(2027, 1, 1)
     while day < date(2029, 1, 1):
-        cutoff = guard.issue_time(day + timedelta(days=1))          # the cutoff that falls on `day`
+        target = day + timedelta(days=1)
+        cutoff = guard.issue_time(target)                           # the cutoff that falls on `day`
         assert cutoff.astimezone(UTC).date() == day
-        hourly = [datetime(day.year, day.month, day.day, h, 20, tzinfo=UTC) for h in range(24)]
-        ahead = [(cutoff - t) / timedelta(minutes=1) for t in hourly]
-        started = [t for t, m in zip(hourly, ahead) if 30 <= m <= 180 and W.plan(t)['go']]
-        assert len(started) >= 2, (day, ahead)
-        for c in RUN_CRONS:
-            assert _cron_time(c, day) > cutoff, (day, c)
+        decided = [{'target_day': str(day), 'exit': 0, 'target_status': 'issued'}]
+        for minutes in (330, 180, 30, 8):                           # 5.5 h, 3 h, 30 min and 8 min before it
+            d = C.decide(cutoff - timedelta(minutes=minutes), None, decided)
+            assert (d['action'], d['day']) == ('acquire', str(target)), (day, minutes, d)
+        assert C.decide(cutoff - timedelta(minutes=335), None, decided)['action'] == 'none'
+        assert C.decide(cutoff - timedelta(minutes=5), None, decided)['action'] == 'none'     # inside its margin
+        assert C.decide(cutoff + timedelta(minutes=1), None, decided)['action'] == 'none'
+        d = C.decide(cutoff + timedelta(minutes=5), None, decided)
+        assert (d['action'], d['day']) == ('run', str(target)), (day, d)
         day += timedelta(days=1)
 
 

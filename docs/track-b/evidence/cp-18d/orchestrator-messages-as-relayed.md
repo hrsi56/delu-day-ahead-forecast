@@ -70,3 +70,20 @@ Committed verbatim by the Lead. Each is the Orchestrator's, relayed through the 
 > the approved contract `docs/track-b/economic-policy-contract-2026-11-15.md` and CP-29's issue in `progress.md`. Your
 > brief's lines "No other checkpoint runs beside it" and "Branches and worktrees: main only" are superseded by this
 > ruling; record it in your packet beside O54. Nothing else changes.
+
+## 2026-11-18, after the first Integration review (FAIL), the Orchestrator's ruling O66
+
+> 1. critic-open.json shows critic-1 closed at 10:52 UTC with its verdict recorded. Verify that, then fix its three
+>    findings: the alert issues' closing (O54), including undated failed-tick issues and the date collision; the
+>    Space's schedule sentence (the chain, not the hourly gate); the report's alert claim. Make the tests use the start
+>    date the real command computes, so they cannot hide the defect again.
+> 2. Re-run the history-free CI. Then open a fresh Critic (critic-2) at the new candidate, as templates §2 requires.
+>    Ruling O66 (decision 27): the Critic re-verifies the whole bar at the new candidate. It repeats a runner rehearsal
+>    only if your fix touches what that rehearsal exercised; otherwise it cites critic-1's rehearsal records. The 5-hour
+>    usage limit is shared by every session on the account. I have paused PRES-7 so that CP-18d has the whole budget.
+>    Keep the Critic proportionate.
+> 3. Finalize return.md and run `gauntlet.py return`.
+>
+> Deadline: 2026-11-16 leaves the lookback at 2026-11-19 10:00 UTC. I need the return by 2026-11-19 04:00 UTC at the
+> latest, so that I can land, push and run the first live run in time. If a fix needs a design change that cannot be
+> made in time, tell me at once with options. Do not cut the check.

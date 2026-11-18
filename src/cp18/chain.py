@@ -7,7 +7,8 @@ scheduled run at all before the cutoff. O54 asks the daily operation to keep acq
 scheduler is late by up to 12 hours or drops most of a day's events. An hourly event through a gate covers any delay
 only while some event still arrives in each day's band (about 11 hours before the cutoff): with most events dropped,
 whole days go uncovered (`tests/cp18d/test_chain.py` simulates both). So the daily work no longer waits for the
-scheduler. Each link of the chain is one workflow run started by `workflow_dispatch`, which GitHub starts at once:
+scheduler. Each link of the chain is one workflow run started by `workflow_dispatch`, which GitHub starts as soon as
+the link before it has ended (one concurrency group):
 
 1. **tick** (Linux): reads the store's run records on `main` and the previous link's state, and decides the next
    action and when it is due (`decide`): D's acquisition from 5.5 h before D's cutoff (`window.LEAD_HOURS`), the run for
@@ -132,7 +133,7 @@ def decide(now: datetime, last: dict | None, runs: list[dict], force: str | None
         at, reason = start, f'{nxt}\'s acquisition, before its cutoff'
         if last.get('action') == 'acquire' and last.get('day') == str(nxt) and last.get('result') != 'success':
             at, reason = max(at, (_instant(last.get('at')) or now) + ACQUIRE_BACKOFF), 'the last acquisition failed: a retry'
-        if at < limit:
+        if at < limit and now < limit:                                 # inside the cutoff's margin: the run's turn
             due.append((at, 'acquire', nxt, reason))
     wake = W.cutoff(nxt) + RUN_DELAY                                    # the next target day's run, at the latest
     ready = sorted((d for d in due if d[0] <= now), key=lambda d: (d[1] != 'run', d[0]))
@@ -140,7 +141,7 @@ def decide(now: datetime, last: dict | None, runs: list[dict], force: str | None
         _, action, day, reason = ready[0]
         return dict(out, action=action, day=str(day), reason=reason)
     soonest = min([d[0] for d in due] + [wake])
-    sleep = min(soonest - now, MAX_SLEEP)
+    sleep = max(min(soonest - now, MAX_SLEEP), timedelta(0))
     return dict(out, sleep_seconds=int(sleep.total_seconds()), wake_utc=_z(now + sleep),
                 reason=f'nothing due before {_z(soonest)}')
 

@@ -9,13 +9,15 @@
 # scheduler is late by up to 12 hours or drops most of a day's events. An hourly event through a gate covers any delay
 # only while events keep arriving; with most of them dropped, whole days go uncovered (tests/cp18d/test_chain.py). So
 # the daily work no longer waits for the scheduler. Each link of the chain is one run started by workflow_dispatch,
-# which GitHub starts at once, and its jobs are:
+# which GitHub starts as soon as the link before it has ended (one concurrency group), and its jobs are:
 #   tick     on ubuntu (no macOS runner held): `src/cp18/chain.py tick` (the standard library only) reads the store's run
 #            records on main and the previous link's state, and decides what is due and when: D's acquisition from 5.5 h
 #            before D's cutoff (04:30 UTC winter, 03:30 UTC summer) until it shows the forecast or reaches the cutoff's
 #            margin; the run for the target day 5 min after its cutoff; their retries and backoffs. It sleeps until the
 #            action is due, at most 5.75 h, then decides again (the action, or none). A dispatch by hand (live,
-#            acquire-live) acts at once, then continues the chain.
+#            acquire-live) acts as soon as its tick starts, then continues the chain; it joins the chain's concurrency
+#            group, so while a link is running it waits, and the chain's own next link may replace it (that link then
+#            does what is due itself).
 #   acquire  when the tick says so (macOS): `cp18 acquire` retrieves the next delivery day D's inputs, its tier-3 load
 #            forecast above all (shown only by a retrieval before D's cutoff), archives them and pushes live/inputs/
 #            through the claim. D's cutoff is D-1 11:00 Europe/Berlin: 10:00 UTC in winter time (CET), 09:00 UTC in
@@ -50,7 +52,7 @@
 #   chain-dry-run  workflow_dispatch only (mode chain-dry-run, `last` = the links left): the self-dispatch rehearsed with
 #            no work and no secret: a short sleep, then the next link through workflow_dispatch with the job's token,
 #            while links are left, in its own concurrency group.
-# A dispatch with mode live or acquire-live acts at once, then continues the chain (no hand dispatch is needed: O54).
+# A dispatch with mode live or acquire-live acts when its tick starts, then continues the chain (none is needed: O54).
 #
 #   alert    on ubuntu, `issues: write` (and `contents: read`) only: `src/cp18/alert.py` opens, comments on or closes one
 #            GitHub issue per problem (a failed job, a recent day not issued, a recent day issued with the load forecast
@@ -112,7 +114,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'dry-run (development days, replayed inputs, fake credentials); chain (a link of the daily chain, as the chain dispatches it); live (the run at once, then the chain); acquire-live (the acquisition at once, then the chain); acquire-dry-run (the acquisition rehearsed on a development day); chain-dry-run (the self-dispatch rehearsed: last = the links left)'
+        description: 'dry-run (development days, replayed inputs, fake credentials); chain (a link of the daily chain, as the chain dispatches it); live (the run, then the chain); acquire-live (the acquisition, then the chain); acquire-dry-run (the acquisition rehearsed on a development day); chain-dry-run (the self-dispatch rehearsed: last = the links left)'
         type: choice
         options: [dry-run, live, acquire-live, acquire-dry-run, chain, chain-dry-run]
         default: dry-run
@@ -493,7 +495,7 @@ jobs:
             src/cp18/window.py
             live/store/runs
           sparse-checkout-cone-mode: false
-      - name: What is due, and when (src/cp18/chain.py tick; a dispatch by hand acts at once)
+      - name: What is due, and when (src/cp18/chain.py tick; a dispatch by hand acts when it starts)
         id: tick
         env:
           LAST: ${{ inputs.last }}

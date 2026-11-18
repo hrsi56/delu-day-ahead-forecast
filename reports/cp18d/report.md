@@ -38,8 +38,8 @@ here is to be checked against the code, the tests and the records it names.*
   collected 2026-11-17T20:52:59Z): the Orchestrator's probe over three probe days, 2026-11-15 to 2026-11-17, ten cron
   hours (00:07 to 09:07 UTC) a day: 30 scheduled runs, none missed. Every run was created between 6 h 10 min and
   10 h 22 min after its cron time; the delay grew within each night and from one day to the next (the median by hour
-  rose from 6 h 11 min at 00:07 to 9 h 18 min - 9 h 42 min at 07:07 - 09:07). The `macos-26` job then started within 4 s
-  to about 10 min of the run's creation. The Orchestrator measured `daily.yml`'s own 07:40 and 08:20 UTC crons start
+  rose from 6 h 11 min at 00:07 to 9 h 18 min - 9 h 42 min at 07:07 - 09:07). The `macos-26` job then started 0 to 604 s after
+  the run's creation. The Orchestrator measured `daily.yml`'s own 07:40 and 08:20 UTC crons start
   7 h 16 min and 7 h 23 min late on 2026-11-15. No fixed cron time can be placed before a cutoff against a delay of this
   size that keeps growing.
 - **First design, an hourly event through a Linux gate** (`src/cp18/window.py`): an event in a band of about 11 hours
@@ -58,8 +58,16 @@ here is to be checked against the code, the tests and the records it names.*
   inside GitHub's 6-hour limit (tick 355 min, acquisition stop-by 340 min with timeout 355). A 60-day simulation in
   winter and summer acquires every day before its cutoff and runs it once after it.
 - **The alert** (`src/cp18/alert.py`, `issues: write` and `contents: read` only): one GitHub issue per problem (a failed
-  job, a recent day not issued, a recent day issued with the load forecast fetched after the cutoff), opened or
-  commented on, closed by itself once a later day is issued with all inputs before the cutoff; tested with a mocked API.
+  job, a recent day not issued, a recent day issued with the load forecast fetched after the cutoff). A problem's line
+  starts with its day and carries a key; a key already in any of the bot's alert issues, open or closed, is never
+  reported again. A new problem opens the issue or is a comment on the open one. An open issue closes itself in the first
+  link with no new problem of its kind and no failed job, once a day later than every day on its problem lines has been
+  issued with all inputs before the cutoff; a failed job's line is dated by its link's day or the target day. Tested
+  through the command itself (`alert.main`, its own start date from `--now`) across consecutive links on an evolving
+  store, with a recorded issues API (`tests/cp18d/test_alert.py`). The first Integration review found that the alert as
+  first written kept an issue open while its day was recent, never closed an undated failed-tick issue, and missed a day
+  whose date already appeared in an issue as an earlier copy's fetch time, and that its tests had hidden this by passing
+  a start date the command never computes; all three are fixed and are now tests.
 
 ## 3. The claim over a moved `main` (O47)
 
@@ -72,8 +80,10 @@ still refuses, as before. Reproduced locally (`tests/cp18d/test_claim_o47.py`) a
 ## 4. The live product's follow-ups
 
 - The two "A1" sentences now name v6, with "A1 in the frozen records"; the unused designation sentence is removed.
-- "Runs daily" in the report and the root README is outside CP-18d's allowed paths: the Space states the schedule
-  (`live_schedule`) beside its issued and not-issued days, and the report's sentence is a follow-up (open item).
+- "Runs daily" in the report and the root README is outside CP-18d's allowed paths: the Space describes the daily
+  operation as it is, a chain of runs that start one another with scheduled events only restarting it (`live_schedule`),
+  beside its issued and not-issued days, and the report's sentence is a follow-up (open item). The first Integration
+  review found that this sentence still described the earlier hourly gate; it is rewritten.
 - v1's history page carries its own preview tags naming v1 (`scripts/build_product_space.py`, recorded in
   `app/history-files.json`); whether the host's own tags still come first is visible only after a publication.
 - The runner's Actions artifact keeps the whole Space build, hidden files included, recorded before the fitted arrays
@@ -81,10 +91,16 @@ still refuses, as before. Reproduced locally (`tests/cp18d/test_claim_o47.py`) a
 
 ## 5. The proposed display (O16: the Orchestrator rules)
 
-See the Space Builder's hand-over (`.local/artifacts/cp-18d/builder-space-handover.md`, section 3) and the screenshots
-it lists: the label on every issued day, the counts once per view, hollow diamonds for the days fetched after the
-cutoff in the per-day chart, the two sets in the cumulative section (one chart when they are the same days), the
-per-set rows in Validation and Reliability.
+Built to the Space's existing tokens and components (the Space Builder's work, checked by
+`tests/cp18d/test_space_d.py` and `tests/cp18d/space_acceptance_d.py` in Chromium and WebKit at 1440 and 390 px):
+- every issued day shows its class, and a day fetched after the cutoff its fetch time ("fetched <time> UTC"); the counts
+  once per view; the note on decision 31 once in a view that shows such a day;
+- the per-day errors chart draws the product's days fetched after the cutoff as hollow diamonds, with a legend entry and
+  a tooltip;
+- the cumulative section shows the set "issued days with every input before the cutoff (n = K)" and "all issued days
+  (n = N)" beside it, each with its band chart and latest line; one chart when both sets hold the same days;
+- the Validation and Reliability views show the prospective record per set, each with its count;
+- the schedule sentence beside the issued and not-issued days; the Space card names the served day's class.
 
 ## 6. The rehearsal (item 5)
 
@@ -113,4 +129,7 @@ apart) and the sleep before its start (600 s); the chain's self-dispatch.
 - **Not changed, by the brief's allowed paths:** the report's and the root README's "runs ... daily" sentence; the
   development bundle's bytes (CP-18b's evidence) stay reproducible: the label and the sets are never written into the
   bundle's files.
-- **Usage-limit pauses:** three, recorded in the Lead's ledger with what was running.
+- **The first Integration review returned FAIL** (`integration-1-fail.md`, at ebbf2cb1): the alert's closing (three
+  faults, hidden by its tests), the Space's schedule sentence describing the gate, and this report's alert claim. All
+  fixed at the final candidate; the alert's tests now run through its own command.
+- **Usage-limit pauses:** six, recorded in the Lead's ledger with what was running.

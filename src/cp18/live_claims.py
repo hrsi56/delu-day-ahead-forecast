@@ -242,9 +242,10 @@ def _common(fresh_test: str) -> dict:
         'live_history_preview_title': 'v1 · historical demo — DE-LU day-ahead price forecast',
         'live_history_preview_description': ("v1's frozen demo of the DE-LU day-ahead price forecast, kept as history. "
                                              'It is not the product this Space presents.'),
-        'live_schedule': ("Daily operation is a schedule, not a guarantee: each day GitHub's scheduler starts the "
-                          'acquisition several times before the cutoff, and the run after it with a retry; a job may '
-                          'start hours after its scheduled time, or not at all. Each delivery day is then issued or not '
+        'live_schedule': ('Daily operation is a chain of GitHub Actions runs, each starting the next: one waits until '
+                          "the next step is due, acquires the next delivery day's inputs before its cutoff, or issues "
+                          'the day after it, then starts the following run; GitHub\'s scheduled events only restart '
+                          'the chain if it stops. A step can still fail or wait, so each delivery day is issued or not '
                           'issued, and every day not issued is listed below with its cause.'),
     }
 
