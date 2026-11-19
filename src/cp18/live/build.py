@@ -6,8 +6,9 @@ See the package docstring (`cp18.live`) for the contract. In order:
 2. the archive's integrity for every archive day in (base_end, D] (`Archive.verify`);
 3. the history: the committed base through `base_end`, the archive's increments to D (`history.assemble`),
    which judges every input against D's cutoff and sets each day's GFS flag;
-4. the serving search's state `k{NN}.json` from `search_dir` (`cp26.search.serving_search(D)`), validated by
-   `cp26.search.validate_ensemble`; absent, the result is `search_state_missing` and nothing is built;
+4. the serving search's state `k{NN}.json` from `search_dir` (`cp18.serving.serving_search(D)`: CP-26's schedule
+   capped at S_13, the Owner's decision 33), validated by `cp26.search.validate_ensemble`; absent, the result is
+   `search_state_missing` and nothing is built;
 5. if every required input is shown (or admitted under a recorded exception valid for that day), the context
    and the four payloads `A1`, `v4`, `v2`, `B0` as `<policy>-<D>.{npz,json}` in `out`, for `cp17.daily.issue_day`.
    D's own load forecast, if no copy precedes D's cutoff, is the copy fetched after it (the Owner's decision 31,

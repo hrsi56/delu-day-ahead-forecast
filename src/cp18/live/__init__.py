@@ -35,7 +35,8 @@ Layout:
 * `buffers` - the released buffers the shadow states hold after D-2's release
   (`cp17.shadow.ShadowStates.buffer(p)` for p in v4, v2, B0): 28 days each, all <= D-2.
 * `search_dir` - the folder holding A1's search states `k{NN}.json`; the one used is
-  `cp26.search.serving_search(day)`, validated by `cp26.search.validate_ensemble(..., 'nominal')`.
+  `cp18.serving.serving_search(day)` (CP-26's schedule capped at S_13, the Owner's decision 33: `k13.json` for every
+  live day), validated by `cp26.search.validate_ensemble(..., 'nominal')`.
 * `out` - where `A1-<D>.{npz,json}`, `v4-<D>...`, `v2-<D>...`, `B0-<D>...` are written.
 * `root` - the repository root (committed snapshot, weather features, `reports/cp15/protocol.json`).
 
@@ -46,7 +47,7 @@ other failure is a result. The returned dict (JSON-able; `build.write_record` wr
 |---|---|
 | `schema` | `'cp18-live-build-v1'` |
 | `day` | ISO date |
-| `status` | `'built'`, `'search_state_missing'` (the pipeline's "S_14's state not in place"; nothing built), `'not_shown'` (the pipeline's "a live day's inputs that cannot be shown to precede its cutoff"; nothing built), or `'failed'` |
+| `status` | `'built'`, `'search_state_missing'` (the serving search's state absent; nothing built: the pipeline's inputs cause for the pinned S_13, decision 33), `'not_shown'` (the pipeline's "a live day's inputs that cannot be shown to precede its cutoff"; nothing built), or `'failed'` |
 | `cause` | `None` when built; otherwise the reason (redacted) |
 | `payloads` | `{policy: {'meta': path, 'npz': path, 'payload_sha256', 'npz_bytes', 'meta_bytes'}}` for A1, v4, v2, B0 when built |
 | `gfs_available` | the flag to pass to `cp17.daily.issue_day` (payloads are built either way; on False D's weather is missing under §15.3) |

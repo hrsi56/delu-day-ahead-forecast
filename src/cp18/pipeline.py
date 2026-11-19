@@ -12,8 +12,12 @@
    issues nothing in this run; each planned day records the failed check as its attempt's cause.
 5. **Each planned day,** oldest first: fetch again (a day another host decided meanwhile is never issued); load the
    store's state and release D−2 with the published prices; ask the inputs for the day's payloads, built with the
-   state's buffers. The serving search's state not in place (S_14) or inputs not shown to precede the cutoff leave
-   the day open with that cause; D's own load forecast fetched after the cutoff does not (the Owner's decision 31:
+   state's buffers and the serving search's state. The serving search is decision 33's rule (`cp18.serving.LIVE`):
+   CP-26's schedule capped at S_13, so every live day is served by S_13's pinned state, and a day the schedule gives
+   to a later search names the decision in its record (`serving_rule`). Only an injected rule before decision 33 (a
+   plain callable, as CP-18a's forced days) can name a later search, whose state not in place leaves the day open with
+   "S_14's state not in place"; the pinned state absent, or inputs not shown to precede the cutoff, leave the day open
+   with the inputs' cause; D's own load forecast fetched after the cutoff does not (the Owner's decision 31:
    the day is issued with that copy and labelled, `cp18.inputclass`), and a built day without its input class is
    refused, left open. Otherwise `cp17.daily.issue_day` issues it, with its shadows registered in the state;
    any earlier day of this run left open is closed first (days go forward); the day's artifact, record and state are
@@ -39,6 +43,7 @@ import uuid
 from cp25 import guard
 
 from . import boundary, causes, inputclass, plan
+from . import serving as S
 from .claim import Claim, ClaimError
 from .host import MANIFEST, PACKAGE_ZIP
 from .store import INPUTS_PATH, STORE_PATH, LiveStore, StoreRefused
@@ -133,8 +138,7 @@ def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict
     """One run. `inputs` provides each day's payloads (`cp18.inputs`); `checks` replaces the H2 checks (tests and
     forced failures only); `issue` is `cp17.daily.issue_day` behind `default_issue`."""
     from cp17 import hostcheck
-    from cp26.search import serving_search
-    serving = serving or serving_search
+    serving = serving or S.LIVE                           # decision 33's rule (`cp18.serving`)
     started = time.perf_counter()
     run_id = settings.run_label or f"{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{settings.host_kind}-{uuid.uuid4().hex[:8]}"
     target = plan.target_day(now)
@@ -197,11 +201,24 @@ def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict
                         note='the published prices for the release could not be acquired or read; nothing issued')
             continue
         k = serving(day)
-        search = store.search_file(k) if k is not None and k >= 14 else inputs.search_file(k)
-        if search is None or not Path(search).is_file():
-            item.update(status='open', cause=causes.S14, cause_text=causes.text(causes.S14), search=k,
-                        note='the search state that serves this day is not in place; the day waits for it')
-            continue
+        rule = serving.record(day) if isinstance(serving, S.Rule) else {}
+        item.update(rule)                                   # decision 33's field, for a day the schedule gives later
+        if k is not None and k > S.LAST:
+            # Only a rule before decision 33 names a search after S_13: a plain callable injected as `serving`
+            # (CP-18a's forced days, CP-18e's negative control). The live rule (`cp18.serving.LIVE`) never does, and the
+            # store refuses a later search's state, so no live day reaches "S_14's state not in place".
+            search = store.search_file(k)
+            if search is None or not Path(search).is_file():
+                item.update(status='open', cause=causes.S14, cause_text=causes.text(causes.S14), search=k,
+                            note='the search state that serves this day is not in place; the day waits for it')
+                continue
+        else:
+            search = inputs.search_file(k)
+            if search is None or not Path(search).is_file():
+                # the pinned state (S_13 for every live day, `cp17.runtime.K13`) absent: no payload can be built
+                item.update(status='open', cause=causes.INPUTS, cause_text=causes.text(causes.INPUTS), search=k,
+                            note='the pinned search state that serves this day is not in place; no payload can be built')
+                continue
         try:
             built = inputs.build(day, buffers={p: state.buffer(p) for p in ('v4', 'v2', 'B0')},
                                  search_file=Path(search), out=settings.out / 'payloads' / str(day))
@@ -212,7 +229,8 @@ def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict
             continue
         item['inputs'] = {k2: v for k2, v in built.items() if k2 not in ('payloads',)}
         if built.get('search_missing'):
-            item.update(status='open', cause=causes.S14, cause_text=causes.text(causes.S14), search=k)
+            cause = causes.S14 if k is not None and k > S.LAST else causes.INPUTS
+            item.update(status='open', cause=cause, cause_text=causes.text(cause), search=k)
             continue
         if not built.get('shown'):
             item.update(status='open', cause=causes.INPUTS, cause_text=causes.text(causes.INPUTS))
@@ -249,7 +267,7 @@ def run(settings: Settings, now: datetime, *, claim: Claim, inputs, checks: dict
                       'artifact_sha256': art['artifact_sha256'], 'artifact_verifies': cp17issue.verify_artifact(art) == [],
                       'shadows': result['shadows'], 'process_seconds': result['process_seconds'],
                       'process_seconds_sum': result['process_seconds_sum'], 'issue_day_seconds': result['total_seconds'],
-                      'blocked_non_local_requests': result['blocked_non_local_requests']}
+                      'blocked_non_local_requests': result['blocked_non_local_requests'], **rule}
         store.record_day(day, state, art, day_record, parent_state)
         status = 'issued' if art['issued_policy'] else 'not issued'
         item.update(status=status, policy=art['issued_policy'], display=art['display'],

@@ -193,9 +193,10 @@ OPEN_DAY_WORDING = ('not issued; attempted, and still inside the three-day lookb
 
 def _common(fresh_test: str) -> dict:
     """The keys both modes carry (the page reads them all): N7's labels, the hosts, the history wording, O33's, and
-    decision 31's labels and the schedule's wording (CP-18d)."""
-    from cp18 import inputclass, running
+    decision 31's labels and the schedule's wording (CP-18d), and decision 33's sentences on the networks (CP-18e)."""
+    from cp18 import inputclass, running, serving
     from cp18.spaceglue import BOUNDARY
+    from cp26.search import SEARCH_SPACING_DAYS
     return {
         'live_product_record_name': 'A1, the designated policy',
         'live_evidence_prefix': 'Evidence, as the manifest states it: ',
@@ -242,6 +243,13 @@ def _common(fresh_test: str) -> dict:
         'live_history_preview_title': 'v1 · historical demo — DE-LU day-ahead price forecast',
         'live_history_preview_description': ("v1's frozen demo of the DE-LU day-ahead price forecast, kept as history. "
                                              'It is not the product this Space presents.'),
+        # the Owner's decision 33 (CP-18e): how v6's networks are chosen, where the panel describes the daily refit;
+        # the spacing and the search's day are read from CP-26's schedule and the live rule, not typed
+        'live_network_choice': (
+            "Each day's refit trains the networks again, with the configurations a DDNN-2 search chose. The development "
+            f'evaluation re-ran that search every {SEARCH_SPACING_DAYS} days; the live product keeps the '
+            f"{serving.search_day(serving.LAST)} search's choice for every later day (the Owner's decision "
+            f'{serving.DECISION}).'),
         'live_schedule': ('Daily operation is a chain of GitHub Actions runs, each starting the next: one waits until '
                           "the next step is due, acquires the next delivery day's inputs before its cutoff, or issues "
                           'the day after it, then starts the following run; GitHub\'s scheduled events only restart '

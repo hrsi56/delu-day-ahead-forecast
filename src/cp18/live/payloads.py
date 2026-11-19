@@ -102,8 +102,10 @@ def context(root: Path, frame, features, day: date) -> LiveContext:
 
 
 def load_ensemble(search_dir: Path, day: date) -> tuple[int, Path, dict | None]:
-    """The serving search's state `k{NN}.json` (§24.7: S_k serves S_k .. S_(k+1) - 1); None if absent."""
-    from cp26.search import serving_search, validate_ensemble
+    """The serving search's state `k{NN}.json` (§24.7: S_k serves S_k .. S_(k+1) - 1, capped at S_13 by the Owner's
+    decision 33, `cp18.serving`); None if absent."""
+    from cp26.search import validate_ensemble
+    from ..serving import serving_search
     k = serving_search(day)
     if k is None:
         raise ValueError(f'{day} precedes the first search')
@@ -124,10 +126,11 @@ def _finish(arrays: dict, meta: dict) -> tuple[dict, dict]:
 
 def a1_payload(ctx: LiveContext, day: date, ens: dict) -> tuple[dict, dict]:
     from cp24 import design as G
-    from cp26.search import serving_search, validate_ensemble
+    from cp26.search import validate_ensemble
+    from ..serving import serving_search
     boundary.admit_delivery_day(day)
-    k = serving_search(day)
-    validate_ensemble(ens, k, 'nominal')
+    k = serving_search(day)                     # decision 33: S_13 for every day from its service start on
+    validate_ensemble(ens, k, 'nominal')        # so any other state (a later search's, a relabelled one) is refused
     dd, keys, data = ctx.dd, ctx.keys, ctx.data
     lower = max(G.FLOOR, day - timedelta(days=G.WINDOW_DAYS))
     reach = max(max(G.PRICE_LAGS.values()), max(G.LOAD_LAGS.values()))

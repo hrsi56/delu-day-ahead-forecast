@@ -7,7 +7,10 @@ of these five causes in the store's record:
 - `H2`: the run's checks before its first issuance failed (`cp17.hostcheck`), so the run issued nothing;
 - `INPUTS`: the day's inputs could not be shown to precede its cutoff (§24.13, the publication time);
 - `NO_RUN`: no run reached the day within decision 23's lookback;
-- `S14`: the search state that serves the day (S_14, H4) is not in place.
+- `S14`: the search state that serves the day (S_14, H4) is not in place. The Owner's decision 33 cancels S_14 and
+  every later search: the live rule (`cp18.serving.LIVE`) never names one, so no live day can carry this cause. It is
+  kept for CP-18a's recorded evidence (its forced days give 2026-09-02 to S_14 through an injected rule) and for
+  CP-18e's negative control, and so that a store holding it still verifies.
 
 A day attempted by a run that could not issue it stays open while it is inside the lookback, so a later run may
 still issue it. It is closed as not issued, with the cause of its last attempt (or `NO_RUN` if nothing attempted it),

@@ -1,0 +1,322 @@
+{
+ "as_expected": true,
+ "candidate": "cc64813b45f102390b9a6d66ae86727650b60d5b",
+ "days": {
+  "2026-11-06": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [
+    "availability.input_class",
+    "availability.input_class_text",
+    "availability.load_forecast_copy",
+    "availability.load_forecast_fetched_utc",
+    "data_refresh_utc"
+   ],
+   "new_vs_record_values": {
+    "availability.input_class": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "before_cutoff",
+     "record": "<absent>"
+    },
+    "availability.input_class_text": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "all inputs before the cutoff",
+     "record": "<absent>"
+    },
+    "availability.load_forecast_copy": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    },
+    "availability.load_forecast_fetched_utc": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    },
+    "data_refresh_utc": {
+     "explained": "the same instant, written ...Z in the record and ...+00:00 now (CP-18c's notation)",
+     "recomputed": "2026-11-05T21:46:40+00:00",
+     "record": "2026-11-05T21:46:40Z"
+    }
+   },
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-07": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [
+    "availability.input_class",
+    "availability.input_class_text",
+    "availability.load_forecast_copy",
+    "availability.load_forecast_fetched_utc"
+   ],
+   "new_vs_record_values": {
+    "availability.input_class": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "before_cutoff",
+     "record": "<absent>"
+    },
+    "availability.input_class_text": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "all inputs before the cutoff",
+     "record": "<absent>"
+    },
+    "availability.load_forecast_copy": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    },
+    "availability.load_forecast_fetched_utc": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    }
+   },
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-08": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [
+    "availability.input_class",
+    "availability.input_class_text",
+    "availability.load_forecast_copy",
+    "availability.load_forecast_fetched_utc"
+   ],
+   "new_vs_record_values": {
+    "availability.input_class": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "before_cutoff",
+     "record": "<absent>"
+    },
+    "availability.input_class_text": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "all inputs before the cutoff",
+     "record": "<absent>"
+    },
+    "availability.load_forecast_copy": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    },
+    "availability.load_forecast_fetched_utc": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    }
+   },
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-14": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [
+    "availability.input_class",
+    "availability.input_class_text",
+    "availability.load_forecast_copy",
+    "availability.load_forecast_fetched_utc"
+   ],
+   "new_vs_record_values": {
+    "availability.input_class": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "before_cutoff",
+     "record": "<absent>"
+    },
+    "availability.input_class_text": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "all inputs before the cutoff",
+     "record": "<absent>"
+    },
+    "availability.load_forecast_copy": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    },
+    "availability.load_forecast_fetched_utc": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    }
+   },
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-15": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [
+    "availability.input_class",
+    "availability.input_class_text",
+    "availability.load_forecast_copy",
+    "availability.load_forecast_fetched_utc"
+   ],
+   "new_vs_record_values": {
+    "availability.input_class": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "before_cutoff",
+     "record": "<absent>"
+    },
+    "availability.input_class_text": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": "all inputs before the cutoff",
+     "record": "<absent>"
+    },
+    "availability.load_forecast_copy": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    },
+    "availability.load_forecast_fetched_utc": {
+     "explained": "decision 31's label (CP-18d), which this CP-18c record predates",
+     "recomputed": null,
+     "record": "<absent>"
+    }
+   },
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-16": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [],
+   "new_vs_record_values": {},
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-17": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [],
+   "new_vs_record_values": {},
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-18": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [],
+   "new_vs_record_values": {},
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-19": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [],
+   "new_vs_record_values": {},
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  },
+  "2026-11-20": {
+   "as_expected": true,
+   "new_vs_old_built_differs_at": [],
+   "new_vs_old_files_equal": true,
+   "new_vs_record_differs_at": [],
+   "new_vs_record_values": {},
+   "payload_sha256_equal_to_record": true,
+   "record_has_serving_rule": false,
+   "record_search": 13,
+   "record_search_file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+   "refit": {
+    "artifact_quantiles_sha256": "7fb7c9889c7e9274d50d909cbb3ec3dbf4a47f0789992639ce6d4f68f259e0c8",
+    "equal": true,
+    "errors": [],
+    "issued_policy": "A1",
+    "members_params_equal": true,
+    "quantiles_sha256": "7fb7c9889c7e9274d50d909cbb3ec3dbf4a47f0789992639ce6d4f68f259e0c8"
+   },
+   "schedule": 13,
+   "serving_new": 13,
+   "serving_old": 13
+  }
+ },
+ "issued_days": 10,
+ "leg_seconds": {
+  "new": 280.833687,
+  "old": 280.809774
+ },
+ "not_as_expected": [],
+ "old_code": {
+  "candidate_differs_under_src_only_in_cp18": true,
+  "candidate_src_changes": [
+   "src/cp18/__main__.py",
+   "src/cp18/bundle.py",
+   "src/cp18/causes.py",
+   "src/cp18/inputs.py",
+   "src/cp18/live/__init__.py",
+   "src/cp18/live/build.py",
+   "src/cp18/live/payloads.py",
+   "src/cp18/live_claims.py",
+   "src/cp18/live_inputs.py",
+   "src/cp18/pipeline.py",
+   "src/cp18/serving.py",
+   "src/cp18/serving_rehearsal.py",
+   "src/cp18/store.py"
+  ],
+  "commit": "5133b02c26dd1e369393362cedc524b8998d2e56",
+  "src": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18e/livedays3/old-src/src",
+  "src_tree": "74d9b30af38f6417b9496e1c44718f89bf61f62f"
+ },
+ "pinned_k13_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+ "schema": "cp18e-live-days-v1",
+ "seconds": 355.797183,
+ "store_head": "227cb8fc3cb7d916e5465a25b24ffd2c746474ec11f4239fbecd7a2f295f7c78",
+ "store_head_old_leg": "227cb8fc3cb7d916e5465a25b24ffd2c746474ec11f4239fbecd7a2f295f7c78"
+}

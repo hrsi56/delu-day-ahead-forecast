@@ -9,8 +9,9 @@ from the network here.
 **The day.** `build` calls `cp18.live.build.build_day` with the store state's buffers after D−2's release and maps its
 result onto the pipeline's: `built` gives the payloads and the day's input class (decision 31, `cp18.inputclass`); `not_shown` and `failed` leave the day open with the cause
 "a live day's inputs that cannot be shown to precede its cutoff", the second because no payload could be built from
-them (the build's own cause is kept in the record); `search_state_missing` leaves it open with "S_14's state not in
-place". The day's `data_refresh_utc` is the latest retrieval time among its archive records.
+them (the build's own cause is kept in the record); `search_state_missing` (the pinned S_13 state absent: every live
+day is S_13's, the Owner's decision 33) leaves it open with the same inputs cause. The day's `data_refresh_utc` is the
+latest retrieval time among its archive records.
 
 **The base.** `base_end` is the last day of the committed history. Live operation uses 2026-09-06, the snapshot's
 end; a dry run on development days uses the day before the recorded responses' first day.

@@ -234,8 +234,8 @@ class Payloads:
         if self.root is None or (self.recorded is None and not boundary.is_live()):
             raise FileNotFoundError(f'{day}: no cached payload and no recorded inputs to rebuild it from')
         from cp17.shadow import ShadowStates
-        from cp26.search import serving_search
         from .live_inputs import LiveInputs
+        from .serving import serving_search          # decision 33's rule, the one the day was issued under
         target = self.work / 'rebuilt' / day
         if (target / f'A1-{day}.json').exists():
             return target
