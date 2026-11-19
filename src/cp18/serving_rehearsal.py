@@ -272,6 +272,41 @@ out.write_text(json.dumps({'store_head': head['entry_sha256'], 'days': days}, in
 '''
 
 
+#: Decision 31's label in a build's availability (CP-18d): absent from the records CP-18c's code wrote.
+LABEL_FIELDS = ('input_class', 'input_class_text', 'load_forecast_copy', 'load_forecast_fetched_utc')
+MISSING = '<absent>'
+
+
+def _at(value, path: str):
+    """The value at a dotted path (`a.b[0].c`), or MISSING."""
+    for part in re.findall(r'[^.\[\]]+|\[\d+\]', path):
+        if part.startswith('['):
+            i = int(part[1:-1])
+            if not isinstance(value, list) or i >= len(value):
+                return MISSING
+            value = value[i]
+        elif isinstance(value, dict) and part in value:
+            value = value[part]
+        else:
+            return MISSING
+    return value
+
+
+def _explained(record: dict, path: str, held, recomputed) -> str | None:
+    """Why a recomputed day's inputs differ from its issued record there, or None if no known reason applies."""
+    if (record.get('schema') == 'cp18a-day-record-v1' and held == MISSING
+            and path in {f'availability.{f}' for f in LABEL_FIELDS}):
+        return "decision 31's label (CP-18d), which this CP-18c record predates"
+    if isinstance(held, str) and isinstance(recomputed, str):
+        try:
+            same = datetime.fromisoformat(held.replace('Z', '+00:00')) == datetime.fromisoformat(recomputed)
+        except ValueError:
+            same = False
+        if same:
+            return 'the same instant, written ...Z in the record and ...+00:00 now (CP-18c\'s notation)'
+    return None
+
+
 def _live_leg(name: str, src: Path, candidate: Path, project: Path, work: Path) -> dict:
     live = work / f'{name}-live'
     shutil.copytree(candidate / 'live', live)
@@ -324,10 +359,16 @@ def live_days(candidate: Path, project: Path, work: Path, refit: str | None) -> 
                 'payload_sha256_equal_to_record': n['built'].get('payload_sha256') == held['payload_sha256'],
                 'new_vs_record_differs_at': [p for p in diff(held, {k: n['built'].get(k) for k in held})
                                              if not _run_field(p, LIVE_RUN_FIELDS)]}
+        # Each difference from the issued record, with both values and why: the record was written by an earlier code
+        # (CP-18c's records lack decision 31's label, which CP-18d added), or the same instant in another notation.
+        item['new_vs_record_values'] = {p: {'record': _at(held, p), 'recomputed': _at(n['built'], p),
+                                            'explained': _explained(record, p, _at(held, p), _at(n['built'], p))}
+                                        for p in item['new_vs_record_differs_at']}
         item['as_expected'] = (item['schedule'] == item['serving_old'] == item['serving_new'] == item['record_search']
                                == 13 and item['record_search_file_sha256'] == pinned
                                and item['new_vs_old_files_equal'] and not item['new_vs_old_built_differs_at']
-                               and item['payload_sha256_equal_to_record'] and not item['record_has_serving_rule'])
+                               and item['payload_sha256_equal_to_record'] and not item['record_has_serving_rule']
+                               and all(v['explained'] for v in item['new_vs_record_values'].values()))
         if refit == day:
             artifact = json.loads((store.folder / entry['artifact_file']).read_text())
             host = daily.Host(project / runtime.PYODIDE_DIR, project / PACKAGE_ZIP)
