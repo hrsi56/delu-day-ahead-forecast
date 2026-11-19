@@ -14,7 +14,7 @@ after 2026-09-06 is planned (the development guard is in force throughout).
 | `decision33` | this candidate | `Rule(scheduled)`, the schedule giving 2026-08-31 to S_14 | issued from S_13; the record names S_13 and decision 33 |
 | `control` | this candidate | `scheduled` itself, a plain callable: the rule before decision 33 (as CP-18a's forced days) | open: "S_14's state not in place" |
 
-**Compared.** `new` against `old` (nothing before 2027-01-06 changes): the four payloads byte for byte, the artifact,
+**Compared.** `new` against `old` (nothing before S_14's day changes): the four payloads byte for byte, the artifact,
 the day's record and the run's item for the day, except the run's own fields (its id, times and durations). The
 artifact records its own attempt's wall time and peak memory (`resources`), so its hash differs between any two runs of
 the same day; every other field of it, the forecast's `quantiles_sha256` included, must be equal. `decision33` against
@@ -34,6 +34,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -50,6 +51,8 @@ RUN_FIELDS = ('run_id', 'run_started_utc', 'issuance_started_utc', 'issuance_fin
               'inputs.timings', 'inputs.payloads', 'inputs.search.path', 'artifact_sha256')
 #: The artifact's own measurements of its attempt (`cp17.issue`: wall time and peak memory), and its hash over them.
 ARTIFACT_RUN_FIELDS = ('artifact_sha256', 'resources', 'attempts[0].resources', 'attempts[0].seconds')
+#: The shadow fits' own measurements in a record (`cp17.daily`: each shadow's wall time and peak memory).
+SHADOW_MEASURES = re.compile(r'^shadows\.[A-Za-z0-9]+\.(peak_bytes|wall_seconds)$')
 
 #: One leg, in its own interpreter. It uses only what both codes have (`cp18.forced.setup`, `cp18.pipeline.run`).
 LEG = r'''
@@ -159,6 +162,8 @@ def diff(a, b, path: str = '') -> list[str]:
 
 
 def _run_field(path: str, fields=RUN_FIELDS) -> bool:
+    if fields is RUN_FIELDS and SHADOW_MEASURES.match(path):
+        return True
     return any(path == f or path.startswith(f + '.') or path.startswith(f + '[') for f in fields)
 
 

@@ -5,13 +5,13 @@ S_k's day to the day before S_(k+1)'s (§24.7). Its searches S_0 to S_13 are the
 `cp26.search` is not edited.
 
 **Decision 33** (the Owner's, recorded beside CP-18e's brief): DDNN-2's searches in operation end at S_13
-(2026-07-08). S_14 (2027-01-06) and every later search are not run, and v6 keeps S_13's state, the one A1's freeze pins
+(2026-07-08). S_14 (182 days later) and every later search are not run, and v6 keeps S_13's state, the one A1's freeze pins
 (`cp17.runtime.K13`), for every later delivery day too. The rule is the schedule's search capped at S_13:
 
 | Delivery day | The schedule | The live rule |
 |---|---|---|
-| before 2027-01-06 | S_k | S_k, unchanged (`min(k, 13) == k`) |
-| from 2027-01-06 | S_14, S_15, ... | S_13 |
+| before S_14's day | S_k | S_k, unchanged (`min(k, 13) == k`) |
+| from S_14's day on | S_14, S_15, ... | S_13 |
 
 So every live day's search state is the pinned S_13, validated as before (`cp26.search.validate_ensemble(..., 13,
 'nominal')`, its own member seeds), and nothing re-labels it as another search.
