@@ -1,0 +1,3858 @@
+{
+ "as_expected": true,
+ "candidate": "cc64813b45f102390b9a6d66ae86727650b60d5b",
+ "checks": {
+  "control_open_with_s14": true,
+  "decision33_built_from_s13": true,
+  "decision33_issued": true,
+  "decision33_names_decision_33": true,
+  "decision33_record_differs_only_by_serving_rule": true,
+  "decision33_same_payloads_and_forecast_as_old": true,
+  "new_equals_old": true,
+  "new_issued": true,
+  "new_record_has_no_serving_rule": true,
+  "old_issued": true
+ },
+ "day": "2026-08-31",
+ "decision33_vs_old": {
+  "artifact_differs_at": [],
+  "artifact_differs_at_run_fields": [
+   "artifact_sha256",
+   "attempts[0].resources.peak_bytes",
+   "attempts[0].resources.wall_seconds",
+   "attempts[0].seconds",
+   "resources.peak_bytes",
+   "resources.wall_seconds"
+  ],
+  "payload_files_equal": true,
+  "quantiles_sha256_equal": true,
+  "record_differs_at": [
+   "serving_rule"
+  ],
+  "record_differs_at_run_fields": [
+   "artifact_sha256",
+   "gate.started_utc",
+   "inputs.timings.context_seconds",
+   "inputs.timings.history_seconds",
+   "inputs.timings.total_seconds",
+   "issuance_finished_utc",
+   "issuance_started_utc",
+   "issue_day_seconds",
+   "process_seconds.A1",
+   "process_seconds.B0",
+   "process_seconds.v2",
+   "process_seconds.v4",
+   "process_seconds_sum",
+   "run_id",
+   "run_started_utc",
+   "shadows.B0.peak_bytes",
+   "shadows.B0.wall_seconds",
+   "shadows.v2.peak_bytes",
+   "shadows.v2.wall_seconds",
+   "shadows.v4.peak_bytes",
+   "shadows.v4.wall_seconds"
+  ],
+  "run_item_differs_at": [
+   "serving_rule"
+  ],
+  "run_item_differs_at_run_fields": [
+   "artifact_sha256",
+   "inputs.timings.context_seconds",
+   "inputs.timings.history_seconds",
+   "inputs.timings.total_seconds",
+   "process_seconds_sum",
+   "seconds",
+   "started_utc"
+  ]
+ },
+ "leg_seconds_sum": 1319.740585,
+ "legs": {
+  "control": {
+   "artifact": null,
+   "code": [
+    "/Users/djourno/Downloads/PJM/.local/worktrees/cp-18e/lead/src"
+   ],
+   "mode": "control",
+   "origin_log": [
+    "delu-daily live: run cp18e-control (done; not issued: 2026-08-31)",
+    "delu-daily forced causes: the store at its start",
+    "Yarden Viktor Dejorno CP-18e: the rehearsal driver refuses a candidate whose src/ differs from HEAD, and voids a run if HEAD moves",
+    "Yarden Viktor Dejorno CP-18e: the live-days record shows each difference from the issued record, with both values and its reason"
+   ],
+   "payload_files": {},
+   "record": null,
+   "run": {
+    "closed": [],
+    "days": {
+     "2026-08-31": {
+      "cause": "s14",
+      "cause_text": "S_14's state not in place",
+      "note": "the search state that serves this day is not in place; the day waits for it",
+      "search": 14,
+      "started_utc": "2026-11-19T13:40:58+00:00",
+      "status": "open"
+     }
+    },
+    "exit": 1,
+    "outcome": "done; not issued: 2026-08-31",
+    "planned": [
+     "2026-08-31"
+    ]
+   },
+   "store_days": {},
+   "store_head": "d8ca1075ba82602b051b04b4ba663abd450867a5cc1b0df1baad9901590082aa",
+   "wall_seconds": 129.525391
+  },
+  "decision33": {
+   "artifact": {
+    "artifact_sha256": "d137522017f4d584262d0d233873bae6fa8404b8299e3c81c611abfa8ff6faf2",
+    "attempts": [
+     {
+      "cause": null,
+      "partial": null,
+      "policy": "A1",
+      "resources": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 842547200,
+       "wall_seconds": 76.922344834
+      },
+      "seconds": 76.97794437500124,
+      "status": "ok"
+     }
+    ],
+    "delivery_day": "2026-08-31",
+    "designated_policy": "A1",
+    "display": "successful daily fit",
+    "issue_utc": "2026-08-30T09:00:00+00:00",
+    "issued_policy": "A1",
+    "keys": [
+     "2026-08-30T22:00:00+00:00",
+     "2026-08-30T23:00:00+00:00",
+     "2026-08-31T00:00:00+00:00",
+     "2026-08-31T01:00:00+00:00",
+     "2026-08-31T02:00:00+00:00",
+     "2026-08-31T03:00:00+00:00",
+     "2026-08-31T04:00:00+00:00",
+     "2026-08-31T05:00:00+00:00",
+     "2026-08-31T06:00:00+00:00",
+     "2026-08-31T07:00:00+00:00",
+     "2026-08-31T08:00:00+00:00",
+     "2026-08-31T09:00:00+00:00",
+     "2026-08-31T10:00:00+00:00",
+     "2026-08-31T11:00:00+00:00",
+     "2026-08-31T12:00:00+00:00",
+     "2026-08-31T13:00:00+00:00",
+     "2026-08-31T14:00:00+00:00",
+     "2026-08-31T15:00:00+00:00",
+     "2026-08-31T16:00:00+00:00",
+     "2026-08-31T17:00:00+00:00",
+     "2026-08-31T18:00:00+00:00",
+     "2026-08-31T19:00:00+00:00",
+     "2026-08-31T20:00:00+00:00",
+     "2026-08-31T21:00:00+00:00"
+    ],
+    "lineage": {
+     "code_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+     "host": {
+      "node": "v26.7.0",
+      "process": "one fresh process per attempt",
+      "pyodide": "0.28.0",
+      "runtime": "pyodide"
+     },
+     "inputs": {
+      "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6"
+     },
+     "parent_artifact_sha256": null,
+     "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc",
+     "state": null,
+     "training": {
+      "ensemble_content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+      "members": [
+       {
+        "holdout_days_sha256": "67a813657c71bfa39b7e92d2d52f62e3f0fd12a3e82fd24f56be9a46f4633c13",
+        "latest_training_day": "2026-08-30",
+        "member": 0,
+        "params_sha256": "815b420c4712cf68ea6ce15e328f736bff0db00f5ca658e585b8671022396f28",
+        "seed": 27390011,
+        "train_days_sha256": "b02e0752ef6a1763350284f8d4a0fd1b8edcfee269ec4a695916b2f9aa6c7122"
+       },
+       {
+        "holdout_days_sha256": "3ea18b73e1de54a3fa45240e136e0ffb3ff9c7971bc125473f6f0d7a2e7cc682",
+        "latest_training_day": "2026-08-30",
+        "member": 1,
+        "params_sha256": "0c3781defd4b4ce1eda40f44281e93822e1884a2dde2b43c0849158e635131d6",
+        "seed": 27390012,
+        "train_days_sha256": "9de244efc2d36d6424075931c6fbc65ff3e13c8f1433a64758b29fde81f89803"
+       },
+       {
+        "holdout_days_sha256": "322f5f4e565e39350759758ef64d30f938d42d26c4b44bbee8b9b5b885ffe5fe",
+        "latest_training_day": "2026-08-30",
+        "member": 2,
+        "params_sha256": "a973f7931e16384946569579f239c2ead18e2f6c1237ee2e590502e235cb777c",
+        "seed": 27390021,
+        "train_days_sha256": "e2874dd73e185242ea85daecf9db9716c4b9b1494c4b20f8941e0d085ef9f3a4"
+       },
+       {
+        "holdout_days_sha256": "ee72186acc8f6ec3b2e414f2c6cd652971c68f43d09ce9bcc151654fdc6423ad",
+        "latest_training_day": "2026-08-30",
+        "member": 3,
+        "params_sha256": "fffdb3c64cabc706d3c019b8ca9da68269fe4137c926f754825d3f0f48dde6c3",
+        "seed": 27390022,
+        "train_days_sha256": "a53375da025abf603886d84006ffd9f0c107f3cc9b202ad1a329a46c838005a3"
+       },
+       {
+        "holdout_days_sha256": "0f7abb0b93d8f86ca383a947da1d7cd81b4e8e330dc3525c829989428664a2fd",
+        "latest_training_day": "2026-08-30",
+        "member": 4,
+        "params_sha256": "b4c71299139539245c383bf1d3141320be908bbb56129dd59e47d77870c8171a",
+        "seed": 27390031,
+        "train_days_sha256": "0f26b4a7e77bbf8c3ea0fbedb4aab265ff989f50a185fa0ac459949dc8a2ac81"
+       },
+       {
+        "holdout_days_sha256": "2862a8c02507ef4f13ec4ecab7954f1e717b57c2bdc68179b70bc16f290769ca",
+        "latest_training_day": "2026-08-30",
+        "member": 5,
+        "params_sha256": "e17421899807528b9791e3d62dfb695a0e1a998e01064241ae87896c639632ab",
+        "seed": 27390032,
+        "train_days_sha256": "1ab3eaa9c7a79f2a459af81ec7fee3763c5a10e507098cece9b9c47311a6dbb2"
+       },
+       {
+        "holdout_days_sha256": "59366cbab12fdcd8ff70b13e22d0890307c57ca9b1cbb43ed230d572675463be",
+        "latest_training_day": "2026-08-30",
+        "member": 6,
+        "params_sha256": "7041b85958d40cad441a89e45b7df1b121c010357891b3efb99c1a602d951653",
+        "seed": 27390041,
+        "train_days_sha256": "55d56d13dcf5fe0b77c26783bd15944c55f987574b0a076f44b2a9cb3bfd045c"
+       },
+       {
+        "holdout_days_sha256": "6cab915f0de468adc284589040e0b234c689017b310b9af22ad2b1f8df85d864",
+        "latest_training_day": "2026-08-30",
+        "member": 7,
+        "params_sha256": "25688f831021f4949d050c025480d08c51ac205775ae76aa404cb5d4c42d3ca8",
+        "seed": 27390042,
+        "train_days_sha256": "2f87e131f8d8323c4edc164b674da8e727aa7e4da081916873f2f4f5e3a9526b"
+       }
+      ],
+      "search": 13,
+      "seeds": [
+       27390011,
+       27390012,
+       27390021,
+       27390022,
+       27390031,
+       27390032,
+       27390041,
+       27390042
+      ]
+     }
+    },
+    "partial": null,
+    "product": "delu-day-ahead-policy",
+    "quantiles": [
+     [
+      116.82861209874585,
+      128.99217112217912,
+      137.59454049054568,
+      146.07063326498906,
+      154.64137679186047,
+      162.4479591637407,
+      174.6354295384349
+     ],
+     [
+      99.43900092753651,
+      113.16670825294686,
+      123.42604534225379,
+      134.3186784061237,
+      142.77935773315204,
+      150.25326664046406,
+      160.11316265884938
+     ],
+     [
+      90.49354215144902,
+      104.96346355978005,
+      115.05461198971673,
+      125.7762401899127,
+      136.42107362219932,
+      146.68745238906362,
+      155.71993793536032
+     ],
+     [
+      81.20471881769723,
+      96.90385458814754,
+      109.44005594626779,
+      121.35608650471568,
+      132.84729838416854,
+      140.50453610825295,
+      149.41254811234825
+     ],
+     [
+      83.87513694477745,
+      99.42020298395968,
+      110.6616378366159,
+      121.47049753842091,
+      131.42935596070282,
+      140.30131879154777,
+      150.81697452086934
+     ],
+     [
+      95.15093406330668,
+      111.76872408808268,
+      122.36905616933026,
+      132.29855398106235,
+      141.66089505486764,
+      150.76796545662677,
+      161.21751296246168
+     ],
+     [
+      117.81488624672583,
+      132.09510757881242,
+      143.18855042423772,
+      155.01768860448541,
+      168.0559724340105,
+      178.42396381330582,
+      194.69051948500666
+     ],
+     [
+      129.01078112173565,
+      142.87083193457212,
+      154.64794850839723,
+      168.42049508683073,
+      183.33572785420347,
+      200.93099005723386,
+      222.69758542891873
+     ],
+     [
+      115.71545656333527,
+      133.3759058288837,
+      147.53034457433813,
+      160.80031146199943,
+      175.7277545835525,
+      193.0269445098986,
+      220.81471401011996
+     ],
+     [
+      76.48082021783824,
+      100.81397691649414,
+      117.03152388091954,
+      133.14342447162227,
+      147.74991474987587,
+      160.97770537635998,
+      178.08465353579905
+     ],
+     [
+      25.264149669169512,
+      56.023650653516064,
+      77.26247172566555,
+      96.46954946837793,
+      114.06704953436704,
+      128.64123715318607,
+      144.8566290943828
+     ],
+     [
+      -33.93393158415836,
+      11.151096849151344,
+      40.574077522341376,
+      67.69815799087849,
+      88.99323229444613,
+      105.3824913066108,
+      123.39730556968914
+     ],
+     [
+      -58.58765664812094,
+      -6.473764014429321,
+      25.246823693911942,
+      55.88541055490703,
+      79.45155566624317,
+      92.78574395503446,
+      111.68503113637664
+     ],
+     [
+      -79.95510069778146,
+      -26.052982620316072,
+      8.64677299701954,
+      37.784924831687654,
+      63.800552086217714,
+      84.27250230863399,
+      102.86923188975067
+     ],
+     [
+      -77.24455511952236,
+      -25.452133640358653,
+      7.733558641113035,
+      35.35497475085251,
+      58.81031587040032,
+      78.98099534849202,
+      96.07787737306037
+     ],
+     [
+      -63.52934130162954,
+      -15.001509568765073,
+      16.501184965361695,
+      44.79185456040374,
+      67.64331300364863,
+      84.87038815034339,
+      102.96033531710182
+     ],
+     [
+      -42.508701138106986,
+      2.308966429385478,
+      29.85794362287634,
+      56.96277231859647,
+      81.34417512048,
+      97.36572436839782,
+      113.25852700420627
+     ],
+     [
+      15.775388640317473,
+      55.80374615809947,
+      81.76794359409908,
+      101.89703544985825,
+      119.8313706487684,
+      133.82962864686158,
+      149.49413421498238
+     ],
+     [
+      80.71864560380753,
+      107.73933501968133,
+      125.461881081039,
+      139.9183631835978,
+      154.03071329245557,
+      168.56314921513035,
+      189.08140405235017
+     ],
+     [
+      116.09880077247152,
+      135.79663216971076,
+      149.77802504538212,
+      163.2718546788842,
+      178.1369829396926,
+      193.41411140495035,
+      219.1822892676173
+     ],
+     [
+      129.46561216134245,
+      143.00272343952474,
+      154.08257836029662,
+      165.7935288145793,
+      180.54474568791989,
+      194.63901027170107,
+      215.38306218616518
+     ],
+     [
+      111.80164183084989,
+      127.84994962038779,
+      138.50574576350215,
+      150.3821929090139,
+      163.67637884305884,
+      176.5930008648856,
+      195.27124363336318
+     ],
+     [
+      113.4341106144269,
+      127.24533892915338,
+      137.67906336475033,
+      147.5849753407993,
+      157.7107746205346,
+      167.09024103963623,
+      179.26056569282713
+     ],
+     [
+      84.98300834369401,
+      104.20232689539898,
+      115.94334145956992,
+      128.24645390444923,
+      140.81429164779792,
+      150.732225459926,
+      162.73877628068078
+     ]
+    ],
+    "quantiles_sha256": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 842547200,
+     "wall_seconds": 76.922344834
+    },
+    "route": "designated",
+    "schema": "cp17b-issued-artifact-v2",
+    "times": {
+     "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+     "issuance_utc": "2026-08-30T09:00:00+00:00",
+     "last_training_utc": "2026-08-30T09:00:00+00:00"
+    }
+   },
+   "code": [
+    "/Users/djourno/Downloads/PJM/.local/worktrees/cp-18e/lead/src"
+   ],
+   "mode": "decision33",
+   "origin_log": [
+    "delu-daily live: run cp18e-decision33 (done)",
+    "delu-daily live: 2026-08-31 issued (successful daily fit)",
+    "delu-daily forced causes: the store at its start",
+    "Yarden Viktor Dejorno CP-18e: the rehearsal driver refuses a candidate whose src/ differs from HEAD, and voids a run if HEAD moves"
+   ],
+   "payload_files": {
+    "A1-2026-08-31.json": "98b6b24f1804dda7e3c52be3a9956f57cc37989765e71434293456781da441a8",
+    "A1-2026-08-31.npz": "b10f123521699033b6ee94a9e9d037fb865919bd2c18bda73250d1423c360463",
+    "B0-2026-08-31.json": "f57bc81ffbf50b36a472c68b7e6f165a5927c982cf09cd10639ca0b20204de0d",
+    "B0-2026-08-31.npz": "564bb319ab9135aeecc1c99e63aa920d23c654241bc9782dc004ea424330c11a",
+    "v2-2026-08-31.json": "ea27ddafcd97482d830b915d969860b3e4fa8e500475ecf38443ab25dc59b24e",
+    "v2-2026-08-31.npz": "47546ddb48f69844adbc111eaa3b8f32bc35dde4d34c3d4d49f8688da52db9bf",
+    "v4-2026-08-31.json": "40b74a0652f89a85870bd0f7d9315629adc83347dd5a4656fc9c6755b018e6f1",
+    "v4-2026-08-31.npz": "dde7b80286b5d074f8413ad991abc24c60e4614d4e9aa5274a600dee00c5a4bb"
+   },
+   "record": {
+    "artifact_sha256": "d137522017f4d584262d0d233873bae6fa8404b8299e3c81c611abfa8ff6faf2",
+    "artifact_verifies": true,
+    "blocked_non_local_requests": [],
+    "causes": {},
+    "cutoff_utc": "2026-08-30T09:00:00+00:00",
+    "day": "2026-08-31",
+    "display": "successful daily fit",
+    "gate": {
+     "machine": {
+      "cpu_count": 8,
+      "cpu_model": "Apple M3",
+      "hardware_model": "Mac15,3",
+      "machine": "arm64",
+      "memory_bytes": 17179869184,
+      "os_version": "26.5.2",
+      "physical_cores": 8,
+      "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+      "runner_env": {
+       "GITHUB_ACTIONS": null,
+       "GITHUB_JOB": null,
+       "GITHUB_REPOSITORY": null,
+       "GITHUB_RUN_ATTEMPT": null,
+       "GITHUB_RUN_ID": null,
+       "GITHUB_SHA": null,
+       "ImageOS": null,
+       "ImageVersion": null,
+       "RUNNER_ARCH": null,
+       "RUNNER_ENVIRONMENT": null,
+       "RUNNER_NAME": null,
+       "RUNNER_OS": null
+      },
+      "system": "Darwin"
+     },
+     "passed": true,
+     "started_utc": "2026-11-19T13:39:44+00:00"
+    },
+    "gfs_available": true,
+    "host_kind": "local",
+    "input_class": "before_cutoff",
+    "input_class_text": "all inputs before the cutoff",
+    "inputs": {
+     "acquired": [],
+     "archive_days": [
+      "2026-08-28",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-08-31"
+     ],
+     "availability": {
+      "base": {
+       "load_forecast_basis": "the committed development history; its tier-3 load forecast is admitted under ruling 1's recorded exception (development data only)",
+       "ruling_4": [
+        "2022-12-01",
+        "2023-01-21"
+       ],
+       "snapshot": "data/snapshot.parquet",
+       "through": "2026-08-27",
+       "weather": [
+        "reports/weather-ablation/weather-features.parquet",
+        "reports/development-inputs/weather-features-gaps.parquet"
+       ]
+      },
+      "by_exception": [
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-28",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-29",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-30",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-31",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       }
+      ],
+      "input_class": "before_cutoff",
+      "input_class_text": "all inputs before the cutoff",
+      "load_forecast_copy": null,
+      "load_forecast_fetched_utc": null,
+      "reasons": [],
+      "records": [
+       {
+        "admitted": true,
+        "archive_day": "2026-08-29",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 3,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-27T11:00:00Z",
+        "reason": "published 2026-08-27T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-28",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-30",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 2,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-28T11:00:00Z",
+        "reason": "published 2026-08-28T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-29",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-31",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-29T11:00:00Z",
+        "reason": "published 2026-08-29T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-30",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-31",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-31",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": true,
+        "sha256": "eba855cb4f710dff73d800dc21d3f90a4576496b2567e36a7b7a88c1061cfcbf",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-27T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-27T04:03:34Z",
+        "reason": "published 2026-08-27T04:03:34Z, strictly before the cutoff 2026-08-27T09:00:00Z",
+        "record": "gfs-run-2026-08-27",
+        "required": false,
+        "run": "2026-08-27",
+        "sha256": "9247c640a0debbc0aca2ea5a94d19fcb591301f466c88aae5c20ab56a57fcfb0",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-28T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-28T03:57:16Z",
+        "reason": "published 2026-08-28T03:57:16Z, strictly before the cutoff 2026-08-28T09:00:00Z",
+        "record": "gfs-run-2026-08-28",
+        "required": false,
+        "run": "2026-08-28",
+        "sha256": "941e83fd4d5414e041f7d21ece1c50417937573729e053c4015e20ca08839188",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-29T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-29T03:48:40Z",
+        "reason": "published 2026-08-29T03:48:40Z, strictly before the cutoff 2026-08-29T09:00:00Z",
+        "record": "gfs-run-2026-08-29",
+        "required": false,
+        "run": "2026-08-29",
+        "sha256": "da280e9304505d5aa0886def26daf7f212f2d78b8634747493511209a155d267",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-31",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-30T03:59:28Z",
+        "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "gfs-run-2026-08-30",
+        "required": false,
+        "run": "2026-08-30",
+        "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       }
+      ],
+      "shown": true
+     },
+     "build_cause": null,
+     "build_status": "built",
+     "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+     "gfs": {
+      "available": true,
+      "day": "2026-08-31",
+      "judgement": {
+       "admitted": true,
+       "archive_day": "2026-08-31",
+       "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+       "basis_id": "aws_last_modified",
+       "by_exception": false,
+       "cutoff_utc": "2026-08-30T09:00:00Z",
+       "data_day": "2026-08-31",
+       "for_day": "2026-08-31",
+       "input": "gfs",
+       "provenance": "recorded",
+       "publication_utc": "2026-08-30T03:59:28Z",
+       "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+       "record": "gfs-run-2026-08-30",
+       "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+       "tier": 2
+      },
+      "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+      "run": "2026-08-30",
+      "status": "ok",
+      "vector_valid": true
+     },
+     "gfs_available": true,
+     "history": {
+      "base_end": "2026-08-27",
+      "frame_rows": 67199,
+      "increment_days": [
+       "2026-08-28",
+       "2026-08-29",
+       "2026-08-30",
+       "2026-08-31"
+      ],
+      "weather_rows": 67199
+     },
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_copy": null,
+     "load_forecast_fetched_utc": null,
+     "payload_sha256": {
+      "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6",
+      "B0": "e845d1b8d9d66b72d2c72357e67862e79c36d379c0517860d857df75892759c7",
+      "v2": "067bca666c98330bf8be220fd463cb13a0c9e3f08614bfce79cc398c403b8f97",
+      "v4": "ce684869ad1c8adc27b61c462a725adbab7cbaed04425bfd9c8867cddeb108f9"
+     },
+     "problems": [],
+     "reasons": [],
+     "search": {
+      "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+      "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+      "k": 13,
+      "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+      "present": true,
+      "search_day": "2026-07-08"
+     },
+     "shown": true,
+     "source": "cp18.live (replayed recorded responses)",
+     "timings": {
+      "context_seconds": 17.151,
+      "history_seconds": 0.54,
+      "total_seconds": 18.537
+     }
+    },
+    "issuance_finished_utc": "2026-11-19T13:44:59+00:00",
+    "issuance_started_utc": "2026-11-19T13:41:17+00:00",
+    "issue_day_seconds": 222.8683871670073,
+    "issued_policy": "A1",
+    "load_forecast_fetched_utc": null,
+    "path": [
+     [
+      "A1",
+      "ok"
+     ]
+    ],
+    "process_seconds": {
+     "A1": 76.922344834,
+     "B0": 4.787407583,
+     "v2": 65.101826125,
+     "v4": 75.775150708
+    },
+    "process_seconds_sum": 222.58672925,
+    "run_id": "cp18e-decision33",
+    "run_started_utc": "2026-11-19T13:39:43+00:00",
+    "schema": "cp18d-day-record-v1",
+    "serving_rule": {
+     "decision": 33,
+     "scheduled_search": 14,
+     "scheduled_search_day": "2027-01-06",
+     "search": 13,
+     "search_day": "2026-07-08",
+     "text": "S_13's state serves this day: DDNN-2's searches in operation end at S_13, and S_14 and every later search are not run (the Owner's decision 33)"
+    },
+    "shadows": {
+     "B0": {
+      "cause": null,
+      "central_sha256": "ddd7f3eacb84218785ddfa499035b0d4af1fcee1ce30f2576b36674c7897bf2d",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 849035264,
+      "quantiles_sha256": "f02ac4e9358ded882e71380848e5293e79cf04b27b7f78f3e8af6a7657b62e0b",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": null,
+      "status": "ok",
+      "wall_seconds": 4.787407583
+     },
+     "v2": {
+      "cause": null,
+      "central_sha256": "8a1d82c87bbe2820b11d9a46ed14748e7ccf09126c74a9dfaa493be4c6d4c9f9",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 940097536,
+      "quantiles_sha256": "b7ada794d543b6429ebcb61522608b70a05e53bb3cc66e45d8912cdebfd23d7d",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": "ac8c43736da36fea896850a48188d72451504dd77fa95e230ecee7f01293d469",
+      "status": "ok",
+      "wall_seconds": 65.101826125
+     },
+     "v4": {
+      "cause": null,
+      "central_sha256": "a0d17c654b133681a5f8e82cd7612c74de525f95041d4c1048c76f27f27f02f8",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 956170240,
+      "quantiles_sha256": "bbdaa9d207bceaa5a03150c289f34137a9261a3e34097357c942a61a86c454a9",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": "ac8c43736da36fea896850a48188d72451504dd77fa95e230ecee7f01293d469",
+      "status": "ok",
+      "wall_seconds": 75.775150708
+     }
+    }
+   },
+   "run": {
+    "closed": [],
+    "days": {
+     "2026-08-31": {
+      "artifact_sha256": "d137522017f4d584262d0d233873bae6fa8404b8299e3c81c611abfa8ff6faf2",
+      "cause": null,
+      "cause_text": null,
+      "display": "successful daily fit",
+      "input_class": "before_cutoff",
+      "input_class_text": "all inputs before the cutoff",
+      "inputs": {
+       "acquired": [],
+       "archive_days": [
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31"
+       ],
+       "availability": {
+        "base": {
+         "load_forecast_basis": "the committed development history; its tier-3 load forecast is admitted under ruling 1's recorded exception (development data only)",
+         "ruling_4": [
+          "2022-12-01",
+          "2023-01-21"
+         ],
+         "snapshot": "data/snapshot.parquet",
+         "through": "2026-08-27",
+         "weather": [
+          "reports/weather-ablation/weather-features.parquet",
+          "reports/development-inputs/weather-features-gaps.parquet"
+         ]
+        },
+        "by_exception": [
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-28",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-29",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-30",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-31",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         }
+        ],
+        "input_class": "before_cutoff",
+        "input_class_text": "all inputs before the cutoff",
+        "load_forecast_copy": null,
+        "load_forecast_fetched_utc": null,
+        "reasons": [],
+        "records": [
+         {
+          "admitted": true,
+          "archive_day": "2026-08-29",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 3,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-27T11:00:00Z",
+          "reason": "published 2026-08-27T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-28",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-30",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 2,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-28T11:00:00Z",
+          "reason": "published 2026-08-28T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-29",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-31",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-29T11:00:00Z",
+          "reason": "published 2026-08-29T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-30",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-31",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-31",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": true,
+          "sha256": "eba855cb4f710dff73d800dc21d3f90a4576496b2567e36a7b7a88c1061cfcbf",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-27T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-27T04:03:34Z",
+          "reason": "published 2026-08-27T04:03:34Z, strictly before the cutoff 2026-08-27T09:00:00Z",
+          "record": "gfs-run-2026-08-27",
+          "required": false,
+          "run": "2026-08-27",
+          "sha256": "9247c640a0debbc0aca2ea5a94d19fcb591301f466c88aae5c20ab56a57fcfb0",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-28T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-28T03:57:16Z",
+          "reason": "published 2026-08-28T03:57:16Z, strictly before the cutoff 2026-08-28T09:00:00Z",
+          "record": "gfs-run-2026-08-28",
+          "required": false,
+          "run": "2026-08-28",
+          "sha256": "941e83fd4d5414e041f7d21ece1c50417937573729e053c4015e20ca08839188",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-29T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-29T03:48:40Z",
+          "reason": "published 2026-08-29T03:48:40Z, strictly before the cutoff 2026-08-29T09:00:00Z",
+          "record": "gfs-run-2026-08-29",
+          "required": false,
+          "run": "2026-08-29",
+          "sha256": "da280e9304505d5aa0886def26daf7f212f2d78b8634747493511209a155d267",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-31",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-30T03:59:28Z",
+          "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "gfs-run-2026-08-30",
+          "required": false,
+          "run": "2026-08-30",
+          "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         }
+        ],
+        "shown": true
+       },
+       "build_cause": null,
+       "build_status": "built",
+       "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+       "gfs": {
+        "available": true,
+        "day": "2026-08-31",
+        "judgement": {
+         "admitted": true,
+         "archive_day": "2026-08-31",
+         "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+         "basis_id": "aws_last_modified",
+         "by_exception": false,
+         "cutoff_utc": "2026-08-30T09:00:00Z",
+         "data_day": "2026-08-31",
+         "for_day": "2026-08-31",
+         "input": "gfs",
+         "provenance": "recorded",
+         "publication_utc": "2026-08-30T03:59:28Z",
+         "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+         "record": "gfs-run-2026-08-30",
+         "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+         "tier": 2
+        },
+        "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "run": "2026-08-30",
+        "status": "ok",
+        "vector_valid": true
+       },
+       "gfs_available": true,
+       "history": {
+        "base_end": "2026-08-27",
+        "frame_rows": 67199,
+        "increment_days": [
+         "2026-08-28",
+         "2026-08-29",
+         "2026-08-30",
+         "2026-08-31"
+        ],
+        "weather_rows": 67199
+       },
+       "input_class": "before_cutoff",
+       "input_class_text": "all inputs before the cutoff",
+       "load_forecast_copy": null,
+       "load_forecast_fetched_utc": null,
+       "payload_sha256": {
+        "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6",
+        "B0": "e845d1b8d9d66b72d2c72357e67862e79c36d379c0517860d857df75892759c7",
+        "v2": "067bca666c98330bf8be220fd463cb13a0c9e3f08614bfce79cc398c403b8f97",
+        "v4": "ce684869ad1c8adc27b61c462a725adbab7cbaed04425bfd9c8867cddeb108f9"
+       },
+       "problems": [],
+       "reasons": [],
+       "search": {
+        "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+        "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+        "k": 13,
+        "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+        "present": true,
+        "search_day": "2026-07-08"
+       },
+       "shown": true,
+       "source": "cp18.live (replayed recorded responses)",
+       "timings": {
+        "context_seconds": 17.151,
+        "history_seconds": 0.54,
+        "total_seconds": 18.537
+       }
+      },
+      "load_forecast_fetched_utc": null,
+      "policy": "A1",
+      "process_seconds_sum": 222.58672925,
+      "seconds": 242.392729625004,
+      "serving_rule": {
+       "decision": 33,
+       "scheduled_search": 14,
+       "scheduled_search_day": "2027-01-06",
+       "search": 13,
+       "search_day": "2026-07-08",
+       "text": "S_13's state serves this day: DDNN-2's searches in operation end at S_13, and S_14 and every later search are not run (the Owner's decision 33)"
+      },
+      "started_utc": "2026-11-19T13:40:57+00:00",
+      "status": "issued"
+     }
+    },
+    "exit": 0,
+    "outcome": "done",
+    "planned": [
+     "2026-08-31"
+    ]
+   },
+   "store_days": {
+    "2026-08-31": {
+     "artifact_sha256": "d137522017f4d584262d0d233873bae6fa8404b8299e3c81c611abfa8ff6faf2",
+     "cause": null,
+     "display": "successful daily fit",
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_fetched_utc": null,
+     "policy": "A1",
+     "status": "issued"
+    }
+   },
+   "store_head": "0550e76c081a002db761c17cebbedcc8ea326d04bda22ae1082126751e769f1b",
+   "wall_seconds": 371.279573
+  },
+  "new": {
+   "artifact": {
+    "artifact_sha256": "30aa35562f3fc1bb4ebed5312bf867342687d8bf157a5ff4f5837bfaab43431e",
+    "attempts": [
+     {
+      "cause": null,
+      "partial": null,
+      "policy": "A1",
+      "resources": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 932315136,
+       "wall_seconds": 87.62889429200001
+      },
+      "seconds": 87.69705458301178,
+      "status": "ok"
+     }
+    ],
+    "delivery_day": "2026-08-31",
+    "designated_policy": "A1",
+    "display": "successful daily fit",
+    "issue_utc": "2026-08-30T09:00:00+00:00",
+    "issued_policy": "A1",
+    "keys": [
+     "2026-08-30T22:00:00+00:00",
+     "2026-08-30T23:00:00+00:00",
+     "2026-08-31T00:00:00+00:00",
+     "2026-08-31T01:00:00+00:00",
+     "2026-08-31T02:00:00+00:00",
+     "2026-08-31T03:00:00+00:00",
+     "2026-08-31T04:00:00+00:00",
+     "2026-08-31T05:00:00+00:00",
+     "2026-08-31T06:00:00+00:00",
+     "2026-08-31T07:00:00+00:00",
+     "2026-08-31T08:00:00+00:00",
+     "2026-08-31T09:00:00+00:00",
+     "2026-08-31T10:00:00+00:00",
+     "2026-08-31T11:00:00+00:00",
+     "2026-08-31T12:00:00+00:00",
+     "2026-08-31T13:00:00+00:00",
+     "2026-08-31T14:00:00+00:00",
+     "2026-08-31T15:00:00+00:00",
+     "2026-08-31T16:00:00+00:00",
+     "2026-08-31T17:00:00+00:00",
+     "2026-08-31T18:00:00+00:00",
+     "2026-08-31T19:00:00+00:00",
+     "2026-08-31T20:00:00+00:00",
+     "2026-08-31T21:00:00+00:00"
+    ],
+    "lineage": {
+     "code_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+     "host": {
+      "node": "v26.7.0",
+      "process": "one fresh process per attempt",
+      "pyodide": "0.28.0",
+      "runtime": "pyodide"
+     },
+     "inputs": {
+      "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6"
+     },
+     "parent_artifact_sha256": null,
+     "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc",
+     "state": null,
+     "training": {
+      "ensemble_content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+      "members": [
+       {
+        "holdout_days_sha256": "67a813657c71bfa39b7e92d2d52f62e3f0fd12a3e82fd24f56be9a46f4633c13",
+        "latest_training_day": "2026-08-30",
+        "member": 0,
+        "params_sha256": "815b420c4712cf68ea6ce15e328f736bff0db00f5ca658e585b8671022396f28",
+        "seed": 27390011,
+        "train_days_sha256": "b02e0752ef6a1763350284f8d4a0fd1b8edcfee269ec4a695916b2f9aa6c7122"
+       },
+       {
+        "holdout_days_sha256": "3ea18b73e1de54a3fa45240e136e0ffb3ff9c7971bc125473f6f0d7a2e7cc682",
+        "latest_training_day": "2026-08-30",
+        "member": 1,
+        "params_sha256": "0c3781defd4b4ce1eda40f44281e93822e1884a2dde2b43c0849158e635131d6",
+        "seed": 27390012,
+        "train_days_sha256": "9de244efc2d36d6424075931c6fbc65ff3e13c8f1433a64758b29fde81f89803"
+       },
+       {
+        "holdout_days_sha256": "322f5f4e565e39350759758ef64d30f938d42d26c4b44bbee8b9b5b885ffe5fe",
+        "latest_training_day": "2026-08-30",
+        "member": 2,
+        "params_sha256": "a973f7931e16384946569579f239c2ead18e2f6c1237ee2e590502e235cb777c",
+        "seed": 27390021,
+        "train_days_sha256": "e2874dd73e185242ea85daecf9db9716c4b9b1494c4b20f8941e0d085ef9f3a4"
+       },
+       {
+        "holdout_days_sha256": "ee72186acc8f6ec3b2e414f2c6cd652971c68f43d09ce9bcc151654fdc6423ad",
+        "latest_training_day": "2026-08-30",
+        "member": 3,
+        "params_sha256": "fffdb3c64cabc706d3c019b8ca9da68269fe4137c926f754825d3f0f48dde6c3",
+        "seed": 27390022,
+        "train_days_sha256": "a53375da025abf603886d84006ffd9f0c107f3cc9b202ad1a329a46c838005a3"
+       },
+       {
+        "holdout_days_sha256": "0f7abb0b93d8f86ca383a947da1d7cd81b4e8e330dc3525c829989428664a2fd",
+        "latest_training_day": "2026-08-30",
+        "member": 4,
+        "params_sha256": "b4c71299139539245c383bf1d3141320be908bbb56129dd59e47d77870c8171a",
+        "seed": 27390031,
+        "train_days_sha256": "0f26b4a7e77bbf8c3ea0fbedb4aab265ff989f50a185fa0ac459949dc8a2ac81"
+       },
+       {
+        "holdout_days_sha256": "2862a8c02507ef4f13ec4ecab7954f1e717b57c2bdc68179b70bc16f290769ca",
+        "latest_training_day": "2026-08-30",
+        "member": 5,
+        "params_sha256": "e17421899807528b9791e3d62dfb695a0e1a998e01064241ae87896c639632ab",
+        "seed": 27390032,
+        "train_days_sha256": "1ab3eaa9c7a79f2a459af81ec7fee3763c5a10e507098cece9b9c47311a6dbb2"
+       },
+       {
+        "holdout_days_sha256": "59366cbab12fdcd8ff70b13e22d0890307c57ca9b1cbb43ed230d572675463be",
+        "latest_training_day": "2026-08-30",
+        "member": 6,
+        "params_sha256": "7041b85958d40cad441a89e45b7df1b121c010357891b3efb99c1a602d951653",
+        "seed": 27390041,
+        "train_days_sha256": "55d56d13dcf5fe0b77c26783bd15944c55f987574b0a076f44b2a9cb3bfd045c"
+       },
+       {
+        "holdout_days_sha256": "6cab915f0de468adc284589040e0b234c689017b310b9af22ad2b1f8df85d864",
+        "latest_training_day": "2026-08-30",
+        "member": 7,
+        "params_sha256": "25688f831021f4949d050c025480d08c51ac205775ae76aa404cb5d4c42d3ca8",
+        "seed": 27390042,
+        "train_days_sha256": "2f87e131f8d8323c4edc164b674da8e727aa7e4da081916873f2f4f5e3a9526b"
+       }
+      ],
+      "search": 13,
+      "seeds": [
+       27390011,
+       27390012,
+       27390021,
+       27390022,
+       27390031,
+       27390032,
+       27390041,
+       27390042
+      ]
+     }
+    },
+    "partial": null,
+    "product": "delu-day-ahead-policy",
+    "quantiles": [
+     [
+      116.82861209874585,
+      128.99217112217912,
+      137.59454049054568,
+      146.07063326498906,
+      154.64137679186047,
+      162.4479591637407,
+      174.6354295384349
+     ],
+     [
+      99.43900092753651,
+      113.16670825294686,
+      123.42604534225379,
+      134.3186784061237,
+      142.77935773315204,
+      150.25326664046406,
+      160.11316265884938
+     ],
+     [
+      90.49354215144902,
+      104.96346355978005,
+      115.05461198971673,
+      125.7762401899127,
+      136.42107362219932,
+      146.68745238906362,
+      155.71993793536032
+     ],
+     [
+      81.20471881769723,
+      96.90385458814754,
+      109.44005594626779,
+      121.35608650471568,
+      132.84729838416854,
+      140.50453610825295,
+      149.41254811234825
+     ],
+     [
+      83.87513694477745,
+      99.42020298395968,
+      110.6616378366159,
+      121.47049753842091,
+      131.42935596070282,
+      140.30131879154777,
+      150.81697452086934
+     ],
+     [
+      95.15093406330668,
+      111.76872408808268,
+      122.36905616933026,
+      132.29855398106235,
+      141.66089505486764,
+      150.76796545662677,
+      161.21751296246168
+     ],
+     [
+      117.81488624672583,
+      132.09510757881242,
+      143.18855042423772,
+      155.01768860448541,
+      168.0559724340105,
+      178.42396381330582,
+      194.69051948500666
+     ],
+     [
+      129.01078112173565,
+      142.87083193457212,
+      154.64794850839723,
+      168.42049508683073,
+      183.33572785420347,
+      200.93099005723386,
+      222.69758542891873
+     ],
+     [
+      115.71545656333527,
+      133.3759058288837,
+      147.53034457433813,
+      160.80031146199943,
+      175.7277545835525,
+      193.0269445098986,
+      220.81471401011996
+     ],
+     [
+      76.48082021783824,
+      100.81397691649414,
+      117.03152388091954,
+      133.14342447162227,
+      147.74991474987587,
+      160.97770537635998,
+      178.08465353579905
+     ],
+     [
+      25.264149669169512,
+      56.023650653516064,
+      77.26247172566555,
+      96.46954946837793,
+      114.06704953436704,
+      128.64123715318607,
+      144.8566290943828
+     ],
+     [
+      -33.93393158415836,
+      11.151096849151344,
+      40.574077522341376,
+      67.69815799087849,
+      88.99323229444613,
+      105.3824913066108,
+      123.39730556968914
+     ],
+     [
+      -58.58765664812094,
+      -6.473764014429321,
+      25.246823693911942,
+      55.88541055490703,
+      79.45155566624317,
+      92.78574395503446,
+      111.68503113637664
+     ],
+     [
+      -79.95510069778146,
+      -26.052982620316072,
+      8.64677299701954,
+      37.784924831687654,
+      63.800552086217714,
+      84.27250230863399,
+      102.86923188975067
+     ],
+     [
+      -77.24455511952236,
+      -25.452133640358653,
+      7.733558641113035,
+      35.35497475085251,
+      58.81031587040032,
+      78.98099534849202,
+      96.07787737306037
+     ],
+     [
+      -63.52934130162954,
+      -15.001509568765073,
+      16.501184965361695,
+      44.79185456040374,
+      67.64331300364863,
+      84.87038815034339,
+      102.96033531710182
+     ],
+     [
+      -42.508701138106986,
+      2.308966429385478,
+      29.85794362287634,
+      56.96277231859647,
+      81.34417512048,
+      97.36572436839782,
+      113.25852700420627
+     ],
+     [
+      15.775388640317473,
+      55.80374615809947,
+      81.76794359409908,
+      101.89703544985825,
+      119.8313706487684,
+      133.82962864686158,
+      149.49413421498238
+     ],
+     [
+      80.71864560380753,
+      107.73933501968133,
+      125.461881081039,
+      139.9183631835978,
+      154.03071329245557,
+      168.56314921513035,
+      189.08140405235017
+     ],
+     [
+      116.09880077247152,
+      135.79663216971076,
+      149.77802504538212,
+      163.2718546788842,
+      178.1369829396926,
+      193.41411140495035,
+      219.1822892676173
+     ],
+     [
+      129.46561216134245,
+      143.00272343952474,
+      154.08257836029662,
+      165.7935288145793,
+      180.54474568791989,
+      194.63901027170107,
+      215.38306218616518
+     ],
+     [
+      111.80164183084989,
+      127.84994962038779,
+      138.50574576350215,
+      150.3821929090139,
+      163.67637884305884,
+      176.5930008648856,
+      195.27124363336318
+     ],
+     [
+      113.4341106144269,
+      127.24533892915338,
+      137.67906336475033,
+      147.5849753407993,
+      157.7107746205346,
+      167.09024103963623,
+      179.26056569282713
+     ],
+     [
+      84.98300834369401,
+      104.20232689539898,
+      115.94334145956992,
+      128.24645390444923,
+      140.81429164779792,
+      150.732225459926,
+      162.73877628068078
+     ]
+    ],
+    "quantiles_sha256": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 932315136,
+     "wall_seconds": 87.62889429200001
+    },
+    "route": "designated",
+    "schema": "cp17b-issued-artifact-v2",
+    "times": {
+     "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+     "issuance_utc": "2026-08-30T09:00:00+00:00",
+     "last_training_utc": "2026-08-30T09:00:00+00:00"
+    }
+   },
+   "code": [
+    "/Users/djourno/Downloads/PJM/.local/worktrees/cp-18e/lead/src"
+   ],
+   "mode": "new",
+   "origin_log": [
+    "delu-daily live: run cp18e-new (done)",
+    "delu-daily live: 2026-08-31 issued (successful daily fit)",
+    "delu-daily forced causes: the store at its start",
+    "Yarden Viktor Dejorno CP-18e: the rehearsal driver refuses a candidate whose src/ differs from HEAD, and voids a run if HEAD moves"
+   ],
+   "payload_files": {
+    "A1-2026-08-31.json": "98b6b24f1804dda7e3c52be3a9956f57cc37989765e71434293456781da441a8",
+    "A1-2026-08-31.npz": "b10f123521699033b6ee94a9e9d037fb865919bd2c18bda73250d1423c360463",
+    "B0-2026-08-31.json": "f57bc81ffbf50b36a472c68b7e6f165a5927c982cf09cd10639ca0b20204de0d",
+    "B0-2026-08-31.npz": "564bb319ab9135aeecc1c99e63aa920d23c654241bc9782dc004ea424330c11a",
+    "v2-2026-08-31.json": "ea27ddafcd97482d830b915d969860b3e4fa8e500475ecf38443ab25dc59b24e",
+    "v2-2026-08-31.npz": "47546ddb48f69844adbc111eaa3b8f32bc35dde4d34c3d4d49f8688da52db9bf",
+    "v4-2026-08-31.json": "40b74a0652f89a85870bd0f7d9315629adc83347dd5a4656fc9c6755b018e6f1",
+    "v4-2026-08-31.npz": "dde7b80286b5d074f8413ad991abc24c60e4614d4e9aa5274a600dee00c5a4bb"
+   },
+   "record": {
+    "artifact_sha256": "30aa35562f3fc1bb4ebed5312bf867342687d8bf157a5ff4f5837bfaab43431e",
+    "artifact_verifies": true,
+    "blocked_non_local_requests": [],
+    "causes": {},
+    "cutoff_utc": "2026-08-30T09:00:00+00:00",
+    "day": "2026-08-31",
+    "display": "successful daily fit",
+    "gate": {
+     "machine": {
+      "cpu_count": 8,
+      "cpu_model": "Apple M3",
+      "hardware_model": "Mac15,3",
+      "machine": "arm64",
+      "memory_bytes": 17179869184,
+      "os_version": "26.5.2",
+      "physical_cores": 8,
+      "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+      "runner_env": {
+       "GITHUB_ACTIONS": null,
+       "GITHUB_JOB": null,
+       "GITHUB_REPOSITORY": null,
+       "GITHUB_RUN_ATTEMPT": null,
+       "GITHUB_RUN_ID": null,
+       "GITHUB_SHA": null,
+       "ImageOS": null,
+       "ImageVersion": null,
+       "RUNNER_ARCH": null,
+       "RUNNER_ENVIRONMENT": null,
+       "RUNNER_NAME": null,
+       "RUNNER_OS": null
+      },
+      "system": "Darwin"
+     },
+     "passed": true,
+     "started_utc": "2026-11-19T13:33:03+00:00"
+    },
+    "gfs_available": true,
+    "host_kind": "local",
+    "input_class": "before_cutoff",
+    "input_class_text": "all inputs before the cutoff",
+    "inputs": {
+     "acquired": [],
+     "archive_days": [
+      "2026-08-28",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-08-31"
+     ],
+     "availability": {
+      "base": {
+       "load_forecast_basis": "the committed development history; its tier-3 load forecast is admitted under ruling 1's recorded exception (development data only)",
+       "ruling_4": [
+        "2022-12-01",
+        "2023-01-21"
+       ],
+       "snapshot": "data/snapshot.parquet",
+       "through": "2026-08-27",
+       "weather": [
+        "reports/weather-ablation/weather-features.parquet",
+        "reports/development-inputs/weather-features-gaps.parquet"
+       ]
+      },
+      "by_exception": [
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-28",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-29",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-30",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-31",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       }
+      ],
+      "input_class": "before_cutoff",
+      "input_class_text": "all inputs before the cutoff",
+      "load_forecast_copy": null,
+      "load_forecast_fetched_utc": null,
+      "reasons": [],
+      "records": [
+       {
+        "admitted": true,
+        "archive_day": "2026-08-29",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 3,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-27T11:00:00Z",
+        "reason": "published 2026-08-27T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-28",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-30",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 2,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-28T11:00:00Z",
+        "reason": "published 2026-08-28T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-29",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-31",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-29T11:00:00Z",
+        "reason": "published 2026-08-29T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-30",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-31",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-31",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": true,
+        "sha256": "eba855cb4f710dff73d800dc21d3f90a4576496b2567e36a7b7a88c1061cfcbf",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-27T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-27T04:03:34Z",
+        "reason": "published 2026-08-27T04:03:34Z, strictly before the cutoff 2026-08-27T09:00:00Z",
+        "record": "gfs-run-2026-08-27",
+        "required": false,
+        "run": "2026-08-27",
+        "sha256": "9247c640a0debbc0aca2ea5a94d19fcb591301f466c88aae5c20ab56a57fcfb0",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-28T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-28T03:57:16Z",
+        "reason": "published 2026-08-28T03:57:16Z, strictly before the cutoff 2026-08-28T09:00:00Z",
+        "record": "gfs-run-2026-08-28",
+        "required": false,
+        "run": "2026-08-28",
+        "sha256": "941e83fd4d5414e041f7d21ece1c50417937573729e053c4015e20ca08839188",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-29T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-29T03:48:40Z",
+        "reason": "published 2026-08-29T03:48:40Z, strictly before the cutoff 2026-08-29T09:00:00Z",
+        "record": "gfs-run-2026-08-29",
+        "required": false,
+        "run": "2026-08-29",
+        "sha256": "da280e9304505d5aa0886def26daf7f212f2d78b8634747493511209a155d267",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-31",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-30T03:59:28Z",
+        "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "gfs-run-2026-08-30",
+        "required": false,
+        "run": "2026-08-30",
+        "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       }
+      ],
+      "shown": true
+     },
+     "build_cause": null,
+     "build_status": "built",
+     "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+     "gfs": {
+      "available": true,
+      "day": "2026-08-31",
+      "judgement": {
+       "admitted": true,
+       "archive_day": "2026-08-31",
+       "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+       "basis_id": "aws_last_modified",
+       "by_exception": false,
+       "cutoff_utc": "2026-08-30T09:00:00Z",
+       "data_day": "2026-08-31",
+       "for_day": "2026-08-31",
+       "input": "gfs",
+       "provenance": "recorded",
+       "publication_utc": "2026-08-30T03:59:28Z",
+       "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+       "record": "gfs-run-2026-08-30",
+       "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+       "tier": 2
+      },
+      "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+      "run": "2026-08-30",
+      "status": "ok",
+      "vector_valid": true
+     },
+     "gfs_available": true,
+     "history": {
+      "base_end": "2026-08-27",
+      "frame_rows": 67199,
+      "increment_days": [
+       "2026-08-28",
+       "2026-08-29",
+       "2026-08-30",
+       "2026-08-31"
+      ],
+      "weather_rows": 67199
+     },
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_copy": null,
+     "load_forecast_fetched_utc": null,
+     "payload_sha256": {
+      "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6",
+      "B0": "e845d1b8d9d66b72d2c72357e67862e79c36d379c0517860d857df75892759c7",
+      "v2": "067bca666c98330bf8be220fd463cb13a0c9e3f08614bfce79cc398c403b8f97",
+      "v4": "ce684869ad1c8adc27b61c462a725adbab7cbaed04425bfd9c8867cddeb108f9"
+     },
+     "problems": [],
+     "reasons": [],
+     "search": {
+      "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+      "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+      "k": 13,
+      "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+      "present": true,
+      "search_day": "2026-07-08"
+     },
+     "shown": true,
+     "source": "cp18.live (replayed recorded responses)",
+     "timings": {
+      "context_seconds": 19.231,
+      "history_seconds": 0.581,
+      "total_seconds": 20.737
+     }
+    },
+    "issuance_finished_utc": "2026-11-19T13:38:48+00:00",
+    "issuance_started_utc": "2026-11-19T13:34:48+00:00",
+    "issue_day_seconds": 239.9799184579897,
+    "issued_policy": "A1",
+    "load_forecast_fetched_utc": null,
+    "path": [
+     [
+      "A1",
+      "ok"
+     ]
+    ],
+    "process_seconds": {
+     "A1": 87.62889429200001,
+     "B0": 5.002168417,
+     "v2": 67.093527042,
+     "v4": 79.93609195799999
+    },
+    "process_seconds_sum": 239.66068170900002,
+    "run_id": "cp18e-new",
+    "run_started_utc": "2026-11-19T13:33:02+00:00",
+    "schema": "cp18d-day-record-v1",
+    "shadows": {
+     "B0": {
+      "cause": null,
+      "central_sha256": "ddd7f3eacb84218785ddfa499035b0d4af1fcee1ce30f2576b36674c7897bf2d",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 823672832,
+      "quantiles_sha256": "f02ac4e9358ded882e71380848e5293e79cf04b27b7f78f3e8af6a7657b62e0b",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": null,
+      "status": "ok",
+      "wall_seconds": 5.002168417
+     },
+     "v2": {
+      "cause": null,
+      "central_sha256": "8a1d82c87bbe2820b11d9a46ed14748e7ccf09126c74a9dfaa493be4c6d4c9f9",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 946487296,
+      "quantiles_sha256": "b7ada794d543b6429ebcb61522608b70a05e53bb3cc66e45d8912cdebfd23d7d",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": "ac8c43736da36fea896850a48188d72451504dd77fa95e230ecee7f01293d469",
+      "status": "ok",
+      "wall_seconds": 67.093527042
+     },
+     "v4": {
+      "cause": null,
+      "central_sha256": "a0d17c654b133681a5f8e82cd7612c74de525f95041d4c1048c76f27f27f02f8",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 980893696,
+      "quantiles_sha256": "bbdaa9d207bceaa5a03150c289f34137a9261a3e34097357c942a61a86c454a9",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": "ac8c43736da36fea896850a48188d72451504dd77fa95e230ecee7f01293d469",
+      "status": "ok",
+      "wall_seconds": 79.93609195799999
+     }
+    }
+   },
+   "run": {
+    "closed": [],
+    "days": {
+     "2026-08-31": {
+      "artifact_sha256": "30aa35562f3fc1bb4ebed5312bf867342687d8bf157a5ff4f5837bfaab43431e",
+      "cause": null,
+      "cause_text": null,
+      "display": "successful daily fit",
+      "input_class": "before_cutoff",
+      "input_class_text": "all inputs before the cutoff",
+      "inputs": {
+       "acquired": [],
+       "archive_days": [
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31"
+       ],
+       "availability": {
+        "base": {
+         "load_forecast_basis": "the committed development history; its tier-3 load forecast is admitted under ruling 1's recorded exception (development data only)",
+         "ruling_4": [
+          "2022-12-01",
+          "2023-01-21"
+         ],
+         "snapshot": "data/snapshot.parquet",
+         "through": "2026-08-27",
+         "weather": [
+          "reports/weather-ablation/weather-features.parquet",
+          "reports/development-inputs/weather-features-gaps.parquet"
+         ]
+        },
+        "by_exception": [
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-28",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-29",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-30",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-31",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         }
+        ],
+        "input_class": "before_cutoff",
+        "input_class_text": "all inputs before the cutoff",
+        "load_forecast_copy": null,
+        "load_forecast_fetched_utc": null,
+        "reasons": [],
+        "records": [
+         {
+          "admitted": true,
+          "archive_day": "2026-08-29",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 3,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-27T11:00:00Z",
+          "reason": "published 2026-08-27T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-28",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-30",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 2,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-28T11:00:00Z",
+          "reason": "published 2026-08-28T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-29",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-31",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-29T11:00:00Z",
+          "reason": "published 2026-08-29T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-30",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-31",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-31",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": true,
+          "sha256": "eba855cb4f710dff73d800dc21d3f90a4576496b2567e36a7b7a88c1061cfcbf",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-27T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-27T04:03:34Z",
+          "reason": "published 2026-08-27T04:03:34Z, strictly before the cutoff 2026-08-27T09:00:00Z",
+          "record": "gfs-run-2026-08-27",
+          "required": false,
+          "run": "2026-08-27",
+          "sha256": "9247c640a0debbc0aca2ea5a94d19fcb591301f466c88aae5c20ab56a57fcfb0",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-28T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-28T03:57:16Z",
+          "reason": "published 2026-08-28T03:57:16Z, strictly before the cutoff 2026-08-28T09:00:00Z",
+          "record": "gfs-run-2026-08-28",
+          "required": false,
+          "run": "2026-08-28",
+          "sha256": "941e83fd4d5414e041f7d21ece1c50417937573729e053c4015e20ca08839188",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-29T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-29T03:48:40Z",
+          "reason": "published 2026-08-29T03:48:40Z, strictly before the cutoff 2026-08-29T09:00:00Z",
+          "record": "gfs-run-2026-08-29",
+          "required": false,
+          "run": "2026-08-29",
+          "sha256": "da280e9304505d5aa0886def26daf7f212f2d78b8634747493511209a155d267",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-31",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-30T03:59:28Z",
+          "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "gfs-run-2026-08-30",
+          "required": false,
+          "run": "2026-08-30",
+          "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         }
+        ],
+        "shown": true
+       },
+       "build_cause": null,
+       "build_status": "built",
+       "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+       "gfs": {
+        "available": true,
+        "day": "2026-08-31",
+        "judgement": {
+         "admitted": true,
+         "archive_day": "2026-08-31",
+         "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+         "basis_id": "aws_last_modified",
+         "by_exception": false,
+         "cutoff_utc": "2026-08-30T09:00:00Z",
+         "data_day": "2026-08-31",
+         "for_day": "2026-08-31",
+         "input": "gfs",
+         "provenance": "recorded",
+         "publication_utc": "2026-08-30T03:59:28Z",
+         "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+         "record": "gfs-run-2026-08-30",
+         "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+         "tier": 2
+        },
+        "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "run": "2026-08-30",
+        "status": "ok",
+        "vector_valid": true
+       },
+       "gfs_available": true,
+       "history": {
+        "base_end": "2026-08-27",
+        "frame_rows": 67199,
+        "increment_days": [
+         "2026-08-28",
+         "2026-08-29",
+         "2026-08-30",
+         "2026-08-31"
+        ],
+        "weather_rows": 67199
+       },
+       "input_class": "before_cutoff",
+       "input_class_text": "all inputs before the cutoff",
+       "load_forecast_copy": null,
+       "load_forecast_fetched_utc": null,
+       "payload_sha256": {
+        "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6",
+        "B0": "e845d1b8d9d66b72d2c72357e67862e79c36d379c0517860d857df75892759c7",
+        "v2": "067bca666c98330bf8be220fd463cb13a0c9e3f08614bfce79cc398c403b8f97",
+        "v4": "ce684869ad1c8adc27b61c462a725adbab7cbaed04425bfd9c8867cddeb108f9"
+       },
+       "problems": [],
+       "reasons": [],
+       "search": {
+        "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+        "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+        "k": 13,
+        "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+        "present": true,
+        "search_day": "2026-07-08"
+       },
+       "shown": true,
+       "source": "cp18.live (replayed recorded responses)",
+       "timings": {
+        "context_seconds": 19.231,
+        "history_seconds": 0.581,
+        "total_seconds": 20.737
+       }
+      },
+      "load_forecast_fetched_utc": null,
+      "policy": "A1",
+      "process_seconds_sum": 239.66068170900002,
+      "seconds": 261.71064187498996,
+      "started_utc": "2026-11-19T13:34:26+00:00",
+      "status": "issued"
+     }
+    },
+    "exit": 0,
+    "outcome": "done",
+    "planned": [
+     "2026-08-31"
+    ]
+   },
+   "store_days": {
+    "2026-08-31": {
+     "artifact_sha256": "30aa35562f3fc1bb4ebed5312bf867342687d8bf157a5ff4f5837bfaab43431e",
+     "cause": null,
+     "display": "successful daily fit",
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_fetched_utc": null,
+     "policy": "A1",
+     "status": "issued"
+    }
+   },
+   "store_head": "11f75ac459b290214d187dcc2e1b98497cf29f18f7569d61e65e3e34e3223623",
+   "wall_seconds": 409.581437
+  },
+  "old": {
+   "artifact": {
+    "artifact_sha256": "605e255187c3d8af1c6f7681d6d3fce9e0506a3525c11c531259219886047e2a",
+    "attempts": [
+     {
+      "cause": null,
+      "partial": null,
+      "policy": "A1",
+      "resources": {
+       "limits": {
+        "peak_bytes": 4294967296,
+        "wall_seconds": 900
+       },
+       "peak_bytes": 875053056,
+       "wall_seconds": 87.70982491699999
+      },
+      "seconds": 87.77313062499161,
+      "status": "ok"
+     }
+    ],
+    "delivery_day": "2026-08-31",
+    "designated_policy": "A1",
+    "display": "successful daily fit",
+    "issue_utc": "2026-08-30T09:00:00+00:00",
+    "issued_policy": "A1",
+    "keys": [
+     "2026-08-30T22:00:00+00:00",
+     "2026-08-30T23:00:00+00:00",
+     "2026-08-31T00:00:00+00:00",
+     "2026-08-31T01:00:00+00:00",
+     "2026-08-31T02:00:00+00:00",
+     "2026-08-31T03:00:00+00:00",
+     "2026-08-31T04:00:00+00:00",
+     "2026-08-31T05:00:00+00:00",
+     "2026-08-31T06:00:00+00:00",
+     "2026-08-31T07:00:00+00:00",
+     "2026-08-31T08:00:00+00:00",
+     "2026-08-31T09:00:00+00:00",
+     "2026-08-31T10:00:00+00:00",
+     "2026-08-31T11:00:00+00:00",
+     "2026-08-31T12:00:00+00:00",
+     "2026-08-31T13:00:00+00:00",
+     "2026-08-31T14:00:00+00:00",
+     "2026-08-31T15:00:00+00:00",
+     "2026-08-31T16:00:00+00:00",
+     "2026-08-31T17:00:00+00:00",
+     "2026-08-31T18:00:00+00:00",
+     "2026-08-31T19:00:00+00:00",
+     "2026-08-31T20:00:00+00:00",
+     "2026-08-31T21:00:00+00:00"
+    ],
+    "lineage": {
+     "code_sha256": "9a2d961aecd2e90d3ea89308ddabddd687aea592944da7a8faabb6cdd648204c",
+     "host": {
+      "node": "v26.7.0",
+      "process": "one fresh process per attempt",
+      "pyodide": "0.28.0",
+      "runtime": "pyodide"
+     },
+     "inputs": {
+      "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6"
+     },
+     "parent_artifact_sha256": null,
+     "policy_identity_sha256": "720fc581be6206eba8ed303e689e63c09272a189564090a547d93fc9e7db62dc",
+     "state": null,
+     "training": {
+      "ensemble_content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+      "members": [
+       {
+        "holdout_days_sha256": "67a813657c71bfa39b7e92d2d52f62e3f0fd12a3e82fd24f56be9a46f4633c13",
+        "latest_training_day": "2026-08-30",
+        "member": 0,
+        "params_sha256": "815b420c4712cf68ea6ce15e328f736bff0db00f5ca658e585b8671022396f28",
+        "seed": 27390011,
+        "train_days_sha256": "b02e0752ef6a1763350284f8d4a0fd1b8edcfee269ec4a695916b2f9aa6c7122"
+       },
+       {
+        "holdout_days_sha256": "3ea18b73e1de54a3fa45240e136e0ffb3ff9c7971bc125473f6f0d7a2e7cc682",
+        "latest_training_day": "2026-08-30",
+        "member": 1,
+        "params_sha256": "0c3781defd4b4ce1eda40f44281e93822e1884a2dde2b43c0849158e635131d6",
+        "seed": 27390012,
+        "train_days_sha256": "9de244efc2d36d6424075931c6fbc65ff3e13c8f1433a64758b29fde81f89803"
+       },
+       {
+        "holdout_days_sha256": "322f5f4e565e39350759758ef64d30f938d42d26c4b44bbee8b9b5b885ffe5fe",
+        "latest_training_day": "2026-08-30",
+        "member": 2,
+        "params_sha256": "a973f7931e16384946569579f239c2ead18e2f6c1237ee2e590502e235cb777c",
+        "seed": 27390021,
+        "train_days_sha256": "e2874dd73e185242ea85daecf9db9716c4b9b1494c4b20f8941e0d085ef9f3a4"
+       },
+       {
+        "holdout_days_sha256": "ee72186acc8f6ec3b2e414f2c6cd652971c68f43d09ce9bcc151654fdc6423ad",
+        "latest_training_day": "2026-08-30",
+        "member": 3,
+        "params_sha256": "fffdb3c64cabc706d3c019b8ca9da68269fe4137c926f754825d3f0f48dde6c3",
+        "seed": 27390022,
+        "train_days_sha256": "a53375da025abf603886d84006ffd9f0c107f3cc9b202ad1a329a46c838005a3"
+       },
+       {
+        "holdout_days_sha256": "0f7abb0b93d8f86ca383a947da1d7cd81b4e8e330dc3525c829989428664a2fd",
+        "latest_training_day": "2026-08-30",
+        "member": 4,
+        "params_sha256": "b4c71299139539245c383bf1d3141320be908bbb56129dd59e47d77870c8171a",
+        "seed": 27390031,
+        "train_days_sha256": "0f26b4a7e77bbf8c3ea0fbedb4aab265ff989f50a185fa0ac459949dc8a2ac81"
+       },
+       {
+        "holdout_days_sha256": "2862a8c02507ef4f13ec4ecab7954f1e717b57c2bdc68179b70bc16f290769ca",
+        "latest_training_day": "2026-08-30",
+        "member": 5,
+        "params_sha256": "e17421899807528b9791e3d62dfb695a0e1a998e01064241ae87896c639632ab",
+        "seed": 27390032,
+        "train_days_sha256": "1ab3eaa9c7a79f2a459af81ec7fee3763c5a10e507098cece9b9c47311a6dbb2"
+       },
+       {
+        "holdout_days_sha256": "59366cbab12fdcd8ff70b13e22d0890307c57ca9b1cbb43ed230d572675463be",
+        "latest_training_day": "2026-08-30",
+        "member": 6,
+        "params_sha256": "7041b85958d40cad441a89e45b7df1b121c010357891b3efb99c1a602d951653",
+        "seed": 27390041,
+        "train_days_sha256": "55d56d13dcf5fe0b77c26783bd15944c55f987574b0a076f44b2a9cb3bfd045c"
+       },
+       {
+        "holdout_days_sha256": "6cab915f0de468adc284589040e0b234c689017b310b9af22ad2b1f8df85d864",
+        "latest_training_day": "2026-08-30",
+        "member": 7,
+        "params_sha256": "25688f831021f4949d050c025480d08c51ac205775ae76aa404cb5d4c42d3ca8",
+        "seed": 27390042,
+        "train_days_sha256": "2f87e131f8d8323c4edc164b674da8e727aa7e4da081916873f2f4f5e3a9526b"
+       }
+      ],
+      "search": 13,
+      "seeds": [
+       27390011,
+       27390012,
+       27390021,
+       27390022,
+       27390031,
+       27390032,
+       27390041,
+       27390042
+      ]
+     }
+    },
+    "partial": null,
+    "product": "delu-day-ahead-policy",
+    "quantiles": [
+     [
+      116.82861209874585,
+      128.99217112217912,
+      137.59454049054568,
+      146.07063326498906,
+      154.64137679186047,
+      162.4479591637407,
+      174.6354295384349
+     ],
+     [
+      99.43900092753651,
+      113.16670825294686,
+      123.42604534225379,
+      134.3186784061237,
+      142.77935773315204,
+      150.25326664046406,
+      160.11316265884938
+     ],
+     [
+      90.49354215144902,
+      104.96346355978005,
+      115.05461198971673,
+      125.7762401899127,
+      136.42107362219932,
+      146.68745238906362,
+      155.71993793536032
+     ],
+     [
+      81.20471881769723,
+      96.90385458814754,
+      109.44005594626779,
+      121.35608650471568,
+      132.84729838416854,
+      140.50453610825295,
+      149.41254811234825
+     ],
+     [
+      83.87513694477745,
+      99.42020298395968,
+      110.6616378366159,
+      121.47049753842091,
+      131.42935596070282,
+      140.30131879154777,
+      150.81697452086934
+     ],
+     [
+      95.15093406330668,
+      111.76872408808268,
+      122.36905616933026,
+      132.29855398106235,
+      141.66089505486764,
+      150.76796545662677,
+      161.21751296246168
+     ],
+     [
+      117.81488624672583,
+      132.09510757881242,
+      143.18855042423772,
+      155.01768860448541,
+      168.0559724340105,
+      178.42396381330582,
+      194.69051948500666
+     ],
+     [
+      129.01078112173565,
+      142.87083193457212,
+      154.64794850839723,
+      168.42049508683073,
+      183.33572785420347,
+      200.93099005723386,
+      222.69758542891873
+     ],
+     [
+      115.71545656333527,
+      133.3759058288837,
+      147.53034457433813,
+      160.80031146199943,
+      175.7277545835525,
+      193.0269445098986,
+      220.81471401011996
+     ],
+     [
+      76.48082021783824,
+      100.81397691649414,
+      117.03152388091954,
+      133.14342447162227,
+      147.74991474987587,
+      160.97770537635998,
+      178.08465353579905
+     ],
+     [
+      25.264149669169512,
+      56.023650653516064,
+      77.26247172566555,
+      96.46954946837793,
+      114.06704953436704,
+      128.64123715318607,
+      144.8566290943828
+     ],
+     [
+      -33.93393158415836,
+      11.151096849151344,
+      40.574077522341376,
+      67.69815799087849,
+      88.99323229444613,
+      105.3824913066108,
+      123.39730556968914
+     ],
+     [
+      -58.58765664812094,
+      -6.473764014429321,
+      25.246823693911942,
+      55.88541055490703,
+      79.45155566624317,
+      92.78574395503446,
+      111.68503113637664
+     ],
+     [
+      -79.95510069778146,
+      -26.052982620316072,
+      8.64677299701954,
+      37.784924831687654,
+      63.800552086217714,
+      84.27250230863399,
+      102.86923188975067
+     ],
+     [
+      -77.24455511952236,
+      -25.452133640358653,
+      7.733558641113035,
+      35.35497475085251,
+      58.81031587040032,
+      78.98099534849202,
+      96.07787737306037
+     ],
+     [
+      -63.52934130162954,
+      -15.001509568765073,
+      16.501184965361695,
+      44.79185456040374,
+      67.64331300364863,
+      84.87038815034339,
+      102.96033531710182
+     ],
+     [
+      -42.508701138106986,
+      2.308966429385478,
+      29.85794362287634,
+      56.96277231859647,
+      81.34417512048,
+      97.36572436839782,
+      113.25852700420627
+     ],
+     [
+      15.775388640317473,
+      55.80374615809947,
+      81.76794359409908,
+      101.89703544985825,
+      119.8313706487684,
+      133.82962864686158,
+      149.49413421498238
+     ],
+     [
+      80.71864560380753,
+      107.73933501968133,
+      125.461881081039,
+      139.9183631835978,
+      154.03071329245557,
+      168.56314921513035,
+      189.08140405235017
+     ],
+     [
+      116.09880077247152,
+      135.79663216971076,
+      149.77802504538212,
+      163.2718546788842,
+      178.1369829396926,
+      193.41411140495035,
+      219.1822892676173
+     ],
+     [
+      129.46561216134245,
+      143.00272343952474,
+      154.08257836029662,
+      165.7935288145793,
+      180.54474568791989,
+      194.63901027170107,
+      215.38306218616518
+     ],
+     [
+      111.80164183084989,
+      127.84994962038779,
+      138.50574576350215,
+      150.3821929090139,
+      163.67637884305884,
+      176.5930008648856,
+      195.27124363336318
+     ],
+     [
+      113.4341106144269,
+      127.24533892915338,
+      137.67906336475033,
+      147.5849753407993,
+      157.7107746205346,
+      167.09024103963623,
+      179.26056569282713
+     ],
+     [
+      84.98300834369401,
+      104.20232689539898,
+      115.94334145956992,
+      128.24645390444923,
+      140.81429164779792,
+      150.732225459926,
+      162.73877628068078
+     ]
+    ],
+    "quantiles_sha256": "75d86a3b3cb9f670b091a0dada961170e52f3a5f2bda0536265e4fd5c2e9249c",
+    "resources": {
+     "limits": {
+      "peak_bytes": 4294967296,
+      "wall_seconds": 900
+     },
+     "peak_bytes": 875053056,
+     "wall_seconds": 87.70982491699999
+    },
+    "route": "designated",
+    "schema": "cp17b-issued-artifact-v2",
+    "times": {
+     "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+     "issuance_utc": "2026-08-30T09:00:00+00:00",
+     "last_training_utc": "2026-08-30T09:00:00+00:00"
+    }
+   },
+   "code": [
+    "/Users/djourno/Downloads/PJM/.local/tmp/cp-18e/rehearsal3/old-src/src"
+   ],
+   "mode": "old",
+   "origin_log": [
+    "delu-daily live: run cp18e-old (done)",
+    "delu-daily live: 2026-08-31 issued (successful daily fit)",
+    "delu-daily forced causes: the store at its start",
+    "Yarden Viktor Dejorno CP-18e: the rehearsal driver refuses a candidate whose src/ differs from HEAD, and voids a run if HEAD moves"
+   ],
+   "payload_files": {
+    "A1-2026-08-31.json": "98b6b24f1804dda7e3c52be3a9956f57cc37989765e71434293456781da441a8",
+    "A1-2026-08-31.npz": "b10f123521699033b6ee94a9e9d037fb865919bd2c18bda73250d1423c360463",
+    "B0-2026-08-31.json": "f57bc81ffbf50b36a472c68b7e6f165a5927c982cf09cd10639ca0b20204de0d",
+    "B0-2026-08-31.npz": "564bb319ab9135aeecc1c99e63aa920d23c654241bc9782dc004ea424330c11a",
+    "v2-2026-08-31.json": "ea27ddafcd97482d830b915d969860b3e4fa8e500475ecf38443ab25dc59b24e",
+    "v2-2026-08-31.npz": "47546ddb48f69844adbc111eaa3b8f32bc35dde4d34c3d4d49f8688da52db9bf",
+    "v4-2026-08-31.json": "40b74a0652f89a85870bd0f7d9315629adc83347dd5a4656fc9c6755b018e6f1",
+    "v4-2026-08-31.npz": "dde7b80286b5d074f8413ad991abc24c60e4614d4e9aa5274a600dee00c5a4bb"
+   },
+   "record": {
+    "artifact_sha256": "605e255187c3d8af1c6f7681d6d3fce9e0506a3525c11c531259219886047e2a",
+    "artifact_verifies": true,
+    "blocked_non_local_requests": [],
+    "causes": {},
+    "cutoff_utc": "2026-08-30T09:00:00+00:00",
+    "day": "2026-08-31",
+    "display": "successful daily fit",
+    "gate": {
+     "machine": {
+      "cpu_count": 8,
+      "cpu_model": "Apple M3",
+      "hardware_model": "Mac15,3",
+      "machine": "arm64",
+      "memory_bytes": 17179869184,
+      "os_version": "26.5.2",
+      "physical_cores": 8,
+      "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+      "runner_env": {
+       "GITHUB_ACTIONS": null,
+       "GITHUB_JOB": null,
+       "GITHUB_REPOSITORY": null,
+       "GITHUB_RUN_ATTEMPT": null,
+       "GITHUB_RUN_ID": null,
+       "GITHUB_SHA": null,
+       "ImageOS": null,
+       "ImageVersion": null,
+       "RUNNER_ARCH": null,
+       "RUNNER_ENVIRONMENT": null,
+       "RUNNER_NAME": null,
+       "RUNNER_OS": null
+      },
+      "system": "Darwin"
+     },
+     "passed": true,
+     "started_utc": "2026-11-19T13:33:03+00:00"
+    },
+    "gfs_available": true,
+    "host_kind": "local",
+    "input_class": "before_cutoff",
+    "input_class_text": "all inputs before the cutoff",
+    "inputs": {
+     "acquired": [],
+     "archive_days": [
+      "2026-08-28",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-08-31"
+     ],
+     "availability": {
+      "base": {
+       "load_forecast_basis": "the committed development history; its tier-3 load forecast is admitted under ruling 1's recorded exception (development data only)",
+       "ruling_4": [
+        "2022-12-01",
+        "2023-01-21"
+       ],
+       "snapshot": "data/snapshot.parquet",
+       "through": "2026-08-27",
+       "weather": [
+        "reports/weather-ablation/weather-features.parquet",
+        "reports/development-inputs/weather-features-gaps.parquet"
+       ]
+      },
+      "by_exception": [
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-28",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-29",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-30",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       },
+       {
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "data_day": "2026-08-31",
+        "input": "load_forecast",
+        "record": "load_forecast-smard-bucket-01"
+       }
+      ],
+      "input_class": "before_cutoff",
+      "input_class_text": "all inputs before the cutoff",
+      "load_forecast_copy": null,
+      "load_forecast_fetched_utc": null,
+      "reasons": [],
+      "records": [
+       {
+        "admitted": true,
+        "archive_day": "2026-08-29",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 3,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-27T11:00:00Z",
+        "reason": "published 2026-08-27T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-28",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-30",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 2,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-28T11:00:00Z",
+        "reason": "published 2026-08-28T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-29",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-31",
+        "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+        "basis_id": "documented_schedule",
+        "by_exception": false,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "price",
+        "provenance": "rendered",
+        "publication_utc": "2026-08-29T11:00:00Z",
+        "reason": "published 2026-08-29T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "price-smard-bucket-01",
+        "required": true,
+        "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+        "tier": 2
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-30",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": false,
+        "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "archive_day": "2026-08-31",
+        "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+        "basis_id": "ruling_1_exception",
+        "by_exception": true,
+        "candidates": 1,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-31",
+        "for_day": "2026-08-31",
+        "input": "load_forecast",
+        "provenance": "rendered",
+        "publication_utc": null,
+        "reason": "admitted under ruling 1's recorded exception (development data only)",
+        "record": "load_forecast-smard-bucket-01",
+        "required": true,
+        "sha256": "eba855cb4f710dff73d800dc21d3f90a4576496b2567e36a7b7a88c1061cfcbf",
+        "tier": 3
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-27T09:00:00Z",
+        "data_day": "2026-08-28",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-27T04:03:34Z",
+        "reason": "published 2026-08-27T04:03:34Z, strictly before the cutoff 2026-08-27T09:00:00Z",
+        "record": "gfs-run-2026-08-27",
+        "required": false,
+        "run": "2026-08-27",
+        "sha256": "9247c640a0debbc0aca2ea5a94d19fcb591301f466c88aae5c20ab56a57fcfb0",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-28T09:00:00Z",
+        "data_day": "2026-08-29",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-28T03:57:16Z",
+        "reason": "published 2026-08-28T03:57:16Z, strictly before the cutoff 2026-08-28T09:00:00Z",
+        "record": "gfs-run-2026-08-28",
+        "required": false,
+        "run": "2026-08-28",
+        "sha256": "941e83fd4d5414e041f7d21ece1c50417937573729e053c4015e20ca08839188",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-29T09:00:00Z",
+        "data_day": "2026-08-30",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-29T03:48:40Z",
+        "reason": "published 2026-08-29T03:48:40Z, strictly before the cutoff 2026-08-29T09:00:00Z",
+        "record": "gfs-run-2026-08-29",
+        "required": false,
+        "run": "2026-08-29",
+        "sha256": "da280e9304505d5aa0886def26daf7f212f2d78b8634747493511209a155d267",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       },
+       {
+        "admitted": true,
+        "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+        "basis_id": "aws_last_modified",
+        "by_exception": false,
+        "cutoff_utc": "2026-08-30T09:00:00Z",
+        "data_day": "2026-08-31",
+        "for_day": "2026-08-31",
+        "input": "gfs",
+        "provenance": "recorded",
+        "publication_utc": "2026-08-30T03:59:28Z",
+        "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "record": "gfs-run-2026-08-30",
+        "required": false,
+        "run": "2026-08-30",
+        "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+        "status": "ok",
+        "tier": 2,
+        "vector_valid": true
+       }
+      ],
+      "shown": true
+     },
+     "build_cause": null,
+     "build_status": "built",
+     "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+     "gfs": {
+      "available": true,
+      "day": "2026-08-31",
+      "judgement": {
+       "admitted": true,
+       "archive_day": "2026-08-31",
+       "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+       "basis_id": "aws_last_modified",
+       "by_exception": false,
+       "cutoff_utc": "2026-08-30T09:00:00Z",
+       "data_day": "2026-08-31",
+       "for_day": "2026-08-31",
+       "input": "gfs",
+       "provenance": "recorded",
+       "publication_utc": "2026-08-30T03:59:28Z",
+       "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+       "record": "gfs-run-2026-08-30",
+       "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+       "tier": 2
+      },
+      "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+      "run": "2026-08-30",
+      "status": "ok",
+      "vector_valid": true
+     },
+     "gfs_available": true,
+     "history": {
+      "base_end": "2026-08-27",
+      "frame_rows": 67199,
+      "increment_days": [
+       "2026-08-28",
+       "2026-08-29",
+       "2026-08-30",
+       "2026-08-31"
+      ],
+      "weather_rows": 67199
+     },
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_copy": null,
+     "load_forecast_fetched_utc": null,
+     "payload_sha256": {
+      "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6",
+      "B0": "e845d1b8d9d66b72d2c72357e67862e79c36d379c0517860d857df75892759c7",
+      "v2": "067bca666c98330bf8be220fd463cb13a0c9e3f08614bfce79cc398c403b8f97",
+      "v4": "ce684869ad1c8adc27b61c462a725adbab7cbaed04425bfd9c8867cddeb108f9"
+     },
+     "problems": [],
+     "reasons": [],
+     "search": {
+      "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+      "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+      "k": 13,
+      "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+      "present": true,
+      "search_day": "2026-07-08"
+     },
+     "shown": true,
+     "source": "cp18.live (replayed recorded responses)",
+     "timings": {
+      "context_seconds": 19.178,
+      "history_seconds": 0.568,
+      "total_seconds": 20.652
+     }
+    },
+    "issuance_finished_utc": "2026-11-19T13:38:47+00:00",
+    "issuance_started_utc": "2026-11-19T13:34:48+00:00",
+    "issue_day_seconds": 239.70524766700692,
+    "issued_policy": "A1",
+    "load_forecast_fetched_utc": null,
+    "path": [
+     [
+      "A1",
+      "ok"
+     ]
+    ],
+    "process_seconds": {
+     "A1": 87.70982491699999,
+     "B0": 5.024634875,
+     "v2": 66.78748791699999,
+     "v4": 79.86994270900001
+    },
+    "process_seconds_sum": 239.391890418,
+    "run_id": "cp18e-old",
+    "run_started_utc": "2026-11-19T13:33:03+00:00",
+    "schema": "cp18d-day-record-v1",
+    "shadows": {
+     "B0": {
+      "cause": null,
+      "central_sha256": "ddd7f3eacb84218785ddfa499035b0d4af1fcee1ce30f2576b36674c7897bf2d",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 832438272,
+      "quantiles_sha256": "f02ac4e9358ded882e71380848e5293e79cf04b27b7f78f3e8af6a7657b62e0b",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": null,
+      "status": "ok",
+      "wall_seconds": 5.024634875
+     },
+     "v2": {
+      "cause": null,
+      "central_sha256": "8a1d82c87bbe2820b11d9a46ed14748e7ccf09126c74a9dfaa493be4c6d4c9f9",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 947650560,
+      "quantiles_sha256": "b7ada794d543b6429ebcb61522608b70a05e53bb3cc66e45d8912cdebfd23d7d",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": "ac8c43736da36fea896850a48188d72451504dd77fa95e230ecee7f01293d469",
+      "status": "ok",
+      "wall_seconds": 66.78748791699999
+     },
+     "v4": {
+      "cause": null,
+      "central_sha256": "a0d17c654b133681a5f8e82cd7612c74de525f95041d4c1048c76f27f27f02f8",
+      "fitted_by": "shadow",
+      "intake": "registered",
+      "keys": 24,
+      "peak_bytes": 943570944,
+      "quantiles_sha256": "bbdaa9d207bceaa5a03150c289f34137a9261a3e34097357c942a61a86c454a9",
+      "role": "shadow: never published, displayed or scored as the product's forecast",
+      "scale_sha256": "ac8c43736da36fea896850a48188d72451504dd77fa95e230ecee7f01293d469",
+      "status": "ok",
+      "wall_seconds": 79.86994270900001
+     }
+    }
+   },
+   "run": {
+    "closed": [],
+    "days": {
+     "2026-08-31": {
+      "artifact_sha256": "605e255187c3d8af1c6f7681d6d3fce9e0506a3525c11c531259219886047e2a",
+      "cause": null,
+      "cause_text": null,
+      "display": "successful daily fit",
+      "input_class": "before_cutoff",
+      "input_class_text": "all inputs before the cutoff",
+      "inputs": {
+       "acquired": [],
+       "archive_days": [
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31"
+       ],
+       "availability": {
+        "base": {
+         "load_forecast_basis": "the committed development history; its tier-3 load forecast is admitted under ruling 1's recorded exception (development data only)",
+         "ruling_4": [
+          "2022-12-01",
+          "2023-01-21"
+         ],
+         "snapshot": "data/snapshot.parquet",
+         "through": "2026-08-27",
+         "weather": [
+          "reports/weather-ablation/weather-features.parquet",
+          "reports/development-inputs/weather-features-gaps.parquet"
+         ]
+        },
+        "by_exception": [
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-28",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-29",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-30",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         },
+         {
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "data_day": "2026-08-31",
+          "input": "load_forecast",
+          "record": "load_forecast-smard-bucket-01"
+         }
+        ],
+        "input_class": "before_cutoff",
+        "input_class_text": "all inputs before the cutoff",
+        "load_forecast_copy": null,
+        "load_forecast_fetched_utc": null,
+        "reasons": [],
+        "records": [
+         {
+          "admitted": true,
+          "archive_day": "2026-08-29",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 3,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-27T11:00:00Z",
+          "reason": "published 2026-08-27T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-28",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-30",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 2,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-28T11:00:00Z",
+          "reason": "published 2026-08-28T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-29",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-31",
+          "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+          "basis_id": "documented_schedule",
+          "by_exception": false,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "price",
+          "provenance": "rendered",
+          "publication_utc": "2026-08-29T11:00:00Z",
+          "reason": "published 2026-08-29T11:00:00Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "price-smard-bucket-01",
+          "required": true,
+          "sha256": "714fe5f3b0a4401e3d7600653c77fc6acfa724add2791dada8428f1e6bf896f4",
+          "tier": 2
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-30",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": false,
+          "sha256": "fd5c14e6df32e1c6f497a47a19d219333ecec85bc085cd2925562ffecea6c4c2",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "archive_day": "2026-08-31",
+          "basis": "Owner's ruling 1 (2026-10-12, docs/track-b/cp-25-rulings-2026-10-12.md): recorded exception for the stored development history of the tier-3 load forecast; development data only (delivery days to 2026-09-06)",
+          "basis_id": "ruling_1_exception",
+          "by_exception": true,
+          "candidates": 1,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-31",
+          "for_day": "2026-08-31",
+          "input": "load_forecast",
+          "provenance": "rendered",
+          "publication_utc": null,
+          "reason": "admitted under ruling 1's recorded exception (development data only)",
+          "record": "load_forecast-smard-bucket-01",
+          "required": true,
+          "sha256": "eba855cb4f710dff73d800dc21d3f90a4576496b2567e36a7b7a88c1061cfcbf",
+          "tier": 3
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-27T09:00:00Z",
+          "data_day": "2026-08-28",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-27T04:03:34Z",
+          "reason": "published 2026-08-27T04:03:34Z, strictly before the cutoff 2026-08-27T09:00:00Z",
+          "record": "gfs-run-2026-08-27",
+          "required": false,
+          "run": "2026-08-27",
+          "sha256": "9247c640a0debbc0aca2ea5a94d19fcb591301f466c88aae5c20ab56a57fcfb0",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-28T09:00:00Z",
+          "data_day": "2026-08-29",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-28T03:57:16Z",
+          "reason": "published 2026-08-28T03:57:16Z, strictly before the cutoff 2026-08-28T09:00:00Z",
+          "record": "gfs-run-2026-08-28",
+          "required": false,
+          "run": "2026-08-28",
+          "sha256": "941e83fd4d5414e041f7d21ece1c50417937573729e053c4015e20ca08839188",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-29T09:00:00Z",
+          "data_day": "2026-08-30",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-29T03:48:40Z",
+          "reason": "published 2026-08-29T03:48:40Z, strictly before the cutoff 2026-08-29T09:00:00Z",
+          "record": "gfs-run-2026-08-29",
+          "required": false,
+          "run": "2026-08-29",
+          "sha256": "da280e9304505d5aa0886def26daf7f212f2d78b8634747493511209a155d267",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         },
+         {
+          "admitted": true,
+          "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+          "basis_id": "aws_last_modified",
+          "by_exception": false,
+          "cutoff_utc": "2026-08-30T09:00:00Z",
+          "data_day": "2026-08-31",
+          "for_day": "2026-08-31",
+          "input": "gfs",
+          "provenance": "recorded",
+          "publication_utc": "2026-08-30T03:59:28Z",
+          "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+          "record": "gfs-run-2026-08-30",
+          "required": false,
+          "run": "2026-08-30",
+          "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+          "status": "ok",
+          "tier": 2,
+          "vector_valid": true
+         }
+        ],
+        "shown": true
+       },
+       "build_cause": null,
+       "build_status": "built",
+       "data_refresh_utc": "2026-10-12T10:59:45+00:00",
+       "gfs": {
+        "available": true,
+        "day": "2026-08-31",
+        "judgement": {
+         "admitted": true,
+         "archive_day": "2026-08-31",
+         "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+         "basis_id": "aws_last_modified",
+         "by_exception": false,
+         "cutoff_utc": "2026-08-30T09:00:00Z",
+         "data_day": "2026-08-31",
+         "for_day": "2026-08-31",
+         "input": "gfs",
+         "provenance": "recorded",
+         "publication_utc": "2026-08-30T03:59:28Z",
+         "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+         "record": "gfs-run-2026-08-30",
+         "sha256": "f427bf6a57c0660322d6c05e7f81843d85a1ccb32eb963c68c61648dff85d896",
+         "tier": 2
+        },
+        "reason": "published 2026-08-30T03:59:28Z, strictly before the cutoff 2026-08-30T09:00:00Z",
+        "run": "2026-08-30",
+        "status": "ok",
+        "vector_valid": true
+       },
+       "gfs_available": true,
+       "history": {
+        "base_end": "2026-08-27",
+        "frame_rows": 67199,
+        "increment_days": [
+         "2026-08-28",
+         "2026-08-29",
+         "2026-08-30",
+         "2026-08-31"
+        ],
+        "weather_rows": 67199
+       },
+       "input_class": "before_cutoff",
+       "input_class_text": "all inputs before the cutoff",
+       "load_forecast_copy": null,
+       "load_forecast_fetched_utc": null,
+       "payload_sha256": {
+        "A1": "f4cdb04dd0c55c0a3d64a0e3f0a6a5f1abd7d041d6b48defc1bb51b765d18ee6",
+        "B0": "e845d1b8d9d66b72d2c72357e67862e79c36d379c0517860d857df75892759c7",
+        "v2": "067bca666c98330bf8be220fd463cb13a0c9e3f08614bfce79cc398c403b8f97",
+        "v4": "ce684869ad1c8adc27b61c462a725adbab7cbaed04425bfd9c8867cddeb108f9"
+       },
+       "problems": [],
+       "reasons": [],
+       "search": {
+        "content_sha256": "6090f4abaeca028694aa9941ce1240001e12b5965d3d9d0b72fe43cf77ee384f",
+        "file_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+        "k": 13,
+        "path": "/Users/djourno/Downloads/PJM/.local/artifacts/cp-17/inputs/reports/rebaseline/cold-rerun-2026-10-15/search-results/nominal/k13.json",
+        "present": true,
+        "search_day": "2026-07-08"
+       },
+       "shown": true,
+       "source": "cp18.live (replayed recorded responses)",
+       "timings": {
+        "context_seconds": 19.178,
+        "history_seconds": 0.568,
+        "total_seconds": 20.652
+       }
+      },
+      "load_forecast_fetched_utc": null,
+      "policy": "A1",
+      "process_seconds_sum": 239.391890418,
+      "seconds": 261.33589662499435,
+      "started_utc": "2026-11-19T13:34:26+00:00",
+      "status": "issued"
+     }
+    },
+    "exit": 0,
+    "outcome": "done",
+    "planned": [
+     "2026-08-31"
+    ]
+   },
+   "store_days": {
+    "2026-08-31": {
+     "artifact_sha256": "605e255187c3d8af1c6f7681d6d3fce9e0506a3525c11c531259219886047e2a",
+     "cause": null,
+     "display": "successful daily fit",
+     "input_class": "before_cutoff",
+     "input_class_text": "all inputs before the cutoff",
+     "load_forecast_fetched_utc": null,
+     "policy": "A1",
+     "status": "issued"
+    }
+   },
+   "store_head": "abd6a51ec75fd0a006ffe46f4d0aab1f0a0949ce6603a2b0b111c9232326b6ad",
+   "wall_seconds": 409.354184
+  }
+ },
+ "new_vs_old": {
+  "artifact_differs_at": [],
+  "artifact_differs_at_run_fields": [
+   "artifact_sha256",
+   "attempts[0].resources.peak_bytes",
+   "attempts[0].resources.wall_seconds",
+   "attempts[0].seconds",
+   "resources.peak_bytes",
+   "resources.wall_seconds"
+  ],
+  "payload_files_equal": true,
+  "quantiles_sha256_equal": true,
+  "record_differs_at": [],
+  "record_differs_at_run_fields": [
+   "artifact_sha256",
+   "inputs.timings.context_seconds",
+   "inputs.timings.history_seconds",
+   "inputs.timings.total_seconds",
+   "issuance_finished_utc",
+   "issue_day_seconds",
+   "process_seconds.A1",
+   "process_seconds.B0",
+   "process_seconds.v2",
+   "process_seconds.v4",
+   "process_seconds_sum",
+   "run_id",
+   "run_started_utc",
+   "shadows.B0.peak_bytes",
+   "shadows.B0.wall_seconds",
+   "shadows.v2.peak_bytes",
+   "shadows.v2.wall_seconds",
+   "shadows.v4.peak_bytes",
+   "shadows.v4.wall_seconds"
+  ],
+  "run_item_differs_at": [],
+  "run_item_differs_at_run_fields": [
+   "artifact_sha256",
+   "inputs.timings.context_seconds",
+   "inputs.timings.history_seconds",
+   "inputs.timings.total_seconds",
+   "process_seconds_sum",
+   "seconds"
+  ]
+ },
+ "old_code": {
+  "candidate_differs_under_src_only_in_cp18": true,
+  "candidate_src_changes": [
+   "src/cp18/__main__.py",
+   "src/cp18/bundle.py",
+   "src/cp18/causes.py",
+   "src/cp18/inputs.py",
+   "src/cp18/live/__init__.py",
+   "src/cp18/live/build.py",
+   "src/cp18/live/payloads.py",
+   "src/cp18/live_claims.py",
+   "src/cp18/live_inputs.py",
+   "src/cp18/pipeline.py",
+   "src/cp18/serving.py",
+   "src/cp18/serving_rehearsal.py",
+   "src/cp18/store.py"
+  ],
+  "commit": "5133b02c26dd1e369393362cedc524b8998d2e56",
+  "src": "/Users/djourno/Downloads/PJM/.local/tmp/cp-18e/rehearsal3/old-src/src",
+  "src_tree": "74d9b30af38f6417b9496e1c44718f89bf61f62f"
+ },
+ "pinned_k13_sha256": "17ade4513a39dffdf6b3fc90e5d45228bbafa71b86af04af22ae4b2418f9d5dc",
+ "schema": "cp18e-serving-rehearsal-v1",
+ "seconds": 781.182391,
+ "wall_clock": "2026-08-30T12:00:00+02:00"
+}
