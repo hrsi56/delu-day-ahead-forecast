@@ -1,0 +1,1338 @@
+{
+ "as_of_day": "2026-11-19",
+ "run_id": "gh-44502379071-1",
+ "schema": "cp18b-daily-evaluation-v1",
+ "static_development_sha256": "040ab44e2f25ac4abbd573009c53ceec258bab5f330301e940a86b0abde83d49",
+ "windows": [
+  {
+   "evidence_class": "development rehearsal \u00b7 CP-18 dry runs on development days \u00b7 not prospective and not 4.7T",
+   "policy": "product",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "development"
+  },
+  {
+   "evidence_class": "development rehearsal \u00b7 CP-18 dry runs on development days \u00b7 not prospective and not 4.7T",
+   "policy": "B0",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "development"
+  },
+  {
+   "evidence_class": "one-shot fresh-data test (4.7T) \u00b7 not yet scored",
+   "policy": "product",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "4.7T"
+  },
+  {
+   "evidence_class": "one-shot fresh-data test (4.7T) \u00b7 not yet scored",
+   "policy": "B0",
+   "record": {
+    "days": [],
+    "pooled": {
+     "partial_days": 0,
+     "pending_or_unscored_days": 0,
+     "scored_days": 0,
+     "scored_hours": 0
+    },
+    "rolling": [],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "4.7T"
+  },
+  {
+   "evidence_class": "prospective \u00b7 evaluation in progress until CP-19",
+   "policy": "product",
+   "record": {
+    "days": [
+     {
+      "at_or_below": [
+       0,
+       6,
+       8,
+       10,
+       19,
+       23,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 11,
+       "80": 17,
+       "95": 24
+      },
+      "day": "2026-11-06",
+      "keys": 24,
+      "mae_eur": 16.314211981590848,
+      "pit_counts": [
+       0,
+       6,
+       2,
+       2,
+       9,
+       4,
+       1,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 656.016661627151,
+       "80": 1366.4756428753822,
+       "95": 2515.7353886737737
+      },
+      "wis_eur": 8.392183441298066,
+      "within_tau_hours": 6
+     },
+     {
+      "at_or_below": [
+       0,
+       4,
+       11,
+       15,
+       21,
+       22,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 10,
+       "80": 18,
+       "95": 24
+      },
+      "day": "2026-11-07",
+      "keys": 24,
+      "mae_eur": 12.825218849693847,
+      "pit_counts": [
+       0,
+       4,
+       7,
+       4,
+       6,
+       1,
+       2,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 522.8981197520275,
+       "80": 1052.257791406319,
+       "95": 1814.829777638576
+      },
+      "wis_eur": 7.163205997427137,
+      "within_tau_hours": 13
+     },
+     {
+      "at_or_below": [
+       9,
+       13,
+       17,
+       21,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 7,
+       "80": 11,
+       "95": 15
+      },
+      "day": "2026-11-08",
+      "keys": 24,
+      "mae_eur": 19.609469166526026,
+      "pit_counts": [
+       9,
+       4,
+       4,
+       4,
+       3,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 491.51227496182383,
+       "80": 998.6908807165296,
+       "95": 1727.2435606640283
+      },
+      "wis_eur": 11.767241992918784,
+      "within_tau_hours": 6
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       1,
+       14,
+       23,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 22,
+       "80": 24,
+       "95": 24
+      },
+      "day": "2026-11-14",
+      "keys": 24,
+      "mae_eur": 11.179214793555557,
+      "pit_counts": [
+       0,
+       0,
+       1,
+       13,
+       9,
+       1,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 1031.2440776356143,
+       "80": 2061.9180568881384,
+       "95": 3451.147355970501
+      },
+      "wis_eur": 8.344921404253341,
+      "within_tau_hours": 11
+     },
+     {
+      "at_or_below": [
+       0,
+       2,
+       16,
+       22,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 8,
+       "80": 22,
+       "95": 24
+      },
+      "day": "2026-11-15",
+      "keys": 24,
+      "mae_eur": 30.505353274292663,
+      "pit_counts": [
+       0,
+       2,
+       14,
+       6,
+       2,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 1167.5710891395954,
+       "80": 2326.3272417399075,
+       "95": 4027.095021494949
+      },
+      "wis_eur": 14.408594133557772,
+      "within_tau_hours": 3
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       0,
+       13,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 13,
+       "80": 24,
+       "95": 24
+      },
+      "day": "2026-11-16",
+      "keys": 24,
+      "mae_eur": 28.272591190961176,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       0,
+       13,
+       11,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 1455.2915423567283,
+       "80": 2982.346540048539,
+       "95": 5250.569701635073
+      },
+      "wis_eur": 14.739520329536882,
+      "within_tau_hours": 0
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       5,
+       17,
+       19,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 17,
+       "80": 19,
+       "95": 24
+      },
+      "day": "2026-11-17",
+      "keys": 24,
+      "mae_eur": 14.79233246762029,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       5,
+       12,
+       2,
+       5,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 938.4454487222454,
+       "80": 1901.7701917564518,
+       "95": 3239.0362002926413
+      },
+      "wis_eur": 9.715219829667893,
+      "within_tau_hours": 9
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       6,
+       20,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 18,
+       "80": 24,
+       "95": 24
+      },
+      "day": "2026-11-18",
+      "keys": 24,
+      "mae_eur": 15.768464091929166,
+      "pit_counts": [
+       0,
+       0,
+       6,
+       14,
+       4,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 951.9227149869262,
+       "80": 1912.0466294454448,
+       "95": 3326.9468211582334
+      },
+      "wis_eur": 9.157539308494227,
+      "within_tau_hours": 11
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       6,
+       13
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 0,
+       "80": 6,
+       "95": 13
+      },
+      "day": "2026-11-19",
+      "keys": 24,
+      "mae_eur": 39.889248478007,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       6,
+       7,
+       11
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 605.2918386555557,
+       "80": 1242.5157104848067,
+       "95": 2147.739836386804
+      },
+      "wis_eur": 23.278871280584706,
+      "within_tau_hours": 1
+     },
+     {
+      "canonical_hours": 24,
+      "completeness": 0.0,
+      "day": "2026-11-20",
+      "keys": 24,
+      "scored": false,
+      "scored_hours": 0
+     }
+    ],
+    "pooled": {
+     "coverage": {
+      "50": {
+       "covered_hours": 106,
+       "mean_width_eur": 36.20460077702624,
+       "nominal": 0.5,
+       "scored_hours": 216,
+       "share": 0.49074074074074076
+      },
+      "80": {
+       "covered_hours": 165,
+       "mean_width_eur": 73.35346613593296,
+       "nominal": 0.8,
+       "scored_hours": 216,
+       "share": 0.7638888888888888
+      },
+      "95": {
+       "covered_hours": 196,
+       "mean_width_eur": 127.3164058514564,
+       "nominal": 0.95,
+       "scored_hours": 216,
+       "share": 0.9074074074074074
+      }
+     },
+     "mae_eur": 21.017344921575177,
+     "partial_days": 0,
+     "pending_or_unscored_days": 1,
+     "percentage": {
+      "label": "share of scored hours within \u00b110 EUR/MWh of the published price",
+      "scored_hours": 216,
+      "share": 0.2777777777777778,
+      "tau_eur": 10.0,
+      "within_hours": 60
+     },
+     "pit": [
+      {
+       "band": 0,
+       "count": 9,
+       "nominal_share": 0.025,
+       "share": 0.041666666666666664
+      },
+      {
+       "band": 1,
+       "count": 16,
+       "nominal_share": 0.075,
+       "share": 0.07407407407407407
+      },
+      {
+       "band": 2,
+       "count": 34,
+       "nominal_share": 0.15,
+       "share": 0.1574074074074074
+      },
+      {
+       "band": 3,
+       "count": 48,
+       "nominal_share": 0.25,
+       "share": 0.2222222222222222
+      },
+      {
+       "band": 4,
+       "count": 58,
+       "nominal_share": 0.25,
+       "share": 0.26851851851851855
+      },
+      {
+       "band": 5,
+       "count": 25,
+       "nominal_share": 0.15,
+       "share": 0.11574074074074074
+      },
+      {
+       "band": 6,
+       "count": 15,
+       "nominal_share": 0.075,
+       "share": 0.06944444444444445
+      },
+      {
+       "band": 7,
+       "count": 11,
+       "nominal_share": 0.025,
+       "share": 0.05092592592592592
+      }
+     ],
+     "reliability": [
+      {
+       "at_or_below": 9,
+       "level": 0.025,
+       "name": "p025",
+       "scored_hours": 216,
+       "share": 0.041666666666666664
+      },
+      {
+       "at_or_below": 25,
+       "level": 0.1,
+       "name": "p10",
+       "scored_hours": 216,
+       "share": 0.11574074074074074
+      },
+      {
+       "at_or_below": 59,
+       "level": 0.25,
+       "name": "p25",
+       "scored_hours": 216,
+       "share": 0.27314814814814814
+      },
+      {
+       "at_or_below": 107,
+       "level": 0.5,
+       "name": "p50",
+       "scored_hours": 216,
+       "share": 0.49537037037037035
+      },
+      {
+       "at_or_below": 165,
+       "level": 0.75,
+       "name": "p75",
+       "scored_hours": 216,
+       "share": 0.7638888888888888
+      },
+      {
+       "at_or_below": 190,
+       "level": 0.9,
+       "name": "p90",
+       "scored_hours": 216,
+       "share": 0.8796296296296297
+      },
+      {
+       "at_or_below": 205,
+       "level": 0.975,
+       "name": "p975",
+       "scored_hours": 216,
+       "share": 0.9490740740740741
+      }
+     ],
+     "scored_days": 9,
+     "scored_hours": 216,
+     "wis_eur": 11.885255301970979
+    },
+    "rolling": [
+     {
+      "coverage50": 0.4583333333333333,
+      "coverage80": 0.7083333333333334,
+      "coverage95": 1.0,
+      "day": "2026-11-06",
+      "scored_hours": 24,
+      "width50_eur": 27.33402756779796,
+      "width80_eur": 56.93648511980759,
+      "width95_eur": 104.82230786140724,
+      "window_days": 1,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.4375,
+      "coverage80": 0.7291666666666666,
+      "coverage95": 1.0,
+      "day": "2026-11-07",
+      "scored_hours": 48,
+      "width50_eur": 24.56072461206622,
+      "width80_eur": 50.390279880868775,
+      "width95_eur": 90.22010763150729,
+      "window_days": 2,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.3888888888888889,
+      "coverage80": 0.6388888888888888,
+      "coverage95": 0.875,
+      "day": "2026-11-08",
+      "scored_hours": 72,
+      "width50_eur": 23.20037578251392,
+      "width80_eur": 47.46422659719765,
+      "width95_eur": 84.13623231911636,
+      "window_days": 3,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.5208333333333334,
+      "coverage80": 0.7291666666666666,
+      "coverage95": 0.90625,
+      "day": "2026-11-14",
+      "scored_hours": 96,
+      "width50_eur": 28.142407645589756,
+      "width80_eur": 57.076483040483005,
+      "width95_eur": 99.05162586402999,
+      "window_days": 4,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.48333333333333334,
+      "coverage80": 0.7666666666666667,
+      "coverage95": 0.925,
+      "day": "2026-11-15",
+      "scored_hours": 120,
+      "width50_eur": 32.243685192635105,
+      "width80_eur": 65.04724678021897,
+      "width95_eur": 112.80042587034856,
+      "window_days": 5,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.4930555555555556,
+      "coverage80": 0.8055555555555556,
+      "coverage95": 0.9375,
+      "day": "2026-11-16",
+      "scored_hours": 144,
+      "width50_eur": 36.97592892689542,
+      "width80_eur": 74.916778844964,
+      "width95_eur": 130.46264448664516,
+      "window_days": 6,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.5238095238095238,
+      "coverage80": 0.8035714285714286,
+      "coverage95": 0.9464285714285714,
+      "day": "2026-11-17",
+      "scored_hours": 168,
+      "width50_eur": 37.27963817973325,
+      "width80_eur": 75.53444253232898,
+      "width95_eur": 131.10510122839014,
+      "window_days": 7,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.5520833333333334,
+      "coverage80": 0.828125,
+      "coverage95": 0.953125,
+      "day": "2026-11-18",
+      "scored_hours": 192,
+      "width50_eur": 37.57761421449017,
+      "width80_eur": 76.0512134108162,
+      "width95_eur": 132.04481160170715,
+      "window_days": 8,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.49074074074074076,
+      "coverage80": 0.7638888888888888,
+      "coverage95": 0.9074074074074074,
+      "day": "2026-11-19",
+      "scored_hours": 216,
+      "width50_eur": 36.20460077702624,
+      "width80_eur": 73.35346613593296,
+      "width95_eur": 127.3164058514564,
+      "window_days": 9,
+      "window_first_day": "2026-11-06"
+     }
+    ],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "prospective"
+  },
+  {
+   "evidence_class": "prospective \u00b7 evaluation in progress until CP-19",
+   "policy": "B0",
+   "record": {
+    "days": [
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       2,
+       9,
+       23,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 9,
+       "80": 23,
+       "95": 24
+      },
+      "day": "2026-11-06",
+      "keys": 24,
+      "mae_eur": 18.903958333333332,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       2,
+       7,
+       14,
+       1,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 815.4750000000004,
+       "80": 2136.072,
+       "95": 3990.2175000000016
+      },
+      "wis_eur": 11.123312648809526,
+      "within_tau_hours": 7
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       7,
+       17,
+       23,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 17,
+       "80": 23,
+       "95": 24
+      },
+      "day": "2026-11-07",
+      "keys": 24,
+      "mae_eur": 11.613437500000005,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       7,
+       10,
+       6,
+       1,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 815.4750000000004,
+       "80": 2136.072,
+       "95": 3990.2175000000016
+      },
+      "wis_eur": 8.793446577380955,
+      "within_tau_hours": 15
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       13,
+       18,
+       21,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 8,
+       "80": 24,
+       "95": 24
+      },
+      "day": "2026-11-08",
+      "keys": 24,
+      "mae_eur": 20.749375000000004,
+      "pit_counts": [
+       0,
+       0,
+       13,
+       5,
+       3,
+       3,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 850.4700000000001,
+       "80": 2107.3500000000004,
+       "95": 3990.2175000000016
+      },
+      "wis_eur": 10.50475223214286,
+      "within_tau_hours": 4
+     },
+     {
+      "at_or_below": [
+       2,
+       21,
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 0,
+       "80": 3,
+       "95": 22
+      },
+      "day": "2026-11-14",
+      "keys": 24,
+      "mae_eur": 61.632604166666674,
+      "pit_counts": [
+       2,
+       19,
+       3,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 882.4350000000002,
+       "80": 2063.298,
+       "95": 3810.1770000000024
+      },
+      "wis_eur": 31.55106220238096,
+      "within_tau_hours": 0
+     },
+     {
+      "at_or_below": [
+       19,
+       24,
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 0,
+       "80": 0,
+       "95": 5
+      },
+      "day": "2026-11-15",
+      "keys": 24,
+      "mae_eur": 101.95927083333333,
+      "pit_counts": [
+       19,
+       5,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 882.4350000000003,
+       "80": 2063.2980000000007,
+       "95": 3810.1770000000024
+      },
+      "wis_eur": 66.44904732142858,
+      "within_tau_hours": 0
+     },
+     {
+      "at_or_below": [
+       23,
+       23,
+       24,
+       24,
+       24,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 0,
+       "80": 1,
+       "95": 1
+      },
+      "day": "2026-11-16",
+      "keys": 24,
+      "mae_eur": 149.92458333333335,
+      "pit_counts": [
+       23,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 945.5849999999994,
+       "80": 2254.187999999999,
+       "95": 3899.478000000003
+      },
+      "wis_eur": 110.45260267857144,
+      "within_tau_hours": 0
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       6,
+       9,
+       10,
+       13,
+       20
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 4,
+       "80": 13,
+       "95": 20
+      },
+      "day": "2026-11-17",
+      "keys": 24,
+      "mae_eur": 47.18322916666667,
+      "pit_counts": [
+       0,
+       0,
+       6,
+       3,
+       1,
+       3,
+       7,
+       4
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 1062.8400000000006,
+       "80": 2450.724,
+       "95": 4336.879500000003
+      },
+      "wis_eur": 25.92425163690476,
+      "within_tau_hours": 1
+     },
+     {
+      "at_or_below": [
+       0,
+       14,
+       15,
+       18,
+       21,
+       24,
+       24
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 6,
+       "80": 10,
+       "95": 24
+      },
+      "day": "2026-11-18",
+      "keys": 24,
+      "mae_eur": 69.43604166666667,
+      "pit_counts": [
+       0,
+       14,
+       1,
+       3,
+       3,
+       3,
+       0,
+       0
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 1188.8250000000003,
+       "80": 2720.267999999999,
+       "95": 4927.495500000002
+      },
+      "wis_eur": 35.80332514880953,
+      "within_tau_hours": 2
+     },
+     {
+      "at_or_below": [
+       0,
+       0,
+       0,
+       0,
+       3,
+       4,
+       11
+      ],
+      "canonical_hours": 24,
+      "completeness": 1.0,
+      "covered": {
+       "50": 3,
+       "80": 4,
+       "95": 11
+      },
+      "day": "2026-11-19",
+      "keys": 24,
+      "mae_eur": 84.55666666666666,
+      "pit_counts": [
+       0,
+       0,
+       0,
+       0,
+       3,
+       1,
+       7,
+       13
+      ],
+      "scored": true,
+      "scored_hours": 24,
+      "width_sum_eur": {
+       "50": 1199.6249999999995,
+       "80": 2722.967999999999,
+       "95": 5011.892999999998
+      },
+      "wis_eur": 57.98271651785715,
+      "within_tau_hours": 0
+     },
+     {
+      "canonical_hours": 24,
+      "completeness": 0.0,
+      "day": "2026-11-20",
+      "keys": 24,
+      "scored": false,
+      "scored_hours": 0
+     }
+    ],
+    "pooled": {
+     "coverage": {
+      "50": {
+       "covered_hours": 47,
+       "mean_width_eur": 40.01465277777778,
+       "nominal": 0.5,
+       "scored_hours": 216,
+       "share": 0.2175925925925926
+      },
+      "80": {
+       "covered_hours": 101,
+       "mean_width_eur": 95.62147222222221,
+       "nominal": 0.8,
+       "scored_hours": 216,
+       "share": 0.4675925925925926
+      },
+      "95": {
+       "covered_hours": 155,
+       "mean_width_eur": 174.84607638888897,
+       "nominal": 0.95,
+       "scored_hours": 216,
+       "share": 0.7175925925925926
+      }
+     },
+     "mae_eur": 62.88435185185185,
+     "partial_days": 0,
+     "pending_or_unscored_days": 1,
+     "percentage": {
+      "label": "share of scored hours within \u00b110 EUR/MWh of the published price",
+      "scored_hours": 216,
+      "share": 0.13425925925925927,
+      "tau_eur": 10.0,
+      "within_hours": 29
+     },
+     "pit": [
+      {
+       "band": 0,
+       "count": 44,
+       "nominal_share": 0.025,
+       "share": 0.2037037037037037
+      },
+      {
+       "band": 1,
+       "count": 38,
+       "nominal_share": 0.075,
+       "share": 0.17592592592592593
+      },
+      {
+       "band": 2,
+       "count": 24,
+       "nominal_share": 0.15,
+       "share": 0.1111111111111111
+      },
+      {
+       "band": 3,
+       "count": 20,
+       "nominal_share": 0.25,
+       "share": 0.09259259259259259
+      },
+      {
+       "band": 4,
+       "count": 27,
+       "nominal_share": 0.25,
+       "share": 0.125
+      },
+      {
+       "band": 5,
+       "count": 30,
+       "nominal_share": 0.15,
+       "share": 0.1388888888888889
+      },
+      {
+       "band": 6,
+       "count": 16,
+       "nominal_share": 0.075,
+       "share": 0.07407407407407407
+      },
+      {
+       "band": 7,
+       "count": 17,
+       "nominal_share": 0.025,
+       "share": 0.0787037037037037
+      }
+     ],
+     "reliability": [
+      {
+       "at_or_below": 44,
+       "level": 0.025,
+       "name": "p025",
+       "scored_hours": 216,
+       "share": 0.2037037037037037
+      },
+      {
+       "at_or_below": 82,
+       "level": 0.1,
+       "name": "p10",
+       "scored_hours": 216,
+       "share": 0.37962962962962965
+      },
+      {
+       "at_or_below": 106,
+       "level": 0.25,
+       "name": "p25",
+       "scored_hours": 216,
+       "share": 0.49074074074074076
+      },
+      {
+       "at_or_below": 126,
+       "level": 0.5,
+       "name": "p50",
+       "scored_hours": 216,
+       "share": 0.5833333333333334
+      },
+      {
+       "at_or_below": 153,
+       "level": 0.75,
+       "name": "p75",
+       "scored_hours": 216,
+       "share": 0.7083333333333334
+      },
+      {
+       "at_or_below": 183,
+       "level": 0.9,
+       "name": "p90",
+       "scored_hours": 216,
+       "share": 0.8472222222222222
+      },
+      {
+       "at_or_below": 199,
+       "level": 0.975,
+       "name": "p975",
+       "scored_hours": 216,
+       "share": 0.9212962962962963
+      }
+     ],
+     "scored_days": 9,
+     "scored_hours": 216,
+     "wis_eur": 39.842724107142864
+    },
+    "rolling": [
+     {
+      "coverage50": 0.375,
+      "coverage80": 0.9583333333333334,
+      "coverage95": 1.0,
+      "day": "2026-11-06",
+      "scored_hours": 24,
+      "width50_eur": 33.97812500000001,
+      "width80_eur": 89.003,
+      "width95_eur": 166.25906250000006,
+      "window_days": 1,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.5416666666666666,
+      "coverage80": 0.9583333333333334,
+      "coverage95": 1.0,
+      "day": "2026-11-07",
+      "scored_hours": 48,
+      "width50_eur": 33.97812500000001,
+      "width80_eur": 89.003,
+      "width95_eur": 166.25906250000006,
+      "window_days": 2,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.4722222222222222,
+      "coverage80": 0.9722222222222222,
+      "coverage95": 1.0,
+      "day": "2026-11-08",
+      "scored_hours": 72,
+      "width50_eur": 34.46416666666668,
+      "width80_eur": 88.60408333333334,
+      "width95_eur": 166.25906250000006,
+      "window_days": 3,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.3541666666666667,
+      "coverage80": 0.7604166666666666,
+      "coverage95": 0.9791666666666666,
+      "day": "2026-11-14",
+      "scored_hours": 96,
+      "width50_eur": 35.04015625000001,
+      "width80_eur": 87.94575000000002,
+      "width95_eur": 164.38364062500008,
+      "window_days": 4,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.2833333333333333,
+      "coverage80": 0.6083333333333333,
+      "coverage95": 0.825,
+      "day": "2026-11-15",
+      "scored_hours": 120,
+      "width50_eur": 35.38575000000001,
+      "width80_eur": 87.55075000000001,
+      "width95_eur": 163.25838750000008,
+      "window_days": 5,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.2361111111111111,
+      "coverage80": 0.5138888888888888,
+      "coverage95": 0.6944444444444444,
+      "day": "2026-11-16",
+      "scored_hours": 144,
+      "width50_eur": 36.05468750000001,
+      "width80_eur": 88.61304166666667,
+      "width95_eur": 163.12836458333342,
+      "window_days": 6,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.2261904761904762,
+      "coverage80": 0.5178571428571429,
+      "coverage95": 0.7142857142857143,
+      "day": "2026-11-17",
+      "scored_hours": 168,
+      "width50_eur": 37.23044642857143,
+      "width80_eur": 90.54167857142858,
+      "width95_eur": 165.63907142857153,
+      "window_days": 7,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.22916666666666666,
+      "coverage80": 0.5052083333333334,
+      "coverage95": 0.75,
+      "day": "2026-11-18",
+      "scored_hours": 192,
+      "width50_eur": 38.76843750000001,
+      "width80_eur": 93.39203125,
+      "width95_eur": 170.5982265625001,
+      "window_days": 8,
+      "window_first_day": "2026-11-06"
+     },
+     {
+      "coverage50": 0.2175925925925926,
+      "coverage80": 0.4675925925925926,
+      "coverage95": 0.7175925925925926,
+      "day": "2026-11-19",
+      "scored_hours": 216,
+      "width50_eur": 40.01465277777778,
+      "width80_eur": 95.62147222222221,
+      "width95_eur": 174.84607638888897,
+      "window_days": 9,
+      "window_first_day": "2026-11-06"
+     }
+    ],
+    "rolling_days": 28,
+    "schema": "cp17-evaluation-v1",
+    "tau_eur": 10.0
+   },
+   "window": "prospective"
+  }
+ ]
+}
