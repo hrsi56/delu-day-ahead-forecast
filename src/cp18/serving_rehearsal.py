@@ -406,10 +406,20 @@ def main(argv=None) -> int:
     candidate, project, work = args.candidate.resolve(), args.project.resolve(), args.work.resolve()
     if work.exists() and any(work.iterdir()):
         raise SystemExit(f'{work} is not empty')
+    # Every leg clones the candidate's HEAD when it starts and imports its `src/`: both must stay one commit throughout
+    head = _git('-C', str(candidate), 'rev-parse', 'HEAD')
+    if _git('-C', str(candidate), 'status', '--porcelain=v1', '--untracked-files=no', '--', 'src'):
+        raise SystemExit(f'{candidate}: src/ differs from HEAD; commit or run from a clean checkout')
     work.mkdir(parents=True, exist_ok=True)
     started = datetime.now()
+
+    def unmoved():
+        if _git('-C', str(candidate), 'rev-parse', 'HEAD') != head:
+            raise SystemExit(f'{candidate}: HEAD moved from {head} during the run; its record is void')
+
     if args.live_days:
         record = live_days(candidate, project, work, args.refit)
+        unmoved()
         record['seconds'] = (datetime.now() - started).total_seconds()
         shutil.rmtree(work, ignore_errors=True)
         args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -424,7 +434,8 @@ def main(argv=None) -> int:
     with ThreadPoolExecutor(max_workers=max(1, min(args.parallel, 4))) as pool:
         futures = {m: pool.submit(run_leg, m, candidate, project, work, sources[m]) for m in LEGS}
         legs = {m: f.result() for m, f in futures.items()}
-    record = {'schema': 'cp18e-serving-rehearsal-v1', 'candidate': _git('-C', str(candidate), 'rev-parse', 'HEAD'),
+    unmoved()
+    record = {'schema': 'cp18e-serving-rehearsal-v1', 'candidate': head,
               'day': DAY, 'wall_clock': NOW, 'old_code': old, 'legs': legs, **judge(legs, project),
               'seconds': (datetime.now() - started).total_seconds(),
               'leg_seconds_sum': sum(v['wall_seconds'] for v in legs.values())}
