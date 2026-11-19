@@ -6,7 +6,8 @@
     PYTHONPATH=src python -m cp18 run --root . --project . --out <dir> --host runner --now <ISO> \
         --inputs prebuilt:<payload folder> | live:<recorded responses> [--remote origin]
     PYTHONPATH=src python -m cp18 carry --root . --last-window-day <day> --first-live-day <day> --reason <text>
-    PYTHONPATH=src python -m cp18 search --root . --k 14 --file <k14.json> --provenance <text>
+    PYTHONPATH=src python -m cp18 search --root . --k <k> --file <k{NN}.json> --provenance <text>   (k > 13 refused:
+        the Owner's decision 33 ends DDNN-2's searches in operation at S_13)
     PYTHONPATH=src python -m cp18 status --root .
 
 **Two modes.** `--mode dry-run` (the default): development days through 2026-09-06, with `--now` required, so the plan
@@ -215,8 +216,15 @@ def cmd_carry(args) -> int:
 
 
 def cmd_search(args) -> int:
-    """S_14 (H4): a search state written natively on the Owner's M3 enters the store, bound by hash."""
+    """H4's route for S_14's state, which the Owner's decision 33 cancels: a search after S_13 is refused here, before
+    the store is opened, and by the store itself (`LiveStore.record_search`). Exit 2 on the refusal."""
+    from . import serving
     from .store import STORE_PATH, LiveStore
+    try:
+        serving.refuse_later(args.k)
+    except serving.LaterSearchRefused as exc:
+        print(f'refused: {exc}', flush=True)
+        return 2
     store = LiveStore(args.root / STORE_PATH)
     store.verify()
     entry = store.record_search(args.k, args.file, args.provenance)

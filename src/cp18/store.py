@@ -9,7 +9,9 @@ repointed head fails `verify()`. This module adds four entry kinds, each carryin
   verifiable from the store itself;
 - `not_issued`: a delivery day closed as not issued, with one of r19's five causes (`cp18.causes`) and the runs
   that attempted it;
-- `search`: a search state that serves later days (S_14's `k14.json`, H4), copied into `search/` and bound by hash;
+- `search`: a search state copied into `search/` and bound by hash. It was H4's route for S_14's `k14.json`; the
+  Owner's decision 33 cancels S_14 and every later search, so a state of a search after S_13 is refused, entered
+  (`record_search`) or found in the ledger (`verify`), and no live day reads one (`cp18.serving`);
 - `carry`: the carry from 4.7T's last window day to the first live day, naming the days between them, which are
   outside both and never issued.
 
@@ -34,7 +36,7 @@ from pathlib import Path
 
 from cp17c.store import SCHEMA as CP17C_SCHEMA, Store, StoreRefused, _canonical, _sha, _sha_bytes, _write
 
-from . import causes, inputclass
+from . import causes, inputclass, serving
 
 STORE_PATH = 'live/store'
 INPUTS_PATH = 'live/inputs'
@@ -83,6 +85,9 @@ class LiveStore(Store):
                     raise StoreRefused(f'ledger entry {i}: a carry before any decided day starts at the genesis origin')
                 previous_day = nxt - timedelta(days=1)            # the days between are outside both, never issued
             if kind == 'search':
+                if entry.get('k', 0) > serving.LAST:
+                    raise StoreRefused(f'ledger entry {i}: a state of search {entry["k"]}: DDNN-2\'s searches in '
+                                       f"operation end at S_{serving.LAST} (the Owner's decision {serving.DECISION})")
                 path = self.folder / entry['search_file']
                 if not path.is_file() or _sha(path) != entry['search_file_sha256']:
                     raise StoreRefused(f'ledger entry {i}: {entry["search_file"]} is absent or altered')
@@ -199,6 +204,10 @@ class LiveStore(Store):
 
     def record_search(self, k: int, source: Path, provenance: str) -> dict:
         from cp26.search import validate_ensemble
+        try:
+            serving.refuse_later(k)              # decision 33: no search after S_13 serves a live day
+        except serving.LaterSearchRefused as exc:
+            raise StoreRefused(str(exc)) from None
         value = json.loads(Path(source).read_text())
         validate_ensemble(value, k, 'nominal')
         rel = f'search/k{k:02d}.json'

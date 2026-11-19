@@ -515,6 +515,7 @@
       h('dt', {}, 'Last training'), h('dd', {'data-time': 'training', 'data-cutoff-time': m.times.last_training_utc, 'data-run-started': trained ? trained.issuance_started_utc : ''},
         `${cap(L('live_issue_time_label'))}: ${when(m.times.last_training_utc)}. ${cap(L('live_run_time_label'))}: `,
         trained ? `the fit ran inside the issuance of ${trained.day}, ${when(trained.issuance_started_utc)} to ${clock(trained.issuance_finished_utc)}, on ${hostText(trained)}` : L('live_run_time_absent')),
+      h('dt', {}, 'Network configurations'), h('dd', {'data-network-choice': '1'}, L('live_network_choice')),
       h('dt', {}, 'Data refresh'), h('dd', {'data-time': 'refresh'}, when(m.times.data_refresh_utc)),
       h('dt', {}, 'Forecast issuance'), h('dd', {'data-time': 'issuance', 'data-cutoff-time': m.times.issuance_utc, 'data-run-started': issuedRun ? issuedRun.run_started_utc : ''},
         `${cap(L('live_issue_time_label'))}: ${when(m.times.issuance_utc)}. ${cap(L('live_run_time_label'))}: ${runText(issuedRun)}`),

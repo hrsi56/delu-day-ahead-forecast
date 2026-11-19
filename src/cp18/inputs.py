@@ -5,7 +5,8 @@ The pipeline asks three things for each delivery day D:
   of the requested keys that is NaN unless every key is present, holding delivery days up to D−1 only (published
   before D's cutoff);
 - `search_file(k)`: A1's search state for search k when it is a pinned file (S_13's `k13.json` at
-  `cp17.runtime.K13`); S_14 and later come from the store's `search` entries, never from here;
+  `cp17.runtime.K13`); no search after S_13 serves any day (the Owner's decision 33, `cp18.serving`), so none comes
+  from here;
 - `build(D, buffers, search_file, out)`: the day's four payloads (A1, v4, v2, B0) in `out`, built with the buffers the
   store's state holds after D−2's release, and the judgement of the day's inputs: a dict with `payloads` (the folder),
   `gfs_available`, `shown` (every required input shown to precede D's cutoff) with its reasons, `availability` (each
