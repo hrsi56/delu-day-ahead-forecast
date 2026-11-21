@@ -29,6 +29,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
+from delu_forecast import derived as D
 from delu_forecast import final_candidate as FC
 from delu_forecast import research as R
 from delu_forecast import research_claims as RC
@@ -215,11 +216,20 @@ def test_the_order_is_a8s_product_first():
     assert _order(old)[:5] != ["top", "product", "outcomes", "business", "research-results"]
 
 
+def _belongs(record_id: str, prefixes: tuple[str, ...]) -> bool:
+    """A committed record under one of `prefixes`, or a derived record computed only from such records (since
+    2026-11-21, the profit chart over the naive's perfect-foresight difference, from two CP-29 records)."""
+    if D.is_derived(record_id):
+        record = D.records().get(record_id)
+        return record is not None and bool(record.inputs) and all(_belongs(i, prefixes) for i in record.inputs)
+    return record_id.startswith(prefixes) and record_id in R.records()
+
+
 def _foreign(section: str, prefixes: tuple[str, ...] = ("pres6.",)) -> list[str]:
     """What does not belong in a PRES-6 section: a record not PRES-6's (or, in Business insights since PRES-7, not
     CP-29's) or unknown, a live record, a raw value shown unrounded."""
     problems = [f"record {record_id}" for record_id in re.findall(r'data-record="([^"]+)"', section)
-                if not record_id.startswith(prefixes) or record_id not in R.records()]
+                if not _belongs(record_id, prefixes)]
     visible = _text(re.sub(r"<svg.*?</svg>", "", re.sub(r"<data [^>]*>", "", section), flags=re.S))
     return problems + [f"unrounded {value}" for value in re.findall(r"\d+\.\d{6,}", visible)]
 
