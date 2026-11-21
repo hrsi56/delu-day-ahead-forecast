@@ -841,11 +841,7 @@ PRES5_BLOCKS: tuple[Block, ...] = (
     _block("terms.final_candidate", "P61", """**Final candidate · pending {s:work-item:4.7T}:** {g:v6.version}
            (named {s:name:A1} in the frozen records), frozen for {s:work-item:4.7T}, its one test on new data:
            {s:count:90} days registered in advance.""", PAGE, README),
-    # ---- the opening's product line (decision 28; O13; O17) ----
-    _block("product.live", "P61", """The Owner, the project's lead, has the Space run """ + _A1 + """ daily before its
-           one test:
-           prospective evaluation in progress. A pass releases it; otherwise {g:v1.version}, the last released
-           generation, is the product again.""", PAGE, README),
+    # The opening's product line (`product.live`, decision 28; O13; O17) was removed by the Owner on 2026-11-21.
     # ---- the comparison, with A1 first (the brief's outcome 1) ----
     _block("comparison.finding.a1", "P62", """{g:v6.version} against {g:v5.version}, as a share of {g:v5.version}'s error
            scores: {r:derived.change.v6.S_MAE} {r:derived.change.v6.S_MAE|ci} on the point-error score and
@@ -954,8 +950,9 @@ PRES5_BLOCKS: tuple[Block, ...] = (
            {r:cp28.selection.wis.A1} EUR/MWh against the next best's {r:cp28.selection.wis.A6}, so it was selected; its
            largest p-value in the main analysis was {r:cp28.holm.primary14.A1.compound_p}. The table gives every arm's
            change against {g:v5.version}, with descriptive {s:level:95%} intervals.""", PAGE),
-    _block("v6.holm.note", "C705", """The selection was run only after the Owner saw the re-baseline's report, which
-           already showed {s:name:DDNN-2} alone on these days; its multiplicity control is conditional on that
+    # PRES-7 (O51 item 8): the Owner is defined at first use, here since the opening's product line was removed
+    _block("v6.holm.note", "C705", """The selection was run only after the Owner, the project's lead, saw the
+           re-baseline's report, which already showed {s:name:DDNN-2} alone on these days; its multiplicity control is conditional on that
            decision.""", PAGE),
     _block("v6.freeze", "C801", """**The freeze.** On {s:date:2026-10-28} {g:v6.version} was frozen as the product's
            complete daily policy: one package, run unchanged by the issuing host and by the visitor's browser. It was
@@ -1250,6 +1247,12 @@ PRES7_BLOCKS: tuple[Block, ...] = (
            from {g:v6.version}'s stored forecasts ({g:v6.name}, {s:name:A1} in the frozen records, policy identity
            {s:hash:720fc581}…), from the similar-day naive's and from the cleared prices themselves (perfect foresight,
            the ceiling) · doing nothing earns zero, the line at zero · simulated, development, post-selection""", PAGE),
+    # The Owner's request of 2026-11-21: the same chart with the naive as the line at zero
+    _block("economics.chart_naive", "C1205", """Drawn: the same days, battery, costs and rule, each schedule's
+           cumulative net profit minus the similar-day naive's, in EUR, so the naive's is the line at zero: above it, a
+           schedule had earned more than the naive's by that day. {g:v6.version}'s line ends at the paired total below;
+           perfect foresight's, at the most any forecast could have added over the naive's on this battery ·
+           simulated, development, post-selection""", PAGE),
     _block("economics.untraded", "C1202", """**Days not traded.** {g:v6.version}'s schedule traded on
            {r:""" + _V6 + """.trading_days} of the {r:""" + _V6 + """.days} days. On the others it did nothing: on most,
            no cycle was expected to pay its costs; on {r:""" + _V6 + """.missing_days}, within a week after a clock

@@ -1764,8 +1764,9 @@ def opening(C, payload) -> str:
         research_name = RC.render_template("P61", "{g:v6.name}")
         primary_action = (f'<a class="btn-primary external" href="{attr(C["space_url"])}"><span>Open the live '
                           f'product</span></a>')
-        # The product identity beside the action (§2's table; §7.1): what the Space runs, and v1's place.
-        product_rule = f'<div class="release-rule" data-block="release-rule">{block("product.live")}</div>'
+        # The product line beside the action (`product.live`: what the Space runs, and v1's place) was removed by the
+        # Owner on 2026-11-21, so the live product's opening has no release-rule slot.
+        product_rule = ""
         preview = (
             f'<figure class="preview panel">'
             f'<figcaption class="preview-label"><span class="badge badge-replay">Development forecast · '
@@ -2528,54 +2529,65 @@ def _day_number(day: str) -> int:
     return pd.Timestamp(year=year, month=month, day=date_).toordinal()
 
 
-def profit_chart() -> str:
-    """The cumulative net profit chart (§5.1a; packet §0): v6, the naive and perfect foresight, doing nothing at zero."""
-    series = profit_series()
+def _profit_panel(series: dict[str, list[tuple[str, float]]], width: float, height: float, phone: bool, *,
+                  heading: str, units: str, units_phone: str, scale: str, zero_label: str | None) -> str:
+    """One variant of a cumulative-profit chart (packet §0): PROFIT_LINES over a zero reference, in thousand EUR.
+    `zero_label` names a zero line that no drawn line runs on (doing nothing); None when a drawn line is the zero line
+    (the naive, in the chart over the naive)."""
     first, last = series["v6"][0][0], series["v6"][-1][0]
     d0, d1 = _day_number(first), _day_number(last)
     top = series["perfect_foresight"][-1][1]
     low = min(0.0, min(value for line in series.values() for _, value in line))
     step = _nice_step(top - low)
     hi = math.ceil(top / step) * step
-
-    def panel(width: float, height: float, phone: bool) -> str:
-        # a phone's top margin leaves room for perfect foresight's two-line label under the subtitle
-        ml, mr, mt, mb = 44, (72 if phone else 128), (60 if phone else 40), 28
-        x = lambda day: ml + (width - ml - mr) * (_day_number(day) - d0) / (d1 - d0)  # noqa: E731
-        y = lambda v: mt + (height - mt - mb) * (1 - (v - low) / (hi - low))  # noqa: E731
-        out = [svg_text(ml, 16, "Cumulative net profit", weight="600"),
-               svg_text(ml, 32, "thousand EUR · one battery · every eligible development day", fill=TOKENS["text-2"])
-               if not phone else svg_text(ml, 32, "thousand EUR · development days", fill=TOKENS["text-2"])]
-        tick = 0.0
-        while tick <= hi + 1e-9:
-            out.append(f'<line x1="{ml}" x2="{width - mr:.0f}" y1="{y(tick):.1f}" y2="{y(tick):.1f}" '
-                       f'stroke="{TOKENS["grid"]}"/>')
-            out.append(svg_text(ml - 6, y(tick) + 4.5, tick_text(tick / 1000, step / 1000), anchor="end",
-                                fill=TOKENS["text-2"], extra=' data-scale="business-profit-keur"'))
-            tick += step
-        for year in range(int(first[:4]) + 1, int(last[:4]) + 1):
-            if phone and year % 2 == 0:
-                continue
-            at = x(f"{year}-01-01")
-            out.append(svg_text(at, height - 10, str(year), anchor="start" if at - ml < 20 else "middle",
-                                fill=TOKENS["text-2"], extra=' data-scale="business-profit-year"'))
+    # a phone's top margin leaves room for perfect foresight's two-line label under the subtitle
+    ml, mr, mt, mb = 44, (72 if phone else 128), (60 if phone else 40), 28
+    x = lambda day: ml + (width - ml - mr) * (_day_number(day) - d0) / (d1 - d0)  # noqa: E731
+    y = lambda v: mt + (height - mt - mb) * (1 - (v - low) / (hi - low))  # noqa: E731
+    out = [svg_text(ml, 16, heading, weight="600"),
+           svg_text(ml, 32, units_phone if phone else units, fill=TOKENS["text-2"])]
+    tick = 0.0
+    while tick <= hi + 1e-9:
+        out.append(f'<line x1="{ml}" x2="{width - mr:.0f}" y1="{y(tick):.1f}" y2="{y(tick):.1f}" '
+                   f'stroke="{TOKENS["grid"]}"/>')
+        out.append(svg_text(ml - 6, y(tick) + 4.5, tick_text(tick / 1000, step / 1000), anchor="end",
+                            fill=TOKENS["text-2"], extra=f' data-scale="{scale}-keur"'))
+        tick += step
+    for year in range(int(first[:4]) + 1, int(last[:4]) + 1):
+        if phone and year % 2 == 0:
+            continue
+        at = x(f"{year}-01-01")
+        out.append(svg_text(at, height - 10, str(year), anchor="start" if at - ml < 20 else "middle",
+                            fill=TOKENS["text-2"], extra=f' data-scale="{scale}-year"'))
+    if zero_label:
         # doing nothing: the contract's zero reference, labelled inside the plot at the right, where no line runs
         out.append(f'<line x1="{ml}" x2="{width - mr:.0f}" y1="{y(0):.1f}" y2="{y(0):.1f}" stroke="{TOKENS["text"]}" '
                    f'stroke-width="1.2"/>')
-        out.append(svg_text(width - mr, y(0) - 6, "doing nothing", anchor="end", fill=TOKENS["text"], extra=HALO))
-        for source, rule, label, phone_label in PROFIT_LINES:
-            colour, stroke, dash = PROFIT_STYLE[source]
-            points = _thin([(x(day), y(value)) for day, value in series[source]], ml)
-            dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
-            out.append(f'<polyline points="{" ".join(f"{px:.1f},{py:.1f}" for px, py in points)}" fill="none" '
-                       f'stroke="{colour}" stroke-width="{stroke}"{dash_attr} stroke-linejoin="round"/>')
-            end_y = y(series[source][-1][1])
-            lines = phone_label if phone else (label,)
-            for index, line in enumerate(lines):
-                # a two-line label stacks upwards, its last line level with the line's end
-                out.append(svg_text(width - mr + 6, end_y + 4.5 - 15 * (len(lines) - 1 - index), line, fill=colour,
-                                    weight="600"))
-        return "".join(out)
+        out.append(svg_text(width - mr, y(0) - 6, zero_label, anchor="end", fill=TOKENS["text"], extra=HALO))
+    for source, rule, label, phone_label in PROFIT_LINES:
+        colour, stroke, dash = PROFIT_STYLE[source]
+        points = _thin([(x(day), y(value)) for day, value in series[source]], ml)
+        dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
+        out.append(f'<polyline points="{" ".join(f"{px:.1f},{py:.1f}" for px, py in points)}" fill="none" '
+                   f'stroke="{colour}" stroke-width="{stroke}"{dash_attr} stroke-linejoin="round"/>')
+        end_y = y(series[source][-1][1])
+        lines = phone_label if phone else (label,)
+        for index, line in enumerate(lines):
+            # a two-line label stacks upwards, its last line level with the line's end
+            out.append(svg_text(width - mr + 6, end_y + 4.5 - 15 * (len(lines) - 1 - index), line, fill=colour,
+                                weight="600"))
+    return "".join(out)
+
+
+def profit_chart() -> str:
+    """The cumulative net profit chart (§5.1a; packet §0): v6, the naive and perfect foresight, doing nothing at zero."""
+    series = profit_series()
+
+    def panel(width: float, height: float, phone: bool) -> str:
+        return _profit_panel(series, width, height, phone, heading="Cumulative net profit",
+                             units="thousand EUR · one battery · every eligible development day",
+                             units_phone="thousand EUR · development days", scale="business-profit",
+                             zero_label="doing nothing")
 
     title = "Cumulative net profit of one battery from v6's, the naive's and perfect forecasts, development days"
     desc = ("The running sum of each day's simulated net profit, in thousand EUR, of a 1 MW, 2 MWh battery trading in "
@@ -2595,6 +2607,61 @@ def profit_chart() -> str:
     key += '<span class="key-profit key-profit-zero">Doing nothing: zero</span>'
     return (f'<div class="chart business-profit" data-chart-id="business-profit-chart">{desktop}{mobile}'
             f'<p class="preview-key profit-key">{key}</p></div>')
+
+
+#: The chart over the naive (the Owner's request of 2026-11-21): the record each line must end at. v6's is CP-29's
+#: paired total (its days the naive's, every one); perfect foresight's is its cumulative minus the naive's (derived).
+OVER_NAIVE_RECORDS = {"v6": "cp29.paired.p_all.median.v6_minus_naive.w25.total_difference_eur",
+                      "perfect_foresight": "derived.cp29.perfect_foresight-naive.w25"}
+
+
+def profit_over_naive_series() -> dict[str, list[tuple[str, float]]]:
+    """Each schedule's cumulative net profit minus the naive's, day by day, so the naive is the line at zero. Built
+    from `profit_series()`, whose lines are already checked, and checked again at each end against its record."""
+    series = profit_series()
+    naive = series["naive"]
+    days = [day for day, _ in naive]
+    out: dict[str, list[tuple[str, float]]] = {}
+    for source, record_id in OVER_NAIVE_RECORDS.items():
+        line = series[source]
+        if [day for day, _ in line] != days:
+            raise ProfitSeriesError(f"{source}: its days are not the naive's, so it cannot be drawn over the naive")
+        difference = [(day, total - base) for (day, total), (_, base) in zip(line, naive)]
+        expected = float(D.get(record_id).value) if D.is_derived(record_id) else R.get(record_id).value
+        if not math.isclose(difference[-1][1], expected, rel_tol=PROFIT_TOLERANCE, abs_tol=0.0):
+            raise ProfitSeriesError(f"{source} over the naive ends at {difference[-1][1]!r}, the record is {expected!r}")
+        out[source] = difference
+    out["naive"] = [(days[0], 0.0), (days[-1], 0.0)]  # the zero line, drawn in the naive's style
+    return out
+
+
+def profit_over_naive_chart() -> str:
+    """The cumulative net profit chart again, each line minus the naive's (the Owner's request of 2026-11-21): v6 and
+    perfect foresight over the naive, the naive at zero. Same days, battery, costs, rule, styles and scale rules."""
+    series = profit_over_naive_series()
+
+    def panel(width: float, height: float, phone: bool) -> str:
+        return _profit_panel(series, width, height, phone, heading="Cumulative net profit over the naive",
+                             units="thousand EUR · minus the naive's · every eligible development day",
+                             units_phone="thousand EUR · minus the naive's", scale="business-profit-naive",
+                             zero_label=None)
+
+    title = "Cumulative net profit over the naive's, from v6's and perfect forecasts, development days"
+    desc = ("The running sum of each day's simulated net profit minus the similar-day naive's, in thousand EUR, for "
+            "the same 1 MW, 2 MWh battery, costs and median rule as the chart above, December 2020 to September 2026: "
+            "v6 solid, perfect foresight dotted; the naive is the dashed line at zero. Simulated, development, "
+            "post-selection.")
+    desktop = svg_wrap(DESKTOP_W, 320, panel(DESKTOP_W, 320, False), title=title, desc=desc, variant="d",
+                       chart_id="business-profit-naive")
+    mobile = svg_wrap(MOBILE_W, 320, panel(MOBILE_W, 320, True), title=title, desc=desc, variant="m",
+                      chart_id="business-profit-naive")
+    key = (f'<span class="key-profit key-profit-v6">{_structural_versions("v6")}, median rule: '
+           f'{value(OVER_NAIVE_RECORDS["v6"], "C1205")} EUR</span> '
+           f'<span class="key-profit key-profit-perfect-foresight">Perfect foresight: '
+           f'{value(OVER_NAIVE_RECORDS["perfect_foresight"], "C1205")} EUR</span> '
+           f'<span class="key-profit key-profit-naive">Similar-day naive: zero</span>')
+    return (f'<div class="chart business-profit-naive" data-chart-id="business-profit-naive-chart">{desktop}{mobile}'
+            f'<p class="preview-key profit-key-naive">{key}</p></div>')
 
 
 def business_audit() -> tuple[Audit, ...]:
@@ -2628,6 +2695,8 @@ def business_insights() -> str:
   {detail_head("business-profit", BUSINESS_HEADINGS["business-profit"])}
   <p class="panel-sub" data-block="economics.chart">{RC.render("economics.chart")}</p>
   {profit_chart()}
+  <p class="panel-sub" data-block="economics.chart_naive">{RC.render("economics.chart_naive")}</p>
+  {profit_over_naive_chart()}
   {block("economics.difference")}
   {block("economics.untraded")}
  </div>

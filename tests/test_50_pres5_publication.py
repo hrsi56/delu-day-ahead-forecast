@@ -202,7 +202,10 @@ def test_the_opening_pairs_the_final_candidate_with_the_live_product():
     opening = PAGE[PAGE.index('id="top"'):PAGE.index('id="product"')]
     text = _text(opening)
     assert "Live product v6 · DDNN-2 alone" in text and "Final candidate · pending 4.7T v6 · DDNN-2 alone" in text
-    assert "prospective evaluation in progress" in text and "Open the live product" in text
+    # The opening's product line, which carried the label here, was removed by the Owner on 2026-11-21; the label
+    # stays on the page's live-record statements.
+    assert "Open the live product" in text
+    assert "prospective evaluation in progress" in _text(PAGE[PAGE.index('id="product"'):])
     assert "/history/" in opening  # v1's demo, historical (O17)
     assert "Try the v1 demo</span>" not in opening
 

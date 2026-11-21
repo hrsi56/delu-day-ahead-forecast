@@ -16,7 +16,7 @@
 - **Development · post-selection:** development evidence, not a test on new data; descriptive intervals: not the rule's own test.
 - **DDNN-2:** a distributional neural network (DDNN).
 
-**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). The Owner, the project's lead, has the Space run v6 · DDNN-2 alone daily before its one test: prospective evaluation in progress. A pass releases it; otherwise v1, the last released generation, is the product again. [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html).
+**Live product:** [open it on the Space](https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast). [v1's historical demo](https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/history/index.html).
 
 **How the product works:** The product the Space runs, v6 · DDNN-2 alone, topic by topic. [Read it in the report](https://hrsi56.github.io/delu-day-ahead-forecast/#product): its data, validation, results, failures, interval reliability and how to run it.
 

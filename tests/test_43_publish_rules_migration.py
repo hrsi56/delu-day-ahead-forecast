@@ -128,6 +128,17 @@ def test_a2_negative_control_the_largest_header_seen_on_the_route_decides():
     assert any("beyond" in problem for problem in CRP.placement_findings(_view(1740, seen=(56, 64))))
 
 
+def test_only_the_live_product_opening_may_omit_the_release_rule():
+    # The Owner removed the live product's product line on 2026-11-21; the v1 demo's opening still needs its rule.
+    view = _view(1744)
+    view["placements"]["release_rule"] = None
+    assert any("release rule is missing" in problem for problem in CRP.placement_findings(view))
+    view["placements"]["live_product"] = True
+    assert CRP.placement_findings(view) == []
+    view["placements"]["demo_action"] = None
+    assert CRP.placement_findings(view) == ["the demo action is missing"]
+
+
 def test_a2_negative_control_an_unmeasured_header_is_a_finding():
     assert any("not measured" in problem for problem in CRP.placement_findings(_view(1600, header=0)))
 

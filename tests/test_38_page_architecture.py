@@ -4,7 +4,8 @@ A3, A4): the page's architecture.
 * The section order of PUBLISH_RULES 1.0 §5 (A4): the opening, the released product's documentation, the
   comparison, then the lineage and the chapters, with planned work after them.
 * The headline block in the research status card, identical to the README's, with the terms it
-  introduces directly below it; the release rule beside the demo action, outside any disclosure;
+  introduces directly below it; on a page without a live product, the release rule beside the demo action, outside
+  any disclosure;
   the byline link; the comparison's finding and caveat above its chart. (The §1 pixel placements
   are measured in real browsers by `scripts/check_reader_paths.py placements` and recorded.)
 * One generic renderer fills the chapter grammar's fixed slots; a chapter missing a slot fails.
@@ -156,20 +157,15 @@ def test_the_terms_are_defined_directly_below_the_headline(page):
         assert f'data-block="{key}"' in page[terms:terms + 4000]
 
 
-def test_the_release_rule_is_beside_the_demo_action_and_outside_any_disclosure(page):
-    # PRES-5: the product line beside the live product's action says what the Space runs, and where v1's demo is
-    # (decision 28; rulings O27, O29). The release rule's own wording stays for a page without a final candidate.
-    action = page.index('class="btn-primary external"')
-    rule = page.index('data-block="product.live"')
-    assert 0 < rule - action < 700, "the product line follows the product's action directly"
-    opened = page.rfind("<details", 0, rule)
-    assert opened == -1 or page.rfind("</details>", 0, rule) > opened
-    text = re.sub(r"<[^>]+>", "", page[rule:rule + 1200])
-    # PRES-7 (O51 item 8): the Owner is defined at first use
-    assert "The Owner, the project's lead, has the Space run v6 · DDNN-2 alone daily before its one test" in text
-    assert "the last released generation" in text
-    # The release check's own selector finds it beside the action (scripts/check_reader_paths.py, PLACEMENT_JS).
-    assert page.rfind('data-block="release-rule"', 0, rule) > action
+def test_the_live_product_opening_has_no_product_line(page):
+    # The Owner removed the product line beside the live product's action on 2026-11-21 (it was PRES-5's
+    # `product.live`; decision 28; rulings O27, O29). The release rule's own wording stays for a page without a final
+    # candidate, and the release check still requires it there (scripts/check_reader_paths.py).
+    assert G.final_candidate() is not None
+    assert "product.live" not in RC.BLOCKS_BY_KEY
+    assert 'data-block="product.live"' not in page and 'data-block="release-rule"' not in page
+    sentence = "has the Space run"
+    assert sentence not in page and sentence not in README.read_text()
 
 
 def test_the_byline_links_to_the_contribution(page):

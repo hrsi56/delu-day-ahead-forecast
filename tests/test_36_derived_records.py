@@ -122,11 +122,12 @@ def test_every_derived_record_names_committed_inputs_and_a_mapped_claim():
 
 def test_no_v2_or_later_derived_value_reaches_past_the_development_boundary():
     # PUBLISH_RULES 1.5 moved invariant 10's date to 2026-09-06 (research §24.2): CP-26's and CP-28's records reach it,
-    # and the five periods' records end at the shared population's own end, 2026-04-07.
+    # and the five periods' records end at the shared population's own end, 2026-04-07. CP-29's records sit on CP-26's
+    # window (`research.CP26_WINDOW`), which the profit chart over the naive's derived difference reads.
     for record in D.records().values():
         for record_id in record.inputs:
             window = R.get(record_id).window
-            bound = R.RESEARCH_BOUNDARY if record_id.startswith(("cp26.", "cp28.")) else R.EVIDENCE_BOUNDARY
+            bound = R.RESEARCH_BOUNDARY if record_id.startswith(("cp26.", "cp28.", "cp29.")) else R.EVIDENCE_BOUNDARY
             assert window is None or window[1] <= bound, (record.record_id, record_id)
 
 

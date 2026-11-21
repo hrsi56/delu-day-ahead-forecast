@@ -16,6 +16,7 @@ The contracts, each with a negative control where a check could pass vacuously:
 from __future__ import annotations
 
 import collections
+import dataclasses
 import html
 import io
 import math
@@ -26,6 +27,7 @@ from pathlib import Path
 
 import pytest
 
+from delu_forecast import derived as D
 from delu_forecast import publication_lint as L
 from delu_forecast import registry as G
 from delu_forecast import research as R
@@ -150,6 +152,72 @@ def test_the_graphic_names_battery_policy_population_dates_units_and_class():
                           "foresight: 287,292 EUR Doing nothing: zero")
 
 
+# --------------------------------------------------------------------------- the chart over the naive (2026-11-21)
+
+
+def test_over_the_naive_each_line_is_its_difference_and_ends_at_its_record():
+    """The Owner's request of 2026-11-21: the same chart with the naive as the line at zero."""
+    series, over = B.profit_series(), B.profit_over_naive_series()
+    naive = dict(series["naive"])
+    for source in ("v6", "perfect_foresight"):
+        assert [day for day, _ in over[source]] == [day for day, _ in series[source]]
+        assert all(math.isclose(value, dict(series[source])[day] - naive[day], rel_tol=0.0, abs_tol=1e-6)
+                   for day, value in over[source])
+    assert math.isclose(over["v6"][-1][1], R.get(B.OVER_NAIVE_RECORDS["v6"]).value, rel_tol=TOLERANCE, abs_tol=0.0)
+    record = D.get(B.OVER_NAIVE_RECORDS["perfect_foresight"])
+    assert math.isclose(over["perfect_foresight"][-1][1], float(record.value), rel_tol=TOLERANCE, abs_tol=0.0)
+    assert record.inputs == ("cp29.p_all.all.perfect_foresight.perfect.w25.cumulative_profit_eur",
+                             "cp29.p_all.all.naive.median.w25.cumulative_profit_eur")
+    assert not [problem for problem in D.validate_all() if "perfect_foresight-naive" in problem]
+    assert over["naive"] == [("2020-12-29", 0.0), ("2026-09-06", 0.0)]
+    # the claim it carries: v6's schedule stays above the naive's on every day, and below perfect foresight's
+    assert min(value for _, value in over["v6"]) > 0
+    assert all(v6 <= pf for (_, v6), (_, pf) in zip(over["v6"], over["perfect_foresight"]))
+
+
+def test_negative_control_a_changed_paired_total_stops_the_chart_over_the_naive(monkeypatch):
+    real = R.get
+
+    def shifted(record_id):
+        record = real(record_id)
+        if record_id == B.OVER_NAIVE_RECORDS["v6"]:
+            return dataclasses.replace(record, raw=str(float(record.raw) + 1.0))
+        return record
+
+    monkeypatch.setattr(R, "get", shifted)
+    with pytest.raises(B.ProfitSeriesError, match="v6 over the naive"):
+        B.profit_over_naive_series()
+
+
+def _naive_chart(variant: str) -> str:
+    return re.search(rf'<svg class="{variant}"[^>]*data-chart="business-profit-naive".*?</svg>', BUSINESS,
+                     re.S).group(0)
+
+
+def test_the_chart_over_the_naive_sits_below_the_first_and_draws_the_naive_at_zero():
+    first = BUSINESS.index('data-chart-id="business-profit-chart"')
+    identity = BUSINESS.index('data-block="economics.chart_naive"')
+    chart = BUSINESS.index('data-chart-id="business-profit-naive-chart"')
+    assert first < identity < chart < BUSINESS.index('data-block="economics.difference"')
+    for variant, labels in (("d", ("perfect foresight", "v6", "naive")), ("m", ("perfect", "foresight", "v6", "naive"))):
+        svg = _naive_chart(variant)
+        assert svg.count("<polyline") == 3, variant
+        texts = [_text(t) for t in re.findall(r"<text[^>]*>(.*?)</text>", svg)]
+        for label in labels + ("Cumulative net profit over the naive",):
+            assert label in texts, (variant, label)
+        assert "doing nothing" not in texts  # the zero line is the naive's here
+        assert "0" in texts and "80" in texts  # thousand EUR, from zero
+        assert "Simulated, development, post-selection" in svg and "1 MW, 2 MWh" in svg
+        # the naive's line is flat at zero, dashed in its style
+        naive = re.search(r'<polyline points="([^"]+)"[^>]*stroke-dasharray="6 4"', svg).group(1).split()
+        assert len(naive) == 2 and naive[0].split(",")[1] == naive[1].split(",")[1]
+    key = _text(re.search(r'<p class="preview-key profit-key-naive">.*?</p>', BUSINESS, re.S).group(0))
+    assert key == "v6, median rule: +37,080 EUR Perfect foresight: +67,160 EUR Similar-day naive: zero"
+    for record_id in B.OVER_NAIVE_RECORDS.values():
+        assert f'data-claim="C1205" data-record="{record_id}"' in BUSINESS
+    assert "C1205" in RC.claim_map_ids()
+
+
 def test_the_section_keeps_a8s_place_and_routes_to_its_details():
     order = SECTION.findall(BODY)
     assert order[:5] == ["top", "product", "outcomes", "business", "research-results"]
@@ -224,7 +292,7 @@ def test_no_status_word_in_the_new_or_reworded_text():
     block list, so PRES-7 scans its own blocks here."""
     keys = [block.key for block in RC.CP29_BLOCKS + RC.PRES7_BLOCKS] + [
         "business.use", "business.measured", "business.gap", "business.limits", "terms.class_final",
-        "terms.selection_rule", "terms.final_candidate", "product.live", "comparison.caveat.a1", "everyday.finding.v6",
+        "terms.selection_rule", "terms.final_candidate", "comparison.caveat.a1", "everyday.finding.v6",
         "comparison.sub"]
     for key in keys:
         assert not L.STATUS_WORDS.search(re.sub(r"\{[^}]*\}", "", RC.BLOCKS_BY_KEY[key].template)), key
@@ -315,7 +383,9 @@ def test_the_comparisons_phone_axis_holds_every_marker():
 def test_the_terms_are_defined_at_first_use():
     body = _text(BODY[BODY.index("<body"):])
     first = lambda term: body.index(term)  # noqa: E731
-    assert body[first("Owner") - 4:].startswith("The Owner, the project's lead,")
+    # the opening's product line, the first definition, was removed by the Owner on 2026-11-21; the selection note
+    # now carries it
+    assert body[first("Owner") - 4:].startswith("the Owner, the project's lead,")
     assert body[first("re-baseline"):].startswith("re-baseline re-scored every policy on every day")
     assert body[first("A1 in the frozen records") - 6:].startswith("named A1 in the frozen records")
     # "descriptive", first used in the headline, is defined directly below it (editorial E2)
@@ -372,6 +442,12 @@ def test_the_wording_pass_changed_no_number():
 
     assert hashlib.sha256(shown.stdout).hexdigest() == BEFORE_SHA256
     before = shown.stdout.decode("utf-8")
+    # The Owner removed the opening's product line on 2026-11-21, after this wording pass; it leaves the before page
+    # too, so the comparison still isolates the wording pass.
+    line = re.search(r'\s*<div class="release-rule" data-block="release-rule"><p data-block="product\.live">.*?</p></div>',
+                     before)
+    assert line and 'data-block="product.live"' not in PAGE
+    before = before[:line.start()] + before[line.end():]
     assert number_changes(before, PAGE) == []
     # the negative control: one bound value changed outside Business insights is caught
     altered = PAGE.replace(">−6%<", ">−5%<", 1)

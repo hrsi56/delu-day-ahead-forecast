@@ -683,10 +683,27 @@ def _pres5_records() -> list[DerivedRecord]:
     return out
 
 
+#: The profit chart over the naive (the Owner's request of 2026-11-21): where perfect foresight's line ends, its
+#: cumulative net profit minus the naive's on the same P-all days at €25 wear. v6's line ends at CP-29's paired total,
+#: a committed record with its interval; this difference has none, and no number of its own in CP-29's rows.
+MONEY_DIFFERENCES = {
+    "cp29.perfect_foresight-naive.w25": ("cp29.p_all.all.perfect_foresight.perfect.w25.cumulative_profit_eur",
+                                         "cp29.p_all.all.naive.median.w25.cumulative_profit_eur"),
+}
+
+
+def _money_difference_records() -> list[DerivedRecord]:
+    return [DerivedRecord(f"derived.{key}", "money_difference", key.split(".")[1].split("-")[0], R.UNIT_EUR_MONEY_DIFF,
+                          _text(_d(minuend) - _d(subtrahend)), (minuend, subtrahend),
+                          "cumulative net profit − the naive's, the same days; a point difference, no interval", 0,
+                          "C1205", label="over the naive's cumulative net profit")
+            for key, (minuend, subtrahend) in MONEY_DIFFERENCES.items()]
+
+
 @lru_cache(maxsize=1)
 def records() -> dict[str, DerivedRecord]:
     built = (_criteria_records() + _change_records() + _adoption_records() + _period_records() + _coverage_records()
-             + _pres5_records())
+             + _pres5_records() + _money_difference_records())
     out: dict[str, DerivedRecord] = {}
     for record in built:
         if record.record_id in out:
@@ -782,6 +799,9 @@ def validate_all() -> list[str]:
             elif record.kind == "point_change":
                 numerator, denominator = record.inputs
                 expected = _text(_relative(value(numerator), value(denominator)))
+            elif record.kind == "money_difference":
+                minuend, subtrahend = record.inputs
+                expected = _text(value(minuend) - value(subtrahend))
             elif record.kind == "adoption_verdict":
                 spec = ADOPTION_RULES[record.subject]
                 expected = _adoption_verdict(spec, lambda rid: R.rederive(R.get(rid), fresh)["value"])
@@ -829,6 +849,9 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
         raise DerivedError(f"{record.record_id} has no {which}")
     if record.unit in (UNIT_LABEL, UNIT_DATE):
         return raw
+    if record.unit == R.UNIT_EUR_MONEY_DIFF and style is None:
+        # as CP-29's paired money differences show (research.display; editorial E6): four significant figures, signed
+        return R.format_number(str(R._round_significant(Decimal(raw), 4)), 0, signed=True, thousands=True)
     places = record.display_precision + (2 if style == "exact" else 0)  # value tables carry two more places
     quantized = Decimal(raw).quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_EVEN)
     if quantized == 0:
@@ -849,7 +872,7 @@ def display(record: DerivedRecord, which: str = "value", *, style: str | None = 
 
 
 __all__ = [
-    "ADOPTION_RULES", "CHANGES", "CONTROL_CHANGES", "NAIVE_RATIO_CHANGES", "POINT_CHANGES", "COVERAGE_KINDS", "DECISION_LEVEL_CHANGES", "PERIOD_SOURCES", "RATIO_CHANGES",
+    "ADOPTION_RULES", "CHANGES", "CONTROL_CHANGES", "MONEY_DIFFERENCES", "NAIVE_RATIO_CHANGES", "POINT_CHANGES", "COVERAGE_KINDS", "DECISION_LEVEL_CHANGES", "PERIOD_SOURCES", "RATIO_CHANGES",
     "comparison_parity_problems", "DerivedError", "DerivedRecord", "PERIOD_SUBJECTS", "RULE", "UNIT_COUNT", "UNIT_DATE", "UNIT_EUR",
     "UNIT_LABEL", "UNIT_RELATIVE", "display", "get", "is_derived", "records", "section_8", "stress_period",
     "validate_all",

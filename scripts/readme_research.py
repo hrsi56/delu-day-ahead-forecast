@@ -167,8 +167,7 @@ def build_glance(target: str = "md") -> str:
         "",
         para(bold(f"Demo, {tok('{g:released.name}')}:") + " " + link(f"try the {tok('{g:released.version}')} demo", SPACE_URL)
              + ". " + tok("{g:release_rule}", "P22")) if G.final_candidate() is None
-        else para(bold("Live product:") + " " + link("open it on the Space", SPACE_URL) + ". " + render("product.live")
-                  + " " + link(f"{tok('{g:released.version}')}'s historical demo", SPACE_APP_URL + "history/index.html") + "."),
+        else para(bold("Live product:") + " " + link("open it on the Space", SPACE_URL) + ". " + link(f"{tok('{g:released.version}')}'s historical demo", SPACE_APP_URL + "history/index.html") + "."),
         "",
         para(bold("How the product works:") + " " + render("product.lede") + " "
              + link("Read it in the report", PAGES_URL + "#product") + ": its data, validation, results, failures, "

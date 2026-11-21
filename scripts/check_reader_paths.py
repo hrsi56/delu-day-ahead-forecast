@@ -866,6 +866,7 @@ PLACEMENT_JS = r"""() => {
           order: a8 ? 'A8' : 'A4', finding_id: a8 ? 'product-finding' : 'comparison-finding',
           headline: box(q('#headline')), terms: box(q('ul.terms')), finding: box(finding), finding_chart: box(chart),
           release_rule: box(release), demo_action: box(actions), byline: box(byline),
+          live_product: [...document.querySelectorAll('.status-released dt')].some(d => d.textContent.trim() === 'Live product'),
           release_rule_in_disclosure: !!(release && release.closest('details')),
           byline_in_disclosure: !!(byline && byline.closest('details')),
           scroll_width: document.documentElement.scrollWidth, client_width: document.documentElement.clientWidth,
@@ -1174,7 +1175,12 @@ def placement_findings(view: dict) -> list[str]:
         problems.append("the terms are not directly below the headline block")
     if p["finding_chart"] and p["finding"] and p["finding"]["bottom"] > p["finding_chart"]["top"]:
         problems.append("the finding sentence is not above the comparison's chart")
-    if p["release_rule_in_disclosure"] or not p["release_rule"] or not p["demo_action"]:
+    # The live product's opening has no release rule: the Owner removed its product line on 2026-11-21. The release
+    # rule is still required on a page whose opening offers the v1 demo.
+    if p.get("live_product") and not p["release_rule"]:
+        if not p["demo_action"]:
+            problems.append("the demo action is missing")
+    elif p["release_rule_in_disclosure"] or not p["release_rule"] or not p["demo_action"]:
         problems.append("the release rule is missing or inside a disclosure")
     elif abs(p["release_rule"]["top"] - p["demo_action"]["bottom"]) > 40:
         problems.append("the release rule is not beside the demo action")
