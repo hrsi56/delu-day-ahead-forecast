@@ -1,0 +1,54 @@
+{
+ "build": "/Users/runner/work/_temp/results/space",
+ "bundle": "/Users/runner/work/_temp/results/bundle",
+ "gate": {
+  "publishable": true,
+  "reason": null,
+  "recompute_match": true,
+  "verify_problems": []
+ },
+ "published": true,
+ "schema": "cp18b-publication-v1",
+ "served": {
+  "artifact_sha256": "40b56a625273d089ffe4bf429d347f42ba098d4f42fa1679010b02fcb44c9c88",
+  "checked": 898,
+  "how": {
+   "normalized": 2,
+   "raw": 895
+  },
+  "intended_manifest_sha256": "5165a99b2a5210b03e00b518ed9c9ba0de9e230510770a9af4706462f6b140ec",
+  "problems": [],
+  "served_identity_equal": true,
+  "served_manifest_sha256": "5165a99b2a5210b03e00b518ed9c9ba0de9e230510770a9af4706462f6b140ec",
+  "verified_in_the_hub_tree_only": [
+   "README.md"
+  ]
+ },
+ "served_attempts": [
+  {
+   "at": "2026-11-25T10:25:04+00:00",
+   "equal": true,
+   "problems": []
+  }
+ ],
+ "served_from": "https://yarden-viktor-delu-day-ahead-forecast.static.hf.space/",
+ "target": "Hugging Face Static Space",
+ "upload": {
+  "after_revision": "28227e8d210e3882e5617064ed8e98b0d454a6e3",
+  "before_revision": "9bd2d739d2818b5761dab59960fa182495b02fce",
+  "commit": "28227e8d210e3882e5617064ed8e98b0d454a6e3",
+  "commit_url": "https://huggingface.co/spaces/Yarden-Viktor/delu-day-ahead-forecast/commit/28227e8d210e3882e5617064ed8e98b0d454a6e3",
+  "credential_guard": "passed",
+  "planned_adds": 0,
+  "planned_changes": 4,
+  "planned_deletes": [],
+  "repo": "Yarden-Viktor/delu-day-ahead-forecast",
+  "target": "Hugging Face Static Space",
+  "tree": {
+   "extra": [],
+   "mismatched": [],
+   "missing": [],
+   "verified": true
+  }
+ }
+}
